@@ -67,7 +67,16 @@ Category = RELATED ( products[category] )
 ## Walkthrough
 
 1. Create a table for your measures: **Home → Enter data**, name it `_Measures`, load it with its one empty column. (The underscore keeps it at the top of the Data pane.)
-2. Select `_Measures`, then **Home → New measure**, and type the `Revenue` measure. Press Enter.
+2. Select `_Measures`, then **Home → New measure**, and type the `Revenue` measure in the formula bar. Press Enter.
+
+   ![Power BI Desktop with a DAX measure being written in the formula bar under the Measure tools ribbon, and the new measure listed in the Data pane.](/images/courses/powerbi/dax-measure.webp "Writing a measure: the formula bar (1) opens under the Measure tools tab (2), and the measure appears in the Data pane with a calculator icon (3).")
+
+   > [!WARNING]
+   > A measure can't share its name with a column in the same table, and names ignore capital letters. Create `Revenue` in the **orders** table, which already has a `revenue` column, and Power BI refuses:
+   >
+   > ![A Power BI dialog titled Rename measure saying the name Revenue is already used for a column on table orders.](/images/courses/powerbi/name-clash.webp "The error (1) for the formula in the bar (2).")
+   >
+   > That's one reason to keep measures in their own `_Measures` table. If you do create a measure in a data table, give it a different name, such as `Total Revenue`.
 3. Add `Order Lines`, `Active Customers` and `Avg Revenue per Line` the same way.
 4. Format them: select a measure → Measure tools → set format (Whole number with thousands separator for counts; currency for revenue).
 5. Build a Matrix with `Date[Year]` in Rows and all four measures in Values. Each number is calculated for its year: that's filter context at work.

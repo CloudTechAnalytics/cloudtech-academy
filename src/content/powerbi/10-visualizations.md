@@ -44,6 +44,14 @@ A first report page for Kolanut:
 
 Click the North West bar and every other visual shows North West only.
 
+Here's a first version of that page built in Power BI Desktop, with a card, a slicer and two bar charts:
+
+![A Power BI report page with a Total Revenue card showing 830.54M, a channel slicer, a bar chart of Total Revenue by region and a column chart of Total Revenue by category, next to the Filters, Visualizations and Data panes.](/images/courses/powerbi/report-page.webp "A report page: card (1), slicer (2), bar chart (3), column chart (4), and the Filters (5), Visualizations (6) and Data (7) panes.")
+
+Tick **Wholesale** in the slicer and every visual on the page recalculates for wholesale customers only:
+
+![The same report with Wholesale ticked in the channel slicer: the card now shows 580.26M and both charts show smaller values.](/images/courses/powerbi/slicer-filter.webp "The slicer (1) filters the page: Total Revenue drops from ₦830.5m to ₦580.3m (2), the wholesale share you calculated in the Excel course.")
+
 ## Walkthrough
 
 1. Add the three cards. For each, Format → Callout value → Display units **Millions** for revenue.
