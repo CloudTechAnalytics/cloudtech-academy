@@ -1,0 +1,25 @@
+employee_id,full_name,role,team,hire_date,manager_id
+1,Segun Okeke,Account Manager,Sales,2023-04-12,23
+2,Tobi Adeyemi,Account Manager,Sales,2017-02-02,23
+3,Obinna Abdullahi,Account Manager,Sales,2016-09-30,24
+4,Segun Ogunleye,Account Manager,Sales,2023-08-14,24
+5,Adaeze Eze,Account Manager,Sales,2023-03-25,23
+6,Ibrahim Abdullahi,Account Manager,Sales,2018-11-20,24
+7,Kunle Nwosu,Account Manager,Sales,2024-04-16,23
+8,Obinna Suleiman,Account Manager,Sales,2024-07-27,23
+9,Tunde Lawal,Operations Officer,Operations,2023-02-18,24
+10,Temitope Umar,Operations Officer,Operations,2019-05-08,23
+11,Zainab Ogunleye,Operations Officer,Operations,2018-11-25,24
+12,Maryam Ogunleye,Operations Officer,Operations,2018-04-26,24
+13,Obinna Afolabi,Operations Officer,Operations,2017-03-25,24
+14,Adaeze Olawale,Operations Officer,Operations,2023-02-23,24
+15,Temitope Eze,Operations Officer,Operations,2017-03-10,24
+16,Folake Adeyemi,Customs Specialist,Customs,2016-08-27,23
+17,Yusuf Umar,Customs Specialist,Customs,2017-03-24,23
+18,Musa Ogunleye,Customs Specialist,Customs,2017-11-17,23
+19,Chiamaka Ogunleye,Customs Specialist,Customs,2023-05-01,24
+20,Folake Ogunleye,Finance Officer,Finance,2016-10-23,24
+21,Nnamdi Danjuma,Finance Officer,Finance,2020-01-26,24
+22,Adaeze Bello,Finance Officer,Finance,2023-11-10,23
+23,Dapo Ibe,Team Lead,Operations,2021-03-19,
+24,Tobi Okeke,Team Lead,Operations,2019-12-05,

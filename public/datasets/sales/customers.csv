@@ -1,0 +1,81 @@
+customer_id,customer_name,channel,region
+1,Mama Stores 1,Kiosk,North West
+2,Aunty Ventures 2,Supermarket,North Central
+3,Alhaji Mini Mart 3,Kiosk,North West
+4,Bola Mini Mart 4,Kiosk,South East
+5,Emeka Mini Mart 5,Supermarket,South South
+6,Chuks Enterprises 6,Wholesale,North Central
+7,Chuks Ventures 7,Kiosk,North Central
+8,Emeka Stores 8,Kiosk,North West
+9,Chuks Enterprises 9,Kiosk,South West
+10,Bola Mini Mart 10,Kiosk,South East
+11,Madam Mini Mart 11,Kiosk,North West
+12,Chuks Ventures 12,Supermarket,South West
+13,Bola Enterprises 13,Wholesale,Lagos
+14,Alhaji Wholesale 14,Kiosk,South South
+15,Chuks Ventures 15,Kiosk,South South
+16,Mama Wholesale 16,Wholesale,North West
+17,Emeka Supermarket 17,Kiosk,South South
+18,Alhaji Ventures 18,Wholesale,South South
+19,Aunty Stores 19,Wholesale,South West
+20,Emeka Wholesale 20,Kiosk,North West
+21,Aunty Ventures 21,Wholesale,Lagos
+22,Alhaji Supermarket 22,Wholesale,South East
+23,Aunty Enterprises 23,Wholesale,North West
+24,Mama Wholesale 24,Kiosk,Lagos
+25,Mama Supermarket 25,Kiosk,North Central
+26,Bola Stores 26,Supermarket,South East
+27,Mama Wholesale 27,Supermarket,North West
+28,Mama Mini Mart 28,Wholesale,North Central
+29,Madam Ventures 29,Kiosk,North Central
+30,Madam Supermarket 30,Supermarket,South South
+31,Emeka Mini Mart 31,Kiosk,South East
+32,Brother Enterprises 32,Wholesale,North Central
+33,Brother Enterprises 33,Kiosk,Lagos
+34,Alhaji Wholesale 34,Supermarket,South South
+35,Aunty Stores 35,Kiosk,South East
+36,Chuks Mini Mart 36,Kiosk,South South
+37,Alhaji Supermarket 37,Kiosk,Lagos
+38,Brother Mini Mart 38,Kiosk,North West
+39,Bola Wholesale 39,Wholesale,North Central
+40,Mama Supermarket 40,Supermarket,North Central
+41,Bola Supermarket 41,Wholesale,Lagos
+42,Emeka Supermarket 42,Wholesale,North West
+43,Brother Mini Mart 43,Supermarket,South South
+44,Madam Wholesale 44,Wholesale,South West
+45,Bola Supermarket 45,Wholesale,Lagos
+46,Mama Ventures 46,Wholesale,South East
+47,Mama Ventures 47,Kiosk,North Central
+48,Bola Supermarket 48,Kiosk,North Central
+49,Chuks Stores 49,Supermarket,Lagos
+50,Madam Enterprises 50,Wholesale,South West
+51,Emeka Wholesale 51,Wholesale,North Central
+52,Alhaji Stores 52,Supermarket,North Central
+53,Chuks Wholesale 53,Supermarket,South East
+54,Madam Stores 54,Kiosk,South South
+55,Emeka Enterprises 55,Kiosk,North Central
+56,Bola Wholesale 56,Supermarket,South East
+57,Mama Wholesale 57,Kiosk,North West
+58,Brother Enterprises 58,Kiosk,South East
+59,Mama Supermarket 59,Kiosk,South South
+60,Brother Stores 60,Wholesale,South East
+61,Madam Enterprises 61,Kiosk,South West
+62,Madam Supermarket 62,Kiosk,Lagos
+63,Alhaji Mini Mart 63,Supermarket,North West
+64,Madam Wholesale 64,Wholesale,South South
+65,Chuks Enterprises 65,Kiosk,Lagos
+66,Mama Ventures 66,Wholesale,Lagos
+67,Bola Stores 67,Supermarket,North West
+68,Brother Wholesale 68,Supermarket,South South
+69,Mama Stores 69,Kiosk,North Central
+70,Madam Wholesale 70,Kiosk,South East
+71,Mama Mini Mart 71,Wholesale,South South
+72,Madam Supermarket 72,Kiosk,South South
+73,Brother Mini Mart 73,Wholesale,South South
+74,Bola Supermarket 74,Wholesale,Lagos
+75,Mama Wholesale 75,Kiosk,South South
+76,Brother Wholesale 76,Kiosk,South South
+77,Aunty Ventures 77,Kiosk,South East
+78,Madam Mini Mart 78,Kiosk,South South
+79,Aunty Stores 79,Supermarket,Lagos
+80,Aunty Ventures 80,Supermarket,Lagos

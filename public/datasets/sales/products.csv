@@ -1,0 +1,17 @@
+product_id,product_name,category,unit_price
+1,Malt drink 330ml (24),Beverages,18900
+2,Bottled water 75cl (12),Beverages,36800
+3,Orange juice 1L (12),Beverages,24200
+4,Energy drink 250ml (24),Beverages,39100
+5,Plantain chips 150g (20),Snacks,25100
+6,Chin chin 200g (20),Snacks,5500
+7,Cabin biscuits (24),Snacks,16900
+8,Groundnuts 250g (30),Snacks,22100
+9,Detergent 900g (12),Household,19800
+10,Dishwashing liquid 1L (12),Household,30600
+11,Toilet roll (48),Household,17500
+12,Air freshener (12),Household,28700
+13,Body lotion 400ml (12),Personal care,6000
+14,Toothpaste 140g (24),Personal care,6100
+15,Bar soap (48),Personal care,7600
+16,Hair cream 250g (12),Personal care,14400

@@ -1,0 +1,19 @@
+{
+  "name": "CloudTech Academy",
+  "short_name": "CT Academy",
+  "icons": [
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#F8F5EF",
+  "background_color": "#F8F5EF",
+  "display": "browser"
+}

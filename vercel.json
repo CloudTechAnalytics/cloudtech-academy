@@ -1,0 +1,19 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "rewrites": [
+    { "source": "/dashboard/:path*", "destination": "/app.html" },
+    { "source": "/dashboard", "destination": "/app.html" },
+    { "source": "/admin/:path*", "destination": "/app.html" },
+    { "source": "/admin", "destination": "/app.html" },
+    { "source": "/profile", "destination": "/app.html" },
+    { "source": "/verify/:path*", "destination": "/app.html" },
+    { "source": "/sign-in", "destination": "/app.html" },
+    { "source": "/sign-up", "destination": "/app.html" },
+    { "source": "/reset-password", "destination": "/app.html" },
+    { "source": "/update-password", "destination": "/app.html" },
+    { "source": "/courses/:slug/assessment", "destination": "/app.html" },
+    { "source": "/courses/:slug/project", "destination": "/app.html" },
+    { "source": "/courses/:slug/certificate", "destination": "/app.html" }
+  ]
+}

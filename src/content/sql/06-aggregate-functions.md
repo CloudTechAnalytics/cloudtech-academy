@@ -1,0 +1,127 @@
+---
+title: Aggregate functions
+minutes: 25
+summary: Summarise many rows into one answer with COUNT, SUM, AVG, MIN and MAX.
+---
+
+## The problem
+
+The managing director has a board meeting tomorrow and asks for a few numbers about 2025:
+
+- How many shipments did we handle?
+- How much did we charge in total?
+- What was the average shipment worth?
+
+None of these needs a list of shipments. Each needs **one number** calculated from many rows.
+
+## The concept
+
+**Aggregate functions** take a column of values and return a single value.
+
+| Function | Returns |
+| :-- | :-- |
+| `COUNT(*)` | the number of rows |
+| `COUNT(column)` | the number of rows where that column is not NULL |
+| `COUNT(DISTINCT column)` | the number of different values |
+| `SUM(column)` | the total |
+| `AVG(column)` | the average |
+| `MIN(column)` / `MAX(column)` | the smallest / largest value |
+
+Aggregates **ignore NULLs**. `AVG` of a column with some NULLs averages only the values that exist.
+
+`ROUND(value, 2)` rounds to two decimal places, which keeps averages readable.
+
+## Example
+
+```sql run
+SELECT
+  COUNT(*)                    AS shipments,
+  SUM(freight_charge)         AS total_charged,
+  ROUND(AVG(freight_charge))  AS average_charge
+FROM shipments
+WHERE booking_date BETWEEN '2025-01-01' AND '2025-12-31'
+  AND status <> 'Cancelled';
+```
+
+## Walkthrough
+
+1. `WHERE` keeps 2025 bookings and removes cancelled ones, which were never charged.
+2. The three aggregates then run over the rows that remain.
+3. The result is **one row**, however many shipments there were.
+
+The difference between `COUNT(*)` and `COUNT(column)` matters when a column has NULLs:
+
+```sql run
+SELECT
+  COUNT(*)                        AS customers,
+  COUNT(account_manager_id)       AS with_manager,
+  COUNT(DISTINCT account_manager_id) AS managers_used
+FROM customers;
+```
+
+`COUNT(*)` counts every customer. `COUNT(account_manager_id)` skips the ones with no manager. `COUNT(DISTINCT …)` counts how many different managers look after customers.
+
+> [!WARNING]
+> You can't mix aggregates with ordinary columns without saying how to group them. `SELECT company_name, COUNT(*) FROM customers` doesn't mean anything sensible: which company name should sit next to the total? The next lesson, GROUP BY, solves this.
+
+## Practice
+
+```exercise
+{
+  "id": "sql-06-p1",
+  "prompt": "How much did Harbourline receive in payments in total? Return one column named total_received.",
+  "starter": "SELECT \nFROM payments;",
+  "solution": "SELECT SUM(amount) AS total_received FROM payments;",
+  "hint": "SUM the amount column of the payments table.",
+  "required": true
+}
+```
+
+```exercise
+{
+  "id": "sql-06-p2",
+  "prompt": "How many shipments are in transit right now (status 'In transit')? Name the column in_transit.",
+  "starter": "",
+  "solution": "SELECT COUNT(*) AS in_transit FROM shipments WHERE status = 'In transit';",
+  "hint": "COUNT(*) with a WHERE filter on status.",
+  "required": true
+}
+```
+
+## Challenge
+
+```exercise
+{
+  "id": "sql-06-c1",
+  "prompt": "For 2026 bookings (from '2026-01-01'), return in one row: the number of different customers who booked, the largest number of containers in a single shipment, and the average weight_kg rounded to a whole number.",
+  "starter": "",
+  "solution": "SELECT COUNT(DISTINCT customer_id), MAX(containers), ROUND(AVG(weight_kg)) FROM shipments WHERE booking_date >= '2026-01-01';",
+  "hint": "COUNT(DISTINCT customer_id), MAX(containers) and ROUND(AVG(weight_kg)), filtered with WHERE booking_date >= '2026-01-01'.",
+  "required": false
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "The customers table has 120 rows and 8 of them have no account manager. What does COUNT(account_manager_id) return?",
+    "options": ["120", "112", "8", "NULL"],
+    "answer": 1,
+    "explanation": "COUNT(column) skips NULLs, so it counts the 112 customers who do have a manager."
+  },
+  {
+    "prompt": "How many rows does SELECT SUM(amount) FROM payments return?",
+    "options": ["One per payment", "One", "One per method", "None"],
+    "answer": 1,
+    "explanation": "Without GROUP BY, an aggregate collapses all rows into a single row."
+  },
+  {
+    "prompt": "Which function counts how many different routes were used?",
+    "options": ["COUNT(route_id)", "COUNT(*)", "COUNT(DISTINCT route_id)", "SUM(route_id)"],
+    "answer": 2,
+    "explanation": "DISTINCT inside COUNT counts each different value once."
+  }
+]
+```

@@ -1,0 +1,207 @@
+import { Link } from "react-router";
+import { ArrowRight } from "lucide-react";
+import { useSeo } from "@/lib/seo";
+import { useCourses } from "@/lib/data";
+import { ButtonLink } from "@/components/Button";
+import { CourseCard } from "@/components/CourseCard";
+import { Reveal } from "@/components/Reveal";
+import { webSiteJsonLd } from "@/lib/schema";
+
+/** DATA → ANALYSIS → INSIGHT → DECISION, drawn with real-looking fragments rather than illustration. */
+function JourneyVisual() {
+  const steps = [
+    {
+      label: "Data",
+      body: (
+        <div className="space-y-1 font-mono text-[0.6875rem] text-muted">
+          <p>shipment_id · customer · containers</p>
+          <p>100412 · Apex Foods · 4</p>
+          <p>100413 · Delta Motors · 2</p>
+          <p>100414 · Apex Foods · 6</p>
+        </div>
+      ),
+    },
+    {
+      label: "Analysis",
+      body: (
+        <pre className="font-mono text-[0.6875rem] leading-relaxed text-ink">
+          {"SELECT customer,\n  SUM(containers)\nFROM shipments\nGROUP BY customer;"}
+        </pre>
+      ),
+    },
+    {
+      label: "Insight",
+      body: (
+        <div className="flex h-12 items-end gap-1.5">
+          {[90, 72, 55, 40, 28].map((h, i) => (
+            <span key={i} className={`flex-1 rounded-t-sm ${i === 0 ? "bg-brass" : "bg-line-strong"}`} style={{ height: `${h}%` }} />
+          ))}
+        </div>
+      ),
+    },
+    { label: "Decision", body: <p className="font-serif text-[0.95rem] leading-snug text-ink">Protect the top accounts; follow up the ones slowing down.</p> },
+  ];
+  return (
+    <ol aria-label="How you learn: data, analysis, insight, decision" className="grid gap-3 sm:grid-cols-2">
+      {steps.map((s, i) => (
+        <li key={s.label} className="relative rounded-xl border border-line bg-paper p-4 shadow-[0_18px_40px_-34px_rgba(23,23,23,0.5)]">
+          <p className="mb-3 flex items-center gap-2 text-[0.6875rem] font-semibold uppercase tracking-[0.18em] text-brass-dark">
+            <span className="flex h-5 w-5 items-center justify-center rounded-full bg-brass-pale text-[0.625rem] text-brass-dark">{i + 1}</span>
+            {s.label}
+          </p>
+          {s.body}
+        </li>
+      ))}
+    </ol>
+  );
+}
+
+const PRINCIPLES = [
+  { title: "Practical", body: "Every lesson starts with a realistic business problem, and you practise on real-looking company data." },
+  { title: "Self-paced", body: "Learn when you have the time. Lessons are short enough for a lunch break and read well on a phone." },
+  { title: "Accessible", body: "The core courses are free. You can read every lesson without an account; sign up only to save progress and earn a certificate." },
+  { title: "Career-focused", body: "Finish with projects you can show and explain to an employer, not only a certificate." },
+];
+
+const STEPS = ["Read", "Understand", "Practise", "Apply", "Assess", "Earn"];
+
+export default function Home() {
+  useSeo({
+    title: "CloudTech Academy | Learn Data, Analytics & Technology",
+    description:
+      "Practical, self-paced courses in data, analytics and technology from CloudTech Analytics. Learn, practise, build and earn CloudTech certificates.",
+    jsonLd: webSiteJsonLd(),
+  });
+  const courses = useCourses();
+
+  return (
+    <>
+      <section className="border-b border-line">
+        <div className="container-page grid items-center gap-12 py-16 sm:py-20 lg:grid-cols-12 lg:py-24">
+          <Reveal className="lg:col-span-6">
+            <p className="kicker">CloudTech Academy</p>
+            <h1 className="mt-5 font-serif text-[2.6rem] leading-[1.06] tracking-[-0.02em] sm:text-[3.4rem] xl:text-[3.9rem]">
+              Learn the skills businesses <span className="text-brass-accent">actually use.</span>
+            </h1>
+            <p className="mt-6 max-w-xl text-[1.0625rem] leading-relaxed text-muted sm:text-[1.1875rem]">
+              Practical, self-paced courses in data, analytics and technology, designed to help you learn, practise and build real skills without
+              expensive course fees.
+            </p>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <ButtonLink to="/courses" arrow>
+                Explore courses
+              </ButtonLink>
+              <ButtonLink to="/sign-up" variant="secondary">
+                Start learning free
+              </ButtonLink>
+            </div>
+            <ol className="mt-10 flex flex-wrap items-center gap-x-2 gap-y-1 text-[0.8125rem] text-muted" aria-label="How each course works">
+              {STEPS.map((s, i) => (
+                <li key={s} className="flex items-center gap-2">
+                  <span className={i === STEPS.length - 1 ? "font-semibold text-brass-dark" : ""}>{s}</span>
+                  {i < STEPS.length - 1 && <ArrowRight aria-hidden className="h-3 w-3 text-line-strong" />}
+                </li>
+              ))}
+            </ol>
+          </Reveal>
+          <Reveal delay={120} className="lg:col-span-6">
+            <JourneyVisual />
+          </Reveal>
+        </div>
+      </section>
+
+      <section aria-labelledby="why-title" className="py-20 sm:py-24">
+        <div className="container-page">
+          <Reveal className="max-w-2xl">
+            <h2 id="why-title" className="font-serif text-[2.1rem] leading-[1.1] sm:text-[2.6rem]">
+              Learn by doing, not just watching.
+            </h2>
+            <p className="mt-4 text-[1.0625rem] leading-relaxed text-muted">
+              CloudTech Academy is text-first. You read a short explanation, then write the query, build the formula or answer the question yourself.
+            </p>
+          </Reveal>
+          <div className="mt-12 grid gap-x-10 border-t border-ink/80 sm:grid-cols-2 lg:grid-cols-4">
+            {PRINCIPLES.map((p, i) => (
+              <Reveal key={p.title} delay={i * 70} className="border-b border-line py-7 lg:border-b-0">
+                <h3 className="font-serif text-[1.4rem]">{p.title}</h3>
+                <p className="mt-2 text-[0.9375rem] leading-relaxed text-muted">{p.body}</p>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section aria-labelledby="courses-title" className="border-t border-line bg-paper py-20 sm:py-24">
+        <div className="container-page">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+            <Reveal>
+              <h2 id="courses-title" className="font-serif text-[2.1rem] leading-[1.1] sm:text-[2.6rem]">
+                Courses
+              </h2>
+              <p className="mt-3 max-w-xl text-muted">Start with SQL for Data Analysis today. The rest of the Data Analyst path is being written now.</p>
+            </Reveal>
+            <Link to="/courses" className="inline-flex items-center gap-1.5 text-[0.9rem] font-semibold text-ink hover:text-brass-dark">
+              All courses <ArrowRight aria-hidden className="h-4 w-4" />
+            </Link>
+          </div>
+          <div className="mt-10 grid gap-5 md:grid-cols-2">
+            {courses.map((c, i) => (
+              <Reveal key={c.id} delay={(i % 2) * 80} className="h-full">
+                <CourseCard course={c} />
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section aria-labelledby="sandbox-title" className="border-t border-line py-20 sm:py-24">
+        <div className="container-page grid gap-10 lg:grid-cols-12 lg:items-center">
+          <Reveal className="lg:col-span-5">
+            <h2 id="sandbox-title" className="font-serif text-[2rem] leading-[1.1] sm:text-[2.4rem]">
+              Practise on a real database, in your browser.
+            </h2>
+            <p className="mt-4 text-[1.0625rem] leading-relaxed text-muted">
+              The SQL course comes with Harbourline Freight, a fictional logistics company with thousands of shipments, customers and payments. Write a
+              query, run it, and get told straight away whether your result is right. Nothing to install.
+            </p>
+            <ButtonLink to="/learn/sql-for-data-analysis/introduction-to-databases" variant="secondary" arrow className="mt-7">
+              Try the first lesson
+            </ButtonLink>
+          </Reveal>
+          <Reveal delay={100} className="lg:col-span-7">
+            <div className="overflow-hidden rounded-2xl border border-line shadow-[0_30px_60px_-40px_rgba(23,23,23,0.5)]">
+              <div className="flex items-center justify-between px-4 py-2.5" style={{ background: "var(--color-code-bg)" }}>
+                <span className="text-[0.6875rem] font-semibold uppercase tracking-[0.16em] text-brass-light">Practice</span>
+                <span className="rounded-md bg-brass-button px-2.5 py-1 text-[0.75rem] font-semibold text-on-brass">Run and check</span>
+              </div>
+              <pre className="code-block rounded-none">
+                <code>{"SELECT c.company_name,\n       SUM(s.containers) AS containers\nFROM shipments AS s\nJOIN customers AS c ON c.customer_id = s.customer_id\nWHERE s.booking_date >= '2026-01-01'\nGROUP BY c.customer_id, c.company_name\nORDER BY containers DESC\nLIMIT 5;"}</code>
+              </pre>
+              <p className="border-t border-line bg-success-bg px-4 py-3 text-[0.875rem] font-medium text-success">Correct. Your result matches the expected answer.</p>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      <section aria-labelledby="cta-title" className="border-t border-line bg-sand/60 py-20 sm:py-24">
+        <div className="container-page grid gap-8 lg:grid-cols-12 lg:items-end">
+          <Reveal className="lg:col-span-8">
+            <h2 id="cta-title" className="font-serif text-[2.3rem] leading-[1.08] sm:text-[2.9rem]">
+              Your next skill starts here.
+            </h2>
+            <p className="mt-4 max-w-2xl text-[1.0625rem] leading-relaxed text-muted">
+              Whether you're starting your first data course or building your next professional skill, CloudTech Academy gives you a practical place to
+              learn, practise and build.
+            </p>
+          </Reveal>
+          <Reveal delay={80} className="flex flex-col gap-3 sm:flex-row lg:col-span-4 lg:justify-end">
+            <ButtonLink to="/courses">Explore courses</ButtonLink>
+            <ButtonLink to="/sign-up" variant="secondary">
+              Start learning free
+            </ButtonLink>
+          </Reveal>
+        </div>
+      </section>
+    </>
+  );
+}

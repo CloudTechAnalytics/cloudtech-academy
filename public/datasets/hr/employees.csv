@@ -1,0 +1,61 @@
+employee_id,full_name,department,job_level,hire_date,monthly_salary,status
+1001,Ngozi Afolabi,IT,Junior,2024-02-11,685000,Active
+1002,Amaka Okafor,Customer Service,Senior,2022-07-24,1115000,Active
+1003,Halima Bello,Operations,Senior,2020-09-22,1415000,Active
+1004,Ngozi Obi,Customer Service,Senior,2019-03-03,770000,Active
+1005,Ibrahim Bello,Human Resources,Junior,2023-08-29,425000,Active
+1006,Temitope Okeke,Finance,Junior,2019-03-27,360000,Active
+1007,Halima Lawal,IT,Junior,2018-02-05,420000,Active
+1008,Maryam Adeyemi,Human Resources,Mid,2020-07-13,1295000,Active
+1009,Temitope Ibe,IT,Junior,2021-06-15,1290000,Active
+1010,Ifeoma Afolabi,IT,Junior,2017-09-18,920000,Active
+1011,Nnamdi Nwosu,Operations,Manager,2023-02-28,1245000,Active
+1012,Musa Lawal,Finance,Senior,2020-07-05,1000000,Active
+1013,Folake Lawal,Human Resources,Junior,2018-06-05,275000,Active
+1014,Sade Afolabi,Finance,Manager,2020-06-15,955000,Active
+1015,Kunle Ogunleye,Sales,Junior,2021-12-16,310000,Active
+1016,Tunde Lawal,Operations,Junior,2019-01-22,1015000,Active
+1017,Ibrahim Adeyemi,Customer Service,Junior,2021-09-29,1435000,Active
+1018,Musa Adeyemi,IT,Mid,2020-02-10,895000,Active
+1019,Funmilayo Lawal,Human Resources,Senior,2019-04-26,435000,Active
+1020,Hauwa Okafor,Operations,Junior,2022-12-25,625000,Active
+1021,Babatunde Abdullahi,Human Resources,Manager,2025-02-19,700000,Resigned
+1022,Aisha Lawal,Customer Service,Mid,2019-03-17,995000,Active
+1023,Chiamaka Nwosu,Finance,Senior,2023-08-07,500000,Active
+1024,Aisha Adebayo,Operations,Mid,2019-02-10,580000,Active
+1025,Hauwa Eze,Operations,Mid,2021-01-28,370000,Active
+1026,Tobi Ndukwe,Customer Service,Manager,2019-05-20,980000,Active
+1027,Yusuf Olawale,Customer Service,Junior,2023-07-15,1300000,Active
+1028,Dapo Okafor,Sales,Junior,2018-07-06,1020000,Active
+1029,Amaka Afolabi,Finance,Junior,2018-09-06,1265000,Active
+1030,Bisi Umar,Operations,Senior,2020-02-20,290000,Active
+1031,Bisi Adeyemi,Sales,Mid,2023-09-10,825000,Active
+1032,Maryam Danjuma,Operations,Senior,2021-10-26,985000,Active
+1033,Tunde Adebayo,Human Resources,Senior,2024-04-08,1185000,Active
+1034,Musa Ibe,Human Resources,Junior,2024-03-10,760000,Active
+1035,Ifeoma Obi,Sales,Junior,2023-06-13,810000,Resigned
+1036,Obinna Ndukwe,Operations,Junior,2022-06-12,585000,Active
+1037,Uche Okeke,Human Resources,Junior,2024-12-05,1025000,Active
+1038,Adaeze Okafor,Operations,Mid,2017-01-08,620000,Active
+1039,Hauwa Olawale,Customer Service,Mid,2021-09-22,695000,Active
+1040,Obinna Okeke,Customer Service,Mid,2019-02-27,610000,Active
+1041,Yusuf Ogunleye,Sales,Manager,2020-08-10,750000,Active
+1042,Funmilayo Adebayo,Finance,Senior,2018-10-11,235000,Active
+1043,Yusuf Okeke,IT,Junior,2023-05-04,420000,Active
+1044,Zainab Ibe,Operations,Senior,2019-11-18,335000,Active
+1045,Maryam Adeyemi,Finance,Mid,2025-02-17,800000,Active
+1046,Halima Olawale,Finance,Senior,2021-05-13,200000,Active
+1047,Maryam Adebayo,Human Resources,Junior,2022-03-02,1290000,Active
+1048,Chinedu Adebayo,Sales,Senior,2017-06-13,1005000,Active
+1049,Ibrahim Chukwu,Human Resources,Mid,2017-09-14,1195000,Active
+1050,Tunde Ndukwe,Human Resources,Senior,2020-03-19,335000,Active
+1051,Chinedu Eze,Sales,Mid,2020-04-04,1415000,Resigned
+1052,Halima Adebayo,Finance,Mid,2022-05-17,845000,Active
+1053,Emeka Umar,Operations,Manager,2021-05-28,195000,Active
+1054,Kelechi Eze,Operations,Junior,2020-01-14,385000,Active
+1055,Musa Okeke,Customer Service,Junior,2021-03-23,920000,Active
+1056,Ibrahim Adebayo,Human Resources,Mid,2019-11-27,520000,Active
+1057,Musa Umar,Human Resources,Junior,2024-11-07,415000,Active
+1058,Dapo Afolabi,Operations,Junior,2019-11-05,830000,Active
+1059,Musa Afolabi,IT,Mid,2022-10-01,1145000,Active
+1060,Dapo Afolabi,Finance,Mid,2019-09-21,780000,Active

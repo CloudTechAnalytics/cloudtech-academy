@@ -1,0 +1,121 @@
+customer_id,company_name,industry,city,country,signup_date,account_manager_id
+1,Meridian Electronics Limited,Electronics,Port Harcourt,Nigeria,2022-09-07,1
+2,Crescent Builders Plc,Construction,Lagos,Nigeria,2022-09-23,3
+3,Lagoon Builders Limited,Construction,Port Harcourt,Nigeria,2021-02-04,6
+4,Brightway Energy Limited,Energy,Lagos,Nigeria,2023-05-07,1
+5,Apex Packaging Ltd,Manufacturing,Abuja,Nigeria,2022-04-09,
+6,Mainland Motors Limited,Automotive,Port Harcourt,Nigeria,2022-09-07,6
+7,Sunrise Builders Ltd,Construction,Port Harcourt,Nigeria,2021-01-29,5
+8,Harmattan Agro Ltd,Agriculture,Onitsha,Nigeria,2024-11-28,2
+9,Oakridge Motors Ltd,Automotive,Lagos,Nigeria,2022-01-29,
+10,Tidewater Foods Ltd,Food & Beverage,Abuja,Nigeria,2021-12-05,1
+11,Brightway Motors Plc,Automotive,Ibadan,Nigeria,2024-06-28,8
+12,Zenith Foods Ltd,Food & Beverage,Port Harcourt,Nigeria,2024-06-30,1
+13,Westbridge Retail & Co,Retail,Lagos,Nigeria,2021-06-06,7
+14,Brightway Agro Limited,Agriculture,Lagos,Nigeria,2024-05-27,5
+15,Silverleaf Textiles Ltd,Textiles,Abuja,Nigeria,2022-04-12,8
+16,Eastgate Textiles Plc,Textiles,Port Harcourt,Nigeria,2023-07-31,4
+17,Westbridge Textiles Limited,Textiles,Lagos,Nigeria,2024-05-01,1
+18,Zenith Electronics & Co,Electronics,Kano,Nigeria,2022-04-12,8
+19,Delta Textiles Ltd,Textiles,Port Harcourt,Nigeria,2023-02-07,7
+20,Brightway Textiles Plc,Textiles,Kano,Nigeria,2024-12-04,6
+21,Everline Retail & Co,Retail,Lagos,Nigeria,2021-01-10,4
+22,Goldcoast Energy Limited,Energy,Lagos,Nigeria,2024-08-26,5
+23,Harmattan Foods Limited,Food & Beverage,Lagos,Nigeria,2022-07-03,
+24,Crescent Packaging Ltd,Manufacturing,Port Harcourt,Nigeria,2022-07-07,2
+25,Mainland Builders & Co,Construction,Lagos,Nigeria,2024-01-02,6
+26,Kingsway Builders Ltd,Construction,Lagos,Nigeria,2021-05-22,2
+27,Cedar Agro Limited,Agriculture,Lagos,Nigeria,2024-10-07,
+28,Riverbend Retail & Co,Retail,Kano,Nigeria,2023-02-03,7
+29,Westbridge Textiles Ltd,Textiles,Kano,Nigeria,2021-01-23,3
+30,Zenith Retail Limited,Retail,Accra,Ghana,2022-04-01,6
+31,Oakridge Agro & Co,Agriculture,Lagos,Nigeria,2022-08-02,8
+32,Mainland Foods Limited,Food & Beverage,Lagos,Nigeria,2024-03-18,3
+33,Everline Foods Ltd,Food & Beverage,Ibadan,Nigeria,2023-02-21,3
+34,Northstar Energy Plc,Energy,Lagos,Nigeria,2021-10-16,5
+35,Savanna Packaging Limited,Manufacturing,Lagos,Nigeria,2021-11-18,3
+36,Apex Agro Limited,Agriculture,Onitsha,Nigeria,2023-06-23,6
+37,Everline Retail Ltd,Retail,Port Harcourt,Nigeria,2023-02-08,4
+38,Mainland Retail & Co,Retail,Port Harcourt,Nigeria,2021-11-29,3
+39,Meridian Packaging & Co,Manufacturing,Port Harcourt,Nigeria,2021-11-13,1
+40,Kingsway Foods Plc,Food & Beverage,Cotonou,Benin,2021-08-01,8
+41,Crescent Electronics & Co,Electronics,Lagos,Nigeria,2022-02-02,6
+42,Savanna Energy Plc,Energy,Lagos,Nigeria,2024-01-18,8
+43,Brightway Packaging Ltd,Manufacturing,Port Harcourt,Nigeria,2023-10-01,1
+44,Harmattan Builders Ltd,Construction,Lagos,Nigeria,2022-08-14,1
+45,Goldcoast Motors Ltd,Automotive,Port Harcourt,Nigeria,2021-03-29,2
+46,Riverbend Motors Limited,Automotive,Lagos,Nigeria,2024-10-08,2
+47,Meridian Builders Ltd,Construction,Port Harcourt,Nigeria,2022-12-20,4
+48,Harmattan Motors Plc,Automotive,Ibadan,Nigeria,2022-08-15,2
+49,Unity Textiles Plc,Textiles,Lagos,Nigeria,2022-07-05,7
+50,Mainland Electronics Limited,Electronics,Ibadan,Nigeria,2021-04-14,
+51,Sunrise Pharma Ltd,Pharmaceuticals,Ibadan,Nigeria,2021-06-08,4
+52,Savanna Agro Ltd,Agriculture,Cotonou,Benin,2021-01-30,8
+53,Everline Foods & Co,Food & Beverage,Kano,Nigeria,2022-08-28,8
+54,Kingsway Packaging Plc,Manufacturing,Lagos,Nigeria,2021-04-05,4
+55,Delta Retail Plc,Retail,Onitsha,Nigeria,2021-02-26,3
+56,Keystone Electronics Plc,Electronics,Lagos,Nigeria,2023-05-27,4
+57,Keystone Motors Limited,Automotive,Ibadan,Nigeria,2024-01-23,1
+58,Coastal Builders Plc,Construction,Accra,Ghana,2021-05-30,3
+59,Meridian Foods Plc,Food & Beverage,Kano,Nigeria,2023-08-05,2
+60,Kingsway Motors Ltd,Automotive,Lagos,Nigeria,2024-08-11,8
+61,Mainland Textiles Ltd,Textiles,Lagos,Nigeria,2022-02-02,8
+62,Greenfield Builders Ltd,Construction,Lagos,Nigeria,2022-01-23,7
+63,Mainland Pharma Ltd,Pharmaceuticals,Lagos,Nigeria,2022-12-29,2
+64,Coastal Motors Ltd,Automotive,Abuja,Nigeria,2024-12-26,3
+65,Crescent Electronics Limited,Electronics,Lagos,Nigeria,2021-07-16,4
+66,Savanna Electronics Ltd,Electronics,Lagos,Nigeria,2022-07-28,6
+67,Sunrise Foods & Co,Food & Beverage,Abuja,Nigeria,2023-05-25,5
+68,Meridian Builders & Co,Construction,Lagos,Nigeria,2024-10-26,8
+69,Eastgate Foods Limited,Food & Beverage,Kano,Nigeria,2021-06-06,1
+70,Goldcoast Energy Plc,Energy,Port Harcourt,Nigeria,2023-10-28,2
+71,Oakridge Pharma Ltd,Pharmaceuticals,Lagos,Nigeria,2021-09-05,8
+72,Zenith Textiles Limited,Textiles,Lagos,Nigeria,2024-01-18,3
+73,Mainland Packaging Limited,Manufacturing,Kano,Nigeria,2022-03-17,1
+74,Apex Retail Plc,Retail,Lagos,Nigeria,2021-05-14,3
+75,Palmline Motors Ltd,Automotive,Onitsha,Nigeria,2022-01-24,2
+76,Delta Textiles Plc,Textiles,Lagos,Nigeria,2025-01-07,8
+77,Delta Packaging Ltd,Manufacturing,Port Harcourt,Nigeria,2023-01-08,5
+78,Mainland Foods Ltd,Food & Beverage,Accra,Ghana,2023-02-06,5
+79,Horizon Foods Plc,Food & Beverage,Kano,Nigeria,2025-01-27,8
+80,Goldcoast Motors Limited,Automotive,Ibadan,Nigeria,2021-02-25,4
+81,Goldcoast Pharma & Co,Pharmaceuticals,Lagos,Nigeria,2021-06-14,1
+82,Lagoon Agro Limited,Agriculture,Cotonou,Benin,2021-09-26,8
+83,Sunrise Energy & Co,Energy,Ibadan,Nigeria,2021-04-06,3
+84,Kingsway Textiles Plc,Textiles,Accra,Ghana,2022-03-04,4
+85,Oakridge Packaging Limited,Manufacturing,Lagos,Nigeria,2021-10-06,2
+86,Everline Retail Plc,Retail,Ibadan,Nigeria,2023-02-18,8
+87,Horizon Packaging Plc,Manufacturing,Accra,Ghana,2021-06-16,7
+88,Goldcoast Builders Ltd,Construction,Lagos,Nigeria,2021-08-27,1
+89,Ironwood Builders Ltd,Construction,Port Harcourt,Nigeria,2022-11-07,5
+90,Lagoon Electronics & Co,Electronics,Lagos,Nigeria,2021-01-31,2
+91,Riverbend Pharma Plc,Pharmaceuticals,Lagos,Nigeria,2022-08-05,7
+92,Ironwood Motors & Co,Automotive,Abuja,Nigeria,2023-11-01,5
+93,Zenith Retail Ltd,Retail,Ibadan,Nigeria,2023-09-01,2
+94,Cedar Retail Ltd,Retail,Onitsha,Nigeria,2024-09-10,
+95,Savanna Builders Limited,Construction,Onitsha,Nigeria,2021-02-08,1
+96,Meridian Textiles Limited,Textiles,Lagos,Nigeria,2022-03-05,4
+97,Tidewater Retail Limited,Retail,Lagos,Nigeria,2022-01-08,8
+98,Greenfield Packaging Ltd,Manufacturing,Abuja,Nigeria,2021-05-10,8
+99,Sunrise Agro Ltd,Agriculture,Cotonou,Benin,2023-04-06,1
+100,Silverleaf Textiles Plc,Textiles,Port Harcourt,Nigeria,2023-12-01,
+101,Goldcoast Motors Plc,Automotive,Kano,Nigeria,2022-03-23,6
+102,Eastgate Pharma Plc,Pharmaceuticals,Port Harcourt,Nigeria,2024-11-05,5
+103,Oakridge Motors Plc,Automotive,Port Harcourt,Nigeria,2022-04-21,3
+104,Zenith Builders Plc,Construction,Port Harcourt,Nigeria,2023-09-07,2
+105,Crescent Builders Limited,Construction,Abuja,Nigeria,2021-09-13,2
+106,Ironwood Electronics Limited,Electronics,Port Harcourt,Nigeria,2024-05-11,6
+107,Zenith Motors Plc,Automotive,Port Harcourt,Nigeria,2024-10-18,3
+108,Oakridge Electronics Ltd,Electronics,Kano,Nigeria,2021-02-15,
+109,Brightway Electronics Plc,Electronics,Lagos,Nigeria,2024-04-25,2
+110,Sunrise Agro & Co,Agriculture,Ibadan,Nigeria,2023-12-20,1
+111,Everline Energy Ltd,Energy,Lagos,Nigeria,2022-02-04,7
+112,Cedar Textiles Ltd,Textiles,Port Harcourt,Nigeria,2024-04-01,1
+113,Lighthouse Pharma Ltd,Pharmaceuticals,Onitsha,Nigeria,2024-05-04,5
+114,Eastgate Electronics Plc,Electronics,Lagos,Nigeria,2023-08-30,8
+115,Brightway Electronics Limited,Electronics,Abuja,Nigeria,2024-09-02,5
+116,Westbridge Energy Ltd,Energy,Lagos,Nigeria,2021-09-10,5
+117,Greenfield Energy Ltd,Energy,Lagos,Nigeria,2023-10-23,3
+118,Sunrise Packaging Limited,Manufacturing,Ibadan,Nigeria,2024-04-05,6
+119,Lagoon Motors Limited,Automotive,Abuja,Nigeria,2022-09-07,8
+120,Mainland Agro Ltd,Agriculture,Ibadan,Nigeria,2021-12-19,4

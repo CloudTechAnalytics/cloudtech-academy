@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--seo:start-->
+    <title>CloudTech Academy | Learn Data, Analytics & Technology</title>
+    <meta
+      name="description"
+      content="Practical, self-paced courses in data, analytics and technology from CloudTech Analytics. Learn, practise, build and earn CloudTech certificates."
+    />
+    <!--seo:end-->
+    <meta name="theme-color" content="#F8F5EF" />
+    <meta name="color-scheme" content="light dark" />
+    <script>
+      // Set the theme before first paint (matches src/lib/theme.ts).
+      try {
+        var t = localStorage.getItem("ct-theme");
+        var dark = t ? t === "dark" : window.matchMedia("(prefers-color-scheme: dark)").matches;
+        if (dark) {
+          document.documentElement.classList.add("dark");
+          document.querySelector('meta[name="theme-color"]').setAttribute("content", "#14161B");
+        }
+      } catch (e) {}
+    </script>
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <noscript>
+      <style>.reveal { opacity: 1 !important; transform: none !important; }</style>
+      <p style="font-family: Georgia, serif; padding: 2rem">
+        CloudTech Academy needs JavaScript for accounts, practice exercises and certificates. Lessons can still be read on this page.
+      </p>
+    </noscript>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

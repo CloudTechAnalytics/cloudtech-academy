@@ -1,0 +1,31 @@
+route_id,origin,destination,mode,target_transit_days
+1,Shanghai,Lagos (Apapa),Sea,38
+2,Ningbo,Lagos (Apapa),Sea,40
+3,Shanghai,Lagos (Tin Can),Sea,39
+4,Rotterdam,Lagos (Apapa),Sea,21
+5,Antwerp,Lagos (Tin Can),Sea,22
+6,Hamburg,Lagos (Apapa),Sea,23
+7,Valencia,Lagos (Tin Can),Sea,18
+8,Jebel Ali (Dubai),Lagos (Apapa),Sea,26
+9,Nhava Sheva (Mumbai),Lagos (Apapa),Sea,28
+10,Singapore,Onne,Sea,32
+11,Shanghai,Onne,Sea,42
+12,Durban,Lagos (Apapa),Sea,16
+13,Tema,Lagos (Apapa),Sea,5
+14,Lagos (Apapa),Tema,Sea,5
+15,Lagos (Apapa),Abidjan,Sea,7
+16,Lagos (Tin Can),Lomé,Sea,4
+17,Rotterdam,Port Harcourt,Sea,24
+18,Antwerp,Calabar,Sea,25
+19,Dubai,Lagos,Air,2
+20,London Heathrow,Lagos,Air,1
+21,Frankfurt,Lagos,Air,2
+22,Guangzhou,Lagos,Air,3
+23,Lagos,Abuja,Air,1
+24,Lagos,Kano,Road,3
+25,Lagos,Abuja,Road,2
+26,Lagos,Cotonou,Road,2
+27,Lagos,Accra,Road,4
+28,Port Harcourt,Onitsha,Road,2
+29,Lagos,Ibadan,Road,1
+30,Onne,Port Harcourt,Road,1
