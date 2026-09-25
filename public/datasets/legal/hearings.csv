@@ -1,264 +1,400 @@
 hearing_id,matter_id,hearing_date,court,outcome
-1,2001,2025-11-02,"Magistrate Court, Ikeja",Judgment delivered
-2,2001,2025-01-12,"Court of Appeal, Lagos",Heard
-3,2001,2025-08-13,"High Court, Lagos",Heard
-4,2001,2024-10-31,"Magistrate Court, Ikeja",Adjourned
-5,2003,2027-07-28,National Industrial Court,Scheduled
-6,2003,2027-01-26,"Federal High Court, Lagos",Scheduled
-7,2004,2025-03-04,"Court of Appeal, Lagos",Adjourned
-8,2004,2026-03-23,"Court of Appeal, Lagos",Adjourned
-9,2005,2026-01-26,"Magistrate Court, Ikeja",Heard
-10,2005,2026-02-24,"Magistrate Court, Ikeja",Heard
-11,2005,2025-06-30,"Court of Appeal, Lagos",Adjourned
-12,2005,2026-05-14,"High Court, Lagos",Adjourned
-13,2006,2024-09-18,National Industrial Court,Adjourned
-14,2006,2025-07-11,"Federal High Court, Lagos",Struck out
-15,2006,2024-08-31,"High Court, Lagos",Adjourned
-16,2007,2025-06-09,National Industrial Court,Judgment delivered
-17,2007,2025-03-29,"Federal High Court, Lagos",Heard
-18,2007,2025-10-11,"Federal High Court, Lagos",Judgment delivered
-19,2010,2027-05-09,"Federal High Court, Lagos",Scheduled
-20,2010,2027-11-23,"Magistrate Court, Ikeja",Scheduled
-21,2010,2027-05-11,"Magistrate Court, Ikeja",Scheduled
-22,2010,2027-10-19,"Federal High Court, Lagos",Scheduled
-23,2011,2025-05-22,"High Court, Lagos",Heard
-24,2011,2025-07-28,National Industrial Court,Judgment delivered
-25,2011,2025-03-21,"Federal High Court, Lagos",Adjourned
-26,2012,2024-08-07,"Magistrate Court, Ikeja",Heard
-27,2012,2025-02-12,"Federal High Court, Lagos",Struck out
-28,2013,2027-01-03,"Federal High Court, Lagos",Scheduled
-29,2015,2025-12-04,"High Court, Lagos",Heard
-30,2015,2025-10-07,"Federal High Court, Lagos",Adjourned
-31,2016,2027-08-07,"Court of Appeal, Lagos",Scheduled
-32,2016,2027-06-15,"Magistrate Court, Ikeja",Scheduled
-33,2016,2027-06-18,National Industrial Court,Scheduled
-34,2016,2027-10-09,"Federal High Court, Lagos",Scheduled
-35,2016,2026-08-03,"Magistrate Court, Ikeja",Heard
-36,2017,2026-11-23,National Industrial Court,Scheduled
-37,2017,2027-05-23,"Magistrate Court, Ikeja",Scheduled
-38,2017,2026-12-08,"Magistrate Court, Ikeja",Scheduled
-39,2017,2026-10-02,"Court of Appeal, Lagos",Scheduled
-40,2017,2026-02-27,"High Court, Lagos",Judgment delivered
-41,2019,2026-05-20,"Federal High Court, Lagos",Heard
-42,2019,2025-09-02,National Industrial Court,Heard
-43,2019,2025-08-21,"Court of Appeal, Lagos",Adjourned
-44,2020,2025-10-02,"High Court, Lagos",Heard
-45,2020,2024-03-24,National Industrial Court,Adjourned
-46,2020,2025-04-08,"Court of Appeal, Lagos",Adjourned
-47,2020,2025-02-03,"High Court, Lagos",Judgment delivered
-48,2020,2025-02-24,"Magistrate Court, Ikeja",Heard
-49,2021,2025-04-18,"Magistrate Court, Ikeja",Heard
-50,2021,2025-11-29,"High Court, Lagos",Adjourned
-51,2021,2026-04-18,"Magistrate Court, Ikeja",Adjourned
-52,2021,2026-05-28,"High Court, Lagos",Adjourned
-53,2021,2026-02-24,"Court of Appeal, Lagos",Adjourned
-54,2022,2026-01-20,National Industrial Court,Adjourned
-55,2022,2026-12-25,"High Court, Lagos",Scheduled
-56,2023,2024-07-18,"High Court, Lagos",Heard
-57,2024,2026-06-01,"High Court, Lagos",Heard
-58,2024,2027-09-11,"Federal High Court, Lagos",Scheduled
-59,2024,2027-08-15,"High Court, Lagos",Scheduled
-60,2024,2026-03-07,"Magistrate Court, Ikeja",Heard
-61,2025,2025-12-14,National Industrial Court,Heard
-62,2025,2026-05-25,National Industrial Court,Adjourned
-63,2025,2025-09-21,National Industrial Court,Heard
-64,2025,2026-07-09,"Federal High Court, Lagos",Heard
-65,2025,2025-03-01,"High Court, Lagos",Adjourned
-66,2026,2026-09-28,"Court of Appeal, Lagos",Scheduled
-67,2026,2026-03-21,"High Court, Lagos",Heard
-68,2026,2026-05-22,"Court of Appeal, Lagos",Adjourned
-69,2027,2024-10-27,"Magistrate Court, Ikeja",Heard
-70,2027,2024-11-10,"Court of Appeal, Lagos",Heard
-71,2027,2024-10-24,"Magistrate Court, Ikeja",Heard
-72,2027,2024-03-28,"Court of Appeal, Lagos",Heard
-73,2028,2025-10-29,"Court of Appeal, Lagos",Judgment delivered
-74,2028,2026-01-09,"Federal High Court, Lagos",Struck out
-75,2028,2025-08-16,"Court of Appeal, Lagos",Adjourned
-76,2030,2026-03-22,"Federal High Court, Lagos",Judgment delivered
-77,2031,2027-03-19,"High Court, Lagos",Scheduled
-78,2031,2027-10-08,National Industrial Court,Scheduled
-79,2031,2027-07-10,"Federal High Court, Lagos",Scheduled
-80,2031,2027-10-31,"Magistrate Court, Ikeja",Scheduled
-81,2034,2025-07-04,"Federal High Court, Lagos",Adjourned
-82,2034,2025-03-22,"Magistrate Court, Ikeja",Adjourned
-83,2034,2025-04-30,National Industrial Court,Adjourned
-84,2034,2026-01-22,"Magistrate Court, Ikeja",Adjourned
-85,2034,2025-05-17,"Federal High Court, Lagos",Adjourned
-86,2034,2025-12-08,"Federal High Court, Lagos",Adjourned
-87,2035,2025-10-27,"High Court, Lagos",Adjourned
-88,2035,2025-12-28,"Court of Appeal, Lagos",Adjourned
-89,2035,2025-02-27,"Federal High Court, Lagos",Heard
-90,2035,2025-11-10,"Federal High Court, Lagos",Adjourned
-91,2035,2025-12-10,"Court of Appeal, Lagos",Adjourned
-92,2036,2024-06-15,"High Court, Lagos",Adjourned
-93,2036,2025-06-10,"High Court, Lagos",Adjourned
-94,2036,2024-08-01,"Court of Appeal, Lagos",Adjourned
-95,2036,2025-07-13,"Magistrate Court, Ikeja",Adjourned
-96,2036,2025-05-30,"Court of Appeal, Lagos",Adjourned
-97,2038,2025-10-28,"Federal High Court, Lagos",Adjourned
-98,2038,2025-02-05,"High Court, Lagos",Adjourned
-99,2041,2025-12-24,"Magistrate Court, Ikeja",Heard
-100,2042,2026-03-25,"Court of Appeal, Lagos",Adjourned
-101,2042,2025-03-20,National Industrial Court,Adjourned
-102,2042,2025-09-21,"Court of Appeal, Lagos",Heard
-103,2043,2025-11-07,"Magistrate Court, Ikeja",Judgment delivered
-104,2043,2025-08-07,"Magistrate Court, Ikeja",Heard
-105,2045,2024-05-10,"Federal High Court, Lagos",Adjourned
-106,2045,2025-07-14,National Industrial Court,Adjourned
-107,2045,2024-05-20,National Industrial Court,Adjourned
-108,2047,2025-06-06,National Industrial Court,Judgment delivered
-109,2047,2026-03-26,"Court of Appeal, Lagos",Adjourned
-110,2047,2025-01-07,National Industrial Court,Adjourned
-111,2047,2026-03-31,National Industrial Court,Heard
-112,2048,2024-09-19,National Industrial Court,Adjourned
-113,2048,2025-08-29,"High Court, Lagos",Judgment delivered
-114,2051,2025-08-10,National Industrial Court,Adjourned
-115,2051,2024-07-09,National Industrial Court,Adjourned
-116,2051,2024-04-24,"High Court, Lagos",Struck out
-117,2051,2024-07-07,"High Court, Lagos",Adjourned
-118,2053,2025-08-27,National Industrial Court,Judgment delivered
-119,2053,2025-07-27,"Magistrate Court, Ikeja",Adjourned
-120,2054,2025-04-24,National Industrial Court,Heard
-121,2054,2026-02-14,"Magistrate Court, Ikeja",Adjourned
-122,2054,2025-07-21,National Industrial Court,Heard
-123,2054,2025-09-16,National Industrial Court,Struck out
-124,2057,2027-07-07,"High Court, Lagos",Scheduled
-125,2057,2027-10-02,"Federal High Court, Lagos",Scheduled
-126,2057,2026-08-12,"Federal High Court, Lagos",Adjourned
-127,2057,2026-04-12,"High Court, Lagos",Adjourned
-128,2057,2026-06-07,"High Court, Lagos",Struck out
-129,2059,2027-01-21,"Federal High Court, Lagos",Scheduled
-130,2059,2027-03-26,"Magistrate Court, Ikeja",Scheduled
-131,2059,2026-07-18,"Court of Appeal, Lagos",Adjourned
-132,2059,2026-10-27,National Industrial Court,Scheduled
-133,2060,2026-08-17,National Industrial Court,Adjourned
-134,2060,2025-05-25,"High Court, Lagos",Adjourned
-135,2061,2025-02-11,"Federal High Court, Lagos",Adjourned
-136,2061,2026-03-05,National Industrial Court,Adjourned
-137,2061,2025-12-08,"Federal High Court, Lagos",Heard
-138,2062,2027-05-16,"High Court, Lagos",Scheduled
-139,2062,2027-08-01,"Court of Appeal, Lagos",Scheduled
-140,2062,2027-11-19,"Federal High Court, Lagos",Scheduled
-141,2063,2026-10-08,National Industrial Court,Scheduled
-142,2063,2026-10-13,"Court of Appeal, Lagos",Scheduled
-143,2063,2027-02-09,"High Court, Lagos",Scheduled
-144,2063,2026-03-11,"Federal High Court, Lagos",Heard
-145,2065,2026-05-31,"Court of Appeal, Lagos",Heard
-146,2065,2026-08-22,"Federal High Court, Lagos",Adjourned
-147,2065,2027-02-15,"Magistrate Court, Ikeja",Scheduled
-148,2065,2026-01-30,"Federal High Court, Lagos",Adjourned
-149,2066,2026-03-12,National Industrial Court,Adjourned
-150,2066,2026-02-11,"Federal High Court, Lagos",Adjourned
-151,2066,2026-01-24,"High Court, Lagos",Adjourned
-152,2066,2026-07-24,"Court of Appeal, Lagos",Adjourned
-153,2068,2026-11-08,"High Court, Lagos",Scheduled
-154,2068,2026-05-11,National Industrial Court,Adjourned
-155,2068,2026-10-15,National Industrial Court,Scheduled
-156,2069,2027-02-06,"Court of Appeal, Lagos",Scheduled
-157,2069,2027-10-16,"High Court, Lagos",Scheduled
-158,2069,2027-02-08,"Federal High Court, Lagos",Scheduled
-159,2069,2026-12-26,"Magistrate Court, Ikeja",Scheduled
-160,2072,2025-01-22,"Federal High Court, Lagos",Heard
-161,2073,2025-05-19,"Federal High Court, Lagos",Adjourned
-162,2073,2025-04-25,"High Court, Lagos",Struck out
-163,2074,2026-06-15,"Court of Appeal, Lagos",Adjourned
-164,2074,2026-01-03,"Magistrate Court, Ikeja",Adjourned
-165,2077,2025-07-07,"Court of Appeal, Lagos",Heard
-166,2077,2026-07-18,"High Court, Lagos",Adjourned
-167,2078,2025-05-30,National Industrial Court,Judgment delivered
-168,2078,2026-06-14,"Court of Appeal, Lagos",Heard
-169,2078,2026-02-01,"Court of Appeal, Lagos",Heard
-170,2080,2026-04-24,"Court of Appeal, Lagos",Adjourned
-171,2080,2026-03-16,"Magistrate Court, Ikeja",Heard
-172,2081,2025-09-22,"Federal High Court, Lagos",Heard
-173,2082,2027-03-19,"High Court, Lagos",Scheduled
-174,2082,2026-10-11,"High Court, Lagos",Scheduled
-175,2083,2025-10-06,"Magistrate Court, Ikeja",Adjourned
-176,2083,2026-11-06,"Federal High Court, Lagos",Scheduled
-177,2083,2026-08-01,"Court of Appeal, Lagos",Heard
-178,2083,2025-10-26,"High Court, Lagos",Adjourned
-179,2084,2027-03-01,National Industrial Court,Scheduled
-180,2084,2026-08-01,"Magistrate Court, Ikeja",Adjourned
-181,2084,2026-03-18,"Federal High Court, Lagos",Adjourned
-182,2084,2027-05-18,"Federal High Court, Lagos",Scheduled
-183,2085,2027-07-04,"Magistrate Court, Ikeja",Scheduled
-184,2085,2026-01-06,National Industrial Court,Adjourned
-185,2085,2026-09-01,National Industrial Court,Adjourned
-186,2085,2026-01-16,National Industrial Court,Adjourned
-187,2086,2025-09-24,"Magistrate Court, Ikeja",Adjourned
-188,2086,2026-12-06,"Federal High Court, Lagos",Scheduled
-189,2086,2026-08-21,National Industrial Court,Adjourned
-190,2087,2026-12-25,"Federal High Court, Lagos",Scheduled
-191,2087,2026-06-01,"Magistrate Court, Ikeja",Adjourned
-192,2090,2026-11-23,"Federal High Court, Lagos",Scheduled
-193,2090,2025-08-17,"Magistrate Court, Ikeja",Adjourned
-194,2091,2026-04-03,"Court of Appeal, Lagos",Adjourned
-195,2092,2025-11-12,"High Court, Lagos",Adjourned
-196,2092,2024-11-09,National Industrial Court,Adjourned
-197,2092,2025-09-25,"High Court, Lagos",Struck out
-198,2093,2024-09-11,"Magistrate Court, Ikeja",Heard
-199,2093,2024-10-07,National Industrial Court,Judgment delivered
-200,2093,2025-10-10,"High Court, Lagos",Heard
-201,2093,2024-05-24,"Federal High Court, Lagos",Adjourned
-202,2093,2025-08-02,National Industrial Court,Adjourned
-203,2094,2026-03-20,"Court of Appeal, Lagos",Struck out
-204,2095,2025-03-26,"Magistrate Court, Ikeja",Adjourned
-205,2095,2024-12-08,"Magistrate Court, Ikeja",Adjourned
-206,2096,2025-06-25,"Magistrate Court, Ikeja",Adjourned
-207,2096,2025-12-01,"Magistrate Court, Ikeja",Heard
-208,2097,2026-12-30,"High Court, Lagos",Scheduled
-209,2097,2026-08-27,"Federal High Court, Lagos",Struck out
-210,2098,2026-09-20,"Magistrate Court, Ikeja",Scheduled
-211,2098,2026-09-08,"Court of Appeal, Lagos",Scheduled
-212,2100,2025-10-27,"Magistrate Court, Ikeja",Adjourned
-213,2100,2025-09-07,National Industrial Court,Adjourned
-214,2100,2025-08-24,"Magistrate Court, Ikeja",Adjourned
-215,2101,2024-12-07,"Federal High Court, Lagos",Adjourned
-216,2101,2024-09-30,"High Court, Lagos",Heard
-217,2102,2027-03-11,"Court of Appeal, Lagos",Scheduled
-218,2107,2026-11-25,National Industrial Court,Scheduled
-219,2107,2025-11-24,"Court of Appeal, Lagos",Heard
-220,2107,2025-10-18,"Federal High Court, Lagos",Heard
-221,2108,2026-02-15,"Magistrate Court, Ikeja",Adjourned
-222,2108,2026-08-21,"High Court, Lagos",Adjourned
-223,2108,2026-01-20,National Industrial Court,Adjourned
-224,2109,2025-11-26,National Industrial Court,Adjourned
-225,2109,2026-06-26,"Federal High Court, Lagos",Adjourned
-226,2114,2025-10-20,National Industrial Court,Struck out
-227,2114,2025-06-28,"Magistrate Court, Ikeja",Heard
-228,2115,2024-12-15,"High Court, Lagos",Heard
-229,2117,2025-05-03,"Magistrate Court, Ikeja",Adjourned
-230,2117,2025-03-23,"High Court, Lagos",Heard
-231,2117,2024-11-11,"Federal High Court, Lagos",Adjourned
-232,2119,2024-09-11,"Magistrate Court, Ikeja",Heard
-233,2120,2027-11-09,"Court of Appeal, Lagos",Scheduled
-234,2120,2027-03-23,"High Court, Lagos",Scheduled
-235,2122,2026-07-16,National Industrial Court,Adjourned
-236,2125,2024-11-12,"Magistrate Court, Ikeja",Heard
-237,2125,2025-03-21,National Industrial Court,Heard
-238,2126,2026-08-11,National Industrial Court,Heard
-239,2126,2025-09-17,"Federal High Court, Lagos",Adjourned
-240,2128,2025-06-02,"High Court, Lagos",Heard
-241,2128,2024-06-14,"Magistrate Court, Ikeja",Adjourned
-242,2128,2024-12-25,"Court of Appeal, Lagos",Adjourned
-243,2129,2025-07-03,"High Court, Lagos",Adjourned
-244,2130,2025-10-07,National Industrial Court,Heard
-245,2130,2026-05-22,"Magistrate Court, Ikeja",Adjourned
-246,2131,2027-04-24,"Federal High Court, Lagos",Scheduled
-247,2133,2025-11-16,"Magistrate Court, Ikeja",Adjourned
-248,2133,2025-09-03,"Magistrate Court, Ikeja",Adjourned
-249,2133,2025-04-13,"Court of Appeal, Lagos",Adjourned
-250,2133,2025-06-11,"Federal High Court, Lagos",Judgment delivered
-251,2133,2026-08-11,"Court of Appeal, Lagos",Adjourned
-252,2134,2025-08-27,"Magistrate Court, Ikeja",Judgment delivered
-253,2134,2025-01-02,"High Court, Lagos",Adjourned
-254,2135,2026-01-16,National Industrial Court,Adjourned
-255,2135,2025-12-04,National Industrial Court,Adjourned
-256,2136,2027-08-23,"Magistrate Court, Ikeja",Scheduled
-257,2136,2027-06-02,"Federal High Court, Lagos",Scheduled
-258,2136,2027-12-02,"Magistrate Court, Ikeja",Scheduled
-259,2137,2025-04-13,"High Court, Lagos",Heard
-260,2137,2024-06-18,"High Court, Lagos",Heard
-261,2137,2024-12-05,"Court of Appeal, Lagos",Heard
-262,2139,2026-08-21,"High Court, Lagos",Adjourned
-263,2139,2026-12-03,"High Court, Lagos",Scheduled
+1,2001,2026-05-05,"High Court, Lagos",Heard
+2,2001,2026-08-10,"High Court, Lagos",Judgment delivered
+3,2002,2025-12-02,"Federal High Court, Lagos",Adjourned
+4,2002,2026-03-05,"Federal High Court, Lagos",Adjourned
+5,2002,2026-05-16,"Federal High Court, Lagos",Adjourned
+6,2002,2026-07-14,"Federal High Court, Lagos",Heard
+7,2002,2026-09-02,"Federal High Court, Lagos",Scheduled
+8,2003,2024-12-04,"Federal High Court, Lagos",Adjourned
+9,2003,2025-03-16,"Federal High Court, Lagos",Heard
+10,2003,2025-06-30,"Federal High Court, Lagos",Adjourned
+11,2003,2025-09-29,"Federal High Court, Lagos",Judgment delivered
+12,2004,2026-03-26,"Magistrate Court, Ikeja",Adjourned
+13,2004,2026-06-08,"High Court, Lagos",Adjourned
+14,2004,2026-07-27,"High Court, Lagos",Heard
+15,2004,2026-11-14,"High Court, Lagos",Scheduled
+16,2005,2025-02-15,National Industrial Court,Adjourned
+17,2005,2025-05-15,National Industrial Court,Heard
+18,2005,2025-06-28,National Industrial Court,Adjourned
+19,2005,2025-09-02,National Industrial Court,Judgment delivered
+20,2006,2024-08-07,"High Court, Lagos",Heard
+21,2006,2024-10-21,"Magistrate Court, Ikeja",Adjourned
+22,2006,2024-12-12,"Magistrate Court, Ikeja",Struck out
+23,2006,2025-02-24,"High Court, Lagos",Adjourned
+24,2006,2025-05-01,"High Court, Lagos",Adjourned
+25,2006,2025-07-10,"Magistrate Court, Ikeja",Judgment delivered
+26,2010,2025-01-26,"High Court, Lagos",Adjourned
+27,2010,2025-04-17,"High Court, Lagos",Heard
+28,2010,2025-05-19,"High Court, Lagos",Judgment delivered
+29,2011,2025-04-17,National Industrial Court,Adjourned
+30,2011,2025-06-22,National Industrial Court,Adjourned
+31,2011,2025-09-04,National Industrial Court,Adjourned
+32,2011,2025-10-06,National Industrial Court,Heard
+33,2011,2026-01-12,National Industrial Court,Heard
+34,2011,2026-03-22,National Industrial Court,Adjourned
+35,2011,2026-05-28,National Industrial Court,Heard
+36,2011,2026-07-23,National Industrial Court,Adjourned
+37,2011,2026-08-25,National Industrial Court,Adjourned
+38,2012,2026-05-10,"Federal High Court, Lagos",Adjourned
+39,2012,2026-08-02,"Federal High Court, Lagos",Adjourned
+40,2012,2026-10-03,"Federal High Court, Lagos",Scheduled
+41,2015,2026-07-04,"Federal High Court, Lagos",Heard
+42,2015,2026-08-19,"Federal High Court, Lagos",Adjourned
+43,2015,2026-09-23,"Federal High Court, Lagos",Scheduled
+44,2016,2025-02-20,"High Court, Lagos",Heard
+45,2016,2025-05-03,"High Court, Lagos",Heard
+46,2016,2025-06-24,"High Court, Lagos",Heard
+47,2016,2025-08-19,"High Court, Lagos",Struck out
+48,2016,2025-11-24,"High Court, Lagos",Heard
+49,2016,2026-01-04,"High Court, Lagos",Judgment delivered
+50,2017,2025-02-28,National Industrial Court,Adjourned
+51,2017,2025-04-18,National Industrial Court,Heard
+52,2017,2025-07-02,National Industrial Court,Judgment delivered
+53,2018,2025-07-30,National Industrial Court,Struck out
+54,2018,2025-10-03,National Industrial Court,Heard
+55,2018,2026-01-07,National Industrial Court,Adjourned
+56,2018,2026-03-07,National Industrial Court,Judgment delivered
+57,2019,2026-03-30,"Court of Appeal, Lagos",Adjourned
+58,2019,2026-07-12,"Court of Appeal, Lagos",Struck out
+59,2019,2026-10-04,"High Court, Lagos",Scheduled
+60,2020,2024-05-21,National Industrial Court,Adjourned
+61,2020,2024-07-10,National Industrial Court,Judgment delivered
+62,2022,2024-12-07,"Federal High Court, Lagos",Heard
+63,2022,2025-03-14,"Federal High Court, Lagos",Adjourned
+64,2022,2025-05-17,"Federal High Court, Lagos",Heard
+65,2022,2025-07-31,"Federal High Court, Lagos",Heard
+66,2022,2025-11-12,"Federal High Court, Lagos",Adjourned
+67,2022,2025-12-16,"Federal High Court, Lagos",Adjourned
+68,2022,2026-03-25,"Federal High Court, Lagos",Adjourned
+69,2022,2026-06-02,"Federal High Court, Lagos",Judgment delivered
+70,2023,2026-05-20,"Federal High Court, Lagos",Adjourned
+71,2023,2026-07-29,"Federal High Court, Lagos",Adjourned
+72,2023,2026-10-18,"Federal High Court, Lagos",Scheduled
+73,2024,2024-06-28,"High Court, Lagos",Adjourned
+74,2024,2024-09-04,"High Court, Lagos",Struck out
+75,2024,2024-11-20,"High Court, Lagos",Adjourned
+76,2024,2025-03-02,"High Court, Lagos",Heard
+77,2024,2025-05-29,"High Court, Lagos",Adjourned
+78,2024,2025-07-07,"High Court, Lagos",Heard
+79,2024,2025-10-03,"High Court, Lagos",Adjourned
+80,2024,2025-12-10,"High Court, Lagos",Heard
+81,2024,2026-01-23,"Court of Appeal, Lagos",Judgment delivered
+82,2028,2025-05-30,National Industrial Court,Adjourned
+83,2028,2025-07-20,National Industrial Court,Heard
+84,2028,2025-10-13,National Industrial Court,Heard
+85,2028,2025-12-24,National Industrial Court,Adjourned
+86,2028,2026-02-01,National Industrial Court,Adjourned
+87,2028,2026-04-05,National Industrial Court,Judgment delivered
+88,2030,2025-04-21,"Federal High Court, Lagos",Adjourned
+89,2030,2025-05-22,"Federal High Court, Lagos",Adjourned
+90,2030,2025-07-13,"Federal High Court, Lagos",Heard
+91,2030,2025-09-06,"Federal High Court, Lagos",Heard
+92,2030,2025-10-19,"Federal High Court, Lagos",Heard
+93,2030,2026-01-05,"Federal High Court, Lagos",Adjourned
+94,2030,2026-03-22,"Federal High Court, Lagos",Adjourned
+95,2030,2026-06-03,"Federal High Court, Lagos",Struck out
+96,2030,2026-07-17,"Federal High Court, Lagos",Heard
+97,2030,2026-10-14,"Federal High Court, Lagos",Scheduled
+98,2031,2026-08-25,National Industrial Court,Adjourned
+99,2031,2026-10-04,National Industrial Court,Scheduled
+100,2032,2025-04-01,"High Court, Lagos",Heard
+101,2032,2025-05-03,"Court of Appeal, Lagos",Judgment delivered
+102,2033,2026-09-24,"Magistrate Court, Ikeja",Scheduled
+103,2035,2025-11-22,"High Court, Lagos",Adjourned
+104,2035,2026-01-13,"High Court, Lagos",Judgment delivered
+105,2037,2025-07-06,"Federal High Court, Lagos",Adjourned
+106,2037,2025-08-17,"Federal High Court, Lagos",Adjourned
+107,2037,2025-10-07,"Federal High Court, Lagos",Heard
+108,2037,2026-01-24,"Federal High Court, Lagos",Heard
+109,2037,2026-03-04,"Federal High Court, Lagos",Adjourned
+110,2037,2026-05-17,"Federal High Court, Lagos",Judgment delivered
+111,2039,2025-07-31,"High Court, Lagos",Adjourned
+112,2039,2025-11-10,"Magistrate Court, Ikeja",Judgment delivered
+113,2041,2026-02-14,"Court of Appeal, Lagos",Adjourned
+114,2041,2026-04-18,"Court of Appeal, Lagos",Heard
+115,2041,2026-07-12,"High Court, Lagos",Adjourned
+116,2041,2026-09-08,"Court of Appeal, Lagos",Scheduled
+117,2042,2025-07-06,"High Court, Lagos",Judgment delivered
+118,2043,2025-11-17,"Court of Appeal, Lagos",Adjourned
+119,2043,2026-02-05,"High Court, Lagos",Adjourned
+120,2043,2026-04-22,"High Court, Lagos",Adjourned
+121,2043,2026-07-16,"Court of Appeal, Lagos",Struck out
+122,2043,2026-09-20,"High Court, Lagos",Scheduled
+123,2044,2025-11-11,"High Court, Lagos",Adjourned
+124,2044,2026-02-15,"High Court, Lagos",Adjourned
+125,2044,2026-03-23,"High Court, Lagos",Heard
+126,2044,2026-05-02,"Court of Appeal, Lagos",Adjourned
+127,2044,2026-07-18,"High Court, Lagos",Heard
+128,2044,2026-08-18,"High Court, Lagos",Adjourned
+129,2044,2026-09-23,"Court of Appeal, Lagos",Scheduled
+130,2045,2024-06-09,"High Court, Lagos",Heard
+131,2045,2024-09-18,"Court of Appeal, Lagos",Adjourned
+132,2045,2024-12-25,"High Court, Lagos",Adjourned
+133,2045,2025-02-26,"Court of Appeal, Lagos",Heard
+134,2045,2025-06-15,"High Court, Lagos",Judgment delivered
+135,2047,2025-03-23,"High Court, Lagos",Adjourned
+136,2047,2025-06-02,"High Court, Lagos",Heard
+137,2047,2025-09-19,"High Court, Lagos",Heard
+138,2047,2025-11-14,"Court of Appeal, Lagos",Adjourned
+139,2047,2026-01-19,"High Court, Lagos",Heard
+140,2047,2026-04-15,"High Court, Lagos",Heard
+141,2047,2026-07-31,"High Court, Lagos",Adjourned
+142,2047,2026-10-21,"Court of Appeal, Lagos",Scheduled
+143,2048,2026-09-15,"High Court, Lagos",Scheduled
+144,2049,2025-07-05,"High Court, Lagos",Heard
+145,2049,2025-08-19,"High Court, Lagos",Adjourned
+146,2049,2025-12-03,"Court of Appeal, Lagos",Heard
+147,2049,2026-02-01,"Court of Appeal, Lagos",Adjourned
+148,2049,2026-04-29,"High Court, Lagos",Adjourned
+149,2049,2026-08-14,"High Court, Lagos",Judgment delivered
+150,2050,2025-08-28,"High Court, Lagos",Heard
+151,2050,2025-11-22,"Court of Appeal, Lagos",Heard
+152,2050,2026-02-16,"High Court, Lagos",Adjourned
+153,2050,2026-05-25,"Court of Appeal, Lagos",Judgment delivered
+154,2051,2026-06-21,"High Court, Lagos",Heard
+155,2051,2026-10-09,"High Court, Lagos",Scheduled
+156,2052,2025-06-26,National Industrial Court,Judgment delivered
+157,2053,2024-07-04,"Federal High Court, Lagos",Heard
+158,2053,2024-09-25,"Federal High Court, Lagos",Adjourned
+159,2053,2024-10-26,"Federal High Court, Lagos",Struck out
+160,2053,2024-11-30,"Federal High Court, Lagos",Adjourned
+161,2053,2025-01-03,"Federal High Court, Lagos",Heard
+162,2053,2025-03-24,"Federal High Court, Lagos",Judgment delivered
+163,2055,2025-06-23,"High Court, Lagos",Adjourned
+164,2055,2025-08-03,"Magistrate Court, Ikeja",Heard
+165,2055,2025-09-24,"Magistrate Court, Ikeja",Adjourned
+166,2055,2026-01-12,"High Court, Lagos",Adjourned
+167,2055,2026-03-25,"Magistrate Court, Ikeja",Heard
+168,2055,2026-06-19,"High Court, Lagos",Adjourned
+169,2055,2026-09-01,"Magistrate Court, Ikeja",Scheduled
+170,2056,2026-01-24,"High Court, Lagos",Adjourned
+171,2056,2026-04-21,"High Court, Lagos",Adjourned
+172,2056,2026-07-10,"Court of Appeal, Lagos",Heard
+173,2056,2026-09-25,"Court of Appeal, Lagos",Scheduled
+174,2057,2026-07-25,"High Court, Lagos",Heard
+175,2057,2026-10-17,"Court of Appeal, Lagos",Scheduled
+176,2058,2024-08-25,"Court of Appeal, Lagos",Adjourned
+177,2058,2024-10-17,"Court of Appeal, Lagos",Adjourned
+178,2058,2025-01-07,"High Court, Lagos",Struck out
+179,2058,2025-04-19,"Court of Appeal, Lagos",Heard
+180,2058,2025-05-25,"High Court, Lagos",Heard
+181,2058,2025-09-04,"High Court, Lagos",Heard
+182,2058,2025-10-26,"High Court, Lagos",Adjourned
+183,2058,2025-12-15,"High Court, Lagos",Judgment delivered
+184,2059,2025-11-01,"High Court, Lagos",Heard
+185,2059,2026-01-23,"Court of Appeal, Lagos",Adjourned
+186,2059,2026-05-11,"High Court, Lagos",Heard
+187,2059,2026-08-10,"High Court, Lagos",Heard
+188,2059,2026-11-16,"High Court, Lagos",Scheduled
+189,2060,2025-09-16,"High Court, Lagos",Adjourned
+190,2060,2025-11-14,"High Court, Lagos",Adjourned
+191,2060,2026-02-18,"High Court, Lagos",Heard
+192,2060,2026-05-26,"High Court, Lagos",Adjourned
+193,2060,2026-07-06,"Court of Appeal, Lagos",Heard
+194,2060,2026-10-03,"High Court, Lagos",Scheduled
+195,2061,2025-12-21,National Industrial Court,Adjourned
+196,2061,2026-04-06,National Industrial Court,Adjourned
+197,2061,2026-07-23,National Industrial Court,Adjourned
+198,2061,2026-09-04,National Industrial Court,Scheduled
+199,2062,2025-03-16,National Industrial Court,Adjourned
+200,2062,2025-05-20,National Industrial Court,Adjourned
+201,2062,2025-08-08,National Industrial Court,Adjourned
+202,2062,2025-10-25,National Industrial Court,Adjourned
+203,2062,2026-01-02,National Industrial Court,Judgment delivered
+204,2065,2026-07-25,"Federal High Court, Lagos",Heard
+205,2065,2026-08-24,"Federal High Court, Lagos",Adjourned
+206,2065,2026-11-17,"Federal High Court, Lagos",Scheduled
+207,2066,2025-06-19,"Court of Appeal, Lagos",Adjourned
+208,2066,2025-07-26,"Court of Appeal, Lagos",Adjourned
+209,2066,2025-09-03,"High Court, Lagos",Heard
+210,2066,2025-11-09,"High Court, Lagos",Heard
+211,2066,2026-01-05,"High Court, Lagos",Judgment delivered
+212,2069,2024-10-09,"High Court, Lagos",Adjourned
+213,2069,2024-12-18,"High Court, Lagos",Adjourned
+214,2069,2025-03-25,"Court of Appeal, Lagos",Adjourned
+215,2069,2025-04-28,"Court of Appeal, Lagos",Adjourned
+216,2069,2025-06-06,"High Court, Lagos",Heard
+217,2069,2025-07-26,"High Court, Lagos",Adjourned
+218,2069,2025-11-08,"High Court, Lagos",Judgment delivered
+219,2071,2026-06-21,"Magistrate Court, Ikeja",Adjourned
+220,2071,2026-09-30,"Magistrate Court, Ikeja",Scheduled
+221,2074,2025-09-03,"High Court, Lagos",Judgment delivered
+222,2077,2026-06-16,"High Court, Lagos",Adjourned
+223,2077,2026-08-03,"High Court, Lagos",Adjourned
+224,2077,2026-10-13,"Magistrate Court, Ikeja",Scheduled
+225,2078,2024-09-02,National Industrial Court,Adjourned
+226,2078,2024-11-06,National Industrial Court,Heard
+227,2078,2024-12-11,National Industrial Court,Heard
+228,2078,2025-01-21,National Industrial Court,Heard
+229,2078,2025-02-27,National Industrial Court,Heard
+230,2078,2025-03-31,National Industrial Court,Judgment delivered
+231,2081,2026-06-17,"High Court, Lagos",Adjourned
+232,2081,2026-09-19,"High Court, Lagos",Scheduled
+233,2082,2025-10-20,"High Court, Lagos",Adjourned
+234,2082,2025-11-28,"High Court, Lagos",Adjourned
+235,2082,2026-01-13,"High Court, Lagos",Adjourned
+236,2082,2026-02-25,"High Court, Lagos",Adjourned
+237,2082,2026-03-31,"High Court, Lagos",Heard
+238,2082,2026-07-13,"High Court, Lagos",Adjourned
+239,2082,2026-09-05,"High Court, Lagos",Scheduled
+240,2084,2024-05-15,"High Court, Lagos",Adjourned
+241,2084,2024-07-02,"High Court, Lagos",Adjourned
+242,2084,2024-08-02,"High Court, Lagos",Adjourned
+243,2084,2024-10-12,"Court of Appeal, Lagos",Adjourned
+244,2084,2024-11-20,"Court of Appeal, Lagos",Adjourned
+245,2084,2024-12-21,"High Court, Lagos",Judgment delivered
+246,2085,2025-05-19,"High Court, Lagos",Adjourned
+247,2085,2025-08-24,"High Court, Lagos",Adjourned
+248,2085,2025-12-04,"High Court, Lagos",Heard
+249,2085,2026-03-04,"High Court, Lagos",Heard
+250,2085,2026-04-11,"Court of Appeal, Lagos",Judgment delivered
+251,2086,2026-01-26,"Magistrate Court, Ikeja",Adjourned
+252,2086,2026-05-03,"Magistrate Court, Ikeja",Adjourned
+253,2086,2026-06-19,"Magistrate Court, Ikeja",Adjourned
+254,2086,2026-09-24,"High Court, Lagos",Scheduled
+255,2089,2026-01-25,"Magistrate Court, Ikeja",Adjourned
+256,2089,2026-02-28,"High Court, Lagos",Heard
+257,2089,2026-04-14,"Magistrate Court, Ikeja",Judgment delivered
+258,2093,2025-04-20,"High Court, Lagos",Heard
+259,2093,2025-06-14,"Court of Appeal, Lagos",Judgment delivered
+260,2094,2024-06-27,"Court of Appeal, Lagos",Adjourned
+261,2094,2024-09-23,"High Court, Lagos",Adjourned
+262,2094,2024-11-29,"High Court, Lagos",Adjourned
+263,2094,2025-01-12,"High Court, Lagos",Heard
+264,2094,2025-02-19,"Court of Appeal, Lagos",Adjourned
+265,2094,2025-05-03,"High Court, Lagos",Adjourned
+266,2094,2025-07-13,"High Court, Lagos",Judgment delivered
+267,2095,2026-08-06,"High Court, Lagos",Adjourned
+268,2095,2026-10-21,"Magistrate Court, Ikeja",Scheduled
+269,2096,2026-03-09,"High Court, Lagos",Adjourned
+270,2096,2026-06-04,"Court of Appeal, Lagos",Struck out
+271,2096,2026-08-21,"High Court, Lagos",Adjourned
+272,2096,2026-10-02,"High Court, Lagos",Scheduled
+273,2097,2025-10-15,"High Court, Lagos",Adjourned
+274,2097,2026-01-15,"High Court, Lagos",Adjourned
+275,2097,2026-05-03,"Magistrate Court, Ikeja",Adjourned
+276,2097,2026-06-19,"High Court, Lagos",Judgment delivered
+277,2098,2026-09-12,"Federal High Court, Lagos",Scheduled
+278,2099,2024-11-24,"High Court, Lagos",Adjourned
+279,2099,2025-02-25,"High Court, Lagos",Adjourned
+280,2099,2025-04-24,"Court of Appeal, Lagos",Adjourned
+281,2099,2025-05-27,"High Court, Lagos",Judgment delivered
+282,2100,2025-08-18,"High Court, Lagos",Heard
+283,2100,2025-09-19,"High Court, Lagos",Heard
+284,2100,2025-12-08,"High Court, Lagos",Adjourned
+285,2100,2026-02-20,"High Court, Lagos",Adjourned
+286,2100,2026-03-23,"Magistrate Court, Ikeja",Heard
+287,2100,2026-05-03,"High Court, Lagos",Adjourned
+288,2100,2026-06-08,"Magistrate Court, Ikeja",Judgment delivered
+289,2102,2024-10-05,"High Court, Lagos",Adjourned
+290,2102,2025-01-21,"Court of Appeal, Lagos",Adjourned
+291,2102,2025-04-22,"Court of Appeal, Lagos",Adjourned
+292,2102,2025-06-12,"High Court, Lagos",Judgment delivered
+293,2105,2025-09-30,"High Court, Lagos",Adjourned
+294,2105,2025-11-23,"Magistrate Court, Ikeja",Heard
+295,2105,2026-02-08,"High Court, Lagos",Adjourned
+296,2105,2026-03-11,"High Court, Lagos",Adjourned
+297,2105,2026-05-16,"High Court, Lagos",Judgment delivered
+298,2107,2025-02-13,"High Court, Lagos",Struck out
+299,2107,2025-05-25,"High Court, Lagos",Adjourned
+300,2107,2025-08-29,"High Court, Lagos",Adjourned
+301,2107,2025-10-31,"High Court, Lagos",Adjourned
+302,2107,2026-01-17,"Court of Appeal, Lagos",Judgment delivered
+303,2108,2025-12-16,"Magistrate Court, Ikeja",Struck out
+304,2108,2026-02-10,"High Court, Lagos",Adjourned
+305,2108,2026-03-26,"High Court, Lagos",Heard
+306,2108,2026-07-05,"Magistrate Court, Ikeja",Adjourned
+307,2108,2026-09-28,"Magistrate Court, Ikeja",Scheduled
+308,2109,2026-08-24,"Magistrate Court, Ikeja",Adjourned
+309,2109,2026-09-27,"High Court, Lagos",Scheduled
+310,2114,2025-03-19,"High Court, Lagos",Adjourned
+311,2114,2025-06-19,"High Court, Lagos",Heard
+312,2114,2025-09-17,"High Court, Lagos",Adjourned
+313,2114,2025-10-25,"High Court, Lagos",Adjourned
+314,2114,2025-12-26,"High Court, Lagos",Adjourned
+315,2114,2026-03-11,"High Court, Lagos",Adjourned
+316,2114,2026-04-28,"High Court, Lagos",Adjourned
+317,2114,2026-06-15,"High Court, Lagos",Adjourned
+318,2114,2026-09-04,"High Court, Lagos",Scheduled
+319,2115,2026-02-02,"Federal High Court, Lagos",Heard
+320,2115,2026-04-04,"Federal High Court, Lagos",Heard
+321,2115,2026-06-18,"Federal High Court, Lagos",Judgment delivered
+322,2116,2024-06-28,National Industrial Court,Adjourned
+323,2116,2024-08-15,National Industrial Court,Adjourned
+324,2116,2024-09-21,National Industrial Court,Adjourned
+325,2116,2024-12-11,National Industrial Court,Heard
+326,2116,2025-02-06,National Industrial Court,Heard
+327,2116,2025-04-17,National Industrial Court,Adjourned
+328,2116,2025-05-26,National Industrial Court,Judgment delivered
+329,2117,2026-05-12,"High Court, Lagos",Adjourned
+330,2117,2026-08-21,"High Court, Lagos",Adjourned
+331,2117,2026-09-27,"Court of Appeal, Lagos",Scheduled
+332,2119,2025-10-05,"High Court, Lagos",Adjourned
+333,2119,2025-12-17,"Court of Appeal, Lagos",Heard
+334,2119,2026-02-27,"High Court, Lagos",Heard
+335,2119,2026-05-08,"High Court, Lagos",Adjourned
+336,2119,2026-08-23,"High Court, Lagos",Adjourned
+337,2119,2026-11-10,"High Court, Lagos",Scheduled
+338,2120,2025-07-26,"Federal High Court, Lagos",Heard
+339,2120,2025-11-13,"Federal High Court, Lagos",Heard
+340,2120,2025-12-20,"Federal High Court, Lagos",Heard
+341,2120,2026-03-02,"Federal High Court, Lagos",Judgment delivered
+342,2121,2024-06-08,"Magistrate Court, Ikeja",Judgment delivered
+343,2123,2024-10-10,National Industrial Court,Adjourned
+344,2123,2025-01-28,National Industrial Court,Adjourned
+345,2123,2025-04-01,National Industrial Court,Heard
+346,2123,2025-07-16,National Industrial Court,Judgment delivered
+347,2124,2024-10-03,"Magistrate Court, Ikeja",Struck out
+348,2124,2025-01-10,"Magistrate Court, Ikeja",Adjourned
+349,2124,2025-04-03,"Magistrate Court, Ikeja",Judgment delivered
+350,2126,2025-11-30,"Court of Appeal, Lagos",Adjourned
+351,2126,2026-03-20,"Court of Appeal, Lagos",Heard
+352,2126,2026-06-03,"Court of Appeal, Lagos",Heard
+353,2126,2026-07-04,"High Court, Lagos",Judgment delivered
+354,2128,2024-06-14,"High Court, Lagos",Adjourned
+355,2128,2024-08-20,"Court of Appeal, Lagos",Adjourned
+356,2128,2024-10-14,"Court of Appeal, Lagos",Adjourned
+357,2128,2025-01-08,"Court of Appeal, Lagos",Judgment delivered
+358,2129,2025-02-09,"Court of Appeal, Lagos",Struck out
+359,2129,2025-04-26,"High Court, Lagos",Adjourned
+360,2129,2025-07-15,"High Court, Lagos",Heard
+361,2129,2025-09-20,"Court of Appeal, Lagos",Heard
+362,2129,2025-12-04,"High Court, Lagos",Judgment delivered
+363,2131,2025-02-11,"High Court, Lagos",Heard
+364,2131,2025-04-06,"High Court, Lagos",Adjourned
+365,2131,2025-07-02,"High Court, Lagos",Adjourned
+366,2131,2025-09-10,"High Court, Lagos",Heard
+367,2131,2025-11-23,"Court of Appeal, Lagos",Judgment delivered
+368,2134,2026-05-03,"Federal High Court, Lagos",Adjourned
+369,2134,2026-08-13,"Federal High Court, Lagos",Heard
+370,2134,2026-11-09,"Federal High Court, Lagos",Scheduled
+371,2139,2025-08-01,"High Court, Lagos",Judgment delivered
+372,2140,2026-02-09,"High Court, Lagos",Judgment delivered
+373,2141,2026-03-30,"Magistrate Court, Ikeja",Adjourned
+374,2141,2026-06-13,"High Court, Lagos",Adjourned
+375,2141,2026-09-08,"Magistrate Court, Ikeja",Scheduled
+376,2143,2026-05-08,"Federal High Court, Lagos",Adjourned
+377,2143,2026-08-23,"Federal High Court, Lagos",Adjourned
+378,2143,2026-11-13,"Federal High Court, Lagos",Scheduled
+379,2145,2024-11-19,"High Court, Lagos",Adjourned
+380,2145,2025-01-10,"High Court, Lagos",Heard
+381,2145,2025-02-27,"High Court, Lagos",Heard
+382,2145,2025-04-26,"High Court, Lagos",Adjourned
+383,2145,2025-07-05,"High Court, Lagos",Adjourned
+384,2145,2025-10-01,"High Court, Lagos",Adjourned
+385,2145,2025-12-17,"High Court, Lagos",Judgment delivered
+386,2146,2024-10-04,"High Court, Lagos",Adjourned
+387,2146,2025-01-03,"Magistrate Court, Ikeja",Heard
+388,2146,2025-02-15,"High Court, Lagos",Judgment delivered
+389,2148,2026-02-18,"Magistrate Court, Ikeja",Adjourned
+390,2148,2026-04-28,"Magistrate Court, Ikeja",Heard
+391,2148,2026-08-07,"Magistrate Court, Ikeja",Adjourned
+392,2148,2026-11-04,"High Court, Lagos",Scheduled
+393,2149,2024-10-19,"High Court, Lagos",Judgment delivered
+394,2150,2026-01-01,"High Court, Lagos",Heard
+395,2150,2026-02-23,"Court of Appeal, Lagos",Adjourned
+396,2150,2026-04-01,"Court of Appeal, Lagos",Adjourned
+397,2150,2026-05-15,"Court of Appeal, Lagos",Heard
+398,2150,2026-08-19,"High Court, Lagos",Adjourned
+399,2150,2026-11-16,"Court of Appeal, Lagos",Scheduled

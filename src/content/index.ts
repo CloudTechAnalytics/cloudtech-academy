@@ -7,15 +7,30 @@ import { COURSES } from "./catalog";
 import type { AssessmentDef, Course, Lesson, Module, ProjectDef } from "./types";
 import { SQL_ASSESSMENT } from "./sql/assessment";
 import { SQL_PROJECT } from "./sql/project";
-import { parseFrontmatter, extractExercises } from "@/lib/lesson-format";
+import { DAF_ASSESSMENT } from "./daf/assessment";
+import { DAF_PROJECT } from "./daf/project";
+import { XLS_ASSESSMENT } from "./excel/assessment";
+import { XLS_PROJECT } from "./excel/project";
+import { PBI_ASSESSMENT } from "./powerbi/assessment";
+import { PBI_PROJECT } from "./powerbi/project";
+import { parseFrontmatter, requiredExerciseIds } from "@/lib/lesson-format";
 
-const lessonFiles = import.meta.glob("./sql/*.md", { query: "?raw", import: "default", eager: true }) as Record<string, string>;
+/** Lesson files live in one folder per course, named NN-slug.md. */
+const COURSE_DIRS: Record<string, string> = {
+  sql: "sql-for-data-analysis",
+  daf: "data-analytics-foundations",
+  excel: "excel-for-data-analysis",
+  powerbi: "power-bi-fundamentals",
+};
 
-/** Lesson files are named NN-slug.md inside a folder per course. */
-const BODIES: Record<string, Record<string, string>> = { "sql-for-data-analysis": {} };
+const lessonFiles = import.meta.glob("./*/*.md", { query: "?raw", import: "default", eager: true }) as Record<string, string>;
+
+const BODIES: Record<string, Record<string, string>> = {};
 for (const [file, raw] of Object.entries(lessonFiles)) {
-  const slug = file.replace(/^.*\/\d+-/, "").replace(/\.md$/, "");
-  BODIES["sql-for-data-analysis"][slug] = raw;
+  const m = file.match(/^\.\/([^/]+)\/\d+-(.+)\.md$/);
+  const courseId = m && COURSE_DIRS[m[1]];
+  if (!courseId) continue;
+  (BODIES[courseId] ??= {})[m[2]] = raw;
 }
 
 function buildCourse(def: (typeof COURSES)[number], position: number): Course {
@@ -42,7 +57,7 @@ function buildCourse(def: (typeof COURSES)[number], position: number): Course {
         required: true,
         published: true,
         position: lessonPos,
-        requiredExercises: extractExercises(body).filter((e) => e.required).map((e) => e.id),
+        requiredExercises: requiredExerciseIds(body),
       };
     }),
   }));
@@ -52,7 +67,7 @@ function buildCourse(def: (typeof COURSES)[number], position: number): Course {
 }
 
 export const BUNDLED_COURSES: Course[] = COURSES.map(buildCourse);
-export const BUNDLED_ASSESSMENTS: AssessmentDef[] = [SQL_ASSESSMENT];
-export const BUNDLED_PROJECTS: ProjectDef[] = [SQL_PROJECT];
+export const BUNDLED_ASSESSMENTS: AssessmentDef[] = [SQL_ASSESSMENT, DAF_ASSESSMENT, XLS_ASSESSMENT, PBI_ASSESSMENT];
+export const BUNDLED_PROJECTS: ProjectDef[] = [SQL_PROJECT, DAF_PROJECT, XLS_PROJECT, PBI_PROJECT];
 
 export { CATEGORIES, categoryName } from "./catalog";

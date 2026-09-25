@@ -4,7 +4,7 @@
  */
 import { createClient, type SupabaseClient, type User as SbUser } from "@supabase/supabase-js";
 import type { AssessmentDef, Course, Lesson, Module, ProjectDef } from "@/content/types";
-import { extractExercises } from "../lesson-format";
+import { requiredExerciseIds } from "../lesson-format";
 import {
   BackendError,
   type AttemptResult,
@@ -357,7 +357,7 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
             required: l.required,
             published: l.published,
             position: l.position,
-            required_exercises: extractExercises(l.body).filter((e) => e.required).map((e) => e.id),
+            required_exercises: requiredExerciseIds(l.body),
           }),
         );
       },

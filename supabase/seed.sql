@@ -39,9 +39,2807 @@ values ('cloud', 'Cloud & Technology', 'Cloud platforms and core technology skil
 on conflict (id) do update set name = excluded.name, description = excluded.description, is_future = excluded.is_future, position = excluded.position;
 
 
+-- Course: Data Analytics Foundations
+insert into public.courses (id, slug, code, title, summary, description, category_id, difficulty, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, passing_score, position)
+values ('data-analytics-foundations', 'data-analytics-foundations', 'DAF', 'Data Analytics Foundations', 'What data analytics is, how businesses use data to decide, and the core skills you need to start.', 'Learn what data analytics is, how businesses use data to make decisions, and the core skills required to begin a career in data analytics. The course ends with your first small analytics project.', 'data-analytics', 'beginner', 'Beginner', 6, true, 'available', true, array['How organizations use data', 'Types of data', 'Databases, cleaning and analysis', 'Visualization and business intelligence', 'Going from a question to an insight']::text[], array['No experience needed', 'A spreadsheet program: Google Sheets (free with a Google account) or Microsoft Excel']::text[], 'Kolanut people review', true, true, true, true, 70, 0)
+on conflict (id) do update set slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, passing_score = excluded.passing_score, position = excluded.position;
+
+insert into public.course_modules (id, course_id, title, position)
+values ('daf-m01', 'data-analytics-foundations', 'What is Data Analytics?', 1)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('data-analytics-foundations:what-is-data-analytics', 'data-analytics-foundations', 'daf-m01', 'what-is-data-analytics', 'What is data analytics?', 'What analysts actually do, the four kinds of analytics, and the steps every analysis follows.', 20, $md$
+## The problem
+
+Kolanut Distribution sells drinks, snacks and household goods to shops across Nigeria. Every order is written into a system: who bought, what, how many, at what price, on which day. After eighteen months that system holds more than four thousand order lines.
+
+The managing director doesn't want four thousand rows. She wants answers:
+
+- Are we selling more than last year?
+- Which regions are growing, and which are slipping?
+- Should we keep giving wholesalers 10% discounts?
+
+Turning the rows into those answers is **data analytics**.
+
+## The concept
+
+**Data analytics** is the work of collecting, cleaning and examining data to answer questions and support decisions.
+
+The word that matters is *decisions*. A table of numbers is not analysis. Analysis ends when someone can act: restock earlier, call a customer, drop a product, hire in one region instead of another.
+
+Analytics questions come in four kinds, each harder than the last:
+
+| Kind | Question it answers | Kolanut example |
+| :-- | :-- | :-- |
+| **Descriptive** | What happened? | Revenue in March 2025 was ₦46.3 million. |
+| **Diagnostic** | Why did it happen? | North West revenue fell because shops there ordered less often, not because we lost them. |
+| **Predictive** | What is likely to happen? | December 2026 sales will again be far above an average month (in 2025 they were about 45% higher). |
+| **Prescriptive** | What should we do? | Send more stock to Lagos warehouses in November. |
+
+Most day-to-day analyst work is descriptive and diagnostic. They are the foundation: you can't predict what you can't describe.
+
+## Example
+
+Here is Kolanut's revenue for the first six months of 2025, rounded to millions of naira:
+
+| Month | Revenue (₦ million) |
+| :-- | --: |
+| January | 37.1 |
+| February | 36.1 |
+| March | 46.3 |
+| April | 44.6 |
+| May | 40.3 |
+| June | 39.8 |
+
+A **descriptive** reading: revenue ranged from ₦36.1m to ₦46.3m, and March was the best month.
+
+A **diagnostic** question it raises: *why* were March and April stronger? (In this data, drink sales rise in the hot, dry months, and Easter shopping falls in that period.)
+
+## Walkthrough
+
+Every analysis, big or small, follows roughly the same steps:
+
+1. **Ask.** Agree the question with the person who will use the answer. "How are sales?" is vague. "Did first-half revenue grow compared with last year, and in which regions?" is answerable.
+2. **Collect.** Find the data that can answer it: which system, which tables, which dates.
+3. **Clean.** Fix what would mislead you: duplicates, inconsistent spellings, missing values.
+4. **Analyse.** Summarise, compare, look for patterns and exceptions.
+5. **Share.** Present the finding so the audience understands it in a minute: a clear chart, a short summary.
+6. **Act.** Someone makes a decision, and you check later whether it worked.
+
+> [!BUSINESS]
+> In most companies the analyst sits between the people who hold the data (IT, operations) and the people who make decisions (managers). Half the job is technical; the other half is asking good questions and explaining answers in plain language.
+
+The rest of this course takes each step in turn. By the end you'll run the whole cycle yourself on real-looking company data.
+
+> [!NOTE]
+> From lesson 3 onwards you'll need a spreadsheet program. Google Sheets is free with a Google account and works in the browser; Microsoft Excel works too.
+
+## Practice
+
+```answer
+{
+  "id": "daf-01-p1",
+  "prompt": "Using the table in the Example, which month in the first half of 2025 had the **lowest** revenue?",
+  "answer": "February",
+  "accept": ["feb"],
+  "format": "text",
+  "hint": "Look for the smallest number in the Revenue column.",
+  "explanation": "February, at ₦36.1m. It's also the shortest month, so it had fewer trading days, which is often part of the reason.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "daf-01-p2",
+  "prompt": "How many million naira separate the best month from the worst month in that table? Give the answer in millions, for example 3.5.",
+  "answer": 10.2,
+  "format": "number",
+  "hint": "Best month minus worst month: 46.3 − 36.1.",
+  "explanation": "46.3 − 36.1 = 10.2. The spread between best and worst months is a quick way to see how uneven sales are.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "\"Which of our products will sell out first next month?\" is which kind of analytics question?",
+    "options": ["Descriptive", "Diagnostic", "Predictive", "Prescriptive"],
+    "answer": 2,
+    "explanation": "It asks what is likely to happen, so it's predictive."
+  },
+  {
+    "prompt": "Why is \"How are sales doing?\" a weak starting question?",
+    "options": ["Sales can't be measured", "It doesn't say which sales, compared with what, or for which decision", "Managers don't care about sales", "It is too specific"],
+    "answer": 1,
+    "explanation": "A good question names the measure, the comparison and the period, so you know when you've answered it."
+  },
+  {
+    "prompt": "An analyst finds that late deliveries doubled after a warehouse moved. Which step comes next?",
+    "options": ["Delete the late deliveries from the data", "Share the finding clearly with the people who can act on it", "Stop, because the analysis is complete", "Collect more data from a different company"],
+    "answer": 1,
+    "explanation": "A finding only creates value once the people who can act on it understand it."
+  }
+]
+```
+$md$, true, true, 1, array['daf-01-p1', 'daf-01-p2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position)
+values ('daf-m02', 'data-analytics-foundations', 'How Businesses Use Data', 2)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('data-analytics-foundations:how-businesses-use-data', 'data-analytics-foundations', 'daf-m02', 'how-businesses-use-data', 'How businesses use data', 'Where data comes from in a company, how each team uses it, and what a KPI is.', 20, $md$
+## The problem
+
+A new analyst joins Kolanut and asks for "the data". The answer is: *which* data? Sales keeps orders. The warehouse tracks stock. Finance holds invoices and payments. HR has staff records and attendance. Each team uses its own data to run its own part of the business, and the most useful questions usually need two or more of them together.
+
+## The concept
+
+Every business activity leaves a record. Some common ones:
+
+| Team | Data it produces | Decisions it supports |
+| :-- | :-- | :-- |
+| Sales | Orders, customers, prices, discounts | Which customers to visit, which products to push |
+| Operations | Deliveries, stock levels, routes | How much to reorder, where to position trucks |
+| Finance | Invoices, payments, costs | Who to chase for payment, where money is being lost |
+| HR | Staff, salaries, attendance, leave | Hiring plans, where people are leaving |
+| Marketing | Campaigns, website visits, enquiries | Which channels bring customers |
+
+A **KPI (key performance indicator)** is a number a business watches regularly because it shows whether things are going well. A good KPI is:
+
+- **Clearly defined.** Everyone calculates it the same way.
+- **Tied to a goal.** It moves when the business gets better or worse.
+- **Actionable.** Someone can do something when it changes.
+
+Some KPIs you'll meet often:
+
+| KPI | Calculation |
+| :-- | :-- |
+| Revenue | Sum of sales value in a period |
+| Growth rate | (This period − last period) ÷ last period × 100 |
+| Average order value | Revenue ÷ number of orders |
+| On-time delivery rate | Deliveries on time ÷ all deliveries × 100 |
+| Staff turnover | People who left ÷ average headcount × 100 |
+| Collection rate | Invoices paid ÷ invoices issued × 100 |
+
+## Example
+
+Three businesses, three uses of data:
+
+- **A distributor** (Kolanut) compares revenue by region each month. When one region drops, the sales manager calls the rep covering it before the quarter is lost.
+- **A logistics company** tracks on-time delivery by route. A route that is late 30% of the time gets a new schedule or a different carrier.
+- **A law firm** watches outstanding invoices. Partners get a weekly list of clients whose invoices are more than 30 days overdue.
+
+In each case the data isn't collected *for* analysis. It exists because the business runs. Analytics makes it useful a second time.
+
+## Walkthrough
+
+Let's calculate two KPIs by hand for one month at Kolanut.
+
+In a month, Kolanut delivered **1,240** orders. **62** arrived later than promised. Revenue was **₦48,000,000**.
+
+**On-time delivery rate**
+
+1. On-time deliveries = 1,240 − 62 = 1,178.
+2. Divide by all deliveries: 1,178 ÷ 1,240 = 0.95.
+3. Multiply by 100: **95%**.
+
+**Average order value**
+
+1. Revenue ÷ orders = 48,000,000 ÷ 1,240.
+2. = **₦38,710** (rounded to the nearest naira).
+
+> [!TIP]
+> Always write down how a KPI is calculated, including what's left out (cancelled orders? returns?). Two people calculating "revenue" differently is one of the most common causes of confusion in meetings.
+
+## Practice
+
+```answer
+{
+  "id": "daf-02-p1",
+  "prompt": "The next month, Kolanut delivered **1,500** orders and **90** were late. What was the on-time delivery rate, as a percentage? (Type just the number, for example 92.5.)",
+  "answer": 94,
+  "format": "percent",
+  "hint": "On time = 1,500 − 90. Divide by 1,500, then multiply by 100.",
+  "explanation": "1,410 ÷ 1,500 = 0.94, so 94% were on time. That's a drop from 95% the month before.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "daf-02-p2",
+  "prompt": "Kolanut had **75** staff at the start of the year and **80** at the end (an average headcount of 77.5). **8** people left during the year. What was staff turnover, to one decimal place?",
+  "answer": 10.3,
+  "format": "percent",
+  "hint": "People who left ÷ average headcount × 100.",
+  "explanation": "8 ÷ 77.5 × 100 = 10.3%. Dividing by the average headcount, not the starting or ending number, keeps the KPI fair when the company is growing.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Which of these is the best KPI for a finance team that is short of cash?",
+    "options": ["Number of website visitors", "Collection rate on invoices", "Number of products in the catalogue", "Average staff age"],
+    "answer": 1,
+    "explanation": "Collection rate shows how much of what was billed has been paid, which is exactly the cash problem."
+  },
+  {
+    "prompt": "Revenue grew from ₦40m to ₦50m. What is the growth rate?",
+    "options": ["10%", "20%", "25%", "80%"],
+    "answer": 2,
+    "explanation": "(50 − 40) ÷ 40 × 100 = 25%. Growth is always measured against the earlier period."
+  },
+  {
+    "prompt": "What makes a KPI \"actionable\"?",
+    "options": ["It is shown in a chart", "Someone can do something about it when it changes", "It is calculated daily", "It uses a large amount of data"],
+    "answer": 1,
+    "explanation": "If nobody can respond when the number moves, it's a statistic, not a KPI."
+  }
+]
+```
+$md$, true, true, 2, array['daf-02-p1', 'daf-02-p2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position)
+values ('daf-m03', 'data-analytics-foundations', 'Types of Data', 3)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('data-analytics-foundations:types-of-data', 'data-analytics-foundations', 'daf-m03', 'types-of-data', 'Types of data', 'Structured and unstructured data, numbers and categories, and the most important question about any table - what does one row mean?', 25, $md$
+## The problem
+
+You open Kolanut's `orders.csv` for the first time. Some columns hold numbers you can add up (`quantity`). Some hold numbers you must *never* add up (`customer_id`). Some hold dates. Before you calculate anything, you need to know what kind of data each column is, and what a single row stands for.
+
+## The concept
+
+**Structured vs unstructured**
+
+- **Structured data** fits in rows and columns with a fixed meaning: orders, invoices, attendance records. This course works with structured data.
+- **Unstructured data** has no fixed layout: emails, WhatsApp messages, scanned contracts, photos. It holds value too, but needs other techniques to analyse.
+
+**Quantitative vs qualitative**
+
+| Type | What it is | Examples |
+| :-- | :-- | :-- |
+| **Quantitative, discrete** | Counts: whole numbers | Quantity ordered, number of staff |
+| **Quantitative, continuous** | Measurements: can take any value | Weight in kg, revenue in naira |
+| **Qualitative, nominal** | Categories with no order | Region, product category, payment method |
+| **Qualitative, ordinal** | Categories with an order | Job level (Junior < Mid < Senior), rating (Poor, Fair, Good) |
+
+**Identifiers look like numbers but aren't.** `customer_id` 42 is not "twice" customer 21. Adding or averaging IDs is meaningless. Treat them as labels.
+
+**Dates and times** deserve their own type. They let you group by month, measure time between events, and compare periods.
+
+**Grain: what one row represents**
+
+The *grain* of a table is the answer to "one row = one what?". In Kolanut's data:
+
+| File | One row is |
+| :-- | :-- |
+| `orders.csv` | one product on one order (an order line) |
+| `customers.csv` | one customer |
+| `products.csv` | one product |
+
+Getting the grain wrong causes real errors. If you think each row in `orders.csv` is a whole order and count rows to get "number of orders", you'll count some orders more than once whenever a shop buys several products on the same day.
+
+## Example
+
+The first rows of `orders.csv`:
+
+| order_id | order_date | customer_id | product_id | quantity | unit_price | discount_pct |
+| --: | :-- | --: | --: | --: | --: | --: |
+| 10001 | 2025-01-01 | 27 | 3 | 14 | 18600 | 0 |
+| 10002 | 2025-01-01 | 56 | 1 | 7 | 13200 | 0 |
+| 10003 | 2025-01-01 | 37 | 2 | 4 | 3600 | 0 |
+
+- `order_id`, `customer_id`, `product_id`: identifiers (labels, not quantities).
+- `order_date`: a date.
+- `quantity`: quantitative, discrete.
+- `unit_price`: quantitative, the price actually charged for one unit (one pack).
+- `discount_pct`: quantitative, the percentage taken off this line: 0, 5 or 10.
+
+Reading the first row: order line 10001 was **14 packs of product 3 at ₦18,600 a pack**, with no discount.
+
+```dataset
+{ "dataset": "sales", "files": ["orders", "customers", "products"] }
+```
+
+## Walkthrough
+
+Open `orders.csv` in Google Sheets (File → Import → Upload) or Excel (File → Open).
+
+1. Look at the header row. Each column name tells you what the column holds.
+2. Press **Ctrl + ↓** (Cmd + ↓ on a Mac) in column A to jump to the last row. The row number tells you how many rows there are. Remember that row 1 is the header.
+3. For each column, decide: identifier, number, category or date?
+4. Ask the grain question: what does one row stand for?
+
+> [!WARNING]
+> Spreadsheet programs sometimes guess types wrongly: a date read as text, or a long ID shown as `1.23E+15`. When a column looks strange, check its type before you trust any calculation on it.
+
+## Practice
+
+```answer
+{
+  "id": "daf-03-p1",
+  "prompt": "How many order lines (data rows, not counting the header) are in `orders.csv`?",
+  "answer": 4266,
+  "format": "number",
+  "dataset": "sales",
+  "files": ["orders"],
+  "verify": "SELECT COUNT(*) FROM orders",
+  "hint": "Jump to the last row with Ctrl + ↓. The last row number minus 1 (the header) is the number of data rows.",
+  "explanation": "4,266 order lines covering January 2025 to June 2026.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "daf-03-p2",
+  "prompt": "How many different products does Kolanut sell? (Look in `products.csv`.)",
+  "answer": 16,
+  "format": "number",
+  "dataset": "sales",
+  "files": ["products"],
+  "verify": "SELECT COUNT(*) FROM products",
+  "hint": "One row in products.csv is one product.",
+  "explanation": "16 products in four categories: Beverages, Snacks, Household and Personal care.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Which column is qualitative and ordinal?",
+    "options": ["Region", "Job level (Junior, Mid, Senior, Manager)", "Monthly salary", "Employee ID"],
+    "answer": 1,
+    "explanation": "Job levels are categories with a natural order. Region is a category without an order."
+  },
+  {
+    "prompt": "What is wrong with averaging the customer_id column?",
+    "options": ["Nothing, it's a number", "IDs are labels, so their average has no meaning", "Averages only work on dates", "It would be too slow"],
+    "answer": 1,
+    "explanation": "An ID identifies a thing. Arithmetic on identifiers produces meaningless numbers."
+  },
+  {
+    "prompt": "In orders.csv one row is one product on one order. A shop buys three products on the same day. How many rows does that create?",
+    "options": ["One", "Three", "It depends on the quantity", "None"],
+    "answer": 1,
+    "explanation": "Each product on the order gets its own row: that's the grain of the table."
+  }
+]
+```
+$md$, true, true, 3, array['daf-03-p1', 'daf-03-p2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position)
+values ('daf-m04', 'data-analytics-foundations', 'Understanding Databases', 4)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('data-analytics-foundations:understanding-databases', 'data-analytics-foundations', 'daf-m04', 'understanding-databases', 'Understanding databases', 'Tables, keys and relationships, why companies keep data in databases, and your first look at SQL.', 30, $md$
+## The problem
+
+Kolanut's `orders.csv` says customer **12** bought something. It doesn't say who customer 12 is, where they are, or which sales rep looks after them. That information lives in a different file, `customers.csv`. Why split it up? And how do you put it back together?
+
+## The concept
+
+A **database** stores data in several **tables**, each about one kind of thing: customers, products, orders. Tables connect through **keys**.
+
+- A **primary key** uniquely identifies each row in a table. `customer_id` is the primary key of `customers`: no two customers share one.
+- A **foreign key** is a column that points to a primary key in another table. `customer_id` in `orders` is a foreign key: it says *which* customer placed the order.
+
+The link between the two is a **relationship**. Here it's **one-to-many**: one customer can have many orders, but each order belongs to one customer.
+
+```
+customers (one)                 orders (many)
+customer_id  customer_name  ←── customer_id  order_id  quantity …
+```
+
+**Why not keep everything in one big sheet?**
+
+If every order line repeated the customer's name, region, city and rep, then:
+
+- the same facts would be typed thousands of times, so mistakes creep in;
+- when a customer moves city, you'd have to change hundreds of rows;
+- the file grows much larger than it needs to be.
+
+Storing each fact once, and linking with keys, avoids all three. This design is called **normalisation**.
+
+**SQL** (Structured Query Language) is the language used to ask databases questions. Analysts use it every day. You'll learn it properly in the SQL course; here's a first taste.
+
+## Example
+
+This SQL runs in your browser against a small freight company's database (Harbourline, used in the SQL course). Press **Run**:
+
+```sql run
+SELECT company_name, city, industry
+FROM customers
+WHERE city = 'Kano';
+```
+
+Read it almost like English: *select* these columns *from* the customers table *where* the city is Kano.
+
+Now a query that uses a relationship. It **joins** each shipment to its customer through `customer_id`, so we can see names next to shipments:
+
+```sql run
+SELECT s.shipment_id, c.company_name, s.containers
+FROM shipments AS s
+JOIN customers AS c ON c.customer_id = s.customer_id
+LIMIT 10;
+```
+
+## Walkthrough
+
+You can follow a relationship by hand, too. Suppose you want to know where the customer on Kolanut order **10050** is based.
+
+1. In `orders.csv`, find order_id **10050**. Its `customer_id` is **13**.
+2. In `customers.csv`, find customer_id **13**: *Peace Provisions*, region **North West**, city **Kano**.
+
+That two-step lookup is exactly what a database join does, for every row at once. In spreadsheets you'll do the same with a lookup formula (XLOOKUP, in the Excel course).
+
+## Practice
+
+```exercise
+{
+  "id": "daf-04-p1",
+  "prompt": "Change the query so it lists Harbourline customers in **Lagos** instead of Kano. Keep the same three columns.",
+  "starter": "SELECT company_name, city, industry\nFROM customers\nWHERE city = 'Kano';",
+  "solution": "SELECT company_name, city, industry FROM customers WHERE city = 'Lagos';",
+  "hint": "Only the text inside the quotes needs to change. Capital L matters.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "daf-04-p2",
+  "prompt": "Back to Kolanut. Which **region** is the customer on order **10500** in? Look up the order in `orders.csv`, then the customer in `customers.csv`.",
+  "answer": "North West",
+  "accept": ["northwest", "north-west"],
+  "format": "text",
+  "dataset": "sales",
+  "files": ["orders", "customers"],
+  "verify": "SELECT c.region FROM orders o JOIN customers c ON c.customer_id = o.customer_id WHERE o.order_id = 10500",
+  "hint": "Order 10500 has a customer_id. Find that customer_id in customers.csv and read the region column. Ctrl + F helps.",
+  "explanation": "Order 10500 belongs to customer 12, Hajia Amina Supermarket in Kano, North West.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "In Kolanut's data, what kind of key is product_id in orders.csv?",
+    "options": ["Primary key", "Foreign key", "Not a key", "A date"],
+    "answer": 1,
+    "explanation": "It points to the primary key of products.csv, so in orders it's a foreign key."
+  },
+  {
+    "prompt": "The relationship between customers and orders is:",
+    "options": ["One-to-one", "One-to-many", "Many-to-many", "No relationship"],
+    "answer": 1,
+    "explanation": "One customer, many orders; each order has one customer."
+  },
+  {
+    "prompt": "Why is it better to store a customer's city once in the customers table rather than on every order?",
+    "options": ["Databases can't store text on orders", "A change of city then needs updating in one place, and there's no risk of conflicting copies", "Orders can't have more than five columns", "It makes SQL faster to type"],
+    "answer": 1,
+    "explanation": "Storing each fact once prevents inconsistent copies and makes updates simple."
+  }
+]
+```
+$md$, true, true, 4, array['daf-04-p1', 'daf-04-p2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position)
+values ('daf-m05', 'data-analytics-foundations', 'Data Cleaning', 5)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('data-analytics-foundations:data-cleaning', 'data-analytics-foundations', 'daf-m05', 'data-cleaning', 'Data cleaning', 'The problems real data arrives with, how they mislead you, and a safe way to fix them.', 30, $md$
+## The problem
+
+Kolanut is moving to a new system, and IT has exported the customer list from the old one. Open it and something is off straight away: some names are in capitals, some have spaces before them, Lagos is written four different ways, and a few customers appear twice.
+
+If you counted customers in this file, you'd get the wrong number. If you totalled sales by region, "Lagos" and "LAGOS" would appear as two different regions. **Data cleaning** is fixing problems like these before you analyse.
+
+## The concept
+
+The most common problems:
+
+| Problem | Example | What it breaks |
+| :-- | :-- | :-- |
+| **Duplicates** | The same customer listed twice | Counts and totals come out too high |
+| **Inconsistent labels** | `Lagos`, `LAGOS`, `lagos`, `Lagos ` | Groups split into several |
+| **Extra spaces** | `"  Ada Superstore"` | Matching and lookups fail silently |
+| **Mixed formats** | `2023-07-11`, `11/07/2023`, `11-Jul-2023` | Dates sort and group wrongly |
+| **Numbers stored as text** | `"₦1,200,000"` | Sums return 0 or an error |
+| **Missing values** | A blank credit limit | Averages and totals change meaning |
+| **Outliers** | A quantity of 10,000 when most are under 40 | Averages are dragged up; could be a typo |
+
+**Rules for cleaning safely**
+
+1. **Never edit the original.** Keep the raw file untouched; work on a copy.
+2. **Keep a cleaning log.** Write down each change: what, why, how many rows. Anyone can then repeat or question your work.
+3. **Fix the cause when you can.** If the old system allowed free-typed regions, the new one should use a drop-down list.
+4. **Don't guess silently.** If a value is missing, decide on a rule (leave blank, mark "Unknown") and state it.
+
+## Example
+
+Four rows from the raw export:
+
+| Customer Name | Region | Date Joined | Credit Limit |
+| :-- | :-- | :-- | :-- |
+| `kayode distributors   ` | LAGOS | 22/10/2023 | ₦2,050,000 |
+| `  ADA SUPERSTORE` | Lagos | 2023-07-11 | 1,200,000 |
+| `Hajia Amina Superstore` | north central | 21/04/2023 | 850000 |
+| `  peace mart` | South-West | 01/09/2022 | 1500000 |
+
+After cleaning:
+
+| Customer Name | Region | Date Joined | Credit Limit |
+| :-- | :-- | :-- | --: |
+| Kayode Distributors | Lagos | 2023-10-22 | 2050000 |
+| Ada Superstore | Lagos | 2023-07-11 | 1200000 |
+| Hajia Amina Superstore | North Central | 2023-04-21 | 850000 |
+| Peace Mart | South West | 2022-09-01 | 1500000 |
+
+Look at `01/09/2022`. Is that 1 September or 9 January? Nigeria writes day first, so it's **1 September 2022**, but a spreadsheet set to US format would read it as 9 January. Mixed date formats are one of the most dangerous cleaning problems, because the wrong answer still *looks* like a date.
+
+## Walkthrough
+
+A cleaning plan for this file, in the order you'd do it:
+
+1. **Save a copy** of the raw file and work only on the copy.
+2. **Trim spaces and fix capitals** in names (spreadsheets have `TRIM` and `PROPER` functions for this; the Excel course shows them).
+3. **Standardise regions** to six agreed spellings: Lagos, South West, South East, South South, North Central, North West. `SW`, `South-West` and `south west` all become `South West`.
+4. **Remove duplicates** *after* steps 2 and 3. Before trimming, `ADA SUPERSTORE` and `Ada Superstore` look different, so duplicate removal would miss them.
+5. **Convert dates** to one format, reading each as day/month/year.
+6. **Turn money into numbers**: remove `₦`, commas and `.00`.
+7. **Log** what you changed and how many rows it affected.
+
+```dataset
+{ "dataset": "cleaning", "files": ["customer_list_raw"] }
+```
+
+> [!TIP]
+> In Google Sheets, **Data → Data cleanup → Trim whitespace** and **Data → Data cleanup → Remove duplicates** do steps 2 and 4 in a few clicks. In Excel, **Data → Remove Duplicates** does step 4.
+
+## Practice
+
+```answer
+{
+  "id": "daf-05-p1",
+  "prompt": "How many data rows does the raw export `customer_list_raw.csv` contain (not counting the header)?",
+  "answer": 102,
+  "format": "number",
+  "dataset": "cleaning",
+  "files": ["customer_list_raw"],
+  "verify": "SELECT COUNT(*) FROM customer_list_raw",
+  "hint": "Open the file and jump to the last row with Ctrl + ↓. Subtract 1 for the header.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "daf-05-p2",
+  "prompt": "After trimming spaces, ignoring differences in capital letters, and removing duplicate customer names, how many **different customers** are in the list?",
+  "answer": 90,
+  "format": "number",
+  "dataset": "cleaning",
+  "files": ["customer_list_raw"],
+  "verify": "SELECT COUNT(DISTINCT LOWER(TRIM(\"Customer Name\"))) FROM customer_list_raw",
+  "hint": "Trim and fix the capitals in the name column first (or make a helper column), then remove duplicates on that column and count what's left.",
+  "explanation": "90 customers. The export listed 12 of them twice, so an uncleaned count would have been 102, an overstatement of about 13%.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why should you remove duplicates only after trimming spaces and fixing capitals?",
+    "options": ["Removing duplicates deletes capitals", "Until then, copies of the same customer look different and won't be detected", "Trimming is slower after removing duplicates", "It doesn't matter which comes first"],
+    "answer": 1,
+    "explanation": "\"  ADA SUPERSTORE\" and \"Ada Superstore\" only match once both are trimmed and in the same case."
+  },
+  {
+    "prompt": "A date in the export reads 03/04/2024. The company writes dates day first. What date is it?",
+    "options": ["3 April 2024", "4 March 2024", "It can't be a date", "3 March 2024"],
+    "answer": 0,
+    "explanation": "Day first: 03 is the day, 04 the month."
+  },
+  {
+    "prompt": "What is the first thing to do before cleaning a file?",
+    "options": ["Delete blank rows", "Keep an untouched copy of the original", "Sort by the first column", "Convert everything to capitals"],
+    "answer": 1,
+    "explanation": "The original is your safety net and your evidence. Always clean a copy."
+  }
+]
+```
+$md$, true, true, 5, array['daf-05-p1', 'daf-05-p2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position)
+values ('daf-m06', 'data-analytics-foundations', 'Data Analysis', 6)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('data-analytics-foundations:data-analysis', 'data-analytics-foundations', 'daf-m06', 'data-analysis', 'Data analysis', 'The handful of calculations behind most business analysis - totals, averages, shares and growth - and the traps in each.', 30, $md$
+## The problem
+
+Kolanut's data is clean. Now the managing director asks: "Did we do better in the first half of 2026 than the first half of 2025, and where did the money come from?"
+
+Answering needs only a few calculations, used carefully. Most business analysis is built from the same small toolkit.
+
+## The concept
+
+| Calculation | What it tells you | Formula |
+| :-- | :-- | :-- |
+| **Total** | How much, overall | Add the values |
+| **Count** | How many | Count the rows (or distinct items) |
+| **Average (mean)** | A typical value | Total ÷ count |
+| **Median** | The middle value when sorted | Half the values are above, half below |
+| **Share of total** | How much one part contributes | Part ÷ total × 100 |
+| **Growth rate** | How much something changed | (New − old) ÷ old × 100 |
+
+**Mean or median?** The mean is pulled towards extreme values; the median isn't. When a few values are much larger than the rest, as with salaries or order sizes, the median is often the fairer "typical" figure. Report both when they differ a lot.
+
+**Compare like with like.** Compare January with January, the first half of one year with the first half of the next. Comparing December with January mostly shows the Christmas season, not performance.
+
+**Revenue at Kolanut** is calculated per order line as:
+
+> revenue = quantity × unit_price × (1 − discount_pct ÷ 100)
+
+## Example
+
+Revenue by region, first half (January–June) of each year, in millions of naira:
+
+| Region | H1 2025 | H1 2026 |
+| :-- | --: | --: |
+| Lagos | 118.2 | 152.8 |
+| South West | 28.9 | 51.7 |
+| North Central | 25.3 | 27.2 |
+| South South | 19.7 | 23.1 |
+| South East | 20.9 | 19.4 |
+| North West | 31.1 | 16.6 |
+| **Total** | **244.2** | **290.7** |
+
+**Growth.** (290.7 − 244.2) ÷ 244.2 × 100 = **19.0%**. The business grew.
+
+**Share.** Lagos brought in 152.8 ÷ 290.7 × 100 = **52.6%** of H1 2026 revenue: more than half the business comes from one region.
+
+**The exception.** North West went the other way, from 31.1 to 16.6. A total that grew 19% hides a region that nearly halved. That's why analysts always break totals down.
+
+## Walkthrough
+
+**Mean versus median on real data.** Across all 4,266 of Kolanut's order lines:
+
+- The **mean** order line is worth **₦194,689**.
+- The **median** order line is worth about **₦166,680**.
+
+The mean is higher because wholesalers place a smaller number of very large orders (up to ₦713,400 on a single line), which pull the average up. If a manager asks "what does a typical order line look like?", the median is the more honest answer.
+
+**Averages by group** often tell the real story. Average quantity per order line:
+
+| Channel | Average packs per line |
+| :-- | --: |
+| Wholesale | 19.0 |
+| Supermarket | 11.1 |
+| Kiosk | 3.6 |
+
+One overall average (13.8 packs) would describe none of these customers well.
+
+> [!WARNING]
+> A percentage without its base can mislead. "Sales in our smallest region grew 50%!" could mean ₦2m became ₦3m. Always show the underlying numbers next to growth rates.
+
+## Practice
+
+```answer
+{
+  "id": "daf-06-p1",
+  "prompt": "Using the table in the Example, what share of **H1 2026** revenue came from the **South West**, to one decimal place?",
+  "answer": 17.8,
+  "tolerance": 0.11,
+  "format": "percent",
+  "hint": "South West H1 2026 ÷ total H1 2026 × 100.",
+  "explanation": "51.7 ÷ 290.7 × 100 = 17.8%. South West is now Kolanut's second-largest region.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "daf-06-p2",
+  "prompt": "By what percentage did **North West** revenue fall from H1 2025 to H1 2026? Give the size of the fall as a positive number, to one decimal place.",
+  "answer": 46.6,
+  "tolerance": 0.11,
+  "format": "percent",
+  "hint": "(Old − new) ÷ old × 100, using 31.1 and 16.6.",
+  "explanation": "(31.1 − 16.6) ÷ 31.1 × 100 = 46.6%. Almost half of the region's revenue disappeared in a year when the business grew 19%.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "daf-06-p3",
+  "prompt": "In `orders.csv`, what is the **average quantity** per order line, to one decimal place?",
+  "answer": 13.8,
+  "format": "number",
+  "dataset": "sales",
+  "files": ["orders"],
+  "verify": "SELECT ROUND(AVG(quantity), 1) FROM orders",
+  "hint": "Use =AVERAGE() on the quantity column, then round to one decimal place.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Salaries at a company are mostly ₦300,000–₦600,000, with three directors on ₦5,000,000. Which figure best describes a typical salary?",
+    "options": ["The mean", "The median", "The maximum", "The total"],
+    "answer": 1,
+    "explanation": "The directors pull the mean up. The median stays with the typical employee."
+  },
+  {
+    "prompt": "Which comparison is the fairest way to judge whether sales improved?",
+    "options": ["December 2025 vs January 2026", "January–June 2025 vs January–June 2026", "Last week vs last year", "Best month vs worst month"],
+    "answer": 1,
+    "explanation": "Same months, different years: the seasons cancel out."
+  },
+  {
+    "prompt": "Total revenue grew 19%. What should an analyst do next?",
+    "options": ["Report 19% and stop", "Break the total down by region, product or channel to see where the growth came from and whether any part fell", "Recalculate it as a median", "Remove the regions that fell"],
+    "answer": 1,
+    "explanation": "Totals hide exceptions. North West fell 47% inside a total that rose 19%."
+  }
+]
+```
+$md$, true, true, 6, array['daf-06-p1', 'daf-06-p2', 'daf-06-p3']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position)
+values ('daf-m07', 'data-analytics-foundations', 'Data Visualization', 7)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('data-analytics-foundations:data-visualization', 'data-analytics-foundations', 'daf-m07', 'data-visualization', 'Data visualization', 'Which chart answers which question, and the design habits that make a chart clear in five seconds.', 25, $md$
+## The problem
+
+You've found that North West revenue nearly halved while the rest of the business grew. You could say it in a sentence, but the sales director will remember a chart. The wrong chart, though, can hide the finding or even suggest the opposite.
+
+## The concept
+
+**Pick the chart from the question.**
+
+| Question | Chart | Example |
+| :-- | :-- | :-- |
+| How does something change over time? | **Line chart** | Monthly revenue, January 2025 to June 2026 |
+| How do categories compare? | **Bar chart** (horizontal bars for long labels) | Revenue by region |
+| What is it made of? | **Stacked bar** or, for 2–4 parts, a **pie/donut** | Revenue split by channel |
+| Are two measures related? | **Scatter plot** | Credit limit vs amount ordered, per customer |
+| What is the one number? | **Big number (card)** with a comparison | "₦290.7m, up 19% on H1 2025" |
+| Exact values to look up | **Table** | Revenue by product and month |
+
+**Design habits that make charts clear**
+
+1. **Title with the finding**, not the topic: "North West revenue nearly halved" beats "Revenue by region".
+2. **Start bar charts at zero.** Cutting the axis makes small differences look huge.
+3. **Sort bars** from largest to smallest unless the categories have a natural order (months, job levels).
+4. **Highlight one thing.** Grey for context, one strong colour for the point you're making.
+5. **Label directly** instead of using a legend the reader must decode.
+6. **Remove clutter:** heavy gridlines, 3D effects, shadows, backgrounds.
+
+**Charts to avoid**
+
+- **3D charts.** Perspective distorts the sizes you're comparing.
+- **Pie charts with many slices.** People can't compare angles well; past four slices, use a bar chart.
+- **Two different y-axes** on one chart, unless the audience is used to them. They invite false conclusions.
+
+## Example
+
+The same data, two ways.
+
+**Weak:** a pie chart of H1 2026 revenue with six slices, titled "Revenue by region", in six bright colours. Lagos is obviously biggest; nothing else is readable, and the North West fall is invisible because a pie shows only one period.
+
+**Strong:** a bar chart with each region's H1 2025 bar in light grey and its H1 2026 bar next to it, North West's 2026 bar in red, sorted by 2026 revenue, titled *"Every region but two grew; North West nearly halved."* The point is visible in five seconds.
+
+## Walkthrough
+
+To build the strong version in a spreadsheet:
+
+1. Lay out a small table: region, H1 2025, H1 2026 (the table from the previous lesson).
+2. Sort it by H1 2026, largest first.
+3. Select it and insert a **clustered bar** (or column) chart.
+4. Colour the 2025 series light grey and the 2026 series dark.
+5. Click North West's 2026 bar alone and colour it red.
+6. Replace the default title with the finding.
+7. Delete the gridlines you don't need, and check the axis starts at 0.
+
+> [!TIP]
+> The five-second test: show the chart to someone for five seconds and ask what it says. If they can't tell you the finding, change the title or the highlighting before changing anything else.
+
+## Practice
+
+```answer
+{
+  "id": "daf-07-p1",
+  "prompt": "The finance manager wants to see how **monthly** revenue moved from January 2025 to June 2026. Which chart type fits best? (One or two words.)",
+  "answer": "line chart",
+  "accept": ["line", "line graph", "a line chart", "line plot"],
+  "format": "text",
+  "hint": "The question is about change over time.",
+  "explanation": "A line chart shows the trend and the December peak at a glance.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "daf-07-p2",
+  "prompt": "A colleague's bar chart of revenue by region has its axis starting at ₦15 million instead of zero. North West (₦16.6m) looks almost empty and Lagos (₦152.8m) enormous. What is the lowest value the axis should start at?",
+  "answer": 0,
+  "format": "number",
+  "hint": "Bar length is read as size. What must the baseline be for lengths to be honest?",
+  "explanation": "Bars must start at zero, otherwise their lengths exaggerate differences.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Which is the best title for a chart showing regional revenue?",
+    "options": ["Chart 3", "Revenue by region", "Lagos brings in more than half of revenue", "Regional data (₦)"],
+    "answer": 2,
+    "explanation": "A title that states the finding tells the reader what to see."
+  },
+  {
+    "prompt": "You need to show revenue split across 12 products. Which chart?",
+    "options": ["Pie chart", "3D pie chart", "Sorted bar chart", "Line chart"],
+    "answer": 2,
+    "explanation": "Twelve slices is far too many for a pie. A sorted bar chart makes the ranking obvious."
+  },
+  {
+    "prompt": "Why highlight one bar in a strong colour and leave the rest grey?",
+    "options": ["It prints better", "It directs attention to the point you're making", "Grey is more accurate", "Charts must have two colours"],
+    "answer": 1,
+    "explanation": "Colour is the fastest way to say 'look here'. Using it everywhere means it says nothing."
+  }
+]
+```
+$md$, true, true, 7, array['daf-07-p1', 'daf-07-p2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position)
+values ('daf-m08', 'data-analytics-foundations', 'Business Intelligence', 8)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('data-analytics-foundations:business-intelligence', 'data-analytics-foundations', 'daf-m08', 'business-intelligence', 'Business intelligence', 'How BI turns one-off analysis into dashboards people use every week, and the pipeline behind them.', 25, $md$
+## The problem
+
+Every Monday, Kolanut's sales manager asks for the same numbers: last week's revenue, revenue by region, overdue customers. Every Monday an analyst spends two hours rebuilding the same spreadsheet. The numbers are useful; the process is wasteful, and each rebuild risks a new mistake.
+
+**Business intelligence (BI)** fixes this: build the analysis once, connect it to the data, and let it refresh.
+
+## The concept
+
+**Analytics vs BI.** The words overlap, but a useful distinction:
+
+- **Analytics** answers a question, often a new one: *why did North West fall?*
+- **BI** monitors the business with the same questions, repeatedly: *how is each region doing this week?*
+
+Good analysis often becomes BI. Once you know North West matters, you put it on the dashboard.
+
+**The BI pipeline**
+
+```
+Source systems  →  Extract, transform, load (ETL)  →  Data warehouse / model  →  Reports & dashboards
+(orders, finance,    (clean, combine, calculate)        (one trusted version)       (Power BI, Tableau,
+ HR, CRM)                                                                             Looker Studio)
+```
+
+1. **Sources**: the systems where work happens.
+2. **ETL**: copying data out, cleaning it and shaping it. In Power BI this is Power Query.
+3. **Model / warehouse**: clean tables with relationships and agreed calculations, a *single source of truth*.
+4. **Dashboards**: the views people look at, refreshed on a schedule.
+
+**Dashboards vs reports.** A **dashboard** is a one-screen summary of KPIs for monitoring. A **report** goes deeper, with several pages and details to explore. Most BI tools produce both.
+
+**Common BI tools:** Microsoft Power BI, Tableau, Google Looker Studio, Qlik. Power BI is widely used in Nigerian companies because many already pay for Microsoft 365; it's covered in its own course here.
+
+## Example
+
+A sensible first dashboard for Kolanut's sales manager:
+
+| Area | Visual | Why |
+| :-- | :-- | :-- |
+| Top row | 4 KPI cards: revenue this month, vs same month last year, active customers, average order line | Answers "are we OK?" in two seconds |
+| Middle | Line chart of monthly revenue, this year vs last | Shows the trend and season |
+| Middle | Bar chart of revenue by region, sorted, with growth % | Shows where to look |
+| Bottom | Table of customers whose orders dropped most vs last quarter | Tells reps who to call |
+| Side | Filters (slicers) for region, channel, product category | Lets each manager see their own area |
+
+Four KPIs, three visuals, one action list. The discipline is leaving things *out*.
+
+## Walkthrough
+
+When a law firm like Ashgrove Chambers builds BI for its partners, it follows the same steps:
+
+1. **Agree the KPIs** with the partners: open matters, hearings adjourned, invoices overdue, **collection rate**.
+2. **Define each one precisely.** Collection rate = paid invoices ÷ all invoices issued × 100, counted by number of invoices.
+3. **Connect the sources:** the matter management system and the billing system.
+4. **Check the numbers** against a manual calculation before anyone relies on the dashboard.
+5. **Schedule the refresh**, for example every morning at 7.
+
+Step 4 is the one people skip. A dashboard that is wrong once loses trust for months.
+
+```dataset
+{ "dataset": "legal", "files": ["invoices"], "note": "Ashgrove Chambers' invoices from 2024 to August 2026: amount, status (Paid, Outstanding, Overdue) and payment date." }
+```
+
+## Practice
+
+```answer
+{
+  "id": "daf-08-p1",
+  "prompt": "Check a KPI before it goes on the dashboard. Using `invoices.csv`, what is Ashgrove Chambers' **collection rate by number of invoices** (invoices with status Paid ÷ all invoices × 100), to one decimal place?",
+  "answer": 79.8,
+  "format": "percent",
+  "dataset": "legal",
+  "files": ["invoices"],
+  "verify": "SELECT ROUND(100.0 * SUM(status = 'Paid') / COUNT(*), 1) FROM invoices",
+  "hint": "Count all invoices, count the ones whose status is Paid (a filter or COUNTIF helps), then divide.",
+  "explanation": "327 of 410 invoices are paid: 79.8%. About one invoice in five is still unpaid.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "daf-08-p2",
+  "prompt": "How many of Ashgrove Chambers' invoices are **Overdue**?",
+  "answer": 70,
+  "format": "number",
+  "dataset": "legal",
+  "files": ["invoices"],
+  "verify": "SELECT COUNT(*) FROM invoices WHERE status = 'Overdue'",
+  "hint": "Filter the status column to Overdue and count the rows.",
+  "explanation": "70 invoices, worth ₦188 million in total, a good candidate for a weekly 'who to chase' list on the dashboard.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Which step of the BI pipeline cleans and combines data from different systems?",
+    "options": ["Dashboards", "ETL (extract, transform, load)", "Source systems", "Slicers"],
+    "answer": 1,
+    "explanation": "ETL takes raw data out of the source systems and shapes it for analysis."
+  },
+  {
+    "prompt": "What does 'single source of truth' mean?",
+    "options": ["Only one person may see the data", "Everyone uses the same cleaned data and the same KPI definitions", "The company has only one database", "Dashboards can't be changed"],
+    "answer": 1,
+    "explanation": "When sales and finance calculate revenue the same way from the same data, meetings argue about decisions, not numbers."
+  },
+  {
+    "prompt": "What should you do before a new dashboard is shared?",
+    "options": ["Add more visuals", "Check its numbers against an independent calculation", "Remove the filters", "Change the colours"],
+    "answer": 1,
+    "explanation": "Trust is hard to win back. Verify first."
+  }
+]
+```
+$md$, true, true, 8, array['daf-08-p1', 'daf-08-p2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position)
+values ('daf-m09', 'data-analytics-foundations', 'From Question to Insight', 9)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('data-analytics-foundations:from-question-to-insight', 'data-analytics-foundations', 'daf-m09', 'from-question-to-insight', 'From question to insight', 'A repeatable method for turning a vague business worry into a clear finding and a recommendation.', 30, $md$
+## The problem
+
+The sales director at Kolanut says: *"Something's wrong in the North. Can you look into it?"*
+
+That isn't a question you can answer with data yet. This lesson is about the method analysts use to get from a worry like this to a finding someone can act on.
+
+## The concept
+
+**The question-to-insight method**
+
+1. **Clarify the business question.** Who is asking, what decision are they facing, by when?
+2. **Make it measurable.** Name the measure, the comparison and the period.
+3. **List the data needed**, and check it exists.
+4. **Analyse**: start broad, then break down. Compare with a baseline.
+5. **Explain** the pattern: test possible reasons against the data.
+6. **Recommend** something specific, and say how you'd know if it worked.
+
+**Finding vs insight.** A *finding* says what the data shows ("North West revenue fell 47%"). An *insight* adds why it matters and what to do ("North West shops are ordering half as often; if we win back the old order frequency, we recover about ₦14m per half-year").
+
+**Test more than one explanation.** For a fall in revenue, the usual suspects are:
+
+| Possible cause | What you'd see in the data |
+| :-- | :-- |
+| Fewer customers | Fewer distinct customers ordering |
+| Customers ordering less often | Same customers, fewer order lines each |
+| Smaller orders | Fewer packs per order line |
+| Lower prices or bigger discounts | Lower price per pack or higher discount % |
+
+## Example
+
+**1. Clarify.** The director is deciding whether to replace the North West sales approach before the next half-year budget.
+
+**2. Measurable question.** *How did North West revenue in January–June 2026 compare with January–June 2025, and what drove the change?*
+
+**3. Data.** `orders.csv` (dates, quantities, prices) joined to `customers.csv` (region).
+
+**4. Analyse.**
+
+| North West | H1 2025 | H1 2026 | Change |
+| :-- | --: | --: | --: |
+| Revenue (₦m) | 31.1 | 16.6 | −46.6% |
+| Customers who ordered | 10 | 11 | +1 |
+| Order lines | 176 | 91 | −48% |
+
+**5. Explain.** Customers didn't leave: 11 ordered in 2026, one more than in 2025. Prices *rose* in January 2026, so price cuts aren't the cause either. The fall is almost entirely **order frequency**: the same shops ordered about half as often.
+
+**6. Recommend.** Find out why North West shops are ordering less often. Ask the regional rep and call the five largest accounts this month: are they buying from a competitor, or is delivery unreliable? Set a target of 150 order lines next half-year and track it monthly.
+
+## Walkthrough
+
+Notice what the analysis did *not* do:
+
+- It didn't stop at "revenue fell 47%". That's a finding, not an explanation.
+- It didn't guess. Each explanation was checked against a number.
+- It didn't claim more than the data shows. The data says *what* changed (frequency); only a conversation with customers can say *why*. A good recommendation names the next question as well as the next action.
+
+> [!BUSINESS]
+> The most valuable sentence an analyst can say is often "the data rules out X". Here, ruling out lost customers and price cuts saved the director from two wrong fixes: a customer-acquisition campaign and a discount.
+
+## Practice
+
+```answer
+{
+  "id": "daf-09-p1",
+  "prompt": "Check the analysis yourself. How many **order lines** did North West customers place in January–June **2026**? (Look up each order's customer region, then count 2026 order lines for North West.)",
+  "answer": 91,
+  "format": "number",
+  "dataset": "sales",
+  "files": ["orders", "customers"],
+  "verify": "SELECT COUNT(*) FROM orders o JOIN customers c ON c.customer_id = o.customer_id WHERE c.region = 'North West' AND o.order_date >= '2026-01-01'",
+  "hint": "Add a region column to orders by looking up each customer_id in customers.csv (in Sheets or Excel: XLOOKUP or VLOOKUP). Then filter region = North West and dates from 2026-01-01, and count.",
+  "explanation": "91 order lines in H1 2026, down from 176 in H1 2025.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "daf-09-p2",
+  "prompt": "Which region's revenue grew by the **most naira** from H1 2025 to H1 2026? Use the table in lesson 6 (Data analysis).",
+  "answer": "Lagos",
+  "format": "text",
+  "hint": "Subtract H1 2025 from H1 2026 for each region and compare the differences.",
+  "explanation": "Lagos grew by ₦34.6m (118.2 → 152.8). South West grew faster in percentage terms (+79%) but by less money (+₦22.8m).",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Which is a measurable version of \"Is the North doing badly?\"",
+    "options": ["Is the North bad?", "How did North West revenue in Jan–Jun 2026 compare with Jan–Jun 2025?", "Tell me about the North", "What is the North's data?"],
+    "answer": 1,
+    "explanation": "It names the measure (revenue), the segment, the periods and the comparison."
+  },
+  {
+    "prompt": "Revenue fell but the number of customers ordering stayed the same. Which explanation does that rule out?",
+    "options": ["Customers ordering less often", "Lost customers", "Smaller orders", "Lower prices"],
+    "answer": 1,
+    "explanation": "If the same number of customers are still ordering, losing customers isn't the cause."
+  },
+  {
+    "prompt": "What turns a finding into an insight?",
+    "options": ["A bigger chart", "Adding why it matters and what to do about it", "More decimal places", "Using a different tool"],
+    "answer": 1,
+    "explanation": "An insight connects the data to a decision."
+  }
+]
+```
+$md$, true, true, 9, array['daf-09-p1', 'daf-09-p2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position)
+values ('daf-m10', 'data-analytics-foundations', 'Your First Analytics Project', 10)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('data-analytics-foundations:your-first-analytics-project', 'data-analytics-foundations', 'daf-m10', 'your-first-analytics-project', 'Your first analytics project', 'Run the whole cycle on Kolanut''s staff data, from question to recommendation, and prepare for the final project.', 40, $md$
+## The problem
+
+Kolanut's HR manager is worried: "It feels like we keep losing people, especially in customer service. Is that true, and what should we do?"
+
+This lesson walks through a small but complete analysis of that question. The course's final project then asks you to take it further on your own.
+
+```dataset
+{ "dataset": "hr", "files": ["employees", "attendance", "leave"] }
+```
+
+## The concept
+
+A complete analysis, even a small one, has five parts. You'll produce them for the final project:
+
+1. **The question**, in measurable form.
+2. **The data** you used and anything you cleaned or excluded.
+3. **The analysis**: the calculations and a chart or table.
+4. **The finding**, in one or two sentences.
+5. **The recommendation** and its limits: what the data can't tell you.
+
+**A note on small numbers.** Kolanut has 80 employees. When you split them by department, some groups have only 6 or 8 people. One resignation in a group of 8 moves the rate by 12.5 percentage points. Report the counts next to the rates, and be careful about strong conclusions from small groups.
+
+## Example
+
+**Question.** Of everyone Kolanut has employed since 2018, what share has resigned, and does it differ by department?
+
+**Data.** `employees.csv`: one row per employee, with `department`, `job_level` and `status` (Active or Resigned).
+
+**Analysis.**
+
+| Department | Staff | Resigned | Resigned % |
+| :-- | --: | --: | --: |
+| Customer Service | 8 | 3 | 37.5% |
+| Finance | 10 | 2 | 20.0% |
+| Operations | 27 | 5 | 18.5% |
+| IT | 12 | 1 | 8.3% |
+| Sales | 17 | 0 | 0.0% |
+| Human Resources | 6 | 0 | 0.0% |
+| **All** | **80** | **11** | **13.8%** |
+
+**Finding.** Customer Service has the highest share of resignations (3 of 8 people, 37.5%), about three times the company-wide rate. By job level, all 11 people who left were Junior or Mid level; no Senior staff or Managers resigned.
+
+**Recommendation.** Hold short exit and "stay" conversations with Customer Service staff to understand why people leave, and review junior pay and workload there. **Limit:** these are small numbers, and the data has no reasons for leaving, so treat this as a signal to investigate, not proof.
+
+## Walkthrough
+
+How to produce the table above in a spreadsheet:
+
+1. Open `employees.csv` in Google Sheets or Excel.
+2. Insert a **pivot table** (Sheets: Insert → Pivot table; Excel: Insert → PivotTable).
+3. Put `department` in **Rows**.
+4. Put `employee_id` in **Values**, summarised by **COUNTA** (Sheets) or **Count** (Excel). That's the Staff column.
+5. Put `status` in **Columns**. You now have Active and Resigned counts per department.
+6. Next to the pivot, calculate Resigned ÷ Staff × 100 for each department.
+7. Sort by the percentage, largest first.
+
+> [!TIP]
+> If pivot tables are new to you, a formula works too: `=COUNTIFS(C:C,"Customer Service",H:H,"Resigned")` counts resigned Customer Service staff, if department is in column C and status in column H. The Excel course covers both methods properly.
+
+## Practice
+
+```answer
+{
+  "id": "daf-10-p1",
+  "prompt": "Across **all** 80 employees, what percentage have resigned? Give one decimal place.",
+  "answer": 13.8,
+  "tolerance": 0.06,
+  "format": "percent",
+  "dataset": "hr",
+  "files": ["employees"],
+  "verify": "SELECT ROUND(100.0 * SUM(status = 'Resigned') / COUNT(*), 2) FROM employees",
+  "hint": "Count the Resigned rows, divide by the total number of rows, multiply by 100.",
+  "explanation": "11 of 80, which is 13.75%, shown as 13.8% to one decimal place.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "daf-10-p2",
+  "prompt": "Now attendance. In `attendance.csv` (June 2026, active staff only), how many records have the status **Late**?",
+  "answer": 103,
+  "format": "number",
+  "dataset": "hr",
+  "files": ["attendance"],
+  "verify": "SELECT COUNT(*) FROM attendance WHERE status = 'Late'",
+  "hint": "Filter the status column to Late and count, or use COUNTIF on the status column.",
+  "explanation": "The final project asks you to break this down by department. One department stands out.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "A department of 6 people had 1 resignation. Why should you be careful calling its rate (16.7%) 'high'?",
+    "options": ["Rates can't be calculated for small groups", "With so few people, one person changes the rate a lot, so it may be chance", "6 is an even number", "Resignations are always normal"],
+    "answer": 1,
+    "explanation": "Small groups produce jumpy percentages. Show the counts and treat the rate as a signal."
+  },
+  {
+    "prompt": "Which part of an analysis says what the data can't tell you?",
+    "options": ["The question", "The limits stated with the recommendation", "The chart title", "The data source"],
+    "answer": 1,
+    "explanation": "Stating limits is part of honest analysis: here, the data has no reasons for leaving."
+  },
+  {
+    "prompt": "In the pivot table, why put status in Columns?",
+    "options": ["To sort alphabetically", "To split each department's count into Active and Resigned side by side", "To remove resigned staff", "Columns are required"],
+    "answer": 1,
+    "explanation": "It gives the two counts you need to calculate a rate for each department."
+  }
+]
+```
+
+When you've finished this lesson, take the final assessment, then open the final project from the course page.
+$md$, true, true, 10, array['daf-10-p1', 'daf-10-p2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+
+-- Course: Excel for Data Analysis
+insert into public.courses (id, slug, code, title, summary, description, category_id, difficulty, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, passing_score, position)
+values ('excel-for-data-analysis', 'excel-for-data-analysis', 'XLS', 'Excel for Data Analysis', 'Clean, analyse and present business data in Excel, from formulas and XLOOKUP to pivot tables and charts.', 'Excel is still where most business analysis happens. Learn to work with real datasets: sort and filter, write the formulas analysts use every day, clean messy data, summarise with pivot tables and present results with clear charts.', 'data-analytics', 'beginner', 'Beginner', 9, true, 'available', true, array['Formulas and functions', 'IF, SUMIF and COUNTIF', 'XLOOKUP', 'Data cleaning', 'Pivot tables', 'Charts']::text[], array['Microsoft Excel 2021 or Microsoft 365 (Google Sheets works for most lessons)', 'Comfortable using a computer; no Excel experience needed']::text[], 'Kolanut sales performance review', true, true, true, true, 70, 1)
+on conflict (id) do update set slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, passing_score = excluded.passing_score, position = excluded.position;
+
+insert into public.course_modules (id, course_id, title, position)
+values ('xls-m01', 'excel-for-data-analysis', 'Excel for Analysts', 1)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('excel-for-data-analysis:excel-for-analysts', 'excel-for-data-analysis', 'xls-m01', 'excel-for-analysts', 'Excel for analysts', 'Why Excel is still where most analysis happens, the parts of the screen you''ll use, and the shortcuts that save hours.', 20, $md$
+## The problem
+
+Kolanut Distribution's sales team lives in Excel. Every report the managing director reads started as a spreadsheet. Analysts who move around Excel slowly (scrolling, clicking through menus, retyping) spend their day on mechanics instead of answers.
+
+This course takes you from opening a raw file to a finished analysis. First, the ground rules for working in Excel like an analyst.
+
+## The concept
+
+**Why Excel?** It's on almost every office computer, everyone can open your file, and it covers the full cycle: import, clean, calculate, summarise, chart. Larger data goes into databases and Power BI, but Excel stays the everyday tool.
+
+**The parts you'll use**
+
+| Part | What it is |
+| :-- | :-- |
+| **Workbook** | The file (`.xlsx`). |
+| **Worksheet** | A tab inside the workbook. Keep raw data, calculations and results on separate sheets. |
+| **Cell** | One box, named by column and row: `C5`. |
+| **Formula bar** | Shows what's really in a cell: a value or a formula. |
+| **Name Box** | Left of the formula bar. Shows the current cell; type `A4000` there and press Enter to jump. |
+| **Ribbon** | The tabs at the top: Home, Insert, Data, Formulas… |
+
+**What version?** This course uses Microsoft 365 or Excel 2021 or later, which include `XLOOKUP`, `FILTER` and `UNIQUE`. **Google Sheets** works for almost everything too; where menus differ, we say so.
+
+**Shortcuts worth learning today** (Windows; on a Mac use Cmd for Ctrl)
+
+| Shortcut | Does |
+| :-- | :-- |
+| Ctrl + ↓ / ↑ / → / ← | Jump to the edge of the data |
+| Ctrl + Shift + ↓ | Select from here to the last filled cell |
+| Ctrl + T | Turn a range into a **Table** |
+| Ctrl + Shift + L | Turn filters on or off |
+| Alt + = | AutoSum |
+| F4 (while editing a formula) | Toggle `$` absolute references |
+| Ctrl + Z | Undo, your best friend |
+
+## Example
+
+Download Kolanut's three files. You'll use them through the whole course:
+
+```dataset
+{ "dataset": "sales" }
+```
+
+- `orders.csv`: one row per product on an order (4,266 rows).
+- `customers.csv`: one row per customer, with channel, region, city and sales rep.
+- `products.csv`: one row per product, with category and **current** list price.
+
+> [!NOTE]
+> Kolanut raised prices on 1 January 2026. `products.csv` shows the 2026 list price; each row of `orders.csv` has the price actually charged at the time. That's why orders carry their own `unit_price`.
+
+## Walkthrough
+
+1. Open `customers.csv` in Excel.
+2. Click cell A1 and press **Ctrl + ↓**. You land on the last customer. The row number minus one (the header) is the number of customers.
+3. Press **Ctrl + →** from A1 to find the last column.
+4. Click anywhere in the data and press **Ctrl + T**, confirm *My table has headers*. The data becomes a **Table**: banded rows, filter buttons, and it will grow automatically when you add rows. Most of this course works with Tables.
+5. With the Table selected, look at **Table Design → Table Name** and rename it `Customers`. Named tables make formulas readable later.
+
+## Practice
+
+```answer
+{
+  "id": "xls-01-p1",
+  "prompt": "How many customers are in `customers.csv`?",
+  "answer": 90,
+  "format": "number",
+  "dataset": "sales",
+  "files": ["customers"],
+  "verify": "SELECT COUNT(*) FROM customers",
+  "hint": "Ctrl + ↓ from A1, then subtract 1 for the header row.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "xls-01-p2",
+  "prompt": "What is the current list price, in naira, of **Bottled water 75cl (12)**?",
+  "answer": 4000,
+  "format": "naira",
+  "dataset": "sales",
+  "files": ["products"],
+  "verify": "SELECT list_price FROM products WHERE product_name = 'Bottled water 75cl (12)'",
+  "hint": "Open products.csv and find the row, or press Ctrl + F and search for 'Bottled water'.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Which shortcut jumps from the top of a column to the last filled cell?",
+    "options": ["Ctrl + Home", "Ctrl + ↓", "Shift + ↓", "Alt + ↓"],
+    "answer": 1,
+    "explanation": "Ctrl + an arrow key jumps to the edge of the data in that direction."
+  },
+  {
+    "prompt": "Why convert a data range into a Table with Ctrl + T?",
+    "options": ["It makes the file read-only", "It adds filters, keeps formatting, grows with new rows and lets formulas use column names", "Tables are required for typing", "It deletes duplicates"],
+    "answer": 1,
+    "explanation": "Tables make the data easier to filter, format and reference."
+  },
+  {
+    "prompt": "Why does each order row carry its own unit_price, when products.csv also has a price?",
+    "options": ["It's a mistake", "Prices change over time; the order records the price actually charged", "To make the file bigger", "Excel requires it"],
+    "answer": 1,
+    "explanation": "The price list shows today's price. Historical orders need the price at the time."
+  }
+]
+```
+$md$, true, true, 1, array['xls-01-p1', 'xls-01-p2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position)
+values ('xls-m02', 'excel-for-data-analysis', 'Working with Data', 2)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('excel-for-data-analysis:working-with-data', 'excel-for-data-analysis', 'xls-m02', 'working-with-data', 'Working with data', 'Import a CSV safely, check data types, and add your first calculated column to a Table.', 30, $md$
+## The problem
+
+The managing director wants one number to start: Kolanut's total revenue since January 2025. The orders file has quantity, price and discount on each line, but no revenue column. You'll add one. Before that, the file has to come into Excel correctly.
+
+## The concept
+
+**Two ways to open a CSV**
+
+| Method | What happens | Use when |
+| :-- | :-- | :-- |
+| Double-click the file | Excel guesses every column's type, instantly | Quick look only |
+| **Data → From Text/CSV** | Shows a preview, lets you check types, loads a Table | Real work |
+
+Excel's guesses can go wrong: codes with leading zeros lose them (`007` becomes `7`), long numbers turn into `1.2E+15`, and day-first dates can be read as month-first. Importing through **Data → From Text/CSV** lets you catch these before they spread.
+
+**Values vs formatting.** A cell's *value* is what's stored; its *format* is how it's shown. `0.19` formatted as a percentage shows `19%`. Formatting never changes the value, so rounding a display to 0 decimals doesn't round the number used in calculations.
+
+**Calculated columns in a Table.** Type a formula once in a Table column and Excel fills it down for every row, using **structured references**: `[@quantity]` means "the quantity in this row".
+
+**Kolanut revenue for one order line:**
+
+```excel
+=[@quantity]*[@unit_price]*(1-[@discount_pct]/100)
+```
+
+## Example
+
+Order line 10001: 14 packs × ₦18,600 × (1 − 0 ÷ 100) = **₦260,400**.
+
+A 5% discount line of 20 packs at ₦13,200: 20 × 13,200 × (1 − 5 ÷ 100) = 264,000 × 0.95 = **₦250,800**.
+
+## Walkthrough
+
+1. In a new workbook, go to **Data → Get Data → From File → From Text/CSV** (older versions: **Data → From Text/CSV**) and choose `orders.csv`.
+2. In the preview, check that `order_date` shows dates and the numbers are right-aligned numbers. Click **Load**. Excel creates a Table on a new sheet.
+3. Rename the sheet `Orders` and the Table `Orders` (Table Design → Table Name).
+4. In the first empty column to the right, type the header `revenue` in row 1.
+5. In row 2 of that column type the formula above and press Enter. Excel fills it down all 4,266 rows.
+6. Select the column and format it: **Home → Number → Comma Style**, and reduce decimals to 0.
+7. **View → Freeze Panes → Freeze Top Row**, so the headers stay visible as you scroll.
+
+To get the total, click in any empty cell and type:
+
+```excel
+=SUM(Orders[revenue])
+```
+
+`Orders[revenue]` means "the whole revenue column of the Orders table". It stays correct if rows are added.
+
+> [!TIP]
+> Google Sheets: **File → Import → Upload**, choose *Insert new sheet*. Sheets has no Table structured references, so use `=E2*F2*(1-G2/100)` in the first row and double-click the fill handle (the small square at the cell's corner) to fill down.
+
+## Practice
+
+```answer
+{
+  "id": "xls-02-p1",
+  "prompt": "What is Kolanut's **total revenue** across all order lines (January 2025 to June 2026), to the nearest naira?",
+  "answer": 830541245,
+  "tolerance": 1,
+  "format": "naira",
+  "dataset": "sales",
+  "files": ["orders"],
+  "verify": "SELECT SUM(quantity * unit_price * (1 - discount_pct / 100.0)) FROM orders",
+  "hint": "Add the revenue column with =[@quantity]*[@unit_price]*(1-[@discount_pct]/100), then =SUM() the column.",
+  "explanation": "₦830,541,245, about ₦830.5 million over 18 months.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "xls-02-p2",
+  "prompt": "And **before** discounts? Add a column for gross value (quantity × unit_price) and total it.",
+  "answer": 859628300,
+  "tolerance": 1,
+  "format": "naira",
+  "dataset": "sales",
+  "files": ["orders"],
+  "verify": "SELECT SUM(quantity * unit_price) FROM orders",
+  "hint": "=[@quantity]*[@unit_price] in a new column, then SUM it.",
+  "explanation": "₦859,628,300. The difference from revenue, about ₦29.1m, is what discounts cost. You'll dig into that in the mini project.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "A cell shows 19% but its value is 0.1874. What will =A1*100 return?",
+    "options": ["19", "18.74", "0.19", "1900"],
+    "answer": 1,
+    "explanation": "Formatting changes the display, not the stored value."
+  },
+  {
+    "prompt": "What does [@quantity] mean in a Table formula?",
+    "options": ["The total of the quantity column", "The quantity value in the same row", "The first quantity in the table", "A named cell called quantity"],
+    "answer": 1,
+    "explanation": "The @ means 'this row'."
+  },
+  {
+    "prompt": "Why import CSVs with Data → From Text/CSV rather than double-clicking?",
+    "options": ["It's the only way to open CSVs", "You can check and fix column types before the data loads", "It makes the file smaller", "It removes duplicates"],
+    "answer": 1,
+    "explanation": "Checking types up front prevents silent errors with IDs, long numbers and dates."
+  }
+]
+```
+$md$, true, true, 2, array['xls-02-p1', 'xls-02-p2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position)
+values ('xls-m03', 'excel-for-data-analysis', 'Sorting and Filtering', 3)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('excel-for-data-analysis:sorting-and-filtering', 'excel-for-data-analysis', 'xls-m03', 'sorting-and-filtering', 'Sorting and filtering', 'Find the rows that matter with multi-level sorts, filters, SUBTOTAL and the FILTER function.', 25, $md$
+## The problem
+
+A sales manager asks three quick questions: *What was our single biggest order line? How many lines got the full 10% discount? How busy was December?* Each answer is buried somewhere in 4,266 rows. Sorting and filtering bring the right rows to the top.
+
+## The concept
+
+**Sorting** reorders rows. **Data → Sort** lets you sort by several columns in turn: region A→Z, then within each region, revenue largest first (use **Add Level**).
+
+**Filtering** hides rows that don't match, without deleting them. Turn filters on with **Ctrl + Shift + L** (Tables have them already). Each column's drop-down offers:
+
+- tick-boxes for specific values;
+- **Number Filters** (Greater Than, Top 10…);
+- **Date Filters** (This Month, Between…), and dates grouped by year and month in the list.
+
+**Counting what you see.** `SUM` and `COUNT` include hidden rows. `SUBTOTAL` ignores rows hidden by a filter:
+
+```excel
+=SUBTOTAL(9, Orders[revenue])
+```
+
+The first argument picks the calculation: 9 = sum, 3 = count of non-empty cells, 1 = average. A Table's **Total Row** (Table Design → Total Row) uses `SUBTOTAL` automatically.
+
+**The FILTER function** (Excel 365/2021 and Google Sheets) returns matching rows as a new range, so your original data stays untouched:
+
+```excel
+=FILTER(Orders, Orders[discount_pct]=10, "none")
+```
+
+> [!WARNING]
+> Sort the **whole table**, never a single column. Sorting one column alone scrambles your data: quantities end up next to the wrong orders. Inside a Table, sorting from a column's drop-down always moves whole rows, which is another reason to use Tables.
+
+## Example
+
+To find the biggest single order line: click the `revenue` drop-down → **Sort Largest to Smallest**. The top row is order line **14243**: 29 packs of Body lotion 400ml at ₦24,600 on 27 June 2026, worth ₦713,400.
+
+## Walkthrough
+
+**How many lines had a 10% discount?**
+
+1. Click the `discount_pct` drop-down, untick *Select All*, tick **10**, OK.
+2. The status bar at the bottom of the window shows *"X of 4266 records found"*. Or turn on the Table's **Total Row** and set the `order_id` total to **Count**.
+3. Clear the filter afterwards: **Data → Clear**.
+
+**How many lines in December 2025?**
+
+1. Open the `order_date` drop-down. Dates are grouped: expand **2025**, untick everything except **December**.
+2. Read the count the same way.
+
+## Practice
+
+```answer
+{
+  "id": "xls-03-p1",
+  "prompt": "How many order lines received a **10%** discount?",
+  "answer": 525,
+  "format": "number",
+  "dataset": "sales",
+  "files": ["orders"],
+  "verify": "SELECT COUNT(*) FROM orders WHERE discount_pct = 10",
+  "hint": "Filter discount_pct to 10 and read the count in the status bar or Total Row.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "xls-03-p2",
+  "prompt": "How many order lines were placed in **December 2025**?",
+  "answer": 334,
+  "format": "number",
+  "dataset": "sales",
+  "files": ["orders"],
+  "verify": "SELECT COUNT(*) FROM orders WHERE order_date BETWEEN '2025-12-01' AND '2025-12-31'",
+  "hint": "Use the date groups in the order_date filter: 2025 → December.",
+  "explanation": "334 lines, the busiest month in the data by far. Other months range from about 190 to 265.",
+  "required": true
+}
+```
+
+## Challenge
+
+```answer
+{
+  "id": "xls-03-c1",
+  "prompt": "What is the revenue of the **second** largest order line, in naira?",
+  "answer": 699000,
+  "format": "naira",
+  "dataset": "sales",
+  "files": ["orders"],
+  "verify": "SELECT quantity * unit_price * (1 - discount_pct / 100.0) AS r FROM orders ORDER BY r DESC LIMIT 1 OFFSET 1",
+  "hint": "Sort revenue largest to smallest and read row 3 (row 2 is the largest). Or use =LARGE(Orders[revenue], 2).",
+  "explanation": "₦699,000: 30 packs of detergent at ₦23,300 on 28 February 2026.",
+  "required": false
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "You filter to Lagos customers and use =SUM(C2:C500). What does it add up?",
+    "options": ["Only the visible Lagos rows", "All rows, including the hidden ones", "Nothing, it returns an error", "Only the first row"],
+    "answer": 1,
+    "explanation": "SUM ignores filters. Use SUBTOTAL(9, …) to total only visible rows."
+  },
+  {
+    "prompt": "What goes wrong if you select one column and sort it on its own?",
+    "options": ["Nothing", "The values in that column no longer line up with the rest of their row", "Excel deletes the column", "The column turns into text"],
+    "answer": 1,
+    "explanation": "Always sort the whole table so rows stay together."
+  },
+  {
+    "prompt": "What does =FILTER(Orders, Orders[discount_pct]=10) do to the original data?",
+    "options": ["Deletes the other rows", "Nothing: it returns a separate list of the matching rows", "Sorts it", "Hides rows"],
+    "answer": 1,
+    "explanation": "FILTER returns a new, live list and leaves the source untouched."
+  }
+]
+```
+$md$, true, true, 3, array['xls-03-p1', 'xls-03-p2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position)
+values ('xls-m04', 'excel-for-data-analysis', 'Formulas and Functions', 4)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('excel-for-data-analysis:formulas-and-functions', 'excel-for-data-analysis', 'xls-m04', 'formulas-and-functions', 'Formulas and functions', 'How formulas work, relative and absolute references, the core functions, and how to read Excel''s error messages.', 35, $md$
+## The problem
+
+You'll write hundreds of formulas as an analyst. Most mistakes come from a few causes: a reference that shifts when copied, a function applied to the wrong range, or an error value spreading silently through a workbook. Get the basics right once and those mistakes mostly disappear.
+
+## The concept
+
+**A formula starts with `=`.** It can use cell references, numbers, operators and functions:
+
+```excel
+=B2*C2              multiply two cells
+=SUM(E2:E4267)      add a range
+=ROUND(F2/1000, 1)  a function inside a function
+```
+
+Operators follow maths order: brackets, then `^`, then `*` and `/`, then `+` and `-`. `=1+2*3` is 7, `=(1+2)*3` is 9.
+
+**Relative vs absolute references**
+
+When you copy a formula, relative references shift; absolute ones (with `$`) don't.
+
+| Reference | Copied one row down becomes | Use for |
+| :-- | :-- | :-- |
+| `B2` | `B3` | Row-by-row calculations |
+| `$B$2` | `$B$2` | A fixed cell, like a total or a rate |
+| `$B2` | `$B3` | Column fixed, row moves |
+| `B$2` | `B$2` | Row fixed, column moves |
+
+Press **F4** while the cursor is on a reference to cycle through these.
+
+**Functions you'll use every day**
+
+| Function | Returns |
+| :-- | :-- |
+| `SUM`, `AVERAGE`, `MIN`, `MAX` | Total, mean, smallest, largest |
+| `COUNT` | How many cells contain **numbers** |
+| `COUNTA` | How many cells are **not empty** |
+| `COUNTBLANK` | How many cells are empty |
+| `ROUND(x, n)` | x rounded to n decimals |
+| `YEAR`, `MONTH`, `DAY` | Parts of a date |
+| `TEXT(date, "mmm yyyy")` | A date shown as text, e.g. "Dec 2025" |
+| `UNIQUE(range)` | The distinct values (365/2021, Sheets) |
+| `IFERROR(x, alt)` | x, or alt if x is an error |
+
+**Error values and what they mean**
+
+| Error | Usual cause |
+| :-- | :-- |
+| `#DIV/0!` | Dividing by zero or an empty cell |
+| `#VALUE!` | Maths on text, e.g. `="₦1,000"*2` |
+| `#N/A` | A lookup found no match |
+| `#REF!` | A referenced cell was deleted |
+| `#NAME?` | A misspelled function or a missing quote |
+| `#SPILL!` | A dynamic array (like UNIQUE) has no room to spill |
+
+## Example
+
+**Share of total with an absolute reference.** With revenue in column H and the grand total in `K1`:
+
+```excel
+=H2/$K$1
+```
+
+Copy it down: `H2` becomes `H3`, `H4`…, but `$K$1` stays fixed. Without the dollars, the second row would divide by `K2`, which is empty, and show `#DIV/0!`.
+
+**Month for grouping.** Next to each order, `=TEXT([@order_date], "yyyy-mm")` gives `2025-12`, handy for summaries that sort correctly.
+
+## Walkthrough
+
+1. In your `Orders` table, next to the data, calculate:
+   - total units sold: `=SUM(Orders[quantity])`
+   - average revenue per line: `=AVERAGE(Orders[revenue])`
+   - the number of different days with orders: `=COUNTA(UNIQUE(Orders[order_date]))`
+2. Wrap the average in `ROUND(…, 0)` to get whole naira.
+3. Check a result by a second route: the status bar shows Sum, Average and Count when you select a column. If your formula and the status bar disagree, find out why before moving on.
+
+## Practice
+
+```answer
+{
+  "id": "xls-04-p1",
+  "prompt": "How many **packs (units)** did Kolanut sell in total across all order lines?",
+  "answer": 58757,
+  "format": "number",
+  "dataset": "sales",
+  "files": ["orders"],
+  "verify": "SELECT SUM(quantity) FROM orders",
+  "hint": "=SUM() of the quantity column.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "xls-04-p2",
+  "prompt": "What is the **average revenue per order line**, rounded to the nearest naira?",
+  "answer": 194689,
+  "tolerance": 1,
+  "format": "naira",
+  "dataset": "sales",
+  "files": ["orders"],
+  "verify": "SELECT ROUND(AVG(quantity * unit_price * (1 - discount_pct / 100.0))) FROM orders",
+  "hint": "=ROUND(AVERAGE(Orders[revenue]), 0), using the revenue column from lesson 2.",
+  "required": true
+}
+```
+
+## Challenge
+
+```answer
+{
+  "id": "xls-04-c1",
+  "prompt": "On how many **different days** did Kolanut receive at least one order?",
+  "answer": 546,
+  "format": "number",
+  "dataset": "sales",
+  "files": ["orders"],
+  "verify": "SELECT COUNT(DISTINCT order_date) FROM orders",
+  "hint": "=COUNTA(UNIQUE(Orders[order_date])). In Google Sheets, =COUNTUNIQUE(B2:B4267).",
+  "explanation": "546 days. January 2025 to June 2026 has 546 days, so there were orders every single day, Sundays included.",
+  "required": false
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "=B2*$D$1 is copied from row 2 to row 5. What does it become?",
+    "options": ["=B5*$D$4", "=B5*$D$1", "=B2*$D$1", "=E5*$D$1"],
+    "answer": 1,
+    "explanation": "B2 is relative and moves; $D$1 is absolute and stays."
+  },
+  {
+    "prompt": "A column has 100 cells: 90 numbers, 5 text entries, 5 blanks. What does COUNT return?",
+    "options": ["100", "95", "90", "5"],
+    "answer": 2,
+    "explanation": "COUNT only counts numbers. COUNTA would return 95."
+  },
+  {
+    "prompt": "A formula shows #VALUE!. What is the most likely cause?",
+    "options": ["Dividing by zero", "Doing arithmetic on text, such as a number stored with a ₦ sign", "A lookup with no match", "A deleted cell"],
+    "answer": 1,
+    "explanation": "#VALUE! usually means a calculation received text where it expected a number."
+  }
+]
+```
+$md$, true, true, 4, array['xls-04-p1', 'xls-04-p2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position)
+values ('xls-m05', 'excel-for-data-analysis', 'IF, SUMIF, COUNTIF', 5)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('excel-for-data-analysis:if-sumif-countif', 'excel-for-data-analysis', 'xls-m05', 'if-sumif-countif', 'IF, SUMIF and COUNTIF', 'Make decisions inside formulas with IF, and total or count only the rows that meet conditions with SUMIFS and COUNTIFS.', 35, $md$
+## The problem
+
+Filtering answers one question at a time. But the sales director wants a table: revenue by product, lines by month, discounted lines this year. Rebuilding filters for every cell would take all day. **Conditional functions** calculate totals and counts for rows that meet a condition, directly in a formula.
+
+## The concept
+
+**IF: choose between two results**
+
+```excel
+=IF(condition, value_if_true, value_if_false)
+=IF([@quantity]>=20, "Large", "Small")
+```
+
+Combine conditions with `AND` and `OR`:
+
+```excel
+=IF(AND([@quantity]>=20, [@discount_pct]=0), "Large, full price", "Other")
+```
+
+For several outcomes, `IFS` is easier to read than nested IFs:
+
+```excel
+=IFS([@quantity]>=20, "Large", [@quantity]>=10, "Medium", TRUE, "Small")
+```
+
+**SUMIF and COUNTIF: one condition**
+
+```excel
+=SUMIF(range_to_test, condition, range_to_add)
+=SUMIF(Orders[product_id], 1, Orders[revenue])       revenue from product 1
+=COUNTIF(Orders[discount_pct], ">0")                  lines with any discount
+```
+
+**SUMIFS and COUNTIFS: several conditions** (note the order changes: the range to add comes **first**)
+
+```excel
+=SUMIFS(range_to_add, range1, condition1, range2, condition2, …)
+=COUNTIFS(range1, condition1, range2, condition2, …)
+```
+
+**Conditions with dates or cell values** are built as text with `&`:
+
+```excel
+=SUMIFS(Orders[revenue], Orders[order_date], ">="&DATE(2025,10,1), Orders[order_date], "<="&DATE(2025,12,31))
+```
+
+That's revenue for October–December 2025: two conditions on the same column give a date range.
+
+> [!TIP]
+> Put conditions in cells instead of typing them into formulas: `=SUMIFS(Orders[revenue], Orders[product_id], A2)`. Then a whole column of product IDs in A gives a whole summary table with one formula copied down.
+
+## Example
+
+Revenue per product, as a small summary table:
+
+| A: product_id | B: revenue |
+| --: | :-- |
+| 1 | `=SUMIFS(Orders[revenue], Orders[product_id], A2)` |
+| 2 | (copied down) |
+| … | … |
+
+Copy the formula down beside product IDs 1 to 16, and you have revenue for every product.
+
+## Walkthrough
+
+1. Add a `size` column to the Orders table: `=IF([@quantity]>=20, "Large", "Small")`.
+2. Count large lines: `=COUNTIF(Orders[size], "Large")`.
+3. Revenue from product 1 (Malt drink): `=SUMIF(Orders[product_id], 1, Orders[revenue])`.
+4. Discounted lines in 2026: `=COUNTIFS(Orders[order_date], ">="&DATE(2026,1,1), Orders[discount_pct], ">0")`.
+
+Check step 4 with a filter (order_date in 2026, discount_pct not 0). Two methods agreeing is the best evidence you're right.
+
+## Practice
+
+```answer
+{
+  "id": "xls-05-p1",
+  "prompt": "What was the total revenue from **product 1 (Malt drink 330ml)**, to the nearest naira?",
+  "answer": 59804940,
+  "tolerance": 1,
+  "format": "naira",
+  "dataset": "sales",
+  "files": ["orders"],
+  "verify": "SELECT SUM(quantity * unit_price * (1 - discount_pct / 100.0)) FROM orders WHERE product_id = 1",
+  "hint": "=SUMIF(Orders[product_id], 1, Orders[revenue])",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "xls-05-p2",
+  "prompt": "How many order lines in **2026** had a discount greater than 0?",
+  "answer": 593,
+  "format": "number",
+  "dataset": "sales",
+  "files": ["orders"],
+  "verify": "SELECT COUNT(*) FROM orders WHERE order_date >= '2026-01-01' AND discount_pct > 0",
+  "hint": "=COUNTIFS(Orders[order_date], \">=\"&DATE(2026,1,1), Orders[discount_pct], \">0\")",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "xls-05-p3",
+  "prompt": "What was revenue in the **fourth quarter of 2025** (1 October to 31 December), to the nearest naira?",
+  "answer": 160799625,
+  "tolerance": 1,
+  "format": "naira",
+  "dataset": "sales",
+  "files": ["orders"],
+  "verify": "SELECT SUM(quantity * unit_price * (1 - discount_pct / 100.0)) FROM orders WHERE order_date BETWEEN '2025-10-01' AND '2025-12-31'",
+  "hint": "SUMIFS with two conditions on order_date: \">=\"&DATE(2025,10,1) and \"<=\"&DATE(2025,12,31).",
+  "explanation": "₦160.8m: nearly 30% of 2025's revenue came in the last three months.",
+  "required": true
+}
+```
+
+## Challenge
+
+```answer
+{
+  "id": "xls-05-c1",
+  "prompt": "How many order lines are **Large** (20 packs or more)?",
+  "answer": 1032,
+  "format": "number",
+  "dataset": "sales",
+  "files": ["orders"],
+  "verify": "SELECT COUNT(*) FROM orders WHERE quantity >= 20",
+  "hint": "Either COUNTIF on a size column, or directly: =COUNTIF(Orders[quantity], \">=20\").",
+  "required": false
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "In SUMIFS, which argument comes first?",
+    "options": ["The first condition", "The range to add up", "The range to test", "The number of conditions"],
+    "answer": 1,
+    "explanation": "SUMIFS(sum_range, criteria_range1, criteria1, …). SUMIF puts the sum range last, which catches people out."
+  },
+  {
+    "prompt": "What does =COUNTIFS(A:A, \"Lagos\", B:B, \">100000\") count?",
+    "options": ["Rows where A is Lagos OR B is over 100,000", "Rows where A is Lagos AND B is over 100,000", "All Lagos rows", "The total of B for Lagos"],
+    "answer": 1,
+    "explanation": "Every condition in COUNTIFS must be true for a row to count."
+  },
+  {
+    "prompt": "Which is the correct way to use a date in a SUMIFS condition?",
+    "options": ["\">=1/10/2025\"", "\">=\"&DATE(2025,10,1)", ">=DATE(2025,10,1)", "\"DATE(2025,10,1)\""],
+    "answer": 1,
+    "explanation": "Join the operator (as text) to a real date with &. Typed dates depend on regional settings."
+  }
+]
+```
+$md$, true, true, 5, array['xls-05-p1', 'xls-05-p2', 'xls-05-p3']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position)
+values ('xls-m06', 'excel-for-data-analysis', 'XLOOKUP', 6)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('excel-for-data-analysis:xlookup', 'excel-for-data-analysis', 'xls-m06', 'xlookup', 'XLOOKUP', 'Bring columns from one table into another with XLOOKUP, and recognise VLOOKUP and INDEX/MATCH in older files.', 35, $md$
+## The problem
+
+The director asks: *"How much did we sell in Lagos? And how much in Beverages?"* The orders table has `customer_id` and `product_id`, but no region and no category. Those live in `customers.csv` and `products.csv`. You need to bring them across, row by row. That's a **lookup**.
+
+## The concept
+
+**XLOOKUP** finds a value in one column and returns the matching value from another:
+
+```excel
+=XLOOKUP(lookup_value, lookup_array, return_array, [if_not_found])
+```
+
+- `lookup_value`: what you're looking for (this order's customer_id)
+- `lookup_array`: where to look for it (the customer_id column of Customers)
+- `return_array`: what to bring back (the region column of Customers)
+- `if_not_found`: optional text to show instead of `#N/A`
+
+**Region for each order line:**
+
+```excel
+=XLOOKUP([@customer_id], Customers[customer_id], Customers[region], "Not found")
+```
+
+XLOOKUP matches **exactly** by default, which is what you want for IDs.
+
+**In older files you'll meet two other methods:**
+
+```excel
+=VLOOKUP(C2, Customers!A:H, 4, FALSE)
+=INDEX(Customers!D:D, MATCH(C2, Customers!A:A, 0))
+```
+
+- **VLOOKUP** needs the ID in the first column and a column *number* (4). Insert a column and the number silently points at the wrong data. Always use `FALSE` for exact match; the default (`TRUE`) returns wrong values on unsorted data.
+- **INDEX/MATCH** was the robust choice before XLOOKUP and still works everywhere.
+
+Google Sheets supports XLOOKUP too.
+
+> [!WARNING]
+> A lookup returns the **first** match. If the lookup table has duplicate IDs (like the messy customer export in the next lesson), you'll silently get one of them. Always check that the ID column you're looking up in is unique.
+
+## Example
+
+Order line 10001 has `customer_id` 27 and `product_id` 3.
+
+- `XLOOKUP(27, Customers[customer_id], Customers[region])` returns the region of customer 27.
+- `XLOOKUP(3, Products[product_id], Products[category])` returns **Beverages** (product 3 is Orange juice 1L).
+
+## Walkthrough
+
+1. Load `customers.csv` and `products.csv` into the same workbook as Tables named `Customers` and `Products` (Data → From Text/CSV, as in lesson 2).
+2. In the Orders table, add a column `region`:
+   `=XLOOKUP([@customer_id], Customers[customer_id], Customers[region], "Not found")`
+3. Add a column `category`:
+   `=XLOOKUP([@product_id], Products[product_id], Products[category], "Not found")`
+4. Filter each new column for "Not found". There should be none; if there are, some IDs don't match.
+5. Now combine with SUMIFS from the last lesson:
+   `=SUMIFS(Orders[revenue], Orders[region], "Lagos")`
+
+## Practice
+
+```answer
+{
+  "id": "xls-06-p1",
+  "prompt": "What is Kolanut's total revenue from customers in the **Lagos** region, to the nearest naira?",
+  "answer": 411162300,
+  "tolerance": 1,
+  "format": "naira",
+  "dataset": "sales",
+  "files": ["orders", "customers"],
+  "verify": "SELECT SUM(o.quantity * o.unit_price * (1 - o.discount_pct / 100.0)) FROM orders o JOIN customers c ON c.customer_id = o.customer_id WHERE c.region = 'Lagos'",
+  "hint": "Add a region column with XLOOKUP, then =SUMIFS(Orders[revenue], Orders[region], \"Lagos\").",
+  "explanation": "₦411.2m, just under half of all revenue.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "xls-06-p2",
+  "prompt": "What is total revenue from the **Beverages** category, to the nearest naira?",
+  "answer": 224612360,
+  "tolerance": 1,
+  "format": "naira",
+  "dataset": "sales",
+  "files": ["orders", "products"],
+  "verify": "SELECT SUM(o.quantity * o.unit_price * (1 - o.discount_pct / 100.0)) FROM orders o JOIN products p ON p.product_id = o.product_id WHERE p.category = 'Beverages'",
+  "hint": "Add a category column with XLOOKUP from Products, then SUMIFS on it.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "xls-06-p3",
+  "prompt": "What is the name of customer **42**?",
+  "answer": "Divine Superstore Uyo",
+  "format": "text",
+  "dataset": "sales",
+  "files": ["customers"],
+  "verify": "SELECT customer_name FROM customers WHERE customer_id = 42",
+  "hint": "=XLOOKUP(42, Customers[customer_id], Customers[customer_name])",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "In =XLOOKUP(A2, Products[product_id], Products[category]), what is Products[category]?",
+    "options": ["What we're looking for", "Where we search", "What we bring back", "The value if not found"],
+    "answer": 2,
+    "explanation": "The third argument is the return array."
+  },
+  {
+    "prompt": "Why is VLOOKUP(C2, Customers!A:H, 4, FALSE) fragile?",
+    "options": ["It can't match text", "If someone inserts a column in the lookup table, 4 points at the wrong column", "FALSE makes it slow", "It only works on numbers"],
+    "answer": 1,
+    "explanation": "The column number is hard-coded. XLOOKUP and INDEX/MATCH refer to the column itself."
+  },
+  {
+    "prompt": "A lookup shows #N/A for some rows. What does it mean?",
+    "options": ["The formula is misspelled", "The value wasn't found in the lookup column", "Division by zero", "The file is too large"],
+    "answer": 1,
+    "explanation": "#N/A is 'not available': no match. Check for extra spaces, text vs number IDs, or missing records."
+  }
+]
+```
+$md$, true, true, 6, array['xls-06-p1', 'xls-06-p2', 'xls-06-p3']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position)
+values ('xls-m07', 'excel-for-data-analysis', 'Data Cleaning', 7)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('excel-for-data-analysis:data-cleaning', 'excel-for-data-analysis', 'xls-m07', 'data-cleaning', 'Data cleaning in Excel', 'Clean a real messy export with TRIM, PROPER, SUBSTITUTE, VALUE, Remove Duplicates, a mapping table and Power Query''s locale-aware dates.', 45, $md$
+## The problem
+
+Kolanut's customer list, exported from its old system, is a mess: names with stray spaces and random capitals, regions spelled 23 different ways, three date formats, credit limits stored as text with `₦` signs, and 12 customers listed twice. The new system needs a clean list, and finance wants the total credit extended to customers.
+
+```dataset
+{ "dataset": "cleaning", "files": ["customer_list_raw"] }
+```
+
+## The concept
+
+**Text functions for cleaning**
+
+| Function | Does | Example |
+| :-- | :-- | :-- |
+| `TRIM(x)` | Removes spaces at the start and end, and repeated spaces inside | `"  Ada  Mart "` → `"Ada Mart"` |
+| `CLEAN(x)` | Removes invisible non-printing characters (common in exports) | |
+| `PROPER(x)` | Capitalises Each Word | `"PEACE MART"` → `"Peace Mart"` |
+| `UPPER(x)`, `LOWER(x)` | All capitals / all lower case | |
+| `SUBSTITUTE(x, old, new)` | Replaces every `old` with `new` | remove `₦`: `SUBSTITUTE(x,"₦","")` |
+| `VALUE(x)` | Turns text that looks like a number into a number | `"1200000"` → 1200000 |
+
+Functions can be nested. A clean credit limit from text like `₦1,200,000.00`:
+
+```excel
+=IFERROR(VALUE(SUBSTITUTE(SUBSTITUTE(TRIM([@[Credit Limit]]),"₦",""),",","")), "")
+```
+
+(Inside the brackets of a Table reference, a column name with a space needs its own brackets: `[@[Credit Limit]]`.)
+
+**Standardising categories with a mapping table.** Don't write a giant nested IF for 23 region spellings. Make a two-column table, `RegionMap`, with every messy spelling (in lower case) and its clean version, then look it up:
+
+| raw | clean |
+| :-- | :-- |
+| lagos | Lagos |
+| sw | South West |
+| south-west | South West |
+| south west | South West |
+| … | … |
+
+```excel
+=XLOOKUP(LOWER(TRIM([@Region])), RegionMap[raw], RegionMap[clean], "CHECK")
+```
+
+Anything that shows `CHECK` is a spelling you haven't mapped yet.
+
+**Remove duplicates** (**Data → Remove Duplicates**) deletes rows that repeat in the columns you choose. Excel ignores capital letters when comparing, but **not** spaces, so trim first.
+
+**Dates: the trap.** The export mixes `2023-07-11`, `22/10/2023` and `5-Mar-2024`. On a computer set to US format, Excel reads `01/09/2022` as **9 January** and leaves `22/10/2023` as text, because there is no 22nd month. Half your dates are wrong and the other half aren't dates. The reliable fix is to import through Power Query and tell it the dates are day-first:
+
+1. **Data → From Text/CSV** → choose the file → **Transform Data**.
+2. Right-click the **Date Joined** column → **Change Type → Using Locale…**
+3. Data type **Date**, locale **English (United Kingdom)** (day-first), OK.
+4. **Home → Close & Load**.
+
+Check a few rows against the raw file afterwards: `01/09/2022` should now be 1 September 2022.
+
+## Example
+
+| Raw | Clean |
+| :-- | :-- |
+| `kayode distributors   ` · `LAGOS` · `22/10/2023` · `₦2,050,000` | Kayode Distributors · Lagos · 22 Oct 2023 · 2,050,000 |
+| `  ADA SUPERSTORE` · `Lagos` · `2023-07-11` · `1,200,000` | Ada Superstore · Lagos · 11 Jul 2023 · 1,200,000 |
+| `Hajia Amina Superstore` · `north central` · `21/04/2023` · `850000` | Hajia Amina Superstore · North Central · 21 Apr 2023 · 850,000 |
+
+## Walkthrough
+
+A clean, repeatable workflow:
+
+1. **Keep the raw sheet untouched.** Load the file (with the Power Query date fix above) into a sheet called `Raw`.
+2. **Add helper columns** next to the data, one per cleaned field:
+   - `Name`: `=PROPER(TRIM(CLEAN([@[Customer Name]])))`
+   - `Region clean`: the XLOOKUP on `RegionMap`
+   - `Limit`: the nested SUBSTITUTE/VALUE formula
+3. **Filter each helper column** for `CHECK`, errors and blanks, and fix the mapping until none are left.
+4. **Copy the helper columns** and paste them into a new sheet `Clean` with **Paste Special → Values** (Ctrl + Alt + V, then V). They're now fixed values, not formulas.
+5. On `Clean`, **Data → Remove Duplicates** on the name column.
+6. **Log it**: on a `Notes` sheet, write what you did and the row counts before and after (102 → 90).
+
+> [!TIP]
+> Flash Fill (**Data → Flash Fill**, or Ctrl + E) is handy for one-off pattern cleaning: type the cleaned version of the first two cells yourself and Excel guesses the rest. Always check its guesses; it can't explain its rule.
+
+## Practice
+
+```answer
+{
+  "id": "xls-07-p1",
+  "prompt": "Before any cleaning, how many rows of the raw export have a **blank** Credit Limit?",
+  "answer": 5,
+  "format": "number",
+  "dataset": "cleaning",
+  "files": ["customer_list_raw"],
+  "verify": "SELECT COUNT(*) FROM customer_list_raw WHERE \"Credit Limit\" IS NULL OR TRIM(\"Credit Limit\") = ''",
+  "hint": "=COUNTBLANK() on the Credit Limit column, or filter it to (Blanks).",
+  "explanation": "Five blanks. Decide on a rule, such as leaving them blank and flagging them for the finance team, rather than guessing a number.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "xls-07-p2",
+  "prompt": "After trimming, standardising regions and removing duplicates, how many customers are in the **Lagos** region?",
+  "answer": 34,
+  "format": "number",
+  "dataset": "cleaning",
+  "files": ["customer_list_raw"],
+  "verify": "SELECT COUNT(*) FROM sales_customers WHERE region = 'Lagos'",
+  "hint": "Lagos appears as Lagos, LAGOS, lagos and 'Lagos ' (with a space). Map them all to Lagos, remove duplicate names, then COUNTIF.",
+  "explanation": "34. Counting before removing duplicates gives a higher number; counting before standardising gives a lower one.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "xls-07-p3",
+  "prompt": "After fixing the dates (day first) and removing duplicates, how many customers joined in the **first half of 2024** (1 January to 30 June 2024)?",
+  "answer": 5,
+  "format": "number",
+  "dataset": "cleaning",
+  "files": ["customer_list_raw"],
+  "verify": "SELECT COUNT(*) FROM sales_customers WHERE joined_date BETWEEN '2024-01-01' AND '2024-06-30'",
+  "hint": "Convert Date Joined with Power Query → Change Type → Using Locale → English (United Kingdom). Then COUNTIFS with two date conditions.",
+  "explanation": "Five. If the dates were read month-first, some would land in the wrong half of the year, and you'd get a different count.",
+  "required": true
+}
+```
+
+## Challenge
+
+```answer
+{
+  "id": "xls-07-c1",
+  "prompt": "What is the **total credit limit** of the cleaned, de-duplicated customers, counting only customers whose limit is known? Where a customer appears twice and only one copy has a limit, keep the copy with the limit.",
+  "answer": 133500000,
+  "tolerance": 1,
+  "format": "naira",
+  "dataset": "cleaning",
+  "files": ["customer_list_raw"],
+  "verify": "SELECT SUM(credit_limit) FROM sales_customers WHERE LOWER(customer_name) <> 'bola mini mart'",
+  "hint": "Clean the limits to numbers. Before removing duplicates, sort the limit column largest to smallest so rows with a value come first: Remove Duplicates keeps the first copy it meets.",
+  "explanation": "₦133,500,000 for 89 customers. Four of the five blanks were on duplicate rows whose other copy had the limit; one customer (Bola Mini Mart) has no limit on file at all, which is something to send back to the finance team, not to guess.",
+  "required": false
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "What does =TRIM(\"  Peace   Mart \") return?",
+    "options": ["\"Peace   Mart\"", "\"Peace Mart\"", "\"PeaceMart\"", "\"  Peace Mart\""],
+    "answer": 1,
+    "explanation": "Excel's TRIM removes leading and trailing spaces and reduces repeated inner spaces to one."
+  },
+  {
+    "prompt": "Why use a mapping table instead of a long nested IF to standardise regions?",
+    "options": ["IF can't compare text", "A table is easier to read, extend and check, and unmapped values show up clearly", "Mapping tables are faster to type than one word", "Excel limits IF to two regions"],
+    "answer": 1,
+    "explanation": "Adding a new spelling is one new row, not a rewritten formula."
+  },
+  {
+    "prompt": "On a US-format computer, how might Excel read the text 01/09/2022 from a Nigerian export?",
+    "options": ["1 September 2022", "9 January 2022", "As an error", "As 2022-09-01 text"],
+    "answer": 1,
+    "explanation": "US format reads month first. Import with a day-first locale to get 1 September."
+  }
+]
+```
+$md$, true, true, 7, array['xls-07-p1', 'xls-07-p2', 'xls-07-p3']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position)
+values ('xls-m08', 'excel-for-data-analysis', 'Pivot Tables', 8)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('excel-for-data-analysis:pivot-tables', 'excel-for-data-analysis', 'xls-m08', 'pivot-tables', 'Pivot tables', 'Summarise thousands of rows in seconds - by region, month, channel or rep - with pivot tables, grouping, percentages and slicers.', 40, $md$
+## The problem
+
+SUMIFS works, but a summary of revenue by region *and* month would need 6 × 18 = 108 formulas. The director will then ask for it by channel instead. **Pivot tables** build these summaries by dragging fields, and rebuild them in seconds when the question changes.
+
+## The concept
+
+A pivot table has four areas:
+
+| Area | Holds | Example |
+| :-- | :-- | :-- |
+| **Rows** | Categories down the side | region |
+| **Columns** | Categories across the top | year |
+| **Values** | The numbers, summarised | Sum of revenue |
+| **Filters** | A filter for the whole pivot | channel = Wholesale |
+
+**Summarise Values By** changes Sum to Count, Average, Max…
+**Show Values As** turns numbers into **% of Grand Total**, **% of Column Total**, **Difference From**…
+
+**Dates** can be grouped into Years, Quarters and Months: right-click a date in the pivot → **Group**. Recent Excel versions group dates automatically when you add a date field.
+
+**Slicers** are clickable filter buttons: **PivotTable Analyze → Insert Slicer**.
+
+A pivot table **doesn't update by itself**. After the source data changes: **Data → Refresh All** (Ctrl + Alt + F5).
+
+> [!NOTE]
+> Build pivots on a **Table** (your `Orders` table with the revenue, region and category columns from lessons 2 and 6). When rows are added to the Table, Refresh picks them up. A pivot built on a fixed range like A1:J4267 would miss them.
+
+## Example
+
+Revenue by channel, with **Show Values As → % of Grand Total**:
+
+| Channel | Sum of revenue | % of total |
+| :-- | --: | --: |
+| Wholesale | 580,264,905 | 69.9% |
+| Supermarket | 210,387,665 | 25.3% |
+| Kiosk | 39,888,675 | 4.8% |
+| **Grand Total** | **830,541,245** | **100%** |
+
+Wholesalers are fewer than a quarter of Kolanut's customers but bring in 70% of revenue.
+
+## Walkthrough
+
+1. Click inside the `Orders` table (with its `revenue`, `region` and `category` columns).
+2. **Insert → PivotTable → From Table/Range → New Worksheet**, OK.
+3. In the PivotTable Fields pane, drag `region` to **Rows** and `revenue` to **Values**. You get Sum of revenue by region.
+4. Drag `order_date` to **Columns**. Excel groups it by year (click the `+` to see quarters and months). If it doesn't, right-click a date → **Group** → select Months and Years.
+5. Right-click any revenue number → **Number Format** → Number, 0 decimals, with a thousands separator.
+6. Sort: right-click a revenue number → **Sort → Largest to Smallest**.
+7. **Insert Slicer** for `channel`. Click Wholesale, then Kiosk, and watch the whole pivot change.
+
+To get the channel percentages in the Example: `channel` in Rows, `revenue` in Values **twice**; on the second, right-click → **Show Values As → % of Grand Total**.
+
+## Practice
+
+```answer
+{
+  "id": "xls-08-p1",
+  "prompt": "What percentage of all revenue came from **Wholesale** customers, to one decimal place? Build it with a pivot table.",
+  "answer": 69.9,
+  "format": "percent",
+  "dataset": "sales",
+  "files": ["orders", "customers"],
+  "verify": "SELECT ROUND(100.0 * SUM(CASE WHEN c.channel = 'Wholesale' THEN o.quantity * o.unit_price * (1 - o.discount_pct / 100.0) END) / SUM(o.quantity * o.unit_price * (1 - o.discount_pct / 100.0)), 1) FROM orders o JOIN customers c ON c.customer_id = o.customer_id",
+  "hint": "You need a channel column on Orders first (XLOOKUP from Customers). Then pivot: channel in Rows, revenue in Values, Show Values As → % of Grand Total.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "xls-08-p2",
+  "prompt": "Which **sales rep** brought in the most revenue in **2026** (January–June)? Give their full name.",
+  "answer": "Chidi Okonkwo",
+  "format": "text",
+  "dataset": "sales",
+  "files": ["orders", "customers"],
+  "verify": "SELECT c.sales_rep FROM orders o JOIN customers c ON c.customer_id = o.customer_id WHERE o.order_date >= '2026-01-01' GROUP BY c.sales_rep ORDER BY SUM(o.quantity * o.unit_price * (1 - o.discount_pct / 100.0)) DESC LIMIT 1",
+  "hint": "Bring sales_rep onto Orders with XLOOKUP. Pivot: sales_rep in Rows, revenue in Values, order_date (Years) in Columns or as a Filter set to 2026.",
+  "explanation": "Chidi Okonkwo, one of the two Lagos reps, with ₦81.2m in the first half of 2026.",
+  "required": true
+}
+```
+
+## Challenge
+
+```answer
+{
+  "id": "xls-08-c1",
+  "prompt": "Which **month** had the highest revenue in the whole dataset? Answer with the month and year, for example March 2025.",
+  "answer": "December 2025",
+  "accept": ["dec 2025", "december, 2025", "2025-12", "dec-25", "dec 25", "december 25", "12/2025"],
+  "format": "text",
+  "dataset": "sales",
+  "files": ["orders"],
+  "verify": "SELECT CASE substr(order_date, 6, 2) WHEN '01' THEN 'January' WHEN '02' THEN 'February' WHEN '03' THEN 'March' WHEN '04' THEN 'April' WHEN '05' THEN 'May' WHEN '06' THEN 'June' WHEN '07' THEN 'July' WHEN '08' THEN 'August' WHEN '09' THEN 'September' WHEN '10' THEN 'October' WHEN '11' THEN 'November' ELSE 'December' END || ' ' || substr(order_date, 1, 4) FROM orders GROUP BY substr(order_date, 1, 7) ORDER BY SUM(quantity * unit_price * (1 - discount_pct / 100.0)) DESC LIMIT 1",
+  "hint": "Pivot with order_date grouped by Years and Months in Rows, revenue in Values, then sort largest to smallest.",
+  "required": false
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "You added 200 new rows to the Orders table. What must you do for the pivot table to include them?",
+    "options": ["Nothing", "Refresh the pivot table", "Rebuild it from scratch", "Save and reopen the file"],
+    "answer": 1,
+    "explanation": "Pivots are snapshots until refreshed. Built on a Table, a refresh picks up new rows."
+  },
+  {
+    "prompt": "Which setting shows each region's revenue as a share of the total?",
+    "options": ["Summarise Values By → Average", "Show Values As → % of Grand Total", "Group → Months", "Insert Slicer"],
+    "answer": 1,
+    "explanation": "Show Values As changes how a number is expressed, here as a percentage of the grand total."
+  },
+  {
+    "prompt": "Where would you put 'channel' so the whole pivot shows only Wholesale?",
+    "options": ["Rows", "Columns", "Values", "Filters (or a slicer)"],
+    "answer": 3,
+    "explanation": "Filters and slicers restrict the whole pivot without adding rows or columns."
+  }
+]
+```
+$md$, true, true, 8, array['xls-08-p1', 'xls-08-p2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position)
+values ('xls-m09', 'excel-for-data-analysis', 'Charts and Visualization', 9)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('excel-for-data-analysis:charts-and-visualization', 'excel-for-data-analysis', 'xls-m09', 'charts-and-visualization', 'Charts and visualization', 'Build clear line, bar and combo charts from pivot tables, and use conditional formatting and sparklines to make tables readable.', 35, $md$
+## The problem
+
+The pivot tables show the numbers, but a table of 18 months × 6 regions doesn't jump out at anyone. The sales director needs to *see* the December peak, the Lagos growth and the North West fall. Excel can chart all of it, but its defaults need work before a chart is fit for a meeting.
+
+## The concept
+
+**Pick the chart from the question** (as in Data Analytics Foundations):
+
+| Question | Excel chart |
+| :-- | :-- |
+| Trend over time | **Line** |
+| Compare categories | **Clustered bar** (horizontal) or **column** |
+| Parts of a whole, 2–4 parts | **100% stacked bar**, or a donut |
+| Two measures with different scales | **Combo** (column + line on a secondary axis), sparingly |
+
+**PivotCharts** (PivotTable Analyze → PivotChart) are linked to the pivot: filter or slice the pivot and the chart follows.
+
+**Fix the defaults, every time**
+
+1. **Title** that states the finding: click the title and type, e.g. "December is our biggest month by far".
+2. **Delete what doesn't help**: legend for a single series, heavy gridlines, field buttons on PivotCharts (right-click → Hide All Field Buttons).
+3. **Axis**: bars start at 0; format numbers as millions. In Format Axis, set **Display units** to Millions.
+4. **Colour**: one colour for everything, one accent for the point you're making.
+5. **Sort** bars largest to smallest (sort the pivot and the chart follows).
+
+**Tables can be visual too**
+
+- **Conditional formatting → Data Bars** puts a small bar in each cell.
+- **Color Scales** shade high and low values.
+- **Sparklines** (Insert → Sparklines → Line) draw a tiny trend chart inside one cell: good for a row per region.
+
+## Example
+
+**Monthly revenue line chart:** pivot with `order_date` grouped into Years and Months in Rows and `revenue` in Values, then **PivotChart → Line**. The chart shows a steady ₦36–49m a month in 2025, a spike to ₦66.3m in December 2025, then a higher base of ₦43–55m a month in 2026 after the January price rise.
+
+**Category bar chart for one month:** `category` in Rows, `revenue` in Values, `order_date` filtered to December 2025, sorted descending, as a clustered bar.
+
+## Walkthrough
+
+1. Build the monthly pivot described above.
+2. Click inside it → **PivotTable Analyze → PivotChart → Line → OK**.
+3. Right-click a field button on the chart → **Hide All Field Buttons on Chart**.
+4. Click the legend → Delete (one series doesn't need one).
+5. Double-click the vertical axis → **Display units: Millions**; tick **Show display units label**.
+6. Click the chart title and write the finding.
+7. Click the December 2025 point twice (to select just that point) → **Add Data Label**.
+
+Then, for the regional table, select the H1 2026 revenue column → **Home → Conditional Formatting → Data Bars → Solid Fill**.
+
+## Practice
+
+```answer
+{
+  "id": "xls-09-p1",
+  "prompt": "Which **product category** had the highest revenue in **December 2025**?",
+  "answer": "Household",
+  "format": "text",
+  "dataset": "sales",
+  "files": ["orders", "products"],
+  "verify": "SELECT p.category FROM orders o JOIN products p ON p.product_id = o.product_id WHERE o.order_date BETWEEN '2025-12-01' AND '2025-12-31' GROUP BY p.category ORDER BY SUM(o.quantity * o.unit_price * (1 - o.discount_pct / 100.0)) DESC LIMIT 1",
+  "hint": "Pivot: category in Rows, revenue in Values, filter order_date to December 2025, sort largest first.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "xls-09-p2",
+  "prompt": "Looking only at **2026**, which month had the highest revenue? (Just the month name.)",
+  "answer": "April",
+  "accept": ["apr", "april 2026", "apr 2026", "2026-04"],
+  "format": "text",
+  "dataset": "sales",
+  "files": ["orders"],
+  "verify": "SELECT CASE substr(order_date, 6, 2) WHEN '01' THEN 'January' WHEN '02' THEN 'February' WHEN '03' THEN 'March' WHEN '04' THEN 'April' WHEN '05' THEN 'May' ELSE 'June' END FROM orders WHERE order_date >= '2026-01-01' GROUP BY substr(order_date, 1, 7) ORDER BY SUM(quantity * unit_price * (1 - discount_pct / 100.0)) DESC LIMIT 1",
+  "hint": "Your monthly line chart shows it, or sort the monthly pivot filtered to 2026.",
+  "explanation": "April 2026, at ₦54.6m. Easter fell on 5 April that year.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "What's the advantage of a PivotChart over a normal chart of copied numbers?",
+    "options": ["It has more colours", "It stays linked to the pivot, so filtering or refreshing updates the chart", "It can't be edited", "It's always a pie chart"],
+    "answer": 1,
+    "explanation": "PivotCharts follow the pivot's fields, filters and slicers."
+  },
+  {
+    "prompt": "A chart shows revenue in naira up to 70,000,000 on its axis. What makes it easier to read?",
+    "options": ["Set axis display units to Millions", "Remove the axis entirely", "Use a 3D effect", "Add more gridlines"],
+    "answer": 0,
+    "explanation": "₦70m is easier to read than 70,000,000 at a glance."
+  },
+  {
+    "prompt": "Which feature draws a tiny trend line inside a single cell?",
+    "options": ["Data bars", "Sparklines", "Slicers", "Flash Fill"],
+    "answer": 1,
+    "explanation": "Sparklines fit a small line or column chart into one cell, one per row."
+  }
+]
+```
+$md$, true, true, 9, array['xls-09-p1', 'xls-09-p2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position)
+values ('xls-m10', 'excel-for-data-analysis', 'Building an Analysis', 10)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('excel-for-data-analysis:building-an-analysis', 'excel-for-data-analysis', 'xls-m10', 'building-an-analysis', 'Building an analysis', 'Organise a workbook someone else can trust - raw data, calculations, checks and a one-page summary - and compare periods properly.', 40, $md$
+## The problem
+
+A workbook full of correct formulas can still be useless if nobody else can follow it: numbers typed over formulas, pivots pointing at old ranges, totals that don't match. The managing director wants a first-half review of 2026 against 2025 that her finance team can check. This lesson is about building it properly.
+
+## The concept
+
+**A standard layout.** One sheet per job, in this order:
+
+| Sheet | Contains | Rule |
+| :-- | :-- | :-- |
+| `README` | Question, sources, date, author, definitions | Written first |
+| `Raw` | Data exactly as received | Never edited |
+| `Data` | Cleaned Tables with helper columns (revenue, region, category) | Formulas only |
+| `Calc` | Pivots and summary formulas | No typed numbers |
+| `Summary` | The one page people read: KPIs, a chart or two, the findings | Refers to Calc |
+| `Checks` | Reconciliations: totals that must agree | All should say OK |
+
+**Checks catch mistakes.** Examples:
+
+```excel
+=IF(ROUND(SUM(Data!Orders[revenue]) - GETPIVOTDATA("revenue", Calc!$A$3), 0) = 0, "OK", "MISMATCH")
+=IF(COUNTIF(Orders[region], "Not found") = 0, "OK", "Unmatched customers")
+```
+
+**Period-over-period comparison.** For January–June each year:
+
+```excel
+H1 2025:  =SUMIFS(Orders[revenue], Orders[order_date], ">="&DATE(2025,1,1), Orders[order_date], "<="&DATE(2025,6,30))
+H1 2026:  =SUMIFS(Orders[revenue], Orders[order_date], ">="&DATE(2026,1,1), Orders[order_date], "<="&DATE(2026,6,30))
+Growth %: =(H1_2026 - H1_2025) / H1_2025
+```
+
+Add a region criterion to get the same by region. Format growth as a percentage with one decimal.
+
+> [!BUSINESS]
+> Always compare the same period (H1 with H1), and say what's included: "revenue after discounts, all channels, January–June". Kolanut also raised prices 8–12% in January 2026, so part of the growth is price, not volume. A good summary says so.
+
+## Example
+
+**H1 2026 vs H1 2025 by region** (₦ million):
+
+| Region | H1 2025 | H1 2026 | Growth |
+| :-- | --: | --: | --: |
+| Lagos | 118.2 | 152.8 | +29.3% |
+| South West | 28.9 | 51.7 | +78.6% |
+| North Central | 25.3 | 27.2 | +7.3% |
+| South South | 19.7 | 23.1 | +16.9% |
+| South East | 20.9 | 19.4 | −7.1% |
+| North West | 31.1 | 16.6 | −46.6% |
+| **Total** | **244.2** | **290.7** | **+19.1%** |
+
+**Findings for the summary page:**
+
+1. First-half revenue grew 19.1%, helped by the January price rise.
+2. Lagos and the South West delivered most of the growth.
+3. North West nearly halved and South East slipped. These two need attention.
+
+## Walkthrough
+
+1. Create the sheets above and write the `README`.
+2. On `Calc`, list the six regions down column A. In B and C, write the SUMIFS for H1 2025 and H1 2026 with a region condition; in D, growth.
+3. Add a total row with `SUM`, and on `Checks` confirm the H1 2026 total equals a SUMIFS on dates alone.
+4. On `Summary`: three KPI cells at the top (H1 2026 revenue, growth %, largest-falling region), a bar chart of growth by region with North West highlighted, and the three findings as sentences.
+5. Protect your work from accidental typing: **Review → Protect Sheet** on `Calc` and `Summary`.
+
+## Practice
+
+```answer
+{
+  "id": "xls-10-p1",
+  "prompt": "What was Kolanut's revenue growth from **H1 2025 to H1 2026**, to one decimal place? Calculate it from the order data, not the rounded table.",
+  "answer": 19.1,
+  "format": "percent",
+  "dataset": "sales",
+  "files": ["orders"],
+  "verify": "SELECT ROUND(100.0 * (SUM(CASE WHEN order_date BETWEEN '2026-01-01' AND '2026-06-30' THEN quantity * unit_price * (1 - discount_pct / 100.0) END) / SUM(CASE WHEN order_date BETWEEN '2025-01-01' AND '2025-06-30' THEN quantity * unit_price * (1 - discount_pct / 100.0) END) - 1), 1) FROM orders",
+  "hint": "Two SUMIFS with date ranges, then (new − old) ÷ old.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "xls-10-p2",
+  "prompt": "Which region had the **second-worst** growth (the smallest growth after North West)?",
+  "answer": "South East",
+  "accept": ["south-east", "southeast"],
+  "format": "text",
+  "dataset": "sales",
+  "files": ["orders", "customers"],
+  "verify": "SELECT region FROM (SELECT c.region, SUM(CASE WHEN o.order_date >= '2026-01-01' THEN o.quantity * o.unit_price * (1 - o.discount_pct / 100.0) END) / SUM(CASE WHEN o.order_date <= '2025-06-30' THEN o.quantity * o.unit_price * (1 - o.discount_pct / 100.0) END) AS g FROM orders o JOIN customers c ON c.customer_id = o.customer_id GROUP BY c.region) ORDER BY g LIMIT 1 OFFSET 1",
+  "hint": "Build the regional growth table and sort it smallest to largest.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why keep an untouched Raw sheet in the workbook?",
+    "options": ["Excel requires it", "So anyone can trace every number back to the source data", "It makes the file faster", "Pivots can't read Tables"],
+    "answer": 1,
+    "explanation": "The raw data is the evidence your analysis rests on."
+  },
+  {
+    "prompt": "What is a 'check' in a workbook?",
+    "options": ["A tick box", "A formula confirming two independent calculations agree", "A spell-check", "A cell with a typed number"],
+    "answer": 1,
+    "explanation": "Reconciliation checks catch broken ranges, missed rows and lookups that failed."
+  },
+  {
+    "prompt": "Revenue grew 19% and prices rose about 10%. What should the summary say?",
+    "options": ["Sales volume grew 19%", "Revenue grew 19%, partly because of the price rise, so volume grew less", "Prices don't affect revenue", "Nothing about prices"],
+    "answer": 1,
+    "explanation": "Separating price from volume stops readers over-crediting the sales team."
+  }
+]
+```
+$md$, true, true, 10, array['xls-10-p1', 'xls-10-p2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position)
+values ('xls-m11', 'excel-for-data-analysis', 'Mini Project', 11)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('excel-for-data-analysis:mini-project', 'excel-for-data-analysis', 'xls-m11', 'mini-project', '"Mini project: what do discounts cost?"', 'A guided analysis of Kolanut''s discounts from question to recommendation, using everything in the course.', 45, $md$
+## The problem
+
+Kolanut's finance manager raises a concern: *"We give discounts all the time. How much are they costing us, who gets them, and are we getting anything back?"*
+
+This mini project walks through the full analysis. The course's final project then asks you to produce a complete sales performance review on your own.
+
+## The concept
+
+**Discount cost** for an order line is what Kolanut would have earned at full price minus what it actually earned:
+
+```excel
+=[@quantity]*[@unit_price]*[@discount_pct]/100
+```
+
+Summed over lines, that's the naira value of discounts given away.
+
+**Questions to answer**
+
+1. How much did discounts cost in total, and as a % of gross sales?
+2. Which channel receives most of the discount value?
+3. What share of each channel's order lines is discounted?
+4. Do discounted lines order more packs than undiscounted ones? (If discounts buy bigger orders, they may pay for themselves.)
+
+## Example
+
+The results, for reference once you've done your own:
+
+| Channel | Order lines | Lines discounted | Discount cost (₦) | Share of discount cost |
+| :-- | --: | --: | --: | --: |
+| Wholesale | 2,181 | 1,347 (62%) | 25,417,295 | 87.4% |
+| Supermarket | 1,308 | 358 (27%) | 3,560,935 | 12.2% |
+| Kiosk | 777 | 42 (5%) | 108,825 | 0.4% |
+| **Total** | **4,266** | **1,747** | **29,087,055** | **100%** |
+
+Discounts cost ₦29.1m, **3.4% of gross sales**, and nearly nine naira in ten of it went to wholesalers.
+
+## Walkthrough
+
+1. **Set up.** On your Orders table (with `channel` looked up from Customers), add `gross = [@quantity]*[@unit_price]` and `discount_cost = [@gross]*[@discount_pct]/100`.
+2. **Total cost.** `=SUM(Orders[discount_cost])`, and as a share of `=SUM(Orders[gross])`.
+3. **By channel.** Pivot: `channel` in Rows; `discount_cost` in Values (Sum, then a second copy as % of Grand Total); `order_id` in Values as Count.
+4. **Discounted share of lines.** Add `discounted = IF([@discount_pct]>0, "Yes", "No")`, put it in Columns of a count pivot, or use COUNTIFS per channel.
+5. **Do discounts buy bigger orders?** Pivot for Wholesale only (slicer): `discounted` in Rows, **Average of quantity** in Values. Compare Yes and No.
+6. **Write it up** on a Summary sheet: three numbers, one chart (discount cost by channel), two or three sentences, one recommendation.
+
+> [!TIP]
+> Step 5 is where analysis becomes judgement. If discounted wholesale lines are no bigger than full-price ones, the discount isn't buying volume. That's a strong argument for tightening the policy. Look at the numbers before you decide what they mean.
+
+## Practice
+
+```answer
+{
+  "id": "xls-11-p1",
+  "prompt": "What did discounts cost Kolanut in total across all order lines, to the nearest naira?",
+  "answer": 29087055,
+  "tolerance": 1,
+  "format": "naira",
+  "dataset": "sales",
+  "files": ["orders"],
+  "verify": "SELECT SUM(quantity * unit_price * discount_pct / 100.0) FROM orders",
+  "hint": "Add discount_cost = quantity × unit_price × discount_pct ÷ 100, then SUM.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "xls-11-p2",
+  "prompt": "Among **Wholesale** order lines, what is the **average quantity** on lines **with** a discount, to one decimal place?",
+  "answer": 19.2,
+  "format": "number",
+  "dataset": "sales",
+  "files": ["orders", "customers"],
+  "verify": "SELECT ROUND(AVG(o.quantity), 1) FROM orders o JOIN customers c ON c.customer_id = o.customer_id WHERE c.channel = 'Wholesale' AND o.discount_pct > 0",
+  "hint": "AVERAGEIFS(Orders[quantity], Orders[channel], \"Wholesale\", Orders[discount_pct], \">0\"), or a pivot with a Wholesale slicer.",
+  "explanation": "Now compare it with Wholesale lines without a discount. Is there a meaningful difference?",
+  "required": true
+}
+```
+
+## Challenge
+
+```answer
+{
+  "id": "xls-11-c1",
+  "prompt": "And the average quantity on **Wholesale** lines **without** a discount, to one decimal place?",
+  "answer": 18.7,
+  "format": "number",
+  "dataset": "sales",
+  "files": ["orders", "customers"],
+  "verify": "SELECT ROUND(AVG(o.quantity), 1) FROM orders o JOIN customers c ON c.customer_id = o.customer_id WHERE c.channel = 'Wholesale' AND o.discount_pct = 0",
+  "hint": "Same as before with discount_pct = 0.",
+  "explanation": "Discounted and full-price wholesale lines are almost the same size. In this data, discounts don't appear to buy bigger orders, which is worth raising with the finance manager.",
+  "required": false
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "A line of 20 packs at ₦10,000 with a 5% discount. What did the discount cost?",
+    "options": ["₦500", "₦10,000", "₦190,000", "₦5,000"],
+    "answer": 1,
+    "explanation": "20 × 10,000 × 5 ÷ 100 = ₦10,000."
+  },
+  {
+    "prompt": "Discounted and full-price wholesale lines have almost the same average quantity. What does that suggest?",
+    "options": ["Discounts clearly increase order size", "In this data, discounts aren't buying larger orders", "Wholesale should get bigger discounts", "The data is wrong"],
+    "answer": 1,
+    "explanation": "If discounts don't change behaviour, they're mostly a cost. Other benefits (loyalty, faster payment) would need other data."
+  },
+  {
+    "prompt": "What should the mini project's summary page contain?",
+    "options": ["Every pivot table you built", "A few key numbers, one clear chart, a short explanation and a recommendation", "The raw data", "Only a chart"],
+    "answer": 1,
+    "explanation": "The summary is for the decision-maker: short, clear and actionable."
+  }
+]
+```
+
+When you've finished, take the final assessment, then start the final project from the course page.
+$md$, true, true, 11, array['xls-11-p1', 'xls-11-p2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+
 -- Course: SQL for Data Analysis
 insert into public.courses (id, slug, code, title, summary, description, category_id, difficulty, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, passing_score, position)
-values ('sql-for-data-analysis', 'sql-for-data-analysis', 'SQL', 'SQL for Data Analysis', 'Query real business data with SQL, from your first SELECT to window functions, using a logistics company''s database.', 'SQL is how analysts get answers out of databases. In this course you work with Harbourline Freight, a fictional logistics company, and answer the questions its managers actually ask: who ships the most, which routes run late, what customers still owe. Every lesson starts with a business problem, explains the idea in plain language, and gives you queries to write in a live SQL editor in your browser.', 'data-analytics', 'beginner', 'Beginner to intermediate', 12, true, 'available', true, array['Reading a database schema', 'Selecting, filtering and sorting data', 'Aggregating with GROUP BY and HAVING', 'Joining tables', 'CASE expressions, subqueries and CTEs', 'Window functions for rankings and running totals', 'Turning a business question into a query']::text[], array['No prior SQL needed', 'Comfortable using a computer and a web browser']::text[], 'Harbourline Freight operations review', true, true, true, true, 70, 0)
+values ('sql-for-data-analysis', 'sql-for-data-analysis', 'SQL', 'SQL for Data Analysis', 'Query real business data with SQL, from your first SELECT to window functions, using a logistics company''s database.', 'SQL is how analysts get answers out of databases. In this course you work with Harbourline Freight, a fictional logistics company, and answer the questions its managers actually ask: who ships the most, which routes run late, what customers still owe. Every lesson starts with a business problem, explains the idea in plain language, and gives you queries to write in a live SQL editor in your browser.', 'data-analytics', 'beginner', 'Beginner to intermediate', 12, true, 'available', true, array['Reading a database schema', 'Selecting, filtering and sorting data', 'Aggregating with GROUP BY and HAVING', 'Joining tables', 'CASE expressions, subqueries and CTEs', 'Window functions for rankings and running totals', 'Turning a business question into a query']::text[], array['No prior SQL needed', 'Comfortable using a computer and a web browser']::text[], 'Harbourline Freight operations review', true, true, true, true, 70, 2)
 on conflict (id) do update set slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, passing_score = excluded.passing_score, position = excluded.position;
 
 insert into public.course_modules (id, course_id, title, position)
@@ -1959,162 +4757,1705 @@ $md$, true, true, 15, array['sql-15-p1']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 
--- Course: Data Analytics Foundations
-insert into public.courses (id, slug, code, title, summary, description, category_id, difficulty, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, passing_score, position)
-values ('data-analytics-foundations', 'data-analytics-foundations', 'DAF', 'Data Analytics Foundations', 'What data analytics is, how businesses use data to decide, and the core skills you need to start.', 'Learn what data analytics is, how businesses use data to make decisions, and the core skills required to begin a career in data analytics. The course ends with your first small analytics project.', 'data-analytics', 'beginner', 'Beginner', null, true, 'coming_soon', true, array['How organizations use data', 'Types of data', 'Databases, cleaning and analysis', 'Visualization and business intelligence', 'Going from a question to an insight']::text[], array['None']::text[], 'Your first analytics project', true, true, true, true, 70, 1)
-on conflict (id) do update set slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, passing_score = excluded.passing_score, position = excluded.position;
-
-insert into public.course_modules (id, course_id, title, position)
-values ('daf-m01', 'data-analytics-foundations', 'What is Data Analytics?', 1)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
-
-insert into public.course_modules (id, course_id, title, position)
-values ('daf-m02', 'data-analytics-foundations', 'How Businesses Use Data', 2)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
-
-insert into public.course_modules (id, course_id, title, position)
-values ('daf-m03', 'data-analytics-foundations', 'Types of Data', 3)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
-
-insert into public.course_modules (id, course_id, title, position)
-values ('daf-m04', 'data-analytics-foundations', 'Understanding Databases', 4)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
-
-insert into public.course_modules (id, course_id, title, position)
-values ('daf-m05', 'data-analytics-foundations', 'Data Cleaning', 5)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
-
-insert into public.course_modules (id, course_id, title, position)
-values ('daf-m06', 'data-analytics-foundations', 'Data Analysis', 6)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
-
-insert into public.course_modules (id, course_id, title, position)
-values ('daf-m07', 'data-analytics-foundations', 'Data Visualization', 7)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
-
-insert into public.course_modules (id, course_id, title, position)
-values ('daf-m08', 'data-analytics-foundations', 'Business Intelligence', 8)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
-
-insert into public.course_modules (id, course_id, title, position)
-values ('daf-m09', 'data-analytics-foundations', 'From Question to Insight', 9)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
-
-insert into public.course_modules (id, course_id, title, position)
-values ('daf-m10', 'data-analytics-foundations', 'Your First Analytics Project', 10)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
-
-
--- Course: Excel for Data Analysis
-insert into public.courses (id, slug, code, title, summary, description, category_id, difficulty, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, passing_score, position)
-values ('excel-for-data-analysis', 'excel-for-data-analysis', 'XLS', 'Excel for Data Analysis', 'Clean, analyse and present business data in Excel, from formulas and XLOOKUP to pivot tables and charts.', 'Excel is still where most business analysis happens. Learn to work with real datasets: sort and filter, write the formulas analysts use every day, clean messy data, summarise with pivot tables and present results with clear charts.', 'data-analytics', 'beginner', 'Beginner', null, true, 'coming_soon', true, array['Formulas and functions', 'IF, SUMIF and COUNTIF', 'XLOOKUP', 'Data cleaning', 'Pivot tables', 'Charts']::text[], array['Microsoft Excel (2021 or Microsoft 365) or Google Sheets']::text[], 'Sales performance analysis', true, true, true, true, 70, 2)
-on conflict (id) do update set slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, passing_score = excluded.passing_score, position = excluded.position;
-
-insert into public.course_modules (id, course_id, title, position)
-values ('xls-m01', 'excel-for-data-analysis', 'Excel for Analysts', 1)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
-
-insert into public.course_modules (id, course_id, title, position)
-values ('xls-m02', 'excel-for-data-analysis', 'Working with Data', 2)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
-
-insert into public.course_modules (id, course_id, title, position)
-values ('xls-m03', 'excel-for-data-analysis', 'Sorting and Filtering', 3)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
-
-insert into public.course_modules (id, course_id, title, position)
-values ('xls-m04', 'excel-for-data-analysis', 'Formulas and Functions', 4)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
-
-insert into public.course_modules (id, course_id, title, position)
-values ('xls-m05', 'excel-for-data-analysis', 'IF, SUMIF, COUNTIF', 5)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
-
-insert into public.course_modules (id, course_id, title, position)
-values ('xls-m06', 'excel-for-data-analysis', 'XLOOKUP', 6)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
-
-insert into public.course_modules (id, course_id, title, position)
-values ('xls-m07', 'excel-for-data-analysis', 'Data Cleaning', 7)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
-
-insert into public.course_modules (id, course_id, title, position)
-values ('xls-m08', 'excel-for-data-analysis', 'Pivot Tables', 8)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
-
-insert into public.course_modules (id, course_id, title, position)
-values ('xls-m09', 'excel-for-data-analysis', 'Charts and Visualization', 9)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
-
-insert into public.course_modules (id, course_id, title, position)
-values ('xls-m10', 'excel-for-data-analysis', 'Building an Analysis', 10)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
-
-insert into public.course_modules (id, course_id, title, position)
-values ('xls-m11', 'excel-for-data-analysis', 'Mini Project', 11)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
-
-
 -- Course: Power BI Fundamentals
 insert into public.courses (id, slug, code, title, summary, description, category_id, difficulty, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, passing_score, position)
-values ('power-bi-fundamentals', 'power-bi-fundamentals', 'PBI', 'Power BI Fundamentals', 'Build a data model, write DAX measures and design a dashboard people can use to run a business.', 'Power BI turns data into dashboards. Learn the full workflow: import and clean data with Power Query, relate tables in a model, write DAX measures, and design a dashboard that tells a clear business story.', 'business-intelligence', 'beginner', 'Beginner to intermediate', null, true, 'coming_soon', true, array['Power Query', 'Data modelling and relationships', 'DAX measures', 'Dashboard design', 'Publishing reports']::text[], array['Power BI Desktop (free, Windows)', 'Basic Excel is helpful']::text[], 'Final dashboard project', true, true, true, true, 70, 3)
+values ('power-bi-fundamentals', 'power-bi-fundamentals', 'PBI', 'Power BI Fundamentals', 'Build a data model, write DAX measures and design a dashboard people can use to run a business.', 'Power BI turns data into dashboards. Learn the full workflow: import and clean data with Power Query, relate tables in a model, write DAX measures, and design a dashboard that tells a clear business story.', 'business-intelligence', 'beginner', 'Beginner to intermediate', 12, true, 'available', true, array['Power Query', 'Data modelling and relationships', 'DAX measures', 'Dashboard design', 'Publishing reports']::text[], array['Power BI Desktop (free, Windows only)', 'Basic Excel is helpful: the Excel course covers it']::text[], 'Ashgrove Chambers practice dashboard', true, true, true, true, 70, 3)
 on conflict (id) do update set slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, passing_score = excluded.passing_score, position = excluded.position;
 
 insert into public.course_modules (id, course_id, title, position)
 values ('pbi-m01', 'power-bi-fundamentals', 'Introduction to Business Intelligence', 1)
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
 
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('power-bi-fundamentals:introduction-to-business-intelligence', 'power-bi-fundamentals', 'pbi-m01', 'introduction-to-business-intelligence', 'Introduction to business intelligence with Power BI', 'What Power BI is, its parts (Desktop, Service, Mobile), the workflow you''ll follow in this course, and how to get set up.', 20, $md$
+## The problem
+
+Every Monday, Kolanut Distribution's analyst rebuilds the same Excel report: revenue by region, by month, by product. It takes a morning, and the managing director sees it on Tuesday. She wants to open a dashboard on Monday at 8am, click on a region, and see the numbers update.
+
+That's what **Power BI** is for: building an analysis once, connecting it to data, and letting people explore it themselves.
+
+## The concept
+
+**Power BI** is Microsoft's business intelligence tool. It has three main parts:
+
+| Part | What it's for | Cost |
+| :-- | :-- | :-- |
+| **Power BI Desktop** | Building reports on your Windows computer: load data, model it, write calculations, design pages | Free |
+| **Power BI Service** (app.powerbi.com) | Publishing, sharing, scheduled refresh, dashboards in the browser | Free to publish to your own workspace; sharing with others needs a Pro (or higher) licence |
+| **Power BI Mobile** | Viewing reports on a phone | Free app; access follows the Service licence |
+
+**The Power BI workflow**, which this course follows step by step:
+
+1. **Get data**: connect to files, databases or online services.
+2. **Transform**: clean and shape it in **Power Query**.
+3. **Model**: relate the tables and add a date table.
+4. **Calculate**: write **DAX** measures (revenue, growth, % of total).
+5. **Visualise**: build report pages with charts, cards and slicers.
+6. **Publish and share** through the Service.
+
+**How it relates to Excel.** Power Query and pivot-style thinking are shared with Excel, so the Excel course helps a lot. The big differences: Power BI handles millions of rows, keeps several related tables in one model, and produces interactive reports rather than static sheets.
+
+## Example
+
+By the end of this course you'll have built a Kolanut sales report with:
+
+- KPI cards: revenue, growth versus last year, active customers;
+- a monthly revenue line comparing this year with last year;
+- revenue by region with growth, highlighting the regions that fell;
+- slicers for channel, category and date;
+
+and then a dashboard of your own for a law firm as the final project.
+
+## Walkthrough
+
+**Get set up**
+
+1. Install **Power BI Desktop** from the Microsoft Store (search "Power BI Desktop"). The Store version updates itself.
+2. Open it. You don't need to sign in to build reports; sign-in is only needed to publish.
+3. Download the course data:
+
+```dataset
+{ "dataset": "sales" }
+```
+
+> [!WARNING]
+> Power BI Desktop runs on **Windows only**. On a Mac you'll need a Windows computer, a Windows virtual machine, or a cloud PC. The concepts in these lessons still apply if you only read along, but the practice needs Desktop.
+
+> [!NOTE]
+> Signing in to the Power BI Service needs a **work or school email address**. Personal addresses such as Gmail aren't accepted. You'll only need this in lesson 13 (publishing), and the lesson explains alternatives for sharing a portfolio piece without it.
+
+## Practice
+
+```answer
+{
+  "id": "pbi-01-p1",
+  "prompt": "Which part of Power BI do you use to **build** reports on your own computer? (Give its full name.)",
+  "answer": "Power BI Desktop",
+  "accept": ["desktop", "pbi desktop", "powerbi desktop"],
+  "format": "text",
+  "explanation": "Power BI Desktop is where you load, model and design. The Service is where reports are shared.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "pbi-01-p2",
+  "prompt": "In the Power BI workflow, which tool do you use for the **transform** step (cleaning and shaping data)?",
+  "answer": "Power Query",
+  "accept": ["power query editor", "powerquery"],
+  "format": "text",
+  "explanation": "Power Query, the same engine as Excel's Get & Transform.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Where do other people usually view a published Power BI report?",
+    "options": ["Power BI Desktop", "The Power BI Service in a browser (or the mobile app)", "Excel", "Power Query"],
+    "answer": 1,
+    "explanation": "Reports are built in Desktop and consumed in the Service or on mobile."
+  },
+  {
+    "prompt": "What is DAX used for?",
+    "options": ["Cleaning text", "Writing calculations such as measures", "Drawing charts", "Installing Power BI"],
+    "answer": 1,
+    "explanation": "DAX (Data Analysis Expressions) is Power BI's calculation language."
+  },
+  {
+    "prompt": "Which statement about cost is correct?",
+    "options": ["Power BI Desktop is paid", "Desktop is free; sharing reports with others in the Service needs a paid licence such as Pro", "Everything in Power BI is free", "Only the mobile app is free"],
+    "answer": 1,
+    "explanation": "Building is free. Sharing in the Service needs Pro (or a higher-level licence) for the people involved."
+  }
+]
+```
+$md$, true, true, 1, array['pbi-01-p1', 'pbi-01-p2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
 insert into public.course_modules (id, course_id, title, position)
 values ('pbi-m02', 'power-bi-fundamentals', 'Power BI Interface', 2)
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('power-bi-fundamentals:power-bi-interface', 'power-bi-fundamentals', 'pbi-m02', 'power-bi-interface', 'The Power BI interface', 'The four views of Power BI Desktop, the panes you''ll use constantly, and how report pages work.', 20, $md$
+## The problem
+
+Power BI Desktop opens to a blank canvas and a lot of panes. New users click around, can't find where their data went, or can't work out why a visual shows the same number in every bar. Knowing the layout saves hours of confusion.
+
+## The concept
+
+**Four views** (icons down the left edge):
+
+| View | What you do there |
+| :-- | :-- |
+| **Report view** | Design pages: add visuals, arrange them, format them |
+| **Table view** | Look at the rows in each loaded table; check types and values |
+| **Model view** | See tables as boxes and the relationships between them |
+| **DAX query view** | Write and test DAX queries (useful later for checking measures) |
+
+(Older guides call Table view "Data view".)
+
+**Panes in Report view** (right side):
+
+- **Data** pane: every table, column and measure in your model. Tick or drag a field to use it.
+- **Visualizations** pane: choose a visual type, then drop fields into its **wells** (Axis, Values, Legend…). The paintbrush icon opens **Format visual**.
+- **Filters** pane: filters for the selected visual, the current page, or all pages.
+
+**The ribbon** across the top: **Home** (Get data, Transform data, Publish), **Insert**, **Modeling** (new measures, tables, relationships), **View** (themes, gridlines, mobile layout).
+
+**Report pages** are tabs along the bottom, like worksheets. A report usually has an overview page and a few detail pages.
+
+**File types:** your work is saved as a `.pbix` file, which holds the data, model and report together.
+
+## Example
+
+A new visual, step by step: in Report view, tick `revenue` in the Data pane and Power BI creates a column chart with one bar. Then tick `region` and it becomes revenue by region. The fields you tick land in the wells of the selected visual; changing the visual type in the Visualizations pane keeps the same fields.
+
+## Walkthrough
+
+1. Open Power BI Desktop and close the start screen.
+2. Hover over each icon on the left edge to find Report, Table, Model and DAX query view.
+3. On the right, find the **Data**, **Visualizations** and **Filters** panes. If one is missing: **View → Show panes**.
+4. Click the **+** at the bottom to add a page; double-click a page tab to rename it.
+5. **File → Save as**: save the empty report as `kolanut-sales.pbix` in the same folder as the course CSV files. You'll build on it in every lesson.
+
+> [!TIP]
+> If a visual shows the same number for every category, the table holding the category usually isn't related to the table holding the number. You'll fix that in Model view in lesson 6. It's the most common beginner problem in Power BI.
+
+## Practice
+
+```answer
+{
+  "id": "pbi-02-p1",
+  "prompt": "Which view do you open to see and create **relationships** between tables?",
+  "answer": "Model view",
+  "accept": ["model", "the model view", "relationship view"],
+  "format": "text",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "pbi-02-p2",
+  "prompt": "Which view lets you scroll through the actual **rows** of a loaded table to check its values?",
+  "answer": "Table view",
+  "accept": ["table", "data view", "the table view"],
+  "format": "text",
+  "explanation": "Table view (called Data view in older versions).",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Where do you choose the chart type for a selected visual?",
+    "options": ["Data pane", "Visualizations pane", "Filters pane", "Model view"],
+    "answer": 1,
+    "explanation": "The Visualizations pane holds visual types, the field wells and formatting."
+  },
+  {
+    "prompt": "What does a .pbix file contain?",
+    "options": ["Only the report design", "Only the data", "The data, the model and the report together", "A link to Excel"],
+    "answer": 2,
+    "explanation": "A .pbix bundles everything, which is why it's easy to share as a portfolio file."
+  },
+  {
+    "prompt": "A bar chart shows the same revenue for every region. What's the most likely cause?",
+    "options": ["The chart type is wrong", "The region table isn't related to the orders table", "Revenue is text", "The page is hidden"],
+    "answer": 1,
+    "explanation": "Without a relationship, filtering by region can't reach the orders, so each bar shows the grand total."
+  }
+]
+```
+$md$, true, true, 2, array['pbi-02-p1', 'pbi-02-p2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position)
 values ('pbi-m03', 'power-bi-fundamentals', 'Importing Data', 3)
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
 
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('power-bi-fundamentals:importing-data', 'power-bi-fundamentals', 'pbi-m03', 'importing-data', 'Importing data', 'Load CSV files into Power BI, choose between Load and Transform Data, and check that what arrived is complete and correctly typed.', 25, $md$
+## The problem
+
+Kolanut's data is in three CSV files. Before you can chart anything, they have to come into Power BI whole, with numbers as numbers and dates as dates. A file that loads with the wrong types, or a truncated preview mistaken for the full data, causes problems that surface much later as "wrong" numbers.
+
+## The concept
+
+**Get data** (Home → Get data) connects to hundreds of sources: Excel workbooks, CSV and text files, folders, SQL databases, SharePoint, web pages and online services.
+
+For a CSV, Power BI shows a **preview** of the first rows with its guess at the delimiter and types, then two buttons:
+
+| Button | Does |
+| :-- | :-- |
+| **Load** | Loads the data as it is into the model |
+| **Transform Data** | Opens Power Query to clean and shape it first (next lesson) |
+
+**Import mode.** Loading copies the data into the `.pbix` file. That makes reports fast. To see new data you **Refresh** (Home → Refresh), which re-reads the source files.
+
+**Check what arrived**, every time:
+
+1. **Row counts**: in Table view the row count for the selected table appears at the bottom-left of the window. Compare it with the source.
+2. **Types**: each column's type shows in Table view under **Column tools → Data type**. Numbers should be Whole number or Decimal number, dates should be Date.
+3. **Obvious oddities**: blanks where you expect values, dates in the wrong century, IDs shown as decimals.
+
+## Example
+
+Kolanut's files, once loaded:
+
+| Table | Rows | Key columns |
+| :-- | --: | :-- |
+| `orders` | 4,266 | order_id, order_date (Date), customer_id, product_id, quantity, unit_price, discount_pct |
+| `customers` | 90 | customer_id, customer_name, channel, region, city, sales_rep, joined_date, credit_limit |
+| `products` | 16 | product_id, product_name, category, list_price |
+
+## Walkthrough
+
+1. Open `kolanut-sales.pbix` from the last lesson.
+2. **Home → Get data → Text/CSV** → choose `orders.csv` → **Open**.
+3. In the preview, check the delimiter is **Comma** and the columns look right. Click **Load**.
+4. Repeat for `customers.csv` and `products.csv`.
+5. Switch to **Table view**. Select each table in the Data pane and read the row count at the bottom of the window.
+6. Click the `order_date` column and check **Column tools → Data type** says **Date**.
+7. Save.
+
+> [!TIP]
+> If the files will live in one folder and grow over time (a new CSV each month), **Get data → Folder** combines every file in the folder into one table. Refreshing then picks up new files automatically.
+
+## Practice
+
+```answer
+{
+  "id": "pbi-03-p1",
+  "prompt": "After loading, how many rows does the **orders** table have in Power BI?",
+  "answer": 4266,
+  "format": "number",
+  "dataset": "sales",
+  "files": ["orders"],
+  "verify": "SELECT COUNT(*) FROM orders",
+  "hint": "Table view → select orders in the Data pane → the row count is at the bottom-left.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "pbi-03-p2",
+  "prompt": "How many **different customers** placed an order in **June 2026**? Build a Card visual with customer_id from orders, set to **Count (Distinct)**, and filter order_date to June 2026.",
+  "answer": 66,
+  "format": "number",
+  "dataset": "sales",
+  "files": ["orders"],
+  "verify": "SELECT COUNT(DISTINCT customer_id) FROM orders WHERE order_date BETWEEN '2026-06-01' AND '2026-06-30'",
+  "hint": "Add a Card; drag orders[customer_id] into it; click the arrow next to the field in the well → Count (Distinct). Then in the Filters pane, filter order_date to June 2026 (Advanced filtering: is on or after 1/6/2026 and is on or before 30/6/2026).",
+  "explanation": "66 of Kolanut's 90 customers ordered in June 2026.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "What does Refresh do for imported CSV data?",
+    "options": ["Nothing, imported data never changes", "Re-reads the source files and reloads the data", "Deletes the data", "Publishes the report"],
+    "answer": 1,
+    "explanation": "Import mode keeps a copy; Refresh updates that copy from the source."
+  },
+  {
+    "prompt": "You loaded orders and Power BI shows 1,000 rows. The CSV has 4,266. What should you do?",
+    "options": ["Ignore it", "Investigate: check the file, the load and any filters before building anything", "Multiply results by 4.266", "Delete the table"],
+    "answer": 1,
+    "explanation": "Row-count checks catch incomplete loads early. Find out why before trusting any number."
+  },
+  {
+    "prompt": "When would you choose Transform Data instead of Load?",
+    "options": ["When the data needs cleaning or reshaping first", "Always, Load doesn't work", "Only for Excel files", "When you want a chart"],
+    "answer": 0,
+    "explanation": "Transform Data opens Power Query so you can fix the data before it reaches the model."
+  }
+]
+```
+$md$, true, true, 3, array['pbi-03-p1', 'pbi-03-p2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
 insert into public.course_modules (id, course_id, title, position)
 values ('pbi-m04', 'power-bi-fundamentals', 'Power Query', 4)
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('power-bi-fundamentals:power-query', 'power-bi-fundamentals', 'pbi-m04', 'power-query', 'Power Query', 'Shape data with Power Query - applied steps, types, custom columns, merges - and profile columns to spot problems.', 35, $md$
+## The problem
+
+The orders table has quantity, price and discount, but no revenue. You could calculate it later in DAX, but a clean, well-typed `revenue` column at the source keeps the model simple. Power Query is where data gets shaped before it reaches the model, and every step you take is recorded, so it runs again on every refresh.
+
+## The concept
+
+**Open it:** Home → **Transform data**. The Power Query Editor shows:
+
+| Area | Purpose |
+| :-- | :-- |
+| **Queries** pane (left) | One query per table |
+| **Preview** (middle) | The data after all steps so far |
+| **Applied Steps** (right) | Every change, in order. Click a step to see the data at that point; delete a step to undo it |
+| **Formula bar** | The **M** code for the selected step (View → Formula Bar if hidden) |
+
+**Transformations you'll use constantly**
+
+| Task | Where |
+| :-- | :-- |
+| Rename a column | Double-click its header |
+| Change type | Click the type icon at the left of the header |
+| Remove columns | Select → Home → Remove Columns |
+| Filter rows | Header drop-down |
+| Replace values | Transform → Replace Values |
+| **Add a calculated column** | **Add Column → Custom Column** |
+| **Bring columns from another query** | **Home → Merge Queries** (like XLOOKUP) |
+| Stack tables with the same columns | Home → Append Queries |
+
+**Column profiling.** **View → Column quality / Column distribution / Column profile** show valid, error and empty percentages, distinct counts and value frequencies. By default it profiles only the **first 1,000 rows**: click *"Column profiling based on top 1000 rows"* in the status bar and choose the entire data set.
+
+**Close & Apply** (Home) saves your steps and loads the result into the model.
+
+## Example
+
+The revenue custom column, in M:
+
+```m
+= Table.AddColumn(#"Changed Type", "revenue", each [quantity] * [unit_price] * (1 - [discount_pct] / 100), type number)
+```
+
+You don't have to type that: the Custom Column dialog writes it. In the dialog you only enter:
+
+```m
+[quantity] * [unit_price] * (1 - [discount_pct] / 100)
+```
+
+## Walkthrough
+
+1. **Home → Transform data**. Select the `orders` query.
+2. **View** → tick **Column quality** and **Column distribution**, then switch profiling to the entire data set. All columns should be 100% valid.
+3. **Add Column → Custom Column**. Name: `revenue`. Formula: as above. OK.
+4. Click the `ABC123` icon on the new column's header → **Decimal Number** (or Fixed decimal number, good for currency).
+5. **Merge** the product category in:
+   - With `orders` selected, **Home → Merge Queries**.
+   - Choose `products` as the second table; click `product_id` in both; Join Kind **Left Outer**. OK.
+   - A new column of nested tables appears. Click its expand icon (↔), untick all but `category`, untick *Use original column name as prefix*. OK.
+6. Look at **Applied Steps**: each action is a step, in order.
+7. **Home → Close & Apply**. Save.
+
+> [!NOTE]
+> Merging the category into orders is fine for learning. In lesson 6 you'll see the better approach, keeping `products` as its own table and relating it to `orders`. Both give the same totals.
+
+## Practice
+
+```answer
+{
+  "id": "pbi-04-p1",
+  "prompt": "Add the `revenue` custom column, load it, and show its total in a Card. What is total revenue, to the nearest naira?",
+  "answer": 830541245,
+  "tolerance": 1,
+  "format": "naira",
+  "dataset": "sales",
+  "files": ["orders"],
+  "verify": "SELECT SUM(quantity * unit_price * (1 - discount_pct / 100.0)) FROM orders",
+  "hint": "Card visual → drag revenue in. To see the exact number, Format visual → Callout value → Display units: None.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "pbi-04-p2",
+  "prompt": "After merging `category` into orders, how many **packs** of **Snacks** were sold in total?",
+  "answer": 14799,
+  "format": "number",
+  "dataset": "sales",
+  "files": ["orders", "products"],
+  "verify": "SELECT SUM(o.quantity) FROM orders o JOIN products p ON p.product_id = o.product_id WHERE p.category = 'Snacks'",
+  "hint": "Table or card visual with Sum of quantity, filtered to category = Snacks.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "What happens to your Power Query steps when the report is refreshed with new data?",
+    "options": ["They're lost", "They run again, in order, on the new data", "Only the last step runs", "You must redo them by hand"],
+    "answer": 1,
+    "explanation": "Applied steps are a recipe that replays on every refresh."
+  },
+  {
+    "prompt": "Column quality shows 100% valid, but only 1,000 rows were profiled. What should you do?",
+    "options": ["Nothing", "Switch profiling to the entire data set to check all rows", "Delete rows after 1,000", "Change the column type"],
+    "answer": 1,
+    "explanation": "Problems in row 3,000 won't show in a 1,000-row profile."
+  },
+  {
+    "prompt": "Which Power Query feature works like XLOOKUP, bringing columns from another table by a matching key?",
+    "options": ["Append Queries", "Merge Queries", "Replace Values", "Group By"],
+    "answer": 1,
+    "explanation": "Merge joins two queries on matching columns."
+  }
+]
+```
+$md$, true, true, 4, array['pbi-04-p1', 'pbi-04-p2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position)
 values ('pbi-m05', 'power-bi-fundamentals', 'Data Cleaning', 5)
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
 
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('power-bi-fundamentals:data-cleaning', 'power-bi-fundamentals', 'pbi-m05', 'data-cleaning', 'Data cleaning in Power Query', 'Clean a messy export with Trim, Capitalize Each Word, Replace Values, locale-aware dates and case-sensitive duplicate removal.', 40, $md$
+## The problem
+
+Kolanut's customer list exported from its old system has stray spaces, random capitals, 23 spellings of six regions, three date formats, money stored as text and 12 customers listed twice. In Excel you'd clean it with formulas. In Power Query you clean it with steps, and when next month's export arrives with the same problems, one refresh cleans it again.
+
+```dataset
+{ "dataset": "cleaning", "files": ["customer_list_raw"] }
+```
+
+## The concept
+
+**Text cleaning** (select column → **Transform → Format**):
+
+| Command | Does |
+| :-- | :-- |
+| **Trim** | Removes spaces at the start and end. Unlike Excel's TRIM, it leaves repeated spaces *inside* the text |
+| **Clean** | Removes invisible control characters |
+| **lowercase / UPPERCASE / Capitalize Each Word** | Changes case |
+
+**Replace Values** (Transform → Replace Values) swaps one value for another in a column: `SW` → `South West`. For many variants, it's cleaner to lower-case and trim first, which collapses `Lagos`, `LAGOS` and `lagos ` into one, then replace what's left.
+
+**Types with a locale.** Right-click a column → **Change Type → Using Locale…** Choose the type and the *locale the data was written in*. **English (United Kingdom)** reads `01/09/2022` as 1 September. The same step handles ISO dates like `2023-07-11` and text like `5-Mar-2024`.
+
+**Errors.** When a type change fails on some rows, those cells show **Error**. Right-click the column → **Replace Errors**, or better, find out why first with **Keep Rows → Keep Errors**.
+
+**Removing duplicates is case-sensitive in Power Query.** `Ada Superstore` and `ADA SUPERSTORE` are *different* to it (Excel would treat them as the same). So fix case and spaces **before** Home → Remove Rows → **Remove Duplicates**.
+
+## Example
+
+Credit limits like `₦2,050,000`, `1,200,000`, `850000` and `1,400,000.00`:
+
+1. Replace Values: `₦` → (nothing).
+2. Replace Values: `,` → (nothing).
+3. Change Type → **Decimal Number** (it reads `1400000.00` fine), or Whole Number after removing `.00`.
+4. Blanks become `null`, which is correct: the limit is unknown.
+
+## Walkthrough
+
+1. **Get data → Text/CSV** → `customer_list_raw.csv` → **Transform Data**.
+2. Rename the query `customers_clean`.
+3. **Customer Name**: Transform → Format → **Trim**, then **Clean**, then **Capitalize Each Word**.
+4. **Region**: Format → **Trim**, then **lowercase**. Now Replace Values for each remaining variant, lower-case to proper name:
+   - `lagos` → `Lagos`
+   - `south west`, `south-west`, `sw` → `South West`
+   - and the same for South East (`se`), South South (`ss`), North Central (`nc`), North West (`nw`).
+
+   Check with the column's filter drop-down: exactly six values should remain.
+5. **City**: Trim, Capitalize Each Word.
+6. **Date Joined**: right-click → **Change Type → Using Locale** → Date, **English (United Kingdom)**.
+7. **Credit Limit**: Replace `₦` and `,` with nothing, then Change Type → Decimal Number.
+8. Select **Customer Name** → **Home → Remove Rows → Remove Duplicates**.
+9. Check the row count at the bottom of the editor, then **Close & Apply**.
+
+Look at **Applied Steps**: that list is your cleaning log.
+
+> [!WARNING]
+> Remove Duplicates keeps the **first** copy it meets. If one copy of a customer has a credit limit and the other is blank, sort by Credit Limit descending first (so values come before nulls), and add **Table.Buffer** in the formula bar around the sort step if the order isn't respected. Otherwise you may keep the blank copy.
+
+## Practice
+
+```answer
+{
+  "id": "pbi-05-p1",
+  "prompt": "After cleaning and removing duplicates, how many rows does `customers_clean` have?",
+  "answer": 90,
+  "format": "number",
+  "dataset": "cleaning",
+  "files": ["customer_list_raw"],
+  "verify": "SELECT COUNT(DISTINCT LOWER(TRIM(\"Customer Name\"))) FROM customer_list_raw",
+  "hint": "If you get more than 90, check that you trimmed and fixed capitals before removing duplicates: Power Query is case-sensitive.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "pbi-05-p2",
+  "prompt": "How many customers are in the **North West** region after cleaning?",
+  "answer": 11,
+  "format": "number",
+  "dataset": "cleaning",
+  "files": ["customer_list_raw"],
+  "verify": "SELECT COUNT(*) FROM sales_customers WHERE region = 'North West'",
+  "hint": "North West appears as North West, North-West, north west and NW in the raw file. After replacing them all and removing duplicates, count with a Card or the column profile.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "In Power Query, 'Ada Superstore' and 'ADA SUPERSTORE' are:",
+    "options": ["Duplicates, removed together", "Different values, until you make the case consistent", "An error", "Merged automatically"],
+    "answer": 1,
+    "explanation": "Power Query compares text case-sensitively."
+  },
+  {
+    "prompt": "The raw file mixes 01/09/2022 and 2022-09-01. How do you convert both to the right date?",
+    "options": ["Change Type → Date", "Change Type → Using Locale → Date, English (United Kingdom)", "Replace '/' with '-'", "Leave them as text"],
+    "answer": 1,
+    "explanation": "The locale tells Power Query the day comes first."
+  },
+  {
+    "prompt": "Why is Power Query cleaning better than cleaning by hand when a new export arrives every month?",
+    "options": ["It's more colourful", "The recorded steps repeat automatically on refresh", "It deletes the raw data", "It doesn't need a computer"],
+    "answer": 1,
+    "explanation": "Clean once, refresh forever, as long as the export keeps the same structure."
+  }
+]
+```
+$md$, true, true, 5, array['pbi-05-p1', 'pbi-05-p2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
 insert into public.course_modules (id, course_id, title, position)
 values ('pbi-m06', 'power-bi-fundamentals', 'Data Relationships', 6)
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('power-bi-fundamentals:data-relationships', 'power-bi-fundamentals', 'pbi-m06', 'data-relationships', 'Data relationships', 'Connect tables with one-to-many relationships so filters flow from customers and products to orders.', 30, $md$
+## The problem
+
+You put `region` from the customers table and `revenue` from orders into a bar chart, and every bar shows ₦830.5 million. Power BI doesn't know which orders belong to which region. The tables need a **relationship**.
+
+## The concept
+
+A **relationship** links two tables through a column they share, usually an ID.
+
+- **Cardinality.** Almost always **one-to-many** (shown as `1` and `*`): one customer, many orders. The "one" side must have unique values; `customers[customer_id]` does.
+- **Cross-filter direction.** The arrow on the line shows which way filters flow. **Single** (from the one side to the many side) is the default and the right choice almost always: choosing a region filters the customers, which filters their orders.
+- **Active vs inactive.** Only one active path can exist between two tables; others show as dashed lines and are used only when a DAX formula asks for them.
+
+**Star schema.** The standard design, which the next lesson explores further:
+
+```
+            customers
+                │ 1
+                │
+products ─1───* orders *───1─ Date
+```
+
+- **Fact table** in the middle: events with numbers (orders).
+- **Dimension tables** around it: the things you filter and group by (customers, products, dates).
+
+Filters flow from dimensions into the fact table. Put fields from **dimensions** on axes and slicers, and numbers from the **fact** table in values.
+
+## Example
+
+With the relationship `customers[customer_id] (1) → orders[customer_id] (*)`:
+
+| region | revenue |
+| :-- | --: |
+| Lagos | ₦411.2m |
+| South West | ₦131.5m |
+| North West | ₦81.6m |
+| North Central | ₦77.5m |
+| South South | ₦68.4m |
+| South East | ₦60.3m |
+
+Without it, every row shows ₦830.5m.
+
+## Walkthrough
+
+1. Go to **Model view**. Power BI may already have created relationships: it auto-detects matching column names on load. Check them rather than trusting them.
+2. If `customers` and `orders` aren't connected, drag `customer_id` from `customers` onto `customer_id` in `orders`.
+3. Double-click the line to open **Edit relationship**. Check: Cardinality **Many to one (\*:1)** from orders to customers; Cross filter direction **Single**; **Make this relationship active** ticked.
+4. Do the same for `products[product_id]` → `orders[product_id]`.
+5. If you merged `category` into orders in lesson 4, delete that column now (in Power Query, delete the merge steps) and use `products[category]` instead.
+6. Back in Report view, build a table visual with `customers[region]` and `orders[revenue]`. Each region should show a different number.
+
+> [!TIP]
+> Hide the ID columns on the "many" side (right-click `orders[customer_id]` → **Hide in report view**). Report builders should use `customers[customer_name]` or `customers[region]`, never the foreign key, which only confuses.
+
+## Practice
+
+```answer
+{
+  "id": "pbi-06-p1",
+  "prompt": "With the relationships in place, what is total revenue from **South East** customers, to the nearest naira?",
+  "answer": 60316685,
+  "tolerance": 1,
+  "format": "naira",
+  "dataset": "sales",
+  "files": ["orders", "customers"],
+  "verify": "SELECT SUM(o.quantity * o.unit_price * (1 - o.discount_pct / 100.0)) FROM orders o JOIN customers c ON c.customer_id = o.customer_id WHERE c.region = 'South East'",
+  "hint": "Table visual: customers[region] and orders[revenue]. If every row shows the same number, the relationship is missing.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "pbi-06-p2",
+  "prompt": "In the relationship between `products` and `orders`, which table is on the **one** side?",
+  "answer": "products",
+  "accept": ["product", "the products table"],
+  "format": "text",
+  "explanation": "Each product appears once in products and many times in orders.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Which column should you use on the axis of a 'revenue by region' chart?",
+    "options": ["orders[customer_id]", "customers[region]", "orders[revenue]", "products[category]"],
+    "answer": 1,
+    "explanation": "Group by fields from the dimension table; the relationship carries the filter to orders."
+  },
+  {
+    "prompt": "What does a Single cross-filter direction from customers to orders mean?",
+    "options": ["Orders can filter customers only", "Selecting customers filters their orders", "No filtering happens", "Both directions, always"],
+    "answer": 1,
+    "explanation": "Filters flow from the one side (customers) to the many side (orders)."
+  },
+  {
+    "prompt": "In a star schema, what sits at the centre?",
+    "options": ["A dimension table like customers", "The fact table with the events and numbers, like orders", "The date table", "A measure"],
+    "answer": 1,
+    "explanation": "The fact table is surrounded by the dimensions that describe it."
+  }
+]
+```
+$md$, true, true, 6, array['pbi-06-p1', 'pbi-06-p2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position)
 values ('pbi-m07', 'power-bi-fundamentals', 'Data Modelling', 7)
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
 
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('power-bi-fundamentals:data-modelling', 'power-bi-fundamentals', 'pbi-m07', 'data-modelling', 'Data modelling', 'Finish the star schema with a proper date table, sort months correctly, and tidy the model so reports are easy to build.', 35, $md$
+## The problem
+
+You want revenue by month, and year-on-year comparisons. Grouping by `order_date` alone gets messy: months sort alphabetically (April, August, December…), there's nothing to group quarters by, and DAX's time functions (next lessons) need a complete calendar. The answer is a **date table**.
+
+## The concept
+
+**Why a date table?**
+
+- One row per day, with no gaps, covering the whole period.
+- Columns to group by: year, quarter, month name, month number.
+- Required for reliable **time intelligence** in DAX (year-to-date, same period last year).
+
+**Build it with DAX** (Modeling → **New table**):
+
+```dax
+Date =
+ADDCOLUMNS (
+    CALENDAR ( DATE ( 2025, 1, 1 ), DATE ( 2026, 12, 31 ) ),
+    "Year", YEAR ( [Date] ),
+    "Quarter", "Q" & ROUNDUP ( MONTH ( [Date] ) / 3, 0 ),
+    "Month Number", MONTH ( [Date] ),
+    "Month", FORMAT ( [Date], "mmm" ),
+    "Year Month", FORMAT ( [Date], "yyyy-mm" )
+)
+```
+
+Then:
+
+1. **Mark as date table**: select the table → Table tools → **Mark as date table** → choose the `Date` column.
+2. **Relate** `Date[Date]` (1) → `orders[order_date]` (*).
+3. **Sort by column**: select `Month` → Column tools → **Sort by column → Month Number**. Now months sort January to December.
+
+**Tidy model habits**
+
+- Hide ID and technical columns report builders shouldn't use.
+- Give tables and columns clear names (`Revenue`, not `Sum of revenue2`).
+- Set formats once in the model (currency, thousands separators), not on every visual.
+- Keep calculations as **measures** (next lessons) rather than many calculated columns.
+- Turn off **Auto date/time** (File → Options and settings → Options → Current file → Data Load) once you have your own date table. It creates hidden date tables for every date column and bloats the file.
+
+## Example
+
+The finished model:
+
+```
+customers (1) ──* orders *── (1) products
+                     *
+                     │
+                  (1) Date
+```
+
+Now `Date[Year]` and `Date[Month]` on a matrix, `orders[revenue]` in values, gives a correctly sorted month-by-year grid.
+
+## Walkthrough
+
+1. **Modeling → New table**, paste the DAX above, press Enter.
+2. Mark it as a date table.
+3. In Model view, drag `Date[Date]` onto `orders[order_date]`. Check it's one-to-many, single direction.
+4. Sort `Month` by `Month Number`.
+5. Build a **Matrix**: Rows `Date[Year]`, then `Date[Quarter]`; Values `orders[revenue]`. Expand a year with the **+** icons.
+6. Hide `orders[order_date]` in report view, so everyone uses `Date` instead.
+
+> [!NOTE]
+> The date table runs to 31 December 2026 although the data stops at 30 June 2026. That's intended: complete years make year-level calculations behave, and later data will fit without changes.
+
+## Practice
+
+```answer
+{
+  "id": "pbi-07-p1",
+  "prompt": "Using the date table, what was revenue in **Q2 2026** (April–June), to the nearest naira?",
+  "answer": 147521325,
+  "tolerance": 1,
+  "format": "naira",
+  "dataset": "sales",
+  "files": ["orders"],
+  "verify": "SELECT SUM(quantity * unit_price * (1 - discount_pct / 100.0)) FROM orders WHERE order_date BETWEEN '2026-04-01' AND '2026-06-30'",
+  "hint": "Matrix with Date[Year] and Date[Quarter] in rows and revenue in values; read 2026 → Q2.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "pbi-07-p2",
+  "prompt": "How many rows does the `Date` table built with the DAX above contain?",
+  "answer": 730,
+  "format": "number",
+  "hint": "It covers 1 January 2025 to 31 December 2026: two full years, neither a leap year.",
+  "explanation": "365 + 365 = 730 days, one row each.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why do months sort April, August, December… by default?",
+    "options": ["A Power BI bug", "Month names are text, so they sort alphabetically unless sorted by a number column", "The date table is wrong", "Months can't be sorted"],
+    "answer": 1,
+    "explanation": "Sort by column → Month Number fixes the order."
+  },
+  {
+    "prompt": "Why mark a table as the date table?",
+    "options": ["To make it bold", "So DAX time intelligence functions treat it as the calendar", "To hide it", "To load it faster"],
+    "answer": 1,
+    "explanation": "Marking tells Power BI which table and column to use for time calculations."
+  },
+  {
+    "prompt": "Which field should you put on a monthly chart's axis once the model has a date table?",
+    "options": ["orders[order_date]", "Date[Month] (or Date[Year Month])", "products[product_id]", "orders[revenue]"],
+    "answer": 1,
+    "explanation": "Use the date table's columns so every visual shares one calendar."
+  }
+]
+```
+$md$, true, true, 7, array['pbi-07-p1', 'pbi-07-p2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
 insert into public.course_modules (id, course_id, title, position)
 values ('pbi-m08', 'power-bi-fundamentals', 'DAX Fundamentals', 8)
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('power-bi-fundamentals:dax-fundamentals', 'power-bi-fundamentals', 'pbi-m08', 'dax-fundamentals', 'DAX fundamentals', 'The difference between calculated columns and measures, how filter context works, and the core DAX functions.', 40, $md$
+## The problem
+
+Dragging `revenue` into a visual gives "Sum of revenue", which is fine until you need an average per order line, a count of active customers, or a percentage of the total. Those need **DAX** (Data Analysis Expressions), Power BI's formula language. DAX looks like Excel, but it thinks in **columns and filters**, not cells.
+
+## The concept
+
+**Calculated columns vs measures**
+
+| | Calculated column | Measure |
+| :-- | :-- | :-- |
+| Calculated | Once per row, when data refreshes | On the fly, for whatever the visual is showing |
+| Stored | In the table (uses memory) | Not stored |
+| Use for | A value you'll filter or group by (size band, age group) | Numbers you aggregate: totals, averages, ratios |
+| Example | `Size = IF(orders[quantity] >= 20, "Large", "Small")` | `Revenue = SUM(orders[revenue])` |
+
+**Rule of thumb:** if it goes in the **Values** well, make it a measure.
+
+**Filter context.** A measure has no fixed answer. In a table of revenue by region, the measure `Revenue` is calculated once per row, each time *filtered* to that region. Slicers, page filters and visual filters add to the context. Understanding "what is filtered right now?" is most of understanding DAX.
+
+**Row context.** Calculated columns, and *iterator* functions ending in X (`SUMX`, `AVERAGEX`), work row by row. `SUMX` evaluates an expression for each row of a table, then adds the results:
+
+```dax
+Revenue = SUMX ( orders, orders[quantity] * orders[unit_price] * ( 1 - orders[discount_pct] / 100 ) )
+```
+
+This gives the same result as the Power Query `revenue` column plus `SUM`, without storing the column.
+
+**Core functions**
+
+| Function | Returns |
+| :-- | :-- |
+| `SUM(col)`, `AVERAGE(col)`, `MIN`, `MAX` | Aggregates over the current filter context |
+| `COUNTROWS(table)` | Number of rows |
+| `DISTINCTCOUNT(col)` | Number of different values |
+| `DIVIDE(a, b)` | a ÷ b, returning blank instead of an error when b is 0 |
+| `RELATED(col)` | In a calculated column on the many side, the matching value from the one side |
+| `IF`, `SWITCH` | Conditional logic |
+
+## Example
+
+Four measures every sales report needs:
+
+```dax
+Revenue = SUM ( orders[revenue] )
+
+Order Lines = COUNTROWS ( orders )
+
+Active Customers = DISTINCTCOUNT ( orders[customer_id] )
+
+Avg Revenue per Line = DIVIDE ( [Revenue], [Order Lines] )
+```
+
+Notice the last one uses the others: measures build on measures. Change `Revenue` once and everything using it follows.
+
+A calculated column using a relationship:
+
+```dax
+Category = RELATED ( products[category] )
+```
+
+## Walkthrough
+
+1. Create a table for your measures: **Home → Enter data**, name it `_Measures`, load it with its one empty column. (The underscore keeps it at the top of the Data pane.)
+2. Select `_Measures`, then **Home → New measure**, and type the `Revenue` measure. Press Enter.
+3. Add `Order Lines`, `Active Customers` and `Avg Revenue per Line` the same way.
+4. Format them: select a measure → Measure tools → set format (Whole number with thousands separator for counts; currency for revenue).
+5. Build a Matrix with `Date[Year]` in Rows and all four measures in Values. Each number is calculated for its year: that's filter context at work.
+6. Delete the empty column in `_Measures`; the table becomes a measure folder.
+
+## Practice
+
+```answer
+{
+  "id": "pbi-08-p1",
+  "prompt": "What is **Avg Revenue per Line** for **2026** (January–June), to the nearest naira?",
+  "answer": 202741,
+  "tolerance": 1,
+  "format": "naira",
+  "dataset": "sales",
+  "files": ["orders"],
+  "verify": "SELECT ROUND(AVG(quantity * unit_price * (1 - discount_pct / 100.0))) FROM orders WHERE order_date >= '2026-01-01'",
+  "hint": "Your matrix with Date[Year] in Rows shows it in the 2026 row.",
+  "explanation": "₦202,741, up from 2025, mostly because of the January price rise.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "pbi-08-p2",
+  "prompt": "How many **order lines** were there in **Q1 2026** (January–March)?",
+  "answer": 695,
+  "format": "number",
+  "dataset": "sales",
+  "files": ["orders"],
+  "verify": "SELECT COUNT(*) FROM orders WHERE order_date BETWEEN '2026-01-01' AND '2026-03-31'",
+  "hint": "The Order Lines measure in a matrix with Date[Year] and Date[Quarter] in Rows.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "You want to show 'Revenue per active customer' in a card. Should it be a calculated column or a measure?",
+    "options": ["Calculated column", "Measure", "Either, they're identical", "Neither"],
+    "answer": 1,
+    "explanation": "It's an aggregate ratio that must respond to filters, so it's a measure."
+  },
+  {
+    "prompt": "Why use DIVIDE([A], [B]) instead of [A] / [B]?",
+    "options": ["It's faster to type", "It returns blank instead of an error when B is zero", "It rounds the result", "It only works on integers"],
+    "answer": 1,
+    "explanation": "DIVIDE handles division by zero gracefully."
+  },
+  {
+    "prompt": "In a table visual with one row per region, how many times is the Revenue measure calculated?",
+    "options": ["Once for the whole table", "Once per row (region), plus once for the total", "Never, it's stored", "Once per order line"],
+    "answer": 1,
+    "explanation": "Each cell has its own filter context, and the total row has the unfiltered one."
+  }
+]
+```
+$md$, true, true, 8, array['pbi-08-p1', 'pbi-08-p2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position)
 values ('pbi-m09', 'power-bi-fundamentals', 'Measures', 9)
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
 
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('power-bi-fundamentals:measures', 'power-bi-fundamentals', 'pbi-m09', 'measures', 'Measures with CALCULATE and time intelligence', 'Change the filter context with CALCULATE, build percentage-of-total, year-to-date and year-on-year measures.', 45, $md$
+## The problem
+
+The managing director wants three numbers on every page: *revenue this year to date*, *growth versus the same period last year*, and *each category's share of revenue*. None of these is a plain sum. Each needs a measure that **changes the filters** before calculating.
+
+## The concept
+
+**CALCULATE** evaluates an expression under modified filters:
+
+```dax
+CALCULATE ( <expression>, <filter1>, <filter2>, … )
+```
+
+```dax
+Revenue Lagos = CALCULATE ( [Revenue], customers[region] = "Lagos" )
+```
+
+That measure shows Lagos revenue even in a visual sliced by another region: the filter argument replaces the region filter.
+
+**Removing filters: ALL / REMOVEFILTERS**
+
+```dax
+Revenue All Categories = CALCULATE ( [Revenue], REMOVEFILTERS ( products[category] ) )
+
+% of Revenue = DIVIDE ( [Revenue], [Revenue All Categories] )
+```
+
+In a table by category, the first measure ignores the category on each row, giving the grand total, so the ratio is each category's share. Format `% of Revenue` as a percentage.
+
+**Time intelligence** (needs the marked date table from lesson 7):
+
+```dax
+Revenue YTD = TOTALYTD ( [Revenue], 'Date'[Date] )
+
+Revenue LY = CALCULATE ( [Revenue], SAMEPERIODLASTYEAR ( 'Date'[Date] ) )
+
+YoY % = DIVIDE ( [Revenue] - [Revenue LY], [Revenue LY] )
+```
+
+- `TOTALYTD` adds everything from 1 January up to the latest date in the current filter.
+- `SAMEPERIODLASTYEAR` shifts the dates in the filter back one year.
+- `YoY %` compares them; blank when there's no previous year.
+
+## Example
+
+A matrix with `Date[Year]` and `Date[Month]` in Rows:
+
+| Month | Revenue | Revenue LY | YoY % |
+| :-- | --: | --: | --: |
+| 2026 Jan | 48,963,925 | 37,088,460 | 32.0% |
+| 2026 Feb | 43,042,730 | 36,138,690 | 19.1% |
+| 2026 Mar | 51,202,475 | 46,282,170 | 10.6% |
+
+And **Revenue YTD** at 2026 March shows Q1 2026 in total.
+
+> [!WARNING]
+> At **year** level, 2026's YoY % compares January–June 2026 with **all** of 2025, because 2026 only has data to June. Compare full year against half year and 2026 looks like a disaster. Compare **H1 with H1** (filter the page to January–June, or use the monthly or quarterly rows) to get the fair +19.1%.
+
+## Walkthrough
+
+1. In `_Measures`, add `Revenue All Categories` and `% of Revenue`. Build a table: `products[category]`, `[Revenue]`, `[% of Revenue]`.
+2. Add `Revenue YTD`, `Revenue LY` and `YoY %`. Format YoY % as a percentage with one decimal place.
+3. Build a matrix with `Date[Year]` → `Date[Month]` in Rows and the three measures in Values.
+4. Check one number by hand: February 2026's YoY % should equal (43.04 − 36.14) ÷ 36.14.
+5. Add a **Card** for `Revenue YTD` and a slicer on `Date[Month]`: selecting March 2026 shows year-to-date March.
+
+## Practice
+
+```answer
+{
+  "id": "pbi-09-p1",
+  "prompt": "What share of total revenue (all dates) comes from **Beverages**? One decimal place.",
+  "answer": 27,
+  "tolerance": 0.06,
+  "format": "percent",
+  "dataset": "sales",
+  "files": ["orders", "products"],
+  "verify": "SELECT ROUND(100.0 * SUM(CASE WHEN p.category = 'Beverages' THEN o.quantity * o.unit_price * (1 - o.discount_pct / 100.0) END) / SUM(o.quantity * o.unit_price * (1 - o.discount_pct / 100.0)), 1) FROM orders o JOIN products p ON p.product_id = o.product_id",
+  "hint": "Table: products[category], [% of Revenue].",
+  "explanation": "27.0%: Household and Personal care are slightly larger.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "pbi-09-p2",
+  "prompt": "What is **Revenue YTD** at the end of **March 2026**, to the nearest naira?",
+  "answer": 143209130,
+  "tolerance": 1,
+  "format": "naira",
+  "dataset": "sales",
+  "files": ["orders"],
+  "verify": "SELECT SUM(quantity * unit_price * (1 - discount_pct / 100.0)) FROM orders WHERE order_date BETWEEN '2026-01-01' AND '2026-03-31'",
+  "hint": "Matrix row 2026 → Mar, column Revenue YTD. It should equal January + February + March 2026.",
+  "required": true
+}
+```
+
+## Challenge
+
+```answer
+{
+  "id": "pbi-09-c1",
+  "prompt": "What is **YoY %** for **Q1 2026** against Q1 2025, to one decimal place?",
+  "answer": 19.8,
+  "format": "percent",
+  "dataset": "sales",
+  "files": ["orders"],
+  "verify": "SELECT ROUND(100.0 * (SUM(CASE WHEN order_date BETWEEN '2026-01-01' AND '2026-03-31' THEN quantity * unit_price * (1 - discount_pct / 100.0) END) / SUM(CASE WHEN order_date BETWEEN '2025-01-01' AND '2025-03-31' THEN quantity * unit_price * (1 - discount_pct / 100.0) END) - 1), 1) FROM orders",
+  "hint": "Put Date[Year] → Date[Quarter] in the matrix rows; read YoY % at 2026 Q1.",
+  "required": false
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "In a table by region, what does CALCULATE([Revenue], customers[region] = \"Lagos\") show on the South East row?",
+    "options": ["South East revenue", "Lagos revenue", "Blank", "Total revenue"],
+    "answer": 1,
+    "explanation": "The filter argument overrides the region filter from the row."
+  },
+  {
+    "prompt": "What is REMOVEFILTERS(products[category]) used for in a % of total measure?",
+    "options": ["Deleting categories", "Getting the total across all categories as the denominator", "Sorting categories", "Hiding the category column"],
+    "answer": 1,
+    "explanation": "It ignores the category filter so the denominator is the all-category total."
+  },
+  {
+    "prompt": "Why does 2026's YoY % look very negative at year level in this data?",
+    "options": ["Sales collapsed", "2026 has only six months of data but is compared with all twelve months of 2025", "The date table is wrong", "DAX can't compare years"],
+    "answer": 1,
+    "explanation": "Compare equal periods, such as H1 vs H1, for a fair picture."
+  }
+]
+```
+$md$, true, true, 9, array['pbi-09-p1', 'pbi-09-p2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
 insert into public.course_modules (id, course_id, title, position)
 values ('pbi-m10', 'power-bi-fundamentals', 'Visualizations', 10)
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('power-bi-fundamentals:visualizations', 'power-bi-fundamentals', 'pbi-m10', 'visualizations', 'Visualizations', 'The visuals you''ll use most, how to configure and format them, and how visuals interact on a page.', 35, $md$
+## The problem
+
+Your model and measures are ready. Now they need to become a page someone can read. Power BI has dozens of visuals; a handful do most of the work, and knowing how they interact (click one bar, and the whole page filters) is what makes a report feel alive.
+
+## The concept
+
+**The core visuals**
+
+| Visual | Best for | Wells to fill |
+| :-- | :-- | :-- |
+| **Card** | One headline number | Fields: a measure |
+| **Clustered bar / column** | Comparing categories | Y-axis (category), X-axis (measure) |
+| **Line chart** | Trends over time | X-axis: `Date[Year Month]` or Date hierarchy; Y-axis: measures |
+| **Matrix** | Cross-tab (like a pivot table) | Rows, Columns, Values |
+| **Table** | Detail lists | Columns |
+| **Slicer** | On-page filtering | Field: a dimension column |
+| **Line and clustered column** | Two measures with different scales | Column y-axis, Line y-axis |
+
+**Formatting** (Format visual, paintbrush icon): titles, data labels, axis units (Millions), colours. For a single highlighted bar: Format → **Bars → Colors** → turn on **Show all** and colour one category.
+
+**Conditional formatting** in tables and matrices: click the field's drop-down in the Values well → **Conditional formatting → Background color / Data bars / Icons**.
+
+**Interactions.** Clicking a data point in one visual **cross-filters** or **cross-highlights** the others. Control it: select a visual → **Format → Edit interactions**, then choose filter, highlight or none on each other visual.
+
+**Drill down.** With a hierarchy (Year → Quarter → Month) on an axis, the drill arrows at the top of the visual move between levels.
+
+**Tooltips.** Hovering shows details; add extra measures to the **Tooltips** well to show more (e.g. YoY % when hovering a region's bar).
+
+## Example
+
+A first report page for Kolanut:
+
+- **Top row:** three Cards: `Revenue`, `YoY %`, `Active Customers`.
+- **Left:** Line chart: `Date[Year Month]` on the X-axis, `Revenue` and `Revenue LY` on the Y-axis.
+- **Right:** Clustered bar: `customers[region]` on the Y-axis, `Revenue` on the X-axis, `YoY %` in Tooltips, sorted descending.
+- **Bottom:** Matrix: `products[category]` in Rows, `Date[Year]` in Columns, `Revenue` in Values, with data bars.
+- **Side:** Slicers for `customers[channel]` and `Date[Year]`.
+
+Click the North West bar and every other visual shows North West only.
+
+## Walkthrough
+
+1. Add the three cards. For each, Format → Callout value → Display units **Millions** for revenue.
+2. Add the line chart. If the X-axis shows a hierarchy (Year, Quarter, Month, Day), use `Date[Year Month]` instead, or drill down to Month.
+3. Add the region bar chart; sort by Revenue (… menu → Sort axis → Revenue, descending).
+4. Add the matrix with data bars on Revenue.
+5. Add slicers; set their style to **Tile** or **Dropdown** (Format → Slicer settings).
+6. Click around. Then select the line chart → **Format → Edit interactions** and set the region bar chart to **filter** rather than highlight the line chart.
+
+## Practice
+
+```answer
+{
+  "id": "pbi-10-p1",
+  "prompt": "Click **North West** in the region bar chart with the Year slicer set to **2026**. What does the Revenue card show, to the nearest naira?",
+  "answer": 16646820,
+  "tolerance": 1,
+  "format": "naira",
+  "dataset": "sales",
+  "files": ["orders", "customers"],
+  "verify": "SELECT SUM(o.quantity * o.unit_price * (1 - o.discount_pct / 100.0)) FROM orders o JOIN customers c ON c.customer_id = o.customer_id WHERE c.region = 'North West' AND o.order_date >= '2026-01-01'",
+  "hint": "Set the card's display units to None to read the exact value.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "pbi-10-p2",
+  "prompt": "In the category-by-year matrix, what was **Snacks** revenue in **2025**, to the nearest naira?",
+  "answer": 80124630,
+  "tolerance": 1,
+  "format": "naira",
+  "dataset": "sales",
+  "files": ["orders", "products"],
+  "verify": "SELECT SUM(o.quantity * o.unit_price * (1 - o.discount_pct / 100.0)) FROM orders o JOIN products p ON p.product_id = o.product_id WHERE p.category = 'Snacks' AND o.order_date BETWEEN '2025-01-01' AND '2025-12-31'",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Which visual lets report users filter the whole page by channel with a click?",
+    "options": ["Card", "Slicer", "Matrix", "Tooltip"],
+    "answer": 1,
+    "explanation": "Slicers are on-page filters."
+  },
+  {
+    "prompt": "Clicking a bar highlights part of the other visuals instead of filtering them. How do you change that?",
+    "options": ["Delete the visual", "Format → Edit interactions, then choose Filter for each target visual", "Change the theme", "Refresh the data"],
+    "answer": 1,
+    "explanation": "Edit interactions sets how each visual responds to selections in another."
+  },
+  {
+    "prompt": "Where do you add YoY % so it appears when hovering over a region's bar?",
+    "options": ["Legend", "Tooltips well", "Filters on this page", "Small multiples"],
+    "answer": 1,
+    "explanation": "Fields in the Tooltips well appear on hover."
+  }
+]
+```
+$md$, true, true, 10, array['pbi-10-p1', 'pbi-10-p2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position)
 values ('pbi-m11', 'power-bi-fundamentals', 'Dashboard Design', 11)
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
 
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('power-bi-fundamentals:dashboard-design', 'power-bi-fundamentals', 'pbi-m11', 'dashboard-design', 'Dashboard design', 'Lay out a report page people understand in five seconds - hierarchy, consistency, restraint and accessibility.', 30, $md$
+## The problem
+
+Your first report page works, but it may look like most first pages: twelve visuals, eight colours, charts squeezed into corners, a title that says "Sales Dashboard". Everything is there and nothing stands out. Good design is mostly about deciding what to leave out and where the eye goes first.
+
+## The concept
+
+**Hierarchy: the most important thing, biggest and first.** People scan a page top-left to bottom-right (a Z or F pattern). Put the headline numbers along the top, the main chart below them, and details lower down.
+
+**The five-second rule.** A manager glancing at the page for five seconds should get the main message. If they can't, the page has too much or the wrong emphasis.
+
+**Design rules that work**
+
+1. **One page, one purpose.** An overview page, then detail pages (by region, by product, by customer).
+2. **At most 5–7 visuals** per page. Each must answer a question someone asked.
+3. **KPI cards with context.** A number alone ("₦290.7m") means little; add a comparison ("+19.1% vs H1 2025").
+4. **Consistent colours.** Pick one colour for "this year", a grey for "last year", and red only for problems. Use a theme (View → Themes) so every visual matches.
+5. **Align and space.** Use View → **Gridlines** and **Snap to grid**. Equal gaps, aligned edges.
+6. **Titles that say something**: "North West revenue nearly halved" instead of "Revenue by Region".
+7. **Slicers together**, in one place, usually along the top or left.
+
+**Accessibility**
+
+- Enough **contrast** between text and background.
+- Don't rely on colour alone: red and green look alike to many colour-blind people. Add labels or icons.
+- Add **alt text** to visuals (Format → General → Alt text) for screen-reader users.
+- Set a sensible **tab order** (View → Selection pane → Tab order).
+- Check readable font sizes: nothing below 10–12pt.
+
+**Mobile.** View → **Mobile layout** lets you arrange a phone-friendly version of each page. Managers in the field will use it.
+
+## Example
+
+**Before:** 11 visuals; a pie chart of 16 products; a gauge; three different blues; title "Kolanut Dashboard"; slicers scattered.
+
+**After:**
+
+```
+┌──────────────────────────────────────────────────────────────┐
+│ Kolanut sales: H1 2026 up 19%, driven by Lagos and South West│
+│ [Channel ▾] [Category ▾] [Date range ▾]                      │
+├──────────────┬──────────────┬──────────────┬─────────────────┤
+│ Revenue      │ YoY %        │ Active       │ Avg per line    │
+│ ₦290.7m      │ +19.1%       │ customers 90 │ ₦202,741        │
+├──────────────┴──────────────┴──────┬───────┴─────────────────┤
+│ Monthly revenue: 2026 vs 2025      │ Revenue by region       │
+│ (line, 2025 in grey)               │ (bars, NW in red)       │
+├────────────────────────────────────┴─────────────────────────┤
+│ Top 10 customers: revenue, YoY % (table with data bars)       │
+└──────────────────────────────────────────────────────────────┘
+```
+
+## Walkthrough
+
+Redesign your page from the previous lesson:
+
+1. Write the page's purpose in one sentence. Delete any visual that doesn't serve it.
+2. Add a text box title that states the main finding.
+3. Line up the KPI cards across the top, the same size, with equal gaps.
+4. Apply a theme; set 2025 to grey and 2026 to your main colour everywhere.
+5. Colour only the North West bar red (Format → Bars → Colors → Show all).
+6. Add a **Top 10 customers** table: `customers[customer_name]`, `[Revenue]`, `[YoY %]`; in the Filters pane, set `customer_name` to **Top N = 10 by Revenue**.
+7. Add alt text to each visual.
+8. Show the page to someone for five seconds and ask what it says.
+
+## Practice
+
+```answer
+{
+  "id": "pbi-11-p1",
+  "prompt": "In your Top 10 customers table filtered to **2026**, which customer is **first**?",
+  "answer": "Brother Sunday Wholesale",
+  "format": "text",
+  "dataset": "sales",
+  "files": ["orders", "customers"],
+  "verify": "SELECT c.customer_name FROM orders o JOIN customers c ON c.customer_id = o.customer_id WHERE o.order_date >= '2026-01-01' GROUP BY c.customer_name ORDER BY SUM(o.quantity * o.unit_price * (1 - o.discount_pct / 100.0)) DESC LIMIT 1",
+  "hint": "Filters pane on the table visual: customer_name → Filter type Top N → Top 10 → By value: Revenue. Then set the Year slicer to 2026 and sort by Revenue.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "pbi-11-p2",
+  "prompt": "A page has 12 visuals and the manager can't find the main message. According to this lesson, roughly what is the **maximum** number of visuals a page should usually have?",
+  "answer": 7,
+  "tolerance": 2,
+  "format": "number",
+  "explanation": "About 5–7. Beyond that, visuals compete for attention.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Where should the headline KPIs usually go on a report page?",
+    "options": ["Bottom right", "Along the top", "In a tooltip", "On a hidden page"],
+    "answer": 1,
+    "explanation": "People start reading at the top left."
+  },
+  {
+    "prompt": "Why avoid showing good and bad only with green and red?",
+    "options": ["They're ugly", "Many colour-blind people can't tell them apart; add labels or icons too", "Power BI doesn't support red", "They print badly"],
+    "answer": 1,
+    "explanation": "Never rely on colour alone to carry meaning."
+  },
+  {
+    "prompt": "A KPI card shows '₦290.7m'. What would make it more useful?",
+    "options": ["A bigger font", "A comparison, like '+19.1% vs H1 2025'", "A 3D border", "More decimal places"],
+    "answer": 1,
+    "explanation": "Context turns a number into information."
+  }
+]
+```
+$md$, true, true, 11, array['pbi-11-p1', 'pbi-11-p2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
 insert into public.course_modules (id, course_id, title, position)
 values ('pbi-m12', 'power-bi-fundamentals', 'Business Storytelling', 12)
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('power-bi-fundamentals:business-storytelling', 'power-bi-fundamentals', 'pbi-m12', 'business-storytelling', 'Business storytelling', 'Turn a report into an argument - context, finding, cause and recommendation - with titles, annotations, bookmarks and navigation.', 30, $md$
+## The problem
+
+A good dashboard lets people explore. But at the quarterly review, the managing director has 15 minutes and wants to know three things: *How did we do? What changed? What should we do?* A dashboard that makes her hunt for the answers loses the room. For that meeting you need a **story**: a short sequence that leads to a decision.
+
+## The concept
+
+**The story structure**
+
+1. **Context**: where we are. "H1 revenue grew 19% to ₦290.7m."
+2. **Complication**: what changed or what's at risk. "But the growth came from two regions, and North West nearly halved."
+3. **Cause**: what the data says about why. "North West customers didn't leave. They ordered half as often."
+4. **Recommendation**: what to do, and how we'll know it worked. "Visit the top five North West accounts this month; target 150 order lines next half-year."
+
+**Know your audience.** Executives want the conclusion first and detail on request. Operational managers want the detail for *their* area. Build the story page for the first, and the explorable pages for the second.
+
+**Tools in Power BI**
+
+| Tool | Use |
+| :-- | :-- |
+| **Text box titles** | State each page's finding |
+| **Annotations** | A text box and arrow pointing at the December peak or the North West fall |
+| **Bookmarks** (View → Bookmarks) | Save a page's state (filters, selections, visible visuals) and return to it with a click |
+| **Buttons + page navigation** (Insert → Buttons) | Build a guided path: Overview → Regions → North West deep-dive |
+| **Tooltip pages** | A small page that appears on hover with extra detail |
+| **Selection pane** | Show or hide visuals, used together with bookmarks |
+
+**Honesty.** A story selects; it mustn't distort. Keep axes at zero for bars, compare equal periods, mention the price rise when you show revenue growth, and show the counts behind percentages.
+
+## Example
+
+A three-page story for the review:
+
+1. **"H1 2026: up 19%, but unevenly."** Cards (revenue, YoY %), and a bar chart of the change in revenue by region, in naira, sorted: Lagos and South West large positives, North West a large negative in red.
+2. **"North West: same customers, half the orders."** Three cards for H1 2025 vs 2026 (revenue, customers who ordered, order lines), and a monthly line of North West order lines with an annotation where the decline starts.
+3. **"What we recommend."** Three short recommendations, each with its target KPI.
+
+Buttons at the bottom of each page move to the next.
+
+## Walkthrough
+
+1. Add a measure for the change in naira: `Revenue Change = [Revenue] - [Revenue LY]`.
+2. On a new page, build a bar chart of `Revenue Change` by region for the first half (filter `Date[Month Number]` to 1–6 and `Date[Year]` to 2026). Sort descending; colour negatives red via conditional formatting (Format → Bars → Colors → fx → rules: less than 0 → red).
+3. Title the page with the finding.
+4. Build page 2 with North West filtered, and add an annotation text box.
+5. **Insert → Buttons → Navigator → Page navigator**, or single buttons with Action → Page navigation.
+6. Rehearse: can you tell the story in three minutes using only these pages?
+
+## Practice
+
+```answer
+{
+  "id": "pbi-12-p1",
+  "prompt": "Which region contributed the **largest increase in naira** from H1 2025 to H1 2026?",
+  "answer": "Lagos",
+  "format": "text",
+  "dataset": "sales",
+  "files": ["orders", "customers"],
+  "verify": "SELECT c.region FROM orders o JOIN customers c ON c.customer_id = o.customer_id GROUP BY c.region ORDER BY SUM(CASE WHEN o.order_date >= '2026-01-01' THEN o.quantity * o.unit_price * (1 - o.discount_pct / 100.0) ELSE 0 END) - SUM(CASE WHEN o.order_date <= '2025-06-30' THEN o.quantity * o.unit_price * (1 - o.discount_pct / 100.0) ELSE 0 END) DESC LIMIT 1",
+  "hint": "Your Revenue Change bar chart, sorted descending, shows it at the top.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "pbi-12-p2",
+  "prompt": "By how many **naira** did North West revenue fall from H1 2025 to H1 2026? Give the size of the fall as a positive number, to the nearest naira.",
+  "answer": 14501100,
+  "tolerance": 1,
+  "format": "naira",
+  "dataset": "sales",
+  "files": ["orders", "customers"],
+  "verify": "SELECT SUM(CASE WHEN o.order_date <= '2025-06-30' THEN o.quantity * o.unit_price * (1 - o.discount_pct / 100.0) ELSE 0 END) - SUM(CASE WHEN o.order_date >= '2026-01-01' THEN o.quantity * o.unit_price * (1 - o.discount_pct / 100.0) ELSE 0 END) FROM orders o JOIN customers c ON c.customer_id = o.customer_id WHERE c.region = 'North West'",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "What comes after 'context' and 'complication' in the story structure?",
+    "options": ["The raw data", "Cause, then recommendation", "A pie chart", "The appendix"],
+    "answer": 1,
+    "explanation": "Explain why it happened, then what to do."
+  },
+  {
+    "prompt": "What does a bookmark save?",
+    "options": ["The data at a point in time", "The state of a page: filters, selections and which visuals are visible", "A copy of the .pbix", "A DAX measure"],
+    "answer": 1,
+    "explanation": "Bookmarks capture view state, not data."
+  },
+  {
+    "prompt": "Revenue grew 19%, partly from a 10% price rise. What should the story say?",
+    "options": ["Volume grew 19%", "Revenue grew 19%, partly from the price rise", "Nothing about prices", "Growth was 29%"],
+    "answer": 1,
+    "explanation": "Selecting what to show is fine; leaving out what changes the meaning isn't."
+  }
+]
+```
+$md$, true, true, 12, array['pbi-12-p1', 'pbi-12-p2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position)
 values ('pbi-m13', 'power-bi-fundamentals', 'Publishing Reports', 13)
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
 
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('power-bi-fundamentals:publishing-reports', 'power-bi-fundamentals', 'pbi-m13', 'publishing-reports', 'Publishing reports', 'Publish to the Power BI Service, share safely, keep data fresh with scheduled refresh, and show your work in a portfolio.', 30, $md$
+## The problem
+
+The report works on your laptop. Now the managing director, the regional managers and the sales reps need it, with fresh numbers every morning, without anyone emailing `.pbix` files. And some of them should only see their own region.
+
+## The concept
+
+**Publishing.** In Desktop, **Home → Publish** uploads the report and its data (the *semantic model*, formerly called a dataset) to a **workspace** in the Power BI Service (app.powerbi.com). You need to sign in with a **work or school account**.
+
+**Workspaces and licences**
+
+| | What you can do |
+| :-- | :-- |
+| **Free licence** | Publish to *My workspace* and view your own content. You can't share with others |
+| **Pro licence** (paid, per user) | Create shared workspaces, share reports, and view content others share with you. Both the sharer and the viewer need Pro |
+| **Premium Per User / Premium or Fabric capacity** | Larger models, more refreshes; with a large enough capacity, free users can view shared content |
+
+Check your organisation's licences before promising a rollout.
+
+**Ways to share**
+
+- **Workspace access**: colleagues who build and maintain reports.
+- **Share** a single report with named people.
+- **Apps**: package a workspace's reports into a tidy app for a wider audience (the recommended way to distribute).
+- **Export**: PDF or PowerPoint snapshots (File → Export) for board packs.
+- **Publish to web**: creates a **public** link anyone on the internet can open, with no sign-in. **Never** use it for company data; your admin may have switched it off, and that's a good thing.
+
+**Keeping data fresh: scheduled refresh.** In the Service, the semantic model's settings let you schedule refreshes (up to 8 a day on Pro). Data from files on your own computer or company servers needs an **on-premises data gateway**; cloud sources such as SharePoint or OneDrive files usually don't.
+
+**Row-level security (RLS).** In Desktop, **Modeling → Manage roles** lets you define rules such as `[region] = "Lagos"`. Assign people to roles in the Service, and each sees only their rows. This is how one report serves every regional manager.
+
+## Example
+
+Kolanut's rollout plan:
+
+1. Move the CSVs to a SharePoint folder so refresh works without a gateway.
+2. Publish to a workspace called *Sales Analytics* (analysts have access).
+3. Add RLS roles for each region; map regional managers to their role.
+4. Schedule refresh daily at 6:00.
+5. Publish an **app** called *Kolanut Sales* for managers and reps.
+6. Export page 1 to PDF for the monthly board pack.
+
+## Walkthrough
+
+**If you have a work or school account:**
+
+1. **Home → Publish** → choose *My workspace*.
+2. Open app.powerbi.com, find the report, and explore it in the browser.
+3. Open the semantic model's settings and look at the **Scheduled refresh** options (it will explain that local CSVs need a gateway).
+
+**For your portfolio (no work account needed):**
+
+1. Save the `.pbix`. It contains everything, so reviewers can open it in Desktop.
+2. Take clean screenshots of each page (File → Export → Export to PDF also works offline).
+3. Write a one-page README: the business question, the data, the model (screenshot of Model view), the key measures, and the findings.
+4. Put the `.pbix`, PDF and README in a GitHub repository or a shared drive folder.
+
+## Practice
+
+```answer
+{
+  "id": "pbi-13-p1",
+  "prompt": "Which sharing option creates a **public** link that anyone on the internet can open, and must never be used for company data? (Three words.)",
+  "answer": "Publish to web",
+  "accept": ["publish to the web"],
+  "format": "text",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "pbi-13-p2",
+  "prompt": "Which Power BI feature makes each regional manager see only their own region's rows in the same report? (Give the three-word name.)",
+  "answer": "Row-level security",
+  "accept": ["row level security", "rls"],
+  "format": "text",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "You have a free licence. What can you do after publishing?",
+    "options": ["Share the report with your whole team", "View it yourself in My workspace", "Publish an app for managers", "Schedule refresh for other users' reports"],
+    "answer": 1,
+    "explanation": "Sharing needs Pro (or capacity-based licensing)."
+  },
+  {
+    "prompt": "Your report uses CSV files on your laptop. What is needed for scheduled refresh in the Service?",
+    "options": ["Nothing", "An on-premises data gateway, or moving the files to a cloud location like SharePoint", "Publish to web", "A mobile layout"],
+    "answer": 1,
+    "explanation": "The Service can't reach your laptop without a gateway."
+  },
+  {
+    "prompt": "What's the recommended way to distribute a set of reports to a wide internal audience?",
+    "options": ["Email .pbix files", "A Power BI app", "Publish to web", "Screenshots on WhatsApp"],
+    "answer": 1,
+    "explanation": "Apps give a tidy, permission-controlled experience."
+  }
+]
+```
+$md$, true, true, 13, array['pbi-13-p1', 'pbi-13-p2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
 insert into public.course_modules (id, course_id, title, position)
 values ('pbi-m14', 'power-bi-fundamentals', 'Final Dashboard Project', 14)
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('power-bi-fundamentals:final-dashboard-project', 'power-bi-fundamentals', 'pbi-m14', 'final-dashboard-project', 'Final dashboard project', 'Plan and start a practice-management dashboard for a law firm, checking your model against known numbers before you build.', 45, $md$
+## The problem
+
+Ashgrove Chambers, a Lagos law firm, runs its practice from spreadsheets: matters, court hearings and invoices. The managing partner wants one report answering: *How much work is open, and whose? How often are our hearings adjourned? How much money is outstanding, and who owes it?*
+
+That's your final project. This lesson sets it up and checks your model against numbers you know are right, so you start the design work on solid ground.
+
+```dataset
+{ "dataset": "legal" }
+```
+
+## The concept
+
+**The data**
+
+| Table | One row is | Key columns |
+| :-- | :-- | :-- |
+| `clients` | a client | client_id, client_name, client_type (Company/Individual) |
+| `matters` | a case or piece of work | matter_id, client_id, matter_title, practice_area, responsible_lawyer, opened_date, closed_date, status (Open/Closed/On hold) |
+| `hearings` | a court date | hearing_id, matter_id, hearing_date, court, outcome (Heard, Adjourned, Struck out, Judgment delivered, Scheduled) |
+| `invoices` | a bill | invoice_id, matter_id, issued_date, amount_ngn, status (Paid/Outstanding/Overdue), paid_date |
+
+**The model** is a snowflake-ish star: `clients` (1) → `matters` (*); `matters` (1) → `hearings` (*) and `matters` (1) → `invoices` (*). Add a `Date` table and relate it to the date you'll analyse most (e.g. `invoices[issued_date]`), with inactive relationships to the others, used with `USERELATIONSHIP` in measures where needed.
+
+**Measures you'll need** (suggestions; name and format them well):
+
+```dax
+Open Matters = CALCULATE ( COUNTROWS ( matters ), matters[status] = "Open" )
+
+Hearings Held = CALCULATE ( COUNTROWS ( hearings ), hearings[outcome] <> "Scheduled" )
+
+Adjournment Rate =
+DIVIDE (
+    CALCULATE ( COUNTROWS ( hearings ), hearings[outcome] = "Adjourned" ),
+    [Hearings Held]
+)
+
+Billed = SUM ( invoices[amount_ngn] )
+
+Overdue Amount = CALCULATE ( [Billed], invoices[status] = "Overdue" )
+
+Collection Rate = DIVIDE ( CALCULATE ( [Billed], invoices[status] = "Paid" ), [Billed] )
+```
+
+## Example
+
+A three-page structure that works:
+
+1. **Overview**: cards (open matters, adjournment rate, overdue amount, collection rate); open matters by practice area; billed vs collected by month.
+2. **Litigation**: hearings by court and outcome; adjournment rate by court and practice area; upcoming (scheduled) hearings list.
+3. **Billing**: overdue invoices by client (top 10); ageing of unpaid invoices; collection rate trend.
+
+## Walkthrough
+
+1. Load the four CSVs; check the row counts and types (dates as Date).
+2. Build the relationships in Model view; check each is one-to-many and single direction.
+3. Add a date table and mark it.
+4. Write the measures above in a `_Measures` table.
+5. **Check before you design.** Put each measure in a card and compare it with the answers below. If one disagrees, fix the model or measure first.
+6. Then design the pages, applying the dashboard design and storytelling lessons.
+
+## Practice
+
+```answer
+{
+  "id": "pbi-14-p1",
+  "prompt": "What is Ashgrove Chambers' **adjournment rate**: adjourned hearings ÷ hearings that have taken place (all outcomes except Scheduled)? One decimal place.",
+  "answer": 52.4,
+  "format": "percent",
+  "dataset": "legal",
+  "files": ["hearings"],
+  "verify": "SELECT ROUND(100.0 * SUM(outcome = 'Adjourned') / SUM(outcome <> 'Scheduled'), 1) FROM hearings",
+  "hint": "Adjournment Rate measure in a card, formatted as a percentage.",
+  "explanation": "52.4%: more than half of hearings that took place were adjourned, a familiar problem in Nigerian courts and a strong story for the dashboard.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "pbi-14-p2",
+  "prompt": "What is the total **Overdue Amount**, in naira?",
+  "answer": 188070000,
+  "format": "naira",
+  "dataset": "legal",
+  "files": ["invoices"],
+  "verify": "SELECT SUM(amount_ngn) FROM invoices WHERE status = 'Overdue'",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "pbi-14-p3",
+  "prompt": "How many matters are currently **Open**?",
+  "answer": 34,
+  "format": "number",
+  "dataset": "legal",
+  "files": ["matters"],
+  "verify": "SELECT COUNT(*) FROM matters WHERE status = 'Open'",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why exclude Scheduled hearings from the adjournment rate's denominator?",
+    "options": ["They're errors", "They haven't happened yet, so they can't have been adjourned", "They're in a different court", "DAX can't count them"],
+    "answer": 1,
+    "explanation": "Only hearings that took place can have an outcome."
+  },
+  {
+    "prompt": "Invoices, hearings and matters all have dates. How can one Date table serve them all?",
+    "options": ["It can't", "One active relationship plus inactive ones, activated in measures with USERELATIONSHIP", "Merge all tables into one", "Use three separate date tables always"],
+    "answer": 1,
+    "explanation": "USERELATIONSHIP turns on an inactive relationship for a single calculation."
+  },
+  {
+    "prompt": "Why check measures against known values before designing pages?",
+    "options": ["It's required to publish", "Design built on a wrong measure has to be redone, and trust is lost", "It makes visuals faster", "To choose colours"],
+    "answer": 1,
+    "explanation": "Verify the numbers first; polish second."
+  }
+]
+```
+
+When you've finished, take the final assessment, then submit your dashboard through the final project page.
+$md$, true, true, 14, array['pbi-14-p1', 'pbi-14-p2', 'pbi-14-p3']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 
 -- Assessment: SQL for Data Analysis: final assessment
@@ -2243,6 +6584,384 @@ values ('sqlq15', 1, 'Different definitions give different numbers. Agree one an
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 
+-- Assessment: Data Analytics Foundations: final assessment
+insert into public.assessments (id, course_id, title, passing_score, published)
+values ('data-analytics-foundations-final', 'data-analytics-foundations', 'Data Analytics Foundations: final assessment', 70, true)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dafq01', 'data-analytics-foundations-final', 1, 'A manager asks "Why did deliveries to Kano get slower last quarter?" Which kind of analytics question is this?', '["Descriptive","Diagnostic","Predictive","Prescriptive"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dafq01', 1, 'It asks why something happened.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dafq02', 'data-analytics-foundations-final', 2, 'Which of these is the most useful, measurable version of "How is the business doing?"', '["How is the business doing overall?","How did revenue in January–June 2026 compare with January–June 2025, by region?","Show me all the data we have.","Is the business good or bad?"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dafq02', 1, 'It names the measure, the periods, the comparison and the breakdown.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dafq03', 'data-analytics-foundations-final', 3, 'An on-time delivery rate is calculated as:', '["Late deliveries ÷ on-time deliveries × 100","On-time deliveries ÷ all deliveries × 100","All deliveries − late deliveries","Late deliveries ÷ all deliveries"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dafq03', 1, 'The share of all deliveries that arrived on time.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dafq04', 'data-analytics-foundations-final', 4, 'Revenue went from ₦50m to ₦60m. What is the growth rate?', '["10%","16.7%","20%","120%"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dafq04', 2, '(60 − 50) ÷ 50 × 100 = 20%.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dafq05', 'data-analytics-foundations-final', 5, 'Which column is qualitative and ordinal?', '["Customer region","Monthly salary","Job level: Junior, Mid, Senior, Manager","Order date"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dafq05', 2, 'Job levels are categories with a natural order.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dafq06', 'data-analytics-foundations-final', 6, 'In an orders table, one row is one product on one order. What is this called?', '["The grain of the table","The primary key","An outlier","A dashboard"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dafq06', 0, 'The grain says what one row represents.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dafq07', 'data-analytics-foundations-final', 7, 'customer_id appears in both the customers table and the orders table. In the orders table it is a:', '["Primary key","Foreign key","Measure","Duplicate"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dafq07', 1, 'It points to the primary key of another table.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dafq08', 'data-analytics-foundations-final', 8, 'A customer list has "Ada Superstore" and "  ADA SUPERSTORE". What must happen before removing duplicates?', '["Sort by region","Trim the spaces and make the capitals consistent","Delete both rows","Convert the names to numbers"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dafq08', 1, 'Until they''re trimmed and in the same case, the two rows don''t look identical.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dafq09', 'data-analytics-foundations-final', 9, 'Why should you keep the original data file untouched when cleaning?', '["Spreadsheets can''t edit CSV files","It lets you check or redo your work, and proves what the source said","Cleaned data is always wrong","It makes the file smaller"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dafq09', 1, 'The raw file is your safety net and your evidence.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dafq10', 'data-analytics-foundations-final', 10, 'Most staff earn ₦300,000–₦600,000 but three directors earn ₦5,000,000. Which figure best describes a typical salary?', '["Mean","Median","Maximum","Total"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dafq10', 1, 'The directors pull the mean up; the median stays with typical staff.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dafq11', 'data-analytics-foundations-final', 11, 'Which chart best shows how monthly revenue changed over 18 months?', '["Pie chart","Line chart","Scatter plot","3D column chart"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dafq11', 1, 'Line charts show trends over time.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dafq12', 'data-analytics-foundations-final', 12, 'A bar chart''s axis starts at ₦40m instead of zero. What is the problem?', '["Nothing","Bar lengths exaggerate the differences between categories","The colours will be wrong","It can''t show negative numbers"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dafq12', 1, 'Bar length is read as size, so the baseline must be zero.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dafq13', 'data-analytics-foundations-final', 13, 'What does a BI dashboard mainly do?', '["Replaces the need for any data cleaning","Monitors agreed KPIs repeatedly from refreshed data","Stores the company''s raw data","Answers a new question once"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dafq13', 1, 'BI is about monitoring the same important measures, reliably and repeatedly.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dafq14', 'data-analytics-foundations-final', 14, 'Revenue in one region fell, but the same customers were still ordering. Which explanation does this rule out?', '["Customers ordering less often","Smaller orders","Losing customers","Lower prices"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dafq14', 2, 'If the same customers still order, lost customers aren''t the cause.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dafq15', 'data-analytics-foundations-final', 15, 'A department of 5 people had 2 resignations (40%). What is the most responsible way to report this?', '["Say this department has a turnover crisis","Leave it out because it''s small","Report the rate with the counts (2 of 5) and note that small groups make rates jumpy","Round it to 50%"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dafq15', 2, 'Show counts beside rates and state the limits of small numbers.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Excel for Data Analysis: final assessment
+insert into public.assessments (id, course_id, title, passing_score, published)
+values ('excel-for-data-analysis-final', 'excel-for-data-analysis', 'Excel for Data Analysis: final assessment', 70, true)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('xlsq01', 'excel-for-data-analysis-final', 1, 'Why import a CSV with Data → From Text/CSV instead of double-clicking it?', '["It is the only way to open a CSV","You can check and set column types before the data loads","It removes duplicates automatically","It makes the numbers smaller"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('xlsq01', 1, 'Checking types up front prevents lost leading zeros, scientific notation and misread dates.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('xlsq02', 'excel-for-data-analysis-final', 2, 'In an Excel Table, what does =[@quantity]*[@unit_price] calculate?', '["The total of both columns","Quantity times unit price for the same row","The first row only","An error, because @ isn''t allowed"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('xlsq02', 1, '[@column] refers to the value in the current row.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('xlsq03', 'excel-for-data-analysis-final', 3, 'You filter a table to Lagos. Which formula totals only the visible revenue cells in H2:H500?', '["=SUM(H2:H500)","=SUBTOTAL(9, H2:H500)","=COUNT(H2:H500)","=TOTAL(H2:H500)"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('xlsq03', 1, 'SUBTOTAL ignores rows hidden by a filter; SUM doesn''t.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('xlsq04', 'excel-for-data-analysis-final', 4, '=C2*$F$1 is copied from row 2 down to row 10. What does it become?', '["=C10*$F$9","=C10*$F$1","=C2*$F$1","=K10*$F$1"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('xlsq04', 1, 'The relative reference moves; the absolute one stays.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('xlsq05', 'excel-for-data-analysis-final', 5, 'A column has 50 numbers, 10 text values and 5 blanks. What does =COUNTA() of it return?', '["50","55","60","65"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('xlsq05', 2, 'COUNTA counts every non-empty cell: 50 + 10 = 60.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('xlsq06', 'excel-for-data-analysis-final', 6, 'A cell shows #N/A after an XLOOKUP. What does it usually mean?', '["Division by zero","No match was found for the lookup value","The formula is misspelled","The cell was deleted"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('xlsq06', 1, '#N/A means the value wasn''t found, often because of spaces or text-vs-number IDs.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('xlsq07', 'excel-for-data-analysis-final', 7, 'Which formula totals revenue (column H) for rows where region (column D) is "Lagos" and channel (column C) is "Wholesale"?', '["=SUMIF(D:D, \"Lagos\", H:H, C:C, \"Wholesale\")","=SUMIFS(H:H, D:D, \"Lagos\", C:C, \"Wholesale\")","=SUM(IF(D:D=\"Lagos\"))","=COUNTIFS(H:H, \"Lagos\", \"Wholesale\")"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('xlsq07', 1, 'SUMIFS takes the sum range first, then pairs of range and condition.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('xlsq08', 'excel-for-data-analysis-final', 8, 'How do you write a SUMIFS condition for dates on or after 1 October 2025?', '["\">=1/10/2025\"","\">=\"&DATE(2025,10,1)",">=DATE(2025,10,1)","\"DATE>=2025-10-01\""]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('xlsq08', 1, 'Join the operator as text to a real date made with DATE().')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('xlsq09', 'excel-for-data-analysis-final', 9, '=XLOOKUP(A2, Products[product_id], Products[category], "Missing"). What is returned when A2 isn''t in the product list?', '["#N/A","0","Missing","The first category"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('xlsq09', 2, 'The fourth argument is the value to return when there is no match.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('xlsq10', 'excel-for-data-analysis-final', 10, 'Why is VLOOKUP(A2, Sheet2!A:F, 4, FALSE) considered fragile?', '["It only works on numbers","Inserting a column in the lookup range shifts what column 4 points to","FALSE returns approximate matches","It can''t search more than 4 columns"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('xlsq10', 1, 'The hard-coded column number doesn''t adjust when the table''s layout changes.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('xlsq11', 'excel-for-data-analysis-final', 11, 'What does =PROPER(TRIM("  KAYODE   STORES ")) return?', '["\"KAYODE STORES\"","\"Kayode Stores\"","\"kayode stores\"","\"  Kayode   Stores \""]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('xlsq11', 1, 'TRIM removes the extra spaces; PROPER capitalises each word.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('xlsq12', 'excel-for-data-analysis-final', 12, 'Excel''s Remove Duplicates treats "Ada Mart" and "Ada Mart " (with a trailing space) as:', '["Duplicates","Different values","An error","Blank"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('xlsq12', 1, 'Spaces count as characters. Trim before removing duplicates.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('xlsq13', 'excel-for-data-analysis-final', 13, 'You added new rows to the Table a pivot table is built on. How do you include them?', '["Rebuild the pivot","Refresh the pivot (Data → Refresh All)","Nothing, pivots update themselves","Copy the rows into the pivot"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('xlsq13', 1, 'Pivots are snapshots until refreshed; a pivot on a Table picks up new rows when refreshed.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('xlsq14', 'excel-for-data-analysis-final', 14, 'Which pivot setting shows each channel''s revenue as a share of all revenue?', '["Summarise Values By → Count","Show Values As → % of Grand Total","Group → Years","Insert Slicer"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('xlsq14', 1, 'Show Values As expresses each value relative to the grand total.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('xlsq15', 'excel-for-data-analysis-final', 15, 'Which chart best shows how revenue changed month by month over 18 months?', '["Pie chart","Line chart","Scatter chart","Doughnut chart"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('xlsq15', 1, 'Line charts show trends over time.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Power BI Fundamentals: final assessment
+insert into public.assessments (id, course_id, title, passing_score, published)
+values ('power-bi-fundamentals-final', 'power-bi-fundamentals', 'Power BI Fundamentals: final assessment', 70, true)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pbiq01', 'power-bi-fundamentals-final', 1, 'Which part of Power BI is used to build a report''s model and pages on your computer?', '["Power BI Service","Power BI Desktop","Power BI Mobile","Power Automate"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pbiq01', 1, 'Reports are built in Desktop and shared through the Service.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pbiq02', 'power-bi-fundamentals-final', 2, 'In Power Query, what happens to the Applied Steps when the data is refreshed?', '["They are deleted","They run again, in order, on the new data","Only the first step runs","They must be recreated"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pbiq02', 1, 'Applied steps are a repeatable recipe.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pbiq03', 'power-bi-fundamentals-final', 3, 'Which Power Query feature brings a column from another table by matching a key, like XLOOKUP?', '["Append Queries","Merge Queries","Group By","Unpivot"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pbiq03', 1, 'Merge joins two queries on matching columns.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pbiq04', 'power-bi-fundamentals-final', 4, 'A column mixes 01/09/2022 and 2022-09-01, written day-first. How should it be converted?', '["Change Type → Date","Change Type → Using Locale → Date with English (United Kingdom)","Replace Values","Split Column"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pbiq04', 1, 'The locale tells Power Query to read the day first.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pbiq05', 'power-bi-fundamentals-final', 5, 'In Power Query, ''Ada Mart'' and ''ADA MART'' are treated by Remove Duplicates as:', '["Duplicates","Different values","Errors","Nulls"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pbiq05', 1, 'Power Query compares text case-sensitively; standardise case first.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pbiq06', 'power-bi-fundamentals-final', 6, 'A bar chart of revenue by region shows the same value on every bar. What is the most likely cause?', '["Wrong chart type","No relationship between the customers and orders tables","Revenue is formatted as currency","Too many regions"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pbiq06', 1, 'Without a relationship, the region filter can''t reach the orders.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pbiq07', 'power-bi-fundamentals-final', 7, 'In a star schema, the orders table is:', '["A dimension table","The fact table","The date table","A measure table"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pbiq07', 1, 'Orders hold the events and numbers; dimensions describe them.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pbiq08', 'power-bi-fundamentals-final', 8, 'Month names on an axis sort April, August, December… How do you fix it?', '["Rename the months","Sort the Month column by a Month Number column","Use a pie chart","Turn off Auto date/time"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pbiq08', 1, 'Sort by column lets text follow a numeric order.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pbiq09', 'power-bi-fundamentals-final', 9, 'Which should be a measure rather than a calculated column?', '["A size band (Large/Small) for each order line","Total revenue divided by active customers","A customer''s region copied onto orders","A year column in the date table"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pbiq09', 1, 'Ratios of aggregates must respond to filters, so they''re measures.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pbiq10', 'power-bi-fundamentals-final', 10, 'What does DIVIDE([A], [B]) return when [B] is zero?', '["An error","Blank (or an alternative result if given)","Zero always","Infinity"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pbiq10', 1, 'DIVIDE handles division by zero safely.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pbiq11', 'power-bi-fundamentals-final', 11, 'What does SUMX(orders, orders[quantity] * orders[unit_price]) do?', '["Multiplies the two column totals","Multiplies quantity by price on each row, then adds the results","Returns the largest product","Creates a calculated column"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pbiq11', 1, 'Iterators evaluate the expression row by row, then aggregate.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pbiq12', 'power-bi-fundamentals-final', 12, 'Which measure gives each category''s share of all revenue in a table by category?', '["DIVIDE([Revenue], CALCULATE([Revenue], REMOVEFILTERS(products[category])))","SUM(products[category])","CALCULATE([Revenue], products[category] = \"All\")","[Revenue] / 100"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pbiq12', 0, 'REMOVEFILTERS gives the all-category total as the denominator.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pbiq13', 'power-bi-fundamentals-final', 13, 'Which function returns revenue for the same period one year earlier?', '["TOTALYTD","SAMEPERIODLASTYEAR inside CALCULATE","DATEADD with 0 years","YEAR"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pbiq13', 1, 'CALCULATE([Revenue], SAMEPERIODLASTYEAR(''Date''[Date])).')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pbiq14', 'power-bi-fundamentals-final', 14, 'Which sharing option makes a report public to anyone on the internet?', '["Share with a colleague","Publish an app","Publish to web","Export to PDF"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pbiq14', 2, 'Publish to web creates a public link; never use it for company data.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pbiq15', 'power-bi-fundamentals-final', 15, 'What lets each regional manager see only their own region''s data in one shared report?', '["Bookmarks","Row-level security","Slicers","Drill-through"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pbiq15', 1, 'RLS filters rows per user based on roles.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
 -- Project: Harbourline Freight operations review
 insert into public.projects (id, course_id, title, summary, brief_md, tasks, datasets, required)
 values ('sql-harbourline-review', 'sql-for-data-analysis', 'Harbourline Freight operations review', 'Analyse the operations of a fictional logistics company and report what you find to its leadership team.', $md$Harbourline Freight's leadership team is planning 2027 and has asked for an operations review built from the company database.
@@ -2250,6 +6969,42 @@ values ('sql-harbourline-review', 'sql-for-data-analysis', 'Harbourline Freight 
 For each question below, submit **the SQL you wrote** and **one or two sentences** explaining what the result means for the business. Write for a manager who doesn't read SQL.
 
 State any definitions you choose. For example, say whether you counted cancelled shipments, and whether "revenue" means charges on delivered shipments or money received.$md$, array['Identify the ten highest-volume customers by containers shipped across the whole period.', 'Analyse monthly shipment volume and describe how it changed.', 'Identify the five busiest routes and their transport mode.', 'Calculate revenue by customer (charges on delivered shipments) and how much of it has been paid.', 'Find inactive customers: those who shipped before but have booked nothing since 2026-03-01.', 'Analyse delivery performance: the on-time rate by mode, and the three routes with the lowest on-time rate.']::text[], array['logistics']::text[], true)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, required = excluded.required;
+
+
+-- Project: Kolanut people review
+insert into public.projects (id, course_id, title, summary, brief_md, tasks, datasets, required)
+values ('daf-kolanut-people-review', 'data-analytics-foundations', 'Kolanut people review', 'Look at who leaves, who is late, and how much leave is taken at a fictional distributor, and recommend what HR should do.', $md$Kolanut Distribution's HR manager wants a short, honest review of the workforce before the next budget. You have three files: every employee since 2018, June 2026 attendance for current staff, and leave records since January 2025.
+
+Answer each question below. For each, give **the number or table you found**, **how you calculated it** (the formula, filter or pivot table you used), and **one or two sentences** on what it means. Write for a manager who is busy and doesn't use spreadsheets.
+
+Finish with a short **recommendation**: two or three things HR should do, and what the data *can't* tell you.
+
+You can use Google Sheets or Excel. A link to your spreadsheet is welcome but optional.$md$, array['What share of all employees have resigned? Break it down by department and by job level, showing counts next to percentages.', 'In June 2026, what share of attendance records were Late in each department? Which department stands out?', 'How many leave days were taken in total, by leave type? How many leave requests were not approved?', 'What is the average monthly salary by job level? Is it higher or lower for the groups that resign most?', 'Choose one chart that best supports your main finding. Describe it (type, what''s highlighted, its title).', 'Recommendation: what should HR do next, and what are the limits of this data?']::text[], array['hr']::text[], true)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, required = excluded.required;
+
+
+-- Project: Kolanut sales performance review
+insert into public.projects (id, course_id, title, summary, brief_md, tasks, datasets, required)
+values ('xls-kolanut-sales-review', 'excel-for-data-analysis', 'Kolanut sales performance review', 'Build a complete Excel analysis of a fictional distributor''s sales and present the findings to its managing director.', $md$Kolanut Distribution's managing director is preparing for a board meeting and has asked for a sales performance review covering January 2025 to June 2026.
+
+Build it in Excel (or Google Sheets) using the three sales files. Organise the workbook as in the *Building an analysis* lesson: a README, the raw data, a cleaned data sheet, calculations, a one-page summary and a checks sheet.
+
+For each question below, submit **the key numbers or a small table**, **how you calculated them** (the formulas or pivot set-up), and **one or two sentences** on what they mean for the business. Finish with **three recommendations** for the board.
+
+Upload your workbook to OneDrive or Google Drive, set the link so anyone with it can view, and paste it in the link box. It's optional but strongly encouraged: it's the piece of work you can show an employer.$md$, array['Monthly revenue trend, January 2025 to June 2026: describe the pattern, the peak and anything unusual. Include one chart.', 'First half 2026 vs first half 2025: total growth and growth by region. Which regions drove growth and which fell?', 'Revenue by product category and by channel, with each as a percentage of the total.', 'The top 10 customers by revenue. What share of total revenue do they account for?', 'Discounts: total cost, cost by channel, and whether discounted lines are larger than full-price lines.', 'Checks: show at least two reconciliation checks that confirm your totals agree.', 'Three recommendations for the board, each linked to a number in your analysis.']::text[], array['sales']::text[], true)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, required = excluded.required;
+
+
+-- Project: Ashgrove Chambers practice dashboard
+insert into public.projects (id, course_id, title, summary, brief_md, tasks, datasets, required)
+values ('pbi-ashgrove-dashboard', 'power-bi-fundamentals', 'Ashgrove Chambers practice dashboard', 'Build a Power BI report for a fictional Lagos law firm covering open work, court hearings and unpaid invoices.', $md$Ashgrove Chambers' managing partner wants one Power BI report to run the practice: how much work is open and with whom, how court hearings are going, and how much money is outstanding.
+
+Build it in Power BI Desktop from the four legal CSV files. Follow the workflow from the course: load and check, clean in Power Query where needed, build the model with a date table, write measures, then design two or three pages using the dashboard design and storytelling lessons.
+
+In the text box, for each item below, describe **what you built** (tables, relationships, measures with their DAX, visuals), **the key numbers** it shows, and **what they mean** for the firm. Finish with **three recommendations** for the managing partner.
+
+For the link, share your work so a reviewer can see it: a Power BI Service link if you have a work account, or a folder (Google Drive, OneDrive or GitHub) with the .pbix file, a PDF export and screenshots.$md$, array['The model: the tables, relationships (with cardinality and direction) and the date table. Include a description or screenshot of Model view.', 'Your measures: at least Open Matters, Adjournment Rate, Billed, Overdue Amount and Collection Rate, with their DAX.', 'Workload: open matters by practice area and by responsible lawyer. Who carries the most open work?', 'Courts: adjournment rate overall, by court and by practice area. Where are adjournments worst?', 'Money: overdue amount by client (top 10) and the collection rate over time.', 'Design: describe your page layout and one design decision you made to make the main message clear.', 'Three recommendations for the managing partner, each linked to a number in your report.']::text[], array['legal']::text[], true)
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, required = excluded.required;
 
 

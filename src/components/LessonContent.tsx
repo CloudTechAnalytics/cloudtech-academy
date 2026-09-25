@@ -1,11 +1,13 @@
 import { Fragment, useMemo, type ReactNode } from "react";
 import { marked, type Token, type Tokens } from "marked";
 import { AlertTriangle, Briefcase, Info, Lightbulb } from "lucide-react";
-import { parseExercise, parseQuiz } from "@/lib/lesson-format";
+import { parseAnswer, parseDataset, parseExercise, parseQuiz } from "@/lib/lesson-format";
 import { RunnableSql } from "./sql/RunnableSql";
 import { SqlExercise } from "./sql/SqlExercise";
 import { LessonQuiz } from "./LessonQuiz";
 import { CopyButton } from "./sql/SqlParts";
+import { AnswerExercise } from "./AnswerExercise";
+import { DatasetCard } from "./DatasetCard";
 
 /**
  * Renders lesson Markdown as React elements. Raw HTML in lesson files is shown as text,
@@ -16,6 +18,9 @@ const SECTIONS = ["The problem", "The concept", "Example", "Walkthrough", "Pract
 
 const decode = (s: string) =>
   s.replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&#39;/g, "'");
+
+/** Labels for formula code blocks, e.g. ```excel or ```dax. */
+const CODE_LABELS: Record<string, string> = { excel: "Excel formula", sheets: "Google Sheets formula", dax: "DAX", m: "Power Query (M)", sql: "SQL" };
 
 const safeHref = (href: string) => (/^(https?:|mailto:|\/|#)/i.test(href) ? href : "#");
 
@@ -210,16 +215,33 @@ function Block({ token, ctx }: { token: Token; ctx: Ctx }): ReactNode {
           );
         }
         if (lang === "quiz") return <LessonQuiz questions={parseQuiz(c.text)} />;
+        if (lang === "answer") {
+          const spec = parseAnswer(c.text);
+          return (
+            <AnswerExercise
+              spec={spec}
+              prompt={marked.lexer(spec.prompt).map((t, i) => (
+                <Block key={i} token={t} ctx={ctx} />
+              ))}
+              label={ctx.exerciseLabel.current === "Challenge" ? "Challenge" : "Practice"}
+              completed={ctx.completedExercises.includes(spec.id)}
+              onSolved={ctx.onExerciseSolved}
+            />
+          );
+        }
+        if (lang === "dataset") return <DatasetCard block={parseDataset(c.text)} />;
       } catch (e) {
         return <p className="rounded-lg border border-danger/40 bg-danger/10 px-3 py-2 text-[0.875rem]">This block couldn't be read: {e instanceof Error ? e.message : String(e)}</p>;
       }
       if (/^sql\b/.test(lang) && /\brun\b/.test(lang)) return <RunnableSql sql={c.text} />;
+      const codeLabel = CODE_LABELS[lang.split(/\s+/)[0]];
       return (
         <div className="not-prose relative">
+          {codeLabel && <p className="mb-1 text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-muted">{codeLabel}</p>}
           <pre className="code-block pr-20">
             <code>{c.text}</code>
           </pre>
-          <div className="absolute right-2 top-2">
+          <div className={`absolute right-2 ${codeLabel ? "top-7" : "top-2"}`}>
             <CopyButton text={c.text} />
           </div>
         </div>

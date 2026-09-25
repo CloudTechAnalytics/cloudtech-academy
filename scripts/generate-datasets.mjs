@@ -215,52 +215,194 @@ function logistics() {
   return { employees, customers, routes, shipments, payments };
 }
 
-/* ------------------------------------------------------------------ sales */
+/* ------------------------------------------------------------------ business datasets
+ * Sales, HR, legal and the messy customer export each start from their own seed, so
+ * changing one never shifts another (or the logistics database above).
+ * Data is "as of" 31 August 2026.
+ */
+const SNAPSHOT = d("2026-08-31");
+const reseed = (n) => {
+  seed = n;
+};
+const round = (n, to) => Math.round(n / to) * to;
+
+/* ---------- sales: Ọja Distribution, an FMCG distributor */
+const REGION_CITIES = {
+  Lagos: ["Ikeja", "Surulere", "Lekki", "Yaba", "Ikorodu", "Festac"],
+  "South West": ["Ibadan", "Abeokuta", "Akure", "Osogbo", "Ilesa"],
+  "South East": ["Enugu", "Onitsha", "Aba", "Owerri", "Nnewi"],
+  "South South": ["Port Harcourt", "Benin City", "Warri", "Uyo", "Calabar"],
+  "North Central": ["Abuja", "Jos", "Ilorin", "Makurdi", "Lokoja"],
+  "North West": ["Kano", "Kaduna", "Zaria", "Sokoto", "Katsina"],
+};
+const REPS = {
+  Lagos: ["Tolu Adeyemi", "Chidi Okonkwo"],
+  "South West": ["Funke Alabi"],
+  "South East": ["Ikenna Obi"],
+  "South South": ["Ebi Tamuno"],
+  "North Central": ["Sani Garba"],
+  "North West": ["Sani Garba"],
+};
+// Price list for 2025. Prices rose on 1 January 2026 (see PRICE_RISE); products.csv holds
+// the current (2026) list price, and each order line records the price actually charged.
+const PRODUCTS = [
+  ["Malt drink 330ml (24)", "Beverages", 13200],
+  ["Bottled water 75cl (12)", "Beverages", 3600],
+  ["Orange juice 1L (12)", "Beverages", 18600],
+  ["Energy drink 250ml (24)", "Beverages", 16800],
+  ["Plantain chips 150g (20)", "Snacks", 9000],
+  ["Chin chin 200g (20)", "Snacks", 8400],
+  ["Cabin biscuits (24)", "Snacks", 6000],
+  ["Groundnuts 250g (30)", "Snacks", 10500],
+  ["Detergent 900g (12)", "Household", 21600],
+  ["Dishwashing liquid 1L (12)", "Household", 14400],
+  ["Toilet roll (48)", "Household", 19200],
+  ["Air freshener (12)", "Household", 15600],
+  ["Body lotion 400ml (12)", "Personal care", 22800],
+  ["Toothpaste 140g (24)", "Personal care", 19200],
+  ["Bar soap (48)", "Personal care", 14400],
+  ["Hair cream 250g (12)", "Personal care", 16800],
+];
+const PRICE_RISE = { Beverages: 0.12, Snacks: 0.1, Household: 0.08, "Personal care": 0.08 };
+const MONTH_FACTOR = [0.85, 0.88, 1.0, 1.05, 0.95, 0.92, 0.9, 0.92, 1.0, 1.05, 1.12, 1.4];
+
 function sales() {
-  const CATEGORIES = { Beverages: ["Malt drink 330ml (24)", "Bottled water 75cl (12)", "Orange juice 1L (12)", "Energy drink 250ml (24)"], Snacks: ["Plantain chips 150g (20)", "Chin chin 200g (20)", "Cabin biscuits (24)", "Groundnuts 250g (30)"], Household: ["Detergent 900g (12)", "Dishwashing liquid 1L (12)", "Toilet roll (48)", "Air freshener (12)"], "Personal care": ["Body lotion 400ml (12)", "Toothpaste 140g (24)", "Bar soap (48)", "Hair cream 250g (12)"] };
-  const products = [];
-  let pid = 1;
-  for (const [cat, items] of Object.entries(CATEGORIES))
-    for (const name of items) products.push({ product_id: pid++, product_name: name, category: cat, unit_price: Math.round((int(4500, 42000)) / 100) * 100 });
-  const REGIONS = ["Lagos", "South West", "South East", "South South", "North Central", "North West"];
-  const customers = Array.from({ length: 80 }, (_, i) => ({
-    customer_id: i + 1,
-    customer_name: `${pick(["Mama", "Bola", "Chuks", "Aunty", "Alhaji", "Brother", "Madam", "Emeka"])} ${pick(["Stores", "Supermarket", "Ventures", "Mini Mart", "Enterprises", "Wholesale"])} ${i + 1}`,
-    channel: weighted(["Wholesale", "Supermarket", "Kiosk"], [30, 25, 45]),
-    region: pick(REGIONS),
+  reseed(424242);
+  const products = PRODUCTS.map(([product_name, category, p2025], i) => ({
+    product_id: i + 1,
+    product_name,
+    category,
+    list_price: round(p2025 * (1 + PRICE_RISE[category]), 100),
   }));
+  const price = (p, t) => (t >= d("2026-01-01") ? p.list_price : PRODUCTS[p.product_id - 1][2]);
+
+  const OWNERS = ["Mama Nkechi", "Bola", "Chuks", "Alhaji Musa", "Madam Titi", "Emeka", "Iya Basira", "Brother Sunday", "Hajia Amina", "Uncle Ben", "Grace", "Kayode", "Ada", "Blessing", "Yakubu", "Divine", "Olumide", "Peace"];
+  const KIND = { Wholesale: ["Wholesale", "Distributors", "Trading Co."], Supermarket: ["Supermarket", "Superstore", "Mart"], Kiosk: ["Stores", "Kiosk", "Provisions", "Mini Mart"] };
+  const used = new Set();
+  const customers = [];
+  for (let i = 0; i < 90; i++) {
+    const region = weighted(Object.keys(REGION_CITIES), [30, 18, 14, 14, 12, 12]);
+    const city = pick(REGION_CITIES[region]);
+    const channel = weighted(["Wholesale", "Supermarket", "Kiosk"], [22, 28, 50]);
+    let name = `${pick(OWNERS)} ${pick(KIND[channel])}`;
+    if (used.has(name)) name = `${name} ${city}`;
+    while (used.has(name)) name = `${pick(OWNERS)} ${pick(KIND[channel])} ${city}`;
+    used.add(name);
+    const joined = i < 70 ? d("2022-01-01") + int(0, 1090) * day : d("2025-01-15") + int(0, 480) * day;
+    const limit = channel === "Wholesale" ? int(2000000, 5000000) : channel === "Supermarket" ? int(800000, 2500000) : int(150000, 600000);
+    customers.push({
+      customer_id: i + 1,
+      customer_name: name,
+      channel,
+      region,
+      city,
+      sales_rep: region === "Lagos" ? REPS.Lagos[i % 2] : REPS[region][0],
+      joined_date: iso(joined),
+      credit_limit: round(limit, 50000),
+    });
+  }
+  // A few big accounts carry much of the volume.
+  const weight = customers.map((c) => (c.channel === "Wholesale" ? 4 : c.channel === "Supermarket" ? 2 : 1) * (0.6 + rand() * 1.8));
+
   const orders = [];
-  let oid = 5001;
+  let oid = 10001;
   for (let t = d("2025-01-01"); t <= d("2026-06-30"); t += day) {
-    for (let k = 0; k < int(4, 12); k++) {
-      const p = pick(products);
-      const qty = int(1, 25);
-      orders.push({ order_id: oid++, order_date: iso(t), customer_id: pick(customers).customer_id, product_id: p.product_id, quantity: qty, unit_price: p.unit_price, discount_pct: weighted([0, 5, 10], [75, 18, 7]) });
+    const date = new Date(t);
+    const dow = date.getUTCDay();
+    const y2026 = date.getUTCFullYear() === 2026;
+    let lines = 9 * MONTH_FACTOR[date.getUTCMonth()] * (dow === 0 ? 0.25 : dow === 6 ? 0.8 : 1) * (y2026 ? 1.1 : 1);
+    lines = Math.floor(lines) + (rand() < lines % 1 ? 1 : 0) + int(-1, 1);
+    for (let k = 0; k < Math.max(0, lines); k++) {
+      const active = customers.filter((c) => d(c.joined_date) <= t);
+      const c = weighted(active, active.map((x) => weight[x.customer_id - 1] * (y2026 && x.region === "North West" ? 0.55 : 1) * (y2026 && x.region === "Lagos" ? 1.25 : 1)));
+      const month = date.getUTCMonth();
+      const p = weighted(products, products.map((x) => (x.category === "Beverages" && (month <= 3 || month === 11) ? 1.4 : 1)));
+      const qty = c.channel === "Wholesale" ? int(8, 30) : c.channel === "Supermarket" ? int(4, 18) : int(1, 6);
+      const discount = c.channel === "Wholesale" ? weighted([0, 5, 10], [40, 40, 20]) : c.channel === "Supermarket" ? weighted([0, 5, 10], [70, 25, 5]) : weighted([0, 5], [95, 5]);
+      orders.push({ order_id: oid++, order_date: iso(t), customer_id: c.customer_id, product_id: p.product_id, quantity: qty, unit_price: price(p, t), discount_pct: discount });
     }
   }
   return { customers, products, orders };
 }
 
-/* ------------------------------------------------------------------ hr */
-function hr() {
-  const DEPTS = ["Operations", "Finance", "Sales", "Customer Service", "IT", "Human Resources"];
-  const employees = Array.from({ length: 60 }, (_, i) => ({
-    employee_id: 1001 + i,
-    full_name: person(),
-    department: pick(DEPTS),
-    job_level: weighted(["Junior", "Mid", "Senior", "Manager"], [40, 30, 20, 10]),
-    hire_date: iso(d("2017-01-01") + int(0, 3000) * day),
-    monthly_salary: Math.round(int(180000, 1450000) / 5000) * 5000,
-    status: weighted(["Active", "Resigned"], [88, 12]),
+/* ---------- the same customers, as exported from the old system (for cleaning practice) */
+function customerExport(customers) {
+  reseed(515151);
+  const REGION_VARIANTS = { "South West": ["South West", "South-West", "south west", "SW"], "South East": ["South East", "South-East", "south east", "SE"], "South South": ["South South", "South-South", "south south", "SS"], "North Central": ["North Central", "North-Central", "north central", "NC"], "North West": ["North West", "North-West", "north west", "NW"], Lagos: ["Lagos", "lagos", "LAGOS", "Lagos "] };
+  const messyName = (n) => {
+    const r = rand();
+    const cased = r < 0.12 ? n.toUpperCase() : r < 0.22 ? n.toLowerCase() : n;
+    return (rand() < 0.2 ? "  " : "") + cased + (rand() < 0.25 ? "   " : "");
+  };
+  const phone = () => {
+    const n = `0${pick(["803", "806", "813", "816", "703", "706", "802", "808", "905", "915"])}${String(int(0, 9999999)).padStart(7, "0")}`;
+    const f = rand();
+    return f < 0.35 ? n : f < 0.6 ? `${n.slice(0, 4)} ${n.slice(4, 7)} ${n.slice(7)}` : f < 0.85 ? `+234 ${n.slice(1, 4)} ${n.slice(4, 7)} ${n.slice(7)}` : `234${n.slice(1)}`;
+  };
+  const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  const date = (s) => {
+    const [y, m, dd] = s.split("-");
+    const f = rand();
+    return f < 0.5 ? s : f < 0.8 ? `${dd}/${m}/${y}` : `${Number(dd)}-${MONTHS[Number(m) - 1]}-${y}`;
+  };
+  const money = (n) => {
+    const f = rand();
+    return f < 0.06 ? "" : f < 0.4 ? String(n) : f < 0.7 ? n.toLocaleString("en-US") : f < 0.9 ? `₦${n.toLocaleString("en-US")}` : `${n.toLocaleString("en-US")}.00`;
+  };
+  const rows = customers.map((c) => ({
+    "Customer Name": messyName(c.customer_name),
+    Region: pick(REGION_VARIANTS[c.region]),
+    City: rand() < 0.15 ? c.city.toUpperCase() : c.city,
+    Phone: phone(),
+    "Date Joined": date(c.joined_date),
+    "Credit Limit": money(c.credit_limit),
+    Channel: c.channel,
   }));
+  // The old system exported some customers twice.
+  const dupes = [];
+  for (let k = 0; k < 12; k++) {
+    const i = int(0, customers.length - 1);
+    if (dupes.includes(i)) continue;
+    dupes.push(i);
+    const copy = { ...rows[i], "Customer Name": messyName(customers[i].customer_name) };
+    rows.splice(int(0, rows.length), 0, copy);
+  }
+  return { customer_list_raw: rows };
+}
+
+/* ---------- hr: the distributor's staff */
+function hr() {
+  reseed(636363);
+  const DEPTS = ["Operations", "Sales", "Customer Service", "Finance", "IT", "Human Resources"];
+  const LEVEL_PAY = { Junior: [180000, 380000], Mid: [380000, 700000], Senior: [700000, 1100000], Manager: [1100000, 1600000] };
+  const employees = Array.from({ length: 80 }, (_, i) => {
+    const department = weighted(DEPTS, [30, 20, 18, 12, 10, 10]);
+    const job_level = weighted(["Junior", "Mid", "Senior", "Manager"], [42, 30, 18, 10]);
+    const hired = d("2018-01-01") + int(0, 3000) * day;
+    // Customer Service juniors leave most often.
+    const risk = (department === "Customer Service" ? 0.32 : department === "Operations" ? 0.18 : 0.08) * (job_level === "Junior" ? 1.5 : job_level === "Manager" ? 0.4 : 1);
+    const resigned = rand() < risk;
+    const exit = resigned ? Math.min(SNAPSHOT - 30 * day, hired + int(120, 1400) * day) : null;
+    return {
+      employee_id: 1001 + i,
+      full_name: person(),
+      department,
+      job_level,
+      hire_date: iso(hired),
+      exit_date: resigned && exit > hired ? iso(exit) : null,
+      monthly_salary: round(int(...LEVEL_PAY[job_level]), 5000),
+      status: resigned && exit > hired ? "Resigned" : "Active",
+    };
+  });
   const attendance = [];
   for (let t = d("2026-06-01"); t <= d("2026-06-30"); t += day) {
     const wd = new Date(t).getUTCDay();
     if (wd === 0 || wd === 6) continue;
     for (const e of employees.filter((x) => x.status === "Active")) {
+      const late = e.department === "Operations" ? 0.1 : 0.04;
       const r = rand();
-      const status = r < 0.9 ? "Present" : r < 0.95 ? "Late" : r < 0.98 ? "Absent" : "On leave";
-      attendance.push({ date: iso(t), employee_id: e.employee_id, status, hours_worked: status === "Present" ? int(7, 10) : status === "Late" ? int(5, 8) : 0 });
+      const status = r < late ? "Late" : r < late + 0.025 ? "Absent" : r < late + 0.045 ? "On leave" : "Present";
+      attendance.push({ date: iso(t), employee_id: e.employee_id, status, hours_worked: status === "Present" ? int(8, 9) : status === "Late" ? int(6, 8) : 0 });
     }
   }
   const leave = [];
@@ -268,49 +410,74 @@ function hr() {
   for (const e of employees)
     for (let k = 0; k < int(0, 3); k++) {
       const s = d("2025-01-01") + int(0, 540) * day;
-      const days = int(1, 10);
-      leave.push({ leave_id: lid++, employee_id: e.employee_id, leave_type: weighted(["Annual", "Sick", "Maternity/Paternity", "Compassionate"], [70, 20, 5, 5]), start_date: iso(s), end_date: iso(s + (days - 1) * day), days, approved: rand() < 0.92 ? "Yes" : "No" });
+      if (e.exit_date && s > d(e.exit_date)) continue;
+      const type = weighted(["Annual", "Sick", "Maternity/Paternity", "Compassionate"], [70, 20, 5, 5]);
+      const days = type === "Maternity/Paternity" ? int(10, 60) : type === "Annual" ? int(3, 15) : int(1, 5);
+      leave.push({ leave_id: lid++, employee_id: e.employee_id, leave_type: type, start_date: iso(s), end_date: iso(s + (days - 1) * day), days, approved: rand() < 0.92 ? "Yes" : "No" });
     }
   return { employees, attendance, leave };
 }
 
-/* ------------------------------------------------------------------ legal operations */
+/* ---------- legal: a Lagos law firm */
 function legal() {
-  const PRACTICE = ["Commercial litigation", "Corporate", "Property", "Employment", "Family", "Intellectual property"];
-  const COURTS = ["High Court, Lagos", "Federal High Court, Lagos", "National Industrial Court", "Court of Appeal, Lagos", "Magistrate Court, Ikeja"];
-  const clients = Array.from({ length: 45 }, (_, i) => ({
+  reseed(747474);
+  const AREAS = {
+    "Commercial litigation": { titles: ["Recovery of debt", "Breach of contract", "Enforcement of judgment"], courts: ["High Court, Lagos", "High Court, Lagos", "Court of Appeal, Lagos"], contentious: true },
+    Corporate: { titles: ["Company incorporation", "Share transfer", "Contract review", "Due diligence"], courts: [], contentious: false },
+    Property: { titles: ["Land title", "Lease dispute", "Tenancy recovery", "Property purchase"], courts: ["High Court, Lagos", "Magistrate Court, Ikeja"], contentious: true },
+    Employment: { titles: ["Wrongful dismissal", "Unpaid wages claim", "Employment contract review"], courts: ["National Industrial Court"], contentious: true },
+    Family: { titles: ["Divorce petition", "Custody application", "Probate and estate"], courts: ["High Court, Lagos"], contentious: true },
+    "Intellectual property": { titles: ["Trademark registration", "Trademark opposition", "Copyright infringement"], courts: ["Federal High Court, Lagos"], contentious: true },
+  };
+  const NON_CONTENTIOUS = ["Company incorporation", "Share transfer", "Contract review", "Due diligence", "Property purchase", "Employment contract review", "Trademark registration", "Probate and estate"];
+  const clients = Array.from({ length: 50 }, (_, i) => ({
     client_id: i + 1,
-    client_name: rand() < 0.55 ? `${pick(["Sterling", "Beacon", "Pinnacle", "Crestview", "Majestic", "Summit", "Orchid", "Trident"])} ${pick(["Holdings", "Properties", "Industries", "Logistics", "Foods", "Partners"])} Ltd` : person(),
+    client_name: rand() < 0.6 ? `${pick(["Sterling", "Beacon", "Pinnacle", "Crestview", "Majestic", "Summit", "Orchid", "Trident", "Harbour", "Cedar"])} ${pick(["Holdings", "Properties", "Industries", "Logistics", "Foods", "Partners", "Energy"])} Ltd` : person(),
     client_type: "",
     onboarded_date: iso(d("2022-01-01") + int(0, 1300) * day),
   }));
   for (const c of clients) c.client_type = / Ltd$/.test(c.client_name) ? "Company" : "Individual";
-  const lawyers = Array.from({ length: 9 }, () => person());
+  const lawyers = Array.from({ length: 8 }, () => person());
   const matters = [];
   let mid = 2001;
-  for (let k = 0; k < 140; k++) {
-    const opened = d("2024-01-01") + int(0, 900) * day;
-    const status = weighted(["Open", "Closed", "On hold"], [55, 38, 7]);
-    matters.push({ matter_id: mid++, client_id: pick(clients).client_id, matter_title: `${pick(["Recovery of debt", "Lease dispute", "Share transfer", "Wrongful dismissal", "Trademark registration", "Contract review", "Land title", "Custody application"])}`, practice_area: pick(PRACTICE), responsible_lawyer: pick(lawyers), opened_date: iso(opened), closed_date: status === "Closed" ? iso(opened + int(40, 500) * day) : null, status });
+  for (let k = 0; k < 150; k++) {
+    const area = weighted(Object.keys(AREAS), [26, 20, 20, 12, 10, 12]);
+    const title = pick(AREAS[area].titles);
+    const client = pick(clients);
+    const opened = Math.max(d(client.onboarded_date), d("2024-01-01") + int(0, 950) * day);
+    const length = NON_CONTENTIOUS.includes(title) ? int(20, 120) : int(90, 700);
+    const closeAt = opened + length * day;
+    const onHold = rand() < 0.06;
+    const closed = !onHold && closeAt <= SNAPSHOT;
+    matters.push({ matter_id: mid++, client_id: client.client_id, matter_title: title, practice_area: area, responsible_lawyer: pick(lawyers), opened_date: iso(opened), closed_date: closed ? iso(closeAt) : null, status: closed ? "Closed" : onHold ? "On hold" : "Open" });
   }
   const hearings = [];
   let hid = 1;
   for (const m of matters) {
-    if (!/litigation|Employment|Family|Property/.test(m.practice_area)) continue;
-    for (let k = 0; k < int(1, 6); k++) {
-      const date = d(m.opened_date) + int(20, 600) * day;
-      hearings.push({ hearing_id: hid++, matter_id: m.matter_id, hearing_date: iso(date), court: pick(COURTS), outcome: date > d("2026-09-01") ? "Scheduled" : weighted(["Adjourned", "Heard", "Struck out", "Judgment delivered"], [55, 30, 5, 10]) });
+    if (NON_CONTENTIOUS.includes(m.matter_title)) continue;
+    const end = m.closed_date ? d(m.closed_date) : SNAPSHOT + 90 * day;
+    let t = d(m.opened_date) + int(30, 90) * day;
+    while (t < end) {
+      const future = t > SNAPSHOT;
+      hearings.push({ hearing_id: hid++, matter_id: m.matter_id, hearing_date: iso(t), court: pick(AREAS[m.practice_area].courts), outcome: future ? "Scheduled" : weighted(["Adjourned", "Heard", "Struck out"], [58, 38, 4]) });
+      if (future) break;
+      t += int(30, 110) * day;
     }
+    const last = hearings[hearings.length - 1];
+    if (m.closed_date && last?.matter_id === m.matter_id && last.outcome !== "Scheduled") last.outcome = "Judgment delivered";
   }
   const invoices = [];
   let iid = 7001;
-  for (const m of matters)
-    for (let k = 0; k < int(1, 4); k++) {
-      const issued = d(m.opened_date) + int(10, 400) * day;
-      const amount = Math.round(int(250000, 6500000) / 10000) * 10000;
-      const paid = rand() < 0.72;
-      invoices.push({ invoice_id: iid++, matter_id: m.matter_id, issued_date: iso(issued), amount_ngn: amount, status: paid ? "Paid" : weighted(["Outstanding", "Overdue"], [55, 45]), paid_date: paid ? iso(issued + int(3, 75) * day) : null });
+  for (const m of matters) {
+    const end = Math.min(m.closed_date ? d(m.closed_date) + 30 * day : SNAPSHOT, SNAPSHOT);
+    for (let t = d(m.opened_date) + int(7, 30) * day; t <= end; t += int(60, 150) * day) {
+      const amount = round(NON_CONTENTIOUS.includes(m.matter_title) ? int(300000, 2500000) : int(800000, 6000000), 10000);
+      const paidAfter = int(5, 90);
+      const paid = t + paidAfter * day <= SNAPSHOT && rand() < 0.82;
+      const age = (SNAPSHOT - t) / day;
+      invoices.push({ invoice_id: iid++, matter_id: m.matter_id, issued_date: iso(t), amount_ngn: amount, status: paid ? "Paid" : age > 30 ? "Overdue" : "Outstanding", paid_date: paid ? iso(t + paidAfter * day) : null });
     }
+  }
   return { clients, matters, hearings, invoices };
 }
 
@@ -339,7 +506,8 @@ for (const t of ["employees", "customers", "routes", "shipments", "payments"]) {
 }
 fs.writeFileSync(path.join(OUT, "logistics.sqlite"), Buffer.from(db.export()));
 
-for (const [name, data] of [["sales", sales()], ["hr", hr()], ["legal", legal()]])
+const S = sales();
+for (const [name, data] of [["sales", S], ["cleaning", customerExport(S.customers)], ["hr", hr()], ["legal", legal()]])
   for (const [table, rows] of Object.entries(data)) writeCsv(name, table, rows);
 
 // Summary for the build log

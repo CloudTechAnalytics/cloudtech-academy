@@ -11,20 +11,27 @@ export const DATASETS: DatasetInfo[] = [
   },
   {
     id: "sales",
-    name: "FMCG distributor (sales)",
-    description: "Orders from shops and supermarkets across Nigerian regions, with products and prices.",
-    files: ["customers", "orders", "products"],
+    name: "Kolanut Distribution (sales)",
+    description:
+      "An FMCG distributor's order lines from January 2025 to June 2026, with its 90 customers (shops, supermarkets and wholesalers across six regions) and 16 products. Prices rose in January 2026.",
+    files: ["orders", "customers", "products"],
+  },
+  {
+    id: "cleaning",
+    name: "Kolanut customer export (messy)",
+    description: "Kolanut's customer list as exported from its old system: duplicates, stray spaces, mixed capitals, three date formats and money stored as text.",
+    files: ["customer_list_raw"],
   },
   {
     id: "hr",
-    name: "Company workforce (HR)",
-    description: "Employees, a month of daily attendance, and leave records.",
+    name: "Kolanut Distribution (HR)",
+    description: "The distributor's 80 staff, their June 2026 attendance, and leave records since January 2025.",
     files: ["employees", "attendance", "leave"],
   },
   {
     id: "legal",
-    name: "Law firm operations (legal)",
-    description: "A firm's clients, matters, court hearings and invoices.",
+    name: "Ashgrove Chambers (legal)",
+    description: "A Lagos law firm's clients, matters, court hearings and invoices from 2024 to August 2026.",
     files: ["clients", "matters", "hearings", "invoices"],
   },
 ];
@@ -36,7 +43,7 @@ export type PracticeProject = {
   dataset: string;
   summary: string;
   questions: string[];
-  /** Set when the project is part of a course and counts towards its certificate. */
+  /** The course whose lessons and final project use this dataset. */
   courseSlug?: string;
 };
 
@@ -60,26 +67,28 @@ export const PRACTICE_PROJECTS: PracticeProject[] = [
     title: "Sales Performance Analysis",
     skills: ["Excel", "Power BI"],
     dataset: "sales",
-    summary: "Find out which products, regions and customer channels drive a distributor's sales, and where discounts are eating margin.",
+    summary: "Find out which products, regions and customer channels drive a distributor's sales, and what its discounts really cost.",
     questions: [
       "What are monthly sales, and how do they trend?",
       "Which product categories and regions sell the most?",
       "How do wholesale, supermarket and kiosk customers differ?",
       "How much revenue is given away in discounts?",
     ],
+    courseSlug: "excel-for-data-analysis",
   },
   {
     id: "law-firm-operations",
     title: "Law Firm Operations Analysis",
     skills: ["SQL", "Power BI"],
     dataset: "legal",
-    summary: "Look at a law firm's workload and cash: open matters by practice area, how often hearings are adjourned, and overdue invoices.",
+    summary: "Look at a Lagos law firm's workload and cash: open matters by practice area, how often hearings are adjourned, and overdue invoices.",
     questions: [
       "How many matters are open per practice area and lawyer?",
       "What share of hearings end in an adjournment?",
       "Which clients have the most outstanding or overdue invoices?",
       "How long do matters take to close?",
     ],
+    courseSlug: "power-bi-fundamentals",
   },
   {
     id: "employee-analytics",
@@ -93,6 +102,7 @@ export const PRACTICE_PROJECTS: PracticeProject[] = [
       "What is the resignation rate by department and job level?",
       "How does pay vary by level?",
     ],
+    courseSlug: "data-analytics-foundations",
   },
 ];
 

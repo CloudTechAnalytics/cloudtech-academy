@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams, useSearchParams } from "react-router";
 import { getBackend, type LessonInput } from "@/lib/backend";
 import { PageLoading } from "@/lib/auth";
-import { extractExercises, extractQuizzes } from "@/lib/lesson-format";
+import { extractAnswers, extractExercises, extractQuizzes } from "@/lib/lesson-format";
 import { LessonContent } from "@/components/LessonContent";
 import { Button } from "@/components/Button";
 import { Alert, TextArea, TextField } from "@/components/Form";
@@ -43,10 +43,10 @@ LIMIT 5;
 /** Checks that exercise and quiz blocks are valid JSON before saving. */
 function validateBody(body: string): string | null {
   try {
-    const ex = extractExercises(body);
+    const ex = [...extractExercises(body), ...extractAnswers(body)];
     const ids = new Set<string>();
     for (const e of ex) {
-      if (!e.id || !e.solution) return "Every exercise needs an id and a solution.";
+      if (!e.id) return "Every exercise needs an id.";
       if (ids.has(e.id)) return `The exercise id "${e.id}" is used twice.`;
       ids.add(e.id);
     }
@@ -55,7 +55,7 @@ function validateBody(body: string): string | null {
     }
     return null;
   } catch (e) {
-    return `An exercise or quiz block isn't valid JSON: ${e instanceof Error ? e.message : String(e)}`;
+    return `An exercise, answer or quiz block isn't valid: ${e instanceof Error ? e.message : String(e)}`;
   }
 }
 
@@ -198,7 +198,7 @@ export default function AdminLessonEditor() {
                 </label>
                 <textarea id="body" value={lesson.body} onChange={(e) => set("body", e.target.value)} rows={28} spellCheck className="sql-editor min-h-[30rem]" />
                 <p className="mt-3 text-[0.8125rem] text-muted">
-                  Markdown. Use ```sql run for runnable examples, ```exercise and ```quiz for JSON practice blocks, and &gt; [!TIP], [!NOTE], [!WARNING] or [!BUSINESS] for callouts.
+                  Markdown. Use ```sql run for runnable examples; ```exercise (SQL), ```answer (checked result) and ```quiz for JSON practice blocks; ```dataset for download links; and &gt; [!TIP], [!NOTE], [!WARNING] or [!BUSINESS] for callouts.
                 </p>
               </>
             ) : (

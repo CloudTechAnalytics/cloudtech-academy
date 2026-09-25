@@ -103,11 +103,11 @@ export default function Certificates() {
       </section>
 
       <section className="container-page py-16 text-center">
-        <h2 className="font-serif text-[1.9rem]">Start with SQL for Data Analysis</h2>
-        <p className="mx-auto mt-3 max-w-xl text-muted">Our first certificate course. Free, self-paced, and practised on a real-looking company database.</p>
+        <h2 className="font-serif text-[1.9rem]">Four certificate courses, all free</h2>
+        <p className="mx-auto mt-3 max-w-xl text-muted">Data Analytics Foundations, Excel, SQL and Power BI. Self-paced, practised on realistic company data, and each ends with a project you can show an employer.</p>
         <div className="mt-6">
-          <ButtonLink to="/courses/sql-for-data-analysis" arrow>
-            View the course
+          <ButtonLink to="/courses" arrow>
+            Browse the courses
           </ButtonLink>
         </div>
       </section>

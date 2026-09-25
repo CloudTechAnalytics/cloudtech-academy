@@ -44,7 +44,7 @@ export default function Courses() {
         <div className="container-page py-14 sm:py-16">
           <h1 className="font-serif text-[2.6rem] leading-tight sm:text-[3.2rem]">Courses</h1>
           <p className="mt-4 max-w-2xl text-[1.0625rem] leading-relaxed text-muted">
-            Every course is free, self-paced and built around business problems. SQL for Data Analysis is open now; the others are in preparation.
+            Every course is free, self-paced and built around business problems, with practice on realistic company data and a certificate you can verify.
           </p>
         </div>
       </section>

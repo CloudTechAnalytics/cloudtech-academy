@@ -1,0 +1,126 @@
+---
+title: Building an analysis
+minutes: 40
+summary: Organise a workbook someone else can trust - raw data, calculations, checks and a one-page summary - and compare periods properly.
+---
+
+## The problem
+
+A workbook full of correct formulas can still be useless if nobody else can follow it: numbers typed over formulas, pivots pointing at old ranges, totals that don't match. The managing director wants a first-half review of 2026 against 2025 that her finance team can check. This lesson is about building it properly.
+
+## The concept
+
+**A standard layout.** One sheet per job, in this order:
+
+| Sheet | Contains | Rule |
+| :-- | :-- | :-- |
+| `README` | Question, sources, date, author, definitions | Written first |
+| `Raw` | Data exactly as received | Never edited |
+| `Data` | Cleaned Tables with helper columns (revenue, region, category) | Formulas only |
+| `Calc` | Pivots and summary formulas | No typed numbers |
+| `Summary` | The one page people read: KPIs, a chart or two, the findings | Refers to Calc |
+| `Checks` | Reconciliations: totals that must agree | All should say OK |
+
+**Checks catch mistakes.** Examples:
+
+```excel
+=IF(ROUND(SUM(Data!Orders[revenue]) - GETPIVOTDATA("revenue", Calc!$A$3), 0) = 0, "OK", "MISMATCH")
+=IF(COUNTIF(Orders[region], "Not found") = 0, "OK", "Unmatched customers")
+```
+
+**Period-over-period comparison.** For January–June each year:
+
+```excel
+H1 2025:  =SUMIFS(Orders[revenue], Orders[order_date], ">="&DATE(2025,1,1), Orders[order_date], "<="&DATE(2025,6,30))
+H1 2026:  =SUMIFS(Orders[revenue], Orders[order_date], ">="&DATE(2026,1,1), Orders[order_date], "<="&DATE(2026,6,30))
+Growth %: =(H1_2026 - H1_2025) / H1_2025
+```
+
+Add a region criterion to get the same by region. Format growth as a percentage with one decimal.
+
+> [!BUSINESS]
+> Always compare the same period (H1 with H1), and say what's included: "revenue after discounts, all channels, January–June". Kolanut also raised prices 8–12% in January 2026, so part of the growth is price, not volume. A good summary says so.
+
+## Example
+
+**H1 2026 vs H1 2025 by region** (₦ million):
+
+| Region | H1 2025 | H1 2026 | Growth |
+| :-- | --: | --: | --: |
+| Lagos | 118.2 | 152.8 | +29.3% |
+| South West | 28.9 | 51.7 | +78.6% |
+| North Central | 25.3 | 27.2 | +7.3% |
+| South South | 19.7 | 23.1 | +16.9% |
+| South East | 20.9 | 19.4 | −7.1% |
+| North West | 31.1 | 16.6 | −46.6% |
+| **Total** | **244.2** | **290.7** | **+19.1%** |
+
+**Findings for the summary page:**
+
+1. First-half revenue grew 19.1%, helped by the January price rise.
+2. Lagos and the South West delivered most of the growth.
+3. North West nearly halved and South East slipped. These two need attention.
+
+## Walkthrough
+
+1. Create the sheets above and write the `README`.
+2. On `Calc`, list the six regions down column A. In B and C, write the SUMIFS for H1 2025 and H1 2026 with a region condition; in D, growth.
+3. Add a total row with `SUM`, and on `Checks` confirm the H1 2026 total equals a SUMIFS on dates alone.
+4. On `Summary`: three KPI cells at the top (H1 2026 revenue, growth %, largest-falling region), a bar chart of growth by region with North West highlighted, and the three findings as sentences.
+5. Protect your work from accidental typing: **Review → Protect Sheet** on `Calc` and `Summary`.
+
+## Practice
+
+```answer
+{
+  "id": "xls-10-p1",
+  "prompt": "What was Kolanut's revenue growth from **H1 2025 to H1 2026**, to one decimal place? Calculate it from the order data, not the rounded table.",
+  "answer": 19.1,
+  "format": "percent",
+  "dataset": "sales",
+  "files": ["orders"],
+  "verify": "SELECT ROUND(100.0 * (SUM(CASE WHEN order_date BETWEEN '2026-01-01' AND '2026-06-30' THEN quantity * unit_price * (1 - discount_pct / 100.0) END) / SUM(CASE WHEN order_date BETWEEN '2025-01-01' AND '2025-06-30' THEN quantity * unit_price * (1 - discount_pct / 100.0) END) - 1), 1) FROM orders",
+  "hint": "Two SUMIFS with date ranges, then (new − old) ÷ old.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "xls-10-p2",
+  "prompt": "Which region had the **second-worst** growth (the smallest growth after North West)?",
+  "answer": "South East",
+  "accept": ["south-east", "southeast"],
+  "format": "text",
+  "dataset": "sales",
+  "files": ["orders", "customers"],
+  "verify": "SELECT region FROM (SELECT c.region, SUM(CASE WHEN o.order_date >= '2026-01-01' THEN o.quantity * o.unit_price * (1 - o.discount_pct / 100.0) END) / SUM(CASE WHEN o.order_date <= '2025-06-30' THEN o.quantity * o.unit_price * (1 - o.discount_pct / 100.0) END) AS g FROM orders o JOIN customers c ON c.customer_id = o.customer_id GROUP BY c.region) ORDER BY g LIMIT 1 OFFSET 1",
+  "hint": "Build the regional growth table and sort it smallest to largest.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why keep an untouched Raw sheet in the workbook?",
+    "options": ["Excel requires it", "So anyone can trace every number back to the source data", "It makes the file faster", "Pivots can't read Tables"],
+    "answer": 1,
+    "explanation": "The raw data is the evidence your analysis rests on."
+  },
+  {
+    "prompt": "What is a 'check' in a workbook?",
+    "options": ["A tick box", "A formula confirming two independent calculations agree", "A spell-check", "A cell with a typed number"],
+    "answer": 1,
+    "explanation": "Reconciliation checks catch broken ranges, missed rows and lookups that failed."
+  },
+  {
+    "prompt": "Revenue grew 19% and prices rose about 10%. What should the summary say?",
+    "options": ["Sales volume grew 19%", "Revenue grew 19%, partly because of the price rise, so volume grew less", "Prices don't affect revenue", "Nothing about prices"],
+    "answer": 1,
+    "explanation": "Separating price from volume stops readers over-crediting the sales team."
+  }
+]
+```

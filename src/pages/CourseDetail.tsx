@@ -128,10 +128,10 @@ export default function CourseDetail() {
                 <>
                   <p className="font-serif text-[1.3rem]">In preparation</p>
                   <p className="mt-2 text-[0.9375rem] leading-relaxed text-muted">
-                    This course is being written. The curriculum below shows what it will cover. In the meantime, SQL for Data Analysis is open now.
+                    This course is being written. The curriculum below shows what it will cover. In the meantime, the other courses are open now.
                   </p>
-                  <ButtonLink to="/courses/sql-for-data-analysis" variant="secondary" className="mt-5 w-full">
-                    See SQL for Data Analysis
+                  <ButtonLink to="/courses" variant="secondary" className="mt-5 w-full">
+                    Browse open courses
                   </ButtonLink>
                 </>
               )}

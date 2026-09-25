@@ -210,20 +210,21 @@
   .lesson h3 {
     @apply mt-8 font-serif text-[1.3rem] leading-snug;
   }
-  .lesson ul,
-  .lesson ol {
+  /* List and link styles are for prose only, not for interactive blocks (.not-prose). */
+  .lesson ul:not(.not-prose *),
+  .lesson ol:not(.not-prose *) {
     @apply space-y-1.5 pl-6;
   }
-  .lesson ul {
+  .lesson ul:not(.not-prose *) {
     list-style: disc;
   }
-  .lesson ol {
+  .lesson ol:not(.not-prose *) {
     list-style: decimal;
   }
   .lesson li::marker {
     color: var(--color-brass);
   }
-  .lesson a {
+  .lesson a:not(.not-prose *) {
     @apply text-brass-dark underline decoration-brass/50 underline-offset-2 hover:decoration-brass;
   }
   .lesson strong {

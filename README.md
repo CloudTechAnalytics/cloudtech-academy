@@ -6,16 +6,22 @@ Every lesson follows the same steps: **read → understand → practise → appl
 
 ## What's in V1
 
-| Area | Status |
+| Course | Lessons | Practice | Final project |
+| --- | --: | --- | --- |
+| Data Analytics Foundations | 10 | Answer tasks on real datasets, one SQL taster | Kolanut people review (HR data) |
+| Excel for Data Analysis | 11 | Answer tasks: formulas, XLOOKUP, cleaning, pivots | Kolanut sales performance review |
+| SQL for Data Analysis | 15 | 36 SQL exercises checked in the browser | Harbourline Freight operations review |
+| Power BI Fundamentals | 14 | Answer tasks: Power Query, modelling, DAX, visuals | Ashgrove Chambers practice dashboard |
+
+Each course has a 15-question final assessment (pass mark 70%, options shuffled, graded on the server) and a verifiable certificate.
+
+| Platform | Status |
 | --- | --- |
-| SQL for Data Analysis | Complete: 15 lessons, 36 exercises, a 15-question final assessment and a final project |
-| Data Analytics Foundations, Excel for Data Analysis, Power BI Fundamentals | Their curricula are published and marked "coming soon" |
 | Accounts, dashboard, progress tracking | ✓ |
-| Final assessments (pass mark 70%, unlimited retakes, max 10 attempts an hour) | ✓ Graded in the database |
 | Certificates: PNG download, print/PDF, LinkedIn, public `/verify/:id` | ✓ |
-| Practice projects plus four downloadable datasets (logistics, sales, legal, HR) | ✓ |
+| Practice projects + five downloadable datasets (logistics, sales, messy customer export, HR, legal) | ✓ |
 | Admin (`/admin`): courses, modules, lessons (Markdown with preview), assessments, students, submissions, certificates | ✓ |
-| SEO: every public page prerendered, sitemap, structured data | ✓ |
+| SEO: every public page prerendered (60 pages), sitemap, structured data | ✓ |
 
 ## Running it
 
@@ -23,7 +29,7 @@ Every lesson follows the same steps: **read → understand → practise → appl
 npm install
 npm run dev          # http://localhost:5173
 npm run build        # typecheck, build, then prerender public pages into dist/
-npm run test:content # runs every lesson example and exercise solution against the database
+npm run test:content # checks every lesson; recomputes every answer from the CSV files
 ```
 
 Without Supabase keys the Academy runs in **demo mode**:
@@ -64,13 +70,15 @@ On Vercel, add the same variables under Project Settings → Environment Variabl
 The course content lives in `src/content/`:
 
 - `catalog.ts`: courses, modules, certificate rules.
-- `sql/NN-slug.md`: lessons. The front matter holds `title`, `minutes` and `summary`.
-- `sql/assessment.ts` and `sql/project.ts`: the final assessment and the project.
+- `<course>/NN-slug.md` (folders `daf`, `excel`, `sql`, `powerbi`): lessons. The front matter holds `title`, `minutes` and `summary`.
+- `<course>/assessment.ts` and `<course>/project.ts`: the final assessment and the project.
 
 Lesson Markdown supports three custom code fences:
 
 - ```` ```sql run ````: a runnable example.
 - ```` ```exercise ````: JSON with `id`, `prompt`, `starter`, `solution`, `hint`, `required` and `orderMatters`. An answer counts as correct when its result matches the result of `solution`.
+- ```` ```answer ````: a task done in Excel, Sheets or Power BI, checked by its result. JSON with `id`, `prompt`, `answer` (number or text), optional `accept`, `tolerance`, `format` (`naira`, `percent`, `number`, `text`), `hint`, `explanation`, `required`, and `dataset` + `files` for download links. Tasks that use a dataset must include `verify`, a SQL query over the CSV files that reproduces the answer; `npm run test:content` runs it.
+- ```` ```dataset ````: a download card, `{ "dataset": "sales", "files": ["orders"] }`.
 - ```` ```quiz ````: JSON questions.
 
 Callouts use `> [!TIP]`, `[!NOTE]`, `[!WARNING]` or `[!BUSINESS]`.
@@ -82,7 +90,7 @@ After editing content:
 
 Lessons edited in `/admin` are stored in the database. The next seed run overwrites a lesson that exists in both places, so choose one place to edit each lesson.
 
-The practice datasets are fictional and are generated with a fixed seed by `npm run datasets`.
+The practice datasets are fictional and are generated with fixed seeds by `npm run datasets`. Each dataset has its own seed, so changing one never changes another. Explore them with `node scripts/sql.mjs --data sales "SELECT ..."`.
 
 ## Structure
 

@@ -87,3 +87,32 @@ export type QuizQuestion = {
   answer: number;
   explanation?: string;
 };
+
+/**
+ * A practice task done outside the browser (Excel, Google Sheets, Power BI, or by hand):
+ * the learner works out a result and types it in to check it.
+ */
+export type AnswerSpec = {
+  id: string;
+  prompt: string;
+  /** The expected result: a number, or a short text answer. */
+  answer: number | string;
+  /** Other text answers that also count as correct. */
+  accept?: string[];
+  /** How far a numeric answer may be from `answer`. Defaults to 0.5 for whole numbers, 0.051 otherwise. */
+  tolerance?: number;
+  /** How to show the expected answer. */
+  format?: "number" | "naira" | "percent" | "text";
+  hint?: string;
+  /** Shown once the task is solved or the answer is revealed. */
+  explanation?: string;
+  required?: boolean;
+  /** Dataset the task uses (public/datasets/<dataset>), for the download links. */
+  dataset?: string;
+  files?: string[];
+  /** SQL over the CSV files that reproduces `answer`. Run by npm run test:content, never in the browser. */
+  verify?: string;
+};
+
+/** Download card for a practice dataset: ```dataset {"dataset": "sales", "files": ["orders"]} */
+export type DatasetBlock = { dataset: string; files?: string[]; note?: string };

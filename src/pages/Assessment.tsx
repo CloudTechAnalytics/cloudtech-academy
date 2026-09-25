@@ -9,6 +9,23 @@ import { Button, ButtonLink } from "@/components/Button";
 import { Alert } from "@/components/Form";
 import NotFound from "./NotFound";
 
+/**
+ * Options are shown in a shuffled order that is fixed per question (seeded by its ID), so the
+ * position of the right answer carries no pattern. Answers are still submitted as the original
+ * option index, which is what the server grades.
+ */
+function optionOrder(questionId: string, count: number) {
+  let h = 2166136261;
+  for (const ch of questionId) h = Math.imul(h ^ ch.charCodeAt(0), 16777619);
+  const order = Array.from({ length: count }, (_, i) => i);
+  for (let i = count - 1; i > 0; i--) {
+    h = Math.imul(h ^ (h >>> 15), 2246822507) ^ Math.imul(h ^ (h >>> 13), 3266489909);
+    const j = (h >>> 0) % (i + 1);
+    [order[i], order[j]] = [order[j], order[i]];
+  }
+  return order;
+}
+
 function AssessmentInner() {
   const { slug } = useParams();
   const { course, loading } = useCourse(slug);
@@ -109,7 +126,7 @@ function AssessmentInner() {
             <p className="text-[0.75rem] font-semibold uppercase tracking-[0.14em] text-brass-dark">Question {i + 1}</p>
             <p className="mt-2 text-[1.0313rem] font-semibold leading-snug">{q.prompt}</p>
             <div className="mt-4 grid gap-2">
-              {q.options.map((opt, oi) => (
+              {optionOrder(q.id, q.options.length).map((oi) => (
                 <label
                   key={oi}
                   className={`flex cursor-pointer items-start gap-3 rounded-lg border px-3.5 py-2.5 text-[0.9375rem] ${answers[q.id] === oi ? "border-brass bg-brass-pale/40" : "border-line hover:border-line-strong"}`}
@@ -121,7 +138,7 @@ function AssessmentInner() {
                     onChange={() => setAnswers((x) => ({ ...x, [q.id]: oi }))}
                     className="mt-1 accent-[var(--color-brass-dark)]"
                   />
-                  <span className="break-words">{opt}</span>
+                  <span className="break-words">{q.options[oi]}</span>
                 </label>
               ))}
             </div>

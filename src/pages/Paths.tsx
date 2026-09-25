@@ -78,11 +78,11 @@ export default function Paths() {
         <div className="mt-14 rounded-2xl border border-line bg-sand/50 p-6 sm:p-8">
           <h2 className="font-serif text-[1.5rem]">Where to start today</h2>
           <p className="mt-2 max-w-2xl text-muted">
-            SQL for Data Analysis is ready now and doesn't assume the earlier courses. Start there, and we'll add the other courses in the path as they're finished.
+            Every course in the path is open. If you're new to data, start at step 1. If you already use spreadsheets at work, you can begin with SQL or Power BI; each course stands on its own.
           </p>
           <div className="mt-5">
-            <ButtonLink to="/courses/sql-for-data-analysis" arrow>
-              Start SQL for Data Analysis
+            <ButtonLink to="/courses/data-analytics-foundations" arrow>
+              Start with Data Analytics Foundations
             </ButtonLink>
           </div>
         </div>

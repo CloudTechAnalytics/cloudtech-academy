@@ -4,11 +4,13 @@
  *   ```sql run      an example the learner can run in the sandbox
  *   ```exercise     JSON: { id, prompt, starter?, solution, hint?, required?, orderMatters? }
  *   ```quiz         JSON: [{ prompt, options, answer, explanation? }]
+ *   ```answer       JSON: a task done in Excel / Power BI / by hand, checked by its result (AnswerSpec)
+ *   ```dataset      JSON: { dataset, files?, note? } download card for a practice dataset
  *
  * Callouts use blockquotes starting with [!TIP], [!NOTE], [!WARNING] or [!BUSINESS].
  * These helpers are dependency-free so the same logic can be mirrored by build scripts.
  */
-import type { ExerciseSpec, QuizQuestion } from "@/content/types";
+import type { AnswerSpec, DatasetBlock, ExerciseSpec, QuizQuestion } from "@/content/types";
 
 export function parseFrontmatter(raw: string): { meta: Record<string, string>; body: string } {
   const text = raw.replace(/\r\n/g, "\n");
@@ -45,4 +47,25 @@ export function extractExercises(body: string): ExerciseSpec[] {
 
 export function extractQuizzes(body: string): QuizQuestion[][] {
   return fences(body, "quiz").map(parseQuiz);
+}
+
+export function parseAnswer(json: string): AnswerSpec {
+  const a = JSON.parse(json) as AnswerSpec;
+  if (!a.id || !a.prompt || a.answer === undefined || a.answer === "") throw new Error("An answer task needs id, prompt and answer");
+  return a;
+}
+
+export function parseDataset(json: string): DatasetBlock {
+  const d = JSON.parse(json) as DatasetBlock;
+  if (!d.dataset) throw new Error("A dataset block needs a dataset");
+  return d;
+}
+
+export function extractAnswers(body: string): AnswerSpec[] {
+  return fences(body, "answer").map(parseAnswer);
+}
+
+/** IDs of every required practice task in a lesson: SQL exercises and answer tasks. */
+export function requiredExerciseIds(body: string): string[] {
+  return [...extractExercises(body), ...extractAnswers(body)].filter((e) => e.required).map((e) => e.id);
 }

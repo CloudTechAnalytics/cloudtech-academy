@@ -6,7 +6,7 @@
  */
 import { BUNDLED_ASSESSMENTS, BUNDLED_COURSES, BUNDLED_PROJECTS } from "@/content";
 import type { AssessmentDef, Course } from "@/content/types";
-import { extractExercises } from "../lesson-format";
+import { requiredExerciseIds } from "../lesson-format";
 import { eligibility, newCredentialId } from "../certificates";
 import {
   BackendError,
@@ -332,7 +332,7 @@ export function createDemoBackend(): Backend {
           const m = c?.modules.find((x) => x.id === input.moduleId);
           if (!c || !m) throw new BackendError("Module not found.");
           c.modules.forEach((mod) => (mod.lessons = mod.lessons.filter((l) => l.id !== input.id || mod.id === m.id)));
-          const lesson = { ...input, requiredExercises: extractExercises(input.body).filter((e) => e.required).map((e) => e.id) };
+          const lesson = { ...input, requiredExercises: requiredExerciseIds(input.body) };
           const i = m.lessons.findIndex((l) => l.id === input.id);
           if (i >= 0) m.lessons[i] = lesson;
           else m.lessons.push(lesson);

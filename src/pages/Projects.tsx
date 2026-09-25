@@ -3,6 +3,7 @@ import { Download } from "lucide-react";
 import { useSeo } from "@/lib/seo";
 import { breadcrumbs } from "@/lib/schema";
 import { DATASETS, PRACTICE_PROJECTS, datasetUrl } from "@/content/projects";
+import { findCourseDef } from "@/content/catalog";
 import { Badge } from "@/components/CourseCard";
 
 export default function Projects() {
@@ -18,7 +19,7 @@ export default function Projects() {
           <p className="kicker">Projects</p>
           <h1 className="mt-4 font-serif text-[2.6rem] leading-[1.05] tracking-[-0.015em] sm:text-[3.4rem]">Practise on business-shaped data.</h1>
           <p className="mt-5 max-w-2xl text-[1.125rem] leading-relaxed text-muted">
-            Four fictional companies, each with its own dataset and a set of questions a manager would actually ask. Download the CSV files and answer them in SQL, Excel or Power BI, then add the work to your portfolio.
+            Four fictional businesses, each with its own dataset and a set of questions a manager would actually ask. Download the CSV files and answer them in SQL, Excel or Power BI, then add the work to your portfolio.
           </p>
         </div>
       </section>
@@ -60,11 +61,11 @@ export default function Projects() {
                 </ul>
                 {p.courseSlug && (
                   <p className="mt-auto pt-6 text-[0.875rem]">
-                    This is also the final project of{" "}
+                    This data is used throughout{" "}
                     <Link to={`/courses/${p.courseSlug}`} className="font-semibold text-brass-dark">
-                      SQL for Data Analysis
+                      {findCourseDef(p.courseSlug)?.title ?? "a course"}
                     </Link>
-                    , where you can query the data in your browser.
+                    , with guided lessons and a final project.
                   </p>
                 )}
               </article>

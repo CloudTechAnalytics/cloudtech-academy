@@ -1,141 +1,151 @@
 matter_id,client_id,matter_title,practice_area,responsible_lawyer,opened_date,closed_date,status
-2001,35,Contract review,Commercial litigation,Obinna Olawale,2024-05-19,2024-10-09,Closed
-2002,1,Custody application,Intellectual property,Aisha Ogunleye,2025-05-23,2026-09-06,Closed
-2003,20,Share transfer,Family,Chinedu Afolabi,2026-03-10,,Open
-2004,18,Custody application,Family,Temitope Adeyemi,2025-01-21,,Open
-2005,43,Share transfer,Property,Yusuf Nwosu,2024-10-18,,Open
-2006,20,Land title,Employment,Aisha Ogunleye,2024-07-10,,Open
-2007,41,Wrongful dismissal,Family,Zainab Okafor,2024-08-18,2025-04-08,Closed
-2008,8,Recovery of debt,Intellectual property,Aisha Ogunleye,2024-03-12,,On hold
-2009,14,Custody application,Intellectual property,Obinna Nwosu,2026-04-01,2026-09-19,Closed
-2010,44,Contract review,Commercial litigation,Obinna Olawale,2026-05-16,2026-11-15,Closed
-2011,20,Wrongful dismissal,Commercial litigation,Chinedu Afolabi,2024-12-26,2025-11-04,Closed
-2012,4,Wrongful dismissal,Commercial litigation,Folake Okafor,2024-07-03,,Open
-2013,30,Custody application,Family,Yusuf Nwosu,2025-11-01,2026-08-15,Closed
-2014,36,Share transfer,Intellectual property,Yusuf Nwosu,2024-03-31,,Open
-2015,26,Share transfer,Property,Folake Okafor,2025-04-04,,Open
-2016,33,Wrongful dismissal,Family,Chinedu Afolabi,2026-03-30,2027-04-04,Closed
-2017,12,Trademark registration,Property,Folake Okafor,2025-11-07,,On hold
-2018,36,Recovery of debt,Corporate,Aisha Ogunleye,2025-09-07,,Open
-2019,37,Lease dispute,Employment,Aisha Ogunleye,2025-02-19,,Open
-2020,11,Recovery of debt,Commercial litigation,Funmilayo Nwosu,2024-02-27,2024-11-04,Closed
-2021,21,Contract review,Property,Temitope Adeyemi,2025-03-17,,Open
-2022,41,Wrongful dismissal,Family,Obinna Olawale,2025-09-15,2025-11-12,Closed
-2023,26,Wrongful dismissal,Property,Chinedu Afolabi,2024-01-03,,Open
-2024,15,Trademark registration,Commercial litigation,Chinedu Afolabi,2026-02-01,2026-11-13,Closed
-2025,6,Trademark registration,Employment,Folake Okafor,2024-12-21,2025-09-06,Closed
-2026,9,Lease dispute,Commercial litigation,Obinna Nwosu,2025-03-06,,Open
-2027,21,Land title,Employment,Obinna Olawale,2024-01-10,2025-03-20,Closed
-2028,2,Land title,Property,Funmilayo Nwosu,2024-11-20,,Open
-2029,26,Contract review,Intellectual property,Obinna Olawale,2026-05-03,,Open
-2030,24,Land title,Commercial litigation,Obinna Olawale,2026-01-11,,Open
-2031,33,Recovery of debt,Commercial litigation,Zainab Okafor,2026-06-01,,Open
-2032,19,Trademark registration,Intellectual property,Obinna Olawale,2025-06-05,,Open
-2033,23,Land title,Intellectual property,Aisha Ogunleye,2025-06-08,,Open
-2034,11,Lease dispute,Property,Funmilayo Nwosu,2024-07-25,2024-12-28,Closed
-2035,35,Recovery of debt,Employment,Aisha Ogunleye,2024-08-02,2025-02-19,Closed
-2036,45,Lease dispute,Family,Temitope Adeyemi,2024-04-07,2024-09-28,Closed
-2037,20,Lease dispute,Corporate,Obinna Olawale,2026-03-03,,Open
-2038,3,Share transfer,Commercial litigation,Obinna Nwosu,2024-07-07,2024-12-30,Closed
-2039,5,Recovery of debt,Corporate,Zainab Okafor,2024-12-30,,Open
-2040,7,Recovery of debt,Corporate,Funmilayo Nwosu,2026-02-10,2027-06-07,Closed
-2041,22,Lease dispute,Commercial litigation,Folake Okafor,2024-10-12,,Open
-2042,19,Recovery of debt,Family,Chinedu Afolabi,2024-08-26,2025-12-06,Closed
-2043,10,Contract review,Property,Obinna Olawale,2024-06-04,,Open
-2044,34,Recovery of debt,Corporate,Yusuf Nwosu,2025-11-19,2026-09-27,Closed
-2045,16,Trademark registration,Employment,Temitope Adeyemi,2024-01-21,,Open
-2046,24,Contract review,Corporate,Chinedu Afolabi,2025-03-17,2026-06-13,Closed
-2047,13,Trademark registration,Family,Chinedu Afolabi,2024-09-01,,Open
-2048,5,Contract review,Commercial litigation,Folake Okafor,2024-04-30,2025-05-08,Closed
-2049,21,Share transfer,Corporate,Obinna Olawale,2024-03-28,,Open
-2050,8,Trademark registration,Intellectual property,Folake Okafor,2025-11-25,2027-04-01,Closed
-2051,41,Land title,Family,Chinedu Afolabi,2024-03-21,,Open
-2052,18,Custody application,Intellectual property,Zainab Okafor,2024-04-11,2025-07-14,Closed
-2053,26,Trademark registration,Employment,Zainab Okafor,2024-07-02,2024-09-20,Closed
-2054,6,Trademark registration,Family,Obinna Nwosu,2025-01-26,,Open
-2055,15,Recovery of debt,Intellectual property,Chinedu Afolabi,2026-03-15,,On hold
-2056,1,Share transfer,Corporate,Chinedu Afolabi,2024-12-07,2026-04-05,Closed
-2057,3,Custody application,Commercial litigation,Folake Okafor,2026-03-18,2026-12-27,Closed
-2058,5,Trademark registration,Corporate,Obinna Olawale,2025-03-09,,Open
-2059,14,Contract review,Employment,Zainab Okafor,2025-11-04,2026-05-18,Closed
-2060,32,Lease dispute,Property,Funmilayo Nwosu,2025-01-20,2026-01-31,Closed
-2061,26,Lease dispute,Family,Yusuf Nwosu,2024-10-10,2025-04-12,Closed
-2062,22,Lease dispute,Employment,Yusuf Nwosu,2026-04-24,,Open
-2063,32,Recovery of debt,Family,Yusuf Nwosu,2025-09-30,,Open
-2064,11,Land title,Intellectual property,Chinedu Afolabi,2026-02-16,2026-04-20,Closed
-2065,13,Lease dispute,Employment,Obinna Nwosu,2025-07-17,2025-12-21,Closed
-2066,28,Wrongful dismissal,Family,Temitope Adeyemi,2025-12-22,,Open
-2067,13,Custody application,Corporate,Obinna Olawale,2026-03-23,2026-09-20,Closed
-2068,1,Lease dispute,Employment,Yusuf Nwosu,2025-10-17,,On hold
-2069,7,Contract review,Commercial litigation,Folake Okafor,2026-05-02,2026-11-15,Closed
-2070,16,Lease dispute,Intellectual property,Folake Okafor,2025-12-06,,Open
-2071,7,Share transfer,Intellectual property,Folake Okafor,2025-01-14,,Open
-2072,2,Custody application,Property,Temitope Adeyemi,2024-08-25,,Open
-2073,29,Share transfer,Employment,Folake Okafor,2024-09-11,,Open
-2074,9,Custody application,Property,Zainab Okafor,2025-04-22,,Open
-2075,6,Custody application,Corporate,Chinedu Afolabi,2024-10-20,,Open
-2076,14,Recovery of debt,Intellectual property,Zainab Okafor,2026-04-04,,Open
-2077,18,Share transfer,Commercial litigation,Obinna Nwosu,2025-06-12,,Open
-2078,16,Wrongful dismissal,Property,Chinedu Afolabi,2025-02-22,,Open
-2079,42,Recovery of debt,Intellectual property,Obinna Olawale,2024-01-11,,Open
-2080,19,Trademark registration,Commercial litigation,Folake Okafor,2025-05-01,,Open
-2081,1,Lease dispute,Family,Zainab Okafor,2025-02-27,2026-07-06,Closed
-2082,36,Wrongful dismissal,Property,Aisha Ogunleye,2025-08-10,,Open
-2083,37,Wrongful dismissal,Property,Obinna Nwosu,2025-05-27,2026-07-09,Closed
-2084,20,Land title,Employment,Chinedu Afolabi,2026-02-25,2027-03-16,Closed
-2085,1,Wrongful dismissal,Property,Temitope Adeyemi,2025-12-03,2026-02-20,Closed
-2086,27,Trademark registration,Employment,Zainab Okafor,2025-07-27,,Open
-2087,25,Share transfer,Commercial litigation,Obinna Nwosu,2025-12-24,2026-02-11,Closed
-2088,17,Custody application,Intellectual property,Zainab Okafor,2024-02-28,2025-05-07,Closed
-2089,44,Share transfer,Corporate,Yusuf Nwosu,2025-03-27,,Open
-2090,10,Custody application,Employment,Zainab Okafor,2025-05-03,,Open
-2091,42,Trademark registration,Employment,Aisha Ogunleye,2025-10-10,2026-03-01,Closed
-2092,1,Wrongful dismissal,Commercial litigation,Obinna Nwosu,2024-05-10,,Open
-2093,34,Custody application,Property,Folake Okafor,2024-04-04,,Open
-2094,27,Contract review,Property,Aisha Ogunleye,2025-09-27,,Open
-2095,35,Lease dispute,Property,Folake Okafor,2024-10-21,2025-03-07,Closed
-2096,44,Contract review,Employment,Obinna Nwosu,2024-05-02,,Open
-2097,28,Contract review,Employment,Funmilayo Nwosu,2025-12-11,2026-05-03,Closed
-2098,5,Lease dispute,Employment,Obinna Olawale,2025-07-13,,Open
-2099,38,Trademark registration,Intellectual property,Obinna Olawale,2025-11-30,,Open
-2100,8,Land title,Property,Funmilayo Nwosu,2025-06-25,,Open
-2101,12,Trademark registration,Employment,Chinedu Afolabi,2024-05-19,,Open
-2102,35,Custody application,Employment,Zainab Okafor,2025-12-13,,Open
-2103,35,Lease dispute,Corporate,Obinna Olawale,2025-01-31,,Open
-2104,12,Lease dispute,Intellectual property,Chinedu Afolabi,2025-10-07,,Open
-2105,13,Recovery of debt,Corporate,Chinedu Afolabi,2024-04-04,2024-12-06,Closed
-2106,36,Wrongful dismissal,Intellectual property,Obinna Olawale,2026-05-03,2027-03-03,Closed
-2107,13,Share transfer,Employment,Yusuf Nwosu,2025-08-24,,Open
-2108,13,Recovery of debt,Employment,Temitope Adeyemi,2025-03-12,2025-05-07,Closed
-2109,24,Share transfer,Employment,Funmilayo Nwosu,2025-08-11,2026-07-01,Closed
-2110,10,Contract review,Intellectual property,Temitope Adeyemi,2025-06-07,2026-07-06,Closed
-2111,4,Trademark registration,Intellectual property,Funmilayo Nwosu,2025-06-12,,Open
-2112,8,Contract review,Corporate,Obinna Nwosu,2025-05-18,,On hold
-2113,32,Land title,Intellectual property,Yusuf Nwosu,2026-04-24,,Open
-2114,22,Custody application,Employment,Obinna Nwosu,2024-10-11,,On hold
-2115,3,Contract review,Family,Yusuf Nwosu,2024-10-08,,Open
-2116,33,Custody application,Intellectual property,Obinna Olawale,2024-05-09,2024-08-07,Closed
-2117,25,Contract review,Employment,Obinna Olawale,2024-05-03,,Open
-2118,34,Land title,Intellectual property,Chinedu Afolabi,2024-02-17,,Open
-2119,3,Wrongful dismissal,Commercial litigation,Obinna Olawale,2024-05-31,2025-02-25,Closed
-2120,15,Wrongful dismissal,Family,Funmilayo Nwosu,2026-05-10,2026-07-16,Closed
-2121,19,Share transfer,Corporate,Funmilayo Nwosu,2024-08-17,2024-11-16,Closed
-2122,7,Recovery of debt,Property,Chinedu Afolabi,2025-10-26,,Open
-2123,18,Wrongful dismissal,Corporate,Folake Okafor,2025-07-28,2026-07-14,Closed
-2124,23,Share transfer,Corporate,Funmilayo Nwosu,2024-07-04,,Open
-2125,25,Share transfer,Property,Funmilayo Nwosu,2024-06-21,2025-04-22,Closed
-2126,20,Recovery of debt,Commercial litigation,Zainab Okafor,2025-03-18,,Open
-2127,7,Land title,Intellectual property,Chinedu Afolabi,2026-01-22,,Open
-2128,19,Land title,Commercial litigation,Obinna Olawale,2024-05-11,,Open
-2129,27,Wrongful dismissal,Employment,Folake Okafor,2025-03-20,,Open
-2130,30,Share transfer,Commercial litigation,Yusuf Nwosu,2025-01-09,,Open
-2131,3,Contract review,Employment,Aisha Ogunleye,2025-09-18,2026-11-07,Closed
-2132,44,Lease dispute,Intellectual property,Temitope Adeyemi,2025-03-12,,On hold
-2133,22,Recovery of debt,Commercial litigation,Funmilayo Nwosu,2025-01-26,2025-03-25,Closed
-2134,26,Land title,Employment,Chinedu Afolabi,2024-07-25,2025-10-30,Closed
-2135,26,Trademark registration,Commercial litigation,Obinna Olawale,2024-12-16,,On hold
-2136,11,Trademark registration,Property,Obinna Nwosu,2026-05-23,,Open
-2137,13,Contract review,Commercial litigation,Folake Okafor,2024-05-06,,Open
-2138,10,Recovery of debt,Corporate,Obinna Olawale,2025-04-07,,On hold
-2139,12,Land title,Family,Yusuf Nwosu,2025-06-23,,Open
-2140,44,Trademark registration,Intellectual property,Temitope Adeyemi,2025-09-25,,On hold
+2001,37,Tenancy recovery,Property,Kunle Eze,2026-02-28,2026-08-23,Closed
+2002,18,Trademark opposition,Intellectual property,Musa Chukwu,2025-09-23,,Open
+2003,10,Trademark opposition,Intellectual property,Kunle Eze,2024-10-27,2025-11-22,Closed
+2004,17,Lease dispute,Property,Temitope Afolabi,2026-02-02,,Open
+2005,47,Wrongful dismissal,Employment,Adaeze Olawale,2024-12-26,2025-10-17,Closed
+2006,8,Tenancy recovery,Property,Kunle Chukwu,2024-07-03,2025-07-24,Closed
+2007,21,Share transfer,Corporate,Ngozi Suleiman,2024-07-27,,On hold
+2008,3,Share transfer,Corporate,Adaeze Olawale,2025-03-18,2025-04-12,Closed
+2009,39,Property purchase,Property,Zainab Abdullahi,2024-04-22,2024-06-21,Closed
+2010,21,Divorce petition,Family,Zainab Abdullahi,2024-12-25,2025-06-18,Closed
+2011,50,Unpaid wages claim,Employment,Kunle Chukwu,2025-03-18,,Open
+2012,16,Trademark opposition,Intellectual property,Zainab Abdullahi,2026-04-06,,Open
+2013,20,Employment contract review,Employment,Nnamdi Ibe,2025-08-30,2025-12-25,Closed
+2014,27,Contract review,Corporate,Kunle Eze,2025-09-20,2025-10-12,Closed
+2015,35,Trademark opposition,Intellectual property,Zainab Abdullahi,2026-04-27,,Open
+2016,23,Enforcement of judgment,Commercial litigation,Kunle Eze,2024-12-21,2026-03-05,Closed
+2017,39,Unpaid wages claim,Employment,Ngozi Suleiman,2024-12-04,2025-09-20,Closed
+2018,42,Unpaid wages claim,Employment,Zainab Abdullahi,2025-06-23,2026-03-23,Closed
+2019,24,Enforcement of judgment,Commercial litigation,Musa Chukwu,2026-02-10,,Open
+2020,28,Wrongful dismissal,Employment,Kunle Eze,2024-04-15,2024-08-05,Closed
+2021,16,Share transfer,Corporate,Adaeze Olawale,2026-05-11,2026-07-01,Closed
+2022,49,Copyright infringement,Intellectual property,Kunle Eze,2024-10-08,2026-06-06,Closed
+2023,29,Trademark opposition,Intellectual property,Zainab Abdullahi,2026-03-30,,Open
+2024,40,Recovery of debt,Commercial litigation,Musa Chukwu,2024-05-05,2026-03-28,Closed
+2025,47,Trademark registration,Intellectual property,Nnamdi Ibe,2025-01-25,2025-03-25,Closed
+2026,48,Contract review,Corporate,Temitope Afolabi,2024-02-18,2024-03-27,Closed
+2027,18,Company incorporation,Corporate,Adaeze Olawale,2026-05-24,2026-08-19,Closed
+2028,48,Wrongful dismissal,Employment,Musa Chukwu,2025-03-17,2026-05-04,Closed
+2029,7,Contract review,Corporate,Musa Chukwu,2025-04-20,2025-07-02,Closed
+2030,18,Copyright infringement,Intellectual property,Adaeze Olawale,2025-03-10,,Open
+2031,41,Unpaid wages claim,Employment,Kunle Chukwu,2026-07-18,,Open
+2032,43,Enforcement of judgment,Commercial litigation,Ngozi Suleiman,2025-02-12,2025-06-12,Closed
+2033,43,Land title,Property,Adaeze Olawale,2026-07-19,,Open
+2034,1,Contract review,Corporate,Temitope Afolabi,2024-05-12,2024-06-05,Closed
+2035,1,Recovery of debt,Commercial litigation,Nnamdi Ibe,2025-09-26,2026-01-26,Closed
+2036,21,Probate and estate,Family,Kunle Eze,2025-03-31,2025-06-19,Closed
+2037,6,Copyright infringement,Intellectual property,Zainab Abdullahi,2025-05-01,2026-05-20,Closed
+2038,8,Employment contract review,Employment,Zainab Abdullahi,2024-07-03,2024-09-08,Closed
+2039,29,Lease dispute,Property,Nnamdi Ibe,2025-06-14,2026-01-06,Closed
+2040,38,Contract review,Corporate,Musa Chukwu,2025-06-07,2025-10-02,Closed
+2041,39,Recovery of debt,Commercial litigation,Zainab Abdullahi,2025-12-29,,Open
+2042,18,Tenancy recovery,Property,Temitope Afolabi,2025-05-08,2025-09-09,Closed
+2043,17,Enforcement of judgment,Commercial litigation,Temitope Afolabi,2025-09-29,,Open
+2044,2,Enforcement of judgment,Commercial litigation,Nnamdi Ibe,2025-08-13,,Open
+2045,11,Enforcement of judgment,Commercial litigation,Nnamdi Ibe,2024-05-07,2025-09-16,Closed
+2046,21,Due diligence,Corporate,Temitope Afolabi,2025-11-12,2025-12-28,Closed
+2047,40,Recovery of debt,Commercial litigation,Zainab Abdullahi,2025-02-07,,Open
+2048,4,Recovery of debt,Commercial litigation,Adaeze Olawale,2026-08-05,,Open
+2049,46,Recovery of debt,Commercial litigation,Temitope Afolabi,2025-04-15,2026-08-31,Closed
+2050,33,Recovery of debt,Commercial litigation,Kunle Eze,2025-07-21,2026-06-23,Closed
+2051,14,Recovery of debt,Commercial litigation,Ngozi Suleiman,2026-05-04,,Open
+2052,9,Wrongful dismissal,Employment,Temitope Afolabi,2025-05-05,2025-08-04,Closed
+2053,7,Copyright infringement,Intellectual property,Ngozi Suleiman,2024-05-25,2025-05-07,Closed
+2054,45,Trademark registration,Intellectual property,Ngozi Suleiman,2024-06-13,2024-09-09,Closed
+2055,35,Land title,Property,Adaeze Olawale,2025-05-09,,Open
+2056,33,Recovery of debt,Commercial litigation,Ngozi Suleiman,2025-10-28,,Open
+2057,45,Breach of contract,Commercial litigation,Musa Chukwu,2026-05-05,,Open
+2058,50,Enforcement of judgment,Commercial litigation,Nnamdi Ibe,2024-06-20,2026-03-05,Closed
+2059,45,Enforcement of judgment,Commercial litigation,Adaeze Olawale,2025-08-26,,On hold
+2060,21,Recovery of debt,Commercial litigation,Adaeze Olawale,2025-07-14,,Open
+2061,48,Unpaid wages claim,Employment,Kunle Chukwu,2025-11-20,,Open
+2062,24,Unpaid wages claim,Employment,Zainab Abdullahi,2024-12-31,2026-03-06,Closed
+2063,15,Trademark registration,Intellectual property,Nnamdi Ibe,2024-01-21,2024-04-21,Closed
+2064,7,Share transfer,Corporate,Kunle Chukwu,2026-04-12,2026-06-23,Closed
+2065,29,Trademark opposition,Intellectual property,Nnamdi Ibe,2026-05-18,,Open
+2066,19,Recovery of debt,Commercial litigation,Kunle Chukwu,2025-04-19,2026-02-10,Closed
+2067,26,Due diligence,Corporate,Kunle Chukwu,2024-10-10,2024-11-22,Closed
+2068,25,Due diligence,Corporate,Musa Chukwu,2024-03-28,2024-05-26,Closed
+2069,15,Breach of contract,Commercial litigation,Ngozi Suleiman,2024-08-30,2026-01-17,Closed
+2070,45,Share transfer,Corporate,Zainab Abdullahi,2024-06-11,2024-07-16,Closed
+2071,42,Land title,Property,Kunle Eze,2026-05-16,,Open
+2072,29,Employment contract review,Employment,Kunle Eze,2024-04-22,2024-07-17,Closed
+2073,35,Company incorporation,Corporate,Kunle Eze,2025-05-09,,On hold
+2074,3,Recovery of debt,Commercial litigation,Adaeze Olawale,2025-07-16,2025-11-28,Closed
+2075,50,Contract review,Corporate,Zainab Abdullahi,2024-08-13,2024-11-05,Closed
+2076,5,Company incorporation,Corporate,Zainab Abdullahi,2025-05-11,,On hold
+2077,45,Land title,Property,Musa Chukwu,2026-04-24,,Open
+2078,42,Wrongful dismissal,Employment,Zainab Abdullahi,2024-07-27,2025-04-17,Closed
+2079,9,Trademark registration,Intellectual property,Temitope Afolabi,2024-02-10,2024-03-02,Closed
+2080,32,Due diligence,Corporate,Musa Chukwu,2025-06-03,2025-07-06,Closed
+2081,22,Lease dispute,Property,Kunle Chukwu,2026-04-18,,On hold
+2082,12,Custody application,Family,Adaeze Olawale,2025-08-22,,Open
+2083,2,Contract review,Corporate,Zainab Abdullahi,2026-01-09,2026-04-24,Closed
+2084,13,Recovery of debt,Commercial litigation,Musa Chukwu,2024-03-15,2025-03-16,Closed
+2085,41,Enforcement of judgment,Commercial litigation,Nnamdi Ibe,2025-02-23,2026-04-26,Closed
+2086,31,Lease dispute,Property,Kunle Eze,2025-12-18,,Open
+2087,3,Company incorporation,Corporate,Zainab Abdullahi,2026-02-22,2026-04-07,Closed
+2088,8,Share transfer,Corporate,Adaeze Olawale,2025-04-28,,On hold
+2089,6,Tenancy recovery,Property,Adaeze Olawale,2025-11-18,2026-05-04,Closed
+2090,37,Due diligence,Corporate,Musa Chukwu,2025-01-06,2025-04-08,Closed
+2091,12,Property purchase,Property,Zainab Abdullahi,2024-02-28,2024-06-21,Closed
+2092,5,Contract review,Corporate,Adaeze Olawale,2024-07-25,2024-09-22,Closed
+2093,24,Recovery of debt,Commercial litigation,Kunle Eze,2025-02-10,2025-07-25,Closed
+2094,20,Breach of contract,Commercial litigation,Kunle Eze,2024-04-01,2025-09-20,Closed
+2095,30,Lease dispute,Property,Nnamdi Ibe,2026-06-15,,On hold
+2096,42,Enforcement of judgment,Commercial litigation,Temitope Afolabi,2026-01-22,,Open
+2097,32,Tenancy recovery,Property,Adaeze Olawale,2025-08-07,2026-08-18,Closed
+2098,37,Trademark opposition,Intellectual property,Kunle Chukwu,2026-06-26,,Open
+2099,32,Recovery of debt,Commercial litigation,Nnamdi Ibe,2024-09-15,2025-06-05,Closed
+2100,24,Lease dispute,Property,Zainab Abdullahi,2025-06-02,2026-06-09,Closed
+2101,29,Trademark registration,Intellectual property,Kunle Eze,2024-11-04,2025-02-02,Closed
+2102,29,Enforcement of judgment,Commercial litigation,Adaeze Olawale,2024-08-12,2025-09-15,Closed
+2103,20,Due diligence,Corporate,Ngozi Suleiman,2025-12-13,2026-02-04,Closed
+2104,23,Share transfer,Corporate,Temitope Afolabi,2026-03-17,2026-06-28,Closed
+2105,44,Lease dispute,Property,Kunle Chukwu,2025-07-12,2026-05-27,Closed
+2106,48,Share transfer,Corporate,Temitope Afolabi,2024-11-29,2025-01-22,Closed
+2107,24,Breach of contract,Commercial litigation,Kunle Chukwu,2024-12-06,2026-03-21,Closed
+2108,24,Tenancy recovery,Property,Nnamdi Ibe,2025-09-18,,Open
+2109,16,Lease dispute,Property,Temitope Afolabi,2026-07-18,,Open
+2110,18,Share transfer,Corporate,Zainab Abdullahi,2026-04-08,2026-07-20,Closed
+2111,18,Employment contract review,Employment,Nnamdi Ibe,2025-12-27,2026-02-19,Closed
+2112,26,Contract review,Corporate,Zainab Abdullahi,2025-11-29,2026-01-08,Closed
+2113,49,Employment contract review,Employment,Musa Chukwu,2025-04-01,2025-05-22,Closed
+2114,46,Divorce petition,Family,Zainab Abdullahi,2025-02-12,,On hold
+2115,8,Copyright infringement,Intellectual property,Ngozi Suleiman,2025-11-23,2026-08-01,Closed
+2116,49,Wrongful dismissal,Employment,Musa Chukwu,2024-05-03,2025-08-17,Closed
+2117,46,Breach of contract,Commercial litigation,Zainab Abdullahi,2026-04-08,,Open
+2118,15,Probate and estate,Family,Zainab Abdullahi,2025-04-26,,On hold
+2119,1,Enforcement of judgment,Commercial litigation,Musa Chukwu,2025-08-26,,Open
+2120,27,Copyright infringement,Intellectual property,Zainab Abdullahi,2025-04-27,2026-03-11,Closed
+2121,11,Tenancy recovery,Property,Kunle Chukwu,2024-03-18,2024-08-06,Closed
+2122,42,Company incorporation,Corporate,Kunle Chukwu,2025-08-13,2025-09-28,Closed
+2123,15,Unpaid wages claim,Employment,Ngozi Suleiman,2024-07-31,2025-09-01,Closed
+2124,22,Land title,Property,Temitope Afolabi,2024-08-27,2025-05-22,Closed
+2125,30,Trademark registration,Intellectual property,Adaeze Olawale,2024-08-13,2024-10-18,Closed
+2126,28,Recovery of debt,Commercial litigation,Temitope Afolabi,2025-09-04,2026-07-31,Closed
+2127,29,Company incorporation,Corporate,Adaeze Olawale,2025-07-27,2025-09-12,Closed
+2128,2,Breach of contract,Commercial litigation,Zainab Abdullahi,2024-04-25,2025-01-14,Closed
+2129,8,Recovery of debt,Commercial litigation,Nnamdi Ibe,2024-11-28,2025-12-10,Closed
+2130,11,Share transfer,Corporate,Musa Chukwu,2024-10-30,,On hold
+2131,30,Enforcement of judgment,Commercial litigation,Nnamdi Ibe,2024-11-22,2025-12-23,Closed
+2132,13,Property purchase,Property,Nnamdi Ibe,2026-03-12,2026-06-14,Closed
+2133,49,Due diligence,Corporate,Adaeze Olawale,2025-01-07,2025-02-11,Closed
+2134,11,Trademark opposition,Intellectual property,Kunle Eze,2026-02-13,,On hold
+2135,47,Property purchase,Property,Kunle Eze,2025-07-22,2025-10-29,Closed
+2136,41,Property purchase,Property,Ngozi Suleiman,2026-06-08,2026-08-16,Closed
+2137,21,Contract review,Corporate,Temitope Afolabi,2024-07-09,2024-08-04,Closed
+2138,24,Property purchase,Property,Temitope Afolabi,2025-10-30,2025-11-30,Closed
+2139,35,Lease dispute,Property,Adaeze Olawale,2025-05-09,2025-10-14,Closed
+2140,44,Enforcement of judgment,Commercial litigation,Kunle Chukwu,2025-11-21,2026-03-13,Closed
+2141,27,Lease dispute,Property,Zainab Abdullahi,2026-01-26,,On hold
+2142,30,Contract review,Corporate,Nnamdi Ibe,2025-04-15,2025-07-25,Closed
+2143,44,Copyright infringement,Intellectual property,Kunle Chukwu,2026-02-09,,Open
+2144,6,Contract review,Corporate,Musa Chukwu,2025-08-10,2025-09-19,Closed
+2145,38,Breach of contract,Commercial litigation,Temitope Afolabi,2024-09-14,2026-01-16,Closed
+2146,47,Tenancy recovery,Property,Kunle Chukwu,2024-08-11,2025-04-01,Closed
+2147,17,Company incorporation,Corporate,Adaeze Olawale,2025-04-24,2025-06-12,Closed
+2148,46,Land title,Property,Zainab Abdullahi,2025-11-21,,On hold
+2149,31,Tenancy recovery,Property,Adaeze Olawale,2024-09-06,2025-01-15,Closed
+2150,7,Enforcement of judgment,Commercial litigation,Zainab Abdullahi,2025-10-06,,Open

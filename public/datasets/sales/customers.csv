@@ -1,81 +1,91 @@
-customer_id,customer_name,channel,region
-1,Mama Stores 1,Kiosk,North West
-2,Aunty Ventures 2,Supermarket,North Central
-3,Alhaji Mini Mart 3,Kiosk,North West
-4,Bola Mini Mart 4,Kiosk,South East
-5,Emeka Mini Mart 5,Supermarket,South South
-6,Chuks Enterprises 6,Wholesale,North Central
-7,Chuks Ventures 7,Kiosk,North Central
-8,Emeka Stores 8,Kiosk,North West
-9,Chuks Enterprises 9,Kiosk,South West
-10,Bola Mini Mart 10,Kiosk,South East
-11,Madam Mini Mart 11,Kiosk,North West
-12,Chuks Ventures 12,Supermarket,South West
-13,Bola Enterprises 13,Wholesale,Lagos
-14,Alhaji Wholesale 14,Kiosk,South South
-15,Chuks Ventures 15,Kiosk,South South
-16,Mama Wholesale 16,Wholesale,North West
-17,Emeka Supermarket 17,Kiosk,South South
-18,Alhaji Ventures 18,Wholesale,South South
-19,Aunty Stores 19,Wholesale,South West
-20,Emeka Wholesale 20,Kiosk,North West
-21,Aunty Ventures 21,Wholesale,Lagos
-22,Alhaji Supermarket 22,Wholesale,South East
-23,Aunty Enterprises 23,Wholesale,North West
-24,Mama Wholesale 24,Kiosk,Lagos
-25,Mama Supermarket 25,Kiosk,North Central
-26,Bola Stores 26,Supermarket,South East
-27,Mama Wholesale 27,Supermarket,North West
-28,Mama Mini Mart 28,Wholesale,North Central
-29,Madam Ventures 29,Kiosk,North Central
-30,Madam Supermarket 30,Supermarket,South South
-31,Emeka Mini Mart 31,Kiosk,South East
-32,Brother Enterprises 32,Wholesale,North Central
-33,Brother Enterprises 33,Kiosk,Lagos
-34,Alhaji Wholesale 34,Supermarket,South South
-35,Aunty Stores 35,Kiosk,South East
-36,Chuks Mini Mart 36,Kiosk,South South
-37,Alhaji Supermarket 37,Kiosk,Lagos
-38,Brother Mini Mart 38,Kiosk,North West
-39,Bola Wholesale 39,Wholesale,North Central
-40,Mama Supermarket 40,Supermarket,North Central
-41,Bola Supermarket 41,Wholesale,Lagos
-42,Emeka Supermarket 42,Wholesale,North West
-43,Brother Mini Mart 43,Supermarket,South South
-44,Madam Wholesale 44,Wholesale,South West
-45,Bola Supermarket 45,Wholesale,Lagos
-46,Mama Ventures 46,Wholesale,South East
-47,Mama Ventures 47,Kiosk,North Central
-48,Bola Supermarket 48,Kiosk,North Central
-49,Chuks Stores 49,Supermarket,Lagos
-50,Madam Enterprises 50,Wholesale,South West
-51,Emeka Wholesale 51,Wholesale,North Central
-52,Alhaji Stores 52,Supermarket,North Central
-53,Chuks Wholesale 53,Supermarket,South East
-54,Madam Stores 54,Kiosk,South South
-55,Emeka Enterprises 55,Kiosk,North Central
-56,Bola Wholesale 56,Supermarket,South East
-57,Mama Wholesale 57,Kiosk,North West
-58,Brother Enterprises 58,Kiosk,South East
-59,Mama Supermarket 59,Kiosk,South South
-60,Brother Stores 60,Wholesale,South East
-61,Madam Enterprises 61,Kiosk,South West
-62,Madam Supermarket 62,Kiosk,Lagos
-63,Alhaji Mini Mart 63,Supermarket,North West
-64,Madam Wholesale 64,Wholesale,South South
-65,Chuks Enterprises 65,Kiosk,Lagos
-66,Mama Ventures 66,Wholesale,Lagos
-67,Bola Stores 67,Supermarket,North West
-68,Brother Wholesale 68,Supermarket,South South
-69,Mama Stores 69,Kiosk,North Central
-70,Madam Wholesale 70,Kiosk,South East
-71,Mama Mini Mart 71,Wholesale,South South
-72,Madam Supermarket 72,Kiosk,South South
-73,Brother Mini Mart 73,Wholesale,South South
-74,Bola Supermarket 74,Wholesale,Lagos
-75,Mama Wholesale 75,Kiosk,South South
-76,Brother Wholesale 76,Kiosk,South South
-77,Aunty Ventures 77,Kiosk,South East
-78,Madam Mini Mart 78,Kiosk,South South
-79,Aunty Stores 79,Supermarket,Lagos
-80,Aunty Ventures 80,Supermarket,Lagos
+customer_id,customer_name,channel,region,city,sales_rep,joined_date,credit_limit
+1,Kayode Distributors,Wholesale,Lagos,Surulere,Tolu Adeyemi,2023-10-22,2050000
+2,Grace Provisions,Kiosk,South East,Nnewi,Ikenna Obi,2022-04-21,500000
+3,Ada Superstore,Supermarket,Lagos,Ikeja,Tolu Adeyemi,2023-07-11,1200000
+4,Hajia Amina Superstore,Supermarket,North Central,Abuja,Sani Garba,2023-04-21,850000
+5,Peace Mart,Supermarket,South West,Osogbo,Funke Alabi,2022-09-01,1500000
+6,Mama Nkechi Trading Co.,Wholesale,Lagos,Surulere,Chidi Okonkwo,2024-12-25,4150000
+7,Divine Kiosk,Kiosk,Lagos,Ikeja,Tolu Adeyemi,2022-05-30,500000
+8,Iya Basira Mart,Supermarket,South East,Nnewi,Ikenna Obi,2024-10-19,2300000
+9,Olumide Mini Mart,Kiosk,Lagos,Ikorodu,Tolu Adeyemi,2023-10-11,450000
+10,Yakubu Kiosk,Kiosk,Lagos,Ikorodu,Chidi Okonkwo,2022-12-14,150000
+11,Iya Basira Mart Warri,Supermarket,South South,Warri,Ebi Tamuno,2024-09-21,1150000
+12,Hajia Amina Supermarket,Supermarket,North West,Kano,Sani Garba,2022-07-02,1400000
+13,Peace Provisions,Kiosk,North West,Kano,Sani Garba,2022-11-17,200000
+14,Kayode Provisions,Kiosk,Lagos,Surulere,Chidi Okonkwo,2022-07-01,400000
+15,Madam Titi Mini Mart,Kiosk,Lagos,Surulere,Tolu Adeyemi,2024-05-27,250000
+16,Olumide Wholesale,Wholesale,North West,Sokoto,Sani Garba,2023-05-20,2900000
+17,Kayode Supermarket,Supermarket,South South,Uyo,Ebi Tamuno,2022-02-03,1900000
+18,Brother Sunday Supermarket,Supermarket,North Central,Jos,Sani Garba,2023-06-07,1400000
+19,Brother Sunday Provisions,Kiosk,South South,Benin City,Ebi Tamuno,2022-01-13,250000
+20,Madam Titi Mart,Supermarket,North West,Kaduna,Sani Garba,2022-02-02,1900000
+21,Alhaji Musa Stores,Kiosk,Lagos,Lekki,Tolu Adeyemi,2024-10-11,350000
+22,Alhaji Musa Superstore,Supermarket,Lagos,Lekki,Chidi Okonkwo,2022-10-05,950000
+23,Emeka Supermarket,Supermarket,Lagos,Ikeja,Tolu Adeyemi,2024-10-09,1450000
+24,Hajia Amina Mini Mart,Kiosk,South East,Enugu,Ikenna Obi,2023-04-16,500000
+25,Emeka Provisions,Kiosk,Lagos,Yaba,Tolu Adeyemi,2023-10-01,250000
+26,Chuks Trading Co.,Wholesale,South West,Abeokuta,Funke Alabi,2024-10-30,4250000
+27,Alhaji Musa Wholesale,Wholesale,Lagos,Yaba,Tolu Adeyemi,2023-06-10,3100000
+28,Yakubu Supermarket,Supermarket,South South,Calabar,Ebi Tamuno,2022-08-30,2350000
+29,Yakubu Mini Mart,Kiosk,North Central,Ilorin,Sani Garba,2023-01-25,200000
+30,Peace Provisions Kaduna,Kiosk,North West,Kaduna,Sani Garba,2023-08-18,400000
+31,Yakubu Mart,Supermarket,Lagos,Ikeja,Tolu Adeyemi,2023-11-03,1150000
+32,Brother Sunday Wholesale,Wholesale,Lagos,Ikorodu,Chidi Okonkwo,2024-09-15,3500000
+33,Emeka Supermarket Ilesa,Supermarket,South West,Ilesa,Funke Alabi,2022-03-20,1600000
+34,Blessing Provisions,Kiosk,North Central,Jos,Sani Garba,2022-04-02,150000
+35,Divine Superstore,Supermarket,Lagos,Ikorodu,Tolu Adeyemi,2024-09-05,1150000
+36,Blessing Superstore,Supermarket,North West,Kano,Sani Garba,2024-09-12,1350000
+37,Hajia Amina Mini Mart Uyo,Kiosk,South South,Uyo,Ebi Tamuno,2024-11-23,500000
+38,Alhaji Musa Wholesale Ikorodu,Wholesale,Lagos,Ikorodu,Chidi Okonkwo,2024-12-18,3200000
+39,Ada Supermarket,Supermarket,Lagos,Ikeja,Tolu Adeyemi,2022-12-10,2000000
+40,Ada Stores,Kiosk,South West,Akure,Funke Alabi,2023-09-30,600000
+41,Iya Basira Distributors,Wholesale,South South,Uyo,Ebi Tamuno,2023-10-27,4550000
+42,Divine Superstore Uyo,Supermarket,South South,Uyo,Ebi Tamuno,2022-08-07,2250000
+43,Chuks Mart,Supermarket,South West,Ibadan,Funke Alabi,2023-01-22,2050000
+44,Brother Sunday Provisions Jos,Kiosk,North Central,Jos,Sani Garba,2023-12-25,300000
+45,Brother Sunday Mini Mart,Kiosk,Lagos,Ikorodu,Tolu Adeyemi,2022-10-13,400000
+46,Iya Basira Trading Co.,Wholesale,North Central,Makurdi,Sani Garba,2023-07-28,4750000
+47,Ada Wholesale,Wholesale,South East,Nnewi,Ikenna Obi,2022-04-07,4950000
+48,Hajia Amina Kiosk,Kiosk,South East,Owerri,Ikenna Obi,2023-02-03,150000
+49,Uncle Ben Kiosk,Kiosk,South East,Nnewi,Ikenna Obi,2024-01-08,300000
+50,Ada Stores Uyo,Kiosk,South South,Uyo,Ebi Tamuno,2023-05-03,450000
+51,Grace Superstore,Supermarket,South West,Akure,Funke Alabi,2022-08-27,2150000
+52,Madam Titi Wholesale,Wholesale,Lagos,Ikeja,Chidi Okonkwo,2023-05-14,3450000
+53,Divine Provisions,Kiosk,Lagos,Festac,Tolu Adeyemi,2023-11-20,300000
+54,Bola Mini Mart,Kiosk,Lagos,Ikorodu,Chidi Okonkwo,2023-01-03,450000
+55,Bola Wholesale,Wholesale,North Central,Abuja,Sani Garba,2024-05-15,2200000
+56,Yakubu Superstore,Supermarket,Lagos,Ikorodu,Chidi Okonkwo,2022-12-31,850000
+57,Olumide Wholesale Yaba,Wholesale,Lagos,Yaba,Tolu Adeyemi,2022-12-18,4900000
+58,Grace Wholesale,Wholesale,North West,Katsina,Sani Garba,2022-01-29,3200000
+59,Yakubu Mini Mart Festac,Kiosk,Lagos,Festac,Tolu Adeyemi,2024-06-12,350000
+60,Blessing Provisions Nnewi,Kiosk,South East,Nnewi,Ikenna Obi,2024-07-14,500000
+61,Blessing Stores,Kiosk,North West,Katsina,Sani Garba,2023-11-26,200000
+62,Divine Wholesale,Wholesale,South East,Enugu,Ikenna Obi,2024-12-05,4400000
+63,Blessing Distributors,Wholesale,South South,Port Harcourt,Ebi Tamuno,2024-02-07,2250000
+64,Emeka Trading Co.,Wholesale,North West,Kaduna,Sani Garba,2023-04-12,2500000
+65,Divine Trading Co.,Wholesale,Lagos,Lekki,Tolu Adeyemi,2023-05-16,4850000
+66,Divine Provisions Abuja,Kiosk,North Central,Abuja,Sani Garba,2022-08-25,200000
+67,Brother Sunday Mini Mart Calabar,Kiosk,South South,Calabar,Ebi Tamuno,2023-07-20,550000
+68,Divine Trading Co. Ikeja,Wholesale,Lagos,Ikeja,Chidi Okonkwo,2023-04-20,3400000
+69,Mama Nkechi Mart,Supermarket,Lagos,Festac,Tolu Adeyemi,2023-01-02,1250000
+70,Olumide Stores,Kiosk,North West,Kano,Sani Garba,2022-12-27,450000
+71,Grace Kiosk,Kiosk,South West,Ilesa,Funke Alabi,2025-11-25,500000
+72,Yakubu Provisions,Kiosk,Lagos,Festac,Chidi Okonkwo,2025-10-11,200000
+73,Ada Provisions,Kiosk,South West,Abeokuta,Funke Alabi,2025-10-30,550000
+74,Mama Nkechi Mini Mart,Kiosk,South East,Nnewi,Ikenna Obi,2026-04-06,450000
+75,Kayode Superstore,Supermarket,North Central,Jos,Sani Garba,2025-12-11,1650000
+76,Brother Sunday Trading Co.,Wholesale,South West,Ibadan,Funke Alabi,2025-06-19,2150000
+77,Peace Mart Enugu,Supermarket,South East,Enugu,Ikenna Obi,2025-11-20,850000
+78,Olumide Mini Mart Lekki,Kiosk,Lagos,Lekki,Chidi Okonkwo,2025-05-28,500000
+79,Kayode Distributors Abeokuta,Wholesale,South West,Abeokuta,Funke Alabi,2025-10-21,4200000
+80,Alhaji Musa Provisions,Kiosk,South East,Nnewi,Ikenna Obi,2026-03-15,450000
+81,Yakubu Superstore Ilorin,Supermarket,North Central,Ilorin,Sani Garba,2025-10-30,900000
+82,Hajia Amina Kiosk Aba,Kiosk,South East,Aba,Ikenna Obi,2026-02-16,350000
+83,Iya Basira Mart Benin City,Supermarket,South South,Benin City,Ebi Tamuno,2025-12-30,1950000
+84,Olumide Superstore,Supermarket,Lagos,Lekki,Chidi Okonkwo,2025-04-12,1950000
+85,Olumide Kiosk,Kiosk,South East,Owerri,Ikenna Obi,2026-02-01,250000
+86,Madam Titi Superstore,Supermarket,Lagos,Yaba,Chidi Okonkwo,2026-04-25,850000
+87,Yakubu Superstore Festac,Supermarket,Lagos,Festac,Tolu Adeyemi,2025-12-04,1550000
+88,Bola Provisions,Kiosk,South East,Enugu,Ikenna Obi,2025-07-29,200000
+89,Ada Superstore Kaduna,Supermarket,North West,Kaduna,Sani Garba,2026-02-18,1200000
+90,Bola Kiosk,Kiosk,Lagos,Yaba,Chidi Okonkwo,2026-01-09,300000
