@@ -8,6 +8,7 @@ import { LessonQuiz } from "./LessonQuiz";
 import { CopyButton } from "./sql/SqlParts";
 import { AnswerExercise } from "./AnswerExercise";
 import { DatasetCard } from "./DatasetCard";
+import IMAGE_SIZES from "@/content/image-sizes.json";
 
 /**
  * Renders lesson Markdown as React elements. Raw HTML in lesson files is shown as text,
@@ -79,6 +80,27 @@ function Inline({ tokens }: { tokens?: Token[] }): ReactNode {
   });
 }
 
+/**
+ * An image on its own line becomes a figure: ![Alt text](/images/x.webp "Caption").
+ * Sizes come from image-sizes.json (npm run images) so the layout doesn't shift while loading;
+ * clicking opens the full-size image, which matters for wide screenshots on phones.
+ */
+function Figure({ image }: { image: Tokens.Image }) {
+  const src = safeHref(image.href);
+  const size = (IMAGE_SIZES as Record<string, number[]>)[src];
+  return (
+    <figure className="not-prose my-8">
+      <a href={src} target="_blank" rel="noopener" className="block overflow-hidden rounded-xl border border-line-strong bg-paper shadow-[0_18px_40px_-30px_rgba(23,23,23,0.45)]">
+        <img src={src} alt={decode(image.text)} width={size?.[0]} height={size?.[1]} loading="lazy" decoding="async" className="h-auto w-full" />
+      </a>
+      <figcaption className="mt-2.5 text-[0.875rem] leading-relaxed text-muted">
+        {image.title && decode(image.title)}
+        <span className="block text-[0.8125rem] text-subtle sm:hidden">Tap the image to see it full size.</span>
+      </figcaption>
+    </figure>
+  );
+}
+
 const CALLOUTS = {
   TIP: { icon: Lightbulb, label: "Tip", cls: "border-brass/40 bg-brass-pale/35" },
   NOTE: { icon: Info, label: "Note", cls: "border-line-strong bg-sand" },
@@ -123,12 +145,16 @@ function Block({ token, ctx }: { token: Token; ctx: Ctx }): ReactNode {
         </h3>
       );
     }
-    case "paragraph":
+    case "paragraph": {
+      const inner = (token as Tokens.Paragraph).tokens ?? [];
+      const only = inner.filter((t) => !(t.type === "text" && !t.raw.trim()));
+      if (only.length === 1 && only[0].type === "image") return <Figure image={only[0] as Tokens.Image} />;
       return (
         <p>
-          <Inline tokens={(token as Tokens.Paragraph).tokens} />
+          <Inline tokens={inner} />
         </p>
       );
+    }
     case "list": {
       const l = token as Tokens.List;
       const Tag = l.ordered ? "ol" : "ul";
@@ -136,9 +162,12 @@ function Block({ token, ctx }: { token: Token; ctx: Ctx }): ReactNode {
         <Tag>
           {l.items.map((item, i) => (
             <li key={i}>
-              {item.tokens.map((t, j) =>
-                t.type === "text" ? <Inline key={j} tokens={(t as Tokens.Text).tokens ?? [t]} /> : <Block key={j} token={t} ctx={ctx} />,
-              )}
+              {item.tokens.map((t, j) => {
+                if (t.type !== "text") return <Block key={j} token={t} ctx={ctx} />;
+                const inner = (t as Tokens.Text).tokens ?? [t];
+                const only = inner.filter((x) => !(x.type === "text" && !x.raw.trim()));
+                return only.length === 1 && only[0].type === "image" ? <Figure key={j} image={only[0] as Tokens.Image} /> : <Inline key={j} tokens={inner} />;
+              })}
             </li>
           ))}
         </Tag>

@@ -54,7 +54,23 @@ Wholesalers are fewer than a quarter of Kolanut's customers but bring in 70% of 
 6. Sort: right-click a revenue number → **Sort → Largest to Smallest**.
 7. **Insert Slicer** for `channel`. Click Wholesale, then Kiosk, and watch the whole pivot change.
 
+![A pivot table of revenue and percentage of total by region, a channel slicer, and the PivotTable Fields pane with region in Rows and two value fields.](/images/courses/excel/pivot-table.webp "Revenue by region with % of total (1). The field list (2), the areas you drag fields into (3), and a slicer (4).")
+
+1. **The pivot table**: region in rows, sorted by revenue, with a second value column showing **% of total**. Lagos is 49.5% of all revenue.
+2. **Field list**: every column of the source Table. Ticked fields are in use.
+3. **Areas**: Filters, Columns, Rows and Values. Drag fields between them to reshape the summary.
+4. **Slicer** for `channel`: click Wholesale and the pivot shows wholesale revenue only.
+
 To get the channel percentages in the Example: `channel` in Rows, `revenue` in Values **twice**; on the second, right-click → **Show Values As → % of Grand Total**.
+
+**Shortcuts for pivot tables**
+
+| Keys | Does |
+| :-- | :-- |
+| Alt, N, V | Insert a PivotTable |
+| Alt + F5 | Refresh the selected pivot |
+| Ctrl + Alt + F5 | Refresh all pivots and connections |
+| Alt + ↓ (on a field in the pivot) | Filter or sort that field |
 
 ## Practice
 

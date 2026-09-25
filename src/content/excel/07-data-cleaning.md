@@ -60,6 +60,17 @@ Anything that shows `CHECK` is a spelling you haven't mapped yet.
 
 Check a few rows against the raw file afterwards: `01/09/2022` should now be 1 September 2022.
 
+**Import it properly first.** Opened with **Data → From Text/CSV**, the messy file comes in far better than by double-clicking:
+
+![The From Text/CSV preview of the messy customer export: File Origin is UTF-8, phone numbers keep their leading zeros, dates and credit limits are recognised.](/images/courses/excel/import-messy.webp "Excel's import preview for the messy export.")
+
+1. **File Origin: 65001 Unicode (UTF-8)**, so `₦` is read correctly.
+2. **Phone** stays as text, leading zeros intact.
+3. **Date Joined** is recognised as dates. It read them day-first because this computer uses a UK date format. On a US-format computer, change the type with a locale in Power Query, as described above.
+4. **Credit Limit** is recognised as numbers; the blank one shows as `null`.
+
+Import gives the cleanest starting point, but names, regions and duplicates still need fixing, and that's what the formulas below do.
+
 ## Example
 
 | Raw | Clean |
@@ -77,10 +88,23 @@ A clean, repeatable workflow:
    - `Name`: `=PROPER(TRIM(CLEAN([@[Customer Name]])))`
    - `Region clean`: the XLOOKUP on `RegionMap`
    - `Limit`: the nested SUBSTITUTE/VALUE formula
+   Here are the helper columns on Kolanut's export, next to the raw data:
+
+   ![The raw customer export with helper columns Name, Region clean and Limit added on the right; the formula bar shows the nested SUBSTITUTE and VALUE formula.](/images/courses/excel/cleaning.webp "Raw columns (1, 2) and their cleaned versions (4), built by formulas like the one in the formula bar (3).")
+
 3. **Filter each helper column** for `CHECK`, errors and blanks, and fix the mapping until none are left.
 4. **Copy the helper columns** and paste them into a new sheet `Clean` with **Paste Special → Values** (Ctrl + Alt + V, then V). They're now fixed values, not formulas.
-5. On `Clean`, **Data → Remove Duplicates** on the name column.
+5. On `Clean`, **Data → Remove Duplicates** (Alt, A, M) on the name column:
+
+   ![The Remove Duplicates dialog listing the table's columns with tick boxes, and My data has headers ticked.](/images/courses/excel/remove-duplicates.webp "Remove Duplicates. Tick only the columns that define a duplicate (1): here, just the cleaned name.")
+
+   1. **Columns**: untick everything except the cleaned name. With every column ticked, two copies count as duplicates only if *every* column matches, and these copies have different phone formats.
+   2. **My data has headers** keeps the header row out of the comparison.
+   3. **OK** reports how many duplicates were removed (12 here) and how many unique rows remain (90).
 6. **Log it**: on a `Notes` sheet, write what you did and the row counts before and after (102 → 90).
+
+> [!WARNING]
+> If a formula shows up as text instead of calculating, the column was formatted as **Text** (common after importing with text columns). Set the column to **General** (Home → Number format), then click the cell, press **F2** and **Enter**.
 
 > [!TIP]
 > Flash Fill (**Data → Flash Fill**, or Ctrl + E) is handy for one-off pattern cleaning: type the cleaned version of the first two cells yourself and Excel guesses the rest. Always check its guesses; it can't explain its rule.

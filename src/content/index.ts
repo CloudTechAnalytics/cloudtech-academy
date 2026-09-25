@@ -13,6 +13,8 @@ import { XLS_ASSESSMENT } from "./excel/assessment";
 import { XLS_PROJECT } from "./excel/project";
 import { PBI_ASSESSMENT } from "./powerbi/assessment";
 import { PBI_PROJECT } from "./powerbi/project";
+import { DMO_ASSESSMENT } from "./modelling/assessment";
+import { DMO_PROJECT } from "./modelling/project";
 import { parseFrontmatter, requiredExerciseIds } from "@/lib/lesson-format";
 
 /** Lesson files live in one folder per course, named NN-slug.md. */
@@ -21,6 +23,7 @@ const COURSE_DIRS: Record<string, string> = {
   daf: "data-analytics-foundations",
   excel: "excel-for-data-analysis",
   powerbi: "power-bi-fundamentals",
+  modelling: "data-modelling",
 };
 
 const lessonFiles = import.meta.glob("./*/*.md", { query: "?raw", import: "default", eager: true }) as Record<string, string>;
@@ -67,7 +70,7 @@ function buildCourse(def: (typeof COURSES)[number], position: number): Course {
 }
 
 export const BUNDLED_COURSES: Course[] = COURSES.map(buildCourse);
-export const BUNDLED_ASSESSMENTS: AssessmentDef[] = [SQL_ASSESSMENT, DAF_ASSESSMENT, XLS_ASSESSMENT, PBI_ASSESSMENT];
-export const BUNDLED_PROJECTS: ProjectDef[] = [SQL_PROJECT, DAF_PROJECT, XLS_PROJECT, PBI_PROJECT];
+export const BUNDLED_ASSESSMENTS: AssessmentDef[] = [SQL_ASSESSMENT, DAF_ASSESSMENT, XLS_ASSESSMENT, PBI_ASSESSMENT, DMO_ASSESSMENT];
+export const BUNDLED_PROJECTS: ProjectDef[] = [SQL_PROJECT, DAF_PROJECT, XLS_PROJECT, PBI_PROJECT, DMO_PROJECT];
 
 export { CATEGORIES, categoryName } from "./catalog";

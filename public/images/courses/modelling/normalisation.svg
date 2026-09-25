@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 640" width="1180" height="640" role="img" aria-label="Normalising a flat invoice sheet: repeated customer and product details are moved into their own tables, linked by keys.">
+<title>Normalising a flat invoice sheet: repeated customer and product details are moved into their own tables, linked by keys.</title>
+<rect width="1180" height="640" fill="#FBF8F2"/>
+<text x="30" y="44" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="18" font-weight="700" fill="#1F1F1F" text-anchor="start" xml:space="preserve">Before: one flat sheet</text>
+<rect x="30" y="60" width="910" height="156" rx="8" fill="#fff" stroke="#CFC4B2" stroke-width="1.5"/>
+<rect x="30" y="60" width="910" height="36" rx="8" fill="#2B2A28"/>
+<text x="38" y="83" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12.5" font-weight="700" fill="#fff" text-anchor="start" xml:space="preserve">invoice</text>
+<text x="38" y="117" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#1F1F1F" text-anchor="start" xml:space="preserve">501</text>
+<text x="38" y="147" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#1F1F1F" text-anchor="start" xml:space="preserve">501</text>
+<text x="38" y="177" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#1F1F1F" text-anchor="start" xml:space="preserve">502</text>
+<text x="38" y="207" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#1F1F1F" text-anchor="start" xml:space="preserve">503</text>
+<text x="118" y="83" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12.5" font-weight="700" fill="#fff" text-anchor="start" xml:space="preserve">date</text>
+<text x="118" y="117" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#1F1F1F" text-anchor="start" xml:space="preserve">2026-03-02</text>
+<text x="118" y="147" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#1F1F1F" text-anchor="start" xml:space="preserve">2026-03-02</text>
+<text x="118" y="177" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#1F1F1F" text-anchor="start" xml:space="preserve">2026-03-02</text>
+<text x="118" y="207" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#1F1F1F" text-anchor="start" xml:space="preserve">2026-03-03</text>
+<text x="218" y="83" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12.5" font-weight="700" fill="#fff" text-anchor="start" xml:space="preserve">customer</text>
+<text x="218" y="117" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#1F1F1F" text-anchor="start" xml:space="preserve">Peace Provisions</text>
+<rect x="213" y="128" width="164" height="26" rx="4" fill="#F6DCD5"/>
+<text x="218" y="147" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#B4452F" text-anchor="start" xml:space="preserve">Peace Provisions</text>
+<text x="218" y="177" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#1F1F1F" text-anchor="start" xml:space="preserve">Divine Kiosk</text>
+<rect x="213" y="188" width="164" height="26" rx="4" fill="#F6DCD5"/>
+<text x="218" y="207" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#B4452F" text-anchor="start" xml:space="preserve">Peace Provisions</text>
+<text x="388" y="83" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12.5" font-weight="700" fill="#fff" text-anchor="start" xml:space="preserve">customer_city</text>
+<text x="388" y="117" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#1F1F1F" text-anchor="start" xml:space="preserve">Kano</text>
+<rect x="383" y="128" width="124" height="26" rx="4" fill="#F6DCD5"/>
+<text x="388" y="147" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#B4452F" text-anchor="start" xml:space="preserve">Kano</text>
+<text x="388" y="177" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#1F1F1F" text-anchor="start" xml:space="preserve">Ikeja</text>
+<rect x="383" y="188" width="124" height="26" rx="4" fill="#F6DCD5"/>
+<text x="388" y="207" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#B4452F" text-anchor="start" xml:space="preserve">Kano</text>
+<text x="518" y="83" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12.5" font-weight="700" fill="#fff" text-anchor="start" xml:space="preserve">product</text>
+<text x="518" y="117" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#1F1F1F" text-anchor="start" xml:space="preserve">Malt drink 330ml (24)</text>
+<text x="518" y="147" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#1F1F1F" text-anchor="start" xml:space="preserve">Cabin biscuits (24)</text>
+<rect x="513" y="158" width="184" height="26" rx="4" fill="#F6DCD5"/>
+<text x="518" y="177" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#B4452F" text-anchor="start" xml:space="preserve">Malt drink 330ml (24)</text>
+<text x="518" y="207" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#1F1F1F" text-anchor="start" xml:space="preserve">Toothpaste 140g (24)</text>
+<text x="708" y="83" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12.5" font-weight="700" fill="#fff" text-anchor="start" xml:space="preserve">category</text>
+<text x="708" y="117" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#1F1F1F" text-anchor="start" xml:space="preserve">Beverages</text>
+<text x="708" y="147" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#1F1F1F" text-anchor="start" xml:space="preserve">Snacks</text>
+<rect x="703" y="158" width="104" height="26" rx="4" fill="#F6DCD5"/>
+<text x="708" y="177" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#B4452F" text-anchor="start" xml:space="preserve">Beverages</text>
+<text x="708" y="207" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#1F1F1F" text-anchor="start" xml:space="preserve">Personal care</text>
+<text x="818" y="83" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12.5" font-weight="700" fill="#fff" text-anchor="start" xml:space="preserve">qty</text>
+<text x="818" y="117" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#1F1F1F" text-anchor="start" xml:space="preserve">4</text>
+<text x="818" y="147" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#1F1F1F" text-anchor="start" xml:space="preserve">6</text>
+<text x="818" y="177" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#1F1F1F" text-anchor="start" xml:space="preserve">2</text>
+<text x="818" y="207" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#1F1F1F" text-anchor="start" xml:space="preserve">3</text>
+<text x="868" y="83" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12.5" font-weight="700" fill="#fff" text-anchor="start" xml:space="preserve">price</text>
+<text x="868" y="117" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#1F1F1F" text-anchor="start" xml:space="preserve">14,800</text>
+<text x="868" y="147" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#1F1F1F" text-anchor="start" xml:space="preserve">6,600</text>
+<text x="868" y="177" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#1F1F1F" text-anchor="start" xml:space="preserve">14,800</text>
+<text x="868" y="207" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#1F1F1F" text-anchor="start" xml:space="preserve">20,700</text>
+<text x="960" y="110" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13" font-weight="700" fill="#B4452F" text-anchor="start" xml:space="preserve">Shaded cells repeat</text>
+<text x="960" y="130" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13" font-weight="400" fill="#6B665C" text-anchor="start" xml:space="preserve">facts already stored</text>
+<text x="960" y="150" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13" font-weight="400" fill="#6B665C" text-anchor="start" xml:space="preserve">on another row.</text>
+<text x="30" y="272" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="18" font-weight="700" fill="#1F1F1F" text-anchor="start" xml:space="preserve">After: third normal form</text>
+<rect x="30" y="290" width="200" height="126" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<path d="M30,300 a10,10 0 0 1 10,-10 h180 a10,10 0 0 1 10,10 v28 h-200 z" fill="#2B2A28"/>
+<text x="44" y="315" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="16" font-weight="700" fill="#FFFFFF" text-anchor="start" xml:space="preserve">customers</text>
+<rect x="40" y="338.0" width="18" height="18" rx="4" fill="#B38A3E"/>
+<text x="49.0" y="351.0" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" xml:space="preserve">PK</text>
+<text x="88" y="352.0" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13.5" font-weight="600" fill="#1F1F1F" text-anchor="start" xml:space="preserve">customer_id</text>
+<rect x="31" y="360.0" width="198" height="26" fill="#FAF6EE"/>
+<text x="88" y="378.0" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#1F1F1F" text-anchor="start" xml:space="preserve">customer_name</text>
+<text x="88" y="404.0" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#1F1F1F" text-anchor="start" xml:space="preserve">city</text>
+<rect x="300" y="290" width="200" height="126" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<path d="M300,300 a10,10 0 0 1 10,-10 h180 a10,10 0 0 1 10,10 v28 h-200 z" fill="#2B2A28"/>
+<text x="314" y="315" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="16" font-weight="700" fill="#FFFFFF" text-anchor="start" xml:space="preserve">invoices</text>
+<rect x="310" y="338.0" width="18" height="18" rx="4" fill="#B38A3E"/>
+<text x="319.0" y="351.0" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" xml:space="preserve">PK</text>
+<text x="358" y="352.0" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13.5" font-weight="600" fill="#1F1F1F" text-anchor="start" xml:space="preserve">invoice_id</text>
+<rect x="301" y="360.0" width="198" height="26" fill="#FAF6EE"/>
+<rect x="310" y="364.0" width="18" height="18" rx="4" fill="#5B7C99"/>
+<text x="319.0" y="377.0" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" xml:space="preserve">FK</text>
+<text x="358" y="378.0" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#1F1F1F" text-anchor="start" xml:space="preserve">customer_id</text>
+<text x="358" y="404.0" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#1F1F1F" text-anchor="start" xml:space="preserve">invoice_date</text>
+<rect x="570" y="290" width="230" height="152" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<path d="M570,300 a10,10 0 0 1 10,-10 h210 a10,10 0 0 1 10,10 v28 h-230 z" fill="#2B2A28"/>
+<text x="584" y="315" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="16" font-weight="700" fill="#FFFFFF" text-anchor="start" xml:space="preserve">invoice_lines</text>
+<rect x="580" y="338.0" width="42" height="18" rx="4" fill="#B38A3E"/>
+<text x="601.0" y="351.0" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" xml:space="preserve">PK FK</text>
+<text x="628" y="352.0" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13.5" font-weight="600" fill="#1F1F1F" text-anchor="start" xml:space="preserve">invoice_id</text>
+<rect x="571" y="360.0" width="228" height="26" fill="#FAF6EE"/>
+<rect x="580" y="364.0" width="42" height="18" rx="4" fill="#B38A3E"/>
+<text x="601.0" y="377.0" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" xml:space="preserve">PK FK</text>
+<text x="628" y="378.0" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13.5" font-weight="600" fill="#1F1F1F" text-anchor="start" xml:space="preserve">product_id</text>
+<text x="628" y="404.0" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#1F1F1F" text-anchor="start" xml:space="preserve">quantity</text>
+<rect x="571" y="412.0" width="228" height="26" fill="#FAF6EE"/>
+<text x="628" y="430.0" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#1F1F1F" text-anchor="start" xml:space="preserve">unit_price</text>
+<rect x="870" y="290" width="210" height="126" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<path d="M870,300 a10,10 0 0 1 10,-10 h190 a10,10 0 0 1 10,10 v28 h-210 z" fill="#2B2A28"/>
+<text x="884" y="315" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="16" font-weight="700" fill="#FFFFFF" text-anchor="start" xml:space="preserve">products</text>
+<rect x="880" y="338.0" width="18" height="18" rx="4" fill="#B38A3E"/>
+<text x="889.0" y="351.0" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" xml:space="preserve">PK</text>
+<text x="928" y="352.0" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13.5" font-weight="600" fill="#1F1F1F" text-anchor="start" xml:space="preserve">product_id</text>
+<rect x="871" y="360.0" width="208" height="26" fill="#FAF6EE"/>
+<text x="928" y="378.0" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#1F1F1F" text-anchor="start" xml:space="preserve">product_name</text>
+<text x="928" y="404.0" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#1F1F1F" text-anchor="start" xml:space="preserve">category</text>
+<path d="M230,347.0 L265,347.0 L265,373.0 L300,373.0" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
+<path d="M238,355.0 L238,339.0" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
+<path d="M244,355.0 L244,339.0" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
+<path d="M300,364.0 L284,373.0 L300,382.0" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
+<path d="M300,373.0 L284,373.0" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
+<circle cx="271" cy="373.0" r="6" fill="#FBF8F2" stroke="#1F1F1F" stroke-width="1.8"/>
+<path d="M500,347.0 L535,347.0 L535,347.0 L570,347.0" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
+<path d="M508,355.0 L508,339.0" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
+<path d="M514,355.0 L514,339.0" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
+<path d="M570,338.0 L554,347.0 L570,356.0" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
+<path d="M570,347.0 L554,347.0" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
+<path d="M548,339.0 L548,355.0" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
+<path d="M870,347.0 L835,347.0 L835,373.0 L800,373.0" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
+<path d="M862,339.0 L862,355.0" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
+<path d="M856,339.0 L856,355.0" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
+<path d="M800,382.0 L816,373.0 L800,364.0" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
+<path d="M800,373.0 L816,373.0" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
+<circle cx="829" cy="373.0" r="6" fill="#FBF8F2" stroke="#1F1F1F" stroke-width="1.8"/>
+<text x="30" y="520" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#6B665C" text-anchor="start" xml:space="preserve">Each fact now lives in one place: a customer's city is stored once, a product's category once.</text>
+<text x="30" y="544" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#6B665C" text-anchor="start" xml:space="preserve">unit_price stays on the line because it is the price charged on that invoice, which can differ from today's list price.</text>
+</svg>

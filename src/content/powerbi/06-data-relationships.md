@@ -32,6 +32,12 @@ Filters flow from dimensions into the fact table. Put fields from **dimensions**
 
 ## Example
 
+Here is Kolanut's model in **Model view**, with the relationships Power BI detected when the tables were loaded:
+
+![Model view in Power BI Desktop showing the products, orders and customers tables, with a one-to-many line from products to orders and another from customers to orders.](/images/courses/powerbi/model-view.webp "Kolanut's model: products (1), orders (2) and customers (3), with two one-to-many relationships (4, 5). Model view is the third icon on the left (6).")
+
+Read each line: the **1** sits beside the table where each ID appears once (`products`, `customers`); the **\*** (many) sits beside `orders`. The small arrow on the line shows the filter direction: from the one side into orders.
+
 With the relationship `customers[customer_id] (1) → orders[customer_id] (*)`:
 
 | region | revenue |

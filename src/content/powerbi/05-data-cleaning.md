@@ -26,6 +26,8 @@ Kolanut's customer list exported from its old system has stray spaces, random ca
 
 **Types with a locale.** Right-click a column → **Change Type → Using Locale…** Choose the type and the *locale the data was written in*. **English (United Kingdom)** reads `01/09/2022` as 1 September. The same step handles ISO dates like `2023-07-11` and text like `5-Mar-2024`.
 
+![The data type menu of a Power Query column header, listing Decimal Number, Fixed decimal number, Whole Number and others, with Using Locale at the bottom.](/images/courses/powerbi/type-menu.webp "Click the type icon on any column header for this menu. Decimal Number is at the top (1); Using Locale is at the bottom (2).")
+
 **Errors.** When a type change fails on some rows, those cells show **Error**. Right-click the column → **Replace Errors**, or better, find out why first with **Keep Rows → Keep Errors**.
 
 **Removing duplicates is case-sensitive in Power Query.** `Ada Superstore` and `ADA SUPERSTORE` are *different* to it (Excel would treat them as the same). So fix case and spaces **before** Home → Remove Rows → **Remove Duplicates**.

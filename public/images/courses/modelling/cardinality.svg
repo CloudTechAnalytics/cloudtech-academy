@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 560" width="1180" height="560" role="img" aria-label="Relationship types: one-to-one (employee and staff ID card), one-to-many (customer and orders), and many-to-many (students and courses) resolved with a bridge table of enrolments.">
+<title>Relationship types: one-to-one (employee and staff ID card), one-to-many (customer and orders), and many-to-many (students and courses) resolved with a bridge table of enrolments.</title>
+<rect width="1180" height="560" fill="#FBF8F2"/>
+<text x="30" y="44" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="18" font-weight="700" fill="#1F1F1F" text-anchor="start" xml:space="preserve">One-to-one</text>
+<rect x="30" y="60" width="170" height="74" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<path d="M30,70 a10,10 0 0 1 10,-10 h150 a10,10 0 0 1 10,10 v28 h-170 z" fill="#2B2A28"/>
+<text x="44" y="85" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="16" font-weight="700" fill="#FFFFFF" text-anchor="start" xml:space="preserve">employees</text>
+<rect x="40" y="108.0" width="18" height="18" rx="4" fill="#B38A3E"/>
+<text x="49.0" y="121.0" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" xml:space="preserve">PK</text>
+<text x="88" y="122.0" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13.5" font-weight="600" fill="#1F1F1F" text-anchor="start" xml:space="preserve">employee_id</text>
+<rect x="330" y="60" width="170" height="100" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<path d="M330,70 a10,10 0 0 1 10,-10 h150 a10,10 0 0 1 10,10 v28 h-170 z" fill="#2B2A28"/>
+<text x="344" y="85" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="16" font-weight="700" fill="#FFFFFF" text-anchor="start" xml:space="preserve">id_cards</text>
+<rect x="340" y="108.0" width="18" height="18" rx="4" fill="#B38A3E"/>
+<text x="349.0" y="121.0" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" xml:space="preserve">PK</text>
+<text x="388" y="122.0" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13.5" font-weight="600" fill="#1F1F1F" text-anchor="start" xml:space="preserve">card_id</text>
+<rect x="331" y="130.0" width="168" height="26" fill="#FAF6EE"/>
+<rect x="340" y="134.0" width="18" height="18" rx="4" fill="#5B7C99"/>
+<text x="349.0" y="147.0" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" xml:space="preserve">FK</text>
+<text x="388" y="148.0" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#1F1F1F" text-anchor="start" xml:space="preserve">employee_id</text>
+<path d="M200,117.0 L265,117.0 L265,143.0 L330,143.0" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
+<path d="M208,125.0 L208,109.0" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
+<path d="M214,125.0 L214,109.0" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
+<path d="M322,135.0 L322,151.0" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
+<circle cx="309" cy="143.0" r="6" fill="#FBF8F2" stroke="#1F1F1F" stroke-width="1.8"/>
+<text x="560" y="100" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13" font-weight="400" fill="#6B665C" text-anchor="start" xml:space="preserve">Each employee has at most one ID card;</text>
+<text x="560" y="120" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13" font-weight="400" fill="#6B665C" text-anchor="start" xml:space="preserve">each card belongs to one employee.</text>
+<text x="30" y="214" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="18" font-weight="700" fill="#1F1F1F" text-anchor="start" xml:space="preserve">One-to-many</text>
+<rect x="30" y="230" width="170" height="74" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<path d="M30,240 a10,10 0 0 1 10,-10 h150 a10,10 0 0 1 10,10 v28 h-170 z" fill="#2B2A28"/>
+<text x="44" y="255" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="16" font-weight="700" fill="#FFFFFF" text-anchor="start" xml:space="preserve">customers</text>
+<rect x="40" y="278.0" width="18" height="18" rx="4" fill="#B38A3E"/>
+<text x="49.0" y="291.0" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" xml:space="preserve">PK</text>
+<text x="88" y="292.0" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13.5" font-weight="600" fill="#1F1F1F" text-anchor="start" xml:space="preserve">customer_id</text>
+<rect x="330" y="230" width="170" height="100" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<path d="M330,240 a10,10 0 0 1 10,-10 h150 a10,10 0 0 1 10,10 v28 h-170 z" fill="#2B2A28"/>
+<text x="344" y="255" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="16" font-weight="700" fill="#FFFFFF" text-anchor="start" xml:space="preserve">orders</text>
+<rect x="340" y="278.0" width="18" height="18" rx="4" fill="#B38A3E"/>
+<text x="349.0" y="291.0" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" xml:space="preserve">PK</text>
+<text x="388" y="292.0" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13.5" font-weight="600" fill="#1F1F1F" text-anchor="start" xml:space="preserve">order_id</text>
+<rect x="331" y="300.0" width="168" height="26" fill="#FAF6EE"/>
+<rect x="340" y="304.0" width="18" height="18" rx="4" fill="#5B7C99"/>
+<text x="349.0" y="317.0" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" xml:space="preserve">FK</text>
+<text x="388" y="318.0" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#1F1F1F" text-anchor="start" xml:space="preserve">customer_id</text>
+<path d="M200,287.0 L265,287.0 L265,313.0 L330,313.0" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
+<path d="M208,295.0 L208,279.0" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
+<path d="M214,295.0 L214,279.0" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
+<path d="M330,304.0 L314,313.0 L330,322.0" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
+<path d="M330,313.0 L314,313.0" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
+<circle cx="301" cy="313.0" r="6" fill="#FBF8F2" stroke="#1F1F1F" stroke-width="1.8"/>
+<text x="560" y="270" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13" font-weight="400" fill="#6B665C" text-anchor="start" xml:space="preserve">The most common kind. The foreign key</text>
+<text x="560" y="290" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13" font-weight="400" fill="#6B665C" text-anchor="start" xml:space="preserve">always sits on the many side.</text>
+<text x="30" y="384" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="18" font-weight="700" fill="#1F1F1F" text-anchor="start" xml:space="preserve">Many-to-many, resolved with a bridge table</text>
+<rect x="30" y="400" width="160" height="74" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<path d="M30,410 a10,10 0 0 1 10,-10 h140 a10,10 0 0 1 10,10 v28 h-160 z" fill="#2B2A28"/>
+<text x="44" y="425" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="16" font-weight="700" fill="#FFFFFF" text-anchor="start" xml:space="preserve">students</text>
+<rect x="40" y="448.0" width="18" height="18" rx="4" fill="#B38A3E"/>
+<text x="49.0" y="461.0" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" xml:space="preserve">PK</text>
+<text x="88" y="462.0" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13.5" font-weight="600" fill="#1F1F1F" text-anchor="start" xml:space="preserve">student_id</text>
+<rect x="300" y="400" width="190" height="126" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<path d="M300,410 a10,10 0 0 1 10,-10 h170 a10,10 0 0 1 10,10 v28 h-190 z" fill="#2B2A28"/>
+<text x="314" y="425" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="16" font-weight="700" fill="#FFFFFF" text-anchor="start" xml:space="preserve">enrolments</text>
+<rect x="310" y="448.0" width="42" height="18" rx="4" fill="#B38A3E"/>
+<text x="331.0" y="461.0" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" xml:space="preserve">PK FK</text>
+<text x="358" y="462.0" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13.5" font-weight="600" fill="#1F1F1F" text-anchor="start" xml:space="preserve">student_id</text>
+<rect x="301" y="470.0" width="188" height="26" fill="#FAF6EE"/>
+<rect x="310" y="474.0" width="42" height="18" rx="4" fill="#B38A3E"/>
+<text x="331.0" y="487.0" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" xml:space="preserve">PK FK</text>
+<text x="358" y="488.0" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13.5" font-weight="600" fill="#1F1F1F" text-anchor="start" xml:space="preserve">course_id</text>
+<text x="358" y="514.0" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#1F1F1F" text-anchor="start" xml:space="preserve">enrolled_on</text>
+<rect x="610" y="400" width="160" height="74" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<path d="M610,410 a10,10 0 0 1 10,-10 h140 a10,10 0 0 1 10,10 v28 h-160 z" fill="#2B2A28"/>
+<text x="624" y="425" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="16" font-weight="700" fill="#FFFFFF" text-anchor="start" xml:space="preserve">courses</text>
+<rect x="620" y="448.0" width="18" height="18" rx="4" fill="#B38A3E"/>
+<text x="629.0" y="461.0" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" xml:space="preserve">PK</text>
+<text x="668" y="462.0" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13.5" font-weight="600" fill="#1F1F1F" text-anchor="start" xml:space="preserve">course_id</text>
+<path d="M190,457.0 L245,457.0 L245,457.0 L300,457.0" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
+<path d="M198,465.0 L198,449.0" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
+<path d="M204,465.0 L204,449.0" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
+<path d="M300,448.0 L284,457.0 L300,466.0" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
+<path d="M300,457.0 L284,457.0" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
+<circle cx="271" cy="457.0" r="6" fill="#FBF8F2" stroke="#1F1F1F" stroke-width="1.8"/>
+<path d="M610,457.0 L550,457.0 L550,483.0 L490,483.0" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
+<path d="M602,449.0 L602,465.0" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
+<path d="M596,449.0 L596,465.0" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
+<path d="M490,492.0 L506,483.0 L490,474.0" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
+<path d="M490,483.0 L506,483.0" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
+<circle cx="519" cy="483.0" r="6" fill="#FBF8F2" stroke="#1F1F1F" stroke-width="1.8"/>
+<text x="800" y="430" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13" font-weight="400" fill="#6B665C" text-anchor="start" xml:space="preserve">A student takes many courses and a course</text>
+<text x="800" y="450" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13" font-weight="400" fill="#6B665C" text-anchor="start" xml:space="preserve">has many students. The bridge table holds</text>
+<text x="800" y="470" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13" font-weight="400" fill="#6B665C" text-anchor="start" xml:space="preserve">one row per student per course.</text>
+<text x="940" y="60" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13" font-weight="700" fill="#1F1F1F" text-anchor="start" xml:space="preserve">How to read the lines</text>
+<path d="M940,86 L1000,86" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
+<path d="M992,78 L992,94" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
+<path d="M986,78 L986,94" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
+<text x="1014" y="90" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#6B665C" text-anchor="start" xml:space="preserve">exactly one</text>
+<path d="M940,112 L1000,112" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
+<path d="M992,104 L992,120" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
+<circle cx="979" cy="112" r="6" fill="#FBF8F2" stroke="#1F1F1F" stroke-width="1.8"/>
+<text x="1014" y="116" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#6B665C" text-anchor="start" xml:space="preserve">zero or one</text>
+<path d="M940,138 L1000,138" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
+<path d="M1000,129 L984,138 L1000,147" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
+<path d="M1000,138 L984,138" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
+<path d="M978,130 L978,146" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
+<text x="1014" y="142" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#6B665C" text-anchor="start" xml:space="preserve">one or many</text>
+<path d="M940,164 L1000,164" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
+<path d="M1000,155 L984,164 L1000,173" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
+<path d="M1000,164 L984,164" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
+<circle cx="971" cy="164" r="6" fill="#FBF8F2" stroke="#1F1F1F" stroke-width="1.8"/>
+<text x="1014" y="168" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#6B665C" text-anchor="start" xml:space="preserve">zero or many</text>
+</svg>

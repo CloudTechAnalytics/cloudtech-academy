@@ -36,6 +36,17 @@ The orders table has quantity, price and discount, but no revenue. You could cal
 
 **Close & Apply** (Home) saves your steps and loads the result into the model.
 
+This is the Power Query Editor with Kolanut's three queries:
+
+![The Power Query Editor showing the Queries pane, the formula bar with M code, column quality bars, the Applied Steps list and the status bar.](/images/courses/powerbi/power-query-editor.webp "The Power Query Editor.")
+
+1. **Queries pane**: one query per table.
+2. **Formula bar**: the M code for the selected step.
+3. **Column quality**: Valid, Error and Empty percentages for each column.
+4. **Applied Steps**: every change, in order.
+5. **Status bar**: *Column profiling based on top 1000 rows*. Click it to profile the whole table.
+6. **The ribbon**: Home, Transform and **Add Column** hold the transformations.
+
 ## Example
 
 The revenue custom column, in M:
@@ -55,7 +66,12 @@ You don't have to type that: the Custom Column dialog writes it. In the dialog y
 1. **Home → Transform data**. Select the `orders` query.
 2. **View** → tick **Column quality** and **Column distribution**, then switch profiling to the entire data set. All columns should be 100% valid.
 3. **Add Column → Custom Column**. Name: `revenue`. Formula: as above. OK.
-4. Click the `ABC123` icon on the new column's header → **Decimal Number** (or Fixed decimal number, good for currency).
+
+   ![The Custom Column dialog with the name revenue and the formula quantity times unit_price times one minus discount_pct over 100, and the message No syntax errors have been detected.](/images/courses/powerbi/custom-column.webp "The Custom Column dialog: name (1), formula (2), the column list you can double-click to insert names (3), and the syntax check (4).")
+
+4. Click the `ABC123` icon on the new column's header → **Decimal Number** (or Fixed decimal number, good for currency). The result:
+
+   ![The orders query with the new revenue column typed as a decimal number, the Table.AddColumn formula in the formula bar and Added Custom in Applied Steps.](/images/courses/powerbi/added-custom.webp "The new step's M code (1), the revenue column (2), and the two new Applied Steps (3): Added Custom, then Changed Type1 for the type change.")
 5. **Merge** the product category in:
    - With `orders` selected, **Home → Merge Queries**.
    - Choose `products` as the second table; click `product_id` in both; Join Kind **Left Outer**. OK.

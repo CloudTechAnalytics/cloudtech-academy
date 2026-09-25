@@ -72,12 +72,31 @@ Copy it down: `H2` becomes `H3`, `H4`…, but `$K$1` stays fixed. Without the do
 
 ## Walkthrough
 
+When a sheet has many formulas, **Ctrl + `** (the key left of 1) shows every formula instead of its result. Press it again to switch back.
+
+![A summary sheet in Show Formulas mode, where each value cell displays its formula.](/images/courses/excel/show-formulas.webp "Ctrl + ` (Show Formulas): each cell shows its formula (2); the formula bar (1) always shows the selected cell's.")
+
+The same summary with results showing: total revenue ₦830,541,245, 58,757 packs, 4,266 order lines, ₦194,689 per line, ₦713,400 largest line, 546 days.
+
 1. In your `Orders` table, next to the data, calculate:
    - total units sold: `=SUM(Orders[quantity])`
    - average revenue per line: `=AVERAGE(Orders[revenue])`
    - the number of different days with orders: `=COUNTA(UNIQUE(Orders[order_date]))`
 2. Wrap the average in `ROUND(…, 0)` to get whole naira.
 3. Check a result by a second route: the status bar shows Sum, Average and Count when you select a column. If your formula and the status bar disagree, find out why before moving on.
+
+**Shortcuts for formulas**
+
+| Keys | Does |
+| :-- | :-- |
+| = | Start a formula |
+| F2 | Edit the selected cell (and see which cells it uses) |
+| F4 | While editing, cycle `A1` → `$A$1` → `A$1` → `$A1` |
+| Ctrl + ` | Show / hide all formulas |
+| Ctrl + Enter | Enter the same formula into every selected cell |
+| Ctrl + D | Fill down from the cell above |
+| Alt + = | AutoSum |
+| Tab | Accept a function name that Excel suggests while you type |
 
 ## Practice
 

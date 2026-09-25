@@ -14,30 +14,49 @@ This course takes you from opening a raw file to a finished analysis. First, the
 
 **Why Excel?** It's on almost every office computer, everyone can open your file, and it covers the full cycle: import, clean, calculate, summarise, chart. Larger data goes into databases and Power BI, but Excel stays the everyday tool.
 
-**The parts you'll use**
+**The Excel window**
 
-| Part | What it is |
-| :-- | :-- |
-| **Workbook** | The file (`.xlsx`). |
-| **Worksheet** | A tab inside the workbook. Keep raw data, calculations and results on separate sheets. |
-| **Cell** | One box, named by column and row: `C5`. |
-| **Formula bar** | Shows what's really in a cell: a value or a formula. |
-| **Name Box** | Left of the formula bar. Shows the current cell; type `A4000` there and press Enter to jump. |
-| **Ribbon** | The tabs at the top: Home, Insert, Data, Formulas… |
+This is Excel with Kolanut's orders loaded as a Table, exactly as you'll set it up in this course:
+
+![The Excel window with Kolanut's orders table open. Numbered boxes mark the file name, ribbon tabs, ribbon, Name Box, formula bar, table headers, sheet tabs and status bar.](/images/courses/excel/excel-window.webp "Excel for Microsoft 365 with the Orders table. This computer uses Excel's dark theme; yours may be white or grey, but everything is in the same place.")
+
+1. **File name.** The workbook you're in (`Kolanut-sales`). Click it to rename the file or see where it's saved.
+2. **Ribbon tabs.** Home, Insert, Formulas, **Data** (import, sort, filter, remove duplicates), View… Extra tabs such as **Table Design** appear only when you click inside a Table.
+3. **The ribbon.** The commands for the selected tab, in labelled groups.
+4. **Name Box.** Shows the selected cell (`H2`). Type an address like `A4000` and press Enter to jump there.
+5. **Formula bar.** Shows what's really in the selected cell. Here `H2` holds a formula, not a typed number: the revenue calculation you'll write in the next lesson.
+6. **Table header row** with **filter buttons** (the small arrows). The data is a Table, so every column can be sorted and filtered.
+7. **Sheet tabs.** One per worksheet: `Orders`, `Customers`, `Products`. Click to switch, or use Ctrl + Page Up / Page Down.
+8. **Status bar.** Shows the mode (`Ready`), and when you select numbers it shows their Sum, Average and Count. Filtered tables report "X of Y records found" here.
 
 **What version?** This course uses Microsoft 365 or Excel 2021 or later, which include `XLOOKUP`, `FILTER` and `UNIQUE`. **Google Sheets** works for almost everything too; where menus differ, we say so.
 
-**Shortcuts worth learning today** (Windows; on a Mac use Cmd for Ctrl)
+**Shortcuts worth learning today** (Windows; on a Mac use ⌘ for Ctrl)
 
-| Shortcut | Does |
+| Moving around | |
 | :-- | :-- |
 | Ctrl + ↓ / ↑ / → / ← | Jump to the edge of the data |
+| Ctrl + Home / Ctrl + End | Go to A1 / the last used cell |
+| Ctrl + Page Down / Page Up | Next / previous sheet |
+| Ctrl + G (or F5) | Go to a cell address |
+
+| Selecting | |
+| :-- | :-- |
 | Ctrl + Shift + ↓ | Select from here to the last filled cell |
+| Ctrl + Space / Shift + Space | Select the whole column / row |
+| Ctrl + A | Select the current table or range (press again for the whole sheet) |
+
+| Working with data | |
+| :-- | :-- |
 | Ctrl + T | Turn a range into a **Table** |
 | Ctrl + Shift + L | Turn filters on or off |
 | Alt + = | AutoSum |
+| F2 | Edit the selected cell |
 | F4 (while editing a formula) | Toggle `$` absolute references |
-| Ctrl + Z | Undo, your best friend |
+| Ctrl + Z / Ctrl + Y | Undo / redo |
+
+> [!TIP]
+> Press and release **Alt**: letters appear over every ribbon tab and command (Excel calls them *KeyTips*). Alt, A opens the Data tab; then F, T starts *From Text/CSV*. Once you know a command's letters, you never need the mouse for it.
 
 ## Example
 

@@ -51,6 +51,10 @@ Order line 10001 has `customer_id` 27 and `product_id` 3.
 - `XLOOKUP(27, Customers[customer_id], Customers[region])` returns the region of customer 27.
 - `XLOOKUP(3, Products[product_id], Products[category])` returns **Beverages** (product 3 is Orange juice 1L).
 
+After the walkthrough below, the Orders table has three looked-up columns:
+
+![The Orders table with new region, channel and category columns filled by XLOOKUP; the formula bar shows the XLOOKUP for region.](/images/courses/excel/xlookup.webp "XLOOKUP in the formula bar (1) and the three new columns it fills (2). None says Not found, so every ID matched.")
+
 ## Walkthrough
 
 1. Load `customers.csv` and `products.csv` into the same workbook as Tables named `Customers` and `Products` (Data → From Text/CSV, as in lesson 2).

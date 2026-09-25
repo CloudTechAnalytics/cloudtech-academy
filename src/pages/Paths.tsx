@@ -8,11 +8,12 @@ import { ButtonLink } from "@/components/Button";
 const PATH = {
   title: "Data Analyst Foundation",
   summary:
-    "The order we recommend if you're starting out in data analysis. It moves from how analysis works, to the tools most teams use every day, to a full project you can show an employer.",
+    "The order we recommend if you're starting out in data analysis. It moves from how analysis works, to the tools most teams use every day, to designing data models, to a full project you can show an employer.",
   steps: [
     { slug: "data-analytics-foundations", why: "How analysis works: questions, data types, cleaning, and telling the story." },
     { slug: "excel-for-data-analysis", why: "The tool almost every business already uses, from formulas to pivot tables." },
     { slug: "sql-for-data-analysis", why: "Pull and summarise data straight from a database." },
+    { slug: "data-modelling", why: "Design the tables, keys and star schemas that reliable reports are built on." },
     { slug: "power-bi-fundamentals", why: "Turn the numbers into dashboards people can use." },
   ],
   capstone: { title: "Portfolio project", why: "Answer a real business question end to end with one of the practice datasets.", to: "/projects" },
@@ -21,7 +22,7 @@ const PATH = {
 export default function Paths() {
   useSeo({
     title: "Learning Paths | CloudTech Academy",
-    description: "Follow the Data Analyst Foundation path: data analytics foundations, Excel, SQL and Power BI, finishing with a portfolio project.",
+    description: "Follow the Data Analyst Foundation path: data analytics foundations, Excel, SQL, data modelling and Power BI, finishing with a portfolio project.",
     jsonLd: breadcrumbs([["Learning Paths", "/paths"]]),
   });
   const courses = useCourses();

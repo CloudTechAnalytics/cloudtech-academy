@@ -51,7 +51,20 @@ The pivot tables show the numbers, but a table of 18 months × 6 regions doesn't
 6. Click the chart title and write the finding.
 7. Click the December 2025 point twice (to select just that point) → **Add Data Label**.
 
+The result, built on Kolanut's monthly revenue:
+
+![A line chart of Kolanut's monthly revenue from January 2025 to June 2026 titled December is our biggest month by far, with the axis in millions and the December point labelled ₦66.3m.](/images/courses/excel/chart.webp "A finished chart: a title that states the finding (1), axis in millions (2), one labelled point (3), and the monthly figures it's drawn from (4).")
+
 Then, for the regional table, select the H1 2026 revenue column → **Home → Conditional Formatting → Data Bars → Solid Fill**.
+
+**Shortcuts for charts**
+
+| Keys | Does |
+| :-- | :-- |
+| Alt + F1 | Insert the default chart next to the selected data |
+| F11 | Insert a chart on its own sheet |
+| Ctrl + 1 | Open the Format pane for the selected chart element |
+| Alt, N, R | Recommended Charts |
 
 ## Practice
 

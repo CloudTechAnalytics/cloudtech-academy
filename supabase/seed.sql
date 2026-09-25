@@ -23,7 +23,7 @@ values ('python', 'Python', 'Python for analysis and automation.', true, 5)
 on conflict (id) do update set name = excluded.name, description = excluded.description, is_future = excluded.is_future, position = excluded.position;
 
 insert into public.course_categories (id, name, description, is_future, position)
-values ('databases', 'Database Management', 'Designing and running databases.', true, 6)
+values ('databases', 'Databases & Data Modelling', 'Designing databases and data models that answer business questions.', false, 6)
 on conflict (id) do update set name = excluded.name, description = excluded.description, is_future = excluded.is_future, position = excluded.position;
 
 insert into public.course_categories (id, name, description, is_future, position)
@@ -1334,30 +1334,49 @@ This course takes you from opening a raw file to a finished analysis. First, the
 
 **Why Excel?** It's on almost every office computer, everyone can open your file, and it covers the full cycle: import, clean, calculate, summarise, chart. Larger data goes into databases and Power BI, but Excel stays the everyday tool.
 
-**The parts you'll use**
+**The Excel window**
 
-| Part | What it is |
-| :-- | :-- |
-| **Workbook** | The file (`.xlsx`). |
-| **Worksheet** | A tab inside the workbook. Keep raw data, calculations and results on separate sheets. |
-| **Cell** | One box, named by column and row: `C5`. |
-| **Formula bar** | Shows what's really in a cell: a value or a formula. |
-| **Name Box** | Left of the formula bar. Shows the current cell; type `A4000` there and press Enter to jump. |
-| **Ribbon** | The tabs at the top: Home, Insert, Data, Formulas… |
+This is Excel with Kolanut's orders loaded as a Table, exactly as you'll set it up in this course:
+
+![The Excel window with Kolanut's orders table open. Numbered boxes mark the file name, ribbon tabs, ribbon, Name Box, formula bar, table headers, sheet tabs and status bar.](/images/courses/excel/excel-window.webp "Excel for Microsoft 365 with the Orders table. This computer uses Excel's dark theme; yours may be white or grey, but everything is in the same place.")
+
+1. **File name.** The workbook you're in (`Kolanut-sales`). Click it to rename the file or see where it's saved.
+2. **Ribbon tabs.** Home, Insert, Formulas, **Data** (import, sort, filter, remove duplicates), View… Extra tabs such as **Table Design** appear only when you click inside a Table.
+3. **The ribbon.** The commands for the selected tab, in labelled groups.
+4. **Name Box.** Shows the selected cell (`H2`). Type an address like `A4000` and press Enter to jump there.
+5. **Formula bar.** Shows what's really in the selected cell. Here `H2` holds a formula, not a typed number: the revenue calculation you'll write in the next lesson.
+6. **Table header row** with **filter buttons** (the small arrows). The data is a Table, so every column can be sorted and filtered.
+7. **Sheet tabs.** One per worksheet: `Orders`, `Customers`, `Products`. Click to switch, or use Ctrl + Page Up / Page Down.
+8. **Status bar.** Shows the mode (`Ready`), and when you select numbers it shows their Sum, Average and Count. Filtered tables report "X of Y records found" here.
 
 **What version?** This course uses Microsoft 365 or Excel 2021 or later, which include `XLOOKUP`, `FILTER` and `UNIQUE`. **Google Sheets** works for almost everything too; where menus differ, we say so.
 
-**Shortcuts worth learning today** (Windows; on a Mac use Cmd for Ctrl)
+**Shortcuts worth learning today** (Windows; on a Mac use ⌘ for Ctrl)
 
-| Shortcut | Does |
+| Moving around | |
 | :-- | :-- |
 | Ctrl + ↓ / ↑ / → / ← | Jump to the edge of the data |
+| Ctrl + Home / Ctrl + End | Go to A1 / the last used cell |
+| Ctrl + Page Down / Page Up | Next / previous sheet |
+| Ctrl + G (or F5) | Go to a cell address |
+
+| Selecting | |
+| :-- | :-- |
 | Ctrl + Shift + ↓ | Select from here to the last filled cell |
+| Ctrl + Space / Shift + Space | Select the whole column / row |
+| Ctrl + A | Select the current table or range (press again for the whole sheet) |
+
+| Working with data | |
+| :-- | :-- |
 | Ctrl + T | Turn a range into a **Table** |
 | Ctrl + Shift + L | Turn filters on or off |
 | Alt + = | AutoSum |
+| F2 | Edit the selected cell |
 | F4 (while editing a formula) | Toggle `$` absolute references |
-| Ctrl + Z | Undo, your best friend |
+| Ctrl + Z / Ctrl + Y | Undo / redo |
+
+> [!TIP]
+> Press and release **Alt**: letters appear over every ribbon tab and command (Excel calls them *KeyTips*). Alt, A opens the Data tab; then F, T starts *From Text/CSV*. Once you know a command's letters, you never need the mouse for it.
 
 ## Example
 
@@ -1458,7 +1477,14 @@ The managing director wants one number to start: Kolanut's total revenue since J
 | Double-click the file | Excel guesses every column's type, instantly | Quick look only |
 | **Data → From Text/CSV** | Shows a preview, lets you check types, loads a Table | Real work |
 
-Excel's guesses can go wrong: codes with leading zeros lose them (`007` becomes `7`), long numbers turn into `1.2E+15`, and day-first dates can be read as month-first. Importing through **Data → From Text/CSV** lets you catch these before they spread.
+Excel's guesses can go wrong: codes with leading zeros lose them (`007` becomes `7`), long numbers turn into `1.2E+15`, and day-first dates can be read as month-first. Here is what happened when Kolanut's messy customer export was opened by double-clicking:
+
+![Kolanut's customer export opened by double-clicking. Phone numbers have lost their leading zero or show as 2.34915E+12, and the naira sign appears as garbled characters.](/images/courses/excel/csv-double-click.webp "Double-clicking the CSV: real damage, in seconds.")
+
+1. **Phone** lost its leading zero (`08089165939` became `8089165939`), and numbers in international format became `2.34915E+12`. Those digits are gone for good once you save.
+2. **Credit Limit** shows `â‚¦2,050,000`: the `₦` sign was read with the wrong text encoding, so the column can't be turned into numbers.
+
+Importing through **Data → From Text/CSV** lets you catch these before they spread.
 
 **Values vs formatting.** A cell's *value* is what's stored; its *format* is how it's shown. `0.19` formatted as a percentage shows `19%`. Formatting never changes the value, so rounding a display to 0 decimals doesn't round the number used in calculations.
 
@@ -1478,13 +1504,27 @@ A 5% discount line of 20 packs at ₦13,200: 20 × 13,200 × (1 − 5 ÷ 100) = 
 
 ## Walkthrough
 
-1. In a new workbook, go to **Data → Get Data → From File → From Text/CSV** (older versions: **Data → From Text/CSV**) and choose `orders.csv`.
-2. In the preview, check that `order_date` shows dates and the numbers are right-aligned numbers. Click **Load**. Excel creates a Table on a new sheet.
+1. In a new workbook, go to **Data → From Text/CSV** (keyboard: Alt, A, F, T) and choose `orders.csv`. In some versions it's under **Data → Get Data → From File → From Text/CSV**.
+2. Excel shows a preview:
+
+   ![The From Text/CSV preview window for orders.csv, with File Origin, Delimiter and Data Type Detection settings above a preview grid, and Load and Transform Data buttons.](/images/courses/excel/import-preview.webp "The import preview. Nothing is loaded until you click Load.")
+
+   1. **File Origin**: the text encoding. For files containing `₦` or other special characters choose **65001: Unicode (UTF-8)**.
+   2. **Delimiter**: what separates columns. CSV means **Comma**.
+   3. **Data Type Detection**: how Excel decides column types.
+   4. **The preview.** Check that `order_date` shows dates and the numbers are numbers (right-aligned). The dates appear in your computer's date format; here, day first.
+   5. **Load** puts the data on a new sheet as a Table. **Transform Data** opens Power Query to clean it first.
+
+   Click **Load**.
 3. Rename the sheet `Orders` and the Table `Orders` (Table Design → Table Name).
 4. In the first empty column to the right, type the header `revenue` in row 1.
 5. In row 2 of that column type the formula above and press Enter. Excel fills it down all 4,266 rows.
 6. Select the column and format it: **Home → Number → Comma Style**, and reduce decimals to 0.
 7. **View → Freeze Panes → Freeze Top Row**, so the headers stay visible as you scroll.
+
+![The Orders table with the new revenue column filled in, and its formula shown in the formula bar.](/images/courses/excel/revenue-column.webp "The revenue column (2), and its formula in the formula bar (1).")
+
+Excel may display the formula as `=[@quantity]*[@[unit_price]]*(1-[@[discount_pct]]/100)`, with extra brackets around column names that contain an underscore. Both forms mean exactly the same thing.
 
 To get the total, click in any empty cell and type:
 
@@ -1601,6 +1641,15 @@ To find the biggest single order line: click the `revenue` drop-down → **Sort 
 
 ## Walkthrough
 
+This is what filtering `discount_pct` to 10 looks like:
+
+![The discount_pct filter drop-down open, with only 10 ticked; the status bar reads 525 of 4266 records found.](/images/courses/excel/filter-dropdown.webp "Filtering discount_pct to 10. The row numbers turn blue and skip, a sign that rows are hidden.")
+
+1. **The filter button** on the column header. Once a filter is on, it shows a funnel icon.
+2. **Number Filters**: conditions like *Greater Than* or *Top 10*. Text columns show *Text Filters*; date columns show *Date Filters*.
+3. **The value list**: tick the values to keep. Use the search box above it for long lists.
+4. **The status bar** reports the result: **525 of 4266 records found**.
+
 **How many lines had a 10% discount?**
 
 1. Click the `discount_pct` drop-down, untick *Select All*, tick **10**, OK.
@@ -1611,6 +1660,15 @@ To find the biggest single order line: click the `revenue` drop-down → **Sort 
 
 1. Open the `order_date` drop-down. Dates are grouped: expand **2025**, untick everything except **December**.
 2. Read the count the same way.
+
+**Shortcuts for sorting and filtering**
+
+| Keys | Does |
+| :-- | :-- |
+| Ctrl + Shift + L | Filters on / off |
+| Alt + ↓ (on a header cell) | Open that column's filter drop-down |
+| Alt, A, S, S | Open the Sort dialog |
+| Alt, A, C | Clear all filters |
 
 ## Practice
 
@@ -1761,12 +1819,31 @@ Copy it down: `H2` becomes `H3`, `H4`…, but `$K$1` stays fixed. Without the do
 
 ## Walkthrough
 
+When a sheet has many formulas, **Ctrl + `** (the key left of 1) shows every formula instead of its result. Press it again to switch back.
+
+![A summary sheet in Show Formulas mode, where each value cell displays its formula.](/images/courses/excel/show-formulas.webp "Ctrl + ` (Show Formulas): each cell shows its formula (2); the formula bar (1) always shows the selected cell's.")
+
+The same summary with results showing: total revenue ₦830,541,245, 58,757 packs, 4,266 order lines, ₦194,689 per line, ₦713,400 largest line, 546 days.
+
 1. In your `Orders` table, next to the data, calculate:
    - total units sold: `=SUM(Orders[quantity])`
    - average revenue per line: `=AVERAGE(Orders[revenue])`
    - the number of different days with orders: `=COUNTA(UNIQUE(Orders[order_date]))`
 2. Wrap the average in `ROUND(…, 0)` to get whole naira.
 3. Check a result by a second route: the status bar shows Sum, Average and Count when you select a column. If your formula and the status bar disagree, find out why before moving on.
+
+**Shortcuts for formulas**
+
+| Keys | Does |
+| :-- | :-- |
+| = | Start a formula |
+| F2 | Edit the selected cell (and see which cells it uses) |
+| F4 | While editing, cycle `A1` → `$A$1` → `A$1` → `$A1` |
+| Ctrl + ` | Show / hide all formulas |
+| Ctrl + Enter | Enter the same formula into every selected cell |
+| Ctrl + D | Fill down from the cell above |
+| Alt + = | AutoSum |
+| Tab | Accept a function name that Excel suggests while you type |
 
 ## Practice
 
@@ -1911,6 +1988,10 @@ Revenue per product, as a small summary table:
 | … | … |
 
 Copy the formula down beside product IDs 1 to 16, and you have revenue for every product.
+
+Here it is built on Kolanut's data, with a second column counting order lines:
+
+![A summary table of product IDs 1 to 16 with revenue from SUMIFS and order lines from COUNTIFS; the formula bar shows the SUMIFS formula for product 1.](/images/courses/excel/sumifs.webp "One SUMIFS formula (1), copied down beside the product IDs (2), gives revenue for every product (3). Product 1 brought in ₦59,804,940.")
 
 ## Walkthrough
 
@@ -2064,6 +2145,10 @@ Order line 10001 has `customer_id` 27 and `product_id` 3.
 - `XLOOKUP(27, Customers[customer_id], Customers[region])` returns the region of customer 27.
 - `XLOOKUP(3, Products[product_id], Products[category])` returns **Beverages** (product 3 is Orange juice 1L).
 
+After the walkthrough below, the Orders table has three looked-up columns:
+
+![The Orders table with new region, channel and category columns filled by XLOOKUP; the formula bar shows the XLOOKUP for region.](/images/courses/excel/xlookup.webp "XLOOKUP in the formula bar (1) and the three new columns it fills (2). None says Not found, so every ID matched.")
+
 ## Walkthrough
 
 1. Load `customers.csv` and `products.csv` into the same workbook as Tables named `Customers` and `Products` (Data → From Text/CSV, as in lesson 2).
@@ -2211,6 +2296,17 @@ Anything that shows `CHECK` is a spelling you haven't mapped yet.
 
 Check a few rows against the raw file afterwards: `01/09/2022` should now be 1 September 2022.
 
+**Import it properly first.** Opened with **Data → From Text/CSV**, the messy file comes in far better than by double-clicking:
+
+![The From Text/CSV preview of the messy customer export: File Origin is UTF-8, phone numbers keep their leading zeros, dates and credit limits are recognised.](/images/courses/excel/import-messy.webp "Excel's import preview for the messy export.")
+
+1. **File Origin: 65001 Unicode (UTF-8)**, so `₦` is read correctly.
+2. **Phone** stays as text, leading zeros intact.
+3. **Date Joined** is recognised as dates. It read them day-first because this computer uses a UK date format. On a US-format computer, change the type with a locale in Power Query, as described above.
+4. **Credit Limit** is recognised as numbers; the blank one shows as `null`.
+
+Import gives the cleanest starting point, but names, regions and duplicates still need fixing, and that's what the formulas below do.
+
 ## Example
 
 | Raw | Clean |
@@ -2228,10 +2324,23 @@ A clean, repeatable workflow:
    - `Name`: `=PROPER(TRIM(CLEAN([@[Customer Name]])))`
    - `Region clean`: the XLOOKUP on `RegionMap`
    - `Limit`: the nested SUBSTITUTE/VALUE formula
+   Here are the helper columns on Kolanut's export, next to the raw data:
+
+   ![The raw customer export with helper columns Name, Region clean and Limit added on the right; the formula bar shows the nested SUBSTITUTE and VALUE formula.](/images/courses/excel/cleaning.webp "Raw columns (1, 2) and their cleaned versions (4), built by formulas like the one in the formula bar (3).")
+
 3. **Filter each helper column** for `CHECK`, errors and blanks, and fix the mapping until none are left.
 4. **Copy the helper columns** and paste them into a new sheet `Clean` with **Paste Special → Values** (Ctrl + Alt + V, then V). They're now fixed values, not formulas.
-5. On `Clean`, **Data → Remove Duplicates** on the name column.
+5. On `Clean`, **Data → Remove Duplicates** (Alt, A, M) on the name column:
+
+   ![The Remove Duplicates dialog listing the table's columns with tick boxes, and My data has headers ticked.](/images/courses/excel/remove-duplicates.webp "Remove Duplicates. Tick only the columns that define a duplicate (1): here, just the cleaned name.")
+
+   1. **Columns**: untick everything except the cleaned name. With every column ticked, two copies count as duplicates only if *every* column matches, and these copies have different phone formats.
+   2. **My data has headers** keeps the header row out of the comparison.
+   3. **OK** reports how many duplicates were removed (12 here) and how many unique rows remain (90).
 6. **Log it**: on a `Notes` sheet, write what you did and the row counts before and after (102 → 90).
+
+> [!WARNING]
+> If a formula shows up as text instead of calculating, the column was formatted as **Text** (common after importing with text columns). Set the column to **General** (Home → Number format), then click the cell, press **F2** and **Enter**.
 
 > [!TIP]
 > Flash Fill (**Data → Flash Fill**, or Ctrl + E) is handy for one-off pattern cleaning: type the cleaned version of the first two cells yourself and Excel guesses the rest. Always check its guesses; it can't explain its rule.
@@ -2384,7 +2493,23 @@ Wholesalers are fewer than a quarter of Kolanut's customers but bring in 70% of 
 6. Sort: right-click a revenue number → **Sort → Largest to Smallest**.
 7. **Insert Slicer** for `channel`. Click Wholesale, then Kiosk, and watch the whole pivot change.
 
+![A pivot table of revenue and percentage of total by region, a channel slicer, and the PivotTable Fields pane with region in Rows and two value fields.](/images/courses/excel/pivot-table.webp "Revenue by region with % of total (1). The field list (2), the areas you drag fields into (3), and a slicer (4).")
+
+1. **The pivot table**: region in rows, sorted by revenue, with a second value column showing **% of total**. Lagos is 49.5% of all revenue.
+2. **Field list**: every column of the source Table. Ticked fields are in use.
+3. **Areas**: Filters, Columns, Rows and Values. Drag fields between them to reshape the summary.
+4. **Slicer** for `channel`: click Wholesale and the pivot shows wholesale revenue only.
+
 To get the channel percentages in the Example: `channel` in Rows, `revenue` in Values **twice**; on the second, right-click → **Show Values As → % of Grand Total**.
+
+**Shortcuts for pivot tables**
+
+| Keys | Does |
+| :-- | :-- |
+| Alt, N, V | Insert a PivotTable |
+| Alt + F5 | Refresh the selected pivot |
+| Ctrl + Alt + F5 | Refresh all pivots and connections |
+| Alt + ↓ (on a field in the pivot) | Filter or sort that field |
 
 ## Practice
 
@@ -2514,7 +2639,20 @@ The pivot tables show the numbers, but a table of 18 months × 6 regions doesn't
 6. Click the chart title and write the finding.
 7. Click the December 2025 point twice (to select just that point) → **Add Data Label**.
 
+The result, built on Kolanut's monthly revenue:
+
+![A line chart of Kolanut's monthly revenue from January 2025 to June 2026 titled December is our biggest month by far, with the axis in millions and the December point labelled ₦66.3m.](/images/courses/excel/chart.webp "A finished chart: a title that states the finding (1), axis in millions (2), one labelled point (3), and the monthly figures it's drawn from (4).")
+
 Then, for the regional table, select the H1 2026 revenue column → **Home → Conditional Formatting → Data Bars → Solid Fill**.
+
+**Shortcuts for charts**
+
+| Keys | Does |
+| :-- | :-- |
+| Alt + F1 | Insert the default chart next to the selected data |
+| F11 | Insert a chart on its own sheet |
+| Ctrl + 1 | Open the Format pane for the selected chart element |
+| Alt, N, R | Recommended Charts |
 
 ## Practice
 
@@ -2955,11 +3093,175 @@ $md$, true, true, 1, array['sql-01-p1']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position)
-values ('sql-m02', 'sql-for-data-analysis', 'SELECT', 2)
+values ('sql-m02', 'sql-for-data-analysis', 'Relational Databases and SQL Tools', 2)
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('sql-for-data-analysis:select', 'sql-for-data-analysis', 'sql-m02', 'select', 'SELECT', 'Choose the columns you need, rename them, calculate new ones and remove duplicates.', 25, $md$
+values ('sql-for-data-analysis:relational-databases-and-sql-tools', 'sql-for-data-analysis', 'sql-m02', 'relational-databases-and-sql-tools', 'Relational databases, SQL Server and MySQL', 'What a relational database is, the database products you''ll meet at work, how their SQL differs, and how to find your way around SQL Server Management Studio and MySQL Workbench.', 30, $md$
+## The problem
+
+In this course you write SQL in your browser, against a small database. At work, the data lives in a company database: **SQL Server** at a bank, **MySQL** behind a website, **PostgreSQL** at a start-up, **Oracle** at a telecoms company. You'll open a different program, connect to a server, and find the SQL mostly the same, with a few words that differ.
+
+This lesson maps that world, so the first day on a real database doesn't feel foreign.
+
+## The concept
+
+**A relational database** stores data in **tables** (relations) of rows and columns, and links the tables through **keys**:
+
+- a **primary key (PK)** identifies each row: `customer_id` in `customers`;
+- a **foreign key (FK)** holds another table's primary key, which is how rows relate: `customer_id` in `shipments` says which customer booked each shipment.
+
+Here is the Harbourline database you've been querying, drawn as an **entity-relationship diagram** (ERD):
+
+![Entity-relationship diagram of the Harbourline database with five tables: employees, customers, shipments, routes and payments. Lines connect each foreign key to the primary key it points to.](/images/courses/sql/harbourline-erd.svg "Harbourline Freight: five tables joined by keys. Each line runs from a primary key to the foreign keys that point at it.")
+
+Read one line: a customer **books zero or many** shipments; each shipment belongs to **exactly one** customer. The crow's foot (three prongs) marks the "many" end. Every JOIN you wrote in this course follows one of these lines.
+
+**An RDBMS** (relational database management system) is the software that stores the tables, enforces the keys, and runs your SQL. The ones you'll meet most:
+
+| RDBMS | Made by | Where you'll see it | Main tool |
+| :-- | :-- | :-- | :-- |
+| **SQL Server** (and Azure SQL) | Microsoft | Banks, large companies, anything built on Microsoft tools | SQL Server Management Studio (SSMS), or VS Code with the MSSQL extension |
+| **MySQL** (and its fork MariaDB) | Oracle (open source) | Websites and web apps: WordPress, PHP and many start-ups | MySQL Workbench |
+| **PostgreSQL** | Open-source community | Start-ups, analytics teams, geographic data | pgAdmin, DBeaver |
+| **Oracle Database** | Oracle | Telecoms, government, very large systems | SQL Developer |
+| **SQLite** | Open source | Inside phones, browsers and apps. **This course's practice database** | Built into the app |
+
+All of them speak **SQL**, a standard language. Each adds its own **dialect**: extra functions and a few different keywords. SQL Server's dialect is called **T-SQL** (Transact-SQL).
+
+**Where you'll notice the differences**
+
+| Task | SQLite (this course) | SQL Server (T-SQL) | MySQL | PostgreSQL |
+| :-- | :-- | :-- | :-- | :-- |
+| First 10 rows | `LIMIT 10` | `SELECT TOP (10) …` | `LIMIT 10` | `LIMIT 10` |
+| Today's date | `DATE('now')` | `CAST(GETDATE() AS date)` | `CURDATE()` | `CURRENT_DATE` |
+| Year of a date | `strftime('%Y', d)` | `YEAR(d)` | `YEAR(d)` | `EXTRACT(YEAR FROM d)` |
+| Join two texts | `a \|\| b` | `a + b` or `CONCAT(a, b)` | `CONCAT(a, b)` | `a \|\| b` |
+| Name with a space | `"order date"` | `[order date]` | `` `order date` `` | `"order date"` |
+
+Everything else you've learned (SELECT, WHERE, GROUP BY, HAVING, JOINs, CASE, subqueries, CTEs, window functions) works the same way in all of them.
+
+## Example
+
+This is the same Harbourline data loaded into **SQL Server**, queried in **SQL Server Management Studio (SSMS)**. The query finds the ten customers who shipped the most containers in 2025. Don't worry about every line yet: you'll write queries like it by the JOINs lesson. For now, notice `TOP (10)` where this course uses `LIMIT 10`.
+
+![SQL Server Management Studio showing the HarbourlineFreight database in Object Explorer, a T-SQL query in the editor, and a results grid listing the ten customers who shipped the most containers in 2025.](/images/courses/sql/ssms-window.webp "SQL Server Management Studio 22, connected to a SQL Server copy of the Harbourline database. Account details are blurred.")
+
+1. **Object Explorer**: the server, its databases, and each database's tables. Press **F8** if it's hidden.
+2. **Columns** of `dbo.customers`, with their data types. `PK` marks the primary key, `FK` a foreign key.
+3. **Available databases**: which database your query runs against. Check this first when a table "doesn't exist".
+4. **Execute** (or **F5**): runs the query, or only the part you've highlighted.
+5. **The query editor**: one tab per query window.
+6. **Results grid**: the output. The **Messages** tab beside it shows errors and row counts.
+7. **Status bar**: *Query executed successfully*, the server, the database, time taken and the number of rows.
+
+> [!NOTE]
+> Run in SQLite, the same query returns the same ten customers, but two of them, tied on 104 containers, come back in the opposite order. With no tie-breaker in `ORDER BY`, each database may order ties differently. Add a second sort column when order matters, as you learned in the ORDER BY lesson.
+
+## Walkthrough
+
+**Getting a practice SQL Server on your own computer (Windows)**
+
+1. Download **SQL Server Developer** (free for learning and testing) or **SQL Server Express** (free, smaller) from Microsoft.
+2. Download **SQL Server Management Studio (SSMS)**, also free.
+3. Open SSMS. In **Connect to Server**, type the server name (`localhost` for a default install, or `localhost\SQLEXPRESS` for Express), choose **Windows Authentication**, and tick **Trust server certificate** for a local practice server. Click **Connect**.
+4. Right-click **Databases → New Database…** to create one, or restore a sample database.
+5. **New Query** (Ctrl + N) opens an editor connected to the database selected in Object Explorer.
+
+**SSMS shortcuts worth learning**
+
+| Keys | Does |
+| :-- | :-- |
+| F5 (or Ctrl + E) | Execute; runs only the highlighted text if something is selected |
+| Ctrl + N | New query window |
+| F8 | Show Object Explorer |
+| Ctrl + R | Show or hide the results pane |
+| Ctrl + D / Ctrl + T | Results as a grid / as text |
+| Ctrl + K, Ctrl + C | Comment out the selected lines |
+| Ctrl + K, Ctrl + U | Uncomment them |
+| Ctrl + Shift + R | Refresh IntelliSense after creating tables |
+| Alt + F1 (on a highlighted table name) | Show the table's columns and keys |
+
+**MySQL Workbench** is laid out much the same way. A simplified picture of its query screen:
+
+![Simplified diagram of the MySQL Workbench window with numbered areas: toolbar with Run all and Run line buttons, Navigator with schemas and tables, the SQL editor, the result grid and the output panel.](/images/courses/sql/mysql-workbench-layout.svg "MySQL Workbench, simplified. In MySQL a database is called a schema.")
+
+1. **Toolbar**: the lightning bolt runs everything (or the selection); the bolt with a cursor runs only the statement the cursor is in.
+2. **Navigator → Schemas**: the databases and their tables. Double-click a schema to make it the default for your queries.
+3. **SQL editor**: note `LIMIT 10`, as in this course.
+4. **Result grid**: the output, which you can sort and export.
+5. **Output**: each statement, its time and row count, or its error.
+
+In Workbench, **Ctrl + Shift + Enter** runs everything (or the selection) and **Ctrl + Enter** runs the current statement.
+
+## Practice
+
+A colleague sends you a T-SQL query written for SQL Server:
+
+```sql
+SELECT TOP (5) company_name, city, signup_date
+FROM customers
+ORDER BY signup_date, customer_id;
+```
+
+```exercise
+{
+  "id": "sql-rdb-p1",
+  "prompt": "Rewrite it so it runs here in SQLite: the five customers who signed up first, with company_name, city and signup_date.",
+  "starter": "SELECT TOP (5) company_name, city, signup_date\nFROM customers\nORDER BY signup_date, customer_id;",
+  "solution": "SELECT company_name, city, signup_date FROM customers ORDER BY signup_date, customer_id LIMIT 5;",
+  "hint": "Remove TOP (5) from the SELECT line and add LIMIT 5 at the end.",
+  "orderMatters": true,
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "sql-rdb-p2",
+  "prompt": "Looking at the diagram of Harbourline, which table holds the foreign key that links a payment to what it pays for? Name the **table**.",
+  "answer": "payments",
+  "accept": ["payment", "the payments table"],
+  "format": "text",
+  "hint": "Foreign keys sit on the 'many' side. One shipment can have several payments.",
+  "explanation": "payments.shipment_id points to shipments.shipment_id. A shipment can be paid in more than one instalment, so the key lives on the payments side.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "What does a foreign key do?",
+    "options": ["Makes every row unique", "Holds another table's primary key, linking the two tables", "Encrypts the table", "Sorts the rows"],
+    "answer": 1,
+    "explanation": "shipments.customer_id is a foreign key: it holds a customers primary key value."
+  },
+  {
+    "prompt": "You move a query from this course to SQL Server. Which line will fail?",
+    "options": ["SELECT city, COUNT(*)", "GROUP BY city", "LIMIT 10;", "ORDER BY 2 DESC"],
+    "answer": 2,
+    "explanation": "SQL Server uses SELECT TOP (10) instead of LIMIT."
+  },
+  {
+    "prompt": "In SSMS, a query says the table dbo.shipments doesn't exist, but you can see it in Object Explorer. What should you check first?",
+    "options": ["Your internet connection", "The database selected in the toolbar drop-down", "The font size", "Whether the table has a primary key"],
+    "answer": 1,
+    "explanation": "Queries run against the database selected in the Available Databases box, often 'master' by default."
+  }
+]
+```
+$md$, true, true, 2, array['sql-rdb-p1', 'sql-rdb-p2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position)
+values ('sql-m03', 'sql-for-data-analysis', 'SELECT', 3)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('sql-for-data-analysis:select', 'sql-for-data-analysis', 'sql-m03', 'select', 'SELECT', 'Choose the columns you need, rename them, calculate new ones and remove duplicates.', 25, $md$
 ## The problem
 
 The sales team is preparing calls to customers. They don't need every column in the `customers` table. They need the company name, the city and the industry, and nothing else cluttering the screen.
@@ -3080,15 +3382,15 @@ Harbourline runs three transport modes, so you get three rows.
   }
 ]
 ```
-$md$, true, true, 2, array['sql-02-p1']::text[])
+$md$, true, true, 3, array['sql-02-p1']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position)
-values ('sql-m03', 'sql-for-data-analysis', 'WHERE', 3)
+values ('sql-m04', 'sql-for-data-analysis', 'WHERE', 4)
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('sql-for-data-analysis:where', 'sql-for-data-analysis', 'sql-m03', 'where', 'WHERE', 'Filter rows with comparisons, AND/OR, IN, BETWEEN, LIKE and NULL checks.', 30, $md$
+values ('sql-for-data-analysis:where', 'sql-for-data-analysis', 'sql-m04', 'where', 'WHERE', 'Filter rows with comparisons, AND/OR, IN, BETWEEN, LIKE and NULL checks.', 30, $md$
 ## The problem
 
 Harbourline has thousands of shipments, and nobody wants to scroll through all of them. Kemi's questions are always about a slice of the data:
@@ -3229,15 +3531,15 @@ WHERE account_manager_id IS NULL;
   }
 ]
 ```
-$md$, true, true, 3, array['sql-03-p1', 'sql-03-p2']::text[])
+$md$, true, true, 4, array['sql-03-p1', 'sql-03-p2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position)
-values ('sql-m04', 'sql-for-data-analysis', 'ORDER BY', 4)
+values ('sql-m05', 'sql-for-data-analysis', 'ORDER BY', 5)
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('sql-for-data-analysis:order-by', 'sql-for-data-analysis', 'sql-m04', 'order-by', 'ORDER BY', 'Sort results by one or more columns, in ascending or descending order.', 20, $md$
+values ('sql-for-data-analysis:order-by', 'sql-for-data-analysis', 'sql-m05', 'order-by', 'ORDER BY', 'Sort results by one or more columns, in ascending or descending order.', 20, $md$
 ## The problem
 
 Finance is reviewing the most valuable bookings from the first week of January 2026. They want the biggest charges at the top, so they can check those first.
@@ -3339,15 +3641,15 @@ ORDER BY mode, target_transit_days DESC;
   }
 ]
 ```
-$md$, true, true, 4, array['sql-04-p1']::text[])
+$md$, true, true, 5, array['sql-04-p1']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position)
-values ('sql-m05', 'sql-for-data-analysis', 'LIMIT', 5)
+values ('sql-m06', 'sql-for-data-analysis', 'LIMIT', 6)
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('sql-for-data-analysis:limit', 'sql-for-data-analysis', 'sql-m05', 'limit', 'LIMIT', 'Return only the first rows of a result to answer "top N" questions and page through data.', 15, $md$
+values ('sql-for-data-analysis:limit', 'sql-for-data-analysis', 'sql-m06', 'limit', 'LIMIT', 'Return only the first rows of a result to answer "top N" questions and page through data.', 15, $md$
 ## The problem
 
 "What were our five most expensive shipments ever?"
@@ -3447,15 +3749,15 @@ This skips the ten earliest customers and shows the next ten.
   }
 ]
 ```
-$md$, true, true, 5, array['sql-05-p1']::text[])
+$md$, true, true, 6, array['sql-05-p1']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position)
-values ('sql-m06', 'sql-for-data-analysis', 'Aggregate Functions', 6)
+values ('sql-m07', 'sql-for-data-analysis', 'Aggregate Functions', 7)
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('sql-for-data-analysis:aggregate-functions', 'sql-for-data-analysis', 'sql-m06', 'aggregate-functions', 'Aggregate functions', 'Summarise many rows into one answer with COUNT, SUM, AVG, MIN and MAX.', 25, $md$
+values ('sql-for-data-analysis:aggregate-functions', 'sql-for-data-analysis', 'sql-m07', 'aggregate-functions', 'Aggregate functions', 'Summarise many rows into one answer with COUNT, SUM, AVG, MIN and MAX.', 25, $md$
 ## The problem
 
 The managing director has a board meeting tomorrow and asks for a few numbers about 2025:
@@ -3577,15 +3879,15 @@ FROM customers;
   }
 ]
 ```
-$md$, true, true, 6, array['sql-06-p1', 'sql-06-p2']::text[])
+$md$, true, true, 7, array['sql-06-p1', 'sql-06-p2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position)
-values ('sql-m07', 'sql-for-data-analysis', 'GROUP BY', 7)
+values ('sql-m08', 'sql-for-data-analysis', 'GROUP BY', 8)
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('sql-for-data-analysis:group-by', 'sql-for-data-analysis', 'sql-m07', 'group-by', 'GROUP BY', 'Calculate totals and counts for each customer, route, month or status.', 30, $md$
+values ('sql-for-data-analysis:group-by', 'sql-for-data-analysis', 'sql-m08', 'group-by', 'GROUP BY', 'Calculate totals and counts for each customer, route, month or status.', 30, $md$
 ## The problem
 
 Harbourline has thousands of shipment records. Your manager wants to know:
@@ -3723,15 +4025,15 @@ ORDER BY month;
   }
 ]
 ```
-$md$, true, true, 7, array['sql-07-p1', 'sql-07-p2']::text[])
+$md$, true, true, 8, array['sql-07-p1', 'sql-07-p2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position)
-values ('sql-m08', 'sql-for-data-analysis', 'HAVING', 8)
+values ('sql-m09', 'sql-for-data-analysis', 'HAVING', 9)
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('sql-for-data-analysis:having', 'sql-for-data-analysis', 'sql-m08', 'having', 'HAVING', 'Filter groups after they''re calculated, such as customers with more than 30 shipments.', 20, $md$
+values ('sql-for-data-analysis:having', 'sql-for-data-analysis', 'sql-m09', 'having', 'HAVING', 'Filter groups after they''re calculated, such as customers with more than 30 shipments.', 20, $md$
 ## The problem
 
 Harbourline is planning a loyalty discount for its most active customers. The rule the sales director proposes is simple:
@@ -3848,15 +4150,15 @@ ORDER BY avg_charge DESC;
   }
 ]
 ```
-$md$, true, true, 8, array['sql-08-p1']::text[])
+$md$, true, true, 9, array['sql-08-p1']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position)
-values ('sql-m09', 'sql-for-data-analysis', 'JOINs', 9)
+values ('sql-m10', 'sql-for-data-analysis', 'JOINs', 10)
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('sql-for-data-analysis:joins', 'sql-for-data-analysis', 'sql-m09', 'joins', 'JOINs', 'Combine tables with INNER JOIN and LEFT JOIN, and find records with no match.', 35, $md$
+values ('sql-for-data-analysis:joins', 'sql-for-data-analysis', 'sql-m10', 'joins', 'JOINs', 'Combine tables with INNER JOIN and LEFT JOIN, and find records with no match.', 35, $md$
 ## The problem
 
 Your list of top customers shows `customer_id` 17, 42, 88… The sales director doesn't know customers by number. She needs **company names**, and those are in a different table.
@@ -3991,15 +4293,15 @@ WHERE s.booking_date = '2026-08-03';
   }
 ]
 ```
-$md$, true, true, 9, array['sql-09-p1', 'sql-09-p2']::text[])
+$md$, true, true, 10, array['sql-09-p1', 'sql-09-p2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position)
-values ('sql-m10', 'sql-for-data-analysis', 'CASE Statements', 10)
+values ('sql-m11', 'sql-for-data-analysis', 'CASE Statements', 11)
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('sql-for-data-analysis:case-statements', 'sql-for-data-analysis', 'sql-m10', 'case-statements', 'CASE statements', 'Create categories and labels with CASE, and use it to count and compare groups.', 25, $md$
+values ('sql-for-data-analysis:case-statements', 'sql-for-data-analysis', 'sql-m11', 'case-statements', 'CASE statements', 'Create categories and labels with CASE, and use it to count and compare groups.', 25, $md$
 ## The problem
 
 Operations wants to know how reliable Harbourline really is:
@@ -4114,15 +4416,15 @@ GROUP BY r.mode;
   }
 ]
 ```
-$md$, true, true, 10, array['sql-10-p1']::text[])
+$md$, true, true, 11, array['sql-10-p1']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position)
-values ('sql-m11', 'sql-for-data-analysis', 'Subqueries', 11)
+values ('sql-m12', 'sql-for-data-analysis', 'Subqueries', 12)
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('sql-for-data-analysis:subqueries', 'sql-for-data-analysis', 'sql-m11', 'subqueries', 'Subqueries', 'Use the result of one query inside another, in WHERE, SELECT and FROM.', 30, $md$
+values ('sql-for-data-analysis:subqueries', 'sql-for-data-analysis', 'sql-m12', 'subqueries', 'Subqueries', 'Use the result of one query inside another, in WHERE, SELECT and FROM.', 30, $md$
 ## The problem
 
 Finance wants to review unusually expensive bookings:
@@ -4234,15 +4536,15 @@ The inner query gives one row per customer; the outer query averages those count
   }
 ]
 ```
-$md$, true, true, 11, array['sql-11-p1']::text[])
+$md$, true, true, 12, array['sql-11-p1']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position)
-values ('sql-m12', 'sql-for-data-analysis', 'CTEs', 12)
+values ('sql-m13', 'sql-for-data-analysis', 'CTEs', 13)
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('sql-for-data-analysis:ctes', 'sql-for-data-analysis', 'sql-m12', 'ctes', 'CTEs', 'Break complex questions into named steps with WITH, and avoid double-counting when combining totals.', 30, $md$
+values ('sql-for-data-analysis:ctes', 'sql-for-data-analysis', 'sql-m13', 'ctes', 'CTEs', 'Break complex questions into named steps with WITH, and avoid double-counting when combining totals.', 30, $md$
 ## The problem
 
 The finance director asks for something that sounds simple:
@@ -4357,15 +4659,15 @@ Why two separate summaries? If you joined shipments and payments first and then 
   }
 ]
 ```
-$md$, true, true, 12, array['sql-12-p1']::text[])
+$md$, true, true, 13, array['sql-12-p1']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position)
-values ('sql-m13', 'sql-for-data-analysis', 'Window Functions', 13)
+values ('sql-m14', 'sql-for-data-analysis', 'Window Functions', 14)
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('sql-for-data-analysis:window-functions', 'sql-for-data-analysis', 'sql-m13', 'window-functions', 'Window functions', 'Rank rows, number them within groups and calculate running totals without losing detail.', 35, $md$
+values ('sql-for-data-analysis:window-functions', 'sql-for-data-analysis', 'sql-m14', 'window-functions', 'Window functions', 'Rank rows, number them within groups and calculate running totals without losing detail.', 35, $md$
 ## The problem
 
 Two requests land on your desk the same morning:
@@ -4514,15 +4816,15 @@ The customers at the top of this list are the ones who haven't booked for longes
   }
 ]
 ```
-$md$, true, true, 13, array['sql-13-p1']::text[])
+$md$, true, true, 14, array['sql-13-p1']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position)
-values ('sql-m14', 'sql-for-data-analysis', 'Business Analysis with SQL', 14)
+values ('sql-m15', 'sql-for-data-analysis', 'Business Analysis with SQL', 15)
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('sql-for-data-analysis:business-analysis-with-sql', 'sql-for-data-analysis', 'sql-m14', 'business-analysis-with-sql', 'Business analysis with SQL', 'Turn a vague business question into precise queries, check your numbers, and present a clear answer.', 40, $md$
+values ('sql-for-data-analysis:business-analysis-with-sql', 'sql-for-data-analysis', 'sql-m15', 'business-analysis-with-sql', 'Business analysis with SQL', 'Turn a vague business question into precise queries, check your numbers, and present a clear answer.', 40, $md$
 ## The problem
 
 On Friday afternoon, the managing director stops by:
@@ -4662,15 +4964,15 @@ A good write-up of these two results would look like:
   }
 ]
 ```
-$md$, true, true, 14, array['sql-14-p1', 'sql-14-p2']::text[])
+$md$, true, true, 15, array['sql-14-p1', 'sql-14-p2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position)
-values ('sql-m15', 'sql-for-data-analysis', 'Final Project', 15)
+values ('sql-m16', 'sql-for-data-analysis', 'Final Project', 16)
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('sql-for-data-analysis:final-project', 'sql-for-data-analysis', 'sql-m15', 'final-project', 'Final project', 'The brief for your final project, the Harbourline Freight operations review, and how it''s assessed.', 15, $md$
+values ('sql-for-data-analysis:final-project', 'sql-for-data-analysis', 'sql-m16', 'final-project', 'Final project', 'The brief for your final project, the Harbourline Freight operations review, and how it''s assessed.', 15, $md$
 ## The problem
 
 Harbourline's leadership team meets next week to plan 2027. They've asked for an **operations review**: a short, evidence-based report on how the business performed, built from the database you've been working with throughout this course.
@@ -4753,13 +5055,1044 @@ To earn your certificate you need to complete every lesson, complete the practic
   }
 ]
 ```
-$md$, true, true, 15, array['sql-15-p1']::text[])
+$md$, true, true, 16, array['sql-15-p1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+
+-- Course: Data Modelling
+insert into public.courses (id, slug, code, title, summary, description, category_id, difficulty, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, passing_score, position)
+values ('data-modelling', 'data-modelling', 'DMO', 'Data Modelling', 'Design databases and analytics models that stay correct: entities, keys, relationships, ERDs, normalisation and star schemas.', 'Every reliable report sits on a well-designed model. Learn to turn business questions into entities and keys, draw entity-relationship diagrams in crow''s-foot notation, normalise away repeated data, and design the star schemas that Power BI and data warehouses run on. Every lesson is built around diagrams, and you practise on real databases in your browser.', 'databases', 'intermediate', 'Beginner to intermediate', 8, true, 'available', true, array['Entities, attributes and grain', 'Primary and foreign keys', 'Cardinality and bridge tables', 'Entity-relationship diagrams', 'Normalisation (1NF to 3NF)', 'Star schemas and slowly changing dimensions']::text[], array['Basic SQL (SELECT, WHERE, JOIN) helps; the SQL for Data Analysis course covers it', 'No design experience needed']::text[], 'Ashgrove Chambers data model', true, true, true, true, 70, 3)
+on conflict (id) do update set slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, passing_score = excluded.passing_score, position = excluded.position;
+
+insert into public.course_modules (id, course_id, title, position)
+values ('dmo-m01', 'data-modelling', 'What Is a Data Model?', 1)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('data-modelling:what-is-a-data-model', 'data-modelling', 'dmo-m01', 'what-is-a-data-model', 'What is a data model?', 'Why data needs a design before it needs a dashboard, and the three levels a model moves through - conceptual, logical and physical.', 20, $md$
+## The problem
+
+Kolanut's first "database" was one enormous spreadsheet: every order with the customer's name, city, phone number and sales rep typed in again on each row. When a customer moved from Kano to Abuja, their old orders still said Kano and their new ones said Abuja. Nobody could say how many customers Kolanut had, because "Peace Provisions" and "Peace Provision" were counted as two.
+
+The data wasn't wrong because people were careless. It was wrong because nobody had **designed** it.
+
+## The concept
+
+A **data model** is the design of how data is organised: what *things* are stored, what is known about each, how they connect, and what rules they follow. It's the plan you build a database (or a Power BI model) from.
+
+Models are usually described at three levels, from business language down to database detail:
+
+![Three panels side by side. Conceptual: Customer, Order and Product as bubbles with the words places and contains. Logical: Customer and Order tables with attributes, a primary key and a foreign key, joined by a relationship line. Physical: a CREATE TABLE statement with data types and constraints.](/images/courses/modelling/model-levels.svg "The same idea at three levels of detail.")
+
+| Level | Describes | Who uses it | Kolanut example |
+| :-- | :-- | :-- | :-- |
+| **Conceptual** | The things the business cares about and how they relate | Managers and analysts agreeing scope | *A customer places orders; an order contains products.* |
+| **Logical** | Each thing's attributes, its key, and the relationships with their cardinality | Analysts and designers | *Customer (Customer ID, Name, Region); Order (Order ID, Customer ID, …); one customer to many orders.* |
+| **Physical** | Real tables in one specific database: names, data types, constraints, indexes | Database developers | `CREATE TABLE orders (order_id INT PRIMARY KEY, …)` in SQL Server |
+
+**Why it matters to an analyst**
+
+- Good models make questions easy: "revenue by region" is one join, not a cleaning project.
+- Most "the numbers don't match" arguments come from models that store the same fact twice.
+- In Power BI, the model *is* half the work: relationships decide what filters what.
+
+## Example
+
+The Harbourline Freight database you've queried in the SQL course is a physical model with five tables. Its conceptual version fits in one sentence: *employees look after customers; customers book shipments on routes; shipments are paid for by payments.*
+
+That sentence already contains the whole design: five **entities** (employees, customers, shipments, routes, payments) and four **relationships** (look after, book, on, paid for by). The next lessons turn sentences like this into tables, keys and lines.
+
+## Walkthrough
+
+When you meet any database or dataset, recover its model in three questions:
+
+1. **What are the things?** Usually the nouns: customers, matters, invoices, employees.
+2. **How do they connect?** Usually the verbs: a client *has* matters; a matter *has* hearings.
+3. **What identifies each one?** An ID column, or a combination of columns.
+
+Try it on Ashgrove Chambers, the law firm in the Power BI course: *clients have matters; matters have hearings and invoices.* Four things, three relationships, each identified by an ID (`client_id`, `matter_id`, `hearing_id`, `invoice_id`).
+
+## Practice
+
+```answer
+{
+  "id": "dmo-01-p1",
+  "prompt": "At which level of a data model do **data types** such as `INT` or `DATE` first appear? (One word.)",
+  "answer": "physical",
+  "accept": ["the physical level", "physical model", "physical level"],
+  "format": "text",
+  "explanation": "Conceptual and logical models describe things and attributes; data types belong to a specific database, so they're physical.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "dmo-01-p2",
+  "prompt": "How many **entities** are there in this description? *A school has teachers and students. Teachers teach classes; students enrol in classes; each class takes place in a classroom.*",
+  "answer": 5,
+  "format": "number",
+  "hint": "List the nouns that are things the school would store data about. Is the school itself one of them?",
+  "explanation": "Teachers, students, classes, classrooms and enrolments. The school is the whole database, not a table in it, and 'enrol' hides an entity: an enrolment (which student is in which class) is a thing with its own rows. If you said 4, you missed enrolments; lesson 4 explains why they need their own table.",
+  "tolerance": 0,
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "A manager says: 'Every sale belongs to one branch, and each branch has one manager.' Which level of model is that?",
+    "options": ["Conceptual", "Logical", "Physical", "None, it's a report"],
+    "answer": 0,
+    "explanation": "It names things and how they relate, in business language, with no attributes or types."
+  },
+  {
+    "prompt": "What is the main risk of storing a customer's city on every order row?",
+    "options": ["The file is slow to open", "The same fact can end up with different values on different rows", "SQL can't read it", "Cities can't be text"],
+    "answer": 1,
+    "explanation": "Storing a fact many times lets the copies disagree, which is exactly what went wrong at Kolanut."
+  },
+  {
+    "prompt": "Which question helps you find a model's entities?",
+    "options": ["What colour are the charts?", "What are the things (nouns) the business stores data about?", "How big is the file?", "Who wrote the data?"],
+    "answer": 1,
+    "explanation": "Entities are usually the nouns: customers, orders, matters."
+  }
+]
+```
+$md$, true, true, 1, array['dmo-01-p1', 'dmo-01-p2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position)
+values ('dmo-m02', 'data-modelling', 'Entities, Attributes and Grain', 2)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('data-modelling:entities-and-attributes', 'data-modelling', 'dmo-m02', 'entities-and-attributes', 'Entities, attributes and grain', 'Turn things into tables and facts into columns, choose data types, and state the grain - what one row means.', 25, $md$
+## The problem
+
+Kolanut wants to store its customers properly. Someone suggests one column called `details` holding *"Peace Provisions, Kiosk, Kano, rep 7"*. It's easy to type, and impossible to filter, count or join. Deciding what the table is, which columns it has, and what one row means is the core skill of modelling.
+
+## The concept
+
+**An entity** is a kind of thing the business stores data about: customers, products, invoices. Each entity becomes a **table**.
+
+**An attribute** is one fact about that thing: a customer's name, channel, region. Each attribute becomes a **column**, with one **data type**.
+
+**An instance** is one particular thing: one customer. It becomes a **row**.
+
+![A customers table with callouts: the table is the entity, each column an attribute, each row one instance, the primary key identifies each row and the foreign key points to a sales rep.](/images/courses/modelling/entity-anatomy.svg "The parts of a table, using Kolanut's customers.")
+
+**Rules for good attributes**
+
+1. **One fact per column.** Not `"Kano, North West"`; use `city` and `region`.
+2. **One value per cell.** Not `"Malt drink, Chin chin"`; that's two rows of something else.
+3. **The right data type.** Numbers you calculate with are numbers; dates are dates; IDs and phone numbers are **text** or integers you never add up. (`08031234567` stored as a number loses its leading zero.)
+4. **Clear names.** `customer_name`, not `name2` or `CustNm`.
+
+**Common data types**
+
+| Type | For | Examples |
+| :-- | :-- | :-- |
+| Integer | Counts and IDs | `quantity`, `customer_id` |
+| Decimal / money | Amounts | `unit_price`, `amount_ngn` |
+| Text | Names, codes, categories | `region`, `phone` |
+| Date / datetime | When something happened | `order_date` |
+| Boolean | Yes / no | `is_active` |
+
+**Grain** is the answer to *what does one row represent?* Always state it in one sentence:
+
+- `customers`: one row per customer.
+- `orders.csv`: one row per **product on an order** (an order line), not one row per order.
+- `attendance.csv`: one row per employee per working day.
+
+Most double-counting mistakes are grain mistakes: summing a customer's credit limit across their order lines, or counting order lines as orders.
+
+## Example
+
+Harbourline's `shipments` table: one row per shipment. It has 2,683 rows but only 105 different customers, because customers book many shipments:
+
+```sql run
+SELECT COUNT(*)                    AS shipments,
+       COUNT(DISTINCT customer_id) AS customers_who_booked
+FROM shipments;
+```
+
+## Walkthrough
+
+Designing Kolanut's product table, step by step:
+
+1. **Entity:** product. **Grain:** one row per product (one pack size of one item).
+2. **Attributes:** name, category, list price. Brand and pack size could be separate columns if managers filter by them.
+3. **Types:** `product_id` integer, `product_name` text, `category` text, `list_price` money.
+4. **Check against a question:** *"Revenue by category"*: category must be a clean column with a fixed list of values. ✓
+
+## Practice
+
+```answer
+{
+  "id": "dmo-02-p1",
+  "prompt": "Complete the grain of Kolanut's `orders.csv`: one row per ___ on one order. (One word.)",
+  "answer": "product",
+  "accept": ["product line", "item", "line", "order line", "line item"],
+  "format": "text",
+  "explanation": "Each row has one product_id and a quantity of it. In this dataset each order_id appears once, so an order line and an order coincide, but the design would allow several products per order.",
+  "required": true
+}
+```
+
+```exercise
+{
+  "id": "dmo-02-p2",
+  "prompt": "Harbourline's `payments` table: return the number of payment rows and the number of **different shipments** they pay for, as two columns.",
+  "starter": "SELECT\nFROM payments;",
+  "solution": "SELECT COUNT(*), COUNT(DISTINCT shipment_id) FROM payments;",
+  "hint": "COUNT(*) and COUNT(DISTINCT shipment_id). If the two differ, some shipments were paid more than once.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "A column holds values like 'Lagos, Ikeja'. What's wrong?",
+    "options": ["Nothing", "It stores two facts in one column; split it into region and city", "It should be a number", "It needs a primary key"],
+    "answer": 1,
+    "explanation": "One fact per column makes filtering and grouping possible."
+  },
+  {
+    "prompt": "Which data type suits a phone number like 08031234567?",
+    "options": ["Decimal number", "Text", "Date", "Boolean"],
+    "answer": 1,
+    "explanation": "You never calculate with it, and as a number it loses its leading zero."
+  },
+  {
+    "prompt": "An attendance table has one row per employee per working day. What is that sentence called?",
+    "options": ["The primary key", "The grain", "The schema", "The index"],
+    "answer": 1,
+    "explanation": "The grain says what one row represents."
+  }
+]
+```
+$md$, true, true, 2, array['dmo-02-p2', 'dmo-02-p1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position)
+values ('dmo-m03', 'data-modelling', 'Keys', 3)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('data-modelling:keys', 'data-modelling', 'dmo-m03', 'keys', 'Keys', 'Primary keys, foreign keys, natural and surrogate keys, and composite keys - the columns that hold a model together.', 25, $md$
+## The problem
+
+Two Kolanut customers are both called "Alhaji Musa Wholesale", one in Kano and one in Ikorodu. If orders recorded the customer's *name*, you couldn't tell whose order was whose. Every table needs a column (or set of columns) that identifies each row beyond doubt, and other tables need to point at it.
+
+## The concept
+
+**Primary key (PK):** the column that uniquely identifies each row.
+
+- **Unique**: no two rows share a value.
+- **Never empty**: every row has one.
+- **Stable**: it doesn't change when the thing's details change.
+
+**Foreign key (FK):** a column that holds another table's primary key, recording which row it relates to. `shipments.customer_id` is a foreign key to `customers.customer_id`.
+
+This is how SQL Server shows them for Harbourline's `customers` table:
+
+![SQL Server Object Explorer listing the columns of dbo.customers: customer_id marked PK, account_manager_id marked FK, and the other columns with their data types.](/images/courses/sql/ssms-object-explorer.webp "Harbourline in SQL Server: the key icon and PK mark the primary key (2); FK marks the foreign key (3). The tables are listed above (1).")
+
+**Natural vs surrogate keys**
+
+| | Natural key | Surrogate key |
+| :-- | :-- | :-- |
+| What | A real-world identifier | A meaningless number the system assigns |
+| Examples | Bank verification number, email, car registration | `customer_id` 1, 2, 3… |
+| Pros | Means something | Never changes, short, always available |
+| Cons | Can change (email), can be missing, can be private (BVN) | Needs a lookup to mean anything |
+
+Analytics models usually use **surrogate keys**, and keep natural keys as ordinary attributes.
+
+**Composite key:** a key made of two or more columns together. In a table of which students take which courses, neither `student_id` nor `course_id` is unique alone, but the pair `(student_id, course_id)` is.
+
+**Referential integrity:** every foreign key value must exist as a primary key in the other table. A shipment for customer 999 when there is no customer 999 is an **orphan**, and it silently drops out of inner joins.
+
+## Example
+
+Check that `customer_id` really is unique in Harbourline's customers table:
+
+```sql run
+SELECT COUNT(*) AS rows_, COUNT(DISTINCT customer_id) AS distinct_ids
+FROM customers;
+```
+
+Both are 120, so it can be a primary key. A foreign key, by contrast, can be empty when the relationship is optional:
+
+```sql run
+SELECT company_name, city
+FROM customers
+WHERE account_manager_id IS NULL;
+```
+
+Eight customers have no account manager assigned. The model allows that, and the diagram in lesson 5 shows it with a small circle ("zero or one").
+
+## Walkthrough
+
+When you receive a new table, test its keys before building on it:
+
+1. **Is the PK unique?** `COUNT(*)` vs `COUNT(DISTINCT key)`: they must match.
+2. **Is it ever empty?** `WHERE key IS NULL` must return nothing.
+3. **Do the FKs all match?** A LEFT JOIN from the child to the parent, keeping rows where the parent is missing, must return nothing.
+4. **Which FKs may be empty?** Decide whether an empty value means "not yet known" or is a data problem.
+
+## Practice
+
+```exercise
+{
+  "id": "dmo-03-p1",
+  "prompt": "How many Harbourline customers have **no** account manager? Return one number.",
+  "starter": "SELECT COUNT(*)\nFROM customers\nWHERE ",
+  "solution": "SELECT COUNT(*) FROM customers WHERE account_manager_id IS NULL;",
+  "hint": "Empty foreign keys are NULL. Use IS NULL, not = NULL.",
+  "required": true
+}
+```
+
+```exercise
+{
+  "id": "dmo-03-p2",
+  "prompt": "Referential-integrity check: count the shipments whose `route_id` has **no matching row** in `routes`. (A healthy model returns 0.)",
+  "starter": "SELECT COUNT(*)\nFROM shipments AS s\nLEFT JOIN routes AS r ON r.route_id = s.route_id\nWHERE ",
+  "solution": "SELECT COUNT(*) FROM shipments AS s LEFT JOIN routes AS r ON r.route_id = s.route_id WHERE r.route_id IS NULL;",
+  "hint": "After a LEFT JOIN, rows with no match have NULL in every column from routes.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "dmo-03-p3",
+  "prompt": "A table records which products each supplier can deliver: `(supplier_id, product_id, price)`. One supplier delivers many products; one product has many suppliers. What kind of primary key does it need? (One word.)",
+  "answer": "composite",
+  "accept": ["composite key", "compound", "compound key", "a composite key"],
+  "format": "text",
+  "explanation": "Only the pair (supplier_id, product_id) is unique, so the key is composite.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why is a customer's email a risky primary key?",
+    "options": ["Emails are too long to store", "It can change, be missing, or be shared, and the key must be stable and unique", "SQL can't compare text", "It's private"],
+    "answer": 1,
+    "explanation": "Keys must be unique, present and stable. Emails fail all three sometimes."
+  },
+  {
+    "prompt": "What is an orphan row?",
+    "options": ["A row with no primary key", "A child row whose foreign key matches no parent row", "The first row of a table", "A duplicated row"],
+    "answer": 1,
+    "explanation": "Orphans quietly disappear from inner joins and make totals wrong."
+  },
+  {
+    "prompt": "Where does the foreign key go in a one-to-many relationship between customers and shipments?",
+    "options": ["customers", "shipments", "Both", "Neither"],
+    "answer": 1,
+    "explanation": "The many side (shipments) holds the key of the one side (customers)."
+  }
+]
+```
+$md$, true, true, 3, array['dmo-03-p1', 'dmo-03-p2', 'dmo-03-p3']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position)
+values ('dmo-m04', 'data-modelling', 'Relationships and Cardinality', 4)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('data-modelling:relationships-and-cardinality', 'data-modelling', 'dmo-m04', 'relationships-and-cardinality', 'Relationships and cardinality', 'One-to-one, one-to-many and many-to-many relationships, optional vs mandatory, and why many-to-many needs a bridge table.', 30, $md$
+## The problem
+
+At Harbourline, a shipment is usually paid in one go, but some customers pay in two instalments. If the model assumed "one payment per shipment", a `payment_date` column on `shipments` would have nowhere to put the second payment. Getting **how many** right, for each relationship, decides where every column goes.
+
+## The concept
+
+**Cardinality** is how many rows on one side can relate to a row on the other.
+
+![Three examples. One-to-one: employees and id_cards. One-to-many: customers and orders. Many-to-many: students and courses joined by an enrolments bridge table with a composite key. A legend explains the line endings.](/images/courses/modelling/cardinality.svg "The three kinds of relationship, and how crow's-foot lines draw them.")
+
+| Type | Meaning | Where the key goes | Harbourline / Kolanut |
+| :-- | :-- | :-- | :-- |
+| **One-to-one** | Each row matches at most one row on the other side | Either side, usually the optional one | An employee and their staff ID card |
+| **One-to-many** | One parent row, many child rows | FK on the **many** side | A customer and their shipments |
+| **Many-to-many** | Many on both sides | A **bridge table** holding both keys | Students and courses; products and suppliers |
+
+**Optional or mandatory.** Each end also says whether a related row *must* exist:
+
+- A shipment **must** have exactly one customer (mandatory, one).
+- A customer **may** have zero shipments, if they've just signed up (optional, many).
+
+In crow's-foot notation, a bar means "one", a crow's foot means "many", and a circle means "zero is allowed". The legend in the diagram shows all four endings.
+
+**Why many-to-many needs a bridge.** You can't put `course_id` on the students table (a student takes several courses) or `student_id` on courses (a course has several students). So you create a table with one row per pairing, `enrolments(student_id, course_id, enrolled_on)`, turning one many-to-many into two one-to-manys. The bridge often carries its own facts, such as the enrolment date or a grade.
+
+## Example
+
+Harbourline's shipments-to-payments relationship is **one-to-many**, and optional on the payments side. How many payments do shipments have?
+
+```sql run
+SELECT payments_per_shipment, COUNT(*) AS shipments
+FROM (
+  SELECT s.shipment_id, COUNT(p.payment_id) AS payments_per_shipment
+  FROM shipments AS s
+  LEFT JOIN payments AS p ON p.shipment_id = s.shipment_id
+  GROUP BY s.shipment_id
+)
+GROUP BY payments_per_shipment
+ORDER BY payments_per_shipment;
+```
+
+Some shipments have 0 payments (not yet paid, or cancelled), most have 1, and some have 2. The model has to allow all three, which it does because payments is its own table.
+
+## Walkthrough
+
+For each pair of entities, ask two questions **in both directions**:
+
+1. *Can one A have many Bs?* and *Can one B have many As?*
+   - Yes / No → one-to-many (FK on B).
+   - Yes / Yes → many-to-many (bridge table).
+   - No / No → one-to-one.
+2. *Must every A have a B?* (mandatory or optional at each end)
+
+Ashgrove Chambers, the law firm: can a client have many matters? Yes. Can a matter have many clients? In this data, no, so it's one-to-many and `matters.client_id` is the foreign key. (If the firm often acted for several clients jointly on one matter, it would need a `matter_clients` bridge.)
+
+## Practice
+
+```exercise
+{
+  "id": "dmo-04-p1",
+  "prompt": "How many Harbourline shipments have **no** payment at all? Return one number.",
+  "starter": "SELECT COUNT(*)\nFROM shipments AS s\nLEFT JOIN payments AS p ON p.shipment_id = s.shipment_id\nWHERE ",
+  "solution": "SELECT COUNT(*) FROM shipments AS s LEFT JOIN payments AS p ON p.shipment_id = s.shipment_id WHERE p.payment_id IS NULL;",
+  "hint": "Shipments with no matching payment have NULL in p.payment_id after the LEFT JOIN.",
+  "required": true
+}
+```
+
+```exercise
+{
+  "id": "dmo-04-p2",
+  "prompt": "How many shipments were paid in **exactly two** payments? Return one number.",
+  "starter": "",
+  "solution": "SELECT COUNT(*) FROM (SELECT shipment_id FROM payments GROUP BY shipment_id HAVING COUNT(*) = 2);",
+  "hint": "Group payments by shipment_id, keep groups with HAVING COUNT(*) = 2, then count those groups in an outer query.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "dmo-04-p3",
+  "prompt": "A hospital: a doctor treats many patients, and a patient sees many doctors. What is the name for the extra table you need? (Two words.)",
+  "answer": "bridge table",
+  "accept": ["junction table", "link table", "associative table", "bridging table", "join table", "linking table"],
+  "format": "text",
+  "explanation": "A bridge (or junction) table such as appointments(doctor_id, patient_id, appointment_date) resolves the many-to-many.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "One product can appear on many order lines; each order line has one product. What is the relationship?",
+    "options": ["One-to-one", "One-to-many from products to order lines", "Many-to-many", "No relationship"],
+    "answer": 1,
+    "explanation": "The foreign key product_id sits on order lines, the many side."
+  },
+  {
+    "prompt": "In crow's-foot notation, what does a small circle at the end of a line mean?",
+    "options": ["Exactly one", "Zero is allowed (optional)", "A primary key", "A deleted row"],
+    "answer": 1,
+    "explanation": "The circle means the relationship is optional at that end."
+  },
+  {
+    "prompt": "Why not store several course IDs in one column of the students table, like '101, 204, 318'?",
+    "options": ["It's too long", "It breaks one-value-per-cell; use a bridge table with one row per student per course", "Course IDs must be text", "SQL forbids commas"],
+    "answer": 1,
+    "explanation": "Lists in a cell can't be joined, counted or validated properly."
+  }
+]
+```
+$md$, true, true, 4, array['dmo-04-p1', 'dmo-04-p2', 'dmo-04-p3']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position)
+values ('dmo-m05', 'data-modelling', 'Entity-Relationship Diagrams', 5)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('data-modelling:entity-relationship-diagrams', 'data-modelling', 'dmo-m05', 'entity-relationship-diagrams', 'Entity-relationship diagrams', 'Read and draw ERDs in crow''s-foot notation, and use one to plan any query across several tables.', 30, $md$
+## The problem
+
+A new analyst at Harbourline is asked: *"How much has each industry paid us?"* The answer needs three tables: industry is on customers, payments are on payments, and the only connection between them is shipments. Without a map, the analyst guesses at joins. With an **entity-relationship diagram (ERD)**, the path is visible in seconds.
+
+## The concept
+
+An **ERD** draws a data model:
+
+- a **box** per entity (table), listing its attributes (columns), with keys marked;
+- a **line** per relationship, from a primary key to the foreign keys that point at it;
+- **line endings** showing cardinality (crow's-foot notation).
+
+Here is Harbourline's full ERD:
+
+![Harbourline Freight's entity-relationship diagram: employees, customers, shipments, routes and payments, with crow's-foot lines for manages, reports to, books, used by and paid by.](/images/courses/sql/harbourline-erd.svg "Harbourline Freight. Follow any line to see which columns join two tables.")
+
+**Reading one line, both ways.** Take the line between customers and shipments:
+
+- From customers: *one customer books **zero or many** shipments* (circle + crow's foot at the shipments end).
+- From shipments: *each shipment is booked by **exactly one** customer* (two bars at the customers end).
+
+**A line back to the same table.** `employees.manager_id` points to `employees.employee_id`: a *self-relationship* (each employee reports to zero or one manager). This is how organisation charts are stored.
+
+**Tools for drawing ERDs:** draw.io (diagrams.net, free), dbdiagram.io, Lucidchart, Microsoft Visio, or the diagram features in SSMS, MySQL Workbench and Power BI's Model view. Paper works too; the notation matters more than the tool.
+
+## Example
+
+*"How much has each industry paid us?"* On the diagram, walk from **customers** (industry) → **shipments** (via `customer_id`) → **payments** (via `shipment_id`). Each step is one JOIN:
+
+```sql run
+SELECT c.industry, SUM(p.amount) AS total_paid
+FROM customers AS c
+JOIN shipments AS s ON s.customer_id = c.customer_id
+JOIN payments  AS p ON p.shipment_id = s.shipment_id
+GROUP BY c.industry
+ORDER BY total_paid DESC;
+```
+
+## Walkthrough
+
+Drawing an ERD from scratch, for Ashgrove Chambers:
+
+1. **Boxes:** clients, matters, hearings, invoices.
+2. **Keys:** `client_id`, `matter_id`, `hearing_id`, `invoice_id` as primary keys.
+3. **Lines:** clients → matters (a client has many matters: FK `matters.client_id`); matters → hearings (FK `hearings.matter_id`); matters → invoices (FK `invoices.matter_id`).
+4. **Endings:** a matter must have one client (bars); a client may have zero matters (circle, crow's foot); a matter may have zero hearings (non-litigation work like contract review never goes to court).
+5. **Check with a question:** *"Overdue amount per client"* → clients → matters → invoices. Two joins, no gaps. ✓
+
+You'll draw this ERD properly in the final project.
+
+## Practice
+
+```exercise
+{
+  "id": "dmo-05-p1",
+  "prompt": "Follow the diagram: return each **route's origin** and the **number of payments** received for shipments on that route. Two columns, one row per origin.",
+  "starter": "SELECT r.origin, COUNT(p.payment_id) AS payments\nFROM routes AS r\n",
+  "solution": "SELECT r.origin, COUNT(p.payment_id) AS payments FROM routes AS r JOIN shipments AS s ON s.route_id = r.route_id JOIN payments AS p ON p.shipment_id = s.shipment_id GROUP BY r.origin;",
+  "hint": "routes → shipments on route_id, shipments → payments on shipment_id, then GROUP BY r.origin.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "dmo-05-p2",
+  "prompt": "Harbourline wants to record **which employee packed each shipment** (one packer per shipment). Which table gets the new foreign key column?",
+  "answer": "shipments",
+  "accept": ["shipment", "the shipments table"],
+  "format": "text",
+  "hint": "One employee packs many shipments; each shipment has one packer. The key goes on the many side.",
+  "explanation": "Add shipments.packed_by_employee_id, a foreign key to employees.employee_id.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "On an ERD line, two short bars at one end mean:",
+    "options": ["Zero or many", "Exactly one", "Zero or one", "Many-to-many"],
+    "answer": 1,
+    "explanation": "Bars mean one; a circle would make it optional; a crow's foot means many."
+  },
+  {
+    "prompt": "employees.manager_id points to employees.employee_id. What is this called?",
+    "options": ["A bridge table", "A self-relationship (recursive relationship)", "A composite key", "An orphan"],
+    "answer": 1,
+    "explanation": "A table relating to itself stores hierarchies such as reporting lines."
+  },
+  {
+    "prompt": "How many JOINs does a query from customers to payments need in Harbourline?",
+    "options": ["One", "Two", "Three", "None"],
+    "answer": 1,
+    "explanation": "customers → shipments → payments: two lines on the diagram, two joins."
+  }
+]
+```
+$md$, true, true, 5, array['dmo-05-p1', 'dmo-05-p2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position)
+values ('dmo-m06', 'data-modelling', 'Normalisation', 6)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('data-modelling:normalisation', 'data-modelling', 'dmo-m06', 'normalisation', 'Normalisation', 'Remove repetition step by step - first, second and third normal form - so every fact is stored exactly once.', 35, $md$
+## The problem
+
+Kolanut's old invoice sheet had one row per product sold, with the customer's name and city and the product's category typed on every row. Peace Provisions' city appeared on every line of every invoice. When they moved, some rows were updated and others weren't. That's an **update anomaly**, and a flat sheet makes it almost inevitable.
+
+## The concept
+
+**Normalisation** reorganises tables so each fact lives in exactly one place. It prevents three problems:
+
+| Anomaly | What goes wrong | Kolanut example |
+| :-- | :-- | :-- |
+| **Update** | A fact changed in some rows but not others | Half the rows say Kano, half say Abuja |
+| **Insert** | You can't record something until something else exists | A new product can't be added until someone buys it |
+| **Delete** | Removing one row erases an unrelated fact | Deleting the only invoice for a product loses its category |
+
+It's done in steps called **normal forms**:
+
+1. **First normal form (1NF):** one value per cell, no repeating groups (no `product1`, `product2`, `product3` columns), and a key for every row.
+2. **Second normal form (2NF):** 1NF, and every non-key column depends on the **whole** key. In a line table keyed by `(invoice_id, product_id)`, `invoice_date` depends only on `invoice_id`, so it moves to an invoices table.
+3. **Third normal form (3NF):** 2NF, and no non-key column depends on **another non-key column**. `customer_city` depends on `customer`, not on the invoice, so it moves to a customers table.
+
+A memory aid: every non-key column should depend on **the key, the whole key, and nothing but the key**.
+
+![Before: a flat invoice sheet with repeated customer, city, product and category values shaded. After: customers, invoices, invoice_lines and products tables joined by keys.](/images/courses/modelling/normalisation.svg "The same data, before and after normalising to third normal form.")
+
+**What stays on the line?** `unit_price` stays on `invoice_lines` even though products have a list price. The price *charged* is a fact about that sale (discounts, the January 2026 price rise), not about the product. Deciding which facts belong to which entity is the judgement at the heart of normalisation.
+
+## Example
+
+Kolanut's `customers.csv` stores the sales rep's name on every customer row. Should reps be their own table?
+
+```dataset
+{ "dataset": "sales", "files": ["customers"] }
+```
+
+There are only a few reps, each named on many customers. If a rep's surname changed, it would need updating on every one of their customers. In a fully normalised operational database, `sales_reps(rep_id, rep_name, region)` becomes its own table and customers keep a `rep_id`.
+
+For **analysis**, though, a rep name on the customer table is often fine, as the next lesson explains.
+
+## Walkthrough
+
+Normalising a flat sheet, in order:
+
+1. **Find the grain and key** of the flat sheet: here `(invoice, product)`.
+2. **Split out repeating facts about the first key part**: invoice date and customer → `invoices`.
+3. **Split out facts that depend on a non-key column**: customer city → `customers`; product category → `products`.
+4. **Keep facts about the combination** on the line table: quantity, price charged.
+5. **Add foreign keys** so the tables join back together.
+6. **Test:** can you rebuild the original sheet with joins? You should get exactly the same rows.
+
+## Practice
+
+```answer
+{
+  "id": "dmo-06-p1",
+  "prompt": "In the flat sheet in the diagram, how many times is Peace Provisions' city (Kano) stored? And after normalising? Give the **first** number.",
+  "answer": 3,
+  "format": "number",
+  "tolerance": 0,
+  "explanation": "Three times in the flat sheet (invoices 501, 501 and 503), once after normalising, in the customers table.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "dmo-06-p2",
+  "prompt": "How many different sales reps appear in Kolanut's `customers.csv`? That's how many rows a `sales_reps` table would have.",
+  "answer": 6,
+  "format": "number",
+  "dataset": "sales",
+  "files": ["customers"],
+  "verify": "SELECT COUNT(DISTINCT sales_rep) FROM customers",
+  "hint": "Count the distinct values in the sales_rep column: remove duplicates or use UNIQUE / COUNTUNIQUE.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "A table has columns phone1, phone2, phone3. Which normal form does it break?",
+    "options": ["First (repeating group)", "Second", "Third", "None"],
+    "answer": 0,
+    "explanation": "Repeating groups break 1NF. Use a phones table with one row per phone number."
+  },
+  {
+    "prompt": "In invoice_lines keyed by (invoice_id, product_id), where should invoice_date go?",
+    "options": ["Stay on invoice_lines", "Move to invoices, because it depends only on invoice_id", "Move to products", "Delete it"],
+    "answer": 1,
+    "explanation": "It depends on part of the key, which breaks 2NF."
+  },
+  {
+    "prompt": "Why keep unit_price on invoice_lines when products has a list_price?",
+    "options": ["It's a mistake", "The price charged on that sale can differ from the current list price", "To make the table bigger", "Because SQL requires it"],
+    "answer": 1,
+    "explanation": "It's a fact about the sale, not about the product."
+  }
+]
+```
+$md$, true, true, 6, array['dmo-06-p1', 'dmo-06-p2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position)
+values ('dmo-m07', 'data-modelling', 'Dimensional Modelling', 7)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('data-modelling:dimensional-modelling', 'data-modelling', 'dmo-m07', 'dimensional-modelling', 'Dimensional modelling', 'Model for analysis with facts and dimensions, choose the grain first, and build the star schema that Power BI works best with.', 35, $md$
+## The problem
+
+A normalised database is ideal for *recording* business: each fact once, easy to update. But a report that asks *"revenue by region, category and month"* may need six or seven joins through it. Analytics models are shaped differently: around the **events you measure** and the **ways you slice them**. That's **dimensional modelling**.
+
+## The concept
+
+A dimensional model has two kinds of table:
+
+| | Fact table | Dimension table |
+| :-- | :-- | :-- |
+| Holds | Events and their **numbers** | **Descriptions** used to filter and group |
+| Examples | Order lines, payments, hearings, attendance | Date, customer, product, sales rep, court |
+| Columns | Foreign keys + measures (quantity, revenue) | A key + text attributes (name, region, category) |
+| Shape | Long and narrow: many rows | Short and wide: fewer rows, more columns |
+
+Put together, the fact sits in the middle and the dimensions around it: a **star schema**.
+
+![A star schema: fact_order_lines in the centre with date_key, customer_key, product_key and rep_key foreign keys plus quantity, unit_price, discount_pct and revenue; dim_date, dim_customer, dim_product and dim_sales_rep around it, each joined one-to-many to the fact.](/images/courses/modelling/star-schema.svg "Kolanut's sales as a star schema. The grain of the fact table is stated first.")
+
+**Kimball's four steps** (from Ralph Kimball, who popularised the method):
+
+1. **Choose the business process**: taking orders.
+2. **Declare the grain**: one row per product on one order.
+3. **Identify the dimensions**: when (date), who (customer, rep), what (product).
+4. **Identify the facts**: quantity, price, discount, revenue.
+
+**Grain first, always.** Every measure in the fact table must be true at that grain. `credit_limit` is a fact about a customer, not an order line; put it in the fact table and summing it across lines would multiply it.
+
+**Dimensions are allowed to repeat.** `dim_customer` can hold `region` and `sales_rep` as text, even though that repeats values a normalised database would split out. Analysts filter by them constantly; one join is worth the repetition.
+
+## Example
+
+You've already built one. In the Power BI course, Kolanut's model looks like this:
+
+![Power BI Model view with products, orders and customers: orders in the middle, related one-to-many to products and customers.](/images/courses/powerbi/model-view.webp "Power BI's Model view of Kolanut's data: orders is the fact table (2) and products (1) and customers (3) are dimensions.")
+
+`orders` is the fact table; `products` and `customers` are dimensions. Add a date table (as the Power BI course does) and you have a complete star.
+
+## Walkthrough
+
+Designing a star for Ashgrove Chambers' **billing**:
+
+1. **Process:** issuing invoices.
+2. **Grain:** one row per invoice.
+3. **Dimensions:** date issued, client, matter (with practice area and responsible lawyer), status.
+4. **Facts:** amount billed, days to pay (for paid invoices).
+5. **Questions it answers:** billed per practice area per month; overdue amount per client; average days to pay by lawyer.
+
+A second star for **court work** would have a different grain (one row per hearing), sharing the date, client and matter dimensions. Shared dimensions are called **conformed** dimensions: they let you compare billing and hearings side by side.
+
+## Practice
+
+```answer
+{
+  "id": "dmo-07-p1",
+  "prompt": "For analysing Ashgrove Chambers' **billing**, which of its four tables (clients, matters, hearings, invoices) is the fact table?",
+  "answer": "invoices",
+  "accept": ["invoice", "the invoices table"],
+  "format": "text",
+  "explanation": "Invoices are the events with a number to add up (amount_ngn); clients and matters describe them.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "dmo-07-p2",
+  "prompt": "How many rows would that billing fact table have? (Count the rows in `invoices.csv`.)",
+  "answer": 410,
+  "format": "number",
+  "dataset": "legal",
+  "files": ["invoices"],
+  "verify": "SELECT COUNT(*) FROM invoices",
+  "hint": "Grain: one row per invoice.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Which column belongs in a dimension table rather than a fact table?",
+    "options": ["quantity", "revenue", "product category", "discount amount"],
+    "answer": 2,
+    "explanation": "Category describes the product; you filter and group by it rather than add it up."
+  },
+  {
+    "prompt": "What should you decide first when designing a fact table?",
+    "options": ["The colours of the report", "The grain", "The number of dimensions", "The database product"],
+    "answer": 1,
+    "explanation": "Every measure must be true at the grain, so it comes first."
+  },
+  {
+    "prompt": "Billing and hearings fact tables both use the same client and matter dimensions. What are these shared dimensions called?",
+    "options": ["Snowflaked", "Conformed dimensions", "Bridge tables", "Surrogate keys"],
+    "answer": 1,
+    "explanation": "Conformed dimensions let two processes be compared on the same terms."
+  }
+]
+```
+$md$, true, true, 7, array['dmo-07-p1', 'dmo-07-p2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position)
+values ('dmo-m08', 'data-modelling', 'Stars, Snowflakes, Dates and History', 8)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('data-modelling:star-snowflake-and-history', 'data-modelling', 'dmo-m08', 'star-snowflake-and-history', 'Stars, snowflakes, dates and history', 'When to snowflake a dimension, why every model needs a date dimension, and how to keep history when attributes change.', 35, $md$
+## The problem
+
+On 1 April 2026, Peace Provisions moved from Kano (North West) to Abuja (North Central). If you simply update their region, every order they placed in 2025 now reports as North Central, and the North West's history quietly shrinks. Models for analysis must decide what happens to history when descriptions change.
+
+## The concept
+
+**Star or snowflake?**
+
+![Two layouts. Star: fact_order_lines joined to dim_product, which has category as a column. Snowflake: dim_product joined further to a dim_category table.](/images/courses/modelling/star-vs-snowflake.svg "A snowflake splits a dimension into further tables.")
+
+- In a **star**, each dimension is one table, even if values repeat (category written on every product).
+- In a **snowflake**, dimensions are normalised further (products point to a categories table).
+
+For Power BI and most analytics, **prefer the star**: fewer relationships, simpler filters, faster queries. Snowflake only when a sub-dimension is large, shared, or maintained separately.
+
+**The date dimension.** Every model with dates needs its own date table: one row per day, with year, quarter, month name, month number, week, weekday and flags such as *is_working_day* or *is_public_holiday*. It lets you:
+
+- group consistently (every report's "Q2" means the same thing);
+- show days with no sales (a fact table can't show what didn't happen);
+- mark Nigerian public holidays and see their effect on orders;
+- use time intelligence in DAX (year-to-date, same period last year).
+
+**Slowly changing dimensions (SCDs)** are the standard answers to "what happens when an attribute changes?":
+
+| Type | Method | History | Use when |
+| :-- | :-- | :-- | :-- |
+| **Type 1** | Overwrite the value | Lost | Corrections (a misspelt name) |
+| **Type 2** | Add a new row with valid-from / valid-to dates; the fact points to the row that was current at the time | Kept | Changes that matter for reporting (region, rep, price band) |
+| **Type 3** | Add a "previous value" column | Only one step back | Rare: a single planned reorganisation |
+
+![Type 1 overwrites Peace Provisions' region to North Central in a single row. Type 2 keeps two rows for customer 13: key 13 North West valid until 31 March 2026, and key 91 North Central from 1 April 2026, marked current.](/images/courses/modelling/slowly-changing-dimensions.svg "Type 1 overwrites; type 2 adds a row, so old orders keep their old region.")
+
+Type 2 is why dimensions use **surrogate keys**: customer 13 now has two rows, so the fact table can't use `customer_id` alone to know which version applied.
+
+## Example
+
+What difference would it make at Kolanut? Revenue for the North West in H1 2025 was ₦31.1m. If a large North West customer moved region and the dimension were type 1, their 2025 orders would move with them, and the H1 2025 figure for North West would shrink after the fact. Last year's board report would no longer match this year's rerun. Type 2 keeps both reports true.
+
+## Walkthrough
+
+Choosing the SCD type, attribute by attribute, for Kolanut's customers:
+
+1. `customer_name`: corrected spellings → **type 1**.
+2. `region` and `city`: real moves, and regional reporting matters → **type 2**.
+3. `sales_rep`: reassignment changes commission and performance reports → **type 2**.
+4. `credit_limit`: finance only needs the current value → **type 1**.
+5. Record the decision in the model documentation, so everyone knows which history the reports show.
+
+## Practice
+
+```answer
+{
+  "id": "dmo-08-p1",
+  "prompt": "Which slowly-changing-dimension type keeps full history by adding a new row? (Type the number.)",
+  "answer": 2,
+  "format": "number",
+  "tolerance": 0,
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "dmo-08-p2",
+  "prompt": "A date dimension covering 1 January 2025 to 31 December 2026 has one row per day. How many rows does it have?",
+  "answer": 730,
+  "format": "number",
+  "tolerance": 0,
+  "hint": "Neither 2025 nor 2026 is a leap year.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why is a star usually preferred over a snowflake in Power BI?",
+    "options": ["Snowflakes can't have measures", "Fewer relationships make filters simpler and queries faster", "Stars use less storage in every case", "Power BI can't import snowflakes"],
+    "answer": 1,
+    "explanation": "Each extra hop is another relationship for filters to travel through."
+  },
+  {
+    "prompt": "A customer's name was misspelt when they signed up. Which SCD type fits the correction?",
+    "options": ["Type 1: overwrite", "Type 2: add a row", "Type 3: previous-value column", "None"],
+    "answer": 0,
+    "explanation": "A correction isn't a real change worth keeping history for."
+  },
+  {
+    "prompt": "Why can't the fact table in a type 2 model join on customer_id alone?",
+    "options": ["customer_id is text", "The same customer_id can now have several rows; the surrogate key picks the version that applied", "Joins are slower on IDs", "It can, always"],
+    "answer": 1,
+    "explanation": "Surrogate keys identify each version of the customer."
+  }
+]
+```
+$md$, true, true, 8, array['dmo-08-p1', 'dmo-08-p2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position)
+values ('dmo-m09', 'data-modelling', 'Modelling in Practice', 9)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('data-modelling:modelling-in-practice', 'data-modelling', 'dmo-m09', 'modelling-in-practice', 'Modelling in practice', 'A repeatable process for designing a model, turning it into tables, and testing it with real queries before anyone builds a report on it.', 40, $md$
+## The problem
+
+You've learned the pieces: entities, keys, relationships, normalisation, stars. At work, the job arrives as a sentence: *"Can we get a dashboard of our law firm's workload and billing?"* This lesson puts the pieces in order, from that sentence to a model you can trust.
+
+## The concept
+
+![Five steps: questions, entities, attributes and keys, relationships, test.](/images/courses/modelling/design-steps.svg "The design process. Steps 2 to 4 are what you've practised; steps 1 and 5 are what separate a good model from a pretty diagram.")
+
+1. **List the questions** the model must answer. Write them down with the people who'll ask them.
+2. **Identify the entities** from the nouns in those questions.
+3. **Define attributes and keys**, with data types and grain.
+4. **Connect the relationships** with cardinality, and resolve many-to-manys.
+5. **Test** by loading real data and running the questions as queries.
+
+**Documentation that matters:** one line per table stating its grain, the key, where the data comes from, and any rule (such as "region is type 2").
+
+## Example
+
+Turning a model into tables. This creates a tiny version of Kolanut's product and category tables in the practice database, loads three rows, and joins them. It uses temporary tables, which disappear when you reset the database:
+
+```sql run
+CREATE TEMP TABLE IF NOT EXISTS categories (
+  category_id   INTEGER PRIMARY KEY,
+  category_name TEXT NOT NULL UNIQUE
+);
+CREATE TEMP TABLE IF NOT EXISTS products (
+  product_id   INTEGER PRIMARY KEY,
+  product_name TEXT NOT NULL,
+  category_id  INTEGER NOT NULL REFERENCES categories (category_id),
+  list_price   INTEGER CHECK (list_price > 0)
+);
+INSERT OR IGNORE INTO categories VALUES (1, 'Beverages'), (2, 'Snacks');
+INSERT OR IGNORE INTO products VALUES
+  (1, 'Malt drink 330ml (24)', 1, 14800),
+  (2, 'Bottled water 75cl (12)', 1, 4000),
+  (7, 'Cabin biscuits (24)', 2, 6600);
+SELECT p.product_name, c.category_name, p.list_price
+FROM products AS p
+JOIN categories AS c ON c.category_id = p.category_id;
+```
+
+Each line of the model became a rule the database enforces: `PRIMARY KEY` (unique, present), `NOT NULL` (mandatory), `REFERENCES` (a foreign key), `CHECK` (a business rule), `UNIQUE` (no duplicate category names).
+
+## Walkthrough
+
+**Step 5, testing, on Harbourline.** Before trusting a model, run these checks. You've met each one in this course:
+
+| Check | Query pattern | Expect |
+| :-- | :-- | :-- |
+| Keys are unique | `COUNT(*)` vs `COUNT(DISTINCT key)` | Equal |
+| Keys are present | `WHERE key IS NULL` | No rows |
+| No orphans | LEFT JOIN child to parent, parent key IS NULL | No rows |
+| Optional relationships are really optional | Count children with no parent, or parents with no children | Explainable numbers |
+| Totals reconcile | Total in the model = total in the source | Equal |
+| The questions run | Each question from step 1 as a query | Sensible answers |
+
+A model that passes these is ready for a dashboard. A model that doesn't will produce a dashboard nobody trusts.
+
+## Practice
+
+```exercise
+{
+  "id": "dmo-09-p1",
+  "prompt": "Totals reconcile? Return, in one row, the **total freight charged** on Delivered shipments and the **total amount paid** across all payments, as two columns. (They won't match exactly: some shipments are unpaid or part-paid, and seeing by how much is the point.)",
+  "starter": "SELECT\n  (SELECT SUM(freight_charge) FROM shipments WHERE status = 'Delivered') AS charged,\n  ",
+  "solution": "SELECT (SELECT SUM(freight_charge) FROM shipments WHERE status = 'Delivered') AS charged, (SELECT SUM(amount) FROM payments) AS paid;",
+  "hint": "Two scalar subqueries side by side in one SELECT.",
+  "required": true
+}
+```
+
+```exercise
+{
+  "id": "dmo-09-p2",
+  "prompt": "Keys are unique? For `shipments`, return the row count and the number of distinct shipment IDs as two columns.",
+  "starter": "",
+  "solution": "SELECT COUNT(*), COUNT(DISTINCT shipment_id) FROM shipments;",
+  "hint": "COUNT(*) and COUNT(DISTINCT shipment_id).",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "What is the first step in designing a model?",
+    "options": ["Drawing the boxes", "Listing the questions it must answer", "Choosing colours", "Writing CREATE TABLE statements"],
+    "answer": 1,
+    "explanation": "Questions decide which entities, attributes and grain you need."
+  },
+  {
+    "prompt": "Which constraint enforces a foreign key?",
+    "options": ["CHECK", "UNIQUE", "REFERENCES", "DEFAULT"],
+    "answer": 2,
+    "explanation": "REFERENCES other_table(column) makes the database reject orphans."
+  },
+  {
+    "prompt": "Why test a model with real queries before building a dashboard?",
+    "options": ["It's faster to build dashboards first", "Key, orphan and reconciliation problems show up as wrong numbers later, when they're far harder to trace", "Dashboards can't use models", "Queries fix the data automatically"],
+    "answer": 1,
+    "explanation": "Checks at the model stage are cheap; wrong dashboards are expensive."
+  }
+]
+```
+
+When you've finished, take the final assessment, then start the final project from the course page.
+$md$, true, true, 9, array['dmo-09-p1', 'dmo-09-p2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 
 -- Course: Power BI Fundamentals
 insert into public.courses (id, slug, code, title, summary, description, category_id, difficulty, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, passing_score, position)
-values ('power-bi-fundamentals', 'power-bi-fundamentals', 'PBI', 'Power BI Fundamentals', 'Build a data model, write DAX measures and design a dashboard people can use to run a business.', 'Power BI turns data into dashboards. Learn the full workflow: import and clean data with Power Query, relate tables in a model, write DAX measures, and design a dashboard that tells a clear business story.', 'business-intelligence', 'beginner', 'Beginner to intermediate', 12, true, 'available', true, array['Power Query', 'Data modelling and relationships', 'DAX measures', 'Dashboard design', 'Publishing reports']::text[], array['Power BI Desktop (free, Windows only)', 'Basic Excel is helpful: the Excel course covers it']::text[], 'Ashgrove Chambers practice dashboard', true, true, true, true, 70, 3)
+values ('power-bi-fundamentals', 'power-bi-fundamentals', 'PBI', 'Power BI Fundamentals', 'Build a data model, write DAX measures and design a dashboard people can use to run a business.', 'Power BI turns data into dashboards. Learn the full workflow: import and clean data with Power Query, relate tables in a model, write DAX measures, and design a dashboard that tells a clear business story.', 'business-intelligence', 'beginner', 'Beginner to intermediate', 12, true, 'available', true, array['Power Query', 'Data modelling and relationships', 'DAX measures', 'Dashboard design', 'Publishing reports']::text[], array['Power BI Desktop (free, Windows only)', 'Basic Excel is helpful: the Excel course covers it']::text[], 'Ashgrove Chambers practice dashboard', true, true, true, true, 70, 4)
 on conflict (id) do update set slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, passing_score = excluded.passing_score, position = excluded.position;
 
 insert into public.course_modules (id, course_id, title, position)
@@ -4914,6 +6247,17 @@ Power BI Desktop opens to a blank canvas and a lot of panes. New users click aro
 
 ## Example
 
+This is Power BI Desktop with a new, empty report:
+
+![Power BI Desktop in Report view with an empty report, showing the view icons on the left, the ribbon, the Visualizations, Filters and Data panes, and the page tabs.](/images/courses/powerbi/blank-report.webp "Power BI Desktop, Report view. Your version may show a few more or fewer ribbon buttons.")
+
+1. **View switcher**: Report, Table, Model, DAX query and TMDL view, top to bottom.
+2. **Ribbon**: File and the Home, Insert, Modeling, View… tabs. **Get data** and **Transform data** live on Home.
+3. **Visualizations pane**: pick a visual type, then fill its wells (Values, Axis…) below.
+4. **Filters pane** (collapsed here): click to open it.
+5. **Data pane** (collapsed here): your tables, columns and measures appear here once data is loaded.
+6. **Page tabs**: one per report page; **+** adds a page.
+
 A new visual, step by step: in Report view, tick `revenue` in the Data pane and Power BI creates a column chart with one bar. Then tick `region` and it becomes revenue by region. The fields you tick land in the wells of the selected visual; changing the visual type in the Visualizations pane keeps the same fields.
 
 ## Walkthrough
@@ -4926,6 +6270,21 @@ A new visual, step by step: in Report view, tick `revenue` in the Data pane and 
 
 > [!TIP]
 > If a visual shows the same number for every category, the table holding the category usually isn't related to the table holding the number. You'll fix that in Model view in lesson 6. It's the most common beginner problem in Power BI.
+
+**Handy shortcuts in Power BI Desktop**
+
+| Keys | Does |
+| :-- | :-- |
+| Ctrl + S | Save |
+| Ctrl + Z / Ctrl + Y | Undo / redo (in Report view) |
+| Ctrl + C, Ctrl + V | Copy and paste a visual, formatting included |
+| Ctrl + click | Select several visuals at once |
+| Enter | Confirm a formula in the formula bar |
+| Shift + Enter | New line inside a DAX formula |
+| Esc | Cancel a formula edit |
+
+> [!NOTE]
+> The Power Query Editor has no undo for transformations. To take one back, delete its step from **Applied Steps** (the ✕ beside it).
 
 ## Practice
 
@@ -5021,12 +6380,27 @@ Kolanut's files, once loaded:
 ## Walkthrough
 
 1. Open `kolanut-sales.pbix` from the last lesson.
-2. **Home → Get data → Text/CSV** → choose `orders.csv` → **Open**.
-3. In the preview, check the delimiter is **Comma** and the columns look right. Click **Load**.
+2. **Home → Get data**. The full list of sources opens:
+
+   ![The Get Data dialog with a search box, source categories on the left and a list of connectors including Text/CSV, and a Connect button.](/images/courses/powerbi/get-data.webp "Get Data. Type in the search box (1) to find a connector quickly.")
+
+   Choose **Text/CSV** (2), then **Connect** (3), and pick `orders.csv`.
+3. Power BI shows a preview:
+
+   ![The Power BI preview of orders.csv, with File Origin, Delimiter and Data Type Detection settings above the data, and Load and Transform Data buttons.](/images/courses/powerbi/csv-preview.webp "The CSV preview: encoding (1), delimiter (2), type detection (3), a sample of rows (4), and Load or Transform Data (5).")
+
+   Check the delimiter is **Comma** and the columns look right. Click **Load**.
 4. Repeat for `customers.csv` and `products.csv`.
-5. Switch to **Table view**. Select each table in the Data pane and read the row count at the bottom of the window.
+5. Switch to **Table view**. Select each table in the Data pane and read the row count at the bottom of the window:
+
+   ![Table view in Power BI Desktop showing the orders table's rows, with the Data pane listing customers, orders and products, and the status bar reading Table: orders (4,266 rows).](/images/courses/powerbi/table-view.webp "Table view (1): the rows of the selected table (2), the tables in the model (3), and the row count (4): 4,266 for orders.")
 6. Click the `order_date` column and check **Column tools → Data type** says **Date**.
 7. Save.
+
+> [!TIP]
+> Loading several tables from one Excel workbook? **Get data → Excel workbook** opens the **Navigator**, where you tick every table you want in one go:
+>
+> ![The Navigator window with customers, orders and products ticked and a preview of the products table.](/images/courses/powerbi/navigator.webp "The Navigator: tick the tables (1), check the preview (2), then Load or Transform Data (3).")
 
 > [!TIP]
 > If the files will live in one folder and grow over time (a new CSV each month), **Get data → Folder** combines every file in the folder into one table. Refreshing then picks up new files automatically.
@@ -5127,6 +6501,17 @@ The orders table has quantity, price and discount, but no revenue. You could cal
 
 **Close & Apply** (Home) saves your steps and loads the result into the model.
 
+This is the Power Query Editor with Kolanut's three queries:
+
+![The Power Query Editor showing the Queries pane, the formula bar with M code, column quality bars, the Applied Steps list and the status bar.](/images/courses/powerbi/power-query-editor.webp "The Power Query Editor.")
+
+1. **Queries pane**: one query per table.
+2. **Formula bar**: the M code for the selected step.
+3. **Column quality**: Valid, Error and Empty percentages for each column.
+4. **Applied Steps**: every change, in order.
+5. **Status bar**: *Column profiling based on top 1000 rows*. Click it to profile the whole table.
+6. **The ribbon**: Home, Transform and **Add Column** hold the transformations.
+
 ## Example
 
 The revenue custom column, in M:
@@ -5146,7 +6531,12 @@ You don't have to type that: the Custom Column dialog writes it. In the dialog y
 1. **Home → Transform data**. Select the `orders` query.
 2. **View** → tick **Column quality** and **Column distribution**, then switch profiling to the entire data set. All columns should be 100% valid.
 3. **Add Column → Custom Column**. Name: `revenue`. Formula: as above. OK.
-4. Click the `ABC123` icon on the new column's header → **Decimal Number** (or Fixed decimal number, good for currency).
+
+   ![The Custom Column dialog with the name revenue and the formula quantity times unit_price times one minus discount_pct over 100, and the message No syntax errors have been detected.](/images/courses/powerbi/custom-column.webp "The Custom Column dialog: name (1), formula (2), the column list you can double-click to insert names (3), and the syntax check (4).")
+
+4. Click the `ABC123` icon on the new column's header → **Decimal Number** (or Fixed decimal number, good for currency). The result:
+
+   ![The orders query with the new revenue column typed as a decimal number, the Table.AddColumn formula in the formula bar and Added Custom in Applied Steps.](/images/courses/powerbi/added-custom.webp "The new step's M code (1), the revenue column (2), and the two new Applied Steps (3): Added Custom, then Changed Type1 for the type change.")
 5. **Merge** the product category in:
    - With `orders` selected, **Home → Merge Queries**.
    - Choose `products` as the second table; click `product_id` in both; Join Kind **Left Outer**. OK.
@@ -5242,6 +6632,8 @@ Kolanut's customer list exported from its old system has stray spaces, random ca
 **Replace Values** (Transform → Replace Values) swaps one value for another in a column: `SW` → `South West`. For many variants, it's cleaner to lower-case and trim first, which collapses `Lagos`, `LAGOS` and `lagos ` into one, then replace what's left.
 
 **Types with a locale.** Right-click a column → **Change Type → Using Locale…** Choose the type and the *locale the data was written in*. **English (United Kingdom)** reads `01/09/2022` as 1 September. The same step handles ISO dates like `2023-07-11` and text like `5-Mar-2024`.
+
+![The data type menu of a Power Query column header, listing Decimal Number, Fixed decimal number, Whole Number and others, with Using Locale at the bottom.](/images/courses/powerbi/type-menu.webp "Click the type icon on any column header for this menu. Decimal Number is at the top (1); Using Locale is at the bottom (2).")
 
 **Errors.** When a type change fails on some rows, those cells show **Error**. Right-click the column → **Replace Errors**, or better, find out why first with **Keep Rows → Keep Errors**.
 
@@ -5368,6 +6760,12 @@ products ─1───* orders *───1─ Date
 Filters flow from dimensions into the fact table. Put fields from **dimensions** on axes and slicers, and numbers from the **fact** table in values.
 
 ## Example
+
+Here is Kolanut's model in **Model view**, with the relationships Power BI detected when the tables were loaded:
+
+![Model view in Power BI Desktop showing the products, orders and customers tables, with a one-to-many line from products to orders and another from customers to orders.](/images/courses/powerbi/model-view.webp "Kolanut's model: products (1), orders (2) and customers (3), with two one-to-many relationships (4, 5). Model view is the third icon on the left (6).")
+
+Read each line: the **1** sits beside the table where each ID appears once (`products`, `customers`); the **\*** (many) sits beside `orders`. The small arrow on the line shows the filter direction: from the one side into orders.
 
 With the relationship `customers[customer_id] (1) → orders[customer_id] (*)`:
 
@@ -6962,6 +8360,132 @@ values ('pbiq15', 1, 'RLS filters rows per user based on roles.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 
+-- Assessment: Data Modelling: final assessment
+insert into public.assessments (id, course_id, title, passing_score, published)
+values ('data-modelling-final', 'data-modelling', 'Data Modelling: final assessment', 70, true)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dmoq01', 'data-modelling-final', 1, 'At which level of a data model are data types such as INT and DATE decided?', '["Conceptual","Logical","Physical","None of the levels"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dmoq01', 2, 'Data types belong to a specific database, so they''re physical.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dmoq02', 'data-modelling-final', 2, 'An attendance table has one row per employee per working day. What is this statement called?', '["The primary key","The grain","The cardinality","The schema"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dmoq02', 1, 'The grain says what one row represents.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dmoq03', 'data-modelling-final', 3, 'Which column is the best primary key for a customers table?', '["customer_name","phone","A system-assigned customer_id","city"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dmoq03', 2, 'A surrogate ID is unique, always present and never changes.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dmoq04', 'data-modelling-final', 4, 'In a one-to-many relationship between customers and orders, where does the foreign key go?', '["On customers","On orders","In a separate table","On both tables"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dmoq04', 1, 'The many side holds the key of the one side.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dmoq05', 'data-modelling-final', 5, 'Students take many courses and courses have many students. How is this modelled?', '["A course_ids column listing IDs on students","A bridge table with one row per student per course","One big table","A self-relationship"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dmoq05', 1, 'A bridge (junction) table turns many-to-many into two one-to-manys.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dmoq06', 'data-modelling-final', 6, 'In crow''s-foot notation, a circle next to a crow''s foot means:', '["Exactly one","Zero or many","One or many","Zero or one"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dmoq06', 1, 'The circle means zero is allowed; the crow''s foot means many.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dmoq07', 'data-modelling-final', 7, 'A shipment row refers to customer_id 999, but no customer 999 exists. What is this row called?', '["A duplicate","An orphan","A composite key","A dimension"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dmoq07', 1, 'It breaks referential integrity and drops out of inner joins.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dmoq08', 'data-modelling-final', 8, 'A table has columns item1, item2, item3. Which normal form does it break?', '["First normal form","Second normal form","Third normal form","It is fully normalised"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dmoq08', 0, 'Repeating groups break 1NF.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dmoq09', 'data-modelling-final', 9, 'In a line table keyed by (invoice_id, product_id), invoice_date depends only on invoice_id. Which rule is broken?', '["1NF","2NF: a column depends on only part of the key","3NF","No rule"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dmoq09', 1, 'Partial dependency on a composite key breaks 2NF.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dmoq10', 'data-modelling-final', 10, 'In a customers table, region depends on city rather than on the customer key. Which normal form does that break?', '["1NF","2NF","3NF: a non-key column depends on another non-key column","None"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dmoq10', 2, 'Transitive dependencies break 3NF.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dmoq11', 'data-modelling-final', 11, 'Which belongs in a fact table?', '["Product category","Customer region","Quantity sold","Sales rep''s name"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dmoq11', 2, 'Facts are the numbers you add up at the fact table''s grain.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dmoq12', 'data-modelling-final', 12, 'What should be decided first when designing a fact table?', '["The dimensions","The grain","The report colours","The database product"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dmoq12', 1, 'Every measure must be true at the grain.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dmoq13', 'data-modelling-final', 13, 'Why is a star schema usually preferred to a snowflake in Power BI?', '["Snowflakes can''t hold numbers","Fewer relationships make filtering simpler and faster","Stars never repeat values","Power BI can''t load snowflakes"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dmoq13', 1, 'Each extra hop is another relationship for filters to travel through.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dmoq14', 'data-modelling-final', 14, 'A customer moves region and old orders must keep reporting under the old region. Which technique?', '["Slowly changing dimension type 1","Slowly changing dimension type 2","Delete and re-add the customer","Store region on the fact table as text only"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dmoq14', 1, 'Type 2 adds a new dimension row and keeps the old one for past facts.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dmoq15', 'data-modelling-final', 15, 'Which check confirms a column can be a primary key?', '["SUM of the column","COUNT(*) equals COUNT(DISTINCT column) and no NULLs","The column is text","The column is the first in the table"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dmoq15', 1, 'A primary key must be unique and never empty.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
 -- Project: Harbourline Freight operations review
 insert into public.projects (id, course_id, title, summary, brief_md, tasks, datasets, required)
 values ('sql-harbourline-review', 'sql-for-data-analysis', 'Harbourline Freight operations review', 'Analyse the operations of a fictional logistics company and report what you find to its leadership team.', $md$Harbourline Freight's leadership team is planning 2027 and has asked for an operations review built from the company database.
@@ -7005,6 +8529,16 @@ Build it in Power BI Desktop from the four legal CSV files. Follow the workflow 
 In the text box, for each item below, describe **what you built** (tables, relationships, measures with their DAX, visuals), **the key numbers** it shows, and **what they mean** for the firm. Finish with **three recommendations** for the managing partner.
 
 For the link, share your work so a reviewer can see it: a Power BI Service link if you have a work account, or a folder (Google Drive, OneDrive or GitHub) with the .pbix file, a PDF export and screenshots.$md$, array['The model: the tables, relationships (with cardinality and direction) and the date table. Include a description or screenshot of Model view.', 'Your measures: at least Open Matters, Adjournment Rate, Billed, Overdue Amount and Collection Rate, with their DAX.', 'Workload: open matters by practice area and by responsible lawyer. Who carries the most open work?', 'Courts: adjournment rate overall, by court and by practice area. Where are adjournments worst?', 'Money: overdue amount by client (top 10) and the collection rate over time.', 'Design: describe your page layout and one design decision you made to make the main message clear.', 'Three recommendations for the managing partner, each linked to a number in your report.']::text[], array['legal']::text[], true)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, required = excluded.required;
+
+
+-- Project: Ashgrove Chambers data model
+insert into public.projects (id, course_id, title, summary, brief_md, tasks, datasets, required)
+values ('dmo-ashgrove-model', 'data-modelling', 'Ashgrove Chambers data model', 'Design the data model for a fictional Lagos law firm: an ERD of its operational data and a star schema for its billing and court reporting.', $md$Ashgrove Chambers keeps its practice data in four files: clients, matters, hearings and invoices. The managing partner wants a reliable model before any dashboard is built.
+
+Design it using the process from *Modelling in practice*. Draw your diagrams with any tool you like: draw.io (diagrams.net), dbdiagram.io, Lucidchart, Power BI's Model view, or neatly on paper and photographed.
+
+In the text box, answer each task below. Put your diagrams in a shared folder (Google Drive, OneDrive or GitHub) and paste the link. Diagrams are the heart of this project, so the link is expected.$md$, array['List five questions the managing partner will want answered (for example: overdue amount per client).', 'Draw the ERD of the four tables: every table''s primary key, foreign keys, and each relationship with crow''s-foot cardinality. State each table''s grain in one sentence.', 'Run key checks on the data: are the primary keys unique? Are there any orphan matters, hearings or invoices? Report the numbers and the queries or steps you used.', 'Identify one normalisation issue or risk in the data as given (for example a column that repeats facts), and say how you''d fix it.', 'Design a star schema for billing: the fact table with its grain, measures and foreign keys, and each dimension with its attributes. Include a date dimension.', 'Choose which dimension attributes should be slowly changing type 1 and which type 2, with one sentence of reasoning each.', 'Explain how your model answers two of the questions from task 1: which tables and joins each one uses.']::text[], array['legal']::text[], true)
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, required = excluded.required;
 
 

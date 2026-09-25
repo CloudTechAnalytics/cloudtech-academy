@@ -67,6 +67,10 @@ Revenue per product, as a small summary table:
 
 Copy the formula down beside product IDs 1 to 16, and you have revenue for every product.
 
+Here it is built on Kolanut's data, with a second column counting order lines:
+
+![A summary table of product IDs 1 to 16 with revenue from SUMIFS and order lines from COUNTIFS; the formula bar shows the SUMIFS formula for product 1.](/images/courses/excel/sumifs.webp "One SUMIFS formula (1), copied down beside the product IDs (2), gives revenue for every product (3). Product 1 brought in ₦59,804,940.")
+
 ## Walkthrough
 
 1. Add a `size` column to the Orders table: `=IF([@quantity]>=20, "Large", "Small")`.

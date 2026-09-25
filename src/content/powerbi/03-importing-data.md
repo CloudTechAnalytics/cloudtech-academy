@@ -40,12 +40,27 @@ Kolanut's files, once loaded:
 ## Walkthrough
 
 1. Open `kolanut-sales.pbix` from the last lesson.
-2. **Home → Get data → Text/CSV** → choose `orders.csv` → **Open**.
-3. In the preview, check the delimiter is **Comma** and the columns look right. Click **Load**.
+2. **Home → Get data**. The full list of sources opens:
+
+   ![The Get Data dialog with a search box, source categories on the left and a list of connectors including Text/CSV, and a Connect button.](/images/courses/powerbi/get-data.webp "Get Data. Type in the search box (1) to find a connector quickly.")
+
+   Choose **Text/CSV** (2), then **Connect** (3), and pick `orders.csv`.
+3. Power BI shows a preview:
+
+   ![The Power BI preview of orders.csv, with File Origin, Delimiter and Data Type Detection settings above the data, and Load and Transform Data buttons.](/images/courses/powerbi/csv-preview.webp "The CSV preview: encoding (1), delimiter (2), type detection (3), a sample of rows (4), and Load or Transform Data (5).")
+
+   Check the delimiter is **Comma** and the columns look right. Click **Load**.
 4. Repeat for `customers.csv` and `products.csv`.
-5. Switch to **Table view**. Select each table in the Data pane and read the row count at the bottom of the window.
+5. Switch to **Table view**. Select each table in the Data pane and read the row count at the bottom of the window:
+
+   ![Table view in Power BI Desktop showing the orders table's rows, with the Data pane listing customers, orders and products, and the status bar reading Table: orders (4,266 rows).](/images/courses/powerbi/table-view.webp "Table view (1): the rows of the selected table (2), the tables in the model (3), and the row count (4): 4,266 for orders.")
 6. Click the `order_date` column and check **Column tools → Data type** says **Date**.
 7. Save.
+
+> [!TIP]
+> Loading several tables from one Excel workbook? **Get data → Excel workbook** opens the **Navigator**, where you tick every table you want in one go:
+>
+> ![The Navigator window with customers, orders and products ticked and a preview of the products table.](/images/courses/powerbi/navigator.webp "The Navigator: tick the tables (1), check the preview (2), then Load or Transform Data (3).")
 
 > [!TIP]
 > If the files will live in one folder and grow over time (a new CSV each month), **Get data → Folder** combines every file in the folder into one table. Refreshing then picks up new files automatically.

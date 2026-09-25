@@ -12,9 +12,10 @@ import path from "node:path";
 import { openDataset, query } from "./lib/csv-db.mjs";
 
 const SQL = await initSqlJs();
+const IMAGE_SIZES = JSON.parse(fs.readFileSync("src/content/image-sizes.json", "utf8"));
 const logistics = new SQL.Database(fs.readFileSync("public/datasets/logistics.sqlite"));
 const CONTENT = "src/content";
-const COURSES = ["sql", "daf", "excel", "powerbi"];
+const COURSES = ["sql", "daf", "excel", "powerbi", "modelling"];
 const SECTIONS = ["## The problem", "## The concept", "## Example", "## Walkthrough", "## Practice", "## Check your understanding"];
 
 let failures = 0;
@@ -47,6 +48,14 @@ for (const course of COURSES) {
     if (!fm || !/title:/.test(fm[1]) || !/minutes:/.test(fm[1]) || !/summary:/.test(fm[1])) fail("front matter needs title, minutes and summary");
     const body = raw.slice(fm ? fm[0].length : 0);
     for (const s of SECTIONS) if (!body.includes(s + "\n")) fail(`missing section "${s}"`);
+
+    // Images: the file exists, has a size in image-sizes.json, and has alt text.
+    for (const m of body.matchAll(/!\[([^\]]*)\]\(([^)\s]+)/g)) {
+      const [, alt, src] = m;
+      if (!alt.trim()) fail(`image ${src} has no alt text`);
+      if (!fs.existsSync(path.join("public", src))) fail(`image ${src} does not exist`);
+      else if (!IMAGE_SIZES[src]) fail(`image ${src} missing from image-sizes.json (run npm run images)`);
+    }
 
     fence(body, "sql run").forEach((q, i) => {
       try {

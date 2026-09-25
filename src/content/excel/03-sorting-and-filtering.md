@@ -41,6 +41,15 @@ To find the biggest single order line: click the `revenue` drop-down → **Sort 
 
 ## Walkthrough
 
+This is what filtering `discount_pct` to 10 looks like:
+
+![The discount_pct filter drop-down open, with only 10 ticked; the status bar reads 525 of 4266 records found.](/images/courses/excel/filter-dropdown.webp "Filtering discount_pct to 10. The row numbers turn blue and skip, a sign that rows are hidden.")
+
+1. **The filter button** on the column header. Once a filter is on, it shows a funnel icon.
+2. **Number Filters**: conditions like *Greater Than* or *Top 10*. Text columns show *Text Filters*; date columns show *Date Filters*.
+3. **The value list**: tick the values to keep. Use the search box above it for long lists.
+4. **The status bar** reports the result: **525 of 4266 records found**.
+
 **How many lines had a 10% discount?**
 
 1. Click the `discount_pct` drop-down, untick *Select All*, tick **10**, OK.
@@ -51,6 +60,15 @@ To find the biggest single order line: click the `revenue` drop-down → **Sort 
 
 1. Open the `order_date` drop-down. Dates are grouped: expand **2025**, untick everything except **December**.
 2. Read the count the same way.
+
+**Shortcuts for sorting and filtering**
+
+| Keys | Does |
+| :-- | :-- |
+| Ctrl + Shift + L | Filters on / off |
+| Alt + ↓ (on a header cell) | Open that column's filter drop-down |
+| Alt, A, S, S | Open the Sort dialog |
+| Alt, A, C | Clear all filters |
 
 ## Practice
 

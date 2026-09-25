@@ -138,7 +138,7 @@ export default function Home() {
               <h2 id="courses-title" className="font-serif text-[2.1rem] leading-[1.1] sm:text-[2.6rem]">
                 Courses
               </h2>
-              <p className="mt-3 max-w-xl text-muted">All four courses are open and free. New to data? Start with Data Analytics Foundations, or go straight to the tool you need.</p>
+              <p className="mt-3 max-w-xl text-muted">All five courses are open and free. New to data? Start with Data Analytics Foundations, or go straight to the tool you need.</p>
             </Reveal>
             <Link to="/courses" className="inline-flex items-center gap-1.5 text-[0.9rem] font-semibold text-ink hover:text-brass-dark">
               All courses <ArrowRight aria-hidden className="h-4 w-4" />

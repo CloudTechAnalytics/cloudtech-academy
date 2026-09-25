@@ -1,0 +1,108 @@
+---
+title: Dimensional modelling
+minutes: 35
+summary: Model for analysis with facts and dimensions, choose the grain first, and build the star schema that Power BI works best with.
+---
+
+## The problem
+
+A normalised database is ideal for *recording* business: each fact once, easy to update. But a report that asks *"revenue by region, category and month"* may need six or seven joins through it. Analytics models are shaped differently: around the **events you measure** and the **ways you slice them**. That's **dimensional modelling**.
+
+## The concept
+
+A dimensional model has two kinds of table:
+
+| | Fact table | Dimension table |
+| :-- | :-- | :-- |
+| Holds | Events and their **numbers** | **Descriptions** used to filter and group |
+| Examples | Order lines, payments, hearings, attendance | Date, customer, product, sales rep, court |
+| Columns | Foreign keys + measures (quantity, revenue) | A key + text attributes (name, region, category) |
+| Shape | Long and narrow: many rows | Short and wide: fewer rows, more columns |
+
+Put together, the fact sits in the middle and the dimensions around it: a **star schema**.
+
+![A star schema: fact_order_lines in the centre with date_key, customer_key, product_key and rep_key foreign keys plus quantity, unit_price, discount_pct and revenue; dim_date, dim_customer, dim_product and dim_sales_rep around it, each joined one-to-many to the fact.](/images/courses/modelling/star-schema.svg "Kolanut's sales as a star schema. The grain of the fact table is stated first.")
+
+**Kimball's four steps** (from Ralph Kimball, who popularised the method):
+
+1. **Choose the business process**: taking orders.
+2. **Declare the grain**: one row per product on one order.
+3. **Identify the dimensions**: when (date), who (customer, rep), what (product).
+4. **Identify the facts**: quantity, price, discount, revenue.
+
+**Grain first, always.** Every measure in the fact table must be true at that grain. `credit_limit` is a fact about a customer, not an order line; put it in the fact table and summing it across lines would multiply it.
+
+**Dimensions are allowed to repeat.** `dim_customer` can hold `region` and `sales_rep` as text, even though that repeats values a normalised database would split out. Analysts filter by them constantly; one join is worth the repetition.
+
+## Example
+
+You've already built one. In the Power BI course, Kolanut's model looks like this:
+
+![Power BI Model view with products, orders and customers: orders in the middle, related one-to-many to products and customers.](/images/courses/powerbi/model-view.webp "Power BI's Model view of Kolanut's data: orders is the fact table (2) and products (1) and customers (3) are dimensions.")
+
+`orders` is the fact table; `products` and `customers` are dimensions. Add a date table (as the Power BI course does) and you have a complete star.
+
+## Walkthrough
+
+Designing a star for Ashgrove Chambers' **billing**:
+
+1. **Process:** issuing invoices.
+2. **Grain:** one row per invoice.
+3. **Dimensions:** date issued, client, matter (with practice area and responsible lawyer), status.
+4. **Facts:** amount billed, days to pay (for paid invoices).
+5. **Questions it answers:** billed per practice area per month; overdue amount per client; average days to pay by lawyer.
+
+A second star for **court work** would have a different grain (one row per hearing), sharing the date, client and matter dimensions. Shared dimensions are called **conformed** dimensions: they let you compare billing and hearings side by side.
+
+## Practice
+
+```answer
+{
+  "id": "dmo-07-p1",
+  "prompt": "For analysing Ashgrove Chambers' **billing**, which of its four tables (clients, matters, hearings, invoices) is the fact table?",
+  "answer": "invoices",
+  "accept": ["invoice", "the invoices table"],
+  "format": "text",
+  "explanation": "Invoices are the events with a number to add up (amount_ngn); clients and matters describe them.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "dmo-07-p2",
+  "prompt": "How many rows would that billing fact table have? (Count the rows in `invoices.csv`.)",
+  "answer": 410,
+  "format": "number",
+  "dataset": "legal",
+  "files": ["invoices"],
+  "verify": "SELECT COUNT(*) FROM invoices",
+  "hint": "Grain: one row per invoice.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Which column belongs in a dimension table rather than a fact table?",
+    "options": ["quantity", "revenue", "product category", "discount amount"],
+    "answer": 2,
+    "explanation": "Category describes the product; you filter and group by it rather than add it up."
+  },
+  {
+    "prompt": "What should you decide first when designing a fact table?",
+    "options": ["The colours of the report", "The grain", "The number of dimensions", "The database product"],
+    "answer": 1,
+    "explanation": "Every measure must be true at the grain, so it comes first."
+  },
+  {
+    "prompt": "Billing and hearings fact tables both use the same client and matter dimensions. What are these shared dimensions called?",
+    "options": ["Snowflaked", "Conformed dimensions", "Bridge tables", "Surrogate keys"],
+    "answer": 1,
+    "explanation": "Conformed dimensions let two processes be compared on the same terms."
+  }
+]
+```

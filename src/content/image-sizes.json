@@ -1,0 +1,142 @@
+{
+ "/images/courses/excel/chart.webp": [
+  1310,
+  620
+ ],
+ "/images/courses/excel/cleaning.webp": [
+  1426,
+  713
+ ],
+ "/images/courses/excel/csv-double-click.webp": [
+  1000,
+  380
+ ],
+ "/images/courses/excel/excel-window.webp": [
+  1426,
+  893
+ ],
+ "/images/courses/excel/filter-dropdown.webp": [
+  1426,
+  893
+ ],
+ "/images/courses/excel/import-messy.webp": [
+  880,
+  660
+ ],
+ "/images/courses/excel/import-preview.webp": [
+  880,
+  660
+ ],
+ "/images/courses/excel/pivot-table.webp": [
+  1426,
+  713
+ ],
+ "/images/courses/excel/remove-duplicates.webp": [
+  820,
+  450
+ ],
+ "/images/courses/excel/revenue-column.webp": [
+  1000,
+  713
+ ],
+ "/images/courses/excel/show-formulas.webp": [
+  950,
+  220
+ ],
+ "/images/courses/excel/sumifs.webp": [
+  900,
+  420
+ ],
+ "/images/courses/excel/xlookup.webp": [
+  1060,
+  713
+ ],
+ "/images/courses/modelling/cardinality.svg": [
+  1180,
+  560
+ ],
+ "/images/courses/modelling/design-steps.svg": [
+  1100,
+  250
+ ],
+ "/images/courses/modelling/entity-anatomy.svg": [
+  1060,
+  470
+ ],
+ "/images/courses/modelling/model-levels.svg": [
+  1180,
+  470
+ ],
+ "/images/courses/modelling/normalisation.svg": [
+  1180,
+  640
+ ],
+ "/images/courses/modelling/slowly-changing-dimensions.svg": [
+  1100,
+  470
+ ],
+ "/images/courses/modelling/star-schema.svg": [
+  1100,
+  640
+ ],
+ "/images/courses/modelling/star-vs-snowflake.svg": [
+  1100,
+  400
+ ],
+ "/images/courses/powerbi/added-custom.webp": [
+  1920,
+  700
+ ],
+ "/images/courses/powerbi/blank-report.webp": [
+  1426,
+  893
+ ],
+ "/images/courses/powerbi/csv-preview.webp": [
+  880,
+  660
+ ],
+ "/images/courses/powerbi/custom-column.webp": [
+  702,
+  445
+ ],
+ "/images/courses/powerbi/get-data.webp": [
+  1920,
+  1032
+ ],
+ "/images/courses/powerbi/model-view.webp": [
+  1360,
+  620
+ ],
+ "/images/courses/powerbi/navigator.webp": [
+  882,
+  702
+ ],
+ "/images/courses/powerbi/power-query-editor.webp": [
+  1920,
+  1032
+ ],
+ "/images/courses/powerbi/table-view.webp": [
+  1920,
+  1032
+ ],
+ "/images/courses/powerbi/type-menu.webp": [
+  840,
+  420
+ ],
+ "/images/courses/sql/harbourline-erd.svg": [
+  1180,
+  700
+ ],
+ "/images/courses/sql/mysql-workbench-layout.svg": [
+  1100,
+  640
+ ],
+ "/images/courses/sql/ssms-object-explorer.webp": [
+  330,
+  590
+ ],
+ "/images/courses/sql/ssms-window.webp": [
+  1430,
+  863
+ ]
+}

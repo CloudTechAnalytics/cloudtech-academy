@@ -35,6 +35,17 @@ Power BI Desktop opens to a blank canvas and a lot of panes. New users click aro
 
 ## Example
 
+This is Power BI Desktop with a new, empty report:
+
+![Power BI Desktop in Report view with an empty report, showing the view icons on the left, the ribbon, the Visualizations, Filters and Data panes, and the page tabs.](/images/courses/powerbi/blank-report.webp "Power BI Desktop, Report view. Your version may show a few more or fewer ribbon buttons.")
+
+1. **View switcher**: Report, Table, Model, DAX query and TMDL view, top to bottom.
+2. **Ribbon**: File and the Home, Insert, Modeling, View… tabs. **Get data** and **Transform data** live on Home.
+3. **Visualizations pane**: pick a visual type, then fill its wells (Values, Axis…) below.
+4. **Filters pane** (collapsed here): click to open it.
+5. **Data pane** (collapsed here): your tables, columns and measures appear here once data is loaded.
+6. **Page tabs**: one per report page; **+** adds a page.
+
 A new visual, step by step: in Report view, tick `revenue` in the Data pane and Power BI creates a column chart with one bar. Then tick `region` and it becomes revenue by region. The fields you tick land in the wells of the selected visual; changing the visual type in the Visualizations pane keeps the same fields.
 
 ## Walkthrough
@@ -47,6 +58,21 @@ A new visual, step by step: in Report view, tick `revenue` in the Data pane and 
 
 > [!TIP]
 > If a visual shows the same number for every category, the table holding the category usually isn't related to the table holding the number. You'll fix that in Model view in lesson 6. It's the most common beginner problem in Power BI.
+
+**Handy shortcuts in Power BI Desktop**
+
+| Keys | Does |
+| :-- | :-- |
+| Ctrl + S | Save |
+| Ctrl + Z / Ctrl + Y | Undo / redo (in Report view) |
+| Ctrl + C, Ctrl + V | Copy and paste a visual, formatting included |
+| Ctrl + click | Select several visuals at once |
+| Enter | Confirm a formula in the formula bar |
+| Shift + Enter | New line inside a DAX formula |
+| Esc | Cancel a formula edit |
+
+> [!NOTE]
+> The Power Query Editor has no undo for transformations. To take one back, delete its step from **Applied Steps** (the ✕ beside it).
 
 ## Practice
 
