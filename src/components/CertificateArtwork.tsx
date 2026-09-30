@@ -15,6 +15,12 @@ const H = 1131; // A4 landscape proportions
 
 /** Long names shrink to fit the line. */
 const nameSize = (name: string) => (name.length > 34 ? 58 : name.length > 26 ? 70 : 84);
+/** "academy.example.com/verify/" and "CTA-SQL-2026-000123". */
+const verifyLines = (url: string) => {
+  const bare = url.replace(/^https?:\/\//, "");
+  const cut = bare.lastIndexOf("/") + 1;
+  return [bare.slice(0, cut), bare.slice(cut)];
+};
 const titleSize = (t: string) => (t.length > 42 ? 40 : 48);
 
 /**
@@ -85,8 +91,12 @@ export const CertificateArtwork = forwardRef<SVGSVGElement, { data: CertificateD
         <text x={W - 200} y="930" textAnchor="end" fontSize="16" letterSpacing="3" fill="#8C6A2C" fontWeight="700">
           VERIFY
         </text>
-        <text x={W - 200} y="966" textAnchor="end" fontSize="19">
-          {data.verifyUrl.replace(/^https?:\/\//, "")}
+        {/* Two lines, so a long address never runs into the credential ID. */}
+        <text x={W - 200} y="962" textAnchor="end" fontSize="19">
+          {verifyLines(data.verifyUrl)[0]}
+        </text>
+        <text x={W - 200} y="990" textAnchor="end" fontSize="19">
+          {verifyLines(data.verifyUrl)[1]}
         </text>
       </g>
 
@@ -102,8 +112,9 @@ export const CertificateArtwork = forwardRef<SVGSVGElement, { data: CertificateD
   );
 });
 
-/** Renders the SVG to a 2x PNG and downloads it. */
-export async function downloadCertificatePng(svg: SVGSVGElement, filename: string) {
+/** Renders an SVG (a certificate or a badge) to a 2x PNG at its viewBox size and downloads it. */
+export async function downloadSvgPng(svg: SVGSVGElement, filename: string) {
+  const { width, height } = svg.viewBox.baseVal;
   const source = new XMLSerializer().serializeToString(svg);
   const url = URL.createObjectURL(new Blob([source], { type: "image/svg+xml;charset=utf-8" }));
   try {
@@ -111,12 +122,12 @@ export async function downloadCertificatePng(svg: SVGSVGElement, filename: strin
     img.decoding = "async";
     await new Promise<void>((resolve, reject) => {
       img.onload = () => resolve();
-      img.onerror = () => reject(new Error("Couldn't draw the certificate."));
+      img.onerror = () => reject(new Error("Couldn't draw the image."));
       img.src = url;
     });
     const canvas = document.createElement("canvas");
-    canvas.width = W * 2;
-    canvas.height = H * 2;
+    canvas.width = (width || W) * 2;
+    canvas.height = (height || H) * 2;
     const ctx = canvas.getContext("2d")!;
     ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
     const blob = await new Promise<Blob | null>((r) => canvas.toBlob(r, "image/png"));
@@ -130,3 +141,5 @@ export async function downloadCertificatePng(svg: SVGSVGElement, filename: strin
     URL.revokeObjectURL(url);
   }
 }
+
+export const downloadCertificatePng = downloadSvgPng;

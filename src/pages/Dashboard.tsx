@@ -4,14 +4,16 @@ import { Award, BookOpen, CheckCircle2 } from "lucide-react";
 import { useSeo } from "@/lib/seo";
 import { useAuth, PageLoading, RequireAuth } from "@/lib/auth";
 import { useCourses } from "@/lib/data";
-import { getBackend, type Certificate, type Enrollment, type Progress } from "@/lib/backend";
+import { getBackend, type AttemptResult, type Certificate, type Enrollment, type Progress } from "@/lib/backend";
 import { publishedLessons } from "@/lib/certificates";
 import { formatDate, percent } from "@/lib/format";
 import { ButtonLink } from "@/components/Button";
 import { CourseCard } from "@/components/CourseCard";
 import { ProgressBar } from "@/components/ProgressBar";
+import { CourseBadges } from "@/components/CourseBadges";
+import { earnedBadges } from "@/lib/badges";
 
-type Row = { enrollment: Enrollment; progress: Progress };
+type Row = { enrollment: Enrollment; progress: Progress; attempts: AttemptResult[] };
 
 function DashboardInner() {
   const auth = useAuth();
@@ -23,8 +25,16 @@ function DashboardInner() {
     void (async () => {
       const b = await getBackend();
       const [enrollments, certificates] = await Promise.all([b.listEnrollments(), b.listMyCertificates()]);
-      const progress = await Promise.all(enrollments.map((e) => b.getProgress(e.courseId)));
-      setRows(enrollments.map((enrollment, i) => ({ enrollment, progress: progress[i] })));
+      const [progress, attempts] = await Promise.all([
+        Promise.all(enrollments.map((e) => b.getProgress(e.courseId))),
+        Promise.all(
+          enrollments.map(async (e) => {
+            const a = await b.getAssessment(e.courseId);
+            return a ? b.listAttempts(a.id) : [];
+          }),
+        ),
+      ]);
+      setRows(enrollments.map((enrollment, i) => ({ enrollment, progress: progress[i], attempts: attempts[i] })));
       setCerts(certificates);
     })().catch(() => setRows([]));
   }, []);
@@ -40,7 +50,7 @@ function DashboardInner() {
       const lessons = publishedLessons(course);
       const done = lessons.filter((l) => r.progress.completedLessons.includes(l.id)).length;
       const resume = lessons.find((l) => l.id === r.enrollment.lastLessonId) ?? lessons.find((l) => !r.progress.completedLessons.includes(l.id)) ?? lessons[0];
-      return { course, done, total: lessons.length, resume, enrollment: r.enrollment };
+      return { course, done, total: lessons.length, resume, enrollment: r.enrollment, badges: earnedBadges(course, r.progress, r.attempts) };
     })
     .filter((x) => x !== null);
   const enrolledIds = new Set(active.map((a) => a.course.id));
@@ -113,6 +123,20 @@ function DashboardInner() {
           </ul>
         )}
       </section>
+
+      {active.length > 0 && (
+        <section className="mt-14" aria-labelledby="my-badges">
+          <h2 id="my-badges" className="font-serif text-[1.7rem]">
+            Badges
+          </h2>
+          <p className="mt-1 text-muted">Earn a badge at each stage of a course, and share it on LinkedIn.</p>
+          <ul className="mt-5 grid gap-4">
+            {active.map((a) => (
+              <CourseBadges key={a.course.id} course={a.course} earned={a.badges} recipientName={auth.user.fullName} />
+            ))}
+          </ul>
+        </section>
+      )}
 
       {certs.length > 0 && (
         <section className="mt-14" aria-labelledby="my-certs">
