@@ -37,10 +37,10 @@ export const XLS_ASSESSMENT: AssessmentDef = {
     },
     {
       id: "xlsq05",
-      prompt: "A column has 50 numbers, 10 text values and 5 blanks. What does =COUNTA() of it return?",
-      options: ["50", "55", "60", "65"],
-      answer: 2,
-      explanation: "COUNTA counts every non-empty cell: 50 + 10 = 60.",
+      prompt: "What does =COUNTA() count?",
+      options: ["Only cells with numbers", "Every cell that isn't empty", "Only empty cells", "Only cells with text"],
+      answer: 1,
+      explanation: "COUNTA counts non-empty cells, whether they hold numbers or text. COUNT counts numbers only.",
     },
     {
       id: "xlsq06",
@@ -63,10 +63,10 @@ export const XLS_ASSESSMENT: AssessmentDef = {
     },
     {
       id: "xlsq08",
-      prompt: "How do you write a SUMIFS condition for dates on or after 1 October 2025?",
-      options: ["\">=1/10/2025\"", "\">=\"&DATE(2025,10,1)", ">=DATE(2025,10,1)", "\"DATE>=2025-10-01\""],
+      prompt: "What does SUMIFS do that SUMIF can't?",
+      options: ["Add up numbers", "Add up using more than one condition", "Count text values", "Sort a column"],
       answer: 1,
-      explanation: "Join the operator as text to a real date made with DATE().",
+      explanation: "SUMIFS takes several conditions, for example region is Lagos and channel is Wholesale.",
     },
     {
       id: "xlsq09",
@@ -77,10 +77,10 @@ export const XLS_ASSESSMENT: AssessmentDef = {
     },
     {
       id: "xlsq10",
-      prompt: "Why is VLOOKUP(A2, Sheet2!A:F, 4, FALSE) considered fragile?",
-      options: ["It only works on numbers", "Inserting a column in the lookup range shifts what column 4 points to", "FALSE returns approximate matches", "It can't search more than 4 columns"],
+      prompt: "Why is XLOOKUP usually safer than VLOOKUP?",
+      options: ["It is shorter to type", "You point it at the return column directly, so inserting a column doesn't break it", "It only works with numbers", "It never needs a lookup value"],
       answer: 1,
-      explanation: "The hard-coded column number doesn't adjust when the table's layout changes.",
+      explanation: "VLOOKUP uses a column number such as 4, which points at the wrong column if one is inserted.",
     },
     {
       id: "xlsq11",

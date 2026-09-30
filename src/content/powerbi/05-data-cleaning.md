@@ -104,10 +104,10 @@ Look at **Applied Steps**: that list is your cleaning log.
     "explanation": "Power Query compares text case-sensitively."
   },
   {
-    "prompt": "The raw file mixes 01/09/2022 and 2022-09-01. How do you convert both to the right date?",
-    "options": ["Change Type → Date", "Change Type → Using Locale → Date, English (United Kingdom)", "Replace '/' with '-'", "Leave them as text"],
-    "answer": 1,
-    "explanation": "The locale tells Power Query the day comes first."
+    "prompt": "Dates like 01/09/2022 load as 9 January instead of 1 September. What should you set when changing the type?",
+    "options": ["The locale, e.g. English (United Kingdom)", "The font", "The chart type", "The column width"],
+    "answer": 0,
+    "explanation": "Change Type → Using Locale reads the dates day-first."
   },
   {
     "prompt": "Why is Power Query cleaning better than cleaning by hand when a new export arrives every month?",

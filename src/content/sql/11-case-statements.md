@@ -111,10 +111,10 @@ GROUP BY r.mode;
     "explanation": "Each cancelled row contributes 1 and every other row 0, so the sum is a count."
   },
   {
-    "prompt": "A CASE tests WHEN containers >= 3 THEN 'Medium' before WHEN containers >= 6 THEN 'Large'. What happens to an 8-container shipment?",
-    "options": ["Large", "Medium", "NULL", "Both"],
-    "answer": 1,
-    "explanation": "The first true condition wins, and 8 >= 3 is true, so it's labelled Medium. Test the narrowest condition first."
+    "prompt": "In what order does CASE check its WHEN conditions?",
+    "options": ["Top to bottom, stopping at the first one that's true", "Bottom to top", "All at once, using the last match", "In random order"],
+    "answer": 0,
+    "explanation": "So put the most specific condition first, for example containers >= 6 before containers >= 3."
   }
 ]
 ```

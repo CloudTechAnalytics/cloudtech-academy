@@ -122,10 +122,10 @@ ORDER BY month;
 ```quiz
 [
   {
-    "prompt": "Why does SELECT customer_id, city, COUNT(*) FROM customers GROUP BY customer_id work, but the same with GROUP BY city fail in most databases?",
-    "options": ["city isn't a real column", "Each city group contains many customer_ids, so one can't be chosen", "COUNT(*) can't be used with city", "It works in both cases everywhere"],
-    "answer": 1,
-    "explanation": "Every selected column must be grouped or aggregated. A city group holds several customer_ids, so the database can't show just one. (SQLite is lenient and picks one anyway, which can quietly give misleading results.)"
+    "prompt": "What does GROUP BY city do?",
+    "options": ["Makes one group, and one result row, per city", "Sorts the rows by city", "Deletes duplicate cities from the table", "Keeps only one city"],
+    "answer": 0,
+    "explanation": "Each distinct city becomes one group, so aggregates like COUNT(*) give one value per city."
   },
   {
     "prompt": "Where does GROUP BY go?",

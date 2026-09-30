@@ -124,10 +124,10 @@ A three-page structure that works:
     "explanation": "Only hearings that took place can have an outcome."
   },
   {
-    "prompt": "Invoices, hearings and matters all have dates. How can one Date table serve them all?",
-    "options": ["It can't", "One active relationship plus inactive ones, activated in measures with USERELATIONSHIP", "Merge all tables into one", "Use three separate date tables always"],
-    "answer": 1,
-    "explanation": "USERELATIONSHIP turns on an inactive relationship for a single calculation."
+    "prompt": "Invoices, hearings and matters all have dates. What's the simplest way to filter them all by date?",
+    "options": ["One shared Date table related to each of them", "A separate calendar for every visual", "Typing the dates into each chart", "Deleting the extra date columns"],
+    "answer": 0,
+    "explanation": "One Date table can serve all of them; USERELATIONSHIP switches on an extra relationship when a measure needs it."
   },
   {
     "prompt": "Why check measures against known values before designing pages?",

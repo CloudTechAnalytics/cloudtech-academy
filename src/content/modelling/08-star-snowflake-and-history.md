@@ -95,10 +95,10 @@ Choosing the SCD type, attribute by attribute, for Kolanut's customers:
     "explanation": "A correction isn't a real change worth keeping history for."
   },
   {
-    "prompt": "Why can't the fact table in a type 2 model join on customer_id alone?",
-    "options": ["customer_id is text", "The same customer_id can now have several rows; the surrogate key picks the version that applied", "Joins are slower on IDs", "It can, always"],
-    "answer": 1,
-    "explanation": "Surrogate keys identify each version of the customer."
+    "prompt": "With type 2 history, one customer can have several rows in the customer table. What tells each version apart?",
+    "options": ["A separate surrogate key, one per version", "The customer's name", "The row colour", "Nothing, they're duplicates"],
+    "answer": 0,
+    "explanation": "Each version gets its own surrogate key, and the fact table stores the key of the version that applied."
   }
 ]
 ```

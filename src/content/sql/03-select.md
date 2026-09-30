@@ -111,10 +111,10 @@ Harbourline runs three transport modes, so you get three rows.
     "explanation": "An alias only renames the column in your result. The table itself is unchanged."
   },
   {
-    "prompt": "In SQLite, what does SELECT 7 / 2 return?",
-    "options": ["3.5", "3", "4", "An error"],
-    "answer": 1,
-    "explanation": "Dividing two whole numbers gives a whole number, so the .5 is dropped. Use 7 / 2.0 to get 3.5."
+    "prompt": "In SQLite, SELECT 7 / 2 returns 3 because both numbers are whole. How do you get 3.5?",
+    "options": ["SELECT 7 / 2.0", "SELECT 7 // 2", "SELECT ROUND(7 / 2)", "You can't"],
+    "answer": 0,
+    "explanation": "Making one of the numbers a decimal, such as 2.0, gives a decimal result."
   },
   {
     "prompt": "SELECT DISTINCT city FROM customers returns…",

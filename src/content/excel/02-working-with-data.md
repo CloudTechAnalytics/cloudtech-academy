@@ -116,10 +116,10 @@ To get the total, click in any empty cell and type:
 ```quiz
 [
   {
-    "prompt": "A cell shows 19% but its value is 0.1874. What will =A1*100 return?",
-    "options": ["19", "18.74", "0.19", "1900"],
-    "answer": 1,
-    "explanation": "Formatting changes the display, not the stored value."
+    "prompt": "A cell shows 19%, but the value stored in it is 0.1874. What will a formula that uses this cell work with?",
+    "options": ["0.1874, the stored value", "19, the displayed number", "0.19", "Nothing, it's text"],
+    "answer": 0,
+    "explanation": "Formatting only changes how a value looks. Formulas always use the stored value."
   },
   {
     "prompt": "What does [@quantity] mean in a Table formula?",

@@ -131,10 +131,10 @@ Category = RELATED ( products[category] )
     "explanation": "DIVIDE handles division by zero gracefully."
   },
   {
-    "prompt": "In a table visual with one row per region, how many times is the Revenue measure calculated?",
-    "options": ["Once for the whole table", "Once per row (region), plus once for the total", "Never, it's stored", "Once per order line"],
-    "answer": 1,
-    "explanation": "Each cell has its own filter context, and the total row has the unfiltered one."
+    "prompt": "In a table with one row per region, the Revenue measure shows a different number on each row. Why?",
+    "options": ["Each row filters the measure to its own region", "The measure is broken", "Each row uses a different measure", "The numbers are random"],
+    "answer": 0,
+    "explanation": "A measure is recalculated for each row's filter. That's called filter context."
   }
 ]
 ```

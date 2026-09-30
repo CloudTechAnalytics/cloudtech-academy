@@ -157,10 +157,10 @@ The same summary with results showing: total revenue ₦830,541,245, 58,757 pack
     "explanation": "B2 is relative and moves; $D$1 is absolute and stays."
   },
   {
-    "prompt": "A column has 100 cells: 90 numbers, 5 text entries, 5 blanks. What does COUNT return?",
-    "options": ["100", "95", "90", "5"],
-    "answer": 2,
-    "explanation": "COUNT only counts numbers. COUNTA would return 95."
+    "prompt": "What does =COUNT() count?",
+    "options": ["Cells that contain numbers", "Every cell in the range", "Empty cells", "Cells that contain text"],
+    "answer": 0,
+    "explanation": "COUNT counts numbers only. COUNTA counts every non-empty cell."
   },
   {
     "prompt": "A formula shows #VALUE!. What is the most likely cause?",

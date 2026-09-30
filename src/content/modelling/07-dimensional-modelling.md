@@ -100,10 +100,10 @@ A second star for **court work** would have a different grain (one row per heari
     "explanation": "Every measure must be true at the grain, so it comes first."
   },
   {
-    "prompt": "Billing and hearings fact tables both use the same client and matter dimensions. What are these shared dimensions called?",
-    "options": ["Snowflaked", "Conformed dimensions", "Bridge tables", "Surrogate keys"],
-    "answer": 1,
-    "explanation": "Conformed dimensions let two processes be compared on the same terms."
+    "prompt": "Billing and hearings fact tables both use the same client and matter tables. Why is sharing them useful?",
+    "options": ["One filter, like a client, works across both fact tables", "It makes the tables bigger", "It hides the fact tables", "It removes the need for keys"],
+    "answer": 0,
+    "explanation": "Shared (conformed) dimensions let one slicer filter every fact table that uses them."
   }
 ]
 ```

@@ -99,15 +99,20 @@ Without it, every row shows ₦830.5m.
 [
   {
     "prompt": "Which column should you use on the axis of a 'revenue by region' chart?",
-    "options": ["orders[customer_id]", "customers[region]", "orders[revenue]", "products[category]"],
+    "options": [
+      "orders[customer_id]",
+      "customers[region]",
+      "orders[revenue]",
+      "products[category]"
+    ],
     "answer": 1,
     "explanation": "Group by fields from the dimension table; the relationship carries the filter to orders."
   },
   {
-    "prompt": "What does a Single cross-filter direction from customers to orders mean?",
-    "options": ["Orders can filter customers only", "Selecting customers filters their orders", "No filtering happens", "Both directions, always"],
-    "answer": 1,
-    "explanation": "Filters flow from the one side (customers) to the many side (orders)."
+    "prompt": "A relationship filters from customers to orders. What happens when you pick a region in a slicer?",
+    "options": ["Only that region's customers' orders are shown", "Nothing changes", "The slicer is deleted", "All regions are shown"],
+    "answer": 0,
+    "explanation": "The filter flows from customers (the one side) to their orders (the many side)."
   },
   {
     "prompt": "In a star schema, what sits at the centre?",

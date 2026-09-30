@@ -106,10 +106,10 @@ FROM customers;
 ```quiz
 [
   {
-    "prompt": "The customers table has 120 rows and 8 of them have no account manager. What does COUNT(account_manager_id) return?",
-    "options": ["120", "112", "8", "NULL"],
-    "answer": 1,
-    "explanation": "COUNT(column) skips NULLs, so it counts the 112 customers who do have a manager."
+    "prompt": "Which rows does COUNT(account_manager_id) skip?",
+    "options": ["Rows where account_manager_id is NULL", "Rows where account_manager_id is a number", "The first row", "None, it counts every row"],
+    "answer": 0,
+    "explanation": "COUNT(column) counts only non-NULL values. COUNT(*) counts every row."
   },
   {
     "prompt": "How many rows does SELECT SUM(amount) FROM payments return?",

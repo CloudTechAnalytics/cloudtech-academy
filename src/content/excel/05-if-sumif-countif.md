@@ -148,10 +148,10 @@ Check step 4 with a filter (order_date in 2026, discount_pct not 0). Two methods
 ```quiz
 [
   {
-    "prompt": "In SUMIFS, which argument comes first?",
-    "options": ["The first condition", "The range to add up", "The range to test", "The number of conditions"],
-    "answer": 1,
-    "explanation": "SUMIFS(sum_range, criteria_range1, criteria1, …). SUMIF puts the sum range last, which catches people out."
+    "prompt": "In =SUMIFS(H:H, D:D, \"Lagos\"), which column is added up?",
+    "options": ["H:H", "D:D", "\"Lagos\"", "None of them"],
+    "answer": 0,
+    "explanation": "The first argument of SUMIFS is always the range to add up; the pairs after it are the conditions."
   },
   {
     "prompt": "What does =COUNTIFS(A:A, \"Lagos\", B:B, \">100000\") count?",
@@ -160,10 +160,10 @@ Check step 4 with a filter (order_date in 2026, discount_pct not 0). Two methods
     "explanation": "Every condition in COUNTIFS must be true for a row to count."
   },
   {
-    "prompt": "Which is the correct way to use a date in a SUMIFS condition?",
-    "options": ["\">=1/10/2025\"", "\">=\"&DATE(2025,10,1)", ">=DATE(2025,10,1)", "\"DATE(2025,10,1)\""],
-    "answer": 1,
-    "explanation": "Join the operator (as text) to a real date with &. Typed dates depend on regional settings."
+    "prompt": "In a SUMIFS condition, what does \">=100000\" mean?",
+    "options": ["100,000 or more", "Less than 100,000", "Exactly 100,000", "Not 100,000"],
+    "answer": 0,
+    "explanation": ">= means greater than or equal to."
   }
 ]
 ```

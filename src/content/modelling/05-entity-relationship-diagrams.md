@@ -97,10 +97,10 @@ You'll draw this ERD properly in the final project.
     "explanation": "A table relating to itself stores hierarchies such as reporting lines."
   },
   {
-    "prompt": "How many JOINs does a query from customers to payments need in Harbourline?",
-    "options": ["One", "Two", "Three", "None"],
-    "answer": 1,
-    "explanation": "customers → shipments → payments: two lines on the diagram, two joins."
+    "prompt": "To go from customers to payments in Harbourline, you pass through shipments. How many JOINs is that?",
+    "options": ["Two: customers → shipments → payments", "One", "Three", "None"],
+    "answer": 0,
+    "explanation": "Each step between two tables is one JOIN."
   }
 ]
 ```

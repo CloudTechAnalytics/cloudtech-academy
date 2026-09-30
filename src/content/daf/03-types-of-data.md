@@ -111,10 +111,10 @@ Open `orders.csv` in Google Sheets (File → Import → Upload) or Excel (File �
 ```quiz
 [
   {
-    "prompt": "Which column is qualitative and ordinal?",
+    "prompt": "Which column is ordinal: categories that have a natural order?",
     "options": ["Region", "Job level (Junior, Mid, Senior, Manager)", "Monthly salary", "Employee ID"],
     "answer": 1,
-    "explanation": "Job levels are categories with a natural order. Region is a category without an order."
+    "explanation": "Job levels are categories that go in order. Regions have no order, and salary and IDs aren't categories."
   },
   {
     "prompt": "What is wrong with averaging the customer_id column?",

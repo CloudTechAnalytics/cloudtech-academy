@@ -139,10 +139,10 @@ The customers at the top of this list are the ones who haven't booked for longes
     "explanation": "GROUP BY collapses rows into one per group; a window function adds a calculated column and keeps the detail."
   },
   {
-    "prompt": "Three customers tie for second place. Which function gives ranks 1, 2, 2, 2, 5?",
-    "options": ["ROW_NUMBER()", "RANK()", "DENSE_RANK()", "LAG()"],
-    "answer": 1,
-    "explanation": "RANK gives tied rows the same number, then skips ahead. DENSE_RANK would give 1, 2, 2, 2, 3."
+    "prompt": "Which function numbers the rows 1, 2, 3, 4… with no ties, even when values are equal?",
+    "options": ["ROW_NUMBER()", "SUM()", "COUNT()", "AVG()"],
+    "answer": 0,
+    "explanation": "ROW_NUMBER gives every row its own number. RANK and DENSE_RANK give tied rows the same rank."
   },
   {
     "prompt": "What does PARTITION BY customer_id do in ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY booking_date)?",

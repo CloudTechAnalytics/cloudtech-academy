@@ -19,15 +19,10 @@ export const SQL_ASSESSMENT: AssessmentDef = {
     },
     {
       id: "sqlq02",
-      prompt: "Which WHERE clause finds shipments that have not been delivered yet and were not cancelled?",
-      options: [
-        "WHERE status <> 'Delivered' OR status <> 'Cancelled'",
-        "WHERE status NOT IN ('Delivered', 'Cancelled')",
-        "WHERE status = 'Delivered' AND status = 'Cancelled'",
-        "WHERE status IS NULL",
-      ],
+      prompt: "Which WHERE clause keeps shipments whose status is neither 'Delivered' nor 'Cancelled'?",
+      options: ["WHERE status = 'Delivered'", "WHERE status NOT IN ('Delivered', 'Cancelled')", "WHERE status IN ('Delivered', 'Cancelled')", "ORDER BY status"],
       answer: 1,
-      explanation: "NOT IN excludes both values. The OR version is true for every row, because no status can equal both.",
+      explanation: "NOT IN excludes every value in the list.",
     },
     {
       id: "sqlq03",
@@ -45,10 +40,10 @@ export const SQL_ASSESSMENT: AssessmentDef = {
     },
     {
       id: "sqlq05",
-      prompt: "payments has 2,409 rows, all with an amount. What does SELECT COUNT(*), SUM(amount) FROM payments; return?",
-      options: ["2,409 rows", "One row", "One row per method", "An error, because of mixing functions"],
-      answer: 1,
-      explanation: "Aggregates without GROUP BY collapse everything into one row.",
+      prompt: "What does SELECT COUNT(*) FROM payments; return?",
+      options: ["One row with the number of payments", "One row for each payment", "No rows", "An error"],
+      answer: 0,
+      explanation: "Without GROUP BY, an aggregate like COUNT(*) returns a single row.",
     },
     {
       id: "sqlq06",
@@ -59,22 +54,17 @@ export const SQL_ASSESSMENT: AssessmentDef = {
     },
     {
       id: "sqlq07",
-      prompt: "Which query keeps only customers with more than 20 shipments?",
-      options: [
-        "SELECT customer_id FROM shipments WHERE COUNT(*) > 20 GROUP BY customer_id;",
-        "SELECT customer_id FROM shipments GROUP BY customer_id HAVING COUNT(*) > 20;",
-        "SELECT customer_id FROM shipments HAVING customer_id > 20;",
-        "SELECT customer_id FROM shipments GROUP BY customer_id WHERE COUNT(*) > 20;",
-      ],
+      prompt: "After GROUP BY customer_id, which keyword keeps only customers with more than 20 shipments?",
+      options: ["WHERE", "HAVING", "ORDER BY", "LIMIT"],
       answer: 1,
-      explanation: "Conditions on aggregates go in HAVING, after GROUP BY.",
+      explanation: "WHERE filters rows before grouping; HAVING filters the groups, so it can use COUNT(*).",
     },
     {
       id: "sqlq08",
-      prompt: "In what order does the database process these clauses?",
-      options: ["SELECT, FROM, WHERE, GROUP BY", "FROM, WHERE, GROUP BY, HAVING, SELECT, ORDER BY", "WHERE, FROM, HAVING, GROUP BY", "ORDER BY, GROUP BY, WHERE, FROM"],
-      answer: 1,
-      explanation: "Rows are read and filtered, then grouped and filtered as groups, then selected and sorted. That's why WHERE can't use aggregates.",
+      prompt: "In which order do you write the clauses of a query?",
+      options: ["SELECT … FROM … WHERE … GROUP BY … ORDER BY", "FROM … SELECT … ORDER BY … WHERE", "WHERE … SELECT … FROM … GROUP BY", "ORDER BY … GROUP BY … WHERE … SELECT"],
+      answer: 0,
+      explanation: "SELECT, FROM, WHERE, GROUP BY, HAVING, ORDER BY, LIMIT.",
     },
     {
       id: "sqlq09",
@@ -85,10 +75,10 @@ export const SQL_ASSESSMENT: AssessmentDef = {
     },
     {
       id: "sqlq10",
-      prompt: "A join between shipments (2,683 rows) and customers (120 rows) returns 321,960 rows. What went wrong?",
-      options: ["Nothing, that's expected", "The ON condition is missing or wrong", "LIMIT is missing", "There are duplicate customers"],
-      answer: 1,
-      explanation: "2,683 × 120 = 321,960: every shipment was paired with every customer.",
+      prompt: "A join returns far more rows than either table has. What is the most likely cause?",
+      options: ["The ON condition is missing or wrong", "The tables are too small", "ORDER BY is missing", "The column names are in capitals"],
+      answer: 0,
+      explanation: "Without a correct ON condition, every row is matched with every row of the other table.",
     },
     {
       id: "sqlq11",
@@ -111,10 +101,10 @@ export const SQL_ASSESSMENT: AssessmentDef = {
     },
     {
       id: "sqlq13",
-      prompt: "You join shipments to payments and then SUM(freight_charge) per customer. Some shipments were paid in two instalments. What's the risk?",
-      options: ["No risk", "Those charges are counted twice", "Those shipments disappear", "The query fails"],
+      prompt: "A shipment was paid in two instalments, so it has two rows in payments. You join shipments to payments and add up freight_charge. What happens to that shipment's charge?",
+      options: ["It is counted once", "It is counted twice", "It disappears", "The query fails"],
       answer: 1,
-      explanation: "The join makes one row per payment, so the charge repeats. Aggregate each table separately, for example in CTEs, then join the totals.",
+      explanation: "The join repeats the shipment row for each payment, so its charge is added twice.",
     },
     {
       id: "sqlq14",

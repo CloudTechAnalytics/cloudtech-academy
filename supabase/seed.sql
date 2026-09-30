@@ -41,7 +41,7 @@ on conflict (id) do update set name = excluded.name, description = excluded.desc
 
 -- Course: Data Analytics Foundations
 insert into public.courses (id, slug, code, title, summary, description, category_id, difficulty, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, passing_score, position)
-values ('data-analytics-foundations', 'data-analytics-foundations', 'DAF', 'Data Analytics Foundations', 'What data analytics is, how businesses use data to decide, and the core skills you need to start.', 'Learn what data analytics is, how businesses use data to make decisions, and the core skills required to begin a career in data analytics. The course ends with your first small analytics project.', 'data-analytics', 'beginner', 'Beginner', 6, true, 'available', true, array['How organizations use data', 'Types of data', 'Databases, cleaning and analysis', 'Visualization and business intelligence', 'Going from a question to an insight']::text[], array['No experience needed', 'A spreadsheet program: Google Sheets (free with a Google account) or Microsoft Excel']::text[], 'Kolanut people review', true, true, true, true, 70, 0)
+values ('data-analytics-foundations', 'data-analytics-foundations', 'DAF', 'Data Analytics Foundations', 'What data analytics is, how businesses use data to decide, and the core skills you need to start.', 'Learn what data analytics is, how businesses use data to make decisions, and the core skills required to begin a career in data analytics. The course ends with your first small analytics project.', 'data-analytics', 'beginner', 'Beginner', 6, true, 'available', true, array['How organizations use data', 'Types of data', 'Databases, cleaning and analysis', 'Visualization and business intelligence', 'Going from a question to an insight']::text[], array['No experience needed', 'A spreadsheet program: Google Sheets (free with a Google account) or Microsoft Excel']::text[], 'Kolanut people review', true, true, true, true, 60, 0)
 on conflict (id) do update set slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, passing_score = excluded.passing_score, position = excluded.position;
 
 insert into public.course_modules (id, course_id, title, position)
@@ -404,10 +404,10 @@ Open `orders.csv` in Google Sheets (File → Import → Upload) or Excel (File �
 ```quiz
 [
   {
-    "prompt": "Which column is qualitative and ordinal?",
+    "prompt": "Which column is ordinal: categories that have a natural order?",
     "options": ["Region", "Job level (Junior, Mid, Senior, Manager)", "Monthly salary", "Employee ID"],
     "answer": 1,
-    "explanation": "Job levels are categories with a natural order. Region is a category without an order."
+    "explanation": "Job levels are categories that go in order. Regions have no order, and salary and IDs aren't categories."
   },
   {
     "prompt": "What is wrong with averaging the customer_id column?",
@@ -1169,10 +1169,10 @@ Notice what the analysis did *not* do:
     "explanation": "It names the measure (revenue), the segment, the periods and the comparison."
   },
   {
-    "prompt": "Revenue fell but the number of customers ordering stayed the same. Which explanation does that rule out?",
-    "options": ["Customers ordering less often", "Lost customers", "Smaller orders", "Lower prices"],
+    "prompt": "Revenue fell, but just as many customers are still ordering. Which is the most likely reason?",
+    "options": ["The business lost customers", "Customers are ordering less often, or buying less each time", "The office moved", "The data has too many columns"],
     "answer": 1,
-    "explanation": "If the same number of customers are still ordering, losing customers isn't the cause."
+    "explanation": "The customers are still there, so the fall must come from how often or how much they buy."
   },
   {
     "prompt": "What turns a finding into an insight?",
@@ -1315,7 +1315,7 @@ on conflict (id) do update set course_id = excluded.course_id, module_id = exclu
 
 -- Course: Excel for Data Analysis
 insert into public.courses (id, slug, code, title, summary, description, category_id, difficulty, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, passing_score, position)
-values ('excel-for-data-analysis', 'excel-for-data-analysis', 'XLS', 'Excel for Data Analysis', 'Clean, analyse and present business data in Excel, from formulas and XLOOKUP to pivot tables and charts.', 'Excel is still where most business analysis happens. Learn to work with real datasets: sort and filter, write the formulas analysts use every day, clean messy data, summarise with pivot tables and present results with clear charts.', 'data-analytics', 'beginner', 'Beginner', 9, true, 'available', true, array['Formulas and functions', 'IF, SUMIF and COUNTIF', 'XLOOKUP', 'Data cleaning', 'Pivot tables', 'Charts']::text[], array['Microsoft Excel 2021 or Microsoft 365 (Google Sheets works for most lessons)', 'Comfortable using a computer; no Excel experience needed']::text[], 'Kolanut sales performance review', true, true, true, true, 70, 1)
+values ('excel-for-data-analysis', 'excel-for-data-analysis', 'XLS', 'Excel for Data Analysis', 'Clean, analyse and present business data in Excel, from formulas and XLOOKUP to pivot tables and charts.', 'Excel is still where most business analysis happens. Learn to work with real datasets: sort and filter, write the formulas analysts use every day, clean messy data, summarise with pivot tables and present results with clear charts.', 'data-analytics', 'beginner', 'Beginner', 9, true, 'available', true, array['Formulas and functions', 'IF, SUMIF and COUNTIF', 'XLOOKUP', 'Data cleaning', 'Pivot tables', 'Charts']::text[], array['Microsoft Excel 2021 or Microsoft 365 (Google Sheets works for most lessons)', 'Comfortable using a computer; no Excel experience needed']::text[], 'Kolanut sales performance review', true, true, true, true, 60, 1)
 on conflict (id) do update set slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, passing_score = excluded.passing_score, position = excluded.position;
 
 insert into public.course_modules (id, course_id, title, position)
@@ -1542,7 +1542,7 @@ To get the total, click in any empty cell and type:
 ```answer
 {
   "id": "xls-02-p1",
-  "prompt": "What is Kolanut's **total revenue** across all order lines (January 2025 to June 2026), to the nearest naira?",
+  "prompt": "What is Kolanut's **total revenue** across all order lines (January 2025 to June 2026)? (A rounded figure is fine.)",
   "answer": 830541245,
   "tolerance": 1,
   "format": "naira",
@@ -1576,10 +1576,10 @@ To get the total, click in any empty cell and type:
 ```quiz
 [
   {
-    "prompt": "A cell shows 19% but its value is 0.1874. What will =A1*100 return?",
-    "options": ["19", "18.74", "0.19", "1900"],
-    "answer": 1,
-    "explanation": "Formatting changes the display, not the stored value."
+    "prompt": "A cell shows 19%, but the value stored in it is 0.1874. What will a formula that uses this cell work with?",
+    "options": ["0.1874, the stored value", "19, the displayed number", "0.19", "Nothing, it's text"],
+    "answer": 0,
+    "explanation": "Formatting only changes how a value looks. Formulas always use the stored value."
   },
   {
     "prompt": "What does [@quantity] mean in a Table formula?",
@@ -1864,7 +1864,7 @@ The same summary with results showing: total revenue ₦830,541,245, 58,757 pack
 ```answer
 {
   "id": "xls-04-p2",
-  "prompt": "What is the **average revenue per order line**, rounded to the nearest naira?",
+  "prompt": "What is the **average revenue per order line**? (A rounded figure is fine.)",
   "answer": 194689,
   "tolerance": 1,
   "format": "naira",
@@ -1904,10 +1904,10 @@ The same summary with results showing: total revenue ₦830,541,245, 58,757 pack
     "explanation": "B2 is relative and moves; $D$1 is absolute and stays."
   },
   {
-    "prompt": "A column has 100 cells: 90 numbers, 5 text entries, 5 blanks. What does COUNT return?",
-    "options": ["100", "95", "90", "5"],
-    "answer": 2,
-    "explanation": "COUNT only counts numbers. COUNTA would return 95."
+    "prompt": "What does =COUNT() count?",
+    "options": ["Cells that contain numbers", "Every cell in the range", "Empty cells", "Cells that contain text"],
+    "answer": 0,
+    "explanation": "COUNT counts numbers only. COUNTA counts every non-empty cell."
   },
   {
     "prompt": "A formula shows #VALUE!. What is the most likely cause?",
@@ -2007,7 +2007,7 @@ Check step 4 with a filter (order_date in 2026, discount_pct not 0). Two methods
 ```answer
 {
   "id": "xls-05-p1",
-  "prompt": "What was the total revenue from **product 1 (Malt drink 330ml)**, to the nearest naira?",
+  "prompt": "What was the total revenue from **product 1 (Malt drink 330ml)**? (A rounded figure is fine.)",
   "answer": 59804940,
   "tolerance": 1,
   "format": "naira",
@@ -2036,7 +2036,7 @@ Check step 4 with a filter (order_date in 2026, discount_pct not 0). Two methods
 ```answer
 {
   "id": "xls-05-p3",
-  "prompt": "What was revenue in the **fourth quarter of 2025** (1 October to 31 December), to the nearest naira?",
+  "prompt": "What was revenue in the **fourth quarter of 2025** (1 October to 31 December)? (A rounded figure is fine.)",
   "answer": 160799625,
   "tolerance": 1,
   "format": "naira",
@@ -2070,10 +2070,10 @@ Check step 4 with a filter (order_date in 2026, discount_pct not 0). Two methods
 ```quiz
 [
   {
-    "prompt": "In SUMIFS, which argument comes first?",
-    "options": ["The first condition", "The range to add up", "The range to test", "The number of conditions"],
-    "answer": 1,
-    "explanation": "SUMIFS(sum_range, criteria_range1, criteria1, …). SUMIF puts the sum range last, which catches people out."
+    "prompt": "In =SUMIFS(H:H, D:D, \"Lagos\"), which column is added up?",
+    "options": ["H:H", "D:D", "\"Lagos\"", "None of them"],
+    "answer": 0,
+    "explanation": "The first argument of SUMIFS is always the range to add up; the pairs after it are the conditions."
   },
   {
     "prompt": "What does =COUNTIFS(A:A, \"Lagos\", B:B, \">100000\") count?",
@@ -2082,10 +2082,10 @@ Check step 4 with a filter (order_date in 2026, discount_pct not 0). Two methods
     "explanation": "Every condition in COUNTIFS must be true for a row to count."
   },
   {
-    "prompt": "Which is the correct way to use a date in a SUMIFS condition?",
-    "options": ["\">=1/10/2025\"", "\">=\"&DATE(2025,10,1)", ">=DATE(2025,10,1)", "\"DATE(2025,10,1)\""],
-    "answer": 1,
-    "explanation": "Join the operator (as text) to a real date with &. Typed dates depend on regional settings."
+    "prompt": "In a SUMIFS condition, what does \">=100000\" mean?",
+    "options": ["100,000 or more", "Less than 100,000", "Exactly 100,000", "Not 100,000"],
+    "answer": 0,
+    "explanation": ">= means greater than or equal to."
   }
 ]
 ```
@@ -2165,7 +2165,7 @@ After the walkthrough below, the Orders table has three looked-up columns:
 ```answer
 {
   "id": "xls-06-p1",
-  "prompt": "What is Kolanut's total revenue from customers in the **Lagos** region, to the nearest naira?",
+  "prompt": "What is Kolanut's total revenue from customers in the **Lagos** region? (A rounded figure is fine.)",
   "answer": 411162300,
   "tolerance": 1,
   "format": "naira",
@@ -2181,7 +2181,7 @@ After the walkthrough below, the Orders table has three looked-up columns:
 ```answer
 {
   "id": "xls-06-p2",
-  "prompt": "What is total revenue from the **Beverages** category, to the nearest naira?",
+  "prompt": "What is total revenue from the **Beverages** category? (A rounded figure is fine.)",
   "answer": 224612360,
   "tolerance": 1,
   "format": "naira",
@@ -2901,7 +2901,7 @@ Discounts cost ₦29.1m, **3.4% of gross sales**, and nearly nine naira in ten o
 ```answer
 {
   "id": "xls-11-p1",
-  "prompt": "What did discounts cost Kolanut in total across all order lines, to the nearest naira?",
+  "prompt": "What did discounts cost Kolanut in total across all order lines? (A rounded figure is fine.)",
   "answer": 29087055,
   "tolerance": 1,
   "format": "naira",
@@ -2977,7 +2977,7 @@ on conflict (id) do update set course_id = excluded.course_id, module_id = exclu
 
 -- Course: SQL for Data Analysis
 insert into public.courses (id, slug, code, title, summary, description, category_id, difficulty, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, passing_score, position)
-values ('sql-for-data-analysis', 'sql-for-data-analysis', 'SQL', 'SQL for Data Analysis', 'Query real business data with SQL, from your first SELECT to window functions, using a logistics company''s database.', 'SQL is how analysts get answers out of databases. In this course you work with Harbourline Freight, a fictional logistics company, and answer the questions its managers actually ask: who ships the most, which routes run late, what customers still owe. Every lesson starts with a business problem, explains the idea in plain language, and gives you queries to write in a live SQL editor in your browser.', 'data-analytics', 'beginner', 'Beginner to intermediate', 12, true, 'available', true, array['Reading a database schema', 'Selecting, filtering and sorting data', 'Aggregating with GROUP BY and HAVING', 'Joining tables', 'CASE expressions, subqueries and CTEs', 'Window functions for rankings and running totals', 'Turning a business question into a query']::text[], array['No prior SQL needed', 'Comfortable using a computer and a web browser']::text[], 'Harbourline Freight operations review', true, true, true, true, 70, 2)
+values ('sql-for-data-analysis', 'sql-for-data-analysis', 'SQL', 'SQL for Data Analysis', 'Query real business data with SQL, from your first SELECT to window functions, using a logistics company''s database.', 'SQL is how analysts get answers out of databases. In this course you work with Harbourline Freight, a fictional logistics company, and answer the questions its managers actually ask: who ships the most, which routes run late, what customers still owe. Every lesson starts with a business problem, explains the idea in plain language, and gives you queries to write in a live SQL editor in your browser.', 'data-analytics', 'beginner', 'Beginner to intermediate', 12, true, 'available', true, array['Reading a database schema', 'Selecting, filtering and sorting data', 'Aggregating with GROUP BY and HAVING', 'Joining tables', 'CASE expressions, subqueries and CTEs', 'Window functions for rankings and running totals', 'Turning a business question into a query']::text[], array['No prior SQL needed', 'Comfortable using a computer and a web browser']::text[], 'Harbourline Freight operations review', true, true, true, true, 60, 2)
 on conflict (id) do update set slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, passing_score = excluded.passing_score, position = excluded.position;
 
 insert into public.course_modules (id, course_id, title, position)
@@ -3369,10 +3369,10 @@ Harbourline runs three transport modes, so you get three rows.
     "explanation": "An alias only renames the column in your result. The table itself is unchanged."
   },
   {
-    "prompt": "In SQLite, what does SELECT 7 / 2 return?",
-    "options": ["3.5", "3", "4", "An error"],
-    "answer": 1,
-    "explanation": "Dividing two whole numbers gives a whole number, so the .5 is dropped. Use 7 / 2.0 to get 3.5."
+    "prompt": "In SQLite, SELECT 7 / 2 returns 3 because both numbers are whole. How do you get 3.5?",
+    "options": ["SELECT 7 / 2.0", "SELECT 7 // 2", "SELECT ROUND(7 / 2)", "You can't"],
+    "answer": 0,
+    "explanation": "Making one of the numbers a decimal, such as 2.0, gives a decimal result."
   },
   {
     "prompt": "SELECT DISTINCT city FROM customers returns…",
@@ -3860,10 +3860,10 @@ FROM customers;
 ```quiz
 [
   {
-    "prompt": "The customers table has 120 rows and 8 of them have no account manager. What does COUNT(account_manager_id) return?",
-    "options": ["120", "112", "8", "NULL"],
-    "answer": 1,
-    "explanation": "COUNT(column) skips NULLs, so it counts the 112 customers who do have a manager."
+    "prompt": "Which rows does COUNT(account_manager_id) skip?",
+    "options": ["Rows where account_manager_id is NULL", "Rows where account_manager_id is a number", "The first row", "None, it counts every row"],
+    "answer": 0,
+    "explanation": "COUNT(column) counts only non-NULL values. COUNT(*) counts every row."
   },
   {
     "prompt": "How many rows does SELECT SUM(amount) FROM payments return?",
@@ -4006,10 +4006,10 @@ ORDER BY month;
 ```quiz
 [
   {
-    "prompt": "Why does SELECT customer_id, city, COUNT(*) FROM customers GROUP BY customer_id work, but the same with GROUP BY city fail in most databases?",
-    "options": ["city isn't a real column", "Each city group contains many customer_ids, so one can't be chosen", "COUNT(*) can't be used with city", "It works in both cases everywhere"],
-    "answer": 1,
-    "explanation": "Every selected column must be grouped or aggregated. A city group holds several customer_ids, so the database can't show just one. (SQLite is lenient and picks one anyway, which can quietly give misleading results.)"
+    "prompt": "What does GROUP BY city do?",
+    "options": ["Makes one group, and one result row, per city", "Sorts the rows by city", "Deletes duplicate cities from the table", "Keeps only one city"],
+    "answer": 0,
+    "explanation": "Each distinct city becomes one group, so aggregates like COUNT(*) give one value per city."
   },
   {
     "prompt": "Where does GROUP BY go?",
@@ -4409,10 +4409,10 @@ GROUP BY r.mode;
     "explanation": "Each cancelled row contributes 1 and every other row 0, so the sum is a count."
   },
   {
-    "prompt": "A CASE tests WHEN containers >= 3 THEN 'Medium' before WHEN containers >= 6 THEN 'Large'. What happens to an 8-container shipment?",
-    "options": ["Large", "Medium", "NULL", "Both"],
-    "answer": 1,
-    "explanation": "The first true condition wins, and 8 >= 3 is true, so it's labelled Medium. Test the narrowest condition first."
+    "prompt": "In what order does CASE check its WHEN conditions?",
+    "options": ["Top to bottom, stopping at the first one that's true", "Bottom to top", "All at once, using the last match", "In random order"],
+    "answer": 0,
+    "explanation": "So put the most specific condition first, for example containers >= 6 before containers >= 3."
   }
 ]
 ```
@@ -4803,10 +4803,10 @@ The customers at the top of this list are the ones who haven't booked for longes
     "explanation": "GROUP BY collapses rows into one per group; a window function adds a calculated column and keeps the detail."
   },
   {
-    "prompt": "Three customers tie for second place. Which function gives ranks 1, 2, 2, 2, 5?",
-    "options": ["ROW_NUMBER()", "RANK()", "DENSE_RANK()", "LAG()"],
-    "answer": 1,
-    "explanation": "RANK gives tied rows the same number, then skips ahead. DENSE_RANK would give 1, 2, 2, 2, 3."
+    "prompt": "Which function numbers the rows 1, 2, 3, 4… with no ties, even when values are equal?",
+    "options": ["ROW_NUMBER()", "SUM()", "COUNT()", "AVG()"],
+    "answer": 0,
+    "explanation": "ROW_NUMBER gives every row its own number. RANK and DENSE_RANK give tied rows the same rank."
   },
   {
     "prompt": "What does PARTITION BY customer_id do in ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY booking_date)?",
@@ -5019,7 +5019,7 @@ How your project is assessed:
 - **Clear explanations.** One or two sentences per question in plain language. A manager should understand them without reading the SQL.
 - **Honest limits.** If the data can't fully answer something, say so.
 
-To earn your certificate you need to complete every lesson, complete the practice exercises, pass the final assessment (70% or more) and submit this project.
+To earn your certificate you need to complete every lesson, complete the practice exercises, pass the final assessment (60% or more) and submit this project.
 
 > [!TIP]
 > Start with the questions you find easiest, check each result against numbers you've seen in the lessons, and keep your queries in the notes box as you go. You can come back and edit your submission at any time before you submit.
@@ -5061,7 +5061,7 @@ on conflict (id) do update set course_id = excluded.course_id, module_id = exclu
 
 -- Course: Data Modelling
 insert into public.courses (id, slug, code, title, summary, description, category_id, difficulty, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, passing_score, position)
-values ('data-modelling', 'data-modelling', 'DMO', 'Data Modelling', 'Design databases and analytics models that stay correct: entities, keys, relationships, ERDs, normalisation and star schemas.', 'Every reliable report sits on a well-designed model. Learn to turn business questions into entities and keys, draw entity-relationship diagrams in crow''s-foot notation, normalise away repeated data, and design the star schemas that Power BI and data warehouses run on. Every lesson is built around diagrams, and you practise on real databases in your browser.', 'databases', 'intermediate', 'Beginner to intermediate', 8, true, 'available', true, array['Entities, attributes and grain', 'Primary and foreign keys', 'Cardinality and bridge tables', 'Entity-relationship diagrams', 'Normalisation (1NF to 3NF)', 'Star schemas and slowly changing dimensions']::text[], array['Basic SQL (SELECT, WHERE, JOIN) helps; the SQL for Data Analysis course covers it', 'No design experience needed']::text[], 'Ashgrove Chambers data model', true, true, true, true, 70, 3)
+values ('data-modelling', 'data-modelling', 'DMO', 'Data Modelling', 'Design databases and analytics models that stay correct: entities, keys, relationships, ERDs, normalisation and star schemas.', 'Every reliable report sits on a well-designed model. Learn to turn business questions into entities and keys, draw entity-relationship diagrams in crow''s-foot notation, normalise away repeated data, and design the star schemas that Power BI and data warehouses run on. Every lesson is built around diagrams, and you practise on real databases in your browser.', 'databases', 'intermediate', 'Beginner to intermediate', 8, true, 'available', true, array['Entities, attributes and grain', 'Primary and foreign keys', 'Cardinality and bridge tables', 'Entity-relationship diagrams', 'Normalisation (1NF to 3NF)', 'Star schemas and slowly changing dimensions']::text[], array['Basic SQL (SELECT, WHERE, JOIN) helps; the SQL for Data Analysis course covers it', 'No design experience needed']::text[], 'Ashgrove Chambers data model', true, true, true, true, 60, 3)
 on conflict (id) do update set slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, passing_score = excluded.passing_score, position = excluded.position;
 
 insert into public.course_modules (id, course_id, title, position)
@@ -5122,7 +5122,8 @@ Try it on Ashgrove Chambers, the law firm in the Power BI course: *clients have 
   "accept": ["the physical level", "physical model", "physical level"],
   "format": "text",
   "explanation": "Conceptual and logical models describe things and attributes; data types belong to a specific database, so they're physical.",
-  "required": true
+  "required": true,
+  "hint": "Conceptual, logical, physical: which level is tied to one particular database?"
 }
 ```
 
@@ -5237,10 +5238,11 @@ Designing Kolanut's product table, step by step:
   "id": "dmo-02-p1",
   "prompt": "Complete the grain of Kolanut's `orders.csv`: one row per ___ on one order. (One word.)",
   "answer": "product",
-  "accept": ["product line", "item", "line", "order line", "line item"],
+  "accept": ["product line", "item", "line", "order line", "line item", "products"],
   "format": "text",
   "explanation": "Each row has one product_id and a quantity of it. In this dataset each order_id appears once, so an order line and an order coincide, but the design would allow several products per order.",
-  "required": true
+  "required": true,
+  "hint": "Look at the columns: each row has one product_id and a quantity of it."
 }
 ```
 
@@ -5381,7 +5383,8 @@ When you receive a new table, test its keys before building on it:
   "accept": ["composite key", "compound", "compound key", "a composite key"],
   "format": "text",
   "explanation": "Only the pair (supplier_id, product_id) is unique, so the key is composite.",
-  "required": true
+  "required": true,
+  "hint": "Neither supplier_id nor product_id is unique on its own. A key made of two columns is called…"
 }
 ```
 
@@ -5502,10 +5505,11 @@ Ashgrove Chambers, the law firm: can a client have many matters? Yes. Can a matt
   "id": "dmo-04-p3",
   "prompt": "A hospital: a doctor treats many patients, and a patient sees many doctors. What is the name for the extra table you need? (Two words.)",
   "answer": "bridge table",
-  "accept": ["junction table", "link table", "associative table", "bridging table", "join table", "linking table"],
+  "accept": ["junction table", "link table", "associative table", "bridging table", "join table", "linking table", "bridge", "junction"],
   "format": "text",
   "explanation": "A bridge (or junction) table such as appointments(doctor_id, patient_id, appointment_date) resolves the many-to-many.",
-  "required": true
+  "required": true,
+  "hint": "It sits between the two tables and holds both keys. The lesson's diagram shows one for students and courses."
 }
 ```
 
@@ -5635,10 +5639,10 @@ You'll draw this ERD properly in the final project.
     "explanation": "A table relating to itself stores hierarchies such as reporting lines."
   },
   {
-    "prompt": "How many JOINs does a query from customers to payments need in Harbourline?",
-    "options": ["One", "Two", "Three", "None"],
-    "answer": 1,
-    "explanation": "customers → shipments → payments: two lines on the diagram, two joins."
+    "prompt": "To go from customers to payments in Harbourline, you pass through shipments. How many JOINs is that?",
+    "options": ["Two: customers → shipments → payments", "One", "Three", "None"],
+    "answer": 0,
+    "explanation": "Each step between two tables is one JOIN."
   }
 ]
 ```
@@ -5710,7 +5714,8 @@ Normalising a flat sheet, in order:
   "format": "number",
   "tolerance": 0,
   "explanation": "Three times in the flat sheet (invoices 501, 501 and 503), once after normalising, in the customers table.",
-  "required": true
+  "required": true,
+  "hint": "Count the rows for Peace Provisions in the flat sheet: each one repeats the city."
 }
 ```
 
@@ -5821,7 +5826,8 @@ A second star for **court work** would have a different grain (one row per heari
   "accept": ["invoice", "the invoices table"],
   "format": "text",
   "explanation": "Invoices are the events with a number to add up (amount_ngn); clients and matters describe them.",
-  "required": true
+  "required": true,
+  "hint": "The fact table holds the events with a number to add up. Which table has an amount in naira?"
 }
 ```
 
@@ -5856,10 +5862,10 @@ A second star for **court work** would have a different grain (one row per heari
     "explanation": "Every measure must be true at the grain, so it comes first."
   },
   {
-    "prompt": "Billing and hearings fact tables both use the same client and matter dimensions. What are these shared dimensions called?",
-    "options": ["Snowflaked", "Conformed dimensions", "Bridge tables", "Surrogate keys"],
-    "answer": 1,
-    "explanation": "Conformed dimensions let two processes be compared on the same terms."
+    "prompt": "Billing and hearings fact tables both use the same client and matter tables. Why is sharing them useful?",
+    "options": ["One filter, like a client, works across both fact tables", "It makes the tables bigger", "It hides the fact tables", "It removes the need for keys"],
+    "answer": 0,
+    "explanation": "Shared (conformed) dimensions let one slicer filter every fact table that uses them."
   }
 ]
 ```
@@ -5929,7 +5935,8 @@ Choosing the SCD type, attribute by attribute, for Kolanut's customers:
   "answer": 2,
   "format": "number",
   "tolerance": 0,
-  "required": true
+  "required": true,
+  "hint": "Type 1 overwrites the old value. The next type number keeps history."
 }
 ```
 
@@ -5962,10 +5969,10 @@ Choosing the SCD type, attribute by attribute, for Kolanut's customers:
     "explanation": "A correction isn't a real change worth keeping history for."
   },
   {
-    "prompt": "Why can't the fact table in a type 2 model join on customer_id alone?",
-    "options": ["customer_id is text", "The same customer_id can now have several rows; the surrogate key picks the version that applied", "Joins are slower on IDs", "It can, always"],
-    "answer": 1,
-    "explanation": "Surrogate keys identify each version of the customer."
+    "prompt": "With type 2 history, one customer can have several rows in the customer table. What tells each version apart?",
+    "options": ["A separate surrogate key, one per version", "The customer's name", "The row colour", "Nothing, they're duplicates"],
+    "answer": 0,
+    "explanation": "Each version gets its own surrogate key, and the fact table stores the key of the version that applied."
   }
 ]
 ```
@@ -6092,7 +6099,7 @@ on conflict (id) do update set course_id = excluded.course_id, module_id = exclu
 
 -- Course: Power BI Fundamentals
 insert into public.courses (id, slug, code, title, summary, description, category_id, difficulty, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, passing_score, position)
-values ('power-bi-fundamentals', 'power-bi-fundamentals', 'PBI', 'Power BI Fundamentals', 'Build a data model, write DAX measures and design a dashboard people can use to run a business.', 'Power BI turns data into dashboards. Learn the full workflow: import and clean data with Power Query, relate tables in a model, write DAX measures, and design a dashboard that tells a clear business story.', 'business-intelligence', 'beginner', 'Beginner to intermediate', 12, true, 'available', true, array['Power Query', 'Data modelling and relationships', 'DAX measures', 'Dashboard design', 'Publishing reports']::text[], array['Power BI Desktop (free, Windows only)', 'Basic Excel is helpful: the Excel course covers it']::text[], 'Ashgrove Chambers practice dashboard', true, true, true, true, 70, 4)
+values ('power-bi-fundamentals', 'power-bi-fundamentals', 'PBI', 'Power BI Fundamentals', 'Build a data model, write DAX measures and design a dashboard people can use to run a business.', 'Power BI turns data into dashboards. Learn the full workflow: import and clean data with Power Query, relate tables in a model, write DAX measures, and design a dashboard that tells a clear business story.', 'business-intelligence', 'beginner', 'Beginner to intermediate', 12, true, 'available', true, array['Power Query', 'Data modelling and relationships', 'DAX measures', 'Dashboard design', 'Publishing reports']::text[], array['Power BI Desktop (free, Windows only)', 'Basic Excel is helpful: the Excel course covers it']::text[], 'Ashgrove Chambers practice dashboard', true, true, true, true, 60, 4)
 on conflict (id) do update set slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, passing_score = excluded.passing_score, position = excluded.position;
 
 insert into public.course_modules (id, course_id, title, position)
@@ -6164,10 +6171,11 @@ and then a dashboard of your own for a law firm as the final project.
   "id": "pbi-01-p1",
   "prompt": "Which part of Power BI do you use to **build** reports on your own computer? (Give its full name.)",
   "answer": "Power BI Desktop",
-  "accept": ["desktop", "pbi desktop", "powerbi desktop"],
+  "accept": ["desktop", "pbi desktop", "powerbi desktop", "Power BI desktop app"],
   "format": "text",
   "explanation": "Power BI Desktop is where you load, model and design. The Service is where reports are shared.",
-  "required": true
+  "required": true,
+  "hint": "It's free and installed on your own Windows computer; the other main part runs in the browser."
 }
 ```
 
@@ -6179,7 +6187,8 @@ and then a dashboard of your own for a law firm as the final project.
   "accept": ["power query editor", "powerquery"],
   "format": "text",
   "explanation": "Power Query, the same engine as Excel's Get & Transform.",
-  "required": true
+  "required": true,
+  "hint": "It opens from Home → Transform data."
 }
 ```
 
@@ -6293,9 +6302,10 @@ A new visual, step by step: in Report view, tick `revenue` in the Data pane and 
   "id": "pbi-02-p1",
   "prompt": "Which view do you open to see and create **relationships** between tables?",
   "answer": "Model view",
-  "accept": ["model", "the model view", "relationship view"],
+  "accept": ["model", "the model view", "relationship view", "Diagram view"],
   "format": "text",
-  "required": true
+  "required": true,
+  "hint": "There are three views on the left: Report, Table and one that shows the tables as boxes joined by lines."
 }
 ```
 
@@ -6304,10 +6314,11 @@ A new visual, step by step: in Report view, tick `revenue` in the Data pane and 
   "id": "pbi-02-p2",
   "prompt": "Which view lets you scroll through the actual **rows** of a loaded table to check its values?",
   "answer": "Table view",
-  "accept": ["table", "data view", "the table view"],
+  "accept": ["table", "data view", "the table view", "Data"],
   "format": "text",
   "explanation": "Table view (called Data view in older versions).",
-  "required": true
+  "required": true,
+  "hint": "The middle icon on the left edge looks like a small grid."
 }
 ```
 
@@ -6552,7 +6563,7 @@ You don't have to type that: the Custom Column dialog writes it. In the dialog y
 ```answer
 {
   "id": "pbi-04-p1",
-  "prompt": "Add the `revenue` custom column, load it, and show its total in a Card. What is total revenue, to the nearest naira?",
+  "prompt": "Add the `revenue` custom column, load it, and show its total in a Card. What is total revenue? (A rounded figure is fine.)",
   "answer": 830541245,
   "tolerance": 1,
   "format": "naira",
@@ -6711,10 +6722,10 @@ Look at **Applied Steps**: that list is your cleaning log.
     "explanation": "Power Query compares text case-sensitively."
   },
   {
-    "prompt": "The raw file mixes 01/09/2022 and 2022-09-01. How do you convert both to the right date?",
-    "options": ["Change Type → Date", "Change Type → Using Locale → Date, English (United Kingdom)", "Replace '/' with '-'", "Leave them as text"],
-    "answer": 1,
-    "explanation": "The locale tells Power Query the day comes first."
+    "prompt": "Dates like 01/09/2022 load as 9 January instead of 1 September. What should you set when changing the type?",
+    "options": ["The locale, e.g. English (United Kingdom)", "The font", "The chart type", "The column width"],
+    "answer": 0,
+    "explanation": "Change Type → Using Locale reads the dates day-first."
   },
   {
     "prompt": "Why is Power Query cleaning better than cleaning by hand when a new export arrives every month?",
@@ -6797,7 +6808,7 @@ Without it, every row shows ₦830.5m.
 ```answer
 {
   "id": "pbi-06-p1",
-  "prompt": "With the relationships in place, what is total revenue from **South East** customers, to the nearest naira?",
+  "prompt": "With the relationships in place, what is total revenue from **South East** customers? (A rounded figure is fine.)",
   "answer": 60316685,
   "tolerance": 1,
   "format": "naira",
@@ -6817,7 +6828,8 @@ Without it, every row shows ₦830.5m.
   "accept": ["product", "the products table"],
   "format": "text",
   "explanation": "Each product appears once in products and many times in orders.",
-  "required": true
+  "required": true,
+  "hint": "Which table lists each product only once?"
 }
 ```
 
@@ -6827,15 +6839,20 @@ Without it, every row shows ₦830.5m.
 [
   {
     "prompt": "Which column should you use on the axis of a 'revenue by region' chart?",
-    "options": ["orders[customer_id]", "customers[region]", "orders[revenue]", "products[category]"],
+    "options": [
+      "orders[customer_id]",
+      "customers[region]",
+      "orders[revenue]",
+      "products[category]"
+    ],
     "answer": 1,
     "explanation": "Group by fields from the dimension table; the relationship carries the filter to orders."
   },
   {
-    "prompt": "What does a Single cross-filter direction from customers to orders mean?",
-    "options": ["Orders can filter customers only", "Selecting customers filters their orders", "No filtering happens", "Both directions, always"],
-    "answer": 1,
-    "explanation": "Filters flow from the one side (customers) to the many side (orders)."
+    "prompt": "A relationship filters from customers to orders. What happens when you pick a region in a slicer?",
+    "options": ["Only that region's customers' orders are shown", "Nothing changes", "The slicer is deleted", "All regions are shown"],
+    "answer": 0,
+    "explanation": "The filter flows from customers (the one side) to their orders (the many side)."
   },
   {
     "prompt": "In a star schema, what sits at the centre?",
@@ -6924,7 +6941,7 @@ Now `Date[Year]` and `Date[Month]` on a matrix, `orders[revenue]` in values, giv
 ```answer
 {
   "id": "pbi-07-p1",
-  "prompt": "Using the date table, what was revenue in **Q2 2026** (April–June), to the nearest naira?",
+  "prompt": "Using the date table, what was revenue in **Q2 2026** (April–June)? (A rounded figure is fine.)",
   "answer": 147521325,
   "tolerance": 1,
   "format": "naira",
@@ -7044,7 +7061,16 @@ Category = RELATED ( products[category] )
 ## Walkthrough
 
 1. Create a table for your measures: **Home → Enter data**, name it `_Measures`, load it with its one empty column. (The underscore keeps it at the top of the Data pane.)
-2. Select `_Measures`, then **Home → New measure**, and type the `Revenue` measure. Press Enter.
+2. Select `_Measures`, then **Home → New measure**, and type the `Revenue` measure in the formula bar. Press Enter.
+
+   ![Power BI Desktop with a DAX measure being written in the formula bar under the Measure tools ribbon, and the new measure listed in the Data pane.](/images/courses/powerbi/dax-measure.webp "Writing a measure: the formula bar (1) opens under the Measure tools tab (2), and the measure appears in the Data pane with a calculator icon (3).")
+
+   > [!WARNING]
+   > A measure can't share its name with a column in the same table, and names ignore capital letters. Create `Revenue` in the **orders** table, which already has a `revenue` column, and Power BI refuses:
+   >
+   > ![A Power BI dialog titled Rename measure saying the name Revenue is already used for a column on table orders.](/images/courses/powerbi/name-clash.webp "The error (1) for the formula in the bar (2).")
+   >
+   > That's one reason to keep measures in their own `_Measures` table. If you do create a measure in a data table, give it a different name, such as `Total Revenue`.
 3. Add `Order Lines`, `Active Customers` and `Avg Revenue per Line` the same way.
 4. Format them: select a measure → Measure tools → set format (Whole number with thousands separator for counts; currency for revenue).
 5. Build a Matrix with `Date[Year]` in Rows and all four measures in Values. Each number is calculated for its year: that's filter context at work.
@@ -7055,7 +7081,7 @@ Category = RELATED ( products[category] )
 ```answer
 {
   "id": "pbi-08-p1",
-  "prompt": "What is **Avg Revenue per Line** for **2026** (January–June), to the nearest naira?",
+  "prompt": "What is **Avg Revenue per Line** for **2026** (January–June)? (A rounded figure is fine.)",
   "answer": 202741,
   "tolerance": 1,
   "format": "naira",
@@ -7099,10 +7125,10 @@ Category = RELATED ( products[category] )
     "explanation": "DIVIDE handles division by zero gracefully."
   },
   {
-    "prompt": "In a table visual with one row per region, how many times is the Revenue measure calculated?",
-    "options": ["Once for the whole table", "Once per row (region), plus once for the total", "Never, it's stored", "Once per order line"],
-    "answer": 1,
-    "explanation": "Each cell has its own filter context, and the total row has the unfiltered one."
+    "prompt": "In a table with one row per region, the Revenue measure shows a different number on each row. Why?",
+    "options": ["Each row filters the measure to its own region", "The measure is broken", "Each row uses a different measure", "The numbers are random"],
+    "answer": 0,
+    "explanation": "A measure is recalculated for each row's filter. That's called filter context."
   }
 ]
 ```
@@ -7201,7 +7227,7 @@ And **Revenue YTD** at 2026 March shows Q1 2026 in total.
 ```answer
 {
   "id": "pbi-09-p2",
-  "prompt": "What is **Revenue YTD** at the end of **March 2026**, to the nearest naira?",
+  "prompt": "What is **Revenue YTD** at the end of **March 2026**? (A rounded figure is fine.)",
   "answer": 143209130,
   "tolerance": 1,
   "format": "naira",
@@ -7234,22 +7260,22 @@ And **Revenue YTD** at 2026 March shows Q1 2026 in total.
 ```quiz
 [
   {
-    "prompt": "In a table by region, what does CALCULATE([Revenue], customers[region] = \"Lagos\") show on the South East row?",
-    "options": ["South East revenue", "Lagos revenue", "Blank", "Total revenue"],
-    "answer": 1,
-    "explanation": "The filter argument overrides the region filter from the row."
+    "prompt": "What does CALCULATE([Revenue], customers[region] = \"Lagos\") return?",
+    "options": ["Revenue for Lagos only", "Revenue for every region", "The number of Lagos customers", "An error"],
+    "answer": 0,
+    "explanation": "CALCULATE applies the filter you give it, here region = Lagos."
   },
   {
-    "prompt": "What is REMOVEFILTERS(products[category]) used for in a % of total measure?",
-    "options": ["Deleting categories", "Getting the total across all categories as the denominator", "Sorting categories", "Hiding the category column"],
-    "answer": 1,
-    "explanation": "It ignores the category filter so the denominator is the all-category total."
+    "prompt": "A '% of total' measure divides a category's revenue by what?",
+    "options": ["Revenue across all categories", "The number of categories", "100", "The largest category"],
+    "answer": 0,
+    "explanation": "REMOVEFILTERS gives the total across all categories, which is the denominator."
   },
   {
-    "prompt": "Why does 2026's YoY % look very negative at year level in this data?",
-    "options": ["Sales collapsed", "2026 has only six months of data but is compared with all twelve months of 2025", "The date table is wrong", "DAX can't compare years"],
-    "answer": 1,
-    "explanation": "Compare equal periods, such as H1 vs H1, for a fair picture."
+    "prompt": "The data for 2026 runs only from January to June. Why does 2026 look much lower than 2025 at year level?",
+    "options": ["Half a year is being compared with a full year", "Sales collapsed", "DAX can't compare years", "The chart is the wrong type"],
+    "answer": 0,
+    "explanation": "Compare like with like: January–June 2026 against January–June 2025."
   }
 ]
 ```
@@ -7302,6 +7328,14 @@ A first report page for Kolanut:
 
 Click the North West bar and every other visual shows North West only.
 
+Here's a first version of that page built in Power BI Desktop, with a card, a slicer and two bar charts:
+
+![A Power BI report page with a Total Revenue card showing 830.54M, a channel slicer, a bar chart of Total Revenue by region and a column chart of Total Revenue by category, next to the Filters, Visualizations and Data panes.](/images/courses/powerbi/report-page.webp "A report page: card (1), slicer (2), bar chart (3), column chart (4), and the Filters (5), Visualizations (6) and Data (7) panes.")
+
+Tick **Wholesale** in the slicer and every visual on the page recalculates for wholesale customers only:
+
+![The same report with Wholesale ticked in the channel slicer: the card now shows 580.26M and both charts show smaller values.](/images/courses/powerbi/slicer-filter.webp "The slicer (1) filters the page: Total Revenue drops from ₦830.5m to ₦580.3m (2), the wholesale share you calculated in the Excel course.")
+
 ## Walkthrough
 
 1. Add the three cards. For each, Format → Callout value → Display units **Millions** for revenue.
@@ -7316,7 +7350,7 @@ Click the North West bar and every other visual shows North West only.
 ```answer
 {
   "id": "pbi-10-p1",
-  "prompt": "Click **North West** in the region bar chart with the Year slicer set to **2026**. What does the Revenue card show, to the nearest naira?",
+  "prompt": "Click **North West** in the region bar chart with the Year slicer set to **2026**. What does the Revenue card show? (A rounded figure is fine.)",
   "answer": 16646820,
   "tolerance": 1,
   "format": "naira",
@@ -7331,14 +7365,18 @@ Click the North West bar and every other visual shows North West only.
 ```answer
 {
   "id": "pbi-10-p2",
-  "prompt": "In the category-by-year matrix, what was **Snacks** revenue in **2025**, to the nearest naira?",
+  "prompt": "In the category-by-year matrix, what was **Snacks** revenue in **2025**? (A rounded figure is fine.)",
   "answer": 80124630,
   "tolerance": 1,
   "format": "naira",
   "dataset": "sales",
-  "files": ["orders", "products"],
+  "files": [
+    "orders",
+    "products"
+  ],
   "verify": "SELECT SUM(o.quantity * o.unit_price * (1 - o.discount_pct / 100.0)) FROM orders o JOIN products p ON p.product_id = o.product_id WHERE p.category = 'Snacks' AND o.order_date BETWEEN '2025-01-01' AND '2025-12-31'",
-  "required": true
+  "required": true,
+  "hint": "Put products[category] in Rows and Date[Year] in Columns, then read the Snacks row under 2025."
 }
 ```
 
@@ -7463,7 +7501,8 @@ Redesign your page from the previous lesson:
   "tolerance": 2,
   "format": "number",
   "explanation": "About 5–7. Beyond that, visuals compete for attention.",
-  "required": true
+  "required": true,
+  "hint": "The lesson gives a range of about five to seven. Type the top of it."
 }
 ```
 
@@ -7566,14 +7605,18 @@ Buttons at the bottom of each page move to the next.
 ```answer
 {
   "id": "pbi-12-p2",
-  "prompt": "By how many **naira** did North West revenue fall from H1 2025 to H1 2026? Give the size of the fall as a positive number, to the nearest naira.",
+  "prompt": "By how many **naira** did North West revenue fall from H1 2025 to H1 2026? Give the size of the fall as a positive number. (A rounded figure is fine.)",
   "answer": 14501100,
   "tolerance": 1,
   "format": "naira",
   "dataset": "sales",
-  "files": ["orders", "customers"],
+  "files": [
+    "orders",
+    "customers"
+  ],
   "verify": "SELECT SUM(CASE WHEN o.order_date <= '2025-06-30' THEN o.quantity * o.unit_price * (1 - o.discount_pct / 100.0) ELSE 0 END) - SUM(CASE WHEN o.order_date >= '2026-01-01' THEN o.quantity * o.unit_price * (1 - o.discount_pct / 100.0) ELSE 0 END) FROM orders o JOIN customers c ON c.customer_id = o.customer_id WHERE c.region = 'North West'",
-  "required": true
+  "required": true,
+  "hint": "Compare North West revenue for January–June 2025 with January–June 2026, then subtract."
 }
 ```
 
@@ -7675,7 +7718,8 @@ Kolanut's rollout plan:
   "answer": "Publish to web",
   "accept": ["publish to the web"],
   "format": "text",
-  "required": true
+  "required": true,
+  "hint": "It's under File → Embed report, and it makes the report public."
 }
 ```
 
@@ -7684,9 +7728,10 @@ Kolanut's rollout plan:
   "id": "pbi-13-p2",
   "prompt": "Which Power BI feature makes each regional manager see only their own region's rows in the same report? (Give the three-word name.)",
   "answer": "Row-level security",
-  "accept": ["row level security", "rls"],
+  "accept": ["row level security", "rls", "Row-level-security"],
   "format": "text",
-  "required": true
+  "required": true,
+  "hint": "It's often shortened to RLS, and it's set up with roles in Modeling → Manage roles."
 }
 ```
 
@@ -7807,9 +7852,12 @@ A three-page structure that works:
   "answer": 188070000,
   "format": "naira",
   "dataset": "legal",
-  "files": ["invoices"],
+  "files": [
+    "invoices"
+  ],
   "verify": "SELECT SUM(amount_ngn) FROM invoices WHERE status = 'Overdue'",
-  "required": true
+  "required": true,
+  "hint": "Use the Overdue Amount measure from the project brief: Billed, filtered to invoices with status Overdue. Show it in a Card."
 }
 ```
 
@@ -7820,9 +7868,12 @@ A three-page structure that works:
   "answer": 34,
   "format": "number",
   "dataset": "legal",
-  "files": ["matters"],
+  "files": [
+    "matters"
+  ],
   "verify": "SELECT COUNT(*) FROM matters WHERE status = 'Open'",
-  "required": true
+  "required": true,
+  "hint": "Use the Open Matters measure: count the matters whose status is Open."
 }
 ```
 
@@ -7837,10 +7888,10 @@ A three-page structure that works:
     "explanation": "Only hearings that took place can have an outcome."
   },
   {
-    "prompt": "Invoices, hearings and matters all have dates. How can one Date table serve them all?",
-    "options": ["It can't", "One active relationship plus inactive ones, activated in measures with USERELATIONSHIP", "Merge all tables into one", "Use three separate date tables always"],
-    "answer": 1,
-    "explanation": "USERELATIONSHIP turns on an inactive relationship for a single calculation."
+    "prompt": "Invoices, hearings and matters all have dates. What's the simplest way to filter them all by date?",
+    "options": ["One shared Date table related to each of them", "A separate calendar for every visual", "Typing the dates into each chart", "Deleting the extra date columns"],
+    "answer": 0,
+    "explanation": "One Date table can serve all of them; USERELATIONSHIP switches on an extra relationship when a measure needs it."
   },
   {
     "prompt": "Why check measures against known values before designing pages?",
@@ -7858,7 +7909,7 @@ on conflict (id) do update set course_id = excluded.course_id, module_id = exclu
 
 -- Assessment: SQL for Data Analysis: final assessment
 insert into public.assessments (id, course_id, title, passing_score, published)
-values ('sql-for-data-analysis-final', 'sql-for-data-analysis', 'SQL for Data Analysis: final assessment', 70, true)
+values ('sql-for-data-analysis-final', 'sql-for-data-analysis', 'SQL for Data Analysis: final assessment', 60, true)
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
@@ -7870,11 +7921,11 @@ values ('sqlq01', 1, 'List only the columns you need after SELECT.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('sqlq02', 'sql-for-data-analysis-final', 2, 'Which WHERE clause finds shipments that have not been delivered yet and were not cancelled?', '["WHERE status <> ''Delivered'' OR status <> ''Cancelled''","WHERE status NOT IN (''Delivered'', ''Cancelled'')","WHERE status = ''Delivered'' AND status = ''Cancelled''","WHERE status IS NULL"]'::jsonb)
+values ('sqlq02', 'sql-for-data-analysis-final', 2, 'Which WHERE clause keeps shipments whose status is neither ''Delivered'' nor ''Cancelled''?', '["WHERE status = ''Delivered''","WHERE status NOT IN (''Delivered'', ''Cancelled'')","WHERE status IN (''Delivered'', ''Cancelled'')","ORDER BY status"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('sqlq02', 1, 'NOT IN excludes both values. The OR version is true for every row, because no status can equal both.')
+values ('sqlq02', 1, 'NOT IN excludes every value in the list.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
@@ -7894,11 +7945,11 @@ values ('sqlq04', 1, 'Sort highest charge first, then keep three rows.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('sqlq05', 'sql-for-data-analysis-final', 5, 'payments has 2,409 rows, all with an amount. What does SELECT COUNT(*), SUM(amount) FROM payments; return?', '["2,409 rows","One row","One row per method","An error, because of mixing functions"]'::jsonb)
+values ('sqlq05', 'sql-for-data-analysis-final', 5, 'What does SELECT COUNT(*) FROM payments; return?', '["One row with the number of payments","One row for each payment","No rows","An error"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('sqlq05', 1, 'Aggregates without GROUP BY collapse everything into one row.')
+values ('sqlq05', 0, 'Without GROUP BY, an aggregate like COUNT(*) returns a single row.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
@@ -7910,19 +7961,19 @@ values ('sqlq06', 1, 'GROUP BY status makes one group, and one count, per status
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('sqlq07', 'sql-for-data-analysis-final', 7, 'Which query keeps only customers with more than 20 shipments?', '["SELECT customer_id FROM shipments WHERE COUNT(*) > 20 GROUP BY customer_id;","SELECT customer_id FROM shipments GROUP BY customer_id HAVING COUNT(*) > 20;","SELECT customer_id FROM shipments HAVING customer_id > 20;","SELECT customer_id FROM shipments GROUP BY customer_id WHERE COUNT(*) > 20;"]'::jsonb)
+values ('sqlq07', 'sql-for-data-analysis-final', 7, 'After GROUP BY customer_id, which keyword keeps only customers with more than 20 shipments?', '["WHERE","HAVING","ORDER BY","LIMIT"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('sqlq07', 1, 'Conditions on aggregates go in HAVING, after GROUP BY.')
+values ('sqlq07', 1, 'WHERE filters rows before grouping; HAVING filters the groups, so it can use COUNT(*).')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('sqlq08', 'sql-for-data-analysis-final', 8, 'In what order does the database process these clauses?', '["SELECT, FROM, WHERE, GROUP BY","FROM, WHERE, GROUP BY, HAVING, SELECT, ORDER BY","WHERE, FROM, HAVING, GROUP BY","ORDER BY, GROUP BY, WHERE, FROM"]'::jsonb)
+values ('sqlq08', 'sql-for-data-analysis-final', 8, 'In which order do you write the clauses of a query?', '["SELECT … FROM … WHERE … GROUP BY … ORDER BY","FROM … SELECT … ORDER BY … WHERE","WHERE … SELECT … FROM … GROUP BY","ORDER BY … GROUP BY … WHERE … SELECT"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('sqlq08', 1, 'Rows are read and filtered, then grouped and filtered as groups, then selected and sorted. That''s why WHERE can''t use aggregates.')
+values ('sqlq08', 0, 'SELECT, FROM, WHERE, GROUP BY, HAVING, ORDER BY, LIMIT.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
@@ -7934,11 +7985,11 @@ values ('sqlq09', 1, 'A LEFT JOIN keeps every row of the left table, here custom
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('sqlq10', 'sql-for-data-analysis-final', 10, 'A join between shipments (2,683 rows) and customers (120 rows) returns 321,960 rows. What went wrong?', '["Nothing, that''s expected","The ON condition is missing or wrong","LIMIT is missing","There are duplicate customers"]'::jsonb)
+values ('sqlq10', 'sql-for-data-analysis-final', 10, 'A join returns far more rows than either table has. What is the most likely cause?', '["The ON condition is missing or wrong","The tables are too small","ORDER BY is missing","The column names are in capitals"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('sqlq10', 1, '2,683 × 120 = 321,960: every shipment was paired with every customer.')
+values ('sqlq10', 0, 'Without a correct ON condition, every row is matched with every row of the other table.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
@@ -7958,11 +8009,11 @@ values ('sqlq12', 2, 'A subquery recalculates the average each time. An aggregat
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('sqlq13', 'sql-for-data-analysis-final', 13, 'You join shipments to payments and then SUM(freight_charge) per customer. Some shipments were paid in two instalments. What''s the risk?', '["No risk","Those charges are counted twice","Those shipments disappear","The query fails"]'::jsonb)
+values ('sqlq13', 'sql-for-data-analysis-final', 13, 'A shipment was paid in two instalments, so it has two rows in payments. You join shipments to payments and add up freight_charge. What happens to that shipment''s charge?', '["It is counted once","It is counted twice","It disappears","The query fails"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('sqlq13', 1, 'The join makes one row per payment, so the charge repeats. Aggregate each table separately, for example in CTEs, then join the totals.')
+values ('sqlq13', 1, 'The join repeats the shipment row for each payment, so its charge is added twice.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
@@ -7984,7 +8035,7 @@ on conflict (question_id) do update set correct_index = excluded.correct_index, 
 
 -- Assessment: Data Analytics Foundations: final assessment
 insert into public.assessments (id, course_id, title, passing_score, published)
-values ('data-analytics-foundations-final', 'data-analytics-foundations', 'Data Analytics Foundations: final assessment', 70, true)
+values ('data-analytics-foundations-final', 'data-analytics-foundations', 'Data Analytics Foundations: final assessment', 60, true)
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
@@ -8020,11 +8071,11 @@ values ('dafq04', 2, '(60 − 50) ÷ 50 × 100 = 20%.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('dafq05', 'data-analytics-foundations-final', 5, 'Which column is qualitative and ordinal?', '["Customer region","Monthly salary","Job level: Junior, Mid, Senior, Manager","Order date"]'::jsonb)
+values ('dafq05', 'data-analytics-foundations-final', 5, 'Which column holds categories that have a natural order?', '["Customer region","Monthly salary","Job level: Junior, Mid, Senior, Manager","Customer name"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('dafq05', 2, 'Job levels are categories with a natural order.')
+values ('dafq05', 2, 'Junior → Mid → Senior → Manager is a set of categories with an order. Regions and names have no order; salary is a number.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
@@ -8092,11 +8143,11 @@ values ('dafq13', 1, 'BI is about monitoring the same important measures, reliab
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('dafq14', 'data-analytics-foundations-final', 14, 'Revenue in one region fell, but the same customers were still ordering. Which explanation does this rule out?', '["Customers ordering less often","Smaller orders","Losing customers","Lower prices"]'::jsonb)
+values ('dafq14', 'data-analytics-foundations-final', 14, 'Revenue in one region fell. The same customers are still buying, but they now order half as often. What is the main reason revenue fell?', '["The region lost most of its customers","Customers are ordering less often","Prices went up","The data is wrong"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('dafq14', 2, 'If the same customers still order, lost customers aren''t the cause.')
+values ('dafq14', 1, 'The customers are still there; they just order less often.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
@@ -8110,7 +8161,7 @@ on conflict (question_id) do update set correct_index = excluded.correct_index, 
 
 -- Assessment: Excel for Data Analysis: final assessment
 insert into public.assessments (id, course_id, title, passing_score, published)
-values ('excel-for-data-analysis-final', 'excel-for-data-analysis', 'Excel for Data Analysis: final assessment', 70, true)
+values ('excel-for-data-analysis-final', 'excel-for-data-analysis', 'Excel for Data Analysis: final assessment', 60, true)
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
@@ -8146,11 +8197,11 @@ values ('xlsq04', 1, 'The relative reference moves; the absolute one stays.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('xlsq05', 'excel-for-data-analysis-final', 5, 'A column has 50 numbers, 10 text values and 5 blanks. What does =COUNTA() of it return?', '["50","55","60","65"]'::jsonb)
+values ('xlsq05', 'excel-for-data-analysis-final', 5, 'What does =COUNTA() count?', '["Only cells with numbers","Every cell that isn''t empty","Only empty cells","Only cells with text"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('xlsq05', 2, 'COUNTA counts every non-empty cell: 50 + 10 = 60.')
+values ('xlsq05', 1, 'COUNTA counts non-empty cells, whether they hold numbers or text. COUNT counts numbers only.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
@@ -8170,11 +8221,11 @@ values ('xlsq07', 1, 'SUMIFS takes the sum range first, then pairs of range and 
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('xlsq08', 'excel-for-data-analysis-final', 8, 'How do you write a SUMIFS condition for dates on or after 1 October 2025?', '["\">=1/10/2025\"","\">=\"&DATE(2025,10,1)",">=DATE(2025,10,1)","\"DATE>=2025-10-01\""]'::jsonb)
+values ('xlsq08', 'excel-for-data-analysis-final', 8, 'What does SUMIFS do that SUMIF can''t?', '["Add up numbers","Add up using more than one condition","Count text values","Sort a column"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('xlsq08', 1, 'Join the operator as text to a real date made with DATE().')
+values ('xlsq08', 1, 'SUMIFS takes several conditions, for example region is Lagos and channel is Wholesale.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
@@ -8186,11 +8237,11 @@ values ('xlsq09', 2, 'The fourth argument is the value to return when there is n
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('xlsq10', 'excel-for-data-analysis-final', 10, 'Why is VLOOKUP(A2, Sheet2!A:F, 4, FALSE) considered fragile?', '["It only works on numbers","Inserting a column in the lookup range shifts what column 4 points to","FALSE returns approximate matches","It can''t search more than 4 columns"]'::jsonb)
+values ('xlsq10', 'excel-for-data-analysis-final', 10, 'Why is XLOOKUP usually safer than VLOOKUP?', '["It is shorter to type","You point it at the return column directly, so inserting a column doesn''t break it","It only works with numbers","It never needs a lookup value"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('xlsq10', 1, 'The hard-coded column number doesn''t adjust when the table''s layout changes.')
+values ('xlsq10', 1, 'VLOOKUP uses a column number such as 4, which points at the wrong column if one is inserted.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
@@ -8236,7 +8287,7 @@ on conflict (question_id) do update set correct_index = excluded.correct_index, 
 
 -- Assessment: Power BI Fundamentals: final assessment
 insert into public.assessments (id, course_id, title, passing_score, published)
-values ('power-bi-fundamentals-final', 'power-bi-fundamentals', 'Power BI Fundamentals: final assessment', 70, true)
+values ('power-bi-fundamentals-final', 'power-bi-fundamentals', 'Power BI Fundamentals: final assessment', 60, true)
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
@@ -8264,11 +8315,11 @@ values ('pbiq03', 1, 'Merge joins two queries on matching columns.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('pbiq04', 'power-bi-fundamentals-final', 4, 'A column mixes 01/09/2022 and 2022-09-01, written day-first. How should it be converted?', '["Change Type → Date","Change Type → Using Locale → Date with English (United Kingdom)","Replace Values","Split Column"]'::jsonb)
+values ('pbiq04', 'power-bi-fundamentals-final', 4, 'Dates like 01/09/2022 load as 9 January instead of 1 September. What should you set when changing the column type?', '["The locale, for example English (United Kingdom)","The font","The chart type","The column width"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('pbiq04', 1, 'The locale tells Power Query to read the day first.')
+values ('pbiq04', 0, 'Change Type → Using Locale tells Power Query to read the date day-first.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
@@ -8280,11 +8331,11 @@ values ('pbiq05', 1, 'Power Query compares text case-sensitively; standardise ca
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('pbiq06', 'power-bi-fundamentals-final', 6, 'A bar chart of revenue by region shows the same value on every bar. What is the most likely cause?', '["Wrong chart type","No relationship between the customers and orders tables","Revenue is formatted as currency","Too many regions"]'::jsonb)
+values ('pbiq06', 'power-bi-fundamentals-final', 6, 'A chart of revenue by region shows the same total on every bar. What should you check first?', '["The relationship between the customers and orders tables","The colours of the bars","The chart title","The font size"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('pbiq06', 1, 'Without a relationship, the region filter can''t reach the orders.')
+values ('pbiq06', 0, 'Without a relationship, the region can''t filter the orders, so every bar shows the grand total.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
@@ -8304,11 +8355,11 @@ values ('pbiq08', 1, 'Sort by column lets text follow a numeric order.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('pbiq09', 'power-bi-fundamentals-final', 9, 'Which should be a measure rather than a calculated column?', '["A size band (Large/Small) for each order line","Total revenue divided by active customers","A customer''s region copied onto orders","A year column in the date table"]'::jsonb)
+values ('pbiq09', 'power-bi-fundamentals-final', 9, 'Which of these should be a measure?', '["Total revenue","A customer''s name","An order''s date","A product''s category"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('pbiq09', 1, 'Ratios of aggregates must respond to filters, so they''re measures.')
+values ('pbiq09', 0, 'Measures are calculations you add up or compare, like totals and averages. Names, dates and categories are columns.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
@@ -8328,19 +8379,19 @@ values ('pbiq11', 1, 'Iterators evaluate the expression row by row, then aggrega
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('pbiq12', 'power-bi-fundamentals-final', 12, 'Which measure gives each category''s share of all revenue in a table by category?', '["DIVIDE([Revenue], CALCULATE([Revenue], REMOVEFILTERS(products[category])))","SUM(products[category])","CALCULATE([Revenue], products[category] = \"All\")","[Revenue] / 100"]'::jsonb)
+values ('pbiq12', 'power-bi-fundamentals-final', 12, 'What does CALCULATE do in DAX?', '["Works out an expression with changed filters","Formats a number as currency","Creates a new table view","Deletes filters from the report"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('pbiq12', 0, 'REMOVEFILTERS gives the all-category total as the denominator.')
+values ('pbiq12', 0, 'CALCULATE evaluates a measure under the filters you give it, for example only 2025.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('pbiq13', 'power-bi-fundamentals-final', 13, 'Which function returns revenue for the same period one year earlier?', '["TOTALYTD","SAMEPERIODLASTYEAR inside CALCULATE","DATEADD with 0 years","YEAR"]'::jsonb)
+values ('pbiq13', 'power-bi-fundamentals-final', 13, 'Which function returns revenue for the same period one year earlier?', '["SAMEPERIODLASTYEAR, used inside CALCULATE","SUM","COUNTROWS","FORMAT"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('pbiq13', 1, 'CALCULATE([Revenue], SAMEPERIODLASTYEAR(''Date''[Date])).')
+values ('pbiq13', 0, 'CALCULATE([Revenue], SAMEPERIODLASTYEAR(''Date''[Date])) shifts the dates back one year.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
@@ -8362,7 +8413,7 @@ on conflict (question_id) do update set correct_index = excluded.correct_index, 
 
 -- Assessment: Data Modelling: final assessment
 insert into public.assessments (id, course_id, title, passing_score, published)
-values ('data-modelling-final', 'data-modelling', 'Data Modelling: final assessment', 70, true)
+values ('data-modelling-final', 'data-modelling', 'Data Modelling: final assessment', 60, true)
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
@@ -8406,11 +8457,11 @@ values ('dmoq05', 1, 'A bridge (junction) table turns many-to-many into two one-
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('dmoq06', 'data-modelling-final', 6, 'In crow''s-foot notation, a circle next to a crow''s foot means:', '["Exactly one","Zero or many","One or many","Zero or one"]'::jsonb)
+values ('dmoq06', 'data-modelling-final', 6, 'In crow''s-foot notation, what does the crow''s foot (the three-pronged end) mean?', '["Many","Exactly one","None","The primary key"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('dmoq06', 1, 'The circle means zero is allowed; the crow''s foot means many.')
+values ('dmoq06', 0, 'The crow''s foot marks the ''many'' side of a relationship.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
@@ -8430,19 +8481,19 @@ values ('dmoq08', 0, 'Repeating groups break 1NF.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('dmoq09', 'data-modelling-final', 9, 'In a line table keyed by (invoice_id, product_id), invoice_date depends only on invoice_id. Which rule is broken?', '["1NF","2NF: a column depends on only part of the key","3NF","No rule"]'::jsonb)
+values ('dmoq09', 'data-modelling-final', 9, 'What is the main goal of normalisation?', '["Store each fact once, so data isn''t repeated or contradictory","Make tables wider","Add more columns to each table","Make reports load colourfully"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('dmoq09', 1, 'Partial dependency on a composite key breaks 2NF.')
+values ('dmoq09', 0, 'Normalising splits repeated information into its own table, so each fact lives in one place.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('dmoq10', 'data-modelling-final', 10, 'In a customers table, region depends on city rather than on the customer key. Which normal form does that break?', '["1NF","2NF","3NF: a non-key column depends on another non-key column","None"]'::jsonb)
+values ('dmoq10', 'data-modelling-final', 10, 'A customer''s phone number is stored in both the customers table and the orders table. What is the risk?', '["None","The two copies can disagree after one is updated","The database will refuse to save it","Orders will be deleted"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('dmoq10', 2, 'Transitive dependencies break 3NF.')
+values ('dmoq10', 1, 'Storing the same fact twice lets the copies drift apart. Keep it in one table.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
@@ -8470,19 +8521,19 @@ values ('dmoq13', 1, 'Each extra hop is another relationship for filters to trav
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('dmoq14', 'data-modelling-final', 14, 'A customer moves region and old orders must keep reporting under the old region. Which technique?', '["Slowly changing dimension type 1","Slowly changing dimension type 2","Delete and re-add the customer","Store region on the fact table as text only"]'::jsonb)
+values ('dmoq14', 'data-modelling-final', 14, 'A customer moves to a new region, but old orders must still be reported under the old region. What should you do in the customer dimension?', '["Overwrite the region (type 1)","Add a new row for the customer with the new region (type 2)","Delete the customer","Ignore the move"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('dmoq14', 1, 'Type 2 adds a new dimension row and keeps the old one for past facts.')
+values ('dmoq14', 1, 'A type 2 slowly changing dimension keeps history by adding a new row.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('dmoq15', 'data-modelling-final', 15, 'Which check confirms a column can be a primary key?', '["SUM of the column","COUNT(*) equals COUNT(DISTINCT column) and no NULLs","The column is text","The column is the first in the table"]'::jsonb)
+values ('dmoq15', 'data-modelling-final', 15, 'A primary key must be:', '["Unique for every row and never empty","Text","The first column in the table","A number you can add up"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('dmoq15', 1, 'A primary key must be unique and never empty.')
+values ('dmoq15', 0, 'Each row needs its own key value, and it can''t be missing.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 

@@ -30,10 +30,10 @@ export const PBI_ASSESSMENT: AssessmentDef = {
     },
     {
       id: "pbiq04",
-      prompt: "A column mixes 01/09/2022 and 2022-09-01, written day-first. How should it be converted?",
-      options: ["Change Type → Date", "Change Type → Using Locale → Date with English (United Kingdom)", "Replace Values", "Split Column"],
-      answer: 1,
-      explanation: "The locale tells Power Query to read the day first.",
+      prompt: "Dates like 01/09/2022 load as 9 January instead of 1 September. What should you set when changing the column type?",
+      options: ["The locale, for example English (United Kingdom)", "The font", "The chart type", "The column width"],
+      answer: 0,
+      explanation: "Change Type → Using Locale tells Power Query to read the date day-first.",
     },
     {
       id: "pbiq05",
@@ -44,10 +44,10 @@ export const PBI_ASSESSMENT: AssessmentDef = {
     },
     {
       id: "pbiq06",
-      prompt: "A bar chart of revenue by region shows the same value on every bar. What is the most likely cause?",
-      options: ["Wrong chart type", "No relationship between the customers and orders tables", "Revenue is formatted as currency", "Too many regions"],
-      answer: 1,
-      explanation: "Without a relationship, the region filter can't reach the orders.",
+      prompt: "A chart of revenue by region shows the same total on every bar. What should you check first?",
+      options: ["The relationship between the customers and orders tables", "The colours of the bars", "The chart title", "The font size"],
+      answer: 0,
+      explanation: "Without a relationship, the region can't filter the orders, so every bar shows the grand total.",
     },
     {
       id: "pbiq07",
@@ -65,10 +65,10 @@ export const PBI_ASSESSMENT: AssessmentDef = {
     },
     {
       id: "pbiq09",
-      prompt: "Which should be a measure rather than a calculated column?",
-      options: ["A size band (Large/Small) for each order line", "Total revenue divided by active customers", "A customer's region copied onto orders", "A year column in the date table"],
-      answer: 1,
-      explanation: "Ratios of aggregates must respond to filters, so they're measures.",
+      prompt: "Which of these should be a measure?",
+      options: ["Total revenue", "A customer's name", "An order's date", "A product's category"],
+      answer: 0,
+      explanation: "Measures are calculations you add up or compare, like totals and averages. Names, dates and categories are columns.",
     },
     {
       id: "pbiq10",
@@ -91,22 +91,17 @@ export const PBI_ASSESSMENT: AssessmentDef = {
     },
     {
       id: "pbiq12",
-      prompt: "Which measure gives each category's share of all revenue in a table by category?",
-      options: [
-        "DIVIDE([Revenue], CALCULATE([Revenue], REMOVEFILTERS(products[category])))",
-        "SUM(products[category])",
-        "CALCULATE([Revenue], products[category] = \"All\")",
-        "[Revenue] / 100",
-      ],
+      prompt: "What does CALCULATE do in DAX?",
+      options: ["Works out an expression with changed filters", "Formats a number as currency", "Creates a new table view", "Deletes filters from the report"],
       answer: 0,
-      explanation: "REMOVEFILTERS gives the all-category total as the denominator.",
+      explanation: "CALCULATE evaluates a measure under the filters you give it, for example only 2025.",
     },
     {
       id: "pbiq13",
       prompt: "Which function returns revenue for the same period one year earlier?",
-      options: ["TOTALYTD", "SAMEPERIODLASTYEAR inside CALCULATE", "DATEADD with 0 years", "YEAR"],
-      answer: 1,
-      explanation: "CALCULATE([Revenue], SAMEPERIODLASTYEAR('Date'[Date])).",
+      options: ["SAMEPERIODLASTYEAR, used inside CALCULATE", "SUM", "COUNTROWS", "FORMAT"],
+      answer: 0,
+      explanation: "CALCULATE([Revenue], SAMEPERIODLASTYEAR('Date'[Date])) shifts the dates back one year.",
     },
     {
       id: "pbiq14",

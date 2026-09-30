@@ -1,8 +1,9 @@
 import { useId, useState } from "react";
 import { CheckCircle2, XCircle } from "lucide-react";
 import type { QuizQuestion } from "@/content/types";
+import { optionOrder } from "@/lib/shuffle";
 
-/** "Check your understanding": instant feedback, not graded or stored. */
+/** "Check your understanding": instant feedback, not graded or stored. Options are shuffled per question. */
 export function LessonQuiz({ questions }: { questions: QuizQuestion[] }) {
   const id = useId();
   const [answers, setAnswers] = useState<Record<number, number>>({});
@@ -23,7 +24,8 @@ export function LessonQuiz({ questions }: { questions: QuizQuestion[] }) {
                   {qi + 1}. {q.prompt}
                 </legend>
                 <div className="mt-3 grid gap-2">
-                  {q.options.map((opt, oi) => {
+                  {optionOrder(q.prompt, q.options.length).map((oi) => {
+                    const opt = q.options[oi];
                     const isAnswer = checked && oi === q.answer;
                     const isWrongPick = checked && oi === chosen && !right;
                     return (

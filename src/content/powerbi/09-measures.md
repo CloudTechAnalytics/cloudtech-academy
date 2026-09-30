@@ -123,22 +123,22 @@ And **Revenue YTD** at 2026 March shows Q1 2026 in total.
 ```quiz
 [
   {
-    "prompt": "In a table by region, what does CALCULATE([Revenue], customers[region] = \"Lagos\") show on the South East row?",
-    "options": ["South East revenue", "Lagos revenue", "Blank", "Total revenue"],
-    "answer": 1,
-    "explanation": "The filter argument overrides the region filter from the row."
+    "prompt": "What does CALCULATE([Revenue], customers[region] = \"Lagos\") return?",
+    "options": ["Revenue for Lagos only", "Revenue for every region", "The number of Lagos customers", "An error"],
+    "answer": 0,
+    "explanation": "CALCULATE applies the filter you give it, here region = Lagos."
   },
   {
-    "prompt": "What is REMOVEFILTERS(products[category]) used for in a % of total measure?",
-    "options": ["Deleting categories", "Getting the total across all categories as the denominator", "Sorting categories", "Hiding the category column"],
-    "answer": 1,
-    "explanation": "It ignores the category filter so the denominator is the all-category total."
+    "prompt": "A '% of total' measure divides a category's revenue by what?",
+    "options": ["Revenue across all categories", "The number of categories", "100", "The largest category"],
+    "answer": 0,
+    "explanation": "REMOVEFILTERS gives the total across all categories, which is the denominator."
   },
   {
-    "prompt": "Why does 2026's YoY % look very negative at year level in this data?",
-    "options": ["Sales collapsed", "2026 has only six months of data but is compared with all twelve months of 2025", "The date table is wrong", "DAX can't compare years"],
-    "answer": 1,
-    "explanation": "Compare equal periods, such as H1 vs H1, for a fair picture."
+    "prompt": "The data for 2026 runs only from January to June. Why does 2026 look much lower than 2025 at year level?",
+    "options": ["Half a year is being compared with a full year", "Sales collapsed", "DAX can't compare years", "The chart is the wrong type"],
+    "answer": 0,
+    "explanation": "Compare like with like: January–June 2026 against January–June 2025."
   }
 ]
 ```

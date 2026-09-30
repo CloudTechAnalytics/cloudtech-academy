@@ -42,10 +42,10 @@ export const DAF_ASSESSMENT: AssessmentDef = {
     },
     {
       id: "dafq05",
-      prompt: "Which column is qualitative and ordinal?",
-      options: ["Customer region", "Monthly salary", "Job level: Junior, Mid, Senior, Manager", "Order date"],
+      prompt: "Which column holds categories that have a natural order?",
+      options: ["Customer region", "Monthly salary", "Job level: Junior, Mid, Senior, Manager", "Customer name"],
       answer: 2,
-      explanation: "Job levels are categories with a natural order.",
+      explanation: "Junior → Mid → Senior → Manager is a set of categories with an order. Regions and names have no order; salary is a number.",
     },
     {
       id: "dafq06",
@@ -115,10 +115,10 @@ export const DAF_ASSESSMENT: AssessmentDef = {
     },
     {
       id: "dafq14",
-      prompt: "Revenue in one region fell, but the same customers were still ordering. Which explanation does this rule out?",
-      options: ["Customers ordering less often", "Smaller orders", "Losing customers", "Lower prices"],
-      answer: 2,
-      explanation: "If the same customers still order, lost customers aren't the cause.",
+      prompt: "Revenue in one region fell. The same customers are still buying, but they now order half as often. What is the main reason revenue fell?",
+      options: ["The region lost most of its customers", "Customers are ordering less often", "Prices went up", "The data is wrong"],
+      answer: 1,
+      explanation: "The customers are still there; they just order less often.",
     },
     {
       id: "dafq15",

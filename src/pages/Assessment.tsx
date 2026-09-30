@@ -7,24 +7,8 @@ import { getBackend, type AttemptResult } from "@/lib/backend";
 import { PageLoading, RequireAuth } from "@/lib/auth";
 import { Button, ButtonLink } from "@/components/Button";
 import { Alert } from "@/components/Form";
+import { optionOrder } from "@/lib/shuffle";
 import NotFound from "./NotFound";
-
-/**
- * Options are shown in a shuffled order that is fixed per question (seeded by its ID), so the
- * position of the right answer carries no pattern. Answers are still submitted as the original
- * option index, which is what the server grades.
- */
-function optionOrder(questionId: string, count: number) {
-  let h = 2166136261;
-  for (const ch of questionId) h = Math.imul(h ^ ch.charCodeAt(0), 16777619);
-  const order = Array.from({ length: count }, (_, i) => i);
-  for (let i = count - 1; i > 0; i--) {
-    h = Math.imul(h ^ (h >>> 15), 2246822507) ^ Math.imul(h ^ (h >>> 13), 3266489909);
-    const j = (h >>> 0) % (i + 1);
-    [order[i], order[j]] = [order[j], order[i]];
-  }
-  return order;
-}
 
 function AssessmentInner() {
   const { slug } = useParams();

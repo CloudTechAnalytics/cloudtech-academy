@@ -103,10 +103,10 @@ Notice what the analysis did *not* do:
     "explanation": "It names the measure (revenue), the segment, the periods and the comparison."
   },
   {
-    "prompt": "Revenue fell but the number of customers ordering stayed the same. Which explanation does that rule out?",
-    "options": ["Customers ordering less often", "Lost customers", "Smaller orders", "Lower prices"],
+    "prompt": "Revenue fell, but just as many customers are still ordering. Which is the most likely reason?",
+    "options": ["The business lost customers", "Customers are ordering less often, or buying less each time", "The office moved", "The data has too many columns"],
     "answer": 1,
-    "explanation": "If the same number of customers are still ordering, losing customers isn't the cause."
+    "explanation": "The customers are still there, so the fall must come from how often or how much they buy."
   },
   {
     "prompt": "What turns a finding into an insight?",
