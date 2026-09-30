@@ -16,6 +16,7 @@ export const ROUTES = [
   "/courses",
   ...courses.map((c) => `/courses/${c.slug}`),
   ...courses.flatMap((c) => publishedLessons(c).map((l) => `/learn/${c.slug}/${l.slug}`)),
+  "/students",
   "/paths",
   "/projects",
   "/certificates",

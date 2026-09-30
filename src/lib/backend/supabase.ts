@@ -14,6 +14,7 @@ import {
   type CertificatePrice,
   type Credential,
   type ProjectSubmission,
+  type PublicProfile,
   type Role,
   type User,
 } from "./types";
@@ -246,6 +247,20 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
       const id = await requireUserId();
       check(await sb.from("profiles").update({ full_name: fullName.trim() }).eq("id", id));
       cached = null;
+    },
+
+    async getPublicProfileSettings() {
+      const id = await requireUserId();
+      const r = check(
+        await sb.from("profiles").select("public_slug, profile_public, headline").eq("id", id).maybeSingle(),
+      ) as Row | null;
+      return { isPublic: Boolean(r?.profile_public), slug: r?.public_slug ?? "", headline: r?.headline ?? "" };
+    },
+    async savePublicProfileSettings({ isPublic, slug, headline }) {
+      check(await sb.rpc("set_public_profile", { p_public: isPublic, p_slug: slug, p_headline: headline }));
+    },
+    async getPublicProfile(slug) {
+      return (check(await sb.rpc("public_profile", { p_slug: slug })) as PublicProfile | null) ?? null;
     },
 
     async listCourses(opts) {

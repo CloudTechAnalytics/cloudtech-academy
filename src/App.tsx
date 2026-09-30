@@ -13,6 +13,8 @@ const CourseComplete = lazy(() => import("@/pages/CourseComplete"));
 const CertificatePurchase = lazy(() => import("@/pages/CertificatePurchase"));
 const CredentialView = lazy(() => import("@/pages/CredentialView"));
 const Paths = lazy(() => import("@/pages/Paths"));
+const Students = lazy(() => import("@/pages/Students"));
+const LearnerProfile = lazy(() => import("@/pages/LearnerProfile"));
 const Projects = lazy(() => import("@/pages/Projects"));
 const Certificates = lazy(() => import("@/pages/Certificates"));
 const Verify = lazy(() => import("@/pages/Verify"));
@@ -55,6 +57,8 @@ export function AppRoutes() {
           <Route path="credentials/:credentialId" element={<CredentialView />} />
           <Route path="learn/:course/:lesson" element={<Learn />} />
           <Route path="paths" element={<Paths />} />
+          <Route path="students" element={<Students />} />
+          <Route path="learners/:slug" element={<LearnerProfile />} />
           <Route path="projects" element={<Projects />} />
           <Route path="certificates" element={<Certificates />} />
           <Route path="verify/:credentialId" element={<Verify />} />

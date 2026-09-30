@@ -17,7 +17,21 @@ const logistics = new SQL.Database(fs.readFileSync("public/datasets/logistics.sq
 const CONTENT = "src/content";
 const FULL = ["sql", "daf", "excel", "powerbi", "modelling"];
 /** Short courses: one lesson per module, a module check each, and a final assessment. */
-const SHORT = ["ai-productivity", "design-content", "career"];
+const SHORT = [
+  "ai-productivity",
+  "design-content",
+  "career",
+  "ai-students",
+  "research",
+  "portfolio",
+  "git",
+  "web",
+  "python",
+  "python-data",
+  "digital",
+  "internship",
+  "freelancing",
+];
 const COURSES = [...FULL, ...SHORT];
 const SECTIONS = ["## The problem", "## The concept", "## Example", "## Walkthrough", "## Practice", "## Check your understanding"];
 

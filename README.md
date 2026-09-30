@@ -17,8 +17,20 @@ The learning platform of [CloudTech Analytics](https://www.cloudtechanalytics.co
 | AI Productivity Fundamentals | Prompting Essentials, Using Claude, Using ChatGPT, Presentations with AI |
 | Design & Content Essentials | Social Media Content with AI, Design with Canva, Video Editing with CapCut |
 | Career Essentials | Build a CV with AI, A Professional LinkedIn Profile, Quick Excel Analysis |
+| ChatGPT & AI for Students | AI Fundamentals for Students, Study Smarter with AI, Research with AI, Writing with AI Honestly |
+| Research Skills for Students | Search Like a Pro, Judge Your Sources, Cite and Organise Your Sources |
+| Build Your Student Portfolio | Plan Your Portfolio, Show Your Work, Build Your Portfolio Page, Share Your Work on LinkedIn |
+| Git & GitHub for Beginners | What Git and GitHub Are, Your First Repository, Show Your Projects on GitHub |
+| Web Development for Beginners | HTML, CSS, JavaScript, Publish Your First Website |
+| Python for Beginners | First Steps in Python, Decisions Lists and Loops, Functions and a Mini Project |
+| Python for Data Analysis | Load and Explore Data, Clean Filter and Calculate, Group Join and Chart |
+| Digital Skills for Students | Files and Cloud Storage, Google Workspace for Students, Professional Email, Stay Safe Online |
+| Get Your First Internship | Get Ready, Find Opportunities (Including Remote), Apply and Stand Out, Ace the Interview |
+| Freelancing for Beginners | Choose Your Skill and Offer, Find Clients and Get Paid, Price and Pitch, Deliver and Get Reviews |
 
 Each short course ends with an 8-question final assessment.
+
+**Student Starter** (`/students`) lists 25 skills for students, grouped by theme. Each links to a whole course or to a single module of one (for example, AI prompting is the first module of AI Productivity Fundamentals). The list is in `src/pages/Students.tsx`.
 
 | Full course | Lessons | Practice | Final project |
 | --- | --: | --- | --- |
@@ -37,6 +49,7 @@ Each full course has a 15-question final assessment. Every assessment has a pass
 | Optional official certificate: order, payment (simulated in demo mode; bank transfer + admin grant until a provider is connected), PDF with QR code, `/verify/:id` | ✓ |
 | Practice projects + five downloadable datasets (logistics, sales, messy customer export, HR, legal) | ✓ |
 | Admin (`/admin`): courses, modules and module badges, lessons, module checks and final assessments, students, submissions, credentials (search, revoke), certificate purchases (grant, email, CSV), pricing per currency | ✓ |
+| Public skills profile (`/learners/:slug`): off by default; the learner picks the address and a headline in their profile, and the page lists their valid badges and certificates, never their email | ✓ |
 | SEO: every public page prerendered, sitemap, structured data | ✓ |
 
 ## Running it
@@ -56,7 +69,7 @@ Without Supabase keys the Academy runs in **demo mode**:
 ## Connecting Supabase
 
 1. Create a project at [supabase.com](https://supabase.com).
-2. In **SQL Editor**, run [`supabase/migrations/0001_academy.sql`](supabase/migrations/0001_academy.sql).
+2. In **SQL Editor**, run [`supabase/migrations/0001_academy.sql`](supabase/migrations/0001_academy.sql), then [`0002_public_profiles.sql`](supabase/migrations/0002_public_profiles.sql).
 3. Then run [`supabase/seed.sql`](supabase/seed.sql). It loads the courses, lessons, assessment and project.
 4. In **Authentication → URL Configuration**:
    - Set the Site URL to the Academy's address.
@@ -140,7 +153,7 @@ src/
   pages/          public pages, learner pages, auth/, admin/
   components/     layout, lesson renderer, SQL editor parts, certificate artwork
 scripts/          prerender, seed builder, content tests, dataset and brand asset generators
-supabase/         migration and generated seed
+supabase/         migrations, Edge Functions and generated seed
 ```
 
 Public pages are prerendered to static HTML. Signed-in pages (dashboard, admin, assessment, certificate, verification, sign-in) are served from `app.html` via the rewrites in `vercel.json`.

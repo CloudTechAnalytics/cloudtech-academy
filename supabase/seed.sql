@@ -15,39 +15,47 @@ values ('career', 'Career', 'CVs, LinkedIn and the digital skills employers look
 on conflict (id) do update set name = excluded.name, description = excluded.description, is_future = excluded.is_future, position = excluded.position;
 
 insert into public.course_categories (id, name, description, is_future, position)
-values ('data-analytics', 'Data Analytics', 'Turning raw data into answers a business can act on.', false, 4)
+values ('study-skills', 'Study & Digital Skills', 'Study, research and work smarter with AI and everyday digital tools.', false, 4)
 on conflict (id) do update set name = excluded.name, description = excluded.description, is_future = excluded.is_future, position = excluded.position;
 
 insert into public.course_categories (id, name, description, is_future, position)
-values ('business-intelligence', 'Business Intelligence', 'Dashboards, reporting and data models.', false, 5)
+values ('coding', 'Coding & Web', 'Git, GitHub and building your first websites.', false, 5)
 on conflict (id) do update set name = excluded.name, description = excluded.description, is_future = excluded.is_future, position = excluded.position;
 
 insert into public.course_categories (id, name, description, is_future, position)
-values ('data-science', 'Data Science', 'Statistics and predictive modelling.', true, 6)
+values ('data-analytics', 'Data Analytics', 'Turning raw data into answers a business can act on.', false, 6)
 on conflict (id) do update set name = excluded.name, description = excluded.description, is_future = excluded.is_future, position = excluded.position;
 
 insert into public.course_categories (id, name, description, is_future, position)
-values ('ai-ml', 'AI & Machine Learning', 'Building and applying machine learning models.', true, 7)
+values ('business-intelligence', 'Business Intelligence', 'Dashboards, reporting and data models.', false, 7)
 on conflict (id) do update set name = excluded.name, description = excluded.description, is_future = excluded.is_future, position = excluded.position;
 
 insert into public.course_categories (id, name, description, is_future, position)
-values ('python', 'Python', 'Python for analysis and automation.', true, 8)
+values ('data-science', 'Data Science', 'Statistics and predictive modelling.', true, 8)
 on conflict (id) do update set name = excluded.name, description = excluded.description, is_future = excluded.is_future, position = excluded.position;
 
 insert into public.course_categories (id, name, description, is_future, position)
-values ('databases', 'Databases & Data Modelling', 'Designing databases and data models that answer business questions.', false, 9)
+values ('ai-ml', 'AI & Machine Learning', 'Building and applying machine learning models.', true, 9)
 on conflict (id) do update set name = excluded.name, description = excluded.description, is_future = excluded.is_future, position = excluded.position;
 
 insert into public.course_categories (id, name, description, is_future, position)
-values ('automation', 'Automation', 'Automating repetitive work.', true, 10)
+values ('python', 'Python', 'Python for analysis and automation.', false, 10)
 on conflict (id) do update set name = excluded.name, description = excluded.description, is_future = excluded.is_future, position = excluded.position;
 
 insert into public.course_categories (id, name, description, is_future, position)
-values ('business-analysis', 'Business Analysis', 'Requirements, processes and decisions.', true, 11)
+values ('databases', 'Databases & Data Modelling', 'Designing databases and data models that answer business questions.', false, 11)
 on conflict (id) do update set name = excluded.name, description = excluded.description, is_future = excluded.is_future, position = excluded.position;
 
 insert into public.course_categories (id, name, description, is_future, position)
-values ('cloud', 'Cloud & Technology', 'Cloud platforms and core technology skills.', true, 12)
+values ('automation', 'Automation', 'Automating repetitive work.', true, 12)
+on conflict (id) do update set name = excluded.name, description = excluded.description, is_future = excluded.is_future, position = excluded.position;
+
+insert into public.course_categories (id, name, description, is_future, position)
+values ('business-analysis', 'Business Analysis', 'Requirements, processes and decisions.', true, 13)
+on conflict (id) do update set name = excluded.name, description = excluded.description, is_future = excluded.is_future, position = excluded.position;
+
+insert into public.course_categories (id, name, description, is_future, position)
+values ('cloud', 'Cloud & Technology', 'Cloud platforms and core technology skills.', true, 14)
 on conflict (id) do update set name = excluded.name, description = excluded.description, is_future = excluded.is_future, position = excluded.position;
 
 
@@ -890,9 +898,2594 @@ $md$, true, true, 3, '{}'::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 
+-- Course: ChatGPT & AI for Students
+insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
+values ('chatgpt-for-students', 'short', 'AI for Students', 'chatgpt-for-students', 'AISTU', 'ChatGPT & AI for Students', 'Use ChatGPT and other AI tools to understand topics, revise, research and write, honestly and within your school''s rules.', 'Learn how AI assistants work and where they go wrong, then use them to study smarter: explain hard topics, make revision questions, plan research and improve your writing without handing in work that isn''t yours. Each module takes about 20 minutes and ends with a short check and a badge.', 'study-skills', 'beginner', 'Beginner', null, true, 'available', true, array['How AI assistants work and their limits', 'Studying and revising with AI', 'Researching with AI and checking sources', 'Using AI in writing honestly']::text[], array['No experience needed', 'A free account with ChatGPT or another AI assistant']::text[], null, true, false, false, false, true, 60, 3)
+on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('aistu-m01', 'chatgpt-for-students', 'AI Fundamentals for Students', 1, 'AI Fundamentals', 'AIBASICS', array['Explain what ChatGPT actually is', 'Know what AI is good and bad at', 'Spot made-up facts and references', 'Follow your school''s rules on AI use']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('chatgpt-for-students:ai-fundamentals', 'chatgpt-for-students', 'aistu-m01', 'ai-fundamentals', 'AI Fundamentals for Students', 'What AI assistants like ChatGPT actually do, what they''re good and bad at, and the rules that keep you on the right side of your school.', 20, $md$
+## What ChatGPT actually is
+
+ChatGPT, Claude, Gemini and Copilot are **AI assistants** built on large language models. They learned patterns from a huge amount of text, and they answer by predicting, word by word, what a helpful reply would look like.
+
+That explains both their strengths and their weaknesses:
+
+- They're excellent at **explaining, rephrasing, summarising, organising and giving examples**, because those are patterns of language.
+- They **don't "know" facts the way a textbook does**. When they're unsure, they can produce something that sounds right but isn't. This is often called a *hallucination*.
+- Unless they search the web, they may not know about **recent events**, your **lecturer's notes**, or your **department's rules**.
+
+Think of an AI assistant as a very fast, well-read study partner who is sometimes confidently wrong. Useful, but you stay in charge.
+
+## What it's great for as a student
+
+| Use | Example |
+| :-- | :-- |
+| Explaining a topic another way | "Explain demand and supply using a Lagos market example." |
+| Breaking down a hard reading | "Summarise this paragraph in simple English, then list the key terms." |
+| Practice | "Give me 10 multiple-choice questions on cell division, with answers at the end." |
+| Planning | "Make a 2-week revision plan for four courses, 2 hours a day." |
+| Feedback | "What's unclear in my essay introduction? Don't rewrite it." |
+
+## What it's bad at
+
+- **Exact facts and figures:** dates, statistics, quotes and references can be invented.
+- **Citations:** it may produce books or articles that **don't exist**. Always find the real source yourself.
+- **Your course's specifics:** it hasn't seen your lecture notes or marking scheme unless you share them.
+- **Maths and calculations:** it's better than it was, but check every step.
+
+## Academic integrity: the rules come first
+
+Every school and lecturer sets their own rules on AI. Some allow it for brainstorming but not writing; some ban it in assessments entirely. Before you use AI for any graded work:
+
+1. **Check the rules** in your course outline or ask your lecturer.
+2. **Never submit AI-written work as your own** where that isn't allowed. It can count as plagiarism or exam malpractice.
+3. **Be ready to explain** anything you submit. If you can't explain it, you haven't learned it.
+4. **Say how you used AI** when you're asked to, for example "I used ChatGPT to generate practice questions."
+
+> [!TIP]
+> A simple test: use AI to help you **understand and practise**, not to **do the assessment for you**.
+
+## Try it
+
+1. Open any AI assistant (ChatGPT, Claude, Gemini or Copilot).
+2. Pick a topic from one of your courses this semester.
+3. Ask: "Explain [topic] to me as if I'm in my first year, with one real-life example from Nigeria."
+4. Then ask: "What are two common mistakes students make about this?"
+5. Check one fact from the answer against your textbook or notes.
+$md$, true, true, 1, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('aistu-m02', 'chatgpt-for-students', 'Study Smarter with AI', 2, 'AI Study Skills', 'STUDYAI', array['Ask for explanations, not answers', 'Test yourself with AI-made questions', 'Turn notes into study tools', 'Plan your revision']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('chatgpt-for-students:study-with-ai', 'chatgpt-for-students', 'aistu-m02', 'study-with-ai', 'Study Smarter with AI', 'Use AI to explain topics, test yourself, plan revision and turn your notes into flashcards, so you learn faster rather than just reading more.', 25, $md$
+## Ask for explanations, not answers
+
+The biggest study win is getting a topic explained **in the way that works for you**. Tell the assistant your level and what confuses you:
+
+```text
+I'm a 100-level student in Economics. I don't understand elasticity of
+demand. Explain it in simple English with an example using fuel prices,
+then check my understanding with two questions. Wait for my answers
+before telling me if I'm right.
+```
+
+That last line matters. It makes the AI **quiz you** instead of just talking at you, and being tested is one of the most reliable ways to remember.
+
+Some assistants have a **study or learning mode** that asks you questions and guides you step by step instead of giving the answer straight away. Try it if yours has one.
+
+## Test yourself
+
+Reading notes again feels productive, but testing yourself works much better. Ask for practice:
+
+```text
+Give me 10 short-answer questions on the causes of the First World War,
+from easy to hard. Don't show the answers until I ask.
+```
+
+Other useful formats:
+
+- **Multiple choice** with explanations for each wrong option.
+- **"Explain it back":** "I'll explain photosynthesis in my own words. Tell me what I got wrong or missed."
+- **Past-question style:** paste a past question (not a live exam!) and ask for a similar one to practise.
+
+## Turn your notes into study tools
+
+Paste your own lecture notes (typed, or a photo the assistant can read) and ask:
+
+- "Summarise these notes in 10 bullet points."
+- "Make 15 flashcards from these notes: question on one side, answer on the other."
+- "Which parts of these notes are most likely to be examined? Why?" (Treat this as a guess, not a promise.)
+
+Working from **your own notes** keeps the AI close to what your lecturer actually taught.
+
+## Plan your revision
+
+```text
+I have exams in 3 weeks: MTH101 (hardest for me), CHM101, PHY101 and
+GST111. I can study 3 hours on weekdays and 5 hours on Saturdays.
+Make a revision timetable with breaks, more time for MTH101, and a
+full practice day before each exam.
+```
+
+Then adjust it to real life. A plan you follow beats a perfect plan you don't.
+
+> [!WARNING]
+> AI can make mistakes in maths and science working. Use it to understand the method, then check the steps yourself or against a worked example from your course.
+
+## Try it
+
+1. Pick a topic you'll be examined on soon.
+2. Ask the AI to explain it at your level and then **quiz you** with three questions, waiting for your answers.
+3. Answer them honestly, without looking.
+4. Paste in a page of your notes and ask for 10 flashcards.
+5. Ask for a one-week revision plan that fits your timetable.
+$md$, true, true, 2, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('aistu-m03', 'chatgpt-for-students', 'Research with AI', 3, 'AI Research', 'AIRESRCH', array['Know where AI helps in research and where it doesn''t', 'Get an overview and search terms', 'Check every AI reference before using it', 'Summarise and question real sources']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('chatgpt-for-students:research-with-ai', 'chatgpt-for-students', 'aistu-m03', 'research-with-ai', 'Research with AI', 'Use AI to understand a topic, find search terms and summarise real sources, while making sure every fact and reference you use is genuine.', 25, $md$
+## Where AI helps in research, and where it doesn't
+
+AI is a strong **starting point** for research, and a weak **finishing point**.
+
+| Good for | Not good for |
+| :-- | :-- |
+| Getting an overview of an unfamiliar topic | Being your source |
+| Suggesting keywords and related ideas | Giving you references to cite |
+| Summarising an article you've found | Current statistics, unless it searches and shows sources |
+| Comparing arguments you've already read | Deciding what's true |
+
+The rule: **AI points you to the research; it doesn't replace it.**
+
+## Start with an overview and search terms
+
+```text
+I'm writing a 2,000-word essay on the effects of mobile money on small
+businesses in Nigeria. Give me: a short overview of the topic, the main
+debates, and 10 search terms I could use on Google Scholar.
+```
+
+Now you know what to look for. Use those search terms in **Google Scholar**, your **school library portal**, or trusted websites, not the AI chat.
+
+## Never trust an AI reference
+
+AI assistants can invent references: realistic-looking author names, journals and page numbers for articles that **don't exist**. Submitting one can get you penalised for fabrication.
+
+For every source you use:
+
+1. **Find it yourself**: search the exact title on Google Scholar or your library.
+2. **Open it** and check that it actually says what you're claiming.
+3. **Cite the real source**, not the AI.
+
+Some assistants can **search the web and show links** (for example ChatGPT's search, Gemini, Copilot, or Perplexity). That's better, but still open each link: summaries can misstate what a page says.
+
+## Summarise and question real sources
+
+Once you have a real article (a PDF you're allowed to use, or a web page), AI becomes very useful:
+
+```text
+Here is an article I'm using for my essay. Summarise its main argument,
+the evidence it uses, and any limitations the authors mention.
+```
+
+```text
+Compare these two articles. Where do they agree and disagree?
+```
+
+Then read the key parts yourself. The summary saves time; it doesn't replace understanding.
+
+> [!TIP]
+> Keep a simple research log: the source, what it says, and which point in your essay it supports. It makes referencing at the end much easier.
+
+## Try it
+
+1. Choose a topic for an assignment you have now, or one you'd like to explore.
+2. Ask an AI assistant for an overview and 10 search terms.
+3. Use three of those terms in Google Scholar and find **two real articles**.
+4. Summarise one article with AI, then read its conclusion yourself and compare.
+5. Ask the AI for "three references on this topic", then try to find each one. How many are real?
+$md$, true, true, 3, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('aistu-m04', 'chatgpt-for-students', 'Writing with AI, Honestly', 4, 'Honest AI Writing', 'AIWRITE', array['Use AI as a coach, not a ghostwriter', 'Plan your writing before you start', 'Get feedback on your own draft', 'Say how you used AI']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('chatgpt-for-students:writing-with-ai', 'chatgpt-for-students', 'aistu-m04', 'writing-with-ai', 'Writing with AI, Honestly', 'Use AI as a writing coach: plan an outline, get feedback and improve clarity, while the ideas and the words stay yours.', 20, $md$
+## A coach, not a ghostwriter
+
+There's a big difference between:
+
+- **"Write my essay on climate change."** The AI does the thinking. You learn nothing, and in most courses it's not allowed.
+- **"Here's my draft paragraph. What's unclear?"** You do the thinking, and the AI helps you improve it.
+
+The second approach makes you a better writer and keeps you within most schools' rules. Always check your course's policy on AI first.
+
+## Plan before you write
+
+A good outline is half the work. Ask for help **structuring your own ideas**:
+
+```text
+My essay question is "Should social media be regulated in Nigeria?"
+My position: yes, but lightly. My points: misinformation, cyberbullying,
+free speech concerns. Suggest an essay structure with an introduction,
+three body sections and a conclusion. Don't write the essay.
+```
+
+Then write each section yourself, following the plan.
+
+## Get feedback on your draft
+
+Paste your own writing and ask **specific** questions:
+
+- "Is my argument in this paragraph clear? Point out any weak links."
+- "Where do I repeat myself?"
+- "Is this introduction too long? Which sentence could go?"
+- "Check my grammar and spelling, and list the mistakes rather than rewriting everything."
+
+Asking for a **list of problems** rather than a rewrite keeps the writing yours, and you learn from each fix.
+
+## Improve clarity and tone
+
+AI is very good at helping you write clearly for different readers:
+
+- "Make this email to my lecturer more polite and concise."
+- "Explain this technical paragraph so a non-specialist could follow it."
+- "This sentence is 60 words long. Suggest how to split it."
+
+> [!WARNING]
+> Watch out for AI "tone": words like *delve*, *tapestry* and *moreover* in every paragraph, and a smooth, generic style. Lecturers notice. Your own voice, with your own examples, is more convincing.
+
+## Say how you used it
+
+If your course allows AI, it may ask you to **declare how you used it**. A short, honest note is enough:
+
+> "I used ChatGPT to suggest an essay structure and to check grammar. The ideas, research and writing are my own."
+
+## Try it
+
+1. Take an assignment question you have now, or make one up.
+2. Write your position and three points, then ask the AI for a structure only.
+3. Write one paragraph yourself.
+4. Ask for a **list of problems** in that paragraph (not a rewrite) and fix them yourself.
+5. Write a one-sentence declaration of how you used AI.
+$md$, true, true, 4, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+
+-- Course: Research Skills for Students
+insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
+values ('research-skills-for-students', 'short', 'Research Skills', 'research-skills-for-students', 'RSRCH', 'Research Skills for Students', 'Search the web and academic databases like a pro, judge which sources to trust, and cite them properly.', 'Find better information faster. Use search operators and Google Scholar, check whether a source is reliable, and cite and organise references so assignments and projects are easy to write. Each module takes about 20 minutes and ends with a short check and a badge.', 'study-skills', 'beginner', 'Beginner', null, true, 'available', true, array['Advanced Google and Google Scholar searches', 'Judging whether a source is reliable', 'Citing sources correctly', 'Organising references']::text[], array['No experience needed']::text[], null, true, false, false, false, true, 60, 4)
+on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('rsrch-m01', 'research-skills-for-students', 'Search Like a Pro', 1, 'Smart Search', 'SEARCH', array['Choose better keywords', 'Use search operators to narrow results', 'Search Google Scholar and trusted sites', 'Refine searches as you go']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('research-skills-for-students:search-like-a-pro', 'research-skills-for-students', 'rsrch-m01', 'search-like-a-pro', 'Search Like a Pro', 'Find what you need in minutes with better keywords, Google search operators and Google Scholar.', 20, $md$
+## Start with better keywords
+
+Search engines match **words**, not questions. Turn your topic into its key terms:
+
+| Instead of | Search |
+| :-- | :-- |
+| What are the effects of youth unemployment in Nigeria? | youth unemployment Nigeria effects |
+| How does mobile money help small businesses? | mobile money small business growth |
+
+Then try **synonyms**: *unemployment / joblessness*, *small business / SME / micro-enterprise*. Different words find different sources.
+
+## Use search operators
+
+These work in Google's search box and save a lot of scrolling:
+
+| Operator | What it does | Example |
+| :-- | :-- | :-- |
+| `"quotes"` | Exact phrase | `"youth unemployment rate"` |
+| `site:` | Only one website or domain | `unemployment site:nigerianstat.gov.ng` |
+| `filetype:` | Only a file type | `SME survey filetype:pdf` |
+| `-` | Leave a word out | `jaguar -car` |
+| `OR` | Either word | `SME OR "small business"` |
+| `before:` / `after:` | By date | `fintech Nigeria after:2023` |
+
+Combine them: `"mobile money" Nigeria site:.gov.ng filetype:pdf`.
+
+> [!TIP]
+> `site:.edu`, `site:.gov` or `site:.gov.ng` narrow results to universities and governments, often more reliable than random blogs.
+
+## Search where the research is
+
+For assignments you usually need **academic sources**:
+
+- **Google Scholar** (scholar.google.com) searches journal articles, theses and books. Click **Cited by** to find newer work that builds on an article, and use **All versions** to find a free PDF.
+- **Your school library portal** often gives free access to databases your lecturers expect you to use.
+- **Official statistics** come from the organisation itself: the National Bureau of Statistics, the Central Bank of Nigeria, the World Bank, the WHO.
+
+## Refine as you go
+
+Good searching is a loop: search, skim the results, notice the words experts use, search again with those words. Five focused searches beat one vague search and fifty open tabs.
+
+## Try it
+
+1. Take a research topic you need, or one you're curious about.
+2. Write it as 3–5 keywords, plus two synonyms.
+3. Search Google with an exact phrase in quotes and a `site:` filter.
+4. Search the same keywords in Google Scholar and open one article's **Cited by** list.
+5. Note the two best sources you found and the search that found them.
+$md$, true, true, 1, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('rsrch-m02', 'research-skills-for-students', 'Judge Your Sources', 2, 'Source Evaluation', 'SOURCES', array['Tell stronger sources from weaker ones', 'Check five things about any source', 'Read laterally to verify claims', 'Spot red flags']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('research-skills-for-students:judge-your-sources', 'research-skills-for-students', 'rsrch-m02', 'judge-your-sources', 'Judge Your Sources', 'Tell a reliable source from a weak one in minutes, and fact-check claims before they end up in your work.', 20, $md$
+## Not all sources are equal
+
+A peer-reviewed journal article, a government statistics report and a viral WhatsApp message can all "say" something about the same topic. They're not equally trustworthy.
+
+| Usually strong | Use with care | Usually avoid for assignments |
+| :-- | :-- | :-- |
+| Peer-reviewed journals, academic books | Reputable newspapers, well-known organisations' reports | Anonymous blogs, social media posts |
+| Official statistics (NBS, CBN, WHO, World Bank) | Wikipedia (good for an overview and its references) | Content farms, sites selling something |
+
+## Check five things
+
+For any source, ask:
+
+1. **Who wrote it?** A named expert or organisation, or nobody?
+2. **Where is it published?** A journal, a university, a government, or a random site?
+3. **When?** Is it recent enough for your topic? Statistics from 2012 may not describe today.
+4. **Why?** Is it informing, or selling, campaigning or trying to get clicks?
+5. **What's the evidence?** Does it show data and references, or just opinions?
+
+## Read laterally
+
+Fact-checkers don't judge a website by reading it closely. They **open new tabs** and see what others say about it. This is called *lateral reading*:
+
+- Search the organisation's or author's name: who are they?
+- Search the claim itself: do reliable sources report the same thing?
+- Look for the **original source** of a statistic, not a site that repeats it.
+
+A useful habit is **SIFT**: **S**top, **I**nvestigate the source, **F**ind better coverage, **T**race claims to the original.
+
+> [!WARNING]
+> Screenshots, "forwarded many times" messages and quotes with no link are the easiest things to fake. Trace them back to an original source before you believe or share them.
+
+## Watch for red flags
+
+- Headlines in ALL CAPS or designed to make you angry or afraid.
+- No author, no date, no sources.
+- A statistic with no link to where it came from.
+- A website address imitating a real one (for example, an extra word or letter).
+
+## Try it
+
+1. Find three sources on the same topic: one academic, one news, one blog or social media post.
+2. Run each through the five checks: who, where, when, why, what evidence.
+3. Pick one statistic from the weakest source and trace it back to its original.
+4. Decide which source you'd cite in an assignment, and why.
+$md$, true, true, 2, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('rsrch-m03', 'research-skills-for-students', 'Cite and Organise Your Sources', 3, 'Citation Skills', 'CITE', array['Explain why citing matters', 'Quote, paraphrase and summarise correctly', 'Cite in your department''s style', 'Format and organise references with a free tool']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('research-skills-for-students:cite-and-organise', 'research-skills-for-students', 'rsrch-m03', 'cite-and-organise', 'Cite and Organise Your Sources', 'Reference your sources correctly, avoid plagiarism, and keep your research organised with a free reference manager.', 20, $md$
+## Why citing matters
+
+Citing gives credit to other people's work, lets your reader check your evidence, and protects you from **plagiarism**: presenting someone else's words or ideas as your own. Plagiarism can happen by accident, from a copied sentence you forgot to reference, so good habits matter.
+
+You must cite when you use someone's **words** (a quote), **ideas** (even in your own words) or **data** (a statistic, a chart). You don't need to cite common knowledge, like "Abuja is the capital of Nigeria".
+
+## Quote, paraphrase or summarise
+
+- **Quote:** the exact words, in quotation marks, with a citation. Use sparingly.
+- **Paraphrase:** the idea in your own words and sentence structure, with a citation. Changing a few words isn't enough.
+- **Summarise:** the main points of a longer source, briefly, with a citation.
+
+## Use your department's style
+
+Your department will name a referencing style. **APA** and **Harvard** are common in Nigerian universities. Both have an **in-text citation** and a **reference list** at the end. In APA 7th edition:
+
+In the text:
+
+```text
+Mobile money use grew quickly among small traders (Adeyemi, 2023).
+```
+
+In the reference list:
+
+```text
+Adeyemi, T. (2023). Mobile money and small business growth in Lagos.
+    Journal of African Business Studies, 12(2), 45–61.
+```
+
+The example author and journal above are made up to show the format. Always follow the exact style guide your department gives you, because details like commas and italics matter.
+
+## Let a tool do the formatting
+
+A **reference manager** saves sources and formats citations for you:
+
+- **Zotero** (free, zotero.org): install the browser extension, click it on any article page to save the source, then insert citations into Word or Google Docs in your chosen style.
+- **Google Scholar's "Cite" button** gives a ready-formatted reference for any article. Check it, since it sometimes gets details wrong.
+- **Word's References tab** can also store sources and build a reference list.
+
+## Stay organised
+
+- Save each source **as soon as you find it**, with a note on why it's useful.
+- Keep one folder per assignment for PDFs and notes.
+- Build the reference list **as you write**, not the night before the deadline.
+
+## Try it
+
+1. Install Zotero and its browser extension (or use Google Scholar's Cite button).
+2. Save three real sources for a topic you're working on.
+3. Write one paraphrased sentence from one source, with an in-text citation in your department's style.
+4. Generate the reference list for all three and check one entry against the style guide.
+$md$, true, true, 3, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+
+-- Course: Build Your Student Portfolio
+insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
+values ('build-your-student-portfolio', 'short', 'Student Portfolio', 'build-your-student-portfolio', 'PORTF', 'Build Your Student Portfolio', 'Choose your best work, present it clearly, publish a one-link portfolio page and share it on LinkedIn.', 'A portfolio shows what you can do, which matters most when you don''t have much work experience yet. Pick your three best pieces, present each one clearly, publish a simple portfolio page for free, and share your work on LinkedIn without sounding like you''re bragging. Each module takes about 20 minutes and ends with a short check and a badge.', 'career', 'beginner', 'Beginner', null, true, 'available', true, array['Choosing and describing portfolio projects', 'Presenting and sharing work safely', 'Publishing a free portfolio page', 'Writing LinkedIn posts about your work']::text[], array['No experience needed', 'At least one project, assignment or activity you''re proud of']::text[], null, true, false, false, false, true, 60, 5)
+on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('portf-m01', 'build-your-student-portfolio', 'Plan Your Portfolio', 1, 'Portfolio Planning', 'PORTPLAN', array['Decide who your portfolio is for', 'Find work you can show', 'Choose your best three pieces', 'Describe each as problem, action, result and link']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('build-your-student-portfolio:plan-your-portfolio', 'build-your-student-portfolio', 'portf-m01', 'plan-your-portfolio', 'Plan Your Portfolio', 'Decide what a portfolio is for, what to put in it, and which three pieces of work best show what you can do.', 20, $md$
+## Why a portfolio beats a list of skills
+
+A CV says "Skilled in Excel and Canva". A portfolio **shows** it: the dashboard you built, the poster you designed, the website you made. For students with little work experience, a portfolio is often the strongest thing you can show an employer, internship coordinator or scholarship panel.
+
+It doesn't need to be fancy. A clear page with three good pieces of work beats a flashy site with nothing in it.
+
+## Who is it for?
+
+Decide before you build. Your audience shapes what you include:
+
+| If you're aiming for… | Show… |
+| :-- | :-- |
+| Data or analytics roles | Spreadsheets, dashboards, SQL queries, a short analysis write-up |
+| Design or content | Posters, social graphics, short videos, a before-and-after redesign |
+| Software or web | Websites, small apps, code on GitHub |
+| Any internship | Class projects, volunteering, leadership, certificates and badges |
+
+## What counts as work
+
+You have more than you think:
+
+- **Class projects and assignments** you're proud of (check you're allowed to share them, and remove other students' personal details).
+- **Personal projects**: a budget tracker for your hostel, a flyer for a church event, a website for a relative's shop.
+- **Course projects**, including CloudTech Academy projects and badges.
+- **Volunteering and leadership**: a departmental event you organised, a club you run.
+
+## Pick your best three
+
+Start small. For each possible piece, ask:
+
+1. Does it show a skill my audience cares about?
+2. Can I explain **what problem it solved** and **what I did**?
+3. Is it finished and presentable?
+
+Choose the **three** strongest. You can add more later.
+
+## Structure each piece the same way
+
+For every project, prepare four short parts. This works on a portfolio page, on LinkedIn and in interviews:
+
+- **The problem:** what needed doing, and why.
+- **What I did:** the tools and steps.
+- **The result:** a number, an outcome or feedback.
+- **See it:** a link, image or file.
+
+> [!TIP]
+> "Built an Excel tracker that cut our class dues reconciliation from two hours to ten minutes" is far stronger than "Made a spreadsheet".
+
+## Try it
+
+1. Write one sentence on who your portfolio is for.
+2. List every project, assignment or activity you could include, at least six.
+3. Choose your best three using the three questions above.
+4. For one of them, write the four parts: problem, what I did, result, link.
+$md$, true, true, 1, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('portf-m02', 'build-your-student-portfolio', 'Show Your Work', 2, 'Show Your Work', 'SHOWWORK', array['Host work where it''s easy to open', 'Take clean screenshots', 'Write a short project summary', 'Share links safely and protect privacy']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('build-your-student-portfolio:show-your-work', 'build-your-student-portfolio', 'portf-m02', 'show-your-work', 'Show Your Work', 'Turn projects into something people can open and understand in a minute, with good screenshots, clean files and a short write-up.', 20, $md$
+## Make it easy to see
+
+A reviewer will spend a minute or two on each project. Help them:
+
+- **Lead with a picture.** A clear screenshot of the dashboard, poster or website, not a photo of your laptop screen.
+- **Link, don't attach.** Put files somewhere with a shareable link: Google Drive, GitHub or a portfolio page.
+- **Name things clearly.** `Kolanut-sales-dashboard.pdf`, not `final final 2.pdf`.
+
+## Where to host each kind of work
+
+| Work | Good place | How to share |
+| :-- | :-- | :-- |
+| Documents, spreadsheets, slides | Google Drive or OneDrive | Share → "Anyone with the link can view" |
+| Designs and posters | Canva, or images on your portfolio page | Canva share link set to view-only, or an exported PNG/PDF |
+| Code, websites, data analysis | GitHub | A repository with a README (see the Git & GitHub course) |
+| Videos | YouTube (unlisted is fine) or Drive | A link, plus a thumbnail image |
+
+> [!WARNING]
+> Before sharing a link, open it in a private browser window. If it asks you to sign in, your settings are wrong. Also check you haven't shared **edit** access by mistake.
+
+## Write a short project summary
+
+Use the structure from the last module, kept short. Here's an example:
+
+```text
+Sales dashboard for a drinks distributor (Power BI)
+
+Problem: The sales team tracked orders in a spreadsheet and couldn't see
+which regions were slowing down.
+What I did: Cleaned 4,000 order lines, built a data model, and designed
+a two-page dashboard with revenue by region, product and month.
+Result: Showed North West revenue fell by almost half year on year,
+which became the focus of the sales review.
+See it: [link to PDF] · [link to .pbix on Drive]
+```
+
+## Protect privacy
+
+- Remove other people's **personal details**: names, phone numbers, grades.
+- Don't publish **confidential** work from an internship or employer. Recreate it with made-up data instead, and say so.
+- Blur or crop anything personal in screenshots.
+
+## Try it
+
+1. Take one of your three chosen projects.
+2. Put the file or files in a shareable place with a clear name.
+3. Take one clean screenshot of the result.
+4. Write a summary like the example above, in under 100 words.
+5. Test the link in a private browser window.
+$md$, true, true, 2, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('portf-m03', 'build-your-student-portfolio', 'Build Your Portfolio Page', 3, 'Portfolio Page', 'PORTSITE', array['Choose a free portfolio tool', 'Lay out a one-page portfolio', 'Publish it with Google Sites', 'Test and share the link']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('build-your-student-portfolio:build-your-portfolio-page', 'build-your-student-portfolio', 'portf-m03', 'build-your-portfolio-page', 'Build Your Portfolio Page', 'Put your projects on one simple page with a link you can add to your CV and LinkedIn, using a free tool you already have.', 30, $md$
+## One link for everything
+
+Your goal is **one link** that you can put on your CV, LinkedIn, email signature and applications. When someone opens it, they should see who you are, what you can do, and your best work, in under a minute.
+
+## Choose a free tool
+
+| Tool | Best for | Link looks like |
+| :-- | :-- | :-- |
+| **Google Sites** | Anyone. Drag and drop, free, works with Drive files | sites.google.com/view/your-name |
+| **Canva websites** | Design-focused students | your-name.my.canva.site |
+| **GitHub Pages** | Code and data students (see the Web Development course) | your-username.github.io |
+| **Your CloudTech Academy profile** | Showing your badges and credentials | academy.cloudtechanalytics.com/learners/your-name |
+
+If you're not sure, use **Google Sites**. It's free, quick and looks clean.
+
+## What goes on the page
+
+Keep it to **one page** with these sections, in this order:
+
+1. **Header:** your name, one line on what you do ("Accounting student at UNILAG · Excel and Power BI"), and a professional photo.
+2. **About:** two or three sentences on your interests and what you're looking for.
+3. **Projects:** your three best, each with a picture, the short summary and a link.
+4. **Skills and credentials:** tools you use, plus certificates and badges with their verification links.
+5. **Contact:** your email and LinkedIn. You don't need your phone number or home address.
+
+## Build it with Google Sites
+
+1. Go to **sites.google.com** and click **Blank site** (or pick a template).
+2. Type your name in the header and choose a simple theme under **Themes**.
+3. Use **Insert → Text box** for your About section.
+4. For each project, use **Insert → Image** and a text box for the summary, and add the link with the link button.
+5. To show a Drive file directly on the page, use **Insert → Drive** and pick the file.
+6. Click **Publish**, choose a web address, and publish.
+
+## Check it before you share it
+
+- Open the published link in a **private window** on your phone. Does everything load?
+- Click every link.
+- Read it aloud once for typos.
+- Ask a friend: "In 30 seconds, what do I do?" If they can't say, simplify the header.
+
+## Try it
+
+1. Choose a tool (Google Sites if you're unsure).
+2. Build the page with the five sections, starting with one project. Add the other two later.
+3. Publish it and test it on your phone.
+4. Add the link to your CV and your LinkedIn **Contact info** or **Featured** section.
+$md$, true, true, 3, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('portf-m04', 'build-your-student-portfolio', 'Share Your Work on LinkedIn', 4, 'LinkedIn Posting', 'LIPOST', array['Write a hook that earns ''see more''', 'Structure a post: story, result, thanks', 'Add images and relevant hashtags', 'Share achievements without bragging']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('build-your-student-portfolio:share-your-work-on-linkedin', 'build-your-student-portfolio', 'portf-m04', 'share-your-work-on-linkedin', 'Share Your Work on LinkedIn', 'Write a professional LinkedIn post about a project, badge or achievement that people actually read, without sounding like you''re bragging.', 20, $md$
+## Why post at all
+
+Recruiters, lecturers and future colleagues notice people who **show their work**. One good post about a project can do more than months of silently applying. And every post is proof of your skills that stays on your profile.
+
+## The shape of a good post
+
+Most strong LinkedIn posts follow a simple pattern:
+
+1. **Hook (1–2 lines):** why someone should keep reading. LinkedIn shows only the first lines before "…see more".
+2. **Story:** what you did, the challenge, and what you learned.
+3. **Result or proof:** a number, a picture, a link.
+4. **Thanks and a question:** credit people who helped, and invite a reply.
+
+## An example
+
+```text
+I just built my first sales dashboard, and it found something I didn't
+expect.
+
+For the CloudTech Academy Power BI course, I analysed 4,000 orders from
+a (fictional) drinks distributor. Revenue grew 19% overall, but one
+region's sales had nearly halved.
+
+What I learned:
+→ Clean data first. Half my time was fixing dates and duplicates.
+→ One clear chart beats five busy ones.
+→ The interesting finding is usually in the breakdown, not the total.
+
+Thanks to my study group for testing the dashboard with me.
+Which tool do you use for analysis: Excel or Power BI?
+
+#PowerBI #DataAnalytics #StudentProject
+```
+
+## Tips that make a difference
+
+- **Add a picture:** a screenshot of your work, or your badge or certificate image.
+- **Be specific.** "Built a dashboard showing revenue by region" beats "Learned so much!"
+- **Keep it honest.** Say "course project" or "practice data" when that's what it is.
+- **Tag thoughtfully:** people or organisations genuinely involved, not everyone you know.
+- **Use 3–5 relevant hashtags**, not 20.
+- **Reply to comments**, especially in the first hour.
+
+> [!TIP]
+> Sharing a CloudTech Academy badge? Use the **Share on LinkedIn** button on your badge. It fills in a post and links to your verifiable credential page.
+
+## Posting achievements without bragging
+
+Focus on **what you learned and who helped**, rather than how great you are. "I'm proud to share…" is fine once; a whole post of self-praise isn't. People engage with lessons and stories.
+
+## Try it
+
+1. Pick one project or badge from your portfolio.
+2. Write a post using the four parts: hook, story, result, thanks and a question.
+3. Add one image and 3–5 hashtags.
+4. Read the first two lines alone: would you click "see more"? If not, rewrite the hook.
+5. Post it, or save it as a draft to post this week.
+$md$, true, true, 4, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+
+-- Course: Git & GitHub for Beginners
+insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
+values ('git-and-github-for-beginners', 'short', 'Git & GitHub', 'git-and-github-for-beginners', 'GIT', 'Git & GitHub for Beginners', 'Track your work with Git, put projects on GitHub and turn your profile into a portfolio employers can check.', 'Learn what version control is and why every developer and data analyst uses it. Create repositories and commit changes in your browser, publish projects from your computer with GitHub Desktop, and write READMEs that show off your work. Each module takes about 20 minutes and ends with a short check and a badge.', 'coding', 'beginner', 'Beginner', null, true, 'available', true, array['Version control with Git', 'Repositories, commits, push and pull', 'Writing a good README', 'A GitHub profile that works as a portfolio']::text[], array['No experience needed', 'A free GitHub account']::text[], null, true, false, false, false, true, 60, 6)
+on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('git-m01', 'git-and-github-for-beginners', 'What Git and GitHub Are', 1, 'Git Basics', 'GITBASIC', array['Explain version control', 'Tell Git and GitHub apart', 'Use the key words: repo, commit, push, pull', 'Set up a secure GitHub account']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('git-and-github-for-beginners:what-git-and-github-are', 'git-and-github-for-beginners', 'git-m01', 'what-git-and-github-are', 'What Git and GitHub Are', 'Understand version control, the difference between Git and GitHub, and set up a free GitHub account the right way.', 15, $md$
+## The problem Git solves
+
+You've probably had a folder like this:
+
+```text
+project.py
+project_final.py
+project_final_v2.py
+project_final_v2_REALLY_final.py
+```
+
+**Git** fixes this. It's a **version control** tool: it keeps one copy of your files and records every change you save as a **commit**, with a message describing it. You can see the full history, compare versions and go back if something breaks.
+
+## Git vs GitHub
+
+They're related but different:
+
+| | Git | GitHub |
+| :-- | :-- | :-- |
+| What it is | A tool that tracks changes | A website that stores Git projects online |
+| Where it runs | On your computer | In the cloud (github.com) |
+| What it's for | History and versions | Backup, sharing, collaboration and showing your work |
+
+A project tracked by Git is called a **repository** (or **repo**). When you put it on GitHub, anyone you allow (or everyone, if it's public) can see it.
+
+## Why students should care
+
+- **Employers look at GitHub.** For data, software and web roles, a GitHub profile with real projects is a portfolio.
+- **Backup.** Your work is safe even if your laptop isn't.
+- **Teamwork.** Group projects without emailing files back and forth.
+
+## Key words
+
+- **Repository (repo):** a project folder tracked by Git.
+- **Commit:** a saved snapshot, with a message like "Add login page".
+- **Push:** send your commits to GitHub.
+- **Pull:** bring the latest changes from GitHub to your computer.
+- **README:** the front page of a repo that explains what it is.
+
+## Set up your account
+
+1. Go to **github.com** and sign up with an email you'll keep after graduation.
+2. Choose a **professional username**, such as `adaeze-okafor` or `tundeanalytics`, not `cooldude2005`. It appears in your links.
+3. Add a profile photo and a one-line bio ("Economics student · learning Python and SQL").
+4. Turn on **two-factor authentication** in Settings → Password and authentication.
+
+> [!TIP]
+> Students can apply for the free **GitHub Student Developer Pack** at education.github.com with a school email or student ID. It includes free tools and extra features.
+
+## Try it
+
+1. Create your GitHub account with a professional username.
+2. Add a photo and a one-line bio.
+3. Turn on two-factor authentication.
+4. Write down, in your own words, the difference between Git and GitHub.
+$md$, true, true, 1, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('git-m02', 'git-and-github-for-beginners', 'Your First Repository', 2, 'First Repository', 'FIRSTREP', array['Create a repository', 'Add, upload and edit files', 'Write clear commit messages', 'Read the commit history']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('git-and-github-for-beginners:your-first-repository', 'git-and-github-for-beginners', 'git-m02', 'your-first-repository', 'Your First Repository', 'Create a repository on GitHub, add and edit files, and write good commit messages, all in your browser with nothing to install.', 25, $md$
+## Start in the browser
+
+You don't need to install anything to start. GitHub lets you create repositories and commit changes on the website. (Later you can install **GitHub Desktop** or use Git on the command line.)
+
+## Create a repository
+
+1. On GitHub, click **+** (top right) → **New repository**.
+2. **Repository name:** short and clear, with hyphens, such as `sales-analysis` or `my-first-website`.
+3. **Description:** one sentence on what it is.
+4. Choose **Public** (anyone can see it, which is good for a portfolio) or **Private**.
+5. Tick **Add a README file**.
+6. Click **Create repository**.
+
+## Add and edit files
+
+- **Add a file:** click **Add file → Create new file**, type a name such as `notes.md`, write something, then scroll down.
+- **Upload files:** click **Add file → Upload files** and drag in your work, for example a spreadsheet, a notebook or images.
+- **Edit a file:** open it and click the pencil icon.
+
+Each time, GitHub asks you to **commit changes**. That's your save point.
+
+## Write good commit messages
+
+A commit message says **what changed**. Future you (and anyone reviewing your work) will read these.
+
+| Weak | Strong |
+| :-- | :-- |
+| update | Add revenue by region chart |
+| stuff | Fix date format in orders data |
+| final | Write README with project summary |
+
+Start with a verb (Add, Fix, Update, Remove) and keep it under about 60 characters.
+
+## See the history
+
+Click **Commits** (near the top of the file list, with a clock icon) to see every change, who made it and when. Click any commit to see exactly what changed: removed lines in red, added lines in green.
+
+> [!NOTE]
+> Never upload passwords, API keys or other people's personal data to a repository, even a private one. If you do by mistake, deleting the file isn't enough, because it stays in the history. Change the password or key straight away.
+
+## Try it
+
+1. Create a public repository called `learning-log` with a README.
+2. Add a file called `week-1.md` and write three things you learned this week.
+3. Commit it with a clear message such as "Add week 1 learning notes".
+4. Edit the README to say what the repository is for, and commit again.
+5. Open the commit history and look at what changed.
+$md$, true, true, 2, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('git-m03', 'git-and-github-for-beginners', 'Show Your Projects on GitHub', 3, 'GitHub Portfolio', 'GITHUB', array['Push projects with GitHub Desktop', 'Know the basic Git commands', 'Write a README that sells a project', 'Pin projects and write a profile README']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('git-and-github-for-beginners:show-projects-on-github', 'git-and-github-for-beginners', 'git-m03', 'show-projects-on-github', 'Show Your Projects on GitHub', 'Push a project from your computer with GitHub Desktop, write a README that sells it, and set up a profile that works as a portfolio.', 25, $md$
+## Work from your computer with GitHub Desktop
+
+Browser uploads are fine for small things. For real projects, **GitHub Desktop** (free, Windows and Mac) keeps a folder on your computer in sync with GitHub.
+
+1. Download it from **desktop.github.com** and sign in with your GitHub account.
+2. **File → Add local repository** and choose your project folder. If it isn't a repository yet, click **create a repository** when prompted.
+3. Make changes to your files as usual. GitHub Desktop lists what changed.
+4. Type a **summary** (your commit message) at the bottom left and click **Commit to main**.
+5. Click **Publish repository** the first time, then **Push origin** after each new commit.
+
+To get changes made on GitHub (or by a teammate), click **Fetch origin**, then **Pull origin**.
+
+## The command-line version
+
+You'll see these commands in tutorials. They do the same thing:
+
+```bash
+git clone https://github.com/your-username/learning-log.git   # copy a repo to your computer
+git status                                                     # see what changed
+git add .                                                      # stage all changes
+git commit -m "Add sales chart"                                # save a snapshot
+git push                                                       # send it to GitHub
+git pull                                                       # get the latest changes
+```
+
+## Write a README that sells the project
+
+The README is the first thing people see. Use this structure:
+
+```markdown
+# Sales Analysis: Kolanut Drinks
+
+Analysis of 4,000 orders to find which regions and products drive revenue.
+
+## What I did
+- Cleaned the data in Python (pandas)
+- Calculated revenue by region, category and month
+- Built charts to show the trends
+
+## Key findings
+- Lagos brings in about half of all revenue
+- Household products are the top category
+
+## Tools
+Python, pandas, Google Colab
+
+## See it
+Open `analysis.ipynb` or view the charts in `/images`.
+```
+
+## Make your profile a portfolio
+
+- **Pin your best repos:** on your profile, click **Customize your pins** and choose up to six.
+- **Profile README:** create a public repository with **exactly your username** as its name and a README. Its content shows at the top of your profile. Say who you are, what you're learning and how to reach you.
+- **Keep it tidy:** make unfinished experiments private, and give every public repo a description.
+
+## Collaborating in one paragraph
+
+For group projects, the owner adds teammates under **Settings → Collaborators**. Everyone clones the repo, **pulls before they start work**, and pushes when they finish. Working in different files at the same time avoids most conflicts.
+
+## Try it
+
+1. Install GitHub Desktop and publish one real project folder (a class project, notebook or website).
+2. Write a README using the structure above.
+3. Pin it on your profile.
+4. Create your profile README repository and write three lines about yourself.
+5. Add your GitHub profile link to your CV or portfolio page.
+$md$, true, true, 3, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+
+-- Course: Web Development for Beginners
+insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
+values ('web-development-for-beginners', 'short', 'Web Development Basics', 'web-development-for-beginners', 'WEB', 'Web Development for Beginners', 'Learn HTML, CSS and JavaScript by building your own personal website, then publish it free with GitHub Pages.', 'Build a real website from scratch. Structure a page with HTML, style it with CSS, add interaction with JavaScript, and publish it at your own free web address with GitHub Pages. Each module takes about 25 minutes and ends with a short check and a badge.', 'coding', 'beginner', 'Beginner', null, true, 'available', true, array['Writing HTML pages', 'Styling and layout with CSS', 'Adding interaction with JavaScript', 'Publishing a website with GitHub Pages']::text[], array['No experience needed', 'A computer with a free code editor such as VS Code']::text[], null, true, false, false, false, true, 60, 7)
+on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('web-m01', 'web-development-for-beginners', 'HTML: The Structure', 1, 'HTML Basics', 'HTML', array['Explain how HTML, CSS and JavaScript work together', 'Write a valid HTML page', 'Use headings, paragraphs, lists and links', 'Add images with alt text']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('web-development-for-beginners:html-the-structure', 'web-development-for-beginners', 'web-m01', 'html-the-structure', '"HTML: The Structure"', 'Learn how web pages are built, write your first HTML page with headings, text, links, images and lists, and open it in your browser.', 25, $md$
+## How a web page works
+
+Every website is built from three languages that work together:
+
+| Language | Job | Think of it as… |
+| :-- | :-- | :-- |
+| **HTML** | Structure and content | The walls and rooms of a house |
+| **CSS** | Style and layout | The paint and furniture |
+| **JavaScript** | Behaviour and interaction | The lights and switches |
+
+Your browser reads these files and draws the page. You only need a text editor and a browser to start.
+
+## Set up
+
+Use a free code editor. **Visual Studio Code** (code.visualstudio.com) is the most popular. On a phone or a borrowed computer, **CodePen** (codepen.io) works in the browser.
+
+1. Create a folder called `my-website`.
+2. In VS Code, open that folder and create a file called `index.html`.
+
+## Your first page
+
+HTML uses **tags** in angle brackets. Most come in pairs: `<p>` opens a paragraph and `</p>` closes it. Type this into `index.html`:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Chioma Eze</title>
+  </head>
+  <body>
+    <h1>Chioma Eze</h1>
+    <p>Computer Science student at UNN, learning web development.</p>
+
+    <h2>My skills</h2>
+    <ul>
+      <li>HTML and CSS</li>
+      <li>Excel</li>
+      <li>Canva</li>
+    </ul>
+
+    <h2>Contact</h2>
+    <p>Find me on <a href="https://www.linkedin.com">LinkedIn</a>.</p>
+  </body>
+</html>
+```
+
+Save it, then double-click the file to open it in your browser.
+
+## The tags you'll use most
+
+| Tag | What it's for |
+| :-- | :-- |
+| `<h1>` to `<h6>` | Headings, from most to least important. Use one `<h1>` per page |
+| `<p>` | A paragraph |
+| `<a href="…">` | A link |
+| `<img src="…" alt="…">` | An image. `alt` describes it for screen readers |
+| `<ul>` / `<ol>` with `<li>` | Bulleted or numbered lists |
+| `<section>`, `<header>`, `<footer>` | Group parts of the page |
+
+> [!TIP]
+> The `<head>` holds information about the page (like the title in the browser tab). Everything visible goes inside `<body>`.
+
+## Add an image
+
+Put a photo called `me.jpg` in the same folder, then add:
+
+```html
+<img src="me.jpg" alt="Chioma smiling in front of the library" width="200" />
+```
+
+## Try it
+
+1. Create `index.html` with your own name, a one-line intro and a heading.
+2. Add a list of three skills and a link to your LinkedIn or GitHub.
+3. Add an image with a helpful `alt` description.
+4. Open the file in your browser, change something, save, and refresh to see the change.
+$md$, true, true, 1, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('web-m02', 'web-development-for-beginners', 'CSS: The Style', 2, 'CSS Basics', 'CSS', array['Link a stylesheet', 'Use element, class and id selectors', 'Understand the box model', 'Build a simple responsive layout with flexbox']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('web-development-for-beginners:css-the-style', 'web-development-for-beginners', 'web-m02', 'css-the-style', '"CSS: The Style"', 'Style your page with colours, fonts, spacing and a simple layout, and make it look good on a phone.', 25, $md$
+## Connect a stylesheet
+
+CSS lives in its own file. In your `my-website` folder, create `style.css`, then link it inside the `<head>` of `index.html`:
+
+```html
+<link rel="stylesheet" href="style.css" />
+```
+
+## How CSS rules work
+
+A rule has a **selector** (what to style) and **declarations** (how to style it):
+
+```css
+h1 {
+  color: #1d4ed8;
+  font-size: 40px;
+}
+```
+
+This makes every `<h1>` blue and 40 pixels tall. Common selectors:
+
+| Selector | Styles | Example |
+| :-- | :-- | :-- |
+| `p` | Every `<p>` | `p { line-height: 1.6; }` |
+| `.card` | Anything with `class="card"` | `<div class="card">` |
+| `#contact` | The one element with `id="contact"` | `<section id="contact">` |
+
+## A clean starting style
+
+Paste this into `style.css`:
+
+```css
+body {
+  font-family: system-ui, sans-serif;
+  color: #1f2937;
+  background: #f9fafb;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 24px;
+  line-height: 1.6;
+}
+
+h1 {
+  color: #1d4ed8;
+  margin-bottom: 4px;
+}
+
+a {
+  color: #1d4ed8;
+}
+
+.card {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+```
+
+`max-width` and `margin: 0 auto` keep the text a comfortable width and centre it.
+
+## The box model
+
+Every element is a box. From the inside out:
+
+- **content:** the text or image
+- **padding:** space inside the border
+- **border:** the line around it
+- **margin:** space outside, between boxes
+
+## Put things side by side with flexbox
+
+```css
+.projects {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.projects .card {
+  flex: 1 1 200px;
+}
+```
+
+Cards sit in a row on wide screens and wrap onto new lines on phones.
+
+> [!TIP]
+> Right-click any part of a page in Chrome and choose **Inspect** to see its HTML and CSS. You can change values there to test ideas before editing your file.
+
+## Try it
+
+1. Create `style.css`, link it, and paste the starting style.
+2. Change the main colour to one you like (try a site like coolors.co).
+3. Wrap two or three projects in `<div class="card">` inside a `<div class="projects">`, and add the flexbox rules.
+4. Make your browser window narrow to check it still looks good on a phone.
+$md$, true, true, 2, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('web-m03', 'web-development-for-beginners', 'JavaScript: The Behaviour', 3, 'JavaScript Basics', 'JS', array['Use the browser console', 'Work with variables, conditions and functions', 'Respond to clicks with event listeners', 'Read error messages to fix bugs']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('web-development-for-beginners:javascript-the-behaviour', 'web-development-for-beginners', 'web-m03', 'javascript-the-behaviour', '"JavaScript: The Behaviour"', 'Add interaction to your page with JavaScript, using variables, functions and a button that responds when someone clicks it.', 25, $md$
+## What JavaScript adds
+
+HTML and CSS make a page look right. **JavaScript** makes it *do* things: respond to clicks, show and hide content, check forms, and fetch data.
+
+Create `script.js` in your folder and link it just before `</body>` in `index.html`:
+
+```html
+<script src="script.js"></script>
+```
+
+## Try the console first
+
+In your browser, press **F12** (or right-click → **Inspect**) and open the **Console** tab. Type each line and press Enter:
+
+```js
+2 + 3
+"Hello " + "Lagos"
+let name = "Tobi";
+name.toUpperCase()
+```
+
+The console is where you test ideas and where errors appear.
+
+## The basics
+
+```js
+// Variables hold values
+let score = 72;
+const school = "OAU";
+
+// Conditions make decisions
+if (score >= 60) {
+  console.log("Passed");
+} else {
+  console.log("Try again");
+}
+
+// Functions are reusable blocks of code
+function greet(person) {
+  return "Welcome, " + person + "!";
+}
+
+console.log(greet("Amina"));
+```
+
+Use `const` for values that won't change and `let` for values that will.
+
+## Make a button work
+
+Add this to `index.html`:
+
+```html
+<button id="theme-btn">Dark mode</button>
+```
+
+And this to `script.js`:
+
+```js
+const button = document.querySelector("#theme-btn");
+
+button.addEventListener("click", function () {
+  document.body.classList.toggle("dark");
+});
+```
+
+And this to `style.css`:
+
+```css
+body.dark {
+  background: #111827;
+  color: #f9fafb;
+}
+```
+
+Click the button: the page switches between light and dark. This is the pattern behind most interaction: **find an element**, **listen for an event**, **change something**.
+
+> [!NOTE]
+> If nothing happens, open the Console. A red error usually names the file and line with the problem. Typos in `querySelector` names are the most common cause.
+
+## Try it
+
+1. Link `script.js` and add the dark mode button.
+2. Add a second button that shows or hides your "Contact" section. Hint: toggle a class that sets `display: none`.
+3. Open the Console, cause an error on purpose (misspell a variable), read the message, then fix it.
+$md$, true, true, 3, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('web-m04', 'web-development-for-beginners', 'Publish Your First Website', 4, 'First Website', 'WEBSITE', array['Plan a personal website', 'Name files safely for the web', 'Publish with GitHub Pages', 'Test a live site on a phone']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('web-development-for-beginners:publish-your-first-website', 'web-development-for-beginners', 'web-m04', 'publish-your-first-website', 'Publish Your First Website', 'Put your personal website online for free with GitHub Pages, so anyone can open it at a real web address.', 30, $md$
+## What you're building
+
+By the end of this module you'll have a live personal website at an address like `https://your-username.github.io`. You can put it on your CV, LinkedIn and portfolio.
+
+Before you start, your `my-website` folder should contain:
+
+```text
+my-website/
+  index.html
+  style.css
+  script.js
+  me.jpg
+```
+
+## Check the content
+
+A good first personal site has:
+
+1. **Header:** your name and one line on what you do.
+2. **About:** two or three sentences.
+3. **Projects:** two or three cards, each with a title, a sentence and a link.
+4. **Contact:** email, LinkedIn and GitHub links.
+
+Keep file names lowercase with no spaces (`me.jpg`, not `My Photo.JPG`). Web servers treat `Me.jpg` and `me.jpg` as different files.
+
+## Publish with GitHub Pages
+
+You need a free GitHub account (see the Git & GitHub course).
+
+1. On GitHub, create a **new public repository** named exactly `your-username.github.io`, replacing `your-username` with your GitHub username.
+2. Click **uploading an existing file** (or **Add file → Upload files**), drag in everything from your `my-website` folder, and commit.
+3. Go to **Settings → Pages**. Under **Build and deployment**, set **Source** to **Deploy from a branch**, choose **main** and **/ (root)**, and save.
+4. Wait a minute or two, then open `https://your-username.github.io`.
+
+Your site is live. Every time you commit a change, it updates within a few minutes.
+
+> [!TIP]
+> Any other public repository can be published the same way. Its address will be `https://your-username.github.io/repository-name`.
+
+## Other free options
+
+- **Netlify** (netlify.com): drag your folder onto the page to publish.
+- **Vercel** (vercel.com): connects to GitHub and publishes on every push.
+
+## Check before you share
+
+- Open the site on your phone.
+- Click every link and check every image loads (broken images are usually a file name mismatch).
+- Right-click → **Inspect** → **Console** to check for red errors.
+
+## Try it
+
+1. Finish your four sections: header, about, projects and contact.
+2. Publish the site with GitHub Pages.
+3. Test it on your phone and fix anything broken.
+4. Add the link to your LinkedIn, CV and portfolio page.
+$md$, true, true, 4, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+
+-- Course: Python for Beginners
+insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
+values ('python-for-beginners', 'short', 'Python Basics', 'python-for-beginners', 'PY', 'Python for Beginners', 'Write your first Python code in Google Colab: variables, decisions, loops and functions, ending with a budget tracker project.', 'Start programming with one of the world''s most popular languages, with nothing to install. Learn values and variables, make decisions with if statements, repeat work with loops, and write your own functions, then build a small budget tracker for your portfolio. Each module takes about 25 minutes and ends with a short check and a badge.', 'python', 'beginner', 'Beginner', null, true, 'available', true, array['Python variables and types', 'Conditions, lists and loops', 'Writing functions', 'Dictionaries and a small project']::text[], array['No experience needed', 'A free Google account for Google Colab']::text[], null, true, false, false, false, true, 60, 8)
+on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('py-m01', 'python-for-beginners', 'First Steps in Python', 1, 'Python First Steps', 'PYSTART', array['Run Python in Google Colab', 'Store values in variables', 'Know the main data types', 'Do maths and format text with f-strings']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('python-for-beginners:first-steps-in-python', 'python-for-beginners', 'py-m01', 'first-steps-in-python', 'First Steps in Python', 'Run Python in your browser with Google Colab, and learn values, variables, types and simple maths, with nothing to install.', 25, $md$
+## Why Python
+
+Python is one of the most popular programming languages in the world, and one of the easiest to read. It's used for data analysis, automation, websites, AI and more. If you want a career in data or tech, it's a strong first language.
+
+## Open Google Colab
+
+You don't need to install anything. **Google Colab** runs Python in your browser for free.
+
+1. Go to **colab.research.google.com** and sign in with a Google account.
+2. Click **New notebook**.
+3. You'll see a **code cell**. Type code in it and press **Shift + Enter** to run it.
+
+The notebook saves to your Google Drive automatically.
+
+## Your first line of code
+
+```python
+print("Hello, I'm learning Python!")
+```
+
+Run it. `print()` shows whatever you put inside the brackets.
+
+## Variables
+
+A **variable** is a name that stores a value. Use `=` to assign:
+
+```python
+name = "Ifeoma"
+age = 20
+cgpa = 4.21
+is_student = True
+
+print(name)
+print("Age:", age)
+```
+
+Variable names use lowercase letters and underscores (`first_name`, not `First Name`). They can't start with a number or contain spaces.
+
+## The main types
+
+| Type | Example | Used for |
+| :-- | :-- | :-- |
+| `str` (string) | `"Lagos"` | Text, always in quotes |
+| `int` (integer) | `42` | Whole numbers |
+| `float` | `3.75` | Decimal numbers |
+| `bool` (boolean) | `True`, `False` | Yes/no values |
+
+Check a type with `type(age)`.
+
+## Maths and text
+
+```python
+price = 2500
+quantity = 4
+total = price * quantity
+print("Total: ₦", total)
+
+# f-strings put values inside text
+print(f"{name} bought {quantity} items for ₦{total:,}")
+```
+
+Operators: `+` add, `-` subtract, `*` multiply, `/` divide, `**` power, `%` remainder. Lines starting with `#` are **comments**; Python ignores them.
+
+> [!NOTE]
+> `"5" + "5"` gives `"55"` (joining text), but `5 + 5` gives `10`. If a number is stored as text, convert it with `int("5")` or `float("5.5")`.
+
+## Try it
+
+1. Create a new Colab notebook called "Python practice".
+2. Make variables for your name, course, level and number of courses this semester.
+3. Print one sentence using an f-string, for example "Ifeoma is a 200 level Economics student taking 9 courses."
+4. Work out how much you'd spend on transport in a month if one trip costs ₦700 and you make 2 trips a day for 22 days. Print the answer with commas.
+$md$, true, true, 1, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('py-m02', 'python-for-beginners', 'Decisions, Lists and Loops', 2, 'Python Logic', 'PYLOOPS', array['Make decisions with if, elif and else', 'Store values in lists', 'Repeat work with for loops', 'Use range and zip']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('python-for-beginners:decisions-and-loops', 'python-for-beginners', 'py-m02', 'decisions-and-loops', 'Decisions, Lists and Loops', 'Make your code decide with if statements, store many values in lists, and repeat work with for loops.', 25, $md$
+## Making decisions with if
+
+```python
+score = 67
+
+if score >= 70:
+    grade = "A"
+elif score >= 60:
+    grade = "B"
+elif score >= 50:
+    grade = "C"
+else:
+    grade = "F"
+
+print(f"Score {score} is grade {grade}")
+```
+
+Two rules that catch every beginner:
+
+- The line before a block ends with a **colon** `:`.
+- The block is **indented** (4 spaces). Indentation is how Python knows what belongs inside the `if`.
+
+Comparison operators: `==` equal, `!=` not equal, `>`, `<`, `>=`, `<=`. Combine conditions with `and`, `or` and `not`.
+
+> [!WARNING]
+> `=` assigns a value; `==` compares two values. `if score = 70:` is an error.
+
+## Lists
+
+A **list** stores many values in order, inside square brackets:
+
+```python
+courses = ["ECO 201", "STA 211", "GST 201"]
+scores = [67, 81, 54]
+
+print(courses[0])      # first item: ECO 201 (counting starts at 0)
+print(len(scores))     # how many items: 3
+courses.append("CSC 201")  # add one to the end
+print(max(scores), min(scores), sum(scores))
+```
+
+## Loops
+
+A **for loop** runs the same code for every item in a list:
+
+```python
+for course in courses:
+    print("Registered:", course)
+```
+
+Loop over two lists together with `zip`:
+
+```python
+for course, score in zip(courses, scores):
+    if score >= 50:
+        print(f"{course}: {score} - pass")
+    else:
+        print(f"{course}: {score} - fail")
+```
+
+Repeat something a set number of times with `range`:
+
+```python
+for week in range(1, 5):
+    print("Week", week)
+```
+
+This prints weeks 1 to 4. `range` stops **before** the second number.
+
+## Try it
+
+1. Make a list of your scores in five courses (real or made up).
+2. Loop through them and print a grade for each using if, elif and else.
+3. Print the average score: `sum(scores) / len(scores)`.
+4. Count how many scores are 70 or above. Hint: start with `count = 0` and add 1 inside the loop.
+$md$, true, true, 2, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('py-m03', 'python-for-beginners', 'Functions and a Mini Project', 3, 'Python Functions', 'PYFUNC', array['Write functions with parameters and return', 'Use dictionaries', 'Combine it all in a small program', 'Save a notebook to GitHub']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('python-for-beginners:functions-and-a-mini-project', 'python-for-beginners', 'py-m03', 'functions-and-a-mini-project', 'Functions and a Mini Project', 'Write your own functions, use dictionaries, and put it all together in a small budget tracker you can show in your portfolio.', 30, $md$
+## Functions
+
+A **function** is a named block of code you can reuse. Define it with `def`:
+
+```python
+def grade(score):
+    if score >= 70:
+        return "A"
+    elif score >= 60:
+        return "B"
+    elif score >= 50:
+        return "C"
+    return "F"
+
+print(grade(74))  # A
+print(grade(48))  # F
+```
+
+- `score` is a **parameter**: the input the function works with.
+- `return` sends a result back.
+- Write a function once and call it as many times as you like.
+
+## Dictionaries
+
+A **dictionary** stores **key: value** pairs, like a label and its value:
+
+```python
+student = {
+    "name": "Musa",
+    "department": "Accounting",
+    "level": 300,
+}
+
+print(student["name"])
+student["cgpa"] = 3.9   # add a new key
+```
+
+Loop through one with `.items()`:
+
+```python
+for key, value in student.items():
+    print(key, "→", value)
+```
+
+## Mini project: a monthly budget tracker
+
+Put it all together. Copy this into Colab and run it:
+
+```python
+budget = 60000
+
+spending = {
+    "Food": 28000,
+    "Transport": 12500,
+    "Data": 6000,
+    "Books": 4500,
+    "Other": 5000,
+}
+
+def naira(amount):
+    return f"₦{amount:,.0f}"
+
+total = sum(spending.values())
+left = budget - total
+
+print("Monthly spending")
+for item, amount in spending.items():
+    share = amount / total * 100
+    print(f"{item:<10} {naira(amount):>10}  {share:4.1f}%")
+
+print("-" * 30)
+print(f"{'Total':<10} {naira(total):>10}")
+
+if left >= 0:
+    print(f"You have {naira(left)} left.")
+else:
+    print(f"You are over budget by {naira(-left)}.")
+```
+
+Read it line by line. You've seen every piece: variables, a dictionary, a function, a loop, maths, f-strings and an if statement.
+
+> [!TIP]
+> `{item:<10}` pads text to 10 characters, aligned left; `>10` aligns right. It makes simple tables line up.
+
+## Show it off
+
+Save your notebook, then in Colab choose **File → Save a copy in GitHub** to put it in a repository (see the Git & GitHub course). It's a small but real project for your portfolio.
+
+## Try it
+
+1. Change the budget and spending to match your own month.
+2. Add a function `biggest(spending)` that returns the item you spend most on. Hint: `max(spending, key=spending.get)`.
+3. Print a warning for any item over 40% of your total.
+4. Save the notebook to GitHub or Drive and add a short description at the top in a text cell.
+$md$, true, true, 3, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+
+-- Course: Python for Data Analysis
+insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
+values ('python-for-data-analysis', 'short', 'Python Data Analysis', 'python-for-data-analysis', 'PYDA', 'Python for Data Analysis', 'Load, clean, summarise and chart real sales data with pandas in Google Colab.', 'Analyse a real-world style sales dataset of over 4,000 orders with pandas. Explore it, fix types and add calculated columns, filter and sort, join tables, summarise with groupby and turn your answers into charts. Each module takes about 25 minutes and ends with a short check and a badge.', 'python', 'beginner', 'Beginner', null, true, 'available', true, array['Loading and exploring data with pandas', 'Cleaning and calculating columns', 'Filtering, sorting and grouping', 'Joining tables and making charts']::text[], array['Python for Beginners, or basic Python', 'A free Google account for Google Colab']::text[], null, true, false, false, false, true, 60, 9)
+on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('pyda-m01', 'python-for-data-analysis', 'Load and Explore Data', 1, 'pandas Basics', 'PANDAS', array['Load a CSV into a DataFrame', 'Inspect data with head, shape and info', 'Summarise with describe', 'Count values in a column']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('python-for-data-analysis:load-and-explore-data', 'python-for-data-analysis', 'pyda-m01', 'load-and-explore-data', 'Load and Explore Data', 'Load a real sales dataset into pandas in Google Colab and find out what''s in it with head, shape, info and describe.', 25, $md$
+## Meet pandas
+
+**pandas** is the Python library for working with tables of data, like Excel but with code. It's already installed in Google Colab. If you're new to Python, take **Python for Beginners** first.
+
+You'll use a practice dataset from a fictional drinks and household goods distributor: every order line from January 2025 to June 2026.
+
+## Load the data
+
+Open a new notebook at **colab.research.google.com** and run:
+
+```python
+import pandas as pd
+
+url = "https://academy.cloudtechanalytics.com/datasets/sales/orders.csv"
+orders = pd.read_csv(url)
+```
+
+`orders` is now a **DataFrame**: a table with rows and named columns. `pd` is the usual short name for pandas.
+
+## Take a first look
+
+Run each line in its own cell:
+
+```python
+orders.head()      # first 5 rows
+orders.tail(3)     # last 3 rows
+orders.shape       # (rows, columns)
+orders.columns     # column names
+```
+
+You should see **4,266 rows** and **7 columns**:
+
+| Column | Meaning |
+| :-- | :-- |
+| `order_id` | Unique ID for each order line |
+| `order_date` | Date of the order |
+| `customer_id` | Which customer (links to a customers table) |
+| `product_id` | Which product (links to a products table) |
+| `quantity` | Cartons ordered |
+| `unit_price` | Price per carton in naira |
+| `discount_pct` | Discount given: 0, 5 or 10 |
+
+## Understand the columns
+
+```python
+orders.info()
+```
+
+`info()` shows each column's **type** and how many values are filled in. Here nothing is missing, but `order_date` is stored as text (`object`). You'll fix that in the next module.
+
+```python
+orders.describe()
+```
+
+`describe()` gives quick statistics for the number columns: count, mean, min, max and quartiles. For example, the average quantity is about **13.8** cartons and unit prices run from ₦3,600 to ₦24,600.
+
+## Select columns and count values
+
+```python
+orders["quantity"]                 # one column
+orders[["order_date", "quantity"]] # several columns (note the double brackets)
+orders["discount_pct"].value_counts()
+```
+
+`value_counts()` shows how often each value appears: 2,519 lines had no discount, 1,222 had 5% and 525 had 10%.
+
+> [!TIP]
+> In Colab, the last line of a cell is displayed automatically, so you don't need `print()` to see a DataFrame.
+
+## Try it
+
+1. Load the orders data and check the shape is (4266, 7).
+2. Use `describe()` to find the largest single quantity ordered.
+3. Use `value_counts()` on `product_id` to find the product that appears in the most order lines.
+4. Write two sentences in a text cell describing the dataset in your own words.
+$md$, true, true, 1, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('pyda-m02', 'python-for-data-analysis', 'Clean, Filter and Calculate', 2, 'Data Cleaning with Python', 'PYCLEAN', array['Convert text to dates', 'Add calculated columns', 'Filter rows with conditions', 'Check for missing and duplicate data']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('python-for-data-analysis:clean-filter-and-calculate', 'python-for-data-analysis', 'pyda-m02', 'clean-filter-and-calculate', 'Clean, Filter and Calculate', 'Fix column types, add a revenue column, filter rows that match a condition and sort the results.', 25, $md$
+## Fix the date column
+
+Dates loaded as text can't be sorted or grouped by month properly. Convert them:
+
+```python
+orders["order_date"] = pd.to_datetime(orders["order_date"])
+orders.info()
+```
+
+`order_date` is now `datetime64`. You can pull out parts of the date:
+
+```python
+orders["year"] = orders["order_date"].dt.year
+orders["month"] = orders["order_date"].dt.to_period("M")
+```
+
+> [!TIP]
+> You can also parse dates while loading: `pd.read_csv(url, parse_dates=["order_date"])`.
+
+## Add a revenue column
+
+Revenue for each line is quantity × unit price, minus the discount:
+
+```python
+orders["revenue"] = (
+    orders["quantity"] * orders["unit_price"] * (1 - orders["discount_pct"] / 100)
+)
+orders["revenue"].sum()
+```
+
+Total revenue is **₦830,541,245**. Notice there's no loop: pandas does the maths for every row at once.
+
+## Filter rows
+
+Put a condition inside square brackets to keep only the matching rows:
+
+```python
+big = orders[orders["quantity"] >= 20]
+len(big)                  # 1,032 lines
+big["revenue"].sum()
+```
+
+Combine conditions with `&` (and) or `|` (or), with brackets around each one:
+
+```python
+discounted_2026 = orders[(orders["discount_pct"] > 0) & (orders["year"] == 2026)]
+```
+
+## Sort
+
+```python
+orders.sort_values("revenue", ascending=False).head(5)
+```
+
+This shows the five biggest order lines. Use `ascending=True` (the default) for smallest first.
+
+## Check for problems
+
+Real data is rarely this clean. These checks are worth running on any dataset:
+
+```python
+orders.isna().sum()          # missing values per column
+orders.duplicated().sum()    # fully duplicated rows
+(orders["quantity"] <= 0).sum()  # impossible values
+```
+
+This dataset passes all three, but make it a habit.
+
+## Try it
+
+1. Convert `order_date` to a date and add `year`, `month` and `revenue` columns.
+2. Check the total revenue is ₦830,541,245.
+3. How many order lines had a 10% discount? How much revenue did they bring in?
+4. Show the 10 biggest order lines from 2026.
+$md$, true, true, 2, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('pyda-m03', 'python-for-data-analysis', 'Group, Join and Chart', 3, 'Python Data Insights', 'PYVIZ', array['Summarise with groupby', 'Join tables with merge', 'Answer business questions', 'Make bar and line charts']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('python-for-data-analysis:group-join-and-chart', 'python-for-data-analysis', 'pyda-m03', 'group-join-and-chart', 'Group, Join and Chart', 'Summarise data with groupby, join tables with merge, and turn the answers into charts you can share.', 30, $md$
+## Summarise with groupby
+
+`groupby` is the pandas version of a pivot table. Total revenue by year:
+
+```python
+orders.groupby("year")["revenue"].sum()
+```
+
+Revenue by month, then the best and worst months:
+
+```python
+monthly = orders.groupby("month")["revenue"].sum()
+monthly.idxmax(), monthly.max()   # December 2025 was the best month
+monthly.idxmin(), monthly.min()
+```
+
+## Join tables with merge
+
+The orders table only has `product_id` and `customer_id`. The names, categories and regions live in two other tables. Load them and **merge**:
+
+```python
+base = "https://academy.cloudtechanalytics.com/datasets/sales/"
+products = pd.read_csv(base + "products.csv")
+customers = pd.read_csv(base + "customers.csv")
+
+sales = (
+    orders
+    .merge(products, on="product_id")
+    .merge(customers, on="customer_id")
+)
+sales.columns
+```
+
+`merge` matches rows where the key column has the same value, like a lookup in Excel.
+
+## Answer business questions
+
+```python
+sales.groupby("category")["revenue"].sum().sort_values(ascending=False)
+```
+
+| Category | Revenue |
+| :-- | --: |
+| Household | ₦244,769,040 |
+| Personal care | ₦235,483,370 |
+| Beverages | ₦224,612,360 |
+| Snacks | ₦125,676,475 |
+
+```python
+sales.groupby("region")["revenue"].sum().sort_values(ascending=False)
+```
+
+Lagos brings in **₦411,162,300**, about half of all revenue, followed by South West and North West.
+
+## Make charts
+
+pandas can draw charts directly:
+
+```python
+by_region = sales.groupby("region")["revenue"].sum().sort_values()
+by_region.plot(kind="barh", title="Revenue by region (₦)")
+```
+
+```python
+monthly.plot(title="Monthly revenue (₦)")
+```
+
+Use `kind="barh"` for comparing categories and a line (the default) for trends over time.
+
+> [!NOTE]
+> The 2026 total looks much smaller than 2025 only because the data stops at the end of June 2026. Always check the date range before comparing periods.
+
+## Share your analysis
+
+Add **text cells** to explain what you found in plain words, not just code. Then save the notebook to GitHub (**File → Save a copy in GitHub**) or share the Colab link. That's a portfolio project.
+
+## Try it
+
+1. Merge the three tables into `sales`.
+2. Find revenue by `channel`. Which channel is biggest?
+3. Find the three products with the highest revenue.
+4. Make one bar chart and one line chart, and write three sentences summarising what they show.
+$md$, true, true, 3, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+
+-- Course: Digital Skills for Students
+insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
+values ('digital-skills-for-students', 'short', 'Digital Skills', 'digital-skills-for-students', 'DIGI', 'Digital Skills for Students', 'Organise and back up your files, work together in Google Workspace, write professional emails and stay safe online.', 'The everyday digital skills every student and new graduate needs. Organise and back up your files in the cloud, collaborate on group work in Google Docs, Sheets and Forms, write emails lecturers and employers take seriously, and protect your accounts from hackers and scams. Each module takes about 20 minutes and ends with a short check and a badge.', 'study-skills', 'beginner', 'Beginner', null, true, 'available', true, array['File organisation and cloud backup', 'Google Docs, Sheets, Forms and Calendar', 'Professional email writing', 'Online safety and scam awareness']::text[], array['No experience needed', 'A free Google account']::text[], null, true, false, false, false, true, 60, 10)
+on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('digi-m01', 'digital-skills-for-students', 'Files and Cloud Storage', 1, 'Cloud Storage', 'CLOUD', array['Organise files in clear folders', 'Name files so you can find them', 'Back up to Google Drive or OneDrive', 'Share files safely']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('digital-skills-for-students:files-and-cloud-storage', 'digital-skills-for-students', 'digi-m01', 'files-and-cloud-storage', 'Files and Cloud Storage', 'Organise your files so you can always find them, back them up to the cloud, and share them safely.', 20, $md$
+## Why it matters
+
+Losing an assignment the night before it's due, or searching for "that PDF" for twenty minutes, costs you time and marks. A simple system fixes both.
+
+## A folder structure that works
+
+Make one main folder for school, then one folder per session and course:
+
+```text
+School/
+  2025-2026/
+    ECO 201 - Microeconomics/
+      Lecture notes/
+      Assignments/
+      Past questions/
+    STA 211 - Statistics/
+  Personal/
+    CV and applications/
+    Certificates/
+```
+
+Keep it shallow: three or four levels is enough.
+
+## Name files well
+
+A good file name tells you what it is without opening it:
+
+| Weak | Strong |
+| :-- | :-- |
+| `Document1.docx` | `ECO201-assignment-2-demand-curves.docx` |
+| `final final.pdf` | `CV-Amaka-Obi-2026-03.pdf` |
+| `IMG_2045.jpg` | `STA211-lecture-5-board.jpg` |
+
+Tips: put the course code first so files sort together, use dates as `YYYY-MM-DD` so they sort in order, and avoid spaces and symbols in files you'll upload.
+
+## Back up to the cloud
+
+If your laptop is stolen or your phone falls in water, anything that's only on the device is gone. Cloud storage keeps a copy online:
+
+| Service | Free storage | Good for |
+| :-- | :-- | :-- |
+| **Google Drive** | 15 GB (shared with Gmail and Photos) | Google Docs, Sheets and Slides, sharing |
+| **OneDrive** | 5 GB (more with a school Microsoft account) | Word, Excel and PowerPoint |
+| **Dropbox** | 2 GB | Simple syncing |
+
+Install the desktop app (**Google Drive for desktop** or **OneDrive**) and keep your `School` folder inside it. It then backs up automatically.
+
+> [!TIP]
+> Many universities give students a Microsoft 365 or Google Workspace account with much more storage. Check with your ICT unit.
+
+## Share safely
+
+- Share with **specific people** when you can, rather than "anyone with the link".
+- Give **Viewer** access unless someone needs to edit.
+- To send a big file, share a link instead of attaching it.
+- Remove access when a group project is finished.
+
+## Try it
+
+1. Create a `School` folder with the structure above for your current courses.
+2. Rename five files from your downloads so their names make sense.
+3. Install Google Drive or OneDrive on your computer and move your `School` folder into it.
+4. Share one file with a friend as Viewer, then check what they see.
+$md$, true, true, 1, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('digi-m02', 'digital-skills-for-students', 'Google Workspace for Students', 2, 'Google Workspace', 'GWORK', array['Collaborate in Google Docs with comments and suggestions', 'Track work in Google Sheets', 'Collect responses with Google Forms', 'Plan a semester in Google Calendar']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('digital-skills-for-students:google-workspace-for-students', 'digital-skills-for-students', 'digi-m02', 'google-workspace-for-students', 'Google Workspace for Students', 'Use Google Docs, Sheets, Forms and Calendar to write, collaborate on group work, collect responses and plan your semester.', 25, $md$
+## One account, many tools
+
+A free Google account gives you **Docs** (writing), **Sheets** (spreadsheets), **Slides** (presentations), **Forms** (surveys), **Calendar** and **Drive**. They work in any browser, save automatically and are built for working together.
+
+## Google Docs: write together
+
+- **Share** (top right) → add your group members as **Editors**.
+- Use **Suggesting** mode (the pencil icon at top right) so changes show as suggestions the owner can accept or reject.
+- Add **comments** with Ctrl + Alt + M. Type `@name` in a comment to assign a task to someone.
+- **Version history** (File → Version history) shows who wrote what and lets you restore earlier versions.
+- Use **Heading 1** and **Heading 2** styles, then **Insert → Table of contents** for long reports.
+
+> [!TIP]
+> Version history is also proof of who did the work in a group project.
+
+## Google Sheets: track anything
+
+Sheets works much like Excel. Useful student uses:
+
+- A **course tracker** with each course, lecturer, test dates and scores.
+- A **budget**: `=SUM(B2:B10)` adds up a column.
+- A **group task list** with columns for task, owner, due date and status.
+
+Use **Data → Data validation** to add a dropdown (for example To do, Doing, Done) to a status column.
+
+## Google Forms: collect responses
+
+Great for class surveys, event registration and research questionnaires:
+
+1. Go to **forms.google.com** → **Blank form**.
+2. Add questions: multiple choice, short answer, linear scale and more.
+3. Click **Send** to get a link.
+4. Open **Responses → Link to Sheets** to see every answer in a spreadsheet.
+
+## Google Calendar: plan your semester
+
+- Add your **timetable** as recurring events (set **Repeat weekly**).
+- Add **tests and deadlines** with reminders a few days before.
+- Use different **colours** for lectures, study time and personal activities.
+
+## Try it
+
+1. Create a Google Doc for a group assignment, share it with a classmate, and leave them a comment using `@name`.
+2. Build a course tracker in Sheets with a status dropdown.
+3. Make a three-question Google Form and link it to a Sheet.
+4. Add this week's lectures to Google Calendar as weekly events.
+$md$, true, true, 2, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('digi-m03', 'digital-skills-for-students', 'Professional Email', 3, 'Professional Email', 'EMAIL', array['Choose a professional address', 'Write clear subject lines', 'Structure a polite, brief email', 'Follow up and set a signature']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('digital-skills-for-students:professional-email', 'digital-skills-for-students', 'digi-m03', 'professional-email', 'Professional Email', 'Write clear, polite emails to lecturers, employers and organisations, with a professional address, a good subject line and the right tone.', 20, $md$
+## Start with the right address
+
+Your email address is the first thing people see. Use a simple, professional one for school and job applications:
+
+| Avoid | Use |
+| :-- | :-- |
+| `sweetgirl2004@…` | `amaka.obi@gmail.com` |
+| `bigboss_king@…` | `tunde.bakare.dev@gmail.com` |
+
+If your school gives you a student email, use it for anything to do with school.
+
+## The parts of a good email
+
+1. **Subject:** specific, so they know what it's about before opening it.
+2. **Greeting:** "Dear Dr Adewale," or "Good morning, Mrs Okon," for formal emails.
+3. **Opening line:** who you are, if they may not know you.
+4. **The point:** what you need, in one or two short paragraphs.
+5. **Closing:** thank them and say what happens next.
+6. **Sign-off and signature:** "Kind regards," then your full name and details.
+
+## An example
+
+```text
+Subject: ECO 201 – Request for extension on Assignment 2 (Matric 21/0453)
+
+Dear Dr Adewale,
+
+I'm Amaka Obi, a 200 level Economics student in your ECO 201 class.
+
+I was admitted to the health centre on Monday and could not complete
+Assignment 2, due on Friday. I have attached my medical note.
+
+Could I please submit it by next Wednesday? I have already finished
+the first half.
+
+Thank you for considering my request.
+
+Kind regards,
+Amaka Obi
+200 Level, Economics
+21/0453 · 0803 000 0000
+```
+
+## Tone tips
+
+- **Be brief.** Busy people read short emails first.
+- **One email, one topic.**
+- **Be polite, not over the top.** "Please" and "thank you" are enough.
+- **No text-speak:** write "please", not "pls"; "you", not "u".
+- **Check attachments.** Say "I have attached…" and make sure you did.
+- **Read it once before sending**, especially names and dates.
+
+> [!TIP]
+> If you don't get a reply, wait three to five working days, then reply to your own email with a short, polite follow-up.
+
+## A simple signature
+
+Set one up once (in Gmail: **Settings → See all settings → Signature**):
+
+```text
+Amaka Obi
+Economics student, University of Lagos
+linkedin.com/in/amaka-obi · 0803 000 0000
+```
+
+## Try it
+
+1. Create a professional email address if yours isn't one.
+2. Add a signature.
+3. Write an email to a lecturer or an organisation asking one clear question, using the six parts above.
+4. Read it aloud before sending, and check the subject line makes sense on its own.
+$md$, true, true, 3, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('digi-m04', 'digital-skills-for-students', 'Stay Safe Online', 4, 'Online Safety', 'SAFE', array['Use strong passphrases and a password manager', 'Turn on two-step verification', 'Spot phishing and student scams', 'Manage your digital footprint']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('digital-skills-for-students:stay-safe-online', 'digital-skills-for-students', 'digi-m04', 'stay-safe-online', 'Stay Safe Online', 'Protect your accounts with strong passwords and two-step verification, spot phishing and scams, and manage your digital footprint.', 20, $md$
+## Strong passwords
+
+Most accounts are hacked because of weak or reused passwords.
+
+- Use a **long passphrase**: `Jollof-Rice-At-Eight-Tonight!` is long and easy to remember, and far stronger than `Tunde1234`.
+- **Never reuse** the same password on important accounts. If one site is hacked, attackers try it everywhere.
+- Use a **password manager** such as Bitwarden (free) or the one built into Chrome or your phone to remember them for you.
+
+## Turn on two-step verification
+
+**Two-step verification** (2SV or 2FA) asks for a code from your phone as well as your password. Even if someone steals your password, they can't get in.
+
+Turn it on for your **email** first (email resets every other account), then WhatsApp, Instagram, LinkedIn and your bank app.
+
+> [!WARNING]
+> Never share a verification code (OTP) with anyone, even someone claiming to be from your bank, WhatsApp or school. No genuine organisation will ask for it.
+
+## Spot phishing
+
+**Phishing** is a fake message that tries to get your password, money or personal details. Warning signs:
+
+- **Urgency or threats:** "Your account will be closed in 24 hours."
+- **Too good to be true:** "You've won a scholarship! Pay ₦5,000 to process it."
+- **Odd links:** hover over (or long-press) a link to see where it really goes. `unilag-portal.xyz` isn't your school.
+- **Requests for codes, PINs or passwords.**
+- **Messages from friends asking for money** out of the blue. Their account may be hacked. Call them to check.
+
+When in doubt, don't click. Go to the website yourself or contact the organisation using details you already trust.
+
+## Common scams targeting students
+
+- Fake **scholarships** or **admission** offers that ask for a fee.
+- **Job offers** that ask you to pay for training, a uniform or a "registration fee".
+- **Investment** schemes promising big, fast returns.
+- Fake **accommodation** listings that want a deposit before you've seen the room.
+
+## Your digital footprint
+
+Everything you post can be seen by future employers and scholarship panels.
+
+- Search your own name on Google and see what comes up.
+- Review old posts and privacy settings on each social account.
+- Don't post your **home address**, **phone number**, **exam number** or **travel plans** publicly.
+
+## Try it
+
+1. Turn on two-step verification for your main email account.
+2. Change one reused password to a long passphrase.
+3. Search your name on Google and review your social media privacy settings.
+4. Find one suspicious message in your inbox or SMS and list the warning signs in it.
+$md$, true, true, 4, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+
+-- Course: Get Your First Internship
+insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
+values ('get-your-first-internship', 'short', 'Internship Ready', 'get-your-first-internship', 'INTERN', 'Get Your First Internship', 'Prepare for SIWES and internships, find local and remote opportunities, apply well and ace the interview.', 'A practical guide to landing an internship or SIWES placement. Get your documents ready, find opportunities (including remote ones) and avoid fake offers, write short applications that get read, and prepare for interviews with the STAR method. Each module takes about 20 minutes and ends with a short check and a badge.', 'career', 'beginner', 'Beginner', null, true, 'available', true, array['Preparing for internships and SIWES', 'Finding local and remote opportunities', 'Spotting fake offers', 'Cover letters and interview answers']::text[], array['No experience needed']::text[], null, true, false, false, false, true, 60, 11)
+on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('intern-m01', 'get-your-first-internship', 'Get Ready for an Internship', 1, 'Internship Prep', 'INTREADY', array['Understand internships and SIWES', 'Know what employers look for in students', 'Prepare your CV, cover letter and documents', 'Plan your placement timeline']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('get-your-first-internship:get-ready', 'get-your-first-internship', 'intern-m01', 'get-ready', 'Get Ready for an Internship', 'Understand what internships and SIWES placements are, what employers look for in students, and get your documents ready before you apply.', 20, $md$
+## What an internship is
+
+An **internship** is a short period of work (usually one to six months) where you learn on the job. Some are paid, some offer a stipend, and some are unpaid. They give you:
+
+- **Experience** to put on your CV.
+- **References** from people who've seen you work.
+- A clearer idea of what you do (and don't) want to do after school.
+- Sometimes, a **job offer** when you graduate.
+
+## SIWES and IT placements
+
+Many Nigerian university and polytechnic programmes require **SIWES** (Students Industrial Work Experience Scheme), run with the Industrial Training Fund (ITF). If your course requires it:
+
+- Your **SIWES coordinator** gives you a placement letter and a **logbook**. Ask early.
+- **You** usually have to find the organisation. Start looking at least two to three months before your placement begins.
+- Fill in your logbook **every day or week** with what you did. It's assessed.
+- Choose a placement where you'll **do real work** in your field, not just run errands.
+
+Even if SIWES isn't required, the same approach works for any internship.
+
+## What employers look for in students
+
+They don't expect experience. They look for:
+
+| Quality | How to show it |
+| :-- | :-- |
+| **Willingness to learn** | Courses and badges you've completed on your own |
+| **Reliability** | Class rep, club roles, volunteering, a part-time job |
+| **Communication** | A clear CV, a polite, well-written email |
+| **Basic tools** | Excel, Google Workspace, Canva, or whatever your field uses |
+| **Evidence** | Projects in a portfolio or on GitHub |
+
+## Get your documents ready
+
+Before you apply anywhere, have these ready in one Drive folder:
+
+1. **CV:** one page, tailored to internships (see the Career Essentials course).
+2. **Cover letter template** you can adapt quickly.
+3. **LinkedIn profile** with a photo and headline.
+4. **Portfolio link**, even with one or two projects.
+5. **Documents** schools and employers often ask for: student ID, school letter, transcript or result slip, and passport photo.
+
+> [!TIP]
+> Save your CV as a PDF named `CV-Firstname-Lastname.pdf`. Recruiters see hundreds of files called `CV.pdf`.
+
+## Try it
+
+1. Write down the dates your internship or SIWES should start and end.
+2. List three kinds of organisations where you'd learn something useful in your field.
+3. Create an "Internship" folder in Drive with your CV, a cover letter draft and scans of your documents.
+4. Add one skill you'll build before you apply, and pick a course to build it.
+$md$, true, true, 1, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('intern-m02', 'get-your-first-internship', 'Find Opportunities (Including Remote)', 2, 'Opportunity Finder', 'INTFIND', array['Search job boards and LinkedIn', 'Approach organisations directly', 'Find remote internships', 'Spot and avoid fake offers']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('get-your-first-internship:find-opportunities', 'get-your-first-internship', 'intern-m02', 'find-opportunities', 'Find Opportunities (Including Remote)', 'Find internships through job boards, LinkedIn, direct approaches and your network, find remote roles, and spot fake offers before they cost you.', 25, $md$
+## Where to look
+
+| Source | How to use it |
+| :-- | :-- |
+| **LinkedIn Jobs** | Search "intern", "internship" or "graduate trainee" and filter by location or **Remote** |
+| **Job boards** | Jobberman, MyJobMag and HotNigerianJobs list Nigerian internships |
+| **Company career pages** | Many banks, consulting firms, tech companies and FMCGs run internship programmes |
+| **Your school** | Career services, SIWES coordinator, departmental notice boards and WhatsApp groups |
+| **Your network** | Lecturers, alumni, family friends, older students who've done placements |
+
+## Ask directly
+
+Many small and medium businesses never advertise internships but will take a keen student. A short, polite email works:
+
+```text
+Subject: Internship enquiry – Accounting student (UNILAG)
+
+Dear Mrs Adeyemi,
+
+I'm a 300 level Accounting student at the University of Lagos looking
+for a 6-month industrial training placement from February 2027.
+
+I use Excel confidently (see my portfolio: [link]) and I'm keen to
+learn how an accounting firm like yours works day to day.
+
+Could your firm take an intern next year? My CV is attached.
+
+Kind regards,
+Chinedu Okeke
+```
+
+## Remote opportunities
+
+Remote internships let you work for organisations anywhere, from home. Find them on:
+
+- **LinkedIn** with the **Remote** filter.
+- **Remote-friendly platforms** such as Wellfound (startups), Internshala, and remote job boards.
+- **Programmes for African students and graduates**, such as fellowship and training programmes run by tech companies and NGOs.
+
+For remote work you'll need: a laptop, reliable internet or a data plan, a quiet place for video calls, and good written communication.
+
+## Spot fake internships
+
+Scammers target students. Walk away if:
+
+- They ask **you to pay**: for "training", "registration", "equipment" or "processing". Genuine employers pay you, not the other way round.
+- The offer arrives **without an interview**.
+- The email is from a **free address** (e.g. `hr.bigbank.recruitment@gmail.com`) claiming to be a big company.
+- They want your **BVN, bank PIN or OTP**.
+- The pay is **far too high** for a student role, or the job is vague ("data entry, ₦300,000 weekly").
+
+Check the company: look it up on its official website and LinkedIn, and search its name plus "scam".
+
+> [!WARNING]
+> Never pay money to get an internship or job, and never share your BVN, PIN or OTP.
+
+## Try it
+
+1. Search LinkedIn Jobs for internships in your field and save five.
+2. Find two companies you'd like to intern at and check their career pages.
+3. Write a direct enquiry email to one small business in your field.
+4. Find one remote opportunity and check it against the fake-internship warning signs.
+$md$, true, true, 2, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('intern-m03', 'get-your-first-internship', 'Apply and Stand Out', 3, 'Strong Applications', 'APPLY', array['Tailor a CV to an advert', 'Write a short cover letter', 'Track applications', 'Follow up politely']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('get-your-first-internship:apply-and-stand-out', 'get-your-first-internship', 'intern-m03', 'apply-and-stand-out', 'Apply and Stand Out', 'Write a short cover letter that gets read, tailor your CV to each role, and track your applications so none slip through.', 20, $md$
+## Quality beats quantity
+
+Sending the same CV to 100 places rarely works. Ten **tailored** applications usually do better than 100 generic ones.
+
+## Tailor your CV in five minutes
+
+For each application:
+
+1. Read the advert and highlight the **skills and tools** it mentions.
+2. Make sure those words appear in your CV, where they're true.
+3. Move your **most relevant** project or experience to the top.
+4. Update your one-line summary to match the role: "Economics student with Excel and Power BI skills, seeking a data analyst internship."
+
+## A short cover letter
+
+Keep it under 200 words, in three paragraphs:
+
+```text
+Dear Hiring Manager,
+
+I'm applying for the Data Analyst Intern role at Kolanut Foods. I'm a
+300 level Statistics student at UNIBEN, and I'm available from
+January to June 2027.
+
+In my coursework and personal projects I've cleaned and analysed sales
+data in Excel and Python, and built a Power BI dashboard showing revenue
+by region (portfolio: [link]). I'd enjoy helping your team turn data
+into clear reports.
+
+Thank you for considering my application. I'd welcome the chance to
+discuss how I can help.
+
+Kind regards,
+Efosa Igbinedion
+```
+
+1. **Why this role**, who you are and when you're available.
+2. **One or two examples** that match what they need.
+3. **Thanks** and a clear close.
+
+> [!TIP]
+> AI tools can help you draft and polish, but always rewrite in your own voice and check every claim is true. Recruiters notice generic, AI-sounding letters.
+
+## Track your applications
+
+Use a simple Google Sheet:
+
+| Company | Role | Link | Date applied | Status | Follow-up date | Notes |
+| :-- | :-- | :-- | :-- | :-- | :-- | :-- |
+| Kolanut Foods | Data Analyst Intern | … | 2026-10-02 | Applied | 2026-10-16 | Referred by Tolu |
+
+Add a **Status** dropdown: Saved, Applied, Interview, Offer, Rejected.
+
+## Follow up
+
+If you haven't heard back in about two weeks, send one short, polite follow-up email. Then move on. Don't take silence personally; it's normal.
+
+## Try it
+
+1. Pick one internship advert and tailor your CV to it.
+2. Write a three-paragraph cover letter for it, under 200 words.
+3. Set up your application tracker and add every role you've saved.
+4. Apply to at least one role this week.
+$md$, true, true, 3, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('intern-m04', 'get-your-first-internship', 'Ace the Interview', 4, 'Interview Ready', 'INTERVW', array['Research an organisation', 'Answer with the STAR method', 'Handle online interviews', 'Follow up after an interview']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('get-your-first-internship:ace-the-interview', 'get-your-first-internship', 'intern-m04', 'ace-the-interview', 'Ace the Interview', 'Prepare for common internship interview questions, answer with the STAR method, handle online interviews, and follow up afterwards.', 25, $md$
+## Before the interview
+
+- **Research the organisation:** what it does, its products or services, and any recent news. Read its website and LinkedIn page.
+- **Re-read the advert** and your application.
+- **Prepare three stories** from school, projects, volunteering or work that show your skills.
+- **Plan logistics:** the address and travel time, or for online interviews the link, a charged laptop, data and a quiet room.
+
+## Common questions
+
+| Question | What they want to know |
+| :-- | :-- |
+| "Tell me about yourself." | A 60-second summary: studies, skills, why this role |
+| "Why do you want this internship?" | You've researched them and have a real reason |
+| "Tell me about a time you worked in a team." | How you collaborate |
+| "What's your biggest weakness?" | Self-awareness, and what you're doing about it |
+| "Do you have any questions for us?" | Interest. Always have two ready |
+
+## Answer with STAR
+
+For "tell me about a time…" questions, use **STAR**:
+
+- **Situation:** the background, in one sentence.
+- **Task:** what you needed to do.
+- **Action:** what **you** did (say "I", not "we").
+- **Result:** what happened, with a number if you can.
+
+> **Example:** "In my second year, our departmental dinner had 40% fewer sign-ups than planned two weeks before the date (**S**). As publicity lead, I had to fill the tickets (**T**). I designed Canva posters, set up a Google Form and asked each class rep to share it in their WhatsApp groups (**A**). We sold out three days before the event (**R**)."
+
+## Online interviews
+
+- Test the link, camera and microphone the day before.
+- Sit facing a window or light, with a plain background.
+- Look at the camera when you speak, not your own face.
+- Keep your phone on silent and close other tabs.
+- Have your CV and notes nearby, but don't read from them.
+
+## Good questions to ask them
+
+- "What would a typical day look like for an intern?"
+- "What would success look like at the end of the internship?"
+- "Who would I be working with most closely?"
+
+## After the interview
+
+Send a short thank-you email the same day:
+
+```text
+Subject: Thank you – Data Analyst Intern interview
+
+Dear Mr Okafor,
+
+Thank you for speaking with me today about the Data Analyst Intern role.
+I enjoyed hearing about how your team uses Power BI for weekly sales
+reviews, and I'm even more keen to join.
+
+Kind regards,
+Efosa Igbinedion
+```
+
+## Try it
+
+1. Write and practise your 60-second "tell me about yourself" answer out loud.
+2. Write one STAR story about teamwork and one about solving a problem.
+3. Prepare two questions to ask an interviewer.
+4. Do a practice video call with a friend and ask for honest feedback.
+$md$, true, true, 4, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+
+-- Course: Freelancing for Beginners
+insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
+values ('freelancing-for-beginners', 'short', 'Freelancing Basics', 'freelancing-for-beginners', 'FREEL', 'Freelancing for Beginners', 'Turn a skill into a clear offer, find clients, price and pitch your work, deliver well and earn great reviews.', 'Start earning from a skill you already have. Shape a clear offer and samples, set up profiles on platforms like Fiverr and Upwork, find direct clients, price and pitch your work, get paid safely, and deliver in a way that brings reviews and repeat work. Each module takes about 20 minutes and ends with a short check and a badge.', 'career', 'beginner', 'Beginner', null, true, 'available', true, array['Packaging a skill as an offer', 'Freelance profiles and finding clients', 'Pricing and proposals', 'Client communication and reviews']::text[], array['No experience needed', 'One skill you can offer, such as design, writing, video or Excel']::text[], null, true, false, false, false, true, 60, 12)
+on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('freel-m01', 'freelancing-for-beginners', 'Choose Your Skill and Offer', 1, 'Freelance Offer', 'OFFER', array['Pick one skill to sell', 'Write a clear one-sentence offer', 'Create samples before your first client', 'Put samples behind one link']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('freelancing-for-beginners:choose-your-skill-and-offer', 'freelancing-for-beginners', 'freel-m01', 'choose-your-skill-and-offer', 'Choose Your Skill and Offer', 'Pick one skill you can sell now, turn it into a clear offer with a fixed scope, and build a few samples to show clients.', 20, $md$
+## What freelancing is
+
+**Freelancing** means doing paid work for clients as your own boss, project by project, rather than as an employee. Many students freelance alongside their studies to earn, build experience and grow a portfolio.
+
+It isn't a get-rich-quick scheme. Most freelancers start small, with a few low-paid jobs, and grow as their reviews and skills grow.
+
+## Pick one skill you can sell now
+
+Start with something you can already do to a good standard, or can learn in a few weeks:
+
+| Skill | Example services |
+| :-- | :-- |
+| **Design** (Canva, Figma) | Flyers, social media graphics, logos, presentation decks |
+| **Video** (CapCut) | Short-form edits for Reels and TikTok, YouTube cuts |
+| **Writing** | Blog posts, product descriptions, CV writing, proofreading |
+| **Data** (Excel, Power BI) | Cleaning spreadsheets, dashboards, data entry |
+| **Web** | Simple websites, landing pages |
+| **Admin** | Virtual assistance, research, transcription |
+
+Pick **one** to start. "I design Instagram flyers for small businesses" is easier to sell than "I do design, writing, video and websites".
+
+## Turn it into a clear offer
+
+A good offer answers four questions:
+
+1. **What exactly do they get?** "3 Instagram flyers in square and story sizes."
+2. **For whom?** "Restaurants and small food businesses."
+3. **How fast?** "Delivered in 3 days."
+4. **What's included?** "2 rounds of changes, editable Canva link."
+
+Write it in one sentence: *"I design three Instagram flyers for small food businesses, delivered in 3 days with two rounds of changes."*
+
+## Build samples before your first client
+
+Clients want to see work. If you don't have clients yet:
+
+- Make **3–5 sample pieces** for imaginary or real local businesses (don't use their real logos without permission; say they're concept pieces).
+- **Redesign** something you see: a poor flyer, a messy spreadsheet.
+- Do **one or two jobs** for someone you know, in exchange for a testimonial.
+
+> [!TIP]
+> Put your samples on a simple portfolio page (see the Build Your Student Portfolio course). One link does the selling for you.
+
+## Try it
+
+1. List three skills you have and pick the one you could sell this month.
+2. Write your offer in one sentence using the four questions.
+3. Create three sample pieces for that offer.
+4. Put them in one place with a shareable link.
+$md$, true, true, 1, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('freel-m02', 'freelancing-for-beginners', 'Find Clients and Get Paid', 2, 'Client Finder', 'CLIENTS', array['Set up a profile on a freelance platform', 'Find clients in your network and locally', 'Agree safe payment terms', 'Avoid client scams']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('freelancing-for-beginners:find-clients-and-get-paid', 'freelancing-for-beginners', 'freel-m02', 'find-clients-and-get-paid', 'Find Clients and Get Paid', 'Set up profiles on freelance platforms, find local and social media clients, and get paid safely in naira and foreign currency.', 25, $md$
+## Two ways to find clients
+
+**1. Freelance platforms** connect you with clients worldwide:
+
+| Platform | How it works |
+| :-- | :-- |
+| **Fiverr** | You list fixed-price "gigs"; clients come to you |
+| **Upwork** | You send proposals to jobs clients post |
+| **Contra**, **Freelancer.com** | Similar marketplaces, some with lower fees |
+
+Platforms take a fee (often around 10–20%), and competition is high. Your first review is the hardest to get.
+
+**2. Direct clients**, often easier at first:
+
+- **Your network:** tell friends, family, church, mosque and school groups exactly what you offer.
+- **Local businesses:** shops, restaurants and salons that need flyers, social posts or spreadsheets.
+- **Social media:** post your samples on Instagram, X, LinkedIn and your WhatsApp status with a clear call to action.
+
+## A profile that wins work
+
+On any platform:
+
+- **Photo:** clear and friendly, just your face.
+- **Title:** your offer, not "freelancer". "Social media flyer designer for small businesses."
+- **Description:** who you help, what they get and how fast, in short paragraphs.
+- **Samples:** your three best pieces.
+- **Price:** start competitive, and raise it after good reviews.
+
+## Get paid safely
+
+- On platforms, **keep all payments on the platform**. It protects both of you. Clients who ask to move to direct payment before the first job are a risk, and it can get your account banned.
+- For direct clients, ask for **50% upfront** and 50% on delivery, or 100% upfront for small jobs.
+- For foreign payments, use the platform's withdrawal options or services such as Payoneer, then withdraw to your Nigerian bank account. Compare fees and exchange rates.
+- Keep a simple **record** in Google Sheets: client, job, amount, date paid.
+
+> [!WARNING]
+> Scammers pose as clients too. Never pay to "unlock" a job, never share your bank login or OTP, and be wary of cheques or "overpayments" where you're asked to send money back.
+
+## Try it
+
+1. Choose one platform and create a profile with your photo, title, description and samples.
+2. Write a short post announcing your service and share it on two social channels.
+3. List five local businesses or people who might need your offer.
+4. Decide your payment terms (for example 50% upfront) and write them down.
+$md$, true, true, 2, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('freel-m03', 'freelancing-for-beginners', 'Price and Pitch Your Work', 3, 'Pricing & Proposals', 'PITCH', array['Price per project, per hour or in packages', 'Write a short winning proposal', 'Agree scope in writing', 'Raise prices as you grow']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('freelancing-for-beginners:price-and-pitch', 'freelancing-for-beginners', 'freel-m03', 'price-and-pitch', 'Price and Pitch Your Work', 'Set fair prices you can explain, write short proposals that win jobs, and agree the scope before you start.', 20, $md$
+## How to price
+
+Three simple ways to set a price:
+
+| Method | How | Good for |
+| :-- | :-- | :-- |
+| **Per project** | A fixed price for a defined result | Most beginner work: "3 flyers for ₦15,000" |
+| **Per hour** | Your hourly rate × hours | Ongoing or unclear work |
+| **Packages** | Basic, Standard, Premium | Fiverr gigs and repeat clients |
+
+To find a starting point:
+
+1. Look at what others with similar samples charge on platforms and locally.
+2. Estimate your time honestly, including changes and messages.
+3. Start slightly lower while you build reviews, then **raise prices** every few jobs.
+
+> [!TIP]
+> Packages help clients say yes. For example: **Basic** 1 flyer; **Standard** 3 flyers; **Premium** 3 flyers plus story versions and a 24-hour turnaround. Most people choose the middle option.
+
+## Write a winning proposal
+
+Clients read many proposals. Keep yours short and about **them**:
+
+```text
+Hi Bola,
+
+You need 3 flyers for your restaurant's weekend promo that look good on
+Instagram. I design for food businesses. Here are two recent samples:
+[link] [link]
+
+My plan: one bold design with your menu photos, in square and story
+sizes, delivered by Thursday, with two rounds of changes.
+
+Price: ₦15,000. Happy to start today if the details suit you.
+
+Tosin
+```
+
+1. **Show you read the brief** in the first line.
+2. **Proof:** one or two relevant samples.
+3. **Plan:** what you'll deliver and when.
+4. **Price and next step.**
+
+## Agree the scope in writing
+
+Before you start, confirm in a message or email:
+
+- What you'll deliver, in what format.
+- The deadline.
+- How many **rounds of changes** are included.
+- The price and payment terms.
+
+This prevents "just one more small change" turning into ten.
+
+## Try it
+
+1. Create three packages (Basic, Standard, Premium) for your offer, with prices.
+2. Find a real job post on a platform or social media and write a proposal using the four parts.
+3. Write a scope message template you can reuse with every client.
+$md$, true, true, 3, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('freel-m04', 'freelancing-for-beginners', 'Deliver Work and Get Great Reviews', 4, 'Client Delivery', 'DELIVER', array['Communicate and update clients', 'Deliver professionally', 'Handle out-of-scope requests', 'Earn reviews and repeat work']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('freelancing-for-beginners:deliver-and-get-reviews', 'freelancing-for-beginners', 'freel-m04', 'deliver-and-get-reviews', 'Deliver Work and Get Great Reviews', 'Communicate well, deliver on time, handle changes and difficult clients, and turn happy clients into reviews and repeat work.', 20, $md$
+## Communication wins repeat clients
+
+Most clients care as much about **how** you work as the result:
+
+- **Reply within a day**, even if it's "Got it, I'll send the first draft on Wednesday."
+- **Ask questions early.** It's better than guessing and redoing the work.
+- **Give updates** before they have to ask.
+- **Warn early** if you'll be late, with a new date. Never go silent.
+
+## Deliver professionally
+
+1. **Check your work** against the agreed scope before sending.
+2. **Deliver in the right format:** PNG and PDF, editable Canva link, `.xlsx` and so on.
+3. **Name files clearly:** `Bola-Kitchen-weekend-promo-square.png`.
+4. **Write a short delivery note:** what's included, how to use it, and how to request changes.
+
+## Handle changes and difficult clients
+
+- Changes **within scope** (the agreed rounds): do them promptly and cheerfully.
+- Changes **outside scope**: politely explain and offer a price. "Happy to add a fourth flyer. That would be ₦5,000 extra."
+- If a client is rude or unreasonable, stay calm and professional, and keep everything in writing. On platforms, contact **support** early rather than arguing.
+- It's fine to turn down work that doesn't feel right.
+
+## Ask for reviews and repeat work
+
+Reviews and referrals are how freelancers grow.
+
+- On platforms, politely ask for a review once they're happy: *"I'm glad you like it! If you have a moment, a review would really help my business."*
+- For direct clients, ask for a **short testimonial** you can put on your portfolio.
+- Offer a small discount on their **next** job, or check in a month later: *"Do you need flyers for next month's promo?"*
+
+## Balance it with school
+
+- Set **fixed hours** for freelance work, and protect exam periods.
+- Don't take on more than you can deliver well. One bad review costs more than one missed job.
+- Keep a simple record of **income and expenses**. As your earnings grow, learn about tax obligations for self-employed income.
+
+> [!TIP]
+> Add every finished project (with permission) to your portfolio. After ten jobs you'll have a strong body of work and your prices can rise.
+
+## Try it
+
+1. Write a delivery note template you'll send with every job.
+2. Write a polite reply to a client asking for changes outside the agreed scope.
+3. Write the message you'll send to ask for a review.
+4. Block out your weekly freelance hours in Google Calendar.
+$md$, true, true, 4, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+
 -- Course: Data Analytics Foundations
 insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
-values ('data-analytics-foundations', 'full', null, 'data-analytics-foundations', 'DAF', 'Data Analytics Foundations', 'What data analytics is, how businesses use data to decide, and the core skills you need to start.', 'Learn what data analytics is, how businesses use data to make decisions, and the core skills required to begin a career in data analytics. The course ends with your first small analytics project.', 'data-analytics', 'beginner', 'Beginner', 6, true, 'available', true, array['How organizations use data', 'Types of data', 'Databases, cleaning and analysis', 'Visualization and business intelligence', 'Going from a question to an insight']::text[], array['No experience needed', 'A spreadsheet program: Google Sheets (free with a Google account) or Microsoft Excel']::text[], 'Kolanut people review', true, true, true, true, false, 60, 3)
+values ('data-analytics-foundations', 'full', null, 'data-analytics-foundations', 'DAF', 'Data Analytics Foundations', 'What data analytics is, how businesses use data to decide, and the core skills you need to start.', 'Learn what data analytics is, how businesses use data to make decisions, and the core skills required to begin a career in data analytics. The course ends with your first small analytics project.', 'data-analytics', 'beginner', 'Beginner', 6, true, 'available', true, array['How organizations use data', 'Types of data', 'Databases, cleaning and analysis', 'Visualization and business intelligence', 'Going from a question to an insight']::text[], array['No experience needed', 'A spreadsheet program: Google Sheets (free with a Google account) or Microsoft Excel']::text[], 'Kolanut people review', true, true, true, true, false, 60, 13)
 on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
@@ -2166,7 +4759,7 @@ on conflict (id) do update set course_id = excluded.course_id, module_id = exclu
 
 -- Course: Excel for Data Analysis
 insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
-values ('excel-for-data-analysis', 'full', null, 'excel-for-data-analysis', 'XLS', 'Excel for Data Analysis', 'Clean, analyse and present business data in Excel, from formulas and XLOOKUP to pivot tables and charts.', 'Excel is still where most business analysis happens. Learn to work with real datasets: sort and filter, write the formulas analysts use every day, clean messy data, summarise with pivot tables and present results with clear charts.', 'data-analytics', 'beginner', 'Beginner', 9, true, 'available', true, array['Formulas and functions', 'IF, SUMIF and COUNTIF', 'XLOOKUP', 'Data cleaning', 'Pivot tables', 'Charts']::text[], array['Microsoft Excel 2021 or Microsoft 365 (Google Sheets works for most lessons)', 'Comfortable using a computer; no Excel experience needed']::text[], 'Kolanut sales performance review', true, true, true, true, false, 60, 4)
+values ('excel-for-data-analysis', 'full', null, 'excel-for-data-analysis', 'XLS', 'Excel for Data Analysis', 'Clean, analyse and present business data in Excel, from formulas and XLOOKUP to pivot tables and charts.', 'Excel is still where most business analysis happens. Learn to work with real datasets: sort and filter, write the formulas analysts use every day, clean messy data, summarise with pivot tables and present results with clear charts.', 'data-analytics', 'beginner', 'Beginner', 9, true, 'available', true, array['Formulas and functions', 'IF, SUMIF and COUNTIF', 'XLOOKUP', 'Data cleaning', 'Pivot tables', 'Charts']::text[], array['Microsoft Excel 2021 or Microsoft 365 (Google Sheets works for most lessons)', 'Comfortable using a computer; no Excel experience needed']::text[], 'Kolanut sales performance review', true, true, true, true, false, 60, 14)
 on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
@@ -3828,7 +6421,7 @@ on conflict (id) do update set course_id = excluded.course_id, module_id = exclu
 
 -- Course: SQL for Data Analysis
 insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
-values ('sql-for-data-analysis', 'full', null, 'sql-for-data-analysis', 'SQL', 'SQL for Data Analysis', 'Query real business data with SQL, from your first SELECT to window functions, using a logistics company''s database.', 'SQL is how analysts get answers out of databases. In this course you work with Harbourline Freight, a fictional logistics company, and answer the questions its managers actually ask: who ships the most, which routes run late, what customers still owe. Every lesson starts with a business problem, explains the idea in plain language, and gives you queries to write in a live SQL editor in your browser.', 'data-analytics', 'beginner', 'Beginner to intermediate', 12, true, 'available', true, array['Reading a database schema', 'Selecting, filtering and sorting data', 'Aggregating with GROUP BY and HAVING', 'Joining tables', 'CASE expressions, subqueries and CTEs', 'Window functions for rankings and running totals', 'Turning a business question into a query']::text[], array['No prior SQL needed', 'Comfortable using a computer and a web browser']::text[], 'Harbourline Freight operations review', true, true, true, true, false, 60, 5)
+values ('sql-for-data-analysis', 'full', null, 'sql-for-data-analysis', 'SQL', 'SQL for Data Analysis', 'Query real business data with SQL, from your first SELECT to window functions, using a logistics company''s database.', 'SQL is how analysts get answers out of databases. In this course you work with Harbourline Freight, a fictional logistics company, and answer the questions its managers actually ask: who ships the most, which routes run late, what customers still owe. Every lesson starts with a business problem, explains the idea in plain language, and gives you queries to write in a live SQL editor in your browser.', 'data-analytics', 'beginner', 'Beginner to intermediate', 12, true, 'available', true, array['Reading a database schema', 'Selecting, filtering and sorting data', 'Aggregating with GROUP BY and HAVING', 'Joining tables', 'CASE expressions, subqueries and CTEs', 'Window functions for rankings and running totals', 'Turning a business question into a query']::text[], array['No prior SQL needed', 'Comfortable using a computer and a web browser']::text[], 'Harbourline Freight operations review', true, true, true, true, false, 60, 15)
 on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
@@ -5912,7 +8505,7 @@ on conflict (id) do update set course_id = excluded.course_id, module_id = exclu
 
 -- Course: Data Modelling
 insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
-values ('data-modelling', 'full', null, 'data-modelling', 'DMO', 'Data Modelling', 'Design databases and analytics models that stay correct: entities, keys, relationships, ERDs, normalisation and star schemas.', 'Every reliable report sits on a well-designed model. Learn to turn business questions into entities and keys, draw entity-relationship diagrams in crow''s-foot notation, normalise away repeated data, and design the star schemas that Power BI and data warehouses run on. Every lesson is built around diagrams, and you practise on real databases in your browser.', 'databases', 'intermediate', 'Beginner to intermediate', 8, true, 'available', true, array['Entities, attributes and grain', 'Primary and foreign keys', 'Cardinality and bridge tables', 'Entity-relationship diagrams', 'Normalisation (1NF to 3NF)', 'Star schemas and slowly changing dimensions']::text[], array['Basic SQL (SELECT, WHERE, JOIN) helps; the SQL for Data Analysis course covers it', 'No design experience needed']::text[], 'Ashgrove Chambers data model', true, true, true, true, false, 60, 6)
+values ('data-modelling', 'full', null, 'data-modelling', 'DMO', 'Data Modelling', 'Design databases and analytics models that stay correct: entities, keys, relationships, ERDs, normalisation and star schemas.', 'Every reliable report sits on a well-designed model. Learn to turn business questions into entities and keys, draw entity-relationship diagrams in crow''s-foot notation, normalise away repeated data, and design the star schemas that Power BI and data warehouses run on. Every lesson is built around diagrams, and you practise on real databases in your browser.', 'databases', 'intermediate', 'Beginner to intermediate', 8, true, 'available', true, array['Entities, attributes and grain', 'Primary and foreign keys', 'Cardinality and bridge tables', 'Entity-relationship diagrams', 'Normalisation (1NF to 3NF)', 'Star schemas and slowly changing dimensions']::text[], array['Basic SQL (SELECT, WHERE, JOIN) helps; the SQL for Data Analysis course covers it', 'No design experience needed']::text[], 'Ashgrove Chambers data model', true, true, true, true, false, 60, 16)
 on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
@@ -6950,7 +9543,7 @@ on conflict (id) do update set course_id = excluded.course_id, module_id = exclu
 
 -- Course: Power BI Fundamentals
 insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
-values ('power-bi-fundamentals', 'full', null, 'power-bi-fundamentals', 'PBI', 'Power BI Fundamentals', 'Build a data model, write DAX measures and design a dashboard people can use to run a business.', 'Power BI turns data into dashboards. Learn the full workflow: import and clean data with Power Query, relate tables in a model, write DAX measures, and design a dashboard that tells a clear business story.', 'business-intelligence', 'beginner', 'Beginner to intermediate', 12, true, 'available', true, array['Power Query', 'Data modelling and relationships', 'DAX measures', 'Dashboard design', 'Publishing reports']::text[], array['Power BI Desktop (free, Windows only)', 'Basic Excel is helpful: the Excel course covers it']::text[], 'Ashgrove Chambers practice dashboard', true, true, true, true, false, 60, 7)
+values ('power-bi-fundamentals', 'full', null, 'power-bi-fundamentals', 'PBI', 'Power BI Fundamentals', 'Build a data model, write DAX measures and design a dashboard people can use to run a business.', 'Power BI turns data into dashboards. Learn the full workflow: import and clean data with Power Query, relate tables in a model, write DAX measures, and design a dashboard that tells a clear business story.', 'business-intelligence', 'beginner', 'Beginner to intermediate', 12, true, 'available', true, array['Power Query', 'Data modelling and relationships', 'DAX measures', 'Dashboard design', 'Publishing reports']::text[], array['Power BI Desktop (free, Windows only)', 'Basic Excel is helpful: the Excel course covers it']::text[], 'Ashgrove Chambers practice dashboard', true, true, true, true, false, 60, 17)
 on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
@@ -10055,6 +12648,2362 @@ on conflict (id) do update set assessment_id = excluded.assessment_id, position 
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
 values ('career-f08', 0, 'Drag a field to Rows and a number to Values to get totals by group.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: AI Fundamentals: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('aistu-m01-check', 'chatgpt-for-students', 'module', 'aistu-m01', 'AI Fundamentals: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aistu-m01-q1', 'aistu-m01-check', 1, 'How does an AI assistant like ChatGPT produce its answers?', '["It looks each answer up in a verified database","It predicts a likely helpful reply from patterns it learned in text","A person types every answer","It copies the first Google result"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aistu-m01-q1', 1, 'It predicts text from patterns, which is why it can sound right and still be wrong.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aistu-m01-q2', 'aistu-m01-check', 2, 'What is a ''hallucination'' in AI?', '["A confident answer that is made up or wrong","A very long answer","An answer in another language","A slow response"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aistu-m01-q2', 0, 'AI can state false facts, figures or references confidently.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aistu-m01-q3', 'aistu-m01-check', 3, 'Which of these is AI most reliable for?', '["Exact statistics for your essay","References to cite","Explaining a topic in simpler words","Your lecturer''s marking scheme"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aistu-m01-q3', 2, 'Explaining and rephrasing are its strengths; facts and references need checking.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aistu-m01-q4', 'aistu-m01-check', 4, 'Before using AI for a graded assignment, what should you do first?', '["Check your course''s rules on AI","Ask the AI if it''s allowed","Use it and hope for the best","Delete your notes"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aistu-m01-q4', 0, 'Each school and lecturer sets their own rules.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aistu-m01-q5', 'aistu-m01-check', 5, 'Which is a good use of AI for learning?', '["Having it write your assessment","Having it explain a topic and quiz you on it","Copying its answers into an exam","Submitting its references without checking"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aistu-m01-q5', 1, 'Use AI to understand and practise, not to do the assessment for you.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Study with AI: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('aistu-m02-check', 'chatgpt-for-students', 'module', 'aistu-m02', 'Study with AI: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aistu-m02-q1', 'aistu-m02-check', 1, 'Why ask the AI to quiz you and wait for your answers?', '["Being tested helps you remember much better than rereading","It makes the AI faster","Quizzes are required by law","It saves data"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aistu-m02-q1', 0, 'Testing yourself is one of the most reliable ways to learn.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aistu-m02-q2', 'aistu-m02-check', 2, 'Which prompt will give the most useful explanation?', '["Explain elasticity.","Elasticity?","I''m a 100-level Economics student. Explain elasticity of demand simply, with a fuel-price example.","Tell me everything about economics."]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aistu-m02-q2', 2, 'Your level, the topic and an example make the explanation fit you.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aistu-m02-q3', 'aistu-m02-check', 3, 'Why build flashcards from your own lecture notes?', '["It keeps the practice close to what your lecturer actually taught","Notes are shorter than textbooks","AI can''t read textbooks","It''s faster to print"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aistu-m02-q3', 0, 'Your notes reflect your course, so the practice matches your exams better.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aistu-m02-q4', 'aistu-m02-check', 4, 'An AI shows the working for a maths problem. What should you do?', '["Trust it completely","Use it to understand the method, and check each step","Copy it into your assignment","Ignore the steps"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aistu-m02-q4', 1, 'AI can still make calculation mistakes.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aistu-m02-q5', 'aistu-m02-check', 5, 'What makes a revision plan from AI actually useful?', '["It fits your real timetable and you follow it","It''s as long as possible","It covers every day with no breaks","It''s in a table"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aistu-m02-q5', 0, 'A realistic plan you follow beats a perfect one you don''t.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Research with AI: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('aistu-m03-check', 'chatgpt-for-students', 'module', 'aistu-m03', 'Research with AI: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aistu-m03-q1', 'aistu-m03-check', 1, 'What is AI best used for in research?', '["As your source","As a starting point: an overview and search terms","To provide references to cite","To decide what''s true"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aistu-m03-q1', 1, 'AI points you to the research; it doesn''t replace it.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aistu-m03-q2', 'aistu-m03-check', 2, 'An AI gives you three references. What must you do?', '["Cite them straight away","Find and open each one yourself to check it exists and says what you claim","Ask the AI if they''re real","Use only the first one"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aistu-m03-q2', 1, 'AI can invent realistic-looking references.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aistu-m03-q3', 'aistu-m03-check', 3, 'Where should you search for academic articles?', '["Google Scholar or your school library","Only in the AI chat","Social media comments","Random blogs"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aistu-m03-q3', 0, 'Scholarly databases and libraries hold real, citable sources.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aistu-m03-q4', 'aistu-m03-check', 4, 'An assistant searches the web and shows links. What''s still wise?', '["Open the links and check the pages say what the summary claims","Nothing, links are always correct","Remove the links","Only read the summary"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aistu-m03-q4', 0, 'Summaries can misstate what a page says.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aistu-m03-q5', 'aistu-m03-check', 5, 'What''s a good way to use AI on a real article you''ve found?', '["Ask it to summarise the argument, evidence and limitations, then read key parts yourself","Ask it to rewrite the article as your essay","Ask it to invent more articles","Skip reading completely"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aistu-m03-q5', 0, 'The summary saves time; you still read and understand.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Writing with AI: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('aistu-m04-check', 'chatgpt-for-students', 'module', 'aistu-m04', 'Writing with AI: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aistu-m04-q1', 'aistu-m04-check', 1, 'Which use of AI keeps the writing yours?', '["Write my essay on climate change.","Here''s my draft paragraph. What''s unclear?","Write 2,000 words I can submit.","Paraphrase this article so it''s not detected."]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aistu-m04-q1', 1, 'You write; the AI gives feedback.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aistu-m04-q2', 'aistu-m04-check', 2, 'Why ask for a list of problems instead of a rewrite?', '["You learn from fixing them, and the writing stays yours","Lists are shorter","AI can''t rewrite","It''s required"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aistu-m04-q2', 0, 'Fixing the problems yourself makes you a better writer.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aistu-m04-q3', 'aistu-m04-check', 3, 'What should you ask AI for before you start writing?', '["A structure for your own position and points","The finished essay","Random quotes","A word count"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aistu-m04-q3', 0, 'An outline of your own ideas makes writing easier.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aistu-m04-q4', 'aistu-m04-check', 4, 'What can make writing sound AI-generated?', '["Your own examples","Generic phrasing and words like ''delve'' in every paragraph","Short sentences","Clear headings"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aistu-m04-q4', 1, 'Your own voice and examples are more convincing.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aistu-m04-q5', 'aistu-m04-check', 5, 'Your course allows AI but asks you to declare it. What do you write?', '["Nothing","A short, honest note on how you used it","That you didn''t use it","The AI''s full chat history only"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aistu-m04-q5', 1, 'For example: ''I used ChatGPT to suggest a structure and check grammar.''')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: ChatGPT for Students: final assessment
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('chatgpt-for-students-final', 'chatgpt-for-students', 'final', null, 'ChatGPT for Students: final assessment', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aistu-f01', 'chatgpt-for-students-final', 1, 'Why can AI assistants give wrong answers confidently?', '["They predict likely text rather than look up verified facts","They are always connected to your school","They are slow","They only speak English"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aistu-f01', 0, 'Prediction from patterns can produce plausible but false answers.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aistu-f02', 'chatgpt-for-students-final', 2, 'What''s the first thing to check before using AI on graded work?', '["Your course''s rules on AI","Your internet speed","The AI''s version","Your word count"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aistu-f02', 0, 'Rules differ between schools and lecturers.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aistu-f03', 'chatgpt-for-students-final', 3, 'Which study technique helps you remember most?', '["Rereading notes many times","Being quizzed and answering before you see the answers","Highlighting everything","Reading AI summaries only"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aistu-f03', 1, 'Testing yourself beats rereading.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aistu-f04', 'chatgpt-for-students-final', 4, 'Which prompt is best for learning?', '["Solve this for me.","Explain this topic at my level, then ask me three questions and wait for my answers.","Tell me everything.","Write my notes."]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aistu-f04', 1, 'Level, explanation and a quiz make it active learning.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aistu-f05', 'chatgpt-for-students-final', 5, 'An AI suggests a reference for your essay. What do you do?', '["Find and read the real source before citing it","Cite it immediately","Cite the AI instead","Change the author''s name"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aistu-f05', 0, 'AI references can be invented.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aistu-f06', 'chatgpt-for-students-final', 6, 'Where should your citations come from?', '["Sources you''ve found and read yourself","The AI''s answer","Your friend''s essay","The first search result"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aistu-f06', 0, 'You cite real sources you''ve checked.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aistu-f07', 'chatgpt-for-students-final', 7, 'Which is an honest use of AI in writing?', '["Getting feedback on your own draft","Submitting an AI-written essay as your own","Using AI to disguise copied text","Letting AI write your exam answers"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aistu-f07', 0, 'Feedback on your own work keeps it yours.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aistu-f08', 'chatgpt-for-students-final', 8, 'If you can''t explain something you submitted, what does that suggest?', '["You haven''t really learned it yet","It''s excellent work","The AI was wrong","Nothing"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aistu-f08', 0, 'Being able to explain it shows you understand it.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Search Like a Pro: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('rsrch-m01-check', 'research-skills-for-students', 'module', 'rsrch-m01', 'Search Like a Pro: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('rsrch-m01-q1', 'rsrch-m01-check', 1, 'Which search is likely to work best?', '["What are the effects of youth unemployment in Nigeria?","youth unemployment Nigeria effects","unemployment","please help me find information"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('rsrch-m01-q1', 1, 'Search engines match key words, not whole questions.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('rsrch-m01-q2', 'rsrch-m01-check', 2, 'What does putting words in "quotes" do on Google?', '["Searches for that exact phrase","Removes those words","Searches images only","Translates them"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('rsrch-m01-q2', 0, 'Quotes find the exact phrase.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('rsrch-m01-q3', 'rsrch-m01-check', 3, 'Which search finds PDFs about SMEs only on Nigerian government websites?', '["SME pdf government","SME site:.gov.ng filetype:pdf","SME -pdf","\"SME government pdf\""]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('rsrch-m01-q3', 1, 'site: limits the website; filetype: limits the file type.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('rsrch-m01-q4', 'rsrch-m01-check', 4, 'Where should you search for journal articles?', '["Google Scholar or your school library portal","Instagram","WhatsApp groups","Online shops"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('rsrch-m01-q4', 0, 'They search academic sources.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('rsrch-m01-q5', 'rsrch-m01-check', 5, 'In Google Scholar, what does ''Cited by'' help you find?', '["Newer work that builds on the article","The author''s phone number","Cheaper books","Images"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('rsrch-m01-q5', 0, 'It lists later papers that cite this one.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Judge Your Sources: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('rsrch-m02-check', 'research-skills-for-students', 'module', 'rsrch-m02', 'Judge Your Sources: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('rsrch-m02-q1', 'rsrch-m02-check', 1, 'Which source is usually strongest for an assignment?', '["A peer-reviewed journal article","An anonymous blog","A viral WhatsApp message","A social media comment"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('rsrch-m02-q1', 0, 'Peer-reviewed work has been checked by experts.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('rsrch-m02-q2', 'rsrch-m02-check', 2, 'What is ''lateral reading''?', '["Opening new tabs to check what others say about a source or claim","Reading faster","Reading only the first line","Reading sideways on your phone"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('rsrch-m02-q2', 0, 'Fact-checkers judge a source by what reliable others say about it.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('rsrch-m02-q3', 'rsrch-m02-check', 3, 'A statistic appears with no link to where it came from. What should you do?', '["Trace it back to the original source before using it","Use it anyway","Round it up","Share it"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('rsrch-m02-q3', 0, 'Unsourced statistics are easy to get wrong or fake.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('rsrch-m02-q4', 'rsrch-m02-check', 4, 'Which is a red flag?', '["A named author and date","No author, no date and no sources","References at the end","A university website"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('rsrch-m02-q4', 1, 'Missing author, date and sources are warning signs.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('rsrch-m02-q5', 'rsrch-m02-check', 5, 'What does the ''T'' in SIFT stand for?', '["Trace claims to the original","Type faster","Trust the headline","Translate"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('rsrch-m02-q5', 0, 'Stop, Investigate the source, Find better coverage, Trace claims.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Cite and Organise: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('rsrch-m03-check', 'research-skills-for-students', 'module', 'rsrch-m03', 'Cite and Organise: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('rsrch-m03-q1', 'rsrch-m03-check', 1, 'When must you cite a source?', '["When you use someone''s words, ideas or data","Only when you quote exactly","Never, if you change a few words","Only in exams"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('rsrch-m03-q1', 0, 'Ideas and data need citing too, even in your own words.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('rsrch-m03-q2', 'rsrch-m03-check', 2, 'What is plagiarism?', '["Presenting someone else''s words or ideas as your own","Citing too many sources","Using a reference manager","Writing a summary"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('rsrch-m03-q2', 0, 'It can happen by accident, so good habits matter.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('rsrch-m03-q3', 'rsrch-m03-check', 3, 'Which is a proper paraphrase?', '["Changing two words of a sentence","Expressing the idea in your own words and structure, with a citation","Copying without quotes","Deleting the citation"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('rsrch-m03-q3', 1, 'A paraphrase is genuinely your own wording, and still cited.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('rsrch-m03-q4', 'rsrch-m03-check', 4, 'What does a reference manager like Zotero do?', '["Saves sources and formats citations for you","Writes your essay","Checks your grammar","Finds free phones"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('rsrch-m03-q4', 0, 'It stores sources and builds citations in your style.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('rsrch-m03-q5', 'rsrch-m03-check', 5, 'Which referencing style should you use?', '["The one your department specifies","Any style you like","No style","A different style for each source"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('rsrch-m03-q5', 0, 'Follow your department''s style guide exactly.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Research Skills for Students: final assessment
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('research-skills-for-students-final', 'research-skills-for-students', 'final', null, 'Research Skills for Students: final assessment', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('rsrch-f01', 'research-skills-for-students-final', 1, 'Which operator limits results to one website or domain?', '["site:","filetype:","OR","\"quotes\""]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('rsrch-f01', 0, 'site: restricts results to a domain.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('rsrch-f02', 'research-skills-for-students-final', 2, 'Why try synonyms when searching?', '["Different words find different sources","Search engines require them","It makes results shorter","It''s faster to type"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('rsrch-f02', 0, 'Experts may use other terms for the same idea.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('rsrch-f03', 'research-skills-for-students-final', 3, 'Which is the most reliable source of official Nigerian statistics?', '["The National Bureau of Statistics","A viral tweet","A random blog","A forwarded message"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('rsrch-f03', 0, 'Get statistics from the organisation that produces them.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('rsrch-f04', 'research-skills-for-students-final', 4, 'What should you check about any source?', '["Who wrote it, where it''s published, when, why and what evidence it uses","Only its colours","Only the headline","How many likes it has"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('rsrch-f04', 0, 'Those five checks reveal most weak sources.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('rsrch-f05', 'research-skills-for-students-final', 5, 'A headline is designed to make you angry and has no sources. What''s the best reaction?', '["Check it against reliable coverage before believing or sharing it","Share it immediately","Believe it because it''s shocking","Quote it in your essay"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('rsrch-f05', 0, 'Emotional headlines with no sources are red flags.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('rsrch-f06', 'research-skills-for-students-final', 6, 'You use a statistic from a report, in your own words. Do you cite it?', '["Yes, data always needs a citation","No, because it''s in your own words","Only if it''s a quote","Only in the reference list"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('rsrch-f06', 0, 'Data and ideas need citing even when paraphrased.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('rsrch-f07', 'research-skills-for-students-final', 7, 'Which pair makes up a citation in APA or Harvard?', '["An in-text citation and a reference-list entry","A footnote and a photo","A hashtag and a link","A title and a page colour"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('rsrch-f07', 0, 'Both styles use in-text citations plus a reference list.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('rsrch-f08', 'research-skills-for-students-final', 8, 'When should you build your reference list?', '["As you research and write","The night before the deadline","After submitting","Never"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('rsrch-f08', 0, 'Saving sources as you go avoids lost references and accidental plagiarism.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Plan Your Portfolio: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('portf-m01-check', 'build-your-student-portfolio', 'module', 'portf-m01', 'Plan Your Portfolio: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('portf-m01-q1', 'portf-m01-check', 1, 'What does a portfolio do that a skills list on a CV doesn''t?', '["It shows real work as proof of your skills","It makes the CV longer","It replaces your name","It lists your hobbies"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('portf-m01-q1', 0, 'A portfolio shows what you can do instead of just saying it.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('portf-m01-q2', 'portf-m01-check', 2, 'How many projects should you start with?', '["Your best three","Every assignment you''ve ever done","None","At least twenty"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('portf-m01-q2', 0, 'Three strong pieces beat many weak ones.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('portf-m01-q3', 'portf-m01-check', 3, 'Which project description is strongest?', '["Made a spreadsheet","Built an Excel tracker that cut class dues reconciliation from two hours to ten minutes","Did some Excel work","Spreadsheet project"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('portf-m01-q3', 1, 'It states the problem solved and the result.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('portf-m01-q4', 'portf-m01-check', 4, 'What are the four parts of each project summary?', '["Problem, what I did, result, link","Name, age, hobby, photo","Title, colour, font, size","Price, date, place, time"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('portf-m01-q4', 0, 'The same four parts work on a page, on LinkedIn and in interviews.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('portf-m01-q5', 'portf-m01-check', 5, 'What should you decide before building a portfolio?', '["Who it''s for","Which font to use","How many pages to make","Which phone to buy"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('portf-m01-q5', 0, 'Your audience shapes what you include.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Show Your Work: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('portf-m02-check', 'build-your-student-portfolio', 'module', 'portf-m02', 'Show Your Work: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('portf-m02-q1', 'portf-m02-check', 1, 'What should lead each project?', '["A clear screenshot of the result","A long paragraph","Your phone number","A photo of your laptop screen"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('portf-m02-q1', 0, 'Reviewers see the picture first.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('portf-m02-q2', 'portf-m02-check', 2, 'Which file name is best?', '["final final 2.pdf","Kolanut-sales-dashboard.pdf","document1.pdf","untitled.pdf"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('portf-m02-q2', 1, 'Clear names look professional and are easy to find.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('portf-m02-q3', 'portf-m02-check', 3, 'How should you test a shared Drive link?', '["Open it in a private browser window","Assume it works","Only open it on your own account","Email it to yourself"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('portf-m02-q3', 0, 'A private window shows what others see, including sign-in prompts.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('portf-m02-q4', 'portf-m02-check', 4, 'What access should a portfolio link usually give?', '["View only","Edit","Owner","No access"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('portf-m02-q4', 0, 'View-only stops others changing your work.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('portf-m02-q5', 'portf-m02-check', 5, 'You want to show internship work that''s confidential. What should you do?', '["Recreate it with made-up data and say so","Post the original files","Share your manager''s login","Screenshot client names"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('portf-m02-q5', 0, 'Never publish confidential work; recreate it safely.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Build Your Portfolio Page: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('portf-m03-check', 'build-your-student-portfolio', 'module', 'portf-m03', 'Build Your Portfolio Page: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('portf-m03-q1', 'portf-m03-check', 1, 'What is the main goal of a portfolio page?', '["One link that shows who you are and your best work","A place to store every file","A private diary","A place for adverts"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('portf-m03-q1', 0, 'One link you can put everywhere.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('portf-m03-q2', 'portf-m03-check', 2, 'Which free tool suits most students starting out?', '["Google Sites","A paid web designer","A printed booklet","A spreadsheet"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('portf-m03-q2', 0, 'It''s free, quick and clean.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('portf-m03-q3', 'portf-m03-check', 3, 'Which detail doesn''t need to be on your public portfolio?', '["Your home address","Your name","Your best projects","Your email"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('portf-m03-q3', 0, 'Keep private details private; email and LinkedIn are enough.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('portf-m03-q4', 'portf-m03-check', 4, 'What''s a good test before sharing your page?', '["Open it in a private window on your phone and click every link","Only look at it on your laptop","Share it first and fix later","Check the font"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('portf-m03-q4', 0, 'Most visitors will open it on a phone.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('portf-m03-q5', 'portf-m03-check', 5, 'Where should you add your portfolio link?', '["On your CV and LinkedIn","Nowhere","Only in your email drafts","In a private note"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('portf-m03-q5', 0, 'Put it where reviewers will look.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Share Your Work on LinkedIn: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('portf-m04-check', 'build-your-student-portfolio', 'module', 'portf-m04', 'Share Your Work on LinkedIn: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('portf-m04-q1', 'portf-m04-check', 1, 'Why do the first two lines of a LinkedIn post matter most?', '["LinkedIn shows only those before ''see more''","They''re in bold","They set your profile photo","Only they are searchable"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('portf-m04-q1', 0, 'The hook decides whether people keep reading.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('portf-m04-q2', 'portf-m04-check', 2, 'Which order works well for a post?', '["Hook, story, result, thanks and a question","Hashtags, then a long list of names","A single emoji","Your CV pasted in full"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('portf-m04-q2', 0, 'It''s the shape of most strong posts.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('portf-m04-q3', 'portf-m04-check', 3, 'How many hashtags should you usually use?', '["3–5 relevant ones","20 or more","None ever","Only trending ones"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('portf-m04-q3', 0, 'A few relevant hashtags are enough.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('portf-m04-q4', 'portf-m04-check', 4, 'Your project used practice data from a course. What should the post say?', '["That it''s a course project with practice data","That it''s for a real client","Nothing about it","That you invented the data yourself for a company"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('portf-m04-q4', 0, 'Honesty builds trust.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('portf-m04-q5', 'portf-m04-check', 5, 'How do you share an achievement without bragging?', '["Focus on what you learned and who helped","Only praise yourself","Tag everyone you know","Use all capital letters"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('portf-m04-q5', 0, 'Lessons and stories get more engagement than self-praise.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Build Your Student Portfolio: final assessment
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('build-your-student-portfolio-final', 'build-your-student-portfolio', 'final', null, 'Build Your Student Portfolio: final assessment', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('portf-f01', 'build-your-student-portfolio-final', 1, 'What''s the strongest evidence of a skill for a student with little work experience?', '["A portfolio of real projects","A long skills list","A photo","Your date of birth"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('portf-f01', 0, 'Showing beats telling.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('portf-f02', 'build-your-student-portfolio-final', 2, 'Which counts as portfolio work?', '["Class projects, personal projects, volunteering and course badges","Only paid jobs","Only first-class grades","Nothing before graduation"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('portf-f02', 0, 'Students have more work to show than they think.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('portf-f03', 'build-your-student-portfolio-final', 3, 'What should each project show?', '["The problem, what you did, the result and a link","Only the title","Only the tools","The date you started"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('portf-f03', 0, 'Those four parts tell the whole story quickly.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('portf-f04', 'build-your-student-portfolio-final', 4, 'Before sharing a Drive link publicly, what should you check?', '["It opens without sign-in and doesn''t give edit access","The file is large","It''s in a zip","It has a long name"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('portf-f04', 0, 'View-only and publicly viewable is what you want.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('portf-f05', 'build-your-student-portfolio-final', 5, 'What should you remove before publishing class work?', '["Other people''s personal details","Your own name","The results","The images"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('portf-f05', 0, 'Protect other people''s privacy.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('portf-f06', 'build-your-student-portfolio-final', 6, 'What should a portfolio page''s header include?', '["Your name, a one-line summary of what you do and a professional photo","Your full CV","A long poem","Your home address"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('portf-f06', 0, 'Visitors should know who you are in seconds.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('portf-f07', 'build-your-student-portfolio-final', 7, 'What makes a LinkedIn post about a project effective?', '["A strong hook, specific details, an image and an honest description","As many hashtags as possible","Vague excitement","Tagging strangers"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('portf-f07', 0, 'Specific, honest and visual posts get read.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('portf-f08', 'build-your-student-portfolio-final', 8, 'Where can students show verifiable CloudTech Academy badges?', '["On their portfolio page and LinkedIn, with the credential link","Nowhere","Only on paper","Only in email"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('portf-f08', 0, 'Each badge has a public credential page anyone can check.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: What Git and GitHub Are: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('git-m01-check', 'git-and-github-for-beginners', 'module', 'git-m01', 'What Git and GitHub Are: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('git-m01-q1', 'git-m01-check', 1, 'What is Git?', '["A tool that tracks changes to files","A social network","A programming language","A cloud spreadsheet"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('git-m01-q1', 0, 'Git is version control: it records the history of your files.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('git-m01-q2', 'git-m01-check', 2, 'What is GitHub?', '["A website that stores Git repositories online","The same thing as Git","A code editor","An email app"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('git-m01-q2', 0, 'GitHub hosts Git projects in the cloud for backup and sharing.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('git-m01-q3', 'git-m01-check', 3, 'What is a commit?', '["A saved snapshot of changes with a message","A deleted file","A GitHub account","A folder on your desktop"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('git-m01-q3', 0, 'Commits are the save points in a project''s history.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('git-m01-q4', 'git-m01-check', 4, 'Which username is most professional?', '["adaeze-okafor","cooldude2005","xXhackerXx","asdfgh"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('git-m01-q4', 0, 'Your username appears in every link you share.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('git-m01-q5', 'git-m01-check', 5, 'What is a README?', '["The front page of a repository that explains it","A list of passwords","A type of commit","A GitHub setting"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('git-m01-q5', 0, 'It tells visitors what the project is.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Your First Repository: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('git-m02-check', 'git-and-github-for-beginners', 'module', 'git-m02', 'Your First Repository: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('git-m02-q1', 'git-m02-check', 1, 'Which repository name is best?', '["sales-analysis","My Project FINAL (2)","asdf","new"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('git-m02-q1', 0, 'Short, clear and hyphenated names work best.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('git-m02-q2', 'git-m02-check', 2, 'Which commit message is strongest?', '["Add revenue by region chart","update","stuff","final"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('git-m02-q2', 0, 'Start with a verb and say what changed.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('git-m02-q3', 'git-m02-check', 3, 'Can you create a repository and commit without installing anything?', '["Yes, on the GitHub website","No, you must install Git first","Only on a Mac","Only with a paid plan"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('git-m02-q3', 0, 'GitHub''s website lets you add, edit and commit files.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('git-m02-q4', 'git-m02-check', 4, 'You accidentally committed a password. What should you do?', '["Change the password straight away","Just delete the file","Rename the repository","Nothing, it''s private"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('git-m02-q4', 0, 'It stays in the history, so the password must be changed.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('git-m02-q5', 'git-m02-check', 5, 'Where can you see every change made to a repository?', '["The commit history","The README","Your profile photo","The Settings page"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('git-m02-q5', 0, 'Commits shows who changed what and when.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Show Your Projects on GitHub: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('git-m03-check', 'git-and-github-for-beginners', 'module', 'git-m03', 'Show Your Projects on GitHub: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('git-m03-q1', 'git-m03-check', 1, 'What does ''push'' do?', '["Sends your commits to GitHub","Deletes your repository","Downloads a file","Creates an account"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('git-m03-q1', 0, 'Push uploads local commits to GitHub.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('git-m03-q2', 'git-m03-check', 2, 'What does ''pull'' do?', '["Brings the latest changes from GitHub to your computer","Sends your changes to GitHub","Removes a file","Renames a branch"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('git-m03-q2', 0, 'Pull before you start work so you have the latest version.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('git-m03-q3', 'git-m03-check', 3, 'What should a good project README include?', '["What it is, what you did, findings, tools and how to see it","Only the project name","Your home address","Nothing"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('git-m03-q3', 0, 'A README should sell the project in a minute.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('git-m03-q4', 'git-m03-check', 4, 'How do you make a profile README?', '["Create a public repo named exactly your username with a README","Edit your bio only","Email GitHub support","Pin six repos"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('git-m03-q4', 0, 'GitHub shows that README at the top of your profile.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('git-m03-q5', 'git-m03-check', 5, 'How many repositories can you pin to your profile?', '["Up to six","One","Unlimited","None"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('git-m03-q5', 0, 'Pin your best six.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Git & GitHub for Beginners: final assessment
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('git-and-github-for-beginners-final', 'git-and-github-for-beginners', 'final', null, 'Git & GitHub for Beginners: final assessment', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('git-f01', 'git-and-github-for-beginners-final', 1, 'What problem does version control solve?', '["Keeping track of every version of your files","Making files smaller","Designing slides","Sending emails"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('git-f01', 0, 'No more project_final_v2_REALLY_final.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('git-f02', 'git-and-github-for-beginners-final', 2, 'Which runs on your computer?', '["Git","GitHub","Both run only in the cloud","Neither"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('git-f02', 0, 'Git runs locally; GitHub is the website.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('git-f03', 'git-and-github-for-beginners-final', 3, 'A project folder tracked by Git is called a…', '["Repository","Commit","Branch","Pin"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('git-f03', 0, 'Repo for short.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('git-f04', 'git-and-github-for-beginners-final', 4, 'Which commit message follows good practice?', '["Fix date format in orders data","fixed","changes","aaaa"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('git-f04', 0, 'Clear verb plus what changed.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('git-f05', 'git-and-github-for-beginners-final', 5, 'Which of these should never go in a repository?', '["API keys and passwords","A README","Python files","Images of charts"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('git-f05', 0, 'Secrets stay in the history forever.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('git-f06', 'git-and-github-for-beginners-final', 6, 'In GitHub Desktop, which button sends commits to GitHub?', '["Push origin","Fetch origin","Clone","Discard changes"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('git-f06', 0, 'Push origin uploads your commits.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('git-f07', 'git-and-github-for-beginners-final', 7, 'Why do employers look at GitHub profiles?', '["They show real projects and how you work","They show your grades","They replace interviews","They list your salary"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('git-f07', 0, 'A GitHub profile works as a portfolio.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('git-f08', 'git-and-github-for-beginners-final', 8, 'To avoid conflicts in a group project, you should…', '["Pull before you start work","Never commit","Share one laptop","Email files instead"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('git-f08', 0, 'Pulling first means you start from the latest version.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: HTML: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('web-m01-check', 'web-development-for-beginners', 'module', 'web-m01', 'HTML: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('web-m01-q1', 'web-m01-check', 1, 'What is HTML for?', '["The structure and content of a page","The colours and fonts","Clicks and interaction","Storing data"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('web-m01-q1', 0, 'HTML is the structure; CSS styles it; JavaScript adds behaviour.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('web-m01-q2', 'web-m01-check', 2, 'Which tag makes a link?', '["<a href=\"…\">","<link>","<p>","<h1>"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('web-m01-q2', 0, 'The a (anchor) tag with href creates a link.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('web-m01-q3', 'web-m01-check', 3, 'What is the alt text on an image for?', '["Describing the image for screen readers and when it doesn''t load","Making it bigger","Adding a border","Linking it"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('web-m01-q3', 0, 'alt makes images accessible.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('web-m01-q4', 'web-m01-check', 4, 'Where does visible page content go?', '["Inside <body>","Inside <head>","Before <!DOCTYPE html>","Inside <title>"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('web-m01-q4', 0, 'The head holds page information; the body holds what you see.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('web-m01-q5', 'web-m01-check', 5, 'How many <h1> headings should a page usually have?', '["One","None","One per paragraph","As many as possible"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('web-m01-q5', 0, 'One main heading, with h2 and below for sections.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: CSS: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('web-m02-check', 'web-development-for-beginners', 'module', 'web-m02', 'CSS: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('web-m02-q1', 'web-m02-check', 1, 'What does CSS control?', '["Style and layout","The page''s text content","Database queries","Web addresses"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('web-m02-q1', 0, 'CSS is the paint and furniture.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('web-m02-q2', 'web-m02-check', 2, 'Which selector targets elements with class="card"?', '[".card","#card","card","*card"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('web-m02-q2', 0, 'A dot selects a class; # selects an id.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('web-m02-q3', 'web-m02-check', 3, 'In the box model, what is padding?', '["Space inside the border","Space outside the border","The text itself","The border line"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('web-m02-q3', 0, 'Padding is inside; margin is outside.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('web-m02-q4', 'web-m02-check', 4, 'What does display: flex with flex-wrap: wrap help with?', '["Placing items side by side and wrapping them on small screens","Changing font colour","Hiding elements","Adding links"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('web-m02-q4', 0, 'Flexbox makes simple responsive layouts.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('web-m02-q5', 'web-m02-check', 5, 'How do you connect style.css to your page?', '["A <link rel=\"stylesheet\" href=\"style.css\"> tag in the head","Rename it index.html","Paste it into the title","Put it in the same folder only"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('web-m02-q5', 0, 'The link tag loads the stylesheet.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: JavaScript: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('web-m03-check', 'web-development-for-beginners', 'module', 'web-m03', 'JavaScript: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('web-m03-q1', 'web-m03-check', 1, 'What does JavaScript add to a page?', '["Behaviour and interaction","The main headings","The fonts","The web address"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('web-m03-q1', 0, 'JavaScript makes pages respond.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('web-m03-q2', 'web-m03-check', 2, 'Where do JavaScript errors appear?', '["In the browser''s Console","In the page title","In the CSS file","Nowhere"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('web-m03-q2', 0, 'Press F12 and open the Console.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('web-m03-q3', 'web-m03-check', 3, 'Which keyword is best for a value that won''t change?', '["const","let","change","var only"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('web-m03-q3', 0, 'Use const for fixed values and let for values that change.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('web-m03-q4', 'web-m03-check', 4, 'What does addEventListener("click", …) do?', '["Runs code when an element is clicked","Deletes the element","Styles the element","Creates a link"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('web-m03-q4', 0, 'It listens for the click event.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('web-m03-q5', 'web-m03-check', 5, 'What''s the usual pattern for interaction?', '["Find an element, listen for an event, change something","Write HTML, delete CSS, reload","Open the console and wait","Copy the page"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('web-m03-q5', 0, 'Most interaction follows those three steps.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Publish Your First Website: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('web-m04-check', 'web-development-for-beginners', 'module', 'web-m04', 'Publish Your First Website: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('web-m04-q1', 'web-m04-check', 1, 'What must your GitHub Pages personal site repository be called?', '["your-username.github.io","website","index.html","my-site"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('web-m04-q1', 0, 'That exact name publishes to your main GitHub Pages address.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('web-m04-q2', 'web-m04-check', 2, 'Where do you turn on GitHub Pages?', '["Settings → Pages","Your profile README","The Commits page","Issues"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('web-m04-q2', 0, 'Choose the main branch and root folder there.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('web-m04-q3', 'web-m04-check', 3, 'What should your home page file be named?', '["index.html","home.htm","Page1.html","main.css"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('web-m04-q3', 0, 'Web servers open index.html by default.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('web-m04-q4', 'web-m04-check', 4, 'An image works on your laptop but not online. What''s the likely cause?', '["The file name''s capitals don''t match","The internet is slow","GitHub blocks images","CSS is missing"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('web-m04-q4', 0, 'Web servers treat Me.jpg and me.jpg as different files.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('web-m04-q5', 'web-m04-check', 5, 'Which of these can also publish a site for free?', '["Netlify","Microsoft Word","WhatsApp","Excel"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('web-m04-q5', 0, 'Netlify and Vercel are popular free options.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Web Development for Beginners: final assessment
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('web-development-for-beginners-final', 'web-development-for-beginners', 'final', null, 'Web Development for Beginners: final assessment', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('web-f01', 'web-development-for-beginners-final', 1, 'Match the language to its job: CSS is for…', '["Style and layout","Structure","Interaction","Hosting"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('web-f01', 0, 'HTML structure, CSS style, JavaScript behaviour.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('web-f02', 'web-development-for-beginners-final', 2, 'Which tag makes a bulleted list item?', '["<li> inside <ul>","<p> inside <h1>","<a> inside <img>","<title>"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('web-f02', 0, 'ul holds li items.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('web-f03', 'web-development-for-beginners-final', 3, 'Which selector targets the element with id="contact"?', '["#contact",".contact","contact","@contact"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('web-f03', 0, '# selects an id.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('web-f04', 'web-development-for-beginners-final', 4, 'What does margin: 0 auto do on a box with a max-width?', '["Centres it horizontally","Hides it","Makes it bold","Adds a border"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('web-f04', 0, 'Automatic left and right margins centre the box.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('web-f05', 'web-development-for-beginners-final', 5, 'Where should you look first when your JavaScript doesn''t work?', '["The browser Console","The page title","Your GitHub profile","The CSS colours"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('web-f05', 0, 'Errors name the file and line.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('web-f06', 'web-development-for-beginners-final', 6, 'What happens when you commit a change to a GitHub Pages site?', '["The live site updates within a few minutes","Nothing ever changes","The site is deleted","You must re-register"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('web-f06', 0, 'Pages republishes on each commit.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('web-f07', 'web-development-for-beginners-final', 7, 'Which file name is safest for the web?', '["profile-photo.jpg","My Photo FINAL.JPG","photo (1).jpeg","Photo#1.jpg"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('web-f07', 0, 'Lowercase, hyphens, no spaces.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('web-f08', 'web-development-for-beginners-final', 8, 'Which free editor is most popular for writing code?', '["Visual Studio Code","Paint","Calculator","Notepad on a phone"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('web-f08', 0, 'VS Code is free and widely used.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: First Steps in Python: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('py-m01-check', 'python-for-beginners', 'module', 'py-m01', 'First Steps in Python: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('py-m01-q1', 'py-m01-check', 1, 'What does print("Hi") do?', '["Shows Hi as output","Saves a file called Hi","Prints on paper","Creates a variable"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('py-m01-q1', 0, 'print() displays output.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('py-m01-q2', 'py-m01-check', 2, 'Which is a valid variable name?', '["first_name","first name","1name","first-name"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('py-m01-q2', 0, 'Use lowercase and underscores; no spaces, hyphens or leading numbers.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('py-m01-q3', 'py-m01-check', 3, 'What type is "Lagos"?', '["str","int","float","bool"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('py-m01-q3', 0, 'Text in quotes is a string.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('py-m01-q4', 'py-m01-check', 4, 'What is 2500 * 4?', '["10000","25004","2504","625"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('py-m01-q4', 0, '* multiplies.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('py-m01-q5', 'py-m01-check', 5, 'What does "5" + "5" give?', '["\"55\"","10","An error","\"10\""]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('py-m01-q5', 0, 'Adding strings joins them.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Decisions, Lists and Loops: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('py-m02-check', 'python-for-beginners', 'module', 'py-m02', 'Decisions, Lists and Loops: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('py-m02-q1', 'py-m02-check', 1, 'Which operator checks whether two values are equal?', '["==","=","!=","=>"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('py-m02-q1', 0, '= assigns; == compares.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('py-m02-q2', 'py-m02-check', 2, 'How does Python know which lines belong inside an if?', '["Indentation","Curly brackets","Semicolons","Line numbers"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('py-m02-q2', 0, 'Indented lines after the colon belong to the block.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('py-m02-q3', 'py-m02-check', 3, 'With courses = ["ECO", "STA", "GST"], what is courses[0]?', '["\"ECO\"","\"STA\"","\"GST\"","An error"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('py-m02-q3', 0, 'Counting starts at 0.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('py-m02-q4', 'py-m02-check', 4, 'What does len([67, 81, 54]) return?', '["3","202","81","54"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('py-m02-q4', 0, 'len counts the items.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('py-m02-q5', 'py-m02-check', 5, 'Which numbers does range(1, 5) produce?', '["1, 2, 3, 4","1, 2, 3, 4, 5","0 to 5","5 only"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('py-m02-q5', 0, 'range stops before the second number.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Functions and a Mini Project: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('py-m03-check', 'python-for-beginners', 'module', 'py-m03', 'Functions and a Mini Project: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('py-m03-q1', 'py-m03-check', 1, 'Which keyword defines a function?', '["def","function","func","define"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('py-m03-q1', 0, 'def grade(score): starts a function.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('py-m03-q2', 'py-m03-check', 2, 'What does return do?', '["Sends a result back from a function","Restarts the program","Prints to the screen","Deletes a variable"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('py-m03-q2', 0, 'The caller receives the returned value.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('py-m03-q3', 'py-m03-check', 3, 'How do you get the name from student = {"name": "Musa"}?', '["student[\"name\"]","student.name()","student[0]","name[student]"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('py-m03-q3', 0, 'Use the key in square brackets.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('py-m03-q4', 'py-m03-check', 4, 'Which loops through a dictionary''s keys and values together?', '["for key, value in d.items():","for d in range():","while d:","for key in d.values():"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('py-m03-q4', 0, '.items() gives each key and value pair.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('py-m03-q5', 'py-m03-check', 5, 'What does sum(spending.values()) calculate?', '["The total of all amounts","The number of items","The largest amount","The first key"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('py-m03-q5', 0, 'It adds up every value.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Python for Beginners: final assessment
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('python-for-beginners-final', 'python-for-beginners', 'final', null, 'Python for Beginners: final assessment', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('py-f01', 'python-for-beginners-final', 1, 'Which free tool runs Python in your browser?', '["Google Colab","Microsoft Paint","Canva","WhatsApp Web"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('py-f01', 0, 'Colab needs only a Google account.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('py-f02', 'python-for-beginners-final', 2, 'What type is 3.75?', '["float","int","str","bool"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('py-f02', 0, 'Decimals are floats.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('py-f03', 'python-for-beginners-final', 3, 'What does f"{name} is {age}" do?', '["Puts the variables'' values inside the text","Creates a file","Prints the letter f","Causes an error"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('py-f03', 0, 'f-strings insert values into text.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('py-f04', 'python-for-beginners-final', 4, 'score = 55. Which branch runs: if score >= 70 … elif score >= 50 … else …?', '["The elif branch","The if branch","The else branch","None of them"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('py-f04', 0, '55 fails the first test and passes the second.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('py-f05', 'python-for-beginners-final', 5, 'What does scores.append(90) do?', '["Adds 90 to the end of the list","Removes 90","Sorts the list","Replaces the first item"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('py-f05', 0, 'append adds one item to the end.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('py-f06', 'python-for-beginners-final', 6, 'Why use a function?', '["To reuse code without repeating it","To make code slower","To store images","To connect to Wi-Fi"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('py-f06', 0, 'Write once, call many times.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('py-f07', 'python-for-beginners-final', 7, 'What is a dictionary?', '["A collection of key: value pairs","A list of numbers only","A type of loop","A Colab setting"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('py-f07', 0, 'Dictionaries map keys to values.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('py-f08', 'python-for-beginners-final', 8, 'What does int("20") return?', '["The number 20","The text \"20\"","An error","20.0 as text"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('py-f08', 0, 'int() converts text to a whole number.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Load and Explore Data: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('pyda-m01-check', 'python-for-data-analysis', 'module', 'pyda-m01', 'Load and Explore Data: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pyda-m01-q1', 'pyda-m01-check', 1, 'Which function loads a CSV file into pandas?', '["pd.read_csv()","pd.open()","pd.load_excel()","print()"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pyda-m01-q1', 0, 'read_csv reads a CSV from a file or web address.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pyda-m01-q2', 'pyda-m01-check', 2, 'What does orders.shape return?', '["The number of rows and columns","The first 5 rows","The column types","The total revenue"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pyda-m01-q2', 0, 'For this dataset it''s (4266, 7).')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pyda-m01-q3', 'pyda-m01-check', 3, 'Which method shows column types and missing values?', '["info()","head()","shape","value_counts()"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pyda-m01-q3', 0, 'info() summarises each column.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pyda-m01-q4', 'pyda-m01-check', 4, 'What does describe() give you?', '["Quick statistics for number columns","A chart","A merged table","A list of files"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pyda-m01-q4', 0, 'Count, mean, min, max and quartiles.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pyda-m01-q5', 'pyda-m01-check', 5, 'How do you select two columns?', '["orders[[\"order_date\", \"quantity\"]]","orders[\"order_date\", \"quantity\"]","orders.order_date.quantity","orders(2)"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pyda-m01-q5', 0, 'Pass a list of names, hence the double brackets.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Clean, Filter and Calculate: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('pyda-m02-check', 'python-for-data-analysis', 'module', 'pyda-m02', 'Clean, Filter and Calculate: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pyda-m02-q1', 'pyda-m02-check', 1, 'Why convert order_date with pd.to_datetime()?', '["So you can sort and group by dates properly","To make the file smaller","To delete old orders","To change the currency"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pyda-m02-q1', 0, 'Text dates can''t be grouped by month or year reliably.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pyda-m02-q2', 'pyda-m02-check', 2, 'How is revenue calculated in this dataset?', '["quantity × unit_price × (1 − discount_pct/100)","quantity + unit_price","unit_price − discount_pct","quantity × discount_pct"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pyda-m02-q2', 0, 'Price times quantity, less the discount.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pyda-m02-q3', 'pyda-m02-check', 3, 'Which keeps only rows where quantity is at least 20?', '["orders[orders[\"quantity\"] >= 20]","orders[\"quantity\"] = 20","orders.head(20)","orders.sort_values(20)"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pyda-m02-q3', 0, 'A condition inside square brackets filters rows.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pyda-m02-q4', 'pyda-m02-check', 4, 'How do you combine two filter conditions with ''and''?', '["(cond1) & (cond2)","cond1 and cond2 without brackets","cond1 + cond2","cond1, cond2"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pyda-m02-q4', 0, 'Use & with brackets around each condition.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pyda-m02-q5', 'pyda-m02-check', 5, 'What does orders.isna().sum() show?', '["Missing values in each column","Total revenue","Duplicate rows","The number of columns"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pyda-m02-q5', 0, 'It counts missing values per column.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Group, Join and Chart: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('pyda-m03-check', 'python-for-data-analysis', 'module', 'pyda-m03', 'Group, Join and Chart: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pyda-m03-q1', 'pyda-m03-check', 1, 'What is groupby most like in Excel?', '["A pivot table","A chart title","Conditional formatting","Freeze panes"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pyda-m03-q1', 0, 'Both summarise values by group.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pyda-m03-q2', 'pyda-m03-check', 2, 'Why do you need merge in this course?', '["To bring product and customer details into the orders table","To delete columns","To sort by date","To make charts"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pyda-m03-q2', 0, 'Orders only store IDs; merge adds names, categories and regions.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pyda-m03-q3', 'pyda-m03-check', 3, 'Which region brings in the most revenue?', '["Lagos","South East","North Central","South South"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pyda-m03-q3', 0, 'Lagos brings in about half of all revenue.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pyda-m03-q4', 'pyda-m03-check', 4, 'Which chart suits a trend over time?', '["A line chart","A pie chart","A table","A horizontal bar chart"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pyda-m03-q4', 0, 'Lines show change over time.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pyda-m03-q5', 'pyda-m03-check', 5, 'Why does 2026 revenue look smaller than 2025?', '["The data stops at the end of June 2026","Sales collapsed","A column is missing","Revenue was calculated wrongly"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pyda-m03-q5', 0, 'Always check the date range before comparing periods.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Python for Data Analysis: final assessment
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('python-for-data-analysis-final', 'python-for-data-analysis', 'final', null, 'Python for Data Analysis: final assessment', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pyda-f01', 'python-for-data-analysis-final', 1, 'What is a pandas DataFrame?', '["A table with rows and named columns","A chart","A type of loop","A Colab notebook"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pyda-f01', 0, 'DataFrames are pandas'' tables.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pyda-f02', 'python-for-data-analysis-final', 2, 'Which shows the first 5 rows?', '["orders.head()","orders.tail()","orders.shape","orders.info()"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pyda-f02', 0, 'head() shows the first rows; tail() the last.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pyda-f03', 'python-for-data-analysis-final', 3, 'Which counts how often each value appears in a column?', '["value_counts()","sum()","describe()","merge()"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pyda-f03', 0, 'Useful for categories like discount_pct.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pyda-f04', 'python-for-data-analysis-final', 4, 'How do you add a new column?', '["orders[\"revenue\"] = …","orders.add(\"revenue\")","new orders.revenue","orders + revenue"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pyda-f04', 0, 'Assign to a new column name.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pyda-f05', 'python-for-data-analysis-final', 5, 'Which sorts the biggest revenue first?', '["sort_values(\"revenue\", ascending=False)","sort_values(\"revenue\")","groupby(\"revenue\")","head(\"revenue\")"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pyda-f05', 0, 'ascending=False puts largest first.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pyda-f06', 'python-for-data-analysis-final', 6, 'What does sales.groupby("category")["revenue"].sum() give?', '["Total revenue for each category","The number of categories","Revenue for one order","A merged table"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pyda-f06', 0, 'Group, pick a column, then summarise.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pyda-f07', 'python-for-data-analysis-final', 7, 'Which category had the highest revenue?', '["Household","Snacks","Beverages","Personal care"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pyda-f07', 0, 'Household led with about ₦244.8 million.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pyda-f08', 'python-for-data-analysis-final', 8, 'What turns a notebook into a portfolio project?', '["Clear text explaining findings, shared via GitHub or a link","More code with no comments","Deleting the charts","Keeping it private"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pyda-f08', 0, 'Explain what you found in plain words and share it.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Files and Cloud Storage: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('digi-m01-check', 'digital-skills-for-students', 'module', 'digi-m01', 'Files and Cloud Storage: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('digi-m01-q1', 'digi-m01-check', 1, 'Which file name is best?', '["ECO201-assignment-2-demand-curves.docx","Document1.docx","final final.docx","new.docx"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('digi-m01-q1', 0, 'It says what the file is without opening it.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('digi-m01-q2', 'digi-m01-check', 2, 'Why write dates as YYYY-MM-DD in file names?', '["So files sort in date order","It looks nicer","It''s required by Windows","To make names shorter"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('digi-m01-q2', 0, 'Year first sorts correctly.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('digi-m01-q3', 'digi-m01-check', 3, 'What is the main benefit of cloud storage?', '["Your files survive if your device is lost","Files open faster offline","It makes files smaller","It removes viruses"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('digi-m01-q3', 0, 'A copy is kept online.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('digi-m01-q4', 'digi-m01-check', 4, 'What access should you usually give when sharing a file?', '["Viewer","Editor","Owner","Public editor"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('digi-m01-q4', 0, 'Give edit access only when needed.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('digi-m01-q5', 'digi-m01-check', 5, 'How should you send a very large file?', '["Share a cloud link","Split it into 50 emails","Print it","Rename it"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('digi-m01-q5', 0, 'Links avoid attachment limits.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Google Workspace for Students: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('digi-m02-check', 'digital-skills-for-students', 'module', 'digi-m02', 'Google Workspace for Students: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('digi-m02-q1', 'digi-m02-check', 1, 'Which Docs mode shows your edits as suggestions the owner can accept?', '["Suggesting","Viewing","Editing","Printing"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('digi-m02-q1', 0, 'Suggesting mode tracks proposed changes.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('digi-m02-q2', 'digi-m02-check', 2, 'How do you assign a task to someone in a Docs comment?', '["Type @ and their name","Use bold text","Change the font colour","Email them separately"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('digi-m02-q2', 0, 'Mentioning someone assigns and notifies them.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('digi-m02-q3', 'digi-m02-check', 3, 'Where can you see who wrote what in a Google Doc?', '["Version history","Page setup","Word count","Explore"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('digi-m02-q3', 0, 'File → Version history.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('digi-m02-q4', 'digi-m02-check', 4, 'Which tool is best for collecting survey responses?', '["Google Forms","Google Slides","Google Calendar","Google Docs"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('digi-m02-q4', 0, 'Forms collects answers into a Sheet.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('digi-m02-q5', 'digi-m02-check', 5, 'How do you add your weekly lectures to Google Calendar?', '["As recurring events that repeat weekly","One event for the whole semester","In a Google Doc","As a Form"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('digi-m02-q5', 0, 'Set Repeat weekly.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Professional Email: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('digi-m03-check', 'digital-skills-for-students', 'module', 'digi-m03', 'Professional Email: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('digi-m03-q1', 'digi-m03-check', 1, 'Which subject line is best?', '["ECO 201 – Request for extension on Assignment 2","Hello","Urgent!!!","(no subject)"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('digi-m03-q1', 0, 'Specific subjects get opened and answered.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('digi-m03-q2', 'digi-m03-check', 2, 'Which email address is most professional?', '["amaka.obi@gmail.com","sweetgirl2004@gmail.com","bigboss_king@yahoo.com","xoxo@gmail.com"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('digi-m03-q2', 0, 'Use your name.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('digi-m03-q3', 'digi-m03-check', 3, 'Which greeting suits an email to a lecturer?', '["Dear Dr Adewale,","Hey!","Yo sir","Hi dear"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('digi-m03-q3', 0, 'Formal emails need a formal greeting.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('digi-m03-q4', 'digi-m03-check', 4, 'You haven''t had a reply. When should you follow up?', '["After three to five working days","After one hour","Never","Every day until they reply"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('digi-m03-q4', 0, 'Give people time, then send a short, polite follow-up.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('digi-m03-q5', 'digi-m03-check', 5, 'Which is good email practice?', '["One topic per email and checking attachments","Writing ''pls'' and ''u''","Very long paragraphs","No sign-off"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('digi-m03-q5', 0, 'Clear, brief and polite.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Stay Safe Online: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('digi-m04-check', 'digital-skills-for-students', 'module', 'digi-m04', 'Stay Safe Online: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('digi-m04-q1', 'digi-m04-check', 1, 'Which password is strongest?', '["Jollof-Rice-At-Eight-Tonight!","Tunde1234","password","12345678"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('digi-m04-q1', 0, 'Long passphrases are strong and memorable.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('digi-m04-q2', 'digi-m04-check', 2, 'Someone claiming to be from your bank asks for the OTP you just received. What do you do?', '["Refuse; never share verification codes","Share it quickly","Share half of it","Send it by email instead"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('digi-m04-q2', 0, 'No genuine organisation asks for your OTP.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('digi-m04-q3', 'digi-m04-check', 3, 'Which account should you secure with two-step verification first?', '["Your email","A game account","A news site","A shopping wishlist"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('digi-m04-q3', 0, 'Email can reset your other accounts.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('digi-m04-q4', 'digi-m04-check', 4, 'A ''scholarship'' asks you to pay ₦5,000 to process your award. This is most likely…', '["A scam","A normal fee","A government requirement","A bank charge"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('digi-m04-q4', 0, 'Genuine scholarships don''t ask winners to pay.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('digi-m04-q5', 'digi-m04-check', 5, 'Why should you never reuse passwords?', '["If one site is hacked, attackers try it everywhere","Sites don''t allow it","It slows your phone","It uses more data"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('digi-m04-q5', 0, 'Reuse spreads one breach to all your accounts.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Digital Skills for Students: final assessment
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('digital-skills-for-students-final', 'digital-skills-for-students', 'final', null, 'Digital Skills for Students: final assessment', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('digi-f01', 'digital-skills-for-students-final', 1, 'Why put the course code first in file names?', '["So files for the same course sort together","It''s required by Google","It makes files smaller","It hides the file"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('digi-f01', 0, 'Consistent names sort neatly.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('digi-f02', 'digital-skills-for-students-final', 2, 'How much free storage does a Google account include?', '["15 GB","1 GB","100 GB","Unlimited"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('digi-f02', 0, 'Shared between Drive, Gmail and Photos.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('digi-f03', 'digital-skills-for-students-final', 3, 'What does linking a Google Form to Sheets do?', '["Puts every response in a spreadsheet","Deletes responses","Sends the form by SMS","Prints the form"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('digi-f03', 0, 'Responses → Link to Sheets.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('digi-f04', 'digital-skills-for-students-final', 4, 'What should the opening line of an email to someone who doesn''t know you say?', '["Who you are","Your favourite colour","An apology for existing","Nothing"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('digi-f04', 0, 'Introduce yourself briefly.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('digi-f05', 'digital-skills-for-students-final', 5, 'What is phishing?', '["A fake message trying to steal your details or money","A way to back up files","A type of email signature","A Google tool"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('digi-f05', 0, 'Watch for urgency, odd links and requests for codes.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('digi-f06', 'digital-skills-for-students-final', 6, 'A friend messages asking for money urgently, which is unusual. What should you do?', '["Call them to check it''s really them","Send it immediately","Share your PIN","Forward it to everyone"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('digi-f06', 0, 'Their account may have been hacked.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('digi-f07', 'digital-skills-for-students-final', 7, 'Which should you avoid posting publicly?', '["Your home address and travel plans","A project you''re proud of","Your course badge","A LinkedIn article"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('digi-f07', 0, 'Protect personal details.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('digi-f08', 'digital-skills-for-students-final', 8, 'What does a password manager do?', '["Stores strong, unique passwords for you","Shares your passwords with friends","Makes all passwords the same","Turns off two-step verification"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('digi-f08', 0, 'You only need to remember one strong password.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Get Ready for an Internship: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('intern-m01-check', 'get-your-first-internship', 'module', 'intern-m01', 'Get Ready for an Internship: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('intern-m01-q1', 'intern-m01-check', 1, 'What does SIWES stand for?', '["Students Industrial Work Experience Scheme","Student Internship and Work Education Service","School Industry Work Exchange System","Summer Internship Work Experience Scheme"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('intern-m01-q1', 0, 'It''s run with the Industrial Training Fund (ITF).')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('intern-m01-q2', 'intern-m01-check', 2, 'Who usually finds the SIWES placement organisation?', '["The student","The ITF","The lecturer","The bank"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('intern-m01-q2', 0, 'Start looking two to three months early.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('intern-m01-q3', 'intern-m01-check', 3, 'What do employers mainly look for in students?', '["Willingness to learn, reliability and communication","Ten years of experience","A first-class degree only","A car"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('intern-m01-q3', 0, 'They don''t expect experience from students.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('intern-m01-q4', 'intern-m01-check', 4, 'Which CV file name is best?', '["CV-Firstname-Lastname.pdf","CV.pdf","document.docx","myCV(3).doc"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('intern-m01-q4', 0, 'It stands out among hundreds of CV.pdf files.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('intern-m01-q5', 'intern-m01-check', 5, 'How often should you fill in your SIWES logbook?', '["Every day or week","Once at the end","Never","Only if asked"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('intern-m01-q5', 0, 'It''s assessed, so keep it up to date.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Find Opportunities: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('intern-m02-check', 'get-your-first-internship', 'module', 'intern-m02', 'Find Opportunities: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('intern-m02-q1', 'intern-m02-check', 1, 'An ''internship'' asks you to pay a ₦15,000 training fee. What is it most likely?', '["A scam","A normal requirement","A government levy","A bank charge"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('intern-m02-q1', 0, 'Genuine employers pay you, not the other way round.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('intern-m02-q2', 'intern-m02-check', 2, 'How can you find remote internships on LinkedIn?', '["Use the Remote filter in LinkedIn Jobs","Only through WhatsApp","You can''t","By changing your photo"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('intern-m02-q2', 0, 'Filter by Remote.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('intern-m02-q3', 'intern-m02-check', 3, 'A small business doesn''t advertise internships. What can you do?', '["Email them a short, polite enquiry","Assume they won''t take interns","Visit without warning every day","Post about them online"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('intern-m02-q3', 0, 'Many small businesses take keen students who ask.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('intern-m02-q4', 'intern-m02-check', 4, 'Which is a warning sign of a fake offer?', '["An offer with no interview, from a free email address","An interview on video","A clear job description","A company LinkedIn page"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('intern-m02-q4', 0, 'Real employers interview candidates and use company email.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('intern-m02-q5', 'intern-m02-check', 5, 'What should you never share with a recruiter?', '["Your BVN, PIN or OTP","Your CV","Your portfolio link","Your LinkedIn"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('intern-m02-q5', 0, 'No legitimate employer needs these.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Apply and Stand Out: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('intern-m03-check', 'get-your-first-internship', 'module', 'intern-m03', 'Apply and Stand Out: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('intern-m03-q1', 'intern-m03-check', 1, 'Which approach usually works better?', '["Ten tailored applications","100 identical applications","One application a year","Only applying to big companies"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('intern-m03-q1', 0, 'Tailored applications get more responses.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('intern-m03-q2', 'intern-m03-check', 2, 'How long should an internship cover letter be?', '["Under 200 words","Three pages","One line","As long as possible"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('intern-m03-q2', 0, 'Short letters get read.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('intern-m03-q3', 'intern-m03-check', 3, 'How do you tailor your CV to an advert?', '["Match its skills and tools where true, and lead with relevant work","Copy the advert into your CV","Add skills you don''t have","Change your name"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('intern-m03-q3', 0, 'Relevant and honest.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('intern-m03-q4', 'intern-m03-check', 4, 'What''s the best use of AI tools for a cover letter?', '["Drafting and polishing, then rewriting in your own voice and checking facts","Sending whatever it writes","Inventing experience","Never reading it"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('intern-m03-q4', 0, 'Recruiters notice generic AI-sounding letters.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('intern-m03-q5', 'intern-m03-check', 5, 'When should you follow up on an application?', '["After about two weeks, once, politely","The next morning","Every day","Never"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('intern-m03-q5', 0, 'One short follow-up, then move on.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Ace the Interview: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('intern-m04-check', 'get-your-first-internship', 'module', 'intern-m04', 'Ace the Interview: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('intern-m04-q1', 'intern-m04-check', 1, 'What does STAR stand for?', '["Situation, Task, Action, Result","Skills, Talent, Ability, Results","Start, Try, Act, Repeat","Story, Topic, Answer, Review"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('intern-m04-q1', 0, 'A structure for ''tell me about a time…'' answers.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('intern-m04-q2', 'intern-m04-check', 2, 'In the Action part of STAR, you should say…', '["What you did, using ''I''","What the team did, using ''we'' only","What you wish happened","Nothing"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('intern-m04-q2', 0, 'Interviewers want your contribution.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('intern-m04-q3', 'intern-m04-check', 3, 'How long should ''Tell me about yourself'' take?', '["About 60 seconds","Ten minutes","Five seconds","As long as possible"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('intern-m04-q3', 0, 'A short summary of studies, skills and why this role.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('intern-m04-q4', 'intern-m04-check', 4, 'In an online interview, where should you look when speaking?', '["At the camera","At your own video","At your phone","Away from the screen"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('intern-m04-q4', 0, 'It looks like eye contact.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('intern-m04-q5', 'intern-m04-check', 5, 'What should you do after an interview?', '["Send a short thank-you email the same day","Call them hourly","Nothing","Post about it with their names"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('intern-m04-q5', 0, 'It''s polite and keeps you memorable.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Get Your First Internship: final assessment
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('get-your-first-internship-final', 'get-your-first-internship', 'final', null, 'Get Your First Internship: final assessment', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('intern-f01', 'get-your-first-internship-final', 1, 'Which is a benefit of an internship?', '["Experience, references and sometimes a job offer","A guaranteed first-class degree","No more exams","Free data forever"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('intern-f01', 0, 'Internships build experience and contacts.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('intern-f02', 'get-your-first-internship-final', 2, 'When should you start looking for a SIWES placement?', '["Two to three months before it begins","The day before","After it ends","In your first week of school"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('intern-f02', 0, 'Good placements go early.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('intern-f03', 'get-your-first-internship-final', 3, 'Which is a good place to find Nigerian internships?', '["LinkedIn Jobs and job boards like Jobberman","Random Instagram DMs","Chain messages","Pop-up ads"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('intern-f03', 0, 'Use established sources and check every offer.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('intern-f04', 'get-your-first-internship-final', 4, 'Which offer should you walk away from?', '["One that pays ₦300,000 weekly for vague data entry","One with a clear role and interview","A school-arranged placement","A company career page listing"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('intern-f04', 0, 'Too good to be true usually is.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('intern-f05', 'get-your-first-internship-final', 5, 'What are the three parts of a short cover letter?', '["Why this role, matching examples, thanks and close","Your life story, hobbies, family","Salary, leave, bonus","Greeting only"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('intern-f05', 0, 'Keep it focused.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('intern-f06', 'get-your-first-internship-final', 6, 'Why track your applications in a sheet?', '["So you know what you applied for and when to follow up","Employers require it","To share it publicly","It isn''t useful"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('intern-f06', 0, 'Nothing slips through.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('intern-f07', 'get-your-first-internship-final', 7, 'What should you do before an interview?', '["Research the organisation and prepare STAR stories","Nothing","Memorise the advert word for word","Ask a friend to go for you"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('intern-f07', 0, 'Preparation shows interest and calms nerves.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('intern-f08', 'get-your-first-internship-final', 8, 'Which is a good question to ask an interviewer?', '["What would success look like at the end of the internship?","How soon can I take leave?","Do I have to come every day?","Can I skip training?"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('intern-f08', 0, 'It shows you want to do well.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Choose Your Skill and Offer: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('freel-m01-check', 'freelancing-for-beginners', 'module', 'freel-m01', 'Choose Your Skill and Offer: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('freel-m01-q1', 'freel-m01-check', 1, 'Which offer is easier to sell?', '["I design Instagram flyers for small food businesses","I do design, writing, video and websites","I can do anything","Freelancer available"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('freel-m01-q1', 0, 'A clear, focused offer is easier to understand and buy.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('freel-m01-q2', 'freel-m01-check', 2, 'What should a clear offer include?', '["What they get, for whom, how fast and what''s included","Only your name","Your life story","A long list of every tool you know"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('freel-m01-q2', 0, 'Answer the client''s four questions.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('freel-m01-q3', 'freel-m01-check', 3, 'You have no clients yet. How do you get samples?', '["Create concept pieces or redesign existing work","Copy other people''s portfolios","Use company logos without permission","Wait until someone hires you"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('freel-m01-q3', 0, 'Make your own samples and label them as concepts.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('freel-m01-q4', 'freel-m01-check', 4, 'How many skills should you start selling?', '["One","Five","As many as possible","None"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('freel-m01-q4', 0, 'Focus makes marketing easier.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('freel-m01-q5', 'freel-m01-check', 5, 'What is freelancing?', '["Doing paid project work for clients as your own boss","A full-time office job","Unpaid volunteering","A get-rich-quick scheme"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('freel-m01-q5', 0, 'You work project by project for clients.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Find Clients and Get Paid: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('freel-m02-check', 'freelancing-for-beginners', 'module', 'freel-m02', 'Find Clients and Get Paid: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('freel-m02-q1', 'freel-m02-check', 1, 'On Fiverr, how do clients usually find you?', '["Through the gigs you list","Only by phone","Through job adverts in newspapers","They can''t"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('freel-m02-q1', 0, 'Fiverr is gig-based; on Upwork you send proposals.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('freel-m02-q2', 'freel-m02-check', 2, 'A platform client asks to pay you directly outside the platform before the first job. What''s the risk?', '["You lose protection and could get banned","Nothing at all","You''ll be paid twice","It''s required"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('freel-m02-q2', 0, 'Keep payments on the platform.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('freel-m02-q3', 'freel-m02-check', 3, 'Which profile title is best?', '["Social media flyer designer for small businesses","Freelancer","Hardworking person","Available"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('freel-m02-q3', 0, 'Say what you offer.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('freel-m02-q4', 'freel-m02-check', 4, 'What are sensible terms for a direct client?', '["50% upfront and 50% on delivery","Payment ''whenever''","100% after six months","No agreement"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('freel-m02-q4', 0, 'Upfront payment reduces your risk.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('freel-m02-q5', 'freel-m02-check', 5, 'A ''client'' overpays and asks you to send the extra back. This is…', '["A common scam","Good luck","Normal practice","A bank error to ignore"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('freel-m02-q5', 0, 'Overpayment scams are common.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Price and Pitch Your Work: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('freel-m03-check', 'freelancing-for-beginners', 'module', 'freel-m03', 'Price and Pitch Your Work: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('freel-m03-q1', 'freel-m03-check', 1, 'Which pricing method suits most beginner work?', '["Per project","Per year","Free forever","Per word only"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('freel-m03-q1', 0, 'A fixed price for a defined result is simple for both sides.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('freel-m03-q2', 'freel-m03-check', 2, 'Why offer Basic, Standard and Premium packages?', '["They make choosing and saying yes easier","They confuse clients","Platforms require three","To avoid setting prices"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('freel-m03-q2', 0, 'Most people pick the middle option.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('freel-m03-q3', 'freel-m03-check', 3, 'What should the first line of a proposal show?', '["That you read and understood the brief","Your full CV","Your price only","A long greeting"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('freel-m03-q3', 0, 'Make it about the client.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('freel-m03-q4', 'freel-m03-check', 4, 'What should you agree in writing before starting?', '["Deliverables, deadline, rounds of changes, price and payment","Nothing","Only the client''s name","Your favourite colour"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('freel-m03-q4', 0, 'Clear scope prevents endless changes.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('freel-m03-q5', 'freel-m03-check', 5, 'When should you raise your prices?', '["Every few jobs as reviews and skills grow","Never","Before your first job","Every day"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('freel-m03-q5', 0, 'Grow prices with your reputation.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Deliver Work and Get Great Reviews: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('freel-m04-check', 'freelancing-for-beginners', 'module', 'freel-m04', 'Deliver Work and Get Great Reviews: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('freel-m04-q1', 'freel-m04-check', 1, 'You''ll miss a deadline. What should you do?', '["Tell the client early with a new date","Go silent","Deliver unfinished work","Block the client"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('freel-m04-q1', 0, 'Early, honest updates keep trust.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('freel-m04-q2', 'freel-m04-check', 2, 'A client asks for a fourth flyer when you agreed three. What''s a good reply?', '["Offer it politely at an extra price","Refuse rudely","Do it free and complain","Ignore the message"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('freel-m04-q2', 0, 'Out-of-scope work is extra.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('freel-m04-q3', 'freel-m04-check', 3, 'What should a delivery note include?', '["What''s included, how to use it and how to request changes","Nothing","Only an invoice","A request for a tip"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('freel-m04-q3', 0, 'It makes delivery clear and professional.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('freel-m04-q4', 'freel-m04-check', 4, 'How do freelancers mainly grow?', '["Reviews, testimonials and repeat clients","Changing names often","Lowering prices forever","Avoiding clients"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('freel-m04-q4', 0, 'Happy clients bring more work.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('freel-m04-q5', 'freel-m04-check', 5, 'How should you balance freelancing with school?', '["Set fixed hours and protect exam periods","Take every job offered","Skip classes for clients","Work only at night before exams"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('freel-m04-q5', 0, 'Don''t take on more than you can deliver well.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Freelancing for Beginners: final assessment
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('freelancing-for-beginners-final', 'freelancing-for-beginners', 'final', null, 'Freelancing for Beginners: final assessment', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('freel-f01', 'freelancing-for-beginners-final', 1, 'What''s the best first step in freelancing?', '["Pick one skill and make a clear offer","Quit school","Sign up to every platform at once","Buy expensive software"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('freel-f01', 0, 'Start focused.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('freel-f02', 'freelancing-for-beginners-final', 2, 'How many samples should you have before pitching?', '["About 3–5","None","At least 100","Just one sentence"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('freel-f02', 0, 'A few strong samples are enough.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('freel-f03', 'freelancing-for-beginners-final', 3, 'Which is often easier for a first client?', '["Your network and local businesses","Only international corporations","Government contracts","Celebrities"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('freel-f03', 0, 'Direct clients know and trust you.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('freel-f04', 'freelancing-for-beginners-final', 4, 'Which should you never share with a client?', '["Your bank login or OTP","Your portfolio","Your delivery date","Your price list"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('freel-f04', 0, 'Protect your accounts.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('freel-f05', 'freelancing-for-beginners-final', 5, 'What are the four parts of a good proposal?', '["Show you read the brief, proof, plan, price and next step","Greeting, weather, hobbies, sign-off","Only a price","Your CV and ID card"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('freel-f05', 0, 'Short and about the client.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('freel-f06', 'freelancing-for-beginners-final', 6, 'Why agree the number of change rounds upfront?', '["It stops endless extra work","It''s required by law","Clients never ask for changes","It lowers your price"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('freel-f06', 0, 'Clear scope protects your time.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('freel-f07', 'freelancing-for-beginners-final', 7, 'How quickly should you reply to client messages?', '["Within a day","Within a month","Only when work is done","Never"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('freel-f07', 0, 'Prompt replies build trust.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('freel-f08', 'freelancing-for-beginners-final', 8, 'What should you keep a record of?', '["Clients, jobs, amounts and dates paid","Nothing","Only complaints","Other freelancers'' prices"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('freel-f08', 0, 'Records help with pricing, planning and tax.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 

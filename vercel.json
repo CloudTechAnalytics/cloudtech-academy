@@ -65,6 +65,10 @@
     {
       "source": "/credentials/:path*",
       "destination": "/app.html"
+    },
+    {
+      "source": "/learners/:path*",
+      "destination": "/app.html"
     }
   ],
   "redirects": [

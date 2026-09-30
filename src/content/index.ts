@@ -18,6 +18,16 @@ import { DMO_PROJECT } from "./modelling/project";
 import { AIPF_ASSESSMENTS } from "./ai-productivity/assessment";
 import { DCE_ASSESSMENTS } from "./design-content/assessment";
 import { CAREER_ASSESSMENTS } from "./career/assessment";
+import { AISTU_ASSESSMENTS } from "./ai-students/assessment";
+import { RSRCH_ASSESSMENTS } from "./research/assessment";
+import { PORTF_ASSESSMENTS } from "./portfolio/assessment";
+import { GIT_ASSESSMENTS } from "./git/assessment";
+import { WEB_ASSESSMENTS } from "./web/assessment";
+import { PY_ASSESSMENTS } from "./python/assessment";
+import { PYDA_ASSESSMENTS } from "./python-data/assessment";
+import { DIGI_ASSESSMENTS } from "./digital/assessment";
+import { INTERN_ASSESSMENTS } from "./internship/assessment";
+import { FREEL_ASSESSMENTS } from "./freelancing/assessment";
 import { parseFrontmatter, requiredExerciseIds } from "@/lib/lesson-format";
 
 /** Lesson files live in one folder per course, named NN-slug.md. */
@@ -30,6 +40,16 @@ const COURSE_DIRS: Record<string, string> = {
   "ai-productivity": "ai-productivity-fundamentals",
   "design-content": "design-content-essentials",
   career: "career-essentials",
+  "ai-students": "chatgpt-for-students",
+  research: "research-skills-for-students",
+  portfolio: "build-your-student-portfolio",
+  git: "git-and-github-for-beginners",
+  web: "web-development-for-beginners",
+  python: "python-for-beginners",
+  "python-data": "python-for-data-analysis",
+  digital: "digital-skills-for-students",
+  internship: "get-your-first-internship",
+  freelancing: "freelancing-for-beginners",
 };
 
 const lessonFiles = import.meta.glob("./*/*.md", { query: "?raw", import: "default", eager: true }) as Record<string, string>;
@@ -88,6 +108,16 @@ export const BUNDLED_ASSESSMENTS: AssessmentDef[] = [
   ...AIPF_ASSESSMENTS,
   ...DCE_ASSESSMENTS,
   ...CAREER_ASSESSMENTS,
+  ...AISTU_ASSESSMENTS,
+  ...RSRCH_ASSESSMENTS,
+  ...PORTF_ASSESSMENTS,
+  ...GIT_ASSESSMENTS,
+  ...WEB_ASSESSMENTS,
+  ...PY_ASSESSMENTS,
+  ...PYDA_ASSESSMENTS,
+  ...DIGI_ASSESSMENTS,
+  ...INTERN_ASSESSMENTS,
+  ...FREEL_ASSESSMENTS,
 ].map((a) => ({ ...a, kind: a.kind ?? "final" }));
 export const BUNDLED_PROJECTS: ProjectDef[] = [SQL_PROJECT, DAF_PROJECT, XLS_PROJECT, PBI_PROJECT, DMO_PROJECT];
 

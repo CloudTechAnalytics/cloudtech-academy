@@ -102,7 +102,7 @@ export default function Home() {
                 Short modules. A badge for each one.
               </h2>
               <p className="mt-3 text-[1.0625rem] leading-relaxed text-muted">
-                AI tools, design and content, and career essentials in modules of about 20 minutes. Pass each short check to earn a free badge you can share,
+                AI tools, design, careers, coding and Python in modules of about 20 minutes. Pass each short check to earn a free badge you can share,
                 with its own credential ID.
               </p>
             </div>
@@ -120,6 +120,46 @@ export default function Home() {
                 </Reveal>
               ))}
           </ul>
+        </div>
+      </section>
+
+      <section aria-labelledby="students-title" className="border-b border-line py-16 sm:py-20">
+        <div className="container-page">
+          <Reveal className="grid gap-8 rounded-2xl border border-line bg-sand/50 p-6 sm:p-10 lg:grid-cols-[1.3fr_1fr] lg:items-center">
+            <div>
+              <p className="kicker">Student Starter · Free</p>
+              <h2 id="students-title" className="mt-3 font-serif text-[2.1rem] leading-[1.1] sm:text-[2.5rem]">
+                Practical skills for students who want to get ahead.
+              </h2>
+              <p className="mt-3 max-w-xl text-[1.0625rem] leading-relaxed text-muted">
+                25 skills for school, internships and your first job, from ChatGPT for study and research to CVs, Excel,
+                Git, Python and freelancing. Earn a badge for each one and show them all on your own skills profile.
+              </p>
+              <div className="mt-6">
+                <ButtonLink to="/students" arrow>
+                  See the Student Starter
+                </ButtonLink>
+              </div>
+            </div>
+            <ul className="grid grid-cols-2 gap-2 text-[0.9375rem]">
+              {[
+                "ChatGPT for study",
+                "Research online",
+                "CV and LinkedIn",
+                "Student portfolio",
+                "Excel and SQL",
+                "Canva and CapCut",
+                "Git and GitHub",
+                "Your first website",
+                "Python",
+                "Internships",
+              ].map((t) => (
+                <li key={t} className="rounded-lg border border-line bg-paper px-3 py-2">
+                  {t}
+                </li>
+              ))}
+            </ul>
+          </Reveal>
         </div>
       </section>
 

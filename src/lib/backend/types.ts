@@ -88,6 +88,19 @@ export type Certificate = {
 
 export type PublicCertificate = Pick<Certificate, "certificateId" | "credentialId" | "recipientName" | "courseTitle" | "issuedAt" | "status">;
 
+/** A learner's public skills profile settings. The page lives at /learners/<slug>. */
+export type PublicProfileSettings = { isPublic: boolean; slug: string; headline: string };
+
+/** What anyone can see on a public skills profile: valid badges and certificates only, never an email. */
+export type PublicProfile = {
+  slug: string;
+  name: string;
+  headline: string;
+  memberSince: string;
+  credentials: PublicCredential[];
+  certificates: PublicCertificate[];
+};
+
 export type CertificatePrice = { currency: string; amount: number; active: boolean; position: number };
 
 export type OrderStatus = "pending" | "paid" | "granted" | "failed" | "cancelled";
@@ -148,6 +161,10 @@ export interface Backend {
   requestPasswordReset(email: string): Promise<void>;
   updatePassword(password: string): Promise<void>;
   updateProfile(input: { fullName: string }): Promise<void>;
+  getPublicProfileSettings(): Promise<PublicProfileSettings>;
+  savePublicProfileSettings(input: PublicProfileSettings): Promise<void>;
+  /** A learner's public page, or null if it doesn't exist or is switched off. */
+  getPublicProfile(slug: string): Promise<PublicProfile | null>;
 
   /* ---------- content ---------- */
   listCourses(opts?: { includeUnpublished?: boolean }): Promise<Course[]>;

@@ -8,6 +8,7 @@ import { BUNDLED_ASSESSMENTS, BUNDLED_COURSES, BUNDLED_PROJECTS } from "@/conten
 import type { AssessmentDef, Course } from "@/content/types";
 import { requiredExerciseIds } from "../lesson-format";
 import { certificateNumber, eligibility, newCredentialId } from "../certificates";
+import { PROFILE_SLUG_RE, SLUG_HELP } from "../profile";
 import {
   BackendError,
   type AttemptResult,
@@ -21,7 +22,7 @@ import {
   type User,
 } from "./types";
 
-type StoredUser = User & { passwordHash: string; salt: string; joinedAt: string };
+type StoredUser = User & { passwordHash: string; salt: string; joinedAt: string; publicSlug?: string; profilePublic?: boolean; headline?: string };
 type Store = {
   users: StoredUser[];
   sessionUserId: string | null;
@@ -227,6 +228,79 @@ export function createDemoBackend(): Backend {
       s.users.find((x) => x.id === u.id)!.fullName = fullName.trim();
       save(s);
       notify();
+    },
+
+    async getPublicProfileSettings() {
+      const u = requireUser();
+      const me = load().users.find((x) => x.id === u.id)!;
+      return { isPublic: Boolean(me.profilePublic), slug: me.publicSlug ?? "", headline: me.headline ?? "" };
+    },
+    async savePublicProfileSettings({ isPublic, slug, headline }) {
+      const u = requireUser();
+      const s = load();
+      const me = s.users.find((x) => x.id === u.id)!;
+      const clean = slug.trim().toLowerCase();
+      if (clean && !PROFILE_SLUG_RE.test(clean)) throw new BackendError(`Your profile address needs ${SLUG_HELP}`);
+      if (isPublic && !clean) throw new BackendError("Choose a profile address first.");
+      if (isPublic && !me.fullName.trim())
+        throw new BackendError("Add your full name first. It appears on your public profile.");
+      if (clean && s.users.some((x) => x.id !== me.id && x.publicSlug === clean))
+        throw new BackendError("That profile address is taken. Try another.");
+      me.profilePublic = isPublic;
+      me.publicSlug = clean || undefined;
+      me.headline = headline.trim().slice(0, 120);
+      save(s);
+    },
+    async getPublicProfile(slug) {
+      const s = load();
+      const me = s.users.find((x) => x.publicSlug === slug.trim().toLowerCase() && x.profilePublic);
+      if (!me) return null;
+      const byNewest = (a: { issuedAt: string }, b: { issuedAt: string }) => b.issuedAt.localeCompare(a.issuedAt);
+      return {
+        slug: me.publicSlug!,
+        name: me.fullName.trim(),
+        headline: me.headline ?? "",
+        memberSince: me.joinedAt,
+        credentials: s.credentials
+          .filter((c) => c.userId === me.id && c.status === "valid")
+          .sort(byNewest)
+          .map(
+            ({
+              credentialId,
+              kind,
+              badgeName,
+              courseId,
+              courseTitle,
+              moduleTitle,
+              recipientName,
+              skills,
+              issuedAt,
+              status,
+            }) => ({
+              credentialId,
+              kind,
+              badgeName,
+              courseId,
+              courseTitle,
+              moduleTitle,
+              recipientName,
+              skills,
+              issuedAt,
+              status,
+            }),
+          ),
+        certificates: s.certificates
+          .filter((c) => c.userId === me.id && c.status === "valid")
+          .sort(byNewest)
+          .map(({ certificateId, credentialId, recipientName, courseTitle, issuedAt, status }) => ({
+            certificateId,
+            credentialId,
+            recipientName,
+            courseTitle,
+            issuedAt,
+            status,
+          })),
+      };
     },
 
     async listCourses(opts) {

@@ -151,6 +151,11 @@ function DashboardInner() {
         <p className="mt-1 text-muted">
           {valid.length ? `${valid.length} ${valid.length === 1 ? "badge" : "badges"} earned. Open one to share it or download the image.` : "Pass a module check to earn your first badge."}
         </p>
+        <p className="mt-1 text-[0.9375rem]">
+          <Link to="/profile" className="font-semibold text-brass-dark hover:text-ink">
+            Show all your badges on a public skills profile
+          </Link>
+        </p>
         {valid.length > 0 && (
           <>
             <ul className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-6">
