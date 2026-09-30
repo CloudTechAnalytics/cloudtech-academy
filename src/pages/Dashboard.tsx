@@ -73,18 +73,21 @@ function DashboardInner() {
       <p className="kicker">Dashboard</p>
       <h1 className="mt-3 font-serif text-[2.3rem] leading-tight sm:text-[2.8rem]">Welcome back, {firstName}</h1>
 
-      <dl className="mt-8 grid grid-cols-2 gap-3 sm:max-w-3xl sm:grid-cols-4">
+      <dl className="mt-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
         {[
           { icon: BookOpen, label: "Courses in progress", value: inProgress.length },
           { icon: CheckCircle2, label: "Completed courses", value: completed.length },
           { icon: Trophy, label: "Badges earned", value: valid.length },
           { icon: GraduationCap, label: "Certificates", value: certs.filter((c) => c.status === "valid").length },
         ].map(({ icon: Icon, label, value }) => (
-          <div key={label} className="rounded-xl border border-line bg-paper p-4">
-            <dt className="flex items-center gap-1.5 text-[0.75rem] text-muted">
-              <Icon aria-hidden className="h-3.5 w-3.5" /> {label}
+          <div key={label} className="flex flex-col justify-between rounded-2xl border border-line bg-paper p-5 sm:p-6">
+            <dt className="flex items-center gap-2 text-[0.875rem] text-muted">
+              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-brass-pale/60 text-brass-dark">
+                <Icon aria-hidden className="h-4 w-4" />
+              </span>
+              {label}
             </dt>
-            <dd className="mt-1 font-serif text-[1.8rem] leading-none">{value}</dd>
+            <dd className="mt-5 font-serif text-[2.6rem] leading-none sm:text-[3rem]">{value}</dd>
           </div>
         ))}
       </dl>
