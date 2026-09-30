@@ -1,0 +1,1677 @@
+{
+ "cleaning": {
+  "zipBytes": 3040,
+  "files": {
+   "customer_list_raw": {
+    "rows": 102,
+    "bytes": 8222,
+    "columns": [
+     {
+      "name": "Customer Name",
+      "type": "text",
+      "missing": 0,
+      "distinct": 99
+     },
+     {
+      "name": "Region",
+      "type": "text",
+      "missing": 0,
+      "distinct": 23
+     },
+     {
+      "name": "City",
+      "type": "text",
+      "missing": 0,
+      "distinct": 37
+     },
+     {
+      "name": "Phone",
+      "type": "text",
+      "missing": 0,
+      "distinct": 90
+     },
+     {
+      "name": "Date Joined",
+      "type": "text",
+      "missing": 0,
+      "distinct": 89
+     },
+     {
+      "name": "Credit Limit",
+      "type": "text",
+      "missing": 5,
+      "distinct": 67
+     },
+     {
+      "name": "Channel",
+      "type": "text",
+      "missing": 0,
+      "distinct": 3
+     }
+    ],
+    "preview": [
+     [
+      "kayode distributors   ",
+      "LAGOS",
+      "Surulere",
+      "08089165939",
+      "22/10/2023",
+      "₦2,050,000",
+      "Wholesale"
+     ],
+     [
+      "Grace Provisions",
+      "South East",
+      "Nnewi",
+      "0915 628 5995",
+      "2022-04-21",
+      "500,000.00",
+      "Kiosk"
+     ],
+     [
+      "  ADA SUPERSTORE",
+      "Lagos",
+      "Ikeja",
+      "+234 813 623 6612",
+      "2023-07-11",
+      "1,200,000",
+      "Supermarket"
+     ],
+     [
+      "Hajia Amina Superstore",
+      "north central",
+      "Abuja",
+      "09156966803",
+      "21/04/2023",
+      "850000",
+      "Supermarket"
+     ],
+     [
+      "  peace mart",
+      "South-West",
+      "Osogbo",
+      "+234 813 930 6584",
+      "01/09/2022",
+      "1500000",
+      "Supermarket"
+     ],
+     [
+      "Mama Nkechi Trading Co.   ",
+      "lagos",
+      "Surulere",
+      "2349153240700",
+      "25/12/2024",
+      "4,150,000",
+      "Wholesale"
+     ]
+    ]
+   }
+  }
+ },
+ "hr": {
+  "zipBytes": 7619,
+  "files": {
+   "attendance": {
+    "rows": 1518,
+    "bytes": 39183,
+    "columns": [
+     {
+      "name": "date",
+      "type": "date",
+      "missing": 0,
+      "distinct": 22,
+      "min": "2026-06-01",
+      "max": "2026-06-30"
+     },
+     {
+      "name": "employee_id",
+      "type": "number",
+      "missing": 0,
+      "distinct": 69,
+      "min": 1004,
+      "max": 1080
+     },
+     {
+      "name": "status",
+      "type": "text",
+      "missing": 0,
+      "distinct": 4
+     },
+     {
+      "name": "hours_worked",
+      "type": "number",
+      "missing": 0,
+      "distinct": 5,
+      "min": 0,
+      "max": 9
+     }
+    ],
+    "preview": [
+     [
+      "2026-06-01",
+      "1004",
+      "Present",
+      "8"
+     ],
+     [
+      "2026-06-01",
+      "1005",
+      "Present",
+      "8"
+     ],
+     [
+      "2026-06-01",
+      "1006",
+      "Present",
+      "9"
+     ],
+     [
+      "2026-06-01",
+      "1007",
+      "Present",
+      "9"
+     ],
+     [
+      "2026-06-01",
+      "1008",
+      "Present",
+      "8"
+     ],
+     [
+      "2026-06-01",
+      "1009",
+      "Late",
+      "8"
+     ]
+    ]
+   },
+   "employees": {
+    "rows": 80,
+    "bytes": 5039,
+    "columns": [
+     {
+      "name": "employee_id",
+      "type": "number",
+      "missing": 0,
+      "distinct": 80,
+      "min": 1001,
+      "max": 1080
+     },
+     {
+      "name": "full_name",
+      "type": "text",
+      "missing": 0,
+      "distinct": 76
+     },
+     {
+      "name": "department",
+      "type": "text",
+      "missing": 0,
+      "distinct": 6
+     },
+     {
+      "name": "job_level",
+      "type": "text",
+      "missing": 0,
+      "distinct": 4
+     },
+     {
+      "name": "hire_date",
+      "type": "date",
+      "missing": 0,
+      "distinct": 79,
+      "min": "2018-01-22",
+      "max": "2026-03-02"
+     },
+     {
+      "name": "exit_date",
+      "type": "date",
+      "missing": 69,
+      "distinct": 10,
+      "min": "2019-04-10",
+      "max": "2026-08-01"
+     },
+     {
+      "name": "monthly_salary",
+      "type": "number",
+      "missing": 0,
+      "distinct": 65,
+      "min": 180000,
+      "max": 1565000
+     },
+     {
+      "name": "status",
+      "type": "text",
+      "missing": 0,
+      "distinct": 2
+     }
+    ],
+    "preview": [
+     [
+      "1001",
+      "Uche Lawal",
+      "Finance",
+      "Junior",
+      "2019-07-26",
+      "2021-03-11",
+      "355000",
+      "Resigned"
+     ],
+     [
+      "1002",
+      "Dapo Umar",
+      "Operations",
+      "Junior",
+      "2024-05-26",
+      "2026-02-13",
+      "215000",
+      "Resigned"
+     ],
+     [
+      "1003",
+      "Amaka Adeyemi",
+      "Finance",
+      "Mid",
+      "2023-10-01",
+      "2025-02-08",
+      "550000",
+      "Resigned"
+     ],
+     [
+      "1004",
+      "Kelechi Abdullahi",
+      "Operations",
+      "Junior",
+      "2024-11-25",
+      "",
+      "280000",
+      "Active"
+     ],
+     [
+      "1005",
+      "Maryam Bello",
+      "Customer Service",
+      "Junior",
+      "2025-06-03",
+      "",
+      "210000",
+      "Active"
+     ],
+     [
+      "1006",
+      "Hauwa Obi",
+      "Human Resources",
+      "Mid",
+      "2025-01-19",
+      "",
+      "545000",
+      "Active"
+     ]
+    ]
+   },
+   "leave": {
+    "rows": 77,
+    "bytes": 3372,
+    "columns": [
+     {
+      "name": "leave_id",
+      "type": "number",
+      "missing": 0,
+      "distinct": 77,
+      "min": 1,
+      "max": 77
+     },
+     {
+      "name": "employee_id",
+      "type": "number",
+      "missing": 0,
+      "distinct": 50,
+      "min": 1002,
+      "max": 1080
+     },
+     {
+      "name": "leave_type",
+      "type": "text",
+      "missing": 0,
+      "distinct": 3
+     },
+     {
+      "name": "start_date",
+      "type": "date",
+      "missing": 0,
+      "distinct": 71,
+      "min": "2025-01-05",
+      "max": "2026-06-25"
+     },
+     {
+      "name": "end_date",
+      "type": "date",
+      "missing": 0,
+      "distinct": 73,
+      "min": "2025-01-09",
+      "max": "2026-07-06"
+     },
+     {
+      "name": "days",
+      "type": "number",
+      "missing": 0,
+      "distinct": 15,
+      "min": 1,
+      "max": 15
+     },
+     {
+      "name": "approved",
+      "type": "text",
+      "missing": 0,
+      "distinct": 2
+     }
+    ],
+    "preview": [
+     [
+      "1",
+      "1002",
+      "Annual",
+      "2025-03-17",
+      "2025-03-27",
+      "11",
+      "Yes"
+     ],
+     [
+      "2",
+      "1004",
+      "Annual",
+      "2025-05-04",
+      "2025-05-13",
+      "10",
+      "Yes"
+     ],
+     [
+      "3",
+      "1004",
+      "Annual",
+      "2025-11-17",
+      "2025-11-26",
+      "10",
+      "Yes"
+     ],
+     [
+      "4",
+      "1005",
+      "Annual",
+      "2025-07-31",
+      "2025-08-11",
+      "12",
+      "Yes"
+     ],
+     [
+      "5",
+      "1005",
+      "Annual",
+      "2025-09-19",
+      "2025-10-02",
+      "14",
+      "Yes"
+     ],
+     [
+      "6",
+      "1006",
+      "Annual",
+      "2025-05-04",
+      "2025-05-15",
+      "12",
+      "Yes"
+     ]
+    ]
+   }
+  }
+ },
+ "legal": {
+  "zipBytes": 12870,
+  "files": {
+   "clients": {
+    "rows": 50,
+    "bytes": 2092,
+    "columns": [
+     {
+      "name": "client_id",
+      "type": "number",
+      "missing": 0,
+      "distinct": 50,
+      "min": 1,
+      "max": 50
+     },
+     {
+      "name": "client_name",
+      "type": "text",
+      "missing": 0,
+      "distinct": 46
+     },
+     {
+      "name": "client_type",
+      "type": "text",
+      "missing": 0,
+      "distinct": 2
+     },
+     {
+      "name": "onboarded_date",
+      "type": "date",
+      "missing": 0,
+      "distinct": 49,
+      "min": "2022-02-24",
+      "max": "2025-05-09"
+     }
+    ],
+    "preview": [
+     [
+      "1",
+      "Crestview Partners Ltd",
+      "Company",
+      "2024-05-12"
+     ],
+     [
+      "2",
+      "Cedar Logistics Ltd",
+      "Company",
+      "2022-03-11"
+     ],
+     [
+      "3",
+      "Cedar Holdings Ltd",
+      "Company",
+      "2025-03-18"
+     ],
+     [
+      "4",
+      "Beacon Foods Ltd",
+      "Company",
+      "2023-12-19"
+     ],
+     [
+      "5",
+      "Chiamaka Okafor",
+      "Individual",
+      "2024-07-25"
+     ],
+     [
+      "6",
+      "Crestview Properties Ltd",
+      "Company",
+      "2025-02-26"
+     ]
+    ]
+   },
+   "hearings": {
+    "rows": 399,
+    "bytes": 21347,
+    "columns": [
+     {
+      "name": "hearing_id",
+      "type": "number",
+      "missing": 0,
+      "distinct": 399,
+      "min": 1,
+      "max": 399
+     },
+     {
+      "name": "matter_id",
+      "type": "number",
+      "missing": 0,
+      "distinct": 95,
+      "min": 2001,
+      "max": 2150
+     },
+     {
+      "name": "hearing_date",
+      "type": "date",
+      "missing": 0,
+      "distinct": 318,
+      "min": "2024-05-15",
+      "max": "2026-11-17"
+     },
+     {
+      "name": "court",
+      "type": "text",
+      "missing": 0,
+      "distinct": 5
+     },
+     {
+      "name": "outcome",
+      "type": "text",
+      "missing": 0,
+      "distinct": 5
+     }
+    ],
+    "preview": [
+     [
+      "1",
+      "2001",
+      "2026-05-05",
+      "High Court, Lagos",
+      "Heard"
+     ],
+     [
+      "2",
+      "2001",
+      "2026-08-10",
+      "High Court, Lagos",
+      "Judgment delivered"
+     ],
+     [
+      "3",
+      "2002",
+      "2025-12-02",
+      "Federal High Court, Lagos",
+      "Adjourned"
+     ],
+     [
+      "4",
+      "2002",
+      "2026-03-05",
+      "Federal High Court, Lagos",
+      "Adjourned"
+     ],
+     [
+      "5",
+      "2002",
+      "2026-05-16",
+      "Federal High Court, Lagos",
+      "Adjourned"
+     ],
+     [
+      "6",
+      "2002",
+      "2026-07-14",
+      "Federal High Court, Lagos",
+      "Heard"
+     ]
+    ]
+   },
+   "invoices": {
+    "rows": 410,
+    "bytes": 17944,
+    "columns": [
+     {
+      "name": "invoice_id",
+      "type": "number",
+      "missing": 0,
+      "distinct": 410,
+      "min": 7001,
+      "max": 7410
+     },
+     {
+      "name": "matter_id",
+      "type": "number",
+      "missing": 0,
+      "distinct": 149,
+      "min": 2001,
+      "max": 2150
+     },
+     {
+      "name": "issued_date",
+      "type": "date",
+      "missing": 0,
+      "distinct": 322,
+      "min": "2024-01-30",
+      "max": "2026-08-28"
+     },
+     {
+      "name": "amount_ngn",
+      "type": "number",
+      "missing": 0,
+      "distinct": 287,
+      "min": 300000,
+      "max": 6000000
+     },
+     {
+      "name": "status",
+      "type": "text",
+      "missing": 0,
+      "distinct": 3
+     },
+     {
+      "name": "paid_date",
+      "type": "date",
+      "missing": 83,
+      "distinct": 269,
+      "min": "2024-04-08",
+      "max": "2026-08-27"
+     }
+    ],
+    "preview": [
+     [
+      "7001",
+      "2001",
+      "2026-03-29",
+      "5580000",
+      "Paid",
+      "2026-06-10"
+     ],
+     [
+      "7002",
+      "2001",
+      "2026-07-23",
+      "2400000",
+      "Overdue",
+      ""
+     ],
+     [
+      "7003",
+      "2002",
+      "2025-10-11",
+      "3000000",
+      "Paid",
+      "2025-10-19"
+     ],
+     [
+      "7004",
+      "2002",
+      "2025-12-10",
+      "5640000",
+      "Paid",
+      "2026-02-23"
+     ],
+     [
+      "7005",
+      "2002",
+      "2026-04-29",
+      "3980000",
+      "Paid",
+      "2026-07-27"
+     ],
+     [
+      "7006",
+      "2003",
+      "2024-11-26",
+      "2760000",
+      "Paid",
+      "2024-12-28"
+     ]
+    ]
+   },
+   "matters": {
+    "rows": 150,
+    "bytes": 12176,
+    "columns": [
+     {
+      "name": "matter_id",
+      "type": "number",
+      "missing": 0,
+      "distinct": 150,
+      "min": 2001,
+      "max": 2150
+     },
+     {
+      "name": "client_id",
+      "type": "number",
+      "missing": 0,
+      "distinct": 48,
+      "min": 1,
+      "max": 50
+     },
+     {
+      "name": "matter_title",
+      "type": "text",
+      "missing": 0,
+      "distinct": 20
+     },
+     {
+      "name": "practice_area",
+      "type": "text",
+      "missing": 0,
+      "distinct": 6
+     },
+     {
+      "name": "responsible_lawyer",
+      "type": "text",
+      "missing": 0,
+      "distinct": 8
+     },
+     {
+      "name": "opened_date",
+      "type": "date",
+      "missing": 0,
+      "distinct": 136,
+      "min": "2024-01-21",
+      "max": "2026-08-05"
+     },
+     {
+      "name": "closed_date",
+      "type": "date",
+      "missing": 47,
+      "distinct": 95,
+      "min": "2024-03-02",
+      "max": "2026-08-31"
+     },
+     {
+      "name": "status",
+      "type": "text",
+      "missing": 0,
+      "distinct": 3
+     }
+    ],
+    "preview": [
+     [
+      "2001",
+      "37",
+      "Tenancy recovery",
+      "Property",
+      "Kunle Eze",
+      "2026-02-28",
+      "2026-08-23",
+      "Closed"
+     ],
+     [
+      "2002",
+      "18",
+      "Trademark opposition",
+      "Intellectual property",
+      "Musa Chukwu",
+      "2025-09-23",
+      "",
+      "Open"
+     ],
+     [
+      "2003",
+      "10",
+      "Trademark opposition",
+      "Intellectual property",
+      "Kunle Eze",
+      "2024-10-27",
+      "2025-11-22",
+      "Closed"
+     ],
+     [
+      "2004",
+      "17",
+      "Lease dispute",
+      "Property",
+      "Temitope Afolabi",
+      "2026-02-02",
+      "",
+      "Open"
+     ],
+     [
+      "2005",
+      "47",
+      "Wrongful dismissal",
+      "Employment",
+      "Adaeze Olawale",
+      "2024-12-26",
+      "2025-10-17",
+      "Closed"
+     ],
+     [
+      "2006",
+      "8",
+      "Tenancy recovery",
+      "Property",
+      "Kunle Chukwu",
+      "2024-07-03",
+      "2025-07-24",
+      "Closed"
+     ]
+    ]
+   }
+  }
+ },
+ "logistics": {
+  "zipBytes": 76594,
+  "files": {
+   "customers": {
+    "rows": 120,
+    "bytes": 7910,
+    "columns": [
+     {
+      "name": "customer_id",
+      "type": "number",
+      "missing": 0,
+      "distinct": 120,
+      "min": 1,
+      "max": 120
+     },
+     {
+      "name": "company_name",
+      "type": "text",
+      "missing": 0,
+      "distinct": 120
+     },
+     {
+      "name": "industry",
+      "type": "text",
+      "missing": 0,
+      "distinct": 10
+     },
+     {
+      "name": "city",
+      "type": "text",
+      "missing": 0,
+      "distinct": 8
+     },
+     {
+      "name": "country",
+      "type": "text",
+      "missing": 0,
+      "distinct": 3
+     },
+     {
+      "name": "signup_date",
+      "type": "date",
+      "missing": 0,
+      "distinct": 114,
+      "min": "2021-01-10",
+      "max": "2025-01-27"
+     },
+     {
+      "name": "account_manager_id",
+      "type": "number",
+      "missing": 8,
+      "distinct": 8,
+      "min": 1,
+      "max": 8
+     }
+    ],
+    "preview": [
+     [
+      "1",
+      "Meridian Electronics Limited",
+      "Electronics",
+      "Port Harcourt",
+      "Nigeria",
+      "2022-09-07",
+      "1"
+     ],
+     [
+      "2",
+      "Crescent Builders Plc",
+      "Construction",
+      "Lagos",
+      "Nigeria",
+      "2022-09-23",
+      "3"
+     ],
+     [
+      "3",
+      "Lagoon Builders Limited",
+      "Construction",
+      "Port Harcourt",
+      "Nigeria",
+      "2021-02-04",
+      "6"
+     ],
+     [
+      "4",
+      "Brightway Energy Limited",
+      "Energy",
+      "Lagos",
+      "Nigeria",
+      "2023-05-07",
+      "1"
+     ],
+     [
+      "5",
+      "Apex Packaging Ltd",
+      "Manufacturing",
+      "Abuja",
+      "Nigeria",
+      "2022-04-09",
+      ""
+     ],
+     [
+      "6",
+      "Mainland Motors Limited",
+      "Automotive",
+      "Port Harcourt",
+      "Nigeria",
+      "2022-09-07",
+      "6"
+     ]
+    ]
+   },
+   "employees": {
+    "rows": 24,
+    "bytes": 1393,
+    "columns": [
+     {
+      "name": "employee_id",
+      "type": "number",
+      "missing": 0,
+      "distinct": 24,
+      "min": 1,
+      "max": 24
+     },
+     {
+      "name": "full_name",
+      "type": "text",
+      "missing": 0,
+      "distinct": 24
+     },
+     {
+      "name": "role",
+      "type": "text",
+      "missing": 0,
+      "distinct": 5
+     },
+     {
+      "name": "team",
+      "type": "text",
+      "missing": 0,
+      "distinct": 4
+     },
+     {
+      "name": "hire_date",
+      "type": "date",
+      "missing": 0,
+      "distinct": 24,
+      "min": "2016-08-27",
+      "max": "2024-07-27"
+     },
+     {
+      "name": "manager_id",
+      "type": "number",
+      "missing": 2,
+      "distinct": 2,
+      "min": 23,
+      "max": 24
+     }
+    ],
+    "preview": [
+     [
+      "1",
+      "Segun Okeke",
+      "Account Manager",
+      "Sales",
+      "2023-04-12",
+      "23"
+     ],
+     [
+      "2",
+      "Tobi Adeyemi",
+      "Account Manager",
+      "Sales",
+      "2017-02-02",
+      "23"
+     ],
+     [
+      "3",
+      "Obinna Abdullahi",
+      "Account Manager",
+      "Sales",
+      "2016-09-30",
+      "24"
+     ],
+     [
+      "4",
+      "Segun Ogunleye",
+      "Account Manager",
+      "Sales",
+      "2023-08-14",
+      "24"
+     ],
+     [
+      "5",
+      "Adaeze Eze",
+      "Account Manager",
+      "Sales",
+      "2023-03-25",
+      "23"
+     ],
+     [
+      "6",
+      "Ibrahim Abdullahi",
+      "Account Manager",
+      "Sales",
+      "2018-11-20",
+      "24"
+     ]
+    ]
+   },
+   "payments": {
+    "rows": 2409,
+    "bytes": 102684,
+    "columns": [
+     {
+      "name": "payment_id",
+      "type": "number",
+      "missing": 0,
+      "distinct": 2409,
+      "min": 1,
+      "max": 2409
+     },
+     {
+      "name": "shipment_id",
+      "type": "number",
+      "missing": 0,
+      "distinct": 2250,
+      "min": 100001,
+      "max": 102641
+     },
+     {
+      "name": "payment_date",
+      "type": "date",
+      "missing": 0,
+      "distinct": 572,
+      "min": "2025-01-16",
+      "max": "2026-08-31"
+     },
+     {
+      "name": "amount",
+      "type": "number",
+      "missing": 0,
+      "distinct": 1955,
+      "min": 237000,
+      "max": 39033000
+     },
+     {
+      "name": "method",
+      "type": "text",
+      "missing": 0,
+      "distinct": 3
+     }
+    ],
+    "preview": [
+     [
+      "1",
+      "100001",
+      "2025-03-03",
+      "32685000",
+      "Card"
+     ],
+     [
+      "2",
+      "100002",
+      "2025-02-22",
+      "4223000",
+      "Bank transfer"
+     ],
+     [
+      "3",
+      "100003",
+      "2025-03-07",
+      "3268000",
+      "Bank transfer"
+     ],
+     [
+      "4",
+      "100004",
+      "2025-02-13",
+      "9443000",
+      "Bank transfer"
+     ],
+     [
+      "5",
+      "100005",
+      "2025-02-16",
+      "12146000",
+      "Bank transfer"
+     ],
+     [
+      "6",
+      "100006",
+      "2025-02-10",
+      "7927000",
+      "Bank transfer"
+     ]
+    ]
+   },
+   "routes": {
+    "rows": 30,
+    "bytes": 919,
+    "columns": [
+     {
+      "name": "route_id",
+      "type": "number",
+      "missing": 0,
+      "distinct": 30,
+      "min": 1,
+      "max": 30
+     },
+     {
+      "name": "origin",
+      "type": "text",
+      "missing": 0,
+      "distinct": 20
+     },
+     {
+      "name": "destination",
+      "type": "text",
+      "missing": 0,
+      "distinct": 15
+     },
+     {
+      "name": "mode",
+      "type": "text",
+      "missing": 0,
+      "distinct": 3
+     },
+     {
+      "name": "target_transit_days",
+      "type": "number",
+      "missing": 0,
+      "distinct": 20,
+      "min": 1,
+      "max": 42
+     }
+    ],
+    "preview": [
+     [
+      "1",
+      "Shanghai",
+      "Lagos (Apapa)",
+      "Sea",
+      "38"
+     ],
+     [
+      "2",
+      "Ningbo",
+      "Lagos (Apapa)",
+      "Sea",
+      "40"
+     ],
+     [
+      "3",
+      "Shanghai",
+      "Lagos (Tin Can)",
+      "Sea",
+      "39"
+     ],
+     [
+      "4",
+      "Rotterdam",
+      "Lagos (Apapa)",
+      "Sea",
+      "21"
+     ],
+     [
+      "5",
+      "Antwerp",
+      "Lagos (Tin Can)",
+      "Sea",
+      "22"
+     ],
+     [
+      "6",
+      "Hamburg",
+      "Lagos (Apapa)",
+      "Sea",
+      "23"
+     ]
+    ]
+   },
+   "shipments": {
+    "rows": 2683,
+    "bytes": 187795,
+    "columns": [
+     {
+      "name": "shipment_id",
+      "type": "number",
+      "missing": 0,
+      "distinct": 2683,
+      "min": 100001,
+      "max": 102683
+     },
+     {
+      "name": "customer_id",
+      "type": "number",
+      "missing": 0,
+      "distinct": 105,
+      "min": 7,
+      "max": 120
+     },
+     {
+      "name": "route_id",
+      "type": "number",
+      "missing": 0,
+      "distinct": 30,
+      "min": 1,
+      "max": 30
+     },
+     {
+      "name": "booking_date",
+      "type": "date",
+      "missing": 0,
+      "distinct": 585,
+      "min": "2025-01-02",
+      "max": "2026-08-31"
+     },
+     {
+      "name": "ship_date",
+      "type": "date",
+      "missing": 168,
+      "distinct": 595,
+      "min": "2025-01-04",
+      "max": "2026-09-02"
+     },
+     {
+      "name": "delivery_date",
+      "type": "date",
+      "missing": 272,
+      "distinct": 588,
+      "min": "2025-01-13",
+      "max": "2026-08-30"
+     },
+     {
+      "name": "status",
+      "type": "text",
+      "missing": 0,
+      "distinct": 4
+     },
+     {
+      "name": "containers",
+      "type": "number",
+      "missing": 0,
+      "distinct": 6,
+      "min": 1,
+      "max": 8
+     },
+     {
+      "name": "weight_kg",
+      "type": "number",
+      "missing": 0,
+      "distinct": 2591,
+      "min": 94,
+      "max": 191992
+     },
+     {
+      "name": "freight_charge",
+      "type": "number",
+      "missing": 0,
+      "distinct": 2204,
+      "min": 376000,
+      "max": 39406000
+     }
+    ],
+    "preview": [
+     [
+      "100001",
+      "75",
+      "2",
+      "2025-01-02",
+      "2025-01-11",
+      "2025-02-18",
+      "Delivered",
+      "8",
+      "86424",
+      "32685000"
+     ],
+     [
+      "100002",
+      "15",
+      "1",
+      "2025-01-02",
+      "2025-01-04",
+      "2025-02-09",
+      "Delivered",
+      "1",
+      "21055",
+      "4223000"
+     ],
+     [
+      "100003",
+      "8",
+      "6",
+      "2025-01-02",
+      "2025-01-10",
+      "2025-02-09",
+      "Delivered",
+      "1",
+      "10929",
+      "3268000"
+     ],
+     [
+      "100004",
+      "35",
+      "2",
+      "2025-01-02",
+      "2025-01-07",
+      "2025-02-15",
+      "Delivered",
+      "2",
+      "19388",
+      "9443000"
+     ],
+     [
+      "100005",
+      "48",
+      "5",
+      "2025-01-03",
+      "2025-01-09",
+      "2025-01-31",
+      "Delivered",
+      "4",
+      "86728",
+      "12146000"
+     ],
+     [
+      "100006",
+      "27",
+      "7",
+      "2025-01-03",
+      "2025-01-08",
+      "2025-01-24",
+      "Delivered",
+      "3",
+      "45270",
+      "7927000"
+     ]
+    ]
+   }
+  }
+ },
+ "sales": {
+  "zipBytes": 39526,
+  "files": {
+   "customers": {
+    "rows": 90,
+    "bytes": 7132,
+    "columns": [
+     {
+      "name": "customer_id",
+      "type": "number",
+      "missing": 0,
+      "distinct": 90,
+      "min": 1,
+      "max": 90
+     },
+     {
+      "name": "customer_name",
+      "type": "text",
+      "missing": 0,
+      "distinct": 90
+     },
+     {
+      "name": "channel",
+      "type": "text",
+      "missing": 0,
+      "distinct": 3
+     },
+     {
+      "name": "region",
+      "type": "text",
+      "missing": 0,
+      "distinct": 6
+     },
+     {
+      "name": "city",
+      "type": "text",
+      "missing": 0,
+      "distinct": 28
+     },
+     {
+      "name": "sales_rep",
+      "type": "text",
+      "missing": 0,
+      "distinct": 6
+     },
+     {
+      "name": "joined_date",
+      "type": "date",
+      "missing": 0,
+      "distinct": 89,
+      "min": "2022-01-13",
+      "max": "2026-04-25"
+     },
+     {
+      "name": "credit_limit",
+      "type": "number",
+      "missing": 0,
+      "distinct": 48,
+      "min": 150000,
+      "max": 4950000
+     }
+    ],
+    "preview": [
+     [
+      "1",
+      "Kayode Distributors",
+      "Wholesale",
+      "Lagos",
+      "Surulere",
+      "Tolu Adeyemi",
+      "2023-10-22",
+      "2050000"
+     ],
+     [
+      "2",
+      "Grace Provisions",
+      "Kiosk",
+      "South East",
+      "Nnewi",
+      "Ikenna Obi",
+      "2022-04-21",
+      "500000"
+     ],
+     [
+      "3",
+      "Ada Superstore",
+      "Supermarket",
+      "Lagos",
+      "Ikeja",
+      "Tolu Adeyemi",
+      "2023-07-11",
+      "1200000"
+     ],
+     [
+      "4",
+      "Hajia Amina Superstore",
+      "Supermarket",
+      "North Central",
+      "Abuja",
+      "Sani Garba",
+      "2023-04-21",
+      "850000"
+     ],
+     [
+      "5",
+      "Peace Mart",
+      "Supermarket",
+      "South West",
+      "Osogbo",
+      "Funke Alabi",
+      "2022-09-01",
+      "1500000"
+     ],
+     [
+      "6",
+      "Mama Nkechi Trading Co.",
+      "Wholesale",
+      "Lagos",
+      "Surulere",
+      "Chidi Okonkwo",
+      "2024-12-25",
+      "4150000"
+     ]
+    ]
+   },
+   "orders": {
+    "rows": 4266,
+    "bytes": 140025,
+    "columns": [
+     {
+      "name": "order_id",
+      "type": "number",
+      "missing": 0,
+      "distinct": 4266,
+      "min": 10001,
+      "max": 14266
+     },
+     {
+      "name": "order_date",
+      "type": "date",
+      "missing": 0,
+      "distinct": 546,
+      "min": "2025-01-01",
+      "max": "2026-06-30"
+     },
+     {
+      "name": "customer_id",
+      "type": "number",
+      "missing": 0,
+      "distinct": 90,
+      "min": 1,
+      "max": 90
+     },
+     {
+      "name": "product_id",
+      "type": "number",
+      "missing": 0,
+      "distinct": 16,
+      "min": 1,
+      "max": 16
+     },
+     {
+      "name": "quantity",
+      "type": "number",
+      "missing": 0,
+      "distinct": 30,
+      "min": 1,
+      "max": 30
+     },
+     {
+      "name": "unit_price",
+      "type": "number",
+      "missing": 0,
+      "distinct": 25,
+      "min": 3600,
+      "max": 24600
+     },
+     {
+      "name": "discount_pct",
+      "type": "number",
+      "missing": 0,
+      "distinct": 3,
+      "min": 0,
+      "max": 10
+     }
+    ],
+    "preview": [
+     [
+      "10001",
+      "2025-01-01",
+      "27",
+      "3",
+      "14",
+      "18600",
+      "0"
+     ],
+     [
+      "10002",
+      "2025-01-01",
+      "56",
+      "1",
+      "7",
+      "13200",
+      "0"
+     ],
+     [
+      "10003",
+      "2025-01-01",
+      "37",
+      "2",
+      "4",
+      "3600",
+      "0"
+     ],
+     [
+      "10004",
+      "2025-01-01",
+      "26",
+      "7",
+      "28",
+      "6000",
+      "5"
+     ],
+     [
+      "10005",
+      "2025-01-01",
+      "27",
+      "8",
+      "19",
+      "10500",
+      "5"
+     ],
+     [
+      "10006",
+      "2025-01-01",
+      "14",
+      "2",
+      "3",
+      "3600",
+      "0"
+     ]
+    ]
+   },
+   "products": {
+    "rows": 16,
+    "bytes": 678,
+    "columns": [
+     {
+      "name": "product_id",
+      "type": "number",
+      "missing": 0,
+      "distinct": 16,
+      "min": 1,
+      "max": 16
+     },
+     {
+      "name": "product_name",
+      "type": "text",
+      "missing": 0,
+      "distinct": 16
+     },
+     {
+      "name": "category",
+      "type": "text",
+      "missing": 0,
+      "distinct": 4
+     },
+     {
+      "name": "list_price",
+      "type": "number",
+      "missing": 0,
+      "distinct": 14,
+      "min": 4000,
+      "max": 24600
+     }
+    ],
+    "preview": [
+     [
+      "1",
+      "Malt drink 330ml (24)",
+      "Beverages",
+      "14800"
+     ],
+     [
+      "2",
+      "Bottled water 75cl (12)",
+      "Beverages",
+      "4000"
+     ],
+     [
+      "3",
+      "Orange juice 1L (12)",
+      "Beverages",
+      "20800"
+     ],
+     [
+      "4",
+      "Energy drink 250ml (24)",
+      "Beverages",
+      "18800"
+     ],
+     [
+      "5",
+      "Plantain chips 150g (20)",
+      "Snacks",
+      "9900"
+     ],
+     [
+      "6",
+      "Chin chin 200g (20)",
+      "Snacks",
+      "9200"
+     ]
+    ]
+   }
+  }
+ }
+}

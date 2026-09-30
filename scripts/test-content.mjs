@@ -5,11 +5,14 @@
 //   the exact CSV files learners download, reproduces the expected answer
 // - quiz answers point at a real option, IDs are unique
 // - each course's assessment and project are well formed
+// - practice projects: every CSV column is described, dataset-meta.json is up to date,
+//   links point at real courses and datasets, and every SQL starter runs
 // Run: npm run test:content
 import initSqlJs from "sql.js";
 import fs from "node:fs";
 import path from "node:path";
 import { openDataset, query } from "./lib/csv-db.mjs";
+import { parseCsv } from "./lib/csv-parse.mjs";
 
 const SQL = await initSqlJs();
 const IMAGE_SIZES = JSON.parse(fs.readFileSync("src/content/image-sizes.json", "utf8"));
@@ -212,6 +215,44 @@ const badgeModules = [...catalog.matchAll(/\{ id: "([a-z0-9-]+)", title: [^}]*?b
 const checkedModules = new Set(COURSES.flatMap((c) => (fs.existsSync(path.join(CONTENT, c, "assessment.ts")) ? loadAssessments(path.join(CONTENT, c, "assessment.ts")) : [])).filter((a) => a.kind === "module").map((a) => a.moduleId));
 for (const m of badgeModules) if (!checkedModules.has(m)) fail(`module ${m} has a badge but no module check`);
 for (const m of checkedModules) if (!badgeModules.includes(m)) fail(`module check for ${m}, which has no badge in the catalogue`);
+
+// Practice projects (src/content/projects.ts, loaded with its types stripped).
+const { stripTypeScriptTypes } = await import("node:module");
+const os = await import("node:os");
+const { pathToFileURL } = await import("node:url");
+const projectsJs = path.join(os.tmpdir(), `cta-projects-${process.pid}.mjs`);
+fs.writeFileSync(projectsJs, stripTypeScriptTypes(fs.readFileSync("src/content/projects.ts", "utf8").replace(/^import META from .*$/m, "const META = {};")));
+const { DATASETS, DATA_DICTIONARY, PRACTICE_PROJECTS } = await import(pathToFileURL(projectsJs).href);
+fs.rmSync(projectsJs);
+const META = JSON.parse(fs.readFileSync("src/content/dataset-meta.json", "utf8"));
+for (const d of DATASETS) {
+  for (const file of datasetFiles(d.id)) {
+    const [header, ...body] = parseCsv(fs.readFileSync(`public/datasets/${d.id}/${file}.csv`, "utf8").replace(/^\uFEFF/, ""));
+    const meta = META[d.id]?.files[file];
+    if (!meta || meta.rows !== body.length || meta.columns.map((c) => c.name).join() !== header.join()) fail(`${d.id}/${file}: dataset-meta.json is out of date (run npm run datasets:meta)`);
+    const doc = DATA_DICTIONARY[d.id]?.[file];
+    if (!doc?.about) fail(`${d.id}/${file}: no description in DATA_DICTIONARY`);
+    for (const h of header) if (!doc?.columns[h]) fail(`${d.id}/${file}: column "${h}" has no description`);
+    for (const c of Object.keys(doc?.columns ?? {})) if (!header.includes(c)) fail(`${d.id}/${file}: described column "${c}" isn't in the file`);
+  }
+  if (!fs.existsSync(`public/datasets/${d.id}.zip`)) fail(`${d.id}: no ZIP (run npm run datasets:meta)`);
+}
+const projectIds = new Set();
+for (const p of PRACTICE_PROJECTS) {
+  if (projectIds.has(p.id)) fail(`duplicate project id ${p.id}`);
+  projectIds.add(p.id);
+  if (!DATASETS.some((d) => d.id === p.dataset)) fail(`${p.id}: unknown dataset ${p.dataset}`);
+  for (const slug of p.courseSlugs) if (!catalog.includes(`slug: "${slug}"`)) fail(`${p.id}: unknown course ${slug}`);
+  for (const key of ["context", "questions", "deliverables", "approach", "starters"]) if (!p[key]?.length) fail(`${p.id}: no ${key}`);
+  for (const st of p.starters.filter((x) => x.language === "sql")) {
+    try {
+      if (!query(await dataset(p.dataset), st.code).rows.length) fail(`${p.id} starter "${st.title}": returns no rows`);
+    } catch (e) {
+      fail(`${p.id} starter "${st.title}": ${e.message}`);
+    }
+  }
+}
+console.log(`\nProjects: ${PRACTICE_PROJECTS.length} projects on ${DATASETS.length} datasets, every column described`);
 
 console.log(failures ? `\n${failures} problem(s)` : `\nAll ${lessonCount} lessons OK, ${ids.size} practice tasks, ${checkCount} module checks, ${badgeModules.length} module badges`);
 process.exit(failures ? 1 : 0);

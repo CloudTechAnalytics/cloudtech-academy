@@ -16,6 +16,7 @@ const Paths = lazy(() => import("@/pages/Paths"));
 const Students = lazy(() => import("@/pages/Students"));
 const LearnerProfile = lazy(() => import("@/pages/LearnerProfile"));
 const Projects = lazy(() => import("@/pages/Projects"));
+const ProjectDetail = lazy(() => import("@/pages/ProjectDetail"));
 const Certificates = lazy(() => import("@/pages/Certificates"));
 const Verify = lazy(() => import("@/pages/Verify"));
 const About = lazy(() => import("@/pages/About"));
@@ -60,6 +61,7 @@ export function AppRoutes() {
           <Route path="students" element={<Students />} />
           <Route path="learners/:slug" element={<LearnerProfile />} />
           <Route path="projects" element={<Projects />} />
+          <Route path="projects/:slug" element={<ProjectDetail />} />
           <Route path="certificates" element={<Certificates />} />
           <Route path="verify/:credentialId" element={<Verify />} />
           <Route path="about" element={<About />} />

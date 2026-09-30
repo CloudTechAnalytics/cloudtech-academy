@@ -6,6 +6,7 @@ import { renderHeadTags, takeSsrHead } from "./lib/seo";
 import { sitewideJsonLd } from "./lib/schema";
 import { publishedLessons } from "./lib/certificates";
 import { BUNDLED_COURSES } from "./content";
+import { PRACTICE_PROJECTS } from "./content/projects";
 import { SITE } from "./lib/site";
 
 const courses = BUNDLED_COURSES.filter((c) => c.published);
@@ -19,6 +20,7 @@ export const ROUTES = [
   "/students",
   "/paths",
   "/projects",
+  ...PRACTICE_PROJECTS.map((p) => `/projects/${p.id}`),
   "/certificates",
   "/about",
 ];
