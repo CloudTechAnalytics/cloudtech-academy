@@ -30,7 +30,14 @@ export function earnedBadges(course: Course, progress: Progress, attempts: Attem
 }
 
 /** Opens LinkedIn with a post already written; the learner attaches the badge image. */
+export const linkedInShareUrl = (text: string) => `https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(text)}`;
+
 export function linkedInPostUrl(stage: BadgeStage, courseTitle: string, courseUrl: string) {
-  const text = `I've earned the "${stage.title}" badge in ${courseTitle} on CloudTech Academy. ${stage.shareLine}\n\n${courseUrl}\n\n#CloudTechAcademy #DataAnalytics #Learning`;
-  return `https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(text)}`;
+  return linkedInShareUrl(
+    `I've earned the "${stage.title}" badge in ${courseTitle} on CloudTech Academy. ${stage.shareLine}\n\n${courseUrl}\n\n#CloudTechAcademy #DataAnalytics #Learning`,
+  );
+}
+
+export function quickPostText(badge: string, courseTitle: string, minutes: number, courseUrl: string) {
+  return `I've just earned the "${badge}" badge from CloudTech Academy after completing "${courseTitle}", a ${minutes}-minute course.\n\nTry it free: ${courseUrl}\n\n#CloudTechAcademy #Learning #Skills`;
 }

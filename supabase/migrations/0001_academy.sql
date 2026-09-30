@@ -470,9 +470,25 @@ language sql stable security definer set search_path = public as $$
 $$;
 
 -- Admin overview of learners.
+/* ============================================================ quick courses
+   Short courses live in the site's content, not in these tables; a learner who passes one
+   records it here (keyed by the course slug) so it appears on their dashboard and in /admin.
+*/
+create table public.quick_completions (
+  user_id      uuid not null references auth.users (id) on delete cascade,
+  slug         text not null check (length(slug) between 1 and 100),
+  score        int not null check (score between 0 and 100),
+  completed_at timestamptz not null default now(),
+  primary key (user_id, slug)
+);
+alter table public.quick_completions enable row level security;
+create policy "read own quick completions" on public.quick_completions for select using (user_id = auth.uid() or public.is_admin());
+create policy "record own quick completions" on public.quick_completions for insert to authenticated with check (user_id = auth.uid());
+create policy "update own quick completions" on public.quick_completions for update using (user_id = auth.uid()) with check (user_id = auth.uid());
+
 create or replace function public.admin_list_students()
 returns table (user_id uuid, full_name text, email text, joined_at timestamptz, enrollments bigint, completed_courses bigint,
-               certificates bigint, lessons_completed bigint, last_active_at timestamptz)
+               certificates bigint, lessons_completed bigint, quick_badges bigint, last_active_at timestamptz)
 language plpgsql stable security definer set search_path = public as $$
 begin
   if not public.is_admin() then raise exception 'Admins only.'; end if;
@@ -482,12 +498,14 @@ begin
          (select count(*) from public.enrollments e where e.user_id = p.id and e.completed_at is not null),
          (select count(*) from public.certificates c where c.user_id = p.id and c.status = 'valid'),
          (select count(*) from public.lesson_progress lp where lp.user_id = p.id),
-         -- The latest thing the learner did: enrolled, finished a lesson or exercise, or took an assessment.
+         (select count(*) from public.quick_completions q where q.user_id = p.id),
+         -- The latest thing the learner did: enrolled, finished a lesson or exercise, took an assessment or passed a quick course.
          greatest(
            (select max(e.enrolled_at) from public.enrollments e where e.user_id = p.id),
            (select max(lp.completed_at) from public.lesson_progress lp where lp.user_id = p.id),
            (select max(x.completed_at) from public.exercise_completions x where x.user_id = p.id),
-           (select max(a.submitted_at) from public.assessment_attempts a where a.user_id = p.id)
+           (select max(a.submitted_at) from public.assessment_attempts a where a.user_id = p.id),
+           (select max(q.completed_at) from public.quick_completions q where q.user_id = p.id)
          )
   from public.profiles p
   where p.role <> 'admin'

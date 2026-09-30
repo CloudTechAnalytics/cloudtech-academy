@@ -6,6 +6,8 @@ import { ButtonLink } from "@/components/Button";
 import { CourseCard } from "@/components/CourseCard";
 import { Reveal } from "@/components/Reveal";
 import { webSiteJsonLd } from "@/lib/schema";
+import { QUICK_COURSES } from "@/content/quick";
+import { QuickCard } from "@/components/QuickCard";
 
 /** A learner in an online lesson, with the kind of progress card the Academy shows. Photo: Unsplash licence. */
 function LearnerVisual() {
@@ -90,6 +92,32 @@ export default function Home() {
           <Reveal delay={120} className="lg:col-span-6">
             <LearnerVisual />
           </Reveal>
+        </div>
+      </section>
+
+      <section aria-labelledby="quick-title" className="border-b border-line bg-paper py-16 sm:py-20">
+        <div className="container-page">
+          <Reveal className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+            <div className="max-w-2xl">
+              <p className="kicker">New · Quick skills</p>
+              <h2 id="quick-title" className="mt-3 font-serif text-[2.1rem] leading-[1.1] sm:text-[2.5rem]">
+                Learn one useful skill in 20 minutes.
+              </h2>
+              <p className="mt-3 text-[1.0625rem] leading-relaxed text-muted">
+                AI prompting, Claude, ChatGPT, Canva, CapCut, your CV and LinkedIn. Pass a five-question quiz and earn a badge to share. No account needed to start.
+              </p>
+            </div>
+            <Link to="/quick" className="inline-flex items-center gap-1.5 text-[0.9375rem] font-semibold text-brass-dark hover:text-ink">
+              All {QUICK_COURSES.length} quick skills <ArrowRight aria-hidden className="h-4 w-4" />
+            </Link>
+          </Reveal>
+          <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {QUICK_COURSES.slice(0, 4).map((c, i) => (
+              <Reveal as="li" key={c.slug} delay={i * 60}>
+                <QuickCard course={c} compact />
+              </Reveal>
+            ))}
+          </ul>
         </div>
       </section>
 

@@ -15,6 +15,7 @@ import {
   type Certificate,
   type Enrollment,
   type ProjectSubmission,
+  type QuickCompletion,
   type User,
 } from "./types";
 
@@ -31,6 +32,7 @@ type Store = {
   courses: Course[] | null; // admin edits (null = bundled content)
   assessments: AssessmentDef[] | null;
   activity: Record<string, string>; // userId -> last active
+  quick: Record<string, QuickCompletion[]>; // userId -> passed quick courses
 };
 
 const KEY = "ct-academy-demo-v1";
@@ -46,6 +48,7 @@ const empty = (): Store => ({
   courses: null,
   assessments: null,
   activity: {},
+  quick: {},
 });
 
 function load(): Store {
@@ -286,6 +289,21 @@ export function createDemoBackend(): Backend {
       save(s);
       return cert;
     },
+    async recordQuickCourse(slug, score) {
+      const u = requireUser();
+      const s = load();
+      const list = (s.quick[u.id] ??= []);
+      const prev = list.find((q) => q.slug === slug);
+      if (prev) {
+        if (score > prev.score) Object.assign(prev, { score, completedAt: now() });
+      } else list.push({ slug, score, completedAt: now() });
+      s.activity[u.id] = now();
+      save(s);
+    },
+    async listQuickCompletions() {
+      const u = current();
+      return u ? (load().quick[u.id] ?? []) : [];
+    },
     async listMyCertificates() {
       const u = current();
       return u ? load().certificates.filter((c) => c.userId === u.id) : [];
@@ -372,6 +390,7 @@ export function createDemoBackend(): Backend {
           enrollments: (s.enrollments[u.id] ?? []).length,
           completedCourses: (s.enrollments[u.id] ?? []).filter((e) => e.completedAt).length,
           certificates: s.certificates.filter((c) => c.userId === u.id && c.status === "valid").length,
+          quickBadges: (s.quick[u.id] ?? []).length,
           lessonsCompleted: Object.entries(s.lessons)
             .filter(([k]) => k.startsWith(`${u.id}|`))
             .reduce((n, [, ids]) => n + ids.length, 0),
@@ -385,6 +404,7 @@ export function createDemoBackend(): Backend {
         const s = load();
         return {
           summary,
+          quick: s.quick[userId] ?? [],
           courses: (s.enrollments[userId] ?? []).map((e) => {
             const c = courses(s).find((x) => x.id === e.courseId);
             const total = c ? c.modules.flatMap((m) => m.lessons).filter((l) => l.published && l.required).length : 0;

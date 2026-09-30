@@ -69,6 +69,7 @@ export type StudentSummary = {
   completedCourses: number;
   certificates: number;
   lessonsCompleted: number;
+  quickBadges: number;
   /** The latest enrolment, lesson, exercise or assessment; null if they haven't started. */
   lastActiveAt: string | null;
 };
@@ -76,7 +77,11 @@ export type StudentSummary = {
 export type StudentDetail = {
   summary: StudentSummary;
   courses: { courseId: string; courseTitle: string; enrolledAt: string; completedLessons: number; totalLessons: number; completedAt: string | null }[];
+  quick: QuickCompletion[];
 };
+
+/** A passed quick course (see src/content/quick.ts). */
+export type QuickCompletion = { slug: string; score: number; completedAt: string };
 
 export type AdminSubmission = ProjectSubmission & { studentName: string; projectTitle: string };
 
@@ -120,6 +125,11 @@ export interface Backend {
   issueCertificate(courseId: string): Promise<Certificate>;
   listMyCertificates(): Promise<Certificate[]>;
   getMyCertificate(credentialId: string): Promise<Certificate | null>;
+
+  /* ---------- quick courses ---------- */
+  /** Saves a passed quick course for the signed-in learner, keeping their best score. */
+  recordQuickCourse(slug: string, score: number): Promise<void>;
+  listQuickCompletions(): Promise<QuickCompletion[]>;
   verifyCertificate(credentialId: string): Promise<PublicCertificate | null>;
 
   /* ---------- admin ---------- */

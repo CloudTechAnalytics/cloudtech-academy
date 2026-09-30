@@ -7,7 +7,11 @@ import { SITE } from "@/lib/site";
 const HOST = SITE.url.replace(/^https?:\/\//, "");
 
 export type BadgeData = {
-  stage: BadgeId;
+  /** A course stage; quick-course badges pass their own icon and kicker instead. */
+  stage?: BadgeId;
+  icon?: LucideIcon;
+  kicker?: string;
+  /** Text on the ribbon. */
   stageTitle: string;
   courseTitle: string;
   /** Omitted on the Certificates page examples. */
@@ -20,19 +24,20 @@ const S = 1200; // square, the shape LinkedIn shows best in a post
 const ICONS: Record<BadgeId, LucideIcon> = { started: Footprints, halfway: Mountain, lessons: BookCheck, assessment: ClipboardCheck };
 const STAGE_NUMBER: Record<BadgeId, number> = { started: 1, halfway: 2, lessons: 3, assessment: 4 };
 
-const titleSize = (t: string) => (t.length > 30 ? 46 : 56);
+const titleSize = (t: string) => (t.length > 34 ? 40 : t.length > 30 ? 46 : 56);
 
-/** A course-stage badge as an SVG: a brass medal with the stage's icon, on the certificate's paper. */
+/** A badge as an SVG: a brass medal with an icon, on the certificate's paper. Used for course stages and quick courses. */
 export const BadgeArtwork = forwardRef<SVGSVGElement, { data: BadgeData; className?: string }>(function BadgeArtwork(
   { data, className = "h-auto w-full" },
   ref,
 ) {
   const serif = "'Playfair Display', Georgia, 'Times New Roman', serif";
   const sans = "Inter, 'Segoe UI', Arial, sans-serif";
-  const Icon = ICONS[data.stage];
+  const Icon = data.stage ? ICONS[data.stage] : (data.icon ?? ClipboardCheck);
+  const kicker = data.stage ? `STAGE ${STAGE_NUMBER[data.stage]} OF 4` : (data.kicker ?? "SKILL BADGE");
   const cx = S / 2;
   const cy = 500;
-  const gid = `medal-${data.stage}`;
+  const gid = `medal-${data.stage ?? "quick"}`;
   return (
     <svg
       ref={ref}
@@ -71,7 +76,7 @@ export const BadgeArtwork = forwardRef<SVGSVGElement, { data: BadgeData; classNa
         fill="#FFFFFF"
         fillOpacity="0.85"
       >
-        {`STAGE ${STAGE_NUMBER[data.stage]} OF 4`}
+        {kicker}
       </text>
 
       {/* Ribbon */}

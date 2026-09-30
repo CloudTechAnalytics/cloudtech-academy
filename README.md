@@ -95,6 +95,16 @@ Lessons edited in `/admin` are stored in the database. The next seed run overwri
 
 The practice datasets are fictional and are generated with fixed seeds by `npm run datasets`. Each dataset has its own seed, so changing one never changes another. Explore them with `node scripts/sql.mjs --data sales "SELECT ..."`.
 
+### Quick skills
+
+Short courses of 15–30 minutes live at `/quick`. Each is one file, `src/content/quick/NN-slug.md`:
+
+- Front matter: `title`, `badge` (the name printed on the badge), `minutes`, `category` (one of `QUICK_CATEGORIES` in `src/content/quick.ts`), `icon` (a key in `src/components/QuickIcon.tsx`), `summary` and `skills` (separated by `;`).
+- Three or more `## ` steps, including one called `## Try it`.
+- A final ` ```quiz ` block of exactly five questions. Three right earns the badge.
+
+Anyone can take a quick course without an account. Signed-in learners' badges are saved in `quick_completions` and shown on their dashboard and in `/admin`. Badges are for sharing; unlike certificates they have no verification page. `npm run test:content` checks every quick course.
+
 ## Structure
 
 ```

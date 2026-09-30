@@ -11,6 +11,8 @@ const Assessment = lazy(() => import("@/pages/Assessment"));
 const Project = lazy(() => import("@/pages/Project"));
 const CourseCertificate = lazy(() => import("@/pages/CourseCertificate"));
 const Paths = lazy(() => import("@/pages/Paths"));
+const QuickCourses = lazy(() => import("@/pages/QuickCourses"));
+const QuickCourse = lazy(() => import("@/pages/QuickCourse"));
 const Projects = lazy(() => import("@/pages/Projects"));
 const Certificates = lazy(() => import("@/pages/Certificates"));
 const Verify = lazy(() => import("@/pages/Verify"));
@@ -48,6 +50,8 @@ export function AppRoutes() {
           <Route path="courses/:slug/project" element={<Project />} />
           <Route path="courses/:slug/certificate" element={<CourseCertificate />} />
           <Route path="learn/:course/:lesson" element={<Learn />} />
+          <Route path="quick" element={<QuickCourses />} />
+          <Route path="quick/:slug" element={<QuickCourse />} />
           <Route path="paths" element={<Paths />} />
           <Route path="projects" element={<Projects />} />
           <Route path="certificates" element={<Certificates />} />

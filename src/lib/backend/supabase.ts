@@ -11,6 +11,7 @@ import {
   type Backend,
   type Certificate,
   type ProjectSubmission,
+  type QuickCompletion,
   type Role,
   type User,
 } from "./types";
@@ -74,6 +75,8 @@ const toCourse = (r: Row): Course => ({
     )
     .sort((a, b) => a.position - b.position),
 });
+
+const toQuick = (r: Row): QuickCompletion => ({ slug: r.slug, score: r.score, completedAt: r.completed_at });
 
 const toCertificate = (r: Row): Certificate => ({
   id: r.id,
@@ -288,6 +291,19 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
     async issueCertificate(courseId) {
       return toCertificate(check(await sb.rpc("issue_certificate", { p_course_id: courseId })) as Row);
     },
+    async recordQuickCourse(slug, score) {
+      const { data } = await sb.auth.getSession();
+      if (!data.session) throw new BackendError("Sign in to save your badge.");
+      const userId = data.session.user.id;
+      const prev = check(await sb.from("quick_completions").select("score").eq("user_id", userId).eq("slug", slug).maybeSingle()) as Row | null;
+      if (prev && prev.score >= score) return;
+      check(await sb.from("quick_completions").upsert({ user_id: userId, slug, score, completed_at: new Date().toISOString() }));
+    },
+    async listQuickCompletions() {
+      const { data } = await sb.auth.getSession();
+      if (!data.session) return [];
+      return (check(await sb.from("quick_completions").select("*").eq("user_id", data.session.user.id)) as Row[]).map(toQuick);
+    },
     async listMyCertificates() {
       const { data } = await sb.auth.getSession();
       if (!data.session) return [];
@@ -404,20 +420,23 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
           completedCourses: Number(r.completed_courses),
           certificates: Number(r.certificates),
           lessonsCompleted: Number(r.lessons_completed),
+          quickBadges: Number(r.quick_badges),
           lastActiveAt: r.last_active_at ?? null,
         }));
       },
       async getStudent(userId) {
         const summary = (await backend.admin.listStudents()).find((s) => s.userId === userId);
         if (!summary) return null;
-        const [enrollments, progress, courses] = await Promise.all([
+        const [enrollments, progress, courses, quick] = await Promise.all([
           sb.from("enrollments").select("*").eq("user_id", userId),
           sb.from("lesson_progress").select("course_id").eq("user_id", userId),
           backend.listCourses({ includeUnpublished: true }),
+          sb.from("quick_completions").select("*").eq("user_id", userId),
         ]);
         const done = (check(progress) as Row[]).reduce<Record<string, number>>((acc, r) => ((acc[r.course_id] = (acc[r.course_id] ?? 0) + 1), acc), {});
         return {
           summary,
+          quick: (check(quick) as Row[]).map(toQuick),
           courses: (check(enrollments) as Row[]).map((e) => {
             const c = courses.find((x) => x.id === e.course_id);
             return {

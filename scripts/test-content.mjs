@@ -137,6 +137,41 @@ for (const course of COURSES) {
   }
 }
 
+// Quick courses: front matter, a Try it step, and a final five-question badge quiz.
+const QUICK_DIR = path.join(CONTENT, "quick");
+const QUICK_ICONS = [...fs.readFileSync("src/components/QuickIcon.tsx", "utf8").matchAll(/^\s+(\w+): \w+,$/gm)].map((m) => m[1]);
+const QUICK_CATS = [...fs.readFileSync("src/content/quick.ts", "utf8").match(/QUICK_CATEGORIES = \[([^\]]*)\]/)[1].matchAll(/"([^"]+)"/g)].map((m) => m[1]);
+const quickFiles = fs.existsSync(QUICK_DIR) ? fs.readdirSync(QUICK_DIR).filter((f) => f.endsWith(".md")).sort() : [];
+console.log(`\n=== quick (${quickFiles.length} courses)`);
+for (const f of quickFiles) {
+  console.log(f);
+  const raw = fs.readFileSync(path.join(QUICK_DIR, f), "utf8").replace(/\r\n/g, "\n");
+  const fm = raw.match(/^---\n([\s\S]*?)\n---\n/);
+  const meta = Object.fromEntries((fm?.[1] ?? "").split("\n").map((l) => [l.slice(0, l.indexOf(":")).trim(), l.slice(l.indexOf(":") + 1).trim()]));
+  for (const k of ["title", "badge", "minutes", "category", "icon", "summary", "skills"]) if (!meta[k]) fail(`missing front matter "${k}"`);
+  if (!(Number(meta.minutes) >= 10 && Number(meta.minutes) <= 30)) fail(`minutes should be 10–30, got ${meta.minutes}`);
+  if (meta.category && !QUICK_CATS.includes(meta.category)) fail(`unknown category "${meta.category}"`);
+  if (meta.icon && !QUICK_ICONS.includes(meta.icon)) fail(`unknown icon "${meta.icon}"`);
+  const body = raw.slice(fm ? fm[0].length : 0);
+  if ((body.match(/^## /gm) ?? []).length < 3) fail("needs at least three ## steps");
+  if (!/^## Try it$/m.test(body)) fail('needs a "## Try it" step');
+  const quiz = body.trimEnd().match(/```quiz\s*\n([\s\S]*?)\n```$/);
+  if (!quiz) fail("the badge quiz must be the last block");
+  else {
+    try {
+      const qs = JSON.parse(quiz[1]);
+      if (qs.length !== 5) fail(`badge quiz has ${qs.length} questions, expected 5`);
+      qs.forEach((q, i) => {
+        if (!(q.answer >= 0 && q.answer < q.options.length)) fail(`quiz question ${i + 1}: answer out of range`);
+        if (!q.explanation) fail(`quiz question ${i + 1}: no explanation`);
+      });
+    } catch (e) {
+      fail(`quiz JSON: ${e.message}`);
+    }
+  }
+  if ((body.match(/```quiz/g) ?? []).length > 1) fail("only the final badge quiz is allowed");
+}
+
 // Assessments and projects are plain data in TypeScript; check them loosely.
 for (const course of COURSES) {
   const file = path.join(CONTENT, course, "assessment.ts");
@@ -156,5 +191,5 @@ for (const course of COURSES) {
   if (!fs.existsSync(p) || !/tasks: \[/.test(fs.readFileSync(p, "utf8"))) fail(`${course}: project missing or has no tasks`);
 }
 
-console.log(failures ? `\n${failures} problem(s)` : `\nAll ${lessonCount} lessons OK, ${ids.size} practice tasks`);
+console.log(failures ? `\n${failures} problem(s)` : `\nAll ${lessonCount} lessons OK, ${ids.size} practice tasks, ${quickFiles.length} quick courses`);
 process.exit(failures ? 1 : 0);

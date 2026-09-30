@@ -4,7 +4,11 @@ import { Award, BookOpen, CheckCircle2 } from "lucide-react";
 import { useSeo } from "@/lib/seo";
 import { useAuth, PageLoading, RequireAuth } from "@/lib/auth";
 import { useCourses } from "@/lib/data";
-import { getBackend, type AttemptResult, type Certificate, type Enrollment, type Progress } from "@/lib/backend";
+import { getBackend, type AttemptResult, type Certificate, type Enrollment, type Progress, type QuickCompletion } from "@/lib/backend";
+import { QUICK_COURSES } from "@/content/quick";
+import { BadgeArtwork } from "@/components/BadgeArtwork";
+import { QuickBadge } from "@/components/QuickBadge";
+import { quickIcon } from "@/components/QuickIcon";
 import { publishedLessons } from "@/lib/certificates";
 import { formatDate, percent } from "@/lib/format";
 import { ButtonLink } from "@/components/Button";
@@ -20,11 +24,14 @@ function DashboardInner() {
   const courses = useCourses();
   const [rows, setRows] = useState<Row[] | null>(null);
   const [certs, setCerts] = useState<Certificate[]>([]);
+  const [quick, setQuick] = useState<QuickCompletion[]>([]);
+  const [openQuick, setOpenQuick] = useState<string | null>(null);
 
   useEffect(() => {
     void (async () => {
       const b = await getBackend();
-      const [enrollments, certificates] = await Promise.all([b.listEnrollments(), b.listMyCertificates()]);
+      const [enrollments, certificates, quickDone] = await Promise.all([b.listEnrollments(), b.listMyCertificates(), b.listQuickCompletions()]);
+      setQuick(quickDone);
       const [progress, attempts] = await Promise.all([
         Promise.all(enrollments.map((e) => b.getProgress(e.courseId))),
         Promise.all(
@@ -56,6 +63,8 @@ function DashboardInner() {
   const enrolledIds = new Set(active.map((a) => a.course.id));
   const suggestions = courses.filter((c) => !enrolledIds.has(c.id)).slice(0, 3);
   const lessonsDone = active.reduce((n, a) => n + a.done, 0);
+  const earnedQuick = QUICK_COURSES.filter((c) => quick.some((q) => q.slug === c.slug));
+  const openCourse = earnedQuick.find((c) => c.slug === openQuick);
 
   return (
     <div className="container-page py-12 sm:py-16">
@@ -137,6 +146,43 @@ function DashboardInner() {
           </ul>
         </section>
       )}
+
+      <section className="mt-14" aria-labelledby="my-quick">
+        <div className="flex flex-wrap items-baseline justify-between gap-2">
+          <h2 id="my-quick" className="font-serif text-[1.7rem]">
+            Quick skill badges
+          </h2>
+          <Link to="/quick" className="text-[0.9375rem] font-semibold text-brass-dark hover:text-ink">
+            Browse quick skills →
+          </Link>
+        </div>
+        {earnedQuick.length === 0 ? (
+          <p className="mt-3 text-muted">Finish a 20-minute quick skill and pass its quiz to earn your first badge.</p>
+        ) : (
+          <>
+            <ul className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-6">
+              {earnedQuick.map((c) => (
+                <li key={c.slug}>
+                  <button
+                    type="button"
+                    onClick={() => setOpenQuick(openQuick === c.slug ? null : c.slug)}
+                    aria-pressed={openQuick === c.slug}
+                    className={`w-full rounded-xl border p-2 text-left transition-colors ${openQuick === c.slug ? "border-brass bg-brass-pale/40" : "border-line bg-paper hover:border-line-strong"}`}
+                  >
+                    <BadgeArtwork data={{ icon: quickIcon(c.icon), kicker: `${c.minutes}-MINUTE COURSE`, stageTitle: "Skill badge", courseTitle: c.badge }} className="h-auto w-full rounded-lg" />
+                    <span className="mt-2 block text-[0.8125rem] font-semibold leading-snug">{c.badge}</span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+            {openCourse && (
+              <div className="mt-5 rounded-2xl border border-line bg-paper p-5 sm:p-6">
+                <QuickBadge key={openCourse.slug} course={openCourse} name={auth.user.fullName} />
+              </div>
+            )}
+          </>
+        )}
+      </section>
 
       {certs.length > 0 && (
         <section className="mt-14" aria-labelledby="my-certs">

@@ -23,6 +23,7 @@ export default function AdminOverview() {
   const cards = [
     { label: "Published courses", value: data.courses.filter((c) => c.published && c.status === "available").length, to: "/admin/courses" },
     { label: "Students", value: data.students.length, to: "/admin/students" },
+    { label: "Quick skill badges earned", value: data.students.reduce((n, s) => n + s.quickBadges, 0), to: "/admin/students" },
     { label: "Active in the last 7 days", value: data.students.filter((s) => daysSince(s.lastActiveAt) <= 7).length, to: "/admin/students" },
     { label: "Submissions to review", value: data.submissions.filter((s) => s.status === "submitted").length, to: "/admin/submissions" },
     { label: "Certificates issued", value: data.certificates.filter((c) => c.status === "valid").length, to: "/admin/certificates" },
@@ -31,7 +32,7 @@ export default function AdminOverview() {
   return (
     <>
       <AdminHeading title="Overview" />
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
+      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
         {cards.map((c) => (
           <Link key={c.label} to={c.to} className="rounded-2xl border border-line bg-paper p-5 hover:border-line-strong">
             <p className="text-[0.8125rem] text-muted">{c.label}</p>
