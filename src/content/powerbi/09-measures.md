@@ -90,7 +90,7 @@ And **Revenue YTD** at 2026 March shows Q1 2026 in total.
 ```answer
 {
   "id": "pbi-09-p2",
-  "prompt": "What is **Revenue YTD** at the end of **March 2026**, to the nearest naira?",
+  "prompt": "What is **Revenue YTD** at the end of **March 2026**? (A rounded figure is fine.)",
   "answer": 143209130,
   "tolerance": 1,
   "format": "naira",

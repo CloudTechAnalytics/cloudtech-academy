@@ -88,10 +88,11 @@ Ashgrove Chambers, the law firm: can a client have many matters? Yes. Can a matt
   "id": "dmo-04-p3",
   "prompt": "A hospital: a doctor treats many patients, and a patient sees many doctors. What is the name for the extra table you need? (Two words.)",
   "answer": "bridge table",
-  "accept": ["junction table", "link table", "associative table", "bridging table", "join table", "linking table"],
+  "accept": ["junction table", "link table", "associative table", "bridging table", "join table", "linking table", "bridge", "junction"],
   "format": "text",
   "explanation": "A bridge (or junction) table such as appointments(doctor_id, patient_id, appointment_date) resolves the many-to-many.",
-  "required": true
+  "required": true,
+  "hint": "It sits between the two tables and holds both keys. The lesson's diagram shows one for students and courses."
 }
 ```
 

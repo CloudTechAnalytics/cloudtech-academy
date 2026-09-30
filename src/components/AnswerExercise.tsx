@@ -97,7 +97,7 @@ export function AnswerExercise({
           inputMode={numeric ? "decimal" : "text"}
           autoComplete="off"
           spellCheck={false}
-          placeholder={numeric ? (spec.format === "naira" ? "e.g. 1250000" : spec.format === "percent" ? "e.g. 18.5" : "Your answer") : "Your answer"}
+          placeholder={numeric ? (spec.format === "naira" ? "e.g. 1250000 or 1.25m" : spec.format === "percent" ? "e.g. 18.5" : "Your answer") : "Your answer"}
           className="min-w-0 flex-1 rounded-lg border border-line-strong bg-ivory px-3.5 py-2.5 font-mono text-[0.9375rem] text-ink focus:border-ink/60 focus:outline-2 focus:outline-offset-2 focus:outline-brass-dark"
         />
         <button type="submit" className="inline-flex min-h-11 items-center justify-center rounded-lg bg-ink px-5 text-[0.9375rem] font-semibold text-ivory hover:bg-ink/85">

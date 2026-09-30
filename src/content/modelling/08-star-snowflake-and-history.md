@@ -61,7 +61,8 @@ Choosing the SCD type, attribute by attribute, for Kolanut's customers:
   "answer": 2,
   "format": "number",
   "tolerance": 0,
-  "required": true
+  "required": true,
+  "hint": "Type 1 overwrites the old value. The next type number keeps history."
 }
 ```
 

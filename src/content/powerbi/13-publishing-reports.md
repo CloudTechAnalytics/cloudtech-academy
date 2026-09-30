@@ -69,7 +69,8 @@ Kolanut's rollout plan:
   "answer": "Publish to web",
   "accept": ["publish to the web"],
   "format": "text",
-  "required": true
+  "required": true,
+  "hint": "It's under File → Embed report, and it makes the report public."
 }
 ```
 
@@ -78,9 +79,10 @@ Kolanut's rollout plan:
   "id": "pbi-13-p2",
   "prompt": "Which Power BI feature makes each regional manager see only their own region's rows in the same report? (Give the three-word name.)",
   "answer": "Row-level security",
-  "accept": ["row level security", "rls"],
+  "accept": ["row level security", "rls", "Row-level-security"],
   "format": "text",
-  "required": true
+  "required": true,
+  "hint": "It's often shortened to RLS, and it's set up with roles in Modeling → Manage roles."
 }
 ```
 

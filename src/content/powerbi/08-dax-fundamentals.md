@@ -87,7 +87,7 @@ Category = RELATED ( products[category] )
 ```answer
 {
   "id": "pbi-08-p1",
-  "prompt": "What is **Avg Revenue per Line** for **2026** (January–June), to the nearest naira?",
+  "prompt": "What is **Avg Revenue per Line** for **2026** (January–June)? (A rounded figure is fine.)",
   "answer": 202741,
   "tolerance": 1,
   "format": "naira",

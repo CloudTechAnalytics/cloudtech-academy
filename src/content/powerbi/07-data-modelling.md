@@ -74,7 +74,7 @@ Now `Date[Year]` and `Date[Month]` on a matrix, `orders[revenue]` in values, giv
 ```answer
 {
   "id": "pbi-07-p1",
-  "prompt": "Using the date table, what was revenue in **Q2 2026** (April–June), to the nearest naira?",
+  "prompt": "Using the date table, what was revenue in **Q2 2026** (April–June)? (A rounded figure is fine.)",
   "answer": 147521325,
   "tolerance": 1,
   "format": "naira",

@@ -56,7 +56,8 @@ Try it on Ashgrove Chambers, the law firm in the Power BI course: *clients have 
   "accept": ["the physical level", "physical model", "physical level"],
   "format": "text",
   "explanation": "Conceptual and logical models describe things and attributes; data types belong to a specific database, so they're physical.",
-  "required": true
+  "required": true,
+  "hint": "Conceptual, logical, physical: which level is tied to one particular database?"
 }
 ```
 

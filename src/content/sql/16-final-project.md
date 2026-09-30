@@ -50,7 +50,7 @@ How your project is assessed:
 - **Clear explanations.** One or two sentences per question in plain language. A manager should understand them without reading the SQL.
 - **Honest limits.** If the data can't fully answer something, say so.
 
-To earn your certificate you need to complete every lesson, complete the practice exercises, pass the final assessment (70% or more) and submit this project.
+To earn your certificate you need to complete every lesson, complete the practice exercises, pass the final assessment (60% or more) and submit this project.
 
 > [!TIP]
 > Start with the questions you find easiest, check each result against numbers you've seen in the lessons, and keep your queries in the notes box as you go. You can come back and edit your submission at any time before you submit.

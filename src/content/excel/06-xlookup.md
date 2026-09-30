@@ -71,7 +71,7 @@ After the walkthrough below, the Orders table has three looked-up columns:
 ```answer
 {
   "id": "xls-06-p1",
-  "prompt": "What is Kolanut's total revenue from customers in the **Lagos** region, to the nearest naira?",
+  "prompt": "What is Kolanut's total revenue from customers in the **Lagos** region? (A rounded figure is fine.)",
   "answer": 411162300,
   "tolerance": 1,
   "format": "naira",
@@ -87,7 +87,7 @@ After the walkthrough below, the Orders table has three looked-up columns:
 ```answer
 {
   "id": "xls-06-p2",
-  "prompt": "What is total revenue from the **Beverages** category, to the nearest naira?",
+  "prompt": "What is total revenue from the **Beverages** category? (A rounded figure is fine.)",
   "answer": 224612360,
   "tolerance": 1,
   "format": "naira",

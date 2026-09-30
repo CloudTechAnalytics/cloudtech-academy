@@ -69,10 +69,11 @@ Designing Kolanut's product table, step by step:
   "id": "dmo-02-p1",
   "prompt": "Complete the grain of Kolanut's `orders.csv`: one row per ___ on one order. (One word.)",
   "answer": "product",
-  "accept": ["product line", "item", "line", "order line", "line item"],
+  "accept": ["product line", "item", "line", "order line", "line item", "products"],
   "format": "text",
   "explanation": "Each row has one product_id and a quantity of it. In this dataset each order_id appears once, so an order line and an order coincide, but the design would allow several products per order.",
-  "required": true
+  "required": true,
+  "hint": "Look at the columns: each row has one product_id and a quantity of it."
 }
 ```
 

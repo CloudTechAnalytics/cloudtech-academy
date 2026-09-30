@@ -25,6 +25,18 @@ const normText = (s: string) =>
 
 export const defaultTolerance = (answer: number) => (Number.isInteger(answer) ? 0.5 : 0.051);
 
+/**
+ * How far off a learner's answer may be and still count. Money is accepted when rounded
+ * sensibly (₦16.6m for ₦16,646,820: within 0.5%), and percentages within half a point, so
+ * nobody fails a task over rounding. Counts stay exact.
+ */
+export function leniency(spec: AnswerSpec & { answer: number }) {
+  const exact = spec.tolerance ?? defaultTolerance(spec.answer);
+  if (spec.format === "naira") return Math.max(exact, Math.abs(spec.answer) * 0.005);
+  if (spec.format === "percent") return Math.max(exact, 0.5);
+  return exact;
+}
+
 export type AnswerCheck = { correct: boolean; message: string };
 
 export function checkAnswer(spec: AnswerSpec, input: string): AnswerCheck {
@@ -32,7 +44,7 @@ export function checkAnswer(spec: AnswerSpec, input: string): AnswerCheck {
   if (typeof spec.answer === "number") {
     const n = readNumber(input);
     if (!n) return { correct: false, message: "That doesn't look like a number. Type digits only, for example 1250000 or 18.5." };
-    const tol = spec.tolerance ?? defaultTolerance(spec.answer);
+    const tol = leniency(spec as AnswerSpec & { answer: number });
     const candidates = [n.value];
     // "0.185" for an answer of 18.5%.
     if (spec.format === "percent" && !n.percent && Math.abs(n.value) <= 1 && Math.abs(spec.answer) > 1) candidates.push(n.value * 100);

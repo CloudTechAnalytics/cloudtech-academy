@@ -51,7 +51,7 @@ export default function AdminCourses() {
         status: "coming_soon",
         skills: [],
         prerequisites: [],
-        certificate: { enabled: true, requireAllLessons: true, requireExercises: true, requireProject: false, passingScore: 70 },
+        certificate: { enabled: true, requireAllLessons: true, requireExercises: true, requireProject: false, passingScore: 60 },
         published: false,
         position: (courses?.length ?? 0) + 1,
       });

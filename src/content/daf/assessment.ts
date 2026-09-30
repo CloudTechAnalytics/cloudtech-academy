@@ -5,7 +5,7 @@ export const DAF_ASSESSMENT: AssessmentDef = {
   id: "data-analytics-foundations-final",
   courseId: "data-analytics-foundations",
   title: "Data Analytics Foundations: final assessment",
-  passingScore: 70,
+  passingScore: 60,
   questions: [
     {
       id: "dafq01",

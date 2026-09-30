@@ -64,7 +64,8 @@ A second star for **court work** would have a different grain (one row per heari
   "accept": ["invoice", "the invoices table"],
   "format": "text",
   "explanation": "Invoices are the events with a number to add up (amount_ngn); clients and matters describe them.",
-  "required": true
+  "required": true,
+  "hint": "The fact table holds the events with a number to add up. Which table has an amount in naira?"
 }
 ```
 

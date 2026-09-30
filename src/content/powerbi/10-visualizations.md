@@ -66,7 +66,7 @@ Tick **Wholesale** in the slicer and every visual on the page recalculates for w
 ```answer
 {
   "id": "pbi-10-p1",
-  "prompt": "Click **North West** in the region bar chart with the Year slicer set to **2026**. What does the Revenue card show, to the nearest naira?",
+  "prompt": "Click **North West** in the region bar chart with the Year slicer set to **2026**. What does the Revenue card show? (A rounded figure is fine.)",
   "answer": 16646820,
   "tolerance": 1,
   "format": "naira",
@@ -81,14 +81,18 @@ Tick **Wholesale** in the slicer and every visual on the page recalculates for w
 ```answer
 {
   "id": "pbi-10-p2",
-  "prompt": "In the category-by-year matrix, what was **Snacks** revenue in **2025**, to the nearest naira?",
+  "prompt": "In the category-by-year matrix, what was **Snacks** revenue in **2025**? (A rounded figure is fine.)",
   "answer": 80124630,
   "tolerance": 1,
   "format": "naira",
   "dataset": "sales",
-  "files": ["orders", "products"],
+  "files": [
+    "orders",
+    "products"
+  ],
   "verify": "SELECT SUM(o.quantity * o.unit_price * (1 - o.discount_pct / 100.0)) FROM orders o JOIN products p ON p.product_id = o.product_id WHERE p.category = 'Snacks' AND o.order_date BETWEEN '2025-01-01' AND '2025-12-31'",
-  "required": true
+  "required": true,
+  "hint": "Put products[category] in Rows and Date[Year] in Columns, then read the Snacks row under 2025."
 }
 ```
 

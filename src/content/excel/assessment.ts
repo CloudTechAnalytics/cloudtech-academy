@@ -5,7 +5,7 @@ export const XLS_ASSESSMENT: AssessmentDef = {
   id: "excel-for-data-analysis-final",
   courseId: "excel-for-data-analysis",
   title: "Excel for Data Analysis: final assessment",
-  passingScore: 70,
+  passingScore: 60,
   questions: [
     {
       id: "xlsq01",

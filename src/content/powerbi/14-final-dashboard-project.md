@@ -88,9 +88,12 @@ A three-page structure that works:
   "answer": 188070000,
   "format": "naira",
   "dataset": "legal",
-  "files": ["invoices"],
+  "files": [
+    "invoices"
+  ],
   "verify": "SELECT SUM(amount_ngn) FROM invoices WHERE status = 'Overdue'",
-  "required": true
+  "required": true,
+  "hint": "Use the Overdue Amount measure from the project brief: Billed, filtered to invoices with status Overdue. Show it in a Card."
 }
 ```
 
@@ -101,9 +104,12 @@ A three-page structure that works:
   "answer": 34,
   "format": "number",
   "dataset": "legal",
-  "files": ["matters"],
+  "files": [
+    "matters"
+  ],
   "verify": "SELECT COUNT(*) FROM matters WHERE status = 'Open'",
-  "required": true
+  "required": true,
+  "hint": "Use the Open Matters measure: count the matters whose status is Open."
 }
 ```
 

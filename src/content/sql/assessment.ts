@@ -8,7 +8,7 @@ export const SQL_ASSESSMENT: AssessmentDef = {
   id: "sql-for-data-analysis-final",
   courseId: "sql-for-data-analysis",
   title: "SQL for Data Analysis: final assessment",
-  passingScore: 70,
+  passingScore: 60,
   questions: [
     {
       id: "sqlq01",

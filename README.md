@@ -14,7 +14,7 @@ Every lesson follows the same steps: **read → understand → practise → appl
 | Power BI Fundamentals | 14 | Answer tasks: Power Query, modelling, DAX, visuals | Ashgrove Chambers practice dashboard |
 | Data Modelling | 9 | SQL checks and answer tasks, built around diagrams | Ashgrove Chambers data model |
 
-Each course has a 15-question final assessment (pass mark 70%, options shuffled, graded on the server) and a verifiable certificate.
+Each course has a 15-question final assessment (pass mark 60%, options shuffled, graded on the server) and a verifiable certificate.
 
 | Platform | Status |
 | --- | --- |

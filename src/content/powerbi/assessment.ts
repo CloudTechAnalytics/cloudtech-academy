@@ -5,7 +5,7 @@ export const PBI_ASSESSMENT: AssessmentDef = {
   id: "power-bi-fundamentals-final",
   courseId: "power-bi-fundamentals",
   title: "Power BI Fundamentals: final assessment",
-  passingScore: 70,
+  passingScore: 60,
   questions: [
     {
       id: "pbiq01",

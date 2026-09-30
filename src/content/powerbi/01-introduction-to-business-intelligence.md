@@ -67,10 +67,11 @@ and then a dashboard of your own for a law firm as the final project.
   "id": "pbi-01-p1",
   "prompt": "Which part of Power BI do you use to **build** reports on your own computer? (Give its full name.)",
   "answer": "Power BI Desktop",
-  "accept": ["desktop", "pbi desktop", "powerbi desktop"],
+  "accept": ["desktop", "pbi desktop", "powerbi desktop", "Power BI desktop app"],
   "format": "text",
   "explanation": "Power BI Desktop is where you load, model and design. The Service is where reports are shared.",
-  "required": true
+  "required": true,
+  "hint": "It's free and installed on your own Windows computer; the other main part runs in the browser."
 }
 ```
 
@@ -82,7 +83,8 @@ and then a dashboard of your own for a law firm as the final project.
   "accept": ["power query editor", "powerquery"],
   "format": "text",
   "explanation": "Power Query, the same engine as Excel's Get & Transform.",
-  "required": true
+  "required": true,
+  "hint": "It opens from Home → Transform data."
 }
 ```
 

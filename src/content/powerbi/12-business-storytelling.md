@@ -70,14 +70,18 @@ Buttons at the bottom of each page move to the next.
 ```answer
 {
   "id": "pbi-12-p2",
-  "prompt": "By how many **naira** did North West revenue fall from H1 2025 to H1 2026? Give the size of the fall as a positive number, to the nearest naira.",
+  "prompt": "By how many **naira** did North West revenue fall from H1 2025 to H1 2026? Give the size of the fall as a positive number. (A rounded figure is fine.)",
   "answer": 14501100,
   "tolerance": 1,
   "format": "naira",
   "dataset": "sales",
-  "files": ["orders", "customers"],
+  "files": [
+    "orders",
+    "customers"
+  ],
   "verify": "SELECT SUM(CASE WHEN o.order_date <= '2025-06-30' THEN o.quantity * o.unit_price * (1 - o.discount_pct / 100.0) ELSE 0 END) - SUM(CASE WHEN o.order_date >= '2026-01-01' THEN o.quantity * o.unit_price * (1 - o.discount_pct / 100.0) ELSE 0 END) FROM orders o JOIN customers c ON c.customer_id = o.customer_id WHERE c.region = 'North West'",
-  "required": true
+  "required": true,
+  "hint": "Compare North West revenue for January–June 2025 with January–June 2026, then subtract."
 }
 ```
 

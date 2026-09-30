@@ -81,9 +81,10 @@ A new visual, step by step: in Report view, tick `revenue` in the Data pane and 
   "id": "pbi-02-p1",
   "prompt": "Which view do you open to see and create **relationships** between tables?",
   "answer": "Model view",
-  "accept": ["model", "the model view", "relationship view"],
+  "accept": ["model", "the model view", "relationship view", "Diagram view"],
   "format": "text",
-  "required": true
+  "required": true,
+  "hint": "There are three views on the left: Report, Table and one that shows the tables as boxes joined by lines."
 }
 ```
 
@@ -92,10 +93,11 @@ A new visual, step by step: in Report view, tick `revenue` in the Data pane and 
   "id": "pbi-02-p2",
   "prompt": "Which view lets you scroll through the actual **rows** of a loaded table to check its values?",
   "answer": "Table view",
-  "accept": ["table", "data view", "the table view"],
+  "accept": ["table", "data view", "the table view", "Data"],
   "format": "text",
   "explanation": "Table view (called Data view in older versions).",
-  "required": true
+  "required": true,
+  "hint": "The middle icon on the left edge looks like a small grid."
 }
 ```
 

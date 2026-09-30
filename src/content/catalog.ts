@@ -59,7 +59,7 @@ const rules = (requireProject: boolean): CertificateRules => ({
   requireAllLessons: true,
   requireExercises: true,
   requireProject,
-  passingScore: 70,
+  passingScore: 60,
 });
 
 export const COURSES: CourseDef[] = [

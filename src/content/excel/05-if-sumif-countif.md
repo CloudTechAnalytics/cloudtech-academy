@@ -85,7 +85,7 @@ Check step 4 with a filter (order_date in 2026, discount_pct not 0). Two methods
 ```answer
 {
   "id": "xls-05-p1",
-  "prompt": "What was the total revenue from **product 1 (Malt drink 330ml)**, to the nearest naira?",
+  "prompt": "What was the total revenue from **product 1 (Malt drink 330ml)**? (A rounded figure is fine.)",
   "answer": 59804940,
   "tolerance": 1,
   "format": "naira",
@@ -114,7 +114,7 @@ Check step 4 with a filter (order_date in 2026, discount_pct not 0). Two methods
 ```answer
 {
   "id": "xls-05-p3",
-  "prompt": "What was revenue in the **fourth quarter of 2025** (1 October to 31 December), to the nearest naira?",
+  "prompt": "What was revenue in the **fourth quarter of 2025** (1 October to 31 December)? (A rounded figure is fine.)",
   "answer": 160799625,
   "tolerance": 1,
   "format": "naira",

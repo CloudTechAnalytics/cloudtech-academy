@@ -117,7 +117,7 @@ The same summary with results showing: total revenue ₦830,541,245, 58,757 pack
 ```answer
 {
   "id": "xls-04-p2",
-  "prompt": "What is the **average revenue per order line**, rounded to the nearest naira?",
+  "prompt": "What is the **average revenue per order line**? (A rounded figure is fine.)",
   "answer": 194689,
   "tolerance": 1,
   "format": "naira",

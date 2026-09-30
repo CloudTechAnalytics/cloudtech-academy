@@ -63,7 +63,8 @@ Normalising a flat sheet, in order:
   "format": "number",
   "tolerance": 0,
   "explanation": "Three times in the flat sheet (invoices 501, 501 and 503), once after normalising, in the customers table.",
-  "required": true
+  "required": true,
+  "hint": "Count the rows for Peace Provisions in the flat sheet: each one repeats the city."
 }
 ```
 

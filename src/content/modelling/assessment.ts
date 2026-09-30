@@ -5,7 +5,7 @@ export const DMO_ASSESSMENT: AssessmentDef = {
   id: "data-modelling-final",
   courseId: "data-modelling",
   title: "Data Modelling: final assessment",
-  passingScore: 70,
+  passingScore: 60,
   questions: [
     {
       id: "dmoq01",

@@ -97,7 +97,8 @@ When you receive a new table, test its keys before building on it:
   "accept": ["composite key", "compound", "compound key", "a composite key"],
   "format": "text",
   "explanation": "Only the pair (supplier_id, product_id) is unique, so the key is composite.",
-  "required": true
+  "required": true,
+  "hint": "Neither supplier_id nor product_id is unique on its own. A key made of two columns is called…"
 }
 ```
 

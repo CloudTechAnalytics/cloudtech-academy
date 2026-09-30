@@ -68,7 +68,7 @@ Without it, every row shows ₦830.5m.
 ```answer
 {
   "id": "pbi-06-p1",
-  "prompt": "With the relationships in place, what is total revenue from **South East** customers, to the nearest naira?",
+  "prompt": "With the relationships in place, what is total revenue from **South East** customers? (A rounded figure is fine.)",
   "answer": 60316685,
   "tolerance": 1,
   "format": "naira",
@@ -88,7 +88,8 @@ Without it, every row shows ₦830.5m.
   "accept": ["product", "the products table"],
   "format": "text",
   "explanation": "Each product appears once in products and many times in orders.",
-  "required": true
+  "required": true,
+  "hint": "Which table lists each product only once?"
 }
 ```
 

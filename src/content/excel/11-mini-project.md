@@ -57,7 +57,7 @@ Discounts cost ₦29.1m, **3.4% of gross sales**, and nearly nine naira in ten o
 ```answer
 {
   "id": "xls-11-p1",
-  "prompt": "What did discounts cost Kolanut in total across all order lines, to the nearest naira?",
+  "prompt": "What did discounts cost Kolanut in total across all order lines? (A rounded figure is fine.)",
   "answer": 29087055,
   "tolerance": 1,
   "format": "naira",

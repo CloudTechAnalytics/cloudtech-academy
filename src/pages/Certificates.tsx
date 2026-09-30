@@ -59,7 +59,7 @@ export function VerifyForm() {
 const STEPS = [
   { icon: BookOpen, title: "Complete the lessons", body: "Work through every required lesson in the course and mark it complete." },
   { icon: PenLine, title: "Do the practice", body: "Solve the required exercises. In SQL courses they're checked against the real query result." },
-  { icon: ClipboardCheck, title: "Pass the assessment", body: "Score 70% or more on the final assessment. You can retake it as often as you need." },
+  { icon: ClipboardCheck, title: "Pass the assessment", body: "Score 60% or more on the final assessment. You can retake it as often as you need." },
   { icon: FolderKanban, title: "Submit the project", body: "Where a course has a final project, submit your work on it." },
 ];
 

@@ -87,7 +87,7 @@ You don't have to type that: the Custom Column dialog writes it. In the dialog y
 ```answer
 {
   "id": "pbi-04-p1",
-  "prompt": "Add the `revenue` custom column, load it, and show its total in a Card. What is total revenue, to the nearest naira?",
+  "prompt": "Add the `revenue` custom column, load it, and show its total in a Card. What is total revenue? (A rounded figure is fine.)",
   "answer": 830541245,
   "tolerance": 1,
   "format": "naira",

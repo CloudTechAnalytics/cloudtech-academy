@@ -92,7 +92,8 @@ Redesign your page from the previous lesson:
   "tolerance": 2,
   "format": "number",
   "explanation": "About 5–7. Beyond that, visuals compete for attention.",
-  "required": true
+  "required": true,
+  "hint": "The lesson gives a range of about five to seven. Type the top of it."
 }
 ```
 

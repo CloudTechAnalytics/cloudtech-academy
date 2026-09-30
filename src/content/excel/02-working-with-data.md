@@ -82,7 +82,7 @@ To get the total, click in any empty cell and type:
 ```answer
 {
   "id": "xls-02-p1",
-  "prompt": "What is Kolanut's **total revenue** across all order lines (January 2025 to June 2026), to the nearest naira?",
+  "prompt": "What is Kolanut's **total revenue** across all order lines (January 2025 to June 2026)? (A rounded figure is fine.)",
   "answer": 830541245,
   "tolerance": 1,
   "format": "naira",
