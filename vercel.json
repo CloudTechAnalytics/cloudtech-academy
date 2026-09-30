@@ -4,71 +4,71 @@
   "rewrites": [
     {
       "source": "/dashboard/:path*",
-      "destination": "/app.html"
+      "destination": "/app"
     },
     {
       "source": "/dashboard",
-      "destination": "/app.html"
+      "destination": "/app"
     },
     {
       "source": "/admin/:path*",
-      "destination": "/app.html"
+      "destination": "/app"
     },
     {
       "source": "/admin",
-      "destination": "/app.html"
+      "destination": "/app"
     },
     {
       "source": "/profile",
-      "destination": "/app.html"
+      "destination": "/app"
     },
     {
       "source": "/verify/:path*",
-      "destination": "/app.html"
+      "destination": "/app"
     },
     {
       "source": "/sign-in",
-      "destination": "/app.html"
+      "destination": "/app"
     },
     {
       "source": "/sign-up",
-      "destination": "/app.html"
+      "destination": "/app"
     },
     {
       "source": "/reset-password",
-      "destination": "/app.html"
+      "destination": "/app"
     },
     {
       "source": "/update-password",
-      "destination": "/app.html"
+      "destination": "/app"
     },
     {
       "source": "/courses/:slug/assessment",
-      "destination": "/app.html"
+      "destination": "/app"
     },
     {
       "source": "/courses/:slug/project",
-      "destination": "/app.html"
+      "destination": "/app"
     },
     {
       "source": "/courses/:slug/certificate",
-      "destination": "/app.html"
+      "destination": "/app"
     },
     {
       "source": "/courses/:slug/modules/:module/check",
-      "destination": "/app.html"
+      "destination": "/app"
     },
     {
       "source": "/courses/:slug/complete",
-      "destination": "/app.html"
+      "destination": "/app"
     },
     {
       "source": "/credentials/:path*",
-      "destination": "/app.html"
+      "destination": "/app"
     },
     {
       "source": "/learners/:path*",
-      "destination": "/app.html"
+      "destination": "/app"
     }
   ],
   "redirects": [
