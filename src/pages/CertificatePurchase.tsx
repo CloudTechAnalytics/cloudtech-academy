@@ -34,6 +34,10 @@ function Inner() {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [paymentsEnabled, setPaymentsEnabled] = useState(false);
+  const [simulated, setSimulated] = useState(false);
+  const [confirming, setConfirming] = useState(false);
+  /** Set when card payment isn't available in the chosen currency. */
+  const [unsupported, setUnsupported] = useState<string | null>(null);
   const art = useRef<SVGSVGElement>(null);
 
   useSeo({ title: course ? `Official certificate | ${course.title}` : "Official certificate", description: "Optional official verified certificate", noindex: true });
@@ -41,14 +45,35 @@ function Inner() {
   useEffect(() => {
     void getBackend().then(async (b) => {
       setPaymentsEnabled(b.paymentsEnabled);
+      setSimulated(!!b.simulatePayment);
       const list = await b.listCertificatePrices();
       setPrices(list);
       setCurrency((c) => (list.some((p) => p.currency === c) ? c : (list[0]?.currency ?? c)));
     });
   }, []);
 
+  // Back from Paystack: ?reference=… (and trxref). Confirm the payment on the server.
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const reference = params.get("reference") ?? params.get("trxref");
+    if (!reference) return;
+    setConfirming(true);
+    void getBackend()
+      .then((b) => {
+        if (!b.confirmPayment) throw new Error("Online payment isn't available.");
+        return b.confirmPayment(reference);
+      })
+      .then((cert) => {
+        setIssued(cert);
+        window.history.replaceState(null, "", window.location.pathname);
+      })
+      .catch((e) => setError(e instanceof Error ? e.message : "Couldn't confirm the payment."))
+      .finally(() => setConfirming(false));
+  }, []);
+
   if (!course) return loading ? <PageLoading /> : <NotFound />;
   if (learner.loading || !prices) return <PageLoading />;
+  if (confirming) return <PageLoading label="Confirming your payment with Paystack…" />;
 
   const completion = learner.completion;
   const certificate = issued ?? learner.certificate;
@@ -83,20 +108,31 @@ function Inner() {
     verifyUrl: certificate ? verifyUrl(SITE.url, certificate.certificateId) : `${SITE.url}/verify`,
   };
 
-  const startOrder = async () => {
+  const startOrder = async (pay = currency) => {
     setBusy(true);
     setError(null);
+    setUnsupported(null);
     try {
       const b = await getBackend();
-      const o = await b.startCertificateOrder(course.id, currency);
+      const o = await b.startCertificateOrder(course.id, pay);
       setOrder(o);
-      if (b.paymentsEnabled && b.simulatePayment) setIssued(await b.simulatePayment(o.id));
+      if (b.simulatePayment) setIssued(await b.simulatePayment(o.id));
+      else if (b.startCheckout) {
+        try {
+          window.location.assign(await b.startCheckout(o.id, `${window.location.origin}/courses/${course.slug}/certificate`));
+          return; // leaving for Paystack's payment page
+        } catch (e) {
+          const msg = e instanceof Error ? e.message : "";
+          if (msg.startsWith("currency_unsupported:")) setUnsupported(msg.slice("currency_unsupported:".length));
+          else throw e;
+        }
+      }
     } catch (e) {
       setError(e instanceof Error ? e.message : "Couldn't start the order.");
-    } finally {
-      setBusy(false);
     }
+    setBusy(false);
   };
+  const naira = prices.find((p) => p.currency === "NGN");
 
   const download = async () => {
     if (!art.current || !certificate) return;
@@ -135,10 +171,28 @@ function Inner() {
                 </ButtonLink>
               </div>
             </>
-          ) : order && !paymentsEnabled ? (
+          ) : order && (!paymentsEnabled || unsupported) ? (
             <>
               <p className="kicker">Order {order.id.slice(0, 8).toUpperCase()}</p>
               <h1 className="mt-3 font-serif text-[2.1rem] leading-tight">Complete your payment</h1>
+              {unsupported && (
+                <div className="mt-4 rounded-xl border border-line-strong bg-paper p-4">
+                  <p className="text-[0.9375rem]">{unsupported}</p>
+                  {naira && (
+                    <Button
+                      className="mt-3"
+                      loading={busy}
+                      onClick={() => {
+                        setCurrency("NGN");
+                        void startOrder("NGN");
+                      }}
+                    >
+                      Pay {formatMoney(naira.amount, "NGN")} by card instead
+                    </Button>
+                  )}
+                  <p className="mt-2 text-[0.8125rem] text-muted">International Visa and Mastercard cards work in naira; your bank converts it. Or pay by transfer:</p>
+                </div>
+              )}
               <p className="mt-3 text-muted">
                 Online card payment is being set up. For now, pay {formatMoney(order.amount, order.currency)} by bank transfer: message us with your order
                 reference and we'll send the account details. Your certificate is issued as soon as the payment is confirmed, usually the same day.
@@ -206,7 +260,9 @@ function Inner() {
                   {paymentsEnabled ? `Pay ${price ? formatMoney(price.amount, price.currency) : ""}` : "Continue"}
                 </Button>
                 {paymentsEnabled && (
-                  <p className="mt-2 text-center text-[0.75rem] text-muted">Demo mode: the payment is simulated and nothing is charged.</p>
+                  <p className="mt-2 text-center text-[0.75rem] text-muted">
+                    {simulated ? "Demo mode: the payment is simulated and nothing is charged." : "Secure card, bank transfer or USSD payment by Paystack."}
+                  </p>
                 )}
               </div>
               <p className="mt-4 text-[0.8125rem] text-muted">

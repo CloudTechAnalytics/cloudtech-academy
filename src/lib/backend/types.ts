@@ -185,6 +185,10 @@ export interface Backend {
   readonly paymentsEnabled: boolean;
   /** Demo mode only: stands in for a successful payment so the flow can be tried. */
   simulatePayment?(orderId: string): Promise<Certificate>;
+  /** Online payment: returns the provider's payment page for a pending order. */
+  startCheckout?(orderId: string, returnUrl: string): Promise<string>;
+  /** Online payment: confirms a payment on the server after the learner returns, and issues the certificate. */
+  confirmPayment?(reference: string): Promise<Certificate>;
   listMyCertificates(): Promise<Certificate[]>;
   getMyCertificate(certificateId: string): Promise<Certificate | null>;
   verifyCertificate(certificateId: string): Promise<PublicCertificate | null>;

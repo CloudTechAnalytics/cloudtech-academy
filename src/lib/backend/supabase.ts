@@ -20,6 +20,18 @@ import {
 
 type Row = Record<string, any>; // eslint-disable-line @typescript-eslint/no-explicit-any
 
+/** The message an Edge Function returned with its error, if any. */
+async function functionError(error: unknown, fallback: string) {
+  const ctx = (error as { context?: Response }).context;
+  try {
+    const body = ctx ? await ctx.clone().json() : null;
+    if (body?.code === "currency_unsupported") return `currency_unsupported:${body.error}`;
+    return body?.error ?? fallback;
+  } catch {
+    return fallback;
+  }
+}
+
 function check<T>(res: { data: T; error: { message: string } | null }): T {
   if (res.error) throw new BackendError(res.error.message);
   return res.data;
@@ -364,8 +376,18 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
         : null;
     },
 
-    // Online payment is switched on once a payment provider is connected (see README).
-    paymentsEnabled: false,
+    // Card payment through Paystack, via the certificate-checkout and certificate-verify Edge Functions.
+    paymentsEnabled: true,
+    async startCheckout(orderId, returnUrl) {
+      const { data, error } = await sb.functions.invoke("certificate-checkout", { body: { orderId, returnUrl } });
+      if (error) throw new BackendError(await functionError(error, "Couldn't start the payment."));
+      return (data as { url: string }).url;
+    },
+    async confirmPayment(reference) {
+      const { data, error } = await sb.functions.invoke("certificate-verify", { body: { reference } });
+      if (error) throw new BackendError(await functionError(error, "Couldn't confirm the payment."));
+      return toCertificate((data as { certificate: Row }).certificate);
+    },
     async listCertificatePrices() {
       return (check(await sb.from("certificate_prices").select("*").eq("active", true).order("position")) as Row[]).map(toPrice);
     },

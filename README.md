@@ -113,9 +113,22 @@ Lessons edited in `/admin` are stored in the database. The next seed run overwri
 
 The practice datasets are fictional and are generated with fixed seeds by `npm run datasets`. Each dataset has its own seed, so changing one never changes another. Explore them with `node scripts/sql.mjs --data sales "SELECT ..."`.
 
-### Payments
+### Payments (Paystack)
 
-Online payment isn't connected yet (`paymentsEnabled` is `false` in `src/lib/backend/supabase.ts`). Until it is, a learner who wants the certificate creates an order and messages CloudTech to pay by transfer; an admin then presses **Grant certificate** in `/admin/certificates`. To connect a provider such as Paystack: verify the payment on a server (a Supabase Edge Function or webhook using the provider's secret key), call `complete_certificate_order(order_id, 'paystack', reference)` with the service role key, and set `paymentsEnabled` to `true`.
+Certificates are paid by card, bank transfer or USSD through Paystack. Three Supabase Edge Functions in `supabase/functions/` handle it:
+
+- `certificate-checkout`: for the signed-in learner's own pending order, starts a Paystack transaction with the amount and currency from the database and returns the payment page. Return addresses are limited to the Academy.
+- `certificate-verify`: when the learner comes back, asks Paystack whether the payment succeeded, checks the amount and currency match the order, and calls `complete_certificate_order()` to issue the certificate.
+- `paystack-webhook`: the same, triggered by Paystack itself (so a closed tab doesn't lose a payment). Requests are accepted only with a valid `x-paystack-signature`, and the transaction is re-checked with Paystack.
+
+Setup:
+
+1. Secret: `PAYSTACK_SECRET_KEY` in Supabase → Edge Functions → Secrets (`sk_test_…` while testing, `sk_live_…` for real payments). It is never in the site's code.
+2. Deploy: `supabase functions deploy certificate-checkout certificate-verify` and `supabase functions deploy paystack-webhook --no-verify-jwt`.
+3. Webhook URL in Paystack → Settings → API Keys & Webhooks: `https://<project>.supabase.co/functions/v1/paystack-webhook`.
+4. A currency is only payable online if Paystack has enabled it for the business (USD needs approval). Otherwise the learner is offered the naira price by card, or bank transfer with an admin grant.
+
+In demo mode the payment is simulated.
 
 ## Structure
 
