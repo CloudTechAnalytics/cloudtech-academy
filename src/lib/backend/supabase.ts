@@ -403,6 +403,8 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
           enrollments: Number(r.enrollments),
           completedCourses: Number(r.completed_courses),
           certificates: Number(r.certificates),
+          lessonsCompleted: Number(r.lessons_completed),
+          lastActiveAt: r.last_active_at ?? null,
         }));
       },
       async getStudent(userId) {

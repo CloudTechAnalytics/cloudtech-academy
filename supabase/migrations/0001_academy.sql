@@ -471,7 +471,8 @@ $$;
 
 -- Admin overview of learners.
 create or replace function public.admin_list_students()
-returns table (user_id uuid, full_name text, email text, joined_at timestamptz, enrollments bigint, completed_courses bigint, certificates bigint)
+returns table (user_id uuid, full_name text, email text, joined_at timestamptz, enrollments bigint, completed_courses bigint,
+               certificates bigint, lessons_completed bigint, last_active_at timestamptz)
 language plpgsql stable security definer set search_path = public as $$
 begin
   if not public.is_admin() then raise exception 'Admins only.'; end if;
@@ -479,8 +480,17 @@ begin
   select p.id, p.full_name, p.email, p.created_at,
          (select count(*) from public.enrollments e where e.user_id = p.id),
          (select count(*) from public.enrollments e where e.user_id = p.id and e.completed_at is not null),
-         (select count(*) from public.certificates c where c.user_id = p.id and c.status = 'valid')
+         (select count(*) from public.certificates c where c.user_id = p.id and c.status = 'valid'),
+         (select count(*) from public.lesson_progress lp where lp.user_id = p.id),
+         -- The latest thing the learner did: enrolled, finished a lesson or exercise, or took an assessment.
+         greatest(
+           (select max(e.enrolled_at) from public.enrollments e where e.user_id = p.id),
+           (select max(lp.completed_at) from public.lesson_progress lp where lp.user_id = p.id),
+           (select max(x.completed_at) from public.exercise_completions x where x.user_id = p.id),
+           (select max(a.submitted_at) from public.assessment_attempts a where a.user_id = p.id)
+         )
   from public.profiles p
+  where p.role <> 'admin'
   order by p.created_at desc;
 end;
 $$;

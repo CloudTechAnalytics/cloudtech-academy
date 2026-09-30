@@ -36,7 +36,7 @@ npm run test:content # checks every lesson; recomputes every answer from the CSV
 Without Supabase keys the Academy runs in **demo mode**:
 - A banner says so on every page.
 - Accounts and progress are saved in the current browser only.
-- The first account created becomes an admin, so the admin area can be tried out.
+- When running locally (`npm run dev`), the first account created becomes an admin, so the admin area can be tried out. On the live site nobody becomes an admin this way.
 
 ## Connecting Supabase
 

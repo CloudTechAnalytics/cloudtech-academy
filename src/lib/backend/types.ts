@@ -68,6 +68,9 @@ export type StudentSummary = {
   enrollments: number;
   completedCourses: number;
   certificates: number;
+  lessonsCompleted: number;
+  /** The latest enrolment, lesson, exercise or assessment; null if they haven't started. */
+  lastActiveAt: string | null;
 };
 
 export type StudentDetail = {

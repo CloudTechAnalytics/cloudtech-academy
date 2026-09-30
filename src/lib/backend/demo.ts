@@ -30,6 +30,7 @@ type Store = {
   certificates: Certificate[];
   courses: Course[] | null; // admin edits (null = bundled content)
   assessments: AssessmentDef[] | null;
+  activity: Record<string, string>; // userId -> last active
 };
 
 const KEY = "ct-academy-demo-v1";
@@ -44,6 +45,7 @@ const empty = (): Store => ({
   certificates: [],
   courses: null,
   assessments: null,
+  activity: {},
 });
 
 function load(): Store {
@@ -119,8 +121,9 @@ export function createDemoBackend(): Backend {
       const e = email.trim().toLowerCase();
       if (s.users.some((u) => u.email === e)) throw new BackendError("An account with this email already exists in this browser.");
       const salt = uid();
-      // In demo mode the first account is an admin, so the admin area can be explored.
-      const user: StoredUser = { id: uid(), email: e, fullName: fullName.trim(), role: s.users.length ? "student" : "admin", salt, passwordHash: await hash(password, salt), joinedAt: now() };
+      // When running locally, the first demo account is an admin so the admin area can be explored.
+      // Never on the live site: there, admins exist only in the database.
+      const user: StoredUser = { id: uid(), email: e, fullName: fullName.trim(), role: import.meta.env.DEV && !s.users.length ? "admin" : "student", salt, passwordHash: await hash(password, salt), joinedAt: now() };
       s.users.push(user);
       s.sessionUserId = user.id;
       save(s);
@@ -211,6 +214,7 @@ export function createDemoBackend(): Backend {
       if (done) set.add(lessonId);
       else set.delete(lessonId);
       s.lessons[key(u.id, courseId)] = [...set];
+      s.activity[u.id] = now();
       save(s);
     },
     async recordExercise(courseId, _lessonId, exerciseId) {
@@ -220,6 +224,7 @@ export function createDemoBackend(): Backend {
       const set = new Set(s.exercises[key(u.id, courseId)] ?? []);
       set.add(exerciseId);
       s.exercises[key(u.id, courseId)] = [...set];
+      s.activity[u.id] = now();
       save(s);
     },
     async submitAssessment(assessmentId, answers) {
@@ -231,6 +236,7 @@ export function createDemoBackend(): Backend {
       const result = { id: uid(), assessmentId, score, passed: score >= a.passingScore, correct, total: a.questions.length, submittedAt: now() };
       const s = load();
       (s.attempts[u.id] ??= []).push(result);
+      s.activity[u.id] = now();
       save(s);
       return result;
     },
@@ -358,7 +364,7 @@ export function createDemoBackend(): Backend {
       async listStudents() {
         requireAdmin();
         const s = load();
-        return s.users.map((u) => ({
+        return s.users.filter((u) => u.role !== "admin").map((u) => ({
           userId: u.id,
           fullName: u.fullName,
           email: u.email,
@@ -366,6 +372,10 @@ export function createDemoBackend(): Backend {
           enrollments: (s.enrollments[u.id] ?? []).length,
           completedCourses: (s.enrollments[u.id] ?? []).filter((e) => e.completedAt).length,
           certificates: s.certificates.filter((c) => c.userId === u.id && c.status === "valid").length,
+          lessonsCompleted: Object.entries(s.lessons)
+            .filter(([k]) => k.startsWith(`${u.id}|`))
+            .reduce((n, [, ids]) => n + ids.length, 0),
+          lastActiveAt: [s.activity[u.id], ...(s.enrollments[u.id] ?? []).map((e) => e.enrolledAt)].filter(Boolean).sort().at(-1) ?? null,
         }));
       },
       async getStudent(userId) {
