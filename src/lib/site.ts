@@ -1,7 +1,7 @@
 export const SITE = {
   name: "CloudTech Academy",
   parent: "CloudTech Analytics",
-  parentUrl: "https://cloudtechanalytics.com",
+  parentUrl: "https://www.cloudtechanalytics.com",
   email: "cloudtechanalytics.consultant@gmail.com",
   /** Public address used for canonical URLs, previews, the sitemap and certificate verification links. */
   url: ((import.meta.env.VITE_SITE_URL as string | undefined) || "https://academy.cloudtechanalytics.com").replace(/\/$/, ""),
@@ -9,7 +9,7 @@ export const SITE = {
   products: [
     { name: "The Counsel", href: "https://thecounsels.org" },
     { name: "The Manifest", href: "https://the-manifest-test.vercel.app" },
-    { name: "CloudTech Analytics", href: "https://cloudtechanalytics.com" },
+    { name: "CloudTech Analytics", href: "https://www.cloudtechanalytics.com" },
   ],
 } as const;
 
