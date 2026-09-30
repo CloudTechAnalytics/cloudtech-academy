@@ -7,52 +7,35 @@ import { CourseCard } from "@/components/CourseCard";
 import { Reveal } from "@/components/Reveal";
 import { webSiteJsonLd } from "@/lib/schema";
 
-/** DATA → ANALYSIS → INSIGHT → DECISION, drawn with real-looking fragments rather than illustration. */
-function JourneyVisual() {
-  const steps = [
-    {
-      label: "Data",
-      body: (
-        <div className="space-y-1 font-mono text-[0.6875rem] text-muted">
-          <p>shipment_id · customer · containers</p>
-          <p>100412 · Apex Foods · 4</p>
-          <p>100413 · Delta Motors · 2</p>
-          <p>100414 · Apex Foods · 6</p>
-        </div>
-      ),
-    },
-    {
-      label: "Analysis",
-      body: (
-        <pre className="font-mono text-[0.6875rem] leading-relaxed text-ink">
-          {"SELECT customer,\n  SUM(containers)\nFROM shipments\nGROUP BY customer;"}
-        </pre>
-      ),
-    },
-    {
-      label: "Insight",
-      body: (
-        <div className="flex h-12 items-end gap-1.5">
-          {[90, 72, 55, 40, 28].map((h, i) => (
-            <span key={i} className={`flex-1 rounded-t-sm ${i === 0 ? "bg-brass" : "bg-line-strong"}`} style={{ height: `${h}%` }} />
-          ))}
-        </div>
-      ),
-    },
-    { label: "Decision", body: <p className="font-serif text-[0.95rem] leading-snug text-ink">Protect the top accounts; follow up the ones slowing down.</p> },
-  ];
+/** A learner in an online lesson, with the kind of progress card the Academy shows. Photo: Unsplash licence. */
+function LearnerVisual() {
   return (
-    <ol aria-label="How you learn: data, analysis, insight, decision" className="grid gap-3 sm:grid-cols-2">
-      {steps.map((s, i) => (
-        <li key={s.label} className="relative rounded-xl border border-line bg-paper p-4 shadow-[0_18px_40px_-34px_rgba(23,23,23,0.5)]">
-          <p className="mb-3 flex items-center gap-2 text-[0.6875rem] font-semibold uppercase tracking-[0.18em] text-brass-dark">
-            <span className="flex h-5 w-5 items-center justify-center rounded-full bg-brass-pale text-[0.625rem] text-brass-dark">{i + 1}</span>
-            {s.label}
-          </p>
-          {s.body}
-        </li>
-      ))}
-    </ol>
+    <div className="relative pb-10 sm:pb-0">
+      <img
+        src="/images/home/learner.webp"
+        srcSet="/images/home/learner-760.webp 760w, /images/home/learner.webp 1400w"
+        sizes="(min-width: 1024px) 560px, 100vw"
+        alt="A learner at a laptop, following an online lesson"
+        width={1400}
+        height={1120}
+        fetchPriority="high"
+        className="aspect-[5/4] w-full rounded-2xl border border-line object-cover shadow-[0_40px_80px_-48px_rgba(23,23,23,0.55)]"
+      />
+      <div
+        aria-hidden
+        className="absolute bottom-0 left-4 w-[17.5rem] rounded-xl border border-line bg-paper p-4 shadow-[0_24px_48px_-28px_rgba(23,23,23,0.5)] sm:-bottom-8 sm:-left-8"
+      >
+        <p className="text-[0.625rem] font-semibold uppercase tracking-[0.18em] text-brass-dark">SQL for Data Analysis</p>
+        <p className="mt-1.5 font-serif text-[1rem] font-bold leading-snug text-ink">Lesson 7 · Aggregate functions</p>
+        <div className="mt-3 flex items-center justify-between text-[0.6875rem] text-muted">
+          <span>6 of 16 lessons</span>
+          <span className="font-semibold text-ink">38%</span>
+        </div>
+        <div className="mt-1.5 h-1.5 overflow-hidden rounded-full bg-sand">
+          <div className="h-full w-[38%] rounded-full bg-brass" />
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -105,7 +88,7 @@ export default function Home() {
             </ol>
           </Reveal>
           <Reveal delay={120} className="lg:col-span-6">
-            <JourneyVisual />
+            <LearnerVisual />
           </Reveal>
         </div>
       </section>
