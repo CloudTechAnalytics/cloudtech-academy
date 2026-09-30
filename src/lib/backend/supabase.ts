@@ -10,8 +10,10 @@ import {
   type AttemptResult,
   type Backend,
   type Certificate,
+  type CertificateOrder,
+  type CertificatePrice,
+  type Credential,
   type ProjectSubmission,
-  type QuickCompletion,
   type Role,
   type User,
 } from "./types";
@@ -40,6 +42,8 @@ const toLesson = (r: Row): Lesson => ({
 
 const toCourse = (r: Row): Course => ({
   id: r.id,
+  format: r.format ?? "full",
+  completionBadge: r.completion_badge ?? undefined,
   slug: r.slug,
   code: r.code,
   title: r.title,
@@ -61,6 +65,7 @@ const toCourse = (r: Row): Course => ({
     requireAllLessons: r.require_all_lessons,
     requireExercises: r.require_exercises,
     requireProject: r.require_project,
+    requireModuleBadges: r.require_module_badges ?? false,
     passingScore: r.passing_score,
   },
   modules: ((r.course_modules ?? []) as Row[])
@@ -70,16 +75,35 @@ const toCourse = (r: Row): Course => ({
         courseId: m.course_id,
         title: m.title,
         position: m.position,
+        badge: m.badge_name ?? null,
+        badgeCode: m.badge_code ?? null,
+        skills: m.skills ?? [],
         lessons: ((m.lessons ?? []) as Row[]).map(toLesson).sort((a, b) => a.position - b.position),
       }),
     )
     .sort((a, b) => a.position - b.position),
 });
 
-const toQuick = (r: Row): QuickCompletion => ({ slug: r.slug, score: r.score, completedAt: r.completed_at });
+const toCredential = (r: Row): Credential => ({
+  id: r.id,
+  credentialId: r.credential_id,
+  userId: r.user_id,
+  kind: r.kind,
+  courseId: r.course_id,
+  moduleId: r.module_id ?? null,
+  badgeName: r.badge_name,
+  courseTitle: r.course_title,
+  moduleTitle: r.module_title ?? null,
+  recipientName: r.recipient_name,
+  skills: r.skills ?? [],
+  issuedAt: r.issued_at,
+  status: r.status,
+  revokedReason: r.revoked_reason ?? null,
+});
 
 const toCertificate = (r: Row): Certificate => ({
   id: r.id,
+  certificateId: r.certificate_id,
   credentialId: r.credential_id,
   userId: r.user_id,
   courseId: r.course_id,
@@ -89,6 +113,23 @@ const toCertificate = (r: Row): Certificate => ({
   status: r.status,
   revokedReason: r.revoked_reason ?? null,
 });
+
+const toOrder = (r: Row): CertificateOrder => ({
+  id: r.id,
+  userId: r.user_id,
+  courseId: r.course_id,
+  credentialId: r.credential_id,
+  currency: r.currency,
+  amount: Number(r.amount),
+  status: r.status,
+  provider: r.provider ?? null,
+  providerRef: r.provider_ref ?? null,
+  note: r.note ?? null,
+  createdAt: r.created_at,
+  paidAt: r.paid_at ?? null,
+});
+
+const toPrice = (r: Row): CertificatePrice => ({ currency: r.currency, amount: Number(r.amount), active: r.active, position: r.position });
 
 const toAttempt = (r: Row): AttemptResult => ({
   id: r.id,
@@ -206,12 +247,16 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
       const row = check(await q.maybeSingle()) as Row | null;
       return row ? toCourse(row) : null;
     },
-    async getAssessment(courseId) {
-      const row = check(await sb.from("assessments").select("*, assessment_questions(id, prompt, options, position)").eq("course_id", courseId).maybeSingle()) as Row | null;
+    async getAssessment(courseId, moduleId) {
+      let q = sb.from("assessments").select("*, assessment_questions(id, prompt, options, position)").eq("course_id", courseId);
+      q = moduleId ? q.eq("kind", "module").eq("module_id", moduleId) : q.eq("kind", "final");
+      const row = check(await q.maybeSingle()) as Row | null;
       if (!row) return null;
       return {
         id: row.id,
         courseId: row.course_id,
+        kind: row.kind,
+        moduleId: row.module_id ?? null,
         title: row.title,
         passingScore: row.passing_score,
         questions: ((row.assessment_questions ?? []) as Row[]).sort((a, b) => a.position - b.position).map((q) => ({ id: q.id, prompt: q.prompt, options: q.options })),
@@ -288,37 +333,66 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
       return toSubmission(check(await sb.rpc("submit_project", { p_project_id: projectId, p_content: content, p_url: url })) as Row);
     },
 
-    async issueCertificate(courseId) {
-      return toCertificate(check(await sb.rpc("issue_certificate", { p_course_id: courseId })) as Row);
+    async claimModuleBadge(moduleId) {
+      return toCredential(check(await sb.rpc("claim_module_badge", { p_module_id: moduleId })) as Row);
     },
-    async recordQuickCourse(slug, score) {
-      const { data } = await sb.auth.getSession();
-      if (!data.session) throw new BackendError("Sign in to save your badge.");
-      const userId = data.session.user.id;
-      const prev = check(await sb.from("quick_completions").select("score").eq("user_id", userId).eq("slug", slug).maybeSingle()) as Row | null;
-      if (prev && prev.score >= score) return;
-      check(await sb.from("quick_completions").upsert({ user_id: userId, slug, score, completed_at: new Date().toISOString() }));
+    async issueCourseCredential(courseId) {
+      return toCredential(check(await sb.rpc("issue_course_credential", { p_course_id: courseId })) as Row);
     },
-    async listQuickCompletions() {
+    async listMyCredentials() {
       const { data } = await sb.auth.getSession();
       if (!data.session) return [];
-      return (check(await sb.from("quick_completions").select("*").eq("user_id", data.session.user.id)) as Row[]).map(toQuick);
+      return (check(await sb.from("credentials").select("*").eq("user_id", data.session.user.id).order("issued_at", { ascending: false })) as Row[]).map(
+        toCredential,
+      );
+    },
+    async verifyCredential(credentialId) {
+      const r = (check(await sb.rpc("verify_credential", { p_credential_id: credentialId })) as Row[])?.[0];
+      return r
+        ? {
+            credentialId: r.credential_id,
+            kind: r.kind,
+            badgeName: r.badge_name,
+            courseId: r.course_id,
+            courseTitle: r.course_title,
+            moduleTitle: r.module_title ?? null,
+            recipientName: r.recipient_name,
+            skills: r.skills ?? [],
+            issuedAt: r.issued_at,
+            status: r.status,
+          }
+        : null;
+    },
+
+    // Online payment is switched on once a payment provider is connected (see README).
+    paymentsEnabled: false,
+    async listCertificatePrices() {
+      return (check(await sb.from("certificate_prices").select("*").eq("active", true).order("position")) as Row[]).map(toPrice);
+    },
+    async startCertificateOrder(courseId, currency) {
+      return toOrder(check(await sb.rpc("start_certificate_order", { p_course_id: courseId, p_currency: currency })) as Row);
+    },
+    async listMyOrders() {
+      const { data } = await sb.auth.getSession();
+      if (!data.session) return [];
+      return (check(await sb.from("certificate_orders").select("*").eq("user_id", data.session.user.id).order("created_at", { ascending: false })) as Row[]).map(toOrder);
     },
     async listMyCertificates() {
       const { data } = await sb.auth.getSession();
       if (!data.session) return [];
       return (check(await sb.from("certificates").select("*").eq("user_id", data.session.user.id).order("issued_at", { ascending: false })) as Row[]).map(toCertificate);
     },
-    async getMyCertificate(credentialId) {
+    async getMyCertificate(certificateId) {
       const { data } = await sb.auth.getSession();
       if (!data.session) return null;
-      const row = check(await sb.from("certificates").select("*").eq("user_id", data.session.user.id).eq("credential_id", credentialId).maybeSingle()) as Row | null;
+      const row = check(await sb.from("certificates").select("*").eq("user_id", data.session.user.id).eq("certificate_id", certificateId).maybeSingle()) as Row | null;
       return row ? toCertificate(row) : null;
     },
-    async verifyCertificate(credentialId) {
-      const rows = check(await sb.rpc("verify_certificate", { p_credential_id: credentialId })) as Row[];
-      const r = rows?.[0];
-      return r ? { credentialId: r.credential_id, recipientName: r.recipient_name, courseTitle: r.course_title, issuedAt: r.issued_at, status: r.status } : null;
+    async verifyCertificate(certificateId) {
+      const r = (check(await sb.rpc("verify_certificate", { p_certificate_id: certificateId })) as Row[])?.[0];
+      return r
+        ? { certificateId: r.certificate_id, credentialId: r.credential_id, recipientName: r.recipient_name, courseTitle: r.course_title, issuedAt: r.issued_at, status: r.status }
+        : null;
     },
 
     admin: {
@@ -326,6 +400,8 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
         check(
           await sb.from("courses").upsert({
             id: c.id,
+            format: c.format ?? "full",
+            completion_badge: c.completionBadge ?? null,
             slug: c.slug,
             code: c.code,
             title: c.title,
@@ -346,12 +422,23 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
             require_all_lessons: c.certificate.requireAllLessons,
             require_exercises: c.certificate.requireExercises,
             require_project: c.certificate.requireProject,
+            require_module_badges: c.certificate.requireModuleBadges,
             passing_score: c.certificate.passingScore,
           }),
         );
       },
       async saveModule(m) {
-        check(await sb.from("course_modules").upsert({ id: m.id, course_id: m.courseId, title: m.title, position: m.position }));
+        check(
+          await sb.from("course_modules").upsert({
+            id: m.id,
+            course_id: m.courseId,
+            title: m.title,
+            position: m.position,
+            badge_name: m.badge || null,
+            badge_code: m.badgeCode || null,
+            skills: m.skills,
+          }),
+        );
       },
       async deleteModule(id) {
         check(await sb.from("course_modules").delete().eq("id", id));
@@ -380,14 +467,16 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
       async deleteLesson(id) {
         check(await sb.from("lessons").delete().eq("id", id));
       },
-      async getAssessment(courseId) {
-        const row = check(
-          await sb.from("assessments").select("*, assessment_questions(*, assessment_answer_keys(*))").eq("course_id", courseId).maybeSingle(),
-        ) as Row | null;
+      async getAssessment(courseId, moduleId) {
+        let q = sb.from("assessments").select("*, assessment_questions(*, assessment_answer_keys(*))").eq("course_id", courseId);
+        q = moduleId ? q.eq("kind", "module").eq("module_id", moduleId) : q.eq("kind", "final");
+        const row = check(await q.maybeSingle()) as Row | null;
         if (!row) return null;
         const def: AssessmentDef = {
           id: row.id,
           courseId: row.course_id,
+          kind: row.kind,
+          moduleId: row.module_id ?? undefined,
           title: row.title,
           passingScore: row.passing_score,
           questions: ((row.assessment_questions ?? []) as Row[])
@@ -400,7 +489,11 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
         return def;
       },
       async saveAssessment(a) {
-        check(await sb.from("assessments").upsert({ id: a.id, course_id: a.courseId, title: a.title, passing_score: a.passingScore }));
+        check(
+          await sb
+            .from("assessments")
+            .upsert({ id: a.id, course_id: a.courseId, kind: a.kind ?? "final", module_id: a.moduleId ?? null, title: a.title, passing_score: a.passingScore }),
+        );
         const existing = (check(await sb.from("assessment_questions").select("id").eq("assessment_id", a.id)) as Row[]).map((r) => r.id);
         const keep = new Set(a.questions.map((q) => q.id));
         const removed = existing.filter((id) => !keep.has(id));
@@ -420,23 +513,23 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
           completedCourses: Number(r.completed_courses),
           certificates: Number(r.certificates),
           lessonsCompleted: Number(r.lessons_completed),
-          quickBadges: Number(r.quick_badges),
+          badges: Number(r.badges),
           lastActiveAt: r.last_active_at ?? null,
         }));
       },
       async getStudent(userId) {
         const summary = (await backend.admin.listStudents()).find((s) => s.userId === userId);
         if (!summary) return null;
-        const [enrollments, progress, courses, quick] = await Promise.all([
+        const [enrollments, progress, courses, creds] = await Promise.all([
           sb.from("enrollments").select("*").eq("user_id", userId),
           sb.from("lesson_progress").select("course_id").eq("user_id", userId),
           backend.listCourses({ includeUnpublished: true }),
-          sb.from("quick_completions").select("*").eq("user_id", userId),
+          sb.from("credentials").select("*").eq("user_id", userId).order("issued_at", { ascending: false }),
         ]);
         const done = (check(progress) as Row[]).reduce<Record<string, number>>((acc, r) => ((acc[r.course_id] = (acc[r.course_id] ?? 0) + 1), acc), {});
         return {
           summary,
-          quick: (check(quick) as Row[]).map(toQuick),
+          credentials: (check(creds) as Row[]).map(toCredential),
           courses: (check(enrollments) as Row[]).map((e) => {
             const c = courses.find((x) => x.id === e.course_id);
             return {
@@ -450,14 +543,50 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
           }),
         };
       },
+      async listCredentials(search) {
+        let q = sb.from("credentials").select("*").order("issued_at", { ascending: false }).limit(300);
+        const t = search?.trim().replace(/[%,()]/g, "");
+        if (t) q = q.or(`credential_id.ilike.%${t}%,recipient_name.ilike.%${t}%,badge_name.ilike.%${t}%`);
+        return (check(await q) as Row[]).map(toCredential);
+      },
+      async revokeCredential(id, reason) {
+        check(await sb.from("credentials").update({ status: "revoked", revoked_at: new Date().toISOString(), revoked_reason: reason }).eq("id", id));
+      },
       async listCertificates(search) {
         let q = sb.from("certificates").select("*").order("issued_at", { ascending: false }).limit(200);
-        const s = search?.trim().replace(/[%,()]/g, "");
-        if (s) q = q.or(`credential_id.ilike.%${s}%,recipient_name.ilike.%${s}%`);
+        const t = search?.trim().replace(/[%,()]/g, "");
+        if (t) q = q.or(`certificate_id.ilike.%${t}%,recipient_name.ilike.%${t}%`);
         return (check(await q) as Row[]).map(toCertificate);
       },
       async revokeCertificate(id, reason) {
         check(await sb.from("certificates").update({ status: "revoked", revoked_at: new Date().toISOString(), revoked_reason: reason }).eq("id", id));
+      },
+      async listOrders() {
+        const [orders, profiles, courses, certs] = await Promise.all([
+          sb.from("certificate_orders").select("*").order("created_at", { ascending: false }).limit(300),
+          sb.from("profiles").select("id, full_name, email"),
+          sb.from("courses").select("id, title"),
+          sb.from("certificates").select("user_id, course_id, certificate_id, status").eq("status", "valid"),
+        ]);
+        const people = new Map((check(profiles) as Row[]).map((p) => [p.id, p]));
+        const titles = new Map((check(courses) as Row[]).map((c) => [c.id, c.title]));
+        const issued = check(certs) as Row[];
+        return (check(orders) as Row[]).map((r) => ({
+          ...toOrder(r),
+          learnerName: people.get(r.user_id)?.full_name ?? "Unknown",
+          learnerEmail: people.get(r.user_id)?.email ?? "",
+          courseTitle: titles.get(r.course_id) ?? r.course_id,
+          certificateId: issued.find((c) => c.user_id === r.user_id && c.course_id === r.course_id)?.certificate_id ?? null,
+        }));
+      },
+      async grantCertificate(orderId, note) {
+        return toCertificate(check(await sb.rpc("admin_grant_certificate", { p_order_id: orderId, p_note: note })) as Row);
+      },
+      async listPrices() {
+        return (check(await sb.from("certificate_prices").select("*").order("position")) as Row[]).map(toPrice);
+      },
+      async savePrice(price) {
+        check(await sb.from("certificate_prices").upsert({ currency: price.currency.toUpperCase(), amount: price.amount, active: price.active, position: price.position }));
       },
       async listSubmissions() {
         const [subs, profiles, projects] = await Promise.all([

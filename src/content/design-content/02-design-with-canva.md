@@ -1,12 +1,9 @@
 ---
-title: How to Design with Canva
-badge: Canva Design Essentials
+title: Design with Canva
 minutes: 25
-category: Design & Content
-icon: palette
 summary: Create a clean, professional social post or flyer in Canva, using templates and four simple design rules that make anything look better.
-skills: Start from the right template and size; Apply four rules: contrast, alignment, spacing, few fonts; Add your own photos, colours and logo; Download in the right format and resize for other platforms
 ---
+
 
 ## Get started
 
@@ -64,38 +61,3 @@ To make the same design in another size, such as turning a post into a story, us
 3. Replace at least one photo with your own, and use no more than two fonts.
 4. Check the four rules: contrast, alignment, space, few fonts.
 5. Download it as a **PNG**.
-
-```quiz
-[
-  {
-    "prompt": "What's the easiest way to start a professional-looking design in Canva?",
-    "options": ["A blank page with ten fonts", "A template in the right size", "Copying someone's logo", "Drawing everything by hand"],
-    "answer": 1,
-    "explanation": "Templates give you a layout that already works; you change the content."
-  },
-  {
-    "prompt": "Your white headline is hard to read on a busy photo. What's the best fix?",
-    "options": ["Make it smaller", "Put a solid shape behind the text, or use a darker photo", "Add more text", "Use a sixth font"],
-    "answer": 1,
-    "explanation": "That's a contrast problem; a solid background behind the text fixes it."
-  },
-  {
-    "prompt": "How many fonts should most designs use?",
-    "options": ["One or two", "Five", "As many as possible", "A different one for every word"],
-    "answer": 0,
-    "explanation": "One for headings and one for body text keeps a design clean."
-  },
-  {
-    "prompt": "Which format is best for a social media post with text on it?",
-    "options": ["PNG", "MP3", "DOCX", "PDF Print"],
-    "answer": 0,
-    "explanation": "PNG keeps text sharp for social media images."
-  },
-  {
-    "prompt": "What do Canva's pink guide lines help you with?",
-    "options": ["Spelling", "Lining things up (alignment)", "Choosing colours", "Downloading"],
-    "answer": 1,
-    "explanation": "They appear when items line up with each other or the centre."
-  }
-]
-```

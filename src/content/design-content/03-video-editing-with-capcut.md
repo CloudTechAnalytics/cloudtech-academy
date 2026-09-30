@@ -1,12 +1,9 @@
 ---
-title: How to Edit Videos with CapCut
-badge: CapCut Video Essentials
+title: Video Editing with CapCut
 minutes: 30
-category: Design & Content
-icon: video
 summary: Edit a short vertical video from start to finish in CapCut, the free video editor for phone and computer. Cut, add text and captions, add music and export.
-skills: Start a project in the right size for Reels, TikTok or Shorts; Trim and split clips to keep only the best parts; Add text, automatic captions and music; Export in good quality for social media
 ---
+
 
 ## Set up your project
 
@@ -66,38 +63,3 @@ Make a 15–30 second vertical video about something you do or sell:
 3. Trim and split so it gets to the point within two seconds.
 4. Add one headline and automatic captions, and correct any wrong words.
 5. Add music at a low volume, or a short voiceover, and export in **1080p**.
-
-```quiz
-[
-  {
-    "prompt": "Which aspect ratio should you use for Reels, TikTok and WhatsApp status?",
-    "options": ["16:9 (wide)", "9:16 (tall)", "1:1 (square) only", "4:3"],
-    "answer": 1,
-    "explanation": "These are watched on phones held upright, so use tall 9:16."
-  },
-  {
-    "prompt": "You want to remove a boring part from the middle of a clip. What do you use?",
-    "options": ["Split at both ends of that part, then delete it", "Add music", "Change the aspect ratio", "Export twice"],
-    "answer": 0,
-    "explanation": "Split cuts the clip where the playhead is, so you can delete the section in between."
-  },
-  {
-    "prompt": "Why add captions to short videos?",
-    "options": ["They make the file smaller", "Many people watch with the sound off", "They're required to export", "They change the video's colours"],
-    "answer": 1,
-    "explanation": "Captions carry your message when the sound is off, and help people who can't hear it."
-  },
-  {
-    "prompt": "What should you do after CapCut writes automatic captions?",
-    "options": ["Nothing, they're always right", "Read them and fix any misheard words", "Delete the audio", "Make them bright red"],
-    "answer": 1,
-    "explanation": "Auto captions often mishear names and local words, so check them."
-  },
-  {
-    "prompt": "Which export setting is good for social media?",
-    "options": ["1080p at 30 frames per second", "240p", "The lowest quality available", "Audio only"],
-    "answer": 0,
-    "explanation": "1080p looks sharp on phones without making the file too large."
-  }
-]
-```

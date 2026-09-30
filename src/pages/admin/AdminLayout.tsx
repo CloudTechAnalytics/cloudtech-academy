@@ -1,6 +1,6 @@
 import { Suspense, type ReactNode } from "react";
 import { NavLink, Outlet } from "react-router";
-import { Award, BookOpen, FolderCheck, LayoutGrid, Users } from "lucide-react";
+import { Award, BadgeCheck, BookOpen, FolderCheck, LayoutGrid, Users } from "lucide-react";
 import { useSeo } from "@/lib/seo";
 import { PageLoading, RequireAuth } from "@/lib/auth";
 import { IS_LIVE } from "@/lib/backend";
@@ -10,7 +10,8 @@ const LINKS = [
   { to: "/admin/courses", label: "Courses", icon: BookOpen },
   { to: "/admin/students", label: "Students", icon: Users },
   { to: "/admin/submissions", label: "Submissions", icon: FolderCheck },
-  { to: "/admin/certificates", label: "Certificates", icon: Award },
+  { to: "/admin/credentials", label: "Badges & credentials", icon: BadgeCheck },
+  { to: "/admin/certificates", label: "Certificates & payments", icon: Award },
 ];
 
 export default function AdminLayout() {

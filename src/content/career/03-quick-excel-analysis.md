@@ -1,12 +1,9 @@
 ---
-title: How to Analyse Excel Data Quickly
-badge: Excel Quick Analysis Essentials
+title: Quick Excel Analysis
 minutes: 30
-category: Data
-icon: chart
 summary: Take a small sales table and answer real questions in minutes. Sort, filter, total with formulas, summarise with a PivotTable and show it in a chart.
-skills: Turn data into an Excel Table; Sort and filter to find what matters; Total and count with SUM, AVERAGE and COUNTIF; Summarise with a PivotTable and a chart
 ---
+
 
 ## Get the data in
 
@@ -84,38 +81,3 @@ Using the drinks shop data:
 4. Add a bar chart with a title that says what it shows.
 
 Want to go further? The free **Excel for Data Analysis** course covers all of this in depth, with a real company dataset.
-
-```quiz
-[
-  {
-    "prompt": "What does pressing Ctrl + T on your data do?",
-    "options": ["Deletes it", "Turns it into an Excel Table with filters that grows with new rows", "Prints it", "Makes it a chart"],
-    "answer": 1,
-    "explanation": "Tables add filters and formatting, and expand automatically."
-  },
-  {
-    "prompt": "Which formula adds up the Sales column F from row 2 to 13?",
-    "options": ["=SUM(F2:F13)", "SUM F2 to F13", "=ADD(F2,F13)", "=F2+F13"],
-    "answer": 0,
-    "explanation": "SUM adds every cell in the range. =F2+F13 would only add two cells."
-  },
-  {
-    "prompt": "In the drinks shop data, what is total Snacks sales?",
-    "options": ["32,000", "82,600", "114,600", "7,500"],
-    "answer": 0,
-    "explanation": "=SUMIF(C2:C13,\"Snacks\",F2:F13) adds 7,500 + 10,000 + 10,500 + 4,000 = 32,000."
-  },
-  {
-    "prompt": "What is a PivotTable good for?",
-    "options": ["Typing new data", "Quick totals by group, like sales by product, without formulas", "Checking spelling", "Changing fonts"],
-    "answer": 1,
-    "explanation": "Drag a field to Rows and a number to Values to get totals by group."
-  },
-  {
-    "prompt": "Which chart is best for comparing sales of different products?",
-    "options": ["A bar or column chart", "A 3D pie chart", "No chart", "A line chart of product names"],
-    "answer": 0,
-    "explanation": "Bars make it easy to compare items side by side."
-  }
-]
-```

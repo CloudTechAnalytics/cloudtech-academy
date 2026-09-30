@@ -25,6 +25,8 @@ export function eligibility(
   attempts: AttemptResult[],
   submission: ProjectSubmission | null,
   project: ProjectDef | null,
+  /** Module ids the learner holds a valid badge for. */
+  badgeModules: Set<string> = new Set(),
 ): Eligibility {
   const rules = course.certificate;
   const lessons = publishedLessons(course);
@@ -37,7 +39,12 @@ export function eligibility(
   const projectNeeded = rules.requireProject && !!project?.required;
   const projectDone = !!submission && submission.status !== "needs_changes";
 
+  const withBadges = badgeModulesOf(course);
+  const badgesDone = withBadges.filter((m) => badgeModules.has(m.id)).length;
+
   const requirements: Requirement[] = [];
+  if (rules.requireModuleBadges && withBadges.length)
+    requirements.push({ key: "badges", label: "Earn every module badge", done: badgesDone === withBadges.length, detail: `${badgesDone} of ${withBadges.length}` });
   if (rules.requireAllLessons)
     requirements.push({ key: "lessons", label: "Complete every lesson", done: lessonsDone === required.length, detail: `${lessonsDone} of ${required.length}` });
   if (rules.requireExercises && exercises.length)
@@ -61,14 +68,36 @@ export function eligibility(
     eligible: rules.enabled && requirements.every((r) => r.done),
     lessonsDone,
     lessonsTotal: required.length,
-    percent: required.length ? Math.round((lessonsDone / required.length) * 100) : 0,
+    percent:
+      rules.requireModuleBadges && withBadges.length
+        ? Math.round((badgesDone / withBadges.length) * 100)
+        : required.length
+          ? Math.round((lessonsDone / required.length) * 100)
+          : 0,
   };
 }
 
-/** CTA-SQL-2026-004821 */
-export function newCredentialId(courseCode: string, date = new Date()) {
-  const n = crypto.getRandomValues(new Uint32Array(1))[0] % 1_000_000;
-  return `CTA-${courseCode}-${date.getFullYear()}-${String(n).padStart(6, "0")}`;
+/** Modules that award a badge, in order. */
+export const badgeModulesOf = (course: Course) => course.modules.filter((m) => m.badge);
+
+/** Number of badges a course offers: one per badge module, plus the completion badge. */
+export const badgeCount = (course: Course) => badgeModulesOf(course).length + (course.certificate.enabled ? 1 : 0);
+
+/** Total minutes of a course's published lessons. */
+export const courseMinutes = (course: Course) => publishedLessons(course).reduce((n, l) => n + l.minutes, 0);
+
+const ALPHABET = "23456789ABCDEFGHJKLMNPQRSTUVWXYZ";
+
+/** CTA-PROMPT-8F72K: easy to read aloud, with no 0/O or 1/I to confuse. Same format the database uses. */
+export function newCredentialId(code: string) {
+  const r = crypto.getRandomValues(new Uint32Array(5));
+  return `CTA-${code.toUpperCase()}-${[...r].map((n) => ALPHABET[n % ALPHABET.length]).join("")}`;
 }
 
-export const verifyUrl = (siteUrl: string, credentialId: string) => `${siteUrl}/verify/${encodeURIComponent(credentialId)}`;
+/** CTA-CERT-2026-000124 */
+export const certificateNumber = (n: number, date = new Date()) => `CTA-CERT-${date.getFullYear()}-${String(n).padStart(6, "0")}`;
+
+/** Public page for a badge or completion credential. */
+export const credentialUrl = (siteUrl: string, credentialId: string) => `${siteUrl}/credentials/${encodeURIComponent(credentialId)}`;
+/** Public verification page for an official certificate. */
+export const verifyUrl = (siteUrl: string, certificateId: string) => `${siteUrl}/verify/${encodeURIComponent(certificateId)}`;

@@ -1,47 +1,102 @@
-import { useState } from "react";
-import { Link, useParams } from "react-router";
-import { CheckCircle2, Circle } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router";
+import { ArrowRight, CheckCircle2, Circle, RotateCcw, Trophy } from "lucide-react";
+import type { AssessmentPublic } from "@/content/types";
 import { useSeo } from "@/lib/seo";
 import { useCourse, useLearner } from "@/lib/data";
-import { getBackend, type AttemptResult } from "@/lib/backend";
+import { getBackend, type AttemptResult, type Credential } from "@/lib/backend";
 import { PageLoading, RequireAuth } from "@/lib/auth";
+import { credentialBadge } from "@/lib/badges";
+import { eligibility } from "@/lib/certificates";
 import { Button, ButtonLink } from "@/components/Button";
 import { Alert } from "@/components/Form";
+import { BadgeArtwork } from "@/components/BadgeArtwork";
+import { ShareMenu } from "@/components/ShareMenu";
 import { optionOrder } from "@/lib/shuffle";
 import NotFound from "./NotFound";
 
+/** A module check (awards the module badge) or the course's final assessment. */
 function AssessmentInner() {
-  const { slug } = useParams();
+  const { slug, moduleId } = useParams();
   const { course, loading } = useCourse(slug);
   const learner = useLearner(course);
+  const navigate = useNavigate();
+  const [moduleCheck, setModuleCheck] = useState<{ assessment: AssessmentPublic | null; attempts: AttemptResult[] } | null>(null);
   const [answers, setAnswers] = useState<Record<string, number>>({});
   const [result, setResult] = useState<AttemptResult | null>(null);
+  const [badge, setBadge] = useState<Credential | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
+  const art = useRef<SVGSVGElement>(null);
 
-  useSeo({ title: course ? `Final assessment | ${course.title}` : "Assessment", description: "Final assessment", noindex: true });
+  const mod = moduleId ? course?.modules.find((m) => m.id === moduleId) : undefined;
+  useSeo({
+    title: course ? `${mod ? `${mod.title} check` : "Final assessment"} | ${course.title}` : "Assessment",
+    description: "Assessment",
+    noindex: true,
+  });
+
+  useEffect(() => {
+    if (!course || !moduleId) return;
+    let alive = true;
+    void (async () => {
+      const b = await getBackend();
+      const assessment = await b.getAssessment(course.id, moduleId);
+      const attempts = assessment ? await b.listAttempts(assessment.id) : [];
+      if (alive) setModuleCheck({ assessment, attempts });
+    })().catch(() => alive && setModuleCheck({ assessment: null, attempts: [] }));
+    return () => {
+      alive = false;
+    };
+  }, [course, moduleId]);
 
   if (!course) return loading ? <PageLoading /> : <NotFound />;
-  if (learner.loading) return <PageLoading />;
-  const a = learner.assessment;
+  if (moduleId && !mod) return <NotFound />;
+  if (learner.loading || (moduleId && !moduleCheck)) return <PageLoading />;
+  const a = moduleId ? moduleCheck!.assessment : learner.assessment;
+  const attempts = moduleId ? moduleCheck!.attempts : learner.attempts;
   if (!a)
     return (
       <div className="container-page py-20">
         <h1 className="font-serif text-[2.2rem]">No assessment yet</h1>
-        <p className="mt-3 text-muted">This course doesn't have a final assessment yet.</p>
+        <p className="mt-3 text-muted">{mod ? "This module doesn't have a check yet." : "This course doesn't have a final assessment yet."}</p>
       </div>
     );
 
   const answered = a.questions.filter((q) => answers[q.id] !== undefined).length;
-  const best = learner.attempts.reduce((m, x) => Math.max(m, x.score), 0);
-  const passedBefore = learner.attempts.some((x) => x.passed);
+  const best = attempts.reduce((m, x) => Math.max(m, x.score), 0);
+  const passedBefore = attempts.some((x) => x.passed);
+  const lesson = mod?.lessons.find((l) => l.published);
+  const modIndex = mod ? course.modules.indexOf(mod) : -1;
+  const nextModule = modIndex >= 0 ? course.modules.slice(modIndex + 1).find((m) => m.lessons.some((l) => l.published)) : undefined;
+  const nextLesson = nextModule?.lessons.find((l) => l.published);
+
+  const retry = () => {
+    setAnswers({});
+    setResult(null);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   const submit = async () => {
     setSubmitting(true);
     setError(null);
     try {
-      const r = await (await getBackend()).submitAssessment(a.id, answers);
+      const b = await getBackend();
+      const r = await b.submitAssessment(a.id, answers);
       setResult(r);
+      if (r.passed && mod) {
+        // A passed module check completes the module and awards its badge.
+        if (lesson) await b.setLessonComplete(course.id, lesson.id, true);
+        setBadge(await b.claimModuleBadge(mod.id));
+        setModuleCheck((m) => (m ? { ...m, attempts: [...m.attempts, r] } : m));
+      }
+      if (r.passed && !mod) {
+        const fresh = eligibility(course, learner.progress, [...learner.attempts, r], learner.submission, learner.project, learner.badgeModules);
+        if (fresh.eligible) {
+          navigate(`/courses/${course.slug}/complete`);
+          return;
+        }
+      }
       await learner.reload();
       window.scrollTo({ top: 0, behavior: "smooth" });
     } catch (e) {
@@ -51,15 +106,57 @@ function AssessmentInner() {
     }
   };
 
+  // Module passed: show the badge they just earned.
+  if (mod && result?.passed && badge) {
+    return (
+      <div className="container-page max-w-4xl py-12 sm:py-16">
+        <Link to={`/courses/${course.slug}`} className="text-[0.875rem] text-muted hover:text-ink">
+          ← {course.title}
+        </Link>
+        <div className="mt-6 grid gap-10 md:grid-cols-[1fr_1.1fr] md:items-center">
+          <BadgeArtwork ref={art} data={credentialBadge(badge, course)} className="h-auto w-full rounded-2xl border border-line shadow-[0_40px_80px_-50px_rgba(23,23,23,0.6)]" />
+          <div>
+            <p className="flex items-center gap-2 font-semibold text-success">
+              <CheckCircle2 aria-hidden className="h-5 w-5" /> Module completed · {result.correct} of {result.total} right
+            </p>
+            <h1 className="mt-3 flex items-start gap-3 font-serif text-[2.2rem] leading-tight">
+              <Trophy aria-hidden className="mt-2 h-7 w-7 shrink-0 text-brass" /> Badge earned: {badge.badgeName}
+            </h1>
+            <p className="mt-3 text-muted">It's yours, free, with its own credential ID ({badge.credentialId}) and a public page anyone can check.</p>
+            <div className="mt-6">
+              <ShareMenu credential={badge} art={art} />
+            </div>
+            <div className="mt-8 flex flex-wrap gap-3">
+              {nextLesson ? (
+                <ButtonLink to={`/learn/${course.slug}/${nextLesson.slug}`}>
+                  Next module: {nextModule!.title} <ArrowRight aria-hidden className="h-4 w-4" />
+                </ButtonLink>
+              ) : (
+                <ButtonLink to={`/courses/${course.slug}/assessment`}>
+                  Final assessment <ArrowRight aria-hidden className="h-4 w-4" />
+                </ButtonLink>
+              )}
+              <ButtonLink to={`/credentials/${badge.credentialId}`} variant="secondary">
+                View credential
+              </ButtonLink>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="container-page max-w-3xl py-12 sm:py-16">
-      <Link to={`/courses/${course.slug}`} className="text-[0.875rem] text-muted hover:text-ink">
-        ← {course.title}
+      <Link to={mod && lesson ? `/learn/${course.slug}/${lesson.slug}` : `/courses/${course.slug}`} className="text-[0.875rem] text-muted hover:text-ink">
+        ← {mod ? mod.title : course.title}
       </Link>
-      <h1 className="mt-4 font-serif text-[2.3rem] leading-tight sm:text-[2.8rem]">Final assessment</h1>
+      <p className="kicker mt-6">{mod ? `Module check · ${course.title}` : course.title}</p>
+      <h1 className="mt-3 font-serif text-[2.3rem] leading-tight sm:text-[2.8rem]">{mod ? mod.title : "Final assessment"}</h1>
       <p className="mt-3 text-[1.0625rem] leading-relaxed text-muted">
-        {a.questions.length} questions. You need {a.passingScore}% to pass, and you can try again as many times as you need.
-        {learner.attempts.length > 0 && ` Your best score so far is ${best}%.`}
+        {a.questions.length} questions. You need {a.passingScore}% to pass
+        {mod?.badge ? ` and earn the ${mod.badge} badge` : ""}. You can try again as many times as you like.
+        {attempts.length > 0 && ` Your best score so far is ${best}%.`}
       </p>
 
       <div aria-live="polite" className="mt-6">
@@ -70,30 +167,43 @@ function AssessmentInner() {
                 You passed with {result.score}% ({result.correct} of {result.total}).
               </p>
               <p className="mt-1">
-                {learner.eligibility?.eligible ? (
-                  <>
-                    You've met every requirement.{" "}
-                    <Link to={`/courses/${course.slug}/certificate`} className="font-semibold underline">
-                      Get your certificate
-                    </Link>
-                    .
-                  </>
+                {mod ? (
+                  "Saving your badge…"
                 ) : (
                   <>
-                    Finish the remaining requirements on the <Link to={`/courses/${course.slug}`} className="font-semibold underline">course page</Link> to earn your certificate.
+                    Finish the remaining steps on the{" "}
+                    <Link to={`/courses/${course.slug}`} className="font-semibold underline">
+                      course page
+                    </Link>{" "}
+                    to complete the course.
                   </>
                 )}
               </p>
             </Alert>
           ) : (
             <Alert tone="info">
-              <p className="font-semibold">
-                You scored {result.score}% ({result.correct} of {result.total}). The pass mark is {a.passingScore}%.
+              <p className="font-semibold">Not quite yet.</p>
+              <p className="mt-1">
+                You got {result.correct} of {result.total} ({result.score}%); the pass mark is {a.passingScore}%. Review the{" "}
+                {mod && lesson ? (
+                  <Link to={`/learn/${course.slug}/${lesson.slug}`} className="font-semibold underline">
+                    lesson
+                  </Link>
+                ) : (
+                  "lessons"
+                )}{" "}
+                and try again.
               </p>
-              <p className="mt-1">Review the lessons on the topics you weren't sure about, then try again. There's no limit on attempts.</p>
+              <Button variant="secondary" onClick={retry} className="mt-3">
+                <RotateCcw aria-hidden className="h-4 w-4" /> Try again
+              </Button>
             </Alert>
           ))}
-        {!result && passedBefore && <Alert tone="success">You've already passed this assessment. You can take it again for practice.</Alert>}
+        {!result && passedBefore && (
+          <Alert tone="success">
+            {mod ? "You've already passed this module check and earned its badge." : "You've already passed this assessment."} You can take it again for practice.
+          </Alert>
+        )}
         {error && <Alert tone="error">{error}</Alert>}
       </div>
 

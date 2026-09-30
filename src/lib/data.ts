@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { BUNDLED_COURSES } from "@/content";
 import type { AssessmentPublic, Course, ProjectDef } from "@/content/types";
-import { getBackend, type AttemptResult, type Enrollment, type Progress, type ProjectSubmission } from "./backend";
+import { getBackend, type AttemptResult, type Certificate, type Credential, type Enrollment, type Progress, type ProjectSubmission } from "./backend";
 import { useAuth } from "./auth";
 import { eligibility } from "./certificates";
 
@@ -51,6 +51,10 @@ export type LearnerState = {
   submission: ProjectSubmission | null;
   project: ProjectDef | null;
   assessment: AssessmentPublic | null;
+  /** The learner's credentials for this course: module badges and the completion badge. */
+  credentials: Credential[];
+  /** The official certificate, if they got one. */
+  certificate: Certificate | null;
 };
 
 const EMPTY: LearnerState = {
@@ -61,6 +65,8 @@ const EMPTY: LearnerState = {
   submission: null,
   project: null,
   assessment: null,
+  credentials: [],
+  certificate: null,
 };
 
 /** Everything about the signed-in learner's relationship with one course. */
@@ -80,11 +86,13 @@ export function useLearner(course: Course | null) {
       setState({ ...EMPTY, loading: false, project, assessment });
       return;
     }
-    const [enrollments, progress, attempts, submission] = await Promise.all([
+    const [enrollments, progress, attempts, submission, credentials, certificates] = await Promise.all([
       b.listEnrollments(),
       b.getProgress(courseId),
       assessment ? b.listAttempts(assessment.id) : Promise.resolve([]),
       project ? b.getSubmission(project.id) : Promise.resolve(null),
+      b.listMyCredentials(),
+      b.listMyCertificates(),
     ]);
     setState({
       loading: false,
@@ -94,6 +102,8 @@ export function useLearner(course: Course | null) {
       submission,
       project,
       assessment,
+      credentials: credentials.filter((c) => c.courseId === courseId && c.status === "valid"),
+      certificate: certificates.find((c) => c.courseId === courseId && c.status === "valid") ?? null,
     });
   }, [courseId, auth.status]);
 
@@ -101,6 +111,8 @@ export function useLearner(course: Course | null) {
     void reload().catch(() => setState((s) => ({ ...s, loading: false })));
   }, [reload]);
 
-  const status = course ? eligibility(course, state.progress, state.attempts, state.submission, state.project) : null;
-  return { ...state, eligibility: status, reload, signedIn: auth.status === "signed-in" };
+  const badgeModules = new Set(state.credentials.filter((c) => c.kind === "module_badge").map((c) => c.moduleId ?? ""));
+  const status = course ? eligibility(course, state.progress, state.attempts, state.submission, state.project, badgeModules) : null;
+  const completion = state.credentials.find((c) => c.kind === "course_completion") ?? null;
+  return { ...state, eligibility: status, badgeModules, completion, reload, signedIn: auth.status === "signed-in" };
 }

@@ -20,6 +20,17 @@ export const plural = (n: number, one: string, many = `${one}s`) => `${n} ${n ==
 /** "Beginner", "Intermediate", "Advanced" */
 export const titleCase = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 
+/** "25 minutes", "1 hr 25 min", or "About 6 hours" for longer courses measured in hours. */
+export function durationLabel(minutes: number | undefined, hours?: number) {
+  if (minutes) {
+    if (minutes < 60) return `${minutes} minutes`;
+    const h = Math.floor(minutes / 60);
+    const m = minutes % 60;
+    return m ? `${h} hr ${m} min` : `${h} ${h === 1 ? "hour" : "hours"}`;
+  }
+  return hoursLabel(hours);
+}
+
 export function hoursLabel(hours: number | undefined) {
   if (!hours) return "In preparation";
   return `About ${hours} hours`;

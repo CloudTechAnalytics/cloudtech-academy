@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { Link, useParams } from "react-router";
-import { ArrowLeft, ArrowRight, CheckCircle2, Clock, ListTree, X } from "lucide-react";
+import { ArrowLeft, ArrowRight, Award, CheckCircle2, Clock, ListTree, X } from "lucide-react";
 import { useSeo } from "@/lib/seo";
 import { useCourse, useLearner } from "@/lib/data";
 import { publishedLessons } from "@/lib/certificates";
@@ -126,6 +126,12 @@ export default function Learn() {
     }
   };
 
+  // In short courses each module ends with a quick check that awards the module's badge.
+  const badgeModule = module?.badge ? module : null;
+  const badgeEarned = !!badgeModule && learner.badgeModules.has(badgeModule.id);
+  const checkUrl = badgeModule ? `/courses/${course.slug}/modules/${badgeModule.id}/check` : "";
+  const nextUrl = next ? `/learn/${course.slug}/${next.slug}` : `/courses/${course.slug}/assessment`;
+
   const sidebar = <LessonSidebar course={course} currentLessonId={lesson.id} completed={completedLessons} />;
 
   return (
@@ -175,7 +181,7 @@ export default function Learn() {
               <Link to={`/sign-up?next=${encodeURIComponent(`/learn/${course.slug}/${lesson.slug}`)}`} className="font-semibold text-brass-dark underline underline-offset-2">
                 Create a free account
               </Link>{" "}
-              to save your progress and work towards the certificate.
+              to save your progress and earn your badges.
             </p>
           )}
         </header>
@@ -183,6 +189,35 @@ export default function Learn() {
         <div className="max-w-[46rem] pt-8">
           <LessonContent body={lesson.body} completedExercises={completedExercises} onExerciseSolved={onExerciseSolved} />
         </div>
+
+        {badgeModule && (
+          <section aria-labelledby="module-check" className="mt-14 max-w-[46rem] rounded-2xl border border-line-strong bg-paper p-6">
+            {badgeEarned ? (
+              <>
+                <p id="module-check" className="flex items-center gap-2 font-semibold text-success">
+                  <CheckCircle2 aria-hidden className="h-5 w-5" /> Module completed · Badge earned: {badgeModule.badge}
+                </p>
+                <p className="mt-2 text-[0.9375rem] text-muted">{next ? "On to the next module." : "Every module done. The final assessment is next."}</p>
+                <ButtonLink to={nextUrl} className="mt-4">
+                  {next ? "Next module" : "Final assessment"} <ArrowRight aria-hidden className="h-4 w-4" />
+                </ButtonLink>
+              </>
+            ) : (
+              <>
+                <p className="kicker">Earn your badge</p>
+                <h2 id="module-check" className="mt-2 font-serif text-[1.5rem] leading-tight">
+                  Take the module check
+                </h2>
+                <p className="mt-2 text-[0.9375rem] text-muted">
+                  Five quick questions about this module. Pass and you earn the <strong className="font-semibold text-ink">{badgeModule.badge}</strong> badge, free.
+                </p>
+                <ButtonLink to={learner.signedIn ? checkUrl : `/sign-up?next=${encodeURIComponent(checkUrl)}`} className="mt-4">
+                  <Award aria-hidden className="h-4 w-4" /> {learner.signedIn ? "Take the module check" : "Create a free account to earn the badge"}
+                </ButtonLink>
+              </>
+            )}
+          </section>
+        )}
 
         <footer className="mt-14 max-w-[46rem] border-t border-line pt-8">
           <div aria-live="polite">
@@ -202,7 +237,7 @@ export default function Learn() {
               <span />
             )}
             <div className="flex flex-col gap-3 sm:flex-row">
-              {learner.signedIn ? (
+              {badgeModule ? null : learner.signedIn ? (
                 <Button variant={done ? "secondary" : "primary"} onClick={() => void toggleComplete()} loading={saving}>
                   {done ? (
                     <>
@@ -218,11 +253,11 @@ export default function Learn() {
                 </ButtonLink>
               )}
               {next ? (
-                <ButtonLink to={`/learn/${course.slug}/${next.slug}`} variant={done ? "primary" : "secondary"}>
-                  Next lesson <ArrowRight aria-hidden className="h-4 w-4" />
+                <ButtonLink to={`/learn/${course.slug}/${next.slug}`} variant={done && !badgeModule ? "primary" : "secondary"}>
+                  {badgeModule ? "Next module" : "Next lesson"} <ArrowRight aria-hidden className="h-4 w-4" />
                 </ButtonLink>
               ) : (
-                <ButtonLink to={`/courses/${course.slug}/assessment`} variant={done ? "primary" : "secondary"}>
+                <ButtonLink to={`/courses/${course.slug}/assessment`} variant={done && !badgeModule ? "primary" : "secondary"}>
                   Final assessment <ArrowRight aria-hidden className="h-4 w-4" />
                 </ButtonLink>
               )}

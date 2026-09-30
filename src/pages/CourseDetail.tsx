@@ -1,11 +1,11 @@
 import { Link, useNavigate, useParams } from "react-router";
 import { useState } from "react";
-import { Award, BookOpen, CheckCircle2, Circle, Clock, FolderKanban, Lock } from "lucide-react";
+import { Award, BookOpen, CheckCircle2, Circle, Clock, FolderKanban, GraduationCap, Lock, Trophy } from "lucide-react";
 import { useSeo } from "@/lib/seo";
 import { useCourse, useLearner } from "@/lib/data";
 import { categoryName } from "@/content";
-import { hoursLabel } from "@/lib/format";
-import { publishedLessons } from "@/lib/certificates";
+import { durationLabel } from "@/lib/format";
+import { badgeCount, courseMinutes, publishedLessons } from "@/lib/certificates";
 import { breadcrumbs, courseJsonLd } from "@/lib/schema";
 import { getBackend } from "@/lib/backend";
 import { Badge } from "@/components/CourseCard";
@@ -30,11 +30,14 @@ export default function CourseDetail() {
 
   if (!course) return loading ? <PageLoading /> : <NotFound />;
 
+  const short = course.format === "short";
   const lessons = publishedLessons(course);
   const available = course.status === "available" && lessons.length > 0;
   const first = lessons[0];
   const resume = lessons.find((l) => l.id === learner.enrollment?.lastLessonId) ?? lessons.find((l) => !learner.progress.completedLessons.includes(l.id)) ?? first;
   const enrolled = !!learner.enrollment;
+  const badges = badgeCount(course);
+  const eligible = !!learner.eligibility?.eligible;
 
   const start = async () => {
     if (!first) return;
@@ -48,10 +51,11 @@ export default function CourseDetail() {
   };
 
   const facts = [
-    { icon: Clock, label: hoursLabel(course.estimatedHours) },
-    { icon: BookOpen, label: available ? `${lessons.length} lessons` : `${course.modules.length} modules planned` },
+    { icon: Clock, label: short ? durationLabel(courseMinutes(course)) : durationLabel(undefined, course.estimatedHours) },
+    { icon: BookOpen, label: available ? `${course.modules.length} ${course.modules.length === 1 ? "module" : "modules"}` : `${course.modules.length} modules planned` },
+    ...(badges ? [{ icon: Trophy, label: `${badges} ${badges === 1 ? "badge" : "badges"}` }] : []),
     ...(course.projectTitle ? [{ icon: FolderKanban, label: "Final project" }] : []),
-    ...(course.certificate.enabled ? [{ icon: Award, label: "Certificate of completion" }] : []),
+    ...(course.certificate.enabled ? [{ icon: GraduationCap, label: "Optional verified certificate" }] : []),
   ];
 
   return (
@@ -66,7 +70,8 @@ export default function CourseDetail() {
               / {categoryName(course.categoryId)}
             </nav>
             <div className="mt-5 flex flex-wrap items-center gap-2">
-              <Badge tone={available ? "free" : "soon"}>{available ? (course.isFree ? "Free" : "Paid") : "Coming soon"}</Badge>
+              <Badge tone={available ? "free" : "soon"}>{available ? "Free" : "Coming soon"}</Badge>
+              {short && <Badge>Short course</Badge>}
               <Badge>{course.levelLabel}</Badge>
             </div>
             <h1 className="mt-4 font-serif text-[2.5rem] leading-[1.06] tracking-[-0.02em] sm:text-[3.3rem]">{course.title}</h1>
@@ -89,21 +94,43 @@ export default function CourseDetail() {
                       <ProgressBar value={learner.eligibility.percent} label="Course progress" />
                     </div>
                   )}
-                  <Button onClick={() => void start()} loading={starting} className="w-full">
-                    {enrolled ? "Continue learning" : "Start learning"}
-                  </Button>
+                  {learner.completion ? (
+                    <>
+                      <p className="flex items-center gap-2 font-semibold text-success">
+                        <CheckCircle2 aria-hidden className="h-5 w-5" /> Course completed
+                      </p>
+                      <ButtonLink to={`/credentials/${learner.completion.credentialId}`} className="mt-4 w-full">
+                        View your credential
+                      </ButtonLink>
+                      <Button variant="secondary" onClick={() => void start()} loading={starting} className="mt-2 w-full">
+                        Review the course
+                      </Button>
+                    </>
+                  ) : (
+                    <Button onClick={() => void start()} loading={starting} className="w-full">
+                      {enrolled ? "Continue learning" : "Start learning — Free"}
+                    </Button>
+                  )}
                   {!learner.signedIn && (
                     <p className="mt-3 text-center text-[0.8125rem] text-muted">
-                      Free to read. <Link to={`/sign-up?next=/courses/${course.slug}`} className="font-semibold text-brass-dark">Create an account</Link> to save progress and earn the certificate.
+                      Free to read.{" "}
+                      <Link to={`/sign-up?next=/courses/${course.slug}`} className="font-semibold text-brass-dark">
+                        Create a free account
+                      </Link>{" "}
+                      to save progress and earn your badges.
                     </p>
                   )}
-                  {learner.eligibility && learner.signedIn && (
+                  {learner.eligibility && learner.signedIn && !learner.completion && (
                     <div className="mt-6 border-t border-line pt-5">
-                      <p className="text-[0.875rem] font-semibold">Certificate requirements</p>
+                      <p className="text-[0.875rem] font-semibold">To complete the course</p>
                       <ul className="mt-3 space-y-2">
                         {learner.eligibility.requirements.map((r) => (
                           <li key={r.key} className="flex items-start gap-2.5 text-[0.875rem]">
-                            {r.done ? <CheckCircle2 aria-label="Done" className="mt-0.5 h-4 w-4 shrink-0 text-success" /> : <Circle aria-label="Not yet" className="mt-0.5 h-4 w-4 shrink-0 text-line-strong" />}
+                            {r.done ? (
+                              <CheckCircle2 aria-label="Done" className="mt-0.5 h-4 w-4 shrink-0 text-success" />
+                            ) : (
+                              <Circle aria-label="Not yet" className="mt-0.5 h-4 w-4 shrink-0 text-line-strong" />
+                            )}
                             <span>
                               {r.label} <span className="text-muted">· {r.detail}</span>
                             </span>
@@ -119,7 +146,7 @@ export default function CourseDetail() {
                             Final project
                           </ButtonLink>
                         )}
-                        {learner.eligibility.eligible && <ButtonLink to={`/courses/${course.slug}/certificate`}>Get certificate</ButtonLink>}
+                        {eligible && <ButtonLink to={`/courses/${course.slug}/complete`}>Claim your completion badge</ButtonLink>}
                       </div>
                     </div>
                   )}
@@ -143,25 +170,33 @@ export default function CourseDetail() {
       <div className="container-page grid gap-12 py-14 sm:py-16 lg:grid-cols-12">
         <section aria-labelledby="curriculum-title" className="lg:col-span-7">
           <h2 id="curriculum-title" className="font-serif text-[1.9rem]">
-            Curriculum
+            {short ? "Modules" : "Curriculum"}
           </h2>
           <ol className="mt-6 border-t border-ink/80">
             {course.modules.map((m, i) => {
-              const ls = m.lessons.filter((l) => l.published);
-              const lesson = ls[0];
+              const lesson = m.lessons.find((l) => l.published);
               const done = lesson && learner.progress.completedLessons.includes(lesson.id);
+              const earned = learner.badgeModules.has(m.id);
               return (
                 <li key={m.id} className="border-b border-line">
                   {lesson ? (
-                    <Link to={`/learn/${course.slug}/${lesson.slug}`} className="group flex items-start gap-4 py-4 hover:bg-sand/40 sm:px-2">
+                    <div className="flex items-start gap-4 py-4 sm:px-2">
                       <span className="w-7 shrink-0 pt-0.5 font-serif text-[0.95rem] text-brass-dark">{String(i + 1).padStart(2, "0")}</span>
-                      <span className="flex-1">
-                        <span className="block font-medium text-ink group-hover:text-brass-dark">{m.title}</span>
+                      <span className="min-w-0 flex-1">
+                        <Link to={`/learn/${course.slug}/${lesson.slug}`} className="block font-medium text-ink hover:text-brass-dark">
+                          {m.title}
+                        </Link>
                         {lesson.summary && <span className="mt-0.5 block text-[0.875rem] text-muted">{lesson.summary}</span>}
+                        {m.badge && (
+                          <span className={`mt-2 inline-flex items-center gap-1.5 text-[0.8125rem] font-medium ${earned ? "text-success" : "text-brass-dark"}`}>
+                            {earned ? <CheckCircle2 aria-hidden className="h-3.5 w-3.5" /> : <Award aria-hidden className="h-3.5 w-3.5" />}
+                            {earned ? `Badge earned: ${m.badge}` : `Badge: ${m.badge}`}
+                          </span>
+                        )}
                       </span>
                       <span className="shrink-0 pt-0.5 text-[0.8125rem] text-muted">{lesson.minutes} min</span>
-                      {done && <CheckCircle2 aria-label="Completed" className="mt-0.5 h-4 w-4 shrink-0 text-success" />}
-                    </Link>
+                      {!m.badge && done && <CheckCircle2 aria-label="Completed" className="mt-0.5 h-4 w-4 shrink-0 text-success" />}
+                    </div>
                   ) : (
                     <div className="flex items-start gap-4 py-4 sm:px-2">
                       <span className="w-7 shrink-0 pt-0.5 font-serif text-[0.95rem] text-subtle">{String(i + 1).padStart(2, "0")}</span>
@@ -172,6 +207,20 @@ export default function CourseDetail() {
                 </li>
               );
             })}
+            {available && course.certificate.enabled && (
+              <li className="flex items-start gap-4 border-b border-line py-4 sm:px-2">
+                <span className="w-7 shrink-0 pt-0.5 text-brass-dark">
+                  <GraduationCap aria-hidden className="h-4 w-4" />
+                </span>
+                <span className="flex-1">
+                  <span className="block font-medium">Final assessment</span>
+                  <span className="mt-0.5 block text-[0.875rem] text-muted">
+                    Pass it ({course.certificate.passingScore}% or more) to earn the {course.completionBadge ?? course.title} course completion badge.
+                  </span>
+                </span>
+                {learner.completion && <CheckCircle2 aria-label="Completed" className="mt-0.5 h-4 w-4 shrink-0 text-success" />}
+              </li>
+            )}
           </ol>
         </section>
 
@@ -207,13 +256,19 @@ export default function CourseDetail() {
             </section>
           )}
           {course.certificate.enabled && (
-            <section aria-labelledby="cert-title" className="rounded-xl border border-line bg-paper p-5">
-              <h2 id="cert-title" className="font-serif text-[1.3rem]">
-                Certificate
+            <section aria-labelledby="cred-title" className="rounded-xl border border-line bg-paper p-5">
+              <h2 id="cred-title" className="font-serif text-[1.3rem]">
+                Badges and certificate
               </h2>
               <p className="mt-2 text-[0.9rem] leading-relaxed text-muted">
-                Complete every lesson and the practice exercises, pass the final assessment ({course.certificate.passingScore}% or more)
-                {course.certificate.requireProject ? " and submit the final project" : ""} to earn a CloudTech Academy certificate with a public verification link.
+                {short ? "Earn a free badge for each module you pass, and a" : "Earn a"} free course completion badge with its own credential ID and public page you can
+                share. Learning and badges are always free.
+              </p>
+              <p className="mt-3 text-[0.9rem] leading-relaxed text-muted">
+                After you finish, you can choose to get an official verified PDF certificate. It's optional.{" "}
+                <Link to="/certificates" className="font-medium text-brass-dark hover:text-ink">
+                  How it works
+                </Link>
               </p>
             </section>
           )}

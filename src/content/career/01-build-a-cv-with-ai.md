@@ -1,12 +1,9 @@
 ---
-title: How to Build a CV with AI
-badge: AI CV Builder Essentials
+title: Build a CV with AI
 minutes: 25
-category: Career
-icon: cv
 summary: Use AI to structure, strengthen and tailor your CV for a specific job, while keeping every word true and in your own voice.
-skills: Lay out a clear, recruiter-friendly CV; Turn duties into achievement bullet points; Tailor your CV to a job advert; Check the result so nothing is exaggerated
 ---
+
 
 ## What a good CV looks like
 
@@ -79,38 +76,3 @@ AI can make you sound like someone else, or quietly add things that aren't true.
 2. Ask AI to rewrite them as achievement bullets, with **[number?]** where a figure would help. Fill in real numbers or remove the gaps.
 3. Find a real job advert you'd like, and ask AI which requirements your CV doesn't show clearly.
 4. Update one bullet and your profile for that job, and read the result aloud.
-
-```quiz
-[
-  {
-    "prompt": "Which bullet point is strongest?",
-    "options": ["Responsible for sales", "Did sales work", "Increased monthly sales by 20% by following up every enquiry within a day", "Sales"],
-    "answer": 2,
-    "explanation": "It starts with an action and shows a result."
-  },
-  {
-    "prompt": "Why tell AI 'don't invent numbers'?",
-    "options": ["Numbers make CVs too long", "Your CV must be true, and you'll be asked about it", "AI can't count", "Recruiters dislike numbers"],
-    "answer": 1,
-    "explanation": "Only include figures you can back up in an interview."
-  },
-  {
-    "prompt": "What's the best way to tailor a CV to a job?",
-    "options": ["Send the same CV everywhere", "Compare it with the advert and make the matching, true skills clear", "Copy the whole advert into your CV", "Add a photo"],
-    "answer": 1,
-    "explanation": "Show clearly how your real experience matches what the employer asked for."
-  },
-  {
-    "prompt": "Which layout is safest for most CVs?",
-    "options": ["One simple column with clear headings", "Text inside images", "Three columns with graphics", "Handwritten and scanned"],
-    "answer": 0,
-    "explanation": "Simple layouts are easy for people and screening software to read."
-  },
-  {
-    "prompt": "Which of these do you usually not need on a CV?",
-    "options": ["Your experience", "Your skills", "Your state of origin and religion", "Your contact details"],
-    "answer": 2,
-    "explanation": "Personal details like these aren't needed unless an employer specifically asks."
-  }
-]
-```

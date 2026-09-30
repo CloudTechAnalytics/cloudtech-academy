@@ -14,6 +14,9 @@ export type AssessmentQuestionDef = {
 export type AssessmentDef = {
   id: string;
   courseId: string;
+  /** "module" checks a single module and awards its badge; "final" is the course assessment. Default "final". */
+  kind?: "module" | "final";
+  moduleId?: string;
   title: string;
   passingScore: number;
   questions: AssessmentQuestionDef[];
@@ -54,6 +57,10 @@ export type Module = {
   title: string;
   position: number;
   lessons: Lesson[];
+  /** Badge awarded for passing this module's check, if any. */
+  badge: string | null;
+  badgeCode: string | null;
+  skills: string[];
 };
 
 export type Course = Omit<CourseDef, "modules"> & {
@@ -66,6 +73,8 @@ export type Course = Omit<CourseDef, "modules"> & {
 export type AssessmentPublic = {
   id: string;
   courseId: string;
+  kind: "module" | "final";
+  moduleId: string | null;
   title: string;
   passingScore: number;
   questions: { id: string; prompt: string; options: string[] }[];

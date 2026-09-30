@@ -45,8 +45,37 @@ export type ProjectSubmission = {
 
 export type CertificateStatus = "valid" | "revoked";
 
+export type CredentialKind = "module_badge" | "course_completion";
+
+/** A free credential: a module badge or a course completion badge. */
+export type Credential = {
+  id: string;
+  credentialId: string;
+  userId: string;
+  kind: CredentialKind;
+  courseId: string;
+  moduleId: string | null;
+  badgeName: string;
+  courseTitle: string;
+  moduleTitle: string | null;
+  recipientName: string;
+  skills: string[];
+  issuedAt: string;
+  status: CertificateStatus;
+  revokedReason: string | null;
+};
+
+/** What anyone can see on a public credential page. No email or account details. */
+export type PublicCredential = Pick<
+  Credential,
+  "credentialId" | "kind" | "badgeName" | "courseId" | "courseTitle" | "moduleTitle" | "recipientName" | "skills" | "issuedAt" | "status"
+>;
+
+/** The optional, paid official certificate for a completed course. */
 export type Certificate = {
   id: string;
+  certificateId: string;
+  /** The course completion credential it certifies. */
   credentialId: string;
   userId: string;
   courseId: string;
@@ -57,8 +86,28 @@ export type Certificate = {
   revokedReason: string | null;
 };
 
-/** What anyone can see when verifying a credential. No email or account details. */
-export type PublicCertificate = Pick<Certificate, "credentialId" | "recipientName" | "courseTitle" | "issuedAt" | "status">;
+export type PublicCertificate = Pick<Certificate, "certificateId" | "credentialId" | "recipientName" | "courseTitle" | "issuedAt" | "status">;
+
+export type CertificatePrice = { currency: string; amount: number; active: boolean; position: number };
+
+export type OrderStatus = "pending" | "paid" | "granted" | "failed" | "cancelled";
+
+export type CertificateOrder = {
+  id: string;
+  userId: string;
+  courseId: string;
+  credentialId: string;
+  currency: string;
+  amount: number;
+  status: OrderStatus;
+  provider: string | null;
+  providerRef: string | null;
+  note: string | null;
+  createdAt: string;
+  paidAt: string | null;
+};
+
+export type AdminOrder = CertificateOrder & { learnerName: string; learnerEmail: string; courseTitle: string; certificateId: string | null };
 
 export type StudentSummary = {
   userId: string;
@@ -69,7 +118,8 @@ export type StudentSummary = {
   completedCourses: number;
   certificates: number;
   lessonsCompleted: number;
-  quickBadges: number;
+  /** Valid credentials: module badges and course completions. */
+  badges: number;
   /** The latest enrolment, lesson, exercise or assessment; null if they haven't started. */
   lastActiveAt: string | null;
 };
@@ -77,11 +127,8 @@ export type StudentSummary = {
 export type StudentDetail = {
   summary: StudentSummary;
   courses: { courseId: string; courseTitle: string; enrolledAt: string; completedLessons: number; totalLessons: number; completedAt: string | null }[];
-  quick: QuickCompletion[];
+  credentials: Credential[];
 };
-
-/** A passed quick course (see src/content/quick.ts). */
-export type QuickCompletion = { slug: string; score: number; completedAt: string };
 
 export type AdminSubmission = ProjectSubmission & { studentName: string; projectTitle: string };
 
@@ -105,7 +152,8 @@ export interface Backend {
   /* ---------- content ---------- */
   listCourses(opts?: { includeUnpublished?: boolean }): Promise<Course[]>;
   getCourse(slug: string, opts?: { includeUnpublished?: boolean }): Promise<Course | null>;
-  getAssessment(courseId: string): Promise<AssessmentPublic | null>;
+  /** The course's final assessment, or a module's check when moduleId is given. */
+  getAssessment(courseId: string, moduleId?: string): Promise<AssessmentPublic | null>;
   getProject(courseId: string): Promise<ProjectDef | null>;
 
   /* ---------- learning ---------- */
@@ -120,17 +168,26 @@ export interface Backend {
   getSubmission(projectId: string): Promise<ProjectSubmission | null>;
   submitProject(projectId: string, input: { content: string; url: string }): Promise<ProjectSubmission>;
 
-  /* ---------- certificates ---------- */
-  /** Issues (or returns the existing) certificate. The server checks every requirement. */
-  issueCertificate(courseId: string): Promise<Certificate>;
-  listMyCertificates(): Promise<Certificate[]>;
-  getMyCertificate(credentialId: string): Promise<Certificate | null>;
+  /* ---------- credentials (free) ---------- */
+  /** Awards (or returns) a module's badge. The server checks the module check was passed. */
+  claimModuleBadge(moduleId: string): Promise<Credential>;
+  /** Issues (or returns) the course completion credential. The server checks every requirement. */
+  issueCourseCredential(courseId: string): Promise<Credential>;
+  listMyCredentials(): Promise<Credential[]>;
+  verifyCredential(credentialId: string): Promise<PublicCredential | null>;
 
-  /* ---------- quick courses ---------- */
-  /** Saves a passed quick course for the signed-in learner, keeping their best score. */
-  recordQuickCourse(slug: string, score: number): Promise<void>;
-  listQuickCompletions(): Promise<QuickCompletion[]>;
-  verifyCertificate(credentialId: string): Promise<PublicCertificate | null>;
+  /* ---------- official certificate (optional, paid) ---------- */
+  listCertificatePrices(): Promise<CertificatePrice[]>;
+  /** Starts (or reuses) an order. The course must be complete. */
+  startCertificateOrder(courseId: string, currency: string): Promise<CertificateOrder>;
+  listMyOrders(): Promise<CertificateOrder[]>;
+  /** Whether online payment is switched on. Until it is, admins grant certificates by hand. */
+  readonly paymentsEnabled: boolean;
+  /** Demo mode only: stands in for a successful payment so the flow can be tried. */
+  simulatePayment?(orderId: string): Promise<Certificate>;
+  listMyCertificates(): Promise<Certificate[]>;
+  getMyCertificate(certificateId: string): Promise<Certificate | null>;
+  verifyCertificate(certificateId: string): Promise<PublicCertificate | null>;
 
   /* ---------- admin ---------- */
   admin: {
@@ -140,12 +197,19 @@ export interface Backend {
     reorderModules(courseId: string, moduleIds: string[]): Promise<void>;
     saveLesson(lesson: LessonInput): Promise<void>;
     deleteLesson(lessonId: string): Promise<void>;
-    getAssessment(courseId: string): Promise<AssessmentDef | null>;
+    getAssessment(courseId: string, moduleId?: string): Promise<AssessmentDef | null>;
     saveAssessment(assessment: AssessmentDef): Promise<void>;
     listStudents(): Promise<StudentSummary[]>;
     getStudent(userId: string): Promise<StudentDetail | null>;
+    listCredentials(search?: string): Promise<Credential[]>;
+    revokeCredential(id: string, reason: string): Promise<void>;
     listCertificates(search?: string): Promise<Certificate[]>;
-    revokeCertificate(certificateId: string, reason: string): Promise<void>;
+    revokeCertificate(id: string, reason: string): Promise<void>;
+    listOrders(): Promise<AdminOrder[]>;
+    grantCertificate(orderId: string, note: string): Promise<Certificate>;
+    /** Every price, including ones switched off. */
+    listPrices(): Promise<CertificatePrice[]>;
+    savePrice(price: CertificatePrice): Promise<void>;
     listSubmissions(): Promise<AdminSubmission[]>;
     reviewSubmission(submissionId: string, status: SubmissionStatus, feedback: string): Promise<void>;
   };

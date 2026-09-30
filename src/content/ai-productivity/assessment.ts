@@ -1,0 +1,82 @@
+import type { AssessmentDef } from "../types";
+
+/** AI Productivity Fundamentals: a short check for each module (it awards the module badge) and a final assessment. */
+export const AIPF_ASSESSMENTS: AssessmentDef[] = [
+  {
+    id: "aipf-m01-check",
+    courseId: "ai-productivity-fundamentals",
+    kind: "module",
+    moduleId: "aipf-m01",
+    title: "Prompting Essentials: module check",
+    passingScore: 60,
+    questions: [
+      { id: "aipf-m01-q1", prompt: "Why does a detailed prompt usually get a better answer?", options: ["The AI only knows what you tell it", "Long prompts make the AI work faster", "Short prompts are not allowed", "The AI charges less for long prompts"], answer: 0, explanation: "The assistant can't see your situation, so the context you give is what it works with." },
+      { id: "aipf-m01-q2", prompt: "Which of these is the best prompt?", options: ["Write an email.", "Email.", "I'm a shop owner. Write a polite email to a supplier asking to move Friday's delivery to Monday. Under 100 words.", "Write something about deliveries."], answer: 2, explanation: "It gives the context, the task, the details and a length limit." },
+      { id: "aipf-m01-q3", prompt: "You want five product descriptions in the same style as one you like. What's the easiest way?", options: ["Describe the style in one word", "Paste the example and ask for more like it", "Ask for 'good descriptions'", "Start a new chat for each one"], answer: 1, explanation: "Showing an example is the quickest way to get the same tone, length and structure." },
+      { id: "aipf-m01-q4", prompt: "The first answer is close, but too formal. What should you do?", options: ["Start a new chat and type the same prompt", "Reply in the same chat: 'Make it less formal'", "Give up on AI", "Copy it anyway"], answer: 1, explanation: "The assistant remembers the conversation, so a short follow-up is enough." },
+      { id: "aipf-m01-q5", prompt: "An AI answer includes a price and a date. What should you do before sharing it?", options: ["Nothing, AI is always right", "Check the price and date against a source you trust", "Add more emojis", "Make the font bigger"], answer: 1, explanation: "AI can be confidently wrong, so check facts, figures and dates before you rely on them." },
+    ],
+  },
+  {
+    id: "aipf-m02-check",
+    courseId: "ai-productivity-fundamentals",
+    kind: "module",
+    moduleId: "aipf-m02",
+    title: "Using Claude: module check",
+    passingScore: 60,
+    questions: [
+      { id: "aipf-m02-q1", prompt: "Which company makes Claude?", options: ["Anthropic", "Google", "Microsoft", "Meta"], answer: 0, explanation: "Claude is Anthropic's AI assistant." },
+      { id: "aipf-m02-q2", prompt: "You got a good answer and want it as a table. What's the easiest thing to do?", options: ["Start a new chat and ask again", "Reply in the same chat: 'Put that in a table'", "Copy it into Excel by hand", "Close Claude and reopen it"], answer: 1, explanation: "Claude remembers the conversation, so a short follow-up is enough." },
+      { id: "aipf-m02-q3", prompt: "Claude summarises a contract and mentions a payment deadline. What should you do before relying on it?", options: ["Nothing, the summary is enough", "Check the deadline in the contract yourself", "Ask a different AI", "Delete the contract"], answer: 1, explanation: "AI can misread or miss details, so check important facts in the original document." },
+      { id: "aipf-m02-q4", prompt: "What is a project in Claude useful for?", options: ["Making Claude answer faster", "Keeping related chats together with shared files and instructions", "Printing documents", "Changing Claude's language to French only"], answer: 1, explanation: "A project keeps background files and instructions so every chat in it starts with the context." },
+      { id: "aipf-m02-q5", prompt: "Which of these should you not upload to Claude without permission?", options: ["A public government report", "A school timetable", "Customer phone numbers and payment details", "A recipe"], answer: 2, explanation: "Keep private and confidential information out unless your organisation has approved the tool for it." },
+    ],
+  },
+  {
+    id: "aipf-m03-check",
+    courseId: "ai-productivity-fundamentals",
+    kind: "module",
+    moduleId: "aipf-m03",
+    title: "Using ChatGPT: module check",
+    passingScore: 60,
+    questions: [
+      { id: "aipf-m03-q1", prompt: "Which company makes ChatGPT?", options: ["OpenAI", "Anthropic", "Canva", "Apple"], answer: 0, explanation: "ChatGPT is made by OpenAI." },
+      { id: "aipf-m03-q2", prompt: "Which request will usually get the most useful answer?", options: ["Tell me about marketing.", "Marketing?", "I sell sandals on Instagram in Kano. Give me five low-cost ways to get customers this month.", "Help."], answer: 2, explanation: "It says who you are, what you want and what kind of answer helps." },
+      { id: "aipf-m03-q3", prompt: "You need the current fee for a government service. What should you do?", options: ["Trust the first number ChatGPT gives", "Ask it to search the web, then check the official source", "Guess", "Ask it to make one up"], answer: 1, explanation: "For current, official information, check the source ChatGPT links to, ideally the official website." },
+      { id: "aipf-m03-q4", prompt: "What do personalisation settings do?", options: ["Make ChatGPT free", "Tell ChatGPT about you and how you like answers, for every new chat", "Delete your chat history", "Change the app's colours"], answer: 1, explanation: "Your preferences are applied to new chats, so you don't repeat them." },
+      { id: "aipf-m03-q5", prompt: "ChatGPT gives you a total from your sales spreadsheet. What's the safest next step?", options: ["Check the total yourself in Excel or Google Sheets", "Share it with your boss straight away", "Ignore the spreadsheet", "Ask it to round the number"], answer: 0, explanation: "It's usually right, but check important numbers yourself." },
+    ],
+  },
+  {
+    id: "aipf-m04-check",
+    courseId: "ai-productivity-fundamentals",
+    kind: "module",
+    moduleId: "aipf-m04",
+    title: "Presentations with AI: module check",
+    passingScore: 60,
+    questions: [
+      { id: "aipf-m04-q1", prompt: "What should you decide before you create any slides?", options: ["The colour of the background", "Who is listening, what you want from them, and why they should care", "How many animations to use", "The font size"], answer: 1, explanation: "A clear message and audience make every later choice easier." },
+      { id: "aipf-m04-q2", prompt: "What is the best thing to ask AI for first?", options: ["50 slides of text", "A slide-by-slide outline you can edit", "The final speech word for word", "Clip art"], answer: 1, explanation: "An outline is quick to review and change before you spend time on design." },
+      { id: "aipf-m04-q3", prompt: "Which slide title is best?", options: ["Deliveries", "Slide 3", "Late deliveries are costing us customers", "Data"], answer: 2, explanation: "A title that states the point tells the audience what to take away." },
+      { id: "aipf-m04-q4", prompt: "Where should the detailed explanation go?", options: ["In long paragraphs on each slide", "In the speaker notes, and in what you say", "In the footer in small text", "Nowhere"], answer: 1, explanation: "Keep slides short; put detail in the notes and your talk." },
+      { id: "aipf-m04-q5", prompt: "An AI-made slide shows a statistic you don't recognise. What should you do?", options: ["Leave it, it looks professional", "Check it against a real source, or remove it", "Make it bigger", "Round it up"], answer: 1, explanation: "AI can invent realistic-looking figures. Only present numbers you can back up." },
+    ],
+  },
+  {
+    id: "ai-productivity-fundamentals-final",
+    courseId: "ai-productivity-fundamentals",
+    kind: "final",
+    title: "AI Productivity Fundamentals: final assessment",
+    passingScore: 60,
+    questions: [
+      { id: "aipf-f01", prompt: "Which prompt will usually get the most useful answer?", options: ["Write a report.", "I run a bakery in Enugu. Write a 100-word WhatsApp message telling customers we now deliver on Sundays.", "Report please.", "Tell me things."], answer: 1, explanation: "It gives context, the task, the details and a length." },
+      { id: "aipf-f02", prompt: "The first answer is nearly right. What's the quickest way to improve it?", options: ["Reply in the same chat with what to change", "Close the app", "Start again with the same prompt", "Copy it anyway"], answer: 0, explanation: "The assistant remembers the conversation, so a short follow-up is enough." },
+      { id: "aipf-f03", prompt: "You want ten captions in the style of one you like. What should you do?", options: ["Paste the example and ask for more like it", "Describe the style in one word", "Ask for 'nice captions'", "Write them all yourself"], answer: 0, explanation: "An example shows the tone, length and structure you want." },
+      { id: "aipf-f04", prompt: "An AI assistant summarises a contract you uploaded. What should you check yourself?", options: ["The deadlines, amounts and other key facts", "Nothing", "Only the first word", "The font"], answer: 0, explanation: "AI can misread or miss details, so check anything important in the original." },
+      { id: "aipf-f05", prompt: "What is a Claude project useful for?", options: ["Keeping related chats together with shared files and instructions", "Making Claude free", "Printing chats", "Changing the language"], answer: 0, explanation: "Projects keep background files and instructions for every chat inside them." },
+      { id: "aipf-f06", prompt: "You need today's official fee for a government service. What's the best approach?", options: ["Ask the assistant to search the web, then check the official source", "Trust the first number", "Guess", "Ask it to invent one"], answer: 0, explanation: "For current, official information, check the source, ideally the official website." },
+      { id: "aipf-f07", prompt: "Which slide title is best?", options: ["Data", "Slide 4", "Late deliveries are costing us customers", "Deliveries"], answer: 2, explanation: "A title that states the point tells the audience what to take away." },
+      { id: "aipf-f08", prompt: "Which of these should you not paste into an AI assistant without permission?", options: ["A public news article", "Customers' phone numbers and bank details", "A recipe", "Your own draft email"], answer: 1, explanation: "Keep private and confidential information out unless your organisation has approved the tool." },
+    ],
+  },
+];

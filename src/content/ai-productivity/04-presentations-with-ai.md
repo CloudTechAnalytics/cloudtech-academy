@@ -1,12 +1,9 @@
 ---
-title: How to Create Presentations with AI
-badge: AI Presentations Essentials
+title: Presentations with AI
 minutes: 25
-category: AI & Productivity
-icon: slides
 summary: Turn an idea into a clear, professional slide deck in half the time, using AI for the outline and wording and your own judgement for the story.
-skills: Get a slide-by-slide outline from an AI assistant; Write short, clear slide text and speaker notes; Build the deck quickly in PowerPoint, Google Slides or Canva; Check the facts and make it sound like you
 ---
+
 
 ## Start with the message, not the slides
 
@@ -79,38 +76,3 @@ Before you present:
 2. Ask an AI assistant for a 5–7 slide outline.
 3. Change at least two things in the outline yourself.
 4. Build three slides in PowerPoint, Google Slides or Canva: a title slide, one content slide with a headline that states the point, and a closing slide with your ask.
-
-```quiz
-[
-  {
-    "prompt": "What should you decide before you create any slides?",
-    "options": ["The colour of the background", "Who is listening, what you want from them, and why they should care", "How many animations to use", "The font size"],
-    "answer": 1,
-    "explanation": "A clear message and audience make every later choice easier."
-  },
-  {
-    "prompt": "What is the best thing to ask AI for first?",
-    "options": ["50 slides of text", "A slide-by-slide outline you can edit", "The final speech word for word", "Clip art"],
-    "answer": 1,
-    "explanation": "An outline is quick to review and change before you spend time on design."
-  },
-  {
-    "prompt": "Which slide title is best?",
-    "options": ["Deliveries", "Slide 3", "Late deliveries are costing us customers", "Data"],
-    "answer": 2,
-    "explanation": "A title that states the point tells the audience what to take away."
-  },
-  {
-    "prompt": "Where should the detailed explanation go?",
-    "options": ["In long paragraphs on each slide", "In the speaker notes, and in what you say", "In the footer in small text", "Nowhere"],
-    "answer": 1,
-    "explanation": "Keep slides short; put detail in the notes and your talk."
-  },
-  {
-    "prompt": "An AI-made slide shows a statistic you don't recognise. What should you do?",
-    "options": ["Leave it, it looks professional", "Check it against a real source, or remove it", "Make it bigger", "Round it up"],
-    "answer": 1,
-    "explanation": "AI can invent realistic-looking figures. Only present numbers you can back up."
-  }
-]
-```

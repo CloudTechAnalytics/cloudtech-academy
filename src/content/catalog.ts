@@ -10,6 +10,9 @@ export type CourseStatus = "available" | "coming_soon";
 export type Category = { id: string; name: string; description: string; future?: boolean };
 
 export const CATEGORIES: Category[] = [
+  { id: "ai-productivity", name: "AI & Productivity", description: "Use AI tools to research, write, create and work faster." },
+  { id: "design-content", name: "Design & Content", description: "Design graphics, edit videos and plan content." },
+  { id: "career", name: "Career", description: "CVs, LinkedIn and the digital skills employers look for." },
   { id: "data-analytics", name: "Data Analytics", description: "Turning raw data into answers a business can act on." },
   { id: "business-intelligence", name: "Business Intelligence", description: "Dashboards, reporting and data models." },
   { id: "data-science", name: "Data Science", description: "Statistics and predictive modelling.", future: true },
@@ -26,13 +29,29 @@ export type CertificateRules = {
   requireAllLessons: boolean;
   requireExercises: boolean;
   requireProject: boolean;
+  /** Every module with a module assessment must have its badge. */
+  requireModuleBadges: boolean;
   passingScore: number;
 };
 
-export type ModuleDef = { id: string; title: string; lessons: string[] };
+export type ModuleDef = {
+  id: string;
+  title: string;
+  lessons: string[];
+  /** Name of the badge earned by passing this module's assessment, e.g. "Prompting Essentials". */
+  badge?: string;
+  /** Short code used in the badge's credential ID, e.g. CTA-PROMPT-8F72K. */
+  badgeCode?: string;
+  /** Skills shown on the module badge's public credential page. */
+  skills?: string[];
+};
 
 export type CourseDef = {
   id: string;
+  /** "short": modules of 15–30 minutes, each with a check and a badge. "full": longer lessons with practice. Default "full". */
+  format?: "full" | "short";
+  /** Name of the course completion badge. Defaults to the course title. */
+  completionBadge?: string;
   slug: string;
   /** Short code used in credential IDs, e.g. CTA-SQL-2026-004821 */
   code: string;
@@ -59,10 +78,94 @@ const rules = (requireProject: boolean): CertificateRules => ({
   requireAllLessons: true,
   requireExercises: true,
   requireProject,
+  requireModuleBadges: false,
   passingScore: 60,
 });
 
+/** Short courses: every module badge, then the final assessment. No lesson ticking or practice required. */
+const shortRules: CertificateRules = {
+  enabled: true,
+  requireAllLessons: false,
+  requireExercises: false,
+  requireProject: false,
+  requireModuleBadges: true,
+  passingScore: 60,
+};
+
 export const COURSES: CourseDef[] = [
+  {
+    id: "ai-productivity-fundamentals",
+    slug: "ai-productivity-fundamentals",
+    format: "short",
+    code: "AIPF",
+    title: "AI Productivity Fundamentals",
+    completionBadge: "AI Productivity Fundamentals",
+    summary: "Use AI tools to research, write and create faster: prompting, Claude, ChatGPT and presentations, in four short modules.",
+    description:
+      "Learn practical ways to use AI assistants at work, at school and in your business. Write prompts that get useful answers, work with your own documents in Claude, research with sources in ChatGPT, and turn an idea into a presentation. Each module takes about 20 minutes and ends with a short check and a badge.",
+    categoryId: "ai-productivity",
+    difficulty: "beginner",
+    levelLabel: "Beginner",
+    isFree: true,
+    status: "available",
+    skills: ["Writing clear prompts", "Working with documents in Claude", "Researching with ChatGPT", "Building presentations with AI", "Checking AI answers before you use them"],
+    prerequisites: ["No experience needed", "A free account with any AI assistant, such as ChatGPT or Claude"],
+    certificate: shortRules,
+    modules: [
+      { id: "aipf-m01", title: "Prompting Essentials", lessons: ["prompting-essentials"], badge: "Prompting Essentials", badgeCode: "PROMPT", skills: ["Write a prompt with context, task and format", "Give examples so the AI matches your style", "Improve a weak answer instead of starting again", "Check AI answers before you use them"] },
+      { id: "aipf-m02", title: "Using Claude", lessons: ["using-claude"], badge: "Claude AI Essentials", badgeCode: "CLAUDE", skills: ["Start a conversation and follow up well", "Summarise and question a document you upload", "Rewrite text for a different reader or tone", "Keep ongoing work organised in a project"] },
+      { id: "aipf-m03", title: "Using ChatGPT", lessons: ["using-chatgpt"], badge: "ChatGPT Essentials", badgeCode: "CHATGPT", skills: ["Ask focused questions and refine the answer", "Use files and images in a chat", "Research with sources you can check", "Save your preferences so every chat starts better"] },
+      { id: "aipf-m04", title: "Presentations with AI", lessons: ["presentations-with-ai"], badge: "AI Presentations", badgeCode: "SLIDES", skills: ["Get a slide-by-slide outline from an AI assistant", "Write short, clear slide text and speaker notes", "Build the deck quickly in PowerPoint, Google Slides or Canva", "Check the facts and make it sound like you"] },
+    ],
+  },
+  {
+    id: "design-content-essentials",
+    slug: "design-content-essentials",
+    format: "short",
+    code: "DCE",
+    title: "Design & Content Essentials",
+    completionBadge: "Design & Content Essentials",
+    summary: "Plan social content with AI, design professional graphics in Canva and edit short videos in CapCut, in three short modules.",
+    description:
+      "Create content people stop scrolling for. Plan a month of posts and write captions in your brand voice with AI, design clean graphics in Canva using four simple rules, and edit a short vertical video in CapCut with captions and music. Each module takes about 25 minutes and ends with a short check and a badge.",
+    categoryId: "design-content",
+    difficulty: "beginner",
+    levelLabel: "Beginner",
+    isFree: true,
+    status: "available",
+    skills: ["Planning a content calendar", "Captions in your brand voice", "Designing in Canva", "Editing short videos in CapCut"],
+    prerequisites: ["No experience needed", "A phone or computer; Canva and CapCut are free to start"],
+    certificate: shortRules,
+    modules: [
+      { id: "dce-m01", title: "Social Media Content with AI", lessons: ["social-media-content-with-ai"], badge: "AI Social Content", badgeCode: "SOCIAL", skills: ["Pick three content themes for your page", "Plan a simple content calendar with AI", "Write captions that match your brand voice", "Repurpose one idea across platforms"] },
+      { id: "dce-m02", title: "Design with Canva", lessons: ["design-with-canva"], badge: "Canva Design Essentials", badgeCode: "CANVA", skills: ["Start from the right template and size", "Apply four rules: contrast, alignment, spacing, few fonts", "Add your own photos, colours and logo", "Download in the right format and resize for other platforms"] },
+      { id: "dce-m03", title: "Video Editing with CapCut", lessons: ["video-editing-with-capcut"], badge: "CapCut Video Essentials", badgeCode: "CAPCUT", skills: ["Start a project in the right size for Reels, TikTok or Shorts", "Trim and split clips to keep only the best parts", "Add text, automatic captions and music", "Export in good quality for social media"] },
+    ],
+  },
+  {
+    id: "career-essentials",
+    slug: "career-essentials",
+    format: "short",
+    code: "CAREER",
+    title: "Career Essentials",
+    completionBadge: "Career Essentials",
+    summary: "Build a CV with AI, set up a professional LinkedIn profile and analyse Excel data quickly, in three short modules.",
+    description:
+      "Get ready for your next job. Use AI to write and tailor a CV that stays true to you, set up a LinkedIn profile recruiters can find, and learn the Excel basics employers expect: sorting, filtering, formulas, PivotTables and charts. Each module takes about 25 minutes and ends with a short check and a badge.",
+    categoryId: "career",
+    difficulty: "beginner",
+    levelLabel: "Beginner",
+    isFree: true,
+    status: "available",
+    skills: ["Achievement-focused CV writing", "Tailoring a CV to a job", "A recruiter-ready LinkedIn profile", "Quick analysis in Excel"],
+    prerequisites: ["No experience needed", "Excel or Google Sheets for the last module"],
+    certificate: shortRules,
+    modules: [
+      { id: "career-m01", title: "Build a CV with AI", lessons: ["build-a-cv-with-ai"], badge: "AI CV Builder", badgeCode: "CV", skills: ["Lay out a clear, recruiter-friendly CV", "Turn duties into achievement bullet points", "Tailor your CV to a job advert", "Check the result so nothing is exaggerated"] },
+      { id: "career-m02", title: "A Professional LinkedIn Profile", lessons: ["linkedin-profile"], badge: "LinkedIn Profile Essentials", badgeCode: "LINKEDIN", skills: ["Choose a professional photo and banner", "Write a headline people search for", "Write an About section that tells your story", "Show your skills, experience and badges"] },
+      { id: "career-m03", title: "Quick Excel Analysis", lessons: ["quick-excel-analysis"], badge: "Excel Quick Analysis", badgeCode: "EXCEL", skills: ["Turn data into an Excel Table", "Sort and filter to find what matters", "Total and count with SUM, AVERAGE and COUNTIF", "Summarise with a PivotTable and a chart"] },
+    ],
+  },
   {
     id: "data-analytics-foundations",
     slug: "data-analytics-foundations",

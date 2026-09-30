@@ -1,21 +1,23 @@
 /**
  * Demo backend: everything is stored in this browser's localStorage.
  * Used when Supabase isn't configured, so the whole learning journey can be tried
- * locally. Accounts here are not real accounts and certificates can only be verified
- * in the same browser; the UI says so wherever it matters.
+ * locally. Accounts here are not real accounts, and credentials and certificates can only be
+ * verified in the same browser; the UI says so wherever it matters. Payment is simulated.
  */
 import { BUNDLED_ASSESSMENTS, BUNDLED_COURSES, BUNDLED_PROJECTS } from "@/content";
 import type { AssessmentDef, Course } from "@/content/types";
 import { requiredExerciseIds } from "../lesson-format";
-import { eligibility, newCredentialId } from "../certificates";
+import { certificateNumber, eligibility, newCredentialId } from "../certificates";
 import {
   BackendError,
   type AttemptResult,
   type Backend,
   type Certificate,
+  type CertificateOrder,
+  type CertificatePrice,
+  type Credential,
   type Enrollment,
   type ProjectSubmission,
-  type QuickCompletion,
   type User,
 } from "./types";
 
@@ -28,14 +30,24 @@ type Store = {
   exercises: Record<string, string[]>;
   attempts: Record<string, (AttemptResult & { assessmentId: string })[]>; // userId -> attempts
   submissions: ProjectSubmission[];
+  credentials: Credential[];
+  orders: CertificateOrder[];
   certificates: Certificate[];
+  certificateSeq: number;
+  prices: CertificatePrice[] | null; // admin edits (null = defaults)
   courses: Course[] | null; // admin edits (null = bundled content)
   assessments: AssessmentDef[] | null;
   activity: Record<string, string>; // userId -> last active
-  quick: Record<string, QuickCompletion[]>; // userId -> passed quick courses
 };
 
-const KEY = "ct-academy-demo-v1";
+// v2: credentials, orders and paid certificates replaced the v1 certificates.
+const KEY = "ct-academy-demo-v2";
+
+/** Same starting prices as the database. */
+const DEFAULT_PRICES: CertificatePrice[] = [
+  { currency: "NGN", amount: 3000, active: true, position: 1 },
+  { currency: "USD", amount: 7, active: true, position: 2 },
+];
 const empty = (): Store => ({
   users: [],
   sessionUserId: null,
@@ -44,11 +56,14 @@ const empty = (): Store => ({
   exercises: {},
   attempts: {},
   submissions: [],
+  credentials: [],
+  orders: [],
   certificates: [],
+  certificateSeq: 0,
+  prices: null,
   courses: null,
   assessments: null,
   activity: {},
-  quick: {},
 });
 
 function load(): Store {
@@ -78,6 +93,51 @@ async function hash(password: string, salt: string) {
 
 const publicUser = ({ id, email, fullName, role }: StoredUser): User => ({ id, email, fullName, role });
 
+const prices = (s = load()) => s.prices ?? DEFAULT_PRICES;
+
+function recipientName(u: User) {
+  if (!u.fullName.trim()) throw new BackendError("Add your full name to your profile first. It appears on your badges and certificate.");
+  return u.fullName.trim();
+}
+
+/** Adds a credential to the store (the caller saves). */
+function newCredential(
+  s: Store,
+  u: User,
+  f: Pick<Credential, "kind" | "courseId" | "moduleId" | "badgeName" | "courseTitle" | "moduleTitle" | "skills"> & { code: string },
+): Credential {
+  let credentialId = newCredentialId(f.code);
+  while (s.credentials.some((c) => c.credentialId === credentialId)) credentialId = newCredentialId(f.code);
+  const { code: _code, ...fields } = f;
+  void _code;
+  const cred: Credential = { id: uid(), credentialId, userId: u.id, recipientName: recipientName(u), issuedAt: now(), status: "valid", revokedReason: null, ...fields };
+  s.credentials.push(cred);
+  s.activity[u.id] = now();
+  return cred;
+}
+
+/** Issues the certificate for a paid or granted order (the caller saves). */
+function issueCertificate(s: Store, order: CertificateOrder): Certificate {
+  const existing = s.certificates.find((c) => c.userId === order.userId && c.courseId === order.courseId && c.status === "valid");
+  if (existing) return existing;
+  const cred = s.credentials.find((c) => c.credentialId === order.credentialId)!;
+  s.certificateSeq += 1;
+  const cert: Certificate = {
+    id: uid(),
+    certificateId: certificateNumber(s.certificateSeq),
+    credentialId: cred.credentialId,
+    userId: order.userId,
+    courseId: order.courseId,
+    recipientName: cred.recipientName,
+    courseTitle: cred.courseTitle,
+    issuedAt: now(),
+    status: "valid",
+    revokedReason: null,
+  };
+  s.certificates.push(cert);
+  return cert;
+}
+
 export function createDemoBackend(): Backend {
   const listeners = new Set<(u: User | null) => void>();
   const current = () => {
@@ -106,6 +166,9 @@ export function createDemoBackend(): Backend {
     save(s);
   };
   const key = (userId: string, courseId: string) => `${userId}|${courseId}`;
+  /** A module's check when moduleId is given, otherwise the course's final assessment. */
+  const findAssessment = (courseId: string, moduleId?: string) =>
+    assessments().find((a) => a.courseId === courseId && (moduleId ? a.kind === "module" && a.moduleId === moduleId : a.kind !== "module"));
 
   if (typeof window !== "undefined") window.addEventListener("storage", (e) => e.key === KEY && notify());
 
@@ -173,10 +236,18 @@ export function createDemoBackend(): Backend {
       const c = courses().find((x) => x.slug === slug);
       return c && (opts?.includeUnpublished || c.published) ? c : null;
     },
-    async getAssessment(courseId) {
-      const a = assessments().find((x) => x.courseId === courseId);
+    async getAssessment(courseId, moduleId) {
+      const a = findAssessment(courseId, moduleId);
       if (!a) return null;
-      return { id: a.id, courseId: a.courseId, title: a.title, passingScore: a.passingScore, questions: a.questions.map(({ id, prompt, options }) => ({ id, prompt, options })) };
+      return {
+        id: a.id,
+        courseId: a.courseId,
+        kind: a.kind ?? "final",
+        moduleId: a.moduleId ?? null,
+        title: a.title,
+        passingScore: a.passingScore,
+        questions: a.questions.map(({ id, prompt, options }) => ({ id, prompt, options })),
+      };
     },
     async getProject(courseId) {
       return BUNDLED_PROJECTS.find((p) => p.courseId === courseId) ?? null;
@@ -266,55 +337,130 @@ export function createDemoBackend(): Backend {
       return sub;
     },
 
-    async issueCertificate(courseId) {
+    async claimModuleBadge(moduleId) {
       const u = requireUser();
       const s = load();
-      const existing = s.certificates.find((c) => c.userId === u.id && c.courseId === courseId && c.status === "valid");
+      const existing = s.credentials.find((c) => c.userId === u.id && c.kind === "module_badge" && c.moduleId === moduleId && c.status === "valid");
+      if (existing) return existing;
+      const course = courses(s).find((c) => c.modules.some((m) => m.id === moduleId));
+      const mod = course?.modules.find((m) => m.id === moduleId);
+      if (!course || !mod?.badge) throw new BackendError("This module has no badge.");
+      const check = assessments(s).find((a) => a.kind === "module" && a.moduleId === moduleId);
+      if (!check || !(s.attempts[u.id] ?? []).some((t) => t.assessmentId === check.id && t.passed)) throw new BackendError("Pass the module check first.");
+      const cred = newCredential(s, u, {
+        kind: "module_badge",
+        code: mod.badgeCode ?? course.code,
+        courseId: course.id,
+        moduleId: mod.id,
+        badgeName: mod.badge,
+        courseTitle: course.title,
+        moduleTitle: mod.title,
+        skills: mod.skills,
+      });
+      save(s);
+      return cred;
+    },
+    async issueCourseCredential(courseId) {
+      const u = requireUser();
+      const s = load();
+      const existing = s.credentials.find((c) => c.userId === u.id && c.kind === "course_completion" && c.courseId === courseId && c.status === "valid");
       if (existing) return existing;
       const course = courses(s).find((c) => c.id === courseId);
       if (!course) throw new BackendError("Course not found.");
-      const assessment = assessments(s).find((a) => a.courseId === courseId);
+      const final = assessments(s).find((a) => a.courseId === courseId && a.kind !== "module");
       const project = BUNDLED_PROJECTS.find((p) => p.courseId === courseId) ?? null;
       const progress = await backend.getProgress(courseId);
-      const attempts = assessment ? await backend.listAttempts(assessment.id) : [];
+      const attempts = final ? await backend.listAttempts(final.id) : [];
       const submission = project ? await backend.getSubmission(project.id) : null;
-      if (!eligibility(course, progress, attempts, submission, project).eligible)
-        throw new BackendError("You haven't met every requirement for this certificate yet.");
-      let credentialId = newCredentialId(course.code);
-      while (s.certificates.some((c) => c.credentialId === credentialId)) credentialId = newCredentialId(course.code);
-      const cert: Certificate = { id: uid(), credentialId, userId: u.id, courseId, recipientName: u.fullName, courseTitle: course.title, issuedAt: now(), status: "valid", revokedReason: null };
-      s.certificates.push(cert);
+      const badges = new Set(s.credentials.filter((c) => c.userId === u.id && c.kind === "module_badge" && c.status === "valid").map((c) => c.moduleId ?? ""));
+      if (!eligibility(course, progress, attempts, submission, project, badges).eligible)
+        throw new BackendError("You haven't met every requirement for this course yet.");
+      const cred = newCredential(s, u, {
+        kind: "course_completion",
+        code: course.code,
+        courseId,
+        moduleId: null,
+        badgeName: course.completionBadge ?? course.title,
+        courseTitle: course.title,
+        moduleTitle: null,
+        skills: course.skills,
+      });
       const enr = (s.enrollments[u.id] ?? []).find((e) => e.courseId === courseId);
-      if (enr) enr.completedAt = cert.issuedAt;
+      if (enr) enr.completedAt = cred.issuedAt;
       save(s);
-      return cert;
+      return cred;
     },
-    async recordQuickCourse(slug, score) {
+    async listMyCredentials() {
+      const u = current();
+      return u ? load().credentials.filter((c) => c.userId === u.id) : [];
+    },
+    async verifyCredential(credentialId) {
+      const c = load().credentials.find((x) => x.credentialId === credentialId.trim().toUpperCase());
+      if (!c) return null;
+      const { credentialId: id, kind, badgeName, courseId, courseTitle, moduleTitle, recipientName, skills, issuedAt, status } = c;
+      return { credentialId: id, kind, badgeName, courseId, courseTitle, moduleTitle, recipientName, skills, issuedAt, status };
+    },
+
+    paymentsEnabled: true,
+    async listCertificatePrices() {
+      return prices().filter((p) => p.active);
+    },
+    async startCertificateOrder(courseId, currency) {
       const u = requireUser();
       const s = load();
-      const list = (s.quick[u.id] ??= []);
-      const prev = list.find((q) => q.slug === slug);
-      if (prev) {
-        if (score > prev.score) Object.assign(prev, { score, completedAt: now() });
-      } else list.push({ slug, score, completedAt: now() });
-      s.activity[u.id] = now();
+      const cred = s.credentials.find((c) => c.userId === u.id && c.courseId === courseId && c.kind === "course_completion" && c.status === "valid");
+      if (!cred) throw new BackendError("Complete the course first. Your free completion badge comes first.");
+      if (s.certificates.some((c) => c.userId === u.id && c.courseId === courseId && c.status === "valid"))
+        throw new BackendError("You already have the official certificate for this course.");
+      const price = prices(s).find((p) => p.currency === currency.toUpperCase() && p.active);
+      if (!price) throw new BackendError("That currency isn't available.");
+      const pending = s.orders.find((o) => o.userId === u.id && o.courseId === courseId && o.status === "pending" && o.currency === price.currency);
+      if (pending) return pending;
+      const order: CertificateOrder = {
+        id: uid(),
+        userId: u.id,
+        courseId,
+        credentialId: cred.credentialId,
+        currency: price.currency,
+        amount: price.amount,
+        status: "pending",
+        provider: null,
+        providerRef: null,
+        note: null,
+        createdAt: now(),
+        paidAt: null,
+      };
+      s.orders.push(order);
       save(s);
+      return order;
     },
-    async listQuickCompletions() {
+    async listMyOrders() {
       const u = current();
-      return u ? (load().quick[u.id] ?? []) : [];
+      return u ? load().orders.filter((o) => o.userId === u.id) : [];
+    },
+    async simulatePayment(orderId) {
+      const u = requireUser();
+      const s = load();
+      const order = s.orders.find((o) => o.id === orderId && o.userId === u.id);
+      if (!order) throw new BackendError("Order not found.");
+      Object.assign(order, { status: "paid", provider: "demo", providerRef: `demo-${order.id.slice(0, 8)}`, paidAt: now() });
+      const cert = issueCertificate(s, order);
+      save(s);
+      return cert;
     },
     async listMyCertificates() {
       const u = current();
       return u ? load().certificates.filter((c) => c.userId === u.id) : [];
     },
-    async getMyCertificate(credentialId) {
+    async getMyCertificate(certificateId) {
       const u = current();
-      return u ? (load().certificates.find((c) => c.userId === u.id && c.credentialId === credentialId) ?? null) : null;
+      return u ? (load().certificates.find((c) => c.userId === u.id && c.certificateId === certificateId) ?? null) : null;
     },
-    async verifyCertificate(credentialId) {
-      const c = load().certificates.find((x) => x.credentialId === credentialId.trim().toUpperCase());
-      return c ? { credentialId: c.credentialId, recipientName: c.recipientName, courseTitle: c.courseTitle, issuedAt: c.issuedAt, status: c.status } : null;
+    async verifyCertificate(certificateId) {
+      const c = load().certificates.find((x) => x.certificateId === certificateId.trim().toUpperCase());
+      return c
+        ? { certificateId: c.certificateId, credentialId: c.credentialId, recipientName: c.recipientName, courseTitle: c.courseTitle, issuedAt: c.issuedAt, status: c.status }
+        : null;
     },
 
     admin: {
@@ -367,9 +513,9 @@ export function createDemoBackend(): Backend {
         requireAdmin();
         mutateCourses((list) => list.forEach((c) => c.modules.forEach((m) => (m.lessons = m.lessons.filter((l) => l.id !== lessonId)))));
       },
-      async getAssessment(courseId) {
+      async getAssessment(courseId, moduleId) {
         requireAdmin();
-        return assessments().find((a) => a.courseId === courseId) ?? null;
+        return findAssessment(courseId, moduleId) ?? null;
       },
       async saveAssessment(def) {
         requireAdmin();
@@ -390,7 +536,7 @@ export function createDemoBackend(): Backend {
           enrollments: (s.enrollments[u.id] ?? []).length,
           completedCourses: (s.enrollments[u.id] ?? []).filter((e) => e.completedAt).length,
           certificates: s.certificates.filter((c) => c.userId === u.id && c.status === "valid").length,
-          quickBadges: (s.quick[u.id] ?? []).length,
+          badges: s.credentials.filter((c) => c.userId === u.id && c.status === "valid").length,
           lessonsCompleted: Object.entries(s.lessons)
             .filter(([k]) => k.startsWith(`${u.id}|`))
             .reduce((n, [, ids]) => n + ids.length, 0),
@@ -404,7 +550,7 @@ export function createDemoBackend(): Backend {
         const s = load();
         return {
           summary,
-          quick: s.quick[userId] ?? [],
+          credentials: s.credentials.filter((c) => c.userId === userId),
           courses: (s.enrollments[userId] ?? []).map((e) => {
             const c = courses(s).find((x) => x.id === e.courseId);
             const total = c ? c.modules.flatMap((m) => m.lessons).filter((l) => l.published && l.required).length : 0;
@@ -412,16 +558,68 @@ export function createDemoBackend(): Backend {
           }),
         };
       },
+      async listCredentials(search) {
+        requireAdmin();
+        const q = (search ?? "").trim().toLowerCase();
+        return load()
+          .credentials.filter((c) => !q || c.credentialId.toLowerCase().includes(q) || c.recipientName.toLowerCase().includes(q) || c.badgeName.toLowerCase().includes(q))
+          .sort((a, b) => b.issuedAt.localeCompare(a.issuedAt));
+      },
+      async revokeCredential(id, reason) {
+        requireAdmin();
+        const s = load();
+        const c = s.credentials.find((x) => x.id === id);
+        if (c) Object.assign(c, { status: "revoked", revokedReason: reason });
+        save(s);
+      },
       async listCertificates(search) {
         requireAdmin();
         const q = (search ?? "").trim().toLowerCase();
-        return load().certificates.filter((c) => !q || c.credentialId.toLowerCase().includes(q) || c.recipientName.toLowerCase().includes(q));
+        return load().certificates.filter((c) => !q || c.certificateId.toLowerCase().includes(q) || c.recipientName.toLowerCase().includes(q));
       },
       async revokeCertificate(id, reason) {
         requireAdmin();
         const s = load();
         const c = s.certificates.find((x) => x.id === id);
         if (c) Object.assign(c, { status: "revoked", revokedReason: reason });
+        save(s);
+      },
+      async listOrders() {
+        requireAdmin();
+        const s = load();
+        return s.orders
+          .map((o) => {
+            const u = s.users.find((x) => x.id === o.userId);
+            return {
+              ...o,
+              learnerName: u?.fullName ?? "Unknown",
+              learnerEmail: u?.email ?? "",
+              courseTitle: courses(s).find((c) => c.id === o.courseId)?.title ?? o.courseId,
+              certificateId: s.certificates.find((c) => c.userId === o.userId && c.courseId === o.courseId && c.status === "valid")?.certificateId ?? null,
+            };
+          })
+          .sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+      },
+      async grantCertificate(orderId, note) {
+        requireAdmin();
+        const s = load();
+        const order = s.orders.find((o) => o.id === orderId);
+        if (!order) throw new BackendError("Order not found.");
+        Object.assign(order, { status: "granted", note: note.trim() || null, paidAt: order.paidAt ?? now() });
+        const cert = issueCertificate(s, order);
+        save(s);
+        return cert;
+      },
+      async listPrices() {
+        requireAdmin();
+        return prices();
+      },
+      async savePrice(price) {
+        requireAdmin();
+        const s = load();
+        const list = clone(prices(s)).filter((p) => p.currency !== price.currency.toUpperCase());
+        list.push({ ...price, currency: price.currency.toUpperCase() });
+        s.prices = list.sort((a, b) => a.position - b.position);
         save(s);
       },
       async listSubmissions() {

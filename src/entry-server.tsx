@@ -6,7 +6,6 @@ import { renderHeadTags, takeSsrHead } from "./lib/seo";
 import { sitewideJsonLd } from "./lib/schema";
 import { publishedLessons } from "./lib/certificates";
 import { BUNDLED_COURSES } from "./content";
-import { QUICK_COURSES } from "./content/quick";
 import { SITE } from "./lib/site";
 
 const courses = BUNDLED_COURSES.filter((c) => c.published);
@@ -17,8 +16,6 @@ export const ROUTES = [
   "/courses",
   ...courses.map((c) => `/courses/${c.slug}`),
   ...courses.flatMap((c) => publishedLessons(c).map((l) => `/learn/${c.slug}/${l.slug}`)),
-  "/quick",
-  ...QUICK_COURSES.map((c) => `/quick/${c.slug}`),
   "/paths",
   "/projects",
   "/certificates",

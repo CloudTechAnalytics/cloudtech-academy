@@ -46,6 +46,8 @@ for (const c of BUNDLED_COURSES) {
   out.push(
     upsert("courses", {
       id: str(c.id),
+      format: str(c.format ?? "full"),
+      completion_badge: str(c.completionBadge),
       slug: str(c.slug),
       code: str(c.code),
       title: str(c.title),
@@ -65,12 +67,23 @@ for (const c of BUNDLED_COURSES) {
       require_all_lessons: bool(c.certificate.requireAllLessons),
       require_exercises: bool(c.certificate.requireExercises),
       require_project: bool(c.certificate.requireProject),
+      require_module_badges: bool(c.certificate.requireModuleBadges),
       passing_score: num(c.certificate.passingScore),
       position: num(c.position),
     }),
   );
   for (const m of c.modules) {
-    out.push(upsert("course_modules", { id: str(m.id), course_id: str(c.id), title: str(m.title), position: num(m.position) }));
+    out.push(
+      upsert("course_modules", {
+        id: str(m.id),
+        course_id: str(c.id),
+        title: str(m.title),
+        position: num(m.position),
+        badge_name: str(m.badge),
+        badge_code: str(m.badgeCode),
+        skills: arr(m.skills ?? []),
+      }),
+    );
     for (const l of m.lessons) {
       out.push(
         upsert("lessons", {
@@ -94,7 +107,17 @@ for (const c of BUNDLED_COURSES) {
 
 for (const a of BUNDLED_ASSESSMENTS) {
   out.push(`\n-- Assessment: ${a.title}`);
-  out.push(upsert("assessments", { id: str(a.id), course_id: str(a.courseId), title: str(a.title), passing_score: num(a.passingScore), published: "true" }));
+  out.push(
+    upsert("assessments", {
+      id: str(a.id),
+      course_id: str(a.courseId),
+      kind: str(a.kind ?? "final"),
+      module_id: str(a.moduleId),
+      title: str(a.title),
+      passing_score: num(a.passingScore),
+      published: "true",
+    }),
+  );
   a.questions.forEach((q, i) => {
     out.push(upsert("assessment_questions", { id: str(q.id), assessment_id: str(a.id), position: num(i + 1), prompt: str(q.prompt), options: `${str(JSON.stringify(q.options))}::jsonb` }));
     out.push(upsert("assessment_answer_keys", { question_id: str(q.id), correct_index: num(q.answer), explanation: str(q.explanation) }, "question_id"));

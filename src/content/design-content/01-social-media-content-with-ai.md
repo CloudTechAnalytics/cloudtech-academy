@@ -1,12 +1,9 @@
 ---
-title: How to Create Social Media Content with AI
-badge: AI Social Media Essentials
+title: Social Media Content with AI
 minutes: 25
-category: Design & Content
-icon: megaphone
 summary: Plan a month of posts, write captions in your own brand voice and turn one idea into content for several platforms, with AI doing the heavy lifting.
-skills: Pick three content themes for your page; Plan a simple content calendar with AI; Write captions that match your brand voice; Repurpose one idea across platforms
 ---
+
 
 ## Decide what you post about
 
@@ -81,38 +78,3 @@ Each platform has its own style. Reels need a strong first two seconds, WhatsApp
 2. Ask AI for a two-week calendar, then delete or change at least two ideas to make it realistic.
 3. Pick one post and ask for three caption options in your voice. Choose one and edit it.
 4. Ask AI to turn that post into a WhatsApp status and a short reel script.
-
-```quiz
-[
-  {
-    "prompt": "What are content themes (content pillars)?",
-    "options": ["The colours of your page", "A few main topics that most of your posts fit into", "Paid adverts", "Your profile picture"],
-    "answer": 1,
-    "explanation": "Two to four themes keep your posts focused and make ideas easier to find."
-  },
-  {
-    "prompt": "How do you make AI captions sound like your brand?",
-    "options": ["Describe your voice and paste an example you like", "Ask for 'a caption'", "Use as many emojis as possible", "Copy another business's captions"],
-    "answer": 0,
-    "explanation": "A description plus an example lets the AI copy your tone."
-  },
-  {
-    "prompt": "Why does the first line of a caption matter most?",
-    "options": ["It's the only part that's free", "It's often all people see before they tap 'more'", "Hashtags only work there", "It sets the font"],
-    "answer": 1,
-    "explanation": "The hook decides whether people keep reading."
-  },
-  {
-    "prompt": "What does 'repurposing' content mean?",
-    "options": ["Deleting old posts", "Turning one idea into posts for several platforms", "Buying followers", "Posting the same picture every day"],
-    "answer": 1,
-    "explanation": "One good idea can become a caption, a reel, a status and more."
-  },
-  {
-    "prompt": "Which of these is fine to post?",
-    "options": ["A client's photo without asking", "An AI image presented as a real result", "A photo you took, with your client's permission", "A price you haven't checked"],
-    "answer": 2,
-    "explanation": "Use your own photos with permission, and keep claims honest."
-  }
-]
-```

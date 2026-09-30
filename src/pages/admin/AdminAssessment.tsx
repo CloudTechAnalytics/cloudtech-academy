@@ -11,20 +11,26 @@ import { AdminHeading } from "./AdminLayout";
 import { randomId, useAdminCourse, useAdminData } from "./useAdmin";
 
 export default function AdminAssessment() {
-  const { slug } = useParams();
+  const { slug, moduleId } = useParams();
   const { data: course, error } = useAdminCourse(slug);
-  const { data: loaded } = useAdminData(async () => (course ? (await getBackend()).admin.getAssessment(course.id) : undefined), [course?.id]);
+  const mod = moduleId ? course?.modules.find((m) => m.id === moduleId) : undefined;
+  const { data: loaded } = useAdminData(async () => (course ? (await getBackend()).admin.getAssessment(course.id, moduleId) : undefined), [course?.id, moduleId]);
   const [a, setA] = useState<AssessmentDef | null>(null);
   const [msg, setMsg] = useState<{ tone: "success" | "error"; text: string } | null>(null);
   const [busy, setBusy] = useState(false);
 
   useEffect(() => {
     if (!course || loaded === undefined) return;
-    setA(loaded ?? { id: `${course.slug}-final`, courseId: course.id, title: `${course.title}: final assessment`, passingScore: course.certificate.passingScore, questions: [] });
-  }, [course, loaded]);
+    setA(
+      loaded ??
+        (mod
+          ? { id: `${mod.id}-check`, courseId: course.id, kind: "module", moduleId: mod.id, title: `${mod.title}: module check`, passingScore: 60, questions: [] }
+          : { id: `${course.slug}-final`, courseId: course.id, kind: "final", title: `${course.title}: final assessment`, passingScore: course.certificate.passingScore, questions: [] }),
+    );
+  }, [course, loaded, mod]);
 
   if (error) return <Alert tone="error">{error}</Alert>;
-  if (course === null) return <NotFound />;
+  if (course === null || (course && moduleId && !mod)) return <NotFound />;
   if (!course || !a) return <PageLoading />;
 
   const update = (i: number, patch: Partial<AssessmentDef["questions"][number]>) => setA({ ...a, questions: a.questions.map((q, j) => (j === i ? { ...q, ...patch } : q)) });
@@ -49,7 +55,7 @@ export default function AdminAssessment() {
 
   return (
     <>
-      <AdminHeading title="Final assessment" />
+      <AdminHeading title={mod ? `Module check: ${mod.title}` : "Final assessment"} />
       <p className="-mt-4 mb-6 text-[0.875rem] text-muted">
         <Link to={`/admin/courses/${course.slug}`} className="hover:text-ink">
           ← {course.title}

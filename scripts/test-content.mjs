@@ -15,7 +15,10 @@ const SQL = await initSqlJs();
 const IMAGE_SIZES = JSON.parse(fs.readFileSync("src/content/image-sizes.json", "utf8"));
 const logistics = new SQL.Database(fs.readFileSync("public/datasets/logistics.sqlite"));
 const CONTENT = "src/content";
-const COURSES = ["sql", "daf", "excel", "powerbi", "modelling"];
+const FULL = ["sql", "daf", "excel", "powerbi", "modelling"];
+/** Short courses: one lesson per module, a module check each, and a final assessment. */
+const SHORT = ["ai-productivity", "design-content", "career"];
+const COURSES = [...FULL, ...SHORT];
 const SECTIONS = ["## The problem", "## The concept", "## Example", "## Walkthrough", "## Practice", "## Check your understanding"];
 
 let failures = 0;
@@ -47,7 +50,11 @@ for (const course of COURSES) {
     console.log(f);
     if (!fm || !/title:/.test(fm[1]) || !/minutes:/.test(fm[1]) || !/summary:/.test(fm[1])) fail("front matter needs title, minutes and summary");
     const body = raw.slice(fm ? fm[0].length : 0);
-    for (const s of SECTIONS) if (!body.includes(s + "\n")) fail(`missing section "${s}"`);
+    if (SHORT.includes(course)) {
+      if ((body.match(/^## /gm) ?? []).length < 3) fail("needs at least three ## steps");
+      if (!/^## Try it$/m.test(body)) fail('needs a "## Try it" step');
+      if (/```quiz/.test(body)) fail("short-course lessons don't have quizzes; the module check is in assessment.ts");
+    } else for (const s of SECTIONS) if (!body.includes(s + "\n")) fail(`missing section "${s}"`);
 
     // Images: the file exists, has a size in image-sizes.json, and has alt text.
     for (const m of body.matchAll(/!\[([^\]]*)\]\(([^)\s]+)/g)) {
@@ -137,59 +144,60 @@ for (const course of COURSES) {
   }
 }
 
-// Quick courses: front matter, a Try it step, and a final five-question badge quiz.
-const QUICK_DIR = path.join(CONTENT, "quick");
-const QUICK_ICONS = [...fs.readFileSync("src/components/QuickIcon.tsx", "utf8").matchAll(/^\s+(\w+): \w+,$/gm)].map((m) => m[1]);
-const QUICK_CATS = [...fs.readFileSync("src/content/quick.ts", "utf8").match(/QUICK_CATEGORIES = \[([^\]]*)\]/)[1].matchAll(/"([^"]+)"/g)].map((m) => m[1]);
-const quickFiles = fs.existsSync(QUICK_DIR) ? fs.readdirSync(QUICK_DIR).filter((f) => f.endsWith(".md")).sort() : [];
-console.log(`\n=== quick (${quickFiles.length} courses)`);
-for (const f of quickFiles) {
-  console.log(f);
-  const raw = fs.readFileSync(path.join(QUICK_DIR, f), "utf8").replace(/\r\n/g, "\n");
-  const fm = raw.match(/^---\n([\s\S]*?)\n---\n/);
-  const meta = Object.fromEntries((fm?.[1] ?? "").split("\n").map((l) => [l.slice(0, l.indexOf(":")).trim(), l.slice(l.indexOf(":") + 1).trim()]));
-  for (const k of ["title", "badge", "minutes", "category", "icon", "summary", "skills"]) if (!meta[k]) fail(`missing front matter "${k}"`);
-  if (!(Number(meta.minutes) >= 10 && Number(meta.minutes) <= 30)) fail(`minutes should be 10–30, got ${meta.minutes}`);
-  if (meta.category && !QUICK_CATS.includes(meta.category)) fail(`unknown category "${meta.category}"`);
-  if (meta.icon && !QUICK_ICONS.includes(meta.icon)) fail(`unknown icon "${meta.icon}"`);
-  const body = raw.slice(fm ? fm[0].length : 0);
-  if ((body.match(/^## /gm) ?? []).length < 3) fail("needs at least three ## steps");
-  if (!/^## Try it$/m.test(body)) fail('needs a "## Try it" step');
-  const quiz = body.trimEnd().match(/```quiz\s*\n([\s\S]*?)\n```$/);
-  if (!quiz) fail("the badge quiz must be the last block");
-  else {
-    try {
-      const qs = JSON.parse(quiz[1]);
-      if (qs.length !== 5) fail(`badge quiz has ${qs.length} questions, expected 5`);
-      qs.forEach((q, i) => {
-        if (!(q.answer >= 0 && q.answer < q.options.length)) fail(`quiz question ${i + 1}: answer out of range`);
-        if (!q.explanation) fail(`quiz question ${i + 1}: no explanation`);
-      });
-    } catch (e) {
-      fail(`quiz JSON: ${e.message}`);
-    }
-  }
-  if ((body.match(/```quiz/g) ?? []).length > 1) fail("only the final badge quiz is allowed");
+// Assessments are plain data in TypeScript: strip the type annotations and evaluate them.
+function loadAssessments(file) {
+  const src = fs
+    .readFileSync(file, "utf8")
+    .replace(/^import .*$/gm, "")
+    .replace(/export const \w+: AssessmentDef(\[\])? =/, "return");
+  const value = new Function(src)();
+  return Array.isArray(value) ? value : [value];
 }
-
-// Assessments and projects are plain data in TypeScript; check them loosely.
+const questionIds = new Set();
+let checkCount = 0;
 for (const course of COURSES) {
   const file = path.join(CONTENT, course, "assessment.ts");
   if (!fs.existsSync(file)) {
     fail(`${course}: no assessment.ts`);
     continue;
   }
-  const a = fs.readFileSync(file, "utf8");
-  const qIds = [...a.matchAll(/id: "([^"]+)",\s*\n\s*prompt:/g)].map((m) => m[1]);
-  const answers = [...a.matchAll(/answer: (\d+)/g)].map((m) => Number(m[1]));
-  if (qIds.length < 10) fail(`${course} assessment: only ${qIds.length} questions`);
-  if (new Set(qIds).size !== qIds.length) fail(`${course} assessment: duplicate question ids`);
-  if (answers.length !== qIds.length) fail(`${course} assessment: ${answers.length} answers for ${qIds.length} questions`);
-  const dist = answers.reduce((m, x) => ((m[x] = (m[x] ?? 0) + 1), m), {});
-  console.log(`\n${course} assessment: ${qIds.length} questions, correct option positions ${JSON.stringify(dist)}`);
-  const p = path.join(CONTENT, course, "project.ts");
-  if (!fs.existsSync(p) || !/tasks: \[/.test(fs.readFileSync(p, "utf8"))) fail(`${course}: project missing or has no tasks`);
+  let list;
+  try {
+    list = loadAssessments(file);
+  } catch (e) {
+    fail(`${course} assessment.ts: ${e.message}`);
+    continue;
+  }
+  const finals = list.filter((a) => (a.kind ?? "final") === "final");
+  const checks = list.filter((a) => a.kind === "module");
+  if (finals.length !== 1) fail(`${course}: expected one final assessment, found ${finals.length}`);
+  if (SHORT.includes(course) && checks.length === 0) fail(`${course}: short courses need a check for each module`);
+  checkCount += checks.length;
+  for (const a of list) {
+    const min = a.kind === "module" ? 5 : SHORT.includes(course) ? 8 : 10;
+    if (a.questions.length < min) fail(`${a.id}: only ${a.questions.length} questions (at least ${min})`);
+    if (a.kind === "module" && !a.moduleId) fail(`${a.id}: a module check needs a moduleId`);
+    if (!(a.passingScore > 0 && a.passingScore <= 100)) fail(`${a.id}: pass mark out of range`);
+    for (const q of a.questions) {
+      if (questionIds.has(q.id)) fail(`duplicate question id ${q.id}`);
+      questionIds.add(q.id);
+      if (!(q.answer >= 0 && q.answer < q.options.length)) fail(`${q.id}: answer out of range`);
+      if (!q.explanation) fail(`${q.id}: no explanation`);
+    }
+  }
+  console.log(`\n${course}: final ${finals[0]?.questions.length ?? 0} questions${checks.length ? `, ${checks.length} module checks` : ""}`);
+  if (FULL.includes(course)) {
+    const p = path.join(CONTENT, course, "project.ts");
+    if (!fs.existsSync(p) || !/tasks: \[/.test(fs.readFileSync(p, "utf8"))) fail(`${course}: project missing or has no tasks`);
+  }
 }
 
-console.log(failures ? `\n${failures} problem(s)` : `\nAll ${lessonCount} lessons OK, ${ids.size} practice tasks, ${quickFiles.length} quick courses`);
+// Every module with a badge in the catalogue has a module check, and every check points at a module.
+const catalog = fs.readFileSync("src/content/catalog.ts", "utf8");
+const badgeModules = [...catalog.matchAll(/\{ id: "([a-z0-9-]+)", title: [^}]*?badge: "/g)].map((m) => m[1]);
+const checkedModules = new Set(COURSES.flatMap((c) => (fs.existsSync(path.join(CONTENT, c, "assessment.ts")) ? loadAssessments(path.join(CONTENT, c, "assessment.ts")) : [])).filter((a) => a.kind === "module").map((a) => a.moduleId));
+for (const m of badgeModules) if (!checkedModules.has(m)) fail(`module ${m} has a badge but no module check`);
+for (const m of checkedModules) if (!badgeModules.includes(m)) fail(`module check for ${m}, which has no badge in the catalogue`);
+
+console.log(failures ? `\n${failures} problem(s)` : `\nAll ${lessonCount} lessons OK, ${ids.size} practice tasks, ${checkCount} module checks, ${badgeModules.length} module badges`);
 process.exit(failures ? 1 : 0);

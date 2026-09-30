@@ -1,9 +1,9 @@
 import { Link } from "react-router";
-import { ArrowRight, Award, BookOpen, Clock, FolderKanban } from "lucide-react";
+import { ArrowRight, BookOpen, Clock, FolderKanban, GraduationCap, Trophy } from "lucide-react";
 import type { Course } from "@/content/types";
 import { categoryName } from "@/content";
-import { hoursLabel } from "@/lib/format";
-import { publishedLessons } from "@/lib/certificates";
+import { durationLabel } from "@/lib/format";
+import { badgeCount, courseMinutes } from "@/lib/certificates";
 import { ProgressBar } from "./ProgressBar";
 
 export function Badge({ children, tone = "neutral" }: { children: string; tone?: "neutral" | "free" | "soon" | "success" }) {
@@ -18,12 +18,14 @@ export function Badge({ children, tone = "neutral" }: { children: string; tone?:
 
 export function CourseCard({ course, progress }: { course: Course; progress?: number }) {
   const available = course.status === "available";
-  const lessons = publishedLessons(course).length;
+  const short = course.format === "short";
   const moduleCount = course.modules.length;
+  const badges = badgeCount(course);
   return (
     <article className="group relative flex h-full flex-col rounded-2xl border border-line bg-paper p-6 transition-[transform,box-shadow] duration-300 hover:-translate-y-0.5 hover:shadow-[0_28px_56px_-40px_rgba(23,23,23,0.45)] sm:p-7">
       <div className="flex flex-wrap items-center gap-2">
-        <Badge tone={available ? "free" : "soon"}>{available ? (course.isFree ? "Free" : "Paid") : "Coming soon"}</Badge>
+        <Badge tone={available ? "free" : "soon"}>{available ? "Free" : "Coming soon"}</Badge>
+        {short && <Badge>Short course</Badge>}
         <span className="text-[0.8125rem] text-muted">{categoryName(course.categoryId)}</span>
       </div>
       <h3 className="mt-4 font-serif text-[1.5rem] leading-tight">
@@ -42,13 +44,22 @@ export function CourseCard({ course, progress }: { course: Course; progress?: nu
         <div className="flex items-center gap-2">
           <Clock aria-hidden className="h-3.5 w-3.5 text-subtle" />
           <dt className="sr-only">Estimated time</dt>
-          <dd>{hoursLabel(course.estimatedHours)}</dd>
+          <dd>{short ? durationLabel(courseMinutes(course)) : durationLabel(undefined, course.estimatedHours)}</dd>
         </div>
         <div className="flex items-center gap-2">
           <BookOpen aria-hidden className="h-3.5 w-3.5 text-subtle" />
-          <dt className="sr-only">Content</dt>
-          <dd>{available ? `${lessons} lessons` : `${moduleCount} modules planned`}</dd>
+          <dt className="sr-only">Modules</dt>
+          <dd>{available ? `${moduleCount} ${moduleCount === 1 ? "module" : "modules"}` : `${moduleCount} modules planned`}</dd>
         </div>
+        {available && badges > 0 && (
+          <div className="flex items-center gap-2">
+            <Trophy aria-hidden className="h-3.5 w-3.5 text-subtle" />
+            <dt className="sr-only">Badges</dt>
+            <dd>
+              {badges} {badges === 1 ? "badge" : "badges"}
+            </dd>
+          </div>
+        )}
         {course.projectTitle && (
           <div className="flex items-center gap-2">
             <FolderKanban aria-hidden className="h-3.5 w-3.5 text-subtle" />
@@ -58,9 +69,9 @@ export function CourseCard({ course, progress }: { course: Course; progress?: nu
         )}
         {course.certificate.enabled && (
           <div className="flex items-center gap-2">
-            <Award aria-hidden className="h-3.5 w-3.5 text-subtle" />
+            <GraduationCap aria-hidden className="h-3.5 w-3.5 text-subtle" />
             <dt className="sr-only">Certificate</dt>
-            <dd>Certificate</dd>
+            <dd>Optional certificate</dd>
           </div>
         )}
       </dl>

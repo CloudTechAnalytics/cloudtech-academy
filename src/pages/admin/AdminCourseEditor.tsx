@@ -4,7 +4,8 @@ import { ArrowDown, ArrowUp, Plus, Trash2 } from "lucide-react";
 import { getBackend } from "@/lib/backend";
 import { PageLoading } from "@/lib/auth";
 import { CATEGORIES } from "@/content";
-import type { Course, Difficulty } from "@/content/types";
+import type { Course, Difficulty, Module } from "@/content/types";
+import type { ModuleInput } from "@/lib/backend";
 import { Button, ButtonLink } from "@/components/Button";
 import { Alert, TextArea, TextField } from "@/components/Form";
 import NotFound from "../NotFound";
@@ -123,8 +124,10 @@ function Details({ course, onSaved }: { course: Course; onSaved: () => Promise<u
       />
 
       <fieldset className="space-y-3 rounded-xl border border-line p-4">
-        <legend className="px-1 text-[0.875rem] font-semibold">Certificate rules</legend>
-        <Check label="Certificates enabled" checked={c.certificate.enabled} onChange={(v) => rule("enabled", v)} />
+        <legend className="px-1 text-[0.875rem] font-semibold">Completion rules</legend>
+        <Check label="Short course (modules with checks and badges)" checked={c.format === "short"} onChange={(v) => set("format", v ? "short" : "full")} />
+        <Check label="Completion badge and optional certificate enabled" checked={c.certificate.enabled} onChange={(v) => rule("enabled", v)} />
+        <Check label="Require every module badge" checked={c.certificate.requireModuleBadges} onChange={(v) => rule("requireModuleBadges", v)} />
         <Check label="Require every lesson" checked={c.certificate.requireAllLessons} onChange={(v) => rule("requireAllLessons", v)} />
         <Check label="Require the practice exercises" checked={c.certificate.requireExercises} onChange={(v) => rule("requireExercises", v)} />
         <Check label="Require the final project" checked={c.certificate.requireProject} onChange={(v) => rule("requireProject", v)} />
@@ -137,6 +140,54 @@ function Details({ course, onSaved }: { course: Course; onSaved: () => Promise<u
       <Button type="submit" loading={busy}>
         Save details
       </Button>
+    </form>
+  );
+}
+
+const moduleInput = (m: Module): ModuleInput => ({ id: m.id, courseId: m.courseId, title: m.title, position: m.position, badge: m.badge, badgeCode: m.badgeCode, skills: m.skills });
+
+/** A module's badge: its name, the code in its credential IDs, the skills on its credential page, and its check. */
+function ModuleBadge({ course, module: m, onSave }: { course: Course; module: Module; onSave: (m: ModuleInput) => Promise<void> }) {
+  const [badge, setBadge] = useState(m.badge ?? "");
+  const [code, setCode] = useState(m.badgeCode ?? "");
+  const [skills, setSkills] = useState(m.skills.join("\n"));
+  const [open, setOpen] = useState(false);
+  if (!open)
+    return (
+      <p className="mt-3 ml-6 flex flex-wrap items-center gap-x-4 gap-y-1 text-[0.8125rem]">
+        <span className="text-muted">{m.badge ? `Badge: ${m.badge}` : "No badge"}</span>
+        <button type="button" onClick={() => setOpen(true)} className="font-semibold text-brass-dark">
+          {m.badge ? "Edit badge" : "Add a badge"}
+        </button>
+        {m.badge && (
+          <Link to={`/admin/courses/${course.slug}/modules/${encodeURIComponent(m.id)}/assessment`} className="font-semibold text-brass-dark">
+            Module check
+          </Link>
+        )}
+      </p>
+    );
+  return (
+    <form
+      className="mt-3 ml-6 grid gap-3 rounded-lg border border-line bg-ivory p-3"
+      onSubmit={(e) => {
+        e.preventDefault();
+        void onSave({
+          ...moduleInput(m),
+          badge: badge.trim() || null,
+          badgeCode: code.trim().toUpperCase() || null,
+          skills: skills.split("\n").map((s) => s.trim()).filter(Boolean),
+        }).then(() => setOpen(false));
+      }}
+    >
+      <TextField label="Badge name" value={badge} onChange={(e) => setBadge(e.target.value)} placeholder="Prompting Essentials" hint="Leave empty for no badge." />
+      <TextField label="Badge code" value={code} onChange={(e) => setCode(e.target.value)} placeholder="PROMPT" hint="2–8 letters or digits, used in credential IDs like CTA-PROMPT-8F72K." />
+      <TextArea label="Skills on the credential (one per line)" rows={3} value={skills} onChange={(e) => setSkills(e.target.value)} />
+      <div className="flex gap-2">
+        <Button type="submit">Save badge</Button>
+        <Button type="button" variant="ghost" onClick={() => setOpen(false)}>
+          Cancel
+        </Button>
+      </div>
     </form>
   );
 }
@@ -166,7 +217,7 @@ function Curriculum({ course, reload }: { course: Course; reload: () => Promise<
     run(async () => {
       const m = course.modules.find((x) => x.id === id)!;
       if (!title.trim() || title === m.title) return;
-      await (await getBackend()).admin.saveModule({ id: m.id, courseId: m.courseId, title: title.trim(), position: m.position });
+      await (await getBackend()).admin.saveModule({ ...moduleInput(m), title: title.trim() });
     });
 
   const remove = (id: string, lessons: number) => {
@@ -183,6 +234,9 @@ function Curriculum({ course, reload }: { course: Course; reload: () => Promise<
         courseId: course.id,
         title: newModule.trim(),
         position: course.modules.length + 1,
+        badge: null,
+        badgeCode: null,
+        skills: [],
       });
       setNewModule("");
     });
@@ -232,6 +286,7 @@ function Curriculum({ course, reload }: { course: Course; reload: () => Promise<
             <Link to={`/admin/courses/${course.slug}/lessons/new?module=${encodeURIComponent(m.id)}`} className="mt-3 ml-6 inline-flex items-center gap-1 text-[0.8125rem] font-semibold text-brass-dark">
               <Plus aria-hidden className="h-3.5 w-3.5" /> Add lesson
             </Link>
+            <ModuleBadge course={course} module={m} onSave={(input) => run(async () => (await getBackend()).admin.saveModule(input))} />
           </li>
         ))}
       </ol>

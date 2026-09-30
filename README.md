@@ -1,12 +1,26 @@
 # CloudTech Academy
 
-The learning platform of [CloudTech Analytics](https://www.cloudtechanalytics.com). It offers practical, self-paced courses in data, analytics and technology. The courses are text-first and free.
+The learning platform of [CloudTech Analytics](https://www.cloudtechanalytics.com). It offers practical, self-paced courses in data, analytics and technology, text-first.
 
-Every lesson follows the same steps: **read → understand → practise → apply → assess → earn**. The SQL course comes with a real SQLite database that runs in the browser. Learners can check each exercise answer immediately, and anyone can verify a certificate by its credential ID.
+**Learn free. Earn badges free. The official certificate is optional.**
+
+- Every course, lesson and assessment is free.
+- Short courses are made of 15–30 minute modules. Passing a module's check earns its badge.
+- Passing the final assessment earns the free course completion badge.
+- Every badge is a credential with an ID (`CTA-PROMPT-8F72K`) and a public page at `/credentials/:id`.
+- After completing a course, a learner can optionally buy the official PDF certificate (₦3,000 or $7, set by admins). It has a certificate number (`CTA-CERT-2026-000124`) and a QR code that opens `/verify/:id`.
 
 ## What's in V1
 
-| Course | Lessons | Practice | Final project |
+| Short course | Modules (each with a check and a badge) |
+| --- | --- |
+| AI Productivity Fundamentals | Prompting Essentials, Using Claude, Using ChatGPT, Presentations with AI |
+| Design & Content Essentials | Social Media Content with AI, Design with Canva, Video Editing with CapCut |
+| Career Essentials | Build a CV with AI, A Professional LinkedIn Profile, Quick Excel Analysis |
+
+Each short course ends with an 8-question final assessment.
+
+| Full course | Lessons | Practice | Final project |
 | --- | --: | --- | --- |
 | Data Analytics Foundations | 10 | Answer tasks on real datasets, one SQL taster | Kolanut people review (HR data) |
 | Excel for Data Analysis | 11 | Answer tasks: formulas, XLOOKUP, cleaning, pivots | Kolanut sales performance review |
@@ -14,15 +28,16 @@ Every lesson follows the same steps: **read → understand → practise → appl
 | Power BI Fundamentals | 14 | Answer tasks: Power Query, modelling, DAX, visuals | Ashgrove Chambers practice dashboard |
 | Data Modelling | 9 | SQL checks and answer tasks, built around diagrams | Ashgrove Chambers data model |
 
-Each course has a 15-question final assessment (pass mark 60%, options shuffled, graded on the server) and a verifiable certificate.
+Each full course has a 15-question final assessment. Every assessment has a pass mark of 60%, shuffled options, and is graded on the server.
 
 | Platform | Status |
 | --- | --- |
 | Accounts, dashboard, progress tracking | ✓ |
-| Certificates: PNG download, print/PDF, LinkedIn, public `/verify/:id` | ✓ |
+| Module badges and course completion badges with public credential pages and sharing (LinkedIn, WhatsApp, Facebook, X, copy link, image) | ✓ |
+| Optional official certificate: order, payment (simulated in demo mode; bank transfer + admin grant until a provider is connected), PDF with QR code, `/verify/:id` | ✓ |
 | Practice projects + five downloadable datasets (logistics, sales, messy customer export, HR, legal) | ✓ |
-| Admin (`/admin`): courses, modules, lessons (Markdown with preview), assessments, students, submissions, certificates | ✓ |
-| SEO: every public page prerendered (60 pages), sitemap, structured data | ✓ |
+| Admin (`/admin`): courses, modules and module badges, lessons, module checks and final assessments, students, submissions, credentials (search, revoke), certificate purchases (grant, email, CSV), pricing per currency | ✓ |
+| SEO: every public page prerendered, sitemap, structured data | ✓ |
 
 ## Running it
 
@@ -62,17 +77,20 @@ On Vercel, add the same variables under Project Settings → Environment Variabl
 - Row-level security is on for every table.
 - Learners can read and write only their own progress.
 - Assessment answer keys are readable by admins only. `submit_assessment()` grades attempts on the server.
-- Certificates can only be created by `issue_certificate()`. It re-checks every requirement: lessons, required exercises, a passed assessment, the project, and a full name on the profile.
-- `verify_certificate()` returns only what is printed on the certificate.
+- Module badges are only created by `claim_module_badge()`, after a passed module check.
+- Course completion credentials are only created by `issue_course_credential()`. It re-checks every requirement the course sets: module badges, lessons, required exercises, a passed final assessment, the project, and a full name on the profile.
+- A learner can only start an order (`start_certificate_order()`) for a course they've completed, at the price stored in `certificate_prices`.
+- Official certificates are only issued for an order that is paid or granted: by `complete_certificate_order()`, which only the payment server (service role) can call, or by an admin with `admin_grant_certificate()`.
+- `verify_credential()` and `verify_certificate()` return only what is printed on the badge or certificate, never an email.
 - SQL exercises run in the learner's browser, so exercise completion is recorded on trust. The server-graded assessment is the real gate for a certificate.
 
 ## Content
 
 The course content lives in `src/content/`:
 
-- `catalog.ts`: courses, modules, certificate rules.
-- `<course>/NN-slug.md` (folders `daf`, `excel`, `sql`, `powerbi`): lessons. The front matter holds `title`, `minutes` and `summary`.
-- `<course>/assessment.ts` and `<course>/project.ts`: the final assessment and the project.
+- `catalog.ts`: courses, modules and completion rules. A short course has `format: "short"`; each of its modules has a `badge` name, a `badgeCode` (used in credential IDs) and `skills` (shown on the credential page).
+- `<course>/NN-slug.md`: lessons. The front matter holds `title`, `minutes` and `summary`. Full-course lessons have six sections (The problem … Check your understanding); short-course lessons have a few `##` steps including `## Try it`.
+- `<course>/assessment.ts`: the final assessment and, for short courses, a module check (`kind: "module"`, `moduleId`) for each badge module. `<course>/project.ts`: the project, for full courses.
 
 Lesson Markdown supports three custom code fences:
 
@@ -95,15 +113,9 @@ Lessons edited in `/admin` are stored in the database. The next seed run overwri
 
 The practice datasets are fictional and are generated with fixed seeds by `npm run datasets`. Each dataset has its own seed, so changing one never changes another. Explore them with `node scripts/sql.mjs --data sales "SELECT ..."`.
 
-### Quick skills
+### Payments
 
-Short courses of 15–30 minutes live at `/quick`. Each is one file, `src/content/quick/NN-slug.md`:
-
-- Front matter: `title`, `badge` (the name printed on the badge), `minutes`, `category` (one of `QUICK_CATEGORIES` in `src/content/quick.ts`), `icon` (a key in `src/components/QuickIcon.tsx`), `summary` and `skills` (separated by `;`).
-- Three or more `## ` steps, including one called `## Try it`.
-- A final ` ```quiz ` block of exactly five questions. Three right earns the badge.
-
-Anyone can take a quick course without an account. Signed-in learners' badges are saved in `quick_completions` and shown on their dashboard and in `/admin`. Badges are for sharing; unlike certificates they have no verification page. `npm run test:content` checks every quick course.
+Online payment isn't connected yet (`paymentsEnabled` is `false` in `src/lib/backend/supabase.ts`). Until it is, a learner who wants the certificate creates an order and messages CloudTech to pay by transfer; an admin then presses **Grant certificate** in `/admin/certificates`. To connect a provider such as Paystack: verify the payment on a server (a Supabase Edge Function or webhook using the provider's secret key), call `complete_certificate_order(order_id, 'paystack', reference)` with the service role key, and set `paymentsEnabled` to `true`.
 
 ## Structure
 

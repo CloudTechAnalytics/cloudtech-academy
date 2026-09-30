@@ -15,6 +15,9 @@ import { PBI_ASSESSMENT } from "./powerbi/assessment";
 import { PBI_PROJECT } from "./powerbi/project";
 import { DMO_ASSESSMENT } from "./modelling/assessment";
 import { DMO_PROJECT } from "./modelling/project";
+import { AIPF_ASSESSMENTS } from "./ai-productivity/assessment";
+import { DCE_ASSESSMENTS } from "./design-content/assessment";
+import { CAREER_ASSESSMENTS } from "./career/assessment";
 import { parseFrontmatter, requiredExerciseIds } from "@/lib/lesson-format";
 
 /** Lesson files live in one folder per course, named NN-slug.md. */
@@ -24,6 +27,9 @@ const COURSE_DIRS: Record<string, string> = {
   excel: "excel-for-data-analysis",
   powerbi: "power-bi-fundamentals",
   modelling: "data-modelling",
+  "ai-productivity": "ai-productivity-fundamentals",
+  "design-content": "design-content-essentials",
+  career: "career-essentials",
 };
 
 const lessonFiles = import.meta.glob("./*/*.md", { query: "?raw", import: "default", eager: true }) as Record<string, string>;
@@ -43,6 +49,9 @@ function buildCourse(def: (typeof COURSES)[number], position: number): Course {
     courseId: def.id,
     title: m.title,
     position: mi + 1,
+    badge: m.badge ?? null,
+    badgeCode: m.badgeCode ?? null,
+    skills: m.skills ?? [],
     lessons: m.lessons.map((slug): Lesson => {
       const raw = BODIES[def.id]?.[slug];
       if (!raw) throw new Error(`Missing lesson file for ${def.id}/${slug}`);
@@ -70,7 +79,16 @@ function buildCourse(def: (typeof COURSES)[number], position: number): Course {
 }
 
 export const BUNDLED_COURSES: Course[] = COURSES.map(buildCourse);
-export const BUNDLED_ASSESSMENTS: AssessmentDef[] = [SQL_ASSESSMENT, DAF_ASSESSMENT, XLS_ASSESSMENT, PBI_ASSESSMENT, DMO_ASSESSMENT];
+export const BUNDLED_ASSESSMENTS: AssessmentDef[] = [
+  SQL_ASSESSMENT,
+  DAF_ASSESSMENT,
+  XLS_ASSESSMENT,
+  PBI_ASSESSMENT,
+  DMO_ASSESSMENT,
+  ...AIPF_ASSESSMENTS,
+  ...DCE_ASSESSMENTS,
+  ...CAREER_ASSESSMENTS,
+].map((a) => ({ ...a, kind: a.kind ?? "final" }));
 export const BUNDLED_PROJECTS: ProjectDef[] = [SQL_PROJECT, DAF_PROJECT, XLS_PROJECT, PBI_PROJECT, DMO_PROJECT];
 
 export { CATEGORIES, categoryName } from "./catalog";

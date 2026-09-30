@@ -2,18 +2,131 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "rewrites": [
-    { "source": "/dashboard/:path*", "destination": "/app.html" },
-    { "source": "/dashboard", "destination": "/app.html" },
-    { "source": "/admin/:path*", "destination": "/app.html" },
-    { "source": "/admin", "destination": "/app.html" },
-    { "source": "/profile", "destination": "/app.html" },
-    { "source": "/verify/:path*", "destination": "/app.html" },
-    { "source": "/sign-in", "destination": "/app.html" },
-    { "source": "/sign-up", "destination": "/app.html" },
-    { "source": "/reset-password", "destination": "/app.html" },
-    { "source": "/update-password", "destination": "/app.html" },
-    { "source": "/courses/:slug/assessment", "destination": "/app.html" },
-    { "source": "/courses/:slug/project", "destination": "/app.html" },
-    { "source": "/courses/:slug/certificate", "destination": "/app.html" }
+    {
+      "source": "/dashboard/:path*",
+      "destination": "/app.html"
+    },
+    {
+      "source": "/dashboard",
+      "destination": "/app.html"
+    },
+    {
+      "source": "/admin/:path*",
+      "destination": "/app.html"
+    },
+    {
+      "source": "/admin",
+      "destination": "/app.html"
+    },
+    {
+      "source": "/profile",
+      "destination": "/app.html"
+    },
+    {
+      "source": "/verify/:path*",
+      "destination": "/app.html"
+    },
+    {
+      "source": "/sign-in",
+      "destination": "/app.html"
+    },
+    {
+      "source": "/sign-up",
+      "destination": "/app.html"
+    },
+    {
+      "source": "/reset-password",
+      "destination": "/app.html"
+    },
+    {
+      "source": "/update-password",
+      "destination": "/app.html"
+    },
+    {
+      "source": "/courses/:slug/assessment",
+      "destination": "/app.html"
+    },
+    {
+      "source": "/courses/:slug/project",
+      "destination": "/app.html"
+    },
+    {
+      "source": "/courses/:slug/certificate",
+      "destination": "/app.html"
+    },
+    {
+      "source": "/courses/:slug/modules/:module/check",
+      "destination": "/app.html"
+    },
+    {
+      "source": "/courses/:slug/complete",
+      "destination": "/app.html"
+    },
+    {
+      "source": "/credentials/:path*",
+      "destination": "/app.html"
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/quick",
+      "destination": "/courses",
+      "permanent": true
+    },
+    {
+      "source": "/quick/ai-prompting-for-beginners",
+      "destination": "/learn/ai-productivity-fundamentals/prompting-essentials",
+      "permanent": true
+    },
+    {
+      "source": "/quick/how-to-use-claude-ai",
+      "destination": "/learn/ai-productivity-fundamentals/using-claude",
+      "permanent": true
+    },
+    {
+      "source": "/quick/how-to-use-chatgpt-effectively",
+      "destination": "/learn/ai-productivity-fundamentals/using-chatgpt",
+      "permanent": true
+    },
+    {
+      "source": "/quick/create-presentations-with-ai",
+      "destination": "/learn/ai-productivity-fundamentals/presentations-with-ai",
+      "permanent": true
+    },
+    {
+      "source": "/quick/social-media-content-with-ai",
+      "destination": "/learn/design-content-essentials/social-media-content-with-ai",
+      "permanent": true
+    },
+    {
+      "source": "/quick/design-with-canva",
+      "destination": "/learn/design-content-essentials/design-with-canva",
+      "permanent": true
+    },
+    {
+      "source": "/quick/edit-videos-with-capcut",
+      "destination": "/learn/design-content-essentials/video-editing-with-capcut",
+      "permanent": true
+    },
+    {
+      "source": "/quick/build-a-cv-with-ai",
+      "destination": "/learn/career-essentials/build-a-cv-with-ai",
+      "permanent": true
+    },
+    {
+      "source": "/quick/professional-linkedin-profile",
+      "destination": "/learn/career-essentials/linkedin-profile",
+      "permanent": true
+    },
+    {
+      "source": "/quick/analyse-excel-data-quickly",
+      "destination": "/learn/career-essentials/quick-excel-analysis",
+      "permanent": true
+    },
+    {
+      "source": "/quick/:path*",
+      "destination": "/courses",
+      "permanent": true
+    }
   ]
 }

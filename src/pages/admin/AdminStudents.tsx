@@ -6,7 +6,6 @@ import { Copy, Download, Mail, X } from "lucide-react";
 import type { StudentSummary } from "@/lib/backend";
 import { daysSince, formatDate, percent, plural, timeAgo } from "@/lib/format";
 import { gmailUrl, mailtoUrl } from "@/lib/email";
-import { quickCourse } from "@/content/quick";
 import { Alert, TextArea, TextField } from "@/components/Form";
 import { Button, buttonClass } from "@/components/Button";
 import { ProgressBar } from "@/components/ProgressBar";
@@ -21,7 +20,7 @@ const FILTERS: { id: Filter; label: string; test: (s: StudentSummary) => boolean
   { id: "active", label: "Active in the last 7 days", test: (s) => daysSince(s.lastActiveAt) <= 7 },
   { id: "inactive", label: "Inactive for 14+ days", test: (s) => s.lessonsCompleted > 0 && daysSince(s.lastActiveAt) >= 14 },
   { id: "completed", label: "Finished a course", test: (s) => s.completedCourses > 0 },
-  { id: "quick", label: "Earned a quick skill badge", test: (s) => s.quickBadges > 0 },
+  { id: "quick", label: "Earned a badge", test: (s) => s.badges > 0 },
   { id: "not-started", label: "Signed up, not started", test: (s) => s.lessonsCompleted === 0 },
 ];
 
@@ -104,7 +103,7 @@ export function AdminStudents() {
                 <th>Lessons done</th>
                 <th>Courses</th>
                 <th>Certificates</th>
-                <th>Quick badges</th>
+                <th>Badges</th>
                 <th>Joined</th>
               </tr>
             </thead>
@@ -132,7 +131,7 @@ export function AdminStudents() {
                     {s.enrollments} enrolled{s.completedCourses > 0 && `, ${s.completedCourses} finished`}
                   </td>
                   <td>{s.certificates}</td>
-                  <td>{s.quickBadges}</td>
+                  <td>{s.badges}</td>
                   <td className="whitespace-nowrap">{formatDate(s.joinedAt)}</td>
                 </tr>
               ))}
@@ -214,8 +213,8 @@ function Composer({ recipients, onClose }: { recipients: StudentSummary[]; onClo
 function downloadCsv(rows: StudentSummary[]) {
   const cell = (v: string | number | null) => `"${String(v ?? "").replace(/"/g, '""')}"`;
   const lines = [
-    ["Name", "Email", "Joined", "Last active", "Lessons completed", "Courses enrolled", "Courses finished", "Certificates", "Quick badges"],
-    ...rows.map((s) => [s.fullName, s.email, s.joinedAt.slice(0, 10), s.lastActiveAt?.slice(0, 10) ?? "", s.lessonsCompleted, s.enrollments, s.completedCourses, s.certificates, s.quickBadges]),
+    ["Name", "Email", "Joined", "Last active", "Lessons completed", "Courses enrolled", "Courses finished", "Certificates", "Badges"],
+    ...rows.map((s) => [s.fullName, s.email, s.joinedAt.slice(0, 10), s.lastActiveAt?.slice(0, 10) ?? "", s.lessonsCompleted, s.enrollments, s.completedCourses, s.certificates, s.badges]),
   ];
   const blob = new Blob([lines.map((l) => l.map(cell).join(",")).join("\r\n")], { type: "text/csv" });
   const a = document.createElement("a");
@@ -288,16 +287,25 @@ export function AdminStudent() {
           ))}
         </ul>
       )}
-      <h2 className="mt-10 font-serif text-[1.4rem]">Quick skill badges</h2>
-      {data.quick.length === 0 ? (
-        <p className="mt-3 text-muted">No quick skill badges yet.</p>
+      <h2 className="mt-10 font-serif text-[1.4rem]">Badges and credentials</h2>
+      {data.credentials.length === 0 ? (
+        <p className="mt-3 text-muted">No badges yet.</p>
       ) : (
         <ul className="mt-4 divide-y divide-line rounded-2xl border border-line bg-paper">
-          {data.quick.map((q) => (
-            <li key={q.slug} className="flex flex-wrap items-center justify-between gap-2 px-5 py-3">
-              <span className="font-medium">{quickCourse(q.slug)?.badge ?? q.slug}</span>
+          {data.credentials.map((c) => (
+            <li key={c.id} className="flex flex-wrap items-center justify-between gap-2 px-5 py-3">
+              <span>
+                <span className="font-medium">{c.badgeName}</span>
+                <span className="block text-[0.8125rem] text-muted">
+                  {c.kind === "course_completion" ? "Course completion" : `Module badge · ${c.courseTitle}`}
+                </span>
+              </span>
               <span className="text-[0.8125rem] text-muted">
-                Score {q.score}% · {formatDate(q.completedAt)}
+                <Link to={`/credentials/${c.credentialId}`} className="font-mono hover:text-ink">
+                  {c.credentialId}
+                </Link>{" "}
+                · {formatDate(c.issuedAt)}
+                {c.status === "revoked" && <span className="ml-2 font-semibold text-danger">Revoked</span>}
               </span>
             </li>
           ))}

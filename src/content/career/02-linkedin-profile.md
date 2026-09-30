@@ -1,12 +1,9 @@
 ---
-title: How to Create a Professional LinkedIn Profile
-badge: LinkedIn Profile Essentials
+title: A Professional LinkedIn Profile
 minutes: 25
-category: Career
-icon: profile
 summary: Set up a LinkedIn profile that recruiters and clients can find and trust, with a clear photo, a headline that says what you do, and an About section in your own words.
-skills: Choose a professional photo and banner; Write a headline people search for; Write an About section that tells your story; Show your skills, experience and badges
 ---
+
 
 ## First impressions: photo and banner
 
@@ -65,38 +62,3 @@ If you're job hunting, you can set **Open to work** and choose whether all membe
 2. Write a new **headline** using the formula: role | skills | goal. Use AI for options, then edit one.
 3. Write a three-part **About** section in the first person.
 4. Add at least **five skills**, and add this course's badge under **Licences & certifications** once you've earned it.
-
-```quiz
-[
-  {
-    "prompt": "Which LinkedIn headline is strongest?",
-    "options": ["Unemployed", "Looking for job", "Customer service professional | 3 years in retail banking | Open to CX roles in Lagos", "Hi"],
-    "answer": 2,
-    "explanation": "It says what you do, your experience and what you want, using words people search for."
-  },
-  {
-    "prompt": "What makes a good LinkedIn profile photo?",
-    "options": ["A group photo from a party", "A clear, recent photo of your face with good light", "Your company logo", "No photo"],
-    "answer": 1,
-    "explanation": "People want to recognise you and see that you're real."
-  },
-  {
-    "prompt": "In what voice should the About section usually be written?",
-    "options": ["First person: 'I help…'", "Third person, like a news story", "In capital letters", "As a list of hashtags"],
-    "answer": 0,
-    "explanation": "First person sounds natural and personal on LinkedIn."
-  },
-  {
-    "prompt": "Why do the first two lines of your About section matter most?",
-    "options": ["They're printed in bold", "LinkedIn hides the rest behind 'see more'", "Only they are searchable", "They set your photo"],
-    "answer": 1,
-    "explanation": "Many people only read what shows before 'see more'."
-  },
-  {
-    "prompt": "Where should you add the badges and certificates you earn?",
-    "options": ["Nowhere", "In the Licences & certifications section", "In your profile photo", "In your banner only"],
-    "answer": 1,
-    "explanation": "Licences & certifications is the section for courses and credentials."
-  }
-]
-```

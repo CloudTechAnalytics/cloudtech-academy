@@ -1,12 +1,9 @@
 ---
-title: AI Prompting for Beginners
-badge: AI Prompting Essentials
+title: Prompting Essentials
 minutes: 20
-category: AI & Productivity
-icon: wand
 summary: Write clear prompts that get useful answers from any AI assistant, whether it's ChatGPT, Claude, Gemini or Copilot.
-skills: Write a prompt with context, task and format; Give examples so the AI matches your style; Improve a weak answer instead of starting again; Check AI answers before you use them
 ---
+
 
 ## What a prompt is
 
@@ -96,38 +93,3 @@ Pick any AI assistant you have access to (ChatGPT, Claude, Gemini or Copilot all
 2. Write the prompt with all four parts: **context, task, details, format**.
 3. Read the answer, then send **one follow-up** that improves it, for example "make it warmer" or "shorter".
 4. Compare the first and second versions. What changed?
-
-```quiz
-[
-  {
-    "prompt": "Why does a detailed prompt usually get a better answer?",
-    "options": ["The AI only knows what you tell it", "Long prompts make the AI work faster", "Short prompts are not allowed", "The AI charges less for long prompts"],
-    "answer": 0,
-    "explanation": "The assistant can't see your situation, so the context you give is what it works with."
-  },
-  {
-    "prompt": "Which of these is the best prompt?",
-    "options": ["Write an email.", "Email.", "I'm a shop owner. Write a polite email to a supplier asking to move Friday's delivery to Monday. Under 100 words.", "Write something about deliveries."],
-    "answer": 2,
-    "explanation": "It gives the context, the task, the details and a length limit."
-  },
-  {
-    "prompt": "You want five product descriptions in the same style as one you like. What's the easiest way?",
-    "options": ["Describe the style in one word", "Paste the example and ask for more like it", "Ask for 'good descriptions'", "Start a new chat for each one"],
-    "answer": 1,
-    "explanation": "Showing an example is the quickest way to get the same tone, length and structure."
-  },
-  {
-    "prompt": "The first answer is close, but too formal. What should you do?",
-    "options": ["Start a new chat and type the same prompt", "Reply in the same chat: 'Make it less formal'", "Give up on AI", "Copy it anyway"],
-    "answer": 1,
-    "explanation": "The assistant remembers the conversation, so a short follow-up is enough."
-  },
-  {
-    "prompt": "An AI answer includes a price and a date. What should you do before sharing it?",
-    "options": ["Nothing, AI is always right", "Check the price and date against a source you trust", "Add more emojis", "Make the font bigger"],
-    "answer": 1,
-    "explanation": "AI can be confidently wrong, so check facts, figures and dates before you rely on them."
-  }
-]
-```

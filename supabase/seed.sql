@@ -3,50 +3,901 @@ begin;
 
 -- Categories
 insert into public.course_categories (id, name, description, is_future, position)
-values ('data-analytics', 'Data Analytics', 'Turning raw data into answers a business can act on.', false, 1)
+values ('ai-productivity', 'AI & Productivity', 'Use AI tools to research, write, create and work faster.', false, 1)
 on conflict (id) do update set name = excluded.name, description = excluded.description, is_future = excluded.is_future, position = excluded.position;
 
 insert into public.course_categories (id, name, description, is_future, position)
-values ('business-intelligence', 'Business Intelligence', 'Dashboards, reporting and data models.', false, 2)
+values ('design-content', 'Design & Content', 'Design graphics, edit videos and plan content.', false, 2)
 on conflict (id) do update set name = excluded.name, description = excluded.description, is_future = excluded.is_future, position = excluded.position;
 
 insert into public.course_categories (id, name, description, is_future, position)
-values ('data-science', 'Data Science', 'Statistics and predictive modelling.', true, 3)
+values ('career', 'Career', 'CVs, LinkedIn and the digital skills employers look for.', false, 3)
 on conflict (id) do update set name = excluded.name, description = excluded.description, is_future = excluded.is_future, position = excluded.position;
 
 insert into public.course_categories (id, name, description, is_future, position)
-values ('ai-ml', 'AI & Machine Learning', 'Building and applying machine learning models.', true, 4)
+values ('data-analytics', 'Data Analytics', 'Turning raw data into answers a business can act on.', false, 4)
 on conflict (id) do update set name = excluded.name, description = excluded.description, is_future = excluded.is_future, position = excluded.position;
 
 insert into public.course_categories (id, name, description, is_future, position)
-values ('python', 'Python', 'Python for analysis and automation.', true, 5)
+values ('business-intelligence', 'Business Intelligence', 'Dashboards, reporting and data models.', false, 5)
 on conflict (id) do update set name = excluded.name, description = excluded.description, is_future = excluded.is_future, position = excluded.position;
 
 insert into public.course_categories (id, name, description, is_future, position)
-values ('databases', 'Databases & Data Modelling', 'Designing databases and data models that answer business questions.', false, 6)
+values ('data-science', 'Data Science', 'Statistics and predictive modelling.', true, 6)
 on conflict (id) do update set name = excluded.name, description = excluded.description, is_future = excluded.is_future, position = excluded.position;
 
 insert into public.course_categories (id, name, description, is_future, position)
-values ('automation', 'Automation', 'Automating repetitive work.', true, 7)
+values ('ai-ml', 'AI & Machine Learning', 'Building and applying machine learning models.', true, 7)
 on conflict (id) do update set name = excluded.name, description = excluded.description, is_future = excluded.is_future, position = excluded.position;
 
 insert into public.course_categories (id, name, description, is_future, position)
-values ('business-analysis', 'Business Analysis', 'Requirements, processes and decisions.', true, 8)
+values ('python', 'Python', 'Python for analysis and automation.', true, 8)
 on conflict (id) do update set name = excluded.name, description = excluded.description, is_future = excluded.is_future, position = excluded.position;
 
 insert into public.course_categories (id, name, description, is_future, position)
-values ('cloud', 'Cloud & Technology', 'Cloud platforms and core technology skills.', true, 9)
+values ('databases', 'Databases & Data Modelling', 'Designing databases and data models that answer business questions.', false, 9)
 on conflict (id) do update set name = excluded.name, description = excluded.description, is_future = excluded.is_future, position = excluded.position;
+
+insert into public.course_categories (id, name, description, is_future, position)
+values ('automation', 'Automation', 'Automating repetitive work.', true, 10)
+on conflict (id) do update set name = excluded.name, description = excluded.description, is_future = excluded.is_future, position = excluded.position;
+
+insert into public.course_categories (id, name, description, is_future, position)
+values ('business-analysis', 'Business Analysis', 'Requirements, processes and decisions.', true, 11)
+on conflict (id) do update set name = excluded.name, description = excluded.description, is_future = excluded.is_future, position = excluded.position;
+
+insert into public.course_categories (id, name, description, is_future, position)
+values ('cloud', 'Cloud & Technology', 'Cloud platforms and core technology skills.', true, 12)
+on conflict (id) do update set name = excluded.name, description = excluded.description, is_future = excluded.is_future, position = excluded.position;
+
+
+-- Course: AI Productivity Fundamentals
+insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
+values ('ai-productivity-fundamentals', 'short', 'AI Productivity Fundamentals', 'ai-productivity-fundamentals', 'AIPF', 'AI Productivity Fundamentals', 'Use AI tools to research, write and create faster: prompting, Claude, ChatGPT and presentations, in four short modules.', 'Learn practical ways to use AI assistants at work, at school and in your business. Write prompts that get useful answers, work with your own documents in Claude, research with sources in ChatGPT, and turn an idea into a presentation. Each module takes about 20 minutes and ends with a short check and a badge.', 'ai-productivity', 'beginner', 'Beginner', null, true, 'available', true, array['Writing clear prompts', 'Working with documents in Claude', 'Researching with ChatGPT', 'Building presentations with AI', 'Checking AI answers before you use them']::text[], array['No experience needed', 'A free account with any AI assistant, such as ChatGPT or Claude']::text[], null, true, false, false, false, true, 60, 0)
+on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('aipf-m01', 'ai-productivity-fundamentals', 'Prompting Essentials', 1, 'Prompting Essentials', 'PROMPT', array['Write a prompt with context, task and format', 'Give examples so the AI matches your style', 'Improve a weak answer instead of starting again', 'Check AI answers before you use them']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('ai-productivity-fundamentals:prompting-essentials', 'ai-productivity-fundamentals', 'aipf-m01', 'prompting-essentials', 'Prompting Essentials', 'Write clear prompts that get useful answers from any AI assistant, whether it''s ChatGPT, Claude, Gemini or Copilot.', 20, $md$
+
+## What a prompt is
+
+A **prompt** is the message you type to an AI assistant. The assistant can't see your screen, your files or your thoughts. It only knows what you tell it.
+
+That's why the same tool gives one person a brilliant answer and another person something bland. The difference is usually the prompt.
+
+Compare these two:
+
+```text
+Write a message to a customer.
+```
+
+```text
+I run a small catering business in Ibadan. A customer, Mrs Adeyemi, paid a
+deposit for 80 guests but her event date moved from 12 to 19 July. Write a
+short, warm WhatsApp message confirming the new date and saying her deposit
+still stands. Keep it under 60 words.
+```
+
+The second prompt tells the AI who you are, what happened, what to write, and how long it should be. You'll get something you can send almost as it is.
+
+## The four parts of a good prompt
+
+Most good prompts have four parts. You don't always need all four, but checking for them fixes most weak answers.
+
+| Part | What it says | Example |
+| :-- | :-- | :-- |
+| **Role or context** | Who you are, or the situation | "I'm a secondary school teacher in Abuja…" |
+| **Task** | Exactly what you want done | "…write five quiz questions on fractions…" |
+| **Details** | The facts it needs and any limits | "…for SS1 students, with answers at the end…" |
+| **Format** | How the answer should look | "…as a numbered list, simple English." |
+
+Put together:
+
+```text
+I'm a secondary school teacher in Abuja. Write five quiz questions on
+adding fractions for SS1 students, with the answers at the end. Use a
+numbered list and simple English.
+```
+
+> [!TIP]
+> If you're not sure what to include, ask yourself: "If I gave this job to a new assistant on their first day, what would they need to know?" Tell the AI the same things.
+
+## Show an example
+
+When you want a particular style, **show** the AI rather than describe it. Paste one example and ask for more like it.
+
+```text
+Here is a product description I like:
+
+"Zobo, brewed fresh every morning with hibiscus, ginger and a hint of
+pineapple. No preservatives. Chilled and ready in 50cl bottles."
+
+Write descriptions in the same style for: kunu, chapman and fresh orange juice.
+```
+
+The AI copies the length, the tone and the structure from your example. This works for emails, social posts, reports and almost anything else.
+
+## Improve the answer, don't start again
+
+The first answer is a draft. Instead of opening a new chat, **reply with what to change**. The assistant remembers the conversation.
+
+Useful follow-ups:
+
+- "Make it shorter, three sentences maximum."
+- "Less formal. It's for a friend."
+- "Good, but the second point is wrong: we close at 6pm, not 8pm."
+- "Give me three different versions to choose from."
+- "Explain that like I'm new to the topic."
+
+Two or three rounds of feedback usually get you from "okay" to "exactly right".
+
+## Check before you use it
+
+AI assistants are very useful, but they can be confidently wrong. They sometimes invent facts, figures, names or quotes. Before you use an answer:
+
+- **Check facts, numbers and dates** against a source you trust, especially anything about money, law, health or prices.
+- **Read it as the person who'll receive it.** Does it sound like you?
+- **Don't paste private information** such as customers' phone numbers, passwords, bank details or confidential company documents, unless your organisation has approved that tool for it.
+
+## Try it
+
+Pick any AI assistant you have access to (ChatGPT, Claude, Gemini or Copilot all work).
+
+1. Think of one real message you need to write this week: to a customer, a colleague, a landlord or a teacher.
+2. Write the prompt with all four parts: **context, task, details, format**.
+3. Read the answer, then send **one follow-up** that improves it, for example "make it warmer" or "shorter".
+4. Compare the first and second versions. What changed?
+$md$, true, true, 1, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('aipf-m02', 'ai-productivity-fundamentals', 'Using Claude', 2, 'Claude AI Essentials', 'CLAUDE', array['Start a conversation and follow up well', 'Summarise and question a document you upload', 'Rewrite text for a different reader or tone', 'Keep ongoing work organised in a project']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('ai-productivity-fundamentals:using-claude', 'ai-productivity-fundamentals', 'aipf-m02', 'using-claude', 'Using Claude', 'Get started with Claude, Anthropic''s AI assistant: ask good questions, work with your own documents and turn rough notes into finished writing.', 20, $md$
+
+## What Claude is
+
+**Claude** is an AI assistant made by the company **Anthropic**. You talk to it in plain language, and it can explain, write, summarise, analyse and brainstorm with you.
+
+You can use it at **claude.ai** in a web browser, or in the Claude apps for computer and phone. There's a free plan to start with; paid plans give you more use and more features. Features change often, so if a button in this module looks slightly different on your screen, look for the nearest match.
+
+Sign up with your email or Google account, and you'll see a message box. That's where everything starts.
+
+## Ask, then follow up
+
+Type your request the way you'd brief a helpful colleague: say what you need, who it's for, and what a good result looks like.
+
+```text
+I manage a small pharmacy in Enugu. Explain, in simple terms, the
+difference between gross profit and net profit, with a short example
+using naira. I'm not an accountant.
+```
+
+Then **keep the conversation going**. Claude remembers what you've said earlier in the same chat, so you can refine the answer:
+
+- "Now show me how to calculate both for a month where we sold ₦2.4m."
+- "Put that in a small table."
+- "What are the three most common costs I might be forgetting?"
+
+> [!TIP]
+> Start a **new chat** when you switch to a completely different topic. A long chat about one thing can confuse the answers about another.
+
+## Work with your own documents
+
+One of Claude's most useful skills is reading documents for you. Use the **attach** button (usually a paperclip or +) to add a PDF, Word document, spreadsheet or image, then ask about it.
+
+Good things to ask about a document:
+
+```text
+Summarise this report in five bullet points for a busy manager.
+```
+
+```text
+List every deadline and amount of money mentioned in this contract,
+with the page it appears on.
+```
+
+```text
+What questions should I ask before I sign this?
+```
+
+Always **open the document yourself** to check anything important Claude tells you, especially numbers, dates and legal wording. Claude is good at reading, but it can still misread or miss something.
+
+> [!WARNING]
+> Don't upload confidential documents (customer data, payslips, company secrets) unless your organisation has approved Claude for that kind of information.
+
+## Rewrite and improve your writing
+
+Paste in something you've written and tell Claude who will read it:
+
+```text
+Rewrite this for a customer, not an engineer. Keep it friendly and
+under 80 words:
+
+"Due to an upstream API outage our payment gateway returned 502 errors
+between 14:00 and 15:30. Transactions were not captured."
+```
+
+You can also ask for:
+
+- **A shorter version:** "Cut this to half the length without losing the main point."
+- **A different tone:** "Make this more formal for a bank."
+- **Feedback instead of a rewrite:** "Don't rewrite it. Tell me what's unclear."
+
+## Keep ongoing work in a project
+
+If you use Claude for the same kind of work again and again (your business, a course, a job search), create a **project**. A project keeps related chats together and lets you add:
+
+- **Files** Claude should always be able to refer to, such as your price list or a style guide.
+- **Instructions** it should always follow, such as "Write in British English. Our business is called Ada's Kitchen, based in Lekki."
+
+Then every new chat inside that project starts already knowing the background, so you don't repeat yourself.
+
+## Try it
+
+1. Go to **claude.ai** and sign in.
+2. Attach a document you're allowed to share: a school handout, a public report or a letter you received.
+3. Ask: "Summarise this in five bullet points, then tell me the one thing I most need to act on."
+4. Follow up with one question about something in the summary.
+5. Open the document and check one fact Claude gave you.
+$md$, true, true, 2, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('aipf-m03', 'ai-productivity-fundamentals', 'Using ChatGPT', 3, 'ChatGPT Essentials', 'CHATGPT', array['Ask focused questions and refine the answer', 'Use files and images in a chat', 'Research with sources you can check', 'Save your preferences so every chat starts better']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('ai-productivity-fundamentals:using-chatgpt', 'ai-productivity-fundamentals', 'aipf-m03', 'using-chatgpt', 'Using ChatGPT', 'Go beyond simple questions in ChatGPT. Get focused answers, work with files, research with sources and set it up to know how you like to work.', 20, $md$
+
+## Getting started
+
+**ChatGPT** is an AI assistant made by **OpenAI**. Open **chatgpt.com** in a browser or install the app on your phone or computer, and sign up with your email or Google account.
+
+There's a free plan and paid plans with more usage and features. The layout changes from time to time, so if something on your screen looks a little different from this course, look for the nearest match.
+
+Everything starts in the message box at the bottom of the screen.
+
+## Ask focused questions
+
+ChatGPT gives better answers to specific requests. Compare:
+
+```text
+Tell me about marketing.
+```
+
+```text
+I sell handmade leather sandals on Instagram from Kano. Give me five
+low-cost ways to get more customers this month, with one concrete
+action for each. Keep it practical.
+```
+
+Three habits make a big difference:
+
+- **Say who it's for.** "Explain it for a 15-year-old" or "for my boss, who has two minutes."
+- **Say what shape you want.** A list, a table, a short email, three options.
+- **Give the facts it can't know.** Your prices, your location, your deadline.
+
+## Refine instead of restarting
+
+Treat the first answer as a draft and reply with changes in the same chat:
+
+- "Shorter, please: five lines."
+- "Point 3 won't work for us, we don't deliver. Replace it."
+- "Turn this into a WhatsApp broadcast message."
+
+If you want a fresh start on a new topic, open a **new chat** so the old conversation doesn't get mixed in.
+
+## Work with files and pictures
+
+Use the **attach** button (a paperclip or +) to add a PDF, spreadsheet, document or photo. Then ask about it:
+
+```text
+Here's our sales spreadsheet for the last three months. Which product
+sold the most, and which month was weakest? Explain in plain English.
+```
+
+```text
+This is a photo of a handwritten price list. Type it out as a neat table.
+```
+
+For spreadsheets, check any important totals yourself in Excel or Google Sheets. ChatGPT usually gets them right, but not always.
+
+## Research with sources
+
+When you need current information, such as news, prices or recent events, ask ChatGPT to **search the web** and show where the information came from. When it searches, it lists its sources as links.
+
+```text
+Search the web: what are the main requirements to register a small
+business name in Nigeria? Include the official source.
+```
+
+Open the sources and check them. For anything official, like regulations, fees or deadlines, the government or organisation's own website is the one to trust.
+
+## Tell it how you like to work
+
+In the settings you can **personalise** ChatGPT: tell it about yourself and how you want answers written. For example:
+
+```text
+I'm a final-year accounting student in Lagos. Use British English,
+explain with Nigerian examples, and keep answers short unless I ask
+for more detail.
+```
+
+After that, new chats start already knowing this. Look for **Personalisation** or **Customise ChatGPT** in the settings.
+
+> [!WARNING]
+> Don't paste passwords, bank details or other people's private information into any AI chat. And don't submit AI-written work as your own where that isn't allowed, such as exams or some assignments.
+
+## Try it
+
+1. Open **chatgpt.com** and sign in.
+2. Ask a focused question about something you're working on, with who it's for and what shape you want.
+3. Reply once to improve the answer.
+4. Ask a question that needs current information and ask it to search the web. Open one of the sources it gives.
+5. Add a short description of yourself in the personalisation settings.
+$md$, true, true, 3, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('aipf-m04', 'ai-productivity-fundamentals', 'Presentations with AI', 4, 'AI Presentations', 'SLIDES', array['Get a slide-by-slide outline from an AI assistant', 'Write short, clear slide text and speaker notes', 'Build the deck quickly in PowerPoint, Google Slides or Canva', 'Check the facts and make it sound like you']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('ai-productivity-fundamentals:presentations-with-ai', 'ai-productivity-fundamentals', 'aipf-m04', 'presentations-with-ai', 'Presentations with AI', 'Turn an idea into a clear, professional slide deck in half the time, using AI for the outline and wording and your own judgement for the story.', 25, $md$
+
+## Start with the message, not the slides
+
+Most weak presentations have too many slides and no clear point. Before you open any tool, answer three questions in one sentence each:
+
+1. **Who** is listening? (Your manager, a client, classmates, investors?)
+2. **What** do you want them to do or believe at the end?
+3. **Why** should they care?
+
+For example: *"I'm presenting to the management team. I want them to approve a delivery van. It will cut our delivery delays and save money on dispatch riders."*
+
+That sentence is your whole presentation in miniature. Everything else supports it.
+
+## Ask AI for an outline
+
+Give an AI assistant (ChatGPT, Claude, Gemini or Copilot) your three answers and ask for an outline, not finished slides:
+
+```text
+I'm presenting to our management team (5 people, 10 minutes). I want
+them to approve buying a delivery van for our bakery in Port Harcourt.
+Key facts: we pay dispatch riders about ₦450,000 a month, and 1 in 8
+deliveries is late. Suggest an outline of 7 slides: a title for each
+and 2–3 bullet points of what it should say.
+```
+
+Read the outline critically. Move slides around, cut what doesn't help your one message, and add what's missing. You know your audience; the AI doesn't.
+
+> [!TIP]
+> Ask for a **story shape**: "Structure it as problem, cost of doing nothing, solution, cost, next step." Decks that follow a story are far easier to follow.
+
+## Write slides people can read
+
+Slides support you; they don't replace you. Good rules of thumb:
+
+- **One idea per slide.** The title should say the point, like "Late deliveries cost us customers", not just "Deliveries".
+- **Few words.** Around 3–5 short lines, not paragraphs.
+- **Numbers big and simple.** "1 in 8 deliveries is late" beats a table of 40 numbers.
+- **Put the detail in speaker notes**, not on the slide.
+
+Ask AI to help with exactly that:
+
+```text
+For slide 3, give me a headline that states the point, three short
+bullet points (max 8 words each), and speaker notes of about 80 words
+in a confident, friendly tone.
+```
+
+## Build the deck quickly
+
+Pick the tool you already have:
+
+- **PowerPoint** or **Google Slides:** start from a built-in theme, then paste each slide's headline and bullets. Keep to one theme, one or two fonts and a few colours.
+- **Canva:** search the presentation templates, choose one, and replace the text. Canva is good for a polished look fast.
+- **AI slide generators:** some tools can create a whole draft deck from a prompt, such as Copilot in PowerPoint, Gemini in Google Slides, Canva's AI features or Gamma. Availability depends on your plan. Treat the result as a first draft and edit it hard.
+
+Add one strong image or chart where it helps the point, and leave the rest clean.
+
+## Check it and make it yours
+
+Before you present:
+
+- **Check every number, name and date.** AI can invent figures that look real.
+- **Say it out loud.** If a sentence sounds unnatural when you speak, rewrite it in your own words.
+- **Time yourself.** Roughly one to two minutes per slide.
+- **End with a clear ask:** "I'd like approval to buy the van this quarter."
+
+## Try it
+
+1. Write your three sentences: who, what, why, for a presentation you might really give.
+2. Ask an AI assistant for a 5–7 slide outline.
+3. Change at least two things in the outline yourself.
+4. Build three slides in PowerPoint, Google Slides or Canva: a title slide, one content slide with a headline that states the point, and a closing slide with your ask.
+$md$, true, true, 4, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+
+-- Course: Design & Content Essentials
+insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
+values ('design-content-essentials', 'short', 'Design & Content Essentials', 'design-content-essentials', 'DCE', 'Design & Content Essentials', 'Plan social content with AI, design professional graphics in Canva and edit short videos in CapCut, in three short modules.', 'Create content people stop scrolling for. Plan a month of posts and write captions in your brand voice with AI, design clean graphics in Canva using four simple rules, and edit a short vertical video in CapCut with captions and music. Each module takes about 25 minutes and ends with a short check and a badge.', 'design-content', 'beginner', 'Beginner', null, true, 'available', true, array['Planning a content calendar', 'Captions in your brand voice', 'Designing in Canva', 'Editing short videos in CapCut']::text[], array['No experience needed', 'A phone or computer; Canva and CapCut are free to start']::text[], null, true, false, false, false, true, 60, 1)
+on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('dce-m01', 'design-content-essentials', 'Social Media Content with AI', 1, 'AI Social Content', 'SOCIAL', array['Pick three content themes for your page', 'Plan a simple content calendar with AI', 'Write captions that match your brand voice', 'Repurpose one idea across platforms']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('design-content-essentials:social-media-content-with-ai', 'design-content-essentials', 'dce-m01', 'social-media-content-with-ai', 'Social Media Content with AI', 'Plan a month of posts, write captions in your own brand voice and turn one idea into content for several platforms, with AI doing the heavy lifting.', 25, $md$
+
+## Decide what you post about
+
+Posting randomly is exhausting and rarely works. Choose **three content themes** (sometimes called content pillars) that your audience cares about. For a small hair salon in Abuja they might be:
+
+1. **Show the work:** before-and-after photos, new styles.
+2. **Help the customer:** hair-care tips, what to ask for.
+3. **Build trust:** reviews, the team, behind the scenes.
+
+Almost every post you make should fit one of the three. If you're stuck, ask AI:
+
+```text
+I run a small hair salon in Abuja. My customers are mostly working
+women aged 25–40. Suggest three content themes for Instagram and
+explain in one line why each would interest them.
+```
+
+## Plan a month in minutes
+
+Ask AI to build a simple calendar you can edit:
+
+```text
+Create a 4-week Instagram content calendar for my salon, 3 posts a
+week, using these themes: show the work, hair-care tips, build trust.
+Put it in a table with: week, day, theme, post idea, format
+(photo, carousel or reel).
+```
+
+Then make it realistic. Remove ideas you can't film or photograph, add real dates like public holidays or your promotions, and put it where you'll see it: a spreadsheet, a notebook or your phone calendar.
+
+## Write captions in your voice
+
+AI captions often sound generic. Fix that by describing your **brand voice** and giving an example of a caption you like:
+
+```text
+Our voice is warm, confident and a little playful, with short
+sentences and no slang. Here's a caption we liked:
+
+"Braids that last. Edges that stay happy. Book your Saturday slot now."
+
+Write 3 caption options for a before-and-after photo of knotless braids,
+with a clear call to action and 3–5 relevant hashtags.
+```
+
+A good caption usually has:
+
+- **A hook** in the first line, because that's all people see before "more".
+- **One idea**, not five.
+- **A call to action:** book, reply, save, share, visit.
+
+Read every caption before posting. Change anything that doesn't sound like you, and never post prices, promises or claims you haven't checked.
+
+## Turn one idea into many posts
+
+One good idea can feed several platforms. Ask AI to adapt it:
+
+```text
+Take this tip: "Sleep with a satin scarf to keep braids neat longer."
+Turn it into: an Instagram caption, a 20-second reel script with what
+to show in each shot, a short WhatsApp status, and a LinkedIn-style
+post about running a salon business.
+```
+
+Each platform has its own style. Reels need a strong first two seconds, WhatsApp status should be short, and LinkedIn is more professional.
+
+> [!WARNING]
+> Use only photos you own or have permission to use, and ask clients before posting their faces. If you use AI-generated images, don't present them as real results.
+
+## Try it
+
+1. Write down your three content themes (use AI if you need ideas).
+2. Ask AI for a two-week calendar, then delete or change at least two ideas to make it realistic.
+3. Pick one post and ask for three caption options in your voice. Choose one and edit it.
+4. Ask AI to turn that post into a WhatsApp status and a short reel script.
+$md$, true, true, 1, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('dce-m02', 'design-content-essentials', 'Design with Canva', 2, 'Canva Design Essentials', 'CANVA', array['Start from the right template and size', 'Apply four rules: contrast, alignment, spacing, few fonts', 'Add your own photos, colours and logo', 'Download in the right format and resize for other platforms']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('design-content-essentials:design-with-canva', 'design-content-essentials', 'dce-m02', 'design-with-canva', 'Design with Canva', 'Create a clean, professional social post or flyer in Canva, using templates and four simple design rules that make anything look better.', 25, $md$
+
+## Get started
+
+**Canva** is a free online design tool at **canva.com**, with apps for phone and computer. Sign up with your email or Google account. The free plan is enough for this course; items marked with a crown are for paid plans.
+
+On the home page, search for what you want to make:
+
+- "Instagram post" (a square, 1080 × 1080 pixels)
+- "Instagram story" or "WhatsApp status" (tall, 1080 × 1920)
+- "Flyer" (A4 or A5 for printing)
+
+Pick a **template** you like and click it to open it in the editor. Starting from a template is not cheating; it gives you a layout that already works.
+
+## Four rules that make designs look professional
+
+Most amateur designs break one of these. Check your design against all four.
+
+| Rule | What it means | Quick fix |
+| :-- | :-- | :-- |
+| **Contrast** | Text must stand out clearly from its background | Dark text on light, or light on dark. Add a solid shape behind text on busy photos. |
+| **Alignment** | Things line up along invisible lines | Drag items until Canva's pink guide lines appear, then let go. |
+| **Space** | Leave empty space around things | Remove at least one element. Keep text away from the edges. |
+| **Few fonts** | Use one or two fonts | One for headings, one for the rest. Never five. |
+
+Also decide the **one thing** people should see first, such as the headline or the price, and make it clearly the biggest.
+
+## Make it yours
+
+Replace the template's content with your own:
+
+- **Text:** click any text box to edit it. Keep the words short. A flyer headline of five words beats a paragraph.
+- **Photos:** use **Uploads** to add your own pictures, then drag one onto a template photo to replace it.
+- **Colours:** click an element, then the colour square in the toolbar. Use your brand colours consistently, ideally two or three.
+- **Logo:** upload it and place it in a corner, not too large.
+
+> [!TIP]
+> If you're making several designs for the same business, save your colours and fonts so you can reuse them. On the free plan you can keep a simple colour palette; paid plans have a full Brand Kit.
+
+## Check, download and resize
+
+Before downloading, zoom out and look at the design as a small image, the way people will see it while scrolling. Can you read the headline? Is it obvious what to do next (call, order, visit)?
+
+Then click **Share → Download**:
+
+- **PNG** for social media posts and images with text (sharpest).
+- **JPG** for photo-heavy images where a smaller file matters.
+- **PDF Print** for flyers you'll print.
+
+To make the same design in another size, such as turning a post into a story, use **Resize** (paid) or create a new design in the new size and copy your elements across.
+
+## Try it
+
+1. Search Canva for "Instagram post" and choose a template.
+2. Change the text to advertise something real: your business, an event, or a service you offer.
+3. Replace at least one photo with your own, and use no more than two fonts.
+4. Check the four rules: contrast, alignment, space, few fonts.
+5. Download it as a **PNG**.
+$md$, true, true, 2, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('dce-m03', 'design-content-essentials', 'Video Editing with CapCut', 3, 'CapCut Video Essentials', 'CAPCUT', array['Start a project in the right size for Reels, TikTok or Shorts', 'Trim and split clips to keep only the best parts', 'Add text, automatic captions and music', 'Export in good quality for social media']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('design-content-essentials:video-editing-with-capcut', 'design-content-essentials', 'dce-m03', 'video-editing-with-capcut', 'Video Editing with CapCut', 'Edit a short vertical video from start to finish in CapCut, the free video editor for phone and computer. Cut, add text and captions, add music and export.', 30, $md$
+
+## Set up your project
+
+**CapCut** is a free video editor with apps for phone and computer, and a version in the browser. Menu names can differ slightly between versions and devices, so if a button here looks different, look for the nearest match.
+
+1. Open CapCut and tap **New project**.
+2. Select the clips and photos you want, in roughly the right order, and tap **Add**.
+3. Check the **aspect ratio** (the shape of the video). For Reels, TikTok, Shorts and WhatsApp status, choose **9:16**, which is tall. For YouTube, use **16:9**, which is wide.
+
+> [!TIP]
+> Before you edit, decide your video's one message in a sentence, for example "Our new jollof pack feeds four for ₦8,000." Anything that doesn't help that message gets cut.
+
+## Cut out the boring parts
+
+Short videos work when every second earns its place. On the **timeline** at the bottom:
+
+- **Trim:** tap a clip and drag its white edges inward to remove the start or end.
+- **Split:** move the playhead (the white line) to where you want to cut, tap **Split**, then select the part you don't want and tap **Delete**.
+- **Reorder:** press and hold a clip, then drag it to a new position.
+
+Aim to get to the point in the first **two seconds**. Most people scroll past slow openings.
+
+## Add text and captions
+
+Many people watch with the sound off, so words on screen matter.
+
+- **Text:** tap **Text → Add text**, type a short headline such as "3 ways to keep your braids neat", choose a clear style, and drag it into place. Keep it away from the very bottom and right edge, where the app's buttons cover it.
+- **Automatic captions:** tap **Captions** (sometimes under Text) and choose **auto captions**. CapCut listens to the speech and writes subtitles. **Read them all**; it often mishears names and Nigerian words, so tap any caption to fix the spelling.
+
+Adjust how long text stays on screen by dragging its edges on the timeline, just like a clip.
+
+## Add music and sound
+
+Tap **Audio** to add music or sound effects, or record a voiceover.
+
+- Lower the music volume when someone is speaking, so the voice is clear.
+- Keep sound effects few and purposeful.
+
+> [!WARNING]
+> Be careful with music for business videos. Popular songs are usually copyrighted, and a video can be muted or taken down. For a business page, use music that's licensed for commercial use, or record a voiceover.
+
+## Export and post
+
+1. Watch the whole video once, with the sound on and once with it off.
+2. Tap the **export** button (often an arrow at the top).
+3. Choose **1080p** resolution and 30 frames per second. That's good quality for social media without a huge file.
+4. Save to your phone, then post it on your chosen platform.
+
+Some versions of CapCut add an ending clip with its logo. If you don't want it, you can usually delete that last clip from the timeline before exporting.
+
+## Try it
+
+Make a 15–30 second vertical video about something you do or sell:
+
+1. Record three or four short clips on your phone.
+2. Start a **9:16** project in CapCut and add the clips.
+3. Trim and split so it gets to the point within two seconds.
+4. Add one headline and automatic captions, and correct any wrong words.
+5. Add music at a low volume, or a short voiceover, and export in **1080p**.
+$md$, true, true, 3, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+
+-- Course: Career Essentials
+insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
+values ('career-essentials', 'short', 'Career Essentials', 'career-essentials', 'CAREER', 'Career Essentials', 'Build a CV with AI, set up a professional LinkedIn profile and analyse Excel data quickly, in three short modules.', 'Get ready for your next job. Use AI to write and tailor a CV that stays true to you, set up a LinkedIn profile recruiters can find, and learn the Excel basics employers expect: sorting, filtering, formulas, PivotTables and charts. Each module takes about 25 minutes and ends with a short check and a badge.', 'career', 'beginner', 'Beginner', null, true, 'available', true, array['Achievement-focused CV writing', 'Tailoring a CV to a job', 'A recruiter-ready LinkedIn profile', 'Quick analysis in Excel']::text[], array['No experience needed', 'Excel or Google Sheets for the last module']::text[], null, true, false, false, false, true, 60, 2)
+on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('career-m01', 'career-essentials', 'Build a CV with AI', 1, 'AI CV Builder', 'CV', array['Lay out a clear, recruiter-friendly CV', 'Turn duties into achievement bullet points', 'Tailor your CV to a job advert', 'Check the result so nothing is exaggerated']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('career-essentials:build-a-cv-with-ai', 'career-essentials', 'career-m01', 'build-a-cv-with-ai', 'Build a CV with AI', 'Use AI to structure, strengthen and tailor your CV for a specific job, while keeping every word true and in your own voice.', 25, $md$
+
+## What a good CV looks like
+
+Recruiters often spend less than a minute on a CV at first. Make it easy for them. A strong CV is usually **one or two pages** with these sections, in this order:
+
+1. **Name and contact:** phone, email, city, and a LinkedIn link if you have one.
+2. **Profile:** two or three lines on who you are and what you're looking for.
+3. **Experience:** most recent first. Job title, organisation, dates, and bullet points.
+4. **Education and training:** including certificates and short courses.
+5. **Skills:** the tools and skills the job asks for.
+
+Keep the layout simple: one column, clear headings, a standard font. Many companies scan CVs with software first, and fancy layouts, tables and text inside images can confuse it.
+
+> [!TIP]
+> You don't need your date of birth, state of origin, religion, marital status or a photo on your CV. Leave them off unless the employer specifically asks.
+
+## Turn duties into achievements
+
+The biggest improvement AI can help with is rewriting bullet points. Weak bullets list duties; strong ones show results, ideally with numbers.
+
+| Weak | Strong |
+| :-- | :-- |
+| Responsible for customer service | Answered 40+ customer enquiries a day, cutting reply time from 1 day to 3 hours |
+| Handled social media | Grew the shop's Instagram from 800 to 3,500 followers in six months |
+
+Give AI the real facts and ask for better wording:
+
+```text
+Rewrite these CV bullet points to show achievements, using a strong
+action verb at the start. Don't invent numbers; where a number would
+help, put [number?] so I can fill it in.
+
+- Responsible for stock taking at the pharmacy
+- Helped customers choose products
+- Trained new staff
+```
+
+Notice the instruction **"don't invent numbers"**. Only use figures you can explain in an interview.
+
+## Tailor it to the job
+
+Sending the same CV everywhere wastes good applications. For each job you really want, paste the advert and your CV into an AI assistant:
+
+```text
+Here is a job advert and my CV. List the 5 most important skills or
+requirements in the advert. For each one, tell me whether my CV shows
+it clearly, and suggest a truthful way to make it clearer.
+
+[paste the job advert]
+[paste your CV]
+```
+
+Then update your profile and the most relevant bullets, using the **same words the advert uses** where they're true for you. If the advert says "stakeholder management" and you've done it, say it that way.
+
+## Check it before you send it
+
+AI can make you sound like someone else, or quietly add things that aren't true. Before sending:
+
+- **Everything must be true.** If you couldn't explain a line in an interview, remove it.
+- **Read it aloud.** Replace words you'd never use, such as "spearheaded" or "synergy", with plain ones.
+- **Check the details:** your phone number, email, dates and spellings.
+- **Save as PDF** with a clear file name like `Chiamaka-Obi-CV.pdf`.
+
+> [!WARNING]
+> Your CV contains personal details. Remove your phone number and address before pasting it into an AI tool if you'd rather not share them; you can add them back at the end.
+
+## Try it
+
+1. Write down your current or most recent role and three things you did in it.
+2. Ask AI to rewrite them as achievement bullets, with **[number?]** where a figure would help. Fill in real numbers or remove the gaps.
+3. Find a real job advert you'd like, and ask AI which requirements your CV doesn't show clearly.
+4. Update one bullet and your profile for that job, and read the result aloud.
+$md$, true, true, 1, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('career-m02', 'career-essentials', 'A Professional LinkedIn Profile', 2, 'LinkedIn Profile Essentials', 'LINKEDIN', array['Choose a professional photo and banner', 'Write a headline people search for', 'Write an About section that tells your story', 'Show your skills, experience and badges']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('career-essentials:linkedin-profile', 'career-essentials', 'career-m02', 'linkedin-profile', 'A Professional LinkedIn Profile', 'Set up a LinkedIn profile that recruiters and clients can find and trust, with a clear photo, a headline that says what you do, and an About section in your own words.', 25, $md$
+
+## First impressions: photo and banner
+
+Your photo, name and headline are what people see in search results and comments. Get them right first.
+
+- **Photo:** a clear, recent photo of your face, looking at the camera, with good light and a plain background. Your face should fill most of the circle. A good phone photo by a window works well.
+- **Banner** (the wide image behind your photo): a simple image related to your work, your city skyline, or a clean design with a line about what you do. You can make one in Canva by searching "LinkedIn banner".
+
+> [!TIP]
+> Set a **custom profile URL**, such as linkedin.com/in/chiamaka-obi. Look for **Edit public profile & URL** on your profile. It looks much better on a CV than a string of random letters.
+
+## A headline people search for
+
+Your **headline** is the line under your name. By default it's just your job title, but you can write your own, up to about 220 characters. Recruiters search for skills and roles, so include the words they'd type.
+
+A simple formula: **role | skills or specialism | who you help or what you're working towards**.
+
+| Weak | Strong |
+| :-- | :-- |
+| Student at UNILAG | Accounting student at UNILAG \| Excel, Power BI \| Seeking a graduate analyst role |
+| Unemployed | Customer service professional \| 3 years in retail banking \| Open to CX roles in Lagos |
+
+AI can help you draft options:
+
+```text
+Write 5 LinkedIn headline options (under 200 characters) for me:
+I'm a graphic designer in Ibadan, 2 years' experience, skilled in
+Canva and Adobe Illustrator, looking for freelance brand design clients.
+```
+
+## An About section in your own words
+
+The **About** section is your short story. Write it in the **first person** ("I help…", "I'm…"), in three short parts:
+
+1. **What you do and for whom.** "I'm a data analyst who helps small businesses understand their sales."
+2. **Proof.** Experience, results, projects or certificates. "I built a sales dashboard that…"
+3. **What you're looking for and how to reach you.** "I'm open to analyst roles. Send me a message or email me at…"
+
+Keep it to a few short paragraphs. The first two lines matter most, because LinkedIn hides the rest behind "see more".
+
+You can ask AI for a first draft, then rewrite it until it sounds like you. Readers can tell when a profile is all AI.
+
+## Experience, skills and proof
+
+- **Experience:** add each role with two to four bullet points about what you achieved, not just your duties. The same bullets you'd use on a good CV work here.
+- **Skills:** add the skills from the job adverts you're interested in, such as Excel, customer service or social media marketing. Put your top ones first.
+- **Licences & certifications:** add courses and badges you've earned, including your CloudTech Academy certificates and badges, with the link.
+- **Featured:** pin your best work at the top: a project, a portfolio link, a post you're proud of.
+- **Recommendations:** ask a former manager, lecturer or client for a short recommendation. One or two good ones build a lot of trust.
+
+If you're job hunting, you can set **Open to work** and choose whether all members see it or only recruiters.
+
+## Try it
+
+1. Update your **photo** and set a **custom URL**.
+2. Write a new **headline** using the formula: role | skills | goal. Use AI for options, then edit one.
+3. Write a three-part **About** section in the first person.
+4. Add at least **five skills**, and add this course's badge under **Licences & certifications** once you've earned it.
+$md$, true, true, 2, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('career-m03', 'career-essentials', 'Quick Excel Analysis', 3, 'Excel Quick Analysis', 'EXCEL', array['Turn data into an Excel Table', 'Sort and filter to find what matters', 'Total and count with SUM, AVERAGE and COUNTIF', 'Summarise with a PivotTable and a chart']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('career-essentials:quick-excel-analysis', 'career-essentials', 'career-m03', 'quick-excel-analysis', 'Quick Excel Analysis', 'Take a small sales table and answer real questions in minutes. Sort, filter, total with formulas, summarise with a PivotTable and show it in a chart.', 30, $md$
+
+## Get the data in
+
+Open Excel (or Google Sheets; almost everything here works the same). Copy the table below and paste it into cell **A1** of a new sheet. It's two weeks of sales from a small drinks shop.
+
+```text
+Date	Product	Category	Quantity	Price	Sales
+03/06/2026	Zobo 50cl	Drinks	12	800	9600
+03/06/2026	Chin chin	Snacks	5	1500	7500
+04/06/2026	Kunu 50cl	Drinks	8	700	5600
+04/06/2026	Zobo 50cl	Drinks	15	800	12000
+05/06/2026	Plantain chips	Snacks	10	1000	10000
+05/06/2026	Chapman	Drinks	6	1200	7200
+06/06/2026	Chin chin	Snacks	7	1500	10500
+06/06/2026	Zobo 50cl	Drinks	20	800	16000
+09/06/2026	Kunu 50cl	Drinks	10	700	7000
+09/06/2026	Plantain chips	Snacks	4	1000	4000
+10/06/2026	Chapman	Drinks	9	1200	10800
+10/06/2026	Zobo 50cl	Drinks	18	800	14400
+```
+
+If everything lands in one column, use **Data → Text to Columns**, choose **Delimited** and tick **Tab**.
+
+Now click any cell in the data and press **Ctrl + T**, then **OK**. This turns it into an **Excel Table**: it gets filter buttons, neat formatting, and it grows automatically when you add rows.
+
+## Sort and filter
+
+Click the arrow on a column heading:
+
+- **Sort Largest to Smallest** on *Sales* shows your best sales at the top.
+- **Filter** on *Category*: untick everything except *Snacks* to see only snacks.
+
+Clear the filter when you're done (arrow → **Clear Filter**). Filters hide rows; they don't delete anything.
+
+## Answer questions with formulas
+
+Click an empty cell to the right of the table, such as **H2**, and try these:
+
+| Question | Formula | Answer |
+| :-- | :-- | :-- |
+| Total sales? | `=SUM(F2:F13)` | 114,600 |
+| Average sale? | `=AVERAGE(F2:F13)` | 9,550 |
+| How many Zobo sales? | `=COUNTIF(B2:B13,"Zobo 50cl")` | 4 |
+| Total Drinks sales? | `=SUMIF(C2:C13,"Drinks",F2:F13)` | 82,600 |
+
+Formulas always start with `=`. If you change a number in the table, every answer updates on its own. That's the big advantage over a calculator.
+
+> [!TIP]
+> Select the *Sales* column and look at the **status bar** at the bottom of the Excel window. It shows the sum, average and count instantly, with no formula needed.
+
+## Summarise with a PivotTable
+
+A **PivotTable** answers "total by…" questions without any formulas.
+
+1. Click inside the table, then **Insert → PivotTable → OK**.
+2. In the field list on the right, drag **Product** to **Rows**.
+3. Drag **Sales** to **Values**. It shows *Sum of Sales* for each product.
+4. Click the arrow next to *Row Labels* → **More Sort Options** → descending by *Sum of Sales*.
+
+You can now see at a glance that Zobo is the best seller. Drag **Category** into Rows instead of Product to compare Drinks with Snacks.
+
+## Show it in a chart
+
+Click inside the PivotTable, then **Insert → Recommended Charts** and pick a **bar or column chart**. Give it a title that states the point, like "Zobo brings in the most sales", not just "Chart 1".
+
+Use a **line chart** for changes over time, and a **bar chart** for comparing items. Avoid 3D charts and crowded pie charts.
+
+## Try it
+
+Using the drinks shop data:
+
+1. Filter to **Drinks** only, then clear the filter.
+2. Use `SUMIF` to find total **Snacks** sales.
+3. Build a PivotTable of **Sales by Category**.
+4. Add a bar chart with a title that says what it shows.
+
+Want to go further? The free **Excel for Data Analysis** course covers all of this in depth, with a real company dataset.
+$md$, true, true, 3, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 
 -- Course: Data Analytics Foundations
-insert into public.courses (id, slug, code, title, summary, description, category_id, difficulty, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, passing_score, position)
-values ('data-analytics-foundations', 'data-analytics-foundations', 'DAF', 'Data Analytics Foundations', 'What data analytics is, how businesses use data to decide, and the core skills you need to start.', 'Learn what data analytics is, how businesses use data to make decisions, and the core skills required to begin a career in data analytics. The course ends with your first small analytics project.', 'data-analytics', 'beginner', 'Beginner', 6, true, 'available', true, array['How organizations use data', 'Types of data', 'Databases, cleaning and analysis', 'Visualization and business intelligence', 'Going from a question to an insight']::text[], array['No experience needed', 'A spreadsheet program: Google Sheets (free with a Google account) or Microsoft Excel']::text[], 'Kolanut people review', true, true, true, true, 60, 0)
-on conflict (id) do update set slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, passing_score = excluded.passing_score, position = excluded.position;
+insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
+values ('data-analytics-foundations', 'full', null, 'data-analytics-foundations', 'DAF', 'Data Analytics Foundations', 'What data analytics is, how businesses use data to decide, and the core skills you need to start.', 'Learn what data analytics is, how businesses use data to make decisions, and the core skills required to begin a career in data analytics. The course ends with your first small analytics project.', 'data-analytics', 'beginner', 'Beginner', 6, true, 'available', true, array['How organizations use data', 'Types of data', 'Databases, cleaning and analysis', 'Visualization and business intelligence', 'Going from a question to an insight']::text[], array['No experience needed', 'A spreadsheet program: Google Sheets (free with a Google account) or Microsoft Excel']::text[], 'Kolanut people review', true, true, true, true, false, 60, 3)
+on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
 
-insert into public.course_modules (id, course_id, title, position)
-values ('daf-m01', 'data-analytics-foundations', 'What is Data Analytics?', 1)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('daf-m01', 'data-analytics-foundations', 'What is Data Analytics?', 1, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
 values ('data-analytics-foundations:what-is-data-analytics', 'data-analytics-foundations', 'daf-m01', 'what-is-data-analytics', 'What is data analytics?', 'What analysts actually do, the four kinds of analytics, and the steps every analysis follows.', 20, $md$
@@ -169,9 +1020,9 @@ The rest of this course takes each step in turn. By the end you'll run the whole
 $md$, true, true, 1, array['daf-01-p1', 'daf-01-p2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position)
-values ('daf-m02', 'data-analytics-foundations', 'How Businesses Use Data', 2)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('daf-m02', 'data-analytics-foundations', 'How Businesses Use Data', 2, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
 values ('data-analytics-foundations:how-businesses-use-data', 'data-analytics-foundations', 'daf-m02', 'how-businesses-use-data', 'How businesses use data', 'Where data comes from in a company, how each team uses it, and what a KPI is.', 20, $md$
@@ -291,9 +1142,9 @@ In a month, Kolanut delivered **1,240** orders. **62** arrived later than promis
 $md$, true, true, 2, array['daf-02-p1', 'daf-02-p2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position)
-values ('daf-m03', 'data-analytics-foundations', 'Types of Data', 3)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('daf-m03', 'data-analytics-foundations', 'Types of Data', 3, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
 values ('data-analytics-foundations:types-of-data', 'data-analytics-foundations', 'daf-m03', 'types-of-data', 'Types of data', 'Structured and unstructured data, numbers and categories, and the most important question about any table - what does one row mean?', 25, $md$
@@ -426,9 +1277,9 @@ Open `orders.csv` in Google Sheets (File → Import → Upload) or Excel (File �
 $md$, true, true, 3, array['daf-03-p1', 'daf-03-p2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position)
-values ('daf-m04', 'data-analytics-foundations', 'Understanding Databases', 4)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('daf-m04', 'data-analytics-foundations', 'Understanding Databases', 4, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
 values ('data-analytics-foundations:understanding-databases', 'data-analytics-foundations', 'daf-m04', 'understanding-databases', 'Understanding databases', 'Tables, keys and relationships, why companies keep data in databases, and your first look at SQL.', 30, $md$
@@ -548,9 +1399,9 @@ That two-step lookup is exactly what a database join does, for every row at once
 $md$, true, true, 4, array['daf-04-p1', 'daf-04-p2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position)
-values ('daf-m05', 'data-analytics-foundations', 'Data Cleaning', 5)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('daf-m05', 'data-analytics-foundations', 'Data Cleaning', 5, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
 values ('data-analytics-foundations:data-cleaning', 'data-analytics-foundations', 'daf-m05', 'data-cleaning', 'Data cleaning', 'The problems real data arrives with, how they mislead you, and a safe way to fix them.', 30, $md$
@@ -680,9 +1531,9 @@ A cleaning plan for this file, in the order you'd do it:
 $md$, true, true, 5, array['daf-05-p1', 'daf-05-p2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position)
-values ('daf-m06', 'data-analytics-foundations', 'Data Analysis', 6)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('daf-m06', 'data-analytics-foundations', 'Data Analysis', 6, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
 values ('data-analytics-foundations:data-analysis', 'data-analytics-foundations', 'daf-m06', 'data-analysis', 'Data analysis', 'The handful of calculations behind most business analysis - totals, averages, shares and growth - and the traps in each.', 30, $md$
@@ -822,9 +1673,9 @@ One overall average (13.8 packs) would describe none of these customers well.
 $md$, true, true, 6, array['daf-06-p1', 'daf-06-p2', 'daf-06-p3']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position)
-values ('daf-m07', 'data-analytics-foundations', 'Data Visualization', 7)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('daf-m07', 'data-analytics-foundations', 'Data Visualization', 7, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
 values ('data-analytics-foundations:data-visualization', 'data-analytics-foundations', 'daf-m07', 'data-visualization', 'Data visualization', 'Which chart answers which question, and the design habits that make a chart clear in five seconds.', 25, $md$
@@ -937,9 +1788,9 @@ To build the strong version in a spreadsheet:
 $md$, true, true, 7, array['daf-07-p1', 'daf-07-p2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position)
-values ('daf-m08', 'data-analytics-foundations', 'Business Intelligence', 8)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('daf-m08', 'data-analytics-foundations', 'Business Intelligence', 8, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
 values ('data-analytics-foundations:business-intelligence', 'data-analytics-foundations', 'daf-m08', 'business-intelligence', 'Business intelligence', 'How BI turns one-off analysis into dashboards people use every week, and the pipeline behind them.', 25, $md$
@@ -1064,9 +1915,9 @@ Step 4 is the one people skip. A dashboard that is wrong once loses trust for mo
 $md$, true, true, 8, array['daf-08-p1', 'daf-08-p2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position)
-values ('daf-m09', 'data-analytics-foundations', 'From Question to Insight', 9)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('daf-m09', 'data-analytics-foundations', 'From Question to Insight', 9, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
 values ('data-analytics-foundations:from-question-to-insight', 'data-analytics-foundations', 'daf-m09', 'from-question-to-insight', 'From question to insight', 'A repeatable method for turning a vague business worry into a clear finding and a recommendation.', 30, $md$
@@ -1185,9 +2036,9 @@ Notice what the analysis did *not* do:
 $md$, true, true, 9, array['daf-09-p1', 'daf-09-p2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position)
-values ('daf-m10', 'data-analytics-foundations', 'Your First Analytics Project', 10)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('daf-m10', 'data-analytics-foundations', 'Your First Analytics Project', 10, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
 values ('data-analytics-foundations:your-first-analytics-project', 'data-analytics-foundations', 'daf-m10', 'your-first-analytics-project', 'Your first analytics project', 'Run the whole cycle on Kolanut''s staff data, from question to recommendation, and prepare for the final project.', 40, $md$
@@ -1314,13 +2165,13 @@ on conflict (id) do update set course_id = excluded.course_id, module_id = exclu
 
 
 -- Course: Excel for Data Analysis
-insert into public.courses (id, slug, code, title, summary, description, category_id, difficulty, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, passing_score, position)
-values ('excel-for-data-analysis', 'excel-for-data-analysis', 'XLS', 'Excel for Data Analysis', 'Clean, analyse and present business data in Excel, from formulas and XLOOKUP to pivot tables and charts.', 'Excel is still where most business analysis happens. Learn to work with real datasets: sort and filter, write the formulas analysts use every day, clean messy data, summarise with pivot tables and present results with clear charts.', 'data-analytics', 'beginner', 'Beginner', 9, true, 'available', true, array['Formulas and functions', 'IF, SUMIF and COUNTIF', 'XLOOKUP', 'Data cleaning', 'Pivot tables', 'Charts']::text[], array['Microsoft Excel 2021 or Microsoft 365 (Google Sheets works for most lessons)', 'Comfortable using a computer; no Excel experience needed']::text[], 'Kolanut sales performance review', true, true, true, true, 60, 1)
-on conflict (id) do update set slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, passing_score = excluded.passing_score, position = excluded.position;
+insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
+values ('excel-for-data-analysis', 'full', null, 'excel-for-data-analysis', 'XLS', 'Excel for Data Analysis', 'Clean, analyse and present business data in Excel, from formulas and XLOOKUP to pivot tables and charts.', 'Excel is still where most business analysis happens. Learn to work with real datasets: sort and filter, write the formulas analysts use every day, clean messy data, summarise with pivot tables and present results with clear charts.', 'data-analytics', 'beginner', 'Beginner', 9, true, 'available', true, array['Formulas and functions', 'IF, SUMIF and COUNTIF', 'XLOOKUP', 'Data cleaning', 'Pivot tables', 'Charts']::text[], array['Microsoft Excel 2021 or Microsoft 365 (Google Sheets works for most lessons)', 'Comfortable using a computer; no Excel experience needed']::text[], 'Kolanut sales performance review', true, true, true, true, false, 60, 4)
+on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
 
-insert into public.course_modules (id, course_id, title, position)
-values ('xls-m01', 'excel-for-data-analysis', 'Excel for Analysts', 1)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('xls-m01', 'excel-for-data-analysis', 'Excel for Analysts', 1, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
 values ('excel-for-data-analysis:excel-for-analysts', 'excel-for-data-analysis', 'xls-m01', 'excel-for-analysts', 'Excel for analysts', 'Why Excel is still where most analysis happens, the parts of the screen you''ll use, and the shortcuts that save hours.', 20, $md$
@@ -1458,9 +2309,9 @@ Download Kolanut's three files. You'll use them through the whole course:
 $md$, true, true, 1, array['xls-01-p1', 'xls-01-p2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position)
-values ('xls-m02', 'excel-for-data-analysis', 'Working with Data', 2)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('xls-m02', 'excel-for-data-analysis', 'Working with Data', 2, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
 values ('excel-for-data-analysis:working-with-data', 'excel-for-data-analysis', 'xls-m02', 'working-with-data', 'Working with data', 'Import a CSV safely, check data types, and add your first calculated column to a Table.', 30, $md$
@@ -1598,9 +2449,9 @@ To get the total, click in any empty cell and type:
 $md$, true, true, 2, array['xls-02-p1', 'xls-02-p2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position)
-values ('xls-m03', 'excel-for-data-analysis', 'Sorting and Filtering', 3)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('xls-m03', 'excel-for-data-analysis', 'Sorting and Filtering', 3, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
 values ('excel-for-data-analysis:sorting-and-filtering', 'excel-for-data-analysis', 'xls-m03', 'sorting-and-filtering', 'Sorting and filtering', 'Find the rows that matter with multi-level sorts, filters, SUBTOTAL and the FILTER function.', 25, $md$
@@ -1745,9 +2596,9 @@ This is what filtering `discount_pct` to 10 looks like:
 $md$, true, true, 3, array['xls-03-p1', 'xls-03-p2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position)
-values ('xls-m04', 'excel-for-data-analysis', 'Formulas and Functions', 4)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('xls-m04', 'excel-for-data-analysis', 'Formulas and Functions', 4, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
 values ('excel-for-data-analysis:formulas-and-functions', 'excel-for-data-analysis', 'xls-m04', 'formulas-and-functions', 'Formulas and functions', 'How formulas work, relative and absolute references, the core functions, and how to read Excel''s error messages.', 35, $md$
@@ -1920,9 +2771,9 @@ The same summary with results showing: total revenue ₦830,541,245, 58,757 pack
 $md$, true, true, 4, array['xls-04-p1', 'xls-04-p2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position)
-values ('xls-m05', 'excel-for-data-analysis', 'IF, SUMIF, COUNTIF', 5)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('xls-m05', 'excel-for-data-analysis', 'IF, SUMIF, COUNTIF', 5, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
 values ('excel-for-data-analysis:if-sumif-countif', 'excel-for-data-analysis', 'xls-m05', 'if-sumif-countif', 'IF, SUMIF and COUNTIF', 'Make decisions inside formulas with IF, and total or count only the rows that meet conditions with SUMIFS and COUNTIFS.', 35, $md$
@@ -2092,9 +2943,9 @@ Check step 4 with a filter (order_date in 2026, discount_pct not 0). Two methods
 $md$, true, true, 5, array['xls-05-p1', 'xls-05-p2', 'xls-05-p3']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position)
-values ('xls-m06', 'excel-for-data-analysis', 'XLOOKUP', 6)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('xls-m06', 'excel-for-data-analysis', 'XLOOKUP', 6, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
 values ('excel-for-data-analysis:xlookup', 'excel-for-data-analysis', 'xls-m06', 'xlookup', 'XLOOKUP', 'Bring columns from one table into another with XLOOKUP, and recognise VLOOKUP and INDEX/MATCH in older files.', 35, $md$
@@ -2234,9 +3085,9 @@ After the walkthrough below, the Orders table has three looked-up columns:
 $md$, true, true, 6, array['xls-06-p1', 'xls-06-p2', 'xls-06-p3']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position)
-values ('xls-m07', 'excel-for-data-analysis', 'Data Cleaning', 7)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('xls-m07', 'excel-for-data-analysis', 'Data Cleaning', 7, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
 values ('excel-for-data-analysis:data-cleaning', 'excel-for-data-analysis', 'xls-m07', 'data-cleaning', 'Data cleaning in Excel', 'Clean a real messy export with TRIM, PROPER, SUBSTITUTE, VALUE, Remove Duplicates, a mapping table and Power Query''s locale-aware dates.', 45, $md$
@@ -2437,9 +3288,9 @@ A clean, repeatable workflow:
 $md$, true, true, 7, array['xls-07-p1', 'xls-07-p2', 'xls-07-p3']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position)
-values ('xls-m08', 'excel-for-data-analysis', 'Pivot Tables', 8)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('xls-m08', 'excel-for-data-analysis', 'Pivot Tables', 8, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
 values ('excel-for-data-analysis:pivot-tables', 'excel-for-data-analysis', 'xls-m08', 'pivot-tables', 'Pivot tables', 'Summarise thousands of rows in seconds - by region, month, channel or rep - with pivot tables, grouping, percentages and slicers.', 40, $md$
@@ -2586,9 +3437,9 @@ To get the channel percentages in the Example: `channel` in Rows, `revenue` in V
 $md$, true, true, 8, array['xls-08-p1', 'xls-08-p2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position)
-values ('xls-m09', 'excel-for-data-analysis', 'Charts and Visualization', 9)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('xls-m09', 'excel-for-data-analysis', 'Charts and Visualization', 9, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
 values ('excel-for-data-analysis:charts-and-visualization', 'excel-for-data-analysis', 'xls-m09', 'charts-and-visualization', 'Charts and visualization', 'Build clear line, bar and combo charts from pivot tables, and use conditional formatting and sparklines to make tables readable.', 35, $md$
@@ -2713,9 +3564,9 @@ Then, for the regional table, select the H1 2026 revenue column → **Home → C
 $md$, true, true, 9, array['xls-09-p1', 'xls-09-p2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position)
-values ('xls-m10', 'excel-for-data-analysis', 'Building an Analysis', 10)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('xls-m10', 'excel-for-data-analysis', 'Building an Analysis', 10, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
 values ('excel-for-data-analysis:building-an-analysis', 'excel-for-data-analysis', 'xls-m10', 'building-an-analysis', 'Building an analysis', 'Organise a workbook someone else can trust - raw data, calculations, checks and a one-page summary - and compare periods properly.', 40, $md$
@@ -2842,9 +3693,9 @@ Add a region criterion to get the same by region. Format growth as a percentage 
 $md$, true, true, 10, array['xls-10-p1', 'xls-10-p2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position)
-values ('xls-m11', 'excel-for-data-analysis', 'Mini Project', 11)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('xls-m11', 'excel-for-data-analysis', 'Mini Project', 11, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
 values ('excel-for-data-analysis:mini-project', 'excel-for-data-analysis', 'xls-m11', 'mini-project', '"Mini project: what do discounts cost?"', 'A guided analysis of Kolanut''s discounts from question to recommendation, using everything in the course.', 45, $md$
@@ -2976,13 +3827,13 @@ on conflict (id) do update set course_id = excluded.course_id, module_id = exclu
 
 
 -- Course: SQL for Data Analysis
-insert into public.courses (id, slug, code, title, summary, description, category_id, difficulty, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, passing_score, position)
-values ('sql-for-data-analysis', 'sql-for-data-analysis', 'SQL', 'SQL for Data Analysis', 'Query real business data with SQL, from your first SELECT to window functions, using a logistics company''s database.', 'SQL is how analysts get answers out of databases. In this course you work with Harbourline Freight, a fictional logistics company, and answer the questions its managers actually ask: who ships the most, which routes run late, what customers still owe. Every lesson starts with a business problem, explains the idea in plain language, and gives you queries to write in a live SQL editor in your browser.', 'data-analytics', 'beginner', 'Beginner to intermediate', 12, true, 'available', true, array['Reading a database schema', 'Selecting, filtering and sorting data', 'Aggregating with GROUP BY and HAVING', 'Joining tables', 'CASE expressions, subqueries and CTEs', 'Window functions for rankings and running totals', 'Turning a business question into a query']::text[], array['No prior SQL needed', 'Comfortable using a computer and a web browser']::text[], 'Harbourline Freight operations review', true, true, true, true, 60, 2)
-on conflict (id) do update set slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, passing_score = excluded.passing_score, position = excluded.position;
+insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
+values ('sql-for-data-analysis', 'full', null, 'sql-for-data-analysis', 'SQL', 'SQL for Data Analysis', 'Query real business data with SQL, from your first SELECT to window functions, using a logistics company''s database.', 'SQL is how analysts get answers out of databases. In this course you work with Harbourline Freight, a fictional logistics company, and answer the questions its managers actually ask: who ships the most, which routes run late, what customers still owe. Every lesson starts with a business problem, explains the idea in plain language, and gives you queries to write in a live SQL editor in your browser.', 'data-analytics', 'beginner', 'Beginner to intermediate', 12, true, 'available', true, array['Reading a database schema', 'Selecting, filtering and sorting data', 'Aggregating with GROUP BY and HAVING', 'Joining tables', 'CASE expressions, subqueries and CTEs', 'Window functions for rankings and running totals', 'Turning a business question into a query']::text[], array['No prior SQL needed', 'Comfortable using a computer and a web browser']::text[], 'Harbourline Freight operations review', true, true, true, true, false, 60, 5)
+on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
 
-insert into public.course_modules (id, course_id, title, position)
-values ('sql-m01', 'sql-for-data-analysis', 'Introduction to Databases', 1)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('sql-m01', 'sql-for-data-analysis', 'Introduction to Databases', 1, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
 values ('sql-for-data-analysis:introduction-to-databases', 'sql-for-data-analysis', 'sql-m01', 'introduction-to-databases', 'Introduction to databases', 'What a database is, how tables connect, and your first query against a real one.', 20, $md$
@@ -3092,9 +3943,9 @@ The result is every row and column of the `routes` table: 30 routes, from sea la
 $md$, true, true, 1, array['sql-01-p1']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position)
-values ('sql-m02', 'sql-for-data-analysis', 'Relational Databases and SQL Tools', 2)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('sql-m02', 'sql-for-data-analysis', 'Relational Databases and SQL Tools', 2, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
 values ('sql-for-data-analysis:relational-databases-and-sql-tools', 'sql-for-data-analysis', 'sql-m02', 'relational-databases-and-sql-tools', 'Relational databases, SQL Server and MySQL', 'What a relational database is, the database products you''ll meet at work, how their SQL differs, and how to find your way around SQL Server Management Studio and MySQL Workbench.', 30, $md$
@@ -3256,9 +4107,9 @@ ORDER BY signup_date, customer_id;
 $md$, true, true, 2, array['sql-rdb-p1', 'sql-rdb-p2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position)
-values ('sql-m03', 'sql-for-data-analysis', 'SELECT', 3)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('sql-m03', 'sql-for-data-analysis', 'SELECT', 3, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
 values ('sql-for-data-analysis:select', 'sql-for-data-analysis', 'sql-m03', 'select', 'SELECT', 'Choose the columns you need, rename them, calculate new ones and remove duplicates.', 25, $md$
@@ -3385,9 +4236,9 @@ Harbourline runs three transport modes, so you get three rows.
 $md$, true, true, 3, array['sql-02-p1']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position)
-values ('sql-m04', 'sql-for-data-analysis', 'WHERE', 4)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('sql-m04', 'sql-for-data-analysis', 'WHERE', 4, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
 values ('sql-for-data-analysis:where', 'sql-for-data-analysis', 'sql-m04', 'where', 'WHERE', 'Filter rows with comparisons, AND/OR, IN, BETWEEN, LIKE and NULL checks.', 30, $md$
@@ -3534,9 +4385,9 @@ WHERE account_manager_id IS NULL;
 $md$, true, true, 4, array['sql-03-p1', 'sql-03-p2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position)
-values ('sql-m05', 'sql-for-data-analysis', 'ORDER BY', 5)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('sql-m05', 'sql-for-data-analysis', 'ORDER BY', 5, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
 values ('sql-for-data-analysis:order-by', 'sql-for-data-analysis', 'sql-m05', 'order-by', 'ORDER BY', 'Sort results by one or more columns, in ascending or descending order.', 20, $md$
@@ -3644,9 +4495,9 @@ ORDER BY mode, target_transit_days DESC;
 $md$, true, true, 5, array['sql-04-p1']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position)
-values ('sql-m06', 'sql-for-data-analysis', 'LIMIT', 6)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('sql-m06', 'sql-for-data-analysis', 'LIMIT', 6, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
 values ('sql-for-data-analysis:limit', 'sql-for-data-analysis', 'sql-m06', 'limit', 'LIMIT', 'Return only the first rows of a result to answer "top N" questions and page through data.', 15, $md$
@@ -3752,9 +4603,9 @@ This skips the ten earliest customers and shows the next ten.
 $md$, true, true, 6, array['sql-05-p1']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position)
-values ('sql-m07', 'sql-for-data-analysis', 'Aggregate Functions', 7)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('sql-m07', 'sql-for-data-analysis', 'Aggregate Functions', 7, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
 values ('sql-for-data-analysis:aggregate-functions', 'sql-for-data-analysis', 'sql-m07', 'aggregate-functions', 'Aggregate functions', 'Summarise many rows into one answer with COUNT, SUM, AVG, MIN and MAX.', 25, $md$
@@ -3882,9 +4733,9 @@ FROM customers;
 $md$, true, true, 7, array['sql-06-p1', 'sql-06-p2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position)
-values ('sql-m08', 'sql-for-data-analysis', 'GROUP BY', 8)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('sql-m08', 'sql-for-data-analysis', 'GROUP BY', 8, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
 values ('sql-for-data-analysis:group-by', 'sql-for-data-analysis', 'sql-m08', 'group-by', 'GROUP BY', 'Calculate totals and counts for each customer, route, month or status.', 30, $md$
@@ -4028,9 +4879,9 @@ ORDER BY month;
 $md$, true, true, 8, array['sql-07-p1', 'sql-07-p2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position)
-values ('sql-m09', 'sql-for-data-analysis', 'HAVING', 9)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('sql-m09', 'sql-for-data-analysis', 'HAVING', 9, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
 values ('sql-for-data-analysis:having', 'sql-for-data-analysis', 'sql-m09', 'having', 'HAVING', 'Filter groups after they''re calculated, such as customers with more than 30 shipments.', 20, $md$
@@ -4153,9 +5004,9 @@ ORDER BY avg_charge DESC;
 $md$, true, true, 9, array['sql-08-p1']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position)
-values ('sql-m10', 'sql-for-data-analysis', 'JOINs', 10)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('sql-m10', 'sql-for-data-analysis', 'JOINs', 10, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
 values ('sql-for-data-analysis:joins', 'sql-for-data-analysis', 'sql-m10', 'joins', 'JOINs', 'Combine tables with INNER JOIN and LEFT JOIN, and find records with no match.', 35, $md$
@@ -4296,9 +5147,9 @@ WHERE s.booking_date = '2026-08-03';
 $md$, true, true, 10, array['sql-09-p1', 'sql-09-p2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position)
-values ('sql-m11', 'sql-for-data-analysis', 'CASE Statements', 11)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('sql-m11', 'sql-for-data-analysis', 'CASE Statements', 11, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
 values ('sql-for-data-analysis:case-statements', 'sql-for-data-analysis', 'sql-m11', 'case-statements', 'CASE statements', 'Create categories and labels with CASE, and use it to count and compare groups.', 25, $md$
@@ -4419,9 +5270,9 @@ GROUP BY r.mode;
 $md$, true, true, 11, array['sql-10-p1']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position)
-values ('sql-m12', 'sql-for-data-analysis', 'Subqueries', 12)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('sql-m12', 'sql-for-data-analysis', 'Subqueries', 12, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
 values ('sql-for-data-analysis:subqueries', 'sql-for-data-analysis', 'sql-m12', 'subqueries', 'Subqueries', 'Use the result of one query inside another, in WHERE, SELECT and FROM.', 30, $md$
@@ -4539,9 +5390,9 @@ The inner query gives one row per customer; the outer query averages those count
 $md$, true, true, 12, array['sql-11-p1']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position)
-values ('sql-m13', 'sql-for-data-analysis', 'CTEs', 13)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('sql-m13', 'sql-for-data-analysis', 'CTEs', 13, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
 values ('sql-for-data-analysis:ctes', 'sql-for-data-analysis', 'sql-m13', 'ctes', 'CTEs', 'Break complex questions into named steps with WITH, and avoid double-counting when combining totals.', 30, $md$
@@ -4662,9 +5513,9 @@ Why two separate summaries? If you joined shipments and payments first and then 
 $md$, true, true, 13, array['sql-12-p1']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position)
-values ('sql-m14', 'sql-for-data-analysis', 'Window Functions', 14)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('sql-m14', 'sql-for-data-analysis', 'Window Functions', 14, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
 values ('sql-for-data-analysis:window-functions', 'sql-for-data-analysis', 'sql-m14', 'window-functions', 'Window functions', 'Rank rows, number them within groups and calculate running totals without losing detail.', 35, $md$
@@ -4819,9 +5670,9 @@ The customers at the top of this list are the ones who haven't booked for longes
 $md$, true, true, 14, array['sql-13-p1']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position)
-values ('sql-m15', 'sql-for-data-analysis', 'Business Analysis with SQL', 15)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('sql-m15', 'sql-for-data-analysis', 'Business Analysis with SQL', 15, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
 values ('sql-for-data-analysis:business-analysis-with-sql', 'sql-for-data-analysis', 'sql-m15', 'business-analysis-with-sql', 'Business analysis with SQL', 'Turn a vague business question into precise queries, check your numbers, and present a clear answer.', 40, $md$
@@ -4967,9 +5818,9 @@ A good write-up of these two results would look like:
 $md$, true, true, 15, array['sql-14-p1', 'sql-14-p2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position)
-values ('sql-m16', 'sql-for-data-analysis', 'Final Project', 16)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('sql-m16', 'sql-for-data-analysis', 'Final Project', 16, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
 values ('sql-for-data-analysis:final-project', 'sql-for-data-analysis', 'sql-m16', 'final-project', 'Final project', 'The brief for your final project, the Harbourline Freight operations review, and how it''s assessed.', 15, $md$
@@ -5060,13 +5911,13 @@ on conflict (id) do update set course_id = excluded.course_id, module_id = exclu
 
 
 -- Course: Data Modelling
-insert into public.courses (id, slug, code, title, summary, description, category_id, difficulty, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, passing_score, position)
-values ('data-modelling', 'data-modelling', 'DMO', 'Data Modelling', 'Design databases and analytics models that stay correct: entities, keys, relationships, ERDs, normalisation and star schemas.', 'Every reliable report sits on a well-designed model. Learn to turn business questions into entities and keys, draw entity-relationship diagrams in crow''s-foot notation, normalise away repeated data, and design the star schemas that Power BI and data warehouses run on. Every lesson is built around diagrams, and you practise on real databases in your browser.', 'databases', 'intermediate', 'Beginner to intermediate', 8, true, 'available', true, array['Entities, attributes and grain', 'Primary and foreign keys', 'Cardinality and bridge tables', 'Entity-relationship diagrams', 'Normalisation (1NF to 3NF)', 'Star schemas and slowly changing dimensions']::text[], array['Basic SQL (SELECT, WHERE, JOIN) helps; the SQL for Data Analysis course covers it', 'No design experience needed']::text[], 'Ashgrove Chambers data model', true, true, true, true, 60, 3)
-on conflict (id) do update set slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, passing_score = excluded.passing_score, position = excluded.position;
+insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
+values ('data-modelling', 'full', null, 'data-modelling', 'DMO', 'Data Modelling', 'Design databases and analytics models that stay correct: entities, keys, relationships, ERDs, normalisation and star schemas.', 'Every reliable report sits on a well-designed model. Learn to turn business questions into entities and keys, draw entity-relationship diagrams in crow''s-foot notation, normalise away repeated data, and design the star schemas that Power BI and data warehouses run on. Every lesson is built around diagrams, and you practise on real databases in your browser.', 'databases', 'intermediate', 'Beginner to intermediate', 8, true, 'available', true, array['Entities, attributes and grain', 'Primary and foreign keys', 'Cardinality and bridge tables', 'Entity-relationship diagrams', 'Normalisation (1NF to 3NF)', 'Star schemas and slowly changing dimensions']::text[], array['Basic SQL (SELECT, WHERE, JOIN) helps; the SQL for Data Analysis course covers it', 'No design experience needed']::text[], 'Ashgrove Chambers data model', true, true, true, true, false, 60, 6)
+on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
 
-insert into public.course_modules (id, course_id, title, position)
-values ('dmo-m01', 'data-modelling', 'What Is a Data Model?', 1)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('dmo-m01', 'data-modelling', 'What Is a Data Model?', 1, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
 values ('data-modelling:what-is-a-data-model', 'data-modelling', 'dmo-m01', 'what-is-a-data-model', 'What is a data model?', 'Why data needs a design before it needs a dashboard, and the three levels a model moves through - conceptual, logical and physical.', 20, $md$
@@ -5167,9 +6018,9 @@ Try it on Ashgrove Chambers, the law firm in the Power BI course: *clients have 
 $md$, true, true, 1, array['dmo-01-p1', 'dmo-01-p2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position)
-values ('dmo-m02', 'data-modelling', 'Entities, Attributes and Grain', 2)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('dmo-m02', 'data-modelling', 'Entities, Attributes and Grain', 2, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
 values ('data-modelling:entities-and-attributes', 'data-modelling', 'dmo-m02', 'entities-and-attributes', 'Entities, attributes and grain', 'Turn things into tables and facts into columns, choose data types, and state the grain - what one row means.', 25, $md$
@@ -5284,9 +6135,9 @@ Designing Kolanut's product table, step by step:
 $md$, true, true, 2, array['dmo-02-p2', 'dmo-02-p1']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position)
-values ('dmo-m03', 'data-modelling', 'Keys', 3)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('dmo-m03', 'data-modelling', 'Keys', 3, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
 values ('data-modelling:keys', 'data-modelling', 'dmo-m03', 'keys', 'Keys', 'Primary keys, foreign keys, natural and surrogate keys, and composite keys - the columns that hold a model together.', 25, $md$
@@ -5415,9 +6266,9 @@ When you receive a new table, test its keys before building on it:
 $md$, true, true, 3, array['dmo-03-p1', 'dmo-03-p2', 'dmo-03-p3']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position)
-values ('dmo-m04', 'data-modelling', 'Relationships and Cardinality', 4)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('dmo-m04', 'data-modelling', 'Relationships and Cardinality', 4, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
 values ('data-modelling:relationships-and-cardinality', 'data-modelling', 'dmo-m04', 'relationships-and-cardinality', 'Relationships and cardinality', 'One-to-one, one-to-many and many-to-many relationships, optional vs mandatory, and why many-to-many needs a bridge table.', 30, $md$
@@ -5540,9 +6391,9 @@ Ashgrove Chambers, the law firm: can a client have many matters? Yes. Can a matt
 $md$, true, true, 4, array['dmo-04-p1', 'dmo-04-p2', 'dmo-04-p3']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position)
-values ('dmo-m05', 'data-modelling', 'Entity-Relationship Diagrams', 5)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('dmo-m05', 'data-modelling', 'Entity-Relationship Diagrams', 5, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
 values ('data-modelling:entity-relationship-diagrams', 'data-modelling', 'dmo-m05', 'entity-relationship-diagrams', 'Entity-relationship diagrams', 'Read and draw ERDs in crow''s-foot notation, and use one to plan any query across several tables.', 30, $md$
@@ -5649,9 +6500,9 @@ You'll draw this ERD properly in the final project.
 $md$, true, true, 5, array['dmo-05-p1', 'dmo-05-p2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position)
-values ('dmo-m06', 'data-modelling', 'Normalisation', 6)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('dmo-m06', 'data-modelling', 'Normalisation', 6, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
 values ('data-modelling:normalisation', 'data-modelling', 'dmo-m06', 'normalisation', 'Normalisation', 'Remove repetition step by step - first, second and third normal form - so every fact is stored exactly once.', 35, $md$
@@ -5760,9 +6611,9 @@ Normalising a flat sheet, in order:
 $md$, true, true, 6, array['dmo-06-p1', 'dmo-06-p2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position)
-values ('dmo-m07', 'data-modelling', 'Dimensional Modelling', 7)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('dmo-m07', 'data-modelling', 'Dimensional Modelling', 7, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
 values ('data-modelling:dimensional-modelling', 'data-modelling', 'dmo-m07', 'dimensional-modelling', 'Dimensional modelling', 'Model for analysis with facts and dimensions, choose the grain first, and build the star schema that Power BI works best with.', 35, $md$
@@ -5872,9 +6723,9 @@ A second star for **court work** would have a different grain (one row per heari
 $md$, true, true, 7, array['dmo-07-p1', 'dmo-07-p2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position)
-values ('dmo-m08', 'data-modelling', 'Stars, Snowflakes, Dates and History', 8)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('dmo-m08', 'data-modelling', 'Stars, Snowflakes, Dates and History', 8, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
 values ('data-modelling:star-snowflake-and-history', 'data-modelling', 'dmo-m08', 'star-snowflake-and-history', 'Stars, snowflakes, dates and history', 'When to snowflake a dimension, why every model needs a date dimension, and how to keep history when attributes change.', 35, $md$
@@ -5979,9 +6830,9 @@ Choosing the SCD type, attribute by attribute, for Kolanut's customers:
 $md$, true, true, 8, array['dmo-08-p1', 'dmo-08-p2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position)
-values ('dmo-m09', 'data-modelling', 'Modelling in Practice', 9)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('dmo-m09', 'data-modelling', 'Modelling in Practice', 9, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
 values ('data-modelling:modelling-in-practice', 'data-modelling', 'dmo-m09', 'modelling-in-practice', 'Modelling in practice', 'A repeatable process for designing a model, turning it into tables, and testing it with real queries before anyone builds a report on it.', 40, $md$
@@ -6098,13 +6949,13 @@ on conflict (id) do update set course_id = excluded.course_id, module_id = exclu
 
 
 -- Course: Power BI Fundamentals
-insert into public.courses (id, slug, code, title, summary, description, category_id, difficulty, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, passing_score, position)
-values ('power-bi-fundamentals', 'power-bi-fundamentals', 'PBI', 'Power BI Fundamentals', 'Build a data model, write DAX measures and design a dashboard people can use to run a business.', 'Power BI turns data into dashboards. Learn the full workflow: import and clean data with Power Query, relate tables in a model, write DAX measures, and design a dashboard that tells a clear business story.', 'business-intelligence', 'beginner', 'Beginner to intermediate', 12, true, 'available', true, array['Power Query', 'Data modelling and relationships', 'DAX measures', 'Dashboard design', 'Publishing reports']::text[], array['Power BI Desktop (free, Windows only)', 'Basic Excel is helpful: the Excel course covers it']::text[], 'Ashgrove Chambers practice dashboard', true, true, true, true, 60, 4)
-on conflict (id) do update set slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, passing_score = excluded.passing_score, position = excluded.position;
+insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
+values ('power-bi-fundamentals', 'full', null, 'power-bi-fundamentals', 'PBI', 'Power BI Fundamentals', 'Build a data model, write DAX measures and design a dashboard people can use to run a business.', 'Power BI turns data into dashboards. Learn the full workflow: import and clean data with Power Query, relate tables in a model, write DAX measures, and design a dashboard that tells a clear business story.', 'business-intelligence', 'beginner', 'Beginner to intermediate', 12, true, 'available', true, array['Power Query', 'Data modelling and relationships', 'DAX measures', 'Dashboard design', 'Publishing reports']::text[], array['Power BI Desktop (free, Windows only)', 'Basic Excel is helpful: the Excel course covers it']::text[], 'Ashgrove Chambers practice dashboard', true, true, true, true, false, 60, 7)
+on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
 
-insert into public.course_modules (id, course_id, title, position)
-values ('pbi-m01', 'power-bi-fundamentals', 'Introduction to Business Intelligence', 1)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('pbi-m01', 'power-bi-fundamentals', 'Introduction to Business Intelligence', 1, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
 values ('power-bi-fundamentals:introduction-to-business-intelligence', 'power-bi-fundamentals', 'pbi-m01', 'introduction-to-business-intelligence', 'Introduction to business intelligence with Power BI', 'What Power BI is, its parts (Desktop, Service, Mobile), the workflow you''ll follow in this course, and how to get set up.', 20, $md$
@@ -6219,9 +7070,9 @@ and then a dashboard of your own for a law firm as the final project.
 $md$, true, true, 1, array['pbi-01-p1', 'pbi-01-p2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position)
-values ('pbi-m02', 'power-bi-fundamentals', 'Power BI Interface', 2)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('pbi-m02', 'power-bi-fundamentals', 'Power BI Interface', 2, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
 values ('power-bi-fundamentals:power-bi-interface', 'power-bi-fundamentals', 'pbi-m02', 'power-bi-interface', 'The Power BI interface', 'The four views of Power BI Desktop, the panes you''ll use constantly, and how report pages work.', 20, $md$
@@ -6349,9 +7200,9 @@ A new visual, step by step: in Report view, tick `revenue` in the Data pane and 
 $md$, true, true, 2, array['pbi-02-p1', 'pbi-02-p2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position)
-values ('pbi-m03', 'power-bi-fundamentals', 'Importing Data', 3)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('pbi-m03', 'power-bi-fundamentals', 'Importing Data', 3, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
 values ('power-bi-fundamentals:importing-data', 'power-bi-fundamentals', 'pbi-m03', 'importing-data', 'Importing data', 'Load CSV files into Power BI, choose between Load and Transform Data, and check that what arrived is complete and correctly typed.', 25, $md$
@@ -6474,9 +7325,9 @@ Kolanut's files, once loaded:
 $md$, true, true, 3, array['pbi-03-p1', 'pbi-03-p2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position)
-values ('pbi-m04', 'power-bi-fundamentals', 'Power Query', 4)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('pbi-m04', 'power-bi-fundamentals', 'Power Query', 4, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
 values ('power-bi-fundamentals:power-query', 'power-bi-fundamentals', 'pbi-m04', 'power-query', 'Power Query', 'Shape data with Power Query - applied steps, types, custom columns, merges - and profile columns to spot problems.', 35, $md$
@@ -6616,9 +7467,9 @@ You don't have to type that: the Custom Column dialog writes it. In the dialog y
 $md$, true, true, 4, array['pbi-04-p1', 'pbi-04-p2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position)
-values ('pbi-m05', 'power-bi-fundamentals', 'Data Cleaning', 5)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('pbi-m05', 'power-bi-fundamentals', 'Data Cleaning', 5, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
 values ('power-bi-fundamentals:data-cleaning', 'power-bi-fundamentals', 'pbi-m05', 'data-cleaning', 'Data cleaning in Power Query', 'Clean a messy export with Trim, Capitalize Each Word, Replace Values, locale-aware dates and case-sensitive duplicate removal.', 40, $md$
@@ -6738,9 +7589,9 @@ Look at **Applied Steps**: that list is your cleaning log.
 $md$, true, true, 5, array['pbi-05-p1', 'pbi-05-p2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position)
-values ('pbi-m06', 'power-bi-fundamentals', 'Data Relationships', 6)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('pbi-m06', 'power-bi-fundamentals', 'Data Relationships', 6, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
 values ('power-bi-fundamentals:data-relationships', 'power-bi-fundamentals', 'pbi-m06', 'data-relationships', 'Data relationships', 'Connect tables with one-to-many relationships so filters flow from customers and products to orders.', 30, $md$
@@ -6865,9 +7716,9 @@ Without it, every row shows ₦830.5m.
 $md$, true, true, 6, array['pbi-06-p1', 'pbi-06-p2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position)
-values ('pbi-m07', 'power-bi-fundamentals', 'Data Modelling', 7)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('pbi-m07', 'power-bi-fundamentals', 'Data Modelling', 7, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
 values ('power-bi-fundamentals:data-modelling', 'power-bi-fundamentals', 'pbi-m07', 'data-modelling', 'Data modelling', 'Finish the star schema with a proper date table, sort months correctly, and tidy the model so reports are easy to build.', 35, $md$
@@ -6992,9 +7843,9 @@ Now `Date[Year]` and `Date[Month]` on a matrix, `orders[revenue]` in values, giv
 $md$, true, true, 7, array['pbi-07-p1', 'pbi-07-p2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position)
-values ('pbi-m08', 'power-bi-fundamentals', 'DAX Fundamentals', 8)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('pbi-m08', 'power-bi-fundamentals', 'DAX Fundamentals', 8, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
 values ('power-bi-fundamentals:dax-fundamentals', 'power-bi-fundamentals', 'pbi-m08', 'dax-fundamentals', 'DAX fundamentals', 'The difference between calculated columns and measures, how filter context works, and the core DAX functions.', 40, $md$
@@ -7135,9 +7986,9 @@ Category = RELATED ( products[category] )
 $md$, true, true, 8, array['pbi-08-p1', 'pbi-08-p2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position)
-values ('pbi-m09', 'power-bi-fundamentals', 'Measures', 9)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('pbi-m09', 'power-bi-fundamentals', 'Measures', 9, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
 values ('power-bi-fundamentals:measures', 'power-bi-fundamentals', 'pbi-m09', 'measures', 'Measures with CALCULATE and time intelligence', 'Change the filter context with CALCULATE, build percentage-of-total, year-to-date and year-on-year measures.', 45, $md$
@@ -7282,9 +8133,9 @@ And **Revenue YTD** at 2026 March shows Q1 2026 in total.
 $md$, true, true, 9, array['pbi-09-p1', 'pbi-09-p2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position)
-values ('pbi-m10', 'power-bi-fundamentals', 'Visualizations', 10)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('pbi-m10', 'power-bi-fundamentals', 'Visualizations', 10, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
 values ('power-bi-fundamentals:visualizations', 'power-bi-fundamentals', 'pbi-m10', 'visualizations', 'Visualizations', 'The visuals you''ll use most, how to configure and format them, and how visuals interact on a page.', 35, $md$
@@ -7407,9 +8258,9 @@ Tick **Wholesale** in the slicer and every visual on the page recalculates for w
 $md$, true, true, 10, array['pbi-10-p1', 'pbi-10-p2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position)
-values ('pbi-m11', 'power-bi-fundamentals', 'Dashboard Design', 11)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('pbi-m11', 'power-bi-fundamentals', 'Dashboard Design', 11, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
 values ('power-bi-fundamentals:dashboard-design', 'power-bi-fundamentals', 'pbi-m11', 'dashboard-design', 'Dashboard design', 'Lay out a report page people understand in five seconds - hierarchy, consistency, restraint and accessibility.', 30, $md$
@@ -7533,9 +8384,9 @@ Redesign your page from the previous lesson:
 $md$, true, true, 11, array['pbi-11-p1', 'pbi-11-p2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position)
-values ('pbi-m12', 'power-bi-fundamentals', 'Business Storytelling', 12)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('pbi-m12', 'power-bi-fundamentals', 'Business Storytelling', 12, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
 values ('power-bi-fundamentals:business-storytelling', 'power-bi-fundamentals', 'pbi-m12', 'business-storytelling', 'Business storytelling', 'Turn a report into an argument - context, finding, cause and recommendation - with titles, annotations, bookmarks and navigation.', 30, $md$
@@ -7647,9 +8498,9 @@ Buttons at the bottom of each page move to the next.
 $md$, true, true, 12, array['pbi-12-p1', 'pbi-12-p2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position)
-values ('pbi-m13', 'power-bi-fundamentals', 'Publishing Reports', 13)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('pbi-m13', 'power-bi-fundamentals', 'Publishing Reports', 13, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
 values ('power-bi-fundamentals:publishing-reports', 'power-bi-fundamentals', 'pbi-m13', 'publishing-reports', 'Publishing reports', 'Publish to the Power BI Service, share safely, keep data fresh with scheduled refresh, and show your work in a portfolio.', 30, $md$
@@ -7762,9 +8613,9 @@ Kolanut's rollout plan:
 $md$, true, true, 13, array['pbi-13-p1', 'pbi-13-p2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position)
-values ('pbi-m14', 'power-bi-fundamentals', 'Final Dashboard Project', 14)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position;
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('pbi-m14', 'power-bi-fundamentals', 'Final Dashboard Project', 14, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
 values ('power-bi-fundamentals:final-dashboard-project', 'power-bi-fundamentals', 'pbi-m14', 'final-dashboard-project', 'Final dashboard project', 'Plan and start a practice-management dashboard for a law firm, checking your model against known numbers before you build.', 45, $md$
@@ -7908,9 +8759,9 @@ on conflict (id) do update set course_id = excluded.course_id, module_id = exclu
 
 
 -- Assessment: SQL for Data Analysis: final assessment
-insert into public.assessments (id, course_id, title, passing_score, published)
-values ('sql-for-data-analysis-final', 'sql-for-data-analysis', 'SQL for Data Analysis: final assessment', 60, true)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('sql-for-data-analysis-final', 'sql-for-data-analysis', 'final', null, 'SQL for Data Analysis: final assessment', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
 values ('sqlq01', 'sql-for-data-analysis-final', 1, 'You need the name and city of every customer. Which query is best?', '["SELECT * FROM customers;","SELECT company_name, city FROM customers;","SELECT customers FROM company_name, city;","GET company_name, city FROM customers;"]'::jsonb)
@@ -8034,9 +8885,9 @@ on conflict (question_id) do update set correct_index = excluded.correct_index, 
 
 
 -- Assessment: Data Analytics Foundations: final assessment
-insert into public.assessments (id, course_id, title, passing_score, published)
-values ('data-analytics-foundations-final', 'data-analytics-foundations', 'Data Analytics Foundations: final assessment', 60, true)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('data-analytics-foundations-final', 'data-analytics-foundations', 'final', null, 'Data Analytics Foundations: final assessment', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
 values ('dafq01', 'data-analytics-foundations-final', 1, 'A manager asks "Why did deliveries to Kano get slower last quarter?" Which kind of analytics question is this?', '["Descriptive","Diagnostic","Predictive","Prescriptive"]'::jsonb)
@@ -8160,9 +9011,9 @@ on conflict (question_id) do update set correct_index = excluded.correct_index, 
 
 
 -- Assessment: Excel for Data Analysis: final assessment
-insert into public.assessments (id, course_id, title, passing_score, published)
-values ('excel-for-data-analysis-final', 'excel-for-data-analysis', 'Excel for Data Analysis: final assessment', 60, true)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('excel-for-data-analysis-final', 'excel-for-data-analysis', 'final', null, 'Excel for Data Analysis: final assessment', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
 values ('xlsq01', 'excel-for-data-analysis-final', 1, 'Why import a CSV with Data → From Text/CSV instead of double-clicking it?', '["It is the only way to open a CSV","You can check and set column types before the data loads","It removes duplicates automatically","It makes the numbers smaller"]'::jsonb)
@@ -8286,9 +9137,9 @@ on conflict (question_id) do update set correct_index = excluded.correct_index, 
 
 
 -- Assessment: Power BI Fundamentals: final assessment
-insert into public.assessments (id, course_id, title, passing_score, published)
-values ('power-bi-fundamentals-final', 'power-bi-fundamentals', 'Power BI Fundamentals: final assessment', 60, true)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('power-bi-fundamentals-final', 'power-bi-fundamentals', 'final', null, 'Power BI Fundamentals: final assessment', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
 values ('pbiq01', 'power-bi-fundamentals-final', 1, 'Which part of Power BI is used to build a report''s model and pages on your computer?', '["Power BI Service","Power BI Desktop","Power BI Mobile","Power Automate"]'::jsonb)
@@ -8412,9 +9263,9 @@ on conflict (question_id) do update set correct_index = excluded.correct_index, 
 
 
 -- Assessment: Data Modelling: final assessment
-insert into public.assessments (id, course_id, title, passing_score, published)
-values ('data-modelling-final', 'data-modelling', 'Data Modelling: final assessment', 60, true)
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('data-modelling-final', 'data-modelling', 'final', null, 'Data Modelling: final assessment', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
 values ('dmoq01', 'data-modelling-final', 1, 'At which level of a data model are data types such as INT and DATE decided?', '["Conceptual","Logical","Physical","None of the levels"]'::jsonb)
@@ -8534,6 +9385,676 @@ on conflict (id) do update set assessment_id = excluded.assessment_id, position 
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
 values ('dmoq15', 0, 'Each row needs its own key value, and it can''t be missing.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Prompting Essentials: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('aipf-m01-check', 'ai-productivity-fundamentals', 'module', 'aipf-m01', 'Prompting Essentials: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aipf-m01-q1', 'aipf-m01-check', 1, 'Why does a detailed prompt usually get a better answer?', '["The AI only knows what you tell it","Long prompts make the AI work faster","Short prompts are not allowed","The AI charges less for long prompts"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aipf-m01-q1', 0, 'The assistant can''t see your situation, so the context you give is what it works with.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aipf-m01-q2', 'aipf-m01-check', 2, 'Which of these is the best prompt?', '["Write an email.","Email.","I''m a shop owner. Write a polite email to a supplier asking to move Friday''s delivery to Monday. Under 100 words.","Write something about deliveries."]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aipf-m01-q2', 2, 'It gives the context, the task, the details and a length limit.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aipf-m01-q3', 'aipf-m01-check', 3, 'You want five product descriptions in the same style as one you like. What''s the easiest way?', '["Describe the style in one word","Paste the example and ask for more like it","Ask for ''good descriptions''","Start a new chat for each one"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aipf-m01-q3', 1, 'Showing an example is the quickest way to get the same tone, length and structure.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aipf-m01-q4', 'aipf-m01-check', 4, 'The first answer is close, but too formal. What should you do?', '["Start a new chat and type the same prompt","Reply in the same chat: ''Make it less formal''","Give up on AI","Copy it anyway"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aipf-m01-q4', 1, 'The assistant remembers the conversation, so a short follow-up is enough.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aipf-m01-q5', 'aipf-m01-check', 5, 'An AI answer includes a price and a date. What should you do before sharing it?', '["Nothing, AI is always right","Check the price and date against a source you trust","Add more emojis","Make the font bigger"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aipf-m01-q5', 1, 'AI can be confidently wrong, so check facts, figures and dates before you rely on them.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Using Claude: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('aipf-m02-check', 'ai-productivity-fundamentals', 'module', 'aipf-m02', 'Using Claude: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aipf-m02-q1', 'aipf-m02-check', 1, 'Which company makes Claude?', '["Anthropic","Google","Microsoft","Meta"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aipf-m02-q1', 0, 'Claude is Anthropic''s AI assistant.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aipf-m02-q2', 'aipf-m02-check', 2, 'You got a good answer and want it as a table. What''s the easiest thing to do?', '["Start a new chat and ask again","Reply in the same chat: ''Put that in a table''","Copy it into Excel by hand","Close Claude and reopen it"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aipf-m02-q2', 1, 'Claude remembers the conversation, so a short follow-up is enough.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aipf-m02-q3', 'aipf-m02-check', 3, 'Claude summarises a contract and mentions a payment deadline. What should you do before relying on it?', '["Nothing, the summary is enough","Check the deadline in the contract yourself","Ask a different AI","Delete the contract"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aipf-m02-q3', 1, 'AI can misread or miss details, so check important facts in the original document.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aipf-m02-q4', 'aipf-m02-check', 4, 'What is a project in Claude useful for?', '["Making Claude answer faster","Keeping related chats together with shared files and instructions","Printing documents","Changing Claude''s language to French only"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aipf-m02-q4', 1, 'A project keeps background files and instructions so every chat in it starts with the context.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aipf-m02-q5', 'aipf-m02-check', 5, 'Which of these should you not upload to Claude without permission?', '["A public government report","A school timetable","Customer phone numbers and payment details","A recipe"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aipf-m02-q5', 2, 'Keep private and confidential information out unless your organisation has approved the tool for it.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Using ChatGPT: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('aipf-m03-check', 'ai-productivity-fundamentals', 'module', 'aipf-m03', 'Using ChatGPT: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aipf-m03-q1', 'aipf-m03-check', 1, 'Which company makes ChatGPT?', '["OpenAI","Anthropic","Canva","Apple"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aipf-m03-q1', 0, 'ChatGPT is made by OpenAI.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aipf-m03-q2', 'aipf-m03-check', 2, 'Which request will usually get the most useful answer?', '["Tell me about marketing.","Marketing?","I sell sandals on Instagram in Kano. Give me five low-cost ways to get customers this month.","Help."]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aipf-m03-q2', 2, 'It says who you are, what you want and what kind of answer helps.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aipf-m03-q3', 'aipf-m03-check', 3, 'You need the current fee for a government service. What should you do?', '["Trust the first number ChatGPT gives","Ask it to search the web, then check the official source","Guess","Ask it to make one up"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aipf-m03-q3', 1, 'For current, official information, check the source ChatGPT links to, ideally the official website.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aipf-m03-q4', 'aipf-m03-check', 4, 'What do personalisation settings do?', '["Make ChatGPT free","Tell ChatGPT about you and how you like answers, for every new chat","Delete your chat history","Change the app''s colours"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aipf-m03-q4', 1, 'Your preferences are applied to new chats, so you don''t repeat them.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aipf-m03-q5', 'aipf-m03-check', 5, 'ChatGPT gives you a total from your sales spreadsheet. What''s the safest next step?', '["Check the total yourself in Excel or Google Sheets","Share it with your boss straight away","Ignore the spreadsheet","Ask it to round the number"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aipf-m03-q5', 0, 'It''s usually right, but check important numbers yourself.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Presentations with AI: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('aipf-m04-check', 'ai-productivity-fundamentals', 'module', 'aipf-m04', 'Presentations with AI: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aipf-m04-q1', 'aipf-m04-check', 1, 'What should you decide before you create any slides?', '["The colour of the background","Who is listening, what you want from them, and why they should care","How many animations to use","The font size"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aipf-m04-q1', 1, 'A clear message and audience make every later choice easier.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aipf-m04-q2', 'aipf-m04-check', 2, 'What is the best thing to ask AI for first?', '["50 slides of text","A slide-by-slide outline you can edit","The final speech word for word","Clip art"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aipf-m04-q2', 1, 'An outline is quick to review and change before you spend time on design.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aipf-m04-q3', 'aipf-m04-check', 3, 'Which slide title is best?', '["Deliveries","Slide 3","Late deliveries are costing us customers","Data"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aipf-m04-q3', 2, 'A title that states the point tells the audience what to take away.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aipf-m04-q4', 'aipf-m04-check', 4, 'Where should the detailed explanation go?', '["In long paragraphs on each slide","In the speaker notes, and in what you say","In the footer in small text","Nowhere"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aipf-m04-q4', 1, 'Keep slides short; put detail in the notes and your talk.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aipf-m04-q5', 'aipf-m04-check', 5, 'An AI-made slide shows a statistic you don''t recognise. What should you do?', '["Leave it, it looks professional","Check it against a real source, or remove it","Make it bigger","Round it up"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aipf-m04-q5', 1, 'AI can invent realistic-looking figures. Only present numbers you can back up.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: AI Productivity Fundamentals: final assessment
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('ai-productivity-fundamentals-final', 'ai-productivity-fundamentals', 'final', null, 'AI Productivity Fundamentals: final assessment', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aipf-f01', 'ai-productivity-fundamentals-final', 1, 'Which prompt will usually get the most useful answer?', '["Write a report.","I run a bakery in Enugu. Write a 100-word WhatsApp message telling customers we now deliver on Sundays.","Report please.","Tell me things."]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aipf-f01', 1, 'It gives context, the task, the details and a length.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aipf-f02', 'ai-productivity-fundamentals-final', 2, 'The first answer is nearly right. What''s the quickest way to improve it?', '["Reply in the same chat with what to change","Close the app","Start again with the same prompt","Copy it anyway"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aipf-f02', 0, 'The assistant remembers the conversation, so a short follow-up is enough.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aipf-f03', 'ai-productivity-fundamentals-final', 3, 'You want ten captions in the style of one you like. What should you do?', '["Paste the example and ask for more like it","Describe the style in one word","Ask for ''nice captions''","Write them all yourself"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aipf-f03', 0, 'An example shows the tone, length and structure you want.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aipf-f04', 'ai-productivity-fundamentals-final', 4, 'An AI assistant summarises a contract you uploaded. What should you check yourself?', '["The deadlines, amounts and other key facts","Nothing","Only the first word","The font"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aipf-f04', 0, 'AI can misread or miss details, so check anything important in the original.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aipf-f05', 'ai-productivity-fundamentals-final', 5, 'What is a Claude project useful for?', '["Keeping related chats together with shared files and instructions","Making Claude free","Printing chats","Changing the language"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aipf-f05', 0, 'Projects keep background files and instructions for every chat inside them.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aipf-f06', 'ai-productivity-fundamentals-final', 6, 'You need today''s official fee for a government service. What''s the best approach?', '["Ask the assistant to search the web, then check the official source","Trust the first number","Guess","Ask it to invent one"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aipf-f06', 0, 'For current, official information, check the source, ideally the official website.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aipf-f07', 'ai-productivity-fundamentals-final', 7, 'Which slide title is best?', '["Data","Slide 4","Late deliveries are costing us customers","Deliveries"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aipf-f07', 2, 'A title that states the point tells the audience what to take away.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aipf-f08', 'ai-productivity-fundamentals-final', 8, 'Which of these should you not paste into an AI assistant without permission?', '["A public news article","Customers'' phone numbers and bank details","A recipe","Your own draft email"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aipf-f08', 1, 'Keep private and confidential information out unless your organisation has approved the tool.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Social Media Content with AI: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('dce-m01-check', 'design-content-essentials', 'module', 'dce-m01', 'Social Media Content with AI: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dce-m01-q1', 'dce-m01-check', 1, 'What are content themes (content pillars)?', '["The colours of your page","A few main topics that most of your posts fit into","Paid adverts","Your profile picture"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dce-m01-q1', 1, 'Two to four themes keep your posts focused and make ideas easier to find.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dce-m01-q2', 'dce-m01-check', 2, 'How do you make AI captions sound like your brand?', '["Describe your voice and paste an example you like","Ask for ''a caption''","Use as many emojis as possible","Copy another business''s captions"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dce-m01-q2', 0, 'A description plus an example lets the AI copy your tone.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dce-m01-q3', 'dce-m01-check', 3, 'Why does the first line of a caption matter most?', '["It''s the only part that''s free","It''s often all people see before they tap ''more''","Hashtags only work there","It sets the font"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dce-m01-q3', 1, 'The hook decides whether people keep reading.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dce-m01-q4', 'dce-m01-check', 4, 'What does ''repurposing'' content mean?', '["Deleting old posts","Turning one idea into posts for several platforms","Buying followers","Posting the same picture every day"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dce-m01-q4', 1, 'One good idea can become a caption, a reel, a status and more.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dce-m01-q5', 'dce-m01-check', 5, 'Which of these is fine to post?', '["A client''s photo without asking","An AI image presented as a real result","A photo you took, with your client''s permission","A price you haven''t checked"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dce-m01-q5', 2, 'Use your own photos with permission, and keep claims honest.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Design with Canva: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('dce-m02-check', 'design-content-essentials', 'module', 'dce-m02', 'Design with Canva: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dce-m02-q1', 'dce-m02-check', 1, 'What''s the easiest way to start a professional-looking design in Canva?', '["A blank page with ten fonts","A template in the right size","Copying someone''s logo","Drawing everything by hand"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dce-m02-q1', 1, 'Templates give you a layout that already works; you change the content.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dce-m02-q2', 'dce-m02-check', 2, 'Your white headline is hard to read on a busy photo. What''s the best fix?', '["Make it smaller","Put a solid shape behind the text, or use a darker photo","Add more text","Use a sixth font"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dce-m02-q2', 1, 'That''s a contrast problem; a solid background behind the text fixes it.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dce-m02-q3', 'dce-m02-check', 3, 'How many fonts should most designs use?', '["One or two","Five","As many as possible","A different one for every word"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dce-m02-q3', 0, 'One for headings and one for body text keeps a design clean.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dce-m02-q4', 'dce-m02-check', 4, 'Which format is best for a social media post with text on it?', '["PNG","MP3","DOCX","PDF Print"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dce-m02-q4', 0, 'PNG keeps text sharp for social media images.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dce-m02-q5', 'dce-m02-check', 5, 'What do Canva''s pink guide lines help you with?', '["Spelling","Lining things up (alignment)","Choosing colours","Downloading"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dce-m02-q5', 1, 'They appear when items line up with each other or the centre.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Video Editing with CapCut: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('dce-m03-check', 'design-content-essentials', 'module', 'dce-m03', 'Video Editing with CapCut: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dce-m03-q1', 'dce-m03-check', 1, 'Which aspect ratio should you use for Reels, TikTok and WhatsApp status?', '["16:9 (wide)","9:16 (tall)","1:1 (square) only","4:3"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dce-m03-q1', 1, 'These are watched on phones held upright, so use tall 9:16.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dce-m03-q2', 'dce-m03-check', 2, 'You want to remove a boring part from the middle of a clip. What do you use?', '["Split at both ends of that part, then delete it","Add music","Change the aspect ratio","Export twice"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dce-m03-q2', 0, 'Split cuts the clip where the playhead is, so you can delete the section in between.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dce-m03-q3', 'dce-m03-check', 3, 'Why add captions to short videos?', '["They make the file smaller","Many people watch with the sound off","They''re required to export","They change the video''s colours"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dce-m03-q3', 1, 'Captions carry your message when the sound is off, and help people who can''t hear it.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dce-m03-q4', 'dce-m03-check', 4, 'What should you do after CapCut writes automatic captions?', '["Nothing, they''re always right","Read them and fix any misheard words","Delete the audio","Make them bright red"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dce-m03-q4', 1, 'Auto captions often mishear names and local words, so check them.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dce-m03-q5', 'dce-m03-check', 5, 'Which export setting is good for social media?', '["1080p at 30 frames per second","240p","The lowest quality available","Audio only"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dce-m03-q5', 0, '1080p looks sharp on phones without making the file too large.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Design & Content Essentials: final assessment
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('design-content-essentials-final', 'design-content-essentials', 'final', null, 'Design & Content Essentials: final assessment', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dce-f01', 'design-content-essentials-final', 1, 'What are content themes (content pillars)?', '["A few main topics most of your posts fit into","The colours of your page","Paid adverts","Your logo"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dce-f01', 0, 'Two to four themes keep posts focused and ideas easy to find.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dce-f02', 'design-content-essentials-final', 2, 'How do you make AI-written captions sound like your brand?', '["Describe your voice and paste an example you like","Use lots of emojis","Ask for ''a caption''","Copy another brand"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dce-f02', 0, 'A description plus an example lets the AI match your tone.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dce-f03', 'design-content-essentials-final', 3, 'Which is fine to post on a business page?', '["A client''s photo without asking","Your own photo, with the client''s permission","An AI image shown as a real result","An unchecked price"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dce-f03', 1, 'Use your own photos with permission, and keep claims honest.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dce-f04', 'design-content-essentials-final', 4, 'Your headline is hard to read on a busy photo in Canva. What''s the best fix?', '["Put a solid shape behind the text","Make the text smaller","Add another font","Add more text"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dce-f04', 0, 'That''s a contrast problem, and a solid background fixes it.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dce-f05', 'design-content-essentials-final', 5, 'How many fonts should most designs use?', '["One or two","Five","As many as possible","One per word"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dce-f05', 0, 'One for headings and one for body text keeps a design clean.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dce-f06', 'design-content-essentials-final', 6, 'Which aspect ratio suits Reels, TikTok and WhatsApp status?', '["9:16 (tall)","16:9 (wide)","4:3","It doesn''t matter"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dce-f06', 0, 'They''re watched on phones held upright.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dce-f07', 'design-content-essentials-final', 7, 'Why add captions to short videos?', '["Many people watch with the sound off","They make the file smaller","They''re required to export","They change the colours"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dce-f07', 0, 'Captions carry your message without sound, and help people who can''t hear it.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dce-f08', 'design-content-essentials-final', 8, 'Which export setting suits social media video?', '["1080p at 30 frames per second","240p","Audio only","The lowest quality"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dce-f08', 0, '1080p looks sharp on phones without a huge file.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Build a CV with AI: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('career-m01-check', 'career-essentials', 'module', 'career-m01', 'Build a CV with AI: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('career-m01-q1', 'career-m01-check', 1, 'Which bullet point is strongest?', '["Responsible for sales","Did sales work","Increased monthly sales by 20% by following up every enquiry within a day","Sales"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('career-m01-q1', 2, 'It starts with an action and shows a result.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('career-m01-q2', 'career-m01-check', 2, 'Why tell AI ''don''t invent numbers''?', '["Numbers make CVs too long","Your CV must be true, and you''ll be asked about it","AI can''t count","Recruiters dislike numbers"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('career-m01-q2', 1, 'Only include figures you can back up in an interview.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('career-m01-q3', 'career-m01-check', 3, 'What''s the best way to tailor a CV to a job?', '["Send the same CV everywhere","Compare it with the advert and make the matching, true skills clear","Copy the whole advert into your CV","Add a photo"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('career-m01-q3', 1, 'Show clearly how your real experience matches what the employer asked for.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('career-m01-q4', 'career-m01-check', 4, 'Which layout is safest for most CVs?', '["One simple column with clear headings","Text inside images","Three columns with graphics","Handwritten and scanned"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('career-m01-q4', 0, 'Simple layouts are easy for people and screening software to read.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('career-m01-q5', 'career-m01-check', 5, 'Which of these do you usually not need on a CV?', '["Your experience","Your skills","Your state of origin and religion","Your contact details"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('career-m01-q5', 2, 'Personal details like these aren''t needed unless an employer specifically asks.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: A Professional LinkedIn Profile: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('career-m02-check', 'career-essentials', 'module', 'career-m02', 'A Professional LinkedIn Profile: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('career-m02-q1', 'career-m02-check', 1, 'Which LinkedIn headline is strongest?', '["Unemployed","Looking for job","Customer service professional | 3 years in retail banking | Open to CX roles in Lagos","Hi"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('career-m02-q1', 2, 'It says what you do, your experience and what you want, using words people search for.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('career-m02-q2', 'career-m02-check', 2, 'What makes a good LinkedIn profile photo?', '["A group photo from a party","A clear, recent photo of your face with good light","Your company logo","No photo"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('career-m02-q2', 1, 'People want to recognise you and see that you''re real.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('career-m02-q3', 'career-m02-check', 3, 'In what voice should the About section usually be written?', '["First person: ''I help…''","Third person, like a news story","In capital letters","As a list of hashtags"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('career-m02-q3', 0, 'First person sounds natural and personal on LinkedIn.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('career-m02-q4', 'career-m02-check', 4, 'Why do the first two lines of your About section matter most?', '["They''re printed in bold","LinkedIn hides the rest behind ''see more''","Only they are searchable","They set your photo"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('career-m02-q4', 1, 'Many people only read what shows before ''see more''.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('career-m02-q5', 'career-m02-check', 5, 'Where should you add the badges and certificates you earn?', '["Nowhere","In the Licences & certifications section","In your profile photo","In your banner only"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('career-m02-q5', 1, 'Licences & certifications is the section for courses and credentials.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Quick Excel Analysis: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('career-m03-check', 'career-essentials', 'module', 'career-m03', 'Quick Excel Analysis: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('career-m03-q1', 'career-m03-check', 1, 'What does pressing Ctrl + T on your data do?', '["Deletes it","Turns it into an Excel Table with filters that grows with new rows","Prints it","Makes it a chart"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('career-m03-q1', 1, 'Tables add filters and formatting, and expand automatically.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('career-m03-q2', 'career-m03-check', 2, 'Which formula adds up the Sales column F from row 2 to 13?', '["=SUM(F2:F13)","SUM F2 to F13","=ADD(F2,F13)","=F2+F13"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('career-m03-q2', 0, 'SUM adds every cell in the range. =F2+F13 would only add two cells.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('career-m03-q3', 'career-m03-check', 3, 'In the drinks shop data, what is total Snacks sales?', '["32,000","82,600","114,600","7,500"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('career-m03-q3', 0, '=SUMIF(C2:C13,"Snacks",F2:F13) adds 7,500 + 10,000 + 10,500 + 4,000 = 32,000.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('career-m03-q4', 'career-m03-check', 4, 'What is a PivotTable good for?', '["Typing new data","Quick totals by group, like sales by product, without formulas","Checking spelling","Changing fonts"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('career-m03-q4', 1, 'Drag a field to Rows and a number to Values to get totals by group.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('career-m03-q5', 'career-m03-check', 5, 'Which chart is best for comparing sales of different products?', '["A bar or column chart","A 3D pie chart","No chart","A line chart of product names"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('career-m03-q5', 0, 'Bars make it easy to compare items side by side.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Career Essentials: final assessment
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('career-essentials-final', 'career-essentials', 'final', null, 'Career Essentials: final assessment', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('career-f01', 'career-essentials-final', 1, 'Which CV bullet point is strongest?', '["Responsible for sales","Increased monthly sales by 20% by following up every enquiry within a day","Did sales","Sales work"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('career-f01', 1, 'It starts with an action and shows a result.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('career-f02', 'career-essentials-final', 2, 'When asking AI to improve your CV, why say ''don''t invent numbers''?', '["Everything on your CV must be true","Numbers make CVs longer","AI can''t count","Recruiters dislike numbers"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('career-f02', 0, 'Only include what you can explain in an interview.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('career-f03', 'career-essentials-final', 3, 'What''s the best way to tailor a CV for a job?', '["Compare it with the advert and make the matching, true skills clear","Send the same CV everywhere","Copy the advert into your CV","Add a photo"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('career-f03', 0, 'Show clearly how your real experience matches what the employer asked for.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('career-f04', 'career-essentials-final', 4, 'Which LinkedIn headline is strongest?', '["Looking for job","Customer service professional | 3 years in banking | Open to CX roles","Hi","Unemployed"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('career-f04', 1, 'It says what you do and what you want, using words people search for.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('career-f05', 'career-essentials-final', 5, 'Why do the first two lines of your LinkedIn About section matter most?', '["LinkedIn hides the rest behind ''see more''","They''re in bold","Only they''re searchable","They set your photo"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('career-f05', 0, 'Many people only read what shows before ''see more''.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('career-f06', 'career-essentials-final', 6, 'What does pressing Ctrl + T on your data in Excel do?', '["Turns it into a Table with filters that grows with new rows","Deletes it","Prints it","Makes a chart"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('career-f06', 0, 'Tables add filters and formatting, and expand automatically.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('career-f07', 'career-essentials-final', 7, 'Which formula adds up cells F2 to F13?', '["=SUM(F2:F13)","SUM F2 to F13","=F2+F13","=ADD(F2:F13)"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('career-f07', 0, 'SUM adds every cell in the range.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('career-f08', 'career-essentials-final', 8, 'What is a PivotTable good for?', '["Quick totals by group, like sales by product","Checking spelling","Changing fonts","Typing new data"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('career-f08', 0, 'Drag a field to Rows and a number to Values to get totals by group.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 
