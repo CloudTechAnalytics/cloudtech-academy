@@ -1,6 +1,6 @@
 # CloudTech Academy
 
-The learning platform of [CloudTech Analytics](https://cloudtech-analytics.vercel.app). It offers practical, self-paced courses in data, analytics and technology. The courses are text-first and free.
+The learning platform of [CloudTech Analytics](https://cloudtechanalytics.com). It offers practical, self-paced courses in data, analytics and technology. The courses are text-first and free.
 
 Every lesson follows the same steps: **read → understand → practise → apply → assess → earn**. The SQL course comes with a real SQLite database that runs in the browser. Learners can check each exercise answer immediately, and anyone can verify a certificate by its credential ID.
 

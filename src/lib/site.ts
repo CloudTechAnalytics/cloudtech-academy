@@ -1,15 +1,15 @@
 export const SITE = {
   name: "CloudTech Academy",
   parent: "CloudTech Analytics",
-  parentUrl: "https://cloudtech-analytics.vercel.app",
+  parentUrl: "https://cloudtechanalytics.com",
   email: "cloudtechanalytics.consultant@gmail.com",
   /** Public address used for canonical URLs, previews, the sitemap and certificate verification links. */
-  url: ((import.meta.env.VITE_SITE_URL as string | undefined) || "https://cloudtech-academy-one.vercel.app").replace(/\/$/, ""),
+  url: ((import.meta.env.VITE_SITE_URL as string | undefined) || "https://academy.cloudtechanalytics.com").replace(/\/$/, ""),
   googleVerification: (import.meta.env.VITE_GOOGLE_SITE_VERIFICATION as string | undefined) ?? "",
   products: [
     { name: "The Counsel", href: "https://thecounsels.org" },
     { name: "The Manifest", href: "https://the-manifest-test.vercel.app" },
-    { name: "CloudTech Analytics", href: "https://cloudtech-analytics.vercel.app" },
+    { name: "CloudTech Analytics", href: "https://cloudtechanalytics.com" },
   ],
 } as const;
 
