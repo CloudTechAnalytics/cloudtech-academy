@@ -666,6 +666,133 @@ function retail() {
   return { stores, products, cost_prices, sales_raw, targets, stockouts };
 }
 
+/* ------------------------------------------------------------------ agile (delivery) */
+// Kolanut's kiosk ordering app: six two-week sprints of a Scrum team's backlog, as exported
+// from its board on 22 May 2026, with the work still to do. Generated after everything else,
+// from its own seed.
+function agile() {
+  seed = 20260801;
+  const SPRINT_START = d("2026-03-02");
+  const GOALS = {
+    "Sign-up and login": "A kiosk owner can sign up and log in with a phone number",
+    "Product catalogue": "Kiosks can browse the catalogue with current prices",
+    "Basket and checkout": "A kiosk can build a basket and place an order",
+    Payments: "Kiosks can pay by transfer or on delivery",
+    "Order tracking": "Kiosks can see order status and delivery day",
+    "Sales rep tools": "Sales reps can see and help their kiosks' orders",
+    Reorder: "Reorder last week's basket in two taps",
+  };
+  const sprints = [];
+  const goals = [
+    "A kiosk owner can sign up and log in with a phone number",
+    "Browse the product catalogue with current prices",
+    "Build a basket and place an order",
+    "Pay by transfer or on delivery",
+    "See order status and delivery day",
+    "Sales reps can see and help their kiosks' orders",
+    "Reorder last week's basket in two taps",
+    "Release candidate: fix, polish and pilot in Surulere",
+  ];
+  for (let k = 0; k < 8; k++) {
+    const start = SPRINT_START + k * 14 * day;
+    sprints.push({ sprint: k + 1, start_date: iso(start), end_date: iso(start + 11 * day), goal: goals[k], committed_points: k < 6 ? 0 : null, status: k < 6 ? "Closed" : k === 6 ? "Planned" : "Future" });
+  }
+  const EPICS = [
+    ["Sign-up and login", "MVP", [["Register with phone number", 8], ["Verify phone by SMS code", 3], ["Log in with PIN", 3], ["Reset forgotten PIN", 2], ["Link kiosk to sales rep", 2]]],
+    ["Product catalogue", "MVP", [["List products by category", 5], ["Show current price and pack size", 2], ["Search products", 3], ["Filter by category and brand", 3], ["Show out-of-stock items", 3], ["Product photos", 2]]],
+    ["Basket and checkout", "MVP", [["Add and remove items in basket", 8], ["Minimum order value rule", 2], ["Delivery day selection", 3], ["Order confirmation screen", 2], ["Order confirmation SMS", 2], ["Apply volume discount", 5]]],
+    ["Payments", "MVP", [["Pay on delivery", 3], ["Pay by bank transfer with reference", 8], ["Confirm transfer payments", 8], ["Credit limit check", 8], ["Payment receipt by SMS", 3]]],
+    ["Order tracking", "MVP", [["Order status list", 3], ["Notify when order is dispatched", 3], ["Delivery day reminder SMS", 2], ["Cancel an order before dispatch", 3]]],
+    ["Sales rep tools", "MVP", [["Rep sees kiosk orders", 5], ["Rep places order for a kiosk", 8], ["Rep sees kiosks that haven't ordered in 14 days", 3]]],
+    ["Reorder", "MVP", [["Reorder last basket", 8], ["Favourite products list", 3]]],
+    ["Loyalty", "Later", [["Points per order", 5], ["Redeem points", 8], ["Loyalty tiers", 5]]],
+    ["Reporting", "Later", [["Kiosk monthly statement", 5], ["Rep performance dashboard", 8]]],
+    ["Offline mode", "Later", [["Browse catalogue offline", 8], ["Queue orders offline", 13]]],
+  ];
+  // Stories added after planning started: scope creep, mostly into the MVP.
+  const ADDED = [
+    ["Basket and checkout", "Edit an order before dispatch", 5, 2],
+    ["Payments", "Part-payment on delivery", 5, 3],
+    ["Sign-up and login", "Yoruba, Hausa and Igbo language options", 8, 3],
+    ["Order tracking", "Driver's phone number on the order", 2, 4],
+    ["Product catalogue", "Promotions banner", 3, 4],
+    ["Sales rep tools", "Rep visit notes", 3, 5],
+    ["Basket and checkout", "Save basket for later", 3, 5],
+    ["Payments", "Pay by card", 5, 6],
+    ["Order tracking", "Delivery photo proof", 5, 6],
+  ];
+  const backlog = [];
+  let id = 101;
+  const add = (epic, release, title, points, type, createdSprint) =>
+    backlog.push({ item_id: `KOA-${id++}`, type, title, epic, release, points, created_date: iso(SPRINT_START - (createdSprint === 0 ? int(5, 20) : -((createdSprint - 1) * 14 + int(0, 9))) * day), sprint: null, status: "To do", started_date: null, done_date: null });
+  for (const [epic, release, stories] of EPICS) for (const [title, pts] of stories) add(epic, release, title, pts, "Story", 0);
+  backlog.splice(2, 0, { item_id: "KOA-100", type: "Spike", title: "Choose SMS provider", epic: "Sign-up and login", release: "MVP", points: 2, created_date: "2026-02-16", sprint: null, status: "To do", started_date: null, done_date: null });
+  for (const [epic, title, pts, s] of ADDED) add(epic, "MVP", title, pts, "Story", s);
+
+  // Work the MVP backlog in order, sprint by sprint, at the team's capacity.
+  const capacity = [14, 17, 19, 21, 20, 22];
+  const mvpQueue = () => backlog.filter((b) => b.release === "MVP" && b.status === "To do" && b.type !== "Bug");
+  for (let k = 0; k < 6; k++) {
+    const s = sprints[k];
+    const sStart = d(s.start_date);
+    // Items created before this sprint can be planned into it.
+    const ready = mvpQueue().filter((b) => d(b.created_date) < sStart);
+    const carried = s.carried ?? 0;
+    delete s.carried;
+    let used = 0;
+    const planned = [];
+    for (const b of ready) {
+      if (carried + used + b.points > capacity[k] + 2) continue;
+      planned.push(b);
+      used += b.points;
+    }
+    s.committed_points = carried + used;
+    const byEpic = {};
+    for (const p of planned) byEpic[p.epic] = (byEpic[p.epic] ?? 0) + p.points;
+    const top = Object.entries(byEpic).sort((x, y) => y[1] - x[1])[0]?.[0];
+    if (top) s.goal = GOALS[top];
+    // Most planned work finishes; a slip carries the item over unfinished.
+    planned.forEach((b, j) => {
+      b.sprint = s.sprint;
+      const slipped = j === planned.length - 1 && rand() < 0.5;
+      const startOff = Math.min(9, Math.floor((j / planned.length) * 8) + int(0, 1));
+      b.started_date = iso(sStart + startOff * day);
+      if (slipped) {
+        b.status = "To do"; // returns to the backlog, keeps its start date
+        b.carried_over = true;
+      } else {
+        b.status = "Done";
+        b.done_date = iso(sStart + Math.min(11, startOff + int(1, Math.max(2, Math.ceil(b.points / 2) + 1))) * day);
+      }
+    });
+    // Bugs found during the sprint, fixed the same sprint or the next.
+    const bugs = int(1, 3) + (k >= 3 ? 1 : 0);
+    for (let n = 0; n < bugs; n++) {
+      const found = sStart + int(2, 9) * day;
+      const fixedNow = rand() < 0.6;
+      backlog.push({ item_id: `KOA-${id++}`, type: "Bug", title: pick(["Price shows old value after refresh", "SMS code arrives late", "Basket total rounding", "Crash on older Android phones", "Delivery day list empty on Fridays", "Transfer reference not saved", "Search misses products with brackets", "Rep sees wrong kiosk list"]), epic: pick(["Basket and checkout", "Payments", "Product catalogue", "Sign-up and login", "Sales rep tools"]), release: "MVP", points: null, created_date: iso(found), sprint: fixedNow || k === 5 ? s.sprint : s.sprint + 1, status: fixedNow || k < 5 ? "Done" : "To do", started_date: iso(found + day), done_date: fixedNow ? iso(found + int(1, 2) * day) : k < 5 ? iso(found + 14 * day) : null });
+    }
+    // Carried-over items go first in the next sprint.
+    for (const b of backlog.filter((x) => x.carried_over && x.status === "To do")) {
+      delete b.carried_over;
+      if (k < 5) {
+        const ns = d(sprints[k + 1].start_date);
+        b.sprint = s.sprint + 1;
+        b.status = "Done";
+        b.done_date = iso(ns + int(1, 3) * day);
+        sprints[k + 1].carried = (sprints[k + 1].carried ?? 0) + b.points;
+      } else {
+        b.status = "In progress";
+        b.sprint = s.sprint;
+      }
+    }
+  }
+  for (const b of backlog) delete b.carried_over;
+  // Re-number bugs into id order and sort the export by id.
+  backlog.sort((a, b) => Number(a.item_id.slice(4)) - Number(b.item_id.slice(4)));
+  return { backlog, sprints };
+}
+
 /* ------------------------------------------------------------------ write */
 const SQL = await initSqlJs();
 const L = logistics();
@@ -696,6 +823,7 @@ for (const [name, data] of [["sales", S], ["cleaning", customerExport(S.customer
   for (const [table, rows] of Object.entries(data)) writeCsv(name, table, rows);
 // Generated last, from its own seed, so it never changes the datasets above.
 for (const [table, rows] of Object.entries(retail())) writeCsv("retail", table, rows);
+for (const [table, rows] of Object.entries(agile())) writeCsv("agile", table, rows);
 
 // Summary for the build log
 const counts = db.exec("SELECT (SELECT COUNT(*) FROM customers), (SELECT COUNT(*) FROM shipments), (SELECT COUNT(*) FROM payments), (SELECT COUNT(*) FROM routes), (SELECT COUNT(*) FROM employees)")[0].values[0];

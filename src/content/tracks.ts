@@ -149,7 +149,7 @@ export const TRACKS: Track[] = [
         title: "Specialist",
         summary: "Go deeper into how BAs work in modern teams.",
         items: [
-          { kind: "upcoming", title: "Agile Business Analysis", why: "Backlogs, refinement, story mapping and working inside a Scrum team.", level: 3 },
+          { kind: "course", courseId: "agile-business-analysis", why: "Story maps, splitting, refinement, WSJF, velocity forecasts and pilots, inside a Scrum team." },
           { kind: "upcoming", title: "Process Improvement with BPMN and Lean", why: "Full BPMN notation, value-stream mapping and measuring waste.", level: 3 },
         ],
       },

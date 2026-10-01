@@ -1,0 +1,65 @@
+item_id,type,title,epic,release,points,created_date,sprint,status,started_date,done_date
+KOA-100,Spike,Choose SMS provider,Sign-up and login,MVP,2,2026-02-16,1,Done,2026-03-06,2026-03-08
+KOA-101,Story,Register with phone number,Sign-up and login,MVP,8,2026-02-21,1,Done,2026-03-03,2026-03-07
+KOA-102,Story,Verify phone by SMS code,Sign-up and login,MVP,3,2026-02-10,1,Done,2026-03-04,2026-03-06
+KOA-103,Story,Log in with PIN,Sign-up and login,MVP,3,2026-02-17,1,Done,2026-03-09,2026-03-12
+KOA-104,Story,Reset forgotten PIN,Sign-up and login,MVP,2,2026-02-24,2,Done,2026-03-16,2026-03-18
+KOA-105,Story,Link kiosk to sales rep,Sign-up and login,MVP,2,2026-02-11,2,Done,2026-03-17,2026-03-18
+KOA-106,Story,List products by category,Product catalogue,MVP,5,2026-02-22,2,Done,2026-03-18,2026-03-22
+KOA-107,Story,Show current price and pack size,Product catalogue,MVP,2,2026-02-10,2,Done,2026-03-19,2026-03-20
+KOA-108,Story,Search products,Product catalogue,MVP,3,2026-02-14,2,Done,2026-03-21,2026-03-24
+KOA-109,Story,Filter by category and brand,Product catalogue,MVP,3,2026-02-24,2,Done,2026-03-22,2026-03-24
+KOA-110,Story,Show out-of-stock items,Product catalogue,MVP,3,2026-02-25,3,Done,2026-03-30,2026-03-31
+KOA-111,Story,Product photos,Product catalogue,MVP,2,2026-02-10,3,Done,2026-03-23,2026-04-02
+KOA-112,Story,Add and remove items in basket,Basket and checkout,MVP,8,2026-02-12,3,Done,2026-04-01,2026-04-05
+KOA-113,Story,Minimum order value rule,Basket and checkout,MVP,2,2026-02-18,3,Done,2026-04-03,2026-04-05
+KOA-114,Story,Delivery day selection,Basket and checkout,MVP,3,2026-02-21,3,Done,2026-04-03,2026-04-04
+KOA-115,Story,Order confirmation screen,Basket and checkout,MVP,2,2026-02-21,3,Done,2026-04-05,2026-04-07
+KOA-116,Story,Order confirmation SMS,Basket and checkout,MVP,2,2026-02-14,4,Done,2026-04-13,2026-04-14
+KOA-117,Story,Apply volume discount,Basket and checkout,MVP,5,2026-02-14,4,Done,2026-04-14,2026-04-16
+KOA-118,Story,Pay on delivery,Payments,MVP,3,2026-02-11,4,Done,2026-04-15,2026-04-18
+KOA-119,Story,Pay by bank transfer with reference,Payments,MVP,8,2026-02-20,4,Done,2026-04-18,2026-04-23
+KOA-120,Story,Confirm transfer payments,Payments,MVP,8,2026-02-15,5,Done,2026-04-28,2026-05-02
+KOA-121,Story,Credit limit check,Payments,MVP,8,2026-02-20,5,Done,2026-04-29,2026-05-04
+KOA-122,Story,Payment receipt by SMS,Payments,MVP,3,2026-02-20,4,Done,2026-04-18,2026-04-21
+KOA-123,Story,Order status list,Order tracking,MVP,3,2026-02-15,6,Done,2026-05-03,2026-05-12
+KOA-124,Story,Notify when order is dispatched,Order tracking,MVP,3,2026-02-15,6,Done,2026-05-11,2026-05-12
+KOA-125,Story,Delivery day reminder SMS,Order tracking,MVP,2,2026-02-10,5,Done,2026-04-20,2026-04-30
+KOA-126,Story,Cancel an order before dispatch,Order tracking,MVP,3,2026-02-17,6,Done,2026-05-13,2026-05-14
+KOA-127,Story,Rep sees kiosk orders,Sales rep tools,MVP,5,2026-02-15,6,Done,2026-05-15,2026-05-18
+KOA-128,Story,Rep places order for a kiosk,Sales rep tools,MVP,8,2026-02-14,6,Done,2026-05-16,2026-05-19
+KOA-129,Story,Rep sees kiosks that haven't ordered in 14 days,Sales rep tools,MVP,3,2026-02-10,,To do,,
+KOA-130,Story,Reorder last basket,Reorder,MVP,8,2026-02-19,,To do,,
+KOA-131,Story,Favourite products list,Reorder,MVP,3,2026-02-19,,To do,,
+KOA-132,Story,Points per order,Loyalty,Later,5,2026-02-16,,To do,,
+KOA-133,Story,Redeem points,Loyalty,Later,8,2026-02-13,,To do,,
+KOA-134,Story,Loyalty tiers,Loyalty,Later,5,2026-02-10,,To do,,
+KOA-135,Story,Kiosk monthly statement,Reporting,Later,5,2026-02-19,,To do,,
+KOA-136,Story,Rep performance dashboard,Reporting,Later,8,2026-02-11,,To do,,
+KOA-137,Story,Browse catalogue offline,Offline mode,Later,8,2026-02-14,,To do,,
+KOA-138,Story,Queue orders offline,Offline mode,Later,13,2026-02-25,,To do,,
+KOA-139,Story,Edit an order before dispatch,Basket and checkout,MVP,5,2026-03-19,,To do,,
+KOA-140,Story,Part-payment on delivery,Payments,MVP,5,2026-04-05,,To do,,
+KOA-141,Story,"Yoruba, Hausa and Igbo language options",Sign-up and login,MVP,8,2026-04-02,,To do,,
+KOA-142,Story,Driver's phone number on the order,Order tracking,MVP,2,2026-04-22,6,Done,2026-05-17,2026-05-19
+KOA-143,Story,Promotions banner,Product catalogue,MVP,3,2026-04-22,,To do,,
+KOA-144,Story,Rep visit notes,Sales rep tools,MVP,3,2026-04-30,,To do,,
+KOA-145,Story,Save basket for later,Basket and checkout,MVP,3,2026-05-03,,To do,,
+KOA-146,Story,Pay by card,Payments,MVP,5,2026-05-12,,To do,,
+KOA-147,Story,Delivery photo proof,Order tracking,MVP,5,2026-05-16,,To do,,
+KOA-148,Bug,SMS code arrives late,Sign-up and login,MVP,,2026-03-10,2,Done,2026-03-11,2026-03-24
+KOA-149,Bug,Rep sees wrong kiosk list,Payments,MVP,,2026-03-11,1,Done,2026-03-12,2026-03-12
+KOA-150,Bug,SMS code arrives late,Basket and checkout,MVP,,2026-03-19,2,Done,2026-03-20,2026-03-21
+KOA-151,Bug,SMS code arrives late,Product catalogue,MVP,,2026-04-04,4,Done,2026-04-05,2026-04-18
+KOA-152,Bug,Delivery day list empty on Fridays,Sign-up and login,MVP,,2026-04-08,4,Done,2026-04-09,2026-04-22
+KOA-153,Bug,Transfer reference not saved,Sign-up and login,MVP,,2026-04-22,5,Done,2026-04-23,2026-05-06
+KOA-154,Bug,Basket total rounding,Sales rep tools,MVP,,2026-04-16,4,Done,2026-04-17,2026-04-17
+KOA-155,Bug,Rep sees wrong kiosk list,Sales rep tools,MVP,,2026-04-19,4,Done,2026-04-20,2026-04-21
+KOA-156,Bug,SMS code arrives late,Sales rep tools,MVP,,2026-04-15,4,Done,2026-04-16,2026-04-16
+KOA-157,Bug,Crash on older Android phones,Sign-up and login,MVP,,2026-05-04,5,Done,2026-05-05,2026-05-06
+KOA-158,Bug,Crash on older Android phones,Product catalogue,MVP,,2026-05-06,5,Done,2026-05-07,2026-05-07
+KOA-159,Bug,Rep sees wrong kiosk list,Sign-up and login,MVP,,2026-05-05,6,Done,2026-05-06,2026-05-19
+KOA-160,Bug,Delivery day list empty on Fridays,Payments,MVP,,2026-05-17,6,Done,2026-05-18,2026-05-18
+KOA-161,Bug,SMS code arrives late,Basket and checkout,MVP,,2026-05-16,6,Done,2026-05-17,2026-05-18
+KOA-162,Bug,Search misses products with brackets,Basket and checkout,MVP,,2026-05-14,6,Done,2026-05-15,2026-05-15
+KOA-163,Bug,Price shows old value after refresh,Payments,MVP,,2026-05-18,6,To do,2026-05-19,

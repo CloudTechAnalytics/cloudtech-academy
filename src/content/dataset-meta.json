@@ -1,4 +1,271 @@
 {
+ "agile": {
+  "zipBytes": 2312,
+  "files": {
+   "backlog": {
+    "rows": 64,
+    "bytes": 6103,
+    "columns": [
+     {
+      "name": "item_id",
+      "type": "text",
+      "missing": 0,
+      "distinct": 64
+     },
+     {
+      "name": "type",
+      "type": "text",
+      "missing": 0,
+      "distinct": 3
+     },
+     {
+      "name": "title",
+      "type": "text",
+      "missing": 0,
+      "distinct": 56
+     },
+     {
+      "name": "epic",
+      "type": "text",
+      "missing": 0,
+      "distinct": 10
+     },
+     {
+      "name": "release",
+      "type": "text",
+      "missing": 0,
+      "distinct": 2
+     },
+     {
+      "name": "points",
+      "type": "number",
+      "missing": 16,
+      "distinct": 5,
+      "min": 2,
+      "max": 13
+     },
+     {
+      "name": "created_date",
+      "type": "date",
+      "missing": 0,
+      "distinct": 36,
+      "min": "2026-02-10",
+      "max": "2026-05-18"
+     },
+     {
+      "name": "sprint",
+      "type": "number",
+      "missing": 18,
+      "distinct": 6,
+      "min": 1,
+      "max": 6
+     },
+     {
+      "name": "status",
+      "type": "text",
+      "missing": 0,
+      "distinct": 2
+     },
+     {
+      "name": "started_date",
+      "type": "date",
+      "missing": 18,
+      "distinct": 40,
+      "min": "2026-03-03",
+      "max": "2026-05-19"
+     },
+     {
+      "name": "done_date",
+      "type": "date",
+      "missing": 19,
+      "distinct": 31,
+      "min": "2026-03-06",
+      "max": "2026-05-19"
+     }
+    ],
+    "preview": [
+     [
+      "KOA-100",
+      "Spike",
+      "Choose SMS provider",
+      "Sign-up and login",
+      "MVP",
+      "2",
+      "2026-02-16",
+      "1",
+      "Done",
+      "2026-03-06",
+      "2026-03-08"
+     ],
+     [
+      "KOA-101",
+      "Story",
+      "Register with phone number",
+      "Sign-up and login",
+      "MVP",
+      "8",
+      "2026-02-21",
+      "1",
+      "Done",
+      "2026-03-03",
+      "2026-03-07"
+     ],
+     [
+      "KOA-102",
+      "Story",
+      "Verify phone by SMS code",
+      "Sign-up and login",
+      "MVP",
+      "3",
+      "2026-02-10",
+      "1",
+      "Done",
+      "2026-03-04",
+      "2026-03-06"
+     ],
+     [
+      "KOA-103",
+      "Story",
+      "Log in with PIN",
+      "Sign-up and login",
+      "MVP",
+      "3",
+      "2026-02-17",
+      "1",
+      "Done",
+      "2026-03-09",
+      "2026-03-12"
+     ],
+     [
+      "KOA-104",
+      "Story",
+      "Reset forgotten PIN",
+      "Sign-up and login",
+      "MVP",
+      "2",
+      "2026-02-24",
+      "2",
+      "Done",
+      "2026-03-16",
+      "2026-03-18"
+     ],
+     [
+      "KOA-105",
+      "Story",
+      "Link kiosk to sales rep",
+      "Sign-up and login",
+      "MVP",
+      "2",
+      "2026-02-11",
+      "2",
+      "Done",
+      "2026-03-17",
+      "2026-03-18"
+     ]
+    ]
+   },
+   "sprints": {
+    "rows": 8,
+    "bytes": 707,
+    "columns": [
+     {
+      "name": "sprint",
+      "type": "number",
+      "missing": 0,
+      "distinct": 8,
+      "min": 1,
+      "max": 8
+     },
+     {
+      "name": "start_date",
+      "type": "date",
+      "missing": 0,
+      "distinct": 8,
+      "min": "2026-03-02",
+      "max": "2026-06-08"
+     },
+     {
+      "name": "end_date",
+      "type": "date",
+      "missing": 0,
+      "distinct": 8,
+      "min": "2026-03-13",
+      "max": "2026-06-19"
+     },
+     {
+      "name": "goal",
+      "type": "text",
+      "missing": 0,
+      "distinct": 7
+     },
+     {
+      "name": "committed_points",
+      "type": "number",
+      "missing": 2,
+      "distinct": 6,
+      "min": 16,
+      "max": 24
+     },
+     {
+      "name": "status",
+      "type": "text",
+      "missing": 0,
+      "distinct": 3
+     }
+    ],
+    "preview": [
+     [
+      "1",
+      "2026-03-02",
+      "2026-03-13",
+      "A kiosk owner can sign up and log in with a phone number",
+      "16",
+      "Closed"
+     ],
+     [
+      "2",
+      "2026-03-16",
+      "2026-03-27",
+      "Kiosks can browse the catalogue with current prices",
+      "19",
+      "Closed"
+     ],
+     [
+      "3",
+      "2026-03-30",
+      "2026-04-10",
+      "A kiosk can build a basket and place an order",
+      "20",
+      "Closed"
+     ],
+     [
+      "4",
+      "2026-04-13",
+      "2026-04-24",
+      "Kiosks can pay by transfer or on delivery",
+      "23",
+      "Closed"
+     ],
+     [
+      "5",
+      "2026-04-27",
+      "2026-05-08",
+      "Kiosks can pay by transfer or on delivery",
+      "21",
+      "Closed"
+     ],
+     [
+      "6",
+      "2026-05-11",
+      "2026-05-22",
+      "Sales reps can see and help their kiosks' orders",
+      "24",
+      "Closed"
+     ]
+    ]
+   }
+  }
+ },
  "cleaning": {
   "zipBytes": 3027,
   "files": {

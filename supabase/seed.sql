@@ -26479,9 +26479,1332 @@ $md$, true, true, 11, array['ba-11-p1', 'ba-11-p2', 'ba-11-t1']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 
+-- Course: Agile Business Analysis
+insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
+values ('agile-business-analysis', 'full', null, 'agile-business-analysis', 'ABA', 'Agile Business Analysis', 'Work as a business analyst in a Scrum team: product vision and outcomes, story maps, splitting, refinement, WSJF, velocity forecasts, flow metrics and pilots, on a real team''s backlog.', 'Most business analysts now work inside agile teams, where there''s no big requirements document and the plan changes every two weeks. In this course you join the team building Kolanut Distribution''s ordering app for kiosk owners, with its real backlog and six sprints of history. You''ll write a product vision and an outcome-based goal, map the user journey and slice a walking skeleton, split big stories into small valuable ones, run refinement with the three amigos and a definition of ready and done, prioritise with cost of delay and WSJF, forecast the release from the team''s real velocity when scope keeps growing, read flow and quality measures without blaming anyone, and design a pilot with success criteria agreed in advance. The course ends with an agile delivery pack for a freight company''s delay-notification service.', 'business-analysis', 'intermediate', 3, 'Intermediate', 6, true, 'available', true, array['Working as a BA in Scrum', 'Product visions and outcome-based goals', 'Story mapping and walking skeletons', 'Splitting stories with proven patterns', 'Refinement, three amigos, definitions of ready and done', 'Story points, planning poker and WSJF', 'Velocity, burn-up charts and release forecasts', 'Cycle time, throughput and commitment reliability', 'Sprint reviews and pilots with decision rules']::text[], array['Business Analysis Fundamentals, or experience writing requirements and user stories']::text[], 'Harbourline delay notifications: agile delivery pack', true, true, true, true, false, 60, 23)
+on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level = excluded.level, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('aba-m01', 'agile-business-analysis', 'Agile and the Business Analyst', 1, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('agile-business-analysis:agile-and-the-business-analyst', 'agile-business-analysis', 'aba-m01', 'agile-and-the-business-analyst', 'Agile and the business analyst', 'How agile teams work, the Scrum roles and events, and where a business analyst adds value when there''s no big requirements document to write.', 20, $md$
+## The problem
+
+Kolanut Distribution sells drinks, snacks and household goods to 90 retail customers across Nigeria. Its 39 kiosk customers are a headache: they order small amounts, about once every three weeks, and only when a sales rep visits or phones. Since the January price rise they've been buying fewer packs. The commercial director has approved a mobile ordering app for kiosk owners, to be built by a small in-house team working in **Scrum**.
+
+You've been hired as the team's business analyst. On your first day the developer asks, "So, are you writing the requirements document?" The honest answer is no. Agile teams don't work from a 60-page specification signed off before anything is built. But they need a BA more than ever, just doing different things.
+
+## The concept
+
+**What agile means**
+
+Agile is a way of building things in small, usable increments, getting feedback early, and changing the plan as you learn. The Agile Manifesto (2001) values:
+
+- individuals and interactions over processes and tools;
+- working software over comprehensive documentation;
+- customer collaboration over contract negotiation;
+- responding to change over following a plan.
+
+The things on the right still matter; the things on the left matter more.
+
+**Scrum in one table**
+
+Scrum is the most widely used agile framework. Work happens in **sprints** of usually two weeks, each producing a usable increment.
+
+| Element | What it is |
+| :-- | :-- |
+| **Product owner** | owns the product backlog and decides what's built next, for maximum value |
+| **Scrum master** | helps the team work well and removes obstacles |
+| **Developers** | everyone who builds and tests the increment |
+| **Product backlog** | the ordered list of everything that might be built |
+| **Sprint planning** | the team chooses a sprint goal and the backlog items to deliver it |
+| **Daily scrum** | 15 minutes each day to plan the next 24 hours |
+| **Refinement** | ongoing work to make upcoming backlog items clear, small and estimated |
+| **Sprint review** | the team shows what it built; stakeholders give feedback |
+| **Retrospective** | the team improves how it works |
+
+Scrum has no "business analyst" role. A BA is usually one of the developers in the broad sense, or works closely with the product owner, and sometimes is the product owner.
+
+**What the BA does in an agile team**
+
+- **Understands the problem and the users** before and during delivery.
+- **Shapes the backlog**: story maps, user stories, splitting, acceptance criteria.
+- **Runs refinement**, so items are ready before sprint planning.
+- **Answers questions** during the sprint and checks work against the criteria.
+- **Measures outcomes**: is the product changing behaviour, not just shipping features?
+
+## Example
+
+The BA's week during a sprint on the kiosk app:
+
+| Day | Activity |
+| :-- | :-- |
+| Monday | Sprint planning: explains the top stories and their acceptance criteria |
+| Daily | Daily scrum: answers questions on "Minimum order value rule" |
+| Tuesday | Calls three kiosk owners about how they'd want to pay |
+| Wednesday | Refinement: splits "Pay by card" into smaller stories with the team |
+| Thursday | Checks finished stories against their acceptance criteria |
+| Friday (end of sprint) | Sprint review: shows a sales rep the "kiosks that haven't ordered" list and records feedback |
+
+Notice how much of the week is spent with users and the team, and how little writing long documents.
+
+## Walkthrough
+
+1. Download the sales dataset and look at how often kiosks order compared with wholesalers. It's the business problem the app is meant to solve.
+2. Download the agile dataset (`backlog.csv` and `sprints.csv`): the team's board, exported after six sprints. You'll use it throughout the course.
+3. Read `sprints.csv`. Each sprint has a goal, committed points and a status.
+4. For each Scrum event, write what the BA contributes (the task below).
+
+## Practice
+
+```dataset
+{"dataset": "agile", "files": ["backlog", "sprints"]}
+```
+
+```answer
+{
+  "id": "aba-01-p1",
+  "prompt": "Sales data: on average, how many days pass between one order day and the next for **Kiosk** customers? (Use the gap between each customer's consecutive order dates, ignoring same-day lines.) One decimal place.",
+  "answer": 22.4,
+  "format": "number",
+  "dataset": "sales",
+  "files": ["orders", "customers"],
+  "verify": "SELECT ROUND(AVG(gap), 1) FROM (SELECT o.customer_id, julianday(o.order_date) - julianday(LAG(o.order_date) OVER (PARTITION BY o.customer_id ORDER BY o.order_date, o.order_id)) AS gap FROM orders o JOIN customers c ON c.customer_id = o.customer_id WHERE c.channel = 'Kiosk') WHERE gap > 0",
+  "hint": "Sort each kiosk's orders by date, take the gap to the previous order date, ignore gaps of 0 (same day), and average.",
+  "explanation": "About 22 days, against about 5 for wholesalers. Kiosks order rarely, mostly when a rep visits. The app is meant to make ordering easy enough that they order more often.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "aba-01-t1",
+  "prompt": "For each of the five Scrum events, write **what the BA contributes** on the kiosk app team. One line per event in the form **Event: contribution**: sprint planning, daily scrum, refinement, sprint review and retrospective.",
+  "minutes": 6,
+  "rows": 6,
+  "placeholder": "Sprint planning: ...",
+  "rules": [
+    { "label": "Sprint planning line", "pattern": "^\\s*[-*]?\\s*sprint planning\\s*:" },
+    { "label": "Daily scrum line", "pattern": "^\\s*[-*]?\\s*daily (scrum|stand-?up)\\s*:" },
+    { "label": "Refinement line", "pattern": "^\\s*[-*]?\\s*(backlog )?refinement\\s*:" },
+    { "label": "Sprint review line", "pattern": "^\\s*[-*]?\\s*sprint review\\s*:" },
+    { "label": "Retrospective line", "pattern": "^\\s*[-*]?\\s*retro(spective)?\\s*:" },
+    { "label": "Mentions users or stakeholders at least once", "pattern": "user|kiosk|stakeholder|rep|customer" }
+  ],
+  "sample": "Sprint planning: explains the top stories and their acceptance criteria, and helps the team agree a sprint goal.\nDaily scrum: listens for questions and blockers about requirements, and answers them the same day.\nRefinement: brings the next stories split, with acceptance criteria and open questions, and agrees them with the team.\nSprint review: invites a sales rep and a kiosk owner, demonstrates against the goal, and records their feedback as new backlog items.\nRetrospective: raises what slowed the team down on requirements, such as stories that weren't ready, and agrees one change.",
+  "note": "None of this is writing a big document. The BA's value in Scrum comes from keeping the team connected to users and making sure every item is understood before it's built.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Who decides the order of the product backlog in Scrum?",
+    "options": ["The business analyst", "The product owner", "The scrum master", "The most senior developer"],
+    "answer": 1,
+    "explanation": "The BA advises and shapes items; the product owner orders the backlog."
+  },
+  {
+    "prompt": "What does 'working software over comprehensive documentation' mean for a BA?",
+    "options": ["Write no documentation", "Write the documentation that helps people build and use the product, and no more", "Only developers write documents", "Documentation is written after release"],
+    "answer": 1,
+    "explanation": "The right side still has value; it just matters less than working results."
+  },
+  {
+    "prompt": "When does refinement happen?",
+    "options": ["Only before the project starts", "Continuously, so upcoming items are ready before sprint planning", "Only in the retrospective", "Never in Scrum"],
+    "answer": 1,
+    "explanation": "Refinement keeps the next sprint or two of work ready."
+  }
+]
+```
+$md$, true, true, 1, array['aba-01-p1', 'aba-01-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('aba-m02', 'agile-business-analysis', 'Product Vision and Outcomes', 2, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('agile-business-analysis:vision-and-outcomes', 'agile-business-analysis', 'aba-m02', 'vision-and-outcomes', 'Product vision and outcomes', 'Write a product vision and goal that keep a team pointed at the right problem, and define outcomes you can measure, not just features you can ship.', 20, $md$
+## The problem
+
+Three weeks into the project, the kiosk app's backlog has grown to nearly 50 ideas: loyalty points, offline mode, a promotions banner, three languages, a rep dashboard. Every idea is reasonable, and the team can build perhaps a quarter of them before the pilot. Which quarter?
+
+Without a clear answer to "what is this product **for**?", every request looks equally important and the loudest stakeholder wins. A **product vision** and a measurable **product goal** are how an agile team decides what *not* to build, and how it knows, after launch, whether the app was worth building at all.
+
+## The concept
+
+**A product vision**
+
+One or two sentences describing who the product is for, the problem it solves and why it's better than the alternative. A common template:
+
+> **For** [target users] **who** [need or problem], **the** [product] **is a** [type of product] **that** [key benefit]. **Unlike** [current alternative], **our product** [main difference].
+
+**Outputs versus outcomes**
+
+- An **output** is something the team ships: "a reorder button".
+- An **outcome** is a change in behaviour that matters to the business: "kiosks order every 10 days instead of every 22".
+
+Teams that measure outputs celebrate shipping features nobody uses. Teams that measure outcomes keep asking whether the features work. A good product goal is an outcome, with a number and a date.
+
+**Choosing outcome measures**
+
+| Measure | Why it matters for the kiosk app |
+| :-- | :-- |
+| Days between orders per kiosk | the core behaviour the app is meant to change |
+| Share of kiosk orders placed in the app | adoption |
+| Average order value | are kiosks buying more each time, or splitting the same order? |
+| Rep time spent taking kiosk orders | the cost the app should save |
+
+Always pair a **leading** measure (app orders, which move quickly) with a **lagging** one (kiosk revenue, which moves slowly), and take the baseline from today's data.
+
+## Example
+
+The kiosk app's vision and product goal:
+
+> **Vision:** For kiosk owners who can only order when a sales rep visits, the Kolanut app is a simple phone ordering service that lets them restock in two minutes, any day. Unlike waiting for a rep, they can order the moment stock runs low, and see exactly when it will arrive.
+>
+> **Product goal (for the Surulere pilot, by September 2026):** pilot kiosks order at least every 14 days on average (today: every 22), with at least 60% of their orders placed in the app.
+
+With that goal, "offline mode" and "loyalty tiers" are easy to postpone: neither helps a kiosk order more often in the pilot. "Reorder last basket" moves to the top: it makes ordering faster.
+
+## Walkthrough
+
+1. Look at the kiosk channel in the sales data: its share of revenue, number of customers and how often they order.
+2. Write a vision using the template. Read it to someone outside the project. Could they say who it's for and why it's better?
+3. Write a product goal as an outcome, with a number, a baseline and a date.
+4. Choose two or three measures, and check that each can actually be measured (from the app, the sales data or a survey).
+5. Go through the backlog and ask of each epic: does it help reach the goal? Mark the ones that don't as "Later".
+
+## Practice
+
+```answer
+{
+  "id": "aba-02-p1",
+  "prompt": "Sales data: what share of Kolanut's **2026** revenue comes from the **Kiosk** channel? One decimal place.",
+  "answer": 4.5,
+  "format": "percent",
+  "dataset": "sales",
+  "files": ["orders", "customers"],
+  "verify": "SELECT ROUND(100.0 * SUM(CASE WHEN c.channel = 'Kiosk' THEN o.quantity * o.unit_price * (1 - o.discount_pct / 100.0) END) / SUM(o.quantity * o.unit_price * (1 - o.discount_pct / 100.0)), 1) FROM orders o JOIN customers c ON c.customer_id = o.customer_id WHERE o.order_date >= '2026-01-01'",
+  "hint": "Kiosk revenue ÷ all revenue, for orders dated 2026.",
+  "explanation": "Only 4.5% of revenue, from 39 of 90 customers. Kiosks are numerous but small, and expensive to serve with rep visits. The app has to make them cheaper to serve as well as more active, which is worth saying in the vision.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "aba-02-t1",
+  "prompt": "Write a **product vision** for a different product: a mobile app that lets patients at a busy Lagos clinic book and manage appointments. Use the **For … who … the … is a … that … Unlike … our product …** template. Then, on a new line starting **Goal:**, write a measurable **outcome** with a number and a date.",
+  "minutes": 8,
+  "rows": 8,
+  "placeholder": "For patients who ...\n\nGoal: ...",
+  "rules": [
+    { "label": "Uses For … who …", "pattern": "\\bfor\\b[^.]*\\bwho\\b" },
+    { "label": "Says what it is and its benefit (is a … that …)", "pattern": "\\bis an?\\b[^.]*\\bthat\\b" },
+    { "label": "Compares with the alternative (Unlike …)", "pattern": "\\bunlike\\b" },
+    { "label": "Has a Goal line", "pattern": "^\\s*\\W*goal\\W*\\s*:?" },
+    { "label": "The goal is an outcome with a number", "pattern": "goal[^\\n]*\\d" },
+    { "label": "The goal has a date or time frame", "pattern": "goal[^\\n]*(by|within|in) [^\\n]*(20\\d\\d|month|week|quarter|january|february|march|april|may|june|july|august|september|october|november|december)" }
+  ],
+  "sample": "For patients of the Ikoyi outpatient clinic who wait hours to be seen and often miss appointments, ClinicBook is a mobile booking app that lets them choose a time slot, get reminders and cancel easily. Unlike phoning the front desk or queuing from early morning, our product gives every patient a confirmed time and a reminder the day before.\n\nGoal: by December 2026, cut the average wait from 3 hours to under 1 hour and the no-show rate from 20% to 10%, for patients who book in the app.",
+  "note": "The goal is about waiting time and no-shows (outcomes), not about the number of bookings made in the app (an output). An app with lots of bookings and the same waiting times would have failed.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Which is an outcome rather than an output?",
+    "options": ["Release the reorder button", "Kiosks order every 10 days instead of every 22", "Build 20 user stories", "Launch the app on Android"],
+    "answer": 1,
+    "explanation": "Outcomes are changes in behaviour or results; outputs are things shipped."
+  },
+  {
+    "prompt": "How does a product goal help a team with a 50-item backlog?",
+    "options": ["It doesn't", "It gives a test for every item: does this help reach the goal? Items that don't can wait", "It tells developers how to code", "It replaces user stories"],
+    "answer": 1,
+    "explanation": "A clear goal makes saying 'not now' easier."
+  },
+  {
+    "prompt": "Why pair a leading measure with a lagging one?",
+    "options": ["To have more charts", "Leading measures move quickly and show early whether you're on track; lagging ones confirm the result that matters", "They're the same", "Lagging measures are always wrong"],
+    "answer": 1,
+    "explanation": "App orders show adoption quickly; revenue confirms value later."
+  }
+]
+```
+$md$, true, true, 2, array['aba-02-p1', 'aba-02-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('aba-m03', 'agile-business-analysis', 'Story Mapping', 3, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('agile-business-analysis:story-mapping', 'agile-business-analysis', 'aba-m03', 'story-mapping', 'Story mapping', 'Lay out a product''s whole user journey as a story map, find the walking skeleton, and slice releases that each deliver something usable end to end.', 20, $md$
+## The problem
+
+The kiosk app's backlog is a flat list, ordered by priority. Look at the top 20 items and you'll find five ways to log in and no way to pay. Each item made sense on its own, but nobody could see the whole journey, so the "top priorities" didn't add up to anything a kiosk owner could actually use.
+
+A flat backlog hides gaps. A **story map** shows the user's whole journey left to right, with the detail underneath, so you can see at a glance whether the first release lets someone do the job from start to finish.
+
+## The concept
+
+**The parts of a story map**
+
+1. **The backbone**: the big steps a user goes through, left to right, in the order they happen. For a kiosk owner: *Sign up → Find products → Build an order → Pay → Track delivery → Reorder*.
+2. **The stories**: under each step, the user stories that support it, most essential at the top.
+3. **Release slices**: horizontal lines across the map. Everything above the first line is the first release.
+
+**The walking skeleton**
+
+The thinnest possible version of the whole journey: the one most basic story under **every** step of the backbone. It's ugly, but someone can use it from start to finish. Building it first proves the journey works and gives you something real to test with users.
+
+**Slice by outcome, not by component**
+
+A good first slice lets a real user complete the job. A bad slice is "all of sign-up, perfectly", which leaves nobody able to order. Slicing the map horizontally, across every step, is what keeps each release usable.
+
+## Example
+
+Part of the kiosk app's story map, with the first two slices:
+
+| Sign up | Find products | Build an order | Pay | Track delivery | Reorder |
+| :-- | :-- | :-- | :-- | :-- | :-- |
+| Register with phone number | List products by category | Add and remove items | Pay on delivery | Order status list | Reorder last basket |
+| *— walking skeleton —* | | | | | |
+| Verify phone by SMS | Show current price | Minimum order value rule | Pay by transfer | Delivery day reminder | Favourite products |
+| Log in with PIN | Search products | Delivery day selection | Confirm transfer payments | Cancel before dispatch | |
+| *— pilot release —* | | | | | |
+| Language options | Promotions banner | Save basket for later | Pay by card | Delivery photo proof | |
+
+Above the first line, a kiosk owner can register, see products, order, pay on delivery, see the order's status and reorder: a complete, if basic, journey. The pilot slice adds what makes it practical. Everything below the second line can wait for feedback from the pilot.
+
+## Walkthrough
+
+1. List the backbone of the kiosk owner's journey on sticky notes or in a spreadsheet, left to right.
+2. Use `backlog.csv` to place each story under its step. (The `epic` column is a good starting point: most epics match one backbone step.)
+3. Draw the walking skeleton line: one story per step, the most basic.
+4. Draw the pilot release line. Check every step has enough above the line for a real kiosk to use it.
+5. Compare your map with the team's original plan: how many MVP stories did it contain (the first task below)?
+
+## Practice
+
+```answer
+{
+  "id": "aba-03-p1",
+  "prompt": "Agile data: how many **stories** were in the **MVP** release when the team started (created before sprint 1 began on 2 March 2026)?",
+  "answer": 31,
+  "format": "number",
+  "dataset": "agile",
+  "files": ["backlog"],
+  "verify": "SELECT COUNT(*) FROM backlog WHERE release = 'MVP' AND type = 'Story' AND created_date < '2026-03-02'",
+  "hint": "Filter backlog.csv to release = MVP, type = Story and created_date before 2026-03-02.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "aba-03-t1",
+  "prompt": "Write a **story map** for a different product: a school fees payment app for parents. First write the **backbone** on one line (at least five steps separated by →). Then, for each step, write a line in the form **Step: walking-skeleton story | later story**, with one essential story and one that can wait.",
+  "minutes": 10,
+  "rows": 10,
+  "placeholder": "Backbone: Sign up → ... \n\nSign up: ... | ...",
+  "rules": [
+    { "label": "A backbone with at least five steps separated by → (or ->)", "pattern": "(?:→|->)(?:(?!→|->)[^\\n])*(?:→|->)(?:(?!→|->)[^\\n])*(?:→|->)(?:(?!→|->)[^\\n])*(?:→|->)" },
+    { "label": "At least five step lines in the form Step: story | story", "pattern": "^\\s*[^:\\n|]+:[^|\\n]+\\|[^|\\n]+$", "min": 5 },
+    { "label": "Includes a payment step", "pattern": "pay" }
+  ],
+  "sample": "Backbone: Sign up → Find my child → See fees due → Pay → Get receipt → Track balance\n\nSign up: register with phone number | sign in with email\nFind my child: enter the school's student ID | add several children to one account\nSee fees due: show this term's total | show a breakdown by item\nPay: pay by bank transfer with a reference | pay by card or instalments\nGet receipt: SMS receipt with amount and date | PDF receipt by email\nTrack balance: show amount paid and owed this term | full payment history",
+  "note": "The left side of each line, read across, is the walking skeleton: a parent can already find their child, see what's due, pay and get proof. Everything on the right improves it, after you've seen how parents use the basic version.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "What is the backbone of a story map?",
+    "options": ["The most important story", "The user's main steps, in order, left to right", "The list of developers", "The release plan"],
+    "answer": 1,
+    "explanation": "The backbone shows the whole journey, so gaps are visible."
+  },
+  {
+    "prompt": "What is a walking skeleton?",
+    "options": ["The finished product", "The thinnest version of the whole journey: one basic story under every step", "A list of bugs", "The first sprint's goal"],
+    "answer": 1,
+    "explanation": "It proves the journey works end to end before anything is polished."
+  },
+  {
+    "prompt": "Which first release is better?",
+    "options": ["Perfect sign-up and catalogue, no ordering", "Basic sign-up, catalogue, ordering, payment and tracking", "Every feature for one user type", "Only the features users asked for most"],
+    "answer": 1,
+    "explanation": "Slice across the whole journey so a real user can complete the job."
+  }
+]
+```
+$md$, true, true, 3, array['aba-03-p1', 'aba-03-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('aba-m04', 'agile-business-analysis', 'Splitting Stories', 4, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('agile-business-analysis:splitting-stories', 'agile-business-analysis', 'aba-m04', 'splitting-stories', 'Splitting stories', 'Break big stories into small, valuable slices with proven splitting patterns, so work finishes inside a sprint and feedback comes sooner.', 20, $md$
+## The problem
+
+"Yoruba, Hausa and Igbo language options" sits in the kiosk app's backlog at 8 points. In refinement, the developer says it will take most of a sprint, the tester can't see how to test "language options", and the product owner isn't sure all three languages are needed for the Surulere pilot anyway.
+
+Big stories are where agile teams get into trouble. They're hard to estimate, they don't finish inside a sprint, they hide risk until late, and they delay feedback. In the team's own data, 8-point stories took longer to get through, from start to done, than small ones. **Splitting** large stories into small, still-valuable slices is one of the most practical skills a BA brings to refinement.
+
+## The concept
+
+**What a good split looks like**
+
+Each slice must still be a **user story**: valuable to a user on its own, and testable. Splitting by technical layer ("build the database", "build the screen") produces tasks, not stories, and nothing usable until all of them are done.
+
+**Splitting patterns**
+
+| Pattern | Split by | Kiosk app example |
+| :-- | :-- | :-- |
+| **Workflow steps** | the steps in the user's process | "Place an order" → choose items / choose delivery day / confirm |
+| **Business rules** | the rules, one at a time | "Apply discounts" → volume discount / promotional price / minimum order value |
+| **Data variations** | different kinds of data | "Language options" → Yoruba first, then Hausa, then Igbo |
+| **Happy and unhappy paths** | the normal case first, errors later | "Pay by transfer" → successful payment / payment not received / wrong amount |
+| **Interfaces** | one device or channel first | "Pay by card" → on Android first, then web |
+| **Simple then complex** | the simplest version first | "Search products" → by name / by brand and category / with spelling mistakes |
+| **Spike** | a short time-boxed investigation, when the unknowns are too big to split | "Choose SMS provider" |
+
+**How small?**
+
+Small enough that several fit in one sprint, typically 1 to 3 days of work each. If a story is more than about a quarter of the team's sprint, split it.
+
+## Example
+
+"Pay by card" (5 points), split in refinement:
+
+1. As a kiosk owner, I want to pay for an order with a debit card, so that I don't need cash on delivery. *(happy path, one card type)*
+2. As a kiosk owner, I want to be told clearly when my card payment fails, so that I can try again or choose another way. *(unhappy path)*
+3. As a kiosk owner, I want to save my card for next time, so that reordering is faster. *(simple then complex)*
+
+Story 1 alone is useful in the pilot. Stories 2 and 3 can follow, and story 3 might never be needed if most kiosks keep paying on delivery.
+
+## Walkthrough
+
+1. Find the stories of 8 points or more in `backlog.csv`.
+2. Compare the average cycle time (start to done) of stories of 8 points or more with stories of 3 points or less (the first task below).
+3. Choose a pattern for each large story and split it. Check that every slice is still valuable and testable.
+4. Re-estimate the slices. They often add up to more than the original, because splitting reveals work that was hidden.
+5. Ask the product owner which slices are needed for the pilot. Often the answer is "only the first one".
+
+## Practice
+
+```answer
+{
+  "id": "aba-04-p1",
+  "prompt": "Agile data: for **Done stories of 8 points or more**, what is the average cycle time in days (done_date − started_date)? One decimal place.",
+  "answer": 4.2,
+  "format": "number",
+  "dataset": "agile",
+  "files": ["backlog"],
+  "verify": "SELECT ROUND(AVG(julianday(done_date) - julianday(started_date)), 1) FROM backlog WHERE status = 'Done' AND type = 'Story' AND points >= 8",
+  "hint": "Filter to type = Story, status = Done, points ≥ 8; average done_date − started_date.",
+  "explanation": "4.2 days, against 3.0 for stories of 3 points or less. Big stories also tie up more of the team while they're in progress.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "aba-04-t1",
+  "prompt": "Split the 8-point story **\"As a kiosk owner, I want the app in Yoruba, Hausa and Igbo, so that I can use it in my own language\"** into **at least three** smaller user stories. Write each in **As a … I want … so that …** form, and name the splitting pattern you used for each in brackets at the end of the line.",
+  "minutes": 8,
+  "rows": 8,
+  "placeholder": "As a kiosk owner, I want ..., so that ... (data variations)",
+  "rules": [
+    { "label": "At least three stories in As a … I want … so that … form", "pattern": "as an? [^\\n]+?I want [^\\n]+?so that [^\\n]+", "min": 3 },
+    { "label": "Each names a pattern in brackets", "pattern": "\\((workflow|business rule|data|happy|unhappy|interface|simple|complex|spike)[^)]*\\)\\s*$", "min": 3 },
+    { "label": "Splits by language (data variations) for at least one story", "pattern": "yoruba|hausa|igbo" },
+    { "label": "No technical-layer split (database, API, back end, front end)", "pattern": "\\b(database|api|back[- ]?end|front[- ]?end|schema)\\b", "absent": true }
+  ],
+  "sample": "As a kiosk owner in Surulere, I want the main ordering screens in Yoruba, so that I can order without struggling with English. (data variations)\nAs a kiosk owner, I want to switch language from the menu at any time, so that I can change it if someone else uses my phone. (simple then complex)\nAs a kiosk owner in the north, I want the ordering screens in Hausa, so that the app works for me when it reaches Kano. (data variations)\nAs a kiosk owner, I want SMS messages in my chosen language, so that confirmations and reminders make sense to me. (workflow steps)",
+  "note": "The first slice alone covers the Surulere pilot, which is mostly Yoruba-speaking. Hausa and Igbo can wait until the app expands, and the product owner may decide they're not needed for months.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why is 'build the database' a poor slice of a user story?",
+    "options": ["Databases aren't needed", "It isn't valuable or testable by a user on its own; it's a technical task", "It's too small", "It's too easy"],
+    "answer": 1,
+    "explanation": "Each slice should still deliver something a user can use."
+  },
+  {
+    "prompt": "A payment story handles success, failure and refunds. Which split is usually best first?",
+    "options": ["Refunds first", "The happy path (successful payment) first, then failures and refunds", "All three together", "The database first"],
+    "answer": 1,
+    "explanation": "Deliver the normal case, then handle the exceptions."
+  },
+  {
+    "prompt": "When is a spike appropriate?",
+    "options": ["For every story", "When unknowns are too big to split or estimate, as a short time-boxed investigation", "Instead of testing", "For bugs only"],
+    "answer": 1,
+    "explanation": "A spike buys knowledge, so the real stories can be split and estimated."
+  }
+]
+```
+$md$, true, true, 4, array['aba-04-p1', 'aba-04-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('aba-m05', 'agile-business-analysis', 'Refinement, Ready and Done', 5, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('agile-business-analysis:refinement-ready-and-done', 'agile-business-analysis', 'aba-m05', 'refinement-ready-and-done', 'Refinement, ready and done', 'Run backlog refinement that gets stories ready before sprint planning, use the three amigos to catch misunderstandings early, and agree a definition of ready and done.', 20, $md$
+## The problem
+
+The kiosk app team's first three sprints went smoothly: 3 bugs in total. In sprints 4 to 6 they found 13. Sprint 5 finished 3 points short of its commitment. In the retrospective, the developers say the same thing in different ways: "We started stories before we understood them," "Nobody told us transfers can arrive the next day," and "We called things done when they weren't tested on a real phone."
+
+None of that is a coding problem. It's what happens when stories reach a sprint before they're **ready**, and leave it before they're really **done**. Both are things a BA can fix.
+
+## The concept
+
+**Backlog refinement**
+
+A regular session (often an hour or two a week) where the product owner, BA and developers look at the next items in the backlog and make them ready: clarify, split, add acceptance criteria and estimate. Aim to keep about **two sprints' worth** of work refined ahead.
+
+**The three amigos**
+
+Before a story is ready, three perspectives look at it together for 15 minutes:
+
+- **Business** (BA or product owner): what's needed and why.
+- **Development**: how it could be built, and what's hard.
+- **Testing**: how it could break, and how to prove it works.
+
+Most misunderstandings ("transfers can arrive the next day") surface in that conversation, when they cost nothing to fix.
+
+**Definition of ready (DoR)**
+
+The checklist a story must pass before the team takes it into a sprint, for example:
+
+- written as a user story, with a clear user and benefit;
+- acceptance criteria agreed, including at least one unhappy path;
+- small enough to finish in a few days;
+- estimated by the team;
+- dependencies known (data, other teams, decisions);
+- open questions answered.
+
+**Definition of done (DoD)**
+
+The checklist every item must pass before it counts as done, for example:
+
+- meets all its acceptance criteria;
+- tested on the oldest phone the pilot kiosks use;
+- reviewed by a second developer;
+- no known bugs of high severity;
+- included in the build that will go to the pilot.
+
+Points only count towards velocity when an item meets the definition of done. "Done except testing" is not done.
+
+## Example
+
+A story before and after a three-amigos conversation:
+
+> **Before:** As a kiosk owner, I want to pay by bank transfer, so that I don't need cash on delivery.
+>
+> **After:** the same story, plus:
+>
+> - Given a transfer with the correct reference, when the bank confirms it, then the order shows "Paid" within 1 hour.
+> - Given a transfer that arrives the next working day, when the delivery is due, then the driver sees "Payment pending" and can still deliver for customers marked as trusted.
+> - Given a transfer for the wrong amount, when it's received, then accounts are alerted and the kiosk owner gets an SMS.
+> - **Question answered:** who marks a customer as trusted? *The sales rep, approved by the area manager.*
+
+The second and third criteria came from the tester asking "what if the money is late or wrong?". Each one would have been a bug in sprint 5.
+
+## Walkthrough
+
+1. In `backlog.csv`, count the bugs by sprint. When did quality start to slip?
+2. Write the team's definition of ready and definition of done (the task below).
+3. Take one remaining MVP story, such as "Part-payment on delivery", and run a three-amigos conversation on paper: what would the developer and tester ask?
+4. Plan the refinement rhythm: when, who attends, and how far ahead the backlog should be ready.
+
+## Practice
+
+```answer
+{
+  "id": "aba-05-p1",
+  "prompt": "Agile data: how many **bugs** were logged against **sprints 4 to 6**?",
+  "answer": 13,
+  "format": "number",
+  "dataset": "agile",
+  "files": ["backlog"],
+  "verify": "SELECT COUNT(*) FROM backlog WHERE type = 'Bug' AND sprint BETWEEN 4 AND 6",
+  "hint": "Filter type = Bug and sprint 4, 5 or 6.",
+  "explanation": "13, against 3 in sprints 1 to 3. As the team sped up and took on payments, the hardest part of the product, quality slipped. A stronger definition of ready and done is the usual fix.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "aba-05-t1",
+  "prompt": "Write the kiosk app team's **Definition of ready** and **Definition of done**. Put each heading on its own line, followed by at least **four** checklist items as bullets.",
+  "minutes": 8,
+  "rows": 12,
+  "placeholder": "Definition of ready\n- ...\n\nDefinition of done\n- ...",
+  "rules": [
+    { "label": "A Definition of ready heading", "pattern": "^\\W*definition of ready\\W*$" },
+    { "label": "A Definition of done heading", "pattern": "^\\W*definition of done\\W*$" },
+    { "label": "At least eight bullets in total", "pattern": "^\\s*[-*]\\s+\\S", "min": 8 },
+    { "label": "Ready includes acceptance criteria", "pattern": "acceptance criteria" },
+    { "label": "Ready includes an estimate or size", "pattern": "estimat|small|size|points" },
+    { "label": "Done includes testing", "pattern": "test" }
+  ],
+  "sample": "**Definition of ready**\n- Written as a user story with a named user and a clear benefit\n- Acceptance criteria agreed in a three-amigos session, including at least one unhappy path\n- Small enough to finish in 3 days or less\n- Estimated by the team\n- Dependencies and open questions resolved (data, decisions, other teams)\n\n**Definition of done**\n- Meets every acceptance criterion\n- Tested on the oldest Android phone used in the pilot kiosks\n- Code reviewed by a second developer\n- No open bugs of high severity\n- Shown to the product owner and included in the pilot build",
+  "note": "Write these with the team, not for it: a definition the developers didn't agree to won't be followed. And review both after a few sprints. If bugs keep escaping, the definition of done isn't strong enough yet.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Who should be in a three-amigos conversation?",
+    "options": ["Three developers", "Business (BA or product owner), development and testing", "The three most senior managers", "The scrum master alone"],
+    "answer": 1,
+    "explanation": "Three perspectives catch misunderstandings before any code is written."
+  },
+  {
+    "prompt": "A story is 'done except testing on a phone'. Do its points count towards velocity?",
+    "options": ["Yes", "No: only items that meet the definition of done count", "Half of them", "Only if the sprint is over"],
+    "answer": 1,
+    "explanation": "Counting unfinished work hides problems and inflates velocity."
+  },
+  {
+    "prompt": "How far ahead should the backlog usually be refined?",
+    "options": ["The whole product", "About one or two sprints' worth", "Nothing: refine during the sprint", "Exactly one story"],
+    "answer": 1,
+    "explanation": "Enough to plan the next sprint well, not so much that the work goes stale."
+  }
+]
+```
+$md$, true, true, 5, array['aba-05-p1', 'aba-05-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('aba-m06', 'agile-business-analysis', 'Estimation and Prioritisation', 6, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('agile-business-analysis:estimation-and-prioritisation', 'agile-business-analysis', 'aba-m06', 'estimation-and-prioritisation', 'Estimation and prioritisation', 'Size work relatively with story points and planning poker, and order the backlog by value with cost of delay and WSJF, so the most valuable small things come first.', 20, $md$
+## The problem
+
+With two sprints to go before the Surulere pilot, the kiosk app still has 11 stories in its MVP backlog, and the team can't do them all. The sales director wants card payments. The marketing manager wants a promotions banner. The area manager wants Yoruba, Hausa and Igbo. Each is convinced theirs matters most.
+
+"Everything is a priority" means nothing is. The product owner needs a way to compare items that's more objective than who argues loudest. And to compare value with effort, the team needs estimates it trusts, which aren't the same as promises.
+
+## The concept
+
+**Story points: relative estimates**
+
+Instead of estimating hours, agile teams compare items with each other: "Is this bigger or smaller than 'Log in with PIN'?" Story points (often on a Fibonacci-like scale: 1, 2, 3, 5, 8, 13) capture size, complexity and uncertainty together. They're relative and team-specific: one team's 5 isn't another's.
+
+**Planning poker**
+
+Each developer privately picks a card, everyone shows at once, and the highest and lowest explain their reasoning. The conversation is the point: a 2 and a 13 on the same story means someone knows something the others don't. Then the team estimates again.
+
+**Cost of delay and WSJF**
+
+**Cost of delay** asks: what do we lose for every sprint this item isn't done? A simple version scores three things from 1 to 20 (relative to each other):
+
+- **User or business value**: how much users or the business gain.
+- **Time criticality**: does the value fall if it's late (a pilot date, a competitor, a regulation)?
+- **Risk reduction or opportunity**: does it reduce a risk, or unlock other work or learning?
+
+**WSJF** (weighted shortest job first) divides the cost of delay by the size:
+
+> **WSJF = (value + time criticality + risk reduction) ÷ job size (story points)**
+
+High-value, small items rise to the top. Big items need a big cost of delay to justify going first.
+
+## Example
+
+The product owner, the BA and two stakeholders scored five remaining MVP stories together:
+
+| Story | Value | Time criticality | Risk reduction | Cost of delay | Points | WSJF |
+| :-- | --: | --: | --: | --: | --: | --: |
+| Rep sees kiosks that haven't ordered in 14 days | 8 | 5 | 5 | 18 | 3 | ? |
+| Reorder last basket | 13 | 8 | 3 | 24 | 8 | ? |
+| Pay by card | 5 | 3 | 2 | 10 | 5 | ? |
+| Part-payment on delivery | 3 | 2 | 1 | 6 | 5 | ? |
+| Yoruba, Hausa and Igbo language options | 5 | 2 | 1 | 8 | 8 | ? |
+
+The scores are judgements, made together and in the open. Their value is that the reasoning is visible and the comparison is consistent.
+
+## Walkthrough
+
+1. Calculate the WSJF column in the table above.
+2. Order the five stories by WSJF. Does the order match the product goal of more frequent kiosk ordering?
+3. Notice that the rep tool, a small story, beats bigger "headline" features. Small, valuable items go first.
+4. Write the order with a one-line reason for each (the task below).
+5. Agree with the product owner what happens to the bottom items: split them, move them to "Later", or drop them.
+
+## Practice
+
+```answer
+{
+  "id": "aba-06-p1",
+  "prompt": "What is the **WSJF** score for **Reorder last basket**? One decimal place.",
+  "answer": 3.0,
+  "format": "number",
+  "hint": "(13 + 8 + 3) ÷ 8.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "aba-06-p2",
+  "prompt": "Which story in the table has the **highest** WSJF? Type its title.",
+  "answer": "Rep sees kiosks that haven't ordered in 14 days",
+  "accept": ["Rep sees kiosks that haven’t ordered in 14 days", "Rep sees kiosks that havent ordered in 14 days", "Rep sees kiosks"],
+  "format": "text",
+  "hint": "18 ÷ 3.",
+  "explanation": "6.0, twice Reorder's 3.0. A small rep tool that prompts follow-up calls helps kiosks order more often, straight away, for very little work.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "aba-06-t1",
+  "prompt": "Write the **priority order** of the five stories in the table, one per line, in the form **Rank. Story | WSJF | reason**. Then add a final line starting **Decision:** saying what should happen to the lowest-ranked story or stories.",
+  "minutes": 6,
+  "rows": 8,
+  "placeholder": "1. Rep sees kiosks ... | 6.0 | ...",
+  "rules": [
+    { "label": "Five ranked lines in the form Rank. Story | WSJF | reason", "pattern": "^\\s*\\d[.)]\\s*[^|\\n]+\\|\\s*\\d+(\\.\\d+)?\\s*\\|[^|\\n]+$", "min": 5 },
+    { "label": "The rep tool is ranked first", "pattern": "^\\s*1[.)]\\s*rep" },
+    { "label": "Has a Decision line", "pattern": "^\\s*decision\\s*:" },
+    { "label": "The decision moves, splits or drops something", "pattern": "decision\\s*:[^\\n]*(later|split|drop|defer|move|postpone|remove|next release|after the pilot)" }
+  ],
+  "sample": "1. Rep sees kiosks that haven't ordered in 14 days | 6.0 | small, and directly prompts more frequent orders\n2. Reorder last basket | 3.0 | the core of the product goal: ordering in two taps\n3. Pay by card | 2.0 | useful, but most pilot kiosks pay on delivery or by transfer\n4. Part-payment on delivery | 1.2 | few kiosks need it; reps can handle it by hand in the pilot\n5. Yoruba, Hausa and Igbo language options | 1.0 | large, and only Yoruba matters in Surulere\nDecision: move part-payment to Later, and split the language story so only Yoruba stays in the pilot release.",
+  "note": "The decision line is what turns a scoring exercise into a plan. Splitting the language story keeps the valuable part (Yoruba for Surulere) and drops the expensive part that the pilot doesn't need.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Two developers estimate a story at 2 and 13 points. What should happen?",
+    "options": ["Average them", "They explain their reasoning, because one of them knows something the other doesn't; then the team re-estimates", "Use the higher number", "Use the lower number"],
+    "answer": 1,
+    "explanation": "The discussion is the most valuable part of planning poker."
+  },
+  {
+    "prompt": "Why does WSJF divide cost of delay by job size?",
+    "options": ["To make the numbers smaller", "So small, valuable items come before large ones of similar value, delivering value sooner", "Because large items are unimportant", "It's a rule of Scrum"],
+    "answer": 1,
+    "explanation": "Doing short, valuable jobs first reduces the total cost of delay."
+  },
+  {
+    "prompt": "Are story points a promise of how many hours the work will take?",
+    "options": ["Yes", "No: they're relative estimates of size and uncertainty, useful for planning across many items", "Only for bugs", "Only for senior developers"],
+    "answer": 1,
+    "explanation": "Estimates inform plans; they aren't commitments for each item."
+  }
+]
+```
+$md$, true, true, 6, array['aba-06-p1', 'aba-06-p2', 'aba-06-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('aba-m07', 'agile-business-analysis', 'Velocity and Release Forecasting', 7, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('agile-business-analysis:velocity-and-release-forecasting', 'agile-business-analysis', 'aba-m07', 'velocity-and-release-forecasting', 'Velocity and release forecasting', 'Use the team''s real velocity to forecast a release as a range, show scope growth on a burn-up chart, and give stakeholders honest options when the date is at risk.', 25, $md$
+## The problem
+
+The Surulere pilot is planned for the end of sprint 8, on 19 June 2026. The commercial director asks the BA a direct question on 22 May: "Will the app be ready?"
+
+The team has finished six sprints. A quick glance at the board suggests yes: most of the original plan is done. But the board also shows a stream of stories added since March: card payments, part-payments, delivery photos, three languages. Nobody has added them up. Answering "will it be ready?" honestly means using the team's actual delivery rate and the actual remaining scope, not hope.
+
+## The concept
+
+**Velocity**
+
+**Velocity** is the number of story points a team completes per sprint, counting only items that meet the definition of done. Use the **average of recent sprints**, and look at the range too: velocity varies from sprint to sprint.
+
+**Forecasting a release**
+
+> Sprints needed = remaining points ÷ average velocity
+
+Give it as a **range**, using the team's lowest and highest recent velocities, not a single date: "between 2.2 and 3 sprints". Remember that bugs and unplanned work also use capacity even when they carry no points.
+
+**The burn-up chart**
+
+A burn-up chart has two lines over the sprints:
+
+- **Work done** (cumulative points completed), which rises with each sprint.
+- **Total scope** (all points in the release), which rises whenever stories are added.
+
+The release is finished where the two lines meet. If scope keeps rising as fast as work is done, the lines never meet. A burn-down chart hides that; a burn-up chart makes it obvious, which is why BAs prefer it for conversations with stakeholders.
+
+**Options when the date is at risk**
+
+There are only three levers, and the product owner chooses between them with stakeholders:
+
+1. **Reduce scope**: move lower-value stories out of the release (using WSJF from lesson 6).
+2. **Move the date**: release a sprint later.
+3. **Change capacity**: rarely works quickly (adding people to a late project usually slows it down at first).
+
+"Work harder" is not an option. It produces bugs, as sprints 4 to 6 already showed.
+
+## Example
+
+The kiosk app's MVP, from `backlog.csv` and `sprints.csv`:
+
+| | Points |
+| :-- | --: |
+| Original MVP plan (stories and the spike, created before 2 March) | 128 |
+| Added since sprint 1 began | 39 |
+| **Total MVP scope now** | **167** |
+| Completed in sprints 1–6 | 116 |
+| **Remaining** | **51** |
+
+Two sprints remain before the pilot. At the team's average velocity, they'll complete roughly 39 more points, leaving about 12 points undone. And that's before allowing for bugs. Without the stories added since March, the original MVP would already be nearly finished. The date isn't at risk because the team is slow; it's at risk because scope grew by 30%.
+
+## Walkthrough
+
+1. Calculate velocity for each closed sprint: total points of Done items by sprint. Then the average and the range.
+2. Calculate the remaining MVP points (stories not Done).
+3. Draw a burn-up chart: cumulative points done by sprint, and total MVP scope by sprint (from the created dates).
+4. Forecast the sprints needed as a range.
+5. Write a recommendation for the commercial director with options (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "aba-07-p1",
+  "prompt": "What is the team's **average velocity** over sprints 1–6 (points of Done items per sprint)? One decimal place.",
+  "answer": 19.3,
+  "format": "number",
+  "dataset": "agile",
+  "files": ["backlog"],
+  "verify": "SELECT ROUND(AVG(p), 1) FROM (SELECT sprint, SUM(points) AS p FROM backlog WHERE status = 'Done' GROUP BY sprint)",
+  "hint": "Sum the points of Done items for each sprint, then average the six totals. Bugs have no points.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "aba-07-p2",
+  "prompt": "How many **story points** of **MVP** work are **not yet Done**?",
+  "answer": 51,
+  "format": "number",
+  "dataset": "agile",
+  "files": ["backlog"],
+  "verify": "SELECT SUM(points) FROM backlog WHERE release = 'MVP' AND status <> 'Done'",
+  "hint": "Filter release = MVP and status To do or In progress, and sum the points.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "aba-07-p3",
+  "prompt": "How many story points were **added** to the backlog as stories **after sprint 1 began** (created on or after 2 March 2026)?",
+  "answer": 39,
+  "format": "number",
+  "dataset": "agile",
+  "files": ["backlog"],
+  "verify": "SELECT SUM(points) FROM backlog WHERE type = 'Story' AND created_date >= '2026-03-02'",
+  "hint": "Filter type = Story and created_date ≥ 2026-03-02.",
+  "explanation": "39 points, nearly two sprints of work. The remaining MVP is mostly scope that arrived after planning.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "aba-07-t1",
+  "prompt": "Write your **answer to the commercial director**: will the MVP be ready for the pilot on 19 June? In 80 to 180 words, give the **forecast** (with numbers), explain **why** the date is at risk, and offer at least **two options** with what each means.",
+  "minutes": 10,
+  "rows": 10,
+  "placeholder": "Not with the current scope. ...",
+  "rules": [
+    { "label": "Uses the velocity", "pattern": "\\b(19|20|21)(\\.\\d)?\\b[^\\n]*(points|velocity|per sprint|a sprint)|velocity" },
+    { "label": "Uses the remaining points (51)", "pattern": "\\b51\\b" },
+    { "label": "Explains the scope growth", "pattern": "scope|added|39" },
+    { "label": "At least two options", "pattern": "option|either|alternatively|or we|or move|or cut|or release", "min": 2 },
+    { "label": "One option reduces scope", "pattern": "move[^.]*(later|after the pilot|points|stories|out of)|\\bcut\\b|\\bdrop|defer|descope|reduce (the )?scope|split" },
+    { "label": "Between 80 and 180 words", "minWords": 80, "maxWords": 180 }
+  ],
+  "sample": "Not with the current scope. The team completes about 19 points a sprint, and 51 points of MVP work remain, so two sprints will deliver about 39 points and leave roughly 12 undone, before allowing for bug fixes. The date is at risk because 39 points of new stories were added after planning began, not because the team is slow. Option 1: keep 19 June and move about 15 points to after the pilot (part-payment, Hausa and Igbo, and the promotions banner), keeping reorder and the rep tool. Option 2: keep all current scope and start the pilot one sprint later, on 3 July. I recommend option 1: the stories we'd move don't affect how often kiosks order, which is what the pilot is testing.",
+  "note": "The recommendation ties the choice back to the product goal. That's what makes \"move these stories\" a decision about value rather than a request to do less.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why forecast a release as a range rather than a single date?",
+    "options": ["Ranges look more professional", "Velocity varies from sprint to sprint, so a range is honest about the uncertainty", "Single dates aren't allowed in Scrum", "To avoid commitment"],
+    "answer": 1,
+    "explanation": "Use the range of recent velocities to show best and worst cases."
+  },
+  {
+    "prompt": "On a burn-up chart, the total-scope line rises as fast as the work-done line. What does that mean?",
+    "options": ["The team is fast", "Scope is growing as fast as work is done, so the release will never finish unless something changes", "The chart is wrong", "The release is finished"],
+    "answer": 1,
+    "explanation": "Burn-up charts make scope growth visible."
+  },
+  {
+    "prompt": "The release is at risk. Which is not a real option?",
+    "options": ["Reduce scope", "Move the date", "Ask the team to work harder for the last two sprints", "Agree which stories can wait"],
+    "answer": 2,
+    "explanation": "Pushing harder usually produces bugs and burnout, not finished software."
+  }
+]
+```
+$md$, true, true, 7, array['aba-07-p1', 'aba-07-p2', 'aba-07-p3', 'aba-07-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('aba-m08', 'agile-business-analysis', 'Measuring Flow and Quality', 8, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('agile-business-analysis:measuring-flow-and-quality', 'agile-business-analysis', 'aba-m08', 'measuring-flow-and-quality', 'Measuring flow and quality', 'Measure how smoothly work moves through the team with cycle time, throughput, commitment reliability and bug trends, and use the numbers to start improvement, not blame.', 20, $md$
+## The problem
+
+Velocity says how much the kiosk app team finishes. It doesn't say how **smoothly**. Two teams with the same velocity can be very different: one finishes stories steadily through the sprint; the other starts everything on day one and finishes it all in a panic on the last afternoon, with bugs to show for it.
+
+The retrospective after sprint 6 is coming up. The scrum master asks the BA to bring some numbers, so the conversation is about evidence rather than feelings. Which numbers help, and which ones do harm?
+
+## The concept
+
+**Flow and quality measures**
+
+| Measure | Definition | Tells you |
+| :-- | :-- | :-- |
+| **Cycle time** | days from started to done, per item | how long work takes once it begins |
+| **Throughput** | items finished per sprint or per week | the team's output, without points |
+| **Work in progress (WIP)** | items started but not done | how much is juggled at once |
+| **Commitment reliability** | points done ÷ points committed, per sprint | how predictable sprint planning is |
+| **Escaped and found bugs** | bugs logged per sprint, and how long they take to fix | quality |
+
+**Little's law**
+
+For a steady team, **average cycle time = average WIP ÷ throughput**. Starting more work at once doesn't finish more; it makes everything take longer. That's why many teams set a WIP limit, such as "no more than three stories in progress".
+
+**Use measures for learning, never for ranking**
+
+These measures describe the **system** the team works in, not individuals. Compare a team with its own past, never with another team, and never use velocity or cycle time to judge people. The moment numbers are used to blame, people game them: stories get split to inflate throughput, or estimates creep up to inflate velocity.
+
+## Example
+
+The kiosk app team's commitment reliability:
+
+| Sprint | Committed | Done | Reliability |
+| :-- | --: | --: | --: |
+| 1 | 16 | 16 | 100% |
+| 2 | 19 | 17 | 89% |
+| 3 | 20 | 20 | 100% |
+| 4 | 23 | 21 | 91% |
+| 5 | 21 | 18 | ? |
+| 6 | 24 | 24 | 100% |
+
+Reliability around 90% is healthy: a team that always hits 100% is probably committing too little. But read it alongside the bugs. Sprint 6 hit 100% while logging 5 bugs, so the team may be finishing stories by passing problems on.
+
+## Walkthrough
+
+1. Calculate cycle time for every Done story, then the average (the first task below).
+2. Calculate commitment reliability for each sprint, using `committed_points` from `sprints.csv`.
+3. Count bugs per sprint, and their average cycle time. Are bugs taking longer to fix than stories take to build?
+4. Prepare three observations for the retrospective, each with a number, a possible cause and a question for the team (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "aba-08-p1",
+  "prompt": "What is the average **cycle time** in days (done_date − started_date) for **Done stories**? One decimal place.",
+  "answer": 3.2,
+  "format": "number",
+  "dataset": "agile",
+  "files": ["backlog"],
+  "verify": "SELECT ROUND(AVG(julianday(done_date) - julianday(started_date)), 1) FROM backlog WHERE status = 'Done' AND type = 'Story'",
+  "hint": "Filter to type = Story and status = Done.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "aba-08-p2",
+  "prompt": "What was **sprint 5**'s commitment reliability (points done ÷ points committed)? One decimal place.",
+  "answer": 85.7,
+  "format": "percent",
+  "dataset": "agile",
+  "files": ["backlog", "sprints"],
+  "verify": "SELECT ROUND(100.0 * (SELECT SUM(points) FROM backlog WHERE status = 'Done' AND sprint = 5) / (SELECT committed_points FROM sprints WHERE sprint = 5), 1)",
+  "hint": "Done points in sprint 5 ÷ committed_points for sprint 5.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "aba-08-p3",
+  "prompt": "What is the average cycle time in days for **Done bugs**? One decimal place.",
+  "answer": 4.6,
+  "format": "number",
+  "dataset": "agile",
+  "files": ["backlog"],
+  "verify": "SELECT ROUND(AVG(julianday(done_date) - julianday(started_date)), 1) FROM backlog WHERE status = 'Done' AND type = 'Bug'",
+  "hint": "The same calculation, for type = Bug.",
+  "explanation": "Bugs take longer to fix (4.6 days) than stories take to build (3.2), largely because some wait for the next sprint. That's a cost the velocity figure doesn't show.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "aba-08-t1",
+  "prompt": "Write **three observations** for the sprint 6 retrospective, one per line. Each should give a **number** from the data, a **possible cause**, and end with a **question** for the team. Don't name or blame individuals.",
+  "minutes": 8,
+  "rows": 8,
+  "placeholder": "- Bugs rose from 3 in sprints 1–3 to 13 in sprints 4–6, possibly because ... What ...?",
+  "rules": [
+    { "label": "Three observations, each a line ending with a question mark", "pattern": "\\?\\s*$", "min": 3 },
+    { "label": "Each includes a number", "pattern": "^[^\\n]*\\d[^\\n]*\\?\\s*$", "min": 3 },
+    { "label": "Suggests causes (because, possibly, may, might, could)", "pattern": "because|possibly|may |might|could|perhaps|likely", "min": 2 },
+    { "label": "No blame words (fault, lazy, blame, careless)", "pattern": "fault|lazy|blame|careless|incompetent", "absent": true }
+  ],
+  "sample": "- Bugs rose from 3 in sprints 1–3 to 13 in sprints 4–6, possibly because payments are harder to test and stories reached the sprint before edge cases were known. What would help us catch these before the sprint starts?\n- Bugs take 4.6 days on average to fix, against 3.2 for stories, perhaps because several wait for the next sprint. Should we keep some capacity free for bugs each sprint?\n- Sprint 5 delivered 85.7% of its commitment while the others were close to 100%, which may be because a 3-point story (Order status list) carried over into sprint 6. How could we spot a story at risk earlier in the sprint?",
+  "note": "Each observation opens a conversation rather than closing one. The team knows the causes better than the numbers do; the numbers just make sure the conversation is about the right things.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "A team starts every story on the first day of the sprint. What usually happens to cycle time?",
+    "options": ["It falls", "It rises: more work in progress means everything takes longer", "No change", "It becomes zero"],
+    "answer": 1,
+    "explanation": "Little's law: cycle time = WIP ÷ throughput."
+  },
+  {
+    "prompt": "A manager wants to rank developers by the story points they complete. What's the risk?",
+    "options": ["None", "People will game the measure (inflated estimates, split stories) and collaboration suffers", "It's too much work", "Points can't be counted"],
+    "answer": 1,
+    "explanation": "Team measures describe the system; using them to judge individuals destroys their usefulness."
+  },
+  {
+    "prompt": "A team hits 100% of its commitment every sprint. What might that suggest?",
+    "options": ["Perfection", "It may be committing too little, or calling items done before they're really done", "Nothing", "It should commit to less"],
+    "answer": 1,
+    "explanation": "Read reliability alongside quality measures."
+  }
+]
+```
+$md$, true, true, 8, array['aba-08-p1', 'aba-08-p2', 'aba-08-p3', 'aba-08-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('aba-m09', 'agile-business-analysis', 'Reviews, Pilots and Outcomes', 9, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('agile-business-analysis:reviews-pilots-and-outcomes', 'agile-business-analysis', 'aba-m09', 'reviews-pilots-and-outcomes', 'Reviews, pilots and outcomes', 'Run sprint reviews that produce real feedback, design a pilot with success criteria agreed in advance, and decide what to do next from the evidence.', 20, $md$
+## The problem
+
+The kiosk app goes to 15 kiosks in Surulere for a six-week pilot. Afterwards there will be a meeting to decide whether to roll it out to all 39 kiosks, change it, or stop. Without preparation, that meeting goes one of two ways: the people who championed the app call it a success because "the kiosks liked it", or the people who doubted it call it a failure because "only 9 kiosks used it every week". Both will have a point, and neither will have evidence.
+
+A pilot is an experiment. It needs a question, success criteria agreed **before** it starts, and a plan for measuring them. Otherwise the result is decided by whoever argues best afterwards.
+
+## The concept
+
+**Sprint reviews that produce feedback**
+
+A sprint review isn't a presentation; it's a working session to inspect the increment and adapt the backlog. To make it useful:
+
+- Invite **real users** (a kiosk owner, a sales rep), not just managers.
+- Demonstrate against the **sprint goal**, with real-looking data.
+- Ask **specific questions**: "Would you use reorder instead of calling your rep? What would stop you?"
+- Turn feedback into **backlog items** before people leave the room.
+
+**Designing a pilot**
+
+| Part | Kiosk app pilot |
+| :-- | :-- |
+| **Question** | Does the app make kiosks order more often? |
+| **Who and how long** | 15 Surulere kiosks, six weeks |
+| **Comparison** | the same kiosks' ordering in the six weeks before, and similar kiosks elsewhere over the same weeks |
+| **Success criteria** (agreed in advance) | average days between orders falls from about 22 to 14 or fewer; at least 60% of pilot kiosks' orders placed in the app; no fall in average order value |
+| **Decision rule** | all three met: roll out; adoption high but frequency unchanged: rethink; adoption low: find out why before spending more |
+
+The **comparison group** matters. If kiosks everywhere order more in the pilot weeks (say, before a holiday), a rise in the pilot group proves nothing about the app.
+
+**Validated learning**
+
+Treat every release as a test of an assumption: "kiosk owners will reorder in the app if it takes under a minute". Measure, learn, and adjust the backlog. Sometimes the right outcome of a pilot is to stop, and that's a success if it saves the money a full rollout would have cost.
+
+## Example
+
+The BA's plan for the sprint 7 review, where reorder is demonstrated:
+
+1. **Goal reminder** (2 minutes): "Kiosks can reorder last week's basket in two taps."
+2. **Demonstration** by a developer, using a real kiosk's last basket (5 minutes).
+3. **Hands-on**: the kiosk owner tries it on her own phone while everyone watches in silence (5 minutes).
+4. **Questions** (10 minutes): "What did you expect to happen when you tapped reorder? Would you change anything before confirming? When would you use this instead of waiting for the rep?"
+5. **Backlog** (5 minutes): new items agreed and added; priorities checked against the product goal.
+
+Step 3 usually teaches the team more than the rest of the review put together.
+
+## Walkthrough
+
+1. Write the pilot's question, groups, duration and comparison.
+2. Agree the success criteria and the decision rule with the product owner and the commercial director **before** the pilot starts (the task below).
+3. Check you can measure every criterion: frequency from the sales data, adoption from the app, order value from both.
+4. Plan the next sprint review with a real kiosk owner and specific questions.
+5. Plan the pilot-end meeting: the numbers, what they mean, and the decision the rule points to.
+
+## Practice
+
+```task
+{
+  "id": "aba-09-t1",
+  "prompt": "Write the **pilot plan** for the kiosk app as lines starting with these headings: **Question:**, **Who:**, **Comparison:**, **Success criteria:** (at least two criteria, each with a number) and **Decision rule:**.",
+  "minutes": 10,
+  "rows": 10,
+  "placeholder": "Question: ...\nWho: ...\nComparison: ...\nSuccess criteria: ...\nDecision rule: ...",
+  "rules": [
+    { "label": "A Question line", "pattern": "^\\s*[-*]?\\s*question\\s*:" },
+    { "label": "A Who line, with a number of kiosks or a duration", "pattern": "^\\s*[-*]?\\s*who\\s*:[^\\n]*\\d" },
+    { "label": "A Comparison line", "pattern": "^\\s*[-*]?\\s*comparison\\s*:" },
+    { "label": "Success criteria with at least two numbers", "pattern": "success criteria\\s*:[^\\n]*\\d[^\\n]*\\d|success criteria\\s*:\\s*\\n(?:\\s*[-*][^\\n]*\\d[^\\n]*\\n?){2,}" },
+    { "label": "A Decision rule line saying what happens if criteria are or aren't met", "pattern": "decision rule\\s*:[^\\n]*(roll|stop|rethink|change|expand|if)" }
+  ],
+  "sample": "Question: Does the app make kiosk owners order more often, without reducing what they buy?\nWho: 15 kiosks in Surulere, for six weeks from 22 June 2026.\nComparison: the same kiosks in the six weeks before the pilot, and 10 similar kiosks in Yaba over the same six weeks.\nSuccess criteria: average days between orders falls from about 22 to 14 or fewer; at least 60% of pilot kiosks' orders are placed in the app; average order value doesn't fall by more than 5%.\nDecision rule: if all three are met, roll out to all 39 kiosks; if adoption is high but ordering frequency hasn't changed, rethink the reorder and reminder features before rollout; if adoption is below 30%, interview pilot kiosks before spending more.",
+  "note": "Agreeing the decision rule in advance is what stops the pilot meeting becoming a debate about opinions. Whatever the numbers show, everyone already knows what they mean.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "aba-09-t2",
+  "prompt": "Write **five questions** you'd ask a kiosk owner at the sprint review after they try the reorder feature. Each on its own line, ending with a question mark. Make them **open**, and include at least one about **when they'd use it** and one about **what would stop them**.",
+  "minutes": 5,
+  "rows": 6,
+  "placeholder": "What did you expect to happen when ...?",
+  "rules": [
+    { "label": "Five questions, each ending with ?", "pattern": "\\?\\s*$", "min": 5 },
+    { "label": "Mostly open questions (what, how, when, why, tell me, describe)", "pattern": "^\\s*(\\d+[.)]\\s*|[-*]\\s*)?(what|how|when|why|which|tell me|describe|walk me)\\b", "min": 4 },
+    { "label": "Asks when they'd use it", "pattern": "when would|when do you|what time|how often" },
+    { "label": "Asks what would stop them", "pattern": "stop you|prevent|get in the way|instead|why not|put you off" },
+    { "label": "No leading questions (don't you think, wouldn't you, isn't it)", "pattern": "don'?t you think|wouldn'?t you|isn'?t it|surely", "absent": true }
+  ],
+  "sample": "1. What did you expect to happen when you tapped reorder?\n2. What would you want to change in the basket before confirming?\n3. When would you use this instead of waiting for your rep's visit?\n4. What might stop you using it on a busy day?\n5. How would you check the order had gone through?",
+  "note": "Question 4 is the one product teams most often forget to ask, and its answer (\"my phone has no data until evening\", \"I don't trust it without a call\") usually becomes the next backlog item.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why agree a pilot's success criteria before it starts?",
+    "options": ["It's a formality", "So the result is judged against agreed evidence, not argued afterwards by whoever cares most", "To make the pilot shorter", "Criteria can't be changed later"],
+    "answer": 1,
+    "explanation": "Agreed criteria and a decision rule turn opinions into a decision."
+  },
+  {
+    "prompt": "Pilot kiosks ordered 20% more often, but so did kiosks elsewhere in the same weeks. What can you conclude?",
+    "options": ["The app works", "The rise may be seasonal; compared with the other kiosks, there's no evidence the app caused it", "The app failed", "Nothing at all"],
+    "answer": 1,
+    "explanation": "That's why a pilot needs a comparison group."
+  },
+  {
+    "prompt": "Who should attend a sprint review for the kiosk app?",
+    "options": ["Only the team", "The team, the product owner and real users such as a kiosk owner and a sales rep", "Only senior managers", "Only the scrum master"],
+    "answer": 1,
+    "explanation": "Real users give the feedback that changes the backlog."
+  }
+]
+```
+$md$, true, true, 9, array['aba-09-t1', 'aba-09-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('aba-m10', 'agile-business-analysis', 'Final Project', 10, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('agile-business-analysis:final-project', 'agile-business-analysis', 'aba-m10', 'final-project', '"Final project: Harbourline''s delay notifications"', 'Plan your final project, an agile delivery pack for a freight company''s customer delay-notification service, from vision and story map to forecast and pilot plan.', 20, $md$
+## The problem
+
+In Business Analysis Fundamentals, Harbourline Freight's operations director asked for a GPS tracking app. The analysis found something different: about a quarter of deliveries arrive late on every kind of route, and customers usually find out only when a shipment doesn't arrive. The managing director agreed to start smaller, with a service that **tells customers about delays before they happen**, built by a small Scrum team in two-week sprints.
+
+You're the team's BA. Before sprint 1, the managing director wants to see how you'll run it: what you're building first and why, how you'll know it's ready and done, when it could be piloted, and how you'll decide whether it worked.
+
+## The concept
+
+**The agile delivery pack**
+
+| Part | What it contains | Lesson |
+| :-- | :-- | :-- |
+| Vision and product goal | who it's for, the outcome, a measurable goal | 2 |
+| Story map | the customer's journey, the walking skeleton and a pilot slice | 3 |
+| Backlog | at least 12 user stories, split small, with acceptance criteria for the top 5 | 4, 5 |
+| Ready and done | the team's definition of ready and definition of done | 5 |
+| Prioritisation | WSJF scores for the top 8 stories | 6 |
+| Forecast | the pilot date as a range, from an assumed velocity | 7 |
+| Measures | flow and quality measures the team will track | 8 |
+| Pilot plan | question, comparison, success criteria, decision rule | 9 |
+
+**Sizing the need from the data**
+
+The logistics dataset tells you how many notifications the service would send, and to whom. That shapes the stories: a service sending three messages a month can be manual; one sending thirty a month needs automating, and needs to work for the account managers who'll handle the replies.
+
+## Example
+
+A first cut at the product goal:
+
+> For Harbourline customers whose shipments are delayed, the delay-notification service tells them about the delay and the new expected date before the original date passes. **Goal for a three-month pilot:** at least 80% of late shipments notified in advance, and complaints about late deliveries down by half.
+
+Notice that the goal needs two new measures Harbourline doesn't collect today: whether a late shipment was notified in advance, and complaints by reason. Capturing them becomes part of the backlog.
+
+## Walkthrough
+
+1. Use the logistics data to estimate how many late deliveries a month the service would need to notify.
+2. Write the vision and the product goal.
+3. Build the story map from the customer's point of view (shipment booked → shipment moving → delay detected → customer told → customer replies → delivered).
+4. Draft the backlog, split the big stories, and write acceptance criteria for the top five.
+5. Open the project brief on the course page and plan the rest of the pack.
+
+## Practice
+
+```dataset
+{"dataset": "logistics", "files": ["shipments", "routes", "customers"]}
+```
+
+```answer
+{
+  "id": "aba-10-p1",
+  "prompt": "Logistics data: on average, how many delivered shipments **a month** arrived **late** (transit days greater than the route's target) in January to August 2026? One decimal place.",
+  "answer": 27.9,
+  "format": "number",
+  "dataset": "logistics",
+  "files": ["shipments", "routes"],
+  "verify": "SELECT ROUND(COUNT(*) / 8.0, 1) FROM shipments s JOIN routes r ON r.route_id = s.route_id WHERE s.status = 'Delivered' AND julianday(s.delivery_date) - julianday(s.ship_date) > r.target_transit_days AND s.delivery_date BETWEEN '2026-01-01' AND '2026-08-31'",
+  "hint": "Count the late deliveries with a delivery date in 2026 (to 31 August), divided by 8 months.",
+  "explanation": "About 28 a month, roughly one every working day: too many to handle well by hand, but few enough that a simple first version (an alert to the account manager, who calls the customer) could work in a pilot.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "aba-10-p2",
+  "prompt": "How many different **customers** had at least one late delivery in January to August 2026?",
+  "answer": 61,
+  "format": "number",
+  "dataset": "logistics",
+  "files": ["shipments", "routes"],
+  "verify": "SELECT COUNT(DISTINCT s.customer_id) FROM shipments s JOIN routes r ON r.route_id = s.route_id WHERE s.status = 'Delivered' AND julianday(s.delivery_date) - julianday(s.ship_date) > r.target_transit_days AND s.delivery_date BETWEEN '2026-01-01' AND '2026-08-31'",
+  "hint": "COUNT(DISTINCT customer_id) over the same late deliveries.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "aba-10-t1",
+  "prompt": "Write the **walking skeleton** for the delay-notification service: one essential user story for each step of the backbone, in **As a … I want … so that …** form. Use at least **four** steps, and include at least one story for an **account manager** as well as for customers.",
+  "minutes": 8,
+  "rows": 8,
+  "placeholder": "As an operations officer, I want ..., so that ...",
+  "rules": [
+    { "label": "At least four stories in As a … I want … so that … form", "pattern": "as an? [^\\n]+?I want [^\\n]+?so that [^\\n]+", "min": 4 },
+    { "label": "At least one story for a customer", "pattern": "as an? (harbourline )?customer" },
+    { "label": "At least one story for an account manager", "pattern": "as an? account manager" },
+    { "label": "Mentions the new expected date or delay", "pattern": "delay|new (expected )?date|late" }
+  ],
+  "sample": "As an operations officer, I want shipments flagged when they'll miss their target date, so that we know about a delay before the customer does.\nAs an account manager, I want an alert listing my customers' delayed shipments each morning, so that I can contact them before the original date.\nAs a customer, I want an SMS or email with the new expected delivery date, so that I can plan around the delay.\nAs a customer, I want to reply to the message to reach my account manager, so that I can ask questions without searching for a phone number.\nAs an account manager, I want to record that a customer was told about a delay, so that we can measure how many late shipments were notified in advance.",
+  "note": "The last story exists because of the product goal: without it, \"80% notified in advance\" can't be measured. Building the measurement into the walking skeleton is a habit worth keeping.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why size the notification volume from data before writing the backlog?",
+    "options": ["It isn't necessary", "Volume decides how much must be automated, and who handles the replies, which shapes the stories", "To estimate story points", "Data replaces user stories"],
+    "answer": 1,
+    "explanation": "Thirty a month and three thousand a month are different products."
+  },
+  {
+    "prompt": "The product goal needs a measure Harbourline doesn't collect yet. What should you do?",
+    "options": ["Change the goal", "Add a backlog item to capture the measure, early, so the pilot can be judged", "Estimate it afterwards", "Ignore it"],
+    "answer": 1,
+    "explanation": "If you can't measure the outcome, you can't learn from the pilot."
+  },
+  {
+    "prompt": "Which is the best first release for the delay-notification service?",
+    "options": ["A full customer portal with GPS maps", "A walking skeleton: detect likely delays, alert the account manager, tell the customer, record that they were told", "Only the delay-detection logic", "Every possible message channel at once"],
+    "answer": 1,
+    "explanation": "Slice across the whole journey so it can be piloted end to end."
+  }
+]
+```
+$md$, true, true, 10, array['aba-10-p1', 'aba-10-p2', 'aba-10-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+
 -- Course: Data Analyst Capstone: End-to-End BI Project
 insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
-values ('data-analyst-capstone', 'full', null, 'data-analyst-capstone', 'CAP', 'Data Analyst Capstone: End-to-End BI Project', 'Take a retail chain''s raw till export all the way to a reviewed dashboard and a board-ready executive summary, using the tools of your choice.', 'The capstone of the Data Analyst track. Voltline Electronics, a chain of eight stores, sends you 18 months of raw till data and one question from its chief executive: what''s really driving our 37% growth? You''ll plan the analysis, profile and clean a genuinely messy export (a duplicated upload, mixed date formats, inconsistent store names and test transactions), build a model that looks up costs by date and compares sales with monthly targets, decompose the growth, find what''s going wrong where, and put a value on missed sales. Then you''ll build a dashboard, write an executive summary, prepare for the board''s questions and publish the project for your portfolio. Use Excel, Power BI, SQL or Python: the work is assessed on the answers, not the tool.', 'data-analytics', 'intermediate', 4, 'Career project', 14, true, 'available', true, array['Turning a business brief into an analysis plan', 'Profiling and cleaning raw data with a quality log', 'Modelling data at the right grain', 'Decomposing growth into price, new stores and volume', 'Judging targets fairly', 'Estimating lost sales with stated assumptions', 'Finding-led dashboards and executive summaries', 'Presenting and publishing a portfolio project']::text[], array['The core Data Analyst courses: Excel, SQL and Power BI (or Python)', 'Comfort cleaning data and building a dashboard in at least one tool']::text[], 'Voltline Electronics: commercial review', true, true, true, true, false, 60, 23)
+values ('data-analyst-capstone', 'full', null, 'data-analyst-capstone', 'CAP', 'Data Analyst Capstone: End-to-End BI Project', 'Take a retail chain''s raw till export all the way to a reviewed dashboard and a board-ready executive summary, using the tools of your choice.', 'The capstone of the Data Analyst track. Voltline Electronics, a chain of eight stores, sends you 18 months of raw till data and one question from its chief executive: what''s really driving our 37% growth? You''ll plan the analysis, profile and clean a genuinely messy export (a duplicated upload, mixed date formats, inconsistent store names and test transactions), build a model that looks up costs by date and compares sales with monthly targets, decompose the growth, find what''s going wrong where, and put a value on missed sales. Then you''ll build a dashboard, write an executive summary, prepare for the board''s questions and publish the project for your portfolio. Use Excel, Power BI, SQL or Python: the work is assessed on the answers, not the tool.', 'data-analytics', 'intermediate', 4, 'Career project', 14, true, 'available', true, array['Turning a business brief into an analysis plan', 'Profiling and cleaning raw data with a quality log', 'Modelling data at the right grain', 'Decomposing growth into price, new stores and volume', 'Judging targets fairly', 'Estimating lost sales with stated assumptions', 'Finding-led dashboards and executive summaries', 'Presenting and publishing a portfolio project']::text[], array['The core Data Analyst courses: Excel, SQL and Power BI (or Python)', 'Comfort cleaning data and building a dashboard in at least one tool']::text[], 'Voltline Electronics: commercial review', true, true, true, true, false, 60, 24)
 on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level = excluded.level, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
@@ -28937,6 +30260,116 @@ on conflict (id) do update set assessment_id = excluded.assessment_id, position 
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
 values ('baq15', 1, 'Recommending the right solution to the real problem is the BA''s job.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Agile Business Analysis: final assessment
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('agile-business-analysis-final', 'agile-business-analysis', 'final', null, 'Agile Business Analysis: final assessment', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('abaq01', 'agile-business-analysis-final', 1, 'Who orders the product backlog in Scrum?', '["The business analyst","The product owner","The scrum master","The stakeholders by vote"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('abaq01', 1, 'The BA shapes and advises; the product owner decides the order.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('abaq02', 'agile-business-analysis-final', 2, 'Which is an outcome?', '["Ship the reorder feature","Kiosks order every 14 days instead of every 22","Write 20 user stories","Release on Android"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('abaq02', 1, 'Outcomes are changes in behaviour or results.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('abaq03', 'agile-business-analysis-final', 3, 'The first release has perfect sign-up but no way to pay. What went wrong?', '["Nothing","The release was sliced by component, not across the whole user journey","Too few developers","Payments are always last"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('abaq03', 1, 'A walking skeleton covers every step of the journey, however basically.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('abaq04', 'agile-business-analysis-final', 4, 'Which split of ''Pay by card'' is best?', '["Database, API, screen","Successful card payment first; failed payment handling next; saved cards later","Front end and back end","Design, build, test"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('abaq04', 1, 'Each slice should still be valuable and testable.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('abaq05', 'agile-business-analysis-final', 5, 'A tester asks in refinement, ''What if the transfer arrives the next day?'' Nobody knows. What does that tell you?', '["The tester is slowing things down","The story isn''t ready: answer the question and add the criterion before the sprint","Start the story and find out","Remove the story"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('abaq05', 1, 'That''s what the three amigos and a definition of ready are for.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('abaq06', 'agile-business-analysis-final', 6, 'A story is coded but not tested on a real phone. Do its points count towards velocity?', '["Yes","No: only items meeting the definition of done count","Half","Only at the end of the release"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('abaq06', 1, 'Counting unfinished work hides problems.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('abaq07', 'agile-business-analysis-final', 7, 'Item A: cost of delay 18, 3 points. Item B: cost of delay 24, 8 points. Which goes first by WSJF?', '["B: higher cost of delay","A: WSJF 6.0 against 3.0","Either","Neither"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('abaq07', 1, 'Short, valuable jobs first.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('abaq08', 'agile-business-analysis-final', 8, 'Average velocity is 19 points; 51 points remain; two sprints are left before the pilot. What''s the honest answer to ''will it be ready?''', '["Yes","Not with the current scope: about 38 points fit, so about 13 must move or the date must change","The team must work harder","We can''t know"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('abaq08', 1, 'Forecast from real velocity and offer options.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('abaq09', 'agile-business-analysis-final', 9, 'On a burn-up chart, total scope rises as fast as work done. What does it mean?', '["Good progress","Scope growth is keeping the release from ever finishing","The team is idle","The chart is broken"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('abaq09', 1, 'Burn-up charts make scope growth visible.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('abaq10', 'agile-business-analysis-final', 10, 'A team starts all its stories on day one of each sprint. What usually happens?', '["Everything finishes faster","Cycle times rise and more work finishes late, often with bugs","No change","Velocity doubles"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('abaq10', 1, 'More work in progress means longer cycle times.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('abaq11', 'agile-business-analysis-final', 11, 'A manager wants to rank developers by story points completed. What''s the main risk?', '["None","People game the measure and stop helping each other","Points can''t be counted","It takes too long"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('abaq11', 1, 'Team measures describe the system, not individuals.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('abaq12', 'agile-business-analysis-final', 12, 'Pilot kiosks ordered 20% more often; so did kiosks with no app in the same weeks. What do you conclude?', '["The app works","No evidence the app caused it: the rise appears everywhere","The app failed","Run the pilot again immediately"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('abaq12', 1, 'Comparison groups separate the effect of the change from everything else.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('abaq13', 'agile-business-analysis-final', 13, 'When should a pilot''s success criteria and decision rule be agreed?', '["After the results come in","Before the pilot starts","Only if the results are bad","They aren''t needed"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('abaq13', 1, 'Agreeing in advance stops the decision being argued from the results.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 
@@ -32178,6 +33611,16 @@ Write for the operations director and Harbourline's managing director: clear, sp
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
 
 
+-- Project: Harbourline delay notifications: agile delivery pack
+insert into public.projects (id, course_id, title, summary, brief_md, tasks, datasets, rubric, required)
+values ('aba-harbourline-delays', 'agile-business-analysis', 'Harbourline delay notifications: agile delivery pack', 'An agile delivery pack for a freight company''s customer delay-notification service, from vision and story map to forecast and pilot plan.', $md$Harbourline Freight will build a service that tells customers about delays before they happen, with a small Scrum team in two-week sprints. Before sprint 1, prepare the agile delivery pack the managing director has asked for.
+
+Use the logistics dataset to size the need. Assume the team's velocity will be 18 to 24 points a sprint once it settles, and that sprint 1 starts on 7 September 2026.
+
+Submit a link to your pack (a shared document, spreadsheet, board export or PDF) and paste your **product goal**, **pilot forecast** and **pilot plan** below, followed by a short note on where to find each task.$md$, array['Vision and product goal, with a measurable outcome, a baseline from the data and a date.', 'A story map of the customer''s journey, with the walking skeleton and the pilot release marked.', 'A backlog of at least 12 user stories, with large stories split and the splitting pattern named, and Given/When/Then acceptance criteria for the top five.', 'The team''s definition of ready and definition of done.', 'WSJF scores for the top eight stories, and the resulting order with reasons.', 'A pilot date forecast as a range, using the assumed velocity and your estimates, with the scope you''d cut if the date is at risk.', 'The flow and quality measures the team will track, and how you''ll use them in retrospectives.', 'A pilot plan: question, comparison, success criteria and decision rule.']::text[], array['logistics']::text[], array['The product goal is an outcome with a number, a baseline and a date, and every backlog decision can be traced to it.', 'The story map covers the whole journey, and the first slice is usable end to end.', 'Stories are small, valuable and testable; splits use real patterns, not technical layers; acceptance criteria cover unhappy paths.', 'Definitions of ready and done are specific and would prevent the problems seen in the kiosk app team.', 'Prioritisation is consistent and explained, and the forecast is a range with an honest scope plan.', 'Measures are used for learning, not judging individuals.', 'The pilot plan has a comparison group, success criteria agreed in advance and a decision rule.']::text[], true)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
+
+
 -- Track: Become a Data Analyst
 insert into public.tracks (id, slug, title, summary, badge_name, badge_code, skills, position, published)
 values ('data-analyst', 'data-analyst', 'Become a Data Analyst', 'The route we recommend from no experience to a junior data analyst role. Learn how analysis works, then the tools teams use every day (Excel, SQL, Power BI and Python) on realistic company data. Build portfolio projects that answer real business questions, and finish with your CV, LinkedIn and interview preparation.', 'CloudTech Data Analyst', 'DATAANALYST', array['Spreadsheet analysis in Excel', 'Statistics: averages, spread, confidence intervals and tests', 'Querying databases with SQL, from first SELECT to cohorts and window functions', 'Data modelling and star schemas', 'Dashboards in Power BI, with DAX measures you can trust', 'Analysis in Python and pandas', 'Turning data into findings a manager can act on']::text[], 1, true)
@@ -32270,15 +33713,19 @@ values ('business-analyst', 'power-bi-fundamentals', 'Core', true, 6)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 insert into public.track_courses (track_id, course_id, stage, required, position)
-values ('business-analyst', 'career-essentials', 'Career', true, 7)
+values ('business-analyst', 'agile-business-analysis', 'Specialist', true, 7)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 insert into public.track_courses (track_id, course_id, stage, required, position)
-values ('business-analyst', 'build-your-student-portfolio', 'Career', false, 8)
+values ('business-analyst', 'career-essentials', 'Career', true, 8)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 insert into public.track_courses (track_id, course_id, stage, required, position)
-values ('business-analyst', 'get-your-first-internship', 'Career', false, 9)
+values ('business-analyst', 'build-your-student-portfolio', 'Career', false, 9)
+on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
+
+insert into public.track_courses (track_id, course_id, stage, required, position)
+values ('business-analyst', 'get-your-first-internship', 'Career', false, 10)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 

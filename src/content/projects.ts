@@ -44,6 +44,13 @@ export const DATASETS: DatasetInfo[] = [
     files: ["sales_raw", "stores", "products", "cost_prices", "targets", "stockouts"],
   },
   {
+    id: "agile",
+    name: "Kolanut kiosk app (agile delivery)",
+    description:
+      "A Scrum team's board for Kolanut's kiosk ordering app, exported after six two-week sprints (to 22 May 2026): every story, spike and bug with its points, sprint, status and dates, and the sprints with their goals and commitments.",
+    files: ["backlog", "sprints"],
+  },
+  {
     id: "legal",
     name: "Ashgrove Chambers (legal)",
     description: "A Lagos law firm's clients, matters, court hearings and invoices from 2024 to August 2026.",
@@ -241,6 +248,35 @@ export const DATA_DICTIONARY: Record<string, Record<string, { about: string; col
         amount_ngn: "Invoice amount in naira.",
         status: "Paid, Outstanding or Overdue.",
         paid_date: "Date it was paid. Blank if unpaid.",
+      },
+    },
+  },
+  agile: {
+    backlog: {
+      about: "Every item on the team's board: stories, a spike and bugs, as exported on 22 May 2026.",
+      columns: {
+        item_id: "Unique item ID, such as KOA-121.",
+        type: "Story, Spike or Bug.",
+        title: "Short title of the item.",
+        epic: "The epic (feature area) it belongs to.",
+        release: "MVP (needed for the pilot) or Later.",
+        points: "Story points estimated by the team. Blank for bugs.",
+        created_date: "Date the item was added to the backlog.",
+        sprint: "Sprint the item was planned into (or found in, for bugs). Blank if not yet planned.",
+        status: "To do, In progress or Done.",
+        started_date: "Date work started. Blank if not started.",
+        done_date: "Date the item met the definition of done. Blank if not done.",
+      },
+    },
+    sprints: {
+      about: "The team's two-week sprints.",
+      columns: {
+        sprint: "Sprint number.",
+        start_date: "First day of the sprint.",
+        end_date: "Last working day of the sprint.",
+        goal: "The sprint goal.",
+        committed_points: "Story points the team committed to at sprint planning. Blank for sprints not yet planned.",
+        status: "Closed, Planned or Future.",
       },
     },
   },
