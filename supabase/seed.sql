@@ -51,7 +51,7 @@ values ('automation', 'Automation', 'Automating repetitive work.', true, 12)
 on conflict (id) do update set name = excluded.name, description = excluded.description, is_future = excluded.is_future, position = excluded.position;
 
 insert into public.course_categories (id, name, description, is_future, position)
-values ('business-analysis', 'Business Analysis', 'Requirements, processes and decisions.', true, 13)
+values ('business-analysis', 'Business Analysis', 'Requirements, processes and decisions.', false, 13)
 on conflict (id) do update set name = excluded.name, description = excluded.description, is_future = excluded.is_future, position = excluded.position;
 
 insert into public.course_categories (id, name, description, is_future, position)
@@ -24977,9 +24977,1511 @@ $md$, true, true, 12, array['pyan-12-p1', 'pyan-12-p2', 'pyan-12-p3']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 
+-- Course: Business Analysis Fundamentals
+insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
+values ('business-analysis-fundamentals', 'full', null, 'business-analysis-fundamentals', 'BA', 'Business Analysis Fundamentals', 'Turn a request into the right change: problem statements, stakeholders, process maps, testable requirements, user stories, KPIs, business cases and acceptance testing, on a real firm''s data.', 'Business analysts help organisations change for the better. In this course you work with Ashgrove Chambers, a Lagos law firm whose managing partner wants ''a new system'' because clients pay late. You''ll find the real problem and measure it from the firm''s own data, map the stakeholders, interview and observe without leading, map how billing really works and where it breaks, write requirements that can be built and tested, turn them into user stories with Given/When/Then acceptance criteria, define the KPIs that will prove success, build a business case that compares options including doing nothing, and plan testing and adoption. The course ends with a full business analysis pack for a freight company''s tracking request.', 'business-analysis', 'beginner', 2, 'Beginner to intermediate', 7, true, 'available', true, array['Problem statements that separate the need from the solution', 'Stakeholder analysis and RACI', 'Interviews, workshops, observation and five whys', 'Measuring the current state with data', 'Swimlane process maps, as is and to be', 'Testable requirements and MoSCoW prioritisation', 'User stories and Given/When/Then acceptance criteria', 'KPI definitions, business cases and payback', 'User acceptance testing, traceability and adoption']::text[], array['No experience needed', 'Basic Excel helps with the data tasks: Excel for Data Analysis covers it']::text[], 'Harbourline tracking request: business analysis pack', true, true, true, true, false, 60, 22)
+on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level = excluded.level, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('ba-m01', 'business-analysis-fundamentals', 'What Business Analysts Do', 1, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('business-analysis-fundamentals:what-business-analysts-do', 'business-analysis-fundamentals', 'ba-m01', 'what-business-analysts-do', 'What business analysts do', 'The business analyst''s job, how it differs from a data analyst''s or project manager''s, and the first and most important skill, separating the problem from the requested solution.', 20, $md$
+## The problem
+
+Ashgrove Chambers, a Lagos law firm with eight lawyers and 50 clients, has a request from its managing partner, Mrs Folake Adeyemi-Cole:
+
+> "We need a new practice-management system. Ours is a mess of spreadsheets. Find us one by the end of the quarter."
+
+A junior analyst starts comparing software. An experienced business analyst asks a different question first: **what problem is the system meant to solve?** Spreadsheets aren't a problem in themselves. Somewhere there's a cost: money arriving late, lawyers wasting hours, clients complaining. Until you know which, you can't say whether a new system will fix it, or whether something cheaper would do.
+
+That question is the heart of business analysis, and this course teaches you to answer it properly, using Ashgrove as the case throughout.
+
+## The concept
+
+**What a business analyst does**
+
+A business analyst (BA) helps an organisation change for the better, by understanding how it works now, working out what needs to change and why, and specifying the change clearly enough that it can be built, bought or adopted. The BA sits between the people with the problem (the "business") and the people who'll deliver the solution (developers, suppliers, the operations team).
+
+| Role | Main question | Typical outputs |
+| :-- | :-- | :-- |
+| **Business analyst** | What should change, and why? | problem statements, process maps, requirements, user stories, business cases |
+| Data analyst | What does the data say? | analyses, dashboards, findings |
+| Project manager | How do we deliver it on time and budget? | plans, schedules, risk logs |
+| Product owner | What do we build next? | a prioritised backlog |
+
+The roles overlap, especially in small companies, where one person may do all four. A BA who can query data is far more effective, which is why this track includes Excel, SQL and Power BI.
+
+**The business analysis cycle**
+
+1. **Understand the problem**: stakeholders, goals and the current situation, measured with data where possible.
+2. **Analyse the current state**: how the work flows today and where it breaks.
+3. **Define the future state**: what should be different.
+4. **Specify requirements**: what the solution must do, in a form people can build and test.
+5. **Justify it**: a business case comparing the options.
+6. **Support delivery**: answer questions, test the solution and help people adopt it.
+
+**Problem, not solution**
+
+Requests usually arrive as solutions: "we need a system", "build a dashboard", "hire another clerk". Your first job is to work backwards to the problem with questions like "What would be different if we had it?", "What does it cost us not to have it?" and "How would we know it worked?".
+
+A good **problem statement** says who's affected, what's happening, what it costs, and how you'll measure success, without naming a solution.
+
+## Example
+
+The managing partner's request, turned into a problem statement after a few conversations:
+
+> "Ashgrove's clients take an average of 45 days to pay their invoices, and ₦188m is currently overdue, much of it for more than six months. Partners spend hours each month chasing payments by phone, and nobody can see at a glance what's owed or by whom. We want to collect faster and know where we stand, measured by average days to pay and the value of overdue invoices."
+
+Notice what's missing: the word "system". A new system might be the answer. So might automatic email reminders, a weekly overdue report, or clearer payment terms on the invoice. The problem statement leaves those options open, and gives you a way to measure whichever one is chosen.
+
+## Walkthrough
+
+1. Read the managing partner's request again and list the questions you'd ask her before doing anything else.
+2. Download the legal dataset and open `invoices.csv`. Filter `status` to Overdue. That list is the problem in the problem statement.
+3. Write Ashgrove's request as a problem statement in your own words (the task below).
+4. Note who else you'd need to talk to: the people who issue invoices, chase them, pay them and use the reports.
+
+## Practice
+
+```dataset
+{"dataset": "legal", "files": ["invoices", "matters", "clients"]}
+```
+
+```answer
+{
+  "id": "ba-01-p1",
+  "prompt": "How many of Ashgrove's invoices are **Overdue**?",
+  "answer": 70,
+  "format": "number",
+  "dataset": "legal",
+  "files": ["invoices"],
+  "verify": "SELECT COUNT(*) FROM invoices WHERE status = 'Overdue'",
+  "hint": "Filter invoices.csv to status = Overdue and count the rows.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "ba-01-t1",
+  "prompt": "A hospital's operations director says: **\"We need an app for booking appointments.\"** After a conversation, you learn that patients wait about 3 hours in the clinic, about 1 in 5 booked patients don't turn up, and nobody knows how many slots are wasted each week. Write a **problem statement** in 2 to 4 sentences: who's affected, what's happening, what it costs, and how success would be measured. **Don't** name a solution (no app, system or software).",
+  "minutes": 6,
+  "rows": 6,
+  "placeholder": "Patients at the clinic ...",
+  "rules": [
+    { "label": "Says who's affected (patients, doctors or staff)", "pattern": "patient|doctor|staff|nurse|clinic" },
+    { "label": "Includes at least one number from the situation", "pattern": "\\d" },
+    { "label": "Says how success would be measured", "pattern": "measur|success|target|reduc|fewer|less than|track" },
+    { "label": "Doesn't name a solution: no app, system, software or platform", "pattern": "\\b(app|apps|application|system|software|platform|portal)\\b", "absent": true },
+    { "label": "Between 30 and 110 words", "minWords": 30, "maxWords": 110 }
+  ],
+  "sample": "Patients at the outpatient clinic wait about 3 hours to be seen, and around 1 in 5 booked patients don't turn up, so doctors' time is wasted while others wait. Nobody can currently say how many slots are lost each week. Success would mean shorter waiting times and fewer wasted slots, measured weekly by average wait and the no-show rate.",
+  "note": "Leaving the app out isn't pedantry. Once the problem is clear, cheaper options appear: SMS reminders the day before might cut no-shows on their own, and staggered booking times might cut waiting. The app may still be right, but now it has to earn its place.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "A manager says 'we need a dashboard'. What should a business analyst do first?",
+    "options": ["Start building the dashboard", "Find out what decision or problem the dashboard is for, and how success would be measured", "Choose a tool", "Write user stories"],
+    "answer": 1,
+    "explanation": "Requests usually arrive as solutions. Work back to the problem first."
+  },
+  {
+    "prompt": "Which is the best problem statement?",
+    "options": ["We need a new CRM", "Sales staff are unhappy", "Sales staff spend about 6 hours a week re-entering orders, causing errors in 4% of invoices; we'll measure success by time spent and the error rate", "Improve efficiency"],
+    "answer": 2,
+    "explanation": "Who, what, the cost and a measure, with no solution named."
+  },
+  {
+    "prompt": "What's the main difference between a business analyst and a data analyst?",
+    "options": ["BAs don't use data", "A BA works out what should change and why, and specifies it; a data analyst finds out what the data says", "Data analysts write requirements", "There is none"],
+    "answer": 1,
+    "explanation": "The roles overlap, and a BA who can analyse data is more effective."
+  }
+]
+```
+$md$, true, true, 1, array['ba-01-p1', 'ba-01-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('ba-m02', 'business-analysis-fundamentals', 'Stakeholders', 2, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('business-analysis-fundamentals:stakeholders', 'business-analysis-fundamentals', 'ba-m02', 'stakeholders', 'Stakeholders', 'Find everyone affected by a change, map their power and interest, decide how to involve each one, and agree who does what with a RACI chart.', 20, $md$
+## The problem
+
+Six months ago, a Lagos firm bought a billing system its partners loved in a demo. The accounts officer, who would use it every day, was never asked. It couldn't print the paper invoices two of the firm's largest clients insisted on, so she kept the old spreadsheet running alongside it. Within three months the new system was abandoned.
+
+Projects rarely fail because the analysis was too technical. They fail because someone who mattered was missed: a user who couldn't do their job, a manager who blocked it, a client who refused the new invoice format. **Stakeholder analysis** is how a BA makes sure everyone who matters is found and heard.
+
+## The concept
+
+**Who counts as a stakeholder**
+
+Anyone who **affects** the change or is **affected** by it: the people who'll pay for it, use it, run it, support it, or be on the receiving end of it. Look in four directions:
+
+- **Up**: sponsors and decision-makers (the managing partner).
+- **Across**: the people who do the work today (lawyers, paralegals, the accounts officer).
+- **Out**: customers and suppliers (clients, the software vendor, the bank).
+- **Around**: support and control (IT, the auditor, regulators such as the data protection authority).
+
+**The power and interest grid**
+
+Place each stakeholder on two scales: their **power** over the change and their **interest** in it.
+
+| | Low interest | High interest |
+| :-- | :-- | :-- |
+| **High power** | **Keep satisfied**: brief updates, involve at key decisions | **Manage closely**: involve throughout, agree decisions with them |
+| **Low power** | **Monitor**: occasional information | **Keep informed**: regular updates, ask for their input; they often know the details best |
+
+The people who do the work every day often sit in "keep informed", but their knowledge is essential, and their resistance can sink a project. Don't confuse low power with low importance.
+
+**RACI: who does what**
+
+For each key decision or deliverable, a RACI chart says who is:
+
+- **R**esponsible: does the work.
+- **A**ccountable: owns the outcome and signs off. Exactly **one** person per row.
+- **C**onsulted: asked for input before (two-way).
+- **I**nformed: told after (one-way).
+
+## Example
+
+Part of Ashgrove's stakeholder register:
+
+| Stakeholder | Role in the change | Power | Interest | Approach |
+| :-- | :-- | :-- | :-- | :-- |
+| Mrs Adeyemi-Cole, managing partner | sponsor, approves the budget | high | high | manage closely: weekly 15-minute update |
+| Accounts officer | issues and chases invoices today | low | high | keep informed, and involve in design: she knows the process best |
+| Lawyers (8) | record work and approve bills | medium | low | keep satisfied: short demos, minimal extra admin |
+| Clients (50) | receive and pay invoices | medium | medium | consult a few major clients on the invoice format |
+| IT contractor | supports the current spreadsheets | low | medium | consult on data migration |
+
+And a RACI row: *Approve the new invoice process*: Responsible, BA; Accountable, managing partner; Consulted, accounts officer and two senior lawyers; Informed, all staff.
+
+## Walkthrough
+
+1. List everyone affected by a change to Ashgrove's billing, looking up, across, out and around.
+2. Place each one on the power and interest grid. Be honest about the lawyers: their interest in billing admin is probably low, but they can block anything that costs them time.
+3. Use the matters data to see who carries the most open work. The busiest lawyers will have the least time for new billing steps.
+4. Write an approach for each stakeholder (the task below).
+5. Draft a RACI for three decisions: choosing the solution, designing the new invoice, and switching off the spreadsheets.
+
+## Practice
+
+```answer
+{
+  "id": "ba-02-p1",
+  "prompt": "Which lawyer is responsible for the most **Open** matters? Type their name.",
+  "answer": "Zainab Abdullahi",
+  "format": "text",
+  "dataset": "legal",
+  "files": ["matters"],
+  "verify": "SELECT responsible_lawyer FROM matters WHERE status = 'Open' GROUP BY responsible_lawyer ORDER BY COUNT(*) DESC LIMIT 1",
+  "hint": "Filter matters.csv to status = Open and count by responsible_lawyer.",
+  "explanation": "Zainab Abdullahi, with 7 open matters. She's also the firm's highest biller, so any new billing step that costs her time will meet resistance. Design with her, not for her.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "ba-02-t1",
+  "prompt": "Write a **stakeholder register** for Ashgrove's billing change with at least **five** stakeholders. Put each on its own line starting with `-`, in the form **Stakeholder | Power | Interest | Approach**, where power and interest are high, medium or low.",
+  "minutes": 8,
+  "rows": 8,
+  "placeholder": "- Managing partner | high | high | manage closely: ...",
+  "rules": [
+    { "label": "At least five stakeholders, each a line starting with -", "pattern": "^\\s*-\\s+\\S", "min": 5 },
+    { "label": "Each line has four parts separated by |", "pattern": "^\\s*-[^|\\n]+\\|[^|\\n]+\\|[^|\\n]+\\|[^|\\n]+$", "min": 5 },
+    { "label": "Power and interest given as high, medium or low", "pattern": "^\\s*-[^|\\n]+\\|\\s*(high|medium|low)\\s*\\|\\s*(high|medium|low)\\s*\\|", "min": 5 },
+    { "label": "Includes the people who do the billing work (accounts officer or paralegals)", "pattern": "accounts|paralegal|finance|billing clerk" },
+    { "label": "Includes clients", "pattern": "client" }
+  ],
+  "sample": "- Managing partner | high | high | manage closely: weekly update, agrees every key decision\n- Accounts officer | low | high | keep informed and involve in design workshops: she runs the process today\n- Senior lawyers | medium | low | keep satisfied: short demos, show it won't add admin time\n- Paralegals | low | medium | keep informed: they record time, so ask how they do it now\n- Major clients | medium | medium | consult two or three on the invoice format and payment options\n- IT contractor | low | medium | consult on moving data out of the spreadsheets",
+  "note": "The approach column is what makes this useful. A register that only labels people high or low is a chart; one that says what you'll *do* about each person is a plan.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "The accounts officer has little power over the decision but will use the new process every day. How should you treat her?",
+    "options": ["Monitor only: low power", "Keep informed and involve her in design: she knows the process best and can make or break adoption", "Ignore her until training", "Make her accountable for the project"],
+    "answer": 1,
+    "explanation": "Low power doesn't mean low importance."
+  },
+  {
+    "prompt": "How many people should be Accountable for one row of a RACI chart?",
+    "options": ["As many as needed", "Exactly one", "None", "Everyone involved"],
+    "answer": 1,
+    "explanation": "One owner per decision; shared accountability means nobody's accountable."
+  },
+  {
+    "prompt": "Which is a stakeholder in a change to a firm's invoicing?",
+    "options": ["Only the partners", "Anyone who affects or is affected by it: partners, staff, clients, IT, even auditors", "Only people who use the software", "Only the project team"],
+    "answer": 1,
+    "explanation": "Look up, across, out and around."
+  }
+]
+```
+$md$, true, true, 2, array['ba-02-p1', 'ba-02-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('ba-m03', 'business-analysis-fundamentals', 'Eliciting Requirements', 3, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('business-analysis-fundamentals:eliciting-requirements', 'business-analysis-fundamentals', 'ba-m03', 'eliciting-requirements', 'Eliciting requirements', 'Draw out what people really need with interviews, workshops, observation and documents, ask questions that get facts rather than opinions, and dig to the root cause.', 20, $md$
+## The problem
+
+Ask Ashgrove's managing partner what she needs and she'll say "a better system". Ask the accounts officer and she'll say "the lawyers send their time sheets late". Ask a lawyer and they'll say "accounts send invoices with the wrong rates". Everyone is partly right, and nobody has the whole picture.
+
+Requirements aren't sitting in people's heads waiting to be collected. They have to be **elicited**: drawn out, checked against each other and against the evidence. People describe symptoms, propose solutions and forget the workarounds they've done for years. A BA's skill is to get past all three to what's actually happening and what's actually needed.
+
+## The concept
+
+**Elicitation techniques**
+
+| Technique | Best for | Watch out for |
+| :-- | :-- | :-- |
+| **Interviews** | depth, sensitive topics, one person's view | hearing one side only |
+| **Workshops** | agreeing across groups, prioritising | loud voices dominating |
+| **Observation** (job shadowing) | how work really happens, workarounds | people behaving differently when watched |
+| **Document and data analysis** | facts, volumes, current rules | documents describe how it should work, not how it does |
+| **Surveys** | many people, simple questions | shallow answers |
+
+Use more than one. Observation and data often contradict interviews, and the contradiction is usually where the real problem is.
+
+**Questions that get facts**
+
+- **Open** questions get stories: "Walk me through what happens when a matter's work is finished." "How do you know an invoice is overdue?"
+- **Closed** questions confirm details: "Is that every month?" "Who signs it off?"
+- **Avoid leading questions**, which plant the answer: "Don't you think automatic reminders would help?" Ask instead: "What happens after an invoice is sent?"
+- **Ask for examples**: "Tell me about the last invoice that was paid late." A specific case beats a general opinion.
+- **Ask about exceptions**: "When doesn't it work like that?"
+
+**Five whys**
+
+Keep asking "why?" to get from the symptom to the root cause:
+
+1. Why are invoices paid late? *Clients don't pay until they're chased.*
+2. Why aren't they chased sooner? *Nobody notices until a partner asks.*
+3. Why does nobody notice? *Overdue invoices aren't listed anywhere; you'd have to filter the spreadsheet.*
+4. Why isn't there a list? *The spreadsheet has no due date, only the issue date.*
+5. Why not? *Ashgrove never set payment terms, so there's no "due" to measure against.*
+
+The root cause isn't the software. It's that Ashgrove has no payment terms, so nothing is ever technically overdue until someone gets annoyed.
+
+## Example
+
+Interview notes, organised the way a BA records them, from the accounts officer:
+
+| Type | Note |
+| :-- | :-- |
+| Fact | Issues about 17 invoices a month, by email, as PDFs made in Word. |
+| Fact | Lawyers send their time to her by WhatsApp or on paper, usually 1–3 weeks after the work. |
+| Pain point | Spends 2–3 days a month chasing payments by phone, mostly when a partner asks about a client. |
+| Workaround | Keeps her own list of "slow payers" in a notebook. |
+| Idea (hers) | "If the invoice said 'due in 30 days', clients would take it more seriously." |
+
+Separating facts, pain points, workarounds and ideas keeps you honest. The notebook of slow payers is gold: it's a requirement (see who pays late) that nobody would ever have written down.
+
+## Walkthrough
+
+1. Before any interview, look at the data so you can ask informed questions. How many invoices did Ashgrove issue in 2025 (the first task below)?
+2. Choose techniques for Ashgrove: interview the managing partner, the accounts officer and two lawyers; observe the accounts officer preparing a month's invoices; analyse the invoice data.
+3. Write your interview questions for the accounts officer (the second task below).
+4. Run "five whys" on another symptom, such as "invoices have the wrong rates".
+5. After each interview, sort your notes into facts, pain points, workarounds and ideas, and send a short summary back to the interviewee to check you understood.
+
+## Practice
+
+```answer
+{
+  "id": "ba-03-p1",
+  "prompt": "How many invoices did Ashgrove issue in **2025**?",
+  "answer": 202,
+  "format": "number",
+  "dataset": "legal",
+  "files": ["invoices"],
+  "verify": "SELECT COUNT(*) FROM invoices WHERE issued_date BETWEEN '2025-01-01' AND '2025-12-31'",
+  "hint": "Filter issued_date to 2025 and count.",
+  "explanation": "202, about 17 a month. That matches what the accounts officer said, which is a useful check on the interview.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "ba-03-t1",
+  "prompt": "Write **six to ten interview questions** for Ashgrove's accounts officer about how invoices are prepared, sent and chased. Put each question on its own line. Make most of them **open**, include at least one asking for a **specific example**, and avoid **leading** questions.",
+  "minutes": 8,
+  "rows": 10,
+  "placeholder": "Walk me through what happens when ...?",
+  "rules": [
+    { "label": "Six to ten questions, each on its own line ending with ?", "pattern": "\\?\\s*$", "min": 6 },
+    { "label": "At least four open questions (starting with what, how, why, who, when, walk me, tell me or describe)", "pattern": "^\\s*(\\d+[.)]\\s*|[-*]\\s*)?(what|how|why|who|when|which|walk me|tell me|describe|talk me)\\b", "min": 4 },
+    { "label": "Asks for a specific example (last time, an example, recent)", "pattern": "last time|example|most recent|recent(ly)?|last (invoice|month|week)" },
+    { "label": "No leading questions (don't you think, wouldn't it, isn't it, surely)", "pattern": "don'?t you think|wouldn'?t it|isn'?t it|surely|wouldn'?t you agree", "absent": true }
+  ],
+  "sample": "1. Walk me through what happens from the moment a lawyer finishes some work to the moment the client pays?\n2. How do you find out how much time to bill?\n3. Who checks an invoice before it goes out?\n4. How do you send invoices, and what does the client receive?\n5. How do you know when an invoice should have been paid?\n6. Tell me about the last invoice that was paid very late. What happened?\n7. What do you do when a client doesn't pay?\n8. What takes up most of your time each month?\n9. When does the process not work the way you've described?\n10. If you could change one thing, what would it be?",
+  "note": "Question 6 will tell you more than the other nine together: a real case, with real dates and real reasons. And question 10 comes last on purpose, so her ideas don't steer the rest of the interview.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Which question is leading?",
+    "options": ["What happens after an invoice is sent?", "Don't you think automatic reminders would solve this?", "Tell me about the last late payment.", "Who approves invoices?"],
+    "answer": 1,
+    "explanation": "It plants the answer. Ask about what happens, not whether they agree with your idea."
+  },
+  {
+    "prompt": "Interviews say invoices go out within a week; the data shows a median of three weeks after the work. What should you do?",
+    "options": ["Trust the interviews", "Treat the gap as a finding: observe the process and ask about specific recent cases", "Trust the data and ignore the interviews", "Average the two"],
+    "answer": 1,
+    "explanation": "Contradictions between sources are often where the real problem is."
+  },
+  {
+    "prompt": "What is 'five whys' for?",
+    "options": ["Asking five people", "Getting from a symptom to its root cause", "Prioritising requirements", "Writing user stories"],
+    "answer": 1,
+    "explanation": "Keep asking why until you reach something you can actually change."
+  }
+]
+```
+$md$, true, true, 3, array['ba-03-p1', 'ba-03-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('ba-m04', 'business-analysis-fundamentals', 'The Current State in Numbers', 4, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('business-analysis-fundamentals:the-current-state-in-numbers', 'business-analysis-fundamentals', 'ba-m04', 'the-current-state-in-numbers', 'The current state in numbers', 'Measure how things work today before changing them, set the baseline every improvement will be judged against, and find out whether a problem is everywhere or concentrated.', 25, $md$
+## The problem
+
+Everyone at Ashgrove agrees that "clients pay late". But how late? Is it getting worse? Is it a few difficult clients, or everyone? Without numbers, a new process could be launched, declared a success at the Christmas party, and nobody would ever know whether it worked.
+
+Before you change anything, measure it. The **baseline** you set now is the yardstick for every claim made about the change later. It also stops the project solving the wrong problem: if late payment turned out to be three clients, the answer would be three phone calls, not a new system.
+
+## The concept
+
+**Baseline measures**
+
+Choose a few measures that capture the problem, and calculate them from the data you have:
+
+| Measure | Definition | Why it matters |
+| :-- | :-- | :-- |
+| **Average days to pay** | paid date − issued date, for paid invoices | how long cash takes to arrive |
+| **% paid within 30 days** | paid invoices paid in 30 days or less ÷ all paid invoices | how many clients pay on time |
+| **Overdue value** | total of unpaid invoices past due | money at risk now |
+| **Overdue age** | overdue value by how long it's been outstanding | how much might never be paid |
+
+**Three questions to ask of every measure**
+
+1. **Is it getting worse, better or staying the same?** Compare by year or quarter.
+2. **Is it everywhere, or concentrated?** Break it down by client type, practice area or lawyer.
+3. **How big is it?** Put a naira figure on it, so it can be compared with the cost of fixing it.
+
+**A note on definitions**
+
+Ashgrove marks an invoice "Overdue" when it's unpaid more than 30 days after issue, but there are no written payment terms. Note any definition like that in your analysis: if the firm later introduces 14-day terms, "overdue" will suddenly jump, without any change in client behaviour.
+
+## Example
+
+Average days to pay, by the year the invoice was issued:
+
+| Year issued | Paid invoices | Average days to pay |
+| :-- | --: | --: |
+| 2024 | 59 | 42.4 |
+| 2025 | 169 | 45.5 |
+| 2026 (to August) | 99 | 47.1 |
+
+It's getting slowly worse, by about 2 to 3 days a year. And the overdue money isn't concentrated in a few bad payers: it's spread across 32 of Ashgrove's 50 clients, companies and individuals alike. That points to a **process** problem (no terms, no reminders, no routine chasing), not a problem with particular clients.
+
+## Walkthrough
+
+1. Open `invoices.csv` in Excel, Power BI, SQL or Python. Add a column for days to pay (paid date − issued date) on paid invoices.
+2. Calculate the four baseline measures for the whole period.
+3. Break days to pay down by year issued, as in the example. Then by client type, after joining invoices to matters and clients.
+4. Age the overdue invoices as of 31 August 2026: 31–60 days, 61–90, 91–180 and over 180 days since issue.
+5. Write your baseline summary (the task below).
+
+> [!TIP]
+> Keep the queries or workbook you used. When the change goes live, you'll rerun exactly the same calculations to show whether it worked, and a baseline calculated differently from the "after" figures proves nothing.
+
+## Practice
+
+```answer
+{
+  "id": "ba-04-p1",
+  "prompt": "For **paid** invoices, what is the **average number of days** from issue to payment? One decimal place.",
+  "answer": 45.4,
+  "format": "number",
+  "dataset": "legal",
+  "files": ["invoices"],
+  "verify": "SELECT ROUND(AVG(julianday(paid_date) - julianday(issued_date)), 1) FROM invoices WHERE status = 'Paid'",
+  "hint": "paid_date − issued_date for each paid invoice, then the average.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "ba-04-p2",
+  "prompt": "What percentage of **paid** invoices were paid **more than 30 days** after issue? One decimal place.",
+  "answer": 66.4,
+  "format": "percent",
+  "dataset": "legal",
+  "files": ["invoices"],
+  "verify": "SELECT ROUND(100.0 * SUM(julianday(paid_date) - julianday(issued_date) > 30) / COUNT(*), 1) FROM invoices WHERE status = 'Paid'",
+  "hint": "Count the paid invoices with days to pay over 30, divided by all paid invoices.",
+  "explanation": "Two-thirds of clients who do pay take more than a month. Late payment is the norm, not the exception.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "ba-04-p3",
+  "prompt": "As of **31 August 2026**, how much of the overdue value is from invoices issued **more than 180 days** earlier? (A rounded figure is fine.)",
+  "answer": 149180000,
+  "format": "naira",
+  "dataset": "legal",
+  "files": ["invoices"],
+  "verify": "SELECT SUM(amount_ngn) FROM invoices WHERE status = 'Overdue' AND julianday('2026-08-31') - julianday(issued_date) > 180",
+  "hint": "Overdue invoices whose issue date is before 2026-03-04.",
+  "explanation": "₦149.2m of the ₦188.1m overdue (79%) is more than six months old. Much of it may never be collected, which is the strongest argument for acting now.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "ba-04-t1",
+  "prompt": "Write a **baseline summary** of Ashgrove's current billing performance for the managing partner, in 3 to 5 bullets. Use at least **four** numbers, say whether things are getting **better or worse**, and say whether the problem is **concentrated or widespread**.",
+  "minutes": 8,
+  "rows": 8,
+  "placeholder": "- Clients take an average of ...",
+  "rules": [
+    { "label": "Three to five bullets", "pattern": "^\\s*[-*]\\s+\\S", "min": 3 },
+    { "label": "At least four numbers", "pattern": "\\d+(\\.\\d+)?", "min": 4 },
+    { "label": "Says whether it's getting better or worse", "pattern": "worse|better|improv|deteriorat|rising|increas|grow|slower|faster" },
+    { "label": "Says whether it's concentrated or widespread", "pattern": "concentrat|widespread|spread|across|most clients|few clients|32" },
+    { "label": "No more than 150 words", "maxWords": 150 }
+  ],
+  "sample": "- Clients take an average of 45.4 days to pay, and 66.4% of paid invoices arrive after 30 days.\n- It's getting slowly worse: from 42.4 days for 2024 invoices to 47.1 days for 2026 invoices.\n- ₦188.1m is overdue across 70 invoices, and ₦149.2m of it is more than six months old.\n- The problem is widespread, not a few bad payers: overdue invoices are spread across 32 of 50 clients, companies and individuals alike.\n- That points to the process (no payment terms, no reminders, chasing only when a partner asks) rather than to particular clients.",
+  "note": "This becomes the \"before\" picture in your business case and the yardstick after go-live. Keep the exact definitions with it.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why set a baseline before changing a process?",
+    "options": ["It's a formality", "So you can show afterwards whether the change actually worked, measured the same way", "To delay the project", "Baselines are only for finance"],
+    "answer": 1,
+    "explanation": "Without a baseline, any claim of improvement is a guess."
+  },
+  {
+    "prompt": "Overdue invoices are spread across 32 of 50 clients. What does that suggest?",
+    "options": ["A few bad clients", "A process problem that affects most clients", "The data is wrong", "Nothing"],
+    "answer": 1,
+    "explanation": "Widespread problems point to the process; concentrated ones point to particular cases."
+  },
+  {
+    "prompt": "The firm plans to introduce 14-day payment terms. What will happen to the 'overdue' figure?",
+    "options": ["Nothing", "It may jump immediately, because the definition changed, not client behaviour", "It will fall", "It can't be calculated"],
+    "answer": 1,
+    "explanation": "Note definition changes so nobody mistakes them for real changes."
+  }
+]
+```
+$md$, true, true, 4, array['ba-04-p1', 'ba-04-p2', 'ba-04-p3', 'ba-04-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('ba-m05', 'business-analysis-fundamentals', 'Process Mapping', 5, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('business-analysis-fundamentals:process-mapping', 'business-analysis-fundamentals', 'ba-m05', 'process-mapping', 'Process mapping', 'Draw how work really flows today with swimlanes, find the delays, handoffs and rework that cause the problem, and design a better future process.', 25, $md$
+## The problem
+
+Ask five people at Ashgrove how a bill gets from finished work to money in the bank and you'll get five different descriptions, each covering the part that person sees. Nobody sees the whole journey, which is exactly why nobody can fix it.
+
+A **process map** puts the whole journey on one page: every step, who does it, and where it waits. It's one of the most powerful tools a BA has, because the moment people see their own process drawn out, the problems become obvious to everyone, usually in the gaps **between** people, not in anyone's own work.
+
+## The concept
+
+**Swimlane diagrams**
+
+A swimlane diagram has a horizontal lane for each role, and the steps flow from left to right across the lanes:
+
+| Symbol | Meaning |
+| :-- | :-- |
+| rounded rectangle | start or end |
+| rectangle | a step (activity) |
+| diamond | a decision, with a labelled path for each answer |
+| arrow | the flow from one step to the next |
+| arrow crossing lanes | a **handoff**: work passing between people |
+
+This is a simplified version of **BPMN** (Business Process Model and Notation), the international standard. Draw it in draw.io (free), Microsoft Visio, Lucidchart or on paper. The thinking matters more than the tool.
+
+**Map the "as is" before the "to be"**
+
+Map what really happens today, including the workarounds, not what the procedures manual says. Walk it with the people who do it, and check it against the data.
+
+**Where to look for problems**
+
+| Problem | Sign on the map |
+| :-- | :-- |
+| **Waiting** | long gaps between steps, often at handoffs |
+| **Handoffs** | many arrows crossing lanes: each one is a chance for delay or loss |
+| **Rework** | loops back to an earlier step (invoices corrected and re-sent) |
+| **Manual re-entry** | the same data typed twice, in two places |
+| **No trigger** | a step that only happens "when someone remembers" |
+
+## Example
+
+Ashgrove's billing process **as is**, written lane by lane:
+
+1. **Lawyer**: finishes a piece of work.
+2. **Lawyer**: sends time worked to accounts by WhatsApp or paper, *when they remember* (usually 1–3 weeks later).
+3. **Accounts**: types the time into the billing spreadsheet.
+4. **Accounts**: drafts the invoice in Word.
+5. **Partner**: reviews the draft. *Wrong rate?* → back to step 4.
+6. **Accounts**: emails the PDF invoice to the client. No due date is shown.
+7. **Client**: pays when they choose, or when chased.
+8. **Accounts**: chases by phone, *only when a partner asks*.
+9. **Accounts**: marks the invoice paid when the bank statement arrives.
+
+Three problems jump out: steps 2 and 8 have **no trigger**, so they happen late or not at all; step 5 has a **rework loop**; and step 6 sends an invoice with **no due date**, so step 7 has no deadline. The data agrees: the first invoice on a matter goes out an average of 18 days after the matter opens, and two-thirds of payments arrive after 30 days.
+
+## Walkthrough
+
+1. Draw the as-is process above as a swimlane diagram, with lanes for Lawyer, Accounts, Partner and Client.
+2. Mark each problem on the map: waiting (W), handoff (H), rework (R) and no trigger (T).
+3. Check the map against the data: how long after a matter opens does its first invoice go out (the task below)?
+4. Design the **to-be** process: what triggers each step, what's automated, and where the decision points are.
+5. Walk the to-be map with the accounts officer and one lawyer. Ask: "What would stop this working on a busy week?"
+
+## Practice
+
+```answer
+{
+  "id": "ba-05-p1",
+  "prompt": "On average, how many days after a matter is **opened** is its **first** invoice issued? One decimal place.",
+  "answer": 18.4,
+  "format": "number",
+  "dataset": "legal",
+  "files": ["invoices", "matters"],
+  "verify": "SELECT ROUND(AVG(julianday(i.issued_date) - julianday(m.opened_date)), 1) FROM invoices i JOIN matters m ON m.matter_id = i.matter_id WHERE i.invoice_id IN (SELECT MIN(invoice_id) FROM invoices GROUP BY matter_id)",
+  "hint": "For each matter, take its earliest invoice (the lowest invoice_id), then average issued_date − opened_date.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "ba-05-t1",
+  "prompt": "Write Ashgrove's **to-be** billing process as numbered steps, each in the form **Lane: step** (for example `3. Accounts: ...`). Use at least **eight** steps and at least three lanes, include at least one **decision** (write it with \"if\"), and fix the problems found in the as-is map: give each step a trigger, show a **due date** on the invoice, and add **reminders**.",
+  "minutes": 12,
+  "rows": 12,
+  "placeholder": "1. Lawyer: ...\n2. Accounts: ...",
+  "rules": [
+    { "label": "At least eight numbered steps in the form Lane: step", "pattern": "^\\s*\\d+[.)]\\s*[A-Za-z ]+:\\s*\\S", "min": 8 },
+    { "label": "At least three different lanes, including the client", "pattern": "^\\s*\\d+[.)]\\s*client\\s*:" },
+    { "label": "Includes a decision written with 'if'", "pattern": "\\bif\\b" },
+    { "label": "Shows a due date or payment terms on the invoice", "pattern": "due date|due in|payment terms|\\d+[- ]day terms" },
+    { "label": "Adds reminders", "pattern": "remind" },
+    { "label": "Gives the time-recording step a trigger or deadline", "pattern": "(daily|weekly|by friday|each week|every week|end of (the )?(day|week|month)|within \\d+)" }
+  ],
+  "sample": "1. Lawyer: records time in the shared time sheet by the end of each week.\n2. Accounts: on the 1st of each month, produces draft invoices from the time sheet.\n3. Partner: reviews drafts within 3 working days; if a rate is wrong, corrects it in the rate table so it's right next time.\n4. Accounts: sends each invoice by email with a due date (30-day terms) and the bank details.\n5. Client: pays by the due date.\n6. Accounts: if unpaid 7 days before the due date, sends an automatic friendly reminder.\n7. Accounts: if unpaid on the due date, sends a second reminder and phones the client.\n8. Partner: if unpaid 30 days after the due date, calls the client personally.\n9. Accounts: each Monday, records payments from the bank statement and circulates the overdue list.",
+  "note": "Every step now has a trigger (a day, a deadline or a condition), the rework loop fixes the cause (the rate table), and chasing no longer depends on someone remembering. Notice none of it *requires* new software, though software could automate steps 2, 6 and 9.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Where do process problems most often hide?",
+    "options": ["Inside each person's own task", "In the handoffs and waits between people", "In the software", "In the start and end steps"],
+    "answer": 1,
+    "explanation": "Nobody owns the gaps between lanes, so that's where work waits."
+  },
+  {
+    "prompt": "A step happens 'when a partner asks'. What kind of problem is that?",
+    "options": ["Rework", "No trigger: the step depends on someone remembering", "Manual re-entry", "A decision point"],
+    "answer": 1,
+    "explanation": "Give each step a trigger: a date, an event or a condition."
+  },
+  {
+    "prompt": "Should you map the process from the procedures manual?",
+    "options": ["Yes, it's the official version", "No: map what actually happens, with the people who do the work, and check it against the data", "Only for the to-be process", "It doesn't matter"],
+    "answer": 1,
+    "explanation": "Workarounds and delays are rarely in the manual."
+  }
+]
+```
+$md$, true, true, 5, array['ba-05-p1', 'ba-05-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('ba-m06', 'business-analysis-fundamentals', 'Writing Requirements', 6, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('business-analysis-fundamentals:writing-requirements', 'business-analysis-fundamentals', 'ba-m06', 'writing-requirements', 'Writing requirements', 'Write requirements that can be built and tested, separate functional and non-functional requirements from business rules, and prioritise with MoSCoW.', 25, $md$
+## The problem
+
+The first requirements list for Ashgrove's billing change came back from a workshop looking like this:
+
+- The system should be user-friendly.
+- Invoices should be sent quickly.
+- It should integrate with everything.
+- Reports should be good.
+
+Every line sounds reasonable, and none of them can be built or tested. How quick is "quickly"? What's "everything"? A supplier could deliver almost anything and claim to meet them, and the firm would have no way to object. Vague requirements are how projects end in arguments.
+
+## The concept
+
+**Types of requirement**
+
+| Type | Says | Example for Ashgrove |
+| :-- | :-- | :-- |
+| **Business requirement** | the goal, in business terms | Reduce average days to pay from 45 to 30 within 12 months. |
+| **Functional requirement** | what the solution must **do** | The system shall show a due date on every invoice. |
+| **Non-functional requirement** | how **well** it must do it: speed, security, availability, usability | The overdue report shall load in under 5 seconds. |
+| **Business rule** | a policy that applies whatever the solution | Invoices are due 30 days after issue. Reminders are not sent to clients on a payment plan. |
+
+**Good requirements are testable**
+
+A requirement is good when someone could write a test that it passes or fails. Check each one against these questions:
+
+- **Specific**: one requirement per statement, with no "and/or" bundles.
+- **Measurable**: numbers instead of "quickly", "easily" or "good".
+- **Unambiguous**: two readers would build the same thing.
+- **Solution-free** where possible: say *what* is needed, not *how* to build it.
+- **Traceable**: linked to the business requirement it serves.
+
+Use **"shall"** (or "must") for requirements, and keep each one short.
+
+**MoSCoW prioritisation**
+
+Not everything can be in the first release. MoSCoW sorts requirements into:
+
+- **Must have**: without it, the solution fails its purpose.
+- **Should have**: important, but there's a workaround for now.
+- **Could have**: nice if time allows.
+- **Won't have (this time)**: agreed to be out of scope, for now.
+
+The test for a Must: "If this isn't delivered, would we still go live?" If the answer is yes, it isn't a Must. A list where everything is a Must hasn't been prioritised.
+
+## Example
+
+The workshop's vague lines, rewritten:
+
+| Vague | Testable |
+| :-- | :-- |
+| Invoices should be sent quickly. | Invoices shall be issued within 5 working days of the end of each month. |
+| It should be user-friendly. | The accounts officer shall be able to produce a month's invoices in under 2 hours after one training session. |
+| It should integrate with everything. | The system shall import payments from the bank's CSV statement. |
+| Reports should be good. | A report shall list every unpaid invoice past its due date, with client, amount and days overdue, sortable by each column. |
+
+Each rewrite can be tested: time it, count it, or check the report against the data.
+
+## Walkthrough
+
+1. Sort Ashgrove's needs from your interviews into business requirements, functional, non-functional and business rules.
+2. Rewrite every vague statement until it passes the testability questions.
+3. Give each requirement an ID (FR-01, NFR-01, BR-01) and link each to the business requirement it serves.
+4. Run a MoSCoW session with the managing partner and the accounts officer. Challenge every Must with "would we still go live without it?".
+5. Record the Won't haves too, with the reason. It stops them reappearing as surprise demands later.
+
+## Practice
+
+```task
+{
+  "id": "ba-06-t1",
+  "prompt": "Rewrite these four vague requirements as **testable** ones, one per line, each using **shall** and including a **number** or a precise condition:\n\n1. Reminders should go out in good time.\n2. The overdue report should be fast.\n3. Only the right people should see client billing.\n4. It should be easy to record time.",
+  "minutes": 8,
+  "rows": 8,
+  "placeholder": "1. The system shall ...",
+  "rules": [
+    { "label": "Four requirements, each on its own line using 'shall' or 'must'", "pattern": "\\b(shall|must)\\b", "min": 4 },
+    { "label": "At least three include a number (a time, a count or a limit)", "pattern": "^\\s*\\d+[.)][^\\n]*\\b(shall|must)\\b[^\\n]*\\d", "min": 3 },
+    { "label": "No vague words left (good time, fast, easy, user-friendly, quickly, right people)", "pattern": "good time|\\bfast\\b|\\beasy\\b|easily|user[- ]friendly|quickly|right people", "absent": true },
+    { "label": "The access requirement names roles", "pattern": "partner|accounts|lawyer|role" }
+  ],
+  "sample": "1. The system shall send a payment reminder by email 7 days before each invoice's due date, and another on the due date.\n2. The overdue report shall load in under 5 seconds for up to 2,000 invoices.\n3. Only partners and the accounts officer shall be able to view client billing amounts; lawyers shall see only their own matters.\n4. A lawyer shall be able to record a time entry in under 1 minute, from a phone or a computer.",
+  "note": "Each one now has a test: check the reminder dates, time the report, log in as a lawyer and try to open another lawyer's billing, time a time entry. If you can't describe the test, the requirement isn't finished.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "ba-06-t2",
+  "prompt": "Prioritise these Ashgrove requirements with **MoSCoW**. Write one per line in the form **Requirement | Must, Should, Could or Won't | reason**: due dates on invoices; automatic email reminders; a client payment portal with card payments; an overdue report; importing bank payments automatically; a mobile app for lawyers.",
+  "minutes": 6,
+  "rows": 8,
+  "placeholder": "Due dates on invoices | Must | ...",
+  "rules": [
+    { "label": "Six lines in the form Requirement | priority | reason", "pattern": "^[^|\\n]+\\|\\s*(must|should|could|won['’]?t)[^|\\n]*\\|[^|\\n]+$", "min": 6 },
+    { "label": "At least one Won't (have this time)", "pattern": "\\|\\s*won['’]?t" },
+    { "label": "Not everything is a Must: at most three Musts", "pattern": "(?:\\|\\s*must\\b(?:(?!\\|\\s*must\\b)[\\s\\S])*){4}", "absent": true },
+    { "label": "Due dates are a Must (nothing can be overdue without them)", "pattern": "due date[^\\n]*\\|\\s*must" }
+  ],
+  "sample": "Due dates on invoices | Must | without them nothing is ever overdue, so nothing else works\nAn overdue report | Must | accounts and partners need to see what to chase each week\nAutomatic email reminders | Should | the biggest time saver, but a weekly manual reminder works at first\nImporting bank payments automatically | Should | saves time, but payments can be recorded by hand for now\nA client payment portal with card payments | Could | convenient, but most clients pay by transfer\nA mobile app for lawyers | Won't | doesn't address late payment; revisit for time recording later",
+  "note": "Two Musts is a sign of a healthy list. The Won't has a reason, so when someone asks for the app in three months, the answer is already agreed.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Which requirement is testable?",
+    "options": ["The system should be fast", "The overdue report shall load in under 5 seconds for 2,000 invoices", "Reports should be good", "It should be user-friendly"],
+    "answer": 1,
+    "explanation": "You can time it and pass or fail it."
+  },
+  {
+    "prompt": "'Invoices are due 30 days after issue' is best described as:",
+    "options": ["A non-functional requirement", "A business rule", "A user story", "A test case"],
+    "answer": 1,
+    "explanation": "It's a policy that applies whatever the solution."
+  },
+  {
+    "prompt": "Every requirement on the list is a Must. What's wrong?",
+    "options": ["Nothing", "It hasn't really been prioritised; test each Must with 'would we still go live without it?'", "Musts should be Coulds", "MoSCoW doesn't allow Musts"],
+    "answer": 1,
+    "explanation": "Prioritising means choosing."
+  }
+]
+```
+$md$, true, true, 6, array['ba-06-t1', 'ba-06-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('ba-m07', 'business-analysis-fundamentals', 'User Stories and Acceptance Criteria', 7, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('business-analysis-fundamentals:user-stories-and-acceptance-criteria', 'business-analysis-fundamentals', 'ba-m07', 'user-stories-and-acceptance-criteria', 'User stories and acceptance criteria', 'Express requirements as user stories that keep the user and the reason in view, split them to a buildable size, and pin down "done" with Given/When/Then acceptance criteria.', 25, $md$
+## The problem
+
+Ashgrove has chosen a supplier who works in two-week **sprints**, the agile way of building software in small, usable pieces. The supplier's developer looks at your requirements list and asks: "Which of these do I build first? And how will you decide it's finished?"
+
+Agile teams don't work from long specifications. They work from a **backlog** of small items, each describing something a user needs and why, and each with a clear test of "done". The standard format for those items is the **user story**, and writing good ones is now a core BA skill in almost every job advert.
+
+## The concept
+
+**The user story format**
+
+> As a **[type of user]**, I want **[something]**, so that **[benefit]**.
+
+- *As an accounts officer, I want a list of invoices past their due date, so that I know who to chase each Monday.*
+
+The "so that" is the most important part. It tells the team **why**, which lets them suggest a better way to deliver the benefit, and it lets the product owner prioritise by value.
+
+**INVEST: what makes a good story**
+
+| Letter | Means |
+| :-- | :-- |
+| **I**ndependent | can be built in any order |
+| **N**egotiable | the details are open to discussion, not a contract |
+| **V**aluable | gives a user something useful on its own |
+| **E**stimable | the team can size it |
+| **S**mall | fits in one sprint, ideally a few days |
+| **T**estable | has clear acceptance criteria |
+
+A story too big to build in a sprint is an **epic**: split it, usually by user, by step in the process, or by rule ("send reminders" → "first reminder", "second reminder", "don't remind clients on a payment plan").
+
+**Acceptance criteria: Given / When / Then**
+
+Each story has a few acceptance criteria that define "done", written as scenarios:
+
+- **Given** a starting situation,
+- **When** something happens,
+- **Then** this is the result.
+
+Write one for the normal case and one for each important exception. They become the tests the team and the business use to accept the story.
+
+## Example
+
+> **As an** accounts officer, **I want** clients to receive an automatic reminder before their invoice is due, **so that** fewer invoices go overdue without me phoning anyone.
+>
+> **Acceptance criteria**
+>
+> 1. **Given** an unpaid invoice due on 30 June, **when** it is 23 June, **then** the client receives a reminder email showing the invoice number, amount and due date.
+> 2. **Given** an invoice that was paid on 20 June, **when** it is 23 June, **then** no reminder is sent.
+> 3. **Given** a client on an agreed payment plan, **when** a reminder would be due, **then** no reminder is sent, and the invoice appears on the accounts officer's exceptions list.
+
+Criterion 2 catches the embarrassing bug (reminding someone who has paid). Criterion 3 comes straight from a business rule found in lesson 6. Good criteria are where the BA's knowledge of the edge cases pays off.
+
+## Walkthrough
+
+1. Take your Must and Should requirements from lesson 6 and turn each into one or more user stories.
+2. Check each against INVEST. Split anything too big: "a billing system" is an epic; "see overdue invoices sorted by days overdue" is a story.
+3. Write acceptance criteria for each, covering the normal case and at least one exception.
+4. Order the backlog: highest value and lowest risk first. The due date and the overdue list come before automatic reminders, because reminders need them.
+5. Review the stories with the accounts officer. If she can't tell from a story what she'll be able to do, rewrite it.
+
+## Practice
+
+```task
+{
+  "id": "ba-07-t1",
+  "prompt": "Write **three user stories** for Ashgrove's billing change, each in the form **As a … I want … so that …**, for at least **two different users** (for example the accounts officer, a partner, a lawyer or a client).",
+  "minutes": 8,
+  "rows": 8,
+  "placeholder": "As an accounts officer, I want ..., so that ...",
+  "rules": [
+    { "label": "Three stories in the form As a … I want … so that …", "pattern": "as an? [^,\\n]+,?\\s*I want [^\\n]+?so that [^\\n]+", "min": 3 },
+    { "label": "At least two different users", "pattern": "as an? (accounts|partner|lawyer|client|managing)[\\s\\S]*as an? (?!\\1)(accounts|partner|lawyer|client|managing)" },
+    { "label": "The benefit isn't just restating the want (so that is followed by at least four words)", "pattern": "so that(?:[ \\t]+\\S+){4,}", "min": 3 }
+  ],
+  "sample": "As an accounts officer, I want a list of invoices past their due date, sorted by days overdue, so that I know who to chase first each Monday.\nAs a partner, I want to see the total overdue for each of my clients, so that I can raise it when I speak to them.\nAs a client, I want each invoice to show its due date and the firm's bank details, so that I can pay on time without having to ask.",
+  "note": "Each story is small enough for one sprint and names a real user. The client story is easy to forget, but clients are the ones who actually pay.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "ba-07-t2",
+  "prompt": "Write **acceptance criteria** for this story, in **Given / When / Then** form: *As a partner, I want to see the total overdue for each of my clients, so that I can raise it when I speak to them.* Write at least **three** scenarios: the normal case and at least two exceptions (for example a client with nothing overdue, or an invoice paid today).",
+  "minutes": 8,
+  "rows": 10,
+  "placeholder": "1. Given ..., when ..., then ...",
+  "rules": [
+    { "label": "At least three scenarios with Given", "pattern": "\\bgiven\\b", "min": 3 },
+    { "label": "Each has a When", "pattern": "\\bwhen\\b", "min": 3 },
+    { "label": "Each has a Then", "pattern": "\\bthen\\b", "min": 3 },
+    { "label": "Covers a client with nothing overdue", "pattern": "no (overdue|unpaid)|nothing overdue|not overdue|zero|₦0|all paid|fully paid" },
+    { "label": "Includes a specific number, amount or date", "pattern": "\\d" }
+  ],
+  "sample": "1. Given a partner whose client Crestview Partners has two overdue invoices of ₦2.4m and ₦1.1m, when the partner opens the overdue view, then Crestview shows ₦3.5m overdue with 2 invoices.\n2. Given a client with no overdue invoices, when the partner opens the overdue view, then that client doesn't appear in the list.\n3. Given an overdue invoice that was paid this morning and recorded by accounts, when the partner opens the overdue view, then the invoice is no longer included in the client's total.\n4. Given a client handled by a different partner, when the partner opens the overdue view, then that client doesn't appear.",
+  "note": "Scenario 4 adds a rule the story didn't state: partners see only *their* clients. Writing acceptance criteria is often where such rules surface, which is exactly why the BA writes them with the business, before anything is built.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why is the 'so that' part of a user story important?",
+    "options": ["It's grammatically required", "It explains why, so the team can prioritise by value and suggest better ways to deliver it", "It names the developer", "It isn't important"],
+    "answer": 1,
+    "explanation": "The benefit is what the business actually wants."
+  },
+  {
+    "prompt": "A story says: 'As a user, I want a complete billing system.' What's wrong?",
+    "options": ["Nothing", "It's an epic: too big, with a vague user and no benefit; split it into small stories for specific users", "It needs more detail on the database", "It should be a non-functional requirement"],
+    "answer": 1,
+    "explanation": "Stories should be small, valuable and for a specific user."
+  },
+  {
+    "prompt": "What are acceptance criteria for?",
+    "options": ["To estimate cost", "To define when a story is done, as testable scenarios", "To name the developer", "To list the stakeholders"],
+    "answer": 1,
+    "explanation": "Given/When/Then scenarios become the tests the story must pass."
+  }
+]
+```
+$md$, true, true, 7, array['ba-07-t1', 'ba-07-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('ba-m08', 'business-analysis-fundamentals', 'Data and Reporting Requirements', 8, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('business-analysis-fundamentals:data-and-reporting-requirements', 'business-analysis-fundamentals', 'ba-m08', 'data-and-reporting-requirements', 'Data and reporting requirements', 'Specify the KPIs, reports and data a change needs, so that "how will we know it worked?" has an exact, agreed answer before anything is built.', 25, $md$
+## The problem
+
+Three months after go-live, Ashgrove's managing partner asks: "Is it working?" The supplier's dashboard says the collection rate is 94%. The accounts officer's spreadsheet says 81%. Both are "right": the supplier counts only invoices issued since go-live, and the accounts officer counts every invoice since 2024.
+
+Nobody ever wrote down what "collection rate" meant. Reporting is the part of a change that's most often left vague, and it's the part that decides whether anyone can prove the change worked. A BA specifies it as carefully as any other requirement.
+
+## The concept
+
+**A KPI definition card**
+
+For every key measure, agree and write down:
+
+| Field | Example: Average days to pay |
+| :-- | :-- |
+| **Name** | Average days to pay |
+| **Purpose** | Shows how quickly clients pay; the main measure of the billing change |
+| **Definition** | For invoices paid in the period: the average number of calendar days from issue date to paid date |
+| **Formula** | AVERAGE(paid_date − issued_date), paid invoices only |
+| **Source** | invoices table: issued_date, paid_date, status |
+| **Baseline** | 45.4 days (all paid invoices, January 2024 to August 2026) |
+| **Target** | 30 days within 12 months of go-live |
+| **Owner** | Accounts officer |
+| **Frequency** | Monthly, in the first week of the month |
+
+The definition and the baseline are the parts that prevent arguments. Calculate the baseline with **exactly** the same formula you'll use afterwards.
+
+**Report specifications**
+
+For each report: who uses it, what decision it supports, the measures and breakdowns, filters, how often it's refreshed, and who can see it. A one-line description ("an overdue report") isn't a specification.
+
+**Data requirements**
+
+List the data each report needs, where it comes from, and the **quality rules** it must meet: every invoice has a due date; every paid invoice has a paid date; amounts are positive. Ashgrove's current data has no due date at all, so "days overdue" can't be calculated today. That's a data requirement the new process must create.
+
+## Example
+
+Two collection-rate definitions on Ashgrove's data:
+
+| Definition | Value |
+| :-- | --: |
+| Value paid ÷ value invoiced, **all invoices** since 2024 | you'll calculate it below |
+| Value paid ÷ value invoiced, **invoices more than 90 days old** (so clients have had time to pay) | you'll calculate it below |
+
+Neither is wrong. They answer different questions. The KPI card must say which one Ashgrove will track, and why. A sensible choice is to measure invoices once they're at least 90 days old, so recent invoices don't drag the rate down just because they're recent.
+
+## Walkthrough
+
+1. List the measures that would show whether Ashgrove's change worked: days to pay, % paid within terms, overdue value, overdue age, collection rate.
+2. Write a KPI card for each, including the baseline from your lesson 4 calculations.
+3. Calculate the collection rate on the data (the first task below) and decide which definition to recommend.
+4. Specify the weekly overdue report: users, decision supported, columns, sort order, filters, refresh and access.
+5. List the data requirements, including the new fields the process must capture (due date, payment plan flag).
+
+## Practice
+
+```answer
+{
+  "id": "ba-08-p1",
+  "prompt": "What is Ashgrove's **collection rate**, defined as the value of **Paid** invoices ÷ the value of **all** invoices? One decimal place.",
+  "answer": 81.5,
+  "format": "percent",
+  "dataset": "legal",
+  "files": ["invoices"],
+  "verify": "SELECT ROUND(100.0 * SUM(CASE WHEN status = 'Paid' THEN amount_ngn END) / SUM(amount_ngn), 1) FROM invoices",
+  "hint": "Sum of amount_ngn for Paid invoices ÷ sum of amount_ngn for all invoices.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "ba-08-p2",
+  "prompt": "Using the second definition, value paid ÷ value invoiced for invoices issued **more than 90 days** before 31 August 2026, what is the collection rate? One decimal place.",
+  "answer": 84.7,
+  "format": "percent",
+  "dataset": "legal",
+  "files": ["invoices"],
+  "verify": "SELECT ROUND(100.0 * SUM(CASE WHEN status = 'Paid' THEN amount_ngn END) / SUM(amount_ngn), 1) FROM invoices WHERE julianday('2026-08-31') - julianday(issued_date) > 90",
+  "hint": "The same formula, filtered to invoices issued before 2 June 2026.",
+  "explanation": "A few points higher. Agree one definition before go-live, or the supplier and the accounts officer will report different numbers for the same thing.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "ba-08-t1",
+  "prompt": "Write a **KPI definition card** for **% paid within terms**. Put each field on its own line as **Field: value**, with at least these fields: Name, Purpose, Definition, Formula, Source, Baseline, Target, Owner, Frequency. Assume 30-day terms.",
+  "minutes": 8,
+  "rows": 10,
+  "placeholder": "Name: % paid within terms\nPurpose: ...",
+  "rules": [
+    { "label": "Has Name, Purpose and Definition lines", "pattern": "^\\s*(name|purpose|definition)\\s*:", "min": 3 },
+    { "label": "Has Formula and Source lines", "pattern": "^\\s*(formula|source)\\s*:", "min": 2 },
+    { "label": "Has Baseline and Target lines, each with a number", "pattern": "^\\s*(baseline|target)\\s*:[^\\n]*\\d", "min": 2 },
+    { "label": "Has Owner and Frequency lines", "pattern": "^\\s*(owner|frequency)\\s*:", "min": 2 },
+    { "label": "The definition says which invoices count (paid invoices, or all invoices due in the period)", "pattern": "paid invoices|invoices (paid|due|issued)|due in the period" }
+  ],
+  "sample": "Name: % paid within terms\nPurpose: Shows how many clients pay on time; a key measure of the billing change.\nDefinition: Of invoices paid in the period, the percentage paid on or before their due date (issue date + 30 days).\nFormula: COUNT(paid invoices where paid_date ≤ issued_date + 30) ÷ COUNT(paid invoices) × 100\nSource: invoices table: issued_date, paid_date, status (due_date once captured)\nBaseline: 33.6% (all paid invoices, January 2024 to August 2026)\nTarget: 70% within 12 months of go-live\nOwner: Accounts officer\nFrequency: Monthly, first week of the month",
+  "note": "The baseline, 33.6%, is simply 100% minus the 66.4% paid after 30 days that you calculated in lesson 4. Reusing your own earlier calculation, with the same definition, is exactly what makes before-and-after comparisons trustworthy.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "The supplier reports a 94% collection rate; the accounts officer reports 81%. What's the most likely cause?",
+    "options": ["One of them made an error", "They're using different definitions of the measure", "The data changed", "Rounding"],
+    "answer": 1,
+    "explanation": "Agree and write down each KPI's definition before go-live."
+  },
+  {
+    "prompt": "Why must the baseline use exactly the same formula as later measurements?",
+    "options": ["It's tidier", "Otherwise a change in the number might come from the formula, not the business", "Formulas can't change", "It doesn't matter"],
+    "answer": 1,
+    "explanation": "Before and after must be measured the same way."
+  },
+  {
+    "prompt": "The current data has no due date. What does that mean for the requirements?",
+    "options": ["Nothing", "Capturing a due date is a data requirement; without it, 'days overdue' can't be reported", "Use the issue date instead and say nothing", "Remove the overdue report"],
+    "answer": 1,
+    "explanation": "Reports can only show data that's captured."
+  }
+]
+```
+$md$, true, true, 8, array['ba-08-p1', 'ba-08-p2', 'ba-08-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('ba-m09', 'business-analysis-fundamentals', 'The Business Case', 9, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('business-analysis-fundamentals:the-business-case', 'business-analysis-fundamentals', 'ba-m09', 'the-business-case', 'The business case', 'Compare options, including doing nothing, on costs, benefits, payback and risk, and recommend one in a way a decision-maker can trust.', 25, $md$
+## The problem
+
+The managing partner has two quotes on her desk: a practice-management system at ₦9m to set up plus ₦3.6m a year, and a proposal from you to fix the process first, with payment terms, reminders and a weekly report, for about ₦1.5m. She asks the question every sponsor asks: **"Which one, and why?"**
+
+"The system is better" isn't an answer. "The system has more features" isn't either. A decision-maker needs to see what each option costs, what it returns, how soon, and what could go wrong, set side by side with the option of doing nothing. That's a **business case**.
+
+## The concept
+
+**The structure of a business case**
+
+1. **The problem and its cost**: from your baseline (lesson 4).
+2. **Options**, always including **do nothing** (or "do minimum").
+3. **Costs**: one-off (set-up, training) and running (licences, staff time), for each option.
+4. **Benefits**: in naira where possible, with the assumptions behind each.
+5. **Comparison**: payback, net benefit over a fixed period, and risks.
+6. **Recommendation**: the option, why, and what would change your mind.
+
+**Turning faster payment into naira**
+
+Getting paid sooner releases cash once: **annual billing × days saved ÷ 365**. Released cash has a value every year: what it would cost to borrow it, or what it could earn.
+
+**Two simple measures**
+
+- **Payback period** = one-off cost ÷ annual net benefit. How soon the option pays for itself.
+- **Net benefit over three years** = 3 × annual net benefit − one-off cost.
+
+Larger organisations also use **net present value (NPV)**, which discounts future benefits because a naira next year is worth less than a naira today. For short, small projects like this one, payback and net benefit are usually enough, as long as you state the assumptions.
+
+**Assumptions and sensitivity**
+
+Every benefit rests on an assumption, such as "days to pay falls from 45 to 30". State each one, and test the important ones: "If days to pay only falls to 38, does the option still pay back within two years?" A case that collapses when one assumption moves a little isn't a strong case.
+
+## Example
+
+Ashgrove's options. Annual billing is about ₦600m; overdue debt written off is assumed to be 2% of billing today; released cash is valued at 20% a year, the firm's overdraft rate.
+
+| | A. Do nothing | B. Fix the process | C. New system |
+| :-- | --: | --: | --: |
+| One-off cost | 0 | ₦1.5m | ₦9.0m |
+| Running cost per year | 0 | ₦0.6m (extra accounts time) | ₦3.6m (licences) |
+| Days to pay | 45 | 35 | 30 |
+| Write-offs | 2% | 1.5% | 1% |
+| Accounts time saved per year | 0 | 0 | ₦1.2m |
+
+For option B: the cash released is ₦600m × 10 ÷ 365 = ₦16.4m, worth ₦3.3m a year at 20%. Write-offs fall by 0.5% of ₦600m, which is ₦3.0m a year. Take off the ₦0.6m running cost and the annual net benefit is **₦5.7m**. Payback is ₦1.5m ÷ ₦5.7m, about **3 months**, and the net benefit over three years is about **₦15.6m**.
+
+You'll work out option C in the practice tasks. The comparison is closer than the sales demo suggested.
+
+## Walkthrough
+
+1. Write the problem and its cost from your lesson 4 baseline.
+2. Set out the three options in a table, with costs and the assumptions behind each benefit.
+3. Calculate cash released, annual net benefit, payback and three-year net benefit for options B and C in a spreadsheet.
+4. Test sensitivity: what if option C's days to pay only falls to 35? What if its licence cost rises 20%?
+5. List the risks: lawyers not recording time, data migration, clients ignoring reminders, the supplier going out of business.
+6. Write the recommendation (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "ba-09-p1",
+  "prompt": "For **option C**, how much cash is released by cutting days to pay from 45 to **30** on ₦600m of annual billing? (₦600m × 15 ÷ 365. A rounded figure is fine.)",
+  "answer": 24657534,
+  "format": "naira",
+  "hint": "600,000,000 × 15 ÷ 365.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "ba-09-p2",
+  "prompt": "What is option C's **annual net benefit**? Add the financing value of the released cash (20% of your previous answer), the write-off saving (1% of ₦600m) and the staff time saved (₦1.2m), then subtract the licences (₦3.6m). (A rounded figure is fine.)",
+  "answer": 8531507,
+  "format": "naira",
+  "hint": "4,931,507 + 6,000,000 + 1,200,000 − 3,600,000.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "ba-09-p3",
+  "prompt": "What is option C's **payback period** in months? (₦9m one-off cost ÷ annual net benefit × 12.) One decimal place.",
+  "answer": 12.7,
+  "format": "number",
+  "hint": "9,000,000 ÷ 8,531,507 × 12.",
+  "explanation": "About 13 months, against about 3 for option B. Over three years, C's net benefit (about ₦16.6m) only just beats B's (about ₦15.6m), and C carries far more risk.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "ba-09-t1",
+  "prompt": "Write your **recommendation** to the managing partner in 80 to 180 words: which option, why (using numbers from the comparison), the main **risk**, and what would make you **change your mind**.",
+  "minutes": 8,
+  "rows": 8,
+  "placeholder": "I recommend ...",
+  "rules": [
+    { "label": "Names an option (A, B or C, or describes it)", "pattern": "option [abc]\\b|fix the process|new system|do nothing" },
+    { "label": "Uses at least three numbers", "pattern": "\\d+(\\.\\d+)?", "min": 3 },
+    { "label": "Mentions payback or net benefit", "pattern": "payback|pays back|net benefit|return" },
+    { "label": "Names a risk", "pattern": "risk" },
+    { "label": "Says what would change your mind", "pattern": "change (my|our) mind|reconsider|revisit|if [^.]*(fails?|doesn'?t|don'?t|falls? short|not)|unless" },
+    { "label": "Between 80 and 180 words", "minWords": 80, "maxWords": 180 }
+  ],
+  "sample": "I recommend option B, fixing the process first: 30-day payment terms on every invoice, reminders before and on the due date, and a weekly overdue report. It costs about ₦1.5m, pays back in about 3 months, and should deliver a net benefit of about ₦15.6m over three years. Option C, the new system, would add only about ₦1m more over three years, for six times the up-front cost and a 13-month payback. The main risk to option B is that reminders slip on busy weeks, because they depend on people. I'd revisit option C after six months if days to pay hasn't fallen below 38, or if the manual reminders prove unreliable, by which time we'd also know exactly what we need a system to do.",
+  "note": "Phasing (process first, system later if needed) is often the strongest recommendation: it delivers most of the benefit quickly, and it turns the expensive decision into one made with evidence.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why include 'do nothing' as an option?",
+    "options": ["It's a formality", "It shows the cost of not acting, the baseline every other option must beat", "It's always the recommendation", "Sponsors require it"],
+    "answer": 1,
+    "explanation": "Every option is judged against carrying on as now."
+  },
+  {
+    "prompt": "Option X pays back in 3 months; option Y in 13 months but with slightly higher three-year benefit. What else should decide it?",
+    "options": ["Always pick the higher benefit", "Risk, confidence in the assumptions, and whether X can be done first with Y later", "Always pick the cheaper one", "Toss a coin"],
+    "answer": 1,
+    "explanation": "Numbers rest on assumptions; risk and phasing matter."
+  },
+  {
+    "prompt": "What is a sensitivity test?",
+    "options": ["Checking spelling", "Changing a key assumption to see whether the recommendation still holds", "Asking stakeholders how they feel", "Testing the software"],
+    "answer": 1,
+    "explanation": "A strong case survives reasonable changes to its assumptions."
+  }
+]
+```
+$md$, true, true, 9, array['ba-09-p1', 'ba-09-p2', 'ba-09-p3', 'ba-09-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('ba-m10', 'business-analysis-fundamentals', 'Testing and Adoption', 10, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('business-analysis-fundamentals:testing-and-adoption', 'business-analysis-fundamentals', 'ba-m10', 'testing-and-adoption', 'Testing and adoption', 'Check the delivered change against the requirements with user acceptance testing and a traceability matrix, then help people actually adopt it and measure whether it worked.', 25, $md$
+## The problem
+
+The new process is ready. Reminders are set up, the invoice template has a due date, and the overdue report runs every Monday. The supplier says it's done. Is it?
+
+"Done" means two different things. **Does it do what was specified?** That's testing. **Do people use it, and is the problem getting smaller?** That's adoption. Plenty of changes pass every test and still fail, because lawyers keep sending time by WhatsApp, or the accounts officer quietly keeps her notebook. The BA's job doesn't end at go-live.
+
+## The concept
+
+**User acceptance testing (UAT)**
+
+Before go-live, the people who'll use the change test it against real scenarios. Each test case says:
+
+| Field | Example |
+| :-- | :-- |
+| **ID** | UAT-04 |
+| **Requirement** | FR-03: reminder 7 days before the due date |
+| **Steps** | Create an invoice dated 1 June with 30-day terms; set the system date to 24 June |
+| **Expected result** | The client receives a reminder email showing the invoice number, amount and due date of 1 July |
+| **Actual result / pass or fail** | filled in during testing |
+
+Your acceptance criteria from lesson 7 are the starting point: most Given/When/Then scenarios become UAT cases almost word for word.
+
+**Traceability**
+
+A **traceability matrix** links every requirement to the user stories, test cases and KPIs that cover it. It answers two questions: "Has every requirement been tested?" and "Why does this feature exist?". A requirement with no test hasn't been checked. A feature with no requirement is scope creep.
+
+**Adoption: the people side**
+
+People adopt a change when they understand **why**, know **how**, and find it easier than the old way. Plan for:
+
+- **Communication**: what's changing, why, when, and what it means for each group.
+- **Training**: short and role-specific (lawyers need two minutes on time recording, not the whole billing process).
+- **Support**: a named person to ask in the first weeks.
+- **Switching off the old way**: the spreadsheet and the notebook are retired on a fixed date, or they never will be.
+
+**Measure the benefits**
+
+After go-live, rerun the baseline measures from lesson 4 with exactly the same definitions, monthly, and report against the business case targets. That's the only way to say "it worked".
+
+## Example
+
+Part of Ashgrove's traceability matrix:
+
+| Requirement | User story | UAT cases | KPI |
+| :-- | :-- | :-- | :-- |
+| BR-01 Invoices due 30 days after issue | Client sees due date and bank details | UAT-01, UAT-02 | % paid within terms |
+| FR-03 Reminder 7 days before due | Automatic reminder before due date | UAT-04, UAT-05, UAT-06 | Average days to pay |
+| FR-05 Weekly overdue report | Accounts officer's overdue list | UAT-08 | Overdue value |
+| FR-07 No reminders on payment plans | (exception in the reminder story) | UAT-06 | |
+
+FR-07 came from an acceptance criterion, not from the original requirements list, and the matrix makes sure it's tested anyway.
+
+## Walkthrough
+
+1. Turn the acceptance criteria from lesson 7 into UAT test cases, at least one per Must requirement.
+2. Build the traceability matrix and look for gaps: requirements with no test, and tests with no requirement.
+3. Plan UAT: who tests (the accounts officer and a partner), with what data, and when. Agree in advance what happens to failed tests.
+4. Write the adoption plan: communication by group, role-specific training, support, and a date for retiring the spreadsheet.
+5. Set up the benefits report: the baseline measures, recalculated monthly, against the targets.
+
+## Practice
+
+```task
+{
+  "id": "ba-10-t1",
+  "prompt": "Write **four UAT test cases** for Ashgrove's billing change. Put each on its own line in the form **ID | Requirement | Steps | Expected result**, and include at least one test of an **exception** (something that should **not** happen).",
+  "minutes": 10,
+  "rows": 8,
+  "placeholder": "UAT-01 | ... | ... | ...",
+  "rules": [
+    { "label": "Four test cases, each a line with four parts separated by |", "pattern": "^[^|\\n]+\\|[^|\\n]+\\|[^|\\n]+\\|[^|\\n]+$", "min": 4 },
+    { "label": "Each has an ID such as UAT-01", "pattern": "^\\s*UAT-?\\d+", "min": 4 },
+    { "label": "Expected results are specific: at least two include a number or date", "pattern": "\\|[^|\\n]*\\d[^|\\n]*$", "min": 2 },
+    { "label": "At least one exception test (no, not, isn't, doesn't)", "pattern": "\\|[^|\\n]*\\b(no|not|isn'?t|doesn'?t|never)\\b[^|\\n]*$" }
+  ],
+  "sample": "UAT-01 | Due date on invoices | Create an invoice dated 1 June 2026 | The invoice shows 'Due: 1 July 2026' and the bank details\nUAT-04 | Reminder before due date | Unpaid invoice due 1 July; set the date to 24 June | Client receives a reminder showing the invoice number, amount and due date of 1 July\nUAT-05 | No reminder once paid | Invoice due 1 July, recorded as paid on 20 June; set the date to 24 June | No reminder is sent\nUAT-08 | Weekly overdue report | Three invoices overdue by 5, 40 and 200 days | Report lists all 3, sorted 200, 40, 5 days, with client and amount",
+  "note": "UAT-05 is the test that saves embarrassment: reminding a client who has already paid damages the relationship the change is meant to protect.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "ba-10-t2",
+  "prompt": "Write a short **adoption plan** for Ashgrove's new billing process, with at least one line for each of: **communication**, **training**, **support**, **switching off** the old spreadsheet, and **measuring** the benefits. Put each on its own line starting with its heading, for example `Training: ...`.",
+  "minutes": 6,
+  "rows": 8,
+  "placeholder": "Communication: ...\nTraining: ...",
+  "rules": [
+    { "label": "Communication line", "pattern": "^\\s*[-*]?\\s*communicat\\w*\\s*:" },
+    { "label": "Training line", "pattern": "^\\s*[-*]?\\s*training\\s*:" },
+    { "label": "Support line", "pattern": "^\\s*[-*]?\\s*support\\s*:" },
+    { "label": "Switching-off line with a date or deadline", "pattern": "^\\s*[-*]?\\s*(switch(ing)? off|retire\\w*|decommission\\w*)[^:\\n]*:[^\\n]*(\\d|week|month|date)" },
+    { "label": "Measuring line that mentions a KPI", "pattern": "^\\s*[-*]?\\s*measur\\w*\\s*:[^\\n]*(days to pay|overdue|collection|within terms|kpi)" }
+  ],
+  "sample": "Communication: managing partner announces the change at the October partners' meeting; one-page note to all staff explaining why (₦188m overdue) and what changes for each role.\nTraining: 10-minute session for lawyers on weekly time recording; 2-hour session for the accounts officer on invoices, reminders and the overdue report.\nSupport: the BA sits with accounts for the first two invoice runs; questions to one named person for the first month.\nSwitching off: the old billing spreadsheet becomes read-only on 1 December, four weeks after go-live.\nMeasuring: average days to pay, % paid within terms and overdue value, recalculated monthly with the baseline definitions and reported to the managing partner against the targets.",
+  "note": "The switch-off date is the line most plans leave out, and the reason most old spreadsheets live for ever.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Who should carry out user acceptance testing?",
+    "options": ["Only the developers", "The people who'll use the change, against realistic scenarios", "The supplier's sales team", "Nobody: it's optional"],
+    "answer": 1,
+    "explanation": "UAT checks the change works for its users, in their real situations."
+  },
+  {
+    "prompt": "A traceability matrix shows a requirement with no test case. What does that mean?",
+    "options": ["Nothing", "That requirement hasn't been checked; write a test before go-live", "The requirement should be deleted", "It passed"],
+    "answer": 1,
+    "explanation": "Traceability finds gaps in testing and scope creep."
+  },
+  {
+    "prompt": "Why set a date to switch off the old spreadsheet?",
+    "options": ["To save disk space", "Otherwise people keep using the old way alongside the new one, and adoption never completes", "It's a legal requirement", "It isn't necessary"],
+    "answer": 1,
+    "explanation": "A fixed retirement date is part of adoption."
+  }
+]
+```
+$md$, true, true, 10, array['ba-10-t1', 'ba-10-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('ba-m11', 'business-analysis-fundamentals', 'Final Project', 11, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('business-analysis-fundamentals:final-project', 'business-analysis-fundamentals', 'ba-m11', 'final-project', '"Final project: Harbourline''s tracking request"', 'Plan your final project, a complete business analysis pack for a freight company whose operations director wants a customer tracking app, and start with the data.', 20, $md$
+## The problem
+
+Your final project moves to a new organisation. Harbourline Freight moves containers and air cargo into West Africa. Its operations director, Mr Emeka Nwosu, sends this:
+
+> "Customers keep complaining that they don't know where their shipments are. We need a tracking app with GPS, like the courier companies have. Can you write the requirements so we can get quotes?"
+
+You've seen this shape of request before: a solution, arriving first. Your job is to produce the business analysis pack that should come before any quotes: the real problem and its size, who's involved, how the process works now, what should change, what the solution must do, how you'll know it worked, and whether it's worth the money.
+
+## The concept
+
+**The pack, and where each part comes from**
+
+| Part | What it contains | Lesson |
+| :-- | :-- | :-- |
+| Problem statement | who, what, the cost, the measure, with no solution named | 1 |
+| Stakeholder register and RACI | power, interest, approach | 2 |
+| Elicitation plan | techniques, interviewees, key questions | 3 |
+| Baseline | on-time rate and lateness from the data, by mode and route | 4 |
+| As-is and to-be process | swimlanes, with the problems marked | 5 |
+| Requirements | functional, non-functional and business rules, prioritised with MoSCoW | 6 |
+| User stories | with Given/When/Then acceptance criteria | 7 |
+| KPI cards | definition, baseline, target, owner | 8 |
+| Business case | options including do nothing, payback, risks, a recommendation | 9 |
+| UAT and adoption | test cases, traceability, adoption plan | 10 |
+
+**Start from the data, then ask why**
+
+Customers complain about not knowing where shipments are, but **why** do they need to know? Usually because a shipment is late and nobody told them. If deliveries were reliable, or customers were told in advance when one would be late, would they still want GPS? That's the question your analysis has to answer before anyone gets a quote.
+
+## Example
+
+A first look at Harbourline's delivery data, for delivered shipments:
+
+| Route target | Delivered | On time |
+| :-- | --: | --: |
+| 1 day | 200 | 70.5% |
+| 2–7 days | 755 | 77.2% |
+| 16 days or more | 1,456 | 77.2% |
+
+About a quarter of deliveries are late on every kind of route, and the one-day routes are the worst. A tracking app would show customers their shipment is late; it wouldn't make it on time. The pack you write may well recommend something different from what Mr Nwosu asked for, such as proactive delay notifications, realistic targets or fixing the causes of lateness, and that's exactly what a BA is for.
+
+## Walkthrough
+
+1. Download the logistics dataset and calculate the on-time rate overall, by mode and by route.
+2. Write the problem statement without naming a solution.
+3. List the stakeholders: operations, customer service, account managers, customers, drivers and shipping lines, IT.
+4. Map the as-is process from booking to delivery, including how (and whether) customers are told about delays today.
+5. Open the project brief on the course page and plan which part of the pack you'll write each day.
+
+## Practice
+
+```dataset
+{"dataset": "logistics", "files": ["shipments", "routes", "customers"]}
+```
+
+```answer
+{
+  "id": "ba-11-p1",
+  "prompt": "How many **delivered** shipments arrived **late** (transit days greater than the route's target) with a delivery date in **2026**?",
+  "answer": 223,
+  "format": "number",
+  "dataset": "logistics",
+  "files": ["shipments", "routes"],
+  "verify": "SELECT COUNT(*) FROM shipments s JOIN routes r ON r.route_id = s.route_id WHERE s.status = 'Delivered' AND julianday(s.delivery_date) - julianday(s.ship_date) > r.target_transit_days AND s.delivery_date >= '2026-01-01'",
+  "hint": "Join shipments to routes; transit days = delivery_date − ship_date; count those over target_transit_days, delivered in 2026.",
+  "explanation": "223 late deliveries in eight months: about 28 a month, each one a customer who may not have been told.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "ba-11-p2",
+  "prompt": "What is the on-time rate for **delivered Air** shipments? One decimal place.",
+  "answer": 75.3,
+  "format": "percent",
+  "dataset": "logistics",
+  "files": ["shipments", "routes"],
+  "verify": "SELECT ROUND(100.0 * SUM(julianday(s.delivery_date) - julianday(s.ship_date) <= r.target_transit_days) / COUNT(*), 1) FROM shipments s JOIN routes r ON r.route_id = s.route_id WHERE s.status = 'Delivered' AND r.mode = 'Air'",
+  "hint": "Filter routes to mode = Air.",
+  "explanation": "75.3%: air freight, the premium service customers pay most for, is no more reliable than sea. A customer paying for speed and still waiting is the complaint behind the tracking request.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "ba-11-t1",
+  "prompt": "Write the **problem statement** for Harbourline in 2 to 4 sentences: who's affected, what's happening, what it costs or risks, and how success would be measured. Use at least **two numbers** from the data, and **don't** name a solution (no app, tracking system, GPS or platform).",
+  "minutes": 6,
+  "rows": 6,
+  "placeholder": "About a quarter of Harbourline's deliveries ...",
+  "rules": [
+    { "label": "Says who's affected (customers)", "pattern": "customer|client" },
+    { "label": "At least two numbers from the data", "pattern": "\\d+(\\.\\d+)?\\s*(%|deliver|shipment|late)", "min": 2 },
+    { "label": "Says how success would be measured", "pattern": "measur|success|target|reduc|fewer|track(ed)? by|on-time rate" },
+    { "label": "Doesn't name a solution: no app, GPS, tracking system, software or platform", "pattern": "\\b(app|apps|gps|tracking system|software|platform|portal)\\b", "absent": true },
+    { "label": "Between 30 and 110 words", "minWords": 30, "maxWords": 110 }
+  ],
+  "sample": "About a quarter of Harbourline's deliveries arrive later than promised (223 late deliveries so far in 2026), and on one-day routes only 70.5% arrive on time. Customers usually find out a shipment is late only when it doesn't arrive, which damages trust and generates complaints to account managers. Success would mean fewer late deliveries and customers being told about delays before the promised date, measured by the on-time rate and the share of late shipments notified in advance.",
+  "note": "The statement now has two parts, lateness and not being told, and they need different fixes. That distinction is what will shape your whole pack.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Customers ask for a tracking app. The data shows a quarter of deliveries are late on every type of route. What should the analysis consider?",
+    "options": ["Only which tracking app to buy", "Whether customers mainly need to be told about delays, and whether the causes of lateness can be fixed", "Nothing: give customers what they ask for", "Cancelling late shipments"],
+    "answer": 1,
+    "explanation": "Requests describe solutions; the BA finds the need behind them."
+  },
+  {
+    "prompt": "Which part of the pack should come first?",
+    "options": ["User stories", "The problem statement and baseline", "UAT test cases", "Vendor quotes"],
+    "answer": 1,
+    "explanation": "Everything else depends on understanding and measuring the problem."
+  },
+  {
+    "prompt": "Your analysis recommends delay notifications instead of the app the director asked for. Is that a failure?",
+    "options": ["Yes: you didn't deliver what was asked", "No: recommending the right solution to the real problem is the BA's job, if the evidence supports it", "Only if it's cheaper", "Only if the director agrees immediately"],
+    "answer": 1,
+    "explanation": "Back the recommendation with data and a business case."
+  }
+]
+```
+$md$, true, true, 11, array['ba-11-p1', 'ba-11-p2', 'ba-11-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+
 -- Course: Data Analyst Capstone: End-to-End BI Project
 insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
-values ('data-analyst-capstone', 'full', null, 'data-analyst-capstone', 'CAP', 'Data Analyst Capstone: End-to-End BI Project', 'Take a retail chain''s raw till export all the way to a reviewed dashboard and a board-ready executive summary, using the tools of your choice.', 'The capstone of the Data Analyst track. Voltline Electronics, a chain of eight stores, sends you 18 months of raw till data and one question from its chief executive: what''s really driving our 37% growth? You''ll plan the analysis, profile and clean a genuinely messy export (a duplicated upload, mixed date formats, inconsistent store names and test transactions), build a model that looks up costs by date and compares sales with monthly targets, decompose the growth, find what''s going wrong where, and put a value on missed sales. Then you''ll build a dashboard, write an executive summary, prepare for the board''s questions and publish the project for your portfolio. Use Excel, Power BI, SQL or Python: the work is assessed on the answers, not the tool.', 'data-analytics', 'intermediate', 4, 'Career project', 14, true, 'available', true, array['Turning a business brief into an analysis plan', 'Profiling and cleaning raw data with a quality log', 'Modelling data at the right grain', 'Decomposing growth into price, new stores and volume', 'Judging targets fairly', 'Estimating lost sales with stated assumptions', 'Finding-led dashboards and executive summaries', 'Presenting and publishing a portfolio project']::text[], array['The core Data Analyst courses: Excel, SQL and Power BI (or Python)', 'Comfort cleaning data and building a dashboard in at least one tool']::text[], 'Voltline Electronics: commercial review', true, true, true, true, false, 60, 22)
+values ('data-analyst-capstone', 'full', null, 'data-analyst-capstone', 'CAP', 'Data Analyst Capstone: End-to-End BI Project', 'Take a retail chain''s raw till export all the way to a reviewed dashboard and a board-ready executive summary, using the tools of your choice.', 'The capstone of the Data Analyst track. Voltline Electronics, a chain of eight stores, sends you 18 months of raw till data and one question from its chief executive: what''s really driving our 37% growth? You''ll plan the analysis, profile and clean a genuinely messy export (a duplicated upload, mixed date formats, inconsistent store names and test transactions), build a model that looks up costs by date and compares sales with monthly targets, decompose the growth, find what''s going wrong where, and put a value on missed sales. Then you''ll build a dashboard, write an executive summary, prepare for the board''s questions and publish the project for your portfolio. Use Excel, Power BI, SQL or Python: the work is assessed on the answers, not the tool.', 'data-analytics', 'intermediate', 4, 'Career project', 14, true, 'available', true, array['Turning a business brief into an analysis plan', 'Profiling and cleaning raw data with a quality log', 'Modelling data at the right grain', 'Decomposing growth into price, new stores and volume', 'Judging targets fairly', 'Estimating lost sales with stated assumptions', 'Finding-led dashboards and executive summaries', 'Presenting and publishing a portfolio project']::text[], array['The core Data Analyst courses: Excel, SQL and Power BI (or Python)', 'Comfort cleaning data and building a dashboard in at least one tool']::text[], 'Voltline Electronics: commercial review', true, true, true, true, false, 60, 23)
 on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level = excluded.level, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
@@ -27309,6 +28811,132 @@ on conflict (id) do update set assessment_id = excluded.assessment_id, position 
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
 values ('capq12', 1, 'Readable in a minute, with the detail one click away.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Business Analysis Fundamentals: final assessment
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('business-analysis-fundamentals-final', 'business-analysis-fundamentals', 'final', null, 'Business Analysis Fundamentals: final assessment', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('baq01', 'business-analysis-fundamentals-final', 1, 'A director says, ''We need a new CRM.'' What should the business analyst do first?', '["Compare CRM vendors","Find out what problem the CRM is meant to solve, what it costs today, and how success would be measured","Write user stories for a CRM","Ask IT which CRM they prefer"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('baq01', 1, 'Requests usually arrive as solutions. Work back to the problem.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('baq02', 'business-analysis-fundamentals-final', 2, 'The receptionist will use the new booking process all day but has no say in the budget. Where does she sit on the power and interest grid, and how should you treat her?', '["Low power, low interest: monitor","Low power, high interest: keep informed and involve her in design","High power, high interest: manage closely","She isn''t a stakeholder"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('baq02', 1, 'Low power doesn''t mean low importance; users can make or break adoption.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('baq03', 'business-analysis-fundamentals-final', 3, 'Which interview question is best for understanding how invoices are chased?', '["Don''t you think reminders would help?","Tell me about the last invoice that was paid late. What happened?","Is the process good?","Would you like a new system?"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('baq03', 1, 'Ask for a specific recent example; avoid leading questions.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('baq04', 'business-analysis-fundamentals-final', 4, 'Overdue invoices are spread across 32 of 50 clients. What does that suggest?', '["A few problem clients","A process problem affecting most clients","A data error","Nothing useful"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('baq04', 1, 'Widespread problems point to the process.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('baq05', 'business-analysis-fundamentals-final', 5, 'On a process map, a step happens only ''when a partner remembers to ask''. What''s the problem?', '["Rework","No trigger","Too many lanes","Manual re-entry"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('baq05', 1, 'Give each step a trigger: a date, an event or a condition.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('baq06', 'business-analysis-fundamentals-final', 6, 'Which requirement is testable?', '["The system shall be easy to use","The report shall load in under 5 seconds for 2,000 records","Invoices should go out quickly","It should integrate with everything"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('baq06', 1, 'It can be timed and passed or failed.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('baq07', 'business-analysis-fundamentals-final', 7, '''Clients on a payment plan don''t receive reminders'' is best described as a:', '["Non-functional requirement","Business rule","User story","KPI"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('baq07', 1, 'A policy that applies whatever the solution.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('baq08', 'business-analysis-fundamentals-final', 8, 'In a MoSCoW session, every requirement is marked Must. What should you do?', '["Accept it","Challenge each Must: would we still go live without it?","Mark them all Should","Drop the lowest-cost ones"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('baq08', 1, 'Prioritising means choosing.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('baq09', 'business-analysis-fundamentals-final', 9, 'Which user story is best?', '["As a user, I want a billing system","As an accounts officer, I want a list of invoices past their due date, so that I know who to chase each Monday","The system shall have reports","As a developer, I want a database"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('baq09', 1, 'A specific user, something small and valuable, and a clear benefit.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('baq10', 'business-analysis-fundamentals-final', 10, 'The supplier reports a 94% collection rate; the accounts officer reports 81%. What most likely went wrong?', '["One of them can''t calculate","The KPI was never defined, so they''re using different definitions","The data is corrupt","Rounding"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('baq10', 1, 'Write and agree each KPI definition before go-live.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('baq11', 'business-analysis-fundamentals-final', 11, 'Option B pays back in 3 months; option C in 13 months with slightly higher three-year benefit and more risk. What''s a strong recommendation?', '["Always choose C","Choose B now and revisit C with evidence after six months","Do nothing","Choose whichever the supplier prefers"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('baq11', 1, 'Phasing delivers most of the benefit quickly and makes the bigger decision with evidence.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('baq12', 'business-analysis-fundamentals-final', 12, 'A traceability matrix shows a feature with no requirement behind it. What is that?', '["Good value","Scope creep: ask why it''s there before it''s built or tested","A test case","A business rule"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('baq12', 1, 'Traceability catches untested requirements and unrequested features.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('baq13', 'business-analysis-fundamentals-final', 13, 'The new process passed every test, but three months later people still use the old spreadsheet. What was most likely missing?', '["More testing","Adoption planning: role-specific training, support and a fixed date to switch off the old way","A bigger budget","More requirements"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('baq13', 1, 'Passing tests isn''t the same as being adopted.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('baq14', 'business-analysis-fundamentals-final', 14, 'How should you show that a change worked?', '["Ask people if they like it","Recalculate the baseline measures with exactly the same definitions and compare with the targets","Count the features delivered","Check the project finished on time"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('baq14', 1, 'Before and after, measured the same way.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('baq15', 'business-analysis-fundamentals-final', 15, 'Your analysis recommends delay notifications instead of the GPS app the director asked for. When is that the right call?', '["Never: deliver what was asked","When the evidence shows the need is being told about delays, and the business case supports it","Only if it''s free","Only if IT agrees"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('baq15', 1, 'Recommending the right solution to the real problem is the BA''s job.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 
@@ -30540,6 +32168,16 @@ In the text box, paste your **executive summary**, then a short note for each ta
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
 
 
+-- Project: Harbourline tracking request: business analysis pack
+insert into public.projects (id, course_id, title, summary, brief_md, tasks, datasets, rubric, required)
+values ('ba-harbourline-pack', 'business-analysis-fundamentals', 'Harbourline tracking request: business analysis pack', 'A complete business analysis pack for a freight company whose operations director wants a customer tracking app.', $md$Harbourline Freight's operations director wants "a tracking app with GPS" because customers complain they don't know where their shipments are. Before any quotes are requested, produce the business analysis pack that should come first.
+
+Use the logistics dataset to measure the problem. Submit a link to your pack (a shared document, PDF or folder) and paste your **problem statement** and **recommendation** below, followed by a short note on where to find each task.
+
+Write for the operations director and Harbourline's managing director: clear, specific and backed by numbers.$md$, array['Problem statement and baseline: the real problem, sized with on-time rates by mode and route, with no solution named.', 'Stakeholder register (power, interest, approach) and a RACI for the main decisions.', 'Elicitation plan: who you''d interview or observe, and ten key questions.', 'As-is and to-be process maps from booking to delivery, with the problems marked, including how customers are told about delays.', 'Requirements: at least ten functional and non-functional requirements and business rules, testable and prioritised with MoSCoW.', 'At least five user stories with Given/When/Then acceptance criteria, and three KPI definition cards with baselines and targets.', 'Business case: at least three options including do nothing, with costs, benefits, payback, risks and a recommendation.', 'UAT test cases for your Must requirements, a traceability matrix and an adoption plan.']::text[], array['logistics']::text[], array['The problem statement separates the need from the requested solution, is sized with data, and names no solution.', 'Stakeholders are complete (up, across, out and around), with a specific approach for each.', 'Process maps show real handoffs and delays, and the to-be process fixes them with clear triggers.', 'Requirements are testable, typed correctly, traceable and genuinely prioritised.', 'User stories follow INVEST, and acceptance criteria cover exceptions as well as the normal case.', 'KPIs have precise definitions and baselines calculated from the data.', 'The business case compares options fairly, states its assumptions and makes a clear, justified recommendation.']::text[], true)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
+
+
 -- Track: Become a Data Analyst
 insert into public.tracks (id, slug, title, summary, badge_name, badge_code, skills, position, published)
 values ('data-analyst', 'data-analyst', 'Become a Data Analyst', 'The route we recommend from no experience to a junior data analyst role. Learn how analysis works, then the tools teams use every day (Excel, SQL, Power BI and Python) on realistic company data. Build portfolio projects that answer real business questions, and finish with your CV, LinkedIn and interview preparation.', 'CloudTech Data Analyst', 'DATAANALYST', array['Spreadsheet analysis in Excel', 'Statistics: averages, spread, confidence intervals and tests', 'Querying databases with SQL, from first SELECT to cohorts and window functions', 'Data modelling and star schemas', 'Dashboards in Power BI, with DAX measures you can trust', 'Analysis in Python and pandas', 'Turning data into findings a manager can act on']::text[], 1, true)
@@ -30600,9 +32238,53 @@ values ('data-analyst', 'get-your-first-internship', 'Career', false, 13)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 
+-- Track: Become a Business Analyst
+insert into public.tracks (id, slug, title, summary, badge_name, badge_code, skills, position, published)
+values ('business-analyst', 'business-analyst', 'Become a Business Analyst', 'The route from no experience to a junior business analyst role. Learn to turn requests into the right changes: understand the problem, map the process, write requirements and user stories, and make the business case. Back it up with the data skills employers now expect from BAs (Excel, SQL and Power BI), then present yourself for the job.', 'CloudTech Business Analyst', 'BUSANALYST', array['Problem statements and stakeholder analysis', 'Process mapping, as is and to be', 'Testable requirements, user stories and acceptance criteria', 'Business cases, KPIs and acceptance testing', 'Measuring problems with Excel and SQL', 'Reporting in Power BI']::text[], 2, true)
+on conflict (id) do update set slug = excluded.slug, title = excluded.title, summary = excluded.summary, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, position = excluded.position, published = excluded.published;
+
+delete from public.track_courses where track_id = 'business-analyst';
+
+insert into public.track_courses (track_id, course_id, stage, required, position)
+values ('business-analyst', 'business-analysis-fundamentals', 'Foundation', true, 1)
+on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
+
+insert into public.track_courses (track_id, course_id, stage, required, position)
+values ('business-analyst', 'data-analytics-foundations', 'Foundation', true, 2)
+on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
+
+insert into public.track_courses (track_id, course_id, stage, required, position)
+values ('business-analyst', 'excel-for-data-analysis', 'Foundation', true, 3)
+on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
+
+insert into public.track_courses (track_id, course_id, stage, required, position)
+values ('business-analyst', 'sql-for-data-analysis', 'Core', true, 4)
+on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
+
+insert into public.track_courses (track_id, course_id, stage, required, position)
+values ('business-analyst', 'data-modelling', 'Core', true, 5)
+on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
+
+insert into public.track_courses (track_id, course_id, stage, required, position)
+values ('business-analyst', 'power-bi-fundamentals', 'Core', true, 6)
+on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
+
+insert into public.track_courses (track_id, course_id, stage, required, position)
+values ('business-analyst', 'career-essentials', 'Career', true, 7)
+on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
+
+insert into public.track_courses (track_id, course_id, stage, required, position)
+values ('business-analyst', 'build-your-student-portfolio', 'Career', false, 8)
+on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
+
+insert into public.track_courses (track_id, course_id, stage, required, position)
+values ('business-analyst', 'get-your-first-internship', 'Career', false, 9)
+on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
+
+
 -- Track: Career & Study Skills
 insert into public.tracks (id, slug, title, summary, badge_name, badge_code, skills, position, published)
-values ('career-study-skills', 'career-study-skills', 'Career & Study Skills', 'The practical skills that sit under every career: using AI honestly and well, researching and citing properly, everyday digital tools, and a CV, LinkedIn profile and portfolio that get you noticed. Short courses you can finish alongside school or work.', 'CloudTech Career Ready', 'CAREERREADY', array['Using AI assistants well and honestly', 'Research and referencing', 'Professional email and digital tools', 'CV, LinkedIn and portfolio']::text[], 2, true)
+values ('career-study-skills', 'career-study-skills', 'Career & Study Skills', 'The practical skills that sit under every career: using AI honestly and well, researching and citing properly, everyday digital tools, and a CV, LinkedIn profile and portfolio that get you noticed. Short courses you can finish alongside school or work.', 'CloudTech Career Ready', 'CAREERREADY', array['Using AI assistants well and honestly', 'Research and referencing', 'Professional email and digital tools', 'CV, LinkedIn and portfolio']::text[], 3, true)
 on conflict (id) do update set slug = excluded.slug, title = excluded.title, summary = excluded.summary, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, position = excluded.position, published = excluded.published;
 
 delete from public.track_courses where track_id = 'career-study-skills';

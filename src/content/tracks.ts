@@ -110,6 +110,69 @@ export const TRACKS: Track[] = [
     ],
   },
   {
+    id: "business-analyst",
+    slug: "business-analyst",
+    title: "Become a Business Analyst",
+    outcome: "Get job-ready as a junior business analyst",
+    summary:
+      "The route from no experience to a junior business analyst role. Learn to turn requests into the right changes: understand the problem, map the process, write requirements and user stories, and make the business case. Back it up with the data skills employers now expect from BAs (Excel, SQL and Power BI), then present yourself for the job.",
+    badge: "CloudTech Business Analyst",
+    badgeCode: "BUSANALYST",
+    skills: [
+      "Problem statements and stakeholder analysis",
+      "Process mapping, as is and to be",
+      "Testable requirements, user stories and acceptance criteria",
+      "Business cases, KPIs and acceptance testing",
+      "Measuring problems with Excel and SQL",
+      "Reporting in Power BI",
+    ],
+    stages: [
+      {
+        title: "Foundation",
+        summary: "What business analysts do, and the data basics every BA needs.",
+        items: [
+          { kind: "course", courseId: "business-analysis-fundamentals", why: "Problems, stakeholders, processes, requirements, user stories and business cases, on a real firm's data." },
+          { kind: "course", courseId: "data-analytics-foundations", why: "How to ask a good question of data and read the answer critically." },
+          { kind: "course", courseId: "excel-for-data-analysis", why: "Measure the current state and build a business case in a spreadsheet." },
+        ],
+      },
+      {
+        title: "Core",
+        summary: "Get your own numbers from systems, and understand how data is structured.",
+        items: [
+          { kind: "course", courseId: "sql-for-data-analysis", why: "Answer your own questions from a database instead of waiting for a report." },
+          { kind: "course", courseId: "data-modelling", why: "Read and specify the data behind a system: entities, keys and relationships." },
+          { kind: "course", courseId: "power-bi-fundamentals", why: "Specify, and build, the reports that prove a change worked." },
+        ],
+      },
+      {
+        title: "Specialist",
+        summary: "Go deeper into how BAs work in modern teams.",
+        items: [
+          { kind: "upcoming", title: "Agile Business Analysis", why: "Backlogs, refinement, story mapping and working inside a Scrum team.", level: 3 },
+          { kind: "upcoming", title: "Process Improvement with BPMN and Lean", why: "Full BPMN notation, value-stream mapping and measuring waste.", level: 3 },
+        ],
+      },
+      {
+        title: "Projects",
+        summary: "Portfolio work that shows you can analyse a real problem end to end.",
+        items: [
+          { kind: "project", projectId: "law-firm-operations", why: "Measure a law firm's workload, court delays and unpaid bills." },
+          { kind: "project", projectId: "logistics-operations", why: "Find the late routes and the customers who owe money." },
+        ],
+      },
+      {
+        title: "Career",
+        summary: "Turn your skills into applications that get interviews.",
+        items: [
+          { kind: "course", courseId: "career-essentials", why: "An ATS-friendly CV and a LinkedIn profile recruiters can find." },
+          { kind: "course", courseId: "build-your-student-portfolio", why: "One link that shows your analysis packs and projects.", required: false },
+          { kind: "course", courseId: "get-your-first-internship", why: "Find, apply for and interview for your first role.", required: false },
+        ],
+      },
+    ],
+  },
+  {
     id: "career-study-skills",
     slug: "career-study-skills",
     title: "Career & Study Skills",
