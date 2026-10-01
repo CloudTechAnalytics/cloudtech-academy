@@ -212,7 +212,7 @@ export const TRACKS: Track[] = [
         title: "Specialist",
         summary: "Go further into the methods data science teams use.",
         items: [
-          { kind: "upcoming", title: "Time Series Forecasting", why: "Forecast demand and sales with seasonality, trends and honest backtesting.", level: 3 },
+          { kind: "course", courseId: "time-series-forecasting", why: "Forecast demand with seasonality, events and honest backtests, and turn it into orders." },
           { kind: "course", courseId: "experimentation-ab-testing", why: "Design tests, size samples, catch broken splits and read results without fooling yourself." },
         ],
       },

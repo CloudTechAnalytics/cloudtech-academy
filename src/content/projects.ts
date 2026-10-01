@@ -82,6 +82,12 @@ export const DATASETS: DatasetInfo[] = [
     files: ["onboarding", "banner_daily", "fee_test", "rollout"],
   },
   {
+    id: "demand",
+    name: "Kolanut Lagos depot (daily demand)",
+    description: "Daily units sold for six products at Kolanut's Lagos depot from July 2022 to June 2026, with promotions and prices, and a holiday calendar showing depot closures. Prices rose in January 2026. Used in Time Series Forecasting.",
+    files: ["daily_sales", "holidays"],
+  },
+  {
     id: "legal",
     name: "Ashgrove Chambers (legal)",
     description: "A Lagos law firm's clients, matters, court hearings and invoices from 2024 to August 2026.",
@@ -279,6 +285,27 @@ export const DATA_DICTIONARY: Record<string, Record<string, { about: string; col
         amount_ngn: "Invoice amount in naira.",
         status: "Paid, Outstanding or Overdue.",
         paid_date: "Date it was paid. Blank if unpaid.",
+      },
+    },
+  },
+  demand: {
+    daily_sales: {
+      about: "One row per product per day at the Lagos depot.",
+      columns: {
+        date: "Day.",
+        product: "Product name.",
+        category: "Beverages, Snacks, Household or Personal care.",
+        units: "Cases sold that day. Zero on days the depot was closed.",
+        on_promotion: "1 if the product was on a price promotion that day.",
+        price_ngn: "Selling price per case that day, in naira.",
+      },
+    },
+    holidays: {
+      about: "Public holidays from 2022 to 2026, and whether the depot closed.",
+      columns: {
+        date: "Date of the holiday.",
+        holiday: "Holiday name, such as Eid al-Fitr or Christmas Day.",
+        depot_closed: "1 if the depot was closed that day.",
       },
     },
   },

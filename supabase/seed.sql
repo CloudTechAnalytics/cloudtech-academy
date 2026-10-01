@@ -34069,9 +34069,1527 @@ $md$, true, true, 9, array['ab-09-p1', 'ab-09-t1']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 
+-- Course: Time Series Forecasting
+insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
+values ('time-series-forecasting', 'full', null, 'time-series-forecasting', 'TSF', 'Time Series Forecasting', 'Forecast demand honestly and turn it into orders: trend and seasonality, baselines, calendar regression, promotions and structural breaks, rolling backtests, prediction intervals and safety stock, on four years of a depot''s daily sales.', 'Every business that holds stock or plans staff needs forecasts, and most still use a guess. In this course you build the forecasting system for Kolanut''s Lagos depot from four years of daily sales of six products, in Python. You''ll frame the forecast around the weekly ordering decision, measure the weekday, December, payday, Eid and promotion patterns, test baselines on a period they never saw, and build a calendar regression that halves the best baseline''s error. You''ll measure what promotions really add once the dip afterwards is counted, handle the January 2026 price rise as a structural break, backtest over many origins, check whether prediction intervals are honest, and turn forecasts into order quantities with safety stock for a chosen service level.', 'data-science', 'intermediate', 3, 'Intermediate', 7, true, 'available', true, array['Framing forecasts around decisions', 'Trend, seasonality and calendar events', 'Baselines and time-based hold-outs', 'WAPE and bias', 'Calendar regression with features known in advance', 'Promotions, post-promotion dips and structural breaks', 'Rolling-origin backtesting', 'Prediction intervals and coverage', 'Safety stock, service levels and ordering rules']::text[], array['Machine Learning Fundamentals, or comfort with scikit-learn regression', 'Python for Data Analytics, or comfort with pandas dates']::text[], 'Kolanut Lagos depot: forecasting and ordering', true, true, true, true, false, 60, 28)
+on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level = excluded.level, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('tsf-m01', 'time-series-forecasting', 'Forecasting for Decisions', 1, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('time-series-forecasting:forecasting-for-decisions', 'time-series-forecasting', 'tsf-m01', 'forecasting-for-decisions', 'Forecasting for decisions', 'What a forecast is for, how the decision sets the horizon and the level of detail, and a first look at four years of daily demand at Kolanut''s Lagos depot.', 20, $md$
+## The problem
+
+Kolanut's Lagos depot orders stock from its suppliers every week, and deliveries take two weeks to arrive. Order too little and the shelves are empty when shops come to restock, so they buy from a competitor. Order too much and money sits in the warehouse, and drinks go past their best-before date.
+
+So every Monday, the depot manager needs a number: how much of each product will sell in the weeks the next order has to cover. Today that number is a guess based on "last month, plus a bit". This course replaces the guess with forecasts built from four years of daily sales, tested honestly, and turned into order quantities.
+
+## The concept
+
+**A forecast serves a decision**
+
+Before choosing any method, answer four questions:
+
+| Question | Kolanut's depot |
+| :-- | :-- |
+| **What decision** does the forecast feed? | the weekly order to the supplier |
+| **Horizon**: how far ahead? | weeks 3 and 4 from now (the order arrives in two weeks) |
+| **Granularity**: what level of detail? | units per product per week (daily forecasts, added up) |
+| **Cost of errors**: which hurts more? | running out (lost sales and customers) usually hurts more than overstock |
+
+**Time series data**
+
+A time series is a measurement taken at regular intervals: daily units here. Unlike the rows in earlier courses, the order matters. Yesterday's sales tell you something about today's, and the past is all you have to learn from.
+
+**What forecasts can and can't do**
+
+A forecast extends the patterns of the past: trends, seasons, regular events. It can't foresee things that have never happened (a competitor's launch, a strike). Good forecasting is honest about that, with a range as well as a number.
+
+## Example
+
+Load the data. Kolanut's depot sells six products; most of this course follows one of them, the malt drink:
+
+```python
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/demand/"
+sales = pd.read_csv(base + "daily_sales.csv", parse_dates=["date"])
+holidays = pd.read_csv(base + "holidays.csv", parse_dates=["date"])
+print(sales["date"].min().date(), "to", sales["date"].max().date(), "|", sales["product"].nunique(), "products")
+
+malt = sales[sales["product"] == "Malt drink 330ml (24)"].set_index("date")["units"]
+malt.resample("YE").sum()
+```
+
+```text
+2022-07-01 to 2026-06-30 | 6 products
+date
+2022-12-31    24519
+2023-12-31    48109
+2024-12-31    51876
+2025-12-31    53298
+2026-12-31    24990
+Freq: YE-DEC, Name: units, dtype: int64
+```
+
+The first and last years are half-years (July 2022 onwards, and January to June 2026). The full years grow slowly. Now weekly totals for the last few months, the level of detail the ordering decision uses:
+
+```python
+malt.resample("W-SUN").sum().tail(8)
+```
+
+```text
+date
+2026-05-17    1013
+2026-05-24     980
+2026-05-31     933
+2026-06-07     921
+2026-06-14     930
+2026-06-21     911
+2026-06-28     909
+2026-07-05     285
+Freq: W-SUN, Name: units, dtype: int64
+```
+
+## Walkthrough
+
+1. Load the data and plot the malt drink's daily units: `malt.plot(figsize=(12, 4))`. You'll see weekly wiggles, a big peak every December, and occasional days at zero.
+2. Plot the weekly totals instead. Which patterns are easier to see?
+3. Look at `holidays`: the days the depot was closed explain the zeros.
+4. Write down the decision, horizon, granularity and cost of errors for a forecast you know (your own business, or a shop you use).
+
+## Practice
+
+```dataset
+{"dataset": "demand", "files": ["daily_sales", "holidays"]}
+```
+
+```answer
+{
+  "id": "ts-01-p1",
+  "prompt": "How many units of the malt drink did the depot sell in **2025**?",
+  "answer": 53298,
+  "format": "number",
+  "dataset": "demand",
+  "files": ["daily_sales"],
+  "pyVerify": "int(malt.loc['2025'].sum())",
+  "hint": "The 2025 row of the yearly totals.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "ts-01-t1",
+  "prompt": "A pharmacy chain wants to forecast demand for malaria medicine. Write one line each for **Decision:**, **Horizon:**, **Granularity:** and **Cost of errors:**, with a specific choice and a short reason on each.",
+  "minutes": 5,
+  "rows": 5,
+  "placeholder": "Decision: ...\nHorizon: ...",
+  "rules": [
+    { "label": "A Decision line", "pattern": "^\\s*[-*]?\\s*decision\\s*:" },
+    { "label": "A Horizon line with a time period", "pattern": "^\\s*[-*]?\\s*horizon\\s*:[^\\n]*(day|week|month)" },
+    { "label": "A Granularity line", "pattern": "^\\s*[-*]?\\s*granularity\\s*:" },
+    { "label": "A Cost of errors line comparing too little with too much", "pattern": "^\\s*[-*]?\\s*cost of errors?\\s*:[^\\n]*(run(ning)? out|stock-?out|too little|shortage|empty|overstock|too much)[^\\n]*" }
+  ],
+  "sample": "Decision: how much of each malaria medicine each branch orders from the central warehouse each week.\nHorizon: 1 to 2 weeks ahead, because the warehouse delivers to branches within a week.\nGranularity: units per product per branch per week, since each branch orders separately.\nCost of errors: running out is far worse than overstock: patients go elsewhere or go untreated, while extra stock keeps for months.",
+  "note": "The cost of errors is what turns a forecast into an order: when running out costs more, you order above the forecast (lesson 7).",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "What should you decide before choosing a forecasting method?",
+    "options": ["The software", "The decision it serves, the horizon, the granularity and the cost of errors", "The colour of the chart", "The number of models"],
+    "answer": 1,
+    "explanation": "The decision sets everything else."
+  },
+  {
+    "prompt": "Supplier deliveries take two weeks. Which horizon matters for today's order?",
+    "options": ["Tomorrow", "Weeks 3 and 4 from now, which the order must cover", "Next year", "Last week"],
+    "answer": 1,
+    "explanation": "Forecast the period the order is for."
+  },
+  {
+    "prompt": "What can't a forecast built from past sales foresee?",
+    "options": ["December peaks", "A brand-new event that has never happened, such as a competitor's surprise launch", "Weekly patterns", "Growth trends"],
+    "answer": 1,
+    "explanation": "Forecasts extend past patterns; new shocks need judgement."
+  }
+]
+```
+$md$, true, true, 1, array['ts-01-p1', 'ts-01-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('tsf-m02', 'time-series-forecasting', 'Trend, Seasonality and Events', 2, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('time-series-forecasting:trend-seasonality-and-events', 'time-series-forecasting', 'tsf-m02', 'trend-seasonality-and-events', 'Trend, seasonality and events', 'Break a series into its building blocks (trend, weekly and yearly seasonality, paydays, holidays and promotions) by measuring each one directly from the data.', 15, $md$
+## The problem
+
+The depot manager has a feel for the patterns: "Saturdays are busy, Sundays are dead, December is mad, and everyone buys drinks before Eid." He's right, but feelings can't be put into a spreadsheet or a model. How much busier is Saturday? How mad is December? Is the month-end payday bump real or a story?
+
+Every forecasting method, from the simplest to the most advanced, works by capturing these patterns. Measuring them first tells you which ones matter and gives you something to check every model against.
+
+## The concept
+
+**The building blocks of a demand series**
+
+| Component | What it is | Kolanut example |
+| :-- | :-- | :-- |
+| **Trend** | the long-run direction | slow growth year on year |
+| **Weekly seasonality** | a repeating pattern each week | Saturday high, Sunday low |
+| **Yearly seasonality** | a repeating pattern each year | December peak, quiet January |
+| **Calendar events** | dates that move or recur | paydays at month-end, Eid, Christmas closures |
+| **Promotions** | planned changes that lift sales | week-long price promotions |
+| **Noise** | what's left | weather, a big customer's order |
+
+**Measuring each one**
+
+- **Trend**: a 28-day or 365-day rolling average smooths the rest away.
+- **Seasonal profiles**: average units by weekday, or by month, divided by the overall average, give **seasonal indices** (1.25 = 25% above average).
+- **Events**: compare event days with similar non-event days.
+
+**Additive or multiplicative?**
+
+When December adds a **percentage** (say 30%) rather than a fixed number of units, and that percentage stays similar as sales grow, the pattern is multiplicative. That's typical of demand, and it's why many forecasts model the log of sales, as you did with rents in Machine Learning Fundamentals.
+
+## Example
+
+```python
+import pandas as pd
+import numpy as np
+
+base = "https://academy.cloudtechanalytics.com/datasets/demand/"
+sales = pd.read_csv(base + "daily_sales.csv", parse_dates=["date"])
+holidays = pd.read_csv(base + "holidays.csv", parse_dates=["date"])
+malt = sales[sales["product"] == "Malt drink 330ml (24)"].set_index("date")
+closed = malt.index.isin(holidays.loc[holidays["depot_closed"] == 1, "date"])
+open_days = malt[~closed]
+
+weekday_index = open_days.groupby(open_days.index.day_name())["units"].mean() / open_days["units"].mean()
+weekday_index.reindex(["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]).round(2)
+```
+
+```text
+date
+Monday       1.01
+Tuesday      0.99
+Wednesday    0.99
+Thursday     1.03
+Friday       1.13
+Saturday     1.28
+Sunday       0.56
+Name: units, dtype: float64
+```
+
+Saturday sells about a quarter more than an average day, and Sunday about half. Now the year, the month-end payday effect and promotions:
+
+```python
+month_index = open_days.groupby(open_days.index.month)["units"].mean() / open_days["units"].mean()
+print("December index:", round(month_index[12], 2), "  January index:", round(month_index[1], 2))
+
+payday = (open_days.index.day >= open_days.index.days_in_month - 2) | (open_days.index.day <= 2)
+print("Payday days vs other days:", round(open_days.loc[payday, "units"].mean() / open_days.loc[~payday, "units"].mean(), 2))
+print("Promotion days vs other days:", round(open_days.loc[open_days["on_promotion"] == 1, "units"].mean() / open_days.loc[open_days["on_promotion"] == 0, "units"].mean(), 2))
+```
+
+```text
+December index: 1.34   January index: 0.86
+Payday days vs other days: 1.09
+Promotion days vs other days: 1.44
+```
+
+December runs well above an average month and January below it; paydays and promotions each lift sales. These are rough measurements (a promotion in a slow month and one in a busy month are lumped together), but they show which patterns any forecast must capture.
+
+## Walkthrough
+
+1. Run the cells. Plot the 28-day rolling average (`malt["units"].rolling(28).mean().plot()`) to see the trend under the noise.
+2. Measure the pre-Eid effect: average units in the 5 days before each Eid against the same weekdays two weeks earlier.
+3. Compare December's index for the malt drink with detergent's. Which is more seasonal?
+4. List the patterns in order of how much they matter for a weekly order.
+
+## Practice
+
+```answer
+{
+  "id": "ts-02-p1",
+  "prompt": "What is the **Saturday** seasonal index for the malt drink (average Saturday units ÷ average open-day units)? Two decimal places.",
+  "answer": 1.28,
+  "tolerance": 0.006,
+  "format": "number",
+  "dataset": "demand",
+  "files": ["daily_sales", "holidays"],
+  "pyVerify": "round(weekday_index['Saturday'], 2)",
+  "hint": "The Saturday row of the first output.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "ts-02-p2",
+  "prompt": "What is the malt drink's **December** index? Two decimal places.",
+  "answer": 1.34,
+  "tolerance": 0.006,
+  "format": "number",
+  "dataset": "demand",
+  "files": ["daily_sales", "holidays"],
+  "pyVerify": "round(month_index[12], 2)",
+  "hint": "The first number in the second output.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "A seasonal index of 0.55 for Sunday means:",
+    "options": ["Sundays sell 55 units", "Sundays sell about 45% less than an average day", "55% of sales are on Sunday", "Sunday sales grow 55%"],
+    "answer": 1,
+    "explanation": "An index is relative to the average: 1.0 is average."
+  },
+  {
+    "prompt": "December adds about 30% each year, and the size in units grows as sales grow. What kind of seasonality is it?",
+    "options": ["Additive", "Multiplicative", "None", "Random"],
+    "answer": 1,
+    "explanation": "A percentage effect is multiplicative; modelling log(sales) handles it."
+  },
+  {
+    "prompt": "Why measure patterns before building a model?",
+    "options": ["It's required", "To know which patterns matter, and to check the model captures them", "Models can't find patterns", "To make the data smaller"],
+    "answer": 1,
+    "explanation": "Measurements are your yardstick for any model."
+  }
+]
+```
+$md$, true, true, 2, array['ts-02-p1', 'ts-02-p2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('tsf-m03', 'time-series-forecasting', 'Baselines and Honest Testing', 3, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('time-series-forecasting:baselines-and-honest-testing', 'time-series-forecasting', 'tsf-m03', 'baselines-and-honest-testing', 'Baselines and honest testing', 'Test forecasts the only honest way (on a later period the method never saw), measure them with WAPE, and set the simple baselines any real method has to beat.', 15, $md$
+## The problem
+
+A consultant offers Kolanut a forecasting system and shows a chart where the forecast line sits almost exactly on top of the actual sales. Impressive, until you ask how it was made: the model was fitted to the same months it's being shown on. Forecasting the past, when you already know the answer, is easy.
+
+The only test that counts is the one that mimics real use: build the forecast using data up to a date, then compare it with what actually happened after that date. And a forecast is only worth paying for if it beats the simple rules the depot could use for free.
+
+## The concept
+
+**A time-based hold-out**
+
+Choose a cut-off. Everything before it is training data; everything after is the test period. Forecast the whole test period from the training data alone, then compare. Here: train up to 28 February 2026, and forecast March to June 2026, which includes Eid, a payday each month and several promotions.
+
+**Measuring error: WAPE**
+
+> WAPE (weighted absolute percentage error) = total absolute error ÷ total actual sales
+
+It reads as "the forecast is off by about x% of sales", it handles days with zero sales (where the usual percentage error breaks), and it weights busy days more than quiet ones, as the business does. Also check **bias**: (total forecast − total actual) ÷ total actual. A forecast that's always 5% high is a different problem from one that's randomly off.
+
+**Baselines**
+
+| Baseline | Forecast for each future day |
+| :-- | :-- |
+| **Naive** | the last day's sales |
+| **Seasonal naive, last week** | the same weekday in the last week of training |
+| **Seasonal naive, last year** | the same weekday 52 weeks earlier |
+| **Weekday average** | the average of the same weekday over the last 28 days |
+
+Days when the depot is closed are known in advance, so every method forecasts zero for them.
+
+## Example
+
+```python
+import pandas as pd
+import numpy as np
+
+base = "https://academy.cloudtechanalytics.com/datasets/demand/"
+sales = pd.read_csv(base + "daily_sales.csv", parse_dates=["date"])
+holidays = pd.read_csv(base + "holidays.csv", parse_dates=["date"])
+closed_days = set(holidays.loc[holidays["depot_closed"] == 1, "date"])
+eid_days = holidays.loc[holidays["holiday"].str.startswith("Eid"), "date"]
+
+def wape(actual, forecast):
+    """Weighted absolute percentage error: total absolute error ÷ total actual."""
+    return np.abs(actual - forecast).sum() / actual.sum()
+
+def calendar_features(dates, promo):
+    """One row per date: trend, weekday, month, payday, pre-Eid, promotions and the 2026 price rise."""
+    X = pd.DataFrame(index=dates)
+    X["years"] = (dates - pd.Timestamp("2022-07-01")).days / 365.25
+    for d in range(7):
+        X[f"weekday_{d}"] = (dates.dayofweek == d).astype(int)
+    for m in range(1, 13):
+        X[f"month_{m}"] = (dates.month == m).astype(int)
+    X["payday"] = ((dates.day >= dates.days_in_month - 2) | (dates.day <= 2)).astype(int)
+    X["pre_eid"] = [int(any(0 < (e - d).days <= 5 for e in eid_days)) for d in dates]
+    X["december_build_up"] = np.where(dates.month == 12, np.minimum(1, dates.day / 20), 0)
+    X["promo"] = promo.reindex(dates).fillna(0).values
+    X["post_promo"] = promo.shift(1).rolling(7).max().reindex(dates).fillna(0).values * (1 - X["promo"])
+    X["after_price_rise"] = (dates >= pd.Timestamp("2026-01-01")).astype(int)
+    return X
+```
+
+Split the malt drink's series at the end of February 2026 and score four baselines:
+
+```python
+malt = sales[sales["product"] == "Malt drink 330ml (24)"].set_index("date")
+y = malt["units"]
+cutoff = pd.Timestamp("2026-03-01")
+train, test = y[y.index < cutoff], y[y.index >= cutoff]
+
+def close_days(forecast):
+    forecast = forecast.copy()
+    forecast[forecast.index.isin(closed_days)] = 0
+    return forecast
+
+last_28 = train.iloc[-28:]
+baselines = {
+    "naive": pd.Series(train.iloc[-1], index=test.index),
+    "same weekday last week": pd.Series([train.iloc[-7:][train.iloc[-7:].index.dayofweek == d.dayofweek].iloc[0] for d in test.index], index=test.index),
+    "same weekday last year": pd.Series([y.get(d - pd.Timedelta(days=364)) for d in test.index], index=test.index),
+    "weekday average, last 28 days": pd.Series([last_28[last_28.index.dayofweek == d.dayofweek].mean() for d in test.index], index=test.index),
+}
+scores = pd.Series({name: wape(test, close_days(f)) for name, f in baselines.items()})
+scores.round(3)
+```
+
+```text
+naive                            0.742
+same weekday last week           0.410
+same weekday last year           0.253
+weekday average, last 28 days    0.171
+dtype: float64
+```
+
+The naive forecast is badly wrong: it repeats the last training day, a busy Saturday, for four months. Seasonal baselines do much better, and the 28-day weekday average is the best of them. That WAPE is the bar for the rest of the course: any method that can't beat it isn't worth using.
+
+## Walkthrough
+
+1. Run the cells. Plot the test period's actual sales against the best baseline.
+2. Calculate each baseline's bias. Which over-forecasts, which under-forecasts?
+3. Change the weekday average to use the last 56 days. Better or worse?
+4. Note the best baseline's WAPE: every model in the next lessons is compared with it.
+
+## Practice
+
+```answer
+{
+  "id": "ts-03-p1",
+  "prompt": "What is the WAPE of the **weekday average, last 28 days** baseline on March to June 2026? Three decimal places.",
+  "answer": 0.171,
+  "tolerance": 0.0011,
+  "format": "number",
+  "dataset": "demand",
+  "files": ["daily_sales", "holidays"],
+  "pyVerify": "round(scores['weekday average, last 28 days'], 3)",
+  "hint": "The last row of the scores.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "ts-03-p2",
+  "prompt": "What is the WAPE of **same weekday last year**? Three decimal places.",
+  "answer": 0.253,
+  "tolerance": 0.0011,
+  "format": "number",
+  "dataset": "demand",
+  "files": ["daily_sales", "holidays"],
+  "pyVerify": "round(scores['same weekday last year'], 3)",
+  "hint": "The third row of the scores.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "A forecast fits past sales almost perfectly on the months it was built from. What does that prove?",
+    "options": ["It will forecast well", "Nothing about the future: test it on a later period it never saw", "It's overfitted", "It's biased"],
+    "answer": 1,
+    "explanation": "Only a time-based hold-out mimics real use."
+  },
+  {
+    "prompt": "Why use WAPE rather than the average percentage error per day?",
+    "options": ["It's simpler", "Daily percentage errors break on zero-sales days and over-weight quiet days; WAPE weights by sales", "WAPE is always smaller", "It ignores bias"],
+    "answer": 1,
+    "explanation": "WAPE reads as error as a share of total sales."
+  },
+  {
+    "prompt": "Why set baselines before building models?",
+    "options": ["Tradition", "A model is only worth using if it clearly beats what simple rules already achieve", "Baselines are the final forecast", "To fill time"],
+    "answer": 1,
+    "explanation": "Always compare with what you could do for free."
+  }
+]
+```
+$md$, true, true, 3, array['ts-03-p1', 'ts-03-p2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('tsf-m04', 'time-series-forecasting', 'Regression with Calendar Features', 4, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('time-series-forecasting:regression-with-calendar-features', 'time-series-forecasting', 'tsf-m04', 'regression-with-calendar-features', 'Regression with calendar features', 'Forecast with a regression model built from what you know about future dates (weekday, month, paydays, Eid, promotions), and learn why lags shorter than the horizon are off-limits.', 20, $md$
+## The problem
+
+The best baseline from lesson 3 averages the last four weeks by weekday. It knows about weekdays, but nothing about Eid, paydays, the December build-up or planned promotions. Yet the depot **knows** those dates in advance: the calendar is fixed, Eid dates are announced, and the sales team plans promotions weeks ahead.
+
+A forecast that uses everything known about the future dates should beat one that only looks backwards. A regression model with **calendar features** is the most direct way to build one, and often the most accurate for this kind of data.
+
+## The concept
+
+**Features known in advance**
+
+For each future date, build the features you already know: trend (years since the start), weekday, month, payday, days before Eid, the December build-up, promotion planned, the week after a promotion, and the price level. Then fit a regression on the past and apply it to future dates.
+
+**Log scale, again**
+
+Patterns here are multiplicative (December adds a percentage), so fit on log(units + 1) and convert back with exp(prediction) − 1. Drop days the depot was closed from training, and forecast zero for them.
+
+**The lag trap**
+
+Yesterday's sales are a powerful predictor of today's, so it's tempting to add "units 1 day ago" as a feature. But you're forecasting weeks 3 and 4 ahead: when you make the forecast, you don't know yesterday's sales for those days. **A lag feature is only allowed if it's at least as long as the horizon** (here, 28 days or more). Using shorter lags in testing gives a forecast that looks great and can't be produced in real life: it's leakage, in time-series form.
+
+## Example
+
+```python
+import pandas as pd
+import numpy as np
+
+base = "https://academy.cloudtechanalytics.com/datasets/demand/"
+sales = pd.read_csv(base + "daily_sales.csv", parse_dates=["date"])
+holidays = pd.read_csv(base + "holidays.csv", parse_dates=["date"])
+closed_days = set(holidays.loc[holidays["depot_closed"] == 1, "date"])
+eid_days = holidays.loc[holidays["holiday"].str.startswith("Eid"), "date"]
+
+def wape(actual, forecast):
+    """Weighted absolute percentage error: total absolute error ÷ total actual."""
+    return np.abs(actual - forecast).sum() / actual.sum()
+
+def calendar_features(dates, promo):
+    """One row per date: trend, weekday, month, payday, pre-Eid, promotions and the 2026 price rise."""
+    X = pd.DataFrame(index=dates)
+    X["years"] = (dates - pd.Timestamp("2022-07-01")).days / 365.25
+    for d in range(7):
+        X[f"weekday_{d}"] = (dates.dayofweek == d).astype(int)
+    for m in range(1, 13):
+        X[f"month_{m}"] = (dates.month == m).astype(int)
+    X["payday"] = ((dates.day >= dates.days_in_month - 2) | (dates.day <= 2)).astype(int)
+    X["pre_eid"] = [int(any(0 < (e - d).days <= 5 for e in eid_days)) for d in dates]
+    X["december_build_up"] = np.where(dates.month == 12, np.minimum(1, dates.day / 20), 0)
+    X["promo"] = promo.reindex(dates).fillna(0).values
+    X["post_promo"] = promo.shift(1).rolling(7).max().reindex(dates).fillna(0).values * (1 - X["promo"])
+    X["after_price_rise"] = (dates >= pd.Timestamp("2026-01-01")).astype(int)
+    return X
+```
+
+```python
+from sklearn.linear_model import LinearRegression
+from sklearn.ensemble import HistGradientBoostingRegressor
+
+malt = sales[sales["product"] == "Malt drink 330ml (24)"].set_index("date")
+y = malt["units"]
+X = calendar_features(y.index, malt["on_promotion"])
+cutoff = pd.Timestamp("2026-03-01")
+is_open = ~y.index.isin(closed_days)
+train_rows = (y.index < cutoff) & is_open
+test = y[y.index >= cutoff]
+
+model = LinearRegression().fit(X[train_rows], np.log(y[train_rows] + 1))
+forecast = pd.Series(np.exp(model.predict(X.loc[test.index])) - 1, index=test.index)
+forecast[forecast.index.isin(closed_days)] = 0
+
+boost = HistGradientBoostingRegressor(random_state=42).fit(X[train_rows], y[train_rows])
+forecast_boost = pd.Series(boost.predict(X.loc[test.index]), index=test.index)
+forecast_boost[forecast_boost.index.isin(closed_days)] = 0
+
+print("Calendar regression WAPE:", round(wape(test, forecast), 3), "  bias:", round(forecast.sum() / test.sum() - 1, 3))
+print("Gradient boosting WAPE:  ", round(wape(test, forecast_boost), 3))
+```
+
+```text
+Calendar regression WAPE: 0.092   bias: 0.004
+Gradient boosting WAPE:   0.105
+```
+
+The calendar regression roughly halves the best baseline's error, with almost no bias. Gradient boosting is close but not better: with good features, the simpler model holds its own again. Weekly totals show what the depot manager would see:
+
+```python
+weekly = pd.DataFrame({"actual": test, "forecast": forecast.round()}).resample("W-SUN").sum()
+weekly.iloc[1:7]
+```
+
+```text
+actual  forecast
+date
+2026-03-08     834     845.0
+2026-03-15    1287    1237.0
+2026-03-22    1221    1249.0
+2026-03-29     882     901.0
+2026-04-05    1071    1000.0
+2026-04-12    1069    1178.0
+```
+
+## Walkthrough
+
+1. Run the cells and plot actual against forecast for March to June 2026.
+2. Look at the Eid week (around 20 March). Does the forecast catch the spike?
+3. Add a lag-1 feature (`y.shift(1)`) and score again. The WAPE falls, but explain why this forecast couldn't be produced in practice.
+4. Replace it with a lag-364 feature (same day last year). Is that allowed? Does it help?
+
+## Practice
+
+```answer
+{
+  "id": "ts-04-p1",
+  "prompt": "What is the WAPE of the **calendar regression** on March to June 2026? Three decimal places.",
+  "answer": 0.092,
+  "tolerance": 0.0011,
+  "format": "number",
+  "dataset": "demand",
+  "files": ["daily_sales", "holidays"],
+  "pyVerify": "round(wape(test, forecast), 3)",
+  "hint": "The first line printed.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "ts-04-t1",
+  "prompt": "For a forecast made each Monday for days **14 to 28** days ahead, say whether each feature is **allowed** or **not allowed**, one per line in the form **Feature | allowed or not allowed | reason**: units 1 day before; units 7 days before; units 364 days before; promotion planned for that day; payday flag; the average of the last 28 days before the forecast is made.",
+  "minutes": 6,
+  "rows": 7,
+  "placeholder": "units 1 day before | not allowed | ...",
+  "rules": [
+    { "label": "Six lines in the form Feature | allowed or not allowed | reason", "pattern": "^[^|\\n]+\\|\\s*(allowed|not allowed)\\s*\\|[^|\\n]+$", "min": 6 },
+    { "label": "Lag 1 and lag 7 are not allowed", "pattern": "^[^|\\n]*\\b(1|7) days?[^|\\n]*\\|\\s*not allowed", "min": 2 },
+    { "label": "Lag 364 is allowed", "pattern": "^[^|\\n]*364[^|\\n]*\\|\\s*allowed" },
+    { "label": "Planned promotions and paydays are allowed", "pattern": "^[^|\\n]*(promotion|payday)[^|\\n]*\\|\\s*allowed", "min": 2 }
+  ],
+  "sample": "units 1 day before | not allowed | for a day 14 or more days ahead, the previous day hasn't happened when the forecast is made\nunits 7 days before | not allowed | also inside the 14-day gap\nunits 364 days before | allowed | last year's sales are known long before\npromotion planned for that day | allowed | promotions are planned weeks ahead\npayday flag | allowed | the calendar is known\naverage of the last 28 days before the forecast is made | allowed | it uses only sales up to the Monday the forecast is made",
+  "note": "The test is always the same: on the day the forecast is made, would this value be known?",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "You forecast 3 to 4 weeks ahead. Which lag feature is allowed?",
+    "options": ["Yesterday's sales", "Last week's sales", "Sales 364 days earlier", "Sales 10 days earlier"],
+    "answer": 2,
+    "explanation": "A lag must be at least as long as the horizon."
+  },
+  {
+    "prompt": "Why can calendar features be used for future dates?",
+    "options": ["They're random", "Weekdays, months, paydays, Eid and planned promotions are known in advance", "They're lags", "They're estimated"],
+    "answer": 1,
+    "explanation": "Known-in-advance features are a forecast's best friends."
+  },
+  {
+    "prompt": "Why forecast zero for closure days instead of letting the model predict them?",
+    "options": ["Models can't predict zero", "Closures are known in advance, so the right forecast is certain", "To lower the WAPE artificially", "It doesn't matter"],
+    "answer": 1,
+    "explanation": "Use what you know for sure."
+  }
+]
+```
+$md$, true, true, 4, array['ts-04-p1', 'ts-04-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('tsf-m05', 'time-series-forecasting', 'Promotions, Events and Structural Breaks', 5, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('time-series-forecasting:promotions-events-and-breaks', 'time-series-forecasting', 'tsf-m05', 'promotions-events-and-breaks', 'Promotions, events and structural breaks', 'Measure what promotions and Eid really add (including the dip after a promotion), and handle a structural break like a price rise so the forecast doesn''t keep predicting a world that''s gone.', 25, $md$
+## The problem
+
+The marketing team says promotions lift malt drink sales by half. The finance team isn't convinced: "Sales jump during the promotion week, but don't they fall the week after? Are we just moving sales forward?" Meanwhile, in January 2026 Kolanut raised its prices by about 12%, and since then the old forecasting habit ("same as last year, plus growth") has kept over-ordering.
+
+A forecasting model can answer both questions, and it must, or it will keep making the same mistakes. The model's coefficients measure each effect, and a well-chosen feature lets it adapt to a change that the past alone can't explain.
+
+## The concept
+
+**Measuring effects from the model**
+
+In the log-scale calendar regression, each coefficient `c` means the feature multiplies sales by `exp(c)`. So `exp(c) − 1` is the percentage effect of a promotion, of the pre-Eid days, of payday, all estimated together, holding the others equal. That's better than comparing raw averages, which mix promotions in busy and quiet months.
+
+**The post-promotion dip**
+
+Promotions often **pull sales forward**: shops stock up at the low price and buy less the following week. The true gain is the promotion lift minus the dip afterwards. Measure both.
+
+**Structural breaks**
+
+A **structural break** is a lasting change in the level or pattern: a price rise, a new competitor, a lost major customer. Past data from before the break describes a world that no longer exists. Options:
+
+- add a **flag** for the period after the break, so the model learns the new level;
+- give **more weight to recent data**, or train only on data after the break (if there's enough);
+- and in either case, check the forecast's **bias** after the break.
+
+## Example
+
+```python
+import pandas as pd
+import numpy as np
+
+base = "https://academy.cloudtechanalytics.com/datasets/demand/"
+sales = pd.read_csv(base + "daily_sales.csv", parse_dates=["date"])
+holidays = pd.read_csv(base + "holidays.csv", parse_dates=["date"])
+closed_days = set(holidays.loc[holidays["depot_closed"] == 1, "date"])
+eid_days = holidays.loc[holidays["holiday"].str.startswith("Eid"), "date"]
+
+def wape(actual, forecast):
+    """Weighted absolute percentage error: total absolute error ÷ total actual."""
+    return np.abs(actual - forecast).sum() / actual.sum()
+
+def calendar_features(dates, promo):
+    """One row per date: trend, weekday, month, payday, pre-Eid, promotions and the 2026 price rise."""
+    X = pd.DataFrame(index=dates)
+    X["years"] = (dates - pd.Timestamp("2022-07-01")).days / 365.25
+    for d in range(7):
+        X[f"weekday_{d}"] = (dates.dayofweek == d).astype(int)
+    for m in range(1, 13):
+        X[f"month_{m}"] = (dates.month == m).astype(int)
+    X["payday"] = ((dates.day >= dates.days_in_month - 2) | (dates.day <= 2)).astype(int)
+    X["pre_eid"] = [int(any(0 < (e - d).days <= 5 for e in eid_days)) for d in dates]
+    X["december_build_up"] = np.where(dates.month == 12, np.minimum(1, dates.day / 20), 0)
+    X["promo"] = promo.reindex(dates).fillna(0).values
+    X["post_promo"] = promo.shift(1).rolling(7).max().reindex(dates).fillna(0).values * (1 - X["promo"])
+    X["after_price_rise"] = (dates >= pd.Timestamp("2026-01-01")).astype(int)
+    return X
+```
+
+```python
+from sklearn.linear_model import LinearRegression
+
+malt = sales[sales["product"] == "Malt drink 330ml (24)"].set_index("date")
+y = malt["units"]
+X = calendar_features(y.index, malt["on_promotion"])
+cutoff = pd.Timestamp("2026-03-01")
+train_rows = (y.index < cutoff) & ~y.index.isin(closed_days)
+test = y[y.index >= cutoff]
+
+model = LinearRegression().fit(X[train_rows], np.log(y[train_rows] + 1))
+effects = (np.exp(pd.Series(model.coef_, index=X.columns)) - 1) * 100
+effects[["promo", "post_promo", "pre_eid", "payday", "after_price_rise"]].round(1)
+```
+
+```text
+promo               44.7
+post_promo         -12.7
+pre_eid             45.2
+payday              10.9
+after_price_rise    -7.0
+dtype: float64
+```
+
+A promotion lifts sales by close to half, as marketing says, but the week after a promotion runs noticeably lower, as finance suspected. The price rise has cut volume since January. Now see what happens if the model is not told about the price rise:
+
+```python
+def fit_and_score(columns):
+    m = LinearRegression().fit(X.loc[train_rows, columns], np.log(y[train_rows] + 1))
+    f = pd.Series(np.exp(m.predict(X.loc[test.index, columns])) - 1, index=test.index)
+    f[f.index.isin(closed_days)] = 0
+    return round(wape(test, f), 3), round(f.sum() / test.sum() - 1, 3)
+
+all_columns = list(X.columns)
+without_break = [c for c in all_columns if c != "after_price_rise"]
+print("With the price-rise flag:    WAPE, bias =", fit_and_score(all_columns))
+print("Without the price-rise flag: WAPE, bias =", fit_and_score(without_break))
+```
+
+```text
+With the price-rise flag:    WAPE, bias = (np.float64(0.092), np.float64(0.004))
+Without the price-rise flag: WAPE, bias = (np.float64(0.112), np.float64(0.071))
+```
+
+Without the flag, the model keeps predicting pre-rise volumes and over-forecasts every week: a bias that would mean over-ordering month after month. With it, the bias almost disappears.
+
+## Walkthrough
+
+1. Run the cells. Work out the net gain of a promotion: one week at the promotion lift, then one week at the post-promotion dip, compared with two normal weeks.
+2. Try training only on data from January 2026 onwards, without the flag. How does it compare? (Two months of data is very little.)
+3. Measure the pre-Eid effect for detergent. Why is it smaller?
+4. Write a short note for finance on what promotions really add (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "ts-05-p1",
+  "prompt": "According to the model, by what percentage does a **promotion** lift malt drink sales? One decimal place.",
+  "answer": 44.7,
+  "format": "percent",
+  "dataset": "demand",
+  "files": ["daily_sales", "holidays"],
+  "pyVerify": "round(effects['promo'], 1)",
+  "hint": "The promo row of the effects.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "ts-05-p2",
+  "prompt": "What is the **bias** of the forecast **without** the price-rise flag (forecast total ÷ actual total − 1)? As a percentage, one decimal place.",
+  "answer": 7.1,
+  "format": "percent",
+  "dataset": "demand",
+  "files": ["daily_sales", "holidays"],
+  "pyVerify": "round(fit_and_score(without_break)[1] * 100, 1)",
+  "hint": "The second number on the last line.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "ts-05-t1",
+  "prompt": "Write a note for the finance team (40 to 120 words) on what a week-long promotion really adds to malt drink sales, using the model's **promotion lift** and **post-promotion dip**, and saying what the net effect over the **two weeks** is.",
+  "minutes": 6,
+  "rows": 6,
+  "placeholder": "During a promotion week, sales rise by about ...",
+  "rules": [
+    { "label": "Gives the promotion lift as a percentage", "pattern": "\\d+(\\.\\d+)?\\s*%[^.]*(promot|lift|rise)|(promot|lift|rise)[^.]*\\d+(\\.\\d+)?\\s*%" },
+    { "label": "Mentions the dip afterwards", "pattern": "dip|after|following week|pull" },
+    { "label": "Gives a net effect over two weeks", "pattern": "net|two weeks|2 weeks|overall" },
+    { "label": "Between 40 and 120 words", "minWords": 40, "maxWords": 120 }
+  ],
+  "sample": "During a promotion week, malt drink sales rise by about 45%, holding everything else equal, but the following week they run about 12% below normal as shops use up the stock they bought cheaply. Over the two weeks, that's a net gain of roughly 33% of one normal week's sales, about two-thirds of what the promotion-week figure suggests, and all of it at the promotional price. Whether that's worth it depends on the margin given away, which the forecast can't tell us.",
+  "note": "The model separates the two effects cleanly; the money question then belongs to finance.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Sales rise 45% in a promotion week and fall 12% the week after. What's the two-week net gain, in normal weeks of sales?",
+    "options": ["0.45", "About 0.33", "0.57", "0.12"],
+    "answer": 1,
+    "explanation": "+0.45 − 0.12 = 0.33 of a normal week."
+  },
+  {
+    "prompt": "What is a structural break?",
+    "options": ["A missing day of data", "A lasting change in the level or pattern of the series, such as a price rise", "A promotion", "A holiday"],
+    "answer": 1,
+    "explanation": "Past data from before it describes a different world."
+  },
+  {
+    "prompt": "After a price rise, a forecast is consistently 7% too high. What's the most direct fix?",
+    "options": ["Ignore it", "Add a feature for the period after the rise, or weight recent data more, and recheck the bias", "Use more past data", "Remove the trend"],
+    "answer": 1,
+    "explanation": "Tell the model the world has changed."
+  }
+]
+```
+$md$, true, true, 5, array['ts-05-p1', 'ts-05-p2', 'ts-05-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('tsf-m06', 'time-series-forecasting', 'Backtesting over Time', 6, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('time-series-forecasting:backtesting-over-time', 'time-series-forecasting', 'tsf-m06', 'backtesting-over-time', 'Backtesting over time', 'Test a forecasting method on many past periods with rolling-origin backtesting, so one lucky or unlucky test period doesn''t decide which method you trust.', 15, $md$
+## The problem
+
+The calendar regression beat every baseline on March to June 2026. But that's one test period, with one Eid, one set of promotions and no December. Would it also have won in the run-up to Christmas, when the weekday average and the regression might behave very differently? A method chosen on a single period can let you down on the next.
+
+Forecasters handle this with **backtesting**: replaying history as if they had used the method at many points in the past, each time forecasting only with the data available then.
+
+## The concept
+
+**Rolling-origin backtesting**
+
+1. Choose a series of forecast dates (origins), for example the first day of each of several months.
+2. At each origin, train on everything before it, and forecast the next 28 days.
+3. Score each forecast, then look at the average **and** the spread across origins.
+
+Because each origin only uses its own past, every fold is an honest test. The origins should cover the situations you care about: here, a December, an Eid and the period after the price rise.
+
+**What to look for**
+
+- **Average WAPE** across origins: the typical accuracy.
+- **Worst origin**: how badly can it go wrong?
+- **Consistency**: does one method win most months, or only on average?
+
+## Example
+
+```python
+import pandas as pd
+import numpy as np
+
+base = "https://academy.cloudtechanalytics.com/datasets/demand/"
+sales = pd.read_csv(base + "daily_sales.csv", parse_dates=["date"])
+holidays = pd.read_csv(base + "holidays.csv", parse_dates=["date"])
+closed_days = set(holidays.loc[holidays["depot_closed"] == 1, "date"])
+eid_days = holidays.loc[holidays["holiday"].str.startswith("Eid"), "date"]
+
+def wape(actual, forecast):
+    """Weighted absolute percentage error: total absolute error ÷ total actual."""
+    return np.abs(actual - forecast).sum() / actual.sum()
+
+def calendar_features(dates, promo):
+    """One row per date: trend, weekday, month, payday, pre-Eid, promotions and the 2026 price rise."""
+    X = pd.DataFrame(index=dates)
+    X["years"] = (dates - pd.Timestamp("2022-07-01")).days / 365.25
+    for d in range(7):
+        X[f"weekday_{d}"] = (dates.dayofweek == d).astype(int)
+    for m in range(1, 13):
+        X[f"month_{m}"] = (dates.month == m).astype(int)
+    X["payday"] = ((dates.day >= dates.days_in_month - 2) | (dates.day <= 2)).astype(int)
+    X["pre_eid"] = [int(any(0 < (e - d).days <= 5 for e in eid_days)) for d in dates]
+    X["december_build_up"] = np.where(dates.month == 12, np.minimum(1, dates.day / 20), 0)
+    X["promo"] = promo.reindex(dates).fillna(0).values
+    X["post_promo"] = promo.shift(1).rolling(7).max().reindex(dates).fillna(0).values * (1 - X["promo"])
+    X["after_price_rise"] = (dates >= pd.Timestamp("2026-01-01")).astype(int)
+    return X
+```
+
+```python
+from sklearn.linear_model import LinearRegression
+
+malt = sales[sales["product"] == "Malt drink 330ml (24)"].set_index("date")
+y = malt["units"]
+X = calendar_features(y.index, malt["on_promotion"])
+is_open = ~y.index.isin(closed_days)
+
+def regression_forecast(origin, days=28):
+    train_rows = (y.index < origin) & is_open
+    future = y.index[(y.index >= origin) & (y.index < origin + pd.Timedelta(days=days))]
+    model = LinearRegression().fit(X[train_rows], np.log(y[train_rows] + 1))
+    f = pd.Series(np.exp(model.predict(X.loc[future])) - 1, index=future)
+    f[f.index.isin(closed_days)] = 0
+    return f
+
+def weekday_average_forecast(origin, days=28):
+    last_28 = y[(y.index < origin) & (y.index >= origin - pd.Timedelta(days=28))]
+    future = y.index[(y.index >= origin) & (y.index < origin + pd.Timedelta(days=days))]
+    f = pd.Series([last_28[last_28.index.dayofweek == d.dayofweek].mean() for d in future], index=future)
+    f[f.index.isin(closed_days)] = 0
+    return f
+
+origins = pd.to_datetime(["2025-03-01", "2025-06-01", "2025-09-01", "2025-11-15", "2025-12-01", "2026-01-15", "2026-03-01", "2026-05-01"])
+rows = []
+for origin in origins:
+    actual = y[(y.index >= origin) & (y.index < origin + pd.Timedelta(days=28))]
+    rows.append({"origin": origin.date(),
+                 "weekday average": wape(actual, weekday_average_forecast(origin)),
+                 "calendar regression": wape(actual, regression_forecast(origin))})
+backtest = pd.DataFrame(rows).set_index("origin")
+print(backtest.round(3))
+backtest.agg(["mean", "max"]).round(3)
+```
+
+```text
+weekday average  calendar regression
+origin
+2025-03-01            0.130                0.079
+2025-06-01            0.223                0.098
+2025-09-01            0.203                0.112
+2025-11-15            0.143                0.094
+2025-12-01            0.309                0.101
+2026-01-15            0.415                0.089
+2026-03-01            0.278                0.104
+2026-05-01            0.117                0.104
+      weekday average  calendar regression
+mean            0.227                0.098
+max             0.415                0.112
+```
+
+The regression wins at every origin, and its advantage is largest around the festive season: from 1 December, the weekday average looks back at an ordinary November and under-forecasts the build-up; from 15 January, it looks back at the busy holiday weeks and badly over-forecasts the January slump. The regression knows the calendar, so it handles both. The average WAPEs summarise it, but the row-by-row table is what convinces a sceptical depot manager.
+
+## Walkthrough
+
+1. Run the cells and plot both methods' WAPE by origin.
+2. Add the "same weekday last year" baseline to the backtest. Where does it do well?
+3. Add origins every month from March 2025 to May 2026. Does the conclusion hold?
+4. Find the origin where the regression does worst, and work out why.
+
+## Practice
+
+```answer
+{
+  "id": "ts-06-p1",
+  "prompt": "What is the calendar regression's **average** WAPE across the eight origins? Three decimal places.",
+  "answer": 0.098,
+  "tolerance": 0.0011,
+  "format": "number",
+  "dataset": "demand",
+  "files": ["daily_sales", "holidays"],
+  "pyVerify": "round(backtest['calendar regression'].mean(), 3)",
+  "hint": "The mean row, calendar regression column.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "ts-06-p2",
+  "prompt": "What is the weekday average's WAPE at the **2025-12-01** origin? Three decimal places.",
+  "answer": 0.309,
+  "tolerance": 0.0011,
+  "format": "number",
+  "dataset": "demand",
+  "files": ["daily_sales", "holidays"],
+  "pyVerify": "round(backtest.loc[pd.Timestamp('2025-12-01').date(), 'weekday average'], 3)",
+  "hint": "The 2025-12-01 row of the first table.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why backtest over many origins instead of one test period?",
+    "options": ["It's faster", "One period can be lucky or unlucky; many origins show typical and worst-case accuracy", "Regulators require it", "To use more features"],
+    "answer": 1,
+    "explanation": "Methods should win consistently, not once."
+  },
+  {
+    "prompt": "In rolling-origin backtesting, what data trains the forecast at each origin?",
+    "options": ["All the data", "Only data before that origin", "Only the test period", "A random sample"],
+    "answer": 1,
+    "explanation": "Each fold replays history honestly."
+  },
+  {
+    "prompt": "Method A has the lower average WAPE but fails badly every December; method B is slightly worse on average but steady. Which matters more for a depot?",
+    "options": ["Always the lower average", "It depends on the cost of the bad months: a December stock-out may outweigh small gains elsewhere", "Always B", "Neither"],
+    "answer": 1,
+    "explanation": "Look at the worst case, not just the average."
+  }
+]
+```
+$md$, true, true, 6, array['ts-06-p1', 'ts-06-p2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('tsf-m07', 'time-series-forecasting', 'Uncertainty and Ordering', 7, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('time-series-forecasting:uncertainty-and-ordering', 'time-series-forecasting', 'tsf-m07', 'uncertainty-and-ordering', 'Uncertainty and ordering', 'Put a range around a forecast, check whether the range is honest, and turn forecast plus uncertainty into an order quantity with safety stock for the service level the business wants.', 25, $md$
+## The problem
+
+The forecast says the depot will sell 1,050 cases of malt drink in a fortnight. The depot manager asks the question that matters for his order: "And if it's a good fortnight?" If he orders exactly 1,050, he'll run out about half the time, because forecasts are wrong both ways.
+
+A single number isn't enough to order from. He needs a range (how high could it plausibly go?) and a rule for how much extra stock to hold against that uncertainty. That extra is **safety stock**, and choosing it is a business decision about how often running out is acceptable.
+
+## The concept
+
+**Prediction intervals from past errors**
+
+The simplest honest way to get a range: look at how wrong the model was on the training data (its **residuals**), and add their spread to the forecast. With a log model, take the 5th and 95th percentiles of the residuals and add them to the log forecast, giving a 90% interval.
+
+**Check the coverage**
+
+On the test period, count how often actual sales fell inside the interval. A 90% interval should contain about 90% of days. If it contains fewer, it's too narrow, often because the future is less predictable than the past suggested (a break, a new competitor), and you should widen it.
+
+**From forecast to order**
+
+For the period an order must cover:
+
+> order = forecast + safety stock − stock on hand
+
+Safety stock depends on the **service level**: the share of order periods in which you don't run out.
+
+> safety stock ≈ z × standard deviation of the forecast error over the period
+
+with z = 1.28 for 90%, 1.65 for 95%. Higher service costs more stock; the right level balances lost sales against holding costs.
+
+## Example
+
+```python
+import pandas as pd
+import numpy as np
+
+base = "https://academy.cloudtechanalytics.com/datasets/demand/"
+sales = pd.read_csv(base + "daily_sales.csv", parse_dates=["date"])
+holidays = pd.read_csv(base + "holidays.csv", parse_dates=["date"])
+closed_days = set(holidays.loc[holidays["depot_closed"] == 1, "date"])
+eid_days = holidays.loc[holidays["holiday"].str.startswith("Eid"), "date"]
+
+def wape(actual, forecast):
+    """Weighted absolute percentage error: total absolute error ÷ total actual."""
+    return np.abs(actual - forecast).sum() / actual.sum()
+
+def calendar_features(dates, promo):
+    """One row per date: trend, weekday, month, payday, pre-Eid, promotions and the 2026 price rise."""
+    X = pd.DataFrame(index=dates)
+    X["years"] = (dates - pd.Timestamp("2022-07-01")).days / 365.25
+    for d in range(7):
+        X[f"weekday_{d}"] = (dates.dayofweek == d).astype(int)
+    for m in range(1, 13):
+        X[f"month_{m}"] = (dates.month == m).astype(int)
+    X["payday"] = ((dates.day >= dates.days_in_month - 2) | (dates.day <= 2)).astype(int)
+    X["pre_eid"] = [int(any(0 < (e - d).days <= 5 for e in eid_days)) for d in dates]
+    X["december_build_up"] = np.where(dates.month == 12, np.minimum(1, dates.day / 20), 0)
+    X["promo"] = promo.reindex(dates).fillna(0).values
+    X["post_promo"] = promo.shift(1).rolling(7).max().reindex(dates).fillna(0).values * (1 - X["promo"])
+    X["after_price_rise"] = (dates >= pd.Timestamp("2026-01-01")).astype(int)
+    return X
+```
+
+```python
+from sklearn.linear_model import LinearRegression
+
+malt = sales[sales["product"] == "Malt drink 330ml (24)"].set_index("date")
+y = malt["units"]
+X = calendar_features(y.index, malt["on_promotion"])
+cutoff = pd.Timestamp("2026-03-01")
+train_rows = (y.index < cutoff) & ~y.index.isin(closed_days)
+test = y[(y.index >= cutoff) & ~y.index.isin(closed_days)]
+
+model = LinearRegression().fit(X[train_rows], np.log(y[train_rows] + 1))
+residuals = np.log(y[train_rows] + 1) - model.predict(X[train_rows])
+log_fc = model.predict(X.loc[test.index])
+low = np.exp(log_fc + np.quantile(residuals, 0.05)) - 1
+high = np.exp(log_fc + np.quantile(residuals, 0.95)) - 1
+coverage = ((test >= low) & (test <= high)).mean()
+print("Share of test days inside the 90% interval:", round(coverage, 3))
+```
+
+```text
+Share of test days inside the 90% interval: 0.851
+```
+
+The interval covers fewer days than it promises: the months after the price rise are less predictable than the years the model learned from. Widen it, or treat it with caution. Now the order for one fortnight, using fortnightly forecast errors from a backtest to size safety stock:
+
+```python
+forecast = pd.Series(np.exp(log_fc) - 1, index=test.index)
+fortnights = pd.DataFrame({"actual": test, "forecast": forecast}).resample("14D").sum()
+error_sd = (fortnights["actual"] - fortnights["forecast"]).std()
+
+next_fortnight_forecast = round(fortnights["forecast"].iloc[-1])
+for service, z in [("90%", 1.28), ("95%", 1.65)]:
+    safety = round(z * error_sd)
+    print(f"{service} service: forecast {next_fortnight_forecast}, safety stock {safety}, order up to {next_fortnight_forecast + safety}")
+```
+
+```text
+90% service: forecast 1268, safety stock 53, order up to 1321
+95% service: forecast 1268, safety stock 68, order up to 1336
+```
+
+The extra stock for 95% service rather than 90% is the price of running out less often. Whether it's worth paying is a question for the depot manager and finance, and now it's one they can answer with numbers.
+
+## Walkthrough
+
+1. Run the cells. Calculate the 80% interval's coverage too.
+2. Widen the interval with the 2.5th and 97.5th percentiles. What's its coverage?
+3. If 300 cases are already in the warehouse, how much should the depot order for 95% service?
+4. Write the ordering rule for the depot (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "ts-07-p1",
+  "prompt": "What share of test days fell inside the **90%** interval? As a percentage, one decimal place.",
+  "answer": 85.1,
+  "format": "percent",
+  "dataset": "demand",
+  "files": ["daily_sales", "holidays"],
+  "pyVerify": "round(coverage * 100, 1)",
+  "hint": "The first number printed.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "ts-07-t1",
+  "prompt": "Write the depot's **ordering rule** for the malt drink (50 to 130 words): the formula in words, the **service level** you recommend and why, how **safety stock** is calculated, and one **warning** about the forecast's uncertainty.",
+  "minutes": 6,
+  "rows": 6,
+  "placeholder": "Each Monday, order the forecast for ...",
+  "rules": [
+    { "label": "States the order formula (forecast + safety stock − stock on hand)", "pattern": "forecast[^.]*safety stock[^.]*(stock on hand|in the warehouse|on hand)" },
+    { "label": "Recommends a service level with a percentage", "pattern": "\\d+\\s*%\\s*service|service level[^.]*\\d+\\s*%" },
+    { "label": "Explains safety stock from forecast errors (error, z, standard deviation)", "pattern": "error|\\bz\\b|standard deviation|spread" },
+    { "label": "Includes a warning (too narrow, coverage, price rise, less predictable, widen)", "pattern": "narrow|coverage|less predictable|widen|price rise|caution" },
+    { "label": "Between 50 and 130 words", "minWords": 50, "maxWords": 130 }
+  ],
+  "sample": "Each Monday, order the forecast for the fortnight the delivery must cover, plus safety stock, minus the stock on hand. We recommend a 95% service level for the malt drink: running out loses shops to competitors, and malt keeps well, so extra stock costs little. Safety stock is 1.65 times the standard deviation of our past fortnightly forecast errors, recalculated each month from the latest backtest. Warning: since the January price rise, actual sales have fallen outside the forecast range more often than they should, so review safety stock monthly and widen it if stock-outs occur.",
+  "note": "The rule is mechanical enough to follow every Monday, and honest enough to say when to stop trusting it.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "A 90% prediction interval contains actual sales on 80% of test days. What should you do?",
+    "options": ["Nothing", "Treat it as too narrow: widen it or find out what changed", "Narrow it further", "Ignore intervals"],
+    "answer": 1,
+    "explanation": "Check coverage; intervals that are too narrow lead to stock-outs."
+  },
+  {
+    "prompt": "Ordering exactly the forecast means running out roughly:",
+    "options": ["Never", "Half the time", "10% of the time", "Always"],
+    "answer": 1,
+    "explanation": "Actuals exceed an unbiased forecast about half the time."
+  },
+  {
+    "prompt": "Raising the service level from 90% to 95% means:",
+    "options": ["Less safety stock", "More safety stock, to run out less often", "No change", "A better forecast"],
+    "answer": 1,
+    "explanation": "Higher service costs more stock."
+  }
+]
+```
+$md$, true, true, 7, array['ts-07-p1', 'ts-07-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('tsf-m08', 'time-series-forecasting', 'Forecasting Many Series', 8, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('time-series-forecasting:forecasting-many-series', 'time-series-forecasting', 'tsf-m08', 'forecasting-many-series', 'Forecasting many series', 'Apply one tested method to every product, compare accuracy across them, and decide where human review is still needed.', 15, $md$
+## The problem
+
+The malt drink is one of six products at the depot, and Kolanut has other depots. Nobody can hand-tune a model for each product in each place every week. The forecasting method has to run automatically across every series, and the team has to know where it's reliable and where a person should check it.
+
+## The concept
+
+**One method, many series**
+
+Wrap the whole method (features, training, forecast) in a function, and run it for each product. Score every product with the same backtest, so they're comparable.
+
+**Accuracy differs by product**
+
+- High-volume, stable products are usually easiest.
+- Products with strong seasonality or frequent promotions are harder.
+- Low-volume products have more random noise relative to their sales, so their WAPE is higher even with a good model.
+
+**Where to spend human attention**
+
+Rank products by **WAPE × sales value**: the products where forecast errors cost the most money. Review those by hand, and let the method run on the rest.
+
+**Top-down or bottom-up?**
+
+Totals are easier to forecast than their parts, because errors partly cancel out. If the business needs a total (for the depot's warehouse space or cash), forecast it directly as well as summing the products, and compare.
+
+## Example
+
+```python
+import pandas as pd
+import numpy as np
+
+base = "https://academy.cloudtechanalytics.com/datasets/demand/"
+sales = pd.read_csv(base + "daily_sales.csv", parse_dates=["date"])
+holidays = pd.read_csv(base + "holidays.csv", parse_dates=["date"])
+closed_days = set(holidays.loc[holidays["depot_closed"] == 1, "date"])
+eid_days = holidays.loc[holidays["holiday"].str.startswith("Eid"), "date"]
+
+def wape(actual, forecast):
+    """Weighted absolute percentage error: total absolute error ÷ total actual."""
+    return np.abs(actual - forecast).sum() / actual.sum()
+
+def calendar_features(dates, promo):
+    """One row per date: trend, weekday, month, payday, pre-Eid, promotions and the 2026 price rise."""
+    X = pd.DataFrame(index=dates)
+    X["years"] = (dates - pd.Timestamp("2022-07-01")).days / 365.25
+    for d in range(7):
+        X[f"weekday_{d}"] = (dates.dayofweek == d).astype(int)
+    for m in range(1, 13):
+        X[f"month_{m}"] = (dates.month == m).astype(int)
+    X["payday"] = ((dates.day >= dates.days_in_month - 2) | (dates.day <= 2)).astype(int)
+    X["pre_eid"] = [int(any(0 < (e - d).days <= 5 for e in eid_days)) for d in dates]
+    X["december_build_up"] = np.where(dates.month == 12, np.minimum(1, dates.day / 20), 0)
+    X["promo"] = promo.reindex(dates).fillna(0).values
+    X["post_promo"] = promo.shift(1).rolling(7).max().reindex(dates).fillna(0).values * (1 - X["promo"])
+    X["after_price_rise"] = (dates >= pd.Timestamp("2026-01-01")).astype(int)
+    return X
+```
+
+```python
+from sklearn.linear_model import LinearRegression
+
+def forecast_product(product, cutoff="2026-03-01"):
+    s = sales[sales["product"] == product].set_index("date")
+    y = s["units"]
+    X = calendar_features(y.index, s["on_promotion"])
+    cut = pd.Timestamp(cutoff)
+    train_rows = (y.index < cut) & ~y.index.isin(closed_days)
+    test = y[y.index >= cut]
+    model = LinearRegression().fit(X[train_rows], np.log(y[train_rows] + 1))
+    f = pd.Series(np.exp(model.predict(X.loc[test.index])) - 1, index=test.index)
+    f[f.index.isin(closed_days)] = 0
+    value = (test * s.loc[test.index, "price_ngn"]).sum()
+    return pd.Series({"units": test.sum(), "wape": round(wape(test, f), 3),
+                      "sales_value_m": round(value / 1e6, 1), "error_value_m": round(wape(test, f) * value / 1e6, 1)})
+
+results = pd.DataFrame({p: forecast_product(p) for p in sales["product"].unique()}).T
+results.sort_values("error_value_m", ascending=False)
+```
+
+```text
+units   wape  sales_value_m  error_value_m
+Malt drink 330ml (24)     17241.0  0.092          250.8           23.0
+Orange juice 1L (12)       7489.0  0.088          156.1           13.8
+Detergent 900g (12)        6504.0  0.088          154.9           13.6
+Bar soap (48)              8326.0  0.096          134.5           12.9
+Bottled water 75cl (12)   28709.0  0.082          114.6            9.4
+Plantain chips 150g (20)  10411.0  0.085          104.7            8.9
+```
+
+Accuracy is broadly similar across products, but the money at stake isn't: the products at the top of the table are where a forecaster's review time is best spent.
+
+## Walkthrough
+
+1. Run the cells. Which product has the highest WAPE, and why might that be?
+2. Forecast the depot's total daily units directly, and compare its WAPE with the products' WAPEs.
+3. Run the backtest from lesson 6 for every product. Is any product's method unstable over time?
+4. Decide which products you'd review by hand each week, and write it down.
+
+## Practice
+
+```answer
+{
+  "id": "ts-08-p1",
+  "prompt": "Which product has the **largest error value** (WAPE × sales value) on March to June 2026? Type its name exactly as in the data.",
+  "answer": "Malt drink 330ml (24)",
+  "format": "text",
+  "dataset": "demand",
+  "files": ["daily_sales", "holidays"],
+  "pyVerify": "results['error_value_m'].astype(float).idxmax()",
+  "hint": "The top row of the table.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why is a total usually easier to forecast than each of its parts?",
+    "options": ["Totals are bigger numbers", "Errors in the parts partly cancel out when added together", "Totals have no seasonality", "They aren't"],
+    "answer": 1,
+    "explanation": "Aggregation reduces relative noise."
+  },
+  {
+    "prompt": "How should you choose which products to review by hand?",
+    "options": ["The highest WAPE", "The largest WAPE × sales value: where errors cost the most", "Alphabetically", "The newest"],
+    "answer": 1,
+    "explanation": "Spend attention where it's worth most."
+  },
+  {
+    "prompt": "A low-volume product has a WAPE of 25% while others have 10%. What's the likely reason?",
+    "options": ["A broken model", "Random noise is larger relative to small sales", "Too many features", "A data error"],
+    "answer": 1,
+    "explanation": "Small series are noisier; judge them in context."
+  }
+]
+```
+$md$, true, true, 8, array['ts-08-p1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('tsf-m09', 'time-series-forecasting', 'Final Project', 9, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('time-series-forecasting:final-project', 'time-series-forecasting', 'tsf-m09', 'final-project', '"Final project: the depot''s ordering forecast"', 'Plan your final project, a tested forecasting and ordering system for all six products at Kolanut''s Lagos depot, and start by backtesting a product other than the malt drink.', 20, $md$
+## The problem
+
+Kolanut's operations director wants the Lagos depot to stop ordering by feel. Your final project is the system that replaces it: forecasts for all six products, tested honestly over time, turned into weekly order quantities with safety stock, and a short guide to when people should override it.
+
+## The concept
+
+**The project, step by step**
+
+| Step | Deliverable | Lesson |
+| :-- | :-- | :-- |
+| Frame | the decision, horizon, granularity and cost of errors | 1 |
+| Explore | each product's trend, seasonality and events, measured | 2 |
+| Baselines | the best simple rule per product, on a time-based test | 3 |
+| Model | calendar regression (and one alternative), with only allowed features | 4 |
+| Effects and breaks | promotion lift and dip, Eid, the price rise, with bias checked | 5 |
+| Backtest | rolling-origin results for every product | 6 |
+| Order | intervals with checked coverage, safety stock and the ordering rule | 7 |
+| Scale | the method run for all products, with review priorities | 8 |
+
+**When should people override the forecast?**
+
+A forecasting system needs a short list of situations where a person must step in: an event the data has never seen (a new competitor, a strike, a fuel shortage), a change in promotion plans after the forecast is made, or a run of forecast errors beyond the agreed limit.
+
+## Example
+
+A first backtest for bottled water, the depot's highest-volume product, comparing the weekday average with the calendar regression across four origins:
+
+```python
+import pandas as pd
+import numpy as np
+
+base = "https://academy.cloudtechanalytics.com/datasets/demand/"
+sales = pd.read_csv(base + "daily_sales.csv", parse_dates=["date"])
+holidays = pd.read_csv(base + "holidays.csv", parse_dates=["date"])
+closed_days = set(holidays.loc[holidays["depot_closed"] == 1, "date"])
+eid_days = holidays.loc[holidays["holiday"].str.startswith("Eid"), "date"]
+
+def wape(actual, forecast):
+    """Weighted absolute percentage error: total absolute error ÷ total actual."""
+    return np.abs(actual - forecast).sum() / actual.sum()
+
+def calendar_features(dates, promo):
+    """One row per date: trend, weekday, month, payday, pre-Eid, promotions and the 2026 price rise."""
+    X = pd.DataFrame(index=dates)
+    X["years"] = (dates - pd.Timestamp("2022-07-01")).days / 365.25
+    for d in range(7):
+        X[f"weekday_{d}"] = (dates.dayofweek == d).astype(int)
+    for m in range(1, 13):
+        X[f"month_{m}"] = (dates.month == m).astype(int)
+    X["payday"] = ((dates.day >= dates.days_in_month - 2) | (dates.day <= 2)).astype(int)
+    X["pre_eid"] = [int(any(0 < (e - d).days <= 5 for e in eid_days)) for d in dates]
+    X["december_build_up"] = np.where(dates.month == 12, np.minimum(1, dates.day / 20), 0)
+    X["promo"] = promo.reindex(dates).fillna(0).values
+    X["post_promo"] = promo.shift(1).rolling(7).max().reindex(dates).fillna(0).values * (1 - X["promo"])
+    X["after_price_rise"] = (dates >= pd.Timestamp("2026-01-01")).astype(int)
+    return X
+```
+
+```python
+from sklearn.linear_model import LinearRegression
+
+water = sales[sales["product"] == "Bottled water 75cl (12)"].set_index("date")
+y = water["units"]
+X = calendar_features(y.index, water["on_promotion"])
+is_open = ~y.index.isin(closed_days)
+
+results = []
+for origin in pd.to_datetime(["2025-06-01", "2025-12-01", "2026-03-01", "2026-05-01"]):
+    window = (y.index >= origin) & (y.index < origin + pd.Timedelta(days=28))
+    actual = y[window]
+    model = LinearRegression().fit(X[(y.index < origin) & is_open], np.log(y[(y.index < origin) & is_open] + 1))
+    reg = pd.Series(np.exp(model.predict(X[window])) - 1, index=actual.index)
+    last_28 = y[(y.index < origin) & (y.index >= origin - pd.Timedelta(days=28))]
+    avg = pd.Series([last_28[last_28.index.dayofweek == d.dayofweek].mean() for d in actual.index], index=actual.index)
+    for f in (reg, avg):
+        f[f.index.isin(closed_days)] = 0
+    results.append({"origin": origin.date(), "weekday average": round(wape(actual, avg), 3), "calendar regression": round(wape(actual, reg), 3)})
+water_backtest = pd.DataFrame(results).set_index("origin")
+water_backtest
+```
+
+```text
+weekday average  calendar regression
+origin
+2025-06-01            0.202                0.075
+2025-12-01            0.173                0.101
+2026-03-01            0.116                0.065
+2026-05-01            0.157                0.108
+```
+
+## Walkthrough
+
+1. Run the backtest for bottled water. Does the regression win at every origin, as it did for malt?
+2. Note the rainy-season dip for water (June to September): is it captured by the month features?
+3. Plan the rest of the project from the table above.
+4. Open the project brief on the course page.
+
+## Practice
+
+```dataset
+{"dataset": "demand", "files": ["daily_sales", "holidays"]}
+```
+
+```answer
+{
+  "id": "ts-09-p1",
+  "prompt": "For bottled water, what is the calendar regression's WAPE at the **2025-12-01** origin? Three decimal places.",
+  "answer": 0.101,
+  "tolerance": 0.0011,
+  "format": "number",
+  "dataset": "demand",
+  "files": ["daily_sales", "holidays"],
+  "pyVerify": "water_backtest.loc[pd.Timestamp('2025-12-01').date(), 'calendar regression']",
+  "hint": "The 2025-12-01 row.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "ts-09-t1",
+  "prompt": "Write the **override guide** for the depot: at least **three** situations when a person should adjust or override the forecast, one per line in the form **Situation | what to do | how you'll know**.",
+  "minutes": 6,
+  "rows": 6,
+  "placeholder": "New competitor opens nearby | ... | ...",
+  "rules": [
+    { "label": "At least three lines in the form Situation | action | signal", "pattern": "^[^|\\n]+\\|[^|\\n]+\\|[^|\\n]+$", "min": 3 },
+    { "label": "Includes something the data has never seen (new competitor, strike, shortage, policy)", "pattern": "competitor|strike|shortage|fuel|policy|new (product|customer)|flood|curfew" },
+    { "label": "Includes a run of large errors or bias as a trigger", "pattern": "error|bias|wape|outside the (range|interval)" }
+  ],
+  "sample": "A competitor opens a depot nearby or cuts prices | reduce the forecast by a judged amount and review weekly | sales reps report it, or two weeks of sales below the forecast range\nA promotion is added, cancelled or moved after the forecast is made | rerun the forecast with the new promotion dates | the marketing calendar changes\nFuel shortage or transport strike | hold extra safety stock and expect lumpy demand | news, and deliveries to shops falling behind\nForecast errors stay high | review the model and the safety stock with the analyst | WAPE above 15% or bias beyond ±5% for two weeks in a row",
+  "note": "The last line turns monitoring into a rule. Without it, a forecast quietly drifts until someone notices empty shelves.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "When should a person override a statistical forecast?",
+    "options": ["Never", "When something the data has never seen is happening, plans change after the forecast, or errors exceed agreed limits", "Every week", "When they disagree with it"],
+    "answer": 1,
+    "explanation": "Overrides should follow rules, not hunches."
+  },
+  {
+    "prompt": "Why backtest every product, not just the biggest?",
+    "options": ["It's quicker", "Methods that work for one series can fail on another with different patterns", "The biggest is always easiest", "To use more data"],
+    "answer": 1,
+    "explanation": "Check the method everywhere it will be used."
+  },
+  {
+    "prompt": "What turns a forecast into an order?",
+    "options": ["Rounding", "Adding safety stock for the chosen service level and subtracting stock on hand", "Doubling it", "Nothing: order the forecast"],
+    "answer": 1,
+    "explanation": "The ordering rule connects forecast and uncertainty to the decision."
+  }
+]
+```
+$md$, true, true, 9, array['ts-09-p1', 'ts-09-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+
 -- Course: Data Analyst Capstone: End-to-End BI Project
 insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
-values ('data-analyst-capstone', 'full', null, 'data-analyst-capstone', 'CAP', 'Data Analyst Capstone: End-to-End BI Project', 'Take a retail chain''s raw till export all the way to a reviewed dashboard and a board-ready executive summary, using the tools of your choice.', 'The capstone of the Data Analyst track. Voltline Electronics, a chain of eight stores, sends you 18 months of raw till data and one question from its chief executive: what''s really driving our 37% growth? You''ll plan the analysis, profile and clean a genuinely messy export (a duplicated upload, mixed date formats, inconsistent store names and test transactions), build a model that looks up costs by date and compares sales with monthly targets, decompose the growth, find what''s going wrong where, and put a value on missed sales. Then you''ll build a dashboard, write an executive summary, prepare for the board''s questions and publish the project for your portfolio. Use Excel, Power BI, SQL or Python: the work is assessed on the answers, not the tool.', 'data-analytics', 'intermediate', 4, 'Career project', 14, true, 'available', true, array['Turning a business brief into an analysis plan', 'Profiling and cleaning raw data with a quality log', 'Modelling data at the right grain', 'Decomposing growth into price, new stores and volume', 'Judging targets fairly', 'Estimating lost sales with stated assumptions', 'Finding-led dashboards and executive summaries', 'Presenting and publishing a portfolio project']::text[], array['The core Data Analyst courses: Excel, SQL and Power BI (or Python)', 'Comfort cleaning data and building a dashboard in at least one tool']::text[], 'Voltline Electronics: commercial review', true, true, true, true, false, 60, 28)
+values ('data-analyst-capstone', 'full', null, 'data-analyst-capstone', 'CAP', 'Data Analyst Capstone: End-to-End BI Project', 'Take a retail chain''s raw till export all the way to a reviewed dashboard and a board-ready executive summary, using the tools of your choice.', 'The capstone of the Data Analyst track. Voltline Electronics, a chain of eight stores, sends you 18 months of raw till data and one question from its chief executive: what''s really driving our 37% growth? You''ll plan the analysis, profile and clean a genuinely messy export (a duplicated upload, mixed date formats, inconsistent store names and test transactions), build a model that looks up costs by date and compares sales with monthly targets, decompose the growth, find what''s going wrong where, and put a value on missed sales. Then you''ll build a dashboard, write an executive summary, prepare for the board''s questions and publish the project for your portfolio. Use Excel, Power BI, SQL or Python: the work is assessed on the answers, not the tool.', 'data-analytics', 'intermediate', 4, 'Career project', 14, true, 'available', true, array['Turning a business brief into an analysis plan', 'Profiling and cleaning raw data with a quality log', 'Modelling data at the right grain', 'Decomposing growth into price, new stores and volume', 'Judging targets fairly', 'Estimating lost sales with stated assumptions', 'Finding-led dashboards and executive summaries', 'Presenting and publishing a portfolio project']::text[], array['The core Data Analyst courses: Excel, SQL and Power BI (or Python)', 'Comfort cleaning data and building a dashboard in at least one tool']::text[], 'Voltline Electronics: commercial review', true, true, true, true, false, 60, 29)
 on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level = excluded.level, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
@@ -37061,6 +38579,108 @@ on conflict (id) do update set assessment_id = excluded.assessment_id, position 
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
 values ('abtq12', 1, 'Pre-registration protects against cherry-picking.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Time Series Forecasting: final assessment
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('time-series-forecasting-final', 'time-series-forecasting', 'final', null, 'Time Series Forecasting: final assessment', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('tsfq01', 'time-series-forecasting-final', 1, 'Orders take two weeks to arrive. Which period should this week''s forecast focus on?', '["Tomorrow","The weeks the order will have to cover, starting two weeks from now","Next year","Last month"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('tsfq01', 1, 'The decision sets the horizon.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('tsfq02', 'time-series-forecasting-final', 2, 'A Saturday seasonal index of 1.28 means:', '["Saturday sells 1.28 units","Saturdays sell about 28% more than an average day","28% of sales are on Saturday","Saturday sales grow 28% a year"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('tsfq02', 1, 'An index is relative to the average day.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('tsfq03', 'time-series-forecasting-final', 3, 'A consultant''s forecast fits past sales almost perfectly on the months it was built from. What does that show?', '["It will forecast well","Nothing about future accuracy: test it on a later period it never saw","It''s biased","It''s perfect"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('tsfq03', 1, 'Only a time-based hold-out mimics real use.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('tsfq04', 'time-series-forecasting-final', 4, 'Why prefer WAPE to an average of daily percentage errors?', '["It''s always smaller","Daily percentage errors break on zero-sales days and over-weight quiet days","It ignores bias","It''s newer"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('tsfq04', 1, 'WAPE is total error as a share of total sales.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('tsfq05', 'time-series-forecasting-final', 5, 'Forecasting 3 to 4 weeks ahead, which feature is not allowed?', '["Payday flag","A promotion planned for that day","Sales the day before","Sales the same day last year"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('tsfq05', 2, 'Lags shorter than the horizon aren''t known when the forecast is made.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('tsfq06', 'time-series-forecasting-final', 6, 'A promotion lifts sales 45% in its week, and sales fall 13% the week after. What''s the two-week net gain, in normal weeks?', '["0.45","About 0.32","0.58","0.13"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('tsfq06', 1, '0.45 − 0.13 = 0.32.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('tsfq07', 'time-series-forecasting-final', 7, 'After a price rise, a forecast is 7% too high every week. What''s the most direct fix?', '["Use more history","Add a feature for the period after the rise, or weight recent data more, and recheck the bias","Remove seasonality","Ignore it"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('tsfq07', 1, 'Tell the model the world changed.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('tsfq08', 'time-series-forecasting-final', 8, 'Why backtest over several origins?', '["It''s faster","One test period can be lucky or unlucky; several show typical and worst-case accuracy","To use more features","It''s required"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('tsfq08', 1, 'Choose methods that win consistently.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('tsfq09', 'time-series-forecasting-final', 9, 'A 90% prediction interval contains actual sales on 85% of days. What does that mean?', '["It''s well calibrated","It''s too narrow: widen it or find out what changed","It''s too wide","Intervals don''t matter"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('tsfq09', 1, 'Check coverage before using intervals for stock.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('tsfq10', 'time-series-forecasting-final', 10, 'Ordering exactly the forecast means running out roughly how often?', '["Never","About half the time","5% of the time","Always"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('tsfq10', 1, 'Add safety stock for the service level you want.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('tsfq11', 'time-series-forecasting-final', 11, 'How should you choose which products'' forecasts to review by hand?', '["Highest WAPE","Largest WAPE × sales value","Newest products","Alphabetical"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('tsfq11', 1, 'Review where errors cost the most.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('tsfq12', 'time-series-forecasting-final', 12, 'A competitor opens next door. What should happen to the statistical forecast?', '["Nothing: trust the model","A person adjusts it, because the data has never seen this, and watches the errors closely","Delete the model","Double the safety stock permanently"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('tsfq12', 1, 'Overrides are for events outside the data.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 
@@ -40344,6 +41964,14 @@ Work in Google Colab with the experiments dataset. Submit a link to your noteboo
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
 
 
+-- Project: Kolanut Lagos depot: forecasting and ordering
+insert into public.projects (id, course_id, title, summary, brief_md, tasks, datasets, rubric, required)
+values ('tsf-depot-ordering', 'time-series-forecasting', 'Kolanut Lagos depot: forecasting and ordering', 'A tested forecasting and ordering system for six products at a distributor''s depot, with backtests, intervals, safety stock and an override guide.', $md$Kolanut's Lagos depot orders stock weekly with a two-week delivery time. Replace ordering by feel with a forecasting system for all six products.
+
+Work in Google Colab with the demand dataset. Submit a link to your notebook (shared so anyone with the link can view it), and paste your **backtest summary**, your **ordering rule** and your **override guide** below, followed by a short note on where each task is answered.$md$, array['Framing: the decision, horizon, granularity and cost of errors.', 'Patterns: weekday, month, payday, pre-Eid and promotion effects measured for each product.', 'Baselines and a model: the best baseline per product and a calendar regression using only features known in advance, on a time-based test.', 'Effects and breaks: promotion lift and post-promotion dip, and the January 2026 price rise handled, with bias checked.', 'Backtesting: rolling-origin results for every product, including a December and a post-price-rise origin.', 'Ordering: prediction intervals with checked coverage, safety stock for a recommended service level, and the ordering rule.', 'An override guide: when people should adjust the forecast, and the signals that tell them.']::text[], array['demand']::text[], array['The forecast is framed around the ordering decision, with the right horizon and granularity.', 'Every test is time-based, and no feature uses information unavailable when the forecast is made.', 'Methods are compared with sensible baselines using WAPE and bias.', 'Promotions, events and the price rise are handled explicitly, with evidence.', 'Backtests cover several origins, and conclusions consider the worst case as well as the average.', 'Intervals are checked for coverage and turned into safety stock for a justified service level.', 'The override guide names clear situations and measurable triggers.']::text[], true)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
+
+
 -- Track: Become a Data Analyst
 insert into public.tracks (id, slug, title, summary, badge_name, badge_code, skills, position, published)
 values ('data-analyst', 'data-analyst', 'Become a Data Analyst', 'The route we recommend from no experience to a junior data analyst role. Learn how analysis works, then the tools teams use every day (Excel, SQL, Power BI and Python) on realistic company data. Build portfolio projects that answer real business questions, and finish with your CV, LinkedIn and interview preparation.', 'CloudTech Data Analyst', 'DATAANALYST', array['Spreadsheet analysis in Excel', 'Statistics: averages, spread, confidence intervals and tests', 'Querying databases with SQL, from first SELECT to cohorts and window functions', 'Data modelling and star schemas', 'Dashboards in Power BI, with DAX measures you can trust', 'Analysis in Python and pandas', 'Turning data into findings a manager can act on']::text[], 1, true)
@@ -40488,15 +42116,19 @@ values ('data-scientist', 'feature-engineering-model-evaluation', 'Core', true, 
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 insert into public.track_courses (track_id, course_id, stage, required, position)
-values ('data-scientist', 'experimentation-ab-testing', 'Specialist', true, 7)
+values ('data-scientist', 'time-series-forecasting', 'Specialist', true, 7)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 insert into public.track_courses (track_id, course_id, stage, required, position)
-values ('data-scientist', 'career-essentials', 'Career', true, 8)
+values ('data-scientist', 'experimentation-ab-testing', 'Specialist', true, 8)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 insert into public.track_courses (track_id, course_id, stage, required, position)
-values ('data-scientist', 'build-your-student-portfolio', 'Career', false, 9)
+values ('data-scientist', 'career-essentials', 'Career', true, 9)
+on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
+
+insert into public.track_courses (track_id, course_id, stage, required, position)
+values ('data-scientist', 'build-your-student-portfolio', 'Career', false, 10)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 

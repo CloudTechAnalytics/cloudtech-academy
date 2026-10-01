@@ -1150,6 +1150,85 @@ function experiments() {
   return { onboarding, banner_daily, fee_test, rollout };
 }
 
+/* ------------------------------------------------------------------ demand (time series) */
+// Kolanut's Lagos depot: daily units for six products, July 2022 to June 2026, with a
+// holiday calendar. Weekly and yearly seasonality, payday and pre-Eid peaks, closures,
+// promotions with a post-promotion dip, and a price rise in January 2026 that lowers
+// volume. Generated last, from its own seed.
+function demand() {
+  seed = 20270201;
+  const START = d("2022-07-01");
+  const END = d("2026-06-30");
+  const holidays = [];
+  const addHol = (date, name, closed) => holidays.push({ date, holiday: name, depot_closed: closed ? 1 : 0 });
+  for (const y of [2022, 2023, 2024, 2025, 2026]) {
+    addHol(`${y}-01-01`, "New Year's Day", true);
+    addHol(`${y}-05-01`, "Workers' Day", false);
+    addHol(`${y}-06-12`, "Democracy Day", false);
+    addHol(`${y}-10-01`, "Independence Day", false);
+    addHol(`${y}-12-25`, "Christmas Day", true);
+    addHol(`${y}-12-26`, "Boxing Day", false);
+  }
+  const EID_FITR = ["2023-04-21", "2024-04-10", "2025-03-30", "2026-03-20"];
+  const EID_ADHA = ["2022-07-09", "2023-06-28", "2024-06-16", "2025-06-06"];
+  const EASTER = ["2023-04-09", "2024-03-31", "2025-04-20", "2026-04-05"];
+  for (const e of EID_FITR) addHol(e, "Eid al-Fitr", true);
+  for (const e of EID_ADHA) addHol(e, "Eid al-Adha", true);
+  for (const e of EASTER) {
+    addHol(iso(d(e) - 2 * day), "Good Friday", false);
+    addHol(iso(d(e) + day), "Easter Monday", false);
+  }
+  const hol = Object.fromEntries(holidays.map((h) => [h.date, h]));
+  const eids = [...EID_FITR, ...EID_ADHA].map(d);
+  // [product, category, base units/day, December lift, Eid lift, rainy-season effect, price]
+  const P = [
+    ["Malt drink 330ml (24)", "Beverages", 120, 1.55, 1.5, 0.95, 13200],
+    ["Bottled water 75cl (12)", "Beverages", 210, 1.25, 1.35, 0.85, 3600],
+    ["Orange juice 1L (12)", "Beverages", 55, 1.6, 1.4, 0.95, 18600],
+    ["Plantain chips 150g (20)", "Snacks", 70, 1.35, 1.2, 1.0, 9200],
+    ["Detergent 900g (12)", "Household", 45, 1.15, 1.05, 1.05, 21500],
+    ["Bar soap (48)", "Personal care", 60, 1.1, 1.05, 1.0, 14400],
+  ];
+  const DOW = [0.55, 1.0, 0.97, 0.98, 1.02, 1.1, 1.25]; // Sunday to Saturday
+  const rows = [];
+  for (const [product, category, base, decLift, eidLift, rainy, price0] of P) {
+    // About six week-long promotions a year per product, not in December.
+    const promos = new Set();
+    for (let t = START; t <= END; t += day) {
+      const m = new Date(t).getUTCMonth();
+      if (m !== 11 && rand() < 6 / 365) for (let k = 0; k < 7; k++) promos.add(t + k * day);
+    }
+    for (let t = START; t <= END; t += day) {
+      const date = iso(t);
+      const dt = new Date(t);
+      const years = (t - START) / (365.25 * day);
+      let level = base * (1 + 0.06 * years); // 6% a year growth
+      level *= DOW[dt.getUTCDay()];
+      const dom = dt.getUTCDate();
+      const dim = new Date(Date.UTC(dt.getUTCFullYear(), dt.getUTCMonth() + 1, 0)).getUTCDate();
+      if (dom >= dim - 2 || dom <= 2) level *= 1.12; // payday
+      const month = dt.getUTCMonth();
+      if (month === 11) level *= 1 + (decLift - 1) * Math.min(1, dom / 20);
+      if (month === 0) level *= 0.88;
+      if (month >= 5 && month <= 8) level *= rainy;
+      const toEid = eids.map((e) => (e - t) / day).filter((x) => x > 0 && x <= 5);
+      if (toEid.length) level *= eidLift;
+      const promo = promos.has(t);
+      if (promo) level *= 1.45;
+      else if (promos.has(t - 7 * day) || promos.has(t - 3 * day)) level *= 0.88; // post-promotion dip
+      const priceRise = t >= d("2026-01-01");
+      if (priceRise) level *= 0.92;
+      const closed = hol[date]?.depot_closed === 1;
+      const units = closed ? 0 : Math.max(0, Math.round(level * Math.exp(normal() * 0.11)));
+      const price = Math.round((priceRise ? price0 * 1.12 : price0) * (promo ? 0.9 : 1) / 50) * 50;
+      rows.push({ date, product, category, units, on_promotion: promo ? 1 : 0, price_ngn: price });
+    }
+  }
+  rows.sort((a, b) => (a.date < b.date ? -1 : a.date > b.date ? 1 : a.product < b.product ? -1 : 1));
+  holidays.sort((a, b) => (a.date < b.date ? -1 : 1));
+  return { daily_sales: rows, holidays };
+}
+
 /* ------------------------------------------------------------------ write */
 const SQL = await initSqlJs();
 const L = logistics();
@@ -1186,6 +1265,7 @@ for (const [table, rows] of Object.entries(rentals())) writeCsv("rentals", table
 for (const [table, rows] of Object.entries(loans())) writeCsv("loans", table, rows);
 for (const [table, rows] of Object.entries(wallet())) writeCsv("wallet", table, rows);
 for (const [table, rows] of Object.entries(experiments())) writeCsv("experiments", table, rows);
+for (const [table, rows] of Object.entries(demand())) writeCsv("demand", table, rows);
 
 // Summary for the build log
 const counts = db.exec("SELECT (SELECT COUNT(*) FROM customers), (SELECT COUNT(*) FROM shipments), (SELECT COUNT(*) FROM payments), (SELECT COUNT(*) FROM routes), (SELECT COUNT(*) FROM employees)")[0].values[0];

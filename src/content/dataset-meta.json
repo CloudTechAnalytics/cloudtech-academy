@@ -375,6 +375,171 @@
    }
   }
  },
+ "demand": {
+  "zipBytes": 47759,
+  "files": {
+   "daily_sales": {
+    "rows": 8766,
+    "bytes": 466354,
+    "columns": [
+     {
+      "name": "date",
+      "type": "date",
+      "missing": 0,
+      "distinct": 1461,
+      "min": "2022-07-01",
+      "max": "2026-06-30"
+     },
+     {
+      "name": "product",
+      "type": "text",
+      "missing": 0,
+      "distinct": 6
+     },
+     {
+      "name": "category",
+      "type": "text",
+      "missing": 0,
+      "distinct": 4
+     },
+     {
+      "name": "units",
+      "type": "number",
+      "missing": 0,
+      "distinct": 371,
+      "min": 0,
+      "max": 507
+     },
+     {
+      "name": "on_promotion",
+      "type": "number",
+      "missing": 0,
+      "distinct": 2,
+      "min": 0,
+      "max": 1
+     },
+     {
+      "name": "price_ngn",
+      "type": "number",
+      "missing": 0,
+      "distinct": 23,
+      "min": 3250,
+      "max": 24100
+     }
+    ],
+    "preview": [
+     [
+      "2022-07-01",
+      "Bar soap (48)",
+      "Personal care",
+      "73",
+      "0",
+      "14400"
+     ],
+     [
+      "2022-07-01",
+      "Bottled water 75cl (12)",
+      "Beverages",
+      "232",
+      "0",
+      "3600"
+     ],
+     [
+      "2022-07-01",
+      "Detergent 900g (12)",
+      "Household",
+      "63",
+      "0",
+      "21500"
+     ],
+     [
+      "2022-07-01",
+      "Malt drink 330ml (24)",
+      "Beverages",
+      "151",
+      "0",
+      "13200"
+     ],
+     [
+      "2022-07-01",
+      "Orange juice 1L (12)",
+      "Beverages",
+      "59",
+      "0",
+      "18600"
+     ],
+     [
+      "2022-07-01",
+      "Plantain chips 150g (20)",
+      "Snacks",
+      "86",
+      "0",
+      "9200"
+     ]
+    ]
+   },
+   "holidays": {
+    "rows": 46,
+    "bytes": 1244,
+    "columns": [
+     {
+      "name": "date",
+      "type": "date",
+      "missing": 0,
+      "distinct": 46,
+      "min": "2022-01-01",
+      "max": "2026-12-26"
+     },
+     {
+      "name": "holiday",
+      "type": "text",
+      "missing": 0,
+      "distinct": 10
+     },
+     {
+      "name": "depot_closed",
+      "type": "number",
+      "missing": 0,
+      "distinct": 2,
+      "min": 0,
+      "max": 1
+     }
+    ],
+    "preview": [
+     [
+      "2022-01-01",
+      "New Year's Day",
+      "1"
+     ],
+     [
+      "2022-05-01",
+      "Workers' Day",
+      "0"
+     ],
+     [
+      "2022-06-12",
+      "Democracy Day",
+      "0"
+     ],
+     [
+      "2022-07-09",
+      "Eid al-Adha",
+      "1"
+     ],
+     [
+      "2022-10-01",
+      "Independence Day",
+      "0"
+     ],
+     [
+      "2022-12-25",
+      "Christmas Day",
+      "1"
+     ]
+    ]
+   }
+  }
+ },
  "experiments": {
   "zipBytes": 141010,
   "files": {
