@@ -9982,9 +9982,1983 @@ $md$, true, true, 11, array['xls-11-p1', 'xls-11-p2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 
+-- Course: Statistics for Data Analysis
+insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
+values ('statistics-for-data-analysis', 'full', null, 'statistics-for-data-analysis', 'STAT', 'Statistics for Data Analysis', 'The statistics analysts use every week, in Excel or Google Sheets: the right average, spread, outliers, rates, correlation, confidence intervals, tests and trends, on real company data.', 'Statistics is what separates a number from a finding. In this course you work in Excel or Google Sheets on the data of Kolanut Distribution, Harbourline Freight and Ashgrove Chambers, and answer the questions managers actually ask: what''s typical, how reliable is it, is that difference real, and what happens next? Learn to choose the right average, measure spread and spot outliers, report rates and weighted averages without misleading anyone, read correlations without confusing them with causes, put honest ranges on estimates with confidence intervals, test whether a change is real, and fit trend lines you can quote from. Every lesson ends with tasks checked against the data, and the course ends with a delivery performance review for a logistics company.', 'data-analytics', 'beginner', 2, 'Beginner to intermediate', 8, true, 'available', true, array['Choosing between mean, median and mode', 'Measuring spread: IQR, standard deviation and percentiles', 'Finding and investigating outliers', 'Percentage points, weighted averages and Simpson''s paradox', 'Correlation, and why it isn''t causation', 'Standard errors and confidence intervals', 'Testing whether a difference is real', 'Regression and trend lines']::text[], array['Comfortable with spreadsheets: Excel for Data Analysis covers what you need', 'No statistics or maths beyond school level']::text[], 'Harbourline delivery performance review', true, true, true, true, false, 60, 15)
+on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level = excluded.level, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('stat-m01', 'statistics-for-data-analysis', 'Statistics for Analysts', 1, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('statistics-for-data-analysis:statistics-for-analysts', 'statistics-for-data-analysis', 'stat-m01', 'statistics-for-analysts', 'Statistics for analysts', 'What statistics does for an analyst, the difference between describing data and drawing conclusions from it, populations and samples, the kinds of variable you''ll meet, and the three ways numbers most often mislead.', 25, $md$
+## The problem
+
+Kolanut Distribution's HR director reads a report that says "the average employee earns ₦609,250 a month" and concludes that pay is generous. A junior analyst replies that most employees earn less than ₦500,000. A third colleague says the sample of 80 employees is too small to say anything at all.
+
+All three are talking about the same file, and they can't all be right. The difference between them isn't arithmetic. It's **statistics**: knowing which number answers the question, how much it can vary, and how far you can trust a conclusion drawn from it.
+
+This course gives you those skills, in Excel or Google Sheets, on Kolanut's sales and HR data, Harbourline Freight's shipments and Ashgrove Chambers' invoices.
+
+## The concept
+
+**Two jobs statistics does**
+
+- **Descriptive statistics** summarise the data you have: the typical salary, how spread out delivery times are, how strongly two things move together. Lessons 2 to 6.
+- **Inferential statistics** help you draw conclusions beyond the data you have: is a difference real or just luck, how precise is an estimate, will a trend continue? Lessons 7 to 10.
+
+Most day-to-day analysis is descriptive. Inference is what stops you announcing a "finding" that's really noise.
+
+**Population and sample**
+
+- The **population** is everyone or everything you want to know about: all of Kolanut's customers, every shipment Harbourline will ever make.
+- A **sample** is the part you actually have data on.
+
+Sometimes your data is the whole population. Kolanut's `employees.csv` lists all 80 people who have worked there, so the average salary in it isn't an estimate; it's the fact. Often it isn't: a survey of 200 customers is a sample of all customers, and the answer would be slightly different with a different 200. Asking "is this all of them, or some of them?" decides which tools you need.
+
+**Kinds of variable**
+
+| Kind | What it is | Example | Typical summaries |
+| :-- | :-- | :-- | :-- |
+| **Categorical** | A label from a set | department, region, payment method | counts, percentages, the most common |
+| **Ordinal** | Categories with an order | job level (Junior < Mid < Senior), a 1–5 rating | counts, the median |
+| **Numerical, discrete** | Counts | containers per shipment, packs per order line | mean, median, spread |
+| **Numerical, continuous** | Measurements | revenue, salary, weight, days to pay | mean, median, spread |
+
+The kind decides what's meaningful. An "average region" is nonsense; an average salary is fine. A job level of "2.4" means nothing even if you coded Junior as 1 and Senior as 3.
+
+**Three ways numbers mislead**
+
+1. **The wrong average.** A few very high values pull the mean up. Kolanut's mean salary (₦609,250) is well above the median (₦492,500), because ten managers earn over ₦1.2 million. "The typical employee" is closer to the median. Lesson 2 shows how to choose.
+2. **No sense of spread.** "Average delivery time is 27 days" hides whether almost every shipment takes 26–28 days or some take 10 and others 60. Customers experience the spread, not the average. Lesson 3.
+3. **Mistaking noise for a signal.** Small groups and small differences bounce around by chance. Customer Service's resignation rate (3 of 8) sounds alarming, but three people is a small number. Lessons 7 to 9 give you the tools to tell the difference.
+
+## Example
+
+The HR director's question, answered properly. Open the HR dataset's `employees.csv` in Excel or Google Sheets and put these formulas in empty cells (the salary is column G, rows 2 to 81):
+
+```excel
+=AVERAGE(G2:G81)        609,250
+=MEDIAN(G2:G81)         492,500
+=COUNTIF(G2:G81,"<500000")   41
+```
+
+Read together: the **average** is ₦609,250, but **half** of all employees earn ₦492,500 or less, and **41 of 80** earn under ₦500,000. The mean is pulled up by the highest earners. A fair one-line answer for the director:
+
+> *Most employees earn under ₦500,000 a month (the median is ₦492,500). The average is higher, ₦609,250, because ten managers earn over ₦1.2 million.*
+
+That sentence is more useful than either number on its own, and it's statistics doing its job: choosing the right summary and saying what it means.
+
+## Walkthrough
+
+1. Download the HR dataset (below) and open `employees.csv` in Excel or Google Sheets.
+2. Press Ctrl + T to make it a Table. Check there are 80 employees.
+3. For each column, write down which kind of variable it is: `department` (categorical), `job_level` (ordinal), `monthly_salary` (continuous), and so on.
+4. Calculate the mean and median salary with `AVERAGE` and `MEDIAN`, and count how many earn under ₦500,000 with `COUNTIF`.
+5. Calculate the mean and median for **Junior** staff only: `=AVERAGEIFS(G2:G81, D2:D81, "Junior")` and `=MEDIAN(IF(D2:D81="Junior", G2:G81))`. In older Excel, finish that last one with Ctrl + Shift + Enter.
+6. Write one sentence, for the HR director, that uses both numbers honestly.
+
+## Practice
+
+```dataset
+{"dataset": "hr", "files": ["employees", "attendance", "leave"]}
+```
+
+```answer
+{
+  "id": "stat-01-p1",
+  "prompt": "How many employees in `employees.csv` earn **more than ₦1,000,000** a month?",
+  "answer": 12,
+  "format": "number",
+  "dataset": "hr",
+  "files": ["employees"],
+  "verify": "SELECT COUNT(*) FROM employees WHERE monthly_salary > 1000000",
+  "pyVerify": "(data('hr', 'employees')['monthly_salary'] > 1000000).sum()",
+  "hint": "=COUNTIF(G2:G81, \">1000000\")",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "stat-01-p2",
+  "prompt": "What is the **median** monthly salary of **Mid**-level staff?",
+  "answer": 525000,
+  "format": "naira",
+  "dataset": "hr",
+  "files": ["employees"],
+  "pyVerify": "data('hr', 'employees').query('job_level == \"Mid\"')['monthly_salary'].median()",
+  "hint": "=MEDIAN(IF(D2:D81=\"Mid\", G2:G81)), or filter to Mid and use MEDIAN on the visible values.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "stat-01-p3",
+  "prompt": "A researcher surveys 300 of Kolanut's 4,000 retail customers about delivery times. Are the 300 a **population** or a **sample**?",
+  "answer": "sample",
+  "format": "text",
+  "accept": ["a sample"],
+  "explanation": "They're part of the group the researcher wants to know about (all 4,000), so any figure from them is an estimate.",
+  "required": true
+}
+```
+
+## Challenge
+
+```answer
+{
+  "id": "stat-01-c1",
+  "prompt": "`job_level` is stored as text (Junior, Mid, Senior, Manager). What kind of variable is it? (One word from this lesson's table.)",
+  "answer": "ordinal",
+  "format": "text",
+  "accept": ["ordinal categorical", "categorical ordinal"],
+  "explanation": "The categories have a natural order, but the gaps between them aren't equal numbers, so averages of levels are meaningless. Medians and counts are fine.",
+  "required": false
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Kolanut's employees.csv lists every person who has worked there. Is its average salary an estimate?",
+    "options": ["Yes, every average is an estimate", "No: the file is the whole population, so the average is a fact about it", "Only if there are more than 100 rows", "Only for active staff"],
+    "answer": 1,
+    "explanation": "Inference is needed for samples. With the whole population, you're describing, not estimating."
+  },
+  {
+    "prompt": "Mean salary ₦609,250, median ₦492,500. What best explains the gap?",
+    "options": ["A data error", "A few high earners pull the mean up", "Most people earn more than the mean", "The median is always lower"],
+    "answer": 1,
+    "explanation": "The mean is sensitive to extreme values; the median isn't."
+  },
+  {
+    "prompt": "Which of these is a categorical variable?",
+    "options": ["Monthly salary", "Payment method", "Weight in kg", "Days to pay"],
+    "answer": 1,
+    "explanation": "Payment method is a label. The others are numbers you can average."
+  },
+  {
+    "prompt": "Three of Customer Service's eight staff resigned. What's the right caution?",
+    "options": ["Ignore it, eight is too small", "It's worth noting, but small groups vary a lot by chance, so be careful how strongly you claim it", "It proves the manager is the problem", "Report it as 37.5% with no comment"],
+    "answer": 1,
+    "explanation": "Small numbers deserve careful wording. Later lessons show how to measure that uncertainty."
+  }
+]
+```
+$md$, true, true, 1, array['stat-01-p1', 'stat-01-p2', 'stat-01-p3']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('stat-m02', 'statistics-for-data-analysis', 'Averages: Mean, Median and Mode', 2, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('statistics-for-data-analysis:averages', 'statistics-for-data-analysis', 'stat-m02', 'averages', '"Averages: mean, median and mode"', 'Calculate the three averages, see how a few extreme values pull the mean, choose the right average for the question, and report it honestly.', 25, $md$
+## The problem
+
+Ashgrove Chambers' managing partner asks two questions about the firm's invoices:
+
+> "What's a typical invoice worth? And how long do clients usually take to pay?"
+
+"Typical" sounds simple, but there are three different averages, and on real data they often disagree. Pick the wrong one and the partner sets fee targets or cash-flow plans on a number that describes almost nobody. This lesson is about choosing.
+
+## The concept
+
+**The three averages**
+
+| Average | What it is | Excel / Sheets | Best for |
+| :-- | :-- | :-- | :-- |
+| **Mean** | Add everything up, divide by how many | `=AVERAGE(range)` | Values that are roughly symmetric, and anything you'll multiply back up to a total |
+| **Median** | The middle value when sorted; half are below, half above | `=MEDIAN(range)` | Skewed data such as salaries, prices, invoice amounts, house prices |
+| **Mode** | The most common value | `=MODE.SNGL(range)` | Categories and repeated values: the most common discount, shoe size, product |
+
+With an even number of values, the median is the average of the middle two.
+
+**Why they disagree: skew**
+
+The mean uses every value's size, so a few very large values pull it up. The median only cares about order, so it barely moves.
+
+- **Right-skewed** data (a long tail of high values) has **mean > median**. Salaries, invoice amounts and order sizes are almost always like this.
+- **Left-skewed** data (a tail of low values) has **mean < median**: for example exam scores where most people did well.
+- Roughly **symmetric** data has mean ≈ median.
+
+So the gap between mean and median is itself useful information: it tells you the data is skewed and which way.
+
+**Choosing**
+
+- Asking "what does a **typical** one look like?" Use the **median** for skewed data.
+- Asking "what's the **total** worth, or the per-unit cost?" Use the **mean**: mean × count = total, which is exactly what budgets need. The median can't be multiplied back up.
+- Asking "what's the **most common** choice?" Use the **mode**.
+
+When in doubt, report both, with a sentence explaining the gap.
+
+**Averages for groups**
+
+`AVERAGEIFS(average_range, criteria_range, criteria, …)` averages only the rows that meet conditions. There's no `MEDIANIFS`, but `=MEDIAN(IF(criteria_range = "x", values))` does the same job (press Ctrl + Shift + Enter in older Excel), and in Google Sheets you can wrap a `FILTER`: `=MEDIAN(FILTER(values, criteria_range = "x"))`.
+
+**A middle way: the trimmed mean**
+
+`=TRIMMEAN(range, 0.1)` drops the top and bottom 5% (10% in total) and averages the rest. It keeps most of the data's information while ignoring extremes, and it's used for things like judges' scores and some inflation measures.
+
+> [!WARNING]
+> Never average averages. The mean salary of Finance (₦637,000) and the mean of Operations (₦597,037) don't average to the mean of both departments together, because Operations has nearly three times as many people. Go back to the rows, or weight by group size (lesson 5).
+
+## Example
+
+The partner's two questions, on the legal dataset's `invoices.csv` (amount in column D, rows 2 to 411):
+
+```excel
+=AVERAGE(D2:D411)     2,931,098
+=MEDIAN(D2:D411)      2,655,000
+```
+
+The mean invoice is about ₦2.93m, the median ₦2.66m: right-skewed, with some large invoices pulling the mean up. "A typical invoice is about ₦2.7m" is the honest answer; "₦2.9m" would overstate it. But for **budgeting** (expected billing next year from roughly 400 invoices), the mean is the right number: 410 × ₦2,931,098 is the actual total billed.
+
+For days to pay, add a column `days_to_pay` = `paid_date - issued_date` (format it as a number). Unpaid invoices have no paid date, so the cell is empty or an error. `AVERAGE` and `MEDIAN` skip blanks, which is exactly right: you can't include a payment that hasn't happened. Then:
+
+```excel
+=AVERAGE(days_to_pay)    45.4
+=MEDIAN(days_to_pay)     46
+```
+
+Here mean and median are almost equal, so payment times are roughly symmetric: "clients usually pay in about 46 days" is fair.
+
+## Walkthrough
+
+1. Download the legal dataset and open `invoices.csv`. Make it a Table (Ctrl + T).
+2. Calculate the mean and median `amount_ngn`. Note which is larger and what that says about skew.
+3. Add `days_to_pay`: `=IF([@[paid_date]]="", "", [@[paid_date]]-[@[issued_date]])`, formatted as a whole number. The `IF` leaves unpaid invoices blank.
+4. Calculate the mean and median of `days_to_pay`.
+5. Open the HR dataset's `employees.csv` and calculate the mean, median and mode of `monthly_salary`. Then `=TRIMMEAN(G2:G81, 0.1)`. Where does the trimmed mean fall between the other two?
+6. Use `AVERAGEIFS` and `MEDIAN(IF(…))` to compare mean and median salary in **Operations**. The gap is unusually large: what does it tell you about pay in that department?
+
+## Practice
+
+```dataset
+{"dataset": "legal", "files": ["invoices"]}
+```
+
+```answer
+{
+  "id": "stat-02-p1",
+  "prompt": "What is the **median** invoice amount in `invoices.csv`?",
+  "answer": 2655000,
+  "format": "naira",
+  "dataset": "legal",
+  "files": ["invoices"],
+  "pyVerify": "data('legal', 'invoices')['amount_ngn'].median()",
+  "hint": "=MEDIAN over the amount_ngn column.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "stat-02-p2",
+  "prompt": "What is the **median** days to pay for **paid** invoices?",
+  "answer": 46,
+  "format": "number",
+  "dataset": "legal",
+  "files": ["invoices"],
+  "pyVerify": "(lambda i: (pd.to_datetime(i['paid_date']) - pd.to_datetime(i['issued_date'])).dt.days.median())(data('legal', 'invoices'))",
+  "hint": "Make a days_to_pay column (paid_date − issued_date), leave unpaid invoices blank, then MEDIAN.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "stat-02-p3",
+  "prompt": "In Kolanut's `orders.csv`, which **discount_pct** value is the **mode**?",
+  "answer": 0,
+  "format": "number",
+  "dataset": "sales",
+  "files": ["orders"],
+  "verify": "SELECT discount_pct FROM orders GROUP BY discount_pct ORDER BY COUNT(*) DESC LIMIT 1",
+  "pyVerify": "data('sales', 'orders')['discount_pct'].mode()[0]",
+  "hint": "=MODE.SNGL over discount_pct, or a pivot table counting each value.",
+  "explanation": "Most lines have no discount: 2,519 of 4,266.",
+  "required": true
+}
+```
+
+## Challenge
+
+```answer
+{
+  "id": "stat-02-c1",
+  "prompt": "What is the **10% trimmed mean** of `monthly_salary` in the HR data (`=TRIMMEAN(range, 0.1)`)? Round to the nearest naira.",
+  "answer": 581528,
+  "format": "naira",
+  "dataset": "hr",
+  "files": ["employees"],
+  "pyVerify": "round(stats.trim_mean(data('hr', 'employees')['monthly_salary'], 0.05))",
+  "hint": "TRIMMEAN's 0.1 means 10% removed in total: 5% from each end.",
+  "explanation": "₦581,528: between the median (₦492,500) and the mean (₦609,250). Dropping the extremes pulls it down, but the remaining high-ish salaries keep it above the median.",
+  "required": false
+}
+```
+
+## More practice
+
+Optional drills on the HR data.
+
+```answer
+{
+  "id": "stat-02-d1",
+  "prompt": "Which **department** has the **largest gap** between its mean and median salary? (Mean minus median.)",
+  "answer": "Operations",
+  "format": "text",
+  "dataset": "hr",
+  "files": ["employees"],
+  "pyVerify": "(lambda g: (g['mean'] - g['median']).idxmax())(data('hr', 'employees').groupby('department')['monthly_salary'].agg(['mean', 'median']))",
+  "explanation": "Operations' mean is about ₦597k but its median only ₦395k: most of the department is junior staff, with a few well-paid managers on top.",
+  "required": false
+}
+```
+
+```answer
+{
+  "id": "stat-02-d2",
+  "prompt": "What is the **mean** salary of **Senior** staff? Round to the nearest naira.",
+  "answer": 891667,
+  "format": "naira",
+  "dataset": "hr",
+  "files": ["employees"],
+  "verify": "SELECT ROUND(AVG(monthly_salary)) FROM employees WHERE job_level = 'Senior'",
+  "pyVerify": "round(data('hr', 'employees').query('job_level == \"Senior\"')['monthly_salary'].mean())",
+  "required": false
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "House prices in an area: mean ₦85m, median ₦48m. Which describes a typical house better?",
+    "options": ["The mean", "The median", "Both equally", "Neither"],
+    "answer": 1,
+    "explanation": "The big gap means right skew from a few very expensive houses. The median is the typical one."
+  },
+  {
+    "prompt": "You need next year's expected training budget for 120 staff. Which average of past cost per person?",
+    "options": ["Median, because it's more typical", "Mean, because mean × people gives the total", "Mode", "Whichever is lower"],
+    "answer": 1,
+    "explanation": "Only the mean multiplies back up to a total."
+  },
+  {
+    "prompt": "Mean ₦45,000, median ₦52,000. What shape is the data?",
+    "options": ["Right-skewed", "Left-skewed", "Symmetric", "You can't tell"],
+    "answer": 1,
+    "explanation": "Mean below median: a tail of low values pulls the mean down."
+  },
+  {
+    "prompt": "Department A (10 people) averages ₦400k; department B (90 people) averages ₦600k. What's the average across both?",
+    "options": ["₦500k", "₦580k", "₦600k", "₦400k"],
+    "answer": 1,
+    "explanation": "(10 × 400 + 90 × 600) ÷ 100 = 580. Averaging the two averages ignores group size."
+  }
+]
+```
+$md$, true, true, 2, array['stat-02-p1', 'stat-02-p2', 'stat-02-p3']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('stat-m03', 'statistics-for-data-analysis', 'Spread: Range, IQR and Standard Deviation', 3, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('statistics-for-data-analysis:spread', 'statistics-for-data-analysis', 'stat-m03', 'spread', '"Spread: range, IQR and standard deviation"', 'Measure how spread out data is with the range, the interquartile range and the standard deviation, know which standard deviation to use, and compare variability fairly with the coefficient of variation.', 25, $md$
+## The problem
+
+Harbourline Freight's customers keep asking the same question: "How long will my shipment take?" The operations manager's answer is the average: "Sea freight takes about 27 days."
+
+A customer planning a factory production run doesn't just need the average. They need to know **how reliable** it is. If almost every shipment arrives in 25–29 days, they can plan around 27. If some take 10 days and others 50, the average is nearly useless and they need to hold more stock.
+
+Two datasets can have exactly the same average and behave completely differently. **Spread** (or variability) is the second number you report alongside every average.
+
+## The concept
+
+**Range: the simplest spread**
+
+`=MAX(range) - MIN(range)`. Easy to explain, but it depends entirely on the two most extreme values, so one unusual shipment can double it.
+
+**Quartiles and the interquartile range (IQR)**
+
+Sort the data and cut it into four equal parts:
+
+- **Q1** (25th percentile): a quarter of values are below it.
+- **Q2** = the median.
+- **Q3** (75th percentile): three quarters are below it.
+
+The **IQR = Q3 − Q1** is the range of the middle half of the data. Extremes don't affect it, which makes it the natural partner of the median.
+
+```excel
+=QUARTILE.INC(range, 1)      Q1
+=QUARTILE.INC(range, 3)      Q3
+=PERCENTILE.INC(range, 0.9)  the 90th percentile
+```
+
+Percentiles answer service-level questions directly: "90% of sea shipments arrive within X days" is a promise a customer can plan around.
+
+**Standard deviation: the typical distance from the mean**
+
+The **standard deviation (SD)** measures how far values typically are from the mean, in the same units as the data. Roughly:
+
+1. Find each value's distance from the mean.
+2. Square the distances (so negatives don't cancel positives), and average them: that's the **variance**.
+3. Take the square root to get back to the original units: the **standard deviation**.
+
+```excel
+=STDEV.S(range)    a sample: divides by n − 1
+=STDEV.P(range)    a whole population: divides by n
+```
+
+**Which one?** Use `STDEV.S` when your data is a **sample** and you want to describe the wider population, which is almost always the case (this month's shipments as a guide to future shipments). Use `STDEV.P` only when the data **is** the whole population and you only care about it. With a few hundred rows the two are nearly identical; with 10 rows they differ noticeably.
+
+The SD goes with the mean; the IQR goes with the median. On skewed data, report the median and IQR.
+
+**Comparing spread fairly: the coefficient of variation**
+
+Managers' salaries vary by about ₦121,000 and juniors' by about ₦62,000. Are managers' salaries more variable? Not relative to their size. The **coefficient of variation (CV)** puts spread on a common scale:
+
+**CV = standard deviation ÷ mean × 100%**
+
+Junior salaries: CV ≈ 22%. Manager salaries: CV ≈ 9%. Junior pay is actually twice as variable relative to its level.
+
+> [!TIP]
+> Spread can be hidden by mixing groups. If you calculate the SD of sea transit times across **all** routes, Shanghai's 39-day voyages and Tema's 4-day hops get mixed together and the spread looks huge. Each route on its own may be very consistent. Always ask: is this spread within one process, or between different ones?
+
+## Example
+
+Sea freight transit times, in Harbourline's logistics data. Add a column `transit_days` = `delivery_date − ship_date` to `shipments.csv`, look up each shipment's `mode` from `routes.csv` with XLOOKUP, and filter to **Delivered** **Sea** shipments.
+
+| | All sea routes | Route 1 only (Shanghai → Lagos Apapa) |
+| :-- | --: | --: |
+| Mean | 27.0 days | 39.0 days |
+| Standard deviation | 12.6 days | 4.7 days |
+| CV | 47% | 12% |
+
+Across all sea routes, the spread is enormous (a CV of 47%), because it mixes 4-day coastal hops with 40-day voyages from China. On a single route, shipments are far more predictable: Shanghai to Apapa takes 39 days, give or take about 5.
+
+So the useful answer to the customer isn't "27 days". It's per route: "From Shanghai, plan for 39 days; most shipments arrive within about 5 days either side."
+
+## Walkthrough
+
+1. Open Kolanut's `orders.csv`. Calculate the mean and standard deviation of `quantity` with `AVERAGE` and `STDEV.S`. Then `STDEV.P`. How different are they with 4,266 rows?
+2. Calculate Q1, Q3 and the IQR of `quantity` with `QUARTILE.INC`. The middle half of order lines are between which quantities?
+3. Open the HR `employees.csv`. Calculate the median and IQR of `monthly_salary`, then the mean and SD. Which pair would you report, and why?
+4. Calculate the CV for Junior and for Manager salaries: `=STDEV.S(IF(D2:D81="Junior", G2:G81)) / AVERAGEIFS(G2:G81, D2:D81, "Junior")`.
+5. Open the logistics `shipments.csv` and `routes.csv`. Build `transit_days` and `mode`, filter to delivered sea shipments, and calculate the SD. Then do the same for route 1 only.
+6. Write the sentence you'd give a customer shipping from Shanghai.
+
+## Practice
+
+```dataset
+{"dataset": "sales", "files": ["orders"]}
+```
+
+```answer
+{
+  "id": "stat-03-p1",
+  "prompt": "What is the **sample standard deviation** (`STDEV.S`) of `quantity` in Kolanut's `orders.csv`? Two decimal places.",
+  "answer": 7.96,
+  "format": "number",
+  "dataset": "sales",
+  "files": ["orders"],
+  "verify": "SELECT ROUND(SQRT(SUM((quantity - (SELECT AVG(quantity) FROM orders)) * (quantity - (SELECT AVG(quantity) FROM orders))) / (COUNT(*) - 1)), 2) FROM orders",
+  "pyVerify": "round(data('sales', 'orders')['quantity'].std(), 2)",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "stat-03-p2",
+  "prompt": "What is the **interquartile range** (Q3 − Q1, using `QUARTILE.INC`) of `monthly_salary` in the HR data?",
+  "answer": 498750,
+  "format": "naira",
+  "dataset": "hr",
+  "files": ["employees"],
+  "pyVerify": "(lambda s: s.quantile(0.75) - s.quantile(0.25))(data('hr', 'employees')['monthly_salary'])",
+  "hint": "=QUARTILE.INC(G2:G81, 3) - QUARTILE.INC(G2:G81, 1)",
+  "explanation": "The middle half of salaries span about ₦500,000: from ₦332,500 to ₦831,250.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "stat-03-p3",
+  "prompt": "What is the **coefficient of variation** of **Junior** salaries, as a percentage? One decimal place. (Use `STDEV.S`.)",
+  "answer": 21.9,
+  "format": "percent",
+  "dataset": "hr",
+  "files": ["employees"],
+  "pyVerify": "(lambda s: round(s.std() / s.mean() * 100, 1))(data('hr', 'employees').query('job_level == \"Junior\"')['monthly_salary'])",
+  "hint": "Standard deviation ÷ mean × 100, both for Junior staff only.",
+  "required": true
+}
+```
+
+## Challenge
+
+```answer
+{
+  "id": "stat-03-c1",
+  "prompt": "For **delivered sea** shipments in the logistics data, what is the **90th percentile** of transit days (delivery date − ship date)? Use `PERCENTILE.INC`.",
+  "answer": 40,
+  "format": "number",
+  "dataset": "logistics",
+  "files": [
+    "shipments",
+    "routes"
+  ],
+  "pyVerify": "(lambda s: (pd.to_datetime(s['delivery_date']) - pd.to_datetime(s['ship_date'])).dt.days.quantile(0.9))(data('logistics', 'shipments').merge(data('logistics', 'routes'), on='route_id').query('status == \"Delivered\" and mode == \"Sea\"'))",
+  "explanation": "90% of delivered sea shipments arrive within about 40 days: a promise you could put in a contract, where the average of 27 days isn't.",
+  "required": false
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Two suppliers both deliver in 10 days on average. Supplier A's SD is 1 day; supplier B's is 6 days. Which is easier to plan around?",
+    "options": ["A", "B", "Both the same", "You can't say"],
+    "answer": 0,
+    "explanation": "Same average, but A is far more predictable."
+  },
+  {
+    "prompt": "Your data is a sample of this year's orders and you want to describe orders in general. Which function?",
+    "options": ["STDEV.P", "STDEV.S", "VAR.P", "MAX − MIN"],
+    "answer": 1,
+    "explanation": "STDEV.S is for samples, which is the usual case."
+  },
+  {
+    "prompt": "Salaries are strongly right-skewed. Which pair of summaries should you report?",
+    "options": ["Mean and SD", "Median and IQR", "Mode and range", "Mean and range"],
+    "answer": 1,
+    "explanation": "Median and IQR aren't pulled by extremes."
+  },
+  {
+    "prompt": "Managers' salaries have a larger SD than juniors' in naira, but a smaller CV. What does that mean?",
+    "options": ["Managers' pay varies more relative to its level", "Juniors' pay varies more relative to its level", "The data is wrong", "CV and SD always agree"],
+    "answer": 1,
+    "explanation": "The CV compares spread relative to the mean; managers earn far more, so the same naira spread is small relative to their pay."
+  }
+]
+```
+$md$, true, true, 3, array['stat-03-p1', 'stat-03-p2', 'stat-03-p3']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('stat-m04', 'statistics-for-data-analysis', 'Distributions and Outliers', 4, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('statistics-for-data-analysis:distributions-and-outliers', 'statistics-for-data-analysis', 'stat-m04', 'distributions-and-outliers', 'Distributions and outliers', 'See the shape of your data with a histogram, recognise skewed and symmetric distributions, measure how unusual a value is with a z-score, flag outliers with the IQR rule, and decide what to do about them.', 25, $md$
+## The problem
+
+Harbourline's operations manager has a list of 247 delivered shipments on its busiest lane, Shanghai to Lagos (Apapa), and two questions:
+
+> "Which shipments were unusually slow? And is 'slow' something that happens randomly, or is there a pattern?"
+
+Averages and standard deviations summarise data in one or two numbers, but they can't show you its **shape**. Two lanes with the same mean and standard deviation can look completely different, and the shape tells you what's actually going on: steady service with rare delays, or two different kinds of shipment mixed together.
+
+## The concept
+
+**The distribution and the histogram**
+
+A **distribution** is how often each value occurs. A **histogram** shows it: the values are grouped into ranges (bins) along the bottom, and each bar's height is how many values fall in that range.
+
+In Excel: select the column, then **Insert → Charts → Histogram** (Excel 2016 and later). Right-click the horizontal axis → **Format Axis** to set the bin width. In Google Sheets: **Insert → Chart → Chart type: Histogram**. Or count bins yourself with `COUNTIFS(range, ">="&low, range, "<"&high)`.
+
+**Shapes to recognise**
+
+| Shape | What it looks like | Typical data | Mean vs median |
+| :-- | :-- | :-- | :-- |
+| **Symmetric, bell-shaped** | One peak in the middle, tails equal | heights, measurement errors, many averages | about equal |
+| **Right-skewed** | Peak on the left, long tail to the right | income, revenue, delays, waiting times | mean > median |
+| **Left-skewed** | Long tail to the left | scores on an easy test | mean < median |
+| **Bimodal** | Two peaks | two different groups mixed together | can mislead |
+
+A bimodal histogram is a signal to split the data: it usually means two processes (sea and air, retail and wholesale) are being treated as one.
+
+`=SKEW(range)` gives a number: about 0 is symmetric, positive is right-skewed, negative left-skewed. Values above about 1 are strongly skewed.
+
+**How unusual is a value? The z-score**
+
+A **z-score** says how many standard deviations a value is from the mean:
+
+**z = (value − mean) ÷ standard deviation**
+
+In Excel: `=STANDARDIZE(value, mean, sd)`. A z-score of 0 is exactly average; +2 is two SDs above. For bell-shaped data, values beyond ±2 are unusual (about 1 in 20) and beyond ±3 very unusual (about 1 in 400). For skewed data, z-scores are a rougher guide, because the tail is longer on one side.
+
+**Flagging outliers: the IQR rule**
+
+A common, robust rule (the one behind box plots):
+
+- **Upper fence** = Q3 + 1.5 × IQR
+- **Lower fence** = Q1 − 1.5 × IQR
+
+Values outside the fences are **outliers**. Because it's built from quartiles, extreme values don't distort the rule itself.
+
+**What to do with an outlier**
+
+An outlier is a question, not a mistake. Find out why before you act:
+
+1. **A data error** (a typo, a test record, the wrong unit): fix it or remove it, and note what you did.
+2. **A real, rare event** (a delayed vessel, a huge one-off order): keep it. It's often the most important thing in the data. Report it separately if it distorts an average.
+3. **A different kind of thing** (an air shipment in a list of sea shipments): it belongs in a different group.
+
+Never delete outliers just because they make a chart untidy.
+
+## Example
+
+Shanghai → Lagos (Apapa), delivered shipments, transit days:
+
+- **Mean** 39.0 days, **SD** 4.7 days.
+- The histogram has a tall block at **35–38 days** (184 of 247 shipments) and then a **long tail to the right**, out to 53 days. Nothing arrives unusually early.
+
+Z-scores make it concrete. The upper threshold of 2 SDs is 39.0 + 2 × 4.7 ≈ 48.4 days. **20 shipments** are more than 2 SDs slow; **none** are more than 2 SDs fast.
+
+That's the pattern the manager was asking about. On-time service on this lane is tight (35–38 days), and delays aren't random noise in both directions: they're a separate, one-sided problem. Something occasionally holds shipments up (port congestion, transhipment, customs), and it's worth investigating those 20 shipments by date and customer, rather than treating "39 ± 5 days" as the lane's normal behaviour.
+
+## Walkthrough
+
+1. Open Kolanut's `orders.csv` and add `revenue` = quantity × unit_price × (1 − discount_pct/100).
+2. Insert a histogram of `revenue`. Describe its shape in one sentence. Check with `=SKEW(revenue)`.
+3. Calculate Q1, Q3, the IQR and the upper fence for `revenue`. Count the outliers with `COUNTIF(revenue, ">"&upper_fence)`.
+4. Sort by revenue, largest first, and look at the top outliers. Are they errors, or real large orders?
+5. In the HR data, calculate the z-score of the highest salary (₦1,565,000) with `STANDARDIZE`.
+6. In the logistics data, filter to delivered shipments on route 1, add `transit_days`, insert a histogram, and count shipments more than 2 SDs above the mean.
+
+## Practice
+
+```answer
+{
+  "id": "stat-04-p1",
+  "prompt": "Using the IQR rule (above Q3 + 1.5 × IQR, quartiles from `QUARTILE.INC`), how many order lines in `orders.csv` are **high outliers** by revenue?",
+  "answer": 53,
+  "format": "number",
+  "dataset": "sales",
+  "files": ["orders"],
+  "pyVerify": "(lambda r: (r > r.quantile(0.75) + 1.5 * (r.quantile(0.75) - r.quantile(0.25))).sum())((lambda o: o['quantity'] * o['unit_price'] * (1 - o['discount_pct'] / 100))(data('sales', 'orders')))",
+  "hint": "Revenue = quantity × unit_price × (1 − discount_pct/100). Then Q1, Q3, IQR, upper fence, and COUNTIF above it.",
+  "explanation": "53 lines above about ₦580,950. They're real: large orders of the most expensive products, not errors. Worth reporting, not deleting.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "stat-04-p2",
+  "prompt": "What is the **z-score** of the highest monthly salary (₦1,565,000) in the HR data? Use the mean and `STDEV.S` of all 80 salaries. Two decimal places.",
+  "answer": 2.5,
+  "format": "number",
+  "tolerance": 0.011,
+  "dataset": "hr",
+  "files": ["employees"],
+  "pyVerify": "(lambda s: round((s.max() - s.mean()) / s.std(), 2))(data('hr', 'employees')['monthly_salary'])",
+  "hint": "=STANDARDIZE(1565000, AVERAGE(G2:G81), STDEV.S(G2:G81))",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "stat-04-p3",
+  "prompt": "On route 1 (Shanghai → Lagos Apapa), how many **delivered** shipments took **more than 2 standard deviations longer** than the route's mean transit time?",
+  "answer": 20,
+  "format": "number",
+  "dataset": "logistics",
+  "files": ["shipments"],
+  "pyVerify": "(lambda t: (t > t.mean() + 2 * t.std()).sum())((lambda s: (pd.to_datetime(s['delivery_date']) - pd.to_datetime(s['ship_date'])).dt.days)(data('logistics', 'shipments').query('route_id == 1 and status == \"Delivered\"')))",
+  "hint": "Filter to route_id 1 and Delivered, add transit_days = delivery_date − ship_date, then count values above AVERAGE + 2 × STDEV.S.",
+  "required": true
+}
+```
+
+## Challenge
+
+```answer
+{
+  "id": "stat-04-c1",
+  "prompt": "What is the **skewness** (`=SKEW`) of order-line revenue? Two decimal places. Is it right- or left-skewed?",
+  "answer": 0.87,
+  "format": "number",
+  "tolerance": 0.011,
+  "dataset": "sales",
+  "files": ["orders"],
+  "pyVerify": "round((lambda o: o['quantity'] * o['unit_price'] * (1 - o['discount_pct'] / 100))(data('sales', 'orders')).skew(), 2)",
+  "explanation": "0.87: moderately right-skewed, as revenue nearly always is. A few large lines stretch the right tail.",
+  "required": false
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "A histogram of delivery times has two clear peaks, at 2 days and at 30 days. What's the most likely explanation?",
+    "options": ["Random noise", "Two different kinds of shipment (such as air and sea) mixed together", "A data error", "The bins are too wide"],
+    "answer": 1,
+    "explanation": "Bimodal data usually means two groups. Split them and summarise each."
+  },
+  {
+    "prompt": "A shipment's z-score is 3.2. What does that mean?",
+    "options": ["It took 3.2 days", "It's 3.2 standard deviations above the mean: very unusual", "It's 3.2% late", "It's average"],
+    "answer": 1,
+    "explanation": "z counts standard deviations from the mean."
+  },
+  {
+    "prompt": "You find an order for 3,000 packs when every other order is under 30. What should you do first?",
+    "options": ["Delete it", "Find out why: a typo, a test record, or a real bulk order", "Replace it with the average", "Ignore outliers always"],
+    "answer": 1,
+    "explanation": "An outlier is a question. Its cause decides whether to fix, keep or separate it."
+  },
+  {
+    "prompt": "Q1 = 80,000 and Q3 = 280,000. What is the upper fence for outliers?",
+    "options": ["380,000", "580,000", "480,000", "300,000"],
+    "answer": 1,
+    "explanation": "IQR = 200,000. Upper fence = 280,000 + 1.5 × 200,000 = 580,000."
+  }
+]
+```
+$md$, true, true, 4, array['stat-04-p1', 'stat-04-p2', 'stat-04-p3']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('stat-m05', 'statistics-for-data-analysis', 'Rates, Percentages and Weighted Averages', 5, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('statistics-for-data-analysis:rates-and-weighted-averages', 'statistics-for-data-analysis', 'stat-m05', 'rates-and-weighted-averages', 'Rates, percentages and weighted averages', 'Report changes in rates without confusing percent and percentage points, calculate weighted averages correctly with SUMPRODUCT, and spot Simpson''s paradox, where a trend in every group reverses in the total.', 25, $md$
+## The problem
+
+Harbourline's quarterly board pack has a slide that reads:
+
+> *"Air freight on-time delivery fell 13% this year. Average discount given: 2.7%."*
+
+Both numbers are wrong, and not because of a calculation slip. The on-time rate fell from 80.9% to 67.8%: that's **13.1 percentage points**, which is a **16%** fall. And the discount figure averages the discount percentage across order lines as if every line were the same size, when big orders get bigger discounts. Weighted properly, Kolanut gives away 3.4% of gross sales in discounts, a quarter more than the slide says.
+
+Rates, percentages and averages of averages cause more wrong conclusions in business reporting than any formula error. The rules are simple once you've seen them.
+
+## The concept
+
+**Percent change versus percentage points**
+
+When the thing you're measuring is itself a percentage (an on-time rate, a market share, a conversion rate), there are two ways to describe a change:
+
+- **Percentage points (pp):** the simple difference. 80.9% → 67.8% is a fall of **13.1 pp**.
+- **Percent change:** the change relative to where you started. (67.8 − 80.9) ÷ 80.9 = **−16.2%**.
+
+Both are correct; they answer different questions. The mistake is writing "fell 13%" when you mean 13 points. Always say which: "on-time delivery fell 13.1 percentage points, from 80.9% to 67.8%". Giving the start and end values removes all doubt.
+
+**Rates need their base**
+
+A rate is a count divided by a base: on-time shipments ÷ delivered shipments. Before comparing rates, check:
+
+1. **The base is right.** Cancellations ÷ all bookings, not ÷ delivered shipments. On-time ÷ delivered, not ÷ all bookings (cancelled shipments can't be on time).
+2. **The bases are big enough.** 2 of 3 is 67%, but you'd want far more than 3 before quoting it.
+3. **You show the counts** next to the percentage: "67.8% (80 of 118)".
+
+**Weighted averages**
+
+A simple average treats every row equally. A **weighted average** gives each value a weight, such as its size:
+
+**weighted average = Σ(value × weight) ÷ Σ(weight)**
+
+In Excel: `=SUMPRODUCT(values, weights) / SUM(weights)`.
+
+Use a weighted average whenever the rows differ in size and the question is about the whole: the average discount on sales (weight by sales value), the average price per pack sold (weight by packs), the average salary across departments (weight by headcount). The simple average answers a different question: "what's the discount on a typical order line?"
+
+**Simpson's paradox**
+
+Sometimes a pattern that holds in **every** group reverses when the groups are combined, because the groups are different sizes. An illustration with made-up numbers:
+
+| | Depot A on time | Depot B on time |
+| :-- | :-- | :-- |
+| Easy local deliveries | 90 of 100 (90%) | 760 of 800 (95%) |
+| Hard long-distance deliveries | 360 of 600 (60%) | 70 of 100 (70%) |
+| **All deliveries** | **450 of 700 (64%)** | **830 of 900 (92%)** |
+
+Depot B is better on **both** kinds of delivery. But Depot A looks far worse overall, and B even better, simply because A handles mostly hard deliveries. Judge A on its total and you'd blame the wrong team. When groups differ in mix, compare like with like: break the total down by the thing that differs.
+
+## Example
+
+Air freight on-time rate by year, from Harbourline's delivered shipments (on time = transit days ≤ the route's target):
+
+| Year | On time | Delivered | Rate |
+| :-- | --: | --: | --: |
+| 2025 | 127 | 157 | 80.9% |
+| 2026 | 80 | 118 | 67.8% |
+
+The honest sentence: *"Air on-time delivery fell 13.1 percentage points, from 80.9% to 67.8% (a 16% fall). 2026 covers January to August only, with 118 shipments."*
+
+Kolanut's discounts. The simple average of `discount_pct` over all order lines is **2.66%**. The discount actually given, as a share of gross sales value, weights each line by its value (quantity × unit_price):
+
+```excel
+=SUMPRODUCT(discount_pct, quantity * unit_price) / SUMPRODUCT(quantity, unit_price)
+```
+
+That's **3.38%**. The difference is the finding: larger lines get larger discounts, so discounts cost more than the per-line average suggests. Finance needs the 3.38%.
+
+## Walkthrough
+
+1. In Kolanut's `orders.csv`, calculate the simple average of `discount_pct`, then the value-weighted average with `SUMPRODUCT`. Why are they different?
+2. Calculate the simple average `unit_price` and the price per pack weighted by `quantity`. Which answers "what does a pack sell for on average?"
+3. In the logistics data, build `transit_days` and `on_time` (transit ≤ `target_transit_days`) for delivered shipments, with `mode` and booking year from the lookups.
+4. Make a pivot table: mode in rows, year in columns, average of `on_time` (TRUE/FALSE averages to a rate when you use `=--on_time` as a 1/0 column).
+5. For air freight, write the change in percentage points and in percent.
+6. Calculate the cancellation rate per year: cancelled ÷ all bookings. Check you used the right base.
+
+## Practice
+
+```dataset
+{"dataset": "logistics", "files": ["shipments", "routes"]}
+```
+
+```answer
+{
+  "id": "stat-05-p1",
+  "prompt": "Air freight on-time delivery went from **80.9%** in 2025 to **67.8%** in 2026. By how many **percentage points** did it fall?",
+  "answer": 13.1,
+  "format": "number",
+  "pyVerify": "round(80.9 - 67.8, 1)",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "stat-05-p2",
+  "prompt": "What is Kolanut's **value-weighted** average discount: total discount given ÷ total gross value (quantity × unit_price)? As a percentage, two decimal places.",
+  "answer": 3.38,
+  "format": "percent",
+  "tolerance": 0.011,
+  "dataset": "sales",
+  "files": ["orders"],
+  "verify": "SELECT ROUND(100.0 * SUM(quantity * unit_price * discount_pct / 100.0) / SUM(quantity * unit_price), 2) FROM orders",
+  "pyVerify": "(lambda o: round((o['discount_pct'] * o['quantity'] * o['unit_price']).sum() / (o['quantity'] * o['unit_price']).sum(), 2))(data('sales', 'orders'))",
+  "hint": "=SUMPRODUCT(discount_pct, quantity, unit_price) / SUMPRODUCT(quantity, unit_price)",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "stat-05-p3",
+  "prompt": "What share of all shipments **booked in 2025** were **Cancelled**? As a percentage, one decimal place.",
+  "answer": 5.6,
+  "format": "percent",
+  "dataset": "logistics",
+  "files": ["shipments"],
+  "verify": "SELECT ROUND(100.0 * SUM(status = 'Cancelled') / COUNT(*), 1) FROM shipments WHERE booking_date BETWEEN '2025-01-01' AND '2025-12-31'",
+  "pyVerify": "(lambda s: round((s['status'] == 'Cancelled').mean() * 100, 1))(data('logistics', 'shipments').query('booking_date < \"2026-01-01\"'))",
+  "hint": "Cancelled bookings ÷ all bookings in 2025 (the base is every booking, not just delivered ones).",
+  "required": true
+}
+```
+
+## Challenge
+
+```answer
+{
+  "id": "stat-05-c1",
+  "prompt": "In the Simpson's paradox table above, what is **Depot B's** overall on-time rate? As a percentage, rounded to a whole number.",
+  "answer": 92,
+  "format": "percent",
+  "pyVerify": "round(830 / 900 * 100)",
+  "explanation": "830 of 900. B handles mostly easy deliveries, so its total looks far better than A's, even though the per-type gap is only 5 to 10 points.",
+  "required": false
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Market share rises from 20% to 25%. Which statement is correct?",
+    "options": ["It rose 5%", "It rose 5 percentage points, a 25% increase", "It rose 25 percentage points", "It rose 5 points, a 5% increase"],
+    "answer": 1,
+    "explanation": "25 − 20 = 5 pp; 5 ÷ 20 = 25%."
+  },
+  {
+    "prompt": "Three products have margins of 10%, 20% and 30%, but the 10% product makes 80% of sales. What's the overall margin closest to?",
+    "options": ["20%", "About 13%", "30%", "10%"],
+    "answer": 1,
+    "explanation": "Weight by sales: mostly the 10% product. (Illustration: 0.8 × 10 + 0.1 × 20 + 0.1 × 30 = 13%.)"
+  },
+  {
+    "prompt": "What's the right base for an on-time delivery rate?",
+    "options": ["All bookings", "Delivered shipments", "Cancelled shipments", "Customers"],
+    "answer": 1,
+    "explanation": "Only delivered shipments can be on time or late."
+  },
+  {
+    "prompt": "Depot B beats Depot A on every delivery type but looks worse overall. What's the likely cause?",
+    "options": ["A calculation error", "The depots handle different mixes of easy and hard deliveries (Simpson's paradox)", "Depot B is lying", "Rates can't be compared"],
+    "answer": 1,
+    "explanation": "Compare like with like by breaking totals down by the factor that differs."
+  }
+]
+```
+$md$, true, true, 5, array['stat-05-p1', 'stat-05-p2', 'stat-05-p3']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('stat-m06', 'statistics-for-data-analysis', 'Correlation', 6, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('statistics-for-data-analysis:correlation', 'statistics-for-data-analysis', 'stat-m06', 'correlation', 'Correlation', 'Measure how strongly two numbers move together with a scatter chart and CORREL, interpret r and r², and avoid the classic traps, above all treating correlation as cause.', 25, $md$
+## The problem
+
+Kolanut's sales director has noticed that order lines with a discount are much bigger than those without: about 17 packs against 11. Her proposal:
+
+> "Discounts make customers buy more. Let's give a 10% discount on everything."
+
+It sounds like the data supports her. But is the discount causing the bigger orders, or are bigger orders getting the discount? The answer decides whether the new policy grows sales or just gives away margin on orders that would have happened anyway.
+
+This lesson measures how strongly two things move together, and then, more importantly, how to think about what that relationship does and doesn't mean.
+
+## The concept
+
+**Look first: the scatter chart**
+
+Put one variable on each axis and plot a dot for each row: **Insert → Scatter** in Excel or Google Sheets. In a few seconds you see whether the dots rise together, fall, or show no pattern; whether the relationship is a straight line or a curve; and whether a few outliers are doing all the work.
+
+**Measure: the correlation coefficient, r**
+
+`=CORREL(range1, range2)` gives **Pearson's r**, a number from −1 to +1:
+
+| r | Meaning |
+| :-- | :-- |
+| +1 | Perfect positive straight line: as one rises, the other rises exactly |
+| about +0.7 to +1 | Strong positive |
+| about +0.3 to +0.7 | Moderate positive |
+| about −0.3 to +0.3 | Weak or none |
+| negative values | The same, but one falls as the other rises |
+| −1 | Perfect negative straight line |
+
+These bands are rough guides, not rules. And r only measures **straight-line** relationships: a strong curve (sales rising then falling with price) can give an r near 0.
+
+**r²: how much is explained**
+
+Square r to get **r²** (`=RSQ(range1, range2)`): the share of the variation in one variable that's explained by a straight-line relationship with the other. r = 0.93 gives r² ≈ 0.87: containers explain about 87% of the variation in freight charges.
+
+**The traps**
+
+1. **Correlation is not causation.** Two things can move together because:
+   - A causes B (more containers cause a higher charge);
+   - B causes A (a supermarket opens more tills because it is busy, not the other way round);
+   - something else causes both (hot weather raises both ice-cream sales and drowning numbers);
+   - pure coincidence, especially when you test many pairs.
+2. **Outliers** can create or hide a correlation. Check the scatter chart.
+3. **Mixing groups.** Two groups with different levels can create a correlation that doesn't exist within either group (the same lesson as Simpson's paradox).
+4. **No correlation isn't "no relationship".** It means no straight-line relationship.
+
+**Getting closer to cause**
+
+Data like Kolanut's is **observational**: nobody decided at random who gets a discount. The strongest way to establish cause is an **experiment**: give the discount to a random half of customers for a month and compare (lesson 9 shows how to test the difference). Without one, ask how the data was produced: who decided the discount, and why?
+
+## Example
+
+Three correlations from the practice data, with what each one means:
+
+| Pair | r | Reading |
+| :-- | --: | :-- |
+| Harbourline: containers vs freight charge | 0.93 | Very strong. And here it **is** causal: Harbourline prices by container. |
+| Kolanut: quantity vs discount % | 0.34 | Moderate. Bigger lines tend to have bigger discounts. But see below. |
+| Kolanut HR: years of service vs monthly salary | −0.05 | None. Pay isn't related to how long people have been there. |
+
+Back to the director. The 0.34 is real, but look at **who** gets discounts. Kolanut's discounts depend mostly on the customer's **channel**: 62% of wholesale lines are discounted, 27% of supermarket lines and 5% of kiosk lines. And wholesalers also order far more per line (19 packs, against 11 for supermarkets and under 4 for kiosks). Channel drives **both** the discount and the quantity: it's a third factor, called a **confounder**.
+
+Check it by looking **within** one channel, so channel can't be the explanation. Among wholesale lines, discounted lines average 19.2 packs and undiscounted ones 18.7: almost no difference, and the correlation is about 0.02. The same holds inside the other two channels. Once you compare like with like, the "discount effect" disappears.
+
+So a discount on everything would cost margin on every order, with no evidence it would grow volume. The honest recommendation: *"Discounted lines are larger overall (r = 0.34), but only because wholesalers get most of the discounts and also place the biggest orders. Within each channel, discounted and full-price lines are the same size. To test whether a discount changes behaviour, offer it to a random half of comparable customers for a month and compare."*
+
+And the HR result deserves a sentence too: pay that doesn't rise with service is something HR would want to know about, especially alongside lesson 1's finding about who leaves.
+
+## Walkthrough
+
+1. Open the logistics `shipments.csv`. Insert a scatter chart of `containers` (x) against `freight_charge` (y). Describe what you see.
+2. Calculate `=CORREL(containers, freight_charge)` and `=RSQ(…)`.
+3. Open Kolanut's `orders.csv`. Calculate `CORREL(quantity, discount_pct)`. Compare the average quantity of discounted and undiscounted lines with `AVERAGEIFS`.
+4. Open the HR `employees.csv`. Add `years` = (`exit_date` if there is one, otherwise 30 June 2026, minus `hire_date`) ÷ 365.25. Scatter `years` against `monthly_salary`, and calculate `CORREL`.
+5. Add each order line's `channel` from `customers.csv` with XLOOKUP. Filter to **Wholesale** and calculate `CORREL(quantity, discount_pct)` again. What happened to the relationship?
+6. Write the director a two-sentence reply about the discount proposal.
+
+## Practice
+
+```answer
+{
+  "id": "stat-06-p1",
+  "prompt": "What is the correlation (`CORREL`) between `containers` and `freight_charge` across all shipments in `shipments.csv`? Two decimal places.",
+  "answer": 0.93,
+  "format": "number",
+  "tolerance": 0.011,
+  "dataset": "logistics",
+  "files": ["shipments"],
+  "pyVerify": "round(data('logistics', 'shipments')[['containers', 'freight_charge']].corr().iloc[0, 1], 2)",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "stat-06-p2",
+  "prompt": "What is the correlation between `quantity` and `discount_pct` in Kolanut's `orders.csv`? Two decimal places.",
+  "answer": 0.34,
+  "format": "number",
+  "tolerance": 0.011,
+  "dataset": "sales",
+  "files": ["orders"],
+  "pyVerify": "round(data('sales', 'orders')[['quantity', 'discount_pct']].corr().iloc[0, 1], 2)",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "stat-06-p3",
+  "prompt": "What is the **average quantity** on order lines **with** a discount (discount_pct > 0)? One decimal place.",
+  "answer": 17.2,
+  "format": "number",
+  "dataset": "sales",
+  "files": ["orders"],
+  "verify": "SELECT ROUND(AVG(quantity), 1) FROM orders WHERE discount_pct > 0",
+  "pyVerify": "round(data('sales', 'orders').query('discount_pct > 0')['quantity'].mean(), 1)",
+  "hint": "=AVERAGEIFS(quantity, discount_pct, \">0\")",
+  "explanation": "17.2 packs, against 11.4 without a discount. The next task shows why that comparison misleads.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "stat-06-p4",
+  "prompt": "Now look **within one channel**. Among **Wholesale** customers' order lines only, what is the correlation between `quantity` and `discount_pct`? Two decimal places.",
+  "answer": 0.02,
+  "format": "number",
+  "tolerance": 0.011,
+  "dataset": "sales",
+  "files": ["orders", "customers"],
+  "pyVerify": "round(data('sales', 'orders').merge(data('sales', 'customers'), on='customer_id').query('channel == \"Wholesale\"')[['quantity', 'discount_pct']].corr().iloc[0, 1], 2)",
+  "hint": "XLOOKUP each line's channel from customers.csv, filter to Wholesale, then CORREL on the visible rows (or use the filtered columns).",
+  "explanation": "About 0.02: no relationship at all. The overall 0.34 came from mixing channels, where wholesalers both buy more and get more discounts. Channel is the confounder.",
+  "required": true
+}
+```
+
+## Challenge
+
+```answer
+{
+  "id": "stat-06-c1",
+  "prompt": "Total each Kolanut customer's revenue across all orders, then calculate the correlation between that total and the customer's `credit_limit`. Two decimal places.",
+  "answer": 0.78,
+  "format": "number",
+  "tolerance": 0.011,
+  "dataset": "sales",
+  "files": ["orders", "customers"],
+  "pyVerify": "round((lambda o, c: c.merge((o['quantity'] * o['unit_price'] * (1 - o['discount_pct'] / 100)).groupby(o['customer_id']).sum().rename('rev'), left_on='customer_id', right_index=True)[['credit_limit', 'rev']].corr().iloc[0, 1])(data('sales', 'orders'), data('sales', 'customers')), 2)",
+  "hint": "A pivot table of revenue by customer_id, then XLOOKUP each customer's credit_limit next to it, then CORREL.",
+  "explanation": "0.78: strong. But it's channel again: wholesalers get the highest credit limits and also buy the most. That doesn't show a higher limit would make any one customer buy more. Check it within one channel, as in the last practice task.",
+  "required": false
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "r = −0.82 between price and units sold. What does that mean?",
+    "options": ["A weak relationship", "A strong relationship where units sold tend to fall as price rises", "Price causes 82% of sales", "No relationship"],
+    "answer": 1,
+    "explanation": "Strong and negative. Whether price causes it is a separate question."
+  },
+  {
+    "prompt": "r = 0.6. What's r², and what does it mean?",
+    "options": ["0.36: about 36% of the variation is explained by a straight-line relationship", "0.6: 60% explained", "1.2", "0.36: the effect is 36% as big"],
+    "answer": 0,
+    "explanation": "r² is r squared, the share of variation explained."
+  },
+  {
+    "prompt": "Shops with more staff have higher sales (r = 0.7). Which conclusion is safest?",
+    "options": ["Hiring staff will raise sales", "Bigger, busier shops tend to have both more staff and more sales; this alone doesn't show staff cause sales", "Sales cause hiring, definitely", "The correlation is wrong"],
+    "answer": 1,
+    "explanation": "A third factor (shop size) could drive both."
+  },
+  {
+    "prompt": "A scatter chart shows a clear U-shaped curve, and CORREL gives 0.02. What's true?",
+    "options": ["There's no relationship", "There's a strong relationship, but not a straight line, which r can't measure", "The data is random", "CORREL is broken"],
+    "answer": 1,
+    "explanation": "r only measures straight-line relationships. Always look at the chart."
+  }
+]
+```
+$md$, true, true, 6, array['stat-06-p1', 'stat-06-p2', 'stat-06-p3', 'stat-06-p4']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('stat-m07', 'statistics-for-data-analysis', 'Sampling and the Normal Distribution', 7, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('statistics-for-data-analysis:sampling-and-the-normal-distribution', 'statistics-for-data-analysis', 'stat-m07', 'sampling-and-the-normal-distribution', 'Sampling and the normal distribution', 'Understand why samples give different answers, measure that uncertainty with the standard error, use the 68–95–99.7 rule, and see why averages of samples behave predictably even when the data is skewed.', 25, $md$
+## The problem
+
+Kolanut's finance manager wants to know the average revenue per order line, but the full order system is being migrated and only a random sample of **50** order lines can be pulled this week. A colleague pulls a sample and gets ₦181,000. Another pulls a different 50 and gets ₦214,000.
+
+Which one is right? Neither, exactly, and both are reasonable. Every sample gives a slightly different answer. That's **sampling variability**, and it's the reason inference exists. The useful questions are how far a sample's answer is likely to be from the truth, and how big a sample you need to be precise enough.
+
+## The concept
+
+**Samples vary; bigger samples vary less**
+
+If you took many random samples and calculated each one's mean, the means would scatter around the true population mean. The **standard error (SE)** measures how much:
+
+**SE of the mean = s ÷ √n**
+
+where *s* is the standard deviation of the data and *n* the sample size. In Excel: `=STDEV.S(range) / SQRT(COUNT(range))`.
+
+Two things follow:
+
+- More spread in the data means a larger SE: noisy data needs bigger samples.
+- The SE shrinks with the **square root** of the sample size. Four times the sample halves the SE; a hundred times the sample divides it by ten. Precision gets expensive.
+
+**A random sample, properly**
+
+A sample only tells you about the population if it's **random**: every row has the same chance of being picked. The first 50 rows (all from January), the 50 biggest customers, or whoever answered a survey are **biased** samples, and a bigger biased sample is just more confidently wrong.
+
+To draw a random sample in Excel: add a column `=RAND()`, copy it and paste as values, sort by it, and take the first 50 rows. In Google Sheets, `=SORTN(range, 50, 0, RANDARRAY(ROWS(range)), TRUE)` does it in one step.
+
+**The normal distribution and the 68–95–99.7 rule**
+
+Many measurements follow a symmetric bell shape called the **normal distribution**. For normal data:
+
+- about **68%** of values are within **1 SD** of the mean;
+- about **95%** within **2 SDs** (more precisely, 1.96);
+- about **99.7%** within **3 SDs**.
+
+Excel calculates exact normal probabilities: `=NORM.DIST(x, mean, sd, TRUE)` is the share of values below *x*.
+
+**Why it matters even for skewed data: the central limit theorem**
+
+Order-line revenue is right-skewed, not normal. But the **means of samples** are close to normal, as long as the samples aren't tiny (30 or more is a common rule of thumb). That's the **central limit theorem**, and it's why the SE and the 68–95 rule work for averages almost regardless of the data's shape. It's the foundation for the confidence intervals and tests in the next two lessons.
+
+## Example
+
+All 4,266 Kolanut order lines are available here, so we can see sampling at work. The full population:
+
+- mean revenue per line **₦194,689**, SD **₦140,241**.
+
+For a sample of 50, the standard error is:
+
+```excel
+=140241 / SQRT(50)     ≈ 19,833
+```
+
+So a sample mean will usually be within about ₦20,000 of the truth, and about 95% of the time within 2 × ₦19,833 ≈ ₦40,000. The two colleagues' answers (₦181,000 and ₦214,000) are both comfortably within that range. Neither did anything wrong.
+
+We can check the theory by brute force. Drawing 1,000 different random samples of 50 lines and calculating each one's mean, the means spread out with a standard deviation of **₦19,790**, almost exactly the ₦19,833 the formula predicts. And a histogram of those 1,000 means is a near-perfect bell shape, even though the revenue data itself is skewed.
+
+To halve the uncertainty to about ₦10,000, the finance manager needs four times the sample: 200 lines.
+
+## Walkthrough
+
+1. Open Kolanut's `orders.csv` and add `revenue`. Calculate its mean and `STDEV.S` across all lines.
+2. Add a column `=RAND()`, paste it as values, sort by it, and calculate the mean revenue of the first 50 rows. Note it.
+3. Re-generate the random column (re-enter `=RAND()` and paste as values again), sort, and take another 50. How far apart are your two sample means?
+4. Calculate the SE for samples of 50, 200 and 800 lines. How does the SE change each time the sample quadruples?
+5. Check the 68% part of the rule on the full data: `=COUNTIFS(revenue, ">="&(mean - sd), revenue, "<="&(mean + sd)) / COUNT(revenue)`.
+6. Write one sentence for the finance manager explaining what a 50-line sample can and can't tell her.
+
+## Practice
+
+```answer
+{
+  "id": "stat-07-p1",
+  "prompt": "Order-line revenue has a standard deviation of about **₦140,241**. What is the **standard error** of the mean for a random sample of **100** lines? Round to the nearest naira.",
+  "answer": 14024,
+  "format": "naira",
+  "pyVerify": "round(140241 / 100 ** 0.5)",
+  "hint": "SE = SD ÷ √n = 140,241 ÷ 10",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "stat-07-p2",
+  "prompt": "On the full `orders.csv`, what **percentage** of order lines have revenue within **one standard deviation** of the mean (inclusive)? One decimal place.",
+  "answer": 67.1,
+  "format": "percent",
+  "dataset": "sales",
+  "files": ["orders"],
+  "pyVerify": "(lambda r: round(((r - r.mean()).abs() <= r.std()).mean() * 100, 1))((lambda o: o['quantity'] * o['unit_price'] * (1 - o['discount_pct'] / 100))(data('sales', 'orders')))",
+  "hint": "COUNTIFS between mean − SD and mean + SD, divided by the number of lines.",
+  "explanation": "67.1%, close to the 68% the normal rule predicts, even though revenue is somewhat skewed.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "stat-07-p3",
+  "prompt": "A sample of 50 gives a standard error of about ₦20,000. How many lines would you need for a standard error of about **₦5,000**?",
+  "answer": 800,
+  "format": "number",
+  "pyVerify": "50 * (20000 / 5000) ** 2",
+  "hint": "The SE shrinks with the square root of n. A quarter of the SE needs 4² = 16 times the sample.",
+  "explanation": "800 lines. Four times the precision costs sixteen times the data.",
+  "required": true
+}
+```
+
+## Challenge
+
+```answer
+{
+  "id": "stat-07-c1",
+  "prompt": "Shipments on route 4 (Rotterdam → Lagos Apapa) take a mean of **21.0** days with an SD of **3.0** days. If transit times were normal, what **percentage** would take more than **27** days? Use `=1 - NORM.DIST(27, 21, 3, TRUE)`. One decimal place.",
+  "answer": 2.3,
+  "format": "percent",
+  "pyVerify": "round((1 - stats.norm.cdf(27, 21, 3)) * 100, 1)",
+  "explanation": "27 days is 2 SDs above the mean, so about 2.3% (half of the 5% outside ±2 SDs). Check it against the real route 4 data: delays are usually more common than a normal curve predicts, because real delays have a long right tail.",
+  "required": false
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Two random samples of 50 give average order values of ₦181,000 and ₦214,000. What's the most likely explanation?",
+    "options": ["One sample was done wrong", "Normal sampling variability", "The data changed between samples", "Averages can't be calculated from samples"],
+    "answer": 1,
+    "explanation": "Different samples give different answers. The standard error says how different to expect."
+  },
+  {
+    "prompt": "You quadruple the sample size. What happens to the standard error?",
+    "options": ["It quarters", "It halves", "It doubles", "It stays the same"],
+    "answer": 1,
+    "explanation": "SE = s ÷ √n, and √4 = 2."
+  },
+  {
+    "prompt": "A survey of 5,000 customers who chose to reply to an email gives an average satisfaction of 8.9/10. What's the main concern?",
+    "options": ["The sample is too small", "It isn't random: people who reply may differ from those who don't", "The SE is too large", "Averages can't be used for ratings"],
+    "answer": 1,
+    "explanation": "A large biased sample is still biased. Size can't fix who's missing."
+  },
+  {
+    "prompt": "For normally distributed data, about what share of values lie within 2 standard deviations of the mean?",
+    "options": ["68%", "95%", "99.7%", "50%"],
+    "answer": 1,
+    "explanation": "68–95–99.7: within 1, 2 and 3 SDs."
+  }
+]
+```
+$md$, true, true, 7, array['stat-07-p1', 'stat-07-p2', 'stat-07-p3']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('stat-m08', 'statistics-for-data-analysis', 'Confidence Intervals', 8, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('statistics-for-data-analysis:confidence-intervals', 'statistics-for-data-analysis', 'stat-m08', 'confidence-intervals', 'Confidence intervals', 'Turn a sample''s answer into an honest range with a 95% confidence interval for a mean (CONFIDENCE.T) or a percentage, interpret it correctly, and use it to say when a difference might just be noise.', 25, $md$
+## The problem
+
+Ashgrove Chambers is negotiating an overdraft with its bank, sized to cover the gap between issuing invoices and getting paid. The finance partner asks:
+
+> "How long do clients take to pay? The bank wants a number we can stand behind."
+
+The average across the 327 paid invoices so far is 45.4 days. But those invoices are a sample of the firm's billing, and next year's clients won't behave identically. "45.4 days" sounds more precise than it is. A **confidence interval** says how precise it really is: "between about 43 and 48 days, with 95% confidence". That's a number the firm can stand behind, and it tells the bank how much buffer to allow.
+
+## The concept
+
+**What a confidence interval is**
+
+A **95% confidence interval** is a range built from a sample so that, if you repeated the sampling many times, 95% of the ranges built this way would contain the true value. In practice: it's the range of values the true number plausibly lies in, given the sample.
+
+It's built from the standard error (lesson 7):
+
+**estimate ± margin of error**, where for a mean the **margin ≈ 1.96 × SE**
+
+The 1.96 comes from the normal distribution: 95% of values lie within 1.96 SDs of the mean.
+
+**For a mean, in Excel**
+
+```excel
+=CONFIDENCE.T(0.05, STDEV.S(range), COUNT(range))
+```
+
+returns the **margin of error** for a 95% interval (0.05 = 5% left over). The interval is `AVERAGE(range) ± margin`. `CONFIDENCE.T` uses the t-distribution, which makes the interval slightly wider for small samples. With more than about 30 values it's almost the same as 1.96 × SE.
+
+**For a percentage (a proportion)**
+
+For a share *p* (as a decimal) from *n* observations:
+
+**margin = 1.96 × √( p × (1 − p) ÷ n )**
+
+In Excel: `=1.96 * SQRT(p * (1 - p) / n)`. This works well when there are at least 10 "yes" and 10 "no" answers; for rarer events, use a bigger sample.
+
+**Reading intervals correctly**
+
+- **Wider interval = less certain.** Smaller samples and noisier data give wider intervals.
+- **Overlapping intervals** for two groups mean the difference **might** be chance; the formal check is a test (next lesson). Intervals that don't overlap at all mean the difference is very unlikely to be chance.
+- An interval only covers **sampling** error. It says nothing about a biased sample, bad data, or a change in the future.
+- Don't say "there's a 95% chance the true value is in this interval". Say "we're 95% confident the true value is between X and Y". (The true value is fixed; it's the interval that varies.)
+
+**Choosing the confidence level**
+
+95% is the convention. 90% gives a narrower interval with less confidence; 99% a wider one with more. Use `CONFIDENCE.T(0.10, …)` for 90% or `CONFIDENCE.T(0.01, …)` for 99%. Pick one before you look at the results, and say which you used.
+
+## Example
+
+Ashgrove's days to pay, for the 327 paid invoices:
+
+```excel
+=AVERAGE(days)                              45.4
+=STDEV.S(days)                              25.6
+=CONFIDENCE.T(0.05, STDEV.S(days), COUNT(days))   2.8
+```
+
+The 95% confidence interval is **45.4 ± 2.8: about 42.6 to 48.2 days.**
+
+For the bank: *"Clients pay in 45 days on average; we're 95% confident the true average is between 43 and 48 days. Individual invoices vary much more (some take 90 days), so the overdraft should cover the slow payers, not just the average."* The last sentence matters: the interval is about the **average**, not about any one invoice.
+
+A percentage, from the HR data: 103 of 1,518 June attendance records were **Late**, 6.8%.
+
+```excel
+=1.96 * SQRT(0.0679 * (1 - 0.0679) / 1518)     0.0127, or 1.3 percentage points
+```
+
+So the lateness rate is **6.8% ± 1.3 pp: between about 5.5% and 8.1%**. One month of data pins it down fairly well.
+
+## Walkthrough
+
+1. Open the legal `invoices.csv` and add `days_to_pay` (blank for unpaid invoices), as in lesson 2.
+2. Calculate the mean, `STDEV.S`, `COUNT` and the margin with `CONFIDENCE.T(0.05, …)`. Write the 95% interval.
+3. Recalculate with 0.10 and 0.01 to get the 90% and 99% intervals. Which is widest?
+4. Open the HR `attendance.csv`. Calculate the share of records that are Late and its 95% margin with the proportion formula.
+5. In the logistics data, calculate the on-time rate for delivered **Air** shipments and its 95% interval.
+6. Write the sentence you'd give the bank, including what the interval does **not** cover.
+
+## Practice
+
+```dataset
+{"dataset": "legal", "files": ["invoices"]}
+```
+
+```answer
+{
+  "id": "stat-08-p1",
+  "prompt": "What is the **95% margin of error** (`CONFIDENCE.T(0.05, …)`) for the mean days to pay, across the paid invoices? Two decimal places.",
+  "answer": 2.78,
+  "format": "number",
+  "tolerance": 0.011,
+  "dataset": "legal",
+  "files": ["invoices"],
+  "pyVerify": "(lambda d: round(stats.t.ppf(0.975, len(d) - 1) * d.std() / len(d) ** 0.5, 2))((lambda i: (pd.to_datetime(i['paid_date']) - pd.to_datetime(i['issued_date'])).dt.days.dropna())(data('legal', 'invoices')))",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "stat-08-p2",
+  "prompt": "What is the **lower end** of the 95% confidence interval for mean days to pay? One decimal place.",
+  "answer": 42.6,
+  "format": "number",
+  "dataset": "legal",
+  "files": ["invoices"],
+  "pyVerify": "(lambda d: round(d.mean() - stats.t.ppf(0.975, len(d) - 1) * d.std() / len(d) ** 0.5, 1))((lambda i: (pd.to_datetime(i['paid_date']) - pd.to_datetime(i['issued_date'])).dt.days.dropna())(data('legal', 'invoices')))",
+  "hint": "The mean minus the margin from the last task.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "stat-08-p3",
+  "prompt": "Air freight on-time delivery is **75.3%** across **275** delivered shipments. What is the 95% **margin of error**, in percentage points? One decimal place.",
+  "answer": 5.1,
+  "format": "number",
+  "pyVerify": "round(1.96 * (0.753 * (1 - 0.753) / 275) ** 0.5 * 100, 1)",
+  "hint": "=1.96 * SQRT(0.753 * (1 - 0.753) / 275), then × 100 for percentage points.",
+  "explanation": "± 5.1 points: the true air on-time rate is plausibly anywhere from about 70% to 80%. Worth remembering before anyone reads too much into a 2-point change.",
+  "required": true
+}
+```
+
+## Challenge
+
+```answer
+{
+  "id": "stat-08-c1",
+  "prompt": "A customer survey finds that **60%** of **50** customers are satisfied. How many customers would you need for a 95% margin of error of about **±5 percentage points** (assuming the share stays near 60%)? Round up to a whole customer.",
+  "answer": 369,
+  "format": "number",
+  "pyVerify": "__import__('math').ceil((1.96 / 0.05) ** 2 * 0.6 * 0.4)",
+  "hint": "Rearrange margin = 1.96 × √(p(1 − p)/n) to n = (1.96 / margin)² × p(1 − p).",
+  "explanation": "About 369 customers. With 50, the margin is ±13.6 points: '60% satisfied' could easily be 50% or 70%.",
+  "required": false
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "A 95% confidence interval for average delivery time is 25 to 29 days. Which statement is right?",
+    "options": ["95% of shipments take 25 to 29 days", "We're 95% confident the true average delivery time is between 25 and 29 days", "There's a 95% chance any shipment takes 27 days", "5% of shipments are late"],
+    "answer": 1,
+    "explanation": "The interval is about the average, not individual shipments."
+  },
+  {
+    "prompt": "What happens to the interval if you collect four times as much data?",
+    "options": ["It gets about half as wide", "It gets a quarter as wide", "It gets wider", "No change"],
+    "answer": 0,
+    "explanation": "The margin is based on the standard error, which halves when n quadruples."
+  },
+  {
+    "prompt": "Store A's satisfaction is 72% ± 6 pp; store B's is 68% ± 7 pp. What can you say?",
+    "options": ["A is definitely better", "The intervals overlap a lot, so the difference may well be chance", "B is better", "They're identical"],
+    "answer": 1,
+    "explanation": "Big overlap: don't claim a difference without more data or a test."
+  },
+  {
+    "prompt": "A survey of 2,000 people who opted in online gives a very narrow interval. What doesn't the interval account for?",
+    "options": ["Sampling variability", "Bias from who chose to answer", "The sample size", "The confidence level"],
+    "answer": 1,
+    "explanation": "Intervals measure random sampling error only, not bias."
+  }
+]
+```
+$md$, true, true, 8, array['stat-08-p1', 'stat-08-p2', 'stat-08-p3']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('stat-m09', 'statistics-for-data-analysis', 'Comparing Groups', 9, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('statistics-for-data-analysis:comparing-groups', 'statistics-for-data-analysis', 'stat-m09', 'comparing-groups', '"Comparing groups: is the difference real?"', 'Test whether a difference between two groups is more than chance, with T.TEST for averages and a two-proportion test for rates, read p-values correctly, and keep statistical significance separate from practical importance.', 25, $md$
+## The problem
+
+In January 2026, Kolanut raised its prices by about 9% across its range. Six months later the commercial director wants to know:
+
+> "Did the price rise make customers buy less? Average quantity per order line dropped from 14.0 packs to 13.7. Should we roll the prices back?"
+
+Meanwhile at Harbourline, air freight's on-time rate has fallen from 80.9% to 67.8%, and the operations director asks whether that's a real problem or a bad run of luck.
+
+In both cases the numbers are different. The question is whether the difference is **bigger than you'd expect from chance alone**. That's what a **hypothesis test** answers, and it's the step between "the numbers moved" and "something changed".
+
+## The concept
+
+**The logic of a test**
+
+1. Start from the **null hypothesis**: there is no real difference; any gap is just sampling variation.
+2. Calculate how surprising your data would be **if the null were true**. That's the **p-value**: the probability of seeing a difference at least this big by chance alone.
+3. If the p-value is small, chance is an unlikely explanation, so you conclude there's a real difference. The usual threshold is **0.05**: below it, the result is called **statistically significant**.
+
+A p-value of 0.23 means: if there were no real effect, you'd see a gap this big about 23% of the time. That's common, so it's not evidence of an effect. A p-value of 0.01 means you'd see it only 1% of the time by chance, so something real is probably going on.
+
+**Comparing two averages: the t-test**
+
+```excel
+=T.TEST(range1, range2, 2, 3)
+```
+
+- The **2** means two-tailed: you're testing for a difference in either direction. Use this unless you decided in advance that only one direction matters.
+- The **3** means two samples with possibly different spreads (Welch's test). It's the safe default.
+
+It returns the p-value directly.
+
+**Comparing two rates: the two-proportion test**
+
+For rates *p₁* (from *n₁*) and *p₂* (from *n₂*), with the pooled rate *p* = all "yes" ÷ all observations:
+
+**z = (p₁ − p₂) ÷ √( p × (1 − p) × (1/n₁ + 1/n₂) )**
+
+and the two-tailed p-value is `=2 * (1 - NORM.S.DIST(ABS(z), TRUE))`.
+
+**What a test can't tell you**
+
+- **"Not significant" doesn't mean "no difference".** It means you can't tell the difference from noise with this much data. A real but small effect needs a bigger sample.
+- **Significant doesn't mean important.** With thousands of rows, a difference of 0.1 packs can be "significant" and still irrelevant. Always report the **size** of the difference, ideally with a confidence interval, not just the p-value.
+- **A test doesn't fix a biased comparison.** If the groups differ in other ways (as discounted and full-price lines differ by channel in lesson 6), a significant result still doesn't prove cause.
+- **Test many things and some will be significant by luck.** At 0.05, about 1 in 20 tests of differences that don't exist will come out "significant". Decide what you're testing before you look.
+
+## Example
+
+**Did the price rise reduce order size?** Compare the six months before (July–December 2025) with the six months after (January–June 2026):
+
+| | Before (H2 2025) | After (H1 2026) |
+| :-- | --: | --: |
+| Order lines | 1,509 | 1,434 |
+| Average quantity | 14.04 packs | 13.69 packs |
+
+```excel
+=T.TEST(before_quantities, after_quantities, 2, 3)     0.23
+```
+
+p = 0.23: a gap of this size would turn up by chance about a quarter of the time. **No evidence that the price rise reduced order size.** Comparing like with like makes the point stronger: January–June 2025 averaged 13.56 packs, slightly **below** January–June 2026 (p = 0.66). The answer for the director: *"There's no sign customers are buying less per order since the price rise. Average quantity is within normal variation (p = 0.23), and slightly above the same months last year. Rolling prices back would give away about 9% of revenue for no evidence of lost volume."*
+
+**Is air freight's on-time fall real?** 127 of 157 on time in 2025 (80.9%) against 80 of 118 in 2026 (67.8%). The pooled rate is 207 ÷ 275 = 75.3%, so:
+
+z = (0.809 − 0.678) ÷ √(0.753 × 0.247 × (1/157 + 1/118)) ≈ **2.49**, and p ≈ **0.013**.
+
+That's well below 0.05: the fall is very unlikely to be chance. *"Air on-time delivery has genuinely fallen, by 13 points, and it's worth finding out why: which routes, and since when."*
+
+## Walkthrough
+
+1. In Kolanut's `orders.csv`, filter `order_date` to July–December 2025 and copy the `quantity` values to a new sheet, column A. Do the same for January–June 2026 into column B.
+2. Calculate each column's mean, then `=T.TEST(A:A, B:B, 2, 3)`.
+3. Repeat with January–June 2025 against January–June 2026.
+4. In the logistics data, count on-time and total delivered air shipments by booking year (a pivot table from lesson 5).
+5. Calculate the two-proportion z and its p-value with `NORM.S.DIST`.
+6. Write one sentence for each director: the size of the difference, the p-value, and what to do.
+
+## Practice
+
+```dataset
+{"dataset": "sales", "files": ["orders"]}
+```
+
+```answer
+{
+  "id": "stat-09-p1",
+  "prompt": "Using `=T.TEST(…, 2, 3)`, what is the **p-value** comparing order-line quantity in **July–December 2025** with **January–June 2026**? Two decimal places.",
+  "answer": 0.23,
+  "format": "number",
+  "tolerance": 0.011,
+  "dataset": "sales",
+  "files": ["orders"],
+  "pyVerify": "(lambda o: round(stats.ttest_ind(o[(o['order_date'] >= '2025-07-01') & (o['order_date'] < '2026-01-01')]['quantity'], o[o['order_date'] >= '2026-01-01']['quantity'], equal_var=False).pvalue, 2))(data('sales', 'orders'))",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "stat-09-p2",
+  "prompt": "For the air on-time rates (127 of 157 against 80 of 118), what is the **z** value of the two-proportion test? Two decimal places.",
+  "answer": 2.49,
+  "format": "number",
+  "tolerance": 0.011,
+  "pyVerify": "(lambda p1, p2, p: round((p1 - p2) / (p * (1 - p) * (1 / 157 + 1 / 118)) ** 0.5, 2))(127 / 157, 80 / 118, 207 / 275)",
+  "hint": "Pooled p = 207 / 275. Then z = (p₁ − p₂) ÷ √(p(1 − p)(1/157 + 1/118)).",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "stat-09-p3",
+  "prompt": "A test gives p = **0.23**. At the usual 0.05 threshold, is the difference **statistically significant**: yes or no?",
+  "answer": "no",
+  "format": "text",
+  "explanation": "0.23 is above 0.05. That doesn't prove there's no effect; it means this data can't tell it apart from chance.",
+  "required": true
+}
+```
+
+## Challenge
+
+```answer
+{
+  "id": "stat-09-c1",
+  "prompt": "Back to lesson 6's discount question, done properly. Among **Wholesale** order lines only, compare the quantity of discounted and undiscounted lines with `T.TEST(…, 2, 3)`. What is the p-value? Two decimal places.",
+  "answer": 0.08,
+  "format": "number",
+  "tolerance": 0.011,
+  "dataset": "sales",
+  "files": ["orders", "customers"],
+  "pyVerify": "(lambda w: round(stats.ttest_ind(w[w['discount_pct'] > 0]['quantity'], w[w['discount_pct'] == 0]['quantity'], equal_var=False).pvalue, 2))(data('sales', 'orders').merge(data('sales', 'customers'), on='customer_id').query('channel == \"Wholesale\"'))",
+  "explanation": "About 0.08: not significant at 0.05, and the difference is only half a pack. Within one channel, there's no convincing evidence that discounts go with bigger orders.",
+  "required": false
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "What does p = 0.03 mean?",
+    "options": ["There's a 3% chance the effect is real", "If there were no real difference, a gap this big would appear only about 3% of the time", "The effect is 3% in size", "97% of customers changed behaviour"],
+    "answer": 1,
+    "explanation": "A p-value is about how surprising the data would be if the null hypothesis were true."
+  },
+  {
+    "prompt": "A campaign test gives p = 0.40. What's the right conclusion?",
+    "options": ["The campaign definitely doesn't work", "This data doesn't show a difference; there could be a small effect a bigger test would find", "The campaign works", "The test is broken"],
+    "answer": 1,
+    "explanation": "Not significant isn't proof of no effect."
+  },
+  {
+    "prompt": "With 2 million rows, average basket size differs by ₦3 between two groups, p < 0.001. What should you report?",
+    "options": ["A major finding", "That it's statistically significant but too small to matter in practice", "That the test is wrong", "Nothing at all"],
+    "answer": 1,
+    "explanation": "Huge samples make tiny differences significant. Report the size and judge whether it matters."
+  },
+  {
+    "prompt": "You test 40 different product categories for a sales change and 2 come out significant at 0.05. What's the concern?",
+    "options": ["None", "With 40 tests, about 2 would be significant by luck alone even if nothing changed", "40 is too few tests", "p-values can't be used for categories"],
+    "answer": 1,
+    "explanation": "Many tests produce false positives. Decide your questions in advance, or demand stronger evidence."
+  }
+]
+```
+$md$, true, true, 9, array['stat-09-p1', 'stat-09-p2', 'stat-09-p3']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('stat-m10', 'statistics-for-data-analysis', 'Regression and Trends', 10, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('statistics-for-data-analysis:regression-and-trends', 'statistics-for-data-analysis', 'stat-m10', 'regression-and-trends', 'Regression and trends', 'Fit a straight line to data with SLOPE, INTERCEPT and RSQ, use it to estimate and forecast with FORECAST.LINEAR, read how much the line explains, and know when a trend line will mislead you.', 25, $md$
+## The problem
+
+Two requests land on the analysts' desks the same morning.
+
+Harbourline's sales team wants a quick way to quote: *"A customer is asking what 6 containers from Shanghai to Lagos will cost. Can we get a formula instead of looking up old invoices?"*
+
+Kolanut's managing director wants a number for the budget: *"Revenue's been growing. If the trend continues, what will July 2026 look like?"*
+
+Both are **regression** questions: fit a line through past data and use it to estimate something new. One of them will work very well. The other needs a large health warning. This lesson shows you how to tell which is which.
+
+## The concept
+
+**The line of best fit**
+
+Simple linear regression finds the straight line **y = intercept + slope × x** that sits closest to the points on a scatter chart (it minimises the squared vertical distances, hence "least squares").
+
+```excel
+=SLOPE(known_ys, known_xs)          how much y changes when x rises by 1
+=INTERCEPT(known_ys, known_xs)      y when x is 0
+=RSQ(known_ys, known_xs)            r²: share of the variation in y the line explains
+=FORECAST.LINEAR(x, known_ys, known_xs)   the line's estimate of y for a new x
+```
+
+On a scatter chart, right-click the points → **Add Trendline**, and tick **Display equation** and **Display R-squared**. Google Sheets: **Customise → Series → Trendline**, with the label set to the equation.
+
+**Reading the slope**
+
+The slope is in real units: "₦4.2 million per container", "₦730,000 more revenue each month". That's usually the most useful number regression gives you.
+
+**How good is the line? r²**
+
+r² runs from 0 to 1. Near 1, the line captures almost everything and estimates from it are reliable. Near 0, the line explains little: the points scatter widely around it and any single estimate could be far off. There's no universal "good" value. For pricing, you'd want 0.9 or more; for messy business trends, 0.3 can still show a real direction while warning you not to trust individual months.
+
+**Residuals: what the line misses**
+
+A **residual** is actual minus predicted. Plot or list them. A big residual is a point the line doesn't explain: an outlier worth investigating (December's festive spike). A pattern in the residuals (all positive in the middle, negative at the ends) means a straight line is the wrong shape.
+
+**When regression misleads**
+
+- **Extrapolation:** a line fitted to 1–8 containers says nothing reliable about 40 containers. A trend fitted to 18 months says little about 3 years from now.
+- **Seasonality:** a straight line through monthly sales ignores December. Compare the same months year on year (lesson 9) or model seasons separately.
+- **Cause:** a slope doesn't prove x causes y (lesson 6). Regression measures association.
+- **Outliers** can drag the line; check the chart.
+
+## Example
+
+**Quoting Shanghai → Lagos (Apapa).** Harbourline's route 1 shipments, with `containers` as x and `freight_charge` as y:
+
+```excel
+=SLOPE(charge, containers)        4,219,636
+=INTERCEPT(charge, containers)    -18,339
+=RSQ(charge, containers)          0.98
+```
+
+The line: **charge ≈ ₦4.22 million per container** (the intercept is effectively zero). r² = 0.98: containers explain 98% of the variation in price. A quote for 6 containers:
+
+```excel
+=FORECAST.LINEAR(6, charge, containers)     25,299,478
+```
+
+About **₦25.3 million**, and with r² this high the sales team can quote with confidence, for loads within the range the route has carried (1 to 8 containers).
+
+**Kolanut's revenue trend.** Number the months 1 (January 2025) to 18 (June 2026) and fit a line to monthly revenue:
+
+| | Value |
+| :-- | --: |
+| Slope | ₦729,718 per month |
+| r² | 0.32 |
+| Forecast for month 19 (July 2026) | ₦53.1 million |
+
+The direction is real: revenue has grown by roughly ₦730,000 a month. But r² is only 0.32. Individual months scatter widely around the line, mostly because December 2025 (₦66.3m) is far above it. Take December out and r² rises to 0.52. The honest budget sentence:
+
+*"Revenue has grown by about ₦0.7m a month over 18 months. A straight-line trend puts July 2026 at about ₦53m, but months vary a lot around the trend (r² = 0.32), so plan for a range: recent months have been between ₦43m and ₦55m."*
+
+## Walkthrough
+
+1. In the logistics `shipments.csv`, filter to `route_id` 1. Insert a scatter chart of `containers` against `freight_charge`, add a trendline with its equation and R².
+2. Calculate `SLOPE`, `INTERCEPT` and `RSQ` with formulas, and quote 6 containers with `FORECAST.LINEAR`.
+3. In Kolanut's `orders.csv`, build monthly revenue with a pivot table (order_date grouped by month), then copy it to a sheet with a month number 1–18 next to each month.
+4. Fit a trendline and calculate slope, r² and the forecast for month 19.
+5. Add a **residual** column: actual − `FORECAST.LINEAR`(month). Which month has the largest residual?
+6. Write the budget sentence for the managing director, with a range rather than a single number.
+
+## Practice
+
+```dataset
+{"dataset": "logistics", "files": ["shipments"]}
+```
+
+```answer
+{
+  "id": "stat-10-p1",
+  "prompt": "On route 1, what is the **slope** of `freight_charge` against `containers`: the cost per extra container? Round to the nearest naira.",
+  "answer": 4219636,
+  "format": "naira",
+  "dataset": "logistics",
+  "files": ["shipments"],
+  "pyVerify": "(lambda s: round(stats.linregress(s['containers'], s['freight_charge']).slope))(data('logistics', 'shipments').query('route_id == 1'))",
+  "hint": "=SLOPE(freight_charge, containers) on route 1's rows only.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "stat-10-p2",
+  "prompt": "Fitting a straight line to Kolanut's **monthly revenue** (month 1 = January 2025 … 18 = June 2026), what is **r²**? Two decimal places.",
+  "answer": 0.32,
+  "format": "number",
+  "tolerance": 0.011,
+  "dataset": "sales",
+  "files": ["orders"],
+  "pyVerify": "(lambda m: round(stats.linregress(range(1, len(m) + 1), m.values).rvalue ** 2, 2))((lambda o: (o['quantity'] * o['unit_price'] * (1 - o['discount_pct'] / 100)).groupby(pd.to_datetime(o['order_date']).dt.to_period('M')).sum())(data('sales', 'orders')))",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "stat-10-p3",
+  "prompt": "Using that line, what is `FORECAST.LINEAR` for **month 19** (July 2026)? Give it in **millions of naira**, one decimal place.",
+  "answer": 53.1,
+  "format": "number",
+  "dataset": "sales",
+  "files": ["orders"],
+  "pyVerify": "(lambda m: round((lambda l: l.intercept + l.slope * 19)(stats.linregress(range(1, len(m) + 1), m.values)) / 1e6, 1))((lambda o: (o['quantity'] * o['unit_price'] * (1 - o['discount_pct'] / 100)).groupby(pd.to_datetime(o['order_date']).dt.to_period('M')).sum())(data('sales', 'orders')))",
+  "required": true
+}
+```
+
+## Challenge
+
+```answer
+{
+  "id": "stat-10-c1",
+  "prompt": "Which month has the **largest positive residual** (actual revenue furthest above the trend line)? Answer as YYYY-MM.",
+  "answer": "2025-12",
+  "format": "text",
+  "dataset": "sales",
+  "files": ["orders"],
+  "pyVerify": "(lambda m: str(m.index[(lambda l: (m.values - (l.intercept + l.slope * pd.Series(range(1, len(m) + 1)).values)).argmax())(stats.linregress(range(1, len(m) + 1), m.values))]))((lambda o: (o['quantity'] * o['unit_price'] * (1 - o['discount_pct'] / 100)).groupby(pd.to_datetime(o['order_date']).dt.to_period('M')).sum())(data('sales', 'orders')))",
+  "explanation": "December 2025, the festive peak. A straight line can't capture seasonality; that's why the forecast needs a range.",
+  "required": false
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "A regression of delivery cost on distance gives slope = 85. What does it mean?",
+    "options": ["Cost is 85 per delivery", "Each extra unit of distance adds about 85 to the cost", "85% of cost is distance", "The line fits 85% of points"],
+    "answer": 1,
+    "explanation": "The slope is the change in y for a one-unit change in x."
+  },
+  {
+    "prompt": "r² = 0.98 for price against containers on one route. What does that tell you?",
+    "options": ["Containers explain almost all the variation in price, so estimates from the line are reliable within the data's range", "98% of shipments are on time", "Price causes containers", "The forecast is exact for any number of containers"],
+    "answer": 0,
+    "explanation": "A high r² means a tight fit, within the range the data covers."
+  },
+  {
+    "prompt": "The line was fitted on shipments of 1 to 8 containers. A customer asks for 50. What's the risk?",
+    "options": ["None", "Extrapolation: the line may not hold far outside the data, such as with bulk discounts or a different vessel", "The slope changes sign", "r² becomes negative"],
+    "answer": 1,
+    "explanation": "Don't trust a line far beyond the data it was fitted on."
+  },
+  {
+    "prompt": "Monthly sales trend: r² = 0.3, with one big spike every December. What's the best approach for a forecast?",
+    "options": ["Use the straight line exactly", "Report the trend direction with a wide range, and treat seasonality (such as December) separately", "Ignore the trend", "Remove December from the data forever"],
+    "answer": 1,
+    "explanation": "A straight line can't model seasons. Give a range and handle the season on its own."
+  }
+]
+```
+$md$, true, true, 10, array['stat-10-p1', 'stat-10-p2', 'stat-10-p3']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('stat-m11', 'statistics-for-data-analysis', 'Final Project', 11, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('statistics-for-data-analysis:final-project', 'statistics-for-data-analysis', 'stat-m11', 'final-project', '"Final project: delivery performance review"', 'Plan and start your final project, a statistical review of Harbourline Freight''s delivery performance that uses every tool in the course, and check your set-up with three warm-ups.', 20, $md$
+## The problem
+
+Harbourline Freight's customers judge it on one thing: does the shipment arrive when promised? The operations director wants a review she can take to the board:
+
+> "How reliable are we, really? Where are we worst, and is it getting better or worse? And give the sales team something useful for quoting."
+
+A review like that needs everything in this course: the right averages and spreads, percentiles a customer can plan around, outliers investigated rather than deleted, rates with confidence intervals, tests that separate real changes from noise, and a regression the sales team can use. This lesson sets up the project; the full brief and submission are on the course's project page.
+
+## The concept
+
+**From questions to statistics**
+
+Each of the director's questions maps to a tool:
+
+| Question | Tool | Lesson |
+| :-- | :-- | :-- |
+| How long do shipments take? | Median, IQR and 90th percentile, by mode and route | 2, 3 |
+| How reliable is each route? | On-time rate with a 95% confidence interval | 5, 8 |
+| Which shipments went badly wrong? | Histogram, z-scores, the IQR rule | 4 |
+| Is anything getting better or worse? | Two-proportion test, 2025 against 2026 | 9 |
+| What should a quote look like? | Regression of charge on containers, for one route | 10 |
+
+**Definitions first**
+
+State them at the top of your workbook, because every number depends on them:
+
+- **Transit days** = `delivery_date − ship_date`, for **Delivered** shipments only.
+- **On time** = transit days ≤ the route's `target_transit_days`.
+- **Year** = the year of `booking_date`. 2026 runs from January to August only.
+
+**A fair comparison**
+
+Routes have very different targets: one day for Lagos–Ibadan by road, 42 for Shanghai–Onne by sea. Comparing raw transit times across routes is meaningless; compare on-time rates, or days late against each route's own target. And watch for small routes: a route with 36 deliveries has a wide confidence interval.
+
+## Example
+
+A first look at on-time performance by route. With a pivot table of delivered shipments (route in rows; count and average of a 1/0 `on_time` column), sorted by on-time rate, the three least punctual routes are:
+
+| Route | Target | Delivered | On time |
+| :-- | --: | --: | --: |
+| Lagos → Ibadan (road) | 1 day | 62 | 69.4% |
+| Lagos → Abuja (air) | 1 day | 36 | 69.4% |
+| London Heathrow → Lagos (air) | 1 day | 53 | 69.8% |
+
+All three have a **one-day** target. That's a finding in itself: the least punctual routes aren't the long sea voyages, they're the short trips with no slack. The question for the director isn't only "why are these routes late?" but also "is a one-day promise realistic?" Before saying either, check the confidence intervals: with 36 to 62 deliveries each, the margins are around ±12 to ±15 points, so these three aren't clearly worse than routes in the low 70s.
+
+Overall, 76.6% of the 2,411 delivered shipments arrived on time.
+
+## Walkthrough
+
+1. Download the logistics dataset. In `shipments.csv`, add `mode`, `origin`, `destination` and `target_transit_days` from `routes.csv` with XLOOKUP.
+2. Add `transit_days`, `on_time` (1 or 0) and `year`, and filter to Delivered shipments. Write your three definitions at the top of a Notes sheet.
+3. Build a pivot table of on-time rate and count by mode, then by route.
+4. For each mode, calculate the median, IQR and 90th percentile of transit days.
+5. Pick the route you'll use for the quoting formula and fit `freight_charge` against `containers`.
+6. Open the project brief on the course page and list which tool answers each of its tasks.
+
+## Practice
+
+```dataset
+{"dataset": "logistics", "files": ["shipments", "routes"]}
+```
+
+```answer
+{
+  "id": "stat-11-p1",
+  "prompt": "What percentage of **delivered** shipments arrived **on time** (transit days ≤ the route's target)? One decimal place.",
+  "answer": 76.6,
+  "format": "percent",
+  "dataset": "logistics",
+  "files": ["shipments", "routes"],
+  "verify": "SELECT ROUND(100.0 * SUM(julianday(s.delivery_date) - julianday(s.ship_date) <= r.target_transit_days) / COUNT(*), 1) FROM shipments s JOIN routes r ON r.route_id = s.route_id WHERE s.status = 'Delivered'",
+  "pyVerify": "(lambda d: round(((pd.to_datetime(d['delivery_date']) - pd.to_datetime(d['ship_date'])).dt.days <= d['target_transit_days']).mean() * 100, 1))(data('logistics', 'shipments').merge(data('logistics', 'routes'), on='route_id').query('status == \"Delivered\"'))",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "stat-11-p2",
+  "prompt": "Among **sea** routes, which **route_id** has the **largest standard deviation** of transit days for delivered shipments?",
+  "answer": 11,
+  "format": "number",
+  "dataset": "logistics",
+  "files": ["shipments", "routes"],
+  "pyVerify": "(lambda d: d.assign(t=(pd.to_datetime(d['delivery_date']) - pd.to_datetime(d['ship_date'])).dt.days).groupby('route_id')['t'].std().idxmax())(data('logistics', 'shipments').merge(data('logistics', 'routes'), on='route_id').query('status == \"Delivered\" and mode == \"Sea\"'))",
+  "hint": "A pivot table of StdDev of transit_days by route, filtered to mode = Sea.",
+  "explanation": "Route 11, Shanghai → Onne: the least predictable sea lane, varying by about 5 days either side of its 42-day average.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "stat-11-p3",
+  "prompt": "When a delivered shipment **is late**, what is the **median** number of days late (transit days − target)?",
+  "answer": 2,
+  "format": "number",
+  "dataset": "logistics",
+  "files": ["shipments", "routes"],
+  "pyVerify": "(lambda d: (lambda late: late[late > 0].median())((pd.to_datetime(d['delivery_date']) - pd.to_datetime(d['ship_date'])).dt.days - d['target_transit_days']))(data('logistics', 'shipments').merge(data('logistics', 'routes'), on='route_id').query('status == \"Delivered\"'))",
+  "explanation": "A median of 2 days, but a mean of about 4.5: most late shipments are a little late, and a few are very late. The median and the mean together tell that story.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why compare routes by on-time rate rather than average transit days?",
+    "options": ["Transit days are less accurate", "Routes have very different targets, so raw transit times aren't comparable", "On-time rates are always higher", "Averages can't be calculated per route"],
+    "answer": 1,
+    "explanation": "Compare each route against its own promise."
+  },
+  {
+    "prompt": "A route with 36 deliveries has a 69% on-time rate; another with 200 has 72%. What should you say?",
+    "options": ["The first route is clearly worse", "The difference is small and the first route's interval is wide, so it may not be a real difference", "The second route is worse", "Small routes should be ignored"],
+    "answer": 1,
+    "explanation": "Check intervals or test before ranking routes on small differences."
+  },
+  {
+    "prompt": "Late shipments: median 2 days late, mean 4.5. What does that tell you?",
+    "options": ["The data has errors", "Most late shipments are slightly late, and a few are very late (right skew)", "The mean is wrong", "Half are 4.5 days late"],
+    "answer": 1,
+    "explanation": "Mean above median means a long right tail."
+  }
+]
+```
+$md$, true, true, 11, array['stat-11-p1', 'stat-11-p2', 'stat-11-p3']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+
 -- Course: SQL for Data Analysis
 insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
-values ('sql-for-data-analysis', 'full', null, 'sql-for-data-analysis', 'SQL', 'SQL for Data Analysis', 'Query real business data with SQL, from your first SELECT to window functions, using a logistics company''s database.', 'SQL is how analysts get answers out of databases. In this course you work with Harbourline Freight, a fictional logistics company, and answer the questions its managers actually ask: who ships the most, which routes run late, what customers still owe. Every lesson starts with a business problem, explains the idea in plain language, and gives you queries to write in a live SQL editor in your browser.', 'data-analytics', 'beginner', 2, 'Beginner to intermediate', 7, true, 'available', true, array['Reading a database schema', 'Selecting, filtering and sorting data', 'Aggregating with GROUP BY and HAVING', 'Joining tables', 'CASE expressions, subqueries and CTEs', 'Window functions for rankings and running totals', 'Turning a business question into a query']::text[], array['No prior SQL needed', 'Comfortable using a computer and a web browser']::text[], 'Harbourline Freight operations review', true, true, true, true, false, 60, 15)
+values ('sql-for-data-analysis', 'full', null, 'sql-for-data-analysis', 'SQL', 'SQL for Data Analysis', 'Query real business data with SQL, from your first SELECT to window functions, using a logistics company''s database.', 'SQL is how analysts get answers out of databases. In this course you work with Harbourline Freight, a fictional logistics company, and answer the questions its managers actually ask: who ships the most, which routes run late, what customers still owe. Every lesson starts with a business problem, explains the idea in plain language, and gives you queries to write in a live SQL editor in your browser.', 'data-analytics', 'beginner', 2, 'Beginner to intermediate', 7, true, 'available', true, array['Reading a database schema', 'Selecting, filtering and sorting data', 'Aggregating with GROUP BY and HAVING', 'Joining tables', 'CASE expressions, subqueries and CTEs', 'Window functions for rankings and running totals', 'Turning a business question into a query']::text[], array['No prior SQL needed', 'Comfortable using a computer and a web browser']::text[], 'Harbourline Freight operations review', true, true, true, true, false, 60, 16)
 on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level = excluded.level, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
@@ -12659,7 +14633,7 @@ on conflict (id) do update set course_id = excluded.course_id, module_id = exclu
 
 -- Course: Data Modelling
 insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
-values ('data-modelling', 'full', null, 'data-modelling', 'DMO', 'Data Modelling', 'Design databases and analytics models that stay correct: entities, keys, relationships, ERDs, normalisation and star schemas.', 'Every reliable report sits on a well-designed model. Learn to turn business questions into entities and keys, draw entity-relationship diagrams in crow''s-foot notation, normalise away repeated data, and design the star schemas that Power BI and data warehouses run on. Every lesson is built around diagrams, and you practise on real databases in your browser.', 'databases', 'intermediate', 3, 'Beginner to intermediate', 6, true, 'available', true, array['Entities, attributes and grain', 'Primary and foreign keys', 'Cardinality and bridge tables', 'Entity-relationship diagrams', 'Normalisation (1NF to 3NF)', 'Star schemas and slowly changing dimensions']::text[], array['Basic SQL (SELECT, WHERE, JOIN) helps; the SQL for Data Analysis course covers it', 'No design experience needed']::text[], 'Ashgrove Chambers data model', true, true, true, true, false, 60, 16)
+values ('data-modelling', 'full', null, 'data-modelling', 'DMO', 'Data Modelling', 'Design databases and analytics models that stay correct: entities, keys, relationships, ERDs, normalisation and star schemas.', 'Every reliable report sits on a well-designed model. Learn to turn business questions into entities and keys, draw entity-relationship diagrams in crow''s-foot notation, normalise away repeated data, and design the star schemas that Power BI and data warehouses run on. Every lesson is built around diagrams, and you practise on real databases in your browser.', 'databases', 'intermediate', 3, 'Beginner to intermediate', 6, true, 'available', true, array['Entities, attributes and grain', 'Primary and foreign keys', 'Cardinality and bridge tables', 'Entity-relationship diagrams', 'Normalisation (1NF to 3NF)', 'Star schemas and slowly changing dimensions']::text[], array['Basic SQL (SELECT, WHERE, JOIN) helps; the SQL for Data Analysis course covers it', 'No design experience needed']::text[], 'Ashgrove Chambers data model', true, true, true, true, false, 60, 17)
 on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level = excluded.level, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
@@ -13891,7 +15865,7 @@ on conflict (id) do update set course_id = excluded.course_id, module_id = exclu
 
 -- Course: Power BI Fundamentals
 insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
-values ('power-bi-fundamentals', 'full', null, 'power-bi-fundamentals', 'PBI', 'Power BI Fundamentals', 'Build a data model, write DAX measures and design a dashboard people can use to run a business.', 'Power BI turns data into dashboards. Learn the full workflow: import and clean data with Power Query, relate tables in a model, write DAX measures, and design a dashboard that tells a clear business story.', 'business-intelligence', 'beginner', 2, 'Beginner to intermediate', 8, true, 'available', true, array['Power Query', 'Data modelling and relationships', 'DAX measures', 'Dashboard design', 'Publishing reports']::text[], array['Power BI Desktop (free, Windows only)', 'Basic Excel is helpful: the Excel course covers it']::text[], 'Ashgrove Chambers practice dashboard', true, true, true, true, false, 60, 17)
+values ('power-bi-fundamentals', 'full', null, 'power-bi-fundamentals', 'PBI', 'Power BI Fundamentals', 'Build a data model, write DAX measures and design a dashboard people can use to run a business.', 'Power BI turns data into dashboards. Learn the full workflow: import and clean data with Power Query, relate tables in a model, write DAX measures, and design a dashboard that tells a clear business story.', 'business-intelligence', 'beginner', 2, 'Beginner to intermediate', 8, true, 'available', true, array['Power Query', 'Data modelling and relationships', 'DAX measures', 'Dashboard design', 'Publishing reports']::text[], array['Power BI Desktop (free, Windows only)', 'Basic Excel is helpful: the Excel course covers it']::text[], 'Ashgrove Chambers practice dashboard', true, true, true, true, false, 60, 18)
 on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level = excluded.level, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
@@ -16110,7 +18084,7 @@ on conflict (id) do update set course_id = excluded.course_id, module_id = exclu
 
 -- Course: Python for Data Analytics
 insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
-values ('python-for-data-analytics', 'full', null, 'python-for-data-analytics', 'PYAN', 'Python for Data Analytics', 'Analyse real business data in Python and pandas, from your first variable to a finished analysis with charts and findings, in Google Colab.', 'Python lets analysts write an analysis once and run it again in seconds, with every step on record. In this course you work in Google Colab, with nothing to install, on the data of Kolanut Distribution and its HR and legal sister datasets. Learn the Python an analyst actually uses, then pandas: loading and exploring data, filtering, calculated columns and dates, cleaning a genuinely messy export, groupby, merging, pivot tables and trends, and charts with titles that say what they show. Every lesson ends with tasks checked against the real data, and the course ends with a customer health review you can put in your portfolio.', 'python', 'beginner', 2, 'Beginner to intermediate', 9, true, 'available', true, array['Python basics: variables, types, lists, dictionaries, loops and functions', 'Loading and exploring data with pandas', 'Filtering, sorting and calculated columns', 'Cleaning messy data: text, categories, numbers, dates and duplicates', 'Summarising with groupby and pivot tables', 'Merging tables safely', 'Growth rates, year-on-year change and rolling averages', 'Charts with matplotlib and findings a manager can act on']::text[], array['No Python needed', 'A free Google account for Google Colab', 'Comfortable with spreadsheets; Excel for Data Analysis helps']::text[], 'Kolanut customer health review', true, true, true, true, false, 60, 18)
+values ('python-for-data-analytics', 'full', null, 'python-for-data-analytics', 'PYAN', 'Python for Data Analytics', 'Analyse real business data in Python and pandas, from your first variable to a finished analysis with charts and findings, in Google Colab.', 'Python lets analysts write an analysis once and run it again in seconds, with every step on record. In this course you work in Google Colab, with nothing to install, on the data of Kolanut Distribution and its HR and legal sister datasets. Learn the Python an analyst actually uses, then pandas: loading and exploring data, filtering, calculated columns and dates, cleaning a genuinely messy export, groupby, merging, pivot tables and trends, and charts with titles that say what they show. Every lesson ends with tasks checked against the real data, and the course ends with a customer health review you can put in your portfolio.', 'python', 'beginner', 2, 'Beginner to intermediate', 9, true, 'available', true, array['Python basics: variables, types, lists, dictionaries, loops and functions', 'Loading and exploring data with pandas', 'Filtering, sorting and calculated columns', 'Cleaning messy data: text, categories, numbers, dates and duplicates', 'Summarising with groupby and pivot tables', 'Merging tables safely', 'Growth rates, year-on-year change and rolling averages', 'Charts with matplotlib and findings a manager can act on']::text[], array['No Python needed', 'A free Google account for Google Colab', 'Comfortable with spreadsheets; Excel for Data Analysis helps']::text[], 'Kolanut customer health review', true, true, true, true, false, 60, 19)
 on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level = excluded.level, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
@@ -19612,6 +21586,132 @@ values ('pyanq15', 1, 'Reproducibility is the main reason to do analysis in code
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 
+-- Assessment: Statistics for Data Analysis: final assessment
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('statistics-for-data-analysis-final', 'statistics-for-data-analysis', 'final', null, 'Statistics for Data Analysis: final assessment', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('statq01', 'statistics-for-data-analysis-final', 1, 'Staff salaries: mean ₦610k, median ₦490k. The HR director asks what a typical employee earns. What should you report?', '["₦610k, the mean","₦490k, the median, explaining that a few high earners pull the mean up","₦550k, halfway between","The highest salary"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('statq01', 1, 'Salaries are right-skewed; the median describes a typical employee.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('statq02', 'statistics-for-data-analysis-final', 2, 'You need next year''s total training budget for 150 people from this year''s cost per person. Which average?', '["Median, because it''s typical","Mean, because mean × 150 gives the total","Mode","The lowest cost"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('statq02', 1, 'Only the mean multiplies back up to a total.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('statq03', 'statistics-for-data-analysis-final', 3, 'Two suppliers both deliver in 12 days on average. A''s standard deviation is 1 day, B''s is 5 days. Which statement is right?', '["They''re equally reliable","A is far more predictable; B''s customers need more safety stock","B is faster","Standard deviation doesn''t matter for delivery"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('statq03', 1, 'Same average, very different reliability.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('statq04', 'statistics-for-data-analysis-final', 4, 'Q1 = 80,000, Q3 = 280,000. Which value is a high outlier by the IQR rule?', '["400,000","560,000","600,000","280,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('statq04', 2, 'Upper fence = 280,000 + 1.5 × 200,000 = 580,000. Only 600,000 is above it.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('statq05', 'statistics-for-data-analysis-final', 5, 'A histogram of delivery times has two clear peaks, at 2 days and at 30 days. What should you do?', '["Report the overall average","Split the data: it''s probably two kinds of shipment (such as air and sea) mixed together","Delete the smaller peak","Use the mode"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('statq05', 1, 'Bimodal data usually means two groups. Summarise each separately.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('statq06', 'statistics-for-data-analysis-final', 6, 'On-time delivery fell from 80% to 70%. Which is correct?', '["It fell 10%","It fell 10 percentage points, a 12.5% fall","It fell 12.5 percentage points","It fell 10 points, a 10% fall"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('statq06', 1, '80 − 70 = 10 pp; 10 ÷ 80 = 12.5%.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('statq07', 'statistics-for-data-analysis-final', 7, 'Discount rates are 2% on small lines and 8% on large lines, and large lines are most of the value. The simple average of the rates is 3%. What does finance need?', '["The 3% simple average","A value-weighted average, which will be higher than 3%","The median rate","The highest rate"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('statq07', 1, 'Weight by value with SUMPRODUCT; large lines carry the higher rate.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('statq08', 'statistics-for-data-analysis-final', 8, 'Discounted order lines are bigger (r = 0.34). Within each sales channel, the correlation is about 0. What''s going on?', '["Discounts cause bigger orders","Channel is a confounder: wholesalers both buy more and get more discounts","The correlation is wrong","Small orders cause discounts"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('statq08', 1, 'A third factor drives both. Comparing within one channel removes it.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('statq09', 'statistics-for-data-analysis-final', 9, 'r = 0.6 between advertising spend and sales. What is r², and what does it mean?', '["0.36: about 36% of the variation in sales is explained by a straight-line relationship with spend","0.6: spend causes 60% of sales","1.2","0.36: each naira of spend returns 36 kobo"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('statq09', 0, 'r² is the share of variation explained, not a causal effect.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('statq10', 'statistics-for-data-analysis-final', 10, 'Data SD = ₦140,000. What''s the standard error of the mean for a random sample of 400?', '["₦140,000","₦7,000","₦350","₦35,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('statq10', 1, 'SE = 140,000 ÷ √400 = 140,000 ÷ 20.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('statq11', 'statistics-for-data-analysis-final', 11, 'A survey of 3,000 customers who chose to answer an email gives a narrow confidence interval. What doesn''t the interval account for?', '["Random sampling error","Bias from who chose to answer","The sample size","The confidence level"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('statq11', 1, 'Intervals cover random sampling error only. A big biased sample is still biased.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('statq12', 'statistics-for-data-analysis-final', 12, 'Mean days to pay is 45, with a 95% confidence interval of 43 to 48 days. Which statement is right?', '["95% of invoices are paid in 43 to 48 days","We''re 95% confident the true average is between 43 and 48 days","No invoice takes more than 48 days","The average is exactly 45"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('statq12', 1, 'The interval is about the average, not individual invoices.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('statq13', 'statistics-for-data-analysis-final', 13, 'After a price rise, average order size fell slightly; T.TEST gives p = 0.23. What''s the right conclusion?', '["The price rise cut order size","There''s no evidence the price rise changed order size; the gap is within normal variation","The price rise increased order size","The test proves there''s no effect at all"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('statq13', 1, 'Not significant: chance can explain it. That isn''t proof of zero effect.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('statq14', 'statistics-for-data-analysis-final', 14, 'With 2 million rows, a ₦3 difference in average basket gives p < 0.001. What should you say?', '["A major finding","Statistically significant, but too small to matter in practice","The test is broken","Nothing"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('statq14', 1, 'Report the size of the difference, not just the p-value.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('statq15', 'statistics-for-data-analysis-final', 15, 'A pricing line fitted on loads of 1 to 8 containers has r² = 0.98. A customer asks for 60 containers. What''s the risk?', '["None: r² is high","Extrapolation: the relationship may not hold far outside the data","r² becomes negative","The slope reverses"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('statq15', 1, 'A good fit inside the data says little about far outside it.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
 -- Assessment: Prompting Essentials: module check
 insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
 values ('aipf-m01-check', 'ai-productivity-fundamentals', 'module', 'aipf-m01', 'Prompting Essentials: module check', 60, true)
@@ -22800,9 +24900,19 @@ Write the findings for the managing director: no code, numbers in every point, a
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
 
 
+-- Project: Harbourline delivery performance review
+insert into public.projects (id, course_id, title, summary, brief_md, tasks, datasets, rubric, required)
+values ('stat-delivery-review', 'statistics-for-data-analysis', 'Harbourline delivery performance review', 'A statistical review of Harbourline Freight''s delivery performance for its operations director and sales team.', $md$Harbourline Freight's operations director wants a statistical review of delivery performance to take to the board, built in Excel or Google Sheets from the logistics dataset (shipments and routes).
+
+Submit a link to your **workbook** (shared as view-only) and paste your **findings** below. For every task, give the number, the formula or method you used, and one or two sentences saying what it means, written for a director who isn't a statistician.
+
+Start with your definitions: transit days, on time, and which shipments you included.$md$, array['Transit times by mode: the median, interquartile range and 90th percentile for Air, Road and Sea, and what a customer of each mode should plan for.', 'On-time rate by mode and for the five largest routes, each with its count and a 95% confidence interval.', 'Outliers: a histogram of days late, the shipments flagged by the IQR rule or a z-score above 2, and what you found when you looked at them.', 'Change over time: test whether the on-time rate for each mode changed between 2025 and 2026, and say which changes are real and which could be chance.', 'A quoting formula: for one route, regress freight_charge on containers and give the cost per container, r², an example quote and the range of loads it applies to.', 'Three recommendations for the board, each linked to a number, with an honest caveat about the data.']::text[], array['logistics']::text[], array['Definitions are stated, and only delivered shipments are used for transit and on-time figures.', 'Skewed measures are summarised with medians and percentiles, not just means.', 'Every rate is shown with its count and a 95% confidence interval, and small groups are treated with caution.', 'Outliers are investigated, not deleted, and what they show is explained.', 'Tests are used correctly: the p-value is reported with the size of the change, and ''not significant'' isn''t read as ''no change''.', 'The quoting formula is fitted on one route, reports r², and isn''t used outside the range of the data.', 'Findings are written for a director, and each recommendation is linked to a number.']::text[], true)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
+
+
 -- Track: Become a Data Analyst
 insert into public.tracks (id, slug, title, summary, badge_name, badge_code, skills, position, published)
-values ('data-analyst', 'data-analyst', 'Become a Data Analyst', 'The route we recommend from no experience to a junior data analyst role. Learn how analysis works, then the tools teams use every day (Excel, SQL, Power BI and Python) on realistic company data. Build portfolio projects that answer real business questions, and finish with your CV, LinkedIn and interview preparation.', 'CloudTech Data Analyst', 'DATAANALYST', array['Spreadsheet analysis in Excel', 'Querying databases with SQL', 'Data modelling and star schemas', 'Dashboards in Power BI', 'Analysis in Python and pandas', 'Turning data into findings a manager can act on']::text[], 1, true)
+values ('data-analyst', 'data-analyst', 'Become a Data Analyst', 'The route we recommend from no experience to a junior data analyst role. Learn how analysis works, then the tools teams use every day (Excel, SQL, Power BI and Python) on realistic company data. Build portfolio projects that answer real business questions, and finish with your CV, LinkedIn and interview preparation.', 'CloudTech Data Analyst', 'DATAANALYST', array['Spreadsheet analysis in Excel', 'Statistics: averages, spread, confidence intervals and tests', 'Querying databases with SQL', 'Data modelling and star schemas', 'Dashboards in Power BI', 'Analysis in Python and pandas', 'Turning data into findings a manager can act on']::text[], 1, true)
 on conflict (id) do update set slug = excluded.slug, title = excluded.title, summary = excluded.summary, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, position = excluded.position, published = excluded.published;
 
 delete from public.track_courses where track_id = 'data-analyst';
@@ -22816,31 +24926,35 @@ values ('data-analyst', 'excel-for-data-analysis', 'Foundation', true, 2)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 insert into public.track_courses (track_id, course_id, stage, required, position)
-values ('data-analyst', 'sql-for-data-analysis', 'Core', true, 3)
+values ('data-analyst', 'statistics-for-data-analysis', 'Foundation', true, 3)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 insert into public.track_courses (track_id, course_id, stage, required, position)
-values ('data-analyst', 'data-modelling', 'Core', true, 4)
+values ('data-analyst', 'sql-for-data-analysis', 'Core', true, 4)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 insert into public.track_courses (track_id, course_id, stage, required, position)
-values ('data-analyst', 'power-bi-fundamentals', 'Core', true, 5)
+values ('data-analyst', 'data-modelling', 'Core', true, 5)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 insert into public.track_courses (track_id, course_id, stage, required, position)
-values ('data-analyst', 'python-for-data-analytics', 'Advanced', true, 6)
+values ('data-analyst', 'power-bi-fundamentals', 'Core', true, 6)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 insert into public.track_courses (track_id, course_id, stage, required, position)
-values ('data-analyst', 'career-essentials', 'Career', true, 7)
+values ('data-analyst', 'python-for-data-analytics', 'Advanced', true, 7)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 insert into public.track_courses (track_id, course_id, stage, required, position)
-values ('data-analyst', 'build-your-student-portfolio', 'Career', false, 8)
+values ('data-analyst', 'career-essentials', 'Career', true, 8)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 insert into public.track_courses (track_id, course_id, stage, required, position)
-values ('data-analyst', 'get-your-first-internship', 'Career', false, 9)
+values ('data-analyst', 'build-your-student-portfolio', 'Career', false, 9)
+on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
+
+insert into public.track_courses (track_id, course_id, stage, required, position)
+values ('data-analyst', 'get-your-first-internship', 'Career', false, 10)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 

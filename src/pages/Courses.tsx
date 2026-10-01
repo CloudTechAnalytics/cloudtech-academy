@@ -21,7 +21,7 @@ const KINDS = [
     Icon: Briefcase,
     title: "Professional courses",
     time: "6 to 9 hours each",
-    body: "In-depth training for a job skill: Data Analytics, Excel, SQL, Data Modelling, Power BI and Python. Full lessons, hands-on practice on realistic company data, a final assessment and a portfolio project.",
+    body: "In-depth training for a job skill: Data Analytics, Excel, Statistics, SQL, Data Modelling, Power BI and Python. Full lessons, hands-on practice on realistic company data, a final assessment and a portfolio project.",
     href: "#professional",
     cta: "See professional courses",
   },

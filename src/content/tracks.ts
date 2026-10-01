@@ -52,6 +52,7 @@ export const TRACKS: Track[] = [
     badgeCode: "DATAANALYST",
     skills: [
       "Spreadsheet analysis in Excel",
+      "Statistics: averages, spread, confidence intervals and tests",
       "Querying databases with SQL",
       "Data modelling and star schemas",
       "Dashboards in Power BI",
@@ -65,7 +66,7 @@ export const TRACKS: Track[] = [
         items: [
           { kind: "course", courseId: "data-analytics-foundations", why: "How analysis works: questions, data types, cleaning and telling the story." },
           { kind: "course", courseId: "excel-for-data-analysis", why: "The tool almost every business already uses, from formulas to pivot tables." },
-          { kind: "upcoming", title: "Statistics for Data Analysis", why: "Averages, spread, distributions, sampling and comparing groups without fooling yourself.", level: 2 },
+          { kind: "course", courseId: "statistics-for-data-analysis", why: "Averages, spread, outliers, confidence intervals and tests: telling a finding from noise." },
         ],
       },
       {

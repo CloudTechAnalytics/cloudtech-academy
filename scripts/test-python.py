@@ -155,6 +155,19 @@ def run_lesson(path, ns):
     return check_answers(path, ns)
 
 
+def new_namespace():
+    """A lesson's starting namespace. pandas, numpy and scipy.stats are there so pyVerify expressions
+    in lessons without Python code (for example Excel-based statistics) can still check answers."""
+    import numpy as np
+    from scipy import stats
+
+    def data(dataset, file):
+        """One downloadable CSV, as the learner gets it: data("hr", "employees")."""
+        return pd.read_csv(f"{DATASETS}{dataset}/{file}.csv")
+
+    return {"__name__": "__lesson__", "pd": pd, "np": np, "stats": stats, "data": data}
+
+
 def main():
     sys.stdout.reconfigure(encoding="utf-8")
     # Lessons save files (plt.savefig, to_csv); keep them out of the project.
@@ -165,13 +178,13 @@ def main():
     failures = lessons = 0
     for course in courses:
         folder = os.path.join(CONTENT, course)
-        ns = {"__name__": "__lesson__"}
+        ns = new_namespace()
         for name in sorted(f for f in os.listdir(folder) if f.endswith(".md")):
             path = os.path.join(folder, name)
             if not lesson_blocks(path) and '"pyVerify"' not in read(path):
                 continue
             lessons += 1
-            error = run_lesson(path, {"__name__": "__lesson__"} if fresh else ns)
+            error = run_lesson(path, new_namespace() if fresh else ns)
             print(("FAIL " if error else "ok   ") + f"{course}/{name}")
             if error:
                 failures += 1

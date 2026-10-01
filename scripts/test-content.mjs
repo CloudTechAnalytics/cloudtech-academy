@@ -24,7 +24,7 @@ const SQL = await initSqlJs();
 const IMAGE_SIZES = JSON.parse(fs.readFileSync("src/content/image-sizes.json", "utf8"));
 const logistics = new SQL.Database(fs.readFileSync("public/datasets/logistics.sqlite"));
 const CONTENT = "src/content";
-const FULL = ["sql", "daf", "excel", "powerbi", "modelling", "python-analytics"];
+const FULL = ["sql", "daf", "excel", "powerbi", "modelling", "python-analytics", "statistics"];
 /** Short courses: one lesson per module, a module check each, and a final assessment. */
 const SHORT = [
   "ai-productivity",
@@ -172,8 +172,13 @@ for (const course of COURSES) {
       if (ids.has(a.id)) fail(`duplicate id ${a.id}`);
       ids.add(a.id);
       for (const file of a.files ?? []) if (!datasetFiles(a.dataset).includes(file)) fail(`${a.id}: no file ${a.dataset}/${file}.csv`);
-      if (a.dataset && !a.verify) {
-        fail(`${a.id}: uses the ${a.dataset} dataset but has no verify query`);
+      if (a.dataset && !a.verify && !a.pyVerify) {
+        fail(`${a.id}: uses the ${a.dataset} dataset but has no verify query (SQL) or pyVerify (pandas)`);
+        continue;
+      }
+      if (!a.verify && a.pyVerify) {
+        // Statistics that SQL can't express simply (medians, percentiles, p-values) are checked in pandas by npm run test:python.
+        console.log(`  ${a.id}${a.required ? " (required)" : ""}: ${JSON.stringify(a.answer)} (checked by test:python)`);
         continue;
       }
       if (!a.verify) {
