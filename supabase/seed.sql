@@ -27802,9 +27802,1384 @@ $md$, true, true, 10, array['aba-10-p1', 'aba-10-p2', 'aba-10-t1']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 
+-- Course: Process Improvement with BPMN and Lean
+insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
+values ('process-improvement-bpmn-lean', 'full', null, 'process-improvement-bpmn-lean', 'PIL', 'Process Improvement with BPMN and Lean', 'Find where time and money really go in a process: BPMN models, event logs, value stream maps, the eight wastes, bottlenecks, root causes, future-state design, pilots and control plans, on a real clearance process.', 'Most delays in organisations aren''t caused by people working slowly; they''re caused by work waiting. In this course you improve Harbourline Freight''s import clearance at Lagos port, where containers spend more than eight days and customers pay demurrage after three. You''ll model the process precisely in BPMN, mine its event log for variants, rework and waiting times, build a value stream map and find a flow efficiency of about 4%, name the wastes, find the bottlenecks with the theory of constraints and Little''s law, get to root causes with fishbones, five whys and Pareto analysis, design a future state with Lean patterns, and judge a real pilot with run charts and fair comparisons before putting controls in place. The course ends with an improvement case and an A3 for the next cycle.', 'business-analysis', 'intermediate', 3, 'Intermediate', 6, true, 'available', true, array['Lean, Six Sigma, DMAIC and PDCA', 'BPMN: events, gateways, pools, lanes and message flows', 'Event logs and process mining', 'Value stream maps and flow efficiency', 'The eight wastes', 'Bottlenecks, the theory of constraints and Little''s law', 'Fishbone, five whys and Pareto analysis', 'Future-state design and benefit estimates', 'Pilots, run charts and control plans']::text[], array['Business Analysis Fundamentals, or experience mapping processes', 'Comfortable with Excel, SQL or Python for the data tasks']::text[], 'Harbourline clearance: the next improvement cycle', true, true, true, true, false, 60, 24)
+on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level = excluded.level, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('pil-m01', 'process-improvement-bpmn-lean', 'Process Improvement and the BA', 1, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('process-improvement-bpmn-lean:process-improvement-and-the-ba', 'process-improvement-bpmn-lean', 'pil-m01', 'process-improvement-and-the-ba', 'Process improvement and the BA', 'What Lean and Six Sigma are for, the improvement cycle every method shares, and how to frame an improvement problem around time, cost and quality that customers feel.', 20, $md$
+## The problem
+
+Harbourline Freight clears its customers' imported containers through Lagos port. Every day a container stays at the port after its three free days, the terminal charges **demurrage**: ₦45,000 per container per day. In the first four months of 2026, Harbourline's customers paid ₦184m in demurrage, and the account managers spent much of their time apologising for it.
+
+The operations director's instinct is to "push the clearing team harder". But the clearing team isn't idle. Most of the time a container sits at the port, nobody is working on it at all: it's waiting for documents, for payment, for an inspection slot. You can't fix waiting by making people work faster.
+
+That's the central insight of **Lean**, and this course teaches you to find where time and money really go in a process, and to change the process rather than push the people.
+
+## The concept
+
+**Lean and Six Sigma in one paragraph each**
+
+**Lean** (from Toyota's production system) is about **flow**: delivering value to the customer with as little waste, waiting and effort as possible. Its tools include value stream maps, the eight wastes and pull systems.
+
+**Six Sigma** (from Motorola and GE) is about **variation and defects**: making a process reliable, so results are predictable. Its improvement cycle is **DMAIC**: Define, Measure, Analyse, Improve, Control.
+
+Most organisations blend the two ("Lean Six Sigma"). You don't need a belt to use them; a BA who can map a process, measure it from data and find root causes is already doing the core work.
+
+**The improvement cycle**
+
+| DMAIC | What you do | Lesson |
+| :-- | :-- | :-- |
+| **Define** | the problem, the customer, the measures | 1 |
+| **Measure** | map the process and measure it from data | 2, 3, 4 |
+| **Analyse** | find waste, bottlenecks and root causes | 5, 6, 7 |
+| **Improve** | design and pilot a better process | 8, 9 |
+| **Control** | make the improvement stick | 9 |
+
+**Measures customers feel**
+
+Frame the problem around what the customer experiences, not internal activity:
+
+- **Lead time**: from the container's arrival to its release from the port (and on to the customer's door).
+- **Cost**: demurrage the customer pays.
+- **Quality**: how often a clearance goes wrong first time (documents rejected, corrections needed).
+
+"Clearing staff processed 20 files a day" is an activity measure. "Containers spend 8.6 days at port" is something the customer feels.
+
+## Example
+
+The improvement problem statement:
+
+> Harbourline's import containers spend an average of 8.6 days at Lagos port from arrival to release, against 3 free days, so customers paid ₦184m in demurrage in January to April 2026. About a third of clearances need corrected documents from the customer before they can proceed. We'll measure success by average days at port, demurrage per container and the share of clearances with complete documents on arrival.
+
+It names the customer impact, the size and the measures, and like every good problem statement it doesn't name a solution.
+
+## Walkthrough
+
+1. Download the process dataset. Open `cases.csv` (one row per clearance) and `events.csv` (every activity, with start and end times).
+2. For each case, calculate days at port: `released_datetime − arrival_datetime`.
+3. Calculate the average days at port for the cases **before** the checklist pilot (`checklist_pilot = No`), then the days to the customer's door and the total demurrage for those cases (the tasks below).
+4. Look at `docs_complete_on_arrival`. What share of clearances arrive with incomplete documents?
+5. Write the problem statement in your own words.
+
+## Practice
+
+```dataset
+{"dataset": "process", "files": ["cases", "events"]}
+```
+
+```answer
+{
+  "id": "pil-01-p1",
+  "prompt": "For clearances **before** the pilot (checklist_pilot = No), what is the average number of days from **arrival to delivery at the customer's door** (delivered − arrival)? Two decimal places.",
+  "answer": 9.65,
+  "tolerance": 0.06,
+  "format": "number",
+  "dataset": "process",
+  "files": ["cases"],
+  "verify": "SELECT ROUND(AVG(julianday(delivered_datetime) - julianday(arrival_datetime)), 2) FROM cases WHERE checklist_pilot = 'No'",
+  "hint": "The datetimes include hours, so the difference is in days with a fraction. In Excel, subtract the two cells; in SQL, julianday(released) − julianday(arrival).",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "pil-01-p2",
+  "prompt": "What was the **total demurrage** charged on clearances before the pilot? (A rounded figure is fine.)",
+  "answer": 184005000,
+  "format": "naira",
+  "dataset": "process",
+  "files": ["cases"],
+  "verify": "SELECT SUM(demurrage_ngn) FROM cases WHERE checklist_pilot = 'No'",
+  "hint": "Sum demurrage_ngn where checklist_pilot = No.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "pil-01-t1",
+  "prompt": "A hospital's pharmacy takes a long time to dispense discharge medicines: patients who are ready to go home wait for their prescriptions, and the beds can't be used by new patients. Write an **improvement problem statement** in 2 to 4 sentences, with a **customer-felt measure** (time or cost), a number (make up a realistic one if you need to), and how success will be measured. Don't name a solution.",
+  "minutes": 6,
+  "rows": 6,
+  "placeholder": "Patients who are ready to go home wait ...",
+  "rules": [
+    { "label": "Names the customer (patients) and what they experience", "pattern": "patient" },
+    { "label": "Includes a number", "pattern": "\\d" },
+    { "label": "Uses a time or cost measure", "pattern": "hour|minute|day|wait|₦|naira|cost" },
+    { "label": "Says how success is measured", "pattern": "measur|success|target|reduc" },
+    { "label": "Doesn't name a solution (system, software, robot, extra staff, automate)", "pattern": "\\b(system|software|robot|app|automat\\w*|hire|extra staff|more staff)\\b", "absent": true },
+    { "label": "Between 30 and 110 words", "minWords": 30, "maxWords": 110 }
+  ],
+  "sample": "Patients who are medically ready to go home wait an average of 4 hours for their discharge medicines, and during that time their beds can't be given to new admissions waiting in the emergency department. On a typical day that's around 30 bed-hours lost. We'll measure success by the average time from discharge decision to medicines in hand, and the bed-hours lost each day.",
+  "note": "The bed-hours measure connects the patient's wait to a cost the hospital feels, which is usually what gets an improvement project funded.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Containers spend 8.6 days at port, but the clearing team is busy all day. What does Lean suggest?",
+    "options": ["Make the team work faster", "Most of the time is probably waiting between steps; find and remove the waits", "Hire more staff", "Nothing can be done"],
+    "answer": 1,
+    "explanation": "In most processes, waiting time dwarfs working time."
+  },
+  {
+    "prompt": "Which is a customer-felt measure?",
+    "options": ["Files processed per clerk per day", "Days from arrival to release", "Hours worked by the team", "Number of meetings held"],
+    "answer": 1,
+    "explanation": "Measure what the customer experiences: time, cost and quality."
+  },
+  {
+    "prompt": "What does DMAIC stand for?",
+    "options": ["Design, Make, Assess, Inspect, Close", "Define, Measure, Analyse, Improve, Control", "Document, Map, Automate, Integrate, Check", "Decide, Monitor, Act, Improve, Continue"],
+    "answer": 1,
+    "explanation": "The Six Sigma improvement cycle."
+  }
+]
+```
+$md$, true, true, 1, array['pil-01-p1', 'pil-01-p2', 'pil-01-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('pil-m02', 'process-improvement-bpmn-lean', 'BPMN in Depth', 2, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('process-improvement-bpmn-lean:bpmn-in-depth', 'process-improvement-bpmn-lean', 'pil-m02', 'bpmn-in-depth', 'BPMN in depth', 'Model a real process in BPMN with events, gateways, pools, lanes and message flows, so anyone, from a clerk to a developer, reads it the same way.', 25, $md$
+## The problem
+
+Harbourline's clearing team has three diagrams of the import clearance process: a flowchart in a 2019 procedures manual, a whiteboard photo, and a slide the operations director drew for a customer. They disagree. One shows customs inspection on every container; another doesn't show inspection at all; none shows what happens when a customer's documents are wrong, which, it turns out, happens to about a third of clearances.
+
+In Business Analysis Fundamentals you drew simple swimlane diagrams. When a process has branches, loops, waiting and several organisations, you need a notation precise enough that everyone reads it the same way. That's **BPMN** (Business Process Model and Notation), the international standard (ISO 19510) used by BAs, process teams and workflow software alike.
+
+## The concept
+
+**The core BPMN elements**
+
+| Element | Symbol | Use |
+| :-- | :-- | :-- |
+| **Start event** | thin circle | what triggers the process (vessel arrives) |
+| **Intermediate event** | double circle | something that happens during it: a **timer** (clock: "wait 3 days") or a **message** (envelope: "corrected documents received") |
+| **End event** | thick circle | how it finishes (container delivered) |
+| **Task** | rounded rectangle | one piece of work |
+| **Sub-process** | rounded rectangle with [+] | a group of tasks shown in detail elsewhere |
+| **Exclusive gateway** (XOR) | diamond with ✕ | exactly one path is taken, based on a condition |
+| **Parallel gateway** (AND) | diamond with + | all paths happen at the same time; a second one waits for all to finish |
+| **Inclusive gateway** (OR) | diamond with ○ | one or more paths, depending on conditions |
+| **Sequence flow** | solid arrow | order within one organisation |
+| **Message flow** | dashed arrow | communication **between** organisations |
+| **Pool** | large box | one organisation (Harbourline, the customer, customs) |
+| **Lane** | strip inside a pool | a role or team within it |
+
+**Rules that keep models readable**
+
+- Label every gateway as a question ("Documents complete?") and every outgoing path with an answer ("Yes", "No").
+- Use **message flows** between pools, never sequence flows: one organisation can't control another's steps.
+- Show waiting explicitly with **intermediate events**, because in improvement work the waits matter most.
+- Model what happens, including the rework loops, not the ideal.
+- One diagram per level: hide detail in sub-processes.
+
+## Example
+
+The clearance process, as a BA would describe the BPMN model in words:
+
+1. **Start event**: vessel arrives (Harbourline pool, Documentation lane).
+2. **Task**: check documents.
+3. **Exclusive gateway**: documents complete?
+   - **No** → task: request corrected documents → *message flow* to the Customer pool → **intermediate message event**: corrected documents received → task: re-check documents → back to the gateway.
+   - **Yes** → continue.
+4. **Task** (Customs broker lane): submit customs declaration → *message flow* to the Customs pool.
+5. **Intermediate message event**: duty assessment received → *message flow* to the customer → **intermediate message event**: duty payment confirmed.
+6. **Exclusive gateway**: customs channel?
+   - **Green** → no inspection.
+   - **Yellow** → document review by customs.
+   - **Red** → physical inspection.
+7. **Task** (Terminal): release and gate-out.
+8. **Task** (Haulage lane): deliver to customer → **end event**: container delivered.
+
+The loop at step 3 is the part none of the three old diagrams showed. It's also where much of the delay turns out to be.
+
+## Walkthrough
+
+1. In `events.csv`, list the distinct activities. Each becomes a task in your model.
+2. Decide the pools: Harbourline, the customer, and Nigeria Customs (plus the terminal operator if you want to show it). Then the lanes inside Harbourline.
+3. Find the branches in the data: how many cases go through physical inspection (the first task below)? How many have a re-check?
+4. Draw the model in draw.io (search its shapes for "BPMN"), Camunda Modeler (free) or on paper.
+5. Write the model in words (the second task below), so it can be checked without the diagram.
+
+## Practice
+
+```answer
+{
+  "id": "pil-02-p1",
+  "prompt": "What percentage of clearances go through **Physical inspection** (the Red channel)? One decimal place.",
+  "answer": 43.6,
+  "format": "percent",
+  "dataset": "process",
+  "files": ["cases"],
+  "verify": "SELECT ROUND(100.0 * SUM(customs_channel = 'Red') / COUNT(*), 1) FROM cases",
+  "hint": "Count the cases with customs_channel = Red ÷ all cases. Or count the cases with a Physical inspection event in events.csv.",
+  "explanation": "43.6%: physical inspection isn't an exception, it's a main path, and the model must show it as one branch of the channel gateway.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "pil-02-t1",
+  "prompt": "Describe a **BPMN model** of this process in numbered lines: *A customer emails a quote request. Sales checks whether the goods can be shipped. If not, sales emails a refusal. If yes, sales prepares a quote and, at the same time, operations checks vessel space; when both are done, sales emails the quote. If the customer doesn't reply within 7 days, sales follows up by phone.* Name the **element type** at the start of each line (Start event, Task, Exclusive gateway, Parallel gateway, Intermediate timer event, Message flow, End event).",
+  "minutes": 12,
+  "rows": 12,
+  "placeholder": "1. Start event (message): quote request received from customer\n2. Task (Sales): ...",
+  "rules": [
+    { "label": "Starts with a start event", "pattern": "start event" },
+    { "label": "Has at least one end event", "pattern": "end event" },
+    { "label": "An exclusive gateway for 'can it be shipped?'", "pattern": "exclusive gateway" },
+    { "label": "A parallel gateway for the quote and the space check", "pattern": "parallel gateway", "min": 1 },
+    { "label": "A timer event for the 7 days", "pattern": "timer" },
+    { "label": "A message flow to or from the customer", "pattern": "message" },
+    { "label": "At least eight numbered lines", "pattern": "^\\s*\\d+[.)]\\s+\\S", "min": 8 }
+  ],
+  "sample": "1. Start event (message): quote request received from customer by email.\n2. Task (Sales): check whether the goods can be shipped.\n3. Exclusive gateway: can it be shipped? No → 4; Yes → 6.\n4. Task (Sales): email refusal to customer (message flow to Customer pool).\n5. End event: request refused.\n6. Parallel gateway (split): both 7 and 8 start.\n7. Task (Sales): prepare quote.\n8. Task (Operations): check vessel space.\n9. Parallel gateway (join): wait until 7 and 8 are both done.\n10. Task (Sales): email quote to customer (message flow to Customer pool).\n11. Event-based choice: customer reply received (message event) → 13; Intermediate timer event: 7 days pass with no reply → 12.\n12. Task (Sales): follow up by phone.\n13. End event: quote sent and followed up.",
+  "note": "The parallel join (line 9) is the detail most people miss: without it, the quote could be emailed before operations has confirmed the space.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "How should communication between Harbourline and Nigeria Customs be shown?",
+    "options": ["A sequence flow (solid arrow) between lanes", "A message flow (dashed arrow) between pools", "A gateway", "It shouldn't be shown"],
+    "answer": 1,
+    "explanation": "Separate organisations get separate pools, connected by message flows."
+  },
+  {
+    "prompt": "Which gateway means 'all paths happen at the same time'?",
+    "options": ["Exclusive (✕)", "Parallel (+)", "Inclusive (○)", "None"],
+    "answer": 1,
+    "explanation": "A matching parallel gateway later waits for all of them to finish."
+  },
+  {
+    "prompt": "Why model the waits with intermediate events?",
+    "options": ["They look nice", "In improvement work, waiting is usually where most of the time goes, so it must be visible", "BPMN requires one per diagram", "To replace tasks"],
+    "answer": 1,
+    "explanation": "A model without the waits hides the problem."
+  }
+]
+```
+$md$, true, true, 2, array['pil-02-p1', 'pil-02-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('pil-m03', 'process-improvement-bpmn-lean', 'Event Logs and Process Mining', 3, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('process-improvement-bpmn-lean:event-logs-and-process-mining', 'process-improvement-bpmn-lean', 'pil-m03', 'event-logs-and-process-mining', 'Event logs and process mining', 'Turn the timestamps systems already record into a picture of how a process really runs: its variants, its rework and how long each step waits.', 25, $md$
+## The problem
+
+You could map Harbourline's clearance process by interviewing the team, and you should. But interviews tell you how people **think** the process runs. The team will say "documents are usually fine" and "inspection takes a day or two". The systems have recorded every clearance, every activity, and when it started and finished. That record says how the process **actually** runs, for all 477 cases, not just the ones people remember.
+
+Using those records to discover and measure a process is called **process mining**. Large companies buy specialist software for it (Celonis, Disco, Microsoft Process Advisor), but the core ideas need nothing more than Excel, SQL or Python and an event log.
+
+## The concept
+
+**An event log**
+
+Every process-mining analysis starts from a table with at least three columns:
+
+| Column | Harbourline example |
+| :-- | :-- |
+| **Case ID**: which instance of the process | `CLR-0042` |
+| **Activity**: what happened | `Re-check documents` |
+| **Timestamp(s)**: when it started and ended | `2026-02-11 09:00`, `2026-02-11 10:00` |
+| Optional: **resource** or team, and case attributes | `Documentation`, importer type, channel |
+
+**What you can derive**
+
+- **Variants**: the distinct paths cases take. List each case's activities in time order and count the distinct sequences. A "simple" process often has dozens of variants.
+- **Rework**: activities that repeat or exist only to fix something (*Request corrected documents*, *Re-check documents*).
+- **Processing time**: end − start of each activity.
+- **Waiting time**: the start of an activity minus the end of the previous one in the same case. Sort by case, then by start time, and take the previous row's end (`LAG` in SQL, `shift` in pandas, a formula referencing the row above in Excel).
+- **Lead time**: last end − first start (or, for Harbourline, release − arrival).
+
+**Cautions**
+
+- Logs record only what systems record. A phone call chasing a customer may leave no trace.
+- Timestamps can be when something was **entered**, not when it happened. Check a few cases with the people involved.
+- Compare like with like: a pilot that changed the process (Harbourline's checklist, from May) creates new variants.
+
+## Example
+
+The most common variants of Harbourline's clearance process:
+
+| Variant (activities in order) | Cases |
+| :-- | --: |
+| Check → Declare → Assess → Pay → **Inspect** → Release → Deliver | 148 |
+| Check → Declare → Assess → Pay → Release → Deliver | 118 |
+| Check → Declare → Assess → Pay → **Customs review** → Release → Deliver | 78 |
+| Check → **Request correction → Re-check** → Declare → Assess → Pay → Inspect → Release → Deliver | 50 |
+
+There are 9 variants in all. The rework variants (with a correction loop, sometimes two) aren't rare exceptions: together they're a large share of the work.
+
+## Walkthrough
+
+1. Sort `events.csv` by `case_id`, then `start_time`.
+2. Add a processing time column (end − start, in hours).
+3. Add a waiting time column: this row's start minus the previous row's end, only when the previous row is the same case.
+4. Average the waiting time by activity. Which steps wait longest? (The first task below asks for one.)
+5. Count the cases with at least one *Re-check documents*, before the pilot.
+
+```sql
+WITH e AS (
+  SELECT
+    case_id,
+    activity,
+    start_time,
+    end_time,
+    LAG(end_time) OVER (PARTITION BY case_id ORDER BY start_time) AS previous_end
+  FROM events
+)
+SELECT
+  activity,
+  ROUND(AVG((julianday(start_time) - julianday(previous_end)) * 24), 1) AS avg_wait_hours
+FROM e
+WHERE previous_end IS NOT NULL
+GROUP BY activity
+ORDER BY avg_wait_hours DESC;
+```
+
+## Practice
+
+```answer
+{
+  "id": "pil-03-p1",
+  "prompt": "Before the pilot, what share of clearances needed **at least one Re-check documents**? One decimal place.",
+  "answer": 33.9,
+  "format": "percent",
+  "dataset": "process",
+  "files": ["cases", "events"],
+  "verify": "SELECT ROUND(100.0 * COUNT(DISTINCT CASE WHEN e.activity = 'Re-check documents' THEN e.case_id END) / COUNT(DISTINCT c.case_id), 1) FROM cases c LEFT JOIN events e ON e.case_id = c.case_id WHERE c.checklist_pilot = 'No'",
+  "hint": "Distinct cases with a Re-check documents event, among cases with checklist_pilot = No, ÷ all those cases.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "pil-03-p2",
+  "prompt": "Before the pilot, what was the average **waiting time** in hours before **Confirm duty payment** (from the end of the previous activity)? One decimal place.",
+  "answer": 46.1,
+  "format": "number",
+  "dataset": "process",
+  "files": ["cases", "events"],
+  "verify": "WITH e AS (SELECT case_id, activity, start_time, LAG(end_time) OVER (PARTITION BY case_id ORDER BY start_time) AS prev_end FROM events) SELECT ROUND(AVG((julianday(e.start_time) - julianday(e.prev_end)) * 24), 1) FROM e JOIN cases c ON c.case_id = e.case_id WHERE e.activity = 'Confirm duty payment' AND c.checklist_pilot = 'No'",
+  "hint": "Use the walkthrough query, filtered to pre-pilot cases.",
+  "explanation": "Nearly two days waiting for the customer to pay duty, every clearance. The checklist pilot didn't touch this wait, so it's an obvious next target.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "pil-03-p3",
+  "prompt": "How many distinct **variants** (sequences of activities) does the event log contain?",
+  "answer": 9,
+  "format": "number",
+  "dataset": "process",
+  "files": ["events"],
+  "verify": "SELECT COUNT(*) FROM (SELECT v FROM (SELECT case_id, group_concat(activity, ' > ') AS v FROM (SELECT * FROM events ORDER BY case_id, start_time) GROUP BY case_id) GROUP BY v)",
+  "hint": "For each case, join its activities in time order into one text value; count the distinct values. In pandas: groupby('case_id')['activity'].agg(' > '.join).nunique().",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "What are the three columns every event log needs?",
+    "options": ["Name, address, phone", "Case ID, activity and timestamp", "Start, end and cost", "Team, manager and budget"],
+    "answer": 1,
+    "explanation": "Everything else (variants, waits, lead times) is derived from these."
+  },
+  {
+    "prompt": "How do you calculate waiting time before an activity?",
+    "options": ["End minus start of the same activity", "Its start minus the end of the previous activity in the same case", "Lead time divided by activities", "It can't be calculated"],
+    "answer": 1,
+    "explanation": "Sort by case and time, then compare with the previous row."
+  },
+  {
+    "prompt": "The log shows no record of the phone calls made to chase customers. What does that mean?",
+    "options": ["There were no calls", "Logs only show what systems record; check with the team what happens off-system", "The analysis is useless", "Add fake events"],
+    "answer": 1,
+    "explanation": "Combine data with observation and interviews."
+  }
+]
+```
+$md$, true, true, 3, array['pil-03-p1', 'pil-03-p2', 'pil-03-p3']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('pil-m04', 'process-improvement-bpmn-lean', 'Value Stream Mapping', 4, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('process-improvement-bpmn-lean:value-stream-mapping', 'process-improvement-bpmn-lean', 'pil-m04', 'value-stream-mapping', 'Value stream mapping', 'Map a process as a value stream, with process time, waiting time and first-time quality at every step, and calculate the flow efficiency that shows how much of the lead time is real work.', 25, $md$
+## The problem
+
+Ask Harbourline's operations director how long clearance takes and he'll say "about eight or nine days". Ask how much of that is **work** and he'll guess "half, maybe more: customs is slow". Both answers matter, but only one is a guess.
+
+A **value stream map** (VSM) puts the two side by side for every step: how long the work takes, and how long the item waits before it. When you add them up, the result is almost always a shock. It changes the conversation from "work faster" to "stop waiting".
+
+## The concept
+
+**What a value stream map shows**
+
+A VSM follows one item (a container) from trigger to customer, step by step, and records for each step:
+
+| Data box | Meaning |
+| :-- | :-- |
+| **Process time (PT)** | hands-on time to do the step once |
+| **Wait time (WT)** | time the item waits before the step starts |
+| **% complete and accurate (%C&A)** | how often the step's output can be used by the next step without correction |
+| Who does it | team or organisation |
+
+Underneath, a **timeline** alternates waits and work, and totals them.
+
+**Three numbers that summarise the stream**
+
+- **Lead time** = total time from start to finish (all waits + all process time).
+- **Total process time** = the sum of process times.
+- **Flow efficiency** = total process time ÷ lead time.
+
+In office and service processes, flow efficiency of **5% to 15%** is common. Below 5% means the item spends almost its whole life waiting.
+
+**Rolled %C&A**
+
+Multiply the %C&A of the steps together to see how often an item goes through the whole stream without any correction. Three steps at 90% each give 0.9 × 0.9 × 0.9 = 73% right first time.
+
+## Example
+
+Harbourline's clearance value stream, before the pilot (averages per clearance, in hours):
+
+| Step | Team | Wait before | Process time |
+| :-- | :-- | --: | --: |
+| Check documents | Documentation | 22.1 | 2.0 |
+| (if incomplete) request correction and re-check | Documentation, customer | about 72 | 1.5 |
+| Submit customs declaration | Customs broker | 18.2 | 1.5 |
+| Duty assessment | Customs | 30.5 | 1.0 |
+| Confirm duty payment | Finance, customer | 46.1 | 0.5 |
+| (Red channel) physical inspection | Customs | 42.1 | 3.0 |
+| Release and gate-out | Terminal | 27.2 | 1.5 |
+
+The first step's %C&A is about 66%: only 66% of clearances have complete documents on arrival. Every other clearance takes the correction loop, which on its own adds about three days.
+
+## Walkthrough
+
+1. For each pre-pilot case, sum the process times of all its activities except delivery.
+2. Calculate the lead time at port: release − arrival, in hours.
+3. Calculate flow efficiency: total process hours ÷ total lead time hours, across all pre-pilot cases (the first task below).
+4. Build the VSM table for the steps, as in the example, using the waiting-time method from lesson 3.
+5. Mark the three longest waits. They're your improvement targets, whatever the team believes is slow.
+
+## Practice
+
+```answer
+{
+  "id": "pil-04-p1",
+  "prompt": "Before the pilot, what was the average **total process time** per clearance in hours (all activities except Deliver to customer)? One decimal place.",
+  "answer": 9.0,
+  "format": "number",
+  "dataset": "process",
+  "files": ["cases", "events"],
+  "verify": "SELECT ROUND(AVG(p), 1) FROM (SELECT c.case_id, SUM((julianday(e.end_time) - julianday(e.start_time)) * 24) AS p FROM cases c JOIN events e ON e.case_id = c.case_id WHERE c.checklist_pilot = 'No' AND e.activity <> 'Deliver to customer' GROUP BY c.case_id)",
+  "hint": "Sum end − start in hours for each case's activities (except delivery), then average across pre-pilot cases.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "pil-04-p2",
+  "prompt": "Before the pilot, what was the **flow efficiency** at port: total process hours (excluding delivery) ÷ total hours from arrival to release, across all pre-pilot cases? One decimal place.",
+  "answer": 4.3,
+  "format": "percent",
+  "dataset": "process",
+  "files": ["cases", "events"],
+  "verify": "SELECT ROUND(100.0 * SUM(p) / SUM(lt), 1) FROM (SELECT c.case_id, (julianday(c.released_datetime) - julianday(c.arrival_datetime)) * 24 AS lt, SUM((julianday(e.end_time) - julianday(e.start_time)) * 24) AS p FROM cases c JOIN events e ON e.case_id = c.case_id WHERE c.checklist_pilot = 'No' AND e.activity <> 'Deliver to customer' GROUP BY c.case_id)",
+  "hint": "Sum process hours over all pre-pilot cases, divided by the sum of their port hours.",
+  "explanation": "4.3%: a container is worked on for about 9 hours of its 207 hours at port. Making the work faster would barely help; removing waits would.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "pil-04-t1",
+  "prompt": "Summarise Harbourline's value stream for the operations director in 3 to 5 bullets: the **lead time**, the **process time**, the **flow efficiency**, the **biggest waits**, and what that means for where to improve.",
+  "minutes": 6,
+  "rows": 7,
+  "placeholder": "- A container spends about ... at port, of which ...",
+  "rules": [
+    { "label": "Three to five bullets", "pattern": "^\\s*[-*]\\s+\\S", "min": 3 },
+    { "label": "Gives the lead time", "pattern": "(8\\.\\d|20\\d|nine|eight)[^\\n]*(day|hour)|(day|hour)s? at port" },
+    { "label": "Gives the flow efficiency", "pattern": "flow efficiency|4\\.3\\s*%" },
+    { "label": "Names at least two of the longest waits", "pattern": "correct|re-?check|duty payment|pay|inspection", "min": 2 },
+    { "label": "Concludes about waiting rather than working faster", "pattern": "wait|queue|idle" },
+    { "label": "No more than 120 words", "maxWords": 120 }
+  ],
+  "sample": "- A container spends about 8.6 days (207 hours) at port, but is actually worked on for about 9 hours.\n- Flow efficiency is 4.3%: for 96% of the time, nothing is happening to it.\n- The longest waits are for corrected documents from customers (about 72 hours, on a third of clearances), customers paying duty (46 hours) and the physical inspection queue (42 hours).\n- Pushing the clearing team to work faster would save minutes; removing these waits would save days, and demurrage with them.",
+  "note": "The last bullet is the one that changes the operations director's plan. Numbers alone inform; the \"so what\" persuades.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Lead time is 200 hours and total process time is 10 hours. What is the flow efficiency?",
+    "options": ["95%", "5%", "20%", "50%"],
+    "answer": 1,
+    "explanation": "10 ÷ 200 = 5%."
+  },
+  {
+    "prompt": "Three steps each have %C&A of 80%. Roughly how often does an item get through all three without correction?",
+    "options": ["80%", "51%", "240%", "20%"],
+    "answer": 1,
+    "explanation": "0.8 × 0.8 × 0.8 = 0.51."
+  },
+  {
+    "prompt": "Flow efficiency is 4%. Where will the biggest improvement come from?",
+    "options": ["Making each step's work faster", "Removing or shortening the waits between steps", "Adding more steps", "Hiring a faster clerk"],
+    "answer": 1,
+    "explanation": "With 96% of the time spent waiting, waits are where the days are."
+  }
+]
+```
+$md$, true, true, 4, array['pil-04-p1', 'pil-04-p2', 'pil-04-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('pil-m05', 'process-improvement-bpmn-lean', 'The Eight Wastes', 5, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('process-improvement-bpmn-lean:the-eight-wastes', 'process-improvement-bpmn-lean', 'pil-m05', 'the-eight-wastes', 'The eight wastes', 'Learn to see waste in any process with the eight Lean wastes, find the evidence for each in data and observation, and size it so the biggest gets fixed first.', 20, $md$
+## The problem
+
+Walk through Harbourline's clearing office and nobody looks idle. The documentation team is checking files, phoning customers about missing permits, re-checking corrected files, re-typing data from emailed PDFs into the customs portal, and printing copies "just in case". Everyone is busy. Much of that busyness adds nothing the customer would pay for.
+
+Lean calls this **waste**: anything that uses time, money or effort without adding value from the customer's point of view. It's hard to see because it looks like work. The eight wastes are a checklist that trains you to spot it.
+
+## The concept
+
+**Value-adding or not?**
+
+A step **adds value** when the customer would willingly pay for it, it changes the item in a way the customer cares about, and it's done right first time. Checking documents is arguably necessary (customs requires it), but **re-checking** them because they were wrong is pure waste. Steps that are needed but add no value (regulatory checks, for example) are "necessary non-value-adding": minimise them, don't pretend they're value.
+
+**The eight wastes (DOWNTIME)**
+
+| Waste | In an office or service process | At Harbourline |
+| :-- | :-- | :-- |
+| **D**efects | errors, rework, corrections | incomplete documents, correction loops |
+| **O**verproduction | doing more, or sooner, than needed | reports nobody reads; printing every file |
+| **W**aiting | items or people waiting | waiting for corrected documents, duty payment, inspection |
+| **N**on-utilised talent | people's skills and ideas unused | clerks who know which customers always forget permits, but aren't asked |
+| **T**ransportation | moving items or information unnecessarily | documents emailed back and forth between teams |
+| **I**nventory | work piling up | containers stacked at port; a backlog of files to check |
+| **M**otion | unnecessary movement or searching | searching inboxes for the latest version of a document |
+| **E**xtra processing | doing more than the customer needs | re-typing data from PDFs into the customs portal |
+
+**Evidence, not opinion**
+
+For each waste, find evidence: a number from the data, an observation, or a quote. Then size it in time or money, so the team fixes the biggest waste first rather than the most annoying one.
+
+## Example
+
+Defects, sized from the event log. Before the pilot, Harbourline's documentation team sent 136 requests for corrected documents, and 25 clearances needed **two** rounds of correction. The correction loop added an average of about three days to every clearance that went through it. At ₦45,000 per container per day once the free days are used up, those days are the most expensive waste in the process.
+
+## Walkthrough
+
+1. Walk through the clearance process (from your BPMN model) and, at each step, ask "would the customer pay for this?"
+2. For each of the eight wastes, write down one example at Harbourline.
+3. Find evidence for each from the event log, from the cases table, or from what you'd observe in the office.
+4. Size the biggest wastes in hours, days or naira.
+5. Write your waste list (the task below), biggest first.
+
+## Practice
+
+```answer
+{
+  "id": "pil-05-p1",
+  "prompt": "Before the pilot, how many **Request corrected documents** events were there?",
+  "answer": 136,
+  "format": "number",
+  "dataset": "process",
+  "files": ["cases", "events"],
+  "verify": "SELECT COUNT(*) FROM events e JOIN cases c ON c.case_id = e.case_id WHERE c.checklist_pilot = 'No' AND e.activity = 'Request corrected documents'",
+  "hint": "Count events with that activity, for cases with checklist_pilot = No.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "pil-05-t1",
+  "prompt": "List **at least five** of the eight wastes in Harbourline's clearance process. One per line, in the form **Waste | example at Harbourline | evidence or size**. Put the biggest first.",
+  "minutes": 10,
+  "rows": 8,
+  "placeholder": "Waiting | containers wait ... | ...",
+  "rules": [
+    { "label": "At least five lines in the form Waste | example | evidence", "pattern": "^[^|\\n]+\\|[^|\\n]+\\|[^|\\n]+$", "min": 5 },
+    { "label": "Each line starts with one of the eight wastes", "pattern": "^\\s*[-*]?\\s*(\\d+[.)]\\s*)?(defects?|overproduction|waiting|non-utili[sz]ed talent|talent|transport(ation)?|inventory|motion|extra processing|over-?processing)\\s*\\|", "min": 5 },
+    { "label": "At least three lines include a number", "pattern": "^[^\\n]*\\|[^\\n]*\\d[^\\n]*$", "min": 3 },
+    { "label": "Includes waiting", "pattern": "^\\s*[-*]?\\s*(\\d+[.)]\\s*)?waiting\\s*\\|" },
+    { "label": "Includes defects", "pattern": "^\\s*[-*]?\\s*(\\d+[.)]\\s*)?defects?\\s*\\|" }
+  ],
+  "sample": "Waiting | containers wait at port for corrections, duty payment and inspection | 4.3% flow efficiency: about 9 hours of work in 207 hours at port\nDefects | incomplete customer documents, corrected and re-checked | 136 correction requests before the pilot; 25 clearances needed two rounds\nInventory | containers stacked at port beyond their free days | ₦184m demurrage in four months\nExtra processing | data re-typed from emailed PDFs into the customs portal | about 30 minutes per declaration (observed)\nMotion | searching email for the latest version of a document | several times a day per clerk (observed)\nNon-utilised talent | clerks know which importers always miss permits, but aren't asked | pharmaceutical files incomplete 70% of the time",
+  "note": "Waiting and defects are linked here: the defects (incomplete documents) cause the longest waits. Lesson 7 digs into why the documents are incomplete in the first place.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Documents are checked, found incomplete, corrected and re-checked. Which waste is the re-check?",
+    "options": ["Motion", "Defects (rework)", "Overproduction", "Value-adding work"],
+    "answer": 1,
+    "explanation": "Work done again because it was wrong the first time is rework."
+  },
+  {
+    "prompt": "A customs check is required by law but doesn't change the container. How should you treat it?",
+    "options": ["As value-adding", "As necessary non-value-adding: keep it, but make it as quick and smooth as possible", "Remove it", "Ignore it"],
+    "answer": 1,
+    "explanation": "Some steps can't be removed, but they can still be streamlined."
+  },
+  {
+    "prompt": "Why size each waste in time or money?",
+    "options": ["To blame someone", "So the team fixes the biggest waste first, not the most annoying one", "It's required by Lean", "To make a longer report"],
+    "answer": 1,
+    "explanation": "Evidence and size decide priorities."
+  }
+]
+```
+$md$, true, true, 5, array['pil-05-p1', 'pil-05-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('pil-m06', 'process-improvement-bpmn-lean', 'Bottlenecks and Flow', 6, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('process-improvement-bpmn-lean:bottlenecks-and-flow', 'process-improvement-bpmn-lean', 'pil-m06', 'bottlenecks-and-flow', 'Bottlenecks and flow', 'Find the constraint that limits a process, use Little''s law to connect work in progress, throughput and lead time, and see why improving anything except the bottleneck changes little.', 20, $md$
+## The problem
+
+Harbourline's operations director has a budget for one improvement this quarter. The documentation team wants a faster scanner. The customs brokers want a second laptop. The haulage team wants another truck. All three would make their own step quicker. Which would get containers out of the port sooner?
+
+Probably none of them. A process can only move as fast as its slowest point, its **bottleneck** or **constraint**, and time saved anywhere else just means items reach the bottleneck sooner and wait there instead. Before spending money on speed, find the constraint.
+
+## The concept
+
+**The theory of constraints in five steps**
+
+1. **Identify** the constraint: where does work pile up? Where are the longest waits?
+2. **Exploit** it: make sure the constraint never wastes time (no idle inspection slots, no files arriving incomplete).
+3. **Subordinate** everything else to it: schedule the other steps to feed it smoothly, not to look busy.
+4. **Elevate** it: if it's still the limit, add capacity there (more inspection slots, earlier booking).
+5. **Repeat**: once it's no longer the constraint, something else will be. Find it.
+
+**Signs of a bottleneck in data**
+
+- The longest average **wait** sits just before it.
+- Waits before it get longer when more work arrives at once.
+- Cases that skip it finish much faster.
+
+**Little's law**
+
+For a stable process, over time:
+
+> **Work in progress (WIP) = throughput × lead time**
+
+If 2.8 clearances arrive a day and each spends 8.6 days at port, about 24 clearances are at the port at any moment. Turn it around: to cut lead time without cutting throughput, you must cut the work in progress, which means removing waiting, not hurrying the work.
+
+## Example
+
+Harbourline's clearances, before the pilot, by customs channel:
+
+| Channel | What happens | Days at port |
+| :-- | :-- | --: |
+| Green | no inspection | 7.6 |
+| Yellow | document review by customs | 8.7 |
+| Red | physical inspection | 9.3 |
+
+Red cases spend about 1.7 days longer at port than Green ones, and the wait before physical inspection (42 hours on average) grows when several Red containers arrive in the same few days. The customs inspection queue behaves like a bottleneck for the 4 in 10 containers that go through it. But look back at the value stream: the waits for **corrected documents** and **duty payment** are as long or longer, and they affect every channel. There's more than one constraint, and some of them sit with Harbourline's own customers.
+
+## Walkthrough
+
+1. Calculate days at port by customs channel, before the pilot.
+2. Calculate the arrival rate (clearances per day) for January to April, and apply Little's law (the first task below).
+3. Look at the wait before physical inspection over time. Is it longer in weeks with more Red arrivals?
+4. Rank the constraints: inspection queue (controlled by customs), corrected documents and duty payment (controlled by customers, but influenced by Harbourline).
+5. For each, ask what "exploit" would mean: for example, having every Red file complete and paid **before** its inspection slot comes up.
+
+## Practice
+
+```answer
+{
+  "id": "pil-06-p1",
+  "prompt": "Before the pilot, how many more **days at port** did **Red** channel clearances spend than **Green** ones, on average? Two decimal places.",
+  "answer": 1.74,
+  "tolerance": 0.06,
+  "format": "number",
+  "dataset": "process",
+  "files": ["cases"],
+  "verify": "SELECT ROUND(AVG(CASE WHEN customs_channel = 'Red' THEN julianday(released_datetime) - julianday(arrival_datetime) END) - AVG(CASE WHEN customs_channel = 'Green' THEN julianday(released_datetime) - julianday(arrival_datetime) END), 2) FROM cases WHERE checklist_pilot = 'No'",
+  "hint": "Average days at port for Red cases minus the average for Green cases, both before the pilot.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "pil-06-p2",
+  "prompt": "Using **Little's law**, about how many clearances were at the port at any one time before the pilot? Use 2.82 arrivals a day and the pre-pilot average of 8.63 days at port. One decimal place.",
+  "answer": 24.3,
+  "format": "number",
+  "hint": "WIP = throughput × lead time = 2.82 × 8.63.",
+  "explanation": "About 24 clearances (roughly 49 containers) sitting at the port at any moment. Cut the average stay to 6 days at the same arrival rate and that falls to about 17.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "pil-06-t1",
+  "prompt": "The operations director can fund **one** of: a faster scanner for the documentation team, a second laptop for the customs brokers, or another truck for haulage. Write a short recommendation (60 to 150 words) explaining why **none of them** would shorten days at port much, and what you'd do instead, using the idea of a constraint and at least **two numbers** from the data.",
+  "minutes": 8,
+  "rows": 8,
+  "placeholder": "None of the three would ...",
+  "rules": [
+    { "label": "Uses the idea of a bottleneck or constraint", "pattern": "bottleneck|constraint" },
+    { "label": "At least two numbers", "pattern": "\\d+(\\.\\d+)?", "min": 2 },
+    { "label": "Mentions waiting", "pattern": "wait" },
+    { "label": "Proposes something aimed at documents, payment or inspection", "pattern": "document|checklist|payment|duty|inspection" },
+    { "label": "Between 60 and 150 words", "minWords": 60, "maxWords": 150 }
+  ],
+  "sample": "None of the three would shorten days at port much, because none of them is at a constraint. The documentation, declaration and haulage steps take about 2, 1.5 and 17 hours of work, but a container spends about 207 hours at port, and most of that is waiting: about 72 hours for corrected documents when files are incomplete, 46 hours for duty payment and 42 hours in the inspection queue for Red cases. A faster scanner would just get files to those waits sooner. Instead, I'd spend the budget on getting documents complete and duty paid before the vessel arrives, so that files are ready the moment an inspection slot or release is available.",
+  "note": "\"Exploit the constraint\" in practice: make sure nothing the constraint needs is missing when it's the item's turn.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "You halve the time of a step that isn't the bottleneck. What usually happens to lead time?",
+    "options": ["It halves", "Very little changes: items just reach the bottleneck sooner and wait there", "It doubles", "It becomes zero"],
+    "answer": 1,
+    "explanation": "Only improvements at the constraint speed up the whole process."
+  },
+  {
+    "prompt": "Throughput is 5 cases a day and lead time is 4 days. How many cases are in progress, on average?",
+    "options": ["1.25", "20", "9", "0.8"],
+    "answer": 1,
+    "explanation": "WIP = throughput × lead time = 5 × 4."
+  },
+  {
+    "prompt": "What does 'exploit the constraint' mean?",
+    "options": ["Overwork the people there", "Make sure the constraint never wastes time, for example by never receiving incomplete work", "Remove the constraint step", "Add more steps"],
+    "answer": 1,
+    "explanation": "Protect the constraint's time before paying for more capacity."
+  }
+]
+```
+$md$, true, true, 6, array['pil-06-p1', 'pil-06-p2', 'pil-06-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('pil-m07', 'process-improvement-bpmn-lean', 'Root Cause Analysis', 7, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('process-improvement-bpmn-lean:root-cause-analysis', 'process-improvement-bpmn-lean', 'pil-m07', 'root-cause-analysis', 'Root cause analysis', 'Get from a symptom to the causes you can actually fix with a fishbone diagram, five whys and Pareto analysis, and avoid the classic trap of confusing a high rate with a big total.', 20, $md$
+## The problem
+
+Incomplete documents cause Harbourline's most expensive wait. Before the pilot, clearances with incomplete documents spent **11.1 days** at port on average, against **7.4** for complete ones, and paid almost twice as much demurrage per container. So why are documents incomplete?
+
+The clearing team's answer is "customers are careless". That's a symptom with a label on it, not a cause, and you can't fix "careless". Root cause analysis keeps asking until it reaches something specific that can be changed: a missing form, an unclear instruction, a permit nobody mentions until it's too late.
+
+## The concept
+
+**The fishbone (Ishikawa) diagram**
+
+Write the problem at the "head" and brainstorm causes along six "bones":
+
+| Category | Questions for incomplete documents |
+| :-- | :-- |
+| **People** | Do customers know what's needed? Does Harbourline's team? |
+| **Process** | When does Harbourline ask for documents? Is there a checklist? |
+| **Policy** | Which goods need extra permits (NAFDAC, SONCAP)? Do the rules change? |
+| **Materials** (inputs) | Which documents are most often missing or wrong? |
+| **Systems** | How are documents sent and stored? Can versions get mixed up? |
+| **Measurement** | Does anyone track incompleteness by customer or document? |
+
+The fishbone generates candidate causes. Data and five whys test them.
+
+**Five whys**, applied:
+
+1. Why are documents incomplete? *The permit is missing.*
+2. Why? *The customer didn't know it was needed.*
+3. Why? *Harbourline only lists the required documents after the vessel arrives.*
+4. Why? *The documentation team checks files on arrival, not before.*
+5. Why? *That's how the process was set up when shipments were simpler.*
+
+Root cause: **documents are checked too late for problems to be fixed before arrival.** That's something Harbourline controls.
+
+**Pareto analysis: rate versus count**
+
+Sort the causes (or customer groups) by how many problems they cause, and look at the cumulative share. Usually a few account for most. But compare two measures:
+
+- the **rate**: which group is most likely to have the problem?
+- the **count**: which group causes the most problems in total?
+
+A small group with a very high rate needs a targeted fix. A large group with a moderate rate may cause more problems overall.
+
+## Example
+
+Incomplete documents before the pilot, by importer type:
+
+| Importer type | Clearances | Incomplete | Rate |
+| :-- | --: | --: | --: |
+| Pharmaceutical | 33 | 23 | 70% |
+| Manufacturer | 95 | 30 | 32% |
+| Retailer | 89 | 26 | 29% |
+| Electronics | 63 | 17 | 27% |
+| Construction | 47 | 15 | 32% |
+
+Pharmaceutical importers are by far the most likely to have incomplete documents (they need NAFDAC permits that others don't), so they need a specific fix: a permit check weeks before shipping. But manufacturers and retailers together cause more incomplete files (56) than pharmaceuticals (23). A fix aimed only at pharmaceutical importers would miss most of the problem. A general "check before arrival" fix reaches everyone.
+
+## Walkthrough
+
+1. Compare days at port and demurrage per container for complete and incomplete files, before the pilot.
+2. Draw a fishbone for "documents incomplete on arrival", with at least two causes per bone.
+3. Run five whys on the most likely cause.
+4. Build the table in the example and a Pareto chart of incomplete files by importer type.
+5. Write the root causes you'll act on, each with its evidence (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "pil-07-p1",
+  "prompt": "Before the pilot, what was the average **demurrage per container** for clearances with **incomplete** documents on arrival? (Total demurrage ÷ total containers, for those cases. A rounded figure is fine.)",
+  "answer": 386652,
+  "format": "naira",
+  "dataset": "process",
+  "files": ["cases"],
+  "verify": "SELECT ROUND(SUM(demurrage_ngn) * 1.0 / SUM(containers)) FROM cases WHERE checklist_pilot = 'No' AND docs_complete_on_arrival = 'No'",
+  "hint": "Sum demurrage_ngn ÷ sum containers, for cases before the pilot with docs_complete_on_arrival = No.",
+  "explanation": "About ₦387,000 per container, against about ₦218,000 when documents were complete. Incomplete documents cost customers roughly ₦169,000 more per container.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "pil-07-p2",
+  "prompt": "Before the pilot, what share of **all** incomplete files came from **Pharmaceutical** importers? One decimal place.",
+  "answer": 20.7,
+  "format": "percent",
+  "dataset": "process",
+  "files": ["cases"],
+  "verify": "SELECT ROUND(100.0 * SUM(importer_type = 'Pharmaceutical' AND docs_complete_on_arrival = 'No') / SUM(docs_complete_on_arrival = 'No'), 1) FROM cases WHERE checklist_pilot = 'No'",
+  "hint": "Pharmaceutical incomplete files ÷ all incomplete files, before the pilot.",
+  "explanation": "About a fifth. The highest rate, but not most of the problem.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "pil-07-t1",
+  "prompt": "Write **five whys** for a different problem: *Customers wait an average of two days for Harbourline to confirm their duty payment.* Number each why (1. to 5.), give an answer for each, and finish with a line starting **Root cause:** that names something Harbourline can change.",
+  "minutes": 8,
+  "rows": 8,
+  "placeholder": "1. Why ...? ...\n...\nRoot cause: ...",
+  "rules": [
+    { "label": "Five numbered whys", "pattern": "^\\s*\\d[.)]\\s*why\\b", "min": 5 },
+    { "label": "A Root cause line", "pattern": "^\\s*root cause\\s*:" },
+    { "label": "The root cause isn't just blaming people (careless, lazy, slow staff)", "pattern": "root cause\\s*:[^\\n]*(careless|lazy|incompetent|slow staff|bad customers)", "absent": true },
+    { "label": "Enough detail: at least 60 words", "minWords": 60 }
+  ],
+  "sample": "1. Why do customers wait two days for payment confirmation? Finance only confirms payments once the bank statement arrives.\n2. Why only then? There's no other way to see that a customer has paid.\n3. Why not? Customers pay by transfer without the clearance reference, so payments can't be matched until someone reads the statement.\n4. Why don't they include the reference? The duty notice we send doesn't ask for one or show it clearly.\n5. Why not? The notice template was written before transfers replaced bank drafts, and nobody updated it.\nRoot cause: the duty notice doesn't give customers a payment reference, so payments can't be matched automatically.",
+  "note": "The root cause is a template, which can be fixed in an afternoon. \"Finance is slow\" would have led to hiring someone; the five whys led to a much cheaper fix.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "The clearing team says the cause is 'customers are careless'. What's wrong with that as a root cause?",
+    "options": ["Nothing", "It's a label for a symptom, not something specific Harbourline can change; keep asking why", "It's too specific", "Root causes must be technical"],
+    "answer": 1,
+    "explanation": "Root causes should be specific and actionable."
+  },
+  {
+    "prompt": "Group A has a 70% problem rate but small volume; group B has a 30% rate and three times the volume. Which causes more problems in total?",
+    "options": ["Group A", "Group B", "They're equal", "You can't tell"],
+    "answer": 1,
+    "explanation": "Rate and count answer different questions; check both."
+  },
+  {
+    "prompt": "What is a fishbone diagram for?",
+    "options": ["Measuring lead time", "Brainstorming possible causes of a problem in categories, before testing them with data", "Prioritising stories", "Drawing BPMN"],
+    "answer": 1,
+    "explanation": "It generates candidate causes; data and five whys test them."
+  }
+]
+```
+$md$, true, true, 7, array['pil-07-p1', 'pil-07-p2', 'pil-07-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('pil-m08', 'process-improvement-bpmn-lean', 'Designing the Future State', 8, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('process-improvement-bpmn-lean:designing-the-future-state', 'process-improvement-bpmn-lean', 'pil-m08', 'designing-the-future-state', 'Designing the future state', 'Design a better process with Lean patterns (do it earlier, error-proof it, standardise it, level the flow), set targets, and estimate the benefit before you change anything.', 20, $md$
+## The problem
+
+You know where the time goes and why. Now the operations director asks for the fix. There's a temptation to jump to the most visible idea, a new clearance system, or to list twenty small tweaks. Neither helps. The first is expensive and slow; the second spreads effort thin.
+
+A good future state attacks the **root causes** at the **constraints**, with a small number of changes, each with a clear expected effect. And before anything changes, you estimate the benefit, so that the pilot has a target to beat.
+
+## The concept
+
+**Lean design patterns**
+
+| Pattern | Idea | For Harbourline's clearance |
+| :-- | :-- | :-- |
+| **Do it earlier (front-load)** | move checks before the point where errors become expensive | check documents before the vessel arrives, not after |
+| **Error-proofing (poka-yoke)** | make the mistake impossible, or obvious at once | a checklist per importer type, so a pharmaceutical shipment can't be booked without its NAFDAC permit |
+| **Standard work** | one agreed best way, written down, for repeatable steps | the same document check, in the same order, for every file |
+| **Remove a handoff** | fewer passes between people and teams | one named clerk owns a file from booking to release |
+| **Level the flow** | avoid peaks that overload the bottleneck | ask customs for inspection slots as soon as the channel is known |
+| **Pull, not push** | start the next step when it can actually proceed | send the duty notice the moment assessment arrives, with a payment reference |
+
+**Future-state targets**
+
+For each change, state the measure it should move and by how much, for example: "documents complete on arrival rises from 66% to 85%". Targets should be ambitious but grounded in your analysis: you know how long complete files take, so you can estimate what more complete files would save.
+
+**Estimating the benefit**
+
+Convert time into money with the cost the customer feels:
+
+> annual saving ≈ (current cost per unit − target cost per unit) × units per year
+
+State the assumptions, and test what happens if you only get half the improvement.
+
+## Example
+
+Harbourline's future state, as three changes:
+
+1. **Pre-arrival document check**, with an importer-specific checklist (front-load and error-proof). *Target:* documents complete on arrival from 66% to at least 85%.
+2. **Duty notice with a payment reference**, sent the same day as assessment (pull, and the fix from lesson 7's five whys). *Target:* wait for payment confirmation from about 46 hours to under 24.
+3. **Early inspection booking** for Red channel files, once all documents are complete and duty is paid (exploit the constraint). *Target:* wait for inspection from about 42 hours to under 30.
+
+Change 1 is the one Harbourline piloted from 1 May. Changes 2 and 3 are the next candidates.
+
+## Walkthrough
+
+1. List your root causes and constraints from lessons 4 to 7.
+2. Choose at most three changes, each tied to a root cause, using the patterns above.
+3. Redraw the BPMN model for the future state: where do the checks move? Which loops disappear?
+4. Set a target for each change.
+5. Estimate the benefit: calculate demurrage per container before the pilot (the first task below), then the saving if it fell to a target.
+
+## Practice
+
+```answer
+{
+  "id": "pil-08-p1",
+  "prompt": "Before the pilot, what was the average **demurrage per container** across **all** clearances (total demurrage ÷ total containers)? (A rounded figure is fine.)",
+  "answer": 277116,
+  "format": "naira",
+  "dataset": "process",
+  "files": ["cases"],
+  "verify": "SELECT ROUND(SUM(demurrage_ngn) * 1.0 / SUM(containers)) FROM cases WHERE checklist_pilot = 'No'",
+  "hint": "Sum of demurrage_ngn ÷ sum of containers, where checklist_pilot = No.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "pil-08-p2",
+  "prompt": "If demurrage per container fell from your previous answer to a target of **₦150,000**, what would the annual saving be on **2,000 containers** a year? (A rounded figure is fine.)",
+  "answer": 254232000,
+  "format": "naira",
+  "hint": "(277,116 − 150,000) × 2,000.",
+  "explanation": "About ₦254m a year, and that's customers' money, which Harbourline can use to keep and win business. Even half the improvement would be worth well over ₦100m.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "pil-08-t1",
+  "prompt": "Propose a **future state** for a different process: *A Lagos hospital's discharge process, where patients wait about 4 hours for their medicines after the doctor says they can go home.* Write **three changes**, one per line, each in the form **Change | Lean pattern | measure and target**.",
+  "minutes": 8,
+  "rows": 6,
+  "placeholder": "Prescribe discharge medicines the day before | do it earlier | ...",
+  "rules": [
+    { "label": "Three lines in the form Change | pattern | measure and target", "pattern": "^[^|\\n]+\\|[^|\\n]+\\|[^|\\n]+$", "min": 3 },
+    { "label": "Names Lean patterns (earlier, error-proof, standard work, handoff, level, pull)", "pattern": "earlier|front-?load|error-?proof|poka|standard|handoff|hand-off|level|pull", "min": 2 },
+    { "label": "Each target includes a number", "pattern": "\\|[^|\\n]*\\d[^|\\n]*$", "min": 3 }
+  ],
+  "sample": "Write discharge prescriptions the evening before expected discharge | do it earlier | share of discharge medicines ready by 10am, from about 20% to 70%\nA discharge checklist the pharmacy can't skip (allergies, doses, follow-up) | error-proofing | prescriptions returned to the ward for correction, from 15% to under 5%\nOne pharmacy technician owns ward discharges each morning | remove a handoff | average wait for medicines from 4 hours to under 1.5 hours",
+  "note": "Each change has a pattern, a measure and a target, so the pilot can test them one by one. Without targets, a pilot can only report that \"things improved\".",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "What is poka-yoke?",
+    "options": ["A Japanese meeting", "Error-proofing: making a mistake impossible or immediately obvious", "A type of bottleneck", "A BPMN symbol"],
+    "answer": 1,
+    "explanation": "A checklist that blocks booking without the permit is a poka-yoke."
+  },
+  {
+    "prompt": "Why limit the future state to a few changes tied to root causes?",
+    "options": ["Fewer changes are always better", "Focused changes at the constraints can be piloted and measured; twenty small tweaks spread effort and can't be evaluated", "Management prefers three", "It's a Lean rule"],
+    "answer": 1,
+    "explanation": "Fix the causes that matter most, and measure each."
+  },
+  {
+    "prompt": "Why estimate the benefit before piloting?",
+    "options": ["To impress the sponsor", "So the pilot has a target to beat, and the decision to scale is based on evidence", "It's optional", "To set the budget"],
+    "answer": 1,
+    "explanation": "A target makes the pilot a test, not a demonstration."
+  }
+]
+```
+$md$, true, true, 8, array['pil-08-p1', 'pil-08-p2', 'pil-08-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('pil-m09', 'process-improvement-bpmn-lean', 'Pilot, Measure and Sustain', 9, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('process-improvement-bpmn-lean:pilot-measure-and-sustain', 'process-improvement-bpmn-lean', 'pil-m09', 'pilot-measure-and-sustain', 'Pilot, measure and sustain', 'Run a change as a PDCA pilot, judge it with a run chart and a fair before-and-after comparison, and put controls in place so the improvement doesn''t quietly slip back.', 25, $md$
+## The problem
+
+From 1 May 2026, Harbourline checked every customer's documents **before** the vessel arrived, using a checklist for each importer type. Two months later, the operations director asks: "Did it work? Should we keep it?"
+
+The tempting answer is to compare the average before and after and declare victory. But averages can mislead. Was May just a quieter month? Did the pilot happen to get fewer Red-channel inspections? Did something else change at the same time? And even if it worked, how do you stop the team drifting back to the old way once the attention moves elsewhere? Most improvements fade within a year, not because they didn't work, but because nobody made them stick.
+
+## The concept
+
+**PDCA**
+
+**Plan** the change and its measures. **Do** it on a small scale. **Check** the results against the target. **Act**: adopt it, adapt it or drop it, then plan the next cycle. PDCA is the small-scale version of DMAIC, repeated.
+
+**Judging a pilot fairly**
+
+- **Plot a run chart**: the measure week by week, with the change date marked. A real improvement shows as a sustained shift, not one good week.
+- **Compare like with like**: check that the mix is similar before and after (here, the share of Red-channel clearances and importer types). If the pilot period happened to get easier cases, the averages flatter it.
+- **Check measures the change shouldn't affect**: if they also improved, something else is going on (a quieter port, a new customs procedure).
+- **Compare with a group not in the pilot** if you can. Harbourline put every customer in the pilot, which makes the run chart and the mix checks more important.
+
+**Sustain: the control plan**
+
+| Control | Harbourline example |
+| :-- | :-- |
+| **Standard work** | the pre-arrival checklist written down, by importer type, in the booking procedure |
+| **Ownership** | the documentation lead owns "documents complete on arrival" |
+| **Visual management** | a weekly board: clearances at port, days at port, files still incomplete |
+| **Control limits** | if weekly days at port goes above an agreed limit, investigate that week |
+| **Review** | a monthly 30-minute review of the measures, with actions |
+
+## Example
+
+Average days at port by arrival week, before and after the pilot started on 1 May:
+
+| Weeks | Range of weekly averages |
+| :-- | :-- |
+| January to April (16 full weeks) | 7.8 to 9.6 days |
+| May and June (8 full weeks) | 5.6 to 7.0 days |
+
+Every pilot week is below every pre-pilot week. That's a sustained shift, not luck. The mix checks pass too: Red-channel clearances were 44% before and 43% during the pilot, and every channel improved by about two days. And the wait for **duty payment confirmation**, which the checklist doesn't touch, stayed the same: about 46 hours before and during. That's good evidence that the improvement came from the documents, not from something else changing at the port.
+
+## Walkthrough
+
+1. Plot days at port by arrival week, and mark 1 May.
+2. Compare the before and after averages for days at port, documents complete on arrival and demurrage per container.
+3. Check the mix: Red-channel share and importer types, before and after.
+4. Check a measure the pilot shouldn't affect: the wait before *Confirm duty payment*.
+5. Write the control plan (the task below), and agree the next PDCA cycle (duty payment reference, from lesson 8).
+
+## Practice
+
+```answer
+{
+  "id": "pil-09-p1",
+  "prompt": "During the pilot (checklist_pilot = Yes), what was the average number of **days at port**? Two decimal places.",
+  "answer": 6.38,
+  "tolerance": 0.06,
+  "format": "number",
+  "dataset": "process",
+  "files": ["cases"],
+  "verify": "SELECT ROUND(AVG(julianday(released_datetime) - julianday(arrival_datetime)), 2) FROM cases WHERE checklist_pilot = 'Yes'",
+  "hint": "Average released − arrival for pilot cases.",
+  "explanation": "6.38 days, down from 8.63: about 2.25 days less at port per clearance.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "pil-09-p2",
+  "prompt": "During the pilot, what was the average **demurrage per container**? (A rounded figure is fine.)",
+  "answer": 174164,
+  "format": "naira",
+  "dataset": "process",
+  "files": ["cases"],
+  "verify": "SELECT ROUND(SUM(demurrage_ngn) * 1.0 / SUM(containers)) FROM cases WHERE checklist_pilot = 'Yes'",
+  "hint": "Sum of demurrage ÷ sum of containers, for pilot cases.",
+  "explanation": "About ₦174,000, against ₦277,000 before: a saving of about ₦103,000 per container, from a checklist and a change of timing.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "pil-09-p3",
+  "prompt": "What share of pilot clearances had **complete documents on arrival**? One decimal place.",
+  "answer": 85.3,
+  "format": "percent",
+  "dataset": "process",
+  "files": ["cases"],
+  "verify": "SELECT ROUND(100.0 * SUM(docs_complete_on_arrival = 'Yes') / COUNT(*), 1) FROM cases WHERE checklist_pilot = 'Yes'",
+  "hint": "Count docs_complete_on_arrival = Yes ÷ all pilot cases.",
+  "explanation": "85.3%, up from 66.1%: the target from lesson 8 was met.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "pil-09-t1",
+  "prompt": "Write the **control plan** that keeps the pre-arrival checklist working after the pilot. One line each for **standard work**, **owner**, **measure** (with a target), **visual management**, and **review** (with how often), each starting with its heading.",
+  "minutes": 8,
+  "rows": 8,
+  "placeholder": "Standard work: ...\nOwner: ...",
+  "rules": [
+    { "label": "Standard work line", "pattern": "^\\s*[-*]?\\s*standard work\\s*:" },
+    { "label": "Owner line naming a role", "pattern": "^\\s*[-*]?\\s*owner\\s*:[^\\n]*(lead|manager|head|officer|supervisor|director)" },
+    { "label": "Measure line with a number", "pattern": "^\\s*[-*]?\\s*measures?\\s*:[^\\n]*\\d" },
+    { "label": "Visual management line", "pattern": "^\\s*[-*]?\\s*visual( management)?\\s*:" },
+    { "label": "Review line with a frequency", "pattern": "^\\s*[-*]?\\s*review\\s*:[^\\n]*(daily|weekly|monthly|quarterly|every|each)" }
+  ],
+  "sample": "Standard work: the pre-arrival checklist for each importer type is part of the booking procedure; no shipment is confirmed until the checklist is sent to the customer.\nOwner: the documentation team lead owns documents complete on arrival and days at port.\nMeasure: documents complete on arrival at least 85%, and weekly average days at port under 7, tracked from the clearance log.\nVisual management: a board in the clearing office showing this week's clearances at port, days at port and files still incomplete, updated every morning.\nReview: a 30-minute review every month with the operations director; any week above 7.5 days at port is investigated within a week.",
+  "note": "The owner and the review are the parts most often missing. Without them, the checklist quietly becomes optional on busy weeks, and in a year nobody remembers why days at port crept back up.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why plot a run chart instead of only comparing two averages?",
+    "options": ["Charts look better", "It shows whether the change is a sustained shift or one good week, and whether something else changed at the same time", "Averages can't be calculated", "It's required by PDCA"],
+    "answer": 1,
+    "explanation": "A shift that holds week after week is far stronger evidence."
+  },
+  {
+    "prompt": "The wait for duty payment stayed the same during the pilot. Why is that useful?",
+    "options": ["It isn't", "The checklist shouldn't affect that wait, so its staying the same suggests the improvement came from the checklist, not from a general change at the port", "It shows the pilot failed", "Duty payment is the bottleneck"],
+    "answer": 1,
+    "explanation": "A measure that should be unaffected acts as a check."
+  },
+  {
+    "prompt": "What is the most common reason improvements fade?",
+    "options": ["They never worked", "Nobody owns the measure, and the new way isn't built into standard work or reviewed", "Customers complain", "The data is wrong"],
+    "answer": 1,
+    "explanation": "A control plan makes the improvement the normal way of working."
+  }
+]
+```
+$md$, true, true, 9, array['pil-09-p1', 'pil-09-p2', 'pil-09-p3', 'pil-09-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('pil-m10', 'process-improvement-bpmn-lean', 'Final Project', 10, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('process-improvement-bpmn-lean:final-project', 'process-improvement-bpmn-lean', 'pil-m10', 'final-project', '"Final project: the next improvement cycle"', 'Plan your final project, a full improvement case for Harbourline''s next PDCA cycle, and summarise it on one page in the A3 format Lean organisations use.', 20, $md$
+## The problem
+
+The pre-arrival checklist worked: about 2.25 fewer days at port per clearance and roughly ₦103,000 less demurrage per container. The operations director wants to keep going. "What's next, and what will it be worth?"
+
+The data already hints at the answer. During the pilot, the wait for **duty payment confirmation** didn't move (about 46 hours, before and after), and Red-channel clearances still spend over 7 days at port. Your final project is the full improvement case for the next cycle: map it, measure it, find the root causes, design the change, estimate the benefit, and plan the pilot and its controls.
+
+## The concept
+
+**The A3 report**
+
+Lean organisations summarise an improvement on one sheet of A3 paper, so the whole story fits on one page and anyone can follow the reasoning. Its sections follow PDCA:
+
+| Section | Contains |
+| :-- | :-- |
+| **Background** | why this matters, in customer terms |
+| **Current condition** | the process map and the key numbers |
+| **Goal** | the target, with a date |
+| **Root cause analysis** | fishbone, five whys, Pareto: the causes you'll act on |
+| **Countermeasures** | the changes, each tied to a root cause |
+| **Plan** | who does what, by when, and how the pilot will be judged |
+| **Follow-up** | the control plan, and what you'll check after the pilot |
+
+The discipline of fitting it on one page forces you to keep only what matters.
+
+## Example
+
+The A3 for the cycle you've just studied would open like this:
+
+> **Background:** containers spent 8.6 days at port against 3 free days; customers paid ₦184m in demurrage in January to April 2026.
+>
+> **Current condition:** flow efficiency 4.3%; the longest waits were for corrected documents (about 72 hours, on a third of clearances), duty payment (46 hours) and inspection (42 hours, Red channel).
+>
+> **Goal:** documents complete on arrival from 66% to 85% by the end of June 2026.
+
+## Walkthrough
+
+1. Choose the focus of your next cycle: the duty-payment wait, the inspection queue for Red-channel files, or both.
+2. Measure the current condition from the pilot-period data (May and June), since that's the new baseline.
+3. Find the root causes, using the fishbone and five whys. The lesson 7 task on duty payment is a starting point.
+4. Design the countermeasures and estimate the benefit in demurrage.
+5. Plan the pilot, with a run chart, mix checks and a control plan.
+6. Open the project brief on the course page and write the full case and the A3.
+
+## Practice
+
+```dataset
+{"dataset": "process", "files": ["cases", "events"]}
+```
+
+```answer
+{
+  "id": "pil-10-p1",
+  "prompt": "During the pilot, what was the average **wait in hours before Confirm duty payment**? One decimal place.",
+  "answer": 46.6,
+  "format": "number",
+  "dataset": "process",
+  "files": ["cases", "events"],
+  "verify": "WITH e AS (SELECT case_id, activity, start_time, LAG(end_time) OVER (PARTITION BY case_id ORDER BY start_time) AS prev_end FROM events) SELECT ROUND(AVG((julianday(e.start_time) - julianday(e.prev_end)) * 24), 1) FROM e JOIN cases c ON c.case_id = e.case_id WHERE e.activity = 'Confirm duty payment' AND c.checklist_pilot = 'Yes'",
+  "hint": "The lesson 3 waiting-time query, filtered to pilot cases.",
+  "explanation": "Unchanged at about 46 hours. It's now the longest wait every clearance goes through, which makes it the obvious next target.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "pil-10-p2",
+  "prompt": "During the pilot, what was the average number of **days at port** for **Red** channel clearances? Two decimal places.",
+  "answer": 7.19,
+  "tolerance": 0.06,
+  "format": "number",
+  "dataset": "process",
+  "files": ["cases"],
+  "verify": "SELECT ROUND(AVG(julianday(released_datetime) - julianday(arrival_datetime)), 2) FROM cases WHERE checklist_pilot = 'Yes' AND customs_channel = 'Red'",
+  "hint": "Pilot cases with customs_channel = Red.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "pil-10-t1",
+  "prompt": "Write the **first three sections of an A3** for your next improvement cycle: **Background**, **Current condition** and **Goal**, each starting on its own line with its heading. Use at least **four numbers** from the data, and make the goal measurable with a date.",
+  "minutes": 10,
+  "rows": 10,
+  "placeholder": "Background: ...\nCurrent condition: ...\nGoal: ...",
+  "rules": [
+    { "label": "A Background section", "pattern": "^\\W*background\\W*:?" },
+    { "label": "A Current condition section", "pattern": "^\\W*current (condition|state)\\W*:?" },
+    { "label": "A Goal section", "pattern": "^\\W*(goal|target)\\W*:?" },
+    { "label": "At least four numbers", "pattern": "\\d+(\\.\\d+)?", "min": 4 },
+    { "label": "The goal has a date or time frame", "pattern": "(goal|target)[^\\n]*(by|within|before) [^\\n]*(20\\d\\d|month|week|quarter|january|february|march|april|may|june|july|august|september|october|november|december)" },
+    { "label": "No more than 200 words: an A3 is short", "maxWords": 200 }
+  ],
+  "sample": "Background: after the pre-arrival checklist, containers still spend 6.4 days at port against 3 free days, and customers paid about ₦174,000 of demurrage per container in May and June 2026.\nCurrent condition: the wait for duty payment confirmation is unchanged at about 46 hours and is now the longest wait on every clearance; Red-channel clearances still average 7.2 days at port, with about 42 hours waiting for inspection.\nGoal: by the end of December 2026, cut the wait for payment confirmation to under 24 hours and average days at port to under 5.5, reducing demurrage per container below ₦120,000.",
+  "note": "Notice the baseline is the **pilot** period, not January to April. Each PDCA cycle starts from the new normal the previous one created.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why does an A3 report fit on one page?",
+    "options": ["To save paper", "So the whole reasoning, from problem to follow-up, can be seen and challenged at once, keeping only what matters", "It's a legal requirement", "Managers don't read"],
+    "answer": 1,
+    "explanation": "One page forces focus."
+  },
+  {
+    "prompt": "What baseline should the next improvement cycle use?",
+    "options": ["January to April, before any change", "The pilot period: the new normal after the last change", "Last year", "The industry average"],
+    "answer": 1,
+    "explanation": "Each cycle builds on the last."
+  },
+  {
+    "prompt": "The duty-payment wait didn't change during the checklist pilot. What does that suggest for the next cycle?",
+    "options": ["It can't be improved", "It's untouched by the last change and is now the longest common wait, so it's a strong candidate", "The pilot failed", "It isn't important"],
+    "answer": 1,
+    "explanation": "Remove one constraint, and the next one shows."
+  }
+]
+```
+$md$, true, true, 10, array['pil-10-p1', 'pil-10-p2', 'pil-10-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+
 -- Course: Data Analyst Capstone: End-to-End BI Project
 insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
-values ('data-analyst-capstone', 'full', null, 'data-analyst-capstone', 'CAP', 'Data Analyst Capstone: End-to-End BI Project', 'Take a retail chain''s raw till export all the way to a reviewed dashboard and a board-ready executive summary, using the tools of your choice.', 'The capstone of the Data Analyst track. Voltline Electronics, a chain of eight stores, sends you 18 months of raw till data and one question from its chief executive: what''s really driving our 37% growth? You''ll plan the analysis, profile and clean a genuinely messy export (a duplicated upload, mixed date formats, inconsistent store names and test transactions), build a model that looks up costs by date and compares sales with monthly targets, decompose the growth, find what''s going wrong where, and put a value on missed sales. Then you''ll build a dashboard, write an executive summary, prepare for the board''s questions and publish the project for your portfolio. Use Excel, Power BI, SQL or Python: the work is assessed on the answers, not the tool.', 'data-analytics', 'intermediate', 4, 'Career project', 14, true, 'available', true, array['Turning a business brief into an analysis plan', 'Profiling and cleaning raw data with a quality log', 'Modelling data at the right grain', 'Decomposing growth into price, new stores and volume', 'Judging targets fairly', 'Estimating lost sales with stated assumptions', 'Finding-led dashboards and executive summaries', 'Presenting and publishing a portfolio project']::text[], array['The core Data Analyst courses: Excel, SQL and Power BI (or Python)', 'Comfort cleaning data and building a dashboard in at least one tool']::text[], 'Voltline Electronics: commercial review', true, true, true, true, false, 60, 24)
+values ('data-analyst-capstone', 'full', null, 'data-analyst-capstone', 'CAP', 'Data Analyst Capstone: End-to-End BI Project', 'Take a retail chain''s raw till export all the way to a reviewed dashboard and a board-ready executive summary, using the tools of your choice.', 'The capstone of the Data Analyst track. Voltline Electronics, a chain of eight stores, sends you 18 months of raw till data and one question from its chief executive: what''s really driving our 37% growth? You''ll plan the analysis, profile and clean a genuinely messy export (a duplicated upload, mixed date formats, inconsistent store names and test transactions), build a model that looks up costs by date and compares sales with monthly targets, decompose the growth, find what''s going wrong where, and put a value on missed sales. Then you''ll build a dashboard, write an executive summary, prepare for the board''s questions and publish the project for your portfolio. Use Excel, Power BI, SQL or Python: the work is assessed on the answers, not the tool.', 'data-analytics', 'intermediate', 4, 'Career project', 14, true, 'available', true, array['Turning a business brief into an analysis plan', 'Profiling and cleaning raw data with a quality log', 'Modelling data at the right grain', 'Decomposing growth into price, new stores and volume', 'Judging targets fairly', 'Estimating lost sales with stated assumptions', 'Finding-led dashboards and executive summaries', 'Presenting and publishing a portfolio project']::text[], array['The core Data Analyst courses: Excel, SQL and Power BI (or Python)', 'Comfort cleaning data and building a dashboard in at least one tool']::text[], 'Voltline Electronics: commercial review', true, true, true, true, false, 60, 25)
 on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level = excluded.level, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
@@ -30370,6 +31745,116 @@ on conflict (id) do update set assessment_id = excluded.assessment_id, position 
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
 values ('abaq13', 1, 'Agreeing in advance stops the decision being argued from the results.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Process Improvement with BPMN and Lean: final assessment
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('process-improvement-bpmn-lean-final', 'process-improvement-bpmn-lean', 'final', null, 'Process Improvement with BPMN and Lean: final assessment', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pilq01', 'process-improvement-bpmn-lean-final', 1, 'Containers spend 8 days at port and the clearing team is busy all day. What does Lean suggest first?', '["Make the team work faster","Measure where the time goes; most of it is probably waiting between steps","Hire more staff","Buy new software"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pilq01', 1, 'Waiting usually dwarfs working time.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pilq02', 'process-improvement-bpmn-lean-final', 2, 'In BPMN, how should communication between Harbourline and the customs service be drawn?', '["Sequence flow between lanes","Message flow between separate pools","A parallel gateway","A sub-process"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pilq02', 1, 'Separate organisations are separate pools, joined by message flows.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pilq03', 'process-improvement-bpmn-lean-final', 3, 'Which BPMN gateway means exactly one path is taken?', '["Parallel (+)","Exclusive (✕)","Inclusive (○)","Event-based"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pilq03', 1, 'Label it with a question and each path with an answer.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pilq04', 'process-improvement-bpmn-lean-final', 4, 'How do you calculate the waiting time before an activity from an event log?', '["End minus start of that activity","Its start minus the end of the previous activity in the same case","Lead time divided by the number of steps","It can''t be calculated"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pilq04', 1, 'Sort by case and time, then compare with the previous row.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pilq05', 'process-improvement-bpmn-lean-final', 5, 'Lead time is 200 hours and total process time is 8 hours. What is the flow efficiency?', '["96%","4%","25%","8%"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pilq05', 1, '8 ÷ 200 = 4%.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pilq06', 'process-improvement-bpmn-lean-final', 6, 'Documents are checked, rejected and checked again. Which waste is the second check?', '["Motion","Defects (rework)","Inventory","Value-adding work"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pilq06', 1, 'Work done again because it was wrong first time.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pilq07', 'process-improvement-bpmn-lean-final', 7, 'You halve the time of a step that isn''t the bottleneck. What happens to the lead time?', '["It halves","Very little: items reach the bottleneck sooner and wait there","It doubles","It becomes unpredictable"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pilq07', 1, 'Only improvements at the constraint speed up the whole flow.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pilq08', 'process-improvement-bpmn-lean-final', 8, 'Throughput is 3 cases a day and lead time is 8 days. Roughly how many cases are in progress?', '["2.7","24","11","0.4"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pilq08', 1, 'Little''s law: WIP = throughput × lead time.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pilq09', 'process-improvement-bpmn-lean-final', 9, 'Group A has a 70% error rate on 30 files; group B has 30% on 100 files. Which causes more errors in total?', '["Group A","Group B","They''re equal","You can''t tell"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pilq09', 1, '21 against 30. Check both rate and count.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pilq10', 'process-improvement-bpmn-lean-final', 10, 'A booking can''t be confirmed until the permit checklist is complete. Which Lean idea is this?', '["Kanban","Poka-yoke (error-proofing)","Takt time","Overproduction"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pilq10', 1, 'It makes the mistake impossible rather than catching it later.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pilq11', 'process-improvement-bpmn-lean-final', 11, 'Every pilot week is below every week before the pilot, the case mix is similar, and an unrelated wait didn''t change. What can you conclude?', '["Nothing","Strong evidence the change caused the improvement","The data is wrong","The pilot should stop"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pilq11', 1, 'A sustained shift plus fair comparisons is good evidence.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pilq12', 'process-improvement-bpmn-lean-final', 12, 'What most often makes an improvement fade within a year?', '["It never worked","No owner, no standard work and no regular review","Too much measurement","Customers complain"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pilq12', 1, 'A control plan makes the new way the normal way.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pilq13', 'process-improvement-bpmn-lean-final', 13, 'After one successful PDCA cycle, what baseline should the next cycle use?', '["The original baseline","The new normal from the last cycle","An industry benchmark","None"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pilq13', 1, 'Each cycle starts from where the last one left off.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 
@@ -33621,6 +35106,14 @@ Submit a link to your pack (a shared document, spreadsheet, board export or PDF)
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
 
 
+-- Project: Harbourline clearance: the next improvement cycle
+insert into public.projects (id, course_id, title, summary, brief_md, tasks, datasets, rubric, required)
+values ('pil-harbourline-next-cycle', 'process-improvement-bpmn-lean', 'Harbourline clearance: the next improvement cycle', 'A full Lean improvement case for the next cycle of Harbourline''s import clearance process, from BPMN model and value stream to pilot and control plan, with a one-page A3.', $md$The pre-arrival checklist cut days at port by about two and a quarter. Harbourline's operations director wants the next improvement cycle, aimed at the waits that are left: duty payment confirmation and, for Red-channel files, the inspection queue.
+
+Use the process dataset, with the pilot period (May and June 2026) as your baseline. Submit a link to your work (a document, workbook or folder with your BPMN model, analysis and A3) and paste your **A3** below, followed by a short note on where to find each task.$md$, array['A BPMN model of the current (post-pilot) clearance process, with pools, lanes, gateways and the waits shown as events.', 'A value stream of the pilot period: process and wait times per step, lead time and flow efficiency.', 'Waste and bottleneck analysis: at least five of the eight wastes with evidence, and the constraints ranked.', 'Root cause analysis for your chosen focus: a fishbone, five whys and a Pareto or rate-versus-count comparison.', 'A future state: at most three countermeasures, each tied to a root cause, with a target and an estimated benefit in naira.', 'A pilot and control plan: PDCA steps, how the pilot will be judged (run chart, mix checks, unaffected measures) and the controls that keep it working.', 'A one-page A3 summarising the whole case.']::text[], array['process']::text[], array['The BPMN model is correct and readable: pools and lanes, labelled gateways, message flows between organisations, and the waits made visible.', 'Measures come from the event log, with the pilot period as the baseline, and are calculated consistently.', 'Waste, bottlenecks and root causes are supported by evidence, not opinion, and distinguish rate from count.', 'Countermeasures target root causes at the constraints, using recognisable Lean patterns.', 'The benefit estimate states its assumptions and survives a ''half the improvement'' test.', 'The pilot plan would show fairly whether the change worked, and the control plan would keep it working.', 'The A3 tells the whole story on one page, clearly enough for a director to decide from it.']::text[], true)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
+
+
 -- Track: Become a Data Analyst
 insert into public.tracks (id, slug, title, summary, badge_name, badge_code, skills, position, published)
 values ('data-analyst', 'data-analyst', 'Become a Data Analyst', 'The route we recommend from no experience to a junior data analyst role. Learn how analysis works, then the tools teams use every day (Excel, SQL, Power BI and Python) on realistic company data. Build portfolio projects that answer real business questions, and finish with your CV, LinkedIn and interview preparation.', 'CloudTech Data Analyst', 'DATAANALYST', array['Spreadsheet analysis in Excel', 'Statistics: averages, spread, confidence intervals and tests', 'Querying databases with SQL, from first SELECT to cohorts and window functions', 'Data modelling and star schemas', 'Dashboards in Power BI, with DAX measures you can trust', 'Analysis in Python and pandas', 'Turning data into findings a manager can act on']::text[], 1, true)
@@ -33683,7 +35176,7 @@ on conflict (track_id, course_id) do update set track_id = excluded.track_id, co
 
 -- Track: Become a Business Analyst
 insert into public.tracks (id, slug, title, summary, badge_name, badge_code, skills, position, published)
-values ('business-analyst', 'business-analyst', 'Become a Business Analyst', 'The route from no experience to a junior business analyst role. Learn to turn requests into the right changes: understand the problem, map the process, write requirements and user stories, and make the business case. Back it up with the data skills employers now expect from BAs (Excel, SQL and Power BI), then present yourself for the job.', 'CloudTech Business Analyst', 'BUSANALYST', array['Problem statements and stakeholder analysis', 'Process mapping, as is and to be', 'Testable requirements, user stories and acceptance criteria', 'Business cases, KPIs and acceptance testing', 'Measuring problems with Excel and SQL', 'Reporting in Power BI']::text[], 2, true)
+values ('business-analyst', 'business-analyst', 'Become a Business Analyst', 'The route from no experience to a junior business analyst role. Learn to turn requests into the right changes: understand the problem, map the process, write requirements and user stories, and make the business case. Back it up with the data skills employers now expect from BAs (Excel, SQL and Power BI), then present yourself for the job.', 'CloudTech Business Analyst', 'BUSANALYST', array['Problem statements and stakeholder analysis', 'Process mapping in BPMN, and Lean process improvement', 'Testable requirements, user stories and acceptance criteria', 'Business cases, KPIs and acceptance testing', 'Measuring problems with Excel and SQL', 'Reporting in Power BI']::text[], 2, true)
 on conflict (id) do update set slug = excluded.slug, title = excluded.title, summary = excluded.summary, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, position = excluded.position, published = excluded.published;
 
 delete from public.track_courses where track_id = 'business-analyst';
@@ -33717,15 +35210,19 @@ values ('business-analyst', 'agile-business-analysis', 'Specialist', true, 7)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 insert into public.track_courses (track_id, course_id, stage, required, position)
-values ('business-analyst', 'career-essentials', 'Career', true, 8)
+values ('business-analyst', 'process-improvement-bpmn-lean', 'Specialist', true, 8)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 insert into public.track_courses (track_id, course_id, stage, required, position)
-values ('business-analyst', 'build-your-student-portfolio', 'Career', false, 9)
+values ('business-analyst', 'career-essentials', 'Career', true, 9)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 insert into public.track_courses (track_id, course_id, stage, required, position)
-values ('business-analyst', 'get-your-first-internship', 'Career', false, 10)
+values ('business-analyst', 'build-your-student-portfolio', 'Career', false, 10)
+on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
+
+insert into public.track_courses (track_id, course_id, stage, required, position)
+values ('business-analyst', 'get-your-first-internship', 'Career', false, 11)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 

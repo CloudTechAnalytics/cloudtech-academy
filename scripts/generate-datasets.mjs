@@ -793,6 +793,89 @@ function agile() {
   return { backlog, sprints };
 }
 
+/* ------------------------------------------------------------------ process (event log) */
+// Harbourline's import clearance at Lagos port, January to June 2026: one row per case and an
+// event log of every activity with start and end times. From 1 May a pre-arrival document
+// checklist is piloted. Generated last, from its own seed.
+function processLog() {
+  seed = 20260901;
+  const hrs = (h) => h * 3600000;
+  const stamp = (t) => new Date(t).toISOString().slice(0, 16).replace("T", " ");
+  const IMPORTERS = ["Manufacturer", "Retailer", "Pharmaceutical", "Construction", "Electronics"];
+  const PILOT = d("2026-05-01");
+  const FREE_DAYS = 3;
+  const DEMURRAGE_PER_DAY = 45000; // per container, after the free days
+  const cases = [];
+  const events = [];
+  let n = 0;
+  for (let t = d("2026-01-05"); t <= d("2026-06-26"); t += day) {
+    const arrivals = weighted([1, 2, 3, 4, 5], [12, 30, 30, 18, 10]) - (new Date(t).getUTCDay() === 0 ? 1 : 0);
+    for (let k = 0; k < arrivals; k++) {
+      n++;
+      const id = `CLR-${String(n).padStart(4, "0")}`;
+      const importer = weighted(IMPORTERS, [28, 24, 14, 18, 16]);
+      const containers = weighted([1, 2, 3, 4], [45, 30, 15, 10]);
+      const pilot = t >= PILOT;
+      // Pharmaceutical imports need extra permits, so their documents are incomplete more often.
+      const pIncomplete = (importer === "Pharmaceutical" ? 0.7 : 0.32) * (pilot ? 0.4 : 1);
+      const complete = rand() >= pIncomplete;
+      const channel = weighted(["Green", "Yellow", "Red"], importer === "Pharmaceutical" ? [15, 25, 60] : [35, 25, 40]);
+      const arrival = t + hrs(int(5, 20));
+      const ev = [];
+      // Teams work 08:00 to 18:00: work that would start outside those hours waits.
+      const work = (x) => {
+        const h = new Date(x).getUTCHours();
+        if (h < 8) return x - (x % day) + hrs(8) + hrs(int(0, 1));
+        if (h >= 17) return x - (x % day) + day + hrs(8) + hrs(int(0, 1));
+        return x;
+      };
+      const add = (activity, team, start, durH) => {
+        start = work(start);
+        const end = start + hrs(durH);
+        ev.push({ case_id: id, activity, team, start_time: stamp(start), end_time: stamp(end) });
+        return end;
+      };
+      // In the pilot, documents are checked before the vessel arrives.
+      let cur = pilot ? arrival - hrs(int(24, 60)) : arrival + hrs(int(4, 30));
+      cur = add("Check documents", "Documentation", cur, int(1, 3));
+      let loops = complete ? 0 : rand() < 0.22 ? 2 : 1;
+      for (let l = 0; l < loops; l++) {
+        cur = add("Request corrected documents", "Documentation", cur + hrs(int(1, 6)), 0.5);
+        cur = add("Re-check documents", "Documentation", cur + hrs(int(20, 96)), 1);
+      }
+      cur = Math.max(cur, arrival);
+      cur = add("Submit customs declaration", "Customs broker", cur + hrs(int(2, 20)), int(1, 2));
+      cur = add("Duty assessment", "Customs", cur + hrs(int(10, 40)), 1);
+      cur = add("Confirm duty payment", "Finance", cur + hrs(int(12, 70)), 0.5);
+      if (channel === "Yellow") cur = add("Document review by customs", "Customs", cur + hrs(int(8, 30)), 2);
+      if (channel === "Red") {
+        // The inspection queue is the bottleneck: it lengthens when many Red cases arrive together.
+        const queued = cases.filter((c) => c.customs_channel === "Red" && Math.abs(d(c.arrival_datetime.slice(0, 10)) - t) <= 3 * day).length;
+        cur = add("Physical inspection", "Customs", cur + hrs(int(12, 30) + queued * 4), int(2, 4));
+      }
+      const release = add("Release and gate-out", "Terminal", cur + hrs(int(10, 34)), int(1, 2));
+      const delivered = add("Deliver to customer", "Haulage", release + hrs(int(1, 6)), int(4, 30));
+      events.push(...ev);
+      const daysAtPort = (release - arrival) / day;
+      const chargeable = Math.max(0, Math.ceil(daysAtPort) - FREE_DAYS);
+      cases.push({
+        case_id: id,
+        importer_type: importer,
+        containers,
+        arrival_datetime: stamp(arrival),
+        docs_complete_on_arrival: complete ? "Yes" : "No",
+        customs_channel: channel,
+        checklist_pilot: pilot ? "Yes" : "No",
+        released_datetime: stamp(release),
+        delivered_datetime: stamp(delivered),
+        demurrage_ngn: chargeable * containers * DEMURRAGE_PER_DAY,
+      });
+    }
+  }
+  events.sort((a, b) => (a.case_id < b.case_id ? -1 : a.case_id > b.case_id ? 1 : a.start_time < b.start_time ? -1 : 1));
+  return { cases, events };
+}
+
 /* ------------------------------------------------------------------ write */
 const SQL = await initSqlJs();
 const L = logistics();
@@ -824,6 +907,7 @@ for (const [name, data] of [["sales", S], ["cleaning", customerExport(S.customer
 // Generated last, from its own seed, so it never changes the datasets above.
 for (const [table, rows] of Object.entries(retail())) writeCsv("retail", table, rows);
 for (const [table, rows] of Object.entries(agile())) writeCsv("agile", table, rows);
+for (const [table, rows] of Object.entries(processLog())) writeCsv("process", table, rows);
 
 // Summary for the build log
 const counts = db.exec("SELECT (SELECT COUNT(*) FROM customers), (SELECT COUNT(*) FROM shipments), (SELECT COUNT(*) FROM payments), (SELECT COUNT(*) FROM routes), (SELECT COUNT(*) FROM employees)")[0].values[0];

@@ -120,7 +120,7 @@ export const TRACKS: Track[] = [
     badgeCode: "BUSANALYST",
     skills: [
       "Problem statements and stakeholder analysis",
-      "Process mapping, as is and to be",
+      "Process mapping in BPMN, and Lean process improvement",
       "Testable requirements, user stories and acceptance criteria",
       "Business cases, KPIs and acceptance testing",
       "Measuring problems with Excel and SQL",
@@ -150,7 +150,7 @@ export const TRACKS: Track[] = [
         summary: "Go deeper into how BAs work in modern teams.",
         items: [
           { kind: "course", courseId: "agile-business-analysis", why: "Story maps, splitting, refinement, WSJF, velocity forecasts and pilots, inside a Scrum team." },
-          { kind: "upcoming", title: "Process Improvement with BPMN and Lean", why: "Full BPMN notation, value-stream mapping and measuring waste.", level: 3 },
+          { kind: "course", courseId: "process-improvement-bpmn-lean", why: "BPMN, event logs, value streams, bottlenecks and root causes, on a real port clearance process." },
         ],
       },
       {

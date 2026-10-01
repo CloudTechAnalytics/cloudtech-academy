@@ -42,6 +42,8 @@ import { BA_ASSESSMENT } from "./ba/assessment";
 import { BA_PROJECT } from "./ba/project";
 import { ABA_ASSESSMENT } from "./agile-ba/assessment";
 import { ABA_PROJECT } from "./agile-ba/project";
+import { PIL_ASSESSMENT } from "./process/assessment";
+import { PIL_PROJECT } from "./process/project";
 import { parseFrontmatter, requiredExerciseIds } from "@/lib/lesson-format";
 
 /** Lesson files live in one folder per course, named NN-slug.md. */
@@ -58,6 +60,7 @@ const COURSE_DIRS: Record<string, string> = {
   capstone: "data-analyst-capstone",
   ba: "business-analysis-fundamentals",
   "agile-ba": "agile-business-analysis",
+  process: "process-improvement-bpmn-lean",
   "ai-productivity": "ai-productivity-fundamentals",
   "design-content": "design-content-essentials",
   career: "career-essentials",
@@ -133,6 +136,7 @@ export const BUNDLED_ASSESSMENTS: AssessmentDef[] = [
   CAP_ASSESSMENT,
   BA_ASSESSMENT,
   ABA_ASSESSMENT,
+  PIL_ASSESSMENT,
   ...AIPF_ASSESSMENTS,
   ...DCE_ASSESSMENTS,
   ...CAREER_ASSESSMENTS,
@@ -147,6 +151,6 @@ export const BUNDLED_ASSESSMENTS: AssessmentDef[] = [
   ...INTERN_ASSESSMENTS,
   ...FREEL_ASSESSMENTS,
 ].map((a) => ({ ...a, kind: a.kind ?? "final" }));
-export const BUNDLED_PROJECTS: ProjectDef[] = [SQL_PROJECT, DAF_PROJECT, XLS_PROJECT, PBI_PROJECT, DMO_PROJECT, PYAN_PROJECT, STAT_PROJECT, ASQL_PROJECT, DAX_PROJECT, CAP_PROJECT, BA_PROJECT, ABA_PROJECT];
+export const BUNDLED_PROJECTS: ProjectDef[] = [SQL_PROJECT, DAF_PROJECT, XLS_PROJECT, PBI_PROJECT, DMO_PROJECT, PYAN_PROJECT, STAT_PROJECT, ASQL_PROJECT, DAX_PROJECT, CAP_PROJECT, BA_PROJECT, ABA_PROJECT, PIL_PROJECT];
 
 export { CATEGORIES, categoryName } from "./catalog";

@@ -51,6 +51,13 @@ export const DATASETS: DatasetInfo[] = [
     files: ["backlog", "sprints"],
   },
   {
+    id: "process",
+    name: "Harbourline import clearance (event log)",
+    description:
+      "Every import clearance Harbourline handled at Lagos port from January to June 2026, with an event log of each activity's start and end time. Includes a pre-arrival document checklist piloted from 1 May. Used in Process Improvement with BPMN and Lean.",
+    files: ["cases", "events"],
+  },
+  {
     id: "legal",
     name: "Ashgrove Chambers (legal)",
     description: "A Lagos law firm's clients, matters, court hearings and invoices from 2024 to August 2026.",
@@ -248,6 +255,33 @@ export const DATA_DICTIONARY: Record<string, Record<string, { about: string; col
         amount_ngn: "Invoice amount in naira.",
         status: "Paid, Outstanding or Overdue.",
         paid_date: "Date it was paid. Blank if unpaid.",
+      },
+    },
+  },
+  process: {
+    cases: {
+      about: "One row per import clearance (a shipment of one or more containers).",
+      columns: {
+        case_id: "Unique clearance ID, such as CLR-0042. Links to events.case_id.",
+        importer_type: "The customer's business: Manufacturer, Retailer, Pharmaceutical, Construction or Electronics.",
+        containers: "Number of containers in the shipment.",
+        arrival_datetime: "When the vessel arrived and the containers were discharged (YYYY-MM-DD HH:MM).",
+        docs_complete_on_arrival: "Yes if the customer's documents were complete when first checked; No if corrections were needed.",
+        customs_channel: "Green (no inspection), Yellow (document review by customs) or Red (physical inspection).",
+        checklist_pilot: "Yes for clearances from 1 May 2026, when documents were checked before arrival with a checklist.",
+        released_datetime: "When the containers were released from the port.",
+        delivered_datetime: "When they were delivered to the customer.",
+        demurrage_ngn: "Demurrage charged: ₦45,000 per container per day at port after 3 free days.",
+      },
+    },
+    events: {
+      about: "The event log: every activity in every clearance, with its start and end time.",
+      columns: {
+        case_id: "Links to cases.case_id.",
+        activity: "What was done, such as Check documents or Physical inspection.",
+        team: "Who did it: Documentation, Customs broker, Customs, Finance, Terminal or Haulage.",
+        start_time: "When the activity started (YYYY-MM-DD HH:MM).",
+        end_time: "When it finished.",
       },
     },
   },

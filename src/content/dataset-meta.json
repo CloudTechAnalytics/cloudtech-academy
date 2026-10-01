@@ -1624,6 +1624,235 @@
    }
   }
  },
+ "process": {
+  "zipBytes": 35522,
+  "files": {
+   "cases": {
+    "rows": 477,
+    "bytes": 44708,
+    "columns": [
+     {
+      "name": "case_id",
+      "type": "text",
+      "missing": 0,
+      "distinct": 477
+     },
+     {
+      "name": "importer_type",
+      "type": "text",
+      "missing": 0,
+      "distinct": 5
+     },
+     {
+      "name": "containers",
+      "type": "number",
+      "missing": 0,
+      "distinct": 4,
+      "min": 1,
+      "max": 4
+     },
+     {
+      "name": "arrival_datetime",
+      "type": "text",
+      "missing": 0,
+      "distinct": 443
+     },
+     {
+      "name": "docs_complete_on_arrival",
+      "type": "text",
+      "missing": 0,
+      "distinct": 2
+     },
+     {
+      "name": "customs_channel",
+      "type": "text",
+      "missing": 0,
+      "distinct": 3
+     },
+     {
+      "name": "checklist_pilot",
+      "type": "text",
+      "missing": 0,
+      "distinct": 2
+     },
+     {
+      "name": "released_datetime",
+      "type": "text",
+      "missing": 0,
+      "distinct": 395
+     },
+     {
+      "name": "delivered_datetime",
+      "type": "text",
+      "missing": 0,
+      "distinct": 456
+     },
+     {
+      "name": "demurrage_ngn",
+      "type": "number",
+      "missing": 0,
+      "distinct": 30,
+      "min": 45000,
+      "max": 1800000
+     }
+    ],
+    "preview": [
+     [
+      "CLR-0001",
+      "Electronics",
+      "2",
+      "2026-01-05 16:00",
+      "No",
+      "Green",
+      "No",
+      "2026-01-15 13:30",
+      "2026-01-17 13:00",
+      "630000"
+     ],
+     [
+      "CLR-0002",
+      "Retailer",
+      "2",
+      "2026-01-05 07:00",
+      "Yes",
+      "Red",
+      "No",
+      "2026-01-11 15:00",
+      "2026-01-12 15:00",
+      "360000"
+     ],
+     [
+      "CLR-0003",
+      "Retailer",
+      "2",
+      "2026-01-05 19:00",
+      "Yes",
+      "Yellow",
+      "No",
+      "2026-01-12 16:30",
+      "2026-01-14 02:00",
+      "360000"
+     ],
+     [
+      "CLR-0004",
+      "Retailer",
+      "1",
+      "2026-01-05 13:00",
+      "Yes",
+      "Green",
+      "No",
+      "2026-01-11 10:00",
+      "2026-01-11 21:00",
+      "135000"
+     ],
+     [
+      "CLR-0005",
+      "Construction",
+      "2",
+      "2026-01-06 05:00",
+      "Yes",
+      "Red",
+      "No",
+      "2026-01-10 11:00",
+      "2026-01-11 23:00",
+      "180000"
+     ],
+     [
+      "CLR-0006",
+      "Pharmaceutical",
+      "3",
+      "2026-01-06 17:00",
+      "Yes",
+      "Red",
+      "No",
+      "2026-01-16 16:00",
+      "2026-01-18 02:00",
+      "945000"
+     ]
+    ]
+   },
+   "events": {
+    "rows": 3501,
+    "bytes": 259590,
+    "columns": [
+     {
+      "name": "case_id",
+      "type": "text",
+      "missing": 0,
+      "distinct": 477
+     },
+     {
+      "name": "activity",
+      "type": "text",
+      "missing": 0,
+      "distinct": 10
+     },
+     {
+      "name": "team",
+      "type": "text",
+      "missing": 0,
+      "distinct": 6
+     },
+     {
+      "name": "start_time",
+      "type": "text",
+      "missing": 0,
+      "distinct": 1377
+     },
+     {
+      "name": "end_time",
+      "type": "text",
+      "missing": 0,
+      "distinct": 1979
+     }
+    ],
+    "preview": [
+     [
+      "CLR-0001",
+      "Check documents",
+      "Documentation",
+      "2026-01-06 08:00",
+      "2026-01-06 10:00"
+     ],
+     [
+      "CLR-0001",
+      "Request corrected documents",
+      "Documentation",
+      "2026-01-06 13:00",
+      "2026-01-06 13:30"
+     ],
+     [
+      "CLR-0001",
+      "Re-check documents",
+      "Documentation",
+      "2026-01-10 08:00",
+      "2026-01-10 09:00"
+     ],
+     [
+      "CLR-0001",
+      "Submit customs declaration",
+      "Customs broker",
+      "2026-01-10 13:00",
+      "2026-01-10 15:00"
+     ],
+     [
+      "CLR-0001",
+      "Duty assessment",
+      "Customs",
+      "2026-01-12 09:00",
+      "2026-01-12 10:00"
+     ],
+     [
+      "CLR-0001",
+      "Confirm duty payment",
+      "Finance",
+      "2026-01-14 09:00",
+      "2026-01-14 09:30"
+     ]
+    ]
+   }
+  }
+ },
  "retail": {
   "zipBytes": 269961,
   "files": {
