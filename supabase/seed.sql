@@ -20088,9 +20088,2150 @@ $md$, true, true, 14, array['pbi-14-p1', 'pbi-14-p2', 'pbi-14-p3']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 
+-- Course: Power BI DAX
+insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
+values ('power-bi-dax', 'full', null, 'power-bi-dax', 'DAX', 'Power BI DAX', 'DAX in depth: filter and row context, CALCULATE, time intelligence, table functions, ranking, customer analytics and fast, tested measures, on a real distributor''s sales data.', 'Power BI Fundamentals taught you to write measures. This course teaches you to write measures you can trust and explain. Working on Kolanut Distribution''s sales model, you''ll learn how DAX really evaluates a formula (filter context, row context and context transition), then use CALCULATE to build shares of a total, a category and a selection. You''ll write time intelligence that stays honest when a year is incomplete, split growth into price and volume with variables, count customers that meet a condition with table functions, rank customers and products, and build active, lapsed and Pareto customer measures. The course ends with performance tuning, a testing routine and a commercial dashboard for Kolanut''s leadership.', 'business-intelligence', 'intermediate', 3, 'Intermediate to advanced', 7, true, 'available', true, array['Filter context, row context and context transition', 'Iterators: SUMX, AVERAGEX, MAXX and RELATED', 'CALCULATE, KEEPFILTERS, REMOVEFILTERS, ALLEXCEPT and ALLSELECTED', 'Variables, BLANK handling and readable DAX', 'Like-for-like time intelligence', 'Table functions: FILTER, VALUES, SUMMARIZE and DAX query view', 'Ranking with RANKX and TOPN', 'Active, lapsed, new customers and Pareto analysis', 'Performance Analyzer and testing measures']::text[], array['Power BI Fundamentals, or comfort with Power Query, relationships and simple measures', 'Power BI Desktop (free, Windows only)']::text[], 'Kolanut commercial dashboard', true, true, true, true, false, 60, 20)
+on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level = excluded.level, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('dax-m01', 'power-bi-dax', 'How DAX Thinks', 1, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('power-bi-dax:how-dax-thinks', 'power-bi-dax', 'dax-m01', 'how-dax-thinks', 'How DAX thinks', 'Set up the Kolanut model you''ll use all course, write the base measures every report builds on, and learn the habits that keep a measure library trustworthy.', 25, $md$
+## The problem
+
+Kolanut Distribution's sales manager opens last month's Power BI report and sees three different revenue figures on three pages: ₦830.5m, ₦859.6m and ₦831.0m. One visual summed the list price, one summed revenue before discounts, and one summed a column somebody had rounded. Each was "Sum of something", dragged straight into a visual.
+
+Nobody trusts the report now, and that's the real cost. A model with one `Revenue` measure, defined once and reused everywhere, can't disagree with itself.
+
+In Power BI Fundamentals you wrote your first measures. This course goes deep: how DAX really evaluates a formula, `CALCULATE`, time intelligence, table functions, ranking, customer analytics and performance. It starts with a model and measures you can trust.
+
+## The concept
+
+**The model comes first**
+
+DAX is evaluated over the **model**: tables joined by relationships, with filters flowing from the "one" side to the "many" side. Kolanut's model is a small star schema:
+
+| Table | Type | Rows | Relationship |
+| :-- | :-- | --: | :-- |
+| `orders` | Fact: one row per order line | 4,266 | the "many" side of everything |
+| `customers` | Dimension | 90 | `customers[customer_id]` 1 → * `orders[customer_id]` |
+| `products` | Dimension | 16 | `products[product_id]` 1 → * `orders[product_id]` |
+| `Date` | Dimension (calendar) | 730 | `Date[Date]` 1 → * `orders[order_date]` |
+
+Filters flow **downhill**, from a dimension to the fact. Selecting "Lagos" in `customers[region]` filters `orders`. Selecting a product filters `orders` too. But nothing flows back up: filtering `orders` doesn't filter `products`. You'll meet the consequences of that in almost every lesson.
+
+**Measures, not dragged columns**
+
+Every number in a report should come from an explicit measure: written once, named clearly, formatted, and reused. Dragging a column into a visual creates an "implicit measure" that nobody can find, check or reuse.
+
+**Base measures first, then build on them**
+
+Write a handful of simple **base measures**, then build everything else from them. When the definition of revenue changes, you change one measure and the whole report follows.
+
+**Habits of a trustworthy measure library**
+
+- Keep measures in a dedicated `_Measures` table, in display folders (Sales, Customers, Time).
+- Name them as a manager would say them: `Revenue`, `Discount %`, `Active Customers`.
+- Format every measure (₦ with thousands separators, % with one decimal place).
+- Write a one-line **description** on each measure (Properties pane). It shows as a tooltip in the Data pane.
+
+## Example
+
+Kolanut's base measures. `Revenue` is calculated from the order lines, so it doesn't depend on a column someone added in Power Query:
+
+```dax
+Revenue =
+SUMX (
+    orders,
+    orders[quantity] * orders[unit_price] * ( 1 - orders[discount_pct] / 100 )
+)
+
+Gross Revenue =
+SUMX ( orders, orders[quantity] * orders[unit_price] )
+
+Discount Amount = [Gross Revenue] - [Revenue]
+
+Discount % = DIVIDE ( [Discount Amount], [Gross Revenue] )
+
+Order Lines = COUNTROWS ( orders )
+
+Units = SUM ( orders[quantity] )
+
+Active Customers = DISTINCTCOUNT ( orders[customer_id] )
+```
+
+The three figures from the problem are now three named measures: `Revenue` (₦830.5m, what customers actually pay), `Gross Revenue` (₦859.6m, before discounts) and the difference between them, `Discount Amount`. Each one is clearly labelled, and none of them can be confused with another.
+
+## Walkthrough
+
+1. Download the sales dataset and load `orders.csv`, `customers.csv` and `products.csv` into Power BI Desktop. In Power Query, check that `order_date` is a **Date** and that `quantity`, `unit_price` and `discount_pct` are **Whole number**.
+2. Create the date table with **Modeling → New table**:
+
+```dax
+Date =
+ADDCOLUMNS (
+    CALENDAR ( DATE ( 2025, 1, 1 ), DATE ( 2026, 12, 31 ) ),
+    "Year", YEAR ( [Date] ),
+    "Quarter", "Q" & ROUNDUP ( MONTH ( [Date] ) / 3, 0 ),
+    "Month Number", MONTH ( [Date] ),
+    "Month", FORMAT ( [Date], "mmm" ),
+    "Year Month", FORMAT ( [Date], "yyyy-mm" )
+)
+```
+
+3. Mark it as a date table (**Table tools → Mark as date table**, column `Date`), and sort `Month` by `Month Number`.
+4. In Model view, create the three relationships in the table above. Check each is **one-to-many** with a **single** cross-filter direction.
+5. Create a `_Measures` table (**Home → Enter data**, load an empty table), then add the seven base measures from the example.
+6. Format them: `Revenue`, `Gross Revenue` and `Discount Amount` as currency with no decimals; `Discount %` as a percentage with one decimal place; the counts as whole numbers.
+7. Put the measures into a display folder called `Sales` (Model view → select the measures → Properties → Display folder), and give `Revenue` the description "What customers pay: quantity × price, after discount."
+8. Check your model: a card with `Revenue` should show **₦830,541,245**.
+
+> [!TIP]
+> Keep this file. Every lesson in the course builds on it, so save it as `kolanut-dax.pbix` and add to it as you go.
+
+## Practice
+
+```dataset
+{"dataset": "sales", "files": ["orders", "customers", "products"]}
+```
+
+```answer
+{
+  "id": "dax-01-p1",
+  "prompt": "What is **Discount %** across all orders? One decimal place.",
+  "answer": 3.4,
+  "format": "percent",
+  "dataset": "sales",
+  "files": ["orders"],
+  "verify": "SELECT ROUND(100.0 * (1 - SUM(quantity * unit_price * (1 - discount_pct / 100.0)) / SUM(quantity * unit_price)), 1) FROM orders",
+  "hint": "A card with the Discount % measure and no filters.",
+  "explanation": "3.4%: about ₦29m given away in discounts on ₦860m of sales.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "dax-01-p2",
+  "prompt": "How many **Active Customers** placed orders in **2026**?",
+  "answer": 90,
+  "format": "number",
+  "dataset": "sales",
+  "files": ["orders"],
+  "verify": "SELECT COUNT(DISTINCT customer_id) FROM orders WHERE order_date >= '2026-01-01'",
+  "hint": "A table with Date[Year] and Active Customers.",
+  "explanation": "All 90 customers ordered in 2026, against 81 in 2025. The nine extra are new customers, and you'll find them with DAX in lesson 7.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "dax-01-t1",
+  "prompt": "Paste your **Discount %** measure exactly as you wrote it in Power BI. It should build on your other measures rather than repeating their formulas, and use `DIVIDE`.",
+  "minutes": 3,
+  "rows": 4,
+  "placeholder": "Discount % = ...",
+  "rules": [
+    { "label": "Named Discount %", "pattern": "^\\s*Discount\\s*%\\s*=" },
+    { "label": "Uses DIVIDE, not the / operator", "pattern": "DIVIDE\\s*\\(" },
+    { "label": "Builds on existing measures in square brackets, such as [Discount Amount] and [Gross Revenue]", "pattern": "\\[[^\\]]+\\]", "min": 2 }
+  ],
+  "sample": "```dax\nDiscount % = DIVIDE ( [Discount Amount], [Gross Revenue] )\n```",
+  "note": "Measure references have **no table name** in front (`[Revenue]`), while columns always do (`orders[quantity]`). That convention lets anyone reading your DAX tell measures and columns apart at a glance.",
+  "required": true
+}
+```
+
+## More practice
+
+Optional drills. They don't count towards the certificate.
+
+```answer
+{
+  "id": "dax-01-d1",
+  "prompt": "What is **Revenue** for **2025**? (A rounded figure is fine.)",
+  "answer": 539810790,
+  "format": "naira",
+  "dataset": "sales",
+  "files": ["orders"],
+  "verify": "SELECT ROUND(SUM(quantity * unit_price * (1 - discount_pct / 100.0))) FROM orders WHERE order_date < '2026-01-01'",
+  "hint": "Table: Date[Year], Revenue.",
+  "required": false
+}
+```
+
+```answer
+{
+  "id": "dax-01-d2",
+  "prompt": "Legal data: load `invoices.csv` and write `Billed = SUM(invoices[amount_ngn])`. What is Billed across all invoices?",
+  "answer": 1201750000,
+  "format": "naira",
+  "dataset": "legal",
+  "files": ["invoices"],
+  "verify": "SELECT SUM(amount_ngn) FROM invoices",
+  "hint": "A card with the measure.",
+  "required": false
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "You select 'Beverages' in a slicer on products[category]. Which tables are filtered?",
+    "options": ["Only products", "products and orders, because filters flow from the one side to the many side", "Every table in the model", "orders and customers"],
+    "answer": 1,
+    "explanation": "Filters flow downhill to the fact table, not back up to other dimensions."
+  },
+  {
+    "prompt": "Why write Discount Amount = [Gross Revenue] - [Revenue] instead of repeating the SUMX formulas?",
+    "options": ["It's faster to type", "If the definition of revenue changes, you change it in one place and every measure follows", "DAX requires it", "It uses less memory"],
+    "answer": 1,
+    "explanation": "Base measures are the single definition everything else reuses."
+  },
+  {
+    "prompt": "How can you tell a measure from a column in someone's DAX?",
+    "options": ["Measures are in capitals", "By convention, columns are written with their table name (orders[quantity]) and measures without one ([Revenue])", "Measures start with M_", "You can't"],
+    "answer": 1,
+    "explanation": "Follow the convention in your own DAX, and others can read it at a glance."
+  }
+]
+```
+$md$, true, true, 1, array['dax-01-p1', 'dax-01-p2', 'dax-01-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('dax-m02', 'power-bi-dax', 'Filter Context and Row Context', 2, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('power-bi-dax:filter-and-row-context', 'power-bi-dax', 'dax-m02', 'filter-and-row-context', 'Filter context and row context', 'The two ways DAX decides which rows a formula sees, and context transition, the rule that explains most "why is every row the same number?" mysteries.', 25, $md$
+## The problem
+
+A colleague adds a calculated column to the `customers` table to show each customer's lifetime sales:
+
+```dax
+Customer Sales (wrong) =
+SUMX ( orders, orders[quantity] * orders[unit_price] * ( 1 - orders[discount_pct] / 100 ) )
+```
+
+Every one of the 90 customers shows the same number: ₦830,541,245, the whole company's revenue. The formula is the same as the `Revenue` measure, which works perfectly in visuals. So why does it fail here?
+
+The answer is **evaluation context**: the set of rows a formula can see when it runs. It's the single most important idea in DAX. Once it clicks, the rest of the language makes sense.
+
+## The concept
+
+DAX has two kinds of context.
+
+**Filter context** is the set of filters active when a measure is calculated: the row and column headers of the visual, slicers, page and report filters. A measure is recalculated for every cell, each with its own filter context. In a matrix of revenue by `customers[region]`, the "Lagos" cell is calculated with the filter `region = "Lagos"`, which flows down to `orders`.
+
+**Row context** means "the current row" while DAX loops through a table. It exists in two places:
+
+- **Calculated columns**: the formula runs once per row of the table.
+- **Iterators** such as `SUMX`, `AVERAGEX` and `FILTER`: the expression runs once per row of the table you pass in.
+
+The crucial rule: **row context doesn't filter anything**. It only lets you read the current row's values, such as `orders[quantity]`. That's why the colleague's column fails: on the row for Kayode Distributors there's a row context on `customers`, but no filter, so `SUMX ( orders, … )` loops over **every** order.
+
+**Context transition**
+
+`CALCULATE` turns the current row context into a filter context: "filter the model to this row". And every **measure reference** is wrapped in an invisible `CALCULATE`. So this column works:
+
+```dax
+Customer Sales = [Revenue]
+```
+
+On Kayode's row, `[Revenue]` becomes `CALCULATE ( [Revenue] )`, which filters `customers` to Kayode, and that filter flows to `orders`. That's **context transition**, and it's why referencing a measure inside a row context behaves so differently from writing the same formula out in full.
+
+| Formula in a `customers` calculated column | Result on each row |
+| :-- | :-- |
+| `SUMX ( orders, … )` | the grand total: no filter on orders |
+| `[Revenue]` | that customer's revenue: context transition |
+| `CALCULATE ( SUMX ( orders, … ) )` | that customer's revenue |
+| `SUMX ( RELATEDTABLE ( orders ), … )` | that customer's revenue: only their related rows |
+
+## Example
+
+Two calculated columns on `customers`. The first uses context transition, and the second uses it to group customers into bands:
+
+```dax
+Customer Sales = [Revenue]
+
+Customer Band =
+SWITCH (
+    TRUE (),
+    customers[Customer Sales] >= 20000000, "A: ₦20m+",
+    customers[Customer Sales] >= 10000000, "B: ₦10m–20m",
+    customers[Customer Sales] > 0, "C: under ₦10m",
+    "No sales"
+)
+```
+
+`SWITCH ( TRUE (), … )` checks each condition in order and returns the first one that's true. It's DAX's tidy alternative to nested `IF`s.
+
+Because `Customer Band` is a **column**, you can put it on an axis or in a slicer. A measure can't do that: measures give numbers for a filter context; columns create the categories you filter by.
+
+> [!WARNING]
+> Calculated columns are computed when the data refreshes, not when someone clicks a slicer. `Customer Sales` is **lifetime** sales and won't change if a report user filters to 2026. Use a column when you need a fixed category; use a measure when the number must respond to filters.
+
+## Walkthrough
+
+1. On `customers`, add the wrong column from the problem and confirm every row shows ₦830,541,245.
+2. Change it to `Customer Sales = [Revenue]`. Each customer now has its own number. Delete the wrong column.
+3. Add `Customer Band` from the example and format `Customer Sales` as currency.
+4. Build a table visual: `customers[Customer Band]`, `[Active Customers]`, `[Revenue]`. You've just used a column (the band) to slice measures.
+5. Add a slicer on `Date[Year]` and select 2026. Revenue changes, but the bands don't, because they were calculated at refresh from lifetime sales.
+
+## Practice
+
+```answer
+{
+  "id": "dax-02-p1",
+  "prompt": "How many customers are in band **B: ₦10m–20m** or above, that is, with lifetime sales of at least ₦10,000,000?",
+  "answer": 30,
+  "format": "number",
+  "dataset": "sales",
+  "files": ["orders"],
+  "verify": "SELECT COUNT(*) FROM (SELECT customer_id FROM orders GROUP BY customer_id HAVING SUM(quantity * unit_price * (1 - discount_pct / 100.0)) >= 10000000)",
+  "hint": "Your table of Customer Band with a count of customers. Add the A and B rows.",
+  "explanation": "30 of 90 customers have bought ₦10m or more. You'll see in lesson 9 that they bring in most of the revenue.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "dax-02-p2",
+  "prompt": "Which customer has the highest **Customer Sales**? Type the name as it appears in the data.",
+  "answer": "Chuks Trading Co.",
+  "accept": ["Chuks Trading Co", "Chuks Trading"],
+  "format": "text",
+  "hint": "Sort a table of customers[customer_name] and customers[Customer Sales] by sales, highest first.",
+  "explanation": "Chuks Trading Co., with ₦47.6m, just ahead of Brother Sunday Wholesale (₦46.5m).",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "dax-02-t1",
+  "prompt": "Write a calculated column for `customers` called **Order Count** that counts each customer's order lines. It must give each customer their **own** number, so think about context transition. Paste it here.",
+  "minutes": 4,
+  "rows": 4,
+  "placeholder": "Order Count = ...",
+  "rules": [
+    { "label": "Named Order Count", "pattern": "^\\s*Order Count\\s*=" },
+    { "label": "Uses a measure reference, CALCULATE or RELATEDTABLE, so each row is filtered to its customer", "pattern": "\\[Order Lines\\]|CALCULATE\\s*\\(|RELATEDTABLE\\s*\\(" },
+    { "label": "Doesn't use COUNTROWS(orders) on its own, which would count every order", "pattern": "=\\s*COUNTROWS\\s*\\(\\s*orders\\s*\\)\\s*$", "absent": true }
+  ],
+  "sample": "```dax\nOrder Count = [Order Lines]\n```",
+  "note": "`[Order Lines]` works through context transition. `COUNTROWS ( RELATEDTABLE ( orders ) )` and `CALCULATE ( COUNTROWS ( orders ) )` also work. Plain `COUNTROWS ( orders )` shows 4,266 on every row, for the same reason as the problem.",
+  "required": true
+}
+```
+
+## More practice
+
+```answer
+{
+  "id": "dax-02-d1",
+  "prompt": "On `products`, add `Product Sales = [Revenue]`. What are the lifetime sales of **Detergent 900g (12)**? (A rounded figure is fine.)",
+  "answer": 78372810,
+  "format": "naira",
+  "dataset": "sales",
+  "files": ["orders", "products"],
+  "verify": "SELECT ROUND(SUM(o.quantity * o.unit_price * (1 - o.discount_pct / 100.0))) FROM orders o JOIN products p ON p.product_id = o.product_id WHERE p.product_name = 'Detergent 900g (12)'",
+  "hint": "Look at the products table in Data view after adding the column.",
+  "required": false
+}
+```
+
+```answer
+{
+  "id": "dax-02-d2",
+  "prompt": "HR data: on `employees`, add `Leave Days = SUM(leave[days])` with **no** CALCULATE, after relating employees to leave. What number appears on every row?",
+  "answer": 609,
+  "format": "number",
+  "dataset": "hr",
+  "files": ["leave"],
+  "verify": "SELECT SUM(days) FROM leave",
+  "hint": "Row context doesn't filter, so SUM sees the whole leave table.",
+  "explanation": "The total for everyone. `CALCULATE ( SUM ( leave[days] ) )` would give each employee their own total.",
+  "required": false
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "In a calculated column on customers, why does SUM(orders[quantity]) return the same number on every row?",
+    "options": ["SUM is broken in columns", "Row context doesn't filter orders; only context transition (CALCULATE or a measure reference) does", "The relationship is missing", "Calculated columns can't use SUM"],
+    "answer": 1,
+    "explanation": "Row context gives you the current row's values, not a filter."
+  },
+  {
+    "prompt": "What is context transition?",
+    "options": ["Moving a measure to another table", "CALCULATE turning the current row context into an equivalent filter context", "Changing a column's data type", "Switching between Report and Data view"],
+    "answer": 1,
+    "explanation": "It happens with CALCULATE and with every measure reference, which is wrapped in an invisible CALCULATE."
+  },
+  {
+    "prompt": "A report user selects 2026 in a slicer. What happens to a calculated column, Customer Sales = [Revenue]?",
+    "options": ["It recalculates for 2026", "Nothing: calculated columns are computed at refresh and don't respond to slicers", "It goes blank", "It shows an error"],
+    "answer": 1,
+    "explanation": "Use a measure when a number must respond to filters."
+  }
+]
+```
+$md$, true, true, 2, array['dax-02-p1', 'dax-02-p2', 'dax-02-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('dax-m03', 'power-bi-dax', 'Iterators', 3, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('power-bi-dax:iterators', 'power-bi-dax', 'dax-m03', 'iterators', '"Iterators: SUMX, AVERAGEX and friends"', 'Calculate row by row and then aggregate, choose the right "average of what", and use RELATED to bring values from a dimension into the loop.', 25, $md$
+## The problem
+
+The sales director asks a simple-sounding question: "What's our average sale?" Three analysts give three answers:
+
+- ₦194,689: the average **order line**.
+- ₦6.66m: the average **customer** in 2025.
+- ₦44.98m: the average **month** in 2025.
+
+All three are correct. They're averages of different things. An "average" in DAX is never just `AVERAGE(column)`: you have to decide **what you're averaging over**, and that's what iterators let you say.
+
+## The concept
+
+An **iterator** loops over a table, evaluates an expression for each row (in row context), then aggregates the results:
+
+```dax
+SUMX ( <table>, <expression> )
+```
+
+| Iterator | Aggregates with |
+| :-- | :-- |
+| `SUMX` | sum |
+| `AVERAGEX` | average, **skipping blanks** |
+| `MINX`, `MAXX` | smallest, largest |
+| `COUNTX` | count of non-blank results |
+| `CONCATENATEX` | joins text, such as a list of names |
+
+`SUM ( orders[quantity] )` is really shorthand for `SUMX ( orders, orders[quantity] )`.
+
+**The table you iterate decides the "average of what"**
+
+| Measure | Iterates over | Means |
+| :-- | :-- | :-- |
+| `AVERAGEX ( orders, … )` | order lines | average line value |
+| `AVERAGEX ( VALUES ( orders[customer_id] ), [Revenue] )` | customers who bought | average revenue per customer |
+| `AVERAGEX ( VALUES ( 'Date'[Year Month] ), [Revenue] )` | months | average monthly revenue |
+
+`VALUES ( column )` returns the distinct values of a column that are visible in the current filter context, so it's the natural thing to iterate when you want "per customer" or "per month".
+
+When you iterate a list of customers and call `[Revenue]`, **context transition** filters each customer in turn, which is exactly what lesson 2 explained. And because `AVERAGEX` skips blanks, months with no sales (such as July 2026, which hasn't happened) don't drag the average down.
+
+**RELATED inside an iterator**
+
+While iterating `orders` (the many side), `RELATED ( products[list_price] )` fetches the matching value from the one side. That lets you compare what customers paid with the list price.
+
+## Example
+
+```dax
+Avg Line Value = AVERAGEX ( orders, orders[quantity] * orders[unit_price] * ( 1 - orders[discount_pct] / 100 ) )
+
+Avg Revenue per Customer = AVERAGEX ( VALUES ( orders[customer_id] ), [Revenue] )
+
+Avg Monthly Revenue = AVERAGEX ( VALUES ( 'Date'[Year Month] ), [Revenue] )
+
+Best Month Revenue = MAXX ( VALUES ( 'Date'[Year Month] ), [Revenue] )
+
+Revenue at List Price = SUMX ( orders, orders[quantity] * RELATED ( products[list_price] ) )
+
+Below List % = 1 - DIVIDE ( [Revenue], [Revenue at List Price] )
+```
+
+`Best Month Revenue` shows ₦66.3m across all dates: December 2025, the festive peak. In a matrix by year, it shows each year's best month instead, because `VALUES ( 'Date'[Year Month] )` only returns the months in that year's filter context.
+
+## Walkthrough
+
+1. Add the six measures to `_Measures` and format them.
+2. Build a table with `Date[Year]` and `Avg Line Value`, `Avg Revenue per Customer` and `Avg Monthly Revenue`. The three "averages" differ by factors of about 30 and 200.
+3. Replace `VALUES ( orders[customer_id] )` with `VALUES ( customers[customer_id] )` and compare the 2025 figure. It's the same, because `[Revenue]` is blank for the nine customers who didn't buy in 2025 and `AVERAGEX` skips them. Now try `[Revenue] + 0` inside the `AVERAGEX`: the zeros count, and the average falls. Decide which you mean, and write it deliberately.
+4. Put `Below List %` in a table by `Date[Year]`. In 2026 it's just the discount; in 2025 it's much bigger. The difference is the January 2026 price rise: 2025 sales were at the old prices.
+
+## Practice
+
+```answer
+{
+  "id": "dax-03-p1",
+  "prompt": "What is **Avg Revenue per Customer** in **2025**? (A rounded figure is fine.)",
+  "answer": 6664330.7,
+  "tolerance": 1,
+  "format": "naira",
+  "dataset": "sales",
+  "files": ["orders"],
+  "verify": "SELECT SUM(quantity * unit_price * (1 - discount_pct / 100.0)) / COUNT(DISTINCT customer_id) FROM orders WHERE order_date < '2026-01-01'",
+  "hint": "Table: Date[Year] and Avg Revenue per Customer.",
+  "explanation": "About ₦6.66m: ₦539.8m of revenue from 81 customers.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "dax-03-p2",
+  "prompt": "In **2025**, how far below today's list prices was Revenue? Give **Below List %** to one decimal place.",
+  "answer": 11.6,
+  "format": "percent",
+  "dataset": "sales",
+  "files": ["orders", "products"],
+  "verify": "SELECT ROUND(100.0 * (1 - SUM(o.quantity * o.unit_price * (1 - o.discount_pct / 100.0)) / SUM(o.quantity * p.list_price)), 1) FROM orders o JOIN products p ON p.product_id = o.product_id WHERE o.order_date < '2026-01-01'",
+  "hint": "Table: Date[Year] and Below List %.",
+  "explanation": "11.6% in 2025: the old, lower prices plus discounts. In 2026 it's only the discount, because unit prices now equal the list price.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "dax-03-t1",
+  "prompt": "Write a measure **Avg Units per Customer**: the average number of units (packs) bought per customer who ordered, in the current filter context. Paste it here.",
+  "minutes": 4,
+  "rows": 4,
+  "placeholder": "Avg Units per Customer = ...",
+  "rules": [
+    { "label": "Named Avg Units per Customer", "pattern": "^\\s*Avg Units per Customer\\s*=" },
+    { "label": "Uses AVERAGEX, or DIVIDE of units by customers", "pattern": "AVERAGEX\\s*\\(|DIVIDE\\s*\\(" },
+    { "label": "Works per customer: iterates customer_id values or divides by a customer count", "pattern": "customer_id|\\[Active Customers\\]" }
+  ],
+  "sample": "```dax\nAvg Units per Customer =\nAVERAGEX ( VALUES ( orders[customer_id] ), [Units] )\n```",
+  "note": "`DIVIDE ( [Units], [Active Customers] )` gives the same result here and is a fine alternative. The AVERAGEX version makes the \"per customer\" explicit.",
+  "required": true
+}
+```
+
+## Challenge
+
+```answer
+{
+  "id": "dax-03-c1",
+  "prompt": "What is **Best Month Revenue** in **2026** (January to June)? (A rounded figure is fine.)",
+  "answer": 54580085,
+  "format": "naira",
+  "dataset": "sales",
+  "files": ["orders"],
+  "verify": "SELECT MAX(r) FROM (SELECT SUM(quantity * unit_price * (1 - discount_pct / 100.0)) AS r FROM orders WHERE order_date >= '2026-01-01' GROUP BY strftime('%Y-%m', order_date))",
+  "hint": "The same measure, in the 2026 row of a table by Date[Year].",
+  "explanation": "April 2026, ₦54.6m.",
+  "required": false
+}
+```
+
+## More practice
+
+```answer
+{
+  "id": "dax-03-d1",
+  "prompt": "What is **Avg Line Value** across all dates? Round to the nearest naira.",
+  "answer": 194689,
+  "format": "naira",
+  "dataset": "sales",
+  "files": ["orders"],
+  "verify": "SELECT ROUND(AVG(quantity * unit_price * (1 - discount_pct / 100.0))) FROM orders",
+  "hint": "A card with the measure and no filters.",
+  "required": false
+}
+```
+
+```answer
+{
+  "id": "dax-03-d2",
+  "prompt": "Legal data: write `Avg Invoice per Matter = AVERAGEX(VALUES(invoices[matter_id]), CALCULATE(SUM(invoices[amount_ngn])))`. What is it across all invoices? Round to the nearest naira.",
+  "answer": 8065436,
+  "format": "naira",
+  "dataset": "legal",
+  "files": ["invoices"],
+  "verify": "SELECT ROUND(SUM(amount_ngn) * 1.0 / COUNT(DISTINCT matter_id)) FROM invoices",
+  "hint": "Total billed divided by the number of matters with invoices.",
+  "required": false
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Which measure gives the average revenue per customer who bought?",
+    "options": ["AVERAGE(orders[revenue])", "AVERAGEX(VALUES(orders[customer_id]), [Revenue])", "SUMX(orders, [Revenue])", "COUNTROWS(customers)"],
+    "answer": 1,
+    "explanation": "Iterate the customers, and context transition calculates each one's revenue."
+  },
+  {
+    "prompt": "AVERAGEX(VALUES(customers[customer_id]), [Revenue]) in 2025, when 9 of 90 customers didn't buy. What does it divide by?",
+    "options": ["90", "81: AVERAGEX skips blank results", "9", "It returns an error"],
+    "answer": 1,
+    "explanation": "Blank [Revenue] values are ignored. Adding + 0 would make them count as zeros."
+  },
+  {
+    "prompt": "Why does RELATED(products[list_price]) work inside SUMX(orders, …)?",
+    "options": ["RELATED works anywhere", "SUMX gives a row context on orders, and RELATED follows the relationship from the many side to the one side", "products is filtered automatically", "list_price is a measure"],
+    "answer": 1,
+    "explanation": "RELATED needs a row context on the many side of a relationship."
+  }
+]
+```
+$md$, true, true, 3, array['dax-03-p1', 'dax-03-p2', 'dax-03-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('dax-m04', 'power-bi-dax', 'CALCULATE in Depth', 4, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('power-bi-dax:calculate-in-depth', 'power-bi-dax', 'dax-m04', 'calculate-in-depth', 'CALCULATE in depth', 'How CALCULATE adds, replaces and removes filters, and how to build shares of a total, of a category and of what the user selected.', 25, $md$
+## The problem
+
+The regional sales manager for Lagos asks for a table of products, with each product's share of its **category**: "Within Household, how much is detergent?" Your first attempt, `DIVIDE ( [Revenue], CALCULATE ( [Revenue], ALL ( products ) ) )`, gives each product's share of **all** sales, so the shares within a category add up to about a quarter, not 100%. Your second attempt ignores the region slicer the manager has set to Lagos.
+
+Nearly every interesting measure in Power BI is a variation on "the same number, but with different filters". `CALCULATE` is the function that changes filters, and getting exactly the right ones kept, replaced or removed is the core skill of DAX.
+
+## The concept
+
+```dax
+CALCULATE ( <expression>, <filter or modifier>, … )
+```
+
+`CALCULATE` takes the current filter context, changes it with its arguments, then evaluates the expression.
+
+**Filter arguments replace filters on the same column**
+
+```dax
+Revenue Wholesale = CALCULATE ( [Revenue], customers[channel] = "Wholesale" )
+```
+
+The condition replaces any existing filter on `customers[channel]` and keeps every other filter (region, date, product). In a table by channel, every row shows the wholesale figure, because the row's own channel filter has been replaced.
+
+To **intersect** with an existing filter instead of replacing it, wrap the condition in `KEEPFILTERS`: `CALCULATE ( [Revenue], KEEPFILTERS ( customers[channel] = "Wholesale" ) )` shows wholesale revenue on the Wholesale row and blank on the others.
+
+**Modifiers remove filters**
+
+| Modifier | Removes |
+| :-- | :-- |
+| `REMOVEFILTERS ( products )` or `ALL ( products )` | every filter on the products table |
+| `REMOVEFILTERS ( products[product_name] )` | only the filter on that column |
+| `ALLEXCEPT ( products, products[category] )` | every products filter **except** category |
+| `ALLSELECTED ( products )` | filters from the visual itself, keeping slicers and page filters |
+
+`REMOVEFILTERS` is the modern, clearer name for `ALL` used as a modifier. `ALL` is also a table function you can iterate; `REMOVEFILTERS` can only be used inside `CALCULATE`.
+
+**Three kinds of "share"**
+
+```dax
+% of Total = DIVIDE ( [Revenue], CALCULATE ( [Revenue], REMOVEFILTERS ( products ) ) )
+
+% of Category = DIVIDE ( [Revenue], CALCULATE ( [Revenue], ALLEXCEPT ( products, products[category] ) ) )
+
+% of Selected = DIVIDE ( [Revenue], CALCULATE ( [Revenue], ALLSELECTED ( products ) ) )
+```
+
+None of them touches the `customers` filters, so a Lagos slicer still applies to both the top and bottom of every fraction. That's what the manager needed.
+
+## Example
+
+Picture a matrix with `products[category]` then `products[product_name]` in Rows, `% of Category` and `% of Total` in Values, and a slicer on `customers[region]` set to Lagos. Here's how `% of Category` is worked out at each level:
+
+| Row | Numerator | Denominator |
+| :-- | :-- | :-- |
+| Detergent 900g (12) | Lagos detergent revenue | Lagos Household revenue |
+| Household | Lagos Household revenue | Lagos Household revenue (100%) |
+| Total | all Lagos revenue | all Lagos revenue (100%) |
+
+On a **product** row, `ALLEXCEPT ( products, products[category] )` removes the product filter and keeps the category, so the denominator is the category total. On the **category** row the measure divides the category by itself: 100%. On the **grand total** row there's no category filter to keep, so it's 100% again.
+
+## Walkthrough
+
+1. Add `Revenue Wholesale`, `% of Total`, `% of Category` and `% of Selected`, formatted as percentages with one decimal place.
+2. Build the matrix from the example, with a slicer on `customers[region]`. Check that `% of Category` adds up to 100% within each category.
+3. Put `customers[channel]` in a table with `[Revenue]` and `[Revenue Wholesale]`. Every row shows the wholesale number. Then change the measure to use `KEEPFILTERS` and watch the other rows go blank.
+4. Add a visual-level filter that hides one category. `% of Total` no longer adds up to 100% on the visible rows, but `% of Selected` does. Use `% of Selected` when the share must be of what's on screen.
+5. Write this measure for the Lagos manager and put it in a card, with the region slicer cleared:
+
+```dax
+Wholesale Share =
+DIVIDE ( [Revenue Wholesale], CALCULATE ( [Revenue], REMOVEFILTERS ( customers[channel] ) ) )
+```
+
+## Practice
+
+```answer
+{
+  "id": "dax-04-p1",
+  "prompt": "With the region slicer set to **Lagos** (all dates), what is **Wholesale Share**? One decimal place.",
+  "answer": 74.1,
+  "format": "percent",
+  "dataset": "sales",
+  "files": ["orders", "customers"],
+  "verify": "SELECT ROUND(100.0 * SUM(CASE WHEN c.channel = 'Wholesale' THEN o.quantity * o.unit_price * (1 - o.discount_pct / 100.0) END) / SUM(o.quantity * o.unit_price * (1 - o.discount_pct / 100.0)), 1) FROM orders o JOIN customers c ON c.customer_id = o.customer_id WHERE c.region = 'Lagos'",
+  "hint": "The card responds to the region slicer because the measure only removes the channel filter.",
+  "explanation": "74.1%: nine wholesale customers carry three-quarters of Lagos sales.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "dax-04-p2",
+  "prompt": "Across all regions and dates, what is **Detergent 900g (12)**'s **% of Category** (Household)? One decimal place.",
+  "answer": 32.0,
+  "format": "percent",
+  "dataset": "sales",
+  "files": ["orders", "products"],
+  "verify": "SELECT ROUND(100.0 * SUM(CASE WHEN p.product_name = 'Detergent 900g (12)' THEN o.quantity * o.unit_price * (1 - o.discount_pct / 100.0) END) / SUM(o.quantity * o.unit_price * (1 - o.discount_pct / 100.0)), 1) FROM orders o JOIN products p ON p.product_id = o.product_id WHERE p.category = 'Household'",
+  "hint": "The detergent row of your matrix, with the region slicer cleared.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "dax-04-t1",
+  "prompt": "Write a measure **% of Region** that shows each customer's share of their **region's** revenue, in a table with customers[region] and customers[customer_name] in the rows. It should still respond to a date slicer. Paste it here.",
+  "minutes": 5,
+  "rows": 6,
+  "placeholder": "% of Region = ...",
+  "rules": [
+    { "label": "Named % of Region", "pattern": "^\\s*%\\s*of Region\\s*=" },
+    { "label": "Uses DIVIDE", "pattern": "DIVIDE\\s*\\(" },
+    { "label": "Uses CALCULATE for the denominator", "pattern": "CALCULATE\\s*\\(" },
+    { "label": "Keeps the region but removes the customer: ALLEXCEPT(customers, customers[region]) or REMOVEFILTERS on the customer columns", "pattern": "ALLEXCEPT\\s*\\(\\s*customers\\s*,\\s*customers\\[region\\]|REMOVEFILTERS\\s*\\(\\s*customers\\[customer_(name|id)\\]" },
+    { "label": "Doesn't remove the Date filters", "pattern": "ALL\\s*\\(\\s*'?Date'?|REMOVEFILTERS\\s*\\(\\s*'?Date'?|REMOVEFILTERS\\s*\\(\\s*\\)", "absent": true }
+  ],
+  "sample": "```dax\n% of Region =\nDIVIDE (\n    [Revenue],\n    CALCULATE ( [Revenue], ALLEXCEPT ( customers, customers[region] ) )\n)\n```",
+  "note": "`ALLEXCEPT ( customers, customers[region] )` removes every customers filter except region, and leaves the Date and products tables alone, so a 2026 slicer still applies to both parts of the fraction.",
+  "required": true
+}
+```
+
+## Challenge
+
+```answer
+{
+  "id": "dax-04-c1",
+  "prompt": "Write `Revenue Lagos = CALCULATE([Revenue], customers[region] = \"Lagos\")`. In a table by **customers[region]**, filtered to **2026**, what does the measure show on the **North West** row? (A rounded figure is fine.)",
+  "answer": 152768595,
+  "format": "naira",
+  "dataset": "sales",
+  "files": ["orders", "customers"],
+  "verify": "SELECT ROUND(SUM(o.quantity * o.unit_price * (1 - o.discount_pct / 100.0))) FROM orders o JOIN customers c ON c.customer_id = o.customer_id WHERE c.region = 'Lagos' AND o.order_date >= '2026-01-01'",
+  "hint": "The filter argument replaces the row's region filter, so every row shows the same thing.",
+  "explanation": "Lagos's 2026 revenue on every row, North West included: the filter on region was replaced, while the date filter was kept.",
+  "required": false
+}
+```
+
+## More practice
+
+```answer
+{
+  "id": "dax-04-d1",
+  "prompt": "What share of all revenue (all dates) comes from the **Supermarket** channel? Use a % of Total measure that removes the customers filters. One decimal place.",
+  "answer": 25.3,
+  "format": "percent",
+  "dataset": "sales",
+  "files": ["orders", "customers"],
+  "verify": "SELECT ROUND(100.0 * SUM(CASE WHEN c.channel = 'Supermarket' THEN o.quantity * o.unit_price * (1 - o.discount_pct / 100.0) END) / SUM(o.quantity * o.unit_price * (1 - o.discount_pct / 100.0)), 1) FROM orders o JOIN customers c ON c.customer_id = o.customer_id",
+  "hint": "DIVIDE([Revenue], CALCULATE([Revenue], REMOVEFILTERS(customers))) in a table by channel.",
+  "required": false
+}
+```
+
+```answer
+{
+  "id": "dax-04-d2",
+  "prompt": "Legal data: relate invoices to matters. Write `Overdue = CALCULATE(SUM(invoices[amount_ngn]), invoices[status] = \"Overdue\")`. What share of **Commercial litigation** billing is overdue? One decimal place.",
+  "answer": 15.0,
+  "format": "percent",
+  "dataset": "legal",
+  "files": ["invoices", "matters"],
+  "verify": "SELECT ROUND(100.0 * SUM(CASE WHEN i.status = 'Overdue' THEN i.amount_ngn END) / SUM(i.amount_ngn), 1) FROM invoices i JOIN matters m ON m.matter_id = i.matter_id WHERE m.practice_area = 'Commercial litigation'",
+  "hint": "DIVIDE([Overdue], SUM(invoices[amount_ngn])) in a table by matters[practice_area].",
+  "required": false
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "In a table by channel, CALCULATE([Revenue], customers[channel] = \"Wholesale\") shows the same number on every row. Why?",
+    "options": ["A bug", "The filter argument replaces each row's channel filter", "The relationship is inactive", "CALCULATE ignores filters"],
+    "answer": 1,
+    "explanation": "Use KEEPFILTERS to intersect with the row's filter instead."
+  },
+  {
+    "prompt": "Which denominator gives each product's share of its own category?",
+    "options": ["CALCULATE([Revenue], ALL(products))", "CALCULATE([Revenue], ALLEXCEPT(products, products[category]))", "CALCULATE([Revenue], ALL(customers))", "[Revenue]"],
+    "answer": 1,
+    "explanation": "ALLEXCEPT removes the product filter but keeps the category."
+  },
+  {
+    "prompt": "A visual filter hides one category. Which measure's rows still add up to 100%?",
+    "options": ["% of Total, using REMOVEFILTERS", "% of Selected, using ALLSELECTED", "Both", "Neither"],
+    "answer": 1,
+    "explanation": "ALLSELECTED keeps filters from outside the visual, so the total is what's on screen."
+  }
+]
+```
+$md$, true, true, 4, array['dax-04-p1', 'dax-04-p2', 'dax-04-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('dax-m05', 'power-bi-dax', 'Variables, BLANKs and Readable DAX', 5, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('power-bi-dax:variables-and-readable-dax', 'power-bi-dax', 'dax-m05', 'variables-and-readable-dax', 'Variables, BLANKs and readable DAX', 'Use VAR and RETURN to write measures you can read and debug, handle BLANK on purpose, and split revenue growth into price and volume.', 25, $md$
+## The problem
+
+Kolanut's revenue for January to June 2026 is ₦290.7m, up 19.1% on the same months of 2025. The managing director's question is the obvious one: "Are we selling **more**, or just charging more?" Prices went up in January 2026, so some of that growth is price and some is volume.
+
+The measure that answers it needs several steps: revenue now, revenue at last year's prices, last year's revenue, and the differences between them. Written as one long nested formula, it's unreadable and impossible to check. Written with **variables**, it reads like the explanation you'd give the director.
+
+## The concept
+
+**VAR and RETURN**
+
+```dax
+Measure name =
+VAR FirstStep = …
+VAR SecondStep = … FirstStep …
+RETURN
+    SecondStep - FirstStep
+```
+
+Variables make measures:
+
+- **Readable**: each step has a name.
+- **Faster**: a variable is calculated once, however many times you use it.
+- **Debuggable**: to check a step, temporarily `RETURN` that variable instead of the result.
+
+One rule catches everyone: **a variable is calculated where it's defined**, in that filter context, and then never changes. `VAR Total = [Revenue]` followed by `CALCULATE ( Total, … )` doesn't recalculate `Total` with the new filters; it returns the same number. Put the `CALCULATE` inside the variable's definition instead.
+
+**BLANK is not zero**
+
+DAX uses `BLANK()` for "no value". Visuals hide rows where every measure is blank, which is usually what you want: a product nobody bought in Kano doesn't clutter the table.
+
+- `DIVIDE ( a, b )` returns BLANK when `b` is 0 or blank, or a third argument if you give one: `DIVIDE ( a, b, 0 )`.
+- `[Revenue] + 0` turns blanks into zeros, and suddenly the table shows every customer for every month, thousands of empty rows. Only do it when a zero genuinely means something (a sales rep's month with no sales on a performance page).
+- `COALESCE ( [Revenue], 0 )` does the same job more explicitly.
+
+**Readable DAX**
+
+- One function argument per line, indented, as in the examples in this course.
+- Paste long measures into DAX Formatter (daxformatter.com, a free tool from SQLBI) to lay them out consistently.
+- Comments: `--` or `//` for a line, `/* … */` for a block.
+
+## Example
+
+First, a calculated column on `products` holding each product's 2025 price (context transition again: each product row filters `orders`):
+
+```dax
+Price 2025 = CALCULATE ( MAX ( orders[unit_price] ), 'Date'[Year] = 2025 )
+```
+
+Then three measures:
+
+```dax
+Revenue at 2025 Prices =
+SUMX (
+    orders,
+    orders[quantity] * RELATED ( products[Price 2025] ) * ( 1 - orders[discount_pct] / 100 )
+)
+
+Price Effect =
+VAR ActualRevenue = [Revenue]
+VAR AtOldPrices = [Revenue at 2025 Prices]
+RETURN
+    ActualRevenue - AtOldPrices
+
+Volume Effect =
+-- growth in revenue at constant (2025) prices, against the same period last year
+VAR AtOldPrices = [Revenue at 2025 Prices]
+VAR LastYear = CALCULATE ( [Revenue], SAMEPERIODLASTYEAR ( 'Date'[Date] ) )
+RETURN
+    AtOldPrices - LastYear
+```
+
+For January to June 2026, in a visual filtered to those months:
+
+| | ₦ |
+| :-- | --: |
+| Revenue, H1 2025 | 244,163,070 |
+| + Volume Effect (more units, different mix) | 21,908,445 |
+| + Price Effect (the January price rise) | 24,658,940 |
+| = Revenue, H1 2026 | 290,730,455 |
+
+The two effects add up exactly to the growth, which is how you know the logic is sound. About half of the ₦46.6m growth came from the price rise and half from selling more. That's a much better answer than "up 19%".
+
+> [!NOTE]
+> `Volume Effect` uses `SAMEPERIODLASTYEAR`, which you'll meet properly in the next lesson. Because the data stops at June 2026, it compares like with like at **month** or **quarter** level, or when the visual is filtered to January to June. At **year** level, 2026 (six months) would be compared with all twelve months of 2025. Lesson 6 shows how to make it safe at year level too.
+
+## Walkthrough
+
+1. Add the `Price 2025` column to `products`. In Data view, check that Malt drink 330ml (24) shows ₦13,200, against a list price of ₦14,800.
+2. Add the three measures. Put them in a table by `Date[Year]` with `[Revenue]`, and filter the visual to 2026.
+3. Debug a step: change `Price Effect` to `RETURN AtOldPrices` and check it shows ₦266,071,515 for 2026. Then put the real `RETURN` back.
+4. Try the variable trap. Write `Test = VAR R = [Revenue] RETURN CALCULATE ( R, products[category] = "Snacks" )` and put it in a table by category: every row shows its own revenue, not Snacks, because `R` was already calculated. Delete it.
+5. Put `customers[customer_name]` and `Date[Year Month]` in a matrix with `[Revenue]`. Then try `[Revenue] + 0` and see the empty cells fill with zeros. Change it back.
+
+## Practice
+
+```answer
+{
+  "id": "dax-05-p1",
+  "prompt": "What is the **Price Effect** for **2026** (January to June)? (A rounded figure is fine.)",
+  "answer": 24658940,
+  "format": "naira",
+  "dataset": "sales",
+  "files": ["orders"],
+  "verify": "WITH p25 AS (SELECT product_id, MAX(unit_price) AS p FROM orders WHERE order_date < '2026-01-01' GROUP BY product_id) SELECT ROUND(SUM(o.quantity * o.unit_price * (1 - o.discount_pct / 100.0)) - SUM(o.quantity * p25.p * (1 - o.discount_pct / 100.0))) FROM orders o JOIN p25 ON p25.product_id = o.product_id WHERE o.order_date >= '2026-01-01'",
+  "hint": "A card with Price Effect, and a Date[Year] slicer set to 2026.",
+  "explanation": "₦24.7m of 2026's revenue came from the price rise alone.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "dax-05-p2",
+  "prompt": "What is **Revenue at 2025 Prices** for **2026** (January to June)? (A rounded figure is fine.)",
+  "answer": 266071515,
+  "format": "naira",
+  "dataset": "sales",
+  "files": ["orders"],
+  "verify": "WITH p25 AS (SELECT product_id, MAX(unit_price) AS p FROM orders WHERE order_date < '2026-01-01' GROUP BY product_id) SELECT ROUND(SUM(o.quantity * p25.p * (1 - o.discount_pct / 100.0))) FROM orders o JOIN p25 ON p25.product_id = o.product_id WHERE o.order_date >= '2026-01-01'",
+  "hint": "The same visual, with Revenue at 2025 Prices.",
+  "explanation": "₦266.1m: what the first half of 2026 would have brought in at the old prices. Against ₦244.2m in H1 2025, that's real volume growth of about 9%.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "dax-05-t1",
+  "prompt": "This measure works but is hard to read, and calculates `[Revenue]` twice:\n\n```dax\nRevenue Growth % = DIVIDE([Revenue] - CALCULATE([Revenue], SAMEPERIODLASTYEAR('Date'[Date])), CALCULATE([Revenue], SAMEPERIODLASTYEAR('Date'[Date])))\n```\n\nRewrite it with **variables**, so each step is calculated once and has a clear name. Paste your version.",
+  "minutes": 5,
+  "rows": 8,
+  "placeholder": "Revenue Growth % =\nVAR ...",
+  "rules": [
+    { "label": "Named Revenue Growth %", "pattern": "^\\s*Revenue Growth\\s*%\\s*=" },
+    { "label": "At least two variables", "pattern": "\\bVAR\\s+\\w+\\s*=", "min": 2 },
+    { "label": "Has a RETURN", "pattern": "\\bRETURN\\b" },
+    { "label": "Calls SAMEPERIODLASTYEAR only once", "pattern": "SAMEPERIODLASTYEAR[\\s\\S]*SAMEPERIODLASTYEAR", "absent": true },
+    { "label": "Uses DIVIDE", "pattern": "DIVIDE\\s*\\(" }
+  ],
+  "sample": "```dax\nRevenue Growth % =\nVAR CurrentRevenue = [Revenue]\nVAR LastYearRevenue =\n    CALCULATE ( [Revenue], SAMEPERIODLASTYEAR ( 'Date'[Date] ) )\nRETURN\n    DIVIDE ( CurrentRevenue - LastYearRevenue, LastYearRevenue )\n```",
+  "note": "Same result, half the work, and anyone can see what it does. If the growth ever looks wrong, change the `RETURN` to `LastYearRevenue` to check that step on its own.",
+  "required": true
+}
+```
+
+## More practice
+
+```answer
+{
+  "id": "dax-05-d1",
+  "prompt": "What is **Price Effect** for the **Kiosk** channel in 2026? (A rounded figure is fine.)",
+  "answer": 1135185,
+  "format": "naira",
+  "dataset": "sales",
+  "files": ["orders", "customers"],
+  "verify": "WITH p25 AS (SELECT product_id, MAX(unit_price) AS p FROM orders WHERE order_date < '2026-01-01' GROUP BY product_id) SELECT ROUND(SUM(o.quantity * o.unit_price * (1 - o.discount_pct / 100.0)) - SUM(o.quantity * p25.p * (1 - o.discount_pct / 100.0))) FROM orders o JOIN p25 ON p25.product_id = o.product_id JOIN customers c ON c.customer_id = o.customer_id WHERE o.order_date >= '2026-01-01' AND c.channel = 'Kiosk'",
+  "hint": "A table by customers[channel], filtered to 2026.",
+  "required": false
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "VAR R = [Revenue] RETURN CALCULATE(R, products[category] = \"Snacks\"). What does it return?",
+    "options": ["Snacks revenue", "[Revenue] in the original filter context: the variable was already calculated, so CALCULATE can't change it", "An error", "BLANK"],
+    "answer": 1,
+    "explanation": "Variables are evaluated where they're defined. Put CALCULATE inside the variable instead."
+  },
+  {
+    "prompt": "Why can [Revenue] + 0 make a report slow and cluttered?",
+    "options": ["Adding is slow", "It turns blanks into zeros, so visuals show every combination of rows, even those with no sales", "It changes the data type", "It removes filters"],
+    "answer": 1,
+    "explanation": "Visuals hide all-blank rows; zeros aren't blank."
+  },
+  {
+    "prompt": "Revenue grew ₦46.6m. Price Effect is ₦24.7m and Volume Effect ₦21.9m. What's the best summary?",
+    "options": ["Growth was all price", "Roughly half the growth came from the price rise and half from selling more", "Volume fell", "The measures are wrong because they don't match"],
+    "answer": 1,
+    "explanation": "The two effects add up to the total growth."
+  }
+]
+```
+$md$, true, true, 5, array['dax-05-p1', 'dax-05-p2', 'dax-05-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('dax-m06', 'power-bi-dax', 'Time Intelligence', 6, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('power-bi-dax:time-intelligence', 'power-bi-dax', 'dax-m06', 'time-intelligence', 'Time intelligence', 'Year-to-date, same period last year, month-on-month and rolling totals, plus the like-for-like fix that stops a part year from looking like a collapse.', 25, $md$
+## The problem
+
+Kolanut's board pack has a KPI card: **"Revenue 2026: ₦290.7m, −46.1% vs last year."** The board is alarmed. In fact revenue is **up** 19.1% on the same months of last year. The data runs only to 30 June 2026, so the card compared six months with twelve.
+
+Time comparisons are what managers ask for most: this year so far, against last year, against last month, the last three months. DAX has a family of **time intelligence** functions that make them short to write, but they only give honest answers if the date table is right and you handle incomplete periods deliberately.
+
+## The concept
+
+**Prerequisites**
+
+Time intelligence functions work on a proper date table: one row per day with no gaps, covering whole years, marked as a date table, and related to the fact table. You built exactly that in lesson 1.
+
+**The core functions**
+
+Each one returns a **set of dates**, which you use as a filter in `CALCULATE`:
+
+| Function | Dates returned, for the current filter |
+| :-- | :-- |
+| `DATESYTD ( 'Date'[Date] )` | 1 January up to the last date in the filter |
+| `DATESQTD`, `DATESMTD` | the same, from the start of the quarter or month |
+| `SAMEPERIODLASTYEAR ( 'Date'[Date] )` | the same dates, one year earlier |
+| `DATEADD ( 'Date'[Date], -1, MONTH )` | the same dates shifted by any number of days, months, quarters or years |
+| `DATESINPERIOD ( 'Date'[Date], <end>, -3, MONTH )` | a window of 3 months ending on a given date |
+
+```dax
+Revenue YTD = CALCULATE ( [Revenue], DATESYTD ( 'Date'[Date] ) )
+
+Revenue LY = CALCULATE ( [Revenue], SAMEPERIODLASTYEAR ( 'Date'[Date] ) )
+
+Revenue PM = CALCULATE ( [Revenue], DATEADD ( 'Date'[Date], -1, MONTH ) )
+
+MoM % = DIVIDE ( [Revenue] - [Revenue PM], [Revenue PM] )
+
+Revenue Rolling 3M =
+CALCULATE (
+    [Revenue],
+    DATESINPERIOD ( 'Date'[Date], MAX ( 'Date'[Date] ), -3, MONTH )
+)
+```
+
+`TOTALYTD ( [Revenue], 'Date'[Date] )` is a shortcut for the YTD measure. For a financial year ending 30 June, `DATESYTD ( 'Date'[Date], "30/6" )` restarts the count each 1 July.
+
+**The incomplete-year trap**
+
+At year level, the 2026 filter contains every date from 1 January to 31 December 2026, because the date table covers whole years. `SAMEPERIODLASTYEAR` shifts that to the whole of 2025, and you're comparing six months of sales with twelve.
+
+The fix is to limit the current period to dates that have sales **before** shifting. Add a calculated column to the date table:
+
+```dax
+Date With Sales = 'Date'[Date] <= MAX ( orders[order_date] )
+```
+
+In a calculated column there's no filter on `orders`, so `MAX ( orders[order_date] )` is the last sale overall: 30 June 2026. Then:
+
+```dax
+Revenue LY (like for like) =
+CALCULATE (
+    [Revenue],
+    CALCULATETABLE (
+        SAMEPERIODLASTYEAR ( 'Date'[Date] ),
+        'Date'[Date With Sales] = TRUE ()
+    )
+)
+```
+
+`CALCULATETABLE` first trims the current dates to those up to 30 June 2026, and **then** `SAMEPERIODLASTYEAR` shifts them back a year. At year level, 2026 is now compared with January to June 2025.
+
+## Example
+
+A matrix with `Date[Year]` and `Date[Month]` in Rows:
+
+| Row | Revenue | Revenue LY (like for like) | YoY % |
+| :-- | --: | --: | --: |
+| 2026 | 290,730,455 | 244,163,070 | 19.1% |
+| 2026 Apr | 54,580,085 | 44,634,720 | 22.3% |
+| 2026 May | 46,767,400 | 40,251,060 | 16.2% |
+| 2026 Jun | 46,173,840 | 39,767,970 | 16.1% |
+
+With the plain `Revenue LY`, the 2026 row would show ₦539.8m and −46.1%. The monthly rows are identical with either measure. The trap only appears on rows that include dates with no sales yet.
+
+## Walkthrough
+
+1. Add `Revenue YTD`, `Revenue LY`, `Revenue PM`, `MoM %` and `Revenue Rolling 3M`. Format the percentages with one decimal place.
+2. Build the matrix from the example with `[Revenue]`, `[Revenue LY]` and a `YoY %` measure: `DIVIDE ( [Revenue] - [Revenue LY], [Revenue LY] )`. Find the −46.1% on the 2026 row.
+3. Add the `Date With Sales` column and `Revenue LY (like for like)`, and change `YoY %` to use it. The 2026 row becomes +19.1%.
+4. Add `Revenue YTD` to the matrix and check that it restarts at January 2026.
+5. Put `Revenue Rolling 3M` on a line chart by `Date[Year Month]`. It smooths out December 2025's festive peak, which is why managers like rolling figures for spotting trends.
+
+> [!TIP]
+> Hide `Date With Sales` from report view. It's plumbing for measures, not something report users should filter on.
+
+## Practice
+
+```answer
+{
+  "id": "dax-06-p1",
+  "prompt": "What is **Revenue YTD** at the end of **May 2026**? (A rounded figure is fine.)",
+  "answer": 244556615,
+  "format": "naira",
+  "dataset": "sales",
+  "files": ["orders"],
+  "verify": "SELECT ROUND(SUM(quantity * unit_price * (1 - discount_pct / 100.0))) FROM orders WHERE order_date BETWEEN '2026-01-01' AND '2026-05-31'",
+  "hint": "The 2026 May row of your matrix.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "dax-06-p2",
+  "prompt": "What is **Revenue Rolling 3M** at **June 2026**? (A rounded figure is fine.)",
+  "answer": 147521325,
+  "format": "naira",
+  "dataset": "sales",
+  "files": ["orders"],
+  "verify": "SELECT ROUND(SUM(quantity * unit_price * (1 - discount_pct / 100.0))) FROM orders WHERE order_date BETWEEN '2026-04-01' AND '2026-06-30'",
+  "hint": "April + May + June 2026.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "dax-06-p3",
+  "prompt": "What is **MoM %** for **June 2026**? One decimal place (it's negative).",
+  "answer": -1.3,
+  "format": "percent",
+  "dataset": "sales",
+  "files": ["orders"],
+  "verify": "SELECT ROUND(100.0 * (SUM(CASE WHEN order_date BETWEEN '2026-06-01' AND '2026-06-30' THEN quantity * unit_price * (1 - discount_pct / 100.0) END) / SUM(CASE WHEN order_date BETWEEN '2026-05-01' AND '2026-05-31' THEN quantity * unit_price * (1 - discount_pct / 100.0) END) - 1), 1) FROM orders",
+  "hint": "The June 2026 row, with MoM % in Values.",
+  "explanation": "Down 1.3% on May, but up 16.1% on June 2025. Month-on-month changes are noisy; compare with last year before worrying.",
+  "required": true
+}
+```
+
+## Challenge
+
+```task
+{
+  "id": "dax-06-c1",
+  "prompt": "Write **Revenue YTD LY (like for like)**: last year's year-to-date revenue, limited to the same dates that have sales this year. Build on the measures from this lesson. Paste it here.",
+  "minutes": 6,
+  "rows": 8,
+  "placeholder": "Revenue YTD LY (like for like) = ...",
+  "rules": [
+    { "label": "Named Revenue YTD LY (like for like)", "pattern": "^\\s*Revenue YTD LY \\(like for like\\)\\s*=" },
+    { "label": "Uses SAMEPERIODLASTYEAR or DATEADD with -1 YEAR", "pattern": "SAMEPERIODLASTYEAR|DATEADD\\s*\\([^)]*-\\s*1\\s*,\\s*YEAR" },
+    { "label": "Is year-to-date: DATESYTD, TOTALYTD or [Revenue YTD]", "pattern": "DATESYTD|TOTALYTD|\\[Revenue YTD\\]" },
+    { "label": "Limits to dates with sales", "pattern": "Date With Sales" }
+  ],
+  "sample": "```dax\nRevenue YTD LY (like for like) =\nCALCULATE (\n    [Revenue YTD],\n    CALCULATETABLE (\n        SAMEPERIODLASTYEAR ( 'Date'[Date] ),\n        'Date'[Date With Sales] = TRUE ()\n    )\n)\n```",
+  "note": "`[Revenue YTD]` is evaluated in the shifted dates, so DATESYTD runs on last year's dates. At year level for 2026 it returns January to June 2025: ₦244.2m.",
+  "required": false
+}
+```
+
+## More practice
+
+```answer
+{
+  "id": "dax-06-d1",
+  "prompt": "Legal data: build a date table for 2024 to 2026 related to `invoices[issued_date]`, and a `Billed` measure. What is **Billed LY (like for like)** for **2026**, given invoices run to the end of August 2026? (A rounded figure is fine.)",
+  "answer": 376570000,
+  "format": "naira",
+  "dataset": "legal",
+  "files": ["invoices"],
+  "verify": "SELECT SUM(amount_ngn) FROM invoices WHERE issued_date BETWEEN '2025-01-01' AND '2025-08-31'",
+  "hint": "January to August 2025.",
+  "explanation": "Against ₦386.1m billed so far in 2026, billing is up 2.5%. The plain LY measure would compare with all of 2025 (₦613.7m) and show a 37% fall.",
+  "required": false
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Data runs to 30 June 2026. At year level, why does CALCULATE([Revenue], SAMEPERIODLASTYEAR('Date'[Date])) mislead for 2026?",
+    "options": ["SAMEPERIODLASTYEAR is broken", "The 2026 filter covers the whole year, so it's shifted to all of 2025 and six months are compared with twelve", "The date table has gaps", "It double-counts June"],
+    "answer": 1,
+    "explanation": "Trim the current period to dates with sales before shifting it."
+  },
+  {
+    "prompt": "Which filter gives the three months ending on the last date in the current context?",
+    "options": ["DATESYTD('Date'[Date])", "DATESINPERIOD('Date'[Date], MAX('Date'[Date]), -3, MONTH)", "DATEADD('Date'[Date], -3, MONTH)", "SAMEPERIODLASTYEAR('Date'[Date])"],
+    "answer": 1,
+    "explanation": "DATEADD shifts the period; DATESINPERIOD builds a window."
+  },
+  {
+    "prompt": "What does time intelligence need from the date table?",
+    "options": ["Only the dates that have sales", "One row per day with no gaps, covering whole years, marked as a date table", "A row per order", "A text date column"],
+    "answer": 1,
+    "explanation": "The functions shift and slice a continuous calendar."
+  }
+]
+```
+$md$, true, true, 6, array['dax-06-p1', 'dax-06-p2', 'dax-06-p3']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('dax-m07', 'power-bi-dax', 'Table Functions', 7, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('power-bi-dax:table-functions', 'power-bi-dax', 'dax-m07', 'table-functions', 'Table functions and virtual tables', 'Build tables inside a measure with FILTER, VALUES, SUMMARIZE and ADDCOLUMNS, count the customers that meet a condition, and test your tables in DAX query view.', 25, $md$
+## The problem
+
+The commercial director asks three questions for the quarterly review:
+
+1. How many customers spent more than ₦10m in 2025?
+2. How many **new** customers did we win in 2026?
+3. How many customers buy from **all four** of our categories?
+
+None of them is a sum or an average of a column. Each one is "count the customers that meet a condition", and the condition is itself a calculation. To answer them, a measure has to build a **table of customers** in memory, test each one and count the survivors. That's what table functions are for.
+
+## The concept
+
+Some DAX functions return a **table** rather than a value. You can't show a table in a card, but you can count it, iterate it or use it as a filter.
+
+| Function | Returns |
+| :-- | :-- |
+| `VALUES ( column )` | the distinct values of a column visible in the current filter context |
+| `ALL ( table or column )` | every row or value, ignoring filters |
+| `FILTER ( table, condition )` | the rows of a table where the condition is true, tested row by row |
+| `SUMMARIZE ( table, column, … )` | the distinct combinations of columns that exist in a table |
+| `ADDCOLUMNS ( table, "Name", expression )` | the table with calculated columns added |
+| `CALCULATETABLE ( table, filters… )` | a table evaluated under modified filters |
+
+The pattern behind all three questions:
+
+```dax
+COUNTROWS ( FILTER ( VALUES ( orders[customer_id] ), <condition per customer> ) )
+```
+
+`FILTER` iterates the customers, so the condition runs in a row context. Use a **measure** in the condition and context transition calculates it for each customer.
+
+**Filter direction matters in table logic too**
+
+You might try to count each customer's categories with `CALCULATE ( DISTINCTCOUNT ( products[category] ) )`. It returns **4 for everyone**: filters flow from `products` to `orders`, never from `orders` back to `products`. Count the categories **through the fact table** instead:
+
+```dax
+COUNTROWS ( SUMMARIZE ( orders, products[category] ) )
+```
+
+`SUMMARIZE` lists the categories that actually appear in the customer's order lines.
+
+**DAX query view**
+
+Power BI Desktop's **DAX query view** (the fourth icon on the left) runs a query and shows the resulting table, so you can see a virtual table before you count it:
+
+```dax
+EVALUATE
+ADDCOLUMNS (
+    VALUES ( customers[customer_name] ),
+    "Revenue 2025", CALCULATE ( [Revenue], 'Date'[Year] = 2025 )
+)
+ORDER BY [Revenue 2025] DESC
+```
+
+## Example
+
+```dax
+Big Customers =
+COUNTROWS (
+    FILTER ( VALUES ( orders[customer_id] ), [Revenue] > 10000000 )
+)
+
+New Customers =
+VAR PeriodStart = MIN ( 'Date'[Date] )
+RETURN
+    COUNTROWS (
+        FILTER (
+            VALUES ( orders[customer_id] ),
+            CALCULATE ( MIN ( orders[order_date] ), REMOVEFILTERS ( 'Date' ) ) >= PeriodStart
+        )
+    )
+
+All-Category Customers =
+COUNTROWS (
+    FILTER (
+        VALUES ( orders[customer_id] ),
+        CALCULATE ( COUNTROWS ( SUMMARIZE ( orders, products[category] ) ) ) = 4
+    )
+)
+```
+
+`New Customers` takes the customers who bought in the period, works out each one's **first ever** order date (removing the date filter), and keeps those whose first order falls inside the period. `PeriodStart` is a variable because it must be the start of the **visual's** period, captured before `FILTER` starts iterating.
+
+> [!WARNING]
+> Kolanut's data starts in January 2025, so in 2025 every customer looks "new": we can't see orders before the data begins. Only trust `New Customers` for periods after the start of the data. Say so on the report.
+
+## Walkthrough
+
+1. Open DAX query view and run the `EVALUATE` query from the concept section. You'll see 90 rows: the virtual table `Big Customers` filters.
+2. Add the three measures, and put them in a table by `Date[Year]`.
+3. Check `Big Customers` for 2025 in DAX query view: add `FILTER ( …, [Revenue 2025] > 10000000 )` around the `ADDCOLUMNS` and count the rows.
+4. Try the wrong version of the category count, `CALCULATE ( DISTINCTCOUNT ( products[category] ) ) = 4`. Every buying customer passes. Then switch back.
+5. Add `customers[channel]` to the table. Which channel do the new customers of 2026 come from?
+
+## Practice
+
+```answer
+{
+  "id": "dax-07-p1",
+  "prompt": "How many **Big Customers** (revenue over ₦10m) were there in **2025**?",
+  "answer": 18,
+  "format": "number",
+  "dataset": "sales",
+  "files": ["orders"],
+  "verify": "SELECT COUNT(*) FROM (SELECT customer_id FROM orders WHERE order_date < '2026-01-01' GROUP BY customer_id HAVING SUM(quantity * unit_price * (1 - discount_pct / 100.0)) > 10000000)",
+  "hint": "The 2025 row of your table.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "dax-07-p2",
+  "prompt": "How many **New Customers** did Kolanut win in **2026**?",
+  "answer": 9,
+  "format": "number",
+  "dataset": "sales",
+  "files": ["orders"],
+  "verify": "SELECT COUNT(*) FROM (SELECT customer_id FROM orders GROUP BY customer_id HAVING MIN(order_date) >= '2026-01-01')",
+  "hint": "The 2026 row. In 2025 the measure shows 81, but that's the start of the data, not 81 new customers.",
+  "explanation": "Nine new customers, all of them kiosks or supermarkets.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "dax-07-p3",
+  "prompt": "How many customers bought from **all four categories** in **2026**?",
+  "answer": 55,
+  "format": "number",
+  "dataset": "sales",
+  "files": ["orders", "products"],
+  "verify": "SELECT COUNT(*) FROM (SELECT o.customer_id FROM orders o JOIN products p ON p.product_id = o.product_id WHERE o.order_date >= '2026-01-01' GROUP BY o.customer_id HAVING COUNT(DISTINCT p.category) = 4)",
+  "hint": "Count the categories through orders with SUMMARIZE, not DISTINCTCOUNT on products.",
+  "explanation": "55 of the 90 customers. The other 35 are cross-selling opportunities: they already buy from Kolanut, just not everything.",
+  "required": true
+}
+```
+
+## More practice
+
+```answer
+{
+  "id": "dax-07-d1",
+  "prompt": "How many customers bought from **exactly one** category in 2026?",
+  "answer": 3,
+  "format": "number",
+  "dataset": "sales",
+  "files": ["orders", "products"],
+  "verify": "SELECT COUNT(*) FROM (SELECT o.customer_id FROM orders o JOIN products p ON p.product_id = o.product_id WHERE o.order_date >= '2026-01-01' GROUP BY o.customer_id HAVING COUNT(DISTINCT p.category) = 1)",
+  "hint": "Change = 4 to = 1.",
+  "required": false
+}
+```
+
+```answer
+{
+  "id": "dax-07-d2",
+  "prompt": "Legal data: how many clients have more than ₦20m of invoices in total? Use COUNTROWS(FILTER(VALUES(matters[client_id]), …)) with invoices related to matters.",
+  "answer": 27,
+  "format": "number",
+  "dataset": "legal",
+  "files": ["invoices", "matters"],
+  "verify": "SELECT COUNT(*) FROM (SELECT m.client_id FROM invoices i JOIN matters m ON m.matter_id = i.matter_id GROUP BY m.client_id HAVING SUM(i.amount_ngn) > 20000000)",
+  "hint": "Inside FILTER, CALCULATE(SUM(invoices[amount_ngn])) gives each client's total.",
+  "required": false
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Which expression counts customers whose revenue in the current period is over ₦10m?",
+    "options": ["COUNTROWS(customers) > 10000000", "COUNTROWS(FILTER(VALUES(orders[customer_id]), [Revenue] > 10000000))", "CALCULATE([Revenue] > 10000000)", "SUM(customers[customer_id])"],
+    "answer": 1,
+    "explanation": "Build the table of customers, filter it with a measure, count what's left."
+  },
+  {
+    "prompt": "Why does CALCULATE(DISTINCTCOUNT(products[category])) return 4 for every customer?",
+    "options": ["Every customer buys everything", "Filters flow from products to orders, not from orders back to products, so the customer filter never reaches products", "DISTINCTCOUNT ignores filters", "The relationship is many-to-many"],
+    "answer": 1,
+    "explanation": "Count through the fact table, with SUMMARIZE(orders, products[category])."
+  },
+  {
+    "prompt": "Data starts in January 2025. What will New Customers show for 2025, and why?",
+    "options": ["0", "Every customer who bought in 2025, because orders before the data starts can't be seen", "The true number of new customers", "An error"],
+    "answer": 1,
+    "explanation": "That's left-censoring; trust the measure only after the start of the data."
+  }
+]
+```
+$md$, true, true, 7, array['dax-07-p1', 'dax-07-p2', 'dax-07-p3']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('dax-m08', 'power-bi-dax', 'Ranking and Top N', 8, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('power-bi-dax:ranking-and-top-n', 'power-bi-dax', 'dax-m08', 'ranking-and-top-n', 'Ranking and Top N', 'Rank customers and products with RANKX, handle ties and totals, measure how concentrated sales are with TOPN, and let report users choose N.', 25, $md$
+## The problem
+
+The sales director wants a customer league table with each customer's **rank this year and last year**, so the account team can see who's climbing and who's slipping. She also wants one number for the board: "How dependent are we on our biggest five customers?"
+
+Sorting a table visual puts customers in order, but it doesn't give you a rank you can show, compare or filter on, and it can't tell you what the top five add up to. Both need DAX.
+
+## The concept
+
+**RANKX**
+
+```dax
+RANKX ( <table>, <expression>, [value], [order], [ties] )
+```
+
+`RANKX` evaluates the expression for every row of the table, then finds where the current value sits among them. For a customer rank:
+
+```dax
+Customer Rank = RANKX ( ALL ( customers[customer_name] ), [Revenue] )
+```
+
+The **table** argument is the key decision. `ALL ( customers[customer_name] )` ranks against every customer, ignoring the visual's customer filter, which is what you want: on the row for Chuks Trading Co., the rank is calculated against all 90 customers, not against just Chuks. Use `ALLSELECTED` instead if the rank should be among the customers the user has selected.
+
+Other arguments:
+
+- `order`: `DESC` (the default, highest = 1) or `ASC`.
+- `ties`: `SKIP` (the default: 1, 2, 2, 4) or `DENSE` (1, 2, 2, 3).
+
+**Two things to tidy**
+
+- **The total row.** At the total there's no single customer, so the rank is meaningless (it shows 1). Return BLANK there with `ISINSCOPE ( customers[customer_name] )`, which is true only when the visual is grouped by customer.
+- **Customers with no sales** in the period get ranked last. Return BLANK when `[Revenue]` is blank.
+
+**TOPN**
+
+`TOPN ( n, <table>, <expression> )` returns the top n rows of a table as a virtual table, which you can then iterate:
+
+```dax
+Top 5 Revenue =
+SUMX ( TOPN ( 5, ALL ( customers[customer_name] ), [Revenue] ), [Revenue] )
+```
+
+**Let the user choose N**
+
+**Modeling → New parameter → Numeric range** creates a slicer and a measure, such as `[Top N Value]`, that returns the selected number. Use it in place of 5 to make the analysis interactive.
+
+## Example
+
+```dax
+Customer Rank =
+IF (
+    ISINSCOPE ( customers[customer_name] ) && NOT ISBLANK ( [Revenue] ),
+    RANKX ( ALL ( customers[customer_name] ), [Revenue] )
+)
+
+Customer Rank LY =
+VAR RevenueLY = CALCULATE ( [Revenue], SAMEPERIODLASTYEAR ( 'Date'[Date] ) )
+RETURN
+    IF (
+        ISINSCOPE ( customers[customer_name] ) && NOT ISBLANK ( RevenueLY ),
+        RANKX (
+            ALL ( customers[customer_name] ),
+            CALCULATE ( [Revenue], SAMEPERIODLASTYEAR ( 'Date'[Date] ) ),
+            RevenueLY
+        )
+    )
+
+Top 5 Share =
+VAR Top5 = TOPN ( 5, ALL ( customers[customer_name] ), [Revenue] )
+RETURN
+    DIVIDE ( SUMX ( Top5, [Revenue] ), CALCULATE ( [Revenue], ALL ( customers[customer_name] ) ) )
+```
+
+In `Customer Rank LY`, the third argument of `RANKX` gives the value to place in the ranking (this customer's revenue last year), and the second argument ranks every customer by their own revenue last year.
+
+With a 2026 filter, the top of the league table looks like this:
+
+| Customer | Rank | Rank LY |
+| :-- | --: | --: |
+| Brother Sunday Wholesale | 1 | 4 |
+| Alhaji Musa Wholesale Ikorodu | 2 | 3 |
+| Chuks Trading Co. | 3 | 1 |
+| Madam Titi Wholesale | 4 | 2 |
+
+## Walkthrough
+
+1. Add `Customer Rank` and put it in a table with `customers[customer_name]` and `[Revenue]`. Check that the total row is blank.
+2. Remove the `ISINSCOPE` test and look at the total row: it shows 1. Put the test back.
+3. Add `Customer Rank LY`, filter the page to 2026, and sort by `Customer Rank`. Who has climbed the most?
+4. Add `Top 5 Share` to a card, with a `Date[Year]` slicer.
+5. Create a numeric range parameter called `Top N` (1 to 20, increment 1). Change `Top 5 Share` to use `[Top N Value]` instead of 5, rename it `Top N Share`, and try different values.
+
+## Practice
+
+```answer
+{
+  "id": "dax-08-p1",
+  "prompt": "In **2025**, what share of revenue came from the **top 5 customers**? One decimal place.",
+  "answer": 26.3,
+  "format": "percent",
+  "dataset": "sales",
+  "files": ["orders", "customers"],
+  "verify": "WITH r AS (SELECT customer_id, SUM(quantity * unit_price * (1 - discount_pct / 100.0)) AS r FROM orders WHERE order_date < '2026-01-01' GROUP BY customer_id) SELECT ROUND(100.0 * (SELECT SUM(r) FROM (SELECT r FROM r ORDER BY r DESC LIMIT 5)) / (SELECT SUM(r) FROM r), 1)",
+  "hint": "A card with Top 5 Share and a Date[Year] slicer set to 2025.",
+  "explanation": "About a quarter of revenue from five customers, all of them wholesalers or trading companies. Losing one would cost Kolanut around 4% to 6% of sales.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "dax-08-p2",
+  "prompt": "Divine Trading Co. was ranked 5th in 2025. What is its **Customer Rank** in **2026**?",
+  "answer": 10,
+  "format": "number",
+  "dataset": "sales",
+  "files": ["orders", "customers"],
+  "verify": "WITH r AS (SELECT c.customer_name AS n, SUM(o.quantity * o.unit_price * (1 - o.discount_pct / 100.0)) AS r FROM orders o JOIN customers c ON c.customer_id = o.customer_id WHERE o.order_date >= '2026-01-01' GROUP BY c.customer_name) SELECT COUNT(*) + 1 FROM r WHERE r > (SELECT r FROM r WHERE n = 'Divine Trading Co.')",
+  "hint": "Filter the page to 2026 and find the customer in your league table.",
+  "explanation": "From 5th to 10th. A related account, Divine Trading Co. Ikeja, is 9th, so check whether orders have moved between the two accounts before calling it a lost customer.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "dax-08-t1",
+  "prompt": "Write **Product Rank in Category**: each product's rank by revenue **within its own category** (1 = best-selling product in the category), blank on category and total rows. Paste it here.",
+  "minutes": 6,
+  "rows": 8,
+  "placeholder": "Product Rank in Category = ...",
+  "rules": [
+    { "label": "Named Product Rank in Category", "pattern": "^\\s*Product Rank in Category\\s*=" },
+    { "label": "Uses RANKX", "pattern": "RANKX\\s*\\(" },
+    { "label": "Ranks within the category: ALLEXCEPT(products, products[category]), ALL(products[product_name]) or ALLSELECTED(products[product_name])", "pattern": "ALLEXCEPT\\s*\\(\\s*products\\s*,\\s*products\\[category\\]|ALL(SELECTED)?\\s*\\(\\s*products\\[product_name\\]" },
+    { "label": "Blank above product level, using ISINSCOPE", "pattern": "ISINSCOPE\\s*\\(\\s*products\\[product_name\\]" }
+  ],
+  "sample": "```dax\nProduct Rank in Category =\nIF (\n    ISINSCOPE ( products[product_name] ),\n    RANKX ( ALL ( products[product_name] ), [Revenue] )\n)\n```",
+  "note": "`ALL ( products[product_name] )` removes only the product filter. The category filter from the matrix row stays in place, so the ranking is among the products in that category. Ranking over `ALL ( products )` would rank against all 16 products instead.",
+  "required": true
+}
+```
+
+## More practice
+
+```answer
+{
+  "id": "dax-08-d1",
+  "prompt": "Using Product Rank in Category (all dates), which product ranks **1st in Snacks**? Type the product name.",
+  "answer": "Groundnuts 250g (30)",
+  "accept": ["Groundnuts 250g", "Groundnuts"],
+  "format": "text",
+  "hint": "A matrix of products[category] and products[product_name], with Revenue and your rank measure.",
+  "required": false
+}
+```
+
+```answer
+{
+  "id": "dax-08-d2",
+  "prompt": "Legal data: rank lawyers (matters[responsible_lawyer]) by total billed. How much has the **top-ranked** lawyer billed? (A rounded figure is fine.)",
+  "answer": 222960000,
+  "format": "naira",
+  "dataset": "legal",
+  "files": ["invoices", "matters"],
+  "verify": "SELECT MAX(t) FROM (SELECT m.responsible_lawyer, SUM(i.amount_ngn) AS t FROM invoices i JOIN matters m ON m.matter_id = i.matter_id GROUP BY m.responsible_lawyer)",
+  "hint": "RANKX(ALL(matters[responsible_lawyer]), [Billed]) in a table by lawyer.",
+  "required": false
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why use ALL(customers[customer_name]) as the table in RANKX?",
+    "options": ["It's faster", "So each customer is ranked against every customer, not only against itself in the row's filter", "To include blank customers", "RANKX requires ALL"],
+    "answer": 1,
+    "explanation": "On each row the customer filter would leave a table of one, and everyone would rank 1."
+  },
+  {
+    "prompt": "A rank measure shows 1 on the total row. How do you blank it?",
+    "options": ["Format it as blank", "Wrap it in IF(ISINSCOPE(customers[customer_name]), …)", "Use DENSE", "Remove the total row from the model"],
+    "answer": 1,
+    "explanation": "ISINSCOPE is true only when the visual is grouped by that column."
+  },
+  {
+    "prompt": "Two customers tie for 2nd. With RANKX's default ties setting, what rank does the next customer get?",
+    "options": ["3", "4", "2", "Blank"],
+    "answer": 1,
+    "explanation": "SKIP is the default: 1, 2, 2, 4. Use DENSE for 1, 2, 2, 3."
+  }
+]
+```
+$md$, true, true, 8, array['dax-08-p1', 'dax-08-p2', 'dax-08-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('dax-m09', 'power-bi-dax', 'Customer Analytics Patterns', 9, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('power-bi-dax:customer-analytics-patterns', 'power-bi-dax', 'dax-m09', 'customer-analytics-patterns', 'Customer analytics patterns', 'Active and lapsed customers over a rolling window, Pareto concentration and ABC classes, and headcount on a date, built from patterns you can reuse on any data.', 25, $md$
+## The problem
+
+Kolanut's sales reps are judged on keeping customers ordering. The sales director wants a page that answers, for any month she picks:
+
+- How many customers are **active**: they ordered in the last 30 days?
+- How many have **lapsed**: they've ordered before, but not in the last 30 days?
+- Which customers make up the **80%** of revenue we can't afford to lose?
+
+These are some of the most requested measures in any business with repeat customers (distributors, banks, telecoms, schools collecting fees), and they all follow a few patterns. Learn the patterns once and you can build them on any data.
+
+## The concept
+
+**Pattern 1: a rolling window from the selected date**
+
+"As of" the last date in the current filter, look back a fixed number of days:
+
+```dax
+Active Customers 30d =
+VAR LastDay = MAX ( 'Date'[Date] )
+RETURN
+    CALCULATE (
+        DISTINCTCOUNT ( orders[customer_id] ),
+        DATESINPERIOD ( 'Date'[Date], LastDay, -30, DAY )
+    )
+```
+
+At June 2026, `LastDay` is 30 June and the window is 1 to 30 June.
+
+**Pattern 2: everything up to a date**
+
+"Ever ordered by the end of the period" needs every date up to `LastDay`. Remove the date filters explicitly, then add the condition:
+
+```dax
+Customers to Date =
+VAR LastDay = MAX ( 'Date'[Date] )
+RETURN
+    CALCULATE (
+        DISTINCTCOUNT ( orders[customer_id] ),
+        REMOVEFILTERS ( 'Date' ),
+        'Date'[Date] <= LastDay
+    )
+
+Lapsed Customers 30d = [Customers to Date] - [Active Customers 30d]
+```
+
+`REMOVEFILTERS ( 'Date' )` matters: without it, a filter on `Date[Year Month]` from the visual would still be in place, and "to date" would mean "this month only".
+
+The same pattern gives **headcount on a date** in HR data: employees hired on or before the date, who haven't left by it.
+
+**Pattern 3: cumulative share (Pareto)**
+
+Rank customers by revenue, then add up everyone whose revenue is at least the current customer's:
+
+```dax
+Cumulative Share =
+VAR CurrentRevenue = [Revenue]
+VAR AllCustomers = ALLSELECTED ( customers[customer_name] )
+VAR RunningTotal =
+    SUMX ( FILTER ( AllCustomers, [Revenue] >= CurrentRevenue ), [Revenue] )
+RETURN
+    DIVIDE ( RunningTotal, CALCULATE ( [Revenue], AllCustomers ) )
+
+ABC Class =
+SWITCH (
+    TRUE (),
+    ISBLANK ( [Revenue] ), BLANK (),
+    [Cumulative Share] <= 0.8, "A",
+    [Cumulative Share] <= 0.95, "B",
+    "C"
+)
+```
+
+Class A customers together make up the first 80% of revenue. They get the most attention from account managers.
+
+## Example
+
+The sales director's page for June 2026, by channel:
+
+| Channel | Customers to Date | Active 30d | Lapsed 30d |
+| :-- | --: | --: | --: |
+| Kiosk | 39 | 24 | 15 |
+| Supermarket | 30 | 21 | 9 |
+| Wholesale | 21 | 21 | 0 |
+| **Total** | **90** | **66** | **24** |
+
+Every wholesaler ordered in June; 15 of 39 kiosks didn't. Before you send the kiosk list to the sales reps, check the window. Kiosks order small amounts, less often, and over the last three months (DATESINPERIOD with -3, MONTH), all 90 customers ordered. A 30-day window suits wholesalers; for kiosks, 60 days or three months may be the fairer test of "lapsed". The pattern is the same, so make the window a parameter and let the business choose.
+
+## Walkthrough
+
+1. Add `Active Customers 30d`, `Customers to Date` and `Lapsed Customers 30d`. Build the table from the example, with a slicer on `Date[Year Month]` set to 2026-06.
+2. Remove `REMOVEFILTERS ( 'Date' )` from `Customers to Date` and watch "to date" collapse to June only. Put it back.
+3. Change `-30` to `-60`. Active customers at June 2026 rise to 84.
+4. Add `Cumulative Share` and `ABC Class` to a table of `customers[customer_name]` and `[Revenue]`, sorted by revenue, with no date filter. Find the row where the share first passes 80%.
+
+## Practice
+
+```answer
+{
+  "id": "dax-09-p1",
+  "prompt": "At **June 2026**, how many **Lapsed Customers 30d** are there in the **Kiosk** channel?",
+  "answer": 15,
+  "format": "number",
+  "dataset": "sales",
+  "files": ["orders", "customers"],
+  "verify": "SELECT COUNT(*) FROM (SELECT o.customer_id FROM orders o JOIN customers c ON c.customer_id = o.customer_id WHERE c.channel = 'Kiosk' AND o.order_date <= '2026-06-30' GROUP BY o.customer_id HAVING MAX(o.order_date) < '2026-06-01')",
+  "hint": "The Kiosk row of your table, with June 2026 selected.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "dax-09-p2",
+  "prompt": "Across all dates, how many customers are in **class A**: the customers who together make up the first 80% of revenue? Count the customer whose revenue takes the running share past 80%.",
+  "answer": 29,
+  "format": "number",
+  "dataset": "sales",
+  "files": ["orders"],
+  "verify": "WITH r AS (SELECT customer_id, SUM(quantity * unit_price * (1 - discount_pct / 100.0)) AS r FROM orders GROUP BY customer_id), c AS (SELECT r, SUM(r) OVER (ORDER BY r DESC ROWS UNBOUNDED PRECEDING) / SUM(r) OVER () AS cum, ROW_NUMBER() OVER (ORDER BY r DESC) AS rn FROM r) SELECT MIN(rn) FROM c WHERE cum >= 0.8",
+  "hint": "Sort the customer table by revenue and find the first row where Cumulative Share is 80% or more. Its position is the answer.",
+  "explanation": "29 of 90 customers (about a third) bring in 80% of revenue. Note that the ABC Class measure, with <= 0.8, puts that 29th customer in B. Decide which convention you'll use and state it on the report.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "dax-09-t1",
+  "prompt": "HR data: write **Headcount** for the employees table, giving the number of employees on the payroll on the **last date** of the current filter context (hired on or before it, and either no exit_date or an exit_date after it). Assume a date table that is **not** related to employees. Paste it here.",
+  "minutes": 6,
+  "rows": 10,
+  "placeholder": "Headcount =\nVAR ...",
+  "rules": [
+    { "label": "Named Headcount", "pattern": "^\\s*Headcount\\s*=" },
+    { "label": "Captures the last date in a variable", "pattern": "VAR\\s+\\w+\\s*=\\s*MAX\\s*\\(\\s*'?Date'?\\[Date\\]" },
+    { "label": "Tests hire_date", "pattern": "hire_date\\]?\\s*<=" },
+    { "label": "Handles a blank exit_date (ISBLANK) and an exit after the date", "pattern": "ISBLANK\\s*\\(\\s*employees\\[exit_date\\]" },
+    { "label": "Counts rows of a filtered employees table", "pattern": "COUNTROWS\\s*\\(|CALCULATE\\s*\\(\\s*COUNTROWS" }
+  ],
+  "sample": "```dax\nHeadcount =\nVAR LastDay = MAX ( 'Date'[Date] )\nRETURN\n    COUNTROWS (\n        FILTER (\n            employees,\n            employees[hire_date] <= LastDay\n                && ( ISBLANK ( employees[exit_date] ) || employees[exit_date] > LastDay )\n        )\n    )\n```",
+  "note": "Because the date table isn't related to employees, the date only enters through the `LastDay` variable. That's the standard design for \"on a date\" measures such as headcount, open matters or stock on hand.",
+  "required": true
+}
+```
+
+## More practice
+
+```answer
+{
+  "id": "dax-09-d1",
+  "prompt": "Using your Headcount measure, how many employees were on the payroll on **31 December 2024**?",
+  "answer": 60,
+  "format": "number",
+  "dataset": "hr",
+  "files": ["employees"],
+  "verify": "SELECT COUNT(*) FROM employees WHERE hire_date <= '2024-12-31' AND (exit_date IS NULL OR exit_date > '2024-12-31')",
+  "hint": "Your date table must include 2024. A table by Date[Year] shows the headcount at the end of each year.",
+  "required": false
+}
+```
+
+```answer
+{
+  "id": "dax-09-d2",
+  "prompt": "At June 2026, how many customers are active in the last **60** days?",
+  "answer": 84,
+  "format": "number",
+  "dataset": "sales",
+  "files": ["orders"],
+  "verify": "SELECT COUNT(DISTINCT customer_id) FROM orders WHERE order_date > date('2026-06-30', '-60 days') AND order_date <= '2026-06-30'",
+  "hint": "Change -30 to -60 in DATESINPERIOD.",
+  "required": false
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why does Customers to Date need REMOVEFILTERS('Date') as well as 'Date'[Date] <= LastDay?",
+    "options": ["It's faster", "Otherwise a filter on another Date column, such as Year Month from the visual, still applies and 'to date' becomes 'this month'", "REMOVEFILTERS counts blanks", "It isn't needed"],
+    "answer": 1,
+    "explanation": "Remove every date filter first, then add exactly the dates you want."
+  },
+  {
+    "prompt": "15 of 39 kiosks didn't order in June, but every kiosk ordered in the last three months. What's the right conclusion?",
+    "options": ["15 kiosks have been lost", "The 30-day window may be too short for kiosks, which order less often; agree the window with the business", "Kiosks should be removed from the report", "The measure is wrong"],
+    "answer": 1,
+    "explanation": "Lapsed depends on the window. Fit it to how often each kind of customer normally orders."
+  },
+  {
+    "prompt": "What does a Cumulative Share of 80% on a customer's row mean?",
+    "options": ["The customer is 80% of revenue", "This customer and everyone with higher revenue together make up 80% of revenue", "80% of customers are bigger", "The customer grew 80%"],
+    "answer": 1,
+    "explanation": "It's the running total of revenue down a list sorted from biggest to smallest."
+  }
+]
+```
+$md$, true, true, 9, array['dax-09-p1', 'dax-09-p2', 'dax-09-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('dax-m10', 'power-bi-dax', 'Performance and Testing', 10, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('power-bi-dax:performance-and-testing', 'power-bi-dax', 'dax-m10', 'performance-and-testing', 'Performance and testing', 'Find slow visuals with Performance Analyzer, rewrite the DAX patterns that cause them, and test measures against the source data before anyone else sees them.', 25, $md$
+## The problem
+
+Kolanut's report has grown to five pages and forty measures. The customer page takes eight seconds to load, and the sales director has started exporting to Excel instead. Worse, last week a measure showed ₦76.6m for supermarket sales in one visual and ₦78.0m in another, and nobody could say which was right.
+
+A report that's slow doesn't get used, and a report that's wrong does damage. On 4,266 rows almost anything is fast, but the habits in this lesson are what keep a model fast at 40 million rows, and the testing routine is what lets you say "this number is right" with confidence.
+
+## The concept
+
+**Find the slow part first**
+
+**Optimize → Performance Analyzer → Start recording**, then refresh the visuals. Each visual's time is split into:
+
+- **DAX query**: the time the engine spent calculating. This is the part your measures control.
+- **Visual display**: drawing. Too many points, or too many visuals on one page.
+- **Other**: waiting for other visuals.
+
+Copy a slow visual's query into **DAX query view** to run and change it on its own.
+
+**DAX habits that keep measures fast**
+
+| Slow | Faster | Why |
+| :-- | :-- | :-- |
+| `CALCULATE ( [Revenue], FILTER ( orders, RELATED ( customers[channel] ) = "Wholesale" ) )` | `CALCULATE ( [Revenue], customers[channel] = "Wholesale" )` | filter a **column**, not a whole fact table |
+| the same sub-expression written twice | a `VAR` | calculated once |
+| `IFERROR ( a / b, 0 )` | `DIVIDE ( a, b, 0 )` | no error handling needed |
+| a calculated column on the fact table that's only ever summed | an iterator in a measure | no stored column eating memory |
+| bidirectional relationships "to make it work" | single direction plus explicit DAX | ambiguous paths and slower queries |
+| `[Revenue] + 0` across big tables | leave blanks blank | visuals stay small |
+
+The model matters as much as the DAX. Remove columns nobody uses, and reduce the number of distinct values (split a date-time into a date and a time; round long decimals). The engine compresses columns, and fewer distinct values compress far better.
+
+**Testing measures**
+
+Before a report goes out, test each important measure:
+
+1. **Reconcile with the source.** Pick a total and check it outside Power BI: in SQL, Excel or the source system.
+2. **Test at every level.** Check a row, a subtotal and the grand total. Ratios and distinct counts often don't add up across rows, and they shouldn't. Make sure the total means what the reader will think it means.
+3. **Test the edges.** A period with no sales, a customer with one order, a filter that leaves nothing.
+4. **Compare two routes to the same number.** `Gross Revenue − Discount Amount` should equal `Revenue`.
+
+DAX query view makes these checks fast:
+
+```dax
+EVALUATE
+ROW (
+    "Order lines", COUNTROWS ( orders ),
+    "Revenue", [Revenue],
+    "Check", [Gross Revenue] - [Discount Amount] - [Revenue]
+)
+```
+
+`Check` should be 0.
+
+## Example
+
+The ₦76.6m versus ₦78.0m mystery. One visual used:
+
+```dax
+Supermarket Revenue = CALCULATE ( [Revenue], customers[channel] = "Supermarket" )
+```
+
+The other used a copy of the formula pasted months earlier, before discounts were part of revenue:
+
+```dax
+Supermarket Revenue (old) =
+CALCULATE (
+    SUMX ( orders, orders[quantity] * orders[unit_price] ),
+    FILTER ( orders, RELATED ( customers[channel] ) = "Supermarket" )
+)
+```
+
+The old version is wrong (it ignores discounts) **and** slow (it filters the whole orders table row by row). For January to June 2026, a SQL query on the source gives ₦76,556,135 of supermarket revenue after discounts, which reconciles with the first measure. The fix is the same as in lesson 1: one base measure, reused, and no pasted copies.
+
+## Walkthrough
+
+1. Open Performance Analyzer, start recording and click **Refresh visuals**. Expand the slowest visual and note its DAX query time.
+2. Click **Copy query** on that visual, paste it into DAX query view and run it.
+3. Run the `EVALUATE ROW` test from the concept section. Check that `Order lines` is 4,266 and `Check` is 0.
+4. Run a reconciliation query for supermarket revenue in January to June 2026:
+
+```dax
+EVALUATE
+SUMMARIZECOLUMNS (
+    customers[channel],
+    TREATAS ( { 2026 }, 'Date'[Year] ),
+    "Revenue", [Revenue]
+)
+```
+
+5. Search your measures for `FILTER ( orders` and `IFERROR`, and rewrite each one using the table above.
+
+## Practice
+
+```answer
+{
+  "id": "dax-10-p1",
+  "prompt": "Run the reconciliation query in step 4. What is **Supermarket** revenue for 2026? (A rounded figure is fine.)",
+  "answer": 76556135,
+  "format": "naira",
+  "dataset": "sales",
+  "files": ["orders", "customers"],
+  "verify": "SELECT ROUND(SUM(o.quantity * o.unit_price * (1 - o.discount_pct / 100.0))) FROM orders o JOIN customers c ON c.customer_id = o.customer_id WHERE c.channel = 'Supermarket' AND o.order_date >= '2026-01-01'",
+  "hint": "The Supermarket row of the SUMMARIZECOLUMNS result.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "dax-10-p2",
+  "prompt": "How much revenue did the old measure **overstate** supermarket sales by in 2026, because it ignored discounts? (Gross minus net for Supermarket, 2026. A rounded figure is fine.)",
+  "answer": 1415065,
+  "format": "naira",
+  "dataset": "sales",
+  "files": ["orders", "customers"],
+  "verify": "SELECT ROUND(SUM(o.quantity * o.unit_price) - SUM(o.quantity * o.unit_price * (1 - o.discount_pct / 100.0))) FROM orders o JOIN customers c ON c.customer_id = o.customer_id WHERE c.channel = 'Supermarket' AND o.order_date >= '2026-01-01'",
+  "hint": "Discount Amount for Supermarket in 2026.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "dax-10-t1",
+  "prompt": "Rewrite this slow measure so it filters a column instead of the whole orders table, and builds on the base measure:\n\n```dax\nNorth Revenue = CALCULATE(SUMX(orders, orders[quantity] * orders[unit_price] * (1 - orders[discount_pct] / 100)), FILTER(orders, RELATED(customers[region]) = \"North Central\" || RELATED(customers[region]) = \"North West\"))\n```\n\nPaste your version.",
+  "minutes": 5,
+  "rows": 6,
+  "placeholder": "North Revenue = ...",
+  "rules": [
+    { "label": "Named North Revenue", "pattern": "^\\s*North Revenue\\s*=" },
+    { "label": "Uses the [Revenue] base measure", "pattern": "\\[Revenue\\]" },
+    { "label": "Filters the customers[region] column directly", "pattern": "customers\\[region\\]\\s*(IN\\s*\\{|=)" },
+    { "label": "No FILTER over the orders table", "pattern": "FILTER\\s*\\(\\s*orders", "absent": true },
+    { "label": "No RELATED", "pattern": "RELATED\\s*\\(", "absent": true }
+  ],
+  "sample": "```dax\nNorth Revenue =\nCALCULATE (\n    [Revenue],\n    customers[region] IN { \"North Central\", \"North West\" }\n)\n```",
+  "note": "`IN { … }` filters the region column to a list of values. The engine filters 90 customers and lets the relationship do the rest, instead of testing 4,266 order lines one at a time.",
+  "required": true
+}
+```
+
+## More practice
+
+```answer
+{
+  "id": "dax-10-d1",
+  "prompt": "Run `EVALUATE ROW(\"Lines\", COUNTROWS(orders), \"Customers\", DISTINCTCOUNT(orders[customer_id]), \"Units\", [Units])`. What is **Units**?",
+  "answer": 58757,
+  "format": "number",
+  "dataset": "sales",
+  "files": ["orders"],
+  "verify": "SELECT SUM(quantity) FROM orders",
+  "hint": "DAX query view shows a one-row table.",
+  "required": false
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Performance Analyzer shows a visual spending 7 seconds in 'DAX query' and 0.2 in 'Visual display'. Where should you look?",
+    "options": ["The visual's colours", "The measures and model behind the visual", "The number of pages", "Your internet connection"],
+    "answer": 1,
+    "explanation": "DAX query time is calculation time."
+  },
+  {
+    "prompt": "Why is CALCULATE([Revenue], customers[channel] = \"Wholesale\") usually faster than filtering the orders table with FILTER(orders, RELATED(…))?",
+    "options": ["It isn't", "It filters one column of a small table and lets the relationship do the rest, instead of testing every order row", "RELATED is deprecated", "FILTER returns the wrong rows"],
+    "answer": 1,
+    "explanation": "Filter columns, not tables, in CALCULATE."
+  },
+  {
+    "prompt": "Two visuals show different numbers for 'supermarket revenue'. What's the most likely cause?",
+    "options": ["Power BI is unreliable", "Two different measures, one of them a pasted copy with an old definition", "The data changed between visuals", "Rounding"],
+    "answer": 1,
+    "explanation": "One base measure, reused everywhere, prevents it."
+  }
+]
+```
+$md$, true, true, 10, array['dax-10-p1', 'dax-10-p2', 'dax-10-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('dax-m11', 'power-bi-dax', 'Final Project', 11, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('power-bi-dax:final-project', 'power-bi-dax', 'dax-m11', 'final-project', '"Final project: Kolanut commercial dashboard"', 'Plan your final project, a DAX-driven commercial dashboard for Kolanut''s leadership, and warm up with three of its measures.', 20, $md$
+## The problem
+
+Kolanut Distribution's managing director wants one Power BI report for the monthly leadership meeting:
+
+> "Are we growing, and is it real growth or just the price rise? Which channels and customers are driving it? Who's slipping away? And I want to trust every number on it."
+
+Every question needs measures from this course: like-for-like time intelligence, price and volume effects, shares and ranks, active and lapsed customers. And "trust every number" means a tested measure library, not a page of dragged-in columns. The full brief and submission are on the course's project page; this lesson gets you started.
+
+## The concept
+
+**From questions to measures**
+
+| Question | Measures | Lesson |
+| :-- | :-- | :-- |
+| Are we growing? | Revenue, Revenue LY (like for like), YoY %, Revenue YTD, Rolling 3M | 6 |
+| Price or volume? | Revenue at 2025 Prices, Price Effect, Volume Effect | 5 |
+| Which channels and customers? | % of Total, Customer Rank, Rank LY, Top 5 Share | 4, 8 |
+| Who's slipping away? | Active Customers 30d, Lapsed Customers 30d, New Customers | 7, 9 |
+| Where's the concentration risk? | Cumulative Share, ABC Class | 9 |
+
+**What makes the measure library trustworthy**
+
+- Base measures defined once, and everything else built on them.
+- Display folders, formats and a description on every measure.
+- Like-for-like comparisons everywhere a part year could appear.
+- A test sheet: key totals reconciled with the source, and the price and volume effects adding up to the total growth.
+
+## Example
+
+A first look at growth by channel, January to June, with the like-for-like `YoY %` from lesson 6:
+
+| Channel | H1 2025 | H1 2026 | YoY % |
+| :-- | --: | --: | --: |
+| Kiosk | 13,013,460 | 13,077,855 | 0.5% |
+| Supermarket | 61,940,025 | 76,556,135 | 23.6% |
+| Wholesale | 169,209,585 | 201,096,465 | 18.8% |
+
+Kiosk revenue is flat. But prices rose about 12% in January, so flat revenue means kiosks are buying **fewer** packs: 875 units against 935, down 6.4%. That's the kind of finding the managing director needs, and it only shows up when you look past the headline growth.
+
+## Walkthrough
+
+1. Start from your `kolanut-dax.pbix` model. Check the relationships, the marked date table and the `Date With Sales` column.
+2. Organise `_Measures` into display folders: Sales, Time, Price & Volume, Customers.
+3. Build a test page (hidden before you publish) with the `EVALUATE ROW` checks from lesson 10 and a card showing `[Price Effect] + [Volume Effect] - ([Revenue] - [Revenue LY (like for like)])`, which should be 0 for 2026. For that to hold at year level, change `Volume Effect` to subtract `[Revenue LY (like for like)]` instead of the plain last-year revenue.
+4. Sketch the report: an overview page (KPIs and trend), a channels and customers page, and a customer health page.
+5. Open the project brief on the course page and list the measures each task needs.
+
+## Practice
+
+```dataset
+{"dataset": "sales", "files": ["orders", "customers", "products"]}
+```
+
+```answer
+{
+  "id": "dax-11-p1",
+  "prompt": "What is the like-for-like **YoY %** for **Wholesale** in 2026 (January to June against January to June 2025)? One decimal place.",
+  "answer": 18.8,
+  "format": "percent",
+  "dataset": "sales",
+  "files": ["orders", "customers"],
+  "verify": "SELECT ROUND(100.0 * (SUM(CASE WHEN o.order_date >= '2026-01-01' THEN o.quantity * o.unit_price * (1 - o.discount_pct / 100.0) END) / SUM(CASE WHEN o.order_date BETWEEN '2025-01-01' AND '2025-06-30' THEN o.quantity * o.unit_price * (1 - o.discount_pct / 100.0) END) - 1), 1) FROM orders o JOIN customers c ON c.customer_id = o.customer_id WHERE c.channel = 'Wholesale'",
+  "hint": "A table by customers[channel] with YoY %, filtered to 2026.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "dax-11-p2",
+  "prompt": "What share of **2026** revenue came from **Wholesale**? One decimal place.",
+  "answer": 69.2,
+  "format": "percent",
+  "dataset": "sales",
+  "files": ["orders", "customers"],
+  "verify": "SELECT ROUND(100.0 * SUM(CASE WHEN c.channel = 'Wholesale' THEN o.quantity * o.unit_price * (1 - o.discount_pct / 100.0) END) / SUM(o.quantity * o.unit_price * (1 - o.discount_pct / 100.0)), 1) FROM orders o JOIN customers c ON c.customer_id = o.customer_id WHERE o.order_date >= '2026-01-01'",
+  "hint": "% of Total by channel, filtered to 2026.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "dax-11-p3",
+  "prompt": "By how much did **Kiosk units** change in January to June 2026 against January to June 2025? A percentage to one decimal place (it's negative).",
+  "answer": -6.4,
+  "format": "percent",
+  "dataset": "sales",
+  "files": ["orders", "customers"],
+  "verify": "SELECT ROUND(100.0 * (SUM(CASE WHEN o.order_date >= '2026-01-01' THEN o.quantity END) * 1.0 / SUM(CASE WHEN o.order_date BETWEEN '2025-01-01' AND '2025-06-30' THEN o.quantity END) - 1), 1) FROM orders o JOIN customers c ON c.customer_id = o.customer_id WHERE c.channel = 'Kiosk'",
+  "hint": "Write Units LY (like for like) the same way as Revenue LY (like for like), then a Units YoY % measure.",
+  "explanation": "Kiosks are buying 6.4% fewer packs; the price rise is hiding it. A recommendation could be a kiosk-sized pack, or a loyalty price for small retailers.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Kiosk revenue is up 0.5% after a 12% price rise. What does that tell you?",
+    "options": ["Kiosks are stable", "Kiosks are buying fewer packs, and the price rise is hiding a fall in volume", "Kiosk prices didn't rise", "The measure is wrong"],
+    "answer": 1,
+    "explanation": "Separate price from volume before calling a channel healthy."
+  },
+  {
+    "prompt": "Why put [Price Effect] + [Volume Effect] − growth on a hidden test page?",
+    "options": ["To make the report longer", "It should be 0; if it isn't, one of the measures is wrong", "Power BI requires it", "To speed up the report"],
+    "answer": 1,
+    "explanation": "Two routes to the same number is one of the best tests of a measure library."
+  },
+  {
+    "prompt": "Which comparison should the YoY % on the overview page use while 2026 is incomplete?",
+    "options": ["2026 against all of 2025", "Like for like: the same dates in 2025 as have sales in 2026", "2026 against 2024", "No comparison at all"],
+    "answer": 1,
+    "explanation": "Compare the same months, or a part year will look like a collapse."
+  }
+]
+```
+$md$, true, true, 11, array['dax-11-p1', 'dax-11-p2', 'dax-11-p3']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+
 -- Course: Python for Data Analytics
 insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
-values ('python-for-data-analytics', 'full', null, 'python-for-data-analytics', 'PYAN', 'Python for Data Analytics', 'Analyse real business data in Python and pandas, from your first variable to a finished analysis with charts and findings, in Google Colab.', 'Python lets analysts write an analysis once and run it again in seconds, with every step on record. In this course you work in Google Colab, with nothing to install, on the data of Kolanut Distribution and its HR and legal sister datasets. Learn the Python an analyst actually uses, then pandas: loading and exploring data, filtering, calculated columns and dates, cleaning a genuinely messy export, groupby, merging, pivot tables and trends, and charts with titles that say what they show. Every lesson ends with tasks checked against the real data, and the course ends with a customer health review you can put in your portfolio.', 'python', 'beginner', 2, 'Beginner to intermediate', 9, true, 'available', true, array['Python basics: variables, types, lists, dictionaries, loops and functions', 'Loading and exploring data with pandas', 'Filtering, sorting and calculated columns', 'Cleaning messy data: text, categories, numbers, dates and duplicates', 'Summarising with groupby and pivot tables', 'Merging tables safely', 'Growth rates, year-on-year change and rolling averages', 'Charts with matplotlib and findings a manager can act on']::text[], array['No Python needed', 'A free Google account for Google Colab', 'Comfortable with spreadsheets; Excel for Data Analysis helps']::text[], 'Kolanut customer health review', true, true, true, true, false, 60, 20)
+values ('python-for-data-analytics', 'full', null, 'python-for-data-analytics', 'PYAN', 'Python for Data Analytics', 'Analyse real business data in Python and pandas, from your first variable to a finished analysis with charts and findings, in Google Colab.', 'Python lets analysts write an analysis once and run it again in seconds, with every step on record. In this course you work in Google Colab, with nothing to install, on the data of Kolanut Distribution and its HR and legal sister datasets. Learn the Python an analyst actually uses, then pandas: loading and exploring data, filtering, calculated columns and dates, cleaning a genuinely messy export, groupby, merging, pivot tables and trends, and charts with titles that say what they show. Every lesson ends with tasks checked against the real data, and the course ends with a customer health review you can put in your portfolio.', 'python', 'beginner', 2, 'Beginner to intermediate', 9, true, 'available', true, array['Python basics: variables, types, lists, dictionaries, loops and functions', 'Loading and exploring data with pandas', 'Filtering, sorting and calculated columns', 'Cleaning messy data: text, categories, numbers, dates and duplicates', 'Summarising with groupby and pivot tables', 'Merging tables safely', 'Growth rates, year-on-year change and rolling averages', 'Charts with matplotlib and findings a manager can act on']::text[], array['No Python needed', 'A free Google account for Google Colab', 'Comfortable with spreadsheets; Excel for Data Analysis helps']::text[], 'Kolanut customer health review', true, true, true, true, false, 60, 21)
 on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level = excluded.level, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
@@ -23844,6 +25985,132 @@ values ('asqlq15', 1, 'A self join with LEFT JOIN keeps the people at the top of
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 
+-- Assessment: Power BI DAX: final assessment
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('power-bi-dax-final', 'power-bi-dax', 'final', null, 'Power BI DAX: final assessment', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('daxq01', 'power-bi-dax-final', 1, 'A calculated column on customers, Total = SUM(orders[amount]), shows the same number on every row. What''s the fix?', '["Change the data type","Use CALCULATE(SUM(orders[amount])) or a measure reference, so context transition filters each customer","Mark the date table","Make the relationship bidirectional"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('daxq01', 1, 'Row context doesn''t filter; context transition does.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('daxq02', 'power-bi-dax-final', 2, 'Which measure gives the average revenue per customer who bought in the current period?', '["AVERAGE(orders[revenue])","AVERAGEX(VALUES(orders[customer_id]), [Revenue])","DIVIDE([Revenue], COUNTROWS(orders))","SUMX(customers, [Revenue])"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('daxq02', 1, 'Iterate the customers; context transition gives each one''s revenue.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('daxq03', 'power-bi-dax-final', 3, 'In a table by region, CALCULATE([Revenue], customers[region] = "Lagos") shows Lagos revenue on every row. Which change shows Lagos revenue on the Lagos row only?', '["Use ALL(customers)","Wrap the condition in KEEPFILTERS","Use REMOVEFILTERS","Use RELATED"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('daxq03', 1, 'KEEPFILTERS intersects with the row''s filter instead of replacing it.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('daxq04', 'power-bi-dax-final', 4, 'Which denominator gives each product''s share of its own category, in a matrix of category then product?', '["CALCULATE([Revenue], ALL(products))","CALCULATE([Revenue], ALLEXCEPT(products, products[category]))","CALCULATE([Revenue], ALL(customers))","CALCULATE([Revenue], ALLSELECTED(customers))"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('daxq04', 1, 'Remove the product filter, keep the category.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('daxq05', 'power-bi-dax-final', 5, 'VAR Sales = [Revenue] RETURN CALCULATE(Sales, ''Date''[Year] = 2025). In a 2026 card, what does it show?', '["2025 revenue","2026 revenue: the variable was already calculated, so CALCULATE can''t change it","Blank","An error"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('daxq05', 1, 'Variables are evaluated where they''re defined.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('daxq06', 'power-bi-dax-final', 6, 'Data runs to 30 June 2026. At year level, CALCULATE([Revenue], SAMEPERIODLASTYEAR(''Date''[Date])) for 2026 returns:', '["January to June 2025","All of 2025, so six months are compared with twelve","Blank","All of 2024"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('daxq06', 1, 'Limit the current dates to those with sales before shifting them.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('daxq07', 'power-bi-dax-final', 7, 'Which filter returns the three months ending on the last date in the current context?', '["DATESYTD(''Date''[Date])","DATESINPERIOD(''Date''[Date], MAX(''Date''[Date]), -3, MONTH)","DATEADD(''Date''[Date], -3, MONTH)","PREVIOUSMONTH(''Date''[Date])"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('daxq07', 1, 'DATEADD shifts a period; DATESINPERIOD builds a window.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('daxq08', 'power-bi-dax-final', 8, 'CALCULATE(DISTINCTCOUNT(products[category])) inside FILTER over customers returns 4 for every customer. Why?', '["Every customer buys every category","Filters flow from products to orders, not back, so the customer filter never reaches products","DISTINCTCOUNT ignores CALCULATE","The model has no relationships"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('daxq08', 1, 'Count through the fact table: COUNTROWS(SUMMARIZE(orders, products[category])).')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('daxq09', 'power-bi-dax-final', 9, 'RANKX(customers, [Revenue]) gives every customer a rank of 1 in a table by customer name. What''s wrong?', '["RANKX needs DENSE","The table argument is filtered to the current customer; use ALL(customers[customer_name])","Revenue is a column","Ranks only work in matrices"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('daxq09', 1, 'Rank against all customers, not the one in the row''s filter.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('daxq10', 'power-bi-dax-final', 10, 'A rank measure shows 1 on the total row. How do you blank it?', '["IF(ISINSCOPE(customers[customer_name]), RANKX(…))","Use DENSE","Format as blank","Use ALLSELECTED"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('daxq10', 0, 'ISINSCOPE is true only when the visual groups by that column.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('daxq11', 'power-bi-dax-final', 11, 'A ''Customers to Date'' measure uses CALCULATE(DISTINCTCOUNT(orders[customer_id]), ''Date''[Date] <= LastDay) and shows only this month''s customers in a matrix by Year Month. What''s missing?', '["A relationship","REMOVEFILTERS(''Date''), so the Year Month filter from the visual is removed","KEEPFILTERS","A calculated column"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('daxq11', 1, 'Remove all date filters, then add exactly the dates you want.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('daxq12', 'power-bi-dax-final', 12, 'Revenue grew ₦46.6m. Price Effect is ₦24.7m. If the measures are right, what must Volume Effect be?', '["₦46.6m","₦21.9m","₦24.7m","₦71.3m"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('daxq12', 1, 'Price and volume effects add up to the total growth: 46.6 − 24.7 = 21.9.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('daxq13', 'power-bi-dax-final', 13, 'Which rewrite usually makes CALCULATE([Revenue], FILTER(orders, RELATED(customers[channel]) = "Kiosk")) faster?', '["Add IFERROR","CALCULATE([Revenue], customers[channel] = \"Kiosk\")","Make the relationship bidirectional","Add + 0"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('daxq13', 1, 'Filter a column, not the whole fact table.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('daxq14', 'power-bi-dax-final', 14, 'Performance Analyzer shows a visual spending most of its time in ''DAX query''. What should you examine?', '["The visual''s formatting","The measures and model behind the visual","The page background","The report theme"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('daxq14', 1, 'DAX query time is calculation time.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('daxq15', 'power-bi-dax-final', 15, 'Data starts in January 2025. A New Customers measure (first ever order in the period) shows 81 for 2025. What should the report say?', '["We won 81 customers in 2025","2025 can''t be measured: orders before the data starts aren''t visible, so every 2025 customer looks new","The measure is broken","We lost 81 customers"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('daxq15', 1, 'That''s left-censoring. Only trust the measure after the start of the data.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
 -- Assessment: Prompting Essentials: module check
 insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
 values ('aipf-m01-check', 'ai-productivity-fundamentals', 'module', 'aipf-m01', 'Prompting Essentials: module check', 60, true)
@@ -27052,9 +29319,19 @@ Start with your definitions: revenue, on time, active customer, and the "as of" 
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
 
 
+-- Project: Kolanut commercial dashboard
+insert into public.projects (id, course_id, title, summary, brief_md, tasks, datasets, rubric, required)
+values ('dax-kolanut-dashboard', 'power-bi-dax', 'Kolanut commercial dashboard', 'A DAX-driven Power BI report for Kolanut''s leadership: like-for-like growth, price and volume, channels and customers, and customer health.', $md$Kolanut Distribution's managing director wants one Power BI report for the monthly leadership meeting, built on the sales dataset with a tested library of DAX measures.
+
+Share your work so a reviewer can see it: a Power BI Service link if you have a work account, or a folder (Google Drive, OneDrive or GitHub) with the .pbix file, a PDF export and screenshots.
+
+In the text box, for each task give the **DAX** of the key measures, the **numbers** they show, and **what they mean** for Kolanut, written for a managing director who doesn't read DAX.$md$, array['Measure library: list your base measures and display folders, with a description for each base measure.', 'Growth: Revenue, like-for-like Revenue LY and YoY %, Revenue YTD and a rolling 3-month trend. Explain how you stopped the part year from misleading.', 'Price and volume: Price Effect and Volume Effect for 2026, overall and by channel, and show that they add up to the growth.', 'Channels and customers: share of revenue by channel, a customer league table with rank this year and last year, and Top 5 Share.', 'Customer health: active, lapsed and new customers for June 2026 by channel, with the window you chose and why, and the class A customers from a Pareto analysis.', 'Testing: at least three checks you ran (reconciliations with the source, totals, edge cases) and their results.', 'Three recommendations for the managing director, each linked to a number in your report.']::text[], array['sales']::text[], array['Every number comes from an explicit measure; base measures are defined once and reused, formatted and organised in display folders.', 'Time comparisons are like for like, and the part year never produces a misleading comparison.', 'CALCULATE filters are correct: shares, ranks and windows respond to slicers the way a reader would expect.', 'Price and volume effects are calculated correctly and reconcile with total growth.', 'Measures are readable: variables for steps, DIVIDE for ratios, no FILTER over whole fact tables where a column filter would do.', 'Testing is shown: key totals are reconciled with the source data.', 'Findings are written for the managing director, and each recommendation is linked to a number.']::text[], true)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
+
+
 -- Track: Become a Data Analyst
 insert into public.tracks (id, slug, title, summary, badge_name, badge_code, skills, position, published)
-values ('data-analyst', 'data-analyst', 'Become a Data Analyst', 'The route we recommend from no experience to a junior data analyst role. Learn how analysis works, then the tools teams use every day (Excel, SQL, Power BI and Python) on realistic company data. Build portfolio projects that answer real business questions, and finish with your CV, LinkedIn and interview preparation.', 'CloudTech Data Analyst', 'DATAANALYST', array['Spreadsheet analysis in Excel', 'Statistics: averages, spread, confidence intervals and tests', 'Querying databases with SQL, from first SELECT to cohorts and window functions', 'Data modelling and star schemas', 'Dashboards in Power BI', 'Analysis in Python and pandas', 'Turning data into findings a manager can act on']::text[], 1, true)
+values ('data-analyst', 'data-analyst', 'Become a Data Analyst', 'The route we recommend from no experience to a junior data analyst role. Learn how analysis works, then the tools teams use every day (Excel, SQL, Power BI and Python) on realistic company data. Build portfolio projects that answer real business questions, and finish with your CV, LinkedIn and interview preparation.', 'CloudTech Data Analyst', 'DATAANALYST', array['Spreadsheet analysis in Excel', 'Statistics: averages, spread, confidence intervals and tests', 'Querying databases with SQL, from first SELECT to cohorts and window functions', 'Data modelling and star schemas', 'Dashboards in Power BI, with DAX measures you can trust', 'Analysis in Python and pandas', 'Turning data into findings a manager can act on']::text[], 1, true)
 on conflict (id) do update set slug = excluded.slug, title = excluded.title, summary = excluded.summary, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, position = excluded.position, published = excluded.published;
 
 delete from public.track_courses where track_id = 'data-analyst';
@@ -27084,23 +29361,27 @@ values ('data-analyst', 'power-bi-fundamentals', 'Core', true, 6)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 insert into public.track_courses (track_id, course_id, stage, required, position)
-values ('data-analyst', 'python-for-data-analytics', 'Advanced', true, 7)
+values ('data-analyst', 'power-bi-dax', 'Core', true, 7)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 insert into public.track_courses (track_id, course_id, stage, required, position)
-values ('data-analyst', 'advanced-sql', 'Advanced', true, 8)
+values ('data-analyst', 'python-for-data-analytics', 'Advanced', true, 8)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 insert into public.track_courses (track_id, course_id, stage, required, position)
-values ('data-analyst', 'career-essentials', 'Career', true, 9)
+values ('data-analyst', 'advanced-sql', 'Advanced', true, 9)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 insert into public.track_courses (track_id, course_id, stage, required, position)
-values ('data-analyst', 'build-your-student-portfolio', 'Career', false, 10)
+values ('data-analyst', 'career-essentials', 'Career', true, 10)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 insert into public.track_courses (track_id, course_id, stage, required, position)
-values ('data-analyst', 'get-your-first-internship', 'Career', false, 11)
+values ('data-analyst', 'build-your-student-portfolio', 'Career', false, 11)
+on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
+
+insert into public.track_courses (track_id, course_id, stage, required, position)
+values ('data-analyst', 'get-your-first-internship', 'Career', false, 12)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 

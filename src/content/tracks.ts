@@ -55,7 +55,7 @@ export const TRACKS: Track[] = [
       "Statistics: averages, spread, confidence intervals and tests",
       "Querying databases with SQL, from first SELECT to cohorts and window functions",
       "Data modelling and star schemas",
-      "Dashboards in Power BI",
+      "Dashboards in Power BI, with DAX measures you can trust",
       "Analysis in Python and pandas",
       "Turning data into findings a manager can act on",
     ],
@@ -76,7 +76,7 @@ export const TRACKS: Track[] = [
           { kind: "course", courseId: "sql-for-data-analysis", why: "Pull and summarise data straight from a database." },
           { kind: "course", courseId: "data-modelling", why: "Design the tables, keys and star schemas reliable reports are built on." },
           { kind: "course", courseId: "power-bi-fundamentals", why: "Turn the numbers into dashboards people can use." },
-          { kind: "upcoming", title: "Power BI DAX", why: "Measures, filter context, CALCULATE and time intelligence in depth.", level: 3 },
+          { kind: "course", courseId: "power-bi-dax", why: "Filter context, CALCULATE, time intelligence and customer measures in depth." },
         ],
       },
       {

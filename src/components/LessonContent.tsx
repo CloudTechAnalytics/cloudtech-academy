@@ -224,7 +224,7 @@ function Block({ token, ctx }: { token: Token; ctx: Ctx }): ReactNode {
           <p className="mb-1 flex items-center gap-2 text-[0.75rem] font-semibold uppercase tracking-[0.14em] text-ink/80">
             <c.icon aria-hidden className="h-4 w-4 text-brass-dark" /> {c.label}
           </p>
-          <div className="space-y-2 [&_code]:rounded [&_code]:bg-ivory/70 [&_code]:px-1 [&_code]:font-mono [&_code]:text-[0.88em]">
+          <div className="space-y-2 [&_:not(pre)>code]:rounded [&_:not(pre)>code]:bg-ivory/70 [&_:not(pre)>code]:px-1 [&_:not(pre)>code]:font-mono [&_:not(pre)>code]:text-[0.88em]">
             {inner.map((t, i) => (
               <Block key={i} token={t} ctx={ctx} />
             ))}

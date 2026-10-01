@@ -39,6 +39,7 @@ Each short course ends with a final assessment of at least 8 questions. Module c
 | SQL for Data Analysis | 16 | SQL exercises checked in the browser, plus optional drills | Harbourline Freight operations review |
 | Advanced SQL | 11 | SQL exercises checked in the browser: NULL traps, dates, data quality, window frames, cohorts, pivots, recursive CTEs, query plans | Harbourline commercial health check |
 | Power BI Fundamentals | 14 | Answer tasks: Power Query, modelling, DAX, visuals | Ashgrove Chambers practice dashboard |
+| Power BI DAX | 11 | Answer tasks checked against SQL over the sales, HR and legal data, plus DAX writing tasks checked against rules | Kolanut commercial dashboard |
 | Data Modelling | 9 | SQL checks and answer tasks, built around diagrams | Ashgrove Chambers data model |
 | Statistics for Data Analysis | 11 | Answer tasks in Excel or Sheets, checked against SQL and pandas (including medians, percentiles and p-values) | Harbourline delivery performance review |
 | Python for Data Analytics | 12 | Answer tasks on real datasets, checked against both SQL and the pandas the lesson teaches | Kolanut customer health review |

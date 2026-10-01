@@ -105,7 +105,7 @@ export function SqlExercise({
           </span>
         )}
       </div>
-      <div className="mt-2 space-y-2 text-[1rem] leading-relaxed text-ink [&_code]:rounded [&_code]:bg-sand [&_code]:px-1 [&_code]:font-mono [&_code]:text-[0.88em]">{prompt ?? <p>{spec.prompt}</p>}</div>
+      <div className="mt-2 space-y-2 text-[1rem] leading-relaxed text-ink [&_:not(pre)>code]:rounded [&_:not(pre)>code]:bg-sand [&_:not(pre)>code]:px-1 [&_:not(pre)>code]:font-mono [&_:not(pre)>code]:text-[0.88em]">{prompt ?? <p>{spec.prompt}</p>}</div>
 
       <div className="mt-4">
         <SchemaToggle />

@@ -83,7 +83,7 @@ export function WrittenTask({
           )}
         </span>
       </div>
-      <div className="mt-2 space-y-2 text-[1rem] leading-relaxed text-ink [&_ul]:ml-5 [&_ul]:list-disc [&_ol]:ml-5 [&_ol]:list-decimal [&_code]:rounded [&_code]:bg-sand [&_code]:px-1 [&_code]:font-mono [&_code]:text-[0.88em]">{prompt}</div>
+      <div className="mt-2 space-y-2 text-[1rem] leading-relaxed text-ink [&_ul]:ml-5 [&_ul]:list-disc [&_ol]:ml-5 [&_ol]:list-decimal [&_:not(pre)>code]:rounded [&_:not(pre)>code]:bg-sand [&_:not(pre)>code]:px-1 [&_:not(pre)>code]:font-mono [&_:not(pre)>code]:text-[0.88em]">{prompt}</div>
 
       <div className="mt-4 rounded-lg border border-line bg-ivory px-3.5 py-3">
         <p className="text-[0.75rem] font-semibold uppercase tracking-[0.12em] text-muted">Your work is checked for</p>
@@ -152,7 +152,7 @@ export function WrittenTask({
         {results && results.every((r) => r.passed) && <p className="mt-3 rounded-lg border border-success/40 bg-success-bg px-3.5 py-2.5 text-[0.9rem] text-success">Done. Compare yours with the model answer below.</p>}
       </div>
       {solved && showSample && spec.sample && (
-        <div className="mt-3 rounded-lg border border-line bg-ivory px-3.5 py-3 text-[0.9375rem] leading-relaxed text-ink [&_code]:rounded [&_code]:bg-sand [&_code]:px-1 [&_code]:font-mono [&_code]:text-[0.88em] [&_pre]:my-2 [&_pre]:overflow-x-auto [&_pre]:rounded-lg [&_pre]:bg-sand [&_pre]:p-3 [&_pre]:text-[0.84rem] [&_ul]:ml-5 [&_ul]:list-disc [&_ol]:ml-5 [&_ol]:list-decimal [&_p+p]:mt-2">
+        <div className="mt-3 rounded-lg border border-line bg-ivory px-3.5 py-3 text-[0.9375rem] leading-relaxed text-ink [&_:not(pre)>code]:rounded [&_:not(pre)>code]:bg-sand [&_:not(pre)>code]:px-1 [&_:not(pre)>code]:font-mono [&_:not(pre)>code]:text-[0.88em] [&_pre]:my-2 [&_pre]:text-[0.84rem] [&_ul]:ml-5 [&_ul]:list-disc [&_ol]:ml-5 [&_ol]:list-decimal [&_p+p]:mt-2">
           <p className="mb-1.5 text-[0.75rem] font-semibold uppercase tracking-[0.12em] text-muted">Model answer</p>
           {sample}
           {note && <div className="mt-3 border-t border-line pt-3 text-muted">{note}</div>}
