@@ -5,12 +5,13 @@
  *   ```exercise     JSON: { id, prompt, starter?, solution, hint?, required?, orderMatters? }
  *   ```quiz         JSON: [{ prompt, options, answer, explanation? }]
  *   ```answer       JSON: a task done in Excel / Power BI / by hand, checked by its result (AnswerSpec)
+ *   ```task         JSON: written work checked against rules, with a model answer (TaskSpec)
  *   ```dataset      JSON: { dataset, files?, note? } download card for a practice dataset
  *
  * Callouts use blockquotes starting with [!TIP], [!NOTE], [!WARNING] or [!BUSINESS].
  * These helpers are dependency-free so the same logic can be mirrored by build scripts.
  */
-import type { AnswerSpec, DatasetBlock, ExerciseSpec, QuizQuestion } from "@/content/types";
+import type { AnswerSpec, DatasetBlock, ExerciseSpec, QuizQuestion, TaskSpec } from "@/content/types";
 
 export function parseFrontmatter(raw: string): { meta: Record<string, string>; body: string } {
   const text = raw.replace(/\r\n/g, "\n");
@@ -65,7 +66,17 @@ export function extractAnswers(body: string): AnswerSpec[] {
   return fences(body, "answer").map(parseAnswer);
 }
 
-/** IDs of every required practice task in a lesson: SQL exercises and answer tasks. */
+export function parseTask(json: string): TaskSpec {
+  const t = JSON.parse(json) as TaskSpec;
+  if (!t.id || !t.prompt || !Array.isArray(t.rules) || !t.rules.length) throw new Error("A written task needs id, prompt and rules");
+  return t;
+}
+
+export function extractTasks(body: string): TaskSpec[] {
+  return fences(body, "task").map(parseTask);
+}
+
+/** IDs of every required practice task in a lesson: SQL exercises, answer tasks and written tasks. */
 export function requiredExerciseIds(body: string): string[] {
-  return [...extractExercises(body), ...extractAnswers(body)].filter((e) => e.required).map((e) => e.id);
+  return [...extractExercises(body), ...extractAnswers(body), ...extractTasks(body)].filter((e) => e.required).map((e) => e.id);
 }

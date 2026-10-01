@@ -1,6 +1,10 @@
 import type { AssessmentDef } from "../types";
 
-/** Design & Content Essentials: a short check for each module (it awards the module badge) and a final assessment. */
+/**
+ * Design & Content Essentials: a check for each module (it awards the module badge, and
+ * unlocks only after the module's tasks are done) and a final assessment. Questions are
+ * scenarios with plausible wrong answers.
+ */
 export const DCE_ASSESSMENTS: AssessmentDef[] = [
   {
     id: "dce-m01-check",
@@ -10,11 +14,11 @@ export const DCE_ASSESSMENTS: AssessmentDef[] = [
     title: "Social Media Content with AI: module check",
     passingScore: 60,
     questions: [
-      { id: "dce-m01-q1", prompt: "What are content themes (content pillars)?", options: ["The colours of your page", "A few main topics that most of your posts fit into", "Paid adverts", "Your profile picture"], answer: 1, explanation: "Two to four themes keep your posts focused and make ideas easier to find." },
-      { id: "dce-m01-q2", prompt: "How do you make AI captions sound like your brand?", options: ["Describe your voice and paste an example you like", "Ask for 'a caption'", "Use as many emojis as possible", "Copy another business's captions"], answer: 0, explanation: "A description plus an example lets the AI copy your tone." },
-      { id: "dce-m01-q3", prompt: "Why does the first line of a caption matter most?", options: ["It's the only part that's free", "It's often all people see before they tap 'more'", "Hashtags only work there", "It sets the font"], answer: 1, explanation: "The hook decides whether people keep reading." },
-      { id: "dce-m01-q4", prompt: "What does 'repurposing' content mean?", options: ["Deleting old posts", "Turning one idea into posts for several platforms", "Buying followers", "Posting the same picture every day"], answer: 1, explanation: "One good idea can become a caption, a reel, a status and more." },
-      { id: "dce-m01-q5", prompt: "Which of these is fine to post?", options: ["A client's photo without asking", "An AI image presented as a real result", "A photo you took, with your client's permission", "A price you haven't checked"], answer: 2, explanation: "Use your own photos with permission, and keep claims honest." },
+      { id: "dce-m01-q1", prompt: "A salon posts only price lists and 'book now' adverts, and engagement is low. What would most likely help?", options: ["Post the price list more often", "Add themes people value, like hair-care tips and behind the scenes, so selling is only part of the mix", "Use more hashtags", "Post at midnight"], answer: 1, explanation: "People follow accounts that are useful or interesting; trust leads to bookings." },
+      { id: "dce-m01-q2", prompt: "AI gives you a calendar with a daily time-lapse reel, but you have no tripod and little time. What should you do?", options: ["Follow it exactly", "Replace what you can't make with posts you can, and add your real promotions and dates", "Abandon the calendar", "Ask for a bigger calendar"], answer: 1, explanation: "A plan you can actually follow beats an impressive one you can't." },
+      { id: "dce-m01-q3", prompt: "Which caption opening line is the strongest hook?", options: ["Hello everyone, hope you're all doing well today!", "Six hours of work. Six weeks of easy mornings.", "We are pleased to inform our esteemed customers", "#braids #hair #abuja"], answer: 1, explanation: "The first line is all people see before 'more'; it should make them want to read on." },
+      { id: "dce-m01-q4", prompt: "Which hashtag approach fits this course's advice?", options: ["15 popular tags like #love #instagood", "3-5 specific tags your customers actually search, like #abujahair", "No hashtags ever", "One very long hashtag"], answer: 1, explanation: "A few relevant tags beat a pile of generic ones." },
+      { id: "dce-m01-q5", prompt: "Your reel opens with your logo spinning for three seconds. What's the risk?", options: ["None, logos build brands", "Most viewers decide in the first two seconds and scroll past before seeing the point", "The logo will be blurry", "Reels can't show logos"], answer: 1, explanation: "Open with the result or the hook; put the logo at the end or small in a corner." },
     ],
   },
   {
@@ -25,11 +29,11 @@ export const DCE_ASSESSMENTS: AssessmentDef[] = [
     title: "Design with Canva: module check",
     passingScore: 60,
     questions: [
-      { id: "dce-m02-q1", prompt: "What's the easiest way to start a professional-looking design in Canva?", options: ["A blank page with ten fonts", "A template in the right size", "Copying someone's logo", "Drawing everything by hand"], answer: 1, explanation: "Templates give you a layout that already works; you change the content." },
-      { id: "dce-m02-q2", prompt: "Your white headline is hard to read on a busy photo. What's the best fix?", options: ["Make it smaller", "Put a solid shape behind the text, or use a darker photo", "Add more text", "Use a sixth font"], answer: 1, explanation: "That's a contrast problem; a solid background behind the text fixes it." },
-      { id: "dce-m02-q3", prompt: "How many fonts should most designs use?", options: ["One or two", "Five", "As many as possible", "A different one for every word"], answer: 0, explanation: "One for headings and one for body text keeps a design clean." },
-      { id: "dce-m02-q4", prompt: "Which format is best for a social media post with text on it?", options: ["PNG", "MP3", "DOCX", "PDF Print"], answer: 0, explanation: "PNG keeps text sharp for social media images." },
-      { id: "dce-m02-q5", prompt: "What do Canva's pink guide lines help you with?", options: ["Spelling", "Lining things up (alignment)", "Choosing colours", "Downloading"], answer: 1, explanation: "They appear when items line up with each other or the centre." },
+      { id: "dce-m02-q1", prompt: "A flyer uses thin white text on a busy photo. Which rule is broken, and what's the fix?", options: ["Few fonts: add another font", "Contrast: put a solid dark shape behind the text or use a plain background", "Alignment: centre the photo", "Space: make the photo bigger"], answer: 1, explanation: "Text must stand out clearly from what's behind it." },
+      { id: "dce-m02-q2", prompt: "Your design uses five fonts. What should you do?", options: ["Add a sixth for the price", "Use one bold font for the headline and one plain font for everything else", "Make each font a different colour", "Nothing, variety is good"], answer: 1, explanation: "One or two fonts look professional; five look chaotic." },
+      { id: "dce-m02-q3", prompt: "Some lines are left-aligned, some centred, one pushed to the right edge. What fixes it?", options: ["Align everything the same way, using Canva's guide lines", "Make the text bigger", "Add a border", "Change the colours"], answer: 0, explanation: "Consistent alignment makes a design look intentional." },
+      { id: "dce-m02-q4", prompt: "What's the best check before downloading a social post?", options: ["Zoom in to 400%", "Zoom out to the size of a post in a phone feed: can you read the headline and see what to do?", "Print it", "Count the elements"], answer: 1, explanation: "People see your design small, while scrolling." },
+      { id: "dce-m02-q5", prompt: "Which download format suits a social media post with text on it?", options: ["PNG", "PDF Print", "MP4", "GIF"], answer: 0, explanation: "PNG keeps text sharp. Use PDF Print for printing." },
     ],
   },
   {
@@ -40,11 +44,11 @@ export const DCE_ASSESSMENTS: AssessmentDef[] = [
     title: "Video Editing with CapCut: module check",
     passingScore: 60,
     questions: [
-      { id: "dce-m03-q1", prompt: "Which aspect ratio should you use for Reels, TikTok and WhatsApp status?", options: ["16:9 (wide)", "9:16 (tall)", "1:1 (square) only", "4:3"], answer: 1, explanation: "These are watched on phones held upright, so use tall 9:16." },
-      { id: "dce-m03-q2", prompt: "You want to remove a boring part from the middle of a clip. What do you use?", options: ["Split at both ends of that part, then delete it", "Add music", "Change the aspect ratio", "Export twice"], answer: 0, explanation: "Split cuts the clip where the playhead is, so you can delete the section in between." },
-      { id: "dce-m03-q3", prompt: "Why add captions to short videos?", options: ["They make the file smaller", "Many people watch with the sound off", "They're required to export", "They change the video's colours"], answer: 1, explanation: "Captions carry your message when the sound is off, and help people who can't hear it." },
-      { id: "dce-m03-q4", prompt: "What should you do after CapCut writes automatic captions?", options: ["Nothing, they're always right", "Read them and fix any misheard words", "Delete the audio", "Make them bright red"], answer: 1, explanation: "Auto captions often mishear names and local words, so check them." },
-      { id: "dce-m03-q5", prompt: "Which export setting is good for social media?", options: ["1080p at 30 frames per second", "240p", "The lowest quality available", "Audio only"], answer: 0, explanation: "1080p looks sharp on phones without making the file too large." },
+      { id: "dce-m03-q1", prompt: "Which opening shot best fits a 20-second food video?", options: ["The logo with music", "The presenter saying 'Hi guys, welcome back'", "Steam rising as the lid comes off, with the price on screen", "A wide shot of the kitchen building"], answer: 2, explanation: "Lead with the result; people decide in about two seconds." },
+      { id: "dce-m03-q2", prompt: "Auto-captions wrote 'Ikea' instead of 'Ikeja'. What does this tell you?", options: ["The video must be re-recorded", "Auto-captions often get names and local words wrong, so read and correct every line", "Turn captions off", "Speak louder next time and don't check"], answer: 1, explanation: "Uncorrected captions make a business look careless." },
+      { id: "dce-m03-q3", prompt: "Why do on-screen text and captions matter so much?", options: ["They're required by law", "Many people watch with the sound off", "They make the file smaller", "They improve the colour"], answer: 1, explanation: "Words on screen carry the message when the sound is off." },
+      { id: "dce-m03-q4", prompt: "You want a popular song in a video for your business page. What's the risk?", options: ["None", "It may be copyrighted, and the video can be muted or removed", "It makes the video too long", "CapCut won't export it"], answer: 1, explanation: "Use music licensed for commercial use, or a voiceover." },
+      { id: "dce-m03-q5", prompt: "Which export settings suit social media?", options: ["480p, 15 fps", "1080p, 30 fps", "4K, 120 fps", "Any, it doesn't matter"], answer: 1, explanation: "Good quality without a huge file." },
     ],
   },
   {
@@ -54,14 +58,14 @@ export const DCE_ASSESSMENTS: AssessmentDef[] = [
     title: "Design & Content Essentials: final assessment",
     passingScore: 60,
     questions: [
-      { id: "dce-f01", prompt: "What are content themes (content pillars)?", options: ["A few main topics most of your posts fit into", "The colours of your page", "Paid adverts", "Your logo"], answer: 0, explanation: "Two to four themes keep posts focused and ideas easy to find." },
-      { id: "dce-f02", prompt: "How do you make AI-written captions sound like your brand?", options: ["Describe your voice and paste an example you like", "Use lots of emojis", "Ask for 'a caption'", "Copy another brand"], answer: 0, explanation: "A description plus an example lets the AI match your tone." },
-      { id: "dce-f03", prompt: "Which is fine to post on a business page?", options: ["A client's photo without asking", "Your own photo, with the client's permission", "An AI image shown as a real result", "An unchecked price"], answer: 1, explanation: "Use your own photos with permission, and keep claims honest." },
-      { id: "dce-f04", prompt: "Your headline is hard to read on a busy photo in Canva. What's the best fix?", options: ["Put a solid shape behind the text", "Make the text smaller", "Add another font", "Add more text"], answer: 0, explanation: "That's a contrast problem, and a solid background fixes it." },
-      { id: "dce-f05", prompt: "How many fonts should most designs use?", options: ["One or two", "Five", "As many as possible", "One per word"], answer: 0, explanation: "One for headings and one for body text keeps a design clean." },
-      { id: "dce-f06", prompt: "Which aspect ratio suits Reels, TikTok and WhatsApp status?", options: ["9:16 (tall)", "16:9 (wide)", "4:3", "It doesn't matter"], answer: 0, explanation: "They're watched on phones held upright." },
-      { id: "dce-f07", prompt: "Why add captions to short videos?", options: ["Many people watch with the sound off", "They make the file smaller", "They're required to export", "They change the colours"], answer: 0, explanation: "Captions carry your message without sound, and help people who can't hear it." },
-      { id: "dce-f08", prompt: "Which export setting suits social media video?", options: ["1080p at 30 frames per second", "240p", "Audio only", "The lowest quality"], answer: 0, explanation: "1080p looks sharp on phones without a huge file." },
+      { id: "dce-f01", prompt: "What are content themes (content pillars) for?", options: ["Choosing your profile colours", "Giving most of your posts a focus your audience cares about", "Paying for adverts", "Picking hashtags"], answer: 1, explanation: "Two to four themes keep posts focused and ideas easy to find." },
+      { id: "dce-f02", prompt: "How do you make AI captions sound like your brand?", options: ["Ask for 'professional' captions", "Describe your brand voice and show an example caption you like", "Add more emojis", "Use the first draft"], answer: 1, explanation: "Showing an example is more precise than describing a style." },
+      { id: "dce-f03", prompt: "What does a good caption need?", options: ["As many hashtags as possible", "A hook, one idea, a call to action that says how, and a few specific hashtags", "Only emojis", "The full price list"], answer: 1, explanation: "Hook, one idea, action." },
+      { id: "dce-f04", prompt: "Which is the clearest flyer headline?", options: ["Weekend Bootcamp for Beginners Aged 16-25 in Port Harcourt", "LEARN CODING!!!", "Learn to code in one weekend", "Welcome"], answer: 2, explanation: "Short and says the benefit; details go below." },
+      { id: "dce-f05", prompt: "Which list is the four design rules from this course?", options: ["Size, colour, logo, price", "Contrast, alignment, space, few fonts", "Photos, videos, music, text", "Bold, italic, underline, shadow"], answer: 1, explanation: "Most amateur designs break one of these four." },
+      { id: "dce-f06", prompt: "Which aspect ratio is right for TikTok and Reels?", options: ["16:9", "1:1", "9:16", "4:3"], answer: 2, explanation: "9:16 is tall, filling a phone screen." },
+      { id: "dce-f07", prompt: "What should the first two seconds of a short video show?", options: ["Your logo", "A greeting", "The result or the hook", "Black screen"], answer: 2, explanation: "Most viewers decide whether to keep watching almost immediately." },
+      { id: "dce-f08", prompt: "Before posting a video with auto-captions, you should…", options: ["Post it straight away", "Read and correct every caption, and watch it muted to check it still makes sense", "Delete the captions", "Make the captions bigger only"], answer: 1, explanation: "Captions often mishear names and local words." },
     ],
   },
 ];

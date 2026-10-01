@@ -1,6 +1,6 @@
 ---
 title: Visualizations
-minutes: 35
+minutes: 15
 summary: The visuals you'll use most, how to configure and format them, and how visuals interact on a page.
 ---
 
@@ -93,6 +93,45 @@ Tick **Wholesale** in the slicer and every visual on the page recalculates for w
   "verify": "SELECT SUM(o.quantity * o.unit_price * (1 - o.discount_pct / 100.0)) FROM orders o JOIN products p ON p.product_id = o.product_id WHERE p.category = 'Snacks' AND o.order_date BETWEEN '2025-01-01' AND '2025-12-31'",
   "required": true,
   "hint": "Put products[category] in Rows and Date[Year] in Columns, then read the Snacks row under 2025."
+}
+```
+
+
+## More practice
+
+Optional drills. They don't count towards the certificate, but they're the fastest way to make this lesson stick. Several use a different dataset from the lesson on purpose: if you can do the same thing on unfamiliar data, you've really learned it.
+
+```answer
+{
+  "id": "pbi-10-d1",
+  "prompt": "In the category-by-year matrix, what was **Household** revenue in **2026**?",
+  "answer": 83195160,
+  "format": "naira",
+  "dataset": "sales",
+  "files": [
+    "orders",
+    "products"
+  ],
+  "verify": "SELECT SUM(o.quantity * o.unit_price * (1 - o.discount_pct / 100.0)) FROM orders o JOIN products p ON p.product_id = o.product_id WHERE p.category = 'Household' AND o.order_date >= '2026-01-01'",
+  "hint": "Read the Household row under the 2026 column.",
+  "required": false
+}
+```
+
+```answer
+{
+  "id": "pbi-10-d2",
+  "prompt": "Add a Channel slicer. With **Wholesale** selected and the Year slicer on **2025**, what does the Revenue card show?",
+  "answer": 379168440,
+  "format": "naira",
+  "dataset": "sales",
+  "files": [
+    "orders",
+    "customers"
+  ],
+  "verify": "SELECT SUM(o.quantity * o.unit_price * (1 - o.discount_pct / 100.0)) FROM orders o JOIN customers c ON c.customer_id = o.customer_id WHERE c.channel = 'Wholesale' AND o.order_date BETWEEN '2025-01-01' AND '2025-12-31'",
+  "hint": "Two slicers filter the card together.",
+  "required": false
 }
 ```
 

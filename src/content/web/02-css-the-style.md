@@ -96,7 +96,46 @@ Cards sit in a row on wide screens and wrap onto new lines on phones.
 
 ## Try it
 
-1. Create `style.css`, link it, and paste the starting style.
-2. Change the main colour to one you like (try a site like coolors.co).
-3. Wrap two or three projects in `<div class="card">` inside a `<div class="projects">`, and add the flexbox rules.
-4. Make your browser window narrow to check it still looks good on a phone.
+```answer
+{
+  "id": "web-m02-a1",
+  "prompt": "In the box model, which layer is the space **outside** the border, between one box and the next?",
+  "answer": "margin",
+  "format": "text",
+  "accept": ["the margin", "margins"],
+  "explanation": "Padding is inside the border; margin is outside it.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "web-m02-a2",
+  "prompt": "Which selector styles every element with `class=\"card\"`? Type the selector only.",
+  "answer": ".card",
+  "format": "text",
+  "explanation": "A dot selects a class; a hash (#) selects an id; a plain name (p) selects a tag.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "web-m02-t1",
+  "prompt": "Create `style.css`, link it, style your page, and put your projects in cards laid out with flexbox. Paste your **whole `style.css`** here. It needs: a `body` rule with a font, a colour of your choice, a `max-width` and `margin: 0 auto`; a `.card` rule with padding and rounded corners; and a `.projects` rule using flexbox with wrapping and a gap.",
+  "minutes": 20,
+  "rows": 16,
+  "placeholder": "body {\n  font-family: ...;\n}",
+  "rules": [
+    { "label": "A body rule with a font-family", "pattern": "body\\s*\\{[^}]*font-family\\s*:" },
+    { "label": "The body has a max-width and margin: 0 auto to centre it", "pattern": "body\\s*\\{[^}]*max-width\\s*:[^}]*margin\\s*:\\s*0\\s+auto|body\\s*\\{[^}]*margin\\s*:\\s*0\\s+auto[^}]*max-width\\s*:" },
+    { "label": "A colour you chose (a # code or rgb)", "pattern": "color\\s*:\\s*(#[0-9a-f]{3,8}|rgb)" },
+    { "label": "A .card rule with padding and border-radius", "pattern": "\\.card\\s*\\{[^}]*(padding[^}]*border-radius|border-radius[^}]*padding)" },
+    { "label": "A .projects rule with display: flex", "pattern": "\\.projects\\s*\\{[^}]*display\\s*:\\s*flex" },
+    { "label": "Flexbox wraps on small screens and has a gap", "pattern": "\\.projects\\s*\\{[^}]*(flex-wrap\\s*:\\s*wrap[^}]*gap|gap[^}]*flex-wrap\\s*:\\s*wrap)" }
+  ],
+  "sample": "body {\n  font-family: system-ui, sans-serif;\n  color: #1f2937;\n  background: #f9fafb;\n  max-width: 720px;\n  margin: 0 auto;\n  padding: 24px;\n  line-height: 1.6;\n}\nh1 {\n  color: #0f766e;\n}\na {\n  color: #0f766e;\n}\n.projects {\n  display: flex;\n  flex-wrap: wrap;\n  gap: 16px;\n}\n.card {\n  flex: 1 1 200px;\n  background: white;\n  border: 1px solid #e5e7eb;\n  border-radius: 12px;\n  padding: 16px;\n}",
+  "note": "Make your browser window narrow: the cards should drop onto separate lines, which is how the page will look on a phone.",
+  "required": true
+}
+```

@@ -7,7 +7,7 @@
 import { BUNDLED_ASSESSMENTS, BUNDLED_COURSES, BUNDLED_PROJECTS } from "@/content";
 import type { AssessmentDef, Course } from "@/content/types";
 import { requiredExerciseIds } from "../lesson-format";
-import { certificateNumber, eligibility, newCredentialId } from "../certificates";
+import { certificateNumber, eligibility, moduleTaskIds, newCredentialId } from "../certificates";
 import { PROFILE_SLUG_RE, SLUG_HELP } from "../profile";
 import {
   BackendError,
@@ -419,7 +419,10 @@ export function createDemoBackend(): Backend {
       const course = courses(s).find((c) => c.modules.some((m) => m.id === moduleId));
       const mod = course?.modules.find((m) => m.id === moduleId);
       if (!course || !mod?.badge) throw new BackendError("This module has no badge.");
-      const check = assessments(s).find((a) => a.kind === "module" && a.moduleId === moduleId);
+      const done = s.exercises[key(u.id, course.id)] ?? [];
+      const missing = moduleTaskIds(mod).filter((id) => !done.includes(id)).length;
+      if (missing) throw new BackendError(`Complete the tasks in this module first (${missing} left).`);
+      const check =assessments(s).find((a) => a.kind === "module" && a.moduleId === moduleId);
       if (!check || !(s.attempts[u.id] ?? []).some((t) => t.assessmentId === check.id && t.passed)) throw new BackendError("Pass the module check first.");
       const cred = newCredential(s, u, {
         kind: "module_badge",

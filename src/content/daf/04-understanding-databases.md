@@ -1,6 +1,6 @@
 ---
 title: Understanding databases
-minutes: 30
+minutes: 15
 summary: Tables, keys and relationships, why companies keep data in databases, and your first look at SQL.
 ---
 
@@ -90,6 +90,28 @@ That two-step lookup is exactly what a database join does, for every row at once
   "hint": "Order 10500 has a customer_id. Find that customer_id in customers.csv and read the region column. Ctrl + F helps.",
   "explanation": "Order 10500 belongs to customer 12, Hajia Amina Supermarket in Kano, North West.",
   "required": true
+}
+```
+
+
+## More practice
+
+Optional drills. They don't count towards the certificate, but they're the fastest way to make this lesson stick. Several use a different dataset from the lesson on purpose: if you can do the same thing on unfamiliar data, you've really learned it.
+
+```answer
+{
+  "id": "daf-04-d1",
+  "prompt": "In the legal dataset, which **client** is matter **2010** for? Look up the matter in `matters.csv`, then its client_id in `clients.csv`. Give the client_name.",
+  "answer": "Ibrahim Ndukwe",
+  "format": "text",
+  "dataset": "legal",
+  "files": [
+    "matters",
+    "clients"
+  ],
+  "verify": "SELECT c.client_name FROM matters m JOIN clients c ON c.client_id = m.client_id WHERE m.matter_id = 2010",
+  "hint": "matters.client_id is a foreign key to clients.client_id.",
+  "required": false
 }
 ```
 

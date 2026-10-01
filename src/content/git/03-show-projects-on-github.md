@@ -66,8 +66,53 @@ For group projects, the owner adds teammates under **Settings → Collaborators*
 
 ## Try it
 
-1. Install GitHub Desktop and publish one real project folder (a class project, notebook or website).
-2. Write a README using the structure above.
-3. Pin it on your profile.
-4. Create your profile README repository and write three lines about yourself.
-5. Add your GitHub profile link to your CV or portfolio page.
+```answer
+{
+  "id": "git-m03-a1",
+  "prompt": "Your GitHub username is `tolu-adeyemi`. What must you name the repository whose README appears at the top of your profile?",
+  "answer": "tolu-adeyemi",
+  "format": "text",
+  "accept": ["tolu-adeyemi/tolu-adeyemi"],
+  "explanation": "A public repository with exactly your username as its name becomes your profile README.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "git-m03-t1",
+  "prompt": "Write the **README** for a real project of yours (a class project, notebook, website or spreadsheet), in Markdown, using the structure from the lesson: a `#` title, a one-line description, then `##` sections for **What I did**, **Key findings** (or **Results**), **Tools** and **See it**.",
+  "minutes": 12,
+  "rows": 14,
+  "placeholder": "# Project title\nOne line on what it is.\n\n## What I did\n- ...\n\n## Key findings\n- ...\n\n## Tools\n...\n\n## See it\n...",
+  "rules": [
+    { "label": "A # title on the first line", "pattern": "(?<![\\s\\S])\\s*#\\s+\\S" },
+    { "label": "A ## What I did section", "pattern": "^##\\s+what i did" },
+    { "label": "A ## Key findings or ## Results section", "pattern": "^##\\s+(key findings|findings|results?)" },
+    { "label": "A ## Tools section", "pattern": "^##\\s+tools" },
+    { "label": "A ## See it section", "pattern": "^##\\s+(see it|how to (run|view|see)|demo|links?)" },
+    { "label": "At least three bullet points", "pattern": "^\\s*[-*]\\s+\\S", "min": 3 },
+    { "label": "A finding or result with a number", "pattern": "^\\s*[-*][^\\n]*\\d" }
+  ],
+  "sample": "# Sales Analysis: Kolanut Drinks\nAnalysis of 4,266 orders to find which regions and products drive revenue.\n\n## What I did\n- Cleaned the data in Python (pandas)\n- Calculated revenue by region, category and month\n- Built charts to show the trends\n\n## Key findings\n- Lagos brings in about half of all revenue\n- North West revenue fell 47% from H1 2025 to H1 2026\n\n## Tools\nPython, pandas, matplotlib, Google Colab\n\n## See it\nOpen `analysis.ipynb`, or view the charts in `/images`.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "git-m03-t2",
+  "prompt": "Publish the project with GitHub Desktop (or the browser), add your README, pin the repository on your profile and create your profile README. Paste the **project repository link** on the first line and your **profile link** on the second.",
+  "minutes": 15,
+  "rows": 3,
+  "placeholder": "https://github.com/your-username/your-project\nhttps://github.com/your-username",
+  "rules": [
+    { "label": "A link to a project repository", "pattern": "https?://(www\\.)?github\\.com/[A-Za-z0-9-]+/[A-Za-z0-9._-]+" },
+    { "label": "Your profile link on its own line", "pattern": "^\\s*https?://(www\\.)?github\\.com/[A-Za-z0-9-]+/?\\s*$" }
+  ],
+  "sample": "https://github.com/adaeze-okafor/kolanut-sales-analysis\nhttps://github.com/adaeze-okafor",
+  "required": true
+}
+```
+
+Finally, add your GitHub profile link to your CV and your portfolio page.

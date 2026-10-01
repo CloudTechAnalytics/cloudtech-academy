@@ -78,7 +78,38 @@ Put a photo called `me.jpg` in the same folder, then add:
 
 ## Try it
 
-1. Create `index.html` with your own name, a one-line intro and a heading.
-2. Add a list of three skills and a link to your LinkedIn or GitHub.
-3. Add an image with a helpful `alt` description.
-4. Open the file in your browser, change something, save, and refresh to see the change.
+```answer
+{
+  "id": "web-m01-a1",
+  "prompt": "This image tag works, but it's missing something every image should have for screen readers and for when the image fails to load: `<img src=\"me.jpg\" width=\"200\" />`. Which **attribute** is missing?",
+  "answer": "alt",
+  "format": "text",
+  "accept": ["alt attribute", "alt=", "alt text"],
+  "explanation": "alt describes the image, for example alt=\"Chioma smiling in front of the library\".",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "web-m01-t1",
+  "prompt": "Build your own `index.html` in VS Code (or CodePen), open it in your browser, then paste the **whole file** here. It needs: the `<!DOCTYPE html>` line, a `<title>`, **one** `<h1>` with your name, a paragraph about you, a list of at least three skills, a link, and an image with a helpful `alt`.",
+  "minutes": 20,
+  "rows": 16,
+  "placeholder": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n  ...",
+  "rules": [
+    { "label": "Starts with <!DOCTYPE html>", "pattern": "<!doctype html>" },
+    { "label": "Has <html lang=\"…\">", "pattern": "<html[^>]*\\blang=\"[a-z-]+\"" },
+    { "label": "Has a <title> in the head", "pattern": "<title>[^<]+</title>" },
+    { "label": "An <h1> with your name", "pattern": "<h1[\\s>]" },
+    { "label": "Not more than one <h1>", "pattern": "<h1[\\s>][\\s\\S]*<h1[\\s>]", "absent": true },
+    { "label": "A paragraph (<p>)", "pattern": "<p[\\s>][^<]{10,}" },
+    { "label": "A list with at least three items", "pattern": "<li[\\s>]", "min": 3 },
+    { "label": "A link to a real address (<a href=\"https://…\">)", "pattern": "<a[^>]+href=\"https?://[^\"]+\"" },
+    { "label": "An image with a non-empty alt", "pattern": "<img[^>]+alt=\"[^\"]{5,}\"" }
+  ],
+  "sample": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />\n    <title>Chioma Eze</title>\n  </head>\n  <body>\n    <h1>Chioma Eze</h1>\n    <img src=\"me.jpg\" alt=\"Chioma smiling in front of the library\" width=\"200\" />\n    <p>Computer Science student at UNN, learning web development.</p>\n    <h2>My skills</h2>\n    <ul>\n      <li>HTML and CSS</li>\n      <li>Excel</li>\n      <li>Canva</li>\n    </ul>\n    <h2>Contact</h2>\n    <p>Find me on <a href=\"https://github.com/chioma-eze\">GitHub</a>.</p>\n  </body>\n</html>",
+  "note": "Your page will look plain: that's right for now. The next module adds the style.",
+  "required": true
+}
+```

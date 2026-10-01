@@ -96,6 +96,43 @@ Kolanut's files, once loaded:
 }
 ```
 
+
+## More practice
+
+Optional drills. They don't count towards the certificate, but they're the fastest way to make this lesson stick. Several use a different dataset from the lesson on purpose: if you can do the same thing on unfamiliar data, you've really learned it.
+
+```answer
+{
+  "id": "pbi-03-d1",
+  "prompt": "Load the HR dataset's `attendance.csv` into Power BI. How many rows does the attendance table have?",
+  "answer": 1518,
+  "format": "number",
+  "dataset": "hr",
+  "files": [
+    "attendance"
+  ],
+  "verify": "SELECT COUNT(*) FROM attendance",
+  "hint": "Check the row count at the bottom of Table view, or put Count of date in a Card.",
+  "required": false
+}
+```
+
+```answer
+{
+  "id": "pbi-03-d2",
+  "prompt": "Load the legal dataset's `hearings.csv`. How many **different matters** have at least one hearing?",
+  "answer": 95,
+  "format": "number",
+  "dataset": "legal",
+  "files": [
+    "hearings"
+  ],
+  "verify": "SELECT COUNT(DISTINCT matter_id) FROM hearings",
+  "hint": "A Card with matter_id set to Count (Distinct).",
+  "required": false
+}
+```
+
 ## Check your understanding
 
 ```quiz

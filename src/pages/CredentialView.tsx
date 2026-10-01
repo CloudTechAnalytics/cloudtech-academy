@@ -129,7 +129,7 @@ export default function CredentialView() {
           {!mine && course && (
             <div className="mt-8 rounded-xl border border-line bg-paper p-5">
               <p className="font-semibold">Earn this badge yourself</p>
-              <p className="mt-1 text-[0.9375rem] text-muted">It's free: learn at your own pace and pass the short checks.</p>
+              <p className="mt-1 text-[0.9375rem] text-muted">It's free: learn at your own pace, do the tasks, and pass the checks.</p>
               <ButtonLink to={`/courses/${course.slug}`} className="mt-3">
                 Start learning — Free
               </ButtonLink>

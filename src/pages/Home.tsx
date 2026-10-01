@@ -102,7 +102,7 @@ export default function Home() {
                 Short modules. A badge for each one.
               </h2>
               <p className="mt-3 text-[1.0625rem] leading-relaxed text-muted">
-                AI tools, design, careers, coding and Python in modules of about 20 minutes. Pass each short check to earn a free badge you can share,
+                AI tools, design, careers, coding and Python in modules of 15 to 40 minutes. Do each module's tasks and pass its check to earn a free badge you can share,
                 with its own credential ID.
               </p>
             </div>
@@ -191,7 +191,7 @@ export default function Home() {
               <h2 id="courses-title" className="font-serif text-[2.1rem] leading-[1.1] sm:text-[2.6rem]">
                 Courses
               </h2>
-              <p className="mt-3 max-w-xl text-muted">All five courses are open and free. New to data? Start with Data Analytics Foundations, or go straight to the tool you need.</p>
+              <p className="mt-3 max-w-xl text-muted">Every course is open and free. New to data? Start with Data Analytics Foundations, or go straight to the tool you need.</p>
             </Reveal>
             <Link to="/courses" className="inline-flex items-center gap-1.5 text-[0.9rem] font-semibold text-ink hover:text-brass-dark">
               All courses <ArrowRight aria-hidden className="h-4 w-4" />

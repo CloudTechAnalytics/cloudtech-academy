@@ -1,6 +1,6 @@
 ---
 title: JOINs
-minutes: 35
+minutes: 15
 summary: Combine tables with INNER JOIN and LEFT JOIN, and find records with no match.
 ---
 
@@ -110,6 +110,55 @@ WHERE s.booking_date = '2026-08-03';
   "starter": "",
   "solution": "SELECT e.full_name, COUNT(*) AS customers FROM customers AS c JOIN employees AS e ON e.employee_id = c.account_manager_id GROUP BY e.employee_id, e.full_name ORDER BY customers DESC;",
   "hint": "Join customers to employees on e.employee_id = c.account_manager_id, then GROUP BY the employee.",
+  "required": false
+}
+```
+
+## More practice
+
+Optional drills on the same skills. They don't count towards the certificate, but each one is a small, realistic request from someone at Harbourline. Do as many as you need until the pattern feels automatic.
+
+```exercise
+{
+  "id": "sql-09-d1",
+  "prompt": "Show shipment_id, origin, destination and mode for every shipment booked on '2026-08-03'.",
+  "starter": "",
+  "solution": "SELECT s.shipment_id, r.origin, r.destination, r.mode FROM shipments AS s JOIN routes AS r ON r.route_id = s.route_id WHERE s.booking_date = '2026-08-03';",
+  "hint": "Join shipments to routes on route_id.",
+  "required": false
+}
+```
+
+```exercise
+{
+  "id": "sql-09-d2",
+  "prompt": "How many shipments did each mode carry? Show mode and shipments, busiest first.",
+  "starter": "",
+  "solution": "SELECT r.mode, COUNT(*) AS shipments FROM shipments AS s JOIN routes AS r ON r.route_id = s.route_id GROUP BY r.mode ORDER BY shipments DESC;",
+  "hint": "Join to routes, then GROUP BY r.mode.",
+  "required": false,
+  "orderMatters": true
+}
+```
+
+```exercise
+{
+  "id": "sql-09-d3",
+  "prompt": "Show each employee's full_name with their manager's full_name as manager. Leave out people with no manager.",
+  "starter": "",
+  "solution": "SELECT e.full_name, m.full_name AS manager FROM employees AS e JOIN employees AS m ON m.employee_id = e.manager_id;",
+  "hint": "Join employees to itself: give the two copies different aliases (e for the employee, m for the manager).",
+  "required": false
+}
+```
+
+```exercise
+{
+  "id": "sql-09-d4",
+  "prompt": "Which shipments have no payment recorded? Show shipment_id and status. (Use LEFT JOIN and IS NULL.)",
+  "starter": "",
+  "solution": "SELECT s.shipment_id, s.status FROM shipments AS s LEFT JOIN payments AS p ON p.shipment_id = s.shipment_id WHERE p.payment_id IS NULL;",
+  "hint": "LEFT JOIN payments, then keep the rows where the payment side is NULL.",
   "required": false
 }
 ```

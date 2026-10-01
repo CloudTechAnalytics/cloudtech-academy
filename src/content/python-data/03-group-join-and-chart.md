@@ -1,6 +1,6 @@
 ---
 title: Group, Join and Chart
-minutes: 30
+minutes: 25
 summary: Summarise data with groupby, join tables with merge, and turn the answers into charts you can share.
 ---
 
@@ -82,7 +82,54 @@ Add **text cells** to explain what you found in plain words, not just code. Then
 
 ## Try it
 
-1. Merge the three tables into `sales`.
-2. Find revenue by `channel`. Which channel is biggest?
-3. Find the three products with the highest revenue.
-4. Make one bar chart and one line chart, and write three sentences summarising what they show.
+Use the merged `sales` table.
+
+```answer
+{
+  "id": "pyda-m03-a1",
+  "prompt": "Which **channel** brings in the most revenue?",
+  "answer": "Wholesale",
+  "format": "text",
+  "dataset": "sales",
+  "files": ["orders", "customers"],
+  "verify": "SELECT c.channel FROM orders o JOIN customers c ON c.customer_id = o.customer_id GROUP BY c.channel ORDER BY SUM(o.quantity * o.unit_price * (1 - o.discount_pct / 100.0)) DESC LIMIT 1",
+  "pyVerify": "sales.groupby('channel')['revenue'].sum().idxmax()",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "pyda-m03-a2",
+  "prompt": "Which **product** (product_name) brings in the most revenue?",
+  "answer": "Detergent 900g (12)",
+  "format": "text",
+  "accept": ["detergent 900g", "detergent"],
+  "dataset": "sales",
+  "files": ["orders", "products"],
+  "verify": "SELECT p.product_name FROM orders o JOIN products p ON p.product_id = o.product_id GROUP BY p.product_id ORDER BY SUM(o.quantity * o.unit_price * (1 - o.discount_pct / 100.0)) DESC LIMIT 1",
+  "pyVerify": "sales.groupby('product_name')['revenue'].sum().idxmax()",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "pyda-m03-t1",
+  "prompt": "Make a bar chart of revenue by region and a line chart of monthly revenue. Then write **three sentences** for a manager summarising what they show, with at least two numbers.",
+  "minutes": 12,
+  "rows": 5,
+  "placeholder": "Lagos brings in ...",
+  "rules": [
+    { "label": "Three sentences", "pattern": "[.!?](\\s|$)", "min": 3 },
+    { "label": "At least two numbers", "pattern": "\\d[\\d,.]*", "min": 2 },
+    { "label": "Mentions a region", "pattern": "lagos|south west|north west|north central|south south|south east" },
+    { "label": "Says something about change over time (month, December, grew, fell, peak…)", "pattern": "month|december|january|june|peak|grew|grow|fell|fall|rose|trend|season" },
+    { "label": "Written for a manager, not code (no brackets or underscores)", "pattern": "\\.groupby|\\[\"|_id|\\(\\)", "absent": true }
+  ],
+  "sample": "Lagos brings in about half of all revenue, ₦411 million of ₦831 million. Monthly revenue peaks in December 2025 at ₦66 million, when retailers stock up for the festive season. The data stops in June 2026, so 2026 totals should be compared with January to June 2025, not the whole year.",
+  "required": true
+}
+```
+
+Then save the notebook to GitHub (**File → Save a copy in GitHub**) or share the Colab link with a text cell at the top explaining what it does.

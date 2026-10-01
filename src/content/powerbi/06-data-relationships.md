@@ -1,6 +1,6 @@
 ---
 title: Data relationships
-minutes: 30
+minutes: 15
 summary: Connect tables with one-to-many relationships so filters flow from customers and products to orders.
 ---
 
@@ -90,6 +90,46 @@ Without it, every row shows ₦830.5m.
   "explanation": "Each product appears once in products and many times in orders.",
   "required": true,
   "hint": "Which table lists each product only once?"
+}
+```
+
+
+## More practice
+
+Optional drills. They don't count towards the certificate, but they're the fastest way to make this lesson stick. Several use a different dataset from the lesson on purpose: if you can do the same thing on unfamiliar data, you've really learned it.
+
+```answer
+{
+  "id": "pbi-06-d1",
+  "prompt": "With customers related to orders, what is total revenue from **Kiosk** customers?",
+  "answer": 39888675,
+  "format": "naira",
+  "dataset": "sales",
+  "files": [
+    "orders",
+    "customers"
+  ],
+  "verify": "SELECT SUM(o.quantity * o.unit_price * (1 - o.discount_pct / 100.0)) FROM orders o JOIN customers c ON c.customer_id = o.customer_id WHERE c.channel = 'Kiosk'",
+  "hint": "Use channel from the customers table in a slicer or table, with the revenue measure.",
+  "required": false
+}
+```
+
+```answer
+{
+  "id": "pbi-06-d2",
+  "prompt": "Load the legal dataset and relate clients → matters → invoices. What is the total invoiced to **Company** clients?",
+  "answer": 678380000,
+  "format": "naira",
+  "dataset": "legal",
+  "files": [
+    "clients",
+    "matters",
+    "invoices"
+  ],
+  "verify": "SELECT SUM(i.amount_ngn) FROM invoices i JOIN matters m ON m.matter_id = i.matter_id JOIN clients c ON c.client_id = m.client_id WHERE c.client_type = 'Company'",
+  "hint": "Two one-to-many relationships: clients[client_id] → matters[client_id], matters[matter_id] → invoices[matter_id].",
+  "required": false
 }
 ```
 

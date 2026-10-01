@@ -46,7 +46,60 @@ Reviews and referrals are how freelancers grow.
 
 ## Try it
 
-1. Write a delivery note template you'll send with every job.
-2. Write a polite reply to a client asking for changes outside the agreed scope.
-3. Write the message you'll send to ask for a review.
-4. Block out your weekly freelance hours in Google Calendar.
+Kunle approved your three designs, then wrote: *"Can you also do 3 more posts for next week? Same price is fine abi?"* Your agreed scope was a price list and two posts.
+
+```task
+{
+  "id": "freel-m04-t1",
+  "prompt": "Write a **polite reply** that thanks him, explains the extra posts are outside the agreed scope, and offers a price and a delivery date for them.",
+  "minutes": 6,
+  "rows": 6,
+  "placeholder": "Hi Kunle, ...",
+  "rules": [
+    { "label": "Friendly and thanks him", "pattern": "thank|glad|happy|pleased" },
+    { "label": "Explains it's outside the agreed scope (agreed, original, included…)", "pattern": "agreed|original|included|scope|we discussed|the brief" },
+    { "label": "Offers a price for the extra work", "pattern": "₦\\s*\\d|\\d+\\s*k\\b|naira" },
+    { "label": "Gives a delivery date or time", "pattern": "monday|tuesday|wednesday|thursday|friday|saturday|sunday|\\d+\\s*days?|tomorrow|next week|by \\d" },
+    { "label": "No rudeness or refusal without an offer (\"no way\", \"not my problem\")", "pattern": "no way|not my problem|are you mad|stop asking", "absent": true }
+  ],
+  "sample": "Hi Kunle, I'm really glad you like the designs! The three extra posts weren't part of our original agreement (the price list and two posts), but I'd be happy to do them. Three more posts would be ₦12,000, and I can deliver them by Wednesday. Shall I go ahead?",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "freel-m04-t2",
+  "prompt": "Write your **delivery note**: what's included (with clear file names and formats), how to use them, and how to ask for changes.",
+  "minutes": 5,
+  "rows": 7,
+  "placeholder": "Hi ..., here are ...",
+  "rules": [
+    { "label": "Lists the files with formats (.png, .pdf, Canva link…)", "pattern": "\\.(png|pdf|jpg|xlsx|docx|mp4)|canva link|editable" },
+    { "label": "Clear file names (with hyphens, not 'final final')", "pattern": "[a-z0-9]+-[a-z0-9-]+\\.(png|pdf|jpg|xlsx|docx|mp4)" },
+    { "label": "Says how to request changes", "pattern": "change|revision|edit|tweak|adjust" },
+    { "label": "At least 30 words", "minWords": 30 }
+  ],
+  "sample": "Hi Kunle, here are your designs:\n- Kunle-Accessories-price-list.pdf (A4, ready to print)\n- Kunle-Accessories-price-list-whatsapp.png\n- Kunle-Accessories-promo-1.png and Kunle-Accessories-promo-2.png (square, for Instagram)\n- An editable Canva link, so you can update prices yourself.\nYou have two rounds of changes included: just reply with what you'd like adjusted.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "freel-m04-t3",
+  "prompt": "Write the short message you'll send to **ask for a review or testimonial** once a client is happy.",
+  "minutes": 3,
+  "rows": 4,
+  "placeholder": "...",
+  "rules": [
+    { "label": "Asks for a review or testimonial", "pattern": "review|testimonial|recommend|feedback|a few words" },
+    { "label": "Polite and low-pressure (if you have a moment, would you mind…)", "pattern": "if you have|would you mind|when you get a chance|if you're happy|could you|would you" },
+    { "label": "Short: under 60 words", "minWords": 10, "maxWords": 60 }
+  ],
+  "sample": "I'm so glad the price list is working well for you! If you have a moment, would you mind leaving a short review on my profile? It really helps a small business like mine.",
+  "required": true
+}
+```
+
+Then block out your weekly freelance hours in Google Calendar, around your lectures and exam periods.

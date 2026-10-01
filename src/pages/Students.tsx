@@ -93,7 +93,7 @@ const GROUPS: { title: string; intro: string; items: Item[] }[] = [
     items: [
       {
         title: "Excel for students",
-        why: "Tables, sorting, SUM and COUNTIF, and a PivotTable in 25 minutes.",
+        why: "Tables, sorting, SUM, SUMIF and COUNTIF, and a PivotTable in 30 minutes.",
         course: "career-essentials",
         module: "career-m03",
       },
@@ -109,7 +109,7 @@ const GROUPS: { title: string; intro: string; items: Item[] }[] = [
       },
       { title: "Intro to Power BI", why: "Build an interactive sales dashboard.", course: "power-bi-fundamentals" },
       {
-        title: "Python for data analysis",
+        title: "pandas quick start",
         why: "Load, clean, summarise and chart data with pandas.",
         course: "python-for-data-analysis",
       },
@@ -231,8 +231,8 @@ export default function Students() {
             Free practical skills for students who want to <span className="text-brass-accent">get ahead.</span>
           </h1>
           <p className="mt-5 max-w-2xl text-[1.125rem] leading-relaxed text-muted">
-            {TOTAL} skills for school, internships and your first job. Most take 15 to 30 minutes. Pass the short check
-            at the end of each module to earn a free badge, then show them all on your own public skills profile.
+            {TOTAL} skills for school, internships and your first job. Most take 15 to 40 minutes. Do the module's tasks and pass its check
+            to earn a free badge, then show them all on your own public skills profile.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <ButtonLink to="/sign-up" arrow>
@@ -247,7 +247,7 @@ export default function Students() {
               {
                 Icon: Clock,
                 title: "Short and practical",
-                body: "Modules of about 20 minutes, each ending with a task you do yourself.",
+                body: "Modules of 15 to 40 minutes, with tasks you do yourself, checked as you go.",
               },
               {
                 Icon: BadgeCheck,

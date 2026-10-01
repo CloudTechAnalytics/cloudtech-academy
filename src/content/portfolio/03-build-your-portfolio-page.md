@@ -1,6 +1,7 @@
 ---
 title: Build Your Portfolio Page
-minutes: 30
+minutes: 25
+handsOn: 15
 summary: Put your projects on one simple page with a link you can add to your CV and LinkedIn, using a free tool you already have.
 ---
 
@@ -47,7 +48,40 @@ Keep it to **one page** with these sections, in this order:
 
 ## Try it
 
-1. Choose a tool (Google Sites if you're unsure).
-2. Build the page with the five sections, starting with one project. Add the other two later.
-3. Publish it and test it on your phone.
-4. Add the link to your CV and your LinkedIn **Contact info** or **Featured** section.
+```task
+{
+  "id": "portf-m03-t1",
+  "prompt": "Write your page's **header line** (what you do, in one line, like \"Accounting student at UNILAG · Excel and Power BI\") and your **About** section (two or three sentences on your interests and what you're looking for). Header first, then a blank line, then About.",
+  "minutes": 6,
+  "rows": 6,
+  "placeholder": "Economics graduate · Excel, SQL and Power BI\n\nI ...",
+  "rules": [
+    { "label": "A short header line first (under 15 words)", "pattern": "(?<![\\s\\S])\\s*(\\S+[ \\t]+){0,14}\\S+[ \\t]*\\n" },
+    { "label": "An About section in the first person", "pattern": "\\b(I|I'm|my)\\b", "min": 2 },
+    { "label": "Says what you're looking for (role, internship, clients, opportunities…)", "pattern": "looking for|seeking|open to|interested in|want to|hoping to|available for" },
+    { "label": "Short: 25 to 90 words in total", "minWords": 25, "maxWords": 90 }
+  ],
+  "sample": "Economics graduate · Excel, SQL and Power BI\n\nI turn messy sales data into reports people use. During NYSC I built a weekly dashboard that cut a 3-hour report to 20 minutes. I'm looking for a junior data analyst role in Lagos.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "portf-m03-t2",
+  "prompt": "Build and publish your page with the five sections (header, about, at least one project, skills and credentials, contact). Test it on your phone in a private window. Paste the **published link**, then one line on what a friend said you do after 30 seconds on the page.",
+  "minutes": 4,
+  "rows": 3,
+  "placeholder": "https://sites.google.com/view/...\nMy friend said: ...",
+  "rules": [
+    { "label": "A published page link (Google Sites, Canva, GitHub Pages, your CloudTech profile or your own domain)", "pattern": "https?://\\S+\\.\\S+" },
+    { "label": "Not a private editing link", "pattern": "/edit\\b|/u/\\d/", "absent": true },
+    { "label": "What your friend said you do", "pattern": "said|thought|told me|answered|replied" }
+  ],
+  "sample": "https://sites.google.com/view/tolu-adeyemi\nMy friend said: \"You analyse sales data in Excel and Power BI and you're looking for an analyst job.\"",
+  "note": "If your friend can say what you do in one sentence, the header is working. If they can't, shorten it.",
+  "required": true
+}
+```
+
+Then add the link to your CV and to your LinkedIn **Contact info** or **Featured** section.

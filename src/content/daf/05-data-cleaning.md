@@ -1,6 +1,6 @@
 ---
 title: Data cleaning
-minutes: 30
+minutes: 20
 summary: The problems real data arrives with, how they mislead you, and a safe way to fix them.
 ---
 
@@ -100,6 +100,27 @@ A cleaning plan for this file, in the order you'd do it:
   "hint": "Trim and fix the capitals in the name column first (or make a helper column), then remove duplicates on that column and count what's left.",
   "explanation": "90 customers. The export listed 12 of them twice, so an uncleaned count would have been 102, an overstatement of about 13%.",
   "required": true
+}
+```
+
+
+## More practice
+
+Optional drills. They don't count towards the certificate, but they're the fastest way to make this lesson stick. Several use a different dataset from the lesson on purpose: if you can do the same thing on unfamiliar data, you've really learned it.
+
+```answer
+{
+  "id": "daf-05-d1",
+  "prompt": "In `customer_list_raw.csv`, how many rows have a **Customer Name** with extra spaces at the start or end?",
+  "answer": 42,
+  "format": "number",
+  "dataset": "cleaning",
+  "files": [
+    "customer_list_raw"
+  ],
+  "verify": "SELECT COUNT(*) FROM customer_list_raw WHERE \"Customer Name\" <> TRIM(\"Customer Name\")",
+  "hint": "=LEN(A2)<>LEN(TRIM(A2)) in a helper column, then count TRUE.",
+  "required": false
 }
 ```
 

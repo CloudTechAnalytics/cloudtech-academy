@@ -3,6 +3,10 @@
 // - every ```sql run example and SQL exercise solution runs against the practice database
 // - every ```answer task that uses a dataset has a `verify` query, and that query, run over
 //   the exact CSV files learners download, reproduces the expected answer
+// - every ```task (written work) has rules that compile, rejects an empty answer, and has a
+//   model answer that passes its own rules
+// - lesson length is honest: the minutes in the front matter match the reading time plus
+//   the time the tasks take
 // - quiz answers point at a real option, IDs are unique
 // - each course's assessment and project are well formed
 // - practice projects: every CSV column is described, dataset-meta.json is up to date,
@@ -13,12 +17,14 @@ import fs from "node:fs";
 import path from "node:path";
 import { openDataset, query } from "./lib/csv-db.mjs";
 import { parseCsv } from "./lib/csv-parse.mjs";
+import { checkTask } from "../src/lib/task-check.ts";
+import { lessonTime, roundMinutes, timingOk } from "./lib/lesson-time.mjs";
 
 const SQL = await initSqlJs();
 const IMAGE_SIZES = JSON.parse(fs.readFileSync("src/content/image-sizes.json", "utf8"));
 const logistics = new SQL.Database(fs.readFileSync("public/datasets/logistics.sqlite"));
 const CONTENT = "src/content";
-const FULL = ["sql", "daf", "excel", "powerbi", "modelling"];
+const FULL = ["sql", "daf", "excel", "powerbi", "modelling", "python-analytics"];
 /** Short courses: one lesson per module, a module check each, and a final assessment. */
 const SHORT = [
   "ai-productivity",
@@ -37,6 +43,10 @@ const SHORT = [
 ];
 const COURSES = [...FULL, ...SHORT];
 const SECTIONS = ["## The problem", "## The concept", "## Example", "## Walkthrough", "## Practice", "## Check your understanding"];
+/** A long, awkward answer for timing task patterns: bullets, stars, hashes, colons, digits and long lines. */
+const STRESS_TEXT = Array.from({ length: 120 }, (_, i) => `${i % 3 ? "-" : "*"} line ${i}: #tag${i} word word "quote ${i}" 12,${i}00 | x ${"filler ".repeat(i % 7)}`).join("\n") + "\n" + "a ".repeat(3000);
+/** Short-course lessons need at least this many required tasks, so a badge means work done. */
+const SHORT_MIN_TASKS = 2;
 
 let failures = 0;
 const fail = (msg) => {
@@ -67,6 +77,50 @@ for (const course of COURSES) {
     console.log(f);
     if (!fm || !/title:/.test(fm[1]) || !/minutes:/.test(fm[1]) || !/summary:/.test(fm[1])) fail("front matter needs title, minutes and summary");
     const body = raw.slice(fm ? fm[0].length : 0);
+
+    // Honest timing: reading, examples, walkthrough steps and the required tasks.
+    const stated = Number(fm?.[1].match(/minutes:\s*(\d+)/)?.[1] ?? 0);
+    const handsOn = Number(fm?.[1].match(/handsOn:\s*(\d+)/)?.[1] ?? 0);
+    const { minutes: estimate, requiredTasks } = lessonTime(body, handsOn);
+    if (!timingOk(stated, estimate)) fail(`says ${stated} minutes, but reading and tasks come to about ${Math.round(estimate)} (set it to ${roundMinutes(estimate)})`);
+    if (SHORT.includes(course) && requiredTasks < SHORT_MIN_TASKS) fail(`needs at least ${SHORT_MIN_TASKS} required tasks (has ${requiredTasks})`);
+
+    for (const json of fence(body, "task")) {
+      let t;
+      try {
+        t = JSON.parse(json);
+      } catch (e) {
+        fail(`task JSON: ${e.message}`);
+        continue;
+      }
+      if (!t.id || !t.prompt || !t.minutes || !t.rules?.length) {
+        fail(`task ${t.id ?? "?"}: needs id, prompt, minutes and rules`);
+        continue;
+      }
+      if (ids.has(t.id)) fail(`duplicate id ${t.id}`);
+      ids.add(t.id);
+      try {
+        for (const r of t.rules) if (r.pattern) new RegExp(r.pattern, "i");
+      } catch (e) {
+        fail(`${t.id}: rule pattern doesn't compile: ${e.message}`);
+        continue;
+      }
+      // A pattern that backtracks badly would freeze the learner's browser on a long answer.
+      const slow = t.rules.find((r) => {
+        if (!r.pattern) return false;
+        const start = performance.now();
+        checkTask({ rules: [r] }, STRESS_TEXT);
+        return performance.now() - start > 100;
+      });
+      if (slow) fail(`${t.id}: the rule "${slow.label}" is too slow on a long answer; simplify its pattern`);
+      if (checkTask(t, "").passed) fail(`${t.id}: an empty answer passes; add a rule that needs real work`);
+      if (t.required && !t.sample) fail(`${t.id}: a required task needs a model answer (sample)`);
+      if (t.sample) {
+        const r = checkTask(t, t.sample.replace(/^```\w*\n|\n```$/g, ""));
+        if (!r.passed) fail(`${t.id}: the model answer fails "${r.results.find((x) => !x.passed).label}"`);
+      }
+    }
+
     if (SHORT.includes(course)) {
       if ((body.match(/^## /gm) ?? []).length < 3) fail("needs at least three ## steps");
       if (!/^## Try it$/m.test(body)) fail('needs a "## Try it" step');

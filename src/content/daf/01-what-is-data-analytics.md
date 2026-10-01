@@ -96,6 +96,22 @@ The rest of this course takes each step in turn. By the end you'll run the whole
 }
 ```
 
+
+## More practice
+
+Optional drills. They don't count towards the certificate, but each one checks you can apply the lesson to a new situation.
+
+```answer
+{
+  "id": "daf-01-d1",
+  "prompt": "A shop sold ₦4.2 million in March and ₦3.5 million in April. By what percentage did sales **fall**? Give the size of the fall as a positive number, one decimal place.",
+  "answer": 16.7,
+  "format": "percent",
+  "hint": "(old − new) ÷ old × 100 = (4.2 − 3.5) ÷ 4.2 × 100.",
+  "required": false
+}
+```
+
 ## Check your understanding
 
 ```quiz

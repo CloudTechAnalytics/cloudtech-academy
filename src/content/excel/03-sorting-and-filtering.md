@@ -118,6 +118,59 @@ This is what filtering `discount_pct` to 10 looks like:
 }
 ```
 
+
+## More practice
+
+Optional drills. They don't count towards the certificate, but they're the fastest way to make this lesson stick. Several use a different dataset from the lesson on purpose: if you can do the same thing on unfamiliar data, you've really learned it.
+
+```answer
+{
+  "id": "xls-03-d1",
+  "prompt": "In the HR `employees.csv`, how many employees in the **IT** department are still **Active**?",
+  "answer": 11,
+  "format": "number",
+  "dataset": "hr",
+  "files": [
+    "employees"
+  ],
+  "verify": "SELECT COUNT(*) FROM employees WHERE department = 'IT' AND status = 'Active'",
+  "hint": "Filter department to IT and status to Active, then read the count in the status bar.",
+  "required": false
+}
+```
+
+```answer
+{
+  "id": "xls-03-d2",
+  "prompt": "Sort the HR `employees.csv` by monthly_salary, largest first. What is the **full name** of the highest-paid employee?",
+  "answer": "Babatunde Adeyemi",
+  "format": "text",
+  "dataset": "hr",
+  "files": [
+    "employees"
+  ],
+  "verify": "SELECT full_name FROM employees ORDER BY monthly_salary DESC LIMIT 1",
+  "hint": "Data → Sort, by monthly_salary, Largest to Smallest.",
+  "required": false
+}
+```
+
+```answer
+{
+  "id": "xls-03-d3",
+  "prompt": "How many order lines for **product 5** were placed in **March 2026**?",
+  "answer": 15,
+  "format": "number",
+  "dataset": "sales",
+  "files": [
+    "orders"
+  ],
+  "verify": "SELECT COUNT(*) FROM orders WHERE product_id = 5 AND order_date BETWEEN '2026-03-01' AND '2026-03-31'",
+  "hint": "Filter product_id to 5, then use a Date Filter on order_date for March 2026.",
+  "required": false
+}
+```
+
 ## Check your understanding
 
 ```quiz

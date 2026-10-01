@@ -63,7 +63,11 @@ export type CourseDef = {
   categoryId: string;
   difficulty: Difficulty;
   levelLabel: string;
-  /** Rough total study time, shown on cards. Undefined while a course is in preparation. */
+  /**
+   * Study time for the required path, shown on cards: the lessons' minutes (which npm run
+   * test:content keeps honest) plus the final project and assessment. Optional drills are extra.
+   * Undefined while a course is in preparation.
+   */
   estimatedHours?: number;
   isFree: boolean;
   status: CourseStatus;
@@ -104,7 +108,7 @@ export const COURSES: CourseDef[] = [
     completionBadge: "AI Productivity Fundamentals",
     summary: "Use AI tools to research, write and create faster: prompting, Claude, ChatGPT and presentations, in four short modules.",
     description:
-      "Learn practical ways to use AI assistants at work, at school and in your business. Write prompts that get useful answers, work with your own documents in Claude, research with sources in ChatGPT, and turn an idea into a presentation. Each module takes about 20 minutes and ends with a short check and a badge.",
+      "Learn practical ways to use AI assistants at work, at school and in your business. Write prompts that get useful answers, work with your own documents in Claude, research with sources in ChatGPT, and turn an idea into a presentation. Each module takes about 30 minutes, including tasks you do yourself, and ends with a check and a badge.",
     categoryId: "ai-productivity",
     difficulty: "beginner",
     levelLabel: "Beginner",
@@ -129,7 +133,7 @@ export const COURSES: CourseDef[] = [
     completionBadge: "Design & Content Essentials",
     summary: "Plan social content with AI, design professional graphics in Canva and edit short videos in CapCut, in three short modules.",
     description:
-      "Create content people stop scrolling for. Plan a month of posts and write captions in your brand voice with AI, design clean graphics in Canva using four simple rules, and edit a short vertical video in CapCut with captions and music. Each module takes about 25 minutes and ends with a short check and a badge.",
+      "Create content people stop scrolling for. Plan a month of posts and write captions in your brand voice with AI, design clean graphics in Canva using four simple rules, and edit a short vertical video in CapCut with captions and music. Each module takes 30 to 40 minutes, including tasks you do yourself, and ends with a check and a badge.",
     categoryId: "design-content",
     difficulty: "beginner",
     levelLabel: "Beginner",
@@ -153,7 +157,7 @@ export const COURSES: CourseDef[] = [
     completionBadge: "Career Essentials",
     summary: "Build a CV with AI, set up a professional LinkedIn profile and analyse Excel data quickly, in three short modules.",
     description:
-      "Get ready for your next job. Use AI to write and tailor a CV that stays true to you, set up a LinkedIn profile recruiters can find, and learn the Excel basics employers expect: sorting, filtering, formulas, PivotTables and charts. Each module takes about 25 minutes and ends with a short check and a badge.",
+      "Get ready for your next job. Use AI to write and tailor a CV that stays true to you, set up a LinkedIn profile recruiters can find, and learn the Excel basics employers expect: sorting, filtering, formulas, PivotTables and charts. Each module takes about 30 minutes, including tasks you do yourself, and ends with a check and a badge.",
     categoryId: "career",
     difficulty: "beginner",
     levelLabel: "Beginner",
@@ -177,7 +181,7 @@ export const COURSES: CourseDef[] = [
     completionBadge: "AI for Students",
     summary: "Use ChatGPT and other AI tools to understand topics, revise, research and write, honestly and within your school's rules.",
     description:
-      "Learn how AI assistants work and where they go wrong, then use them to study smarter: explain hard topics, make revision questions, plan research and improve your writing without handing in work that isn't yours. Each module takes about 20 minutes and ends with a short check and a badge.",
+      "Learn how AI assistants work and where they go wrong, then use them to study smarter: explain hard topics, make revision questions, plan research and improve your writing without handing in work that isn't yours. Each module takes 20 to 30 minutes, including tasks you do yourself, and ends with a check and a badge.",
     categoryId: "study-skills",
     difficulty: "beginner",
     levelLabel: "Beginner",
@@ -202,7 +206,7 @@ export const COURSES: CourseDef[] = [
     completionBadge: "Research Skills",
     summary: "Search the web and academic databases like a pro, judge which sources to trust, and cite them properly.",
     description:
-      "Find better information faster. Use search operators and Google Scholar, check whether a source is reliable, and cite and organise references so assignments and projects are easy to write. Each module takes about 20 minutes and ends with a short check and a badge.",
+      "Find better information faster. Use search operators and Google Scholar, check whether a source is reliable, and cite and organise references so assignments and projects are easy to write. Each module takes 25 to 35 minutes, including tasks you do yourself, and ends with a check and a badge.",
     categoryId: "study-skills",
     difficulty: "beginner",
     levelLabel: "Beginner",
@@ -226,7 +230,7 @@ export const COURSES: CourseDef[] = [
     completionBadge: "Student Portfolio",
     summary: "Choose your best work, present it clearly, publish a one-link portfolio page and share it on LinkedIn.",
     description:
-      "A portfolio shows what you can do, which matters most when you don't have much work experience yet. Pick your three best pieces, present each one clearly, publish a simple portfolio page for free, and share your work on LinkedIn without sounding like you're bragging. Each module takes about 20 minutes and ends with a short check and a badge.",
+      "A portfolio shows what you can do, which matters most when you don't have much work experience yet. Pick your three best pieces, present each one clearly, publish a simple portfolio page for free, and share your work on LinkedIn without sounding like you're bragging. Each module takes 20 to 25 minutes, including tasks you do yourself, and ends with a check and a badge.",
     categoryId: "career",
     difficulty: "beginner",
     levelLabel: "Beginner",
@@ -251,7 +255,7 @@ export const COURSES: CourseDef[] = [
     completionBadge: "Git & GitHub",
     summary: "Track your work with Git, put projects on GitHub and turn your profile into a portfolio employers can check.",
     description:
-      "Learn what version control is and why every developer and data analyst uses it. Create repositories and commit changes in your browser, publish projects from your computer with GitHub Desktop, and write READMEs that show off your work. Each module takes about 20 minutes and ends with a short check and a badge.",
+      "Learn what version control is and why every developer and data analyst uses it. Create repositories and commit changes in your browser, publish projects from your computer with GitHub Desktop, and write READMEs that show off your work. Each module takes 15 to 25 minutes, including tasks you do yourself, and ends with a check and a badge.",
     categoryId: "coding",
     difficulty: "beginner",
     levelLabel: "Beginner",
@@ -275,7 +279,7 @@ export const COURSES: CourseDef[] = [
     completionBadge: "Web Development Basics",
     summary: "Learn HTML, CSS and JavaScript by building your own personal website, then publish it free with GitHub Pages.",
     description:
-      "Build a real website from scratch. Structure a page with HTML, style it with CSS, add interaction with JavaScript, and publish it at your own free web address with GitHub Pages. Each module takes about 25 minutes and ends with a short check and a badge.",
+      "Build a real website from scratch. Structure a page with HTML, style it with CSS, add interaction with JavaScript, and publish it at your own free web address with GitHub Pages. Each module takes 25 to 30 minutes, including tasks you do yourself, and ends with a check and a badge.",
     categoryId: "coding",
     difficulty: "beginner",
     levelLabel: "Beginner",
@@ -300,7 +304,7 @@ export const COURSES: CourseDef[] = [
     completionBadge: "Python Basics",
     summary: "Write your first Python code in Google Colab: variables, decisions, loops and functions, ending with a budget tracker project.",
     description:
-      "Start programming with one of the world's most popular languages, with nothing to install. Learn values and variables, make decisions with if statements, repeat work with loops, and write your own functions, then build a small budget tracker for your portfolio. Each module takes about 25 minutes and ends with a short check and a badge.",
+      "Start programming with one of the world's most popular languages, with nothing to install. Learn values and variables, make decisions with if statements, repeat work with loops, and write your own functions, then build a small budget tracker for your portfolio. Each module takes 20 to 25 minutes, including tasks you do yourself, and ends with a check and a badge.",
     categoryId: "python",
     difficulty: "beginner",
     levelLabel: "Beginner",
@@ -320,11 +324,11 @@ export const COURSES: CourseDef[] = [
     slug: "python-for-data-analysis",
     format: "short",
     code: "PYDA",
-    title: "Python for Data Analysis",
+    title: "pandas Quick Start",
     completionBadge: "Python Data Analysis",
     summary: "Load, clean, summarise and chart real sales data with pandas in Google Colab.",
     description:
-      "Analyse a real-world style sales dataset of over 4,000 orders with pandas. Explore it, fix types and add calculated columns, filter and sort, join tables, summarise with groupby and turn your answers into charts. Each module takes about 25 minutes and ends with a short check and a badge.",
+      "Analyse a real-world style sales dataset of over 4,000 orders with pandas. Explore it, fix types and add calculated columns, filter and sort, join tables, summarise with groupby and turn your answers into charts. Each module takes 15 to 25 minutes, including tasks you do yourself, and ends with a check and a badge.",
     categoryId: "python",
     difficulty: "beginner",
     levelLabel: "Beginner",
@@ -348,7 +352,7 @@ export const COURSES: CourseDef[] = [
     completionBadge: "Digital Skills",
     summary: "Organise and back up your files, work together in Google Workspace, write professional emails and stay safe online.",
     description:
-      "The everyday digital skills every student and new graduate needs. Organise and back up your files in the cloud, collaborate on group work in Google Docs, Sheets and Forms, write emails lecturers and employers take seriously, and protect your accounts from hackers and scams. Each module takes about 20 minutes and ends with a short check and a badge.",
+      "The everyday digital skills every student and new graduate needs. Organise and back up your files in the cloud, collaborate on group work in Google Docs, Sheets and Forms, write emails lecturers and employers take seriously, and protect your accounts from hackers and scams. Each module takes 20 to 25 minutes, including tasks you do yourself, and ends with a check and a badge.",
     categoryId: "study-skills",
     difficulty: "beginner",
     levelLabel: "Beginner",
@@ -373,7 +377,7 @@ export const COURSES: CourseDef[] = [
     completionBadge: "Internship Ready",
     summary: "Prepare for SIWES and internships, find local and remote opportunities, apply well and ace the interview.",
     description:
-      "A practical guide to landing an internship or SIWES placement. Get your documents ready, find opportunities (including remote ones) and avoid fake offers, write short applications that get read, and prepare for interviews with the STAR method. Each module takes about 20 minutes and ends with a short check and a badge.",
+      "A practical guide to landing an internship or SIWES placement. Get your documents ready, find opportunities (including remote ones) and avoid fake offers, write short applications that get read, and prepare for interviews with the STAR method. Each module takes 20 to 25 minutes, including tasks you do yourself, and ends with a check and a badge.",
     categoryId: "career",
     difficulty: "beginner",
     levelLabel: "Beginner",
@@ -398,7 +402,7 @@ export const COURSES: CourseDef[] = [
     completionBadge: "Freelancing Basics",
     summary: "Turn a skill into a clear offer, find clients, price and pitch your work, deliver well and earn great reviews.",
     description:
-      "Start earning from a skill you already have. Shape a clear offer and samples, set up profiles on platforms like Fiverr and Upwork, find direct clients, price and pitch your work, get paid safely, and deliver in a way that brings reviews and repeat work. Each module takes about 20 minutes and ends with a short check and a badge.",
+      "Start earning from a skill you already have. Shape a clear offer and samples, set up profiles on platforms like Fiverr and Upwork, find direct clients, price and pitch your work, get paid safely, and deliver in a way that brings reviews and repeat work. Each module takes 20 to 40 minutes, including tasks you do yourself, and ends with a check and a badge.",
     categoryId: "career",
     difficulty: "beginner",
     levelLabel: "Beginner",
@@ -456,7 +460,7 @@ export const COURSES: CourseDef[] = [
     categoryId: "data-analytics",
     difficulty: "beginner",
     levelLabel: "Beginner",
-    estimatedHours: 9,
+    estimatedHours: 7,
     isFree: true,
     status: "available",
     skills: ["Formulas and functions", "IF, SUMIF and COUNTIF", "XLOOKUP", "Data cleaning", "Pivot tables", "Charts"],
@@ -488,7 +492,7 @@ export const COURSES: CourseDef[] = [
     categoryId: "data-analytics",
     difficulty: "beginner",
     levelLabel: "Beginner to intermediate",
-    estimatedHours: 12,
+    estimatedHours: 7,
     isFree: true,
     status: "available",
     skills: [
@@ -533,7 +537,7 @@ export const COURSES: CourseDef[] = [
     categoryId: "databases",
     difficulty: "intermediate",
     levelLabel: "Beginner to intermediate",
-    estimatedHours: 8,
+    estimatedHours: 6,
     isFree: true,
     status: "available",
     skills: ["Entities, attributes and grain", "Primary and foreign keys", "Cardinality and bridge tables", "Entity-relationship diagrams", "Normalisation (1NF to 3NF)", "Star schemas and slowly changing dimensions"],
@@ -563,7 +567,7 @@ export const COURSES: CourseDef[] = [
     categoryId: "business-intelligence",
     difficulty: "beginner",
     levelLabel: "Beginner to intermediate",
-    estimatedHours: 12,
+    estimatedHours: 8,
     isFree: true,
     status: "available",
     skills: ["Power Query", "Data modelling and relationships", "DAX measures", "Dashboard design", "Publishing reports"],
@@ -587,7 +591,48 @@ export const COURSES: CourseDef[] = [
       ["Final Dashboard Project", "final-dashboard-project"],
     ].map(([title, slug], i) => ({ id: `pbi-m${String(i + 1).padStart(2, "0")}`, title, lessons: [slug] })),
   },
+  {
+    id: "python-for-data-analytics",
+    slug: "python-for-data-analytics",
+    code: "PYAN",
+    title: "Python for Data Analytics",
+    summary: "Analyse real business data in Python and pandas, from your first variable to a finished analysis with charts and findings, in Google Colab.",
+    description:
+      "Python lets analysts write an analysis once and run it again in seconds, with every step on record. In this course you work in Google Colab, with nothing to install, on the data of Kolanut Distribution and its HR and legal sister datasets. Learn the Python an analyst actually uses, then pandas: loading and exploring data, filtering, calculated columns and dates, cleaning a genuinely messy export, groupby, merging, pivot tables and trends, and charts with titles that say what they show. Every lesson ends with tasks checked against the real data, and the course ends with a customer health review you can put in your portfolio.",
+    categoryId: "python",
+    difficulty: "beginner",
+    levelLabel: "Beginner to intermediate",
+    estimatedHours: 9,
+    isFree: true,
+    status: "available",
+    skills: [
+      "Python basics: variables, types, lists, dictionaries, loops and functions",
+      "Loading and exploring data with pandas",
+      "Filtering, sorting and calculated columns",
+      "Cleaning messy data: text, categories, numbers, dates and duplicates",
+      "Summarising with groupby and pivot tables",
+      "Merging tables safely",
+      "Growth rates, year-on-year change and rolling averages",
+      "Charts with matplotlib and findings a manager can act on",
+    ],
+    prerequisites: ["No Python needed", "A free Google account for Google Colab", "Comfortable with spreadsheets; Excel for Data Analysis helps"],
+    projectTitle: "Kolanut customer health review",
+    certificate: rules(true),
+    modules: [
+      ["Python and Colab for Analysts", "python-and-colab-for-analysts"],
+      ["Lists, Dictionaries, Loops and Functions", "lists-dictionaries-loops-and-functions"],
+      ["DataFrames: Load and Explore", "dataframes-load-and-explore"],
+      ["Filtering and Sorting", "filtering-and-sorting"],
+      ["Calculated Columns and Dates", "calculated-columns-and-dates"],
+      ["Cleaning Messy Data", "cleaning-messy-data"],
+      ["groupby and Aggregation", "groupby-and-aggregation"],
+      ["Merging Tables", "merging-tables"],
+      ["Pivot Tables and Trends", "pivot-tables-and-trends"],
+      ["Charts with pandas and matplotlib", "charts-with-matplotlib"],
+      ["From Question to Insight", "from-question-to-insight"],
+      ["Final Project", "final-project"],
+    ].map(([title, slug], i) => ({ id: `pyan-m${String(i + 1).padStart(2, "0")}`, title, lessons: [slug] })),
+  },
 ];
-
 export const findCourseDef = (slug: string | undefined) => COURSES.find((c) => c.slug === slug);
 export const categoryName = (id: string) => CATEGORIES.find((c) => c.id === id)?.name ?? id;

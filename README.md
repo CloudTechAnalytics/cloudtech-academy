@@ -5,7 +5,7 @@ The learning platform of [CloudTech Analytics](https://www.cloudtechanalytics.co
 **Learn free. Earn badges free. The official certificate is optional.**
 
 - Every course, lesson and assessment is free.
-- Short courses are made of 15–30 minute modules. Passing a module's check earns its badge.
+- Short courses are made of 15–40 minute modules. Each module has tasks the learner does and submits (checked as they go), and its check unlocks only when they're done. Passing the check earns the module's badge.
 - Passing the final assessment earns the free course completion badge.
 - Every badge is a credential with an ID (`CTA-PROMPT-8F72K`) and a public page at `/credentials/:id`.
 - After completing a course, a learner can optionally buy the official PDF certificate (₦3,000 or $7, set by admins). It has a certificate number (`CTA-CERT-2026-000124`) and a QR code that opens `/verify/:id`.
@@ -23,12 +23,12 @@ The learning platform of [CloudTech Analytics](https://www.cloudtechanalytics.co
 | Git & GitHub for Beginners | What Git and GitHub Are, Your First Repository, Show Your Projects on GitHub |
 | Web Development for Beginners | HTML, CSS, JavaScript, Publish Your First Website |
 | Python for Beginners | First Steps in Python, Decisions Lists and Loops, Functions and a Mini Project |
-| Python for Data Analysis | Load and Explore Data, Clean Filter and Calculate, Group Join and Chart |
+| pandas Quick Start | Load and Explore Data, Clean Filter and Calculate, Group Join and Chart |
 | Digital Skills for Students | Files and Cloud Storage, Google Workspace for Students, Professional Email, Stay Safe Online |
 | Get Your First Internship | Get Ready, Find Opportunities (Including Remote), Apply and Stand Out, Ace the Interview |
 | Freelancing for Beginners | Choose Your Skill and Offer, Find Clients and Get Paid, Price and Pitch, Deliver and Get Reviews |
 
-Each short course ends with an 8-question final assessment.
+Each short course ends with a final assessment of at least 8 questions. Module checks are scenario questions with plausible wrong answers.
 
 **Student Starter** (`/students`) lists 25 skills for students, grouped by theme. Each links to a whole course or to a single module of one (for example, AI prompting is the first module of AI Productivity Fundamentals). The list is in `src/pages/Students.tsx`.
 
@@ -36,11 +36,14 @@ Each short course ends with an 8-question final assessment.
 | --- | --: | --- | --- |
 | Data Analytics Foundations | 10 | Answer tasks on real datasets, one SQL taster | Kolanut people review (HR data) |
 | Excel for Data Analysis | 11 | Answer tasks: formulas, XLOOKUP, cleaning, pivots | Kolanut sales performance review |
-| SQL for Data Analysis | 16 | 36 SQL exercises checked in the browser | Harbourline Freight operations review |
+| SQL for Data Analysis | 16 | SQL exercises checked in the browser, plus optional drills | Harbourline Freight operations review |
 | Power BI Fundamentals | 14 | Answer tasks: Power Query, modelling, DAX, visuals | Ashgrove Chambers practice dashboard |
 | Data Modelling | 9 | SQL checks and answer tasks, built around diagrams | Ashgrove Chambers data model |
+| Python for Data Analytics | 12 | Answer tasks on real datasets, checked against both SQL and the pandas the lesson teaches | Kolanut customer health review |
 
-Each full course has a 15-question final assessment. Every assessment has a pass mark of 60%, shuffled options, and is graded on the server.
+Every full-course lesson also has a **More practice** section of optional drills (often on a different dataset from the lesson), which don't count towards the certificate.
+
+Each full course has a final assessment of at least 10 questions (15 in most). Every assessment has a pass mark of 60%, shuffled options, and is graded on the server.
 
 | Platform | Status |
 | --- | --- |
@@ -59,6 +62,7 @@ npm install
 npm run dev          # http://localhost:5173
 npm run build        # typecheck, build, then prerender public pages into dist/
 npm run test:content # checks every lesson; recomputes every answer from the CSV files
+npm run test:python  # runs every Python example and checks the outputs and answers (needs Python 3 with pandas and matplotlib)
 ```
 
 Without Supabase keys the Academy runs in **demo mode**:
@@ -69,7 +73,7 @@ Without Supabase keys the Academy runs in **demo mode**:
 ## Connecting Supabase
 
 1. Create a project at [supabase.com](https://supabase.com).
-2. In **SQL Editor**, run [`supabase/migrations/0001_academy.sql`](supabase/migrations/0001_academy.sql), then [`0002_public_profiles.sql`](supabase/migrations/0002_public_profiles.sql).
+2. In **SQL Editor**, run [`supabase/migrations/0001_academy.sql`](supabase/migrations/0001_academy.sql), then [`0002_public_profiles.sql`](supabase/migrations/0002_public_profiles.sql) and [`0003_module_tasks.sql`](supabase/migrations/0003_module_tasks.sql).
 3. Then run [`supabase/seed.sql`](supabase/seed.sql). It loads the courses, lessons, assessment and project.
 4. In **Authentication → URL Configuration**:
    - Set the Site URL to the Academy's address.
@@ -90,7 +94,7 @@ On Vercel, add the same variables under Project Settings → Environment Variabl
 - Row-level security is on for every table.
 - Learners can read and write only their own progress.
 - Assessment answer keys are readable by admins only. `submit_assessment()` grades attempts on the server.
-- Module badges are only created by `claim_module_badge()`, after a passed module check.
+- Module badges are only created by `claim_module_badge()`, after every required task in the module is complete and the module check is passed.
 - Course completion credentials are only created by `issue_course_credential()`. It re-checks every requirement the course sets: module badges, lessons, required exercises, a passed final assessment, the project, and a full name on the profile.
 - A learner can only start an order (`start_certificate_order()`) for a course they've completed, at the price stored in `certificate_prices`.
 - Official certificates are only issued for an order that is paid or granted: by `complete_certificate_order()`, which only the payment server (service role) can call, or by an admin with `admin_grant_certificate()`.
@@ -102,18 +106,26 @@ On Vercel, add the same variables under Project Settings → Environment Variabl
 The course content lives in `src/content/`:
 
 - `catalog.ts`: courses, modules and completion rules. A short course has `format: "short"`; each of its modules has a `badge` name, a `badgeCode` (used in credential IDs) and `skills` (shown on the credential page).
-- `<course>/NN-slug.md`: lessons. The front matter holds `title`, `minutes` and `summary`. Full-course lessons have six sections (The problem … Check your understanding); short-course lessons have a few `##` steps including `## Try it`.
+- `<course>/NN-slug.md`: lessons. The front matter holds `title`, `minutes` and `summary`, and optionally `handsOn` (see **Honest timing** below). Full-course lessons have six sections (The problem … Check your understanding); short-course lessons have a few `##` steps including `## Try it`.
 - `<course>/assessment.ts`: the final assessment and, for short courses, a module check (`kind: "module"`, `moduleId`) for each badge module. `<course>/project.ts`: the project, for full courses.
 
-Lesson Markdown supports three custom code fences:
+Lesson Markdown supports these custom code fences:
 
 - ```` ```sql run ````: a runnable example.
 - ```` ```exercise ````: JSON with `id`, `prompt`, `starter`, `solution`, `hint`, `required` and `orderMatters`. An answer counts as correct when its result matches the result of `solution`.
 - ```` ```answer ````: a task done in Excel, Sheets or Power BI, checked by its result. JSON with `id`, `prompt`, `answer` (number or text), optional `accept`, `tolerance`, `format` (`naira`, `percent`, `number`, `text`), `hint`, `explanation`, `required`, and `dataset` + `files` for download links. Tasks that use a dataset must include `verify`, a SQL query over the CSV files that reproduces the answer; `npm run test:content` runs it.
+- ```` ```task ````: written work the learner types or pastes (a CV bullet, a prompt, an email, some HTML), checked against `rules` and then compared with a model answer. JSON with `id`, `prompt`, `minutes`, `rules`, `sample` (the model answer, which must pass its own rules), optional `note` (commentary shown under the model answer), `placeholder`, `hint`, `rows` and `required`. Each rule has a `label` and a `pattern` (a regular expression, case-insensitive and line by line) with optional `min` (matches needed), `absent` (must not match) or `perLine` (every line must match), or a length limit: `minWords`, `maxWords`, `minLines`.
+- In Python lessons, an `answer` can also have `pyVerify`: a Python expression evaluated after the lesson's code runs; `npm run test:python` checks it equals the answer.
 - ```` ```dataset ````: a download card, `{ "dataset": "sales", "files": ["orders"] }`.
 - ```` ```quiz ````: JSON questions.
 
 Callouts use `> [!TIP]`, `[!NOTE]`, `[!WARNING]` or `[!BUSINESS]`.
+
+**Honest timing.** A lesson's `minutes` must match what it actually takes, and `npm run test:content` fails if it doesn't. The estimate is reading at 200 words a minute, one minute per runnable example and per numbered Walkthrough step, the time of each required task (a task's own `minutes`; 4 for a SQL exercise, 3 for an answer task) and half a minute per quiz question. Optional work isn't counted. Hands-on work the content can't show, such as building a slide deck or a page outside a Walkthrough, is declared as `handsOn: <minutes>` in the front matter. `node scripts/fix-lesson-minutes.mjs <course>` sets the minutes for you.
+
+**Short-course rules.** Every short-course lesson needs a `## Try it` step and at least two required tasks, and no lesson quiz (the module check is in `assessment.ts`).
+
+**Python lessons.** `npm run test:python` runs every ````python```` block. A ````text```` block straight after a Python block is the output the learner should see, and must match what the code prints (fence it ````text nocheck```` if it's only an illustration; fence code ````python norun```` if it's meant to fail). `py scripts/test-python.py --fix <course>` writes the real output into the lesson.
 
 After editing content:
 

@@ -1,6 +1,6 @@
 ---
 title: From question to insight
-minutes: 30
+minutes: 10
 summary: A repeatable method for turning a vague business worry into a clear finding and a recommendation.
 ---
 
@@ -89,6 +89,27 @@ Notice what the analysis did *not* do:
   "hint": "Subtract H1 2025 from H1 2026 for each region and compare the differences.",
   "explanation": "Lagos grew by ₦34.6m (118.2 → 152.8). South West grew faster in percentage terms (+79%) but by less money (+₦22.8m).",
   "required": true
+}
+```
+
+
+## More practice
+
+Optional drills. They don't count towards the certificate, but they're the fastest way to make this lesson stick. Several use a different dataset from the lesson on purpose: if you can do the same thing on unfamiliar data, you've really learned it.
+
+```answer
+{
+  "id": "daf-09-d1",
+  "prompt": "How many **different customers** placed at least one order in **January–June 2026**?",
+  "answer": 90,
+  "format": "number",
+  "dataset": "sales",
+  "files": [
+    "orders"
+  ],
+  "verify": "SELECT COUNT(DISTINCT customer_id) FROM orders WHERE order_date BETWEEN '2026-01-01' AND '2026-06-30'",
+  "hint": "Filter to H1 2026, then =COUNTA(UNIQUE(filtered customer_id column)), or a pivot's distinct count.",
+  "required": false
 }
 ```
 

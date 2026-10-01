@@ -1,6 +1,6 @@
 ---
 title: Entities, attributes and grain
-minutes: 25
+minutes: 15
 summary: Turn things into tables and facts into columns, choose data types, and state the grain - what one row means.
 ---
 
@@ -85,6 +85,27 @@ Designing Kolanut's product table, step by step:
   "solution": "SELECT COUNT(*), COUNT(DISTINCT shipment_id) FROM payments;",
   "hint": "COUNT(*) and COUNT(DISTINCT shipment_id). If the two differ, some shipments were paid more than once.",
   "required": true
+}
+```
+
+
+## More practice
+
+Optional drills. They don't count towards the certificate, but each one checks you can apply the lesson to a new situation.
+
+```answer
+{
+  "id": "dmo-02-d1",
+  "prompt": "Look at the HR `attendance.csv` (date, employee_id, status, hours_worked). Complete its grain: one row per employee per ___. (One word.)",
+  "answer": "day",
+  "format": "text",
+  "accept": [
+    "date",
+    "working day",
+    "workday"
+  ],
+  "hint": "Each employee appears once for each date.",
+  "required": false
 }
 ```
 

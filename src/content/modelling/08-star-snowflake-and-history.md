@@ -1,6 +1,6 @@
 ---
 title: Stars, snowflakes, dates and history
-minutes: 35
+minutes: 15
 summary: When to snowflake a dimension, why every model needs a date dimension, and how to keep history when attributes change.
 ---
 
@@ -75,6 +75,33 @@ Choosing the SCD type, attribute by attribute, for Kolanut's customers:
   "tolerance": 0,
   "hint": "Neither 2025 nor 2026 is a leap year.",
   "required": true
+}
+```
+
+
+## More practice
+
+Optional drills. They don't count towards the certificate, but each one checks you can apply the lesson to a new situation.
+
+```answer
+{
+  "id": "dmo-08-d1",
+  "prompt": "Which slowly-changing-dimension type **overwrites** the old value, keeping no history? (Type the number.)",
+  "answer": 1,
+  "format": "number",
+  "hint": "The simplest type.",
+  "required": false
+}
+```
+
+```answer
+{
+  "id": "dmo-08-d2",
+  "prompt": "A date dimension covers **2026 only**, one row per day. How many rows does it have?",
+  "answer": 365,
+  "format": "number",
+  "hint": "2026 isn't a leap year.",
+  "required": false
 }
 ```
 

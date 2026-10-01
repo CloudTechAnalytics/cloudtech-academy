@@ -1,6 +1,6 @@
 ---
 title: Clean, Filter and Calculate
-minutes: 25
+minutes: 15
 summary: Fix column types, add a revenue column, filter rows that match a condition and sort the results.
 ---
 
@@ -74,7 +74,50 @@ This dataset passes all three, but make it a habit.
 
 ## Try it
 
-1. Convert `order_date` to a date and add `year`, `month` and `revenue` columns.
-2. Check the total revenue is ₦830,541,245.
-3. How many order lines had a 10% discount? How much revenue did they bring in?
-4. Show the 10 biggest order lines from 2026.
+Continue in the same notebook, after adding the `year`, `month` and `revenue` columns.
+
+```answer
+{
+  "id": "pyda-m02-a1",
+  "prompt": "How many order lines had a **10%** discount?",
+  "answer": 525,
+  "format": "number",
+  "dataset": "sales",
+  "files": ["orders"],
+  "verify": "SELECT COUNT(*) FROM orders WHERE discount_pct = 10",
+  "pyVerify": "(orders['discount_pct'] == 10).sum()",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "pyda-m02-a2",
+  "prompt": "How much **revenue** did those 10%-discount lines bring in? (A rounded figure is fine.)",
+  "answer": 122835600,
+  "format": "naira",
+  "dataset": "sales",
+  "files": [
+    "orders"
+  ],
+  "verify": "SELECT SUM(quantity * unit_price * (1 - discount_pct / 100.0)) FROM orders WHERE discount_pct = 10",
+  "pyVerify": "orders.loc[orders['discount_pct'] == 10, 'revenue'].sum()",
+  "hint": "orders[orders[\"discount_pct\"] == 10][\"revenue\"].sum()",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "pyda-m02-a3",
+  "prompt": "What is the revenue of the **biggest single order line in 2026**?",
+  "answer": 713400,
+  "format": "naira",
+  "dataset": "sales",
+  "files": ["orders"],
+  "verify": "SELECT MAX(quantity * unit_price * (1 - discount_pct / 100.0)) FROM orders WHERE order_date >= '2026-01-01'",
+  "pyVerify": "orders.loc[orders['year'] == 2026, 'revenue'].max()",
+  "hint": "Filter to year 2026, then sort_values(\"revenue\", ascending=False).head(1)",
+  "required": true
+}
+```

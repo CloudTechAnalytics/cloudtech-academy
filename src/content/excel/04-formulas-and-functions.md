@@ -1,6 +1,6 @@
 ---
 title: Formulas and functions
-minutes: 35
+minutes: 15
 summary: How formulas work, relative and absolute references, the core functions, and how to read Excel's error messages.
 ---
 
@@ -142,6 +142,59 @@ The same summary with results showing: total revenue ₦830,541,245, 58,757 pack
   "verify": "SELECT COUNT(DISTINCT order_date) FROM orders",
   "hint": "=COUNTA(UNIQUE(Orders[order_date])). In Google Sheets, =COUNTUNIQUE(B2:B4267).",
   "explanation": "546 days. January 2025 to June 2026 has 546 days, so there were orders every single day, Sundays included.",
+  "required": false
+}
+```
+
+
+## More practice
+
+Optional drills. They don't count towards the certificate, but they're the fastest way to make this lesson stick. Several use a different dataset from the lesson on purpose: if you can do the same thing on unfamiliar data, you've really learned it.
+
+```answer
+{
+  "id": "xls-04-d1",
+  "prompt": "What is the **average monthly salary** of all employees in the HR `employees.csv`? Round to the nearest naira.",
+  "answer": 609250,
+  "format": "naira",
+  "dataset": "hr",
+  "files": [
+    "employees"
+  ],
+  "verify": "SELECT ROUND(AVG(monthly_salary)) FROM employees",
+  "hint": "=ROUND(AVERAGE(Employees[monthly_salary]), 0)",
+  "required": false
+}
+```
+
+```answer
+{
+  "id": "xls-04-d2",
+  "prompt": "How many **hours** were worked in total across `attendance.csv`?",
+  "answer": 12165,
+  "format": "number",
+  "dataset": "hr",
+  "files": [
+    "attendance"
+  ],
+  "verify": "SELECT SUM(hours_worked) FROM attendance",
+  "hint": "=SUM over the hours_worked column.",
+  "required": false
+}
+```
+
+```answer
+{
+  "id": "xls-04-d3",
+  "prompt": "What is the **largest single invoice** in the legal dataset's `invoices.csv`, in naira?",
+  "answer": 6000000,
+  "format": "naira",
+  "dataset": "legal",
+  "files": [
+    "invoices"
+  ],
+  "verify": "SELECT MAX(amount_ngn) FROM invoices",
+  "hint": "=MAX over amount_ngn.",
   "required": false
 }
 ```

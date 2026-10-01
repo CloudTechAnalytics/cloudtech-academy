@@ -1,6 +1,6 @@
 ---
 title: CASE statements
-minutes: 25
+minutes: 10
 summary: Create categories and labels with CASE, and use it to count and compare groups.
 ---
 
@@ -90,6 +90,43 @@ GROUP BY r.mode;
   "starter": "",
   "solution": "SELECT CASE WHEN containers >= 6 THEN 'Large' WHEN containers >= 3 THEN 'Medium' ELSE 'Small' END AS size_band, COUNT(*) AS shipments FROM shipments GROUP BY size_band;",
   "hint": "Put the CASE in SELECT with an alias, then GROUP BY that alias.",
+  "required": false
+}
+```
+
+## More practice
+
+Optional drills on the same skills. They don't count towards the certificate, but each one is a small, realistic request from someone at Harbourline. Do as many as you need until the pattern feels automatic.
+
+```exercise
+{
+  "id": "sql-10-d1",
+  "prompt": "For every route, show origin, destination and a column distance_band: 'Long haul' when target_transit_days is 20 or more, 'Regional' when it's 5 to 19, 'Local' otherwise.",
+  "starter": "",
+  "solution": "SELECT origin, destination, CASE WHEN target_transit_days >= 20 THEN 'Long haul' WHEN target_transit_days >= 5 THEN 'Regional' ELSE 'Local' END AS distance_band FROM routes;",
+  "hint": "CASE checks conditions in order, so put the biggest band first.",
+  "required": false
+}
+```
+
+```exercise
+{
+  "id": "sql-10-d2",
+  "prompt": "Count customers by region: 'Nigeria' for Nigerian customers and 'Rest of West Africa' for everyone else. Show region and customers.",
+  "starter": "",
+  "solution": "SELECT CASE WHEN country = 'Nigeria' THEN 'Nigeria' ELSE 'Rest of West Africa' END AS region, COUNT(*) AS customers FROM customers GROUP BY region;",
+  "hint": "Build the CASE column, then GROUP BY it.",
+  "required": false
+}
+```
+
+```exercise
+{
+  "id": "sql-10-d3",
+  "prompt": "In one row, count shipments that were Delivered as delivered and shipments that were Cancelled as cancelled. Use SUM with CASE.",
+  "starter": "",
+  "solution": "SELECT SUM(CASE WHEN status = 'Delivered' THEN 1 ELSE 0 END) AS delivered, SUM(CASE WHEN status = 'Cancelled' THEN 1 ELSE 0 END) AS cancelled FROM shipments;",
+  "hint": "SUM(CASE WHEN … THEN 1 ELSE 0 END) counts the rows that match.",
   "required": false
 }
 ```

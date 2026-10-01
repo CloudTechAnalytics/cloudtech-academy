@@ -111,6 +111,43 @@ Download Kolanut's three files. You'll use them through the whole course:
 }
 ```
 
+
+## More practice
+
+Optional drills. They don't count towards the certificate, but they're the fastest way to make this lesson stick. Several use a different dataset from the lesson on purpose: if you can do the same thing on unfamiliar data, you've really learned it.
+
+```answer
+{
+  "id": "xls-01-d1",
+  "prompt": "Open the HR dataset's `employees.csv`. How many employees does it list?",
+  "answer": 80,
+  "format": "number",
+  "dataset": "hr",
+  "files": [
+    "employees"
+  ],
+  "verify": "SELECT COUNT(*) FROM employees",
+  "hint": "Click the first empty cell under the data and check the row number, or select a column and read the Count in the status bar (it includes the header).",
+  "required": false
+}
+```
+
+```answer
+{
+  "id": "xls-01-d2",
+  "prompt": "In Kolanut's `products.csv`, how many products are in the **Snacks** category?",
+  "answer": 4,
+  "format": "number",
+  "dataset": "sales",
+  "files": [
+    "products"
+  ],
+  "verify": "SELECT COUNT(*) FROM products WHERE category = 'Snacks'",
+  "hint": "Turn on a filter (Ctrl + Shift + L) and pick Snacks in the category column.",
+  "required": false
+}
+```
+
 ## Check your understanding
 
 ```quiz

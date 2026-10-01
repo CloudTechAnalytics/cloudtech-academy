@@ -1,6 +1,6 @@
 ---
 title: Business analysis with SQL
-minutes: 40
+minutes: 15
 summary: Turn a vague business question into precise queries, check your numbers, and present a clear answer.
 ---
 
@@ -114,6 +114,46 @@ A good write-up of these two results would look like:
   "starter": "",
   "solution": "SELECT c.company_name, MAX(s.booking_date) AS last_booking FROM customers AS c JOIN shipments AS s ON s.customer_id = c.customer_id GROUP BY c.customer_id, c.company_name HAVING MAX(s.booking_date) < '2026-03-01' AND MAX(s.booking_date) >= '2025-01-01' ORDER BY last_booking, c.company_name;",
   "hint": "Group shipments by customer and use HAVING on MAX(booking_date).",
+  "required": false,
+  "orderMatters": true
+}
+```
+
+## More practice
+
+Optional drills on the same skills. They don't count towards the certificate, but each one is a small, realistic request from someone at Harbourline. Do as many as you need until the pattern feels automatic.
+
+```exercise
+{
+  "id": "sql-14-d1",
+  "prompt": "Which industry brought in the most freight revenue in 2025? Show industry and revenue for every industry, highest first.",
+  "starter": "",
+  "solution": "SELECT c.industry, SUM(s.freight_charge) AS revenue FROM shipments AS s JOIN customers AS c ON c.customer_id = s.customer_id WHERE s.booking_date BETWEEN '2025-01-01' AND '2025-12-31' AND s.status <> 'Cancelled' GROUP BY c.industry ORDER BY revenue DESC;",
+  "hint": "Join to customers, filter 2025, leave out cancelled shipments, group by industry.",
+  "required": false,
+  "orderMatters": true
+}
+```
+
+```exercise
+{
+  "id": "sql-14-d2",
+  "prompt": "What share of shipments were cancelled each year? Show year ('YYYY') and cancel_pct rounded to 1 decimal place.",
+  "starter": "",
+  "solution": "SELECT strftime('%Y', booking_date) AS year, ROUND(100.0 * SUM(CASE WHEN status = 'Cancelled' THEN 1 ELSE 0 END) / COUNT(*), 1) AS cancel_pct FROM shipments GROUP BY year ORDER BY year;",
+  "hint": "100.0 * cancelled / all, with SUM(CASE …) for the cancelled count. Use 100.0 so the division keeps its decimals.",
+  "required": false,
+  "orderMatters": true
+}
+```
+
+```exercise
+{
+  "id": "sql-14-d3",
+  "prompt": "Each account manager's book of business: show full_name, number of customers, and total freight_charge of their customers' shipments, highest total first.",
+  "starter": "",
+  "solution": "SELECT e.full_name, COUNT(DISTINCT c.customer_id) AS customers, SUM(s.freight_charge) AS total_charge FROM employees AS e JOIN customers AS c ON c.account_manager_id = e.employee_id JOIN shipments AS s ON s.customer_id = c.customer_id GROUP BY e.employee_id, e.full_name ORDER BY total_charge DESC;",
+  "hint": "Two joins: employees to customers, customers to shipments. Count customers with COUNT(DISTINCT …) because the join repeats each customer once per shipment.",
   "required": false,
   "orderMatters": true
 }

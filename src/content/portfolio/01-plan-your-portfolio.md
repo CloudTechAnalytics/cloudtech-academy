@@ -54,7 +54,39 @@ For every project, prepare four short parts. This works on a portfolio page, on 
 
 ## Try it
 
-1. Write one sentence on who your portfolio is for.
-2. List every project, assignment or activity you could include, at least six.
-3. Choose your best three using the three questions above.
-4. For one of them, write the four parts: problem, what I did, result, link.
+```task
+{
+  "id": "portf-m01-t1",
+  "prompt": "Write **who your portfolio is for** in one sentence on the first line. Then list **at least six** things you could include, one per line, and mark your best three with `*` at the start of the line.",
+  "minutes": 8,
+  "rows": 9,
+  "placeholder": "My portfolio is for ...\n* ...\n* ...\n* ...\n- ...\n- ...\n- ...",
+  "rules": [
+    { "label": "First line says who it's for (for, aimed at, recruiters, internships…)", "pattern": "(?<![\\s\\S])\\s*[^\\n]*(for |aimed at|recruiter|employer|intern|client|role|job)" },
+    { "label": "At least seven lines: the sentence plus six possible pieces", "minLines": 7 },
+    { "label": "Exactly three marked with * as your best", "pattern": "^\\s*\\*\\s*\\S", "min": 3 },
+    { "label": "No more than three marked with *", "pattern": "(^[ \\t]*\\*[^\\n]*\\n?[^*]*){4}", "absent": true }
+  ],
+  "sample": "My portfolio is for recruiters hiring data analyst interns in Lagos.\n* Sales dashboard in Power BI from the CloudTech course project\n* Excel tracker for our class dues, used by 120 students\n* SQL analysis of a logistics database (course project)\n- Flyer for our departmental week\n- Group presentation on mobile money in Nigeria\n- Treasurer of the Economics Students' Association",
+  "note": "Each starred piece shows a skill data recruiters care about, can be explained in an interview, and is finished. The others are real, just less relevant to this audience.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "portf-m01-t2",
+  "prompt": "For **one** of your best three, write the four parts, one per line: `Problem:`, `What I did:`, `Result:` (with a number or a concrete outcome) and `See it:` (a link, or where the link will go).",
+  "minutes": 8,
+  "rows": 6,
+  "placeholder": "Problem: ...\nWhat I did: ...\nResult: ...\nSee it: ...",
+  "rules": [
+    { "label": "Problem:", "pattern": "^\\s*problem\\s*:\\s*\\S" },
+    { "label": "What I did: (with tools or steps)", "pattern": "^\\s*what i did\\s*:\\s*\\S" },
+    { "label": "Result: with a number or concrete outcome", "pattern": "^\\s*result\\s*:[^\\n]*(\\d|half|double|twice|all |every)" },
+    { "label": "See it:", "pattern": "^\\s*see it\\s*:\\s*\\S" }
+  ],
+  "sample": "Problem: Our class treasurer tracked dues for 120 students on paper, and reconciling them took two hours a week.\nWhat I did: Built an Excel tracker with a table of payments, COUNTIF to flag who hadn't paid, and a summary by month.\nResult: Reconciliation now takes ten minutes, and unpaid dues fell from 40 students to 12 in one semester.\nSee it: Google Drive link (sample data, names removed)",
+  "required": true
+}
+```

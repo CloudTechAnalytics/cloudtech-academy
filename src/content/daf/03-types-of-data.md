@@ -1,6 +1,6 @@
 ---
 title: Types of data
-minutes: 25
+minutes: 15
 summary: Structured and unstructured data, numbers and categories, and the most important question about any table - what does one row mean?
 ---
 
@@ -103,6 +103,43 @@ Open `orders.csv` in Google Sheets (File → Import → Upload) or Excel (File �
   "hint": "One row in products.csv is one product.",
   "explanation": "16 products in four categories: Beverages, Snacks, Household and Personal care.",
   "required": true
+}
+```
+
+
+## More practice
+
+Optional drills. They don't count towards the certificate, but they're the fastest way to make this lesson stick. Several use a different dataset from the lesson on purpose: if you can do the same thing on unfamiliar data, you've really learned it.
+
+```answer
+{
+  "id": "daf-03-d1",
+  "prompt": "How many **columns** does the HR `employees.csv` have?",
+  "answer": 8,
+  "format": "number",
+  "dataset": "hr",
+  "files": [
+    "employees"
+  ],
+  "verify": "SELECT COUNT(*) FROM pragma_table_info('employees')",
+  "hint": "Count the headings in the first row.",
+  "required": false
+}
+```
+
+```answer
+{
+  "id": "daf-03-d2",
+  "prompt": "How many leave requests (data rows) are in the HR `leave.csv`?",
+  "answer": 77,
+  "format": "number",
+  "dataset": "hr",
+  "files": [
+    "leave"
+  ],
+  "verify": "SELECT COUNT(*) FROM leave",
+  "hint": "Rows minus the header row.",
+  "required": false
 }
 ```
 

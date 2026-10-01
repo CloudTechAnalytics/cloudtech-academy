@@ -1,6 +1,6 @@
 ---
 title: Building an analysis
-minutes: 40
+minutes: 15
 summary: Organise a workbook someone else can trust - raw data, calculations, checks and a one-page summary - and compare periods properly.
 ---
 
@@ -97,6 +97,44 @@ Add a region criterion to get the same by region. Format growth as a percentage 
   "verify": "SELECT region FROM (SELECT c.region, SUM(CASE WHEN o.order_date >= '2026-01-01' THEN o.quantity * o.unit_price * (1 - o.discount_pct / 100.0) END) / SUM(CASE WHEN o.order_date <= '2025-06-30' THEN o.quantity * o.unit_price * (1 - o.discount_pct / 100.0) END) AS g FROM orders o JOIN customers c ON c.customer_id = o.customer_id GROUP BY c.region) ORDER BY g LIMIT 1 OFFSET 1",
   "hint": "Build the regional growth table and sort it smallest to largest.",
   "required": true
+}
+```
+
+
+## More practice
+
+Optional drills. They don't count towards the certificate, but they're the fastest way to make this lesson stick. Several use a different dataset from the lesson on purpose: if you can do the same thing on unfamiliar data, you've really learned it.
+
+```answer
+{
+  "id": "xls-10-d1",
+  "prompt": "What percentage of the **IT** department's employees have **resigned**? One decimal place.",
+  "answer": 8.3,
+  "format": "percent",
+  "dataset": "hr",
+  "files": [
+    "employees"
+  ],
+  "verify": "SELECT ROUND(100.0 * SUM(status = 'Resigned') / COUNT(*), 1) FROM employees WHERE department = 'IT'",
+  "hint": "COUNTIFS for IT and Resigned, divided by COUNTIF for IT.",
+  "required": false
+}
+```
+
+```answer
+{
+  "id": "xls-10-d2",
+  "prompt": "By what percentage did **Kiosk** revenue grow from **H1 2025** to **H1 2026**? One decimal place (negative if it fell).",
+  "answer": 0.5,
+  "format": "percent",
+  "dataset": "sales",
+  "files": [
+    "orders",
+    "customers"
+  ],
+  "verify": "SELECT ROUND(100.0 * (SUM(CASE WHEN o.order_date BETWEEN '2026-01-01' AND '2026-06-30' THEN o.quantity * o.unit_price * (1 - o.discount_pct / 100.0) END) / SUM(CASE WHEN o.order_date BETWEEN '2025-01-01' AND '2025-06-30' THEN o.quantity * o.unit_price * (1 - o.discount_pct / 100.0) END) - 1), 1) FROM orders o JOIN customers c ON c.customer_id = o.customer_id WHERE c.channel = 'Kiosk'",
+  "hint": "Two SUMIFS (one per half-year, both with channel = Kiosk), then new ÷ old − 1.",
+  "required": false
 }
 ```
 

@@ -1,6 +1,6 @@
 ---
 title: Entity-relationship diagrams
-minutes: 30
+minutes: 15
 summary: Read and draw ERDs in crow's-foot notation, and use one to plan any query across several tables.
 ---
 
@@ -77,6 +77,23 @@ You'll draw this ERD properly in the final project.
   "hint": "One employee packs many shipments; each shipment has one packer. The key goes on the many side.",
   "explanation": "Add shipments.packed_by_employee_id, a foreign key to employees.employee_id.",
   "required": true
+}
+```
+
+
+## More practice
+
+Optional drills. They don't count towards the certificate, but each one checks you can apply the lesson to a new situation.
+
+```answer
+{
+  "id": "dmo-05-d1",
+  "prompt": "Harbourline wants to record **drivers**: one shipment can have several drivers, and a driver works on many shipments. How many **new tables** does the model need?",
+  "answer": 2,
+  "format": "number",
+  "hint": "A many-to-many relationship needs a table for the new entity and a bridge table between it and shipments.",
+  "explanation": "drivers, plus a bridge table such as shipment_drivers (shipment_id, driver_id).",
+  "required": false
 }
 ```
 

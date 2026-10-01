@@ -358,13 +358,15 @@ function customerExport(customers) {
     "Credit Limit": money(c.credit_limit),
     Channel: c.channel,
   }));
-  // The old system exported some customers twice.
+  // The old system exported some customers twice. Copies come from `exported`, not `rows`:
+  // inserting into `rows` shifts its positions, so rows[i] stops being customer i.
+  const exported = [...rows];
   const dupes = [];
   for (let k = 0; k < 12; k++) {
     const i = int(0, customers.length - 1);
     if (dupes.includes(i)) continue;
     dupes.push(i);
-    const copy = { ...rows[i], "Customer Name": messyName(customers[i].customer_name) };
+    const copy = { ...exported[i], "Customer Name": messyName(customers[i].customer_name) };
     rows.splice(int(0, rows.length), 0, copy);
   }
   return { customer_list_raw: rows };

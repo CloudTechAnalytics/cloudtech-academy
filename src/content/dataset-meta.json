@@ -1,10 +1,10 @@
 {
  "cleaning": {
-  "zipBytes": 3040,
+  "zipBytes": 3027,
   "files": {
    "customer_list_raw": {
     "rows": 102,
-    "bytes": 8222,
+    "bytes": 8250,
     "columns": [
      {
       "name": "Customer Name",
@@ -39,7 +39,7 @@
      {
       "name": "Credit Limit",
       "type": "text",
-      "missing": 5,
+      "missing": 3,
       "distinct": 67
      },
      {

@@ -66,7 +66,7 @@ export function AnswerExercise({
           </span>
         )}
       </div>
-      <div className="mt-2 space-y-2 text-[1rem] leading-relaxed text-ink [&_code]:rounded [&_code]:bg-sand [&_code]:px-1 [&_code]:font-mono [&_code]:text-[0.88em]">{prompt}</div>
+      <div className="mt-2 space-y-2 text-[1rem] leading-relaxed text-ink [&_ul]:ml-5 [&_ul]:list-disc [&_ol]:ml-5 [&_ol]:list-decimal [&_code]:rounded [&_code]:bg-sand [&_code]:px-1 [&_code]:font-mono [&_code]:text-[0.88em]">{prompt}</div>
 
       {spec.dataset && spec.files?.length ? (
         <ul className="mt-3 flex flex-wrap gap-2">

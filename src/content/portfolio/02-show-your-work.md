@@ -48,8 +48,58 @@ See it: [link to PDF] · [link to .pbix on Drive]
 
 ## Try it
 
-1. Take one of your three chosen projects.
-2. Put the file or files in a shareable place with a clear name.
-3. Take one clean screenshot of the result.
-4. Write a summary like the example above, in under 100 words.
-5. Test the link in a private browser window.
+A recruiter receives four files from four applicants. Which name is best?
+
+- **A.** `final final 2.pdf`
+- **B.** `Document1.pdf`
+- **C.** `Tolu-Adeyemi-Sales-Dashboard.pdf`
+- **D.** `IMG_20260611_142233.jpg`
+
+```answer
+{
+  "id": "portf-m02-a1",
+  "prompt": "Type the letter of the best file name.",
+  "answer": "C",
+  "format": "text",
+  "accept": ["c.", "(c)"],
+  "explanation": "It says whose it is and what it is, so it's easy to find again in a folder of fifty downloads.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "portf-m02-t1",
+  "prompt": "Write the **project summary** for one of your three projects, in the format from the example: a title line with the tool in brackets, then `Problem:`, `What I did:`, `Result:` and `See it:`. Under 100 words.",
+  "minutes": 8,
+  "rows": 8,
+  "placeholder": "Project title (Tool)\nProblem: ...\nWhat I did: ...\nResult: ...\nSee it: ...",
+  "rules": [
+    { "label": "A title line naming the tool in brackets", "pattern": "(?<![\\s\\S])\\s*[^\\n]+\\([^)\\n]+\\)" },
+    { "label": "Problem:", "pattern": "^\\s*problem\\s*:\\s*\\S" },
+    { "label": "What I did:", "pattern": "^\\s*what i did\\s*:\\s*\\S" },
+    { "label": "Result: with a number or concrete outcome", "pattern": "^\\s*result\\s*:[^\\n]*(\\d|half|double|twice|all |every|became|led to)" },
+    { "label": "See it:", "pattern": "^\\s*see it\\s*:\\s*\\S" },
+    { "label": "Under 100 words", "minWords": 30, "maxWords": 100 }
+  ],
+  "sample": "Class dues tracker (Excel)\nProblem: Our treasurer tracked dues for 120 students on paper, and reconciling took two hours a week.\nWhat I did: Built a payments table, flagged unpaid students with COUNTIF, and added a monthly summary and chart.\nResult: Reconciliation now takes ten minutes; unpaid dues fell from 40 students to 12 in one semester.\nSee it: Google Drive (sample data, names removed)",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "portf-m02-t2",
+  "prompt": "Put that project somewhere shareable (Google Drive, OneDrive, GitHub, Canva or YouTube), set it to **view only**, and test the link in a **private browser window**. Paste the link and one line saying what you checked.",
+  "minutes": 6,
+  "rows": 3,
+  "placeholder": "https://...\nChecked: ...",
+  "rules": [
+    { "label": "A share link from Drive, OneDrive, GitHub, Canva or YouTube", "pattern": "https?://(drive\\.google\\.com|docs\\.google\\.com|1drv\\.ms|onedrive\\.live\\.com|[\\w-]+\\.sharepoint\\.com|github\\.com|[\\w-]+\\.github\\.io|(www\\.)?canva\\.com|(www\\.)?youtube\\.com|youtu\\.be)/?\\S*" },
+    { "label": "Says you tested it in a private or incognito window", "pattern": "private|incognito|signed out|logged out|another (browser|device|phone)" },
+    { "label": "Mentions view-only access", "pattern": "view|read-only|can't edit|cannot edit|no edit" }
+  ],
+  "sample": "https://drive.google.com/file/d/1AbCdEfGhIjK/view\nChecked: opened it in a private window without signing in; it loads, and it's view-only.",
+  "required": true
+}
+```

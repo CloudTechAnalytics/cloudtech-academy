@@ -44,7 +44,47 @@ On any platform:
 
 ## Try it
 
-1. Choose one platform and create a profile with your photo, title, description and samples.
-2. Write a short post announcing your service and share it on two social channels.
-3. List five local businesses or people who might need your offer.
-4. Decide your payment terms (for example 50% upfront) and write them down.
+```answer
+{
+  "id": "freel-m02-a1",
+  "prompt": "You complete a **₦50,000** job on a platform that takes a **20%** fee. How much do you receive, in naira?",
+  "answer": 40000,
+  "format": "naira",
+  "hint": "50,000 × (1 − 0.20)",
+  "explanation": "₦40,000. Remember the fee when you set platform prices: to take home ₦50,000 you'd need to charge ₦62,500.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "freel-m02-a2",
+  "prompt": "A new client asks to move off the platform and pay you directly **before** the first job \"to avoid fees\". Is this safe: **yes** or **no**?",
+  "answer": "no",
+  "format": "text",
+  "explanation": "It removes the platform's protection for both of you and usually breaks its rules. Keep the first jobs (at least) on the platform.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "freel-m02-t1",
+  "prompt": "Write your platform profile's **title** on the first line, then a **description** of 50 to 120 words: who you help, what they get, how fast, and a call to action.",
+  "minutes": 10,
+  "rows": 8,
+  "placeholder": "Social media flyer designer for small food businesses\n\nI help ...",
+  "rules": [
+    { "label": "A title on the first line (2 to 12 words)", "pattern": "(?<![\\s\\S])\\s*(\\S+[ \\t]+){1,11}\\S+[ \\t]*\\n" },
+    { "label": "The title names your service, not just \"Freelancer\"", "pattern": "(?<![\\s\\S])\\s*(i am a |i'm a )?freelancer\\s*\\n", "absent": true },
+    { "label": "Says who you help", "pattern": "\\bfor\\b|\\bhelp\\b|clients|businesses|owners|brands|students" },
+    { "label": "Says how fast you deliver", "pattern": "\\d+\\s*(days?|hours?)|within|same day|next day" },
+    { "label": "Ends with a call to action (message, order, get in touch…)", "pattern": "message|order|contact|get in touch|send|book|dm|reach out|let's talk" },
+    { "label": "Description of 50 to 120 words", "minWords": 55, "maxWords": 135 }
+  ],
+  "sample": "Social media flyer designer for small food businesses\n\nI help restaurants, bakeries and food vendors fill their weekends with flyers people stop scrolling for. You get three designs for Instagram and WhatsApp, in square and story sizes, delivered in 3 days with two rounds of changes and an editable Canva link, so you can update prices yourself. I've designed for a suya spot, a café and a home bakery (samples below). Send me your menu and promo details, and I'll reply within a day.",
+  "required": true
+}
+```
+
+Then create your profile on one platform with your photo, title, description and samples, and decide your payment terms for direct clients (for example 50% upfront).

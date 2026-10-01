@@ -1,6 +1,6 @@
 ---
 title: Working with data
-minutes: 30
+minutes: 20
 summary: Import a CSV safely, check data types, and add your first calculated column to a Table.
 ---
 
@@ -108,6 +108,43 @@ To get the total, click in any empty cell and type:
   "hint": "=[@quantity]*[@unit_price] in a new column, then SUM it.",
   "explanation": "₦859,628,300. The difference from revenue, about ₦29.1m, is what discounts cost. You'll dig into that in the mini project.",
   "required": true
+}
+```
+
+
+## More practice
+
+Optional drills. They don't count towards the certificate, but they're the fastest way to make this lesson stick. Several use a different dataset from the lesson on purpose: if you can do the same thing on unfamiliar data, you've really learned it.
+
+```answer
+{
+  "id": "xls-02-d1",
+  "prompt": "Turn the HR `employees.csv` into a Table and add a calculated column `annual_salary` = monthly_salary × 12. What is the **total annual salary** of all 80 employees?",
+  "answer": 584880000,
+  "format": "naira",
+  "dataset": "hr",
+  "files": [
+    "employees"
+  ],
+  "verify": "SELECT SUM(monthly_salary * 12) FROM employees",
+  "hint": "=[@monthly_salary]*12 in the new column, then turn on the Total Row and set it to Sum.",
+  "required": false
+}
+```
+
+```answer
+{
+  "id": "xls-02-d2",
+  "prompt": "Open the legal dataset's `invoices.csv` as a Table. What is the **total amount invoiced** (amount_ngn) across every invoice?",
+  "answer": 1201750000,
+  "format": "naira",
+  "dataset": "legal",
+  "files": [
+    "invoices"
+  ],
+  "verify": "SELECT SUM(amount_ngn) FROM invoices",
+  "hint": "Table Design → Total Row, then choose Sum under amount_ngn.",
+  "required": false
 }
 ```
 

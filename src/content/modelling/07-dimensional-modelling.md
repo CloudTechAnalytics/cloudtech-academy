@@ -1,6 +1,6 @@
 ---
 title: Dimensional modelling
-minutes: 35
+minutes: 15
 summary: Model for analysis with facts and dimensions, choose the grain first, and build the star schema that Power BI works best with.
 ---
 
@@ -80,6 +80,44 @@ A second star for **court work** would have a different grain (one row per heari
   "verify": "SELECT COUNT(*) FROM invoices",
   "hint": "Grain: one row per invoice.",
   "required": true
+}
+```
+
+
+## More practice
+
+Optional drills. They don't count towards the certificate, but they're the fastest way to make this lesson stick. Several use a different dataset from the lesson on purpose: if you can do the same thing on unfamiliar data, you've really learned it.
+
+```answer
+{
+  "id": "dmo-07-d1",
+  "prompt": "If `attendance.csv` were the fact table of an HR star schema, how many rows would the fact table have?",
+  "answer": 1518,
+  "format": "number",
+  "dataset": "hr",
+  "files": [
+    "attendance"
+  ],
+  "verify": "SELECT COUNT(*) FROM attendance",
+  "hint": "One fact row per row of the file.",
+  "required": false
+}
+```
+
+```answer
+{
+  "id": "dmo-07-d2",
+  "prompt": "In a star schema for Kolanut's sales, does **region** belong in the fact table or in a dimension? Answer with the dimension's name (one word).",
+  "answer": "customer",
+  "format": "text",
+  "accept": [
+    "customers",
+    "dim_customer",
+    "customer dimension"
+  ],
+  "hint": "Region describes who bought, not the sale itself.",
+  "explanation": "Region is an attribute of the customer, so it lives in the customer dimension.",
+  "required": false
 }
 ```
 

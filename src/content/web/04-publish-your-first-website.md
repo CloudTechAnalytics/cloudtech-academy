@@ -56,7 +56,42 @@ Your site is live. Every time you commit a change, it updates within a few minut
 
 ## Try it
 
-1. Finish your four sections: header, about, projects and contact.
-2. Publish the site with GitHub Pages.
-3. Test it on your phone and fix anything broken.
-4. Add the link to your LinkedIn, CV and portfolio page.
+```answer
+{
+  "id": "web-m04-a1",
+  "prompt": "Your GitHub username is `chioma-eze`. What must you name the repository so GitHub Pages publishes it at `https://chioma-eze.github.io`?",
+  "answer": "chioma-eze.github.io",
+  "format": "text",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "web-m04-a2",
+  "prompt": "Your page shows a broken image. The HTML says `<img src=\"me.jpg\" …>` and the file you uploaded is called `Me.JPG`. What should the file be renamed to?",
+  "answer": "me.jpg",
+  "format": "text",
+  "explanation": "Web servers treat capital and small letters as different, so Me.JPG and me.jpg are different files. Keep file names lowercase with no spaces.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "web-m04-t1",
+  "prompt": "Publish your site (GitHub Pages, Netlify or Vercel), open it on your phone, and click every link. Paste the **live address** on the first line, then one line saying what you checked or fixed.",
+  "minutes": 20,
+  "rows": 3,
+  "placeholder": "https://your-username.github.io\nChecked: ...",
+  "rules": [
+    { "label": "A live site address (github.io, netlify.app, vercel.app or your own domain)", "pattern": "https?://[\\w.-]+\\.(github\\.io|netlify\\.app|vercel\\.app|[a-z]{2,})(/\\S*)?" },
+    { "label": "Not a github.com repository page (that's the code, not the live site)", "pattern": "https?://(www\\.)?github\\.com/", "absent": true },
+    { "label": "Says what you checked or fixed (phone, links, images, console…)", "pattern": "phone|mobile|link|image|console|error|fixed|checked" }
+  ],
+  "sample": "https://chioma-eze.github.io\nChecked: opened it on my phone, clicked all three project links, and fixed one image that wasn't loading because the file was called Me.JPG.",
+  "required": true
+}
+```
+
+Then add the address to your LinkedIn, CV and portfolio page.
