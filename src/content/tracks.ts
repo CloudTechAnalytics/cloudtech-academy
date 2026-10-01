@@ -53,7 +53,7 @@ export const TRACKS: Track[] = [
     skills: [
       "Spreadsheet analysis in Excel",
       "Statistics: averages, spread, confidence intervals and tests",
-      "Querying databases with SQL",
+      "Querying databases with SQL, from first SELECT to cohorts and window functions",
       "Data modelling and star schemas",
       "Dashboards in Power BI",
       "Analysis in Python and pandas",
@@ -84,7 +84,7 @@ export const TRACKS: Track[] = [
         summary: "Automate and scale your analysis, and handle harder questions.",
         items: [
           { kind: "course", courseId: "python-for-data-analytics", why: "Write an analysis once and run it again in seconds, with every step on record." },
-          { kind: "upcoming", title: "Advanced SQL", why: "Window functions in depth, query performance, date logic and data cleaning in SQL.", level: 3 },
+          { kind: "course", courseId: "advanced-sql", why: "Window functions in depth, cohorts, date logic, data quality checks and query performance." },
         ],
       },
       {

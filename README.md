@@ -37,6 +37,7 @@ Each short course ends with a final assessment of at least 8 questions. Module c
 | Data Analytics Foundations | 10 | Answer tasks on real datasets, one SQL taster | Kolanut people review (HR data) |
 | Excel for Data Analysis | 11 | Answer tasks: formulas, XLOOKUP, cleaning, pivots | Kolanut sales performance review |
 | SQL for Data Analysis | 16 | SQL exercises checked in the browser, plus optional drills | Harbourline Freight operations review |
+| Advanced SQL | 11 | SQL exercises checked in the browser: NULL traps, dates, data quality, window frames, cohorts, pivots, recursive CTEs, query plans | Harbourline commercial health check |
 | Power BI Fundamentals | 14 | Answer tasks: Power Query, modelling, DAX, visuals | Ashgrove Chambers practice dashboard |
 | Data Modelling | 9 | SQL checks and answer tasks, built around diagrams | Ashgrove Chambers data model |
 | Statistics for Data Analysis | 11 | Answer tasks in Excel or Sheets, checked against SQL and pandas (including medians, percentiles and p-values) | Harbourline delivery performance review |

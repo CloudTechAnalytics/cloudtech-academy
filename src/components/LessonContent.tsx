@@ -241,6 +241,9 @@ function Block({ token, ctx }: { token: Token; ctx: Ctx }): ReactNode {
           return (
             <SqlExercise
               spec={spec}
+              prompt={marked.lexer(spec.prompt).map((t, i) => (
+                <Block key={i} token={t} ctx={ctx} />
+              ))}
               label={ctx.exerciseLabel.current}
               completed={ctx.completedExercises.includes(spec.id)}
               onSolved={ctx.onExerciseSolved}

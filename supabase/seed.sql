@@ -14631,9 +14631,2015 @@ $md$, true, true, 16, array['sql-15-p1']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 
+-- Course: Advanced SQL
+insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
+values ('advanced-sql', 'full', null, 'advanced-sql', 'ASQL', 'Advanced SQL', 'The SQL working analysts write: NULL and date traps, data quality checks, window functions in depth, cohorts, pivots, recursive queries, performance and the business analyses finance and sales ask for.', 'SQL for Data Analysis taught you to get answers out of a database. This course teaches you to get answers you can defend. Back at Harbourline Freight, you''ll catch the NULL, integer-division and NOT IN traps that silently give wrong numbers, handle dates and fill missing periods with a calendar, and check a database before you trust it. Then you''ll go deeper into window functions (frames, moving averages, LAG and LEAD), return the top rows per group, build cohort and retention tables, compare periods like for like, walk hierarchies with recursive CTEs, read query plans and write queries that stay fast on millions of rows. The course ends with the analyses companies ask for again and again: receivables aging, Pareto concentration and RFM segmentation, and a commercial health check for a board.', 'data-analytics', 'intermediate', 3, 'Intermediate to advanced', 6, true, 'available', true, array['Avoiding NULL, NOT IN and integer-division traps', 'Date logic, calendars and ''as of'' reporting', 'Data quality checks in SQL', 'Window frames, moving averages, LAG and LEAD', 'Top N per group and deduplication', 'Cohort and retention analysis', 'Pivots and like-for-like period comparisons', 'Self joins, semi- and anti-joins and recursive CTEs', 'Reading query plans and writing sargable queries', 'Receivables aging, Pareto and RFM analysis']::text[], array['SQL for Data Analysis, or comfort with joins, GROUP BY, CTEs and basic window functions']::text[], 'Harbourline commercial health check', true, true, true, true, false, 60, 17)
+on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level = excluded.level, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('asql-m01', 'advanced-sql', 'Readable SQL and NULL Traps', 1, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('advanced-sql:readable-sql-and-null-traps', 'advanced-sql', 'asql-m01', 'readable-sql-and-null-traps', 'Readable SQL and NULL traps', 'Write queries other analysts can check, and avoid the NULL, integer-division and NOT IN traps that silently give wrong answers.', 20, $md$
+## The problem
+
+Harbourline Freight's sales director asks a simple question: "How many of our customers are **not** looked after by Obinna?" Obinna Abdullahi (employee 3) manages 15 of the 120 customers. A colleague's query says the answer is 97:
+
+```sql run
+SELECT COUNT(*) AS customers
+FROM customers
+WHERE account_manager_id <> 3;
+```
+
+120 − 15 is 105. Eight customers have gone missing, and the query gave no error and no warning. It just returned a wrong number, and that number could easily end up in a slide deck.
+
+This course is about the SQL that working analysts write: longer queries, harder questions, and real data that doesn't behave. It starts with the habits that stop queries quietly lying to you.
+
+## The concept
+
+**NULL means "unknown", not "nothing"**
+
+The 8 missing customers have no account manager: `account_manager_id` is `NULL`. SQL treats NULL as an unknown value, so any comparison with it is also unknown:
+
+| Expression | Result |
+| :-- | :-- |
+| `NULL <> 3` | NULL (unknown), so `WHERE` drops the row |
+| `NULL = NULL` | NULL, not true |
+| `NULL IS NULL` | true |
+| `5 + NULL` | NULL |
+| `'Lagos' \|\| NULL` | NULL |
+| `COUNT(column)` | counts only non-NULL values |
+| `AVG(column)` | averages only non-NULL values |
+
+`WHERE` keeps a row only when the condition is **true**, so unknown rows silently vanish. The fix is to say what you mean about NULLs:
+
+```sql
+WHERE account_manager_id <> 3 OR account_manager_id IS NULL
+```
+
+or replace the NULL first with `COALESCE(account_manager_id, 0) <> 3`.
+
+**The NOT IN trap**
+
+`NOT IN (subquery)` is the most dangerous NULL trap. If the subquery returns even one NULL, `NOT IN` returns no rows at all, because SQL can't be sure the value isn't equal to the unknown one. `NOT EXISTS` doesn't have this problem, so prefer it.
+
+**Integer division**
+
+In SQLite, SQL Server and PostgreSQL, dividing one whole number by another gives a whole number: `7 / 2` is `3`, and `2000 / 2411` is `0`. Multiply by `100.0` (or `1.0`) first to get a decimal. MySQL is the exception: it returns a decimal.
+
+**Readable SQL**
+
+A query is something other people need to check. Write it so they can:
+
+- One clause per line, with the columns indented under `SELECT`.
+- Short but meaningful aliases: `s` for shipments, `r` for routes, never `a`, `b`, `c`.
+- A CTE for each step, named for what it holds (`delivered`, `monthly_totals`).
+- A comment where a definition matters: `-- on time = transit days <= route target`.
+
+## Example
+
+Three versions of "how many employees have no customers?" Only one is right.
+
+```sql run
+SELECT
+  (SELECT COUNT(*)
+   FROM employees
+   WHERE employee_id NOT IN (SELECT account_manager_id FROM customers)) AS not_in_version,
+  (SELECT COUNT(*)
+   FROM employees AS e
+   WHERE NOT EXISTS (
+     SELECT 1 FROM customers AS c WHERE c.account_manager_id = e.employee_id
+   )) AS not_exists_version,
+  (SELECT COUNT(*)
+   FROM employees AS e
+   LEFT JOIN customers AS c ON c.account_manager_id = e.employee_id
+   WHERE c.customer_id IS NULL) AS left_join_version;
+```
+
+`NOT IN` says 0. The other two say 16, which is right: only the 8 account managers have customers, so the operations, customs, finance and team-lead staff (16 people) have none. The `NOT IN` version fails because `customers.account_manager_id` contains NULLs.
+
+Now integer division. The on-time rate for delivered shipments, written two ways:
+
+```sql run
+-- on time = transit days <= the route's target
+SELECT
+  SUM(julianday(s.delivery_date) - julianday(s.ship_date) <= r.target_transit_days) / COUNT(*) AS integer_division,
+  ROUND(100.0 * SUM(julianday(s.delivery_date) - julianday(s.ship_date) <= r.target_transit_days) / COUNT(*), 1) AS on_time_pct
+FROM shipments AS s
+JOIN routes AS r ON r.route_id = s.route_id
+WHERE s.status = 'Delivered';
+```
+
+The first column says 0%. The second says 76.6%. Same data, same logic: the only difference is `100.0`.
+
+## Walkthrough
+
+1. Run the first query in the problem section and note the 97.
+2. Change the condition to `account_manager_id <> 3 OR account_manager_id IS NULL` and check you get 105.
+3. In the NOT IN example, change the inner query to `SELECT account_manager_id FROM customers WHERE account_manager_id IS NOT NULL`. `NOT IN` now gives 16 too. That's the fix if you must use `NOT IN`, but `NOT EXISTS` is safer because it doesn't depend on anyone remembering.
+4. In the integer-division example, remove `100.0 *` from the second column and watch it fall to 0.
+
+> [!TIP]
+> Whenever a count looks plausible but you can't reconcile it, check the NULLs first: `SELECT COUNT(*), COUNT(column) FROM table` tells you at once how many are missing.
+
+## Practice
+
+```exercise
+{
+  "id": "asql-01-p1",
+  "prompt": "List every customer not managed by employee 3, including those with no account manager. Show customer_id and company_name. You should get 105 rows.",
+  "starter": "SELECT customer_id, company_name\nFROM customers\nWHERE account_manager_id <> 3;",
+  "solution": "SELECT customer_id, company_name FROM customers WHERE account_manager_id <> 3 OR account_manager_id IS NULL;",
+  "hint": "Add OR account_manager_id IS NULL, or compare COALESCE(account_manager_id, 0) <> 3.",
+  "required": true
+}
+```
+
+```exercise
+{
+  "id": "asql-01-p2",
+  "prompt": "For each transport mode, show mode, delivered (the number of delivered shipments) and on_time_pct: the percentage delivered within the route's target_transit_days, rounded to 1 decimal place.",
+  "starter": "SELECT\n  r.mode,\n  COUNT(*) AS delivered,\n  -- on_time_pct here\nFROM shipments AS s\nJOIN routes AS r ON r.route_id = s.route_id\nWHERE s.status = 'Delivered'\nGROUP BY r.mode;",
+  "solution": "SELECT r.mode, COUNT(*) AS delivered, ROUND(100.0 * SUM(julianday(s.delivery_date) - julianday(s.ship_date) <= r.target_transit_days) / COUNT(*), 1) AS on_time_pct FROM shipments AS s JOIN routes AS r ON r.route_id = s.route_id WHERE s.status = 'Delivered' GROUP BY r.mode;",
+  "hint": "In SQLite a comparison is 1 or 0, so SUM(condition) counts the rows where it's true. Multiply by 100.0 before dividing.",
+  "required": true
+}
+```
+
+## Challenge
+
+```exercise
+{
+  "id": "asql-01-c1",
+  "prompt": "Find the employees who manage no customers, using NOT EXISTS. Show employee_id, full_name and role, ordered by employee_id.",
+  "starter": "",
+  "solution": "SELECT e.employee_id, e.full_name, e.role FROM employees AS e WHERE NOT EXISTS (SELECT 1 FROM customers AS c WHERE c.account_manager_id = e.employee_id) ORDER BY e.employee_id;",
+  "hint": "WHERE NOT EXISTS (SELECT 1 FROM customers AS c WHERE c.account_manager_id = e.employee_id).",
+  "required": false,
+  "orderMatters": true
+}
+```
+
+## More practice
+
+Optional drills on the same traps.
+
+```exercise
+{
+  "id": "asql-01-d1",
+  "prompt": "Show how complete the shipment dates are: total_rows, with_ship_date and with_delivery_date, using COUNT(*) and COUNT(column).",
+  "starter": "",
+  "solution": "SELECT COUNT(*) AS total_rows, COUNT(ship_date) AS with_ship_date, COUNT(delivery_date) AS with_delivery_date FROM shipments;",
+  "hint": "COUNT(column) skips NULLs; COUNT(*) counts every row.",
+  "required": false
+}
+```
+
+```exercise
+{
+  "id": "asql-01-d2",
+  "prompt": "List every customer with their account manager's name, showing 'Unassigned' when there isn't one. Show company_name and account_manager, ordered by company_name.",
+  "starter": "",
+  "solution": "SELECT c.company_name, COALESCE(e.full_name, 'Unassigned') AS account_manager FROM customers AS c LEFT JOIN employees AS e ON e.employee_id = c.account_manager_id ORDER BY c.company_name;",
+  "hint": "A LEFT JOIN keeps customers with no manager; COALESCE replaces the NULL name.",
+  "required": false,
+  "orderMatters": true
+}
+```
+
+```exercise
+{
+  "id": "asql-01-d3",
+  "prompt": "What share of all shipments were cancelled? Show cancelled, total and cancelled_pct (1 decimal place).",
+  "starter": "",
+  "solution": "SELECT SUM(status = 'Cancelled') AS cancelled, COUNT(*) AS total, ROUND(100.0 * SUM(status = 'Cancelled') / COUNT(*), 1) AS cancelled_pct FROM shipments;",
+  "hint": "SUM(status = 'Cancelled') counts the cancelled rows. Remember 100.0.",
+  "required": false
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "WHERE region <> 'North' returns 40 rows, but you expected 46. What's the most likely cause?",
+    "options": ["The table is locked", "Six rows have a NULL region, and NULL <> 'North' is unknown, so WHERE drops them", "<> doesn't work on text", "The query needs ORDER BY"],
+    "answer": 1,
+    "explanation": "Any comparison with NULL is unknown, and WHERE keeps only rows where the condition is true."
+  },
+  {
+    "prompt": "Why is NOT EXISTS safer than NOT IN (subquery)?",
+    "options": ["It's always faster", "If the subquery returns a NULL, NOT IN returns no rows; NOT EXISTS isn't affected", "NOT IN is deprecated", "NOT EXISTS ignores duplicates"],
+    "answer": 1,
+    "explanation": "One NULL in the list makes every NOT IN comparison unknown."
+  },
+  {
+    "prompt": "SUM(on_time) / COUNT(*) returns 0, but about three quarters of shipments are on time. Why?",
+    "options": ["SUM ignores 1s", "Integer division: a whole number divided by a whole number is truncated", "COUNT(*) counts NULLs twice", "The data is empty"],
+    "answer": 1,
+    "explanation": "Multiply by 100.0 or 1.0 first so the division is done in decimals."
+  }
+]
+```
+$md$, true, true, 1, array['asql-01-p1', 'asql-01-p2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('asql-m02', 'advanced-sql', 'Date Logic', 2, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('advanced-sql:date-logic', 'advanced-sql', 'asql-m02', 'date-logic', 'Date logic', 'Truncate dates to weeks and months, measure gaps in days, report "as of" a date, and fill in the months with no activity using a calendar.', 20, $md$
+## The problem
+
+Kingsway Foods' account manager wants a monthly chart of the shipments it booked, January 2025 to August 2026. The obvious query returns **12 rows**, not 20:
+
+```sql run
+SELECT strftime('%Y-%m', booking_date) AS month, COUNT(*) AS shipments
+FROM shipments
+WHERE customer_id = 40
+GROUP BY month
+ORDER BY month;
+```
+
+Months with no bookings simply don't appear. Charted as it is, the line jumps straight from November 2025 to March 2026, and three quiet months, the most important fact about this customer, disappear.
+
+Nearly every business question has a date in it: this month, last quarter, days to pay, how long since the last order. Date logic is where queries most often go quietly wrong.
+
+## The concept
+
+**Dates in SQLite are text**
+
+Harbourline stores dates as `YYYY-MM-DD` text. That format sorts correctly and compares correctly (`'2026-03-01' < '2026-04-15'`), and SQLite's date functions read it:
+
+| Task | SQLite |
+| :-- | :-- |
+| Month label | `strftime('%Y-%m', d)` |
+| First day of the month | `date(d, 'start of month')` |
+| Last day of the month | `date(d, 'start of month', '+1 month', '-1 day')` |
+| Monday of the week | `date(d, '-6 days', 'weekday 1')` |
+| Add or subtract | `date(d, '+30 days')`, `date(d, '-3 months')` |
+| Days between | `julianday(d2) - julianday(d1)` |
+| Day of week (0 = Sunday) | `strftime('%w', d)` |
+
+**The same ideas in other databases**
+
+Your job may use a different database. The ideas are identical; only the spelling changes:
+
+| Task | PostgreSQL | SQL Server | MySQL |
+| :-- | :-- | :-- | :-- |
+| First of month | `date_trunc('month', d)` | `DATETRUNC(month, d)` | `DATE_FORMAT(d, '%Y-%m-01')` |
+| Add 30 days | `d + INTERVAL '30 days'` | `DATEADD(day, 30, d)` | `DATE_ADD(d, INTERVAL 30 DAY)` |
+| Days between | `d2 - d1` | `DATEDIFF(day, d1, d2)` | `DATEDIFF(d2, d1)` |
+| Year | `EXTRACT(YEAR FROM d)` | `YEAR(d)` | `YEAR(d)` |
+
+**"As of" dates**
+
+Reports are run as of a date. Harbourline's data ends on 31 August 2026, so "the last 90 days" means after `date('2026-08-31', '-90 days')`. Avoid `date('now')` in analysis you'll hand over: the answer changes every day, and nobody can reproduce it.
+
+**A calendar for missing periods**
+
+`GROUP BY` can only produce groups that exist in the data. To show every month, build a list of months first and `LEFT JOIN` the data onto it. A **recursive CTE** generates the list: it starts with one row, then keeps adding a row based on the previous one until a condition stops it.
+
+## Example
+
+The full 20 months for Kingsway Foods, with zeros where nothing was booked:
+
+```sql run
+WITH RECURSIVE months(month_start) AS (
+  SELECT '2025-01-01'                     -- the first row
+  UNION ALL
+  SELECT date(month_start, '+1 month')    -- each next row
+  FROM months
+  WHERE month_start < '2026-08-01'        -- stop after August 2026
+),
+bookings AS (
+  SELECT date(booking_date, 'start of month') AS month_start, COUNT(*) AS shipments
+  FROM shipments
+  WHERE customer_id = 40
+  GROUP BY 1
+)
+SELECT
+  strftime('%Y-%m', m.month_start) AS month,
+  COALESCE(b.shipments, 0) AS shipments
+FROM months AS m
+LEFT JOIN bookings AS b ON b.month_start = m.month_start
+ORDER BY m.month_start;
+```
+
+Now the gaps show: nothing in December 2025, January or February 2026, and nothing since June 2026. That's a customer to call.
+
+## Walkthrough
+
+1. Run the `months` CTE on its own (`WITH RECURSIVE months(...) AS (...) SELECT * FROM months;`) and check it lists 20 months.
+2. Note how both sides of the join use the **first of the month**. Joining on the same key format is what makes the `LEFT JOIN` line up.
+3. Remove `COALESCE` and see the gaps become NULL. A chart would draw NULL as a break, or not at all; a zero is what the manager means.
+4. Run `SELECT date('2026-02-14', '-6 days', 'weekday 1');` to find the Monday of that week (9 February).
+
+> [!NOTE]
+> Bookings are mostly on weekdays: 90 shipments were booked on a Sunday against about 480 on each weekday. When you compare weeks, compare whole weeks, never part of one.
+
+## Practice
+
+```exercise
+{
+  "id": "asql-02-p1",
+  "prompt": "How long do customers take to pay? For each payment, the gap is payment_date minus the shipment's delivery_date. Show payments, avg_days_to_pay (1 decimal place) and paid_within_30 (the number of payments made 30 days or less after delivery).",
+  "starter": "SELECT\n  COUNT(*) AS payments\nFROM payments AS p\nJOIN shipments AS s ON s.shipment_id = p.shipment_id;",
+  "solution": "SELECT COUNT(*) AS payments, ROUND(AVG(julianday(p.payment_date) - julianday(s.delivery_date)), 1) AS avg_days_to_pay, SUM(julianday(p.payment_date) - julianday(s.delivery_date) <= 30) AS paid_within_30 FROM payments AS p JOIN shipments AS s ON s.shipment_id = p.shipment_id;",
+  "hint": "julianday(p.payment_date) - julianday(s.delivery_date) is the gap in days. SUM(gap <= 30) counts the quick payments.",
+  "required": true
+}
+```
+
+```exercise
+{
+  "id": "asql-02-p2",
+  "prompt": "Show Harbourline's bookings by week, for the weeks starting in July 2026. Show week_start (the Monday) and shipments, ordered by week_start.",
+  "starter": "SELECT\n  date(booking_date, '-6 days', 'weekday 1') AS week_start,\n  COUNT(*) AS shipments\nFROM shipments\n",
+  "solution": "SELECT date(booking_date, '-6 days', 'weekday 1') AS week_start, COUNT(*) AS shipments FROM shipments GROUP BY week_start HAVING week_start BETWEEN '2026-07-01' AND '2026-07-31' ORDER BY week_start;",
+  "hint": "Group by the week start, then keep weeks whose Monday is in July with HAVING week_start BETWEEN '2026-07-01' AND '2026-07-31'. Filtering booking_date instead would cut the first week short.",
+  "required": true,
+  "orderMatters": true
+}
+```
+
+## Challenge
+
+```exercise
+{
+  "id": "asql-02-c1",
+  "prompt": "Show every month from 2025-01 to 2026-08 with the number of shipments Harmattan Agro Ltd (customer 8) booked, including zeros. Show month ('YYYY-MM') and shipments, ordered by month.",
+  "starter": "",
+  "solution": "WITH RECURSIVE months(month_start) AS (SELECT '2025-01-01' UNION ALL SELECT date(month_start, '+1 month') FROM months WHERE month_start < '2026-08-01'), b AS (SELECT date(booking_date, 'start of month') AS month_start, COUNT(*) AS shipments FROM shipments WHERE customer_id = 8 GROUP BY 1) SELECT strftime('%Y-%m', m.month_start) AS month, COALESCE(b.shipments, 0) AS shipments FROM months AS m LEFT JOIN b ON b.month_start = m.month_start ORDER BY m.month_start;",
+  "hint": "Reuse the calendar from the example and change the customer.",
+  "required": false,
+  "orderMatters": true
+}
+```
+
+## More practice
+
+```exercise
+{
+  "id": "asql-02-d1",
+  "prompt": "As of 2026-08-31, how many days has it been since each customer's last booking? Show customer_id, last_booking and days_since (a whole number), longest first. Only customers who have booked.",
+  "starter": "",
+  "solution": "SELECT customer_id, MAX(booking_date) AS last_booking, CAST(julianday('2026-08-31') - julianday(MAX(booking_date)) AS INTEGER) AS days_since FROM shipments GROUP BY customer_id ORDER BY days_since DESC, customer_id;",
+  "hint": "julianday('2026-08-31') - julianday(MAX(booking_date)).",
+  "required": false,
+  "orderMatters": true
+}
+```
+
+```exercise
+{
+  "id": "asql-02-d2",
+  "prompt": "How many shipments were delivered in the 90 days up to and including 2026-08-31? Show one number, delivered_last_90.",
+  "starter": "",
+  "solution": "SELECT COUNT(*) AS delivered_last_90 FROM shipments WHERE delivery_date > date('2026-08-31', '-90 days') AND delivery_date <= '2026-08-31';",
+  "hint": "delivery_date > date('2026-08-31', '-90 days').",
+  "required": false
+}
+```
+
+```exercise
+{
+  "id": "asql-02-d3",
+  "prompt": "Count bookings by day of the week. Show day_number (0 = Sunday … 6 = Saturday from strftime('%w')) and shipments, ordered by day_number.",
+  "starter": "",
+  "solution": "SELECT CAST(strftime('%w', booking_date) AS INTEGER) AS day_number, COUNT(*) AS shipments FROM shipments GROUP BY day_number ORDER BY day_number;",
+  "hint": "strftime('%w', booking_date) returns '0' to '6' as text; CAST it to INTEGER.",
+  "required": false,
+  "orderMatters": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "A monthly GROUP BY returns 17 rows for a 20-month period. What's happening?",
+    "options": ["Three months were deleted", "Months with no rows don't form a group; join to a calendar to show them as zeros", "GROUP BY has a row limit", "The dates are in the wrong format"],
+    "answer": 1,
+    "explanation": "GROUP BY only creates groups that exist. A calendar plus LEFT JOIN and COALESCE fills the gaps."
+  },
+  {
+    "prompt": "Why use a fixed 'as of' date instead of date('now') in a report?",
+    "options": ["date('now') is slower", "So the answer can be reproduced and checked later", "date('now') returns text", "It doesn't matter"],
+    "answer": 1,
+    "explanation": "A report that changes every time it runs can't be checked."
+  },
+  {
+    "prompt": "In PostgreSQL, which expression gives the first day of the month?",
+    "options": ["strftime('%Y-%m', d)", "date_trunc('month', d)", "DATEADD(month, 1, d)", "date(d, 'start of month')"],
+    "answer": 1,
+    "explanation": "date_trunc('month', d) in PostgreSQL; date(d, 'start of month') is SQLite's version."
+  }
+]
+```
+$md$, true, true, 2, array['asql-02-p1', 'asql-02-p2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('asql-m03', 'advanced-sql', 'Data Quality Checks', 3, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('advanced-sql:data-quality-checks', 'advanced-sql', 'asql-m03', 'data-quality-checks', 'Data quality checks in SQL', 'Profile a table before you trust it, test keys, relationships and business rules, and investigate suspicious rows instead of deleting them.', 20, $md$
+## The problem
+
+You've just been given access to Harbourline's database, and finance wants a receivables report by Friday. Before you write a single report query, ask the question every experienced analyst asks first: **can I trust this data?**
+
+A report built on data nobody checked can be wrong in ways no query will warn you about: customers counted twice, shipments marked Delivered with no delivery date, payments that belong to no shipment. Twenty minutes of checks can save the week you'd otherwise spend explaining a wrong number to finance.
+
+## The concept
+
+Data quality checks are short queries that test what you're assuming. Run them on any new table, and again whenever the data is refreshed.
+
+| Check | Question | Typical query |
+| :-- | :-- | :-- |
+| **Profile** | How many rows, NULLs, distinct values, min and max? | `COUNT(*)`, `COUNT(col)`, `COUNT(DISTINCT col)`, `MIN`, `MAX` |
+| **Keys** | Is the ID really unique? | `COUNT(*)` against `COUNT(DISTINCT id)` |
+| **Relationships** | Does every foreign key point at a real row? Does every parent have children? | `NOT EXISTS`, `LEFT JOIN … IS NULL` |
+| **Business rules** | Do the values make sense together? | e.g. Delivered shipments have both dates; delivery is after shipping |
+| **Duplicates** | Are rows repeated under different IDs? | `GROUP BY` the natural key `HAVING COUNT(*) > 1` |
+| **Reconciliation** | Do totals agree with another source? | e.g. payments never exceed the charge |
+
+**A failed check is a question, not a verdict.** When a check finds rows, look at them before doing anything. Some are errors. Some are perfectly legitimate and tell you something about the business. Write down what you found and what you decided, so the next person doesn't repeat the investigation.
+
+## Example
+
+A business-rule check: each status should come with the right dates. Booked and Cancelled shipments haven't shipped, In transit ones have a ship date only, and Delivered ones have both.
+
+```sql run
+SELECT
+  status,
+  COUNT(*) AS shipments,
+  COUNT(ship_date) AS with_ship_date,
+  COUNT(delivery_date) AS with_delivery_date
+FROM shipments
+GROUP BY status;
+```
+
+Every status passes. Now a duplicate check on the natural key: the same customer booking the same route on the same day with the same number of containers.
+
+```sql run
+SELECT s.*
+FROM shipments AS s
+JOIN (
+  SELECT customer_id, route_id, booking_date, containers
+  FROM shipments
+  GROUP BY customer_id, route_id, booking_date, containers
+  HAVING COUNT(*) > 1
+) AS d
+  ON  d.customer_id = s.customer_id
+  AND d.route_id = s.route_id
+  AND d.booking_date = s.booking_date
+  AND d.containers = s.containers;
+```
+
+Two shipments match: 101206 and 101207, both booked by customer 27 on 2 October 2025. They aren't duplicates. They shipped on different days with different weights and different charges, so they're two real containers that happened to be booked together. Deleting one would have understated that customer's revenue by ₦3.7 million.
+
+## Walkthrough
+
+1. Profile the customers table: `SELECT COUNT(*), COUNT(DISTINCT customer_id), COUNT(account_manager_id), MIN(signup_date), MAX(signup_date) FROM customers;`. 120 customers, unique IDs, 8 with no account manager.
+2. Check a relationship from the other side: customers with no shipments at all. There are 15. They signed up but never booked. Is that a data problem, or a sales opportunity?
+3. Check a timing rule: does any customer's first booking come before their signup date? One does: Horizon Foods Plc (customer 79) signed up on 27 January 2025 but first booked on 12 January. That's probably a late account set-up, so it's worth noting but harmless.
+4. Check payments against shipping: 59 payments are dated before the shipment even left. Are they prepayments, or payments recorded on the wrong date? That's a question for finance, not something to "fix" in SQL.
+5. Write the results in a short data-quality note: check, result, decision.
+
+## Practice
+
+```exercise
+{
+  "id": "asql-03-p1",
+  "prompt": "List the customers who have never booked a shipment. Show customer_id, company_name and signup_date, ordered by signup_date. Use NOT EXISTS.",
+  "starter": "SELECT c.customer_id, c.company_name, c.signup_date\nFROM customers AS c\nWHERE NOT EXISTS (\n  \n)\nORDER BY c.signup_date;",
+  "solution": "SELECT c.customer_id, c.company_name, c.signup_date FROM customers AS c WHERE NOT EXISTS (SELECT 1 FROM shipments AS s WHERE s.customer_id = c.customer_id) ORDER BY c.signup_date, c.customer_id;",
+  "hint": "Inside NOT EXISTS: SELECT 1 FROM shipments AS s WHERE s.customer_id = c.customer_id.",
+  "required": true,
+  "orderMatters": true
+}
+```
+
+```exercise
+{
+  "id": "asql-03-p2",
+  "prompt": "Reconcile the money on delivered shipments. Show one row: charged (total freight_charge), received (total payments on those shipments) and outstanding (charged − received).",
+  "starter": "WITH paid AS (\n  SELECT shipment_id, SUM(amount) AS paid\n  FROM payments\n  GROUP BY shipment_id\n)\nSELECT\n  \nFROM shipments AS s\nLEFT JOIN paid AS p ON p.shipment_id = s.shipment_id\nWHERE s.status = 'Delivered';",
+  "solution": "WITH paid AS (SELECT shipment_id, SUM(amount) AS paid FROM payments GROUP BY shipment_id) SELECT SUM(s.freight_charge) AS charged, SUM(COALESCE(p.paid, 0)) AS received, SUM(s.freight_charge - COALESCE(p.paid, 0)) AS outstanding FROM shipments AS s LEFT JOIN paid AS p ON p.shipment_id = s.shipment_id WHERE s.status = 'Delivered';",
+  "hint": "Total the payments per shipment first, so a shipment paid in two instalments isn't counted twice. Then COALESCE unpaid shipments to 0.",
+  "required": true
+}
+```
+
+## Challenge
+
+```exercise
+{
+  "id": "asql-03-c1",
+  "prompt": "List the payments dated before the shipment's ship_date. Show payment_id, shipment_id, payment_date, ship_date and method, ordered by payment_id.",
+  "starter": "",
+  "solution": "SELECT p.payment_id, p.shipment_id, p.payment_date, s.ship_date, p.method FROM payments AS p JOIN shipments AS s ON s.shipment_id = p.shipment_id WHERE p.payment_date < s.ship_date ORDER BY p.payment_id;",
+  "hint": "Join payments to shipments and compare the two dates. Text dates in YYYY-MM-DD compare correctly.",
+  "required": false,
+  "orderMatters": true
+}
+```
+
+## More practice
+
+```exercise
+{
+  "id": "asql-03-d1",
+  "prompt": "Profile the shipments table in one row: total_rows, distinct_ids, min_booking, max_booking, min_containers, max_containers.",
+  "starter": "",
+  "solution": "SELECT COUNT(*) AS total_rows, COUNT(DISTINCT shipment_id) AS distinct_ids, MIN(booking_date) AS min_booking, MAX(booking_date) AS max_booking, MIN(containers) AS min_containers, MAX(containers) AS max_containers FROM shipments;",
+  "hint": "If total_rows and distinct_ids differ, the ID isn't unique.",
+  "required": false
+}
+```
+
+```exercise
+{
+  "id": "asql-03-d2",
+  "prompt": "Find customers whose first booking is earlier than their signup_date. Show customer_id, company_name, signup_date and first_booking.",
+  "starter": "",
+  "solution": "SELECT c.customer_id, c.company_name, c.signup_date, MIN(s.booking_date) AS first_booking FROM customers AS c JOIN shipments AS s ON s.customer_id = c.customer_id GROUP BY c.customer_id, c.company_name, c.signup_date HAVING MIN(s.booking_date) < c.signup_date;",
+  "hint": "GROUP BY the customer and compare MIN(booking_date) with signup_date in HAVING.",
+  "required": false
+}
+```
+
+```exercise
+{
+  "id": "asql-03-d3",
+  "prompt": "Some shipments are paid in instalments. List the shipments with more than one payment: shipment_id, payments (the count) and paid (the total), ordered by payments descending then shipment_id. Top 10 only.",
+  "starter": "",
+  "solution": "SELECT shipment_id, COUNT(*) AS payments, SUM(amount) AS paid FROM payments GROUP BY shipment_id HAVING COUNT(*) > 1 ORDER BY payments DESC, shipment_id LIMIT 10;",
+  "hint": "GROUP BY shipment_id HAVING COUNT(*) > 1.",
+  "required": false,
+  "orderMatters": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "A duplicate check finds two shipments with the same customer, route, date and containers. What should you do first?",
+    "options": ["Delete the one with the higher ID", "Look at the other columns: different ship dates, weights or charges mean they're probably two real shipments", "Average them", "Ignore the check"],
+    "answer": 1,
+    "explanation": "A failed check is a question. Here the rows were two genuine containers."
+  },
+  {
+    "prompt": "COUNT(*) is 2,683 and COUNT(DISTINCT shipment_id) is 2,683. What does that tell you?",
+    "options": ["There are 2,683 NULLs", "shipment_id is unique", "There are duplicates", "Nothing useful"],
+    "answer": 1,
+    "explanation": "Equal counts mean no ID appears twice."
+  },
+  {
+    "prompt": "Why total payments per shipment in a CTE before joining them to shipments?",
+    "options": ["CTEs are faster", "A shipment paid in instalments would otherwise appear once per payment and its charge would be counted several times", "Payments can't be joined directly", "To remove NULLs"],
+    "answer": 1,
+    "explanation": "Joining a one-to-many table repeats the 'one' side. Aggregate the many side first."
+  }
+]
+```
+$md$, true, true, 3, array['asql-03-p1', 'asql-03-p2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('asql-m04', 'advanced-sql', 'Window Functions in Depth', 4, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('advanced-sql:window-functions-in-depth', 'advanced-sql', 'asql-m04', 'window-functions-in-depth', 'Window functions in depth', 'Control exactly which rows a window function sees with frames, and use moving averages, shares of a total, LAG, LEAD and FIRST_VALUE without the common traps.', 25, $md$
+## The problem
+
+Harbourline's monthly bookings bounce around: 146 in April 2025, 106 in June, 142 in July. The operations director asks, "Is volume actually going up or down, or is it just noise?" A month-by-month chart is too jumpy to answer that. What she needs is a **moving average**, which smooths each month with the months before it.
+
+In SQL for Data Analysis you met `RANK`, `ROW_NUMBER`, running totals and `LAG`. This lesson covers the part that trips up experienced analysts: **which rows** a window function actually looks at.
+
+## The concept
+
+**The frame**
+
+Inside `OVER (…)`, `PARTITION BY` picks the group and `ORDER BY` sorts it. The **frame** then picks which rows of the group the function uses for the current row:
+
+```sql
+AVG(shipments) OVER (
+  ORDER BY month
+  ROWS BETWEEN 2 PRECEDING AND CURRENT ROW   -- this month and the two before
+)
+```
+
+| Frame | Rows used |
+| :-- | :-- |
+| `ROWS BETWEEN 2 PRECEDING AND CURRENT ROW` | this row and the two before: a 3-period moving window |
+| `ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW` | everything up to this row: a running total |
+| `ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING` | the whole partition |
+| *(no ORDER BY)* | the whole partition |
+
+**Two default-frame traps**
+
+1. With `ORDER BY` and no frame, the default is `RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW`. **RANGE** treats rows with the same `ORDER BY` value as one step. A running total ordered by `booking_date` gives every shipment booked on the same day the *same* total. If you want one step per row, write `ROWS` and add a tie-breaker (`ORDER BY booking_date, shipment_id`).
+2. `LAST_VALUE(x) OVER (ORDER BY …)` returns the **current** row's value, because the default frame stops at the current row. Give it the whole partition, or use `FIRST_VALUE` with the order reversed.
+
+**Shares of a total**
+
+`SUM(x) OVER ()` is the grand total on every row, and `SUM(x) OVER (PARTITION BY mode)` is the mode's total. Divide by either to get a share without a second query.
+
+**LAG and LEAD**
+
+`LAG(x, n, default)` looks `n` rows back (1 by default) and `LEAD` looks forward. They're how you calculate month-on-month change, or the gap between one order and the next.
+
+## Example
+
+A 3-month moving average of bookings, showing it only once three months are available:
+
+```sql run
+WITH monthly AS (
+  SELECT strftime('%Y-%m', booking_date) AS month, COUNT(*) AS shipments
+  FROM shipments
+  GROUP BY month
+)
+SELECT
+  month,
+  shipments,
+  CASE
+    WHEN COUNT(*) OVER w = 3 THEN ROUND(AVG(shipments) OVER w, 1)
+  END AS moving_avg_3,
+  shipments - LAG(shipments) OVER (ORDER BY month) AS change_vs_last_month
+FROM monthly
+WINDOW w AS (ORDER BY month ROWS BETWEEN 2 PRECEDING AND CURRENT ROW)
+ORDER BY month;
+```
+
+The moving average sits between about 126 and 140 all the way through. June 2025's 106 is a dip, not a trend, and volume is broadly flat. That's the answer to the director's question, and it's far more reliable than reading the raw months.
+
+## Walkthrough
+
+1. Run the example. `WINDOW w AS (…)` names a window once so several functions can share it.
+2. Remove the `CASE` so the first two months show a "moving average" of one and two months. That's why it's worth hiding incomplete windows: January's "average" is just January.
+3. Run the RANGE trap for yourself. Look at the rows where several shipments share a booking date:
+
+```sql run
+SELECT
+  shipment_id,
+  booking_date,
+  freight_charge,
+  SUM(freight_charge) OVER (ORDER BY booking_date) AS range_total,
+  SUM(freight_charge) OVER (ORDER BY booking_date, shipment_id ROWS UNBOUNDED PRECEDING) AS rows_total
+FROM shipments
+ORDER BY booking_date, shipment_id
+LIMIT 12;
+```
+
+4. Notice that `range_total` jumps once per **day**, while `rows_total` climbs once per **shipment**. Both are "correct", but they answer different questions.
+
+## Practice
+
+```exercise
+{
+  "id": "asql-04-p1",
+  "prompt": "For delivered shipments, show each route's share of its mode's freight charges. Show mode, route_id, charges and pct_of_mode (1 decimal place), ordered by mode, then charges descending.",
+  "starter": "WITH by_route AS (\n  SELECT r.mode, s.route_id, SUM(s.freight_charge) AS charges\n  FROM shipments AS s\n  JOIN routes AS r ON r.route_id = s.route_id\n  WHERE s.status = 'Delivered'\n  GROUP BY r.mode, s.route_id\n)\nSELECT mode, route_id, charges\nFROM by_route;",
+  "solution": "WITH by_route AS (SELECT r.mode, s.route_id, SUM(s.freight_charge) AS charges FROM shipments AS s JOIN routes AS r ON r.route_id = s.route_id WHERE s.status = 'Delivered' GROUP BY r.mode, s.route_id) SELECT mode, route_id, charges, ROUND(100.0 * charges / SUM(charges) OVER (PARTITION BY mode), 1) AS pct_of_mode FROM by_route ORDER BY mode, charges DESC;",
+  "hint": "Divide by SUM(charges) OVER (PARTITION BY mode). Remember 100.0.",
+  "required": true,
+  "orderMatters": true
+}
+```
+
+```exercise
+{
+  "id": "asql-04-p2",
+  "prompt": "For customer 8 (Harmattan Agro), list each shipment with the days since that customer's previous booking. Show shipment_id, booking_date and days_since_previous (a whole number; NULL for the first), ordered by booking_date then shipment_id.",
+  "starter": "SELECT\n  shipment_id,\n  booking_date\nFROM shipments\nWHERE customer_id = 8\nORDER BY booking_date, shipment_id;",
+  "solution": "SELECT shipment_id, booking_date, CAST(julianday(booking_date) - julianday(LAG(booking_date) OVER (ORDER BY booking_date, shipment_id)) AS INTEGER) AS days_since_previous FROM shipments WHERE customer_id = 8 ORDER BY booking_date, shipment_id;",
+  "hint": "julianday(booking_date) - julianday(LAG(booking_date) OVER (ORDER BY booking_date, shipment_id)), wrapped in CAST(… AS INTEGER).",
+  "required": true,
+  "orderMatters": true
+}
+```
+
+## Challenge
+
+```exercise
+{
+  "id": "asql-04-c1",
+  "prompt": "For customers with at least 20 shipments, find the average gap in days between consecutive bookings. Show customer_id, shipments and avg_gap_days (1 decimal place), shortest gap first.",
+  "starter": "",
+  "solution": "WITH gaps AS (SELECT customer_id, julianday(booking_date) - julianday(LAG(booking_date) OVER (PARTITION BY customer_id ORDER BY booking_date, shipment_id)) AS gap FROM shipments) SELECT customer_id, COUNT(*) AS shipments, ROUND(AVG(gap), 1) AS avg_gap_days FROM gaps GROUP BY customer_id HAVING COUNT(*) >= 20 ORDER BY avg_gap_days, customer_id;",
+  "hint": "LAG partitioned by customer_id in a CTE, then GROUP BY customer. AVG ignores the NULL first gap, which is what you want.",
+  "required": false,
+  "orderMatters": true
+}
+```
+
+## More practice
+
+```exercise
+{
+  "id": "asql-04-d1",
+  "prompt": "Show payments received per month in 2026 with the percentage change from the previous month. Show month, received and pct_change (1 decimal place, NULL for January), ordered by month.",
+  "starter": "",
+  "solution": "WITH m AS (SELECT strftime('%Y-%m', payment_date) AS month, SUM(amount) AS received FROM payments WHERE payment_date >= '2026-01-01' GROUP BY month) SELECT month, received, ROUND(100.0 * (received - LAG(received) OVER (ORDER BY month)) / LAG(received) OVER (ORDER BY month), 1) AS pct_change FROM m ORDER BY month;",
+  "hint": "(this − previous) / previous × 100, with LAG for the previous month.",
+  "required": false,
+  "orderMatters": true
+}
+```
+
+```exercise
+{
+  "id": "asql-04-d2",
+  "prompt": "For each customer who has booked, show customer_id and first_route: the route_id of their earliest booking (ties broken by the lower shipment_id). Use FIRST_VALUE. One row per customer, ordered by customer_id.",
+  "starter": "",
+  "solution": "SELECT DISTINCT customer_id, FIRST_VALUE(route_id) OVER (PARTITION BY customer_id ORDER BY booking_date, shipment_id) AS first_route FROM shipments ORDER BY customer_id;",
+  "hint": "FIRST_VALUE(route_id) OVER (PARTITION BY customer_id ORDER BY booking_date, shipment_id), then DISTINCT to keep one row each.",
+  "required": false,
+  "orderMatters": true
+}
+```
+
+```exercise
+{
+  "id": "asql-04-d3",
+  "prompt": "Show each mode's share of all delivered freight charges: mode, charges and pct_of_total (1 decimal place), largest first.",
+  "starter": "",
+  "solution": "SELECT r.mode, SUM(s.freight_charge) AS charges, ROUND(100.0 * SUM(s.freight_charge) / SUM(SUM(s.freight_charge)) OVER (), 1) AS pct_of_total FROM shipments AS s JOIN routes AS r ON r.route_id = s.route_id WHERE s.status = 'Delivered' GROUP BY r.mode ORDER BY charges DESC;",
+  "hint": "SUM(SUM(freight_charge)) OVER () is the grand total of the grouped sums.",
+  "required": false,
+  "orderMatters": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "What does ROWS BETWEEN 2 PRECEDING AND CURRENT ROW give AVG for the first row of a partition?",
+    "options": ["NULL", "The average of just that one row", "An error", "The average of the whole partition"],
+    "answer": 1,
+    "explanation": "The frame has only one row so far. Hide incomplete windows, for example with COUNT(*) OVER the same window."
+  },
+  {
+    "prompt": "SUM(charge) OVER (ORDER BY booking_date) gives three shipments booked on the same day the same running total. Why?",
+    "options": ["A bug in SQLite", "The default frame is RANGE, which treats rows with equal ORDER BY values as one step", "SUM ignores duplicates", "The dates are text"],
+    "answer": 1,
+    "explanation": "Use ROWS and a tie-breaker for one step per row."
+  },
+  {
+    "prompt": "Which expression gives each route's share of its mode's total?",
+    "options": ["charges / SUM(charges)", "charges / SUM(charges) OVER (PARTITION BY mode)", "charges / COUNT(*) OVER ()", "RANK() OVER (PARTITION BY mode)"],
+    "answer": 1,
+    "explanation": "PARTITION BY mode makes the total restart for each mode."
+  }
+]
+```
+$md$, true, true, 4, array['asql-04-p1', 'asql-04-p2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('asql-m05', 'advanced-sql', 'Top N per Group and Deduplication', 5, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('advanced-sql:top-n-and-deduplication', 'advanced-sql', 'asql-m05', 'top-n-and-deduplication', 'Top N per group and deduplication', 'Return the top rows within every group, the latest record per entity, and one clean row out of several, choosing deliberately how ties are handled.', 20, $md$
+## The problem
+
+Three requests that look different but are the same problem:
+
+1. Sales: "Our top three customers **for each transport mode**, by revenue."
+2. Finance: "For each shipment, the **most recent** payment."
+3. Data team: "The CRM export has some customers in it twice. Keep **one row per customer**: the newest."
+
+`ORDER BY … LIMIT 3` gives the top three overall, not per mode. `GROUP BY` with `MAX(payment_date)` finds the latest date but loses the rest of the row (the amount, the method). Each request needs "the top N rows **within each group**, with the whole row".
+
+## The concept
+
+The pattern has three steps:
+
+1. **Number** the rows within each group with a window function, in the order that defines "top".
+2. Do it in a **CTE** or subquery, because `WHERE` can't see window functions in the same query.
+3. **Filter** on the number outside.
+
+```sql
+WITH ranked AS (
+  SELECT …, ROW_NUMBER() OVER (PARTITION BY group_col ORDER BY sort_col DESC, id) AS rn
+  FROM …
+)
+SELECT … FROM ranked WHERE rn <= 3;
+```
+
+**Choosing the numbering function decides what happens to ties:**
+
+| Function | Ties | Use when |
+| :-- | :-- | :-- |
+| `ROW_NUMBER()` | broken arbitrarily, so add a tie-breaker | you need exactly N rows, such as deduplication |
+| `RANK()` | tied rows share a rank, and the next one skips | "everyone in the top 3, including ties" |
+| `DENSE_RANK()` | tied rows share a rank, no gaps | "the top 3 *values*", such as the three highest prices |
+
+Always add a tie-breaker to `ROW_NUMBER` (usually the ID). Without one the database may pick a different row each time you run the query, and two people running the same report get different answers.
+
+> [!NOTE]
+> Snowflake, BigQuery, Databricks and DuckDB have a shortcut, `QUALIFY rn <= 3`, which filters on a window function without a CTE. SQLite, PostgreSQL, SQL Server and MySQL don't, so the CTE pattern is the one that works everywhere.
+
+## Example
+
+The top three customers by delivered freight charges, within each mode:
+
+```sql run
+WITH customer_mode AS (
+  SELECT r.mode, s.customer_id, SUM(s.freight_charge) AS charges
+  FROM shipments AS s
+  JOIN routes AS r ON r.route_id = s.route_id
+  WHERE s.status = 'Delivered'
+  GROUP BY r.mode, s.customer_id
+),
+ranked AS (
+  SELECT
+    mode,
+    customer_id,
+    charges,
+    ROW_NUMBER() OVER (PARTITION BY mode ORDER BY charges DESC, customer_id) AS rn
+  FROM customer_mode
+)
+SELECT ranked.mode, ranked.rn, c.company_name, ranked.charges
+FROM ranked
+JOIN customers AS c ON c.customer_id = ranked.customer_id
+WHERE ranked.rn <= 3
+ORDER BY ranked.mode, ranked.rn;
+```
+
+Nine rows: three per mode. Note the order of the work. First total per customer and mode, then number within each mode, then filter, and only then join the names in. Joining names at the end means the ranking runs on fewer, narrower rows.
+
+## Walkthrough
+
+1. Run the example. Then change `rn <= 3` to `rn = 1` to get each mode's single biggest customer.
+2. Replace `ROW_NUMBER()` with `RANK()`. Nothing changes here because no two customers have identical charges, but on a column with ties, such as `containers`, `RANK` could return more than three rows per group.
+3. Now the "latest record" version. For shipments paid in instalments, keep only the most recent payment, with the full row:
+
+```sql run
+WITH numbered AS (
+  SELECT
+    p.*,
+    ROW_NUMBER() OVER (PARTITION BY shipment_id ORDER BY payment_date DESC, payment_id DESC) AS rn,
+    COUNT(*) OVER (PARTITION BY shipment_id) AS payments
+  FROM payments AS p
+)
+SELECT shipment_id, payment_id, payment_date, amount, method, payments
+FROM numbered
+WHERE rn = 1 AND payments > 1
+ORDER BY shipment_id
+LIMIT 20;
+```
+
+4. Check the count without `LIMIT`: 159 shipments have more than one payment. Deduplication works the same way: number the copies newest first and keep `rn = 1`.
+
+## Practice
+
+```exercise
+{
+  "id": "asql-05-p1",
+  "prompt": "For each route, show its most recent booking. Show route_id, shipment_id and booking_date (break ties by the higher shipment_id), ordered by route_id.",
+  "starter": "WITH numbered AS (\n  SELECT\n    route_id,\n    shipment_id,\n    booking_date,\n    ROW_NUMBER() OVER () AS rn\n  FROM shipments\n)\nSELECT route_id, shipment_id, booking_date\nFROM numbered\nWHERE rn = 1\nORDER BY route_id;",
+  "solution": "WITH numbered AS (SELECT route_id, shipment_id, booking_date, ROW_NUMBER() OVER (PARTITION BY route_id ORDER BY booking_date DESC, shipment_id DESC) AS rn FROM shipments) SELECT route_id, shipment_id, booking_date FROM numbered WHERE rn = 1 ORDER BY route_id;",
+  "hint": "Fill in OVER (PARTITION BY route_id ORDER BY booking_date DESC, shipment_id DESC).",
+  "required": true,
+  "orderMatters": true
+}
+```
+
+```exercise
+{
+  "id": "asql-05-p2",
+  "prompt": "For each customer, find their busiest route by number of shipments. If two routes tie, show both. Show customer_id, route_id and shipments, ordered by customer_id then route_id.",
+  "starter": "",
+  "solution": "WITH counts AS (SELECT customer_id, route_id, COUNT(*) AS shipments FROM shipments GROUP BY customer_id, route_id), ranked AS (SELECT customer_id, route_id, shipments, RANK() OVER (PARTITION BY customer_id ORDER BY shipments DESC) AS rnk FROM counts) SELECT customer_id, route_id, shipments FROM ranked WHERE rnk = 1 ORDER BY customer_id, route_id;",
+  "hint": "Count per customer and route, then RANK() within each customer by that count, and keep rank 1. RANK keeps ties; ROW_NUMBER wouldn't.",
+  "required": true,
+  "orderMatters": true
+}
+```
+
+## Challenge
+
+```exercise
+{
+  "id": "asql-05-c1",
+  "prompt": "For each mode, show the shipments with the second-highest freight_charge value (if several share that value, show them all). Show mode, shipment_id and freight_charge, ordered by mode then shipment_id.",
+  "starter": "",
+  "solution": "WITH ranked AS (SELECT r.mode, s.shipment_id, s.freight_charge, DENSE_RANK() OVER (PARTITION BY r.mode ORDER BY s.freight_charge DESC) AS dr FROM shipments AS s JOIN routes AS r ON r.route_id = s.route_id) SELECT mode, shipment_id, freight_charge FROM ranked WHERE dr = 2 ORDER BY mode, shipment_id;",
+  "hint": "DENSE_RANK numbers distinct values with no gaps, so dr = 2 is the second-highest value.",
+  "required": false,
+  "orderMatters": true
+}
+```
+
+## More practice
+
+```exercise
+{
+  "id": "asql-05-d1",
+  "prompt": "For each year (from booking_date), show its two busiest months. Show year, month ('YYYY-MM') and shipments, ordered by year then shipments descending.",
+  "starter": "",
+  "solution": "WITH m AS (SELECT strftime('%Y', booking_date) AS year, strftime('%Y-%m', booking_date) AS month, COUNT(*) AS shipments FROM shipments GROUP BY month), r AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY year ORDER BY shipments DESC, month) AS rn FROM m) SELECT year, month, shipments FROM r WHERE rn <= 2 ORDER BY year, shipments DESC;",
+  "hint": "Count by month, keep the year as a column, then number within each year.",
+  "required": false,
+  "orderMatters": true
+}
+```
+
+```exercise
+{
+  "id": "asql-05-d2",
+  "prompt": "For each account manager, show their single largest customer by number of shipments. Show account_manager_id, customer_id and shipments (break ties by the lower customer_id), ordered by account_manager_id. Leave out customers with no account manager.",
+  "starter": "",
+  "solution": "WITH c AS (SELECT cu.account_manager_id, cu.customer_id, COUNT(*) AS shipments FROM customers AS cu JOIN shipments AS s ON s.customer_id = cu.customer_id WHERE cu.account_manager_id IS NOT NULL GROUP BY cu.account_manager_id, cu.customer_id), r AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY account_manager_id ORDER BY shipments DESC, customer_id) AS rn FROM c) SELECT account_manager_id, customer_id, shipments FROM r WHERE rn = 1 ORDER BY account_manager_id;",
+  "hint": "Count shipments per manager and customer, number within each manager, keep rn = 1.",
+  "required": false,
+  "orderMatters": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why can't you write WHERE ROW_NUMBER() OVER (…) = 1 directly?",
+    "options": ["ROW_NUMBER needs GROUP BY", "WHERE runs before window functions are calculated, so filter in an outer query", "It only works with RANK", "You can; it's just slow"],
+    "answer": 1,
+    "explanation": "Compute the number in a CTE or subquery, then filter outside."
+  },
+  {
+    "prompt": "You want the top 3 salespeople per region and must include anyone tied for third. Which function?",
+    "options": ["ROW_NUMBER()", "RANK()", "COUNT()", "LAG()"],
+    "answer": 1,
+    "explanation": "RANK gives tied rows the same rank, so all of them pass rank <= 3."
+  },
+  {
+    "prompt": "Why add shipment_id to ORDER BY inside ROW_NUMBER() OVER (PARTITION BY route_id ORDER BY booking_date DESC, shipment_id DESC)?",
+    "options": ["It's required syntax", "To break ties, so the same row is chosen every time the query runs", "To sort the final output", "To remove duplicates"],
+    "answer": 1,
+    "explanation": "Without a tie-breaker, rows booked on the same day can come out in any order."
+  }
+]
+```
+$md$, true, true, 5, array['asql-05-p1', 'asql-05-p2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('asql-m06', 'advanced-sql', 'Cohorts and Retention', 6, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('advanced-sql:cohorts-and-retention', 'advanced-sql', 'asql-m06', 'cohorts-and-retention', 'Cohorts and retention', 'Group customers by when they started, track how many keep coming back, and avoid the traps of left-censored data and part periods.', 20, $md$
+## The problem
+
+Harbourline's commercial director has a worry: "We win new customers, but do they stay? Or do we keep replacing the ones we lose?"
+
+Counting active customers per quarter doesn't answer it. The count was 80 in the first quarter of 2025 and 73 a year later, but that total mixes long-standing customers with new ones. A fall could mean old customers leaving, new ones not sticking, or both. To find out, you need to follow **groups of customers who started at the same time** and see what each group does next. That's **cohort analysis**, and it's one of the most requested analyses in subscription, retail and B2B companies.
+
+## The concept
+
+A **cohort** is a group of customers who share a starting point: here, the quarter of their first booking. A **retention table** counts how many from each cohort are active 0, 1, 2… periods later.
+
+You build one in three steps:
+
+1. **Activity**: one row per customer per period they were active (`SELECT DISTINCT customer_id, period`).
+2. **Cohort**: each customer's first period (`MIN(period)`).
+3. **Join and count**: for each cohort and each "periods since start", count the customers.
+
+To work out "periods since start", give every quarter a number that counts up: `year × 4 + quarter`. Then 2026-Q1 minus 2025-Q3 is 2 quarters, even across a year boundary.
+
+**Two traps to say out loud**
+
+- **Left-censoring.** Harbourline's data starts in January 2025, but customers signed up as early as 2021. The "2025-Q1 cohort" is really **everyone already active** when the data begins, not new customers. Treat it as the existing base and compare the genuinely new cohorts separately.
+- **Part periods.** The data ends on 31 August 2026, so 2026-Q3 has two months, not three. Activity in that quarter will look lower simply because it's shorter. Label it or leave it out.
+
+## Example
+
+The retention table, by quarter of first booking:
+
+```sql run
+WITH activity AS (
+  SELECT DISTINCT
+    customer_id,
+    CAST(strftime('%Y', booking_date) AS INTEGER) * 4
+      + (CAST(strftime('%m', booking_date) AS INTEGER) + 2) / 3 AS q_index
+  FROM shipments
+),
+cohorts AS (
+  SELECT customer_id, MIN(q_index) AS cohort_q
+  FROM activity
+  GROUP BY customer_id
+)
+SELECT
+  (c.cohort_q - 1) / 4 || '-Q' || ((c.cohort_q - 1) % 4 + 1) AS cohort,
+  a.q_index - c.cohort_q AS quarters_since_start,
+  COUNT(*) AS active_customers
+FROM activity AS a
+JOIN cohorts AS c ON c.customer_id = a.customer_id
+GROUP BY c.cohort_q, quarters_since_start
+ORDER BY c.cohort_q, quarters_since_start;
+```
+
+Reading it:
+
+- The existing base (2025-Q1, 80 customers) is steady: 63 were active the next quarter, and 56 were still booking in the short 2026-Q3.
+- The 2025-Q2 cohort, the largest group of genuinely new customers, had 13 customers, but only 6 booked again the next quarter.
+
+Does that mean new customers leave? Check before you say so. Of the 19 customers who first booked between April and December 2025, 16 booked again in 2026: 84%, about the same as the existing base (68 of 80, 85%). New customers aren't leaving more. They're **booking less often**, which is a different problem with a different fix (account management, not win-back campaigns).
+
+## Walkthrough
+
+1. Run the `activity` CTE on its own and check that a customer appears at most once per quarter.
+2. Check the quarter number: `SELECT (2026 * 4 + 1) - (2025 * 4 + 3);` gives 2, which is 2025-Q3 to 2026-Q1.
+3. Run the full example and find the 2025-Q2 row for `quarters_since_start = 4`. 11 of 13 were active a year later, more than in the quarters in between. A seasonal pattern? That's worth a question to the sales team.
+4. Write the director's answer in two sentences, mentioning both traps.
+
+## Practice
+
+```exercise
+{
+  "id": "asql-06-p1",
+  "prompt": "How many new customers did each quarter bring? Show cohort (as 'YYYY-Qn', from each customer's first booking) and new_customers, ordered by cohort.",
+  "starter": "WITH firsts AS (\n  SELECT customer_id, MIN(booking_date) AS first_booking\n  FROM shipments\n  GROUP BY customer_id\n)\nSELECT\n  \nFROM firsts\nGROUP BY cohort\nORDER BY cohort;",
+  "solution": "WITH firsts AS (SELECT customer_id, MIN(booking_date) AS first_booking FROM shipments GROUP BY customer_id) SELECT strftime('%Y', first_booking) || '-Q' || ((CAST(strftime('%m', first_booking) AS INTEGER) + 2) / 3) AS cohort, COUNT(*) AS new_customers FROM firsts GROUP BY cohort ORDER BY cohort;",
+  "hint": "The quarter is (month + 2) / 3 with whole-number division. Build the label with strftime('%Y', first_booking) || '-Q' || ….",
+  "required": true,
+  "orderMatters": true
+}
+```
+
+```exercise
+{
+  "id": "asql-06-p2",
+  "prompt": "Retention for the existing base: for customers whose first booking was in 2025-Q1, show quarters_since_start, active_customers and retention_pct (active ÷ the cohort's 80 customers × 100, 1 decimal place), ordered by quarters_since_start. Work out the 80 in SQL rather than typing it.",
+  "starter": "",
+  "solution": "WITH activity AS (SELECT DISTINCT customer_id, CAST(strftime('%Y', booking_date) AS INTEGER) * 4 + (CAST(strftime('%m', booking_date) AS INTEGER) + 2) / 3 AS q_index FROM shipments), cohorts AS (SELECT customer_id, MIN(q_index) AS cohort_q FROM activity GROUP BY customer_id), base AS (SELECT a.q_index - c.cohort_q AS quarters_since_start, COUNT(*) AS active_customers FROM activity AS a JOIN cohorts AS c ON c.customer_id = a.customer_id WHERE c.cohort_q = 2025 * 4 + 1 GROUP BY quarters_since_start) SELECT quarters_since_start, active_customers, ROUND(100.0 * active_customers / FIRST_VALUE(active_customers) OVER (ORDER BY quarters_since_start), 1) AS retention_pct FROM base ORDER BY quarters_since_start;",
+  "hint": "Filter the example to cohort_q = 2025 * 4 + 1. The cohort size is the quarter-0 count, so divide by FIRST_VALUE(active_customers) OVER (ORDER BY quarters_since_start).",
+  "required": true,
+  "orderMatters": true
+}
+```
+
+## Challenge
+
+```exercise
+{
+  "id": "asql-06-c1",
+  "prompt": "Find customers who booked in 2025 but not at all in 2026. Show customer_id, company_name and last_booking, most recent last_booking first.",
+  "starter": "",
+  "solution": "SELECT c.customer_id, c.company_name, MAX(s.booking_date) AS last_booking FROM shipments AS s JOIN customers AS c ON c.customer_id = s.customer_id GROUP BY c.customer_id, c.company_name HAVING MAX(s.booking_date) < '2026-01-01' ORDER BY last_booking DESC, c.customer_id;",
+  "hint": "Every customer here booked at some point, so 'not in 2026' means MAX(booking_date) < '2026-01-01'.",
+  "required": false,
+  "orderMatters": true
+}
+```
+
+## More practice
+
+```exercise
+{
+  "id": "asql-06-d1",
+  "prompt": "Show active customers per quarter: quarter ('YYYY-Qn') and active_customers (distinct customers who booked), ordered by quarter.",
+  "starter": "",
+  "solution": "SELECT strftime('%Y', booking_date) || '-Q' || ((CAST(strftime('%m', booking_date) AS INTEGER) + 2) / 3) AS quarter, COUNT(DISTINCT customer_id) AS active_customers FROM shipments GROUP BY quarter ORDER BY quarter;",
+  "hint": "COUNT(DISTINCT customer_id) grouped by the quarter label.",
+  "required": false,
+  "orderMatters": true
+}
+```
+
+```exercise
+{
+  "id": "asql-06-d2",
+  "prompt": "For customers whose first booking was in 2026, show customer_id, first_booking and shipments (their total), ordered by first_booking.",
+  "starter": "",
+  "solution": "SELECT customer_id, MIN(booking_date) AS first_booking, COUNT(*) AS shipments FROM shipments GROUP BY customer_id HAVING MIN(booking_date) >= '2026-01-01' ORDER BY first_booking, customer_id;",
+  "hint": "HAVING MIN(booking_date) >= '2026-01-01'.",
+  "required": false,
+  "orderMatters": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "The data starts in January 2025, but some customers joined in 2021. What's true of the 2025-Q1 cohort?",
+    "options": ["It's the best cohort of new customers", "It includes everyone already active when the data starts, so it isn't a cohort of new customers", "It should be deleted", "It has no retention"],
+    "answer": 1,
+    "explanation": "That's left-censoring. Compare it separately from cohorts of genuinely new customers."
+  },
+  {
+    "prompt": "Why number quarters as year × 4 + quarter?",
+    "options": ["To sort them alphabetically", "So subtracting two quarter numbers gives the number of quarters between them, even across years", "SQLite requires it", "To hide the year"],
+    "answer": 1,
+    "explanation": "2026-Q1 (8105) − 2025-Q3 (8103) = 2."
+  },
+  {
+    "prompt": "Few new customers book in the quarter after they start, but most book again within a year. What's the best summary?",
+    "options": ["New customers churn", "New customers stay, but book less often than established ones", "The data is wrong", "Retention is 100%"],
+    "answer": 1,
+    "explanation": "Retention depends on the window you choose. Check more than one before concluding."
+  }
+]
+```
+$md$, true, true, 6, array['asql-06-p1', 'asql-06-p2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('asql-m07', 'advanced-sql', 'Pivots and Period Comparisons', 7, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('advanced-sql:pivots-and-period-comparisons', 'advanced-sql', 'asql-m07', 'pivots-and-period-comparisons', 'Pivots and period comparisons', 'Turn rows into columns with conditional aggregation, compare periods like for like, and calculate growth without dividing by zero.', 20, $md$
+## The problem
+
+A board pack draft has this line: **"Shipments fell 33% in 2026: 1,075 against 1,608 in 2025."**
+
+Both numbers are correct. The conclusion is wrong. 2025 is a full year, while 2026 runs only to the end of August. Compare January to August with January to August, and bookings went **up**: 1,052 in 2025 against 1,075 in 2026, a rise of 2.2%.
+
+Period comparisons are where analysts most often embarrass themselves, and the board slide is where it's most costly. This lesson covers the two tools for them: **pivots**, which put periods side by side as columns, and **like-for-like** comparisons.
+
+## The concept
+
+**Pivoting with conditional aggregation**
+
+A pivot turns values in a column (years, modes, statuses) into separate columns. The portable way works in every database: an aggregate wrapped around a `CASE`.
+
+```sql
+SELECT
+  r.mode,
+  SUM(CASE WHEN s.booking_date < '2026-01-01' THEN 1 ELSE 0 END) AS y2025,
+  SUM(CASE WHEN s.booking_date >= '2026-01-01' THEN 1 ELSE 0 END) AS y2026
+FROM …
+GROUP BY r.mode;
+```
+
+Shorter spellings exist. PostgreSQL and SQLite allow `COUNT(*) FILTER (WHERE …)`, and SQL Server, Oracle and Snowflake have a `PIVOT` operator. But `SUM(CASE …)` works everywhere and is the one you'll read most in other people's code.
+
+**Like for like**
+
+Compare periods of the same length and the same season:
+
+- **Year to date (YTD)**: January to the last complete month, in both years.
+- **Same month last year**: August 2026 against August 2025, not against July 2026, if the business is seasonal.
+- Only **complete** periods. A month that's half over always looks like a collapse.
+
+**Growth without errors**
+
+Growth is `(this − last) / last`. If `last` is 0, SQL Server and PostgreSQL raise an error, and SQLite and MySQL return NULL. Make the intention explicit with `NULLIF(last, 0)`, which turns a zero into NULL so the result is NULL, meaning "no comparison possible".
+
+## Example
+
+Year to date by mode, side by side, with the change:
+
+```sql run
+WITH ytd AS (
+  SELECT
+    r.mode,
+    SUM(CASE WHEN s.booking_date BETWEEN '2025-01-01' AND '2025-08-31' THEN 1 ELSE 0 END) AS ytd_2025,
+    SUM(CASE WHEN s.booking_date BETWEEN '2026-01-01' AND '2026-08-31' THEN 1 ELSE 0 END) AS ytd_2026
+  FROM shipments AS s
+  JOIN routes AS r ON r.route_id = s.route_id
+  GROUP BY r.mode
+)
+SELECT
+  mode,
+  ytd_2025,
+  ytd_2026,
+  ytd_2026 - ytd_2025 AS change,
+  ROUND(100.0 * (ytd_2026 - ytd_2025) / NULLIF(ytd_2025, 0), 1) AS pct_change
+FROM ytd
+ORDER BY ytd_2026 DESC;
+```
+
+Sea, the bulk of the business, is slightly down (2.6%), and the smaller air and road businesses grew by 14% to 17%. There was no 33% fall: that was the calendar, not the business.
+
+## Walkthrough
+
+1. Run the example. Then change both date ranges to whole years (`'2025-01-01' AND '2025-12-31'`, and the same for 2026) and see misleading falls of 23% to 36% appear.
+2. Put it back to January to August. That's the version to show.
+3. Run this month-by-month comparison, which shows the seasonal pattern behind the totals:
+
+```sql run
+SELECT
+  strftime('%m', booking_date) AS month,
+  SUM(booking_date < '2026-01-01') AS y2025,
+  SUM(booking_date >= '2026-01-01') AS y2026
+FROM shipments
+WHERE strftime('%m', booking_date) <= '08'
+GROUP BY month
+ORDER BY month;
+```
+
+4. Find June: 106 in 2025, 138 in 2026. Most of the year-to-date rise comes from one weak month in 2025, so the honest summary is "flat, with a weak June last year", not "growing".
+
+## Practice
+
+```exercise
+{
+  "id": "asql-07-p1",
+  "prompt": "Pivot shipment status by year of booking. Show year, booked, in_transit, delivered and cancelled (counts), ordered by year.",
+  "starter": "SELECT\n  strftime('%Y', booking_date) AS year,\n  SUM(CASE WHEN status = 'Booked' THEN 1 ELSE 0 END) AS booked\nFROM shipments\nGROUP BY year\nORDER BY year;",
+  "solution": "SELECT strftime('%Y', booking_date) AS year, SUM(CASE WHEN status = 'Booked' THEN 1 ELSE 0 END) AS booked, SUM(CASE WHEN status = 'In transit' THEN 1 ELSE 0 END) AS in_transit, SUM(CASE WHEN status = 'Delivered' THEN 1 ELSE 0 END) AS delivered, SUM(CASE WHEN status = 'Cancelled' THEN 1 ELSE 0 END) AS cancelled FROM shipments GROUP BY year ORDER BY year;",
+  "hint": "One SUM(CASE WHEN status = '…' THEN 1 ELSE 0 END) per status. The value is 'In transit', with a space.",
+  "required": true,
+  "orderMatters": true
+}
+```
+
+```exercise
+{
+  "id": "asql-07-p2",
+  "prompt": "Compare payments received year to date (January to August) in 2025 and 2026. Show one row: ytd_2025, ytd_2026 and pct_change (1 decimal place).",
+  "starter": "",
+  "solution": "WITH t AS (SELECT SUM(CASE WHEN payment_date BETWEEN '2025-01-01' AND '2025-08-31' THEN amount ELSE 0 END) AS ytd_2025, SUM(CASE WHEN payment_date BETWEEN '2026-01-01' AND '2026-08-31' THEN amount ELSE 0 END) AS ytd_2026 FROM payments) SELECT ytd_2025, ytd_2026, ROUND(100.0 * (ytd_2026 - ytd_2025) / NULLIF(ytd_2025, 0), 1) AS pct_change FROM t;",
+  "hint": "SUM(CASE WHEN payment_date BETWEEN … THEN amount ELSE 0 END) for each year, then the growth formula with NULLIF.",
+  "required": true
+}
+```
+
+## Challenge
+
+```exercise
+{
+  "id": "asql-07-c1",
+  "prompt": "For the 10 customers with the highest delivered freight charges, show customer_id, sea, air, road (delivered charges by mode, 0 where none) and total, highest total first.",
+  "starter": "",
+  "solution": "SELECT s.customer_id, SUM(CASE WHEN r.mode = 'Sea' THEN s.freight_charge ELSE 0 END) AS sea, SUM(CASE WHEN r.mode = 'Air' THEN s.freight_charge ELSE 0 END) AS air, SUM(CASE WHEN r.mode = 'Road' THEN s.freight_charge ELSE 0 END) AS road, SUM(s.freight_charge) AS total FROM shipments AS s JOIN routes AS r ON r.route_id = s.route_id WHERE s.status = 'Delivered' GROUP BY s.customer_id ORDER BY total DESC LIMIT 10;",
+  "hint": "Pivot the mode with SUM(CASE WHEN r.mode = 'Sea' THEN s.freight_charge ELSE 0 END), and order by the total.",
+  "required": false,
+  "orderMatters": true
+}
+```
+
+## More practice
+
+```exercise
+{
+  "id": "asql-07-d1",
+  "prompt": "Show August's bookings by mode for 2025 and 2026 side by side: mode, aug_2025, aug_2026, ordered by mode.",
+  "starter": "",
+  "solution": "SELECT r.mode, SUM(CASE WHEN strftime('%Y-%m', s.booking_date) = '2025-08' THEN 1 ELSE 0 END) AS aug_2025, SUM(CASE WHEN strftime('%Y-%m', s.booking_date) = '2026-08' THEN 1 ELSE 0 END) AS aug_2026 FROM shipments AS s JOIN routes AS r ON r.route_id = s.route_id GROUP BY r.mode ORDER BY r.mode;",
+  "hint": "Compare strftime('%Y-%m', booking_date) with '2025-08' and '2026-08'.",
+  "required": false,
+  "orderMatters": true
+}
+```
+
+```exercise
+{
+  "id": "asql-07-d2",
+  "prompt": "Show payments received by method per year: method, y2025 and y2026 (totals of amount by payment_date year), ordered by method.",
+  "starter": "",
+  "solution": "SELECT method, SUM(CASE WHEN payment_date < '2026-01-01' THEN amount ELSE 0 END) AS y2025, SUM(CASE WHEN payment_date >= '2026-01-01' THEN amount ELSE 0 END) AS y2026 FROM payments GROUP BY method ORDER BY method;",
+  "hint": "SUM(CASE … THEN amount ELSE 0 END) per year.",
+  "required": false,
+  "orderMatters": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "It's mid-September. Which comparison of this year's sales with last year's is fair?",
+    "options": ["This year so far against all of last year", "January to August this year against January to August last year", "September so far against last September", "This year so far against last December"],
+    "answer": 1,
+    "explanation": "Compare complete periods of the same length and season."
+  },
+  {
+    "prompt": "Why write ROUND(100.0 * (this - last) / NULLIF(last, 0), 1)?",
+    "options": ["NULLIF rounds the number", "If last is 0 the result is NULL instead of an error or a misleading number", "It removes NULLs", "It's needed for ROUND"],
+    "answer": 1,
+    "explanation": "Growth from zero has no meaningful percentage."
+  },
+  {
+    "prompt": "Which pattern pivots rows into columns in every SQL database?",
+    "options": ["PIVOT", "SUM(CASE WHEN … THEN … ELSE 0 END)", "QUALIFY", "UNION ALL"],
+    "answer": 1,
+    "explanation": "Conditional aggregation is portable; PIVOT and FILTER are not available everywhere."
+  }
+]
+```
+$md$, true, true, 7, array['asql-07-p1', 'asql-07-p2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('asql-m08', 'advanced-sql', 'Advanced Joins', 8, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('advanced-sql:advanced-joins', 'advanced-sql', 'asql-m08', 'advanced-joins', 'Advanced joins', 'Join a table to itself, test for existence with semi- and anti-joins, walk a hierarchy with a recursive CTE, join on ranges, and build complete grids with CROSS JOIN.', 20, $md$
+## The problem
+
+HR asks for a staff list showing each person's manager. The `employees` table has a `manager_id` column, but it holds a number, not a name, and the manager is just another row in the **same table**.
+
+The same week, sales asks, "Which customers have **ever** used air freight?" A plain join returns one row per air shipment, so a customer with 30 air shipments appears 30 times. You could add `DISTINCT`, but that hides the real question, which is about **existence**, not about combining rows.
+
+Joins you already know (`INNER`, `LEFT`) combine matching rows. This lesson covers the joins that answer other kinds of questions.
+
+## The concept
+
+| Join | Answers | Pattern |
+| :-- | :-- | :-- |
+| **Self join** | How does a row relate to another row in the same table? | `employees AS e LEFT JOIN employees AS m ON m.employee_id = e.manager_id` |
+| **Semi-join** | Which rows have **at least one** match? | `WHERE EXISTS (SELECT 1 FROM … WHERE …)` |
+| **Anti-join** | Which rows have **no** match? | `WHERE NOT EXISTS (…)` |
+| **Recursive CTE** | Who's under whom, at any depth? | `WITH RECURSIVE` |
+| **Range (non-equi) join** | Which band or period does a value fall in? | `ON value BETWEEN band.lo AND band.hi` |
+| **Cross join** | Every combination, even ones with no data | `routes CROSS JOIN months` |
+
+A semi-join never duplicates rows, however many matches there are, and it stops looking at the first match.
+
+**Recursive CTEs** have two parts joined by `UNION ALL`: an **anchor** (the starting rows, such as people with no manager) and a **recursive part** that joins the CTE to the table to find the next level down. It repeats until a level finds no new rows. Always carry a `level` column, and make sure the recursion can end: a loop in the data (A manages B, B manages A) would run forever, and a `WHERE level < 10` guard prevents that.
+
+## Example
+
+The staff list with managers, via a self join. The same table appears twice, with different aliases:
+
+```sql run
+SELECT
+  e.employee_id,
+  e.full_name,
+  e.role,
+  COALESCE(m.full_name, '(no manager)') AS manager
+FROM employees AS e
+LEFT JOIN employees AS m ON m.employee_id = e.manager_id
+ORDER BY e.employee_id;
+```
+
+`LEFT JOIN` keeps the two team leads, who have no manager. An inner join would silently drop the most senior people in the list.
+
+Now the whole reporting tree, with a recursive CTE:
+
+```sql run
+WITH RECURSIVE org AS (
+  SELECT employee_id, full_name, role, 0 AS level, full_name AS path
+  FROM employees
+  WHERE manager_id IS NULL                      -- anchor: the top of the tree
+  UNION ALL
+  SELECT e.employee_id, e.full_name, e.role, o.level + 1, o.path || ' > ' || e.full_name
+  FROM employees AS e
+  JOIN org AS o ON e.manager_id = o.employee_id -- the next level down
+  WHERE o.level < 10                            -- guard against loops
+)
+SELECT level, path, role
+FROM org
+ORDER BY path;
+```
+
+Harbourline's tree is only two levels deep, but the same query works unchanged for a company with ten.
+
+## Walkthrough
+
+1. Run the self join. Change `LEFT JOIN` to `JOIN` and count the rows: 22, not 24.
+2. Run the recursive CTE, then remove `WHERE manager_id IS NULL` from the anchor. Every employee becomes a starting point and people appear several times. The anchor decides where the tree starts.
+3. Try a range join. Group shipments into size bands defined in a small inline table:
+
+```sql run
+WITH bands(band, lo, hi) AS (
+  VALUES ('Small (1-2)', 1, 2), ('Medium (3-5)', 3, 5), ('Large (6-8)', 6, 8)
+)
+SELECT b.band, COUNT(*) AS shipments, ROUND(AVG(s.freight_charge)) AS avg_charge
+FROM shipments AS s
+JOIN bands AS b ON s.containers BETWEEN b.lo AND b.hi
+GROUP BY b.band, b.lo
+ORDER BY b.lo;
+```
+
+4. Note that the bands live in data, not in a long `CASE`. When finance changes the bands, you change three rows, not the query.
+
+## Practice
+
+```exercise
+{
+  "id": "asql-08-p1",
+  "prompt": "Which customers have ever booked an Air shipment? Use EXISTS. Show customer_id and company_name, ordered by customer_id.",
+  "starter": "SELECT c.customer_id, c.company_name\nFROM customers AS c\nWHERE EXISTS (\n  SELECT 1\n  FROM shipments AS s\n  JOIN routes AS r ON r.route_id = s.route_id\n  WHERE \n)\nORDER BY c.customer_id;",
+  "solution": "SELECT c.customer_id, c.company_name FROM customers AS c WHERE EXISTS (SELECT 1 FROM shipments AS s JOIN routes AS r ON r.route_id = s.route_id WHERE s.customer_id = c.customer_id AND r.mode = 'Air') ORDER BY c.customer_id;",
+  "hint": "Inside EXISTS, link to the outer row (s.customer_id = c.customer_id) and add r.mode = 'Air'.",
+  "required": true,
+  "orderMatters": true
+}
+```
+
+```exercise
+{
+  "id": "asql-08-p2",
+  "prompt": "For each manager, count their direct reports. Show manager_id, manager_name and direct_reports, most reports first (ties by manager_id).",
+  "starter": "",
+  "solution": "SELECT m.employee_id AS manager_id, m.full_name AS manager_name, COUNT(*) AS direct_reports FROM employees AS e JOIN employees AS m ON m.employee_id = e.manager_id GROUP BY m.employee_id, m.full_name ORDER BY direct_reports DESC, manager_id;",
+  "hint": "Self join employees (e) to employees (m) on m.employee_id = e.manager_id, then group by the manager.",
+  "required": true,
+  "orderMatters": true
+}
+```
+
+## Challenge
+
+```exercise
+{
+  "id": "asql-08-c1",
+  "prompt": "Build a complete grid of every route and every month of 2026 (January to August), with the number of shipments booked, 0 where none. Show route_id, month ('YYYY-MM') and shipments, ordered by route_id then month.",
+  "starter": "",
+  "solution": "WITH RECURSIVE months(m) AS (SELECT '2026-01-01' UNION ALL SELECT date(m, '+1 month') FROM months WHERE m < '2026-08-01'), counts AS (SELECT route_id, date(booking_date, 'start of month') AS m, COUNT(*) AS n FROM shipments GROUP BY route_id, m) SELECT r.route_id, strftime('%Y-%m', mo.m) AS month, COALESCE(c.n, 0) AS shipments FROM routes AS r CROSS JOIN months AS mo LEFT JOIN counts AS c ON c.route_id = r.route_id AND c.m = mo.m ORDER BY r.route_id, month;",
+  "hint": "Generate the months with a recursive CTE, CROSS JOIN them with routes (240 rows), then LEFT JOIN the counts.",
+  "required": false,
+  "orderMatters": true
+}
+```
+
+## More practice
+
+```exercise
+{
+  "id": "asql-08-d1",
+  "prompt": "Find routes that have never had a cancelled shipment. Show route_id, origin and destination, ordered by route_id. Use NOT EXISTS.",
+  "starter": "",
+  "solution": "SELECT r.route_id, r.origin, r.destination FROM routes AS r WHERE NOT EXISTS (SELECT 1 FROM shipments AS s WHERE s.route_id = r.route_id AND s.status = 'Cancelled') ORDER BY r.route_id;",
+  "hint": "NOT EXISTS with s.route_id = r.route_id AND s.status = 'Cancelled'.",
+  "required": false,
+  "orderMatters": true
+}
+```
+
+```exercise
+{
+  "id": "asql-08-d2",
+  "prompt": "Find pairs of employees in the same team who were hired in the same year. Show team, hire_year, employee_a and employee_b (full names), each pair once, ordered by team, hire_year, employee_a.",
+  "starter": "",
+  "solution": "SELECT a.team, strftime('%Y', a.hire_date) AS hire_year, a.full_name AS employee_a, b.full_name AS employee_b FROM employees AS a JOIN employees AS b ON b.team = a.team AND strftime('%Y', b.hire_date) = strftime('%Y', a.hire_date) AND b.employee_id > a.employee_id ORDER BY a.team, hire_year, employee_a;",
+  "hint": "Self join on team and hire year, with b.employee_id > a.employee_id so each pair appears once and nobody is paired with themselves.",
+  "required": false,
+  "orderMatters": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "A customer has 30 air shipments. How many times does it appear in WHERE EXISTS (… air shipment …)?",
+    "options": ["30", "Once", "Zero", "It depends on the order"],
+    "answer": 1,
+    "explanation": "A semi-join tests for existence; it never multiplies rows."
+  },
+  {
+    "prompt": "In a recursive CTE, what is the anchor?",
+    "options": ["The guard that stops loops", "The first SELECT, which gives the starting rows", "The final ORDER BY", "The UNION ALL"],
+    "answer": 1,
+    "explanation": "The anchor runs once. The recursive part then keeps adding rows joined to the previous level."
+  },
+  {
+    "prompt": "You need a row for every route and month, including combinations with no shipments. Which join creates them?",
+    "options": ["INNER JOIN", "CROSS JOIN routes with a list of months, then LEFT JOIN the data", "Self join", "NOT EXISTS"],
+    "answer": 1,
+    "explanation": "CROSS JOIN makes every combination; the LEFT JOIN then fills in the numbers that exist."
+  }
+]
+```
+$md$, true, true, 8, array['asql-08-p1', 'asql-08-p2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('asql-m09', 'advanced-sql', 'Query Performance', 9, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('advanced-sql:query-performance', 'advanced-sql', 'asql-m09', 'query-performance', 'Query performance', 'Read a query plan, understand what an index does, and write queries a database can run quickly on millions of rows.', 25, $md$
+## The problem
+
+Your SQL runs in a second on Harbourline's 2,683 shipments. At your next job, the shipments table has 80 million rows, and the same query runs for twenty minutes, then times out and holds up everyone else's reports.
+
+The data volume is out of your hands, but how you write the query isn't. The difference between a query that **searches** an index and one that **scans** every row can be a thousandfold at scale. Analysts who write fast queries get their numbers sooner and are trusted with access to bigger systems.
+
+## The concept
+
+**Scan or search**
+
+To find rows, a database either **scans** (reads every row in the table) or **searches** (uses an **index** to jump straight to the rows it needs). An index is like the index at the back of a book: a sorted list of values, each pointing to where the matching rows are. Searching 80 million rows through an index takes a few steps, while scanning them means reading all 80 million.
+
+**Reading the plan**
+
+`EXPLAIN QUERY PLAN` (SQLite), `EXPLAIN` (PostgreSQL, MySQL) or the "estimated execution plan" (SQL Server) shows what the database intends to do, without running the query. Look for:
+
+| In the plan | Meaning |
+| :-- | :-- |
+| `SCAN table` | reads every row. Fine for small tables, slow for big ones |
+| `SEARCH table USING INDEX` | jumps to matching rows. What you want for selective filters |
+| `USING COVERING INDEX` | the index holds every column needed, so the table isn't touched |
+| `CORRELATED SCALAR SUBQUERY` | a subquery that runs once **per row** of the outer query |
+
+**Habits that keep queries fast**
+
+1. **Keep filters sargable**: leave the column bare. `WHERE strftime('%Y', booking_date) = '2026'` has to calculate the year for every row, so it can't use an index on `booking_date`. `WHERE booking_date >= '2026-01-01' AND booking_date < '2027-01-01'` can.
+2. **Select only the columns you need.** `SELECT *` reads and sends everything, and stops covering indexes from working.
+3. **Aggregate before you join.** Total payments per shipment first, then join 2,409 rows down to 2,250, rather than joining everything and grouping at the end.
+4. **Avoid correlated subqueries in `SELECT`** on big tables. Replace them with a join to a pre-aggregated CTE.
+5. **Prefer `UNION ALL` to `UNION`** when duplicates are impossible or wanted. `UNION` has to sort everything to remove them.
+6. **Beware leading wildcards.** `LIKE '%Foods'` can't use an index; `LIKE 'Kings%'` can.
+
+Indexes aren't free: each one slows down inserts and updates and takes space. In most jobs analysts don't create indexes on production databases themselves; they show the plan to a data engineer or DBA and ask. Writing sargable queries is always in your hands.
+
+## Example
+
+Harbourline's practice database has no indexes, so every query scans:
+
+```sql run
+EXPLAIN QUERY PLAN
+SELECT * FROM shipments WHERE customer_id = 42;
+```
+
+`SCAN shipments`. Now create an index and ask again. Your browser has its own copy of the database, so this changes nothing for anyone else:
+
+```sql run
+CREATE INDEX IF NOT EXISTS idx_shipments_customer ON shipments(customer_id);
+EXPLAIN QUERY PLAN
+SELECT * FROM shipments WHERE customer_id = 42;
+```
+
+`SEARCH shipments USING INDEX idx_shipments_customer (customer_id=?)`. The database now jumps straight to customer 42's rows.
+
+## Walkthrough
+
+1. Create an index on booking dates, and compare the plans of the two ways of filtering on a year:
+
+```sql run
+CREATE INDEX IF NOT EXISTS idx_shipments_booking ON shipments(booking_date);
+EXPLAIN QUERY PLAN
+SELECT COUNT(*) FROM shipments WHERE strftime('%Y', booking_date) = '2026';
+```
+
+```sql run
+EXPLAIN QUERY PLAN
+SELECT COUNT(*) FROM shipments WHERE booking_date >= '2026-01-01' AND booking_date < '2027-01-01';
+```
+
+2. Read the two plans. The first still **scans** (the whole index, calculating the year for every entry). The second **searches** a range of the index: `booking_date>? AND booking_date<?`. Same answer, very different work at scale.
+3. Look at the plan for a correlated subquery:
+
+```sql run
+EXPLAIN QUERY PLAN
+SELECT
+  c.company_name,
+  (SELECT SUM(p.amount)
+   FROM payments AS p
+   JOIN shipments AS s ON s.shipment_id = p.shipment_id
+   WHERE s.customer_id = c.customer_id) AS total_paid
+FROM customers AS c;
+```
+
+4. Find `CORRELATED SCALAR SUBQUERY` in the plan: the subquery runs once for each of the 120 customers. With a million customers it would run a million times. The practice tasks below rewrite it.
+
+> [!NOTE]
+> On a database this small every query is fast, so timings tell you little. The plan is what tells you how a query will behave when the table is a thousand times bigger.
+
+## Practice
+
+```exercise
+{
+  "id": "asql-09-p1",
+  "prompt": "Rewrite the correlated subquery from the walkthrough as a join to a pre-aggregated CTE. Show company_name and total_paid for customers who have made payments, highest first.",
+  "starter": "WITH paid_by_customer AS (\n  SELECT s.customer_id, SUM(p.amount) AS total_paid\n  FROM payments AS p\n  JOIN shipments AS s ON s.shipment_id = p.shipment_id\n  GROUP BY s.customer_id\n)\nSELECT\n  \nFROM customers AS c\n",
+  "solution": "WITH paid_by_customer AS (SELECT s.customer_id, SUM(p.amount) AS total_paid FROM payments AS p JOIN shipments AS s ON s.shipment_id = p.shipment_id GROUP BY s.customer_id) SELECT c.company_name, pc.total_paid FROM customers AS c JOIN paid_by_customer AS pc ON pc.customer_id = c.customer_id ORDER BY pc.total_paid DESC;",
+  "hint": "Join customers to paid_by_customer on customer_id. An inner join keeps only customers who have paid.",
+  "required": true,
+  "orderMatters": true
+}
+```
+
+```exercise
+{
+  "id": "asql-09-p2",
+  "prompt": "Count bookings per mode for March 2026, with a sargable date filter (no function on booking_date). Show mode and shipments, ordered by mode.",
+  "starter": "SELECT r.mode, COUNT(*) AS shipments\nFROM shipments AS s\nJOIN routes AS r ON r.route_id = s.route_id\nWHERE strftime('%Y-%m', s.booking_date) = '2026-03'\nGROUP BY r.mode\nORDER BY r.mode;",
+  "solution": "SELECT r.mode, COUNT(*) AS shipments FROM shipments AS s JOIN routes AS r ON r.route_id = s.route_id WHERE s.booking_date >= '2026-03-01' AND s.booking_date < '2026-04-01' GROUP BY r.mode ORDER BY r.mode;",
+  "hint": "Use s.booking_date >= '2026-03-01' AND s.booking_date < '2026-04-01'. A half-open range (< the first of next month) works for any month length.",
+  "required": true,
+  "orderMatters": true
+}
+```
+
+## Challenge
+
+```exercise
+{
+  "id": "asql-09-c1",
+  "prompt": "This query lists customers with a delivered Sea shipment, but it joins every shipment and then removes duplicates: SELECT DISTINCT c.customer_id, c.company_name FROM customers c JOIN shipments s ON s.customer_id = c.customer_id JOIN routes r ON r.route_id = s.route_id WHERE r.mode = 'Sea' AND s.status = 'Delivered'. Rewrite it with EXISTS so no duplicates are created. Show customer_id and company_name, ordered by customer_id.",
+  "starter": "",
+  "solution": "SELECT c.customer_id, c.company_name FROM customers AS c WHERE EXISTS (SELECT 1 FROM shipments AS s JOIN routes AS r ON r.route_id = s.route_id WHERE s.customer_id = c.customer_id AND r.mode = 'Sea' AND s.status = 'Delivered') ORDER BY c.customer_id;",
+  "hint": "A semi-join stops at the first matching shipment for each customer, so there's nothing to deduplicate.",
+  "required": false,
+  "orderMatters": true
+}
+```
+
+## More practice
+
+```exercise
+{
+  "id": "asql-09-d1",
+  "prompt": "Look at the plan for a search inside company names. Run: EXPLAIN QUERY PLAN SELECT customer_id FROM customers WHERE company_name LIKE '%Foods%'. Then write the query itself: customer_id and company_name for every company whose name contains 'Foods', ordered by customer_id.",
+  "starter": "",
+  "solution": "SELECT customer_id, company_name FROM customers WHERE company_name LIKE '%Foods%' ORDER BY customer_id;",
+  "hint": "A leading % can never use an index, so on a large table this always scans. Sometimes that's the only way to answer the question, and that's fine on a small table like customers.",
+  "required": false,
+  "orderMatters": true
+}
+```
+
+```exercise
+{
+  "id": "asql-09-d2",
+  "prompt": "Aggregate before joining: show each route's origin, destination and total delivered containers, by totalling shipments per route in a CTE first. Show route_id, origin, destination and containers, highest first.",
+  "starter": "",
+  "solution": "WITH per_route AS (SELECT route_id, SUM(containers) AS containers FROM shipments WHERE status = 'Delivered' GROUP BY route_id) SELECT r.route_id, r.origin, r.destination, pr.containers FROM per_route AS pr JOIN routes AS r ON r.route_id = pr.route_id ORDER BY pr.containers DESC, r.route_id;",
+  "hint": "Group shipments by route_id in the CTE, then join the 30 totals to routes.",
+  "required": false,
+  "orderMatters": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Which filter can use an index on order_date?",
+    "options": ["WHERE YEAR(order_date) = 2026", "WHERE order_date >= '2026-01-01' AND order_date < '2027-01-01'", "WHERE CAST(order_date AS TEXT) LIKE '2026%'", "WHERE strftime('%Y', order_date) = '2026'"],
+    "answer": 1,
+    "explanation": "Leave the column bare so the database can search a range of the index."
+  },
+  {
+    "prompt": "A plan shows CORRELATED SCALAR SUBQUERY under a scan of a 2-million-row table. What's the risk?",
+    "options": ["None", "The subquery runs once per row: 2 million times", "It returns the wrong answer", "It locks the table"],
+    "answer": 1,
+    "explanation": "Rewrite it as a join to a pre-aggregated CTE."
+  },
+  {
+    "prompt": "Your query on a production database is slow and the plan shows a full scan on a filtered column. What should you usually do?",
+    "options": ["Create the index yourself on production", "Make sure the filter is sargable, then share the plan with a data engineer or DBA and ask about an index", "Add SELECT *", "Run it at night and hope"],
+    "answer": 1,
+    "explanation": "Indexes affect everyone who writes to the table; they're usually the data team's decision."
+  }
+]
+```
+$md$, true, true, 9, array['asql-09-p1', 'asql-09-p2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('asql-m10', 'advanced-sql', 'Business Analysis Patterns', 10, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('advanced-sql:business-analysis-patterns', 'advanced-sql', 'asql-m10', 'business-analysis-patterns', 'Business analysis patterns', 'Build three analyses finance and sales ask for again and again (receivables aging, Pareto concentration and RFM segmentation) by combining everything in this course.', 25, $md$
+## The problem
+
+Harbourline's finance director has a number: ₦1.41 billion of freight charges on delivered shipments hasn't been paid. She needs to know **how worried to be**. ₦1.4 billion that's a week overdue is normal business. ₦1.4 billion that's six months overdue is a cash-flow crisis and possibly bad debt.
+
+Meanwhile, the sales director wants to know which customers matter most and which are slipping away.
+
+None of these is a new SQL feature. Each is a **pattern**: a standard analysis that companies everywhere ask for, built from the pieces you already have. Knowing the patterns means you can say "yes, by tomorrow" instead of "let me think about how".
+
+## The concept
+
+**Receivables aging**
+
+Group unpaid amounts into buckets by how long they've been owed (0–30, 31–60, 61–90, over 90 days) as of a fixed date. The older the bucket, the less likely the money is ever collected. Finance teams review an aging report every month.
+
+Steps: total payments per shipment → outstanding = charge − paid → days since delivery, as of the report date → `CASE` into buckets → total by bucket.
+
+**Pareto (concentration)**
+
+How much of revenue comes from the top customers? Sort customers by revenue, take a **running total**, and divide by the grand total. The row where the running share passes 80% tells you how concentrated the business is. High concentration is a risk: lose one big customer and revenue falls sharply.
+
+**RFM segmentation**
+
+Score every customer on three things:
+
+- **Recency**: days since their last order (fewer is better).
+- **Frequency**: how many orders.
+- **Monetary**: how much they've spent.
+
+`NTILE(4) OVER (ORDER BY …)` splits customers into four equal groups for each measure, scored 1 to 4. A customer scoring 4-4-4 is your best; one with high frequency and money but a recency score of 1 is a valuable customer who's gone quiet, the first call for the account team.
+
+> [!NOTE]
+> `NTILE` puts tied values into different groups when a group boundary falls between them. Add a tie-breaker to its `ORDER BY` so the scores are the same every time.
+
+## Example
+
+The aging report as of 31 August 2026:
+
+```sql run
+WITH paid AS (
+  SELECT shipment_id, SUM(amount) AS paid
+  FROM payments
+  GROUP BY shipment_id
+),
+open_items AS (
+  SELECT
+    s.shipment_id,
+    s.customer_id,
+    s.freight_charge - COALESCE(p.paid, 0) AS outstanding,
+    julianday('2026-08-31') - julianday(s.delivery_date) AS days_owed
+  FROM shipments AS s
+  LEFT JOIN paid AS p ON p.shipment_id = s.shipment_id
+  WHERE s.status = 'Delivered'
+    AND s.freight_charge - COALESCE(p.paid, 0) > 0
+)
+SELECT
+  CASE
+    WHEN days_owed <= 30 THEN '0-30 days'
+    WHEN days_owed <= 60 THEN '31-60 days'
+    WHEN days_owed <= 90 THEN '61-90 days'
+    ELSE 'Over 90 days'
+  END AS bucket,
+  COUNT(*) AS shipments,
+  SUM(outstanding) AS outstanding,
+  ROUND(100.0 * SUM(outstanding) / SUM(SUM(outstanding)) OVER (), 1) AS pct_of_total
+FROM open_items
+GROUP BY bucket
+ORDER BY MIN(days_owed);
+```
+
+The answer to "how worried?" is **very**: ₦1.29 billion, **91.6%** of everything owed, is more than 90 days overdue, spread over 221 shipments. This isn't slow paperwork; it's old debt. The recommendation writes itself: a collection drive on the over-90 balances, starting with the largest.
+
+## Walkthrough
+
+1. Run the example and check the total: the four buckets add up to ₦1,411,777,000, the same as charged minus received on delivered shipments in lesson 3. Reconcile before you present.
+2. Note why `paid` is a CTE: shipments paid in instalments would otherwise be counted once per payment.
+3. Find who owes the old money. Change the final `SELECT` to group the over-90 items by customer:
+
+```sql run
+WITH paid AS (
+  SELECT shipment_id, SUM(amount) AS paid FROM payments GROUP BY shipment_id
+)
+SELECT c.company_name, COUNT(*) AS shipments, SUM(s.freight_charge - COALESCE(p.paid, 0)) AS over_90
+FROM shipments AS s
+LEFT JOIN paid AS p ON p.shipment_id = s.shipment_id
+JOIN customers AS c ON c.customer_id = s.customer_id
+WHERE s.status = 'Delivered'
+  AND s.freight_charge > COALESCE(p.paid, 0)
+  AND s.delivery_date <= date('2026-08-31', '-90 days')
+GROUP BY c.customer_id, c.company_name
+ORDER BY over_90 DESC
+LIMIT 10;
+```
+
+4. Oakridge Motors Plc tops the list with about ₦92 million across 8 shipments. 63 customers have something over 90 days, so this is a widespread collections problem, not one bad customer.
+
+## Practice
+
+```exercise
+{
+  "id": "asql-10-p1",
+  "prompt": "Pareto: rank customers by delivered freight charges and show each one's cumulative share of the total. Show customer_id, revenue and cumulative_pct (1 decimal place), highest revenue first (ties by customer_id).",
+  "starter": "WITH revenue AS (\n  SELECT customer_id, SUM(freight_charge) AS revenue\n  FROM shipments\n  WHERE status = 'Delivered'\n  GROUP BY customer_id\n)\nSELECT customer_id, revenue\nFROM revenue\nORDER BY revenue DESC, customer_id;",
+  "solution": "WITH revenue AS (SELECT customer_id, SUM(freight_charge) AS revenue FROM shipments WHERE status = 'Delivered' GROUP BY customer_id) SELECT customer_id, revenue, ROUND(100.0 * SUM(revenue) OVER (ORDER BY revenue DESC, customer_id ROWS UNBOUNDED PRECEDING) / SUM(revenue) OVER (), 1) AS cumulative_pct FROM revenue ORDER BY revenue DESC, customer_id;",
+  "hint": "A running total (SUM(revenue) OVER (ORDER BY revenue DESC, customer_id ROWS UNBOUNDED PRECEDING)) divided by the grand total (SUM(revenue) OVER ()).",
+  "required": true,
+  "orderMatters": true
+}
+```
+
+```exercise
+{
+  "id": "asql-10-p2",
+  "prompt": "RFM scores, as of 2026-08-31, for every customer who has booked. Recency = days since last booking; frequency = number of shipments; monetary = total freight_charge on delivered shipments. Score each with NTILE(4) so that 4 is best (most recent, most frequent, highest spend), breaking ties by customer_id. Show customer_id, recency_days, frequency, monetary, r, f and m, ordered by customer_id.",
+  "starter": "WITH base AS (\n  SELECT\n    customer_id,\n    CAST(julianday('2026-08-31') - julianday(MAX(booking_date)) AS INTEGER) AS recency_days,\n    COUNT(*) AS frequency,\n    SUM(CASE WHEN status = 'Delivered' THEN freight_charge ELSE 0 END) AS monetary\n  FROM shipments\n  GROUP BY customer_id\n)\nSELECT *\nFROM base\nORDER BY customer_id;",
+  "solution": "WITH base AS (SELECT customer_id, CAST(julianday('2026-08-31') - julianday(MAX(booking_date)) AS INTEGER) AS recency_days, COUNT(*) AS frequency, SUM(CASE WHEN status = 'Delivered' THEN freight_charge ELSE 0 END) AS monetary FROM shipments GROUP BY customer_id) SELECT customer_id, recency_days, frequency, monetary, NTILE(4) OVER (ORDER BY recency_days DESC, customer_id) AS r, NTILE(4) OVER (ORDER BY frequency, customer_id) AS f, NTILE(4) OVER (ORDER BY monetary, customer_id) AS m FROM base ORDER BY customer_id;",
+  "hint": "NTILE gives 1 to the first rows in its order, so order from worst to best: recency_days DESC (longest ago first), frequency ascending, monetary ascending. Add customer_id as the tie-breaker in each.",
+  "required": true,
+  "orderMatters": true
+}
+```
+
+## Challenge
+
+```exercise
+{
+  "id": "asql-10-c1",
+  "prompt": "Using the RFM scores, find valuable customers who've gone quiet: f = 4 and m = 4 but r <= 2. Show customer_id, company_name, recency_days, frequency and monetary, longest recency first.",
+  "starter": "",
+  "solution": "WITH base AS (SELECT customer_id, CAST(julianday('2026-08-31') - julianday(MAX(booking_date)) AS INTEGER) AS recency_days, COUNT(*) AS frequency, SUM(CASE WHEN status = 'Delivered' THEN freight_charge ELSE 0 END) AS monetary FROM shipments GROUP BY customer_id), scored AS (SELECT *, NTILE(4) OVER (ORDER BY recency_days DESC, customer_id) AS r, NTILE(4) OVER (ORDER BY frequency, customer_id) AS f, NTILE(4) OVER (ORDER BY monetary, customer_id) AS m FROM base) SELECT s.customer_id, c.company_name, s.recency_days, s.frequency, s.monetary FROM scored AS s JOIN customers AS c ON c.customer_id = s.customer_id WHERE s.f = 4 AND s.m = 4 AND s.r <= 2 ORDER BY s.recency_days DESC, s.customer_id;",
+  "hint": "Put the scoring query in a CTE, then filter and join the names.",
+  "required": false,
+  "orderMatters": true
+}
+```
+
+## More practice
+
+```exercise
+{
+  "id": "asql-10-d1",
+  "prompt": "Average days to pay by customer: for customers with at least 10 payments, show customer_id, payments and avg_days_to_pay (payment_date − delivery_date, 1 decimal place), slowest first.",
+  "starter": "",
+  "solution": "SELECT s.customer_id, COUNT(*) AS payments, ROUND(AVG(julianday(p.payment_date) - julianday(s.delivery_date)), 1) AS avg_days_to_pay FROM payments AS p JOIN shipments AS s ON s.shipment_id = p.shipment_id GROUP BY s.customer_id HAVING COUNT(*) >= 10 ORDER BY avg_days_to_pay DESC, s.customer_id;",
+  "hint": "Join payments to shipments, group by customer, HAVING COUNT(*) >= 10.",
+  "required": false,
+  "orderMatters": true
+}
+```
+
+```exercise
+{
+  "id": "asql-10-d2",
+  "prompt": "Aging by mode: for unpaid amounts on delivered shipments as of 2026-08-31, show mode, outstanding (total) and over_90 (the part more than 90 days since delivery), largest outstanding first.",
+  "starter": "",
+  "solution": "WITH paid AS (SELECT shipment_id, SUM(amount) AS paid FROM payments GROUP BY shipment_id) SELECT r.mode, SUM(s.freight_charge - COALESCE(p.paid, 0)) AS outstanding, SUM(CASE WHEN julianday('2026-08-31') - julianday(s.delivery_date) > 90 THEN s.freight_charge - COALESCE(p.paid, 0) ELSE 0 END) AS over_90 FROM shipments AS s LEFT JOIN paid AS p ON p.shipment_id = s.shipment_id JOIN routes AS r ON r.route_id = s.route_id WHERE s.status = 'Delivered' AND s.freight_charge > COALESCE(p.paid, 0) GROUP BY r.mode ORDER BY outstanding DESC;",
+  "hint": "The aging CTE plus a join to routes, with SUM(CASE …) for the over-90 part.",
+  "required": false,
+  "orderMatters": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "₦1.4bn is outstanding and 92% of it is more than 90 days old. What's the best summary for finance?",
+    "options": ["Normal working capital", "Mostly old debt: a collections problem and a bad-debt risk, not slow paperwork", "The data is wrong", "Customers have overpaid"],
+    "answer": 1,
+    "explanation": "The aging profile, not the total, tells you how worried to be."
+  },
+  {
+    "prompt": "The running share of revenue passes 80% at customer 38 of 102. What does that mean?",
+    "options": ["38 customers owe money", "About 37% of customers bring in 80% of revenue", "Revenue grew 80%", "38% of customers are inactive"],
+    "answer": 1,
+    "explanation": "That's a Pareto analysis of concentration."
+  },
+  {
+    "prompt": "In NTILE(4) OVER (ORDER BY recency_days DESC, customer_id), which customers get a score of 4?",
+    "options": ["Those who booked longest ago", "Those who booked most recently", "Random customers", "Those with the most shipments"],
+    "answer": 1,
+    "explanation": "NTILE gives 1 to the first rows and 4 to the last; ordering by recency_days DESC puts the most recent last."
+  }
+]
+```
+$md$, true, true, 10, array['asql-10-p1', 'asql-10-p2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('asql-m11', 'advanced-sql', 'Final Project', 11, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('advanced-sql:final-project', 'advanced-sql', 'asql-m11', 'final-project', '"Final project: commercial health check"', 'Plan your final project, a commercial health check of Harbourline Freight for its leadership team, and warm up with two of its queries.', 20, $md$
+## The problem
+
+Harbourline Freight's managing director is preparing for a board meeting and asks for a **commercial health check**:
+
+> "Are we growing? Are our customers staying? Are we delivering on our promises? And are we actually getting paid? I want numbers I can defend, with the SQL behind them so the finance team can check them."
+
+That's four questions, and each one needs a pattern from this course. The board will push back on any number that looks odd, so the data has to be checked first and the definitions written down. The full brief and submission are on the course's project page; this lesson gets you started.
+
+## The concept
+
+**From questions to patterns**
+
+| Question | Pattern | Lesson |
+| :-- | :-- | :-- |
+| Can we trust the data? | Profile, keys, relationships, business rules, reconciliation | 3 |
+| Are we growing? | Like-for-like year-to-date pivot, monthly trend with a moving average | 2, 4, 7 |
+| Are customers staying? | Cohorts and retention, lapsed customers, RFM | 6, 10 |
+| Are we delivering on our promises? | On-time rate by mode and route, period comparison | 1, 7 |
+| Are we getting paid? | Receivables aging, top debtors, days to pay | 10 |
+
+**What makes it board-ready**
+
+- **Definitions first**: what counts as revenue (charges on delivered shipments, or cash received?), on time, active and the "as of" date (31 August 2026).
+- **Like for like**: no comparison of a full year with eight months.
+- **Readable SQL**: one CTE per step, named for what it holds, with a comment where a definition matters.
+- **Reconciled totals**: the aging buckets add up to the outstanding total, and the customer list adds up to the company total.
+- **Sentences, not just tables**: each result followed by what it means and what to do about it.
+
+## Example
+
+A first look at the delivery question: on-time rate by mode, 2025 against 2026 (both years by delivery date, as of 31 August 2026).
+
+```sql run
+WITH delivered AS (
+  SELECT
+    r.mode,
+    strftime('%Y', s.delivery_date) AS year,
+    -- on time = transit days <= the route's target
+    julianday(s.delivery_date) - julianday(s.ship_date) <= r.target_transit_days AS on_time
+  FROM shipments AS s
+  JOIN routes AS r ON r.route_id = s.route_id
+  WHERE s.status = 'Delivered'
+)
+SELECT
+  mode,
+  SUM(year = '2025') AS delivered_2025,
+  ROUND(100.0 * SUM(CASE WHEN year = '2025' THEN on_time END) / SUM(year = '2025'), 1) AS on_time_2025,
+  SUM(year = '2026') AS delivered_2026,
+  ROUND(100.0 * SUM(CASE WHEN year = '2026' THEN on_time END) / SUM(year = '2026'), 1) AS on_time_2026
+FROM delivered
+GROUP BY mode
+ORDER BY mode;
+```
+
+Road and sea improved, but air fell from 80.4% to 68.9% on time. Rates are shares, not counts, so comparing a full year with eight months is fair here. The counts still matter, though: air had only 153 and 122 deliveries, so part of a change that size could be noise. The Statistics for Data Analysis course shows how to test whether a change like that is real.
+
+## Walkthrough
+
+1. Write your definitions in a comment block at the top of a SQL file: revenue, on time, active customer and the "as of" date.
+2. Run the data-quality checks from lesson 3 and note what you found and decided.
+3. Build the year-to-date pivot (lesson 7) and the monthly moving average (lesson 4) to answer "are we growing?".
+4. Build the cohort table (lesson 6) and the list of lapsed customers.
+5. Build the aging report (lesson 10) and reconcile it with the outstanding total.
+6. Open the project brief on the course page and check that every task has a query.
+
+## Practice
+
+```exercise
+{
+  "id": "asql-11-p1",
+  "prompt": "Who should chase the old debt? For unpaid amounts on delivered shipments more than 90 days after delivery (as of 2026-08-31), show account_manager (full name, or 'Unassigned'), customers (the number of distinct customers) and over_90 (the total), largest first.",
+  "starter": "WITH paid AS (\n  SELECT shipment_id, SUM(amount) AS paid\n  FROM payments\n  GROUP BY shipment_id\n)\nSELECT\n  \nFROM shipments AS s\nLEFT JOIN paid AS p ON p.shipment_id = s.shipment_id\nJOIN customers AS c ON c.customer_id = s.customer_id\nLEFT JOIN employees AS e ON e.employee_id = c.account_manager_id\nWHERE s.status = 'Delivered'\n  AND s.freight_charge > COALESCE(p.paid, 0)\n  AND s.delivery_date <= date('2026-08-31', '-90 days')\n",
+  "solution": "WITH paid AS (SELECT shipment_id, SUM(amount) AS paid FROM payments GROUP BY shipment_id) SELECT COALESCE(e.full_name, 'Unassigned') AS account_manager, COUNT(DISTINCT s.customer_id) AS customers, SUM(s.freight_charge - COALESCE(p.paid, 0)) AS over_90 FROM shipments AS s LEFT JOIN paid AS p ON p.shipment_id = s.shipment_id JOIN customers AS c ON c.customer_id = s.customer_id LEFT JOIN employees AS e ON e.employee_id = c.account_manager_id WHERE s.status = 'Delivered' AND s.freight_charge > COALESCE(p.paid, 0) AND s.delivery_date <= date('2026-08-31', '-90 days') GROUP BY account_manager ORDER BY over_90 DESC;",
+  "hint": "Group by COALESCE(e.full_name, 'Unassigned'). The LEFT JOIN to employees keeps customers with no account manager, and their debt still needs an owner.",
+  "required": true,
+  "orderMatters": true
+}
+```
+
+```exercise
+{
+  "id": "asql-11-p2",
+  "prompt": "Are we growing? Show bookings and delivered freight charges year to date (January to August) for 2025 and 2026 in one row: shipments_2025, shipments_2026, charges_2025, charges_2026 (charges on Delivered shipments, by booking_date).",
+  "starter": "",
+  "solution": "SELECT SUM(booking_date BETWEEN '2025-01-01' AND '2025-08-31') AS shipments_2025, SUM(booking_date BETWEEN '2026-01-01' AND '2026-08-31') AS shipments_2026, SUM(CASE WHEN status = 'Delivered' AND booking_date BETWEEN '2025-01-01' AND '2025-08-31' THEN freight_charge ELSE 0 END) AS charges_2025, SUM(CASE WHEN status = 'Delivered' AND booking_date BETWEEN '2026-01-01' AND '2026-08-31' THEN freight_charge ELSE 0 END) AS charges_2026 FROM shipments;",
+  "hint": "Conditional aggregation over the same January-to-August window in both years.",
+  "required": true
+}
+```
+
+## Challenge
+
+```exercise
+{
+  "id": "asql-11-c1",
+  "prompt": "Delivered charges by booking year look lower in 2026 partly because recent shipments are still in transit. Show, for bookings from January to August of each year: year, booked, delivered, in_transit_or_booked, and delivered_pct (1 decimal place), ordered by year.",
+  "starter": "",
+  "solution": "SELECT strftime('%Y', booking_date) AS year, COUNT(*) AS booked, SUM(status = 'Delivered') AS delivered, SUM(status IN ('In transit', 'Booked')) AS in_transit_or_booked, ROUND(100.0 * SUM(status = 'Delivered') / COUNT(*), 1) AS delivered_pct FROM shipments WHERE strftime('%m', booking_date) <= '08' GROUP BY year ORDER BY year;",
+  "hint": "Bookings made in July and August 2026 have had little time to arrive. Show it, so nobody mistakes it for a fall in business.",
+  "required": false,
+  "orderMatters": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why reconcile the aging buckets with the outstanding total before presenting?",
+    "options": ["Boards like big numbers", "If they don't add up, a join or filter is wrong, and the board will find it", "It makes the query faster", "It isn't necessary"],
+    "answer": 1,
+    "explanation": "A reconciliation is the cheapest proof that your query is right."
+  },
+  {
+    "prompt": "2026 delivered charges for bookings to date look lower than 2025's. What should you check first?",
+    "options": ["Nothing; revenue fell", "Whether recent bookings are still in transit and so not yet delivered", "Whether SQL rounded the numbers", "The colour of the chart"],
+    "answer": 1,
+    "explanation": "Recent periods are incomplete. Compare like for like, or show what's still in progress."
+  },
+  {
+    "prompt": "Where should the definitions of revenue, on time and active customer go?",
+    "options": ["Nowhere: they're obvious", "At the top of the work, before any results", "In a footnote on the last slide", "Only in your head"],
+    "answer": 1,
+    "explanation": "Every number depends on them, so they come first."
+  }
+]
+```
+$md$, true, true, 11, array['asql-11-p1', 'asql-11-p2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+
 -- Course: Data Modelling
 insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
-values ('data-modelling', 'full', null, 'data-modelling', 'DMO', 'Data Modelling', 'Design databases and analytics models that stay correct: entities, keys, relationships, ERDs, normalisation and star schemas.', 'Every reliable report sits on a well-designed model. Learn to turn business questions into entities and keys, draw entity-relationship diagrams in crow''s-foot notation, normalise away repeated data, and design the star schemas that Power BI and data warehouses run on. Every lesson is built around diagrams, and you practise on real databases in your browser.', 'databases', 'intermediate', 3, 'Beginner to intermediate', 6, true, 'available', true, array['Entities, attributes and grain', 'Primary and foreign keys', 'Cardinality and bridge tables', 'Entity-relationship diagrams', 'Normalisation (1NF to 3NF)', 'Star schemas and slowly changing dimensions']::text[], array['Basic SQL (SELECT, WHERE, JOIN) helps; the SQL for Data Analysis course covers it', 'No design experience needed']::text[], 'Ashgrove Chambers data model', true, true, true, true, false, 60, 17)
+values ('data-modelling', 'full', null, 'data-modelling', 'DMO', 'Data Modelling', 'Design databases and analytics models that stay correct: entities, keys, relationships, ERDs, normalisation and star schemas.', 'Every reliable report sits on a well-designed model. Learn to turn business questions into entities and keys, draw entity-relationship diagrams in crow''s-foot notation, normalise away repeated data, and design the star schemas that Power BI and data warehouses run on. Every lesson is built around diagrams, and you practise on real databases in your browser.', 'databases', 'intermediate', 3, 'Beginner to intermediate', 6, true, 'available', true, array['Entities, attributes and grain', 'Primary and foreign keys', 'Cardinality and bridge tables', 'Entity-relationship diagrams', 'Normalisation (1NF to 3NF)', 'Star schemas and slowly changing dimensions']::text[], array['Basic SQL (SELECT, WHERE, JOIN) helps; the SQL for Data Analysis course covers it', 'No design experience needed']::text[], 'Ashgrove Chambers data model', true, true, true, true, false, 60, 18)
 on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level = excluded.level, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
@@ -15865,7 +17871,7 @@ on conflict (id) do update set course_id = excluded.course_id, module_id = exclu
 
 -- Course: Power BI Fundamentals
 insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
-values ('power-bi-fundamentals', 'full', null, 'power-bi-fundamentals', 'PBI', 'Power BI Fundamentals', 'Build a data model, write DAX measures and design a dashboard people can use to run a business.', 'Power BI turns data into dashboards. Learn the full workflow: import and clean data with Power Query, relate tables in a model, write DAX measures, and design a dashboard that tells a clear business story.', 'business-intelligence', 'beginner', 2, 'Beginner to intermediate', 8, true, 'available', true, array['Power Query', 'Data modelling and relationships', 'DAX measures', 'Dashboard design', 'Publishing reports']::text[], array['Power BI Desktop (free, Windows only)', 'Basic Excel is helpful: the Excel course covers it']::text[], 'Ashgrove Chambers practice dashboard', true, true, true, true, false, 60, 18)
+values ('power-bi-fundamentals', 'full', null, 'power-bi-fundamentals', 'PBI', 'Power BI Fundamentals', 'Build a data model, write DAX measures and design a dashboard people can use to run a business.', 'Power BI turns data into dashboards. Learn the full workflow: import and clean data with Power Query, relate tables in a model, write DAX measures, and design a dashboard that tells a clear business story.', 'business-intelligence', 'beginner', 2, 'Beginner to intermediate', 8, true, 'available', true, array['Power Query', 'Data modelling and relationships', 'DAX measures', 'Dashboard design', 'Publishing reports']::text[], array['Power BI Desktop (free, Windows only)', 'Basic Excel is helpful: the Excel course covers it']::text[], 'Ashgrove Chambers practice dashboard', true, true, true, true, false, 60, 19)
 on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level = excluded.level, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
@@ -18084,7 +20090,7 @@ on conflict (id) do update set course_id = excluded.course_id, module_id = exclu
 
 -- Course: Python for Data Analytics
 insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
-values ('python-for-data-analytics', 'full', null, 'python-for-data-analytics', 'PYAN', 'Python for Data Analytics', 'Analyse real business data in Python and pandas, from your first variable to a finished analysis with charts and findings, in Google Colab.', 'Python lets analysts write an analysis once and run it again in seconds, with every step on record. In this course you work in Google Colab, with nothing to install, on the data of Kolanut Distribution and its HR and legal sister datasets. Learn the Python an analyst actually uses, then pandas: loading and exploring data, filtering, calculated columns and dates, cleaning a genuinely messy export, groupby, merging, pivot tables and trends, and charts with titles that say what they show. Every lesson ends with tasks checked against the real data, and the course ends with a customer health review you can put in your portfolio.', 'python', 'beginner', 2, 'Beginner to intermediate', 9, true, 'available', true, array['Python basics: variables, types, lists, dictionaries, loops and functions', 'Loading and exploring data with pandas', 'Filtering, sorting and calculated columns', 'Cleaning messy data: text, categories, numbers, dates and duplicates', 'Summarising with groupby and pivot tables', 'Merging tables safely', 'Growth rates, year-on-year change and rolling averages', 'Charts with matplotlib and findings a manager can act on']::text[], array['No Python needed', 'A free Google account for Google Colab', 'Comfortable with spreadsheets; Excel for Data Analysis helps']::text[], 'Kolanut customer health review', true, true, true, true, false, 60, 19)
+values ('python-for-data-analytics', 'full', null, 'python-for-data-analytics', 'PYAN', 'Python for Data Analytics', 'Analyse real business data in Python and pandas, from your first variable to a finished analysis with charts and findings, in Google Colab.', 'Python lets analysts write an analysis once and run it again in seconds, with every step on record. In this course you work in Google Colab, with nothing to install, on the data of Kolanut Distribution and its HR and legal sister datasets. Learn the Python an analyst actually uses, then pandas: loading and exploring data, filtering, calculated columns and dates, cleaning a genuinely messy export, groupby, merging, pivot tables and trends, and charts with titles that say what they show. Every lesson ends with tasks checked against the real data, and the course ends with a customer health review you can put in your portfolio.', 'python', 'beginner', 2, 'Beginner to intermediate', 9, true, 'available', true, array['Python basics: variables, types, lists, dictionaries, loops and functions', 'Loading and exploring data with pandas', 'Filtering, sorting and calculated columns', 'Cleaning messy data: text, categories, numbers, dates and duplicates', 'Summarising with groupby and pivot tables', 'Merging tables safely', 'Growth rates, year-on-year change and rolling averages', 'Charts with matplotlib and findings a manager can act on']::text[], array['No Python needed', 'A free Google account for Google Colab', 'Comfortable with spreadsheets; Excel for Data Analysis helps']::text[], 'Kolanut customer health review', true, true, true, true, false, 60, 20)
 on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level = excluded.level, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
@@ -21712,6 +23718,132 @@ values ('statq15', 1, 'A good fit inside the data says little about far outside 
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 
+-- Assessment: Advanced SQL: final assessment
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('advanced-sql-final', 'advanced-sql', 'final', null, 'Advanced SQL: final assessment', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('asqlq01', 'advanced-sql-final', 1, 'SELECT COUNT(*) FROM staff WHERE department <> ''Sales'' returns 140. The table has 200 staff, 45 of them in Sales. What explains the gap?', '["COUNT(*) skips duplicates","15 staff have a NULL department, and NULL <> ''Sales'' is unknown, so WHERE drops them","<> is case-sensitive","The query needs GROUP BY"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('asqlq01', 1, '200 − 45 = 155 expected; the 15 NULLs are missing. Add OR department IS NULL.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('asqlq02', 'advanced-sql-final', 2, 'WHERE customer_id NOT IN (SELECT customer_id FROM orders) returns no rows, but you know some customers have never ordered. Why?', '["NOT IN only works on numbers","orders.customer_id contains a NULL, which makes every NOT IN comparison unknown","The subquery is too large","Customers must be sorted first"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('asqlq02', 1, 'Use NOT EXISTS, which isn''t affected by NULLs.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('asqlq03', 'advanced-sql-final', 3, 'SUM(is_late) / COUNT(*) returns 0 in PostgreSQL, though 12% of orders are late. What''s the fix?', '["Use AVG(COUNT(*))","Multiply by 100.0 (or 1.0) before dividing, to avoid integer division","Use ROUND","Add GROUP BY"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('asqlq03', 1, 'A whole number divided by a whole number is truncated to a whole number.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('asqlq04', 'advanced-sql-final', 4, 'A monthly GROUP BY returns 10 rows for a 12-month report. The manager wants all 12, with zeros. What do you do?', '["Insert fake rows into the table","Generate the 12 months (a calendar or recursive CTE), LEFT JOIN the totals and COALESCE to 0","Use HAVING COUNT(*) >= 0","Use ORDER BY month"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('asqlq04', 1, 'GROUP BY can''t create groups that don''t exist in the data.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('asqlq05', 'advanced-sql-final', 5, 'Which filter lets the database use an index on order_date?', '["WHERE YEAR(order_date) = 2026","WHERE order_date >= ''2026-01-01'' AND order_date < ''2027-01-01''","WHERE CAST(order_date AS TEXT) LIKE ''2026%''","WHERE DATEPART(year, order_date) = 2026"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('asqlq05', 1, 'Keep the column bare (sargable) and filter a range.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('asqlq06', 'advanced-sql-final', 6, 'SUM(amount) OVER (ORDER BY order_date) gives three orders on the same day the same running total. Why, and how do you get one step per order?', '["It''s a bug; use GROUP BY","The default frame is RANGE, which groups equal dates. Use ROWS UNBOUNDED PRECEDING and add order_id to ORDER BY","Use LAG instead","Use DISTINCT"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('asqlq06', 1, 'RANGE treats peers (equal ORDER BY values) as one step.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('asqlq07', 'advanced-sql-final', 7, 'You need each customer''s most recent order, with all its columns, and exactly one row per customer. Which approach is right?', '["GROUP BY customer_id with MAX(order_date)","ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY order_date DESC, order_id DESC) in a CTE, then keep rn = 1","RANK() and keep rank 1","SELECT DISTINCT customer_id"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('asqlq07', 1, 'ROW_NUMBER with a tie-breaker gives exactly one row; RANK could return ties.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('asqlq08', 'advanced-sql-final', 8, 'The top 3 products per category must include anyone tied for third place. Which function?', '["ROW_NUMBER()","RANK()","NTILE(3)","LEAD()"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('asqlq08', 1, 'RANK gives tied rows the same rank, so all of them pass rank <= 3.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('asqlq09', 'advanced-sql-final', 9, 'In September, a draft says sales fell 30% this year, comparing January–August with all of last year. What''s the right comparison?', '["The same: it''s the data","January–August against January–August last year","August against July","This year against the average of the last five years"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('asqlq09', 1, 'Compare periods of the same length and season.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('asqlq10', 'advanced-sql-final', 10, 'Your data starts in January 2024, but customers have been signing up since 2018. What''s true of the ''January 2024 cohort''?', '["It''s the best cohort of new customers","It holds everyone already active when the data starts, so it isn''t a cohort of new customers","It has 100% retention","It must be deleted"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('asqlq10', 1, 'That''s left-censoring. Analyse it as the existing base.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('asqlq11', 'advanced-sql-final', 11, 'Joining orders (one row each) to payments (several rows per order) and then summing order_total overstates revenue. Why?', '["SUM is inaccurate","Each order is repeated once per payment, so its total is counted several times. Aggregate payments per order first","Payments have NULLs","The join should be a CROSS JOIN"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('asqlq11', 1, 'Aggregate the ''many'' side before joining it to the ''one'' side.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('asqlq12', 'advanced-sql-final', 12, 'A duplicate check finds two shipments with the same customer, route, date and size, but different weights and ship dates. What should you do?', '["Delete the later one","Treat them as two real shipments, and note the check and your decision","Average them","Delete both"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('asqlq12', 1, 'A failed check is a question. The other columns show they''re different shipments.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('asqlq13', 'advanced-sql-final', 13, 'A query plan shows CORRELATED SCALAR SUBQUERY inside a scan of a 5-million-row table. What''s the usual fix?', '["Add SELECT *","Rewrite it as a join to a CTE that aggregates once","Use UNION instead of UNION ALL","Add ORDER BY"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('asqlq13', 1, 'The subquery runs once per outer row; a pre-aggregated join runs once.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('asqlq14', 'advanced-sql-final', 14, '₦900m is outstanding. The aging report shows 85% of it is less than 30 days old. What''s the best summary?', '["A collections crisis","Mostly recent, normal invoices; watch the older 15%","Customers have stopped paying","The report is wrong"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('asqlq14', 1, 'The aging profile, not the total, tells you how worried to be.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('asqlq15', 'advanced-sql-final', 15, 'Which query lists employees with their manager''s name, keeping employees who have no manager?', '["SELECT e.name, m.name FROM employees e JOIN employees m ON m.id = e.manager_id","SELECT e.name, m.name FROM employees e LEFT JOIN employees m ON m.id = e.manager_id","SELECT e.name, e.manager_id FROM employees e","SELECT name FROM employees WHERE manager_id IS NULL"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('asqlq15', 1, 'A self join with LEFT JOIN keeps the people at the top of the tree.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
 -- Assessment: Prompting Essentials: module check
 insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
 values ('aipf-m01-check', 'ai-productivity-fundamentals', 'module', 'aipf-m01', 'Prompting Essentials: module check', 60, true)
@@ -24910,9 +27042,19 @@ Start with your definitions: transit days, on time, and which shipments you incl
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
 
 
+-- Project: Harbourline commercial health check
+insert into public.projects (id, course_id, title, summary, brief_md, tasks, datasets, rubric, required)
+values ('asql-health-check', 'advanced-sql', 'Harbourline commercial health check', 'A board-ready commercial health check of Harbourline Freight: growth, customer retention, delivery performance and receivables, all in SQL.', $md$Harbourline Freight's managing director wants a commercial health check for the board, built in SQL on the company database, as of **31 August 2026**.
+
+Submit a link to your **SQL file or notebook** (GitHub, a shared document or a gist) and paste your **findings** below. For every task, give the query, the key result and two or three sentences on what it means, written for a board member who doesn't read SQL.
+
+Start with your definitions: revenue, on time, active customer, and the "as of" date.$md$, array['Data quality: profile the tables, test keys, relationships and status/date rules, and write a short note of what you found and decided.', 'Growth: compare January to August 2025 with January to August 2026 (shipments and delivered charges, by mode), and show the monthly trend with a 3-month moving average.', 'Customers: a quarterly cohort table, the customers who booked in 2025 but not in 2026, and RFM scores with a list of valuable customers who have gone quiet.', 'Delivery: on-time rate by mode and for the five worst routes (with their delivery counts), 2025 against 2026.', 'Cash: a receivables aging report that reconciles with the outstanding total, and the ten largest over-90-day balances with their account managers.', 'Three recommendations for the board, each linked to a number from your analysis.']::text[], array['logistics']::text[], array['Definitions and the ''as of'' date are stated at the start and used consistently.', 'Data-quality checks are run, and anything they find is investigated and explained, not silently deleted.', 'Every period comparison is like for like, and incomplete periods are labelled or excluded.', 'Queries handle NULLs and integer division correctly, and payments are aggregated before joining so nothing is double-counted.', 'Queries are readable: one CTE per step, named for what it holds, with comments where a definition matters.', 'Totals are reconciled: the aging buckets add up to the outstanding total.', 'Findings are written for a board member, and each recommendation is linked to a number.']::text[], true)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
+
+
 -- Track: Become a Data Analyst
 insert into public.tracks (id, slug, title, summary, badge_name, badge_code, skills, position, published)
-values ('data-analyst', 'data-analyst', 'Become a Data Analyst', 'The route we recommend from no experience to a junior data analyst role. Learn how analysis works, then the tools teams use every day (Excel, SQL, Power BI and Python) on realistic company data. Build portfolio projects that answer real business questions, and finish with your CV, LinkedIn and interview preparation.', 'CloudTech Data Analyst', 'DATAANALYST', array['Spreadsheet analysis in Excel', 'Statistics: averages, spread, confidence intervals and tests', 'Querying databases with SQL', 'Data modelling and star schemas', 'Dashboards in Power BI', 'Analysis in Python and pandas', 'Turning data into findings a manager can act on']::text[], 1, true)
+values ('data-analyst', 'data-analyst', 'Become a Data Analyst', 'The route we recommend from no experience to a junior data analyst role. Learn how analysis works, then the tools teams use every day (Excel, SQL, Power BI and Python) on realistic company data. Build portfolio projects that answer real business questions, and finish with your CV, LinkedIn and interview preparation.', 'CloudTech Data Analyst', 'DATAANALYST', array['Spreadsheet analysis in Excel', 'Statistics: averages, spread, confidence intervals and tests', 'Querying databases with SQL, from first SELECT to cohorts and window functions', 'Data modelling and star schemas', 'Dashboards in Power BI', 'Analysis in Python and pandas', 'Turning data into findings a manager can act on']::text[], 1, true)
 on conflict (id) do update set slug = excluded.slug, title = excluded.title, summary = excluded.summary, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, position = excluded.position, published = excluded.published;
 
 delete from public.track_courses where track_id = 'data-analyst';
@@ -24946,15 +27088,19 @@ values ('data-analyst', 'python-for-data-analytics', 'Advanced', true, 7)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 insert into public.track_courses (track_id, course_id, stage, required, position)
-values ('data-analyst', 'career-essentials', 'Career', true, 8)
+values ('data-analyst', 'advanced-sql', 'Advanced', true, 8)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 insert into public.track_courses (track_id, course_id, stage, required, position)
-values ('data-analyst', 'build-your-student-portfolio', 'Career', false, 9)
+values ('data-analyst', 'career-essentials', 'Career', true, 9)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 insert into public.track_courses (track_id, course_id, stage, required, position)
-values ('data-analyst', 'get-your-first-internship', 'Career', false, 10)
+values ('data-analyst', 'build-your-student-portfolio', 'Career', false, 10)
+on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
+
+insert into public.track_courses (track_id, course_id, stage, required, position)
+values ('data-analyst', 'get-your-first-internship', 'Career', false, 11)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 

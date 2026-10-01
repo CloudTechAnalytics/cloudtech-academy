@@ -361,7 +361,7 @@ delivered.groupby(["origin", "destination"])["late"].mean().sort_values(ascendin
         ],
       },
     ],
-    courseSlugs: ["sql-for-data-analysis", "power-bi-fundamentals", "python-for-data-analytics"],
+    courseSlugs: ["sql-for-data-analysis", "advanced-sql", "power-bi-fundamentals", "python-for-data-analytics"],
     courseSlug: "sql-for-data-analysis",
     updated: "2026-09-30",
   },
