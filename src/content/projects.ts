@@ -88,6 +88,12 @@ export const DATASETS: DatasetInfo[] = [
     files: ["daily_sales", "holidays"],
   },
   {
+    id: "genai",
+    name: "Paystream support (help centre and AI evaluations)",
+    description: "Paystream's 25 help articles, 83 customer questions linked to the article that answers them, 900 labelled support tickets with the categories a small and a large model gave them, and human and judge grades for two versions of a help assistant. Used in Generative AI Engineering.",
+    files: ["articles", "questions", "tickets", "answer_evals"],
+  },
+  {
     id: "legal",
     name: "Ashgrove Chambers (legal)",
     description: "A Lagos law firm's clients, matters, court hearings and invoices from 2024 to August 2026.",
@@ -285,6 +291,47 @@ export const DATA_DICTIONARY: Record<string, Record<string, { about: string; col
         amount_ngn: "Invoice amount in naira.",
         status: "Paid, Outstanding or Overdue.",
         paid_date: "Date it was paid. Blank if unpaid.",
+      },
+    },
+  },
+  genai: {
+    articles: {
+      about: "One row per help centre article.",
+      columns: {
+        article_id: "Article ID, such as KB005.",
+        title: "Article title.",
+        category: "Help centre section, such as Transfers or Cards.",
+        body: "Article text.",
+      },
+    },
+    questions: {
+      about: "Customer questions for testing retrieval and answers.",
+      columns: {
+        question_id: "Question ID.",
+        question: "The customer's question, as written.",
+        relevant_article_id: "The article that answers it. Blank when the help centre doesn't answer the question.",
+      },
+    },
+    tickets: {
+      about: "One row per support ticket, with a person's label and two models' labels.",
+      columns: {
+        ticket_id: "Ticket ID.",
+        created_date: "Date the ticket arrived.",
+        text: "The customer's message. Some contain phone or account numbers, and a few contain prompt injection attempts.",
+        true_category: "The category a support lead assigned.",
+        small_model_category: "The category a small model chose.",
+        large_model_category: "The category a large model chose.",
+        input_tokens: "Tokens sent to the model for this ticket, including the prompt.",
+      },
+    },
+    answer_evals: {
+      about: "Graded answers from two versions of the help assistant to every question.",
+      columns: {
+        question_id: "Question answered.",
+        system: "v1 no retrieval or v2 retrieval.",
+        cited_article_id: "Article the answer cited. Blank if none.",
+        human_grade: "A support lead's grade: Correct, Partly correct, Incorrect, Correctly refused, or Answered when it should refuse.",
+        judge_grade: "The grade an LLM judge gave the same answer.",
       },
     },
   },

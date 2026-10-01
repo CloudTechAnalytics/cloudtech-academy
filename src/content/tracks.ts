@@ -235,6 +235,59 @@ export const TRACKS: Track[] = [
     ],
   },
   {
+    id: "ai-engineer",
+    slug: "ai-engineer",
+    title: "Become an AI Engineer",
+    outcome: "Build AI features a business can trust",
+    summary:
+      "The route to building with generative AI professionally, not just using chatbots. Learn the Python and machine learning foundations, then build LLM features properly: prompts as specifications, validated outputs, retrieval with citations, evaluation against human labels, and the privacy, safety and cost controls that decide whether a feature can launch.",
+    badge: "CloudTech AI Engineer",
+    badgeCode: "AIENGINEER",
+    skills: [
+      "Python and pandas for AI work",
+      "Machine learning evaluation: splits, recall and baselines",
+      "Prompt design, structured outputs and validation",
+      "Retrieval-augmented generation",
+      "Evaluating LLM outputs with people and judges",
+      "Privacy, prompt injection and cost control",
+    ],
+    stages: [
+      {
+        title: "Foundation",
+        summary: "The Python and machine learning every AI engineer relies on.",
+        items: [
+          { kind: "course", courseId: "python-for-data-analytics", why: "pandas for loading, cleaning and exploring the data AI features run on." },
+          { kind: "course", courseId: "statistics-for-data-analysis", why: "Sampling and uncertainty, for reading evaluation results honestly.", required: false },
+          { kind: "course", courseId: "machine-learning-fundamentals", why: "Train and test splits, baselines, recall and cost-based decisions." },
+        ],
+      },
+      {
+        title: "Core",
+        summary: "Build LLM features properly.",
+        items: [
+          { kind: "course", courseId: "generative-ai-engineering", why: "Prompts, validation, retrieval, evaluation, safety and cost, on a mobile wallet's support assistant." },
+          { kind: "course", courseId: "feature-engineering-model-evaluation", why: "Calibration, drift and monitoring: the habits that keep models working after launch.", required: false },
+        ],
+      },
+      {
+        title: "Specialist",
+        summary: "Go further into AI systems.",
+        items: [
+          { kind: "upcoming", title: "AI Agents and Tool Use", why: "Let models call tools and APIs safely, with limits, approvals and tests.", level: 4 },
+          { kind: "upcoming", title: "LLM Evaluation and Safety in Production", why: "Monitoring, red-teaming, regression tests and incident response for live AI features.", level: 4 },
+        ],
+      },
+      {
+        title: "Career",
+        summary: "Turn your skills into applications that get interviews.",
+        items: [
+          { kind: "course", courseId: "career-essentials", why: "An ATS-friendly CV and a LinkedIn profile recruiters can find." },
+          { kind: "course", courseId: "build-your-student-portfolio", why: "One link that shows your notebooks and evaluation reports.", required: false },
+        ],
+      },
+    ],
+  },
+  {
     id: "career-study-skills",
     slug: "career-study-skills",
     title: "Career & Study Skills",
