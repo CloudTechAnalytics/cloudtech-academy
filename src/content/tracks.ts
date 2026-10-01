@@ -213,7 +213,7 @@ export const TRACKS: Track[] = [
         summary: "Go further into the methods data science teams use.",
         items: [
           { kind: "upcoming", title: "Time Series Forecasting", why: "Forecast demand and sales with seasonality, trends and honest backtesting.", level: 3 },
-          { kind: "upcoming", title: "Experimentation and A/B Testing", why: "Design tests, size samples and read results without fooling yourself.", level: 3 },
+          { kind: "course", courseId: "experimentation-ab-testing", why: "Design tests, size samples, catch broken splits and read results without fooling yourself." },
         ],
       },
       {

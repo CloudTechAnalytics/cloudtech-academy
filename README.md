@@ -47,6 +47,7 @@ Each short course ends with a final assessment of at least 8 questions. Module c
 | Process Improvement with BPMN and Lean | 10 | Answer tasks on a port clearance event log (waits, flow efficiency, bottlenecks, pilot results) plus BPMN models, waste lists, five whys, future states and control plans checked against rules | Harbourline clearance: the next improvement cycle |
 | Machine Learning Fundamentals | 11 | Python in Colab with scikit-learn; every code block and answer checked by running the lesson (rentals regression, loan default classification) | Ladder Microfinance: a responsible credit model |
 | Feature Engineering and Model Evaluation | 8 | Python in Colab; point-in-time features from 65,825 wallet transactions, time-based validation, calibration, lift and drift, all checked by running the lessons | Paystream: a retention model that stays honest |
+| Experimentation and A/B Testing | 9 | Python in Colab with scipy; sample sizes, SRM, a peeking simulation, z-tests, bootstrap, segments, guardrail valuation and difference-in-differences, all checked by running the lessons | Paystream: experiment review and next test |
 | Data Analyst Capstone | 7 | Answer tasks on a raw retail export, checked against SQL; written plan, data quality log, executive summary and portfolio tasks checked against rules | Voltline Electronics commercial review |
 | Python for Data Analytics | 12 | Answer tasks on real datasets, checked against both SQL and the pandas the lesson teaches | Kolanut customer health review |
 

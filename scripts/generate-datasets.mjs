@@ -1066,6 +1066,90 @@ function wallet() {
   return { customers, transactions };
 }
 
+/* ------------------------------------------------------------------ experiments */
+// Paystream's experiments: an onboarding A/B test (user level), a homepage banner test
+// (daily, with a broken randomiser and a novelty effect), a transfer-fee test with guardrail
+// metrics, and a state-by-state rollout of cash-out agents for difference-in-differences.
+// Generated last, from its own seed.
+function experiments() {
+  seed = 20270101;
+  const poisson = (lam) => {
+    let L = Math.exp(-lam), k = 0, p = 1;
+    do { k++; p *= rand(); } while (p > L);
+    return k - 1;
+  };
+  // 1. Onboarding: new signup flow (B) against the old one (A), 4 weeks of new users.
+  const REGIONS = ["Lagos", "Oyo", "Ogun", "Kano", "Kaduna", "Rivers", "Enugu", "Anambra", "FCT", "Delta"];
+  const onboarding = [];
+  for (let k = 1; k <= 12000; k++) {
+    const variant = rand() < 0.5 ? "A" : "B";
+    const platform = rand() < 0.78 ? "Android" : "iOS";
+    const channel = weighted(["Referral", "Agent", "Social ads", "Organic"], [25, 30, 25, 20]);
+    const region = weighted(REGIONS, [26, 9, 7, 10, 7, 9, 7, 7, 10, 8]);
+    let pKyc = 0.38 + (channel === "Referral" ? 0.06 : channel === "Social ads" ? -0.06 : 0) + (platform === "iOS" ? 0.04 : 0);
+    if (variant === "B" && platform === "Android") pKyc += 0.045; // the new flow fixes an Android camera step
+    const kyc = rand() < pKyc ? 1 : 0;
+    const engagement = Math.exp(normal() * 0.9);
+    const txns = kyc ? poisson(2.2 * engagement * (variant === "B" ? 1.06 : 1)) : poisson(0.4 * engagement);
+    let value = 0;
+    for (let n = 0; n < txns; n++) value += Math.max(100, 9000 * Math.exp(normal() * 1.0));
+    onboarding.push({
+      user_id: `U${String(k).padStart(6, "0")}`,
+      signup_date: iso(d("2026-05-04") + int(0, 27) * day),
+      variant,
+      platform,
+      acquisition_channel: channel,
+      region,
+      completed_kyc_7d: kyc,
+      txns_first_14d: txns,
+      value_first_14d_ngn: round(value, 50),
+    });
+  }
+  // 2. Homepage banner: daily counts. Variant B's randomiser dropped some users (sample ratio
+  //    mismatch), and its click rate starts high and fades (novelty).
+  const banner_daily = [];
+  for (let k = 0; k < 28; k++) {
+    const date = iso(d("2026-06-01") + k * day);
+    for (const variant of ["A", "B"]) {
+      const users = Math.round((variant === "A" ? 4000 : 3720) * (1 + normal() * 0.03));
+      const ctr = variant === "A" ? 0.031 : 0.031 + 0.022 * Math.exp(-k / 5) + 0.002;
+      let clicks = 0;
+      for (let u = 0; u < users; u++) if (rand() < ctr) clicks++;
+      banner_daily.push({ date, variant, users, clicks });
+    }
+  }
+  // 3. Transfer fee: ₦10 (control) against ₦25 (test) per transfer, existing users, 4 weeks.
+  const fee_test = [];
+  for (let k = 1; k <= 8000; k++) {
+    const variant = rand() < 0.5 ? "Control" : "Higher fee";
+    const engagement = Math.exp(normal() * 0.8);
+    const leaves = rand() < (variant === "Control" ? 0.06 : 0.095);
+    const weeks = leaves ? int(1, 3) : 4;
+    const transfers = poisson(1.6 * engagement * weeks * (variant === "Control" ? 1 : 0.88));
+    fee_test.push({
+      user_id: `F${String(k).padStart(6, "0")}`,
+      variant,
+      transfers_28d: transfers,
+      fee_revenue_28d_ngn: transfers * (variant === "Control" ? 10 : 25),
+      active_on_day_28: leaves ? 0 : 1,
+    });
+  }
+  // 4. Cash-out agents rolled out in three states from week 14 of 2026; weekly active users
+  //    per state, with a shared seasonal pattern.
+  const rollout = [];
+  const AGENT_STATES = ["Kano", "Kaduna", "Enugu"];
+  const sizes = { Lagos: 5200, Oyo: 1800, Ogun: 1500, Kano: 2100, Kaduna: 1500, Rivers: 1700, Enugu: 1300, Anambra: 1400, FCT: 2000, Delta: 1200 };
+  for (const [state, size] of Object.entries(sizes)) {
+    for (let w = 1; w <= 26; w++) {
+      const season = 1 + 0.05 * Math.sin(w / 4) + (w >= 10 && w <= 13 ? 0.04 : 0);
+      const treated = AGENT_STATES.includes(state) && w >= 14;
+      const active = Math.round(size * season * (1 + 0.004 * w) * (treated ? 1.08 : 1) * (1 + normal() * 0.012));
+      rollout.push({ state, week: w, week_start: iso(d("2025-12-29") + (w - 1) * 7 * day), agents_launched: treated ? 1 : 0, weekly_active_users: active });
+    }
+  }
+  return { onboarding, banner_daily, fee_test, rollout };
+}
+
 /* ------------------------------------------------------------------ write */
 const SQL = await initSqlJs();
 const L = logistics();
@@ -1101,6 +1185,7 @@ for (const [table, rows] of Object.entries(processLog())) writeCsv("process", ta
 for (const [table, rows] of Object.entries(rentals())) writeCsv("rentals", table, rows);
 for (const [table, rows] of Object.entries(loans())) writeCsv("loans", table, rows);
 for (const [table, rows] of Object.entries(wallet())) writeCsv("wallet", table, rows);
+for (const [table, rows] of Object.entries(experiments())) writeCsv("experiments", table, rows);
 
 // Summary for the build log
 const counts = db.exec("SELECT (SELECT COUNT(*) FROM customers), (SELECT COUNT(*) FROM shipments), (SELECT COUNT(*) FROM payments), (SELECT COUNT(*) FROM routes), (SELECT COUNT(*) FROM employees)")[0].values[0];

@@ -76,6 +76,12 @@ export const DATASETS: DatasetInfo[] = [
     files: ["customers", "transactions"],
   },
   {
+    id: "experiments",
+    name: "Paystream experiments",
+    description: "Four of a mobile wallet's experiments from 2026: a signup-flow A/B test (12,000 users), a homepage banner test (daily counts), a transfer-fee test (8,000 users) and a state-by-state rollout of cash-out agents (weekly active users). Used in Experimentation and A/B Testing.",
+    files: ["onboarding", "banner_daily", "fee_test", "rollout"],
+  },
+  {
     id: "legal",
     name: "Ashgrove Chambers (legal)",
     description: "A Lagos law firm's clients, matters, court hearings and invoices from 2024 to August 2026.",
@@ -273,6 +279,51 @@ export const DATA_DICTIONARY: Record<string, Record<string, { about: string; col
         amount_ngn: "Invoice amount in naira.",
         status: "Paid, Outstanding or Overdue.",
         paid_date: "Date it was paid. Blank if unpaid.",
+      },
+    },
+  },
+  experiments: {
+    onboarding: {
+      about: "One row per new user in the signup-flow test (old flow A against new flow B), May 2026.",
+      columns: {
+        user_id: "Unique user ID.",
+        signup_date: "Date the user signed up and was assigned a variant.",
+        variant: "A (old signup flow) or B (new flow), assigned at random.",
+        platform: "Android or iOS.",
+        acquisition_channel: "How the user arrived: Referral, Agent, Social ads or Organic.",
+        region: "State of the user.",
+        completed_kyc_7d: "1 if the user completed identity verification within 7 days of signup.",
+        txns_first_14d: "Number of transactions in the first 14 days.",
+        value_first_14d_ngn: "Total value of those transactions in naira.",
+      },
+    },
+    banner_daily: {
+      about: "Daily totals for the homepage banner test, June 2026, by variant.",
+      columns: {
+        date: "Day.",
+        variant: "A (current homepage) or B (new banner).",
+        users: "Users who saw that variant's homepage that day.",
+        clicks: "Users who clicked the banner area.",
+      },
+    },
+    fee_test: {
+      about: "One row per existing user in the transfer-fee test: ₦10 (Control) against ₦25 (Higher fee), over 28 days.",
+      columns: {
+        user_id: "Unique user ID.",
+        variant: "Control (₦10 per transfer) or Higher fee (₦25), assigned at random.",
+        transfers_28d: "Transfers made in the 28 days.",
+        fee_revenue_28d_ngn: "Transfer fees paid in the 28 days, in naira.",
+        active_on_day_28: "1 if the user still had an active wallet on day 28.",
+      },
+    },
+    rollout: {
+      about: "Weekly active users by state for the first 26 weeks of 2026. Cash-out agents launched in Kano, Kaduna and Enugu from week 14.",
+      columns: {
+        state: "State.",
+        week: "Week number of 2026.",
+        week_start: "First day of the week.",
+        agents_launched: "1 from the week agents were available in that state.",
+        weekly_active_users: "Users with at least one transaction that week.",
       },
     },
   },

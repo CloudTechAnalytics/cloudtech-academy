@@ -32627,9 +32627,1451 @@ $md$, true, true, 8, array['fe-08-p1', 'fe-08-t1']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 
+-- Course: Experimentation and A/B Testing
+insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
+values ('experimentation-ab-testing', 'full', null, 'experimentation-ab-testing', 'ABT', 'Experimentation and A/B Testing', 'Design, run and read experiments you can trust: sample sizes, sample ratio checks, the peeking trap, conversion and money metrics, segments, novelty, guardrails and difference-in-differences, on a mobile wallet''s real tests.', 'An experiment is the only reliable way to know whether a change worked. In this course you review Paystream''s experiments in Python: a new signup flow, a homepage banner, a transfer-fee rise and a state-by-state rollout of cash-out agents. You''ll see why ''users who did X'' comparisons mislead, size a test before it starts, catch a broken randomiser with a sample ratio check, and simulate how peeking at results multiplies false alarms. Then you''ll analyse conversion and skewed money metrics with confidence intervals and the bootstrap, read segments without fooling yourself, spot novelty, value a fee rise against the customers it costs, and estimate an effect without randomisation using difference-in-differences.', 'data-science', 'intermediate', 3, 'Intermediate', 7, true, 'available', true, array['Randomisation, confounders and causal claims', 'Hypotheses, primary metrics, guardrails and MDEs', 'Sample size and duration', 'Sample ratio mismatch and the peeking problem', 'Two-proportion tests and confidence intervals', 'Welch''s t-test and the bootstrap for skewed metrics', 'Segments, multiple comparisons and novelty effects', 'Valuing trade-offs between metrics', 'Difference-in-differences and parallel trends']::text[], array['Statistics for Data Analysis, or comfort with confidence intervals and p-values', 'Python for Data Analytics, or comfort with pandas']::text[], 'Paystream: experiment review and next test', true, true, true, true, false, 60, 27)
+on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level = excluded.level, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('abt-m01', 'experimentation-ab-testing', 'Why Experiment', 1, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('experimentation-ab-testing:why-experiment', 'experimentation-ab-testing', 'abt-m01', 'why-experiment', 'Why experiment', 'Why comparing users who did something with users who didn''t can''t tell you whether the thing worked, and how random assignment fixes that.', 20, $md$
+## The problem
+
+Paystream's product team redesigned the signup flow. A month after launch, someone runs the numbers: new users who signed up through **referrals** complete identity verification (KYC) far more often than those from **social ads**. Should the company spend more on referrals? Probably, but the data can't say how much a referral **causes**: people who arrive through a friend may simply be more committed in the first place.
+
+The same trap catches almost every "before and after" or "users who did X versus users who didn't" analysis. Those who chose X, or who arrived after the change, differ in ways you can't see. The only reliable way to measure the effect of a change is to decide **at random** who gets it. That's an **experiment**, or **A/B test**, and it's how product, marketing and pricing decisions are made at companies that take evidence seriously.
+
+## The concept
+
+**Correlation isn't causation, for a specific reason**
+
+When people **choose** a treatment (a feature, a channel, a plan), the choosers differ from the non-choosers: more engaged, richer, more urban. Those differences, not the treatment, may explain the outcome. They're called **confounders**.
+
+**Randomisation breaks the link**
+
+If a coin decides who sees the new signup flow (B) and who sees the old one (A), then on average the two groups are the same in every way, seen and unseen. Any difference in outcomes beyond chance is caused by the flow. That's why A/B tests are the gold standard.
+
+**The pieces of an A/B test**
+
+| Piece | Paystream's onboarding test |
+| :-- | :-- |
+| **Unit** randomised | each new user, at signup |
+| **Variants** | A: old flow (control); B: new flow (treatment) |
+| **Primary metric** | completed KYC within 7 days |
+| **Secondary metrics** | transactions and value in the first 14 days |
+| **Guardrails** | metrics that mustn't get worse (support tickets, failed payments) |
+
+## Example
+
+The onboarding experiment: 12,000 new users, randomly assigned at signup.
+
+```python
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/experiments/"
+onboarding = pd.read_csv(base + "onboarding.csv")
+print(onboarding["variant"].value_counts())
+onboarding.groupby("acquisition_channel")["completed_kyc_7d"].mean().round(3)
+```
+
+```text
+variant
+B    6054
+A    5946
+Name: count, dtype: int64
+acquisition_channel
+Agent         0.406
+Organic       0.397
+Referral      0.471
+Social ads    0.337
+Name: completed_kyc_7d, dtype: float64
+```
+
+Referral users verify most and social-ads users least, but users choose how they arrive, so that comparison is confounded. The A/B comparison isn't, because the coin decided the variant:
+
+```python
+onboarding.groupby("variant")[["completed_kyc_7d", "txns_first_14d"]].mean().round(3)
+```
+
+```text
+completed_kyc_7d  txns_first_14d
+variant
+A                   0.382           1.615
+B                   0.426           1.821
+```
+
+The new flow's users verify more often and transact more. Because assignment was random, this difference is the effect of the flow plus chance, and the next lessons show how to separate the two. Check that randomisation worked by comparing the groups on things the flow can't affect:
+
+```python
+pd.crosstab(onboarding["acquisition_channel"], onboarding["variant"], normalize="columns").round(3)
+```
+
+```text
+variant                  A      B
+acquisition_channel
+Agent                0.302  0.299
+Organic              0.206  0.202
+Referral             0.249  0.256
+Social ads           0.242  0.243
+```
+
+The channel mix is nearly identical in both variants, exactly what random assignment should produce.
+
+## Walkthrough
+
+1. Load the data and look at the columns: `onboarding.head()`.
+2. Compare KYC completion by platform. Is that comparison causal? Why not?
+3. Compare the variants on platform and region mix, as above. Are they balanced?
+4. Think of a recent decision at a company you know that was based on a "users who did X" comparison. What confounders might explain the result?
+
+## Practice
+
+```dataset
+{"dataset": "experiments", "files": ["onboarding", "banner_daily", "fee_test", "rollout"]}
+```
+
+```answer
+{
+  "id": "ab-01-p1",
+  "prompt": "What share of onboarding users completed KYC within 7 days in variant **A** (the old flow)? As a percentage, one decimal place.",
+  "answer": 38.2,
+  "format": "percent",
+  "dataset": "experiments",
+  "files": ["onboarding"],
+  "pyVerify": "round(onboarding.loc[onboarding['variant'] == 'A', 'completed_kyc_7d'].mean() * 100, 1)",
+  "hint": "The A row of the second output.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "ab-01-t1",
+  "prompt": "A bank finds that customers who use its budgeting tool save twice as much as those who don't, and wants to say the tool doubles savings. Write a short reply (40 to 120 words) explaining why that conclusion isn't safe, naming **two possible confounders**, and describing the **experiment** that would answer the question.",
+  "minutes": 6,
+  "rows": 6,
+  "placeholder": "Customers who choose to use the tool ...",
+  "rules": [
+    { "label": "Explains self-selection (choose, chose, already, different)", "pattern": "choose|chose|already|differ|self-select" },
+    { "label": "Names at least two confounders (income, motivation, age, engagement, education, savers)", "pattern": "income|motivat|age|engag|educat|disciplin|saver|wealth|salary", "min": 2 },
+    { "label": "Describes random assignment", "pattern": "random" },
+    { "label": "Between 40 and 120 words", "minWords": 40, "maxWords": 120 }
+  ],
+  "sample": "Customers who choose to use the budgeting tool are probably different from those who don't: likely more motivated savers, perhaps with higher or more regular incomes. Those differences, not the tool, could explain why they save more. To measure the tool's real effect, the bank should randomly offer it to half of a group of similar customers, for example new current-account holders, and compare savings in the two halves after three months. Because a coin decides who's offered the tool, any difference beyond chance is caused by the tool.",
+  "note": "\"Offered\" matters: you can randomise who's offered the tool, but not who uses it. Comparing everyone offered against everyone not offered keeps the comparison fair.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Users who enable notifications transact twice as much. Why can't you conclude notifications cause it?",
+    "options": ["The sample is too small", "Users who choose to enable them may already be more engaged: a confounder", "Notifications don't work", "Transactions can't be measured"],
+    "answer": 1,
+    "explanation": "Self-selection makes the groups different from the start."
+  },
+  {
+    "prompt": "What makes an A/B test's comparison causal?",
+    "options": ["A large sample", "Random assignment, which makes the groups alike in everything except the treatment, on average", "A dashboard", "Using the mean"],
+    "answer": 1,
+    "explanation": "Randomisation removes confounders."
+  },
+  {
+    "prompt": "What is a guardrail metric?",
+    "options": ["The primary metric", "A metric that mustn't get worse, even if the primary metric improves", "The sample size", "A segment"],
+    "answer": 1,
+    "explanation": "Guardrails stop you winning one metric by damaging another."
+  }
+]
+```
+$md$, true, true, 1, array['ab-01-p1', 'ab-01-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('abt-m02', 'experimentation-ab-testing', 'Designing a Test', 2, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('experimentation-ab-testing:designing-a-test', 'experimentation-ab-testing', 'abt-m02', 'designing-a-test', 'Designing a test', 'Write a hypothesis, choose one primary metric and the guardrails, set the smallest effect worth detecting, and calculate how many users and days the test needs before it starts.', 25, $md$
+## The problem
+
+The product team is keen to test a new KYC reminder message. "Let's run it for a week and see," says the product manager. A week later the reminder group is 1.2 points ahead, with a p-value of 0.31. Did the reminder fail, or was the test just too small to tell? Nobody can say, and the week is gone.
+
+Most failed experiments fail at the design stage: no clear metric, no idea what size of effect matters, and no calculation of how many users are needed to see it. Ten minutes of design saves weeks of inconclusive tests.
+
+## The concept
+
+**The hypothesis**
+
+Write it before the test starts: *"Showing a KYC reminder on day 2 will increase 7-day KYC completion, because many users abandon at the ID-photo step."* It names the change, the metric, the direction and the reason.
+
+**One primary metric, plus guardrails**
+
+Choose **one** primary metric to decide the test. Others are secondary (to understand it) or guardrails (that mustn't get worse). Deciding with several metrics after the fact invites picking whichever one happens to look good.
+
+**Minimum detectable effect (MDE)**
+
+The smallest improvement worth acting on, a business judgement. If a 1-point rise in KYC wouldn't justify the work, there's no point designing a test to detect it.
+
+**Significance, power and sample size**
+
+- **Significance level (α)**, usually 5%: the false-alarm rate you accept (declaring an effect when there's none).
+- **Power**, usually 80%: the chance of detecting the effect if it's really the size of your MDE.
+- For a conversion metric with baseline rate p₁ and target p₂, users needed **per variant**:
+
+> n = (z₁₋α/₂ + z_power)² × [p₁(1 − p₁) + p₂(1 − p₂)] ÷ (p₂ − p₁)²
+
+with z₁₋α/₂ = 1.96 for α = 5% and z_power = 0.84 for 80% power.
+
+**Duration**
+
+Divide by the users you get per day, and round **up to whole weeks**, so every weekday and weekend is equally represented. Never stop early because results look good (lesson 3 shows why).
+
+## Example
+
+The reminder test: baseline KYC completion 38%, and the team decides a 3-point rise (to 41%) is the smallest worth acting on.
+
+```python
+from scipy import stats
+import math
+
+def sample_size_per_variant(p1, p2, alpha=0.05, power=0.80):
+    z_alpha = stats.norm.ppf(1 - alpha / 2)
+    z_power = stats.norm.ppf(power)
+    variance = p1 * (1 - p1) + p2 * (1 - p2)
+    return math.ceil((z_alpha + z_power) ** 2 * variance / (p2 - p1) ** 2)
+
+n = sample_size_per_variant(0.38, 0.41)
+print("Users needed per variant:", n)
+```
+
+```text
+Users needed per variant: 4165
+```
+
+About 430 new users sign up per day, split between the two variants:
+
+```python
+users_per_day = 430
+days = math.ceil(2 * n / users_per_day)
+weeks = math.ceil(days / 7)
+print("Days needed:", days, " so run for", weeks, "full weeks")
+```
+
+```text
+Days needed: 20  so run for 3 full weeks
+```
+
+The week the product manager suggested would have had well under half the users needed. Halving the MDE to 1.5 points would need about four times as many users: small effects are expensive to detect.
+
+## Walkthrough
+
+1. Run the cells and check the sample size by hand with the formula.
+2. Calculate the sample size for an MDE of 1.5 points and of 5 points. How does it scale?
+3. Change power to 90%. How many more users?
+4. Write the design for the reminder test (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "ab-02-p1",
+  "prompt": "How many users **per variant** does the reminder test need (baseline 38%, MDE 3 points, α 5%, power 80%)?",
+  "answer": 4165,
+  "format": "number",
+  "dataset": "experiments",
+  "files": ["onboarding"],
+  "pyVerify": "n",
+  "hint": "The first number printed.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "ab-02-p2",
+  "prompt": "How many users per variant would it need for an MDE of **1.5 points** (38% to 39.5%)?",
+  "answer": 16556,
+  "format": "number",
+  "dataset": "experiments",
+  "files": ["onboarding"],
+  "pyVerify": "sample_size_per_variant(0.38, 0.395)",
+  "hint": "sample_size_per_variant(0.38, 0.395).",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "ab-02-t1",
+  "prompt": "Write the **test design** for the KYC reminder, one line each starting **Hypothesis:**, **Primary metric:**, **Guardrails:**, **MDE:**, **Sample size:** and **Duration:**.",
+  "minutes": 8,
+  "rows": 8,
+  "placeholder": "Hypothesis: ...\nPrimary metric: ...",
+  "rules": [
+    { "label": "A Hypothesis line with a reason (because)", "pattern": "^\\s*[-*]?\\s*hypothesis\\s*:[^\\n]*because" },
+    { "label": "A Primary metric line", "pattern": "^\\s*[-*]?\\s*primary metric\\s*:" },
+    { "label": "A Guardrails line", "pattern": "^\\s*[-*]?\\s*guardrails?\\s*:" },
+    { "label": "An MDE line with a number", "pattern": "^\\s*[-*]?\\s*mde\\s*:[^\\n]*\\d" },
+    { "label": "A Sample size line with a number", "pattern": "^\\s*[-*]?\\s*sample size\\s*:[^\\n]*\\d" },
+    { "label": "A Duration line in weeks", "pattern": "^\\s*[-*]?\\s*duration\\s*:[^\\n]*week" }
+  ],
+  "sample": "Hypothesis: showing a KYC reminder on day 2 will increase 7-day KYC completion, because many users abandon at the ID-photo step and forget to return.\nPrimary metric: share of new users who complete KYC within 7 days of signup.\nGuardrails: app uninstalls within 7 days, and support tickets about KYC per 1,000 users.\nMDE: 3 percentage points (38% to 41%), the smallest rise that would justify building the reminder properly.\nSample size: about 4,100 users per variant (α 5%, power 80%).\nDuration: 3 full weeks at about 430 signups a day, so every weekday is covered equally.",
+  "note": "Writing this before the test starts is what makes the result trustworthy: the metric, the size that matters and the stopping point can't be changed after you've seen the data.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "What happens to the required sample size if you halve the MDE?",
+    "options": ["It halves", "It roughly quadruples", "It doubles", "No change"],
+    "answer": 1,
+    "explanation": "Sample size scales with 1 ÷ effect²."
+  },
+  {
+    "prompt": "Why choose one primary metric before the test?",
+    "options": ["It's simpler", "So you can't pick whichever of many metrics happens to look good afterwards", "Dashboards only show one", "It doesn't matter"],
+    "answer": 1,
+    "explanation": "Pre-registering the metric protects against cherry-picking."
+  },
+  {
+    "prompt": "Why run a test for whole weeks?",
+    "options": ["Tradition", "Behaviour differs by day of the week, so each day should be equally represented", "Tools require it", "To get more users"],
+    "answer": 1,
+    "explanation": "A test that runs Monday to Thursday misses weekend users."
+  }
+]
+```
+$md$, true, true, 2, array['ab-02-p1', 'ab-02-p2', 'ab-02-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('abt-m03', 'experimentation-ab-testing', 'Running a Test Properly', 3, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('experimentation-ab-testing:running-a-test-properly', 'experimentation-ab-testing', 'abt-m03', 'running-a-test-properly', 'Running a test properly', 'Check that randomisation worked with a sample ratio mismatch test, and see by simulation why peeking at results and stopping early multiplies false alarms.', 15, $md$
+## The problem
+
+Two things go wrong while tests are running, and both produce confident, wrong answers.
+
+The homepage banner test was meant to split users 50/50. Variant B got 104,210 users and A got 110,094. "Close enough," says the product manager. It isn't: a gap that size is almost impossible by chance with this many users, which means something in the randomiser or the logging is broken, and the users who went missing from B might be exactly the ones who wouldn't have clicked.
+
+Meanwhile, the growth team checks every test's dashboard each morning and stops a test the day it shows "significant". It feels efficient. It's a way of finding effects that don't exist.
+
+## The concept
+
+**Sample ratio mismatch (SRM)**
+
+If you intended a 50/50 split, the number of users in each variant should be close to 50/50, within the range chance allows. A **chi-square test** of the counts against the intended split gives a p-value. If p is very small (say below 0.001), the split is broken. **Don't analyse the results**: find and fix the cause first (a bug that drops users, a redirect that fails on some phones, bots in one variant).
+
+**Peeking**
+
+A p-value below 0.05 means a 5% false-alarm rate **if you look once, at the planned end**. If you look every day and stop the first time p < 0.05, you get many chances for random noise to cross the line, and the real false-alarm rate rises far above 5%.
+
+**An A/A test**
+
+Two identical variants. Any "significant" difference is a false alarm by definition. Simulating many A/A tests is a powerful way to see what your process really does.
+
+**The rules**
+
+- Fix the sample size and duration in advance, and analyse once at the end.
+- If you must monitor, use a method designed for it (sequential testing), or only stop early for harm on a guardrail.
+
+## Example
+
+The SRM check, on both tests:
+
+```python
+import pandas as pd
+import numpy as np
+from scipy import stats
+
+base = "https://academy.cloudtechanalytics.com/datasets/experiments/"
+onboarding = pd.read_csv(base + "onboarding.csv")
+banner = pd.read_csv(base + "banner_daily.csv")
+
+counts = onboarding["variant"].value_counts().sort_index()
+print("Onboarding users:", counts.to_dict(), " SRM p-value:", round(stats.chisquare(counts).pvalue, 3))
+
+banner_users = banner.groupby("variant")["users"].sum()
+print("Banner users:", banner_users.to_dict(), " SRM p-value:", stats.chisquare(banner_users).pvalue)
+```
+
+```text
+Onboarding users: {'A': 5946, 'B': 6054}  SRM p-value: 0.324
+Banner users: {'A': 110094, 'B': 104210}  SRM p-value: 5.180176304654498e-37
+```
+
+The onboarding split is consistent with chance. The banner split has a p-value with dozens of zeros: it is broken, and its results can't be trusted until the cause is found. Now the peeking problem, simulated: 1,000 A/A tests of a 40% conversion rate, 400 users per variant per day for 20 days, checked every day:
+
+```python
+rng = np.random.default_rng(42)
+tests, days, per_day, rate = 1000, 20, 400, 0.40
+
+def p_value(conv_a, conv_b, n):
+    pooled = (conv_a + conv_b) / (2 * n)
+    se = np.sqrt(pooled * (1 - pooled) * 2 / n)
+    return 2 * stats.norm.sf(np.abs(conv_b / n - conv_a / n) / se)
+
+false_alarm_end, false_alarm_peeking = 0, 0
+for _ in range(tests):
+    a = rng.binomial(per_day, rate, days).cumsum()
+    b = rng.binomial(per_day, rate, days).cumsum()
+    n = per_day * np.arange(1, days + 1)
+    pvals = p_value(a, b, n)
+    false_alarm_end += pvals[-1] < 0.05
+    false_alarm_peeking += (pvals < 0.05).any()
+print("False alarms, looking once at the end:", false_alarm_end / tests)
+print("False alarms, stopping at the first p < 0.05:", false_alarm_peeking / tests)
+```
+
+```text
+False alarms, looking once at the end: 0.055
+False alarms, stopping at the first p < 0.05: 0.268
+```
+
+Looking once gives about the 5% you'd expect. Checking every day and stopping at the first "win" makes false alarms several times more common, though there's never any real difference.
+
+## Walkthrough
+
+1. Run the cells. Then calculate the share of banner users in B: it should be 50%.
+2. Change the peeking simulation to check every 5 days instead of every day. Does the false-alarm rate fall?
+3. List three things that could cause the banner test's mismatch.
+4. Write the rule your team will follow about looking at running tests.
+
+## Practice
+
+```answer
+{
+  "id": "ab-03-p1",
+  "prompt": "What share of the banner test's users were in **variant B**? As a percentage, one decimal place.",
+  "answer": 48.6,
+  "format": "percent",
+  "dataset": "experiments",
+  "files": ["banner_daily"],
+  "pyVerify": "round(banner_users['B'] / banner_users.sum() * 100, 1)",
+  "hint": "B's users ÷ all users.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "ab-03-p2",
+  "prompt": "In the simulation, what share of A/A tests produced a false alarm when **stopping at the first p < 0.05**? As a percentage, one decimal place.",
+  "answer": 26.8,
+  "format": "percent",
+  "dataset": "experiments",
+  "files": ["onboarding"],
+  "pyVerify": "round(false_alarm_peeking / tests * 100, 1)",
+  "hint": "The second line of the simulation's output.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "A test meant to split 50/50 has 110,094 users in A and 104,210 in B, with an SRM p-value near zero. What should you do?",
+    "options": ["Analyse it anyway", "Stop and find the cause; don't trust the results until the split is fixed", "Weight the results", "Drop some A users"],
+    "answer": 1,
+    "explanation": "The missing users may differ systematically, biasing everything."
+  },
+  {
+    "prompt": "Why does checking a test every day and stopping at p < 0.05 cause problems?",
+    "options": ["It's tiring", "Each look is another chance for noise to cross the line, so false alarms rise well above 5%", "p-values change meaning at night", "It doesn't"],
+    "answer": 1,
+    "explanation": "Analyse once, at the planned end."
+  },
+  {
+    "prompt": "What is an A/A test for?",
+    "options": ["Testing two new designs", "Checking the testing system: with identical variants, any 'win' is a false alarm", "Doubling the sample", "Measuring novelty"],
+    "answer": 1,
+    "explanation": "It reveals problems in randomisation and analysis."
+  }
+]
+```
+$md$, true, true, 3, array['ab-03-p1', 'ab-03-p2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('abt-m04', 'experimentation-ab-testing', 'Analysing Conversion Tests', 4, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('experimentation-ab-testing:analysing-conversion-tests', 'experimentation-ab-testing', 'abt-m04', 'analysing-conversion-tests', 'Analysing conversion tests', 'Test the difference between two conversion rates with a two-proportion z-test, report it with a confidence interval and relative lift, and say what it means in users and money.', 25, $md$
+## The problem
+
+The onboarding test has finished: 12,000 users, randomisation checked. Now the head of product wants one sentence: "Did the new flow work, and by how much?"
+
+"B converted 42.6% and A 38.2%, so B wins" isn't enough. With random samples, some difference is always there by chance. The analysis has to say whether this difference is bigger than chance can explain, how big the true effect plausibly is, and what that means for the business.
+
+## The concept
+
+**The two-proportion z-test**
+
+For conversion rates p_A and p_B from n_A and n_B users:
+
+1. Pooled rate p = (conversions A + conversions B) ÷ (n_A + n_B).
+2. Standard error SE = √[p(1 − p)(1/n_A + 1/n_B)].
+3. z = (p_B − p_A) ÷ SE, and the two-sided p-value = 2 × P(Z > |z|).
+
+A p-value below 0.05 means a difference this large would be rare if the flows were really the same.
+
+**Report the effect, not just the p-value**
+
+- **Absolute difference**: p_B − p_A, in percentage points.
+- **Confidence interval** for it: difference ± 1.96 × √[p_A(1 − p_A)/n_A + p_B(1 − p_B)/n_B]. It gives the range of effects consistent with the data.
+- **Relative lift**: (p_B − p_A) ÷ p_A.
+
+**Translate it**
+
+"+4.5 points" means little to a director. "About 45 more verified customers per 1,000 signups, around 5,800 more a year at current signup rates" means a lot.
+
+## Example
+
+```python
+import pandas as pd
+import numpy as np
+from scipy import stats
+
+onboarding = pd.read_csv("https://academy.cloudtechanalytics.com/datasets/experiments/onboarding.csv")
+summary = onboarding.groupby("variant")["completed_kyc_7d"].agg(conversions="sum", users="count")
+summary["rate"] = summary["conversions"] / summary["users"]
+summary.round(4)
+```
+
+```text
+conversions  users    rate
+variant
+A               2270   5946  0.3818
+B               2581   6054  0.4263
+```
+
+```python
+pA, pB = summary.loc["A", "rate"], summary.loc["B", "rate"]
+nA, nB = summary.loc["A", "users"], summary.loc["B", "users"]
+
+pooled = summary["conversions"].sum() / summary["users"].sum()
+z = (pB - pA) / np.sqrt(pooled * (1 - pooled) * (1 / nA + 1 / nB))
+p_value = 2 * stats.norm.sf(abs(z))
+
+diff = pB - pA
+se = np.sqrt(pA * (1 - pA) / nA + pB * (1 - pB) / nB)
+print(f"Difference: {diff:.2%}   95% CI: {diff - 1.96 * se:.2%} to {diff + 1.96 * se:.2%}")
+print(f"Relative lift: {diff / pA:.1%}   z = {z:.2f}   p-value = {p_value:.2g}")
+```
+
+```text
+Difference: 4.46%   95% CI: 2.70% to 6.21%
+Relative lift: 11.7%   z = 4.97   p-value = 6.6e-07
+```
+
+The new flow raised 7-day KYC completion by about 4.5 percentage points, a relative lift of about 12%, and the confidence interval is well clear of zero. With about 430 signups a day, that's roughly 19 more verified customers every day, or around 7,000 a year.
+
+## Walkthrough
+
+1. Run the cells and check the z-test by hand for the first step (the pooled rate).
+2. Compare your result with `stats.chi2_contingency` on the 2×2 table of variant against KYC. The p-values should match closely.
+3. Work out how many extra verified customers the flow would produce in a year.
+4. Write the result for the head of product (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "ab-04-p1",
+  "prompt": "What is the **absolute difference** in 7-day KYC completion (B − A), in percentage points? One decimal place.",
+  "answer": 4.5,
+  "format": "number",
+  "dataset": "experiments",
+  "files": ["onboarding"],
+  "pyVerify": "round(diff * 100, 1)",
+  "hint": "The difference printed by the second cell.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "ab-04-p2",
+  "prompt": "What is the **lower end** of the 95% confidence interval for the difference, in percentage points? One decimal place.",
+  "answer": 2.7,
+  "format": "number",
+  "dataset": "experiments",
+  "files": ["onboarding"],
+  "pyVerify": "round((diff - 1.96 * se) * 100, 1)",
+  "hint": "The first number of the CI.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "ab-04-t1",
+  "prompt": "Write the **result** for the head of product in 40 to 110 words: the effect with its **confidence interval**, whether it's **statistically significant**, and what it means in **customers** per day or year.",
+  "minutes": 6,
+  "rows": 6,
+  "placeholder": "The new signup flow raised ...",
+  "rules": [
+    { "label": "Gives the effect in points or percent", "pattern": "\\d+(\\.\\d+)?\\s*(percentage )?points?|\\d+(\\.\\d+)?\\s*%" },
+    { "label": "Gives a confidence interval (CI, range, between … and)", "pattern": "confidence|\\bci\\b|range|between [^.]*and" },
+    { "label": "Says whether it's significant", "pattern": "significant|p-value|p =|p<|p <|chance" },
+    { "label": "Translates into customers", "pattern": "customers?|users?|verified" },
+    { "label": "Between 40 and 110 words", "minWords": 40, "maxWords": 110 }
+  ],
+  "sample": "The new signup flow raised 7-day KYC completion from 38.2% to 42.6%, an increase of 4.5 percentage points (95% confidence interval 2.7 to 6.2 points), or about 12% in relative terms. The result is statistically significant (p < 0.001): a difference this large would be very unlikely if the flows performed the same. At about 430 signups a day, that's roughly 19 more verified customers every day, around 7,000 a year. We recommend rolling the new flow out to all users.",
+  "note": "The interval matters: even the low end (2.7 points) would be worth having, which makes the decision easy.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "A test shows +1.2 points with a 95% CI of −0.8 to +3.2 points. What should you conclude?",
+    "options": ["B is better", "The data are consistent with no effect, or a small positive or negative one: inconclusive", "B is worse", "The test proves there's no effect"],
+    "answer": 1,
+    "explanation": "An interval that includes zero means the test couldn't tell."
+  },
+  {
+    "prompt": "A conversion rate rises from 10% to 12%. What are the absolute and relative changes?",
+    "options": ["2 points and 20%", "20 points and 2%", "2% and 2%", "12 points and 20%"],
+    "answer": 0,
+    "explanation": "Absolute: 12 − 10 = 2 points; relative: 2 ÷ 10 = 20%."
+  },
+  {
+    "prompt": "Why translate the result into customers or money?",
+    "options": ["It's more impressive", "Decision-makers act on business impact, not p-values", "It's required by statistics", "To avoid confidence intervals"],
+    "answer": 1,
+    "explanation": "A result is only useful if people can weigh it against costs."
+  }
+]
+```
+$md$, true, true, 4, array['ab-04-p1', 'ab-04-p2', 'ab-04-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('abt-m05', 'experimentation-ab-testing', 'Analysing Continuous Metrics', 5, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('experimentation-ab-testing:analysing-continuous-metrics', 'experimentation-ab-testing', 'abt-m05', 'analysing-continuous-metrics', 'Analysing continuous metrics', 'Compare averages such as transactions or value per user with Welch''s t-test, handle heavily skewed money metrics with a bootstrap, and decide whether a few big users are driving the result.', 15, $md$
+## The problem
+
+The finance team cares less about KYC than about money: did the new flow make new users transact more, and more valuably? In the first 14 days, B's users transacted more on average, and their total value was higher.
+
+Value is tricky. Most new users move small amounts, and a handful move very large ones. One trader moving ₦3m in their first week can swing a group's average. Before telling finance that the flow increased value, you need to know whether the difference is real, and whether it's the typical user or a few big ones.
+
+## The concept
+
+**Welch's t-test**
+
+For a numeric metric (transactions, value), compare the two means with `stats.ttest_ind(b, a, equal_var=False)`. "Welch" means it doesn't assume the two groups have the same spread, which is the safer default. With thousands of users per group, the t-test works even when the data are skewed, because averages of many values are close to normally distributed.
+
+**Skewed metrics**
+
+For money, look at more than the mean:
+
+- the **median**: what a typical user does;
+- the share of the total from the top 1% of users;
+- a **winsorised** or capped mean (capping values above, say, the 99th percentile), to check that a few extreme users aren't driving the result.
+
+**The bootstrap**
+
+A general way to get a confidence interval for any statistic:
+
+1. Resample each group **with replacement**, same size as the original.
+2. Calculate the statistic (difference in means) on the resample.
+3. Repeat thousands of times; the middle 95% of the results is the confidence interval.
+
+No formula needed, and it works for medians, ratios and capped means alike.
+
+## Example
+
+```python
+import pandas as pd
+import numpy as np
+from scipy import stats
+
+onboarding = pd.read_csv("https://academy.cloudtechanalytics.com/datasets/experiments/onboarding.csv")
+a = onboarding[onboarding["variant"] == "A"]
+b = onboarding[onboarding["variant"] == "B"]
+
+for metric in ["txns_first_14d", "value_first_14d_ngn"]:
+    t = stats.ttest_ind(b[metric], a[metric], equal_var=False)
+    print(f"{metric}: A mean {a[metric].mean():,.2f}  B mean {b[metric].mean():,.2f}  p = {t.pvalue:.3g}")
+print("Median value: A", a["value_first_14d_ngn"].median(), " B", b["value_first_14d_ngn"].median())
+```
+
+```text
+txns_first_14d: A mean 1.61  B mean 1.82  p = 0.000271
+value_first_14d_ngn: A mean 23,696.10  B mean 26,776.71  p = 0.00125
+Median value: A 3625.0  B 5350.0
+```
+
+Both differences are significant, and the median moves too, so it isn't only a few big users. Check the money result with a bootstrap of the difference in mean value, and with values capped at the 99th percentile:
+
+```python
+rng = np.random.default_rng(42)
+va, vb = a["value_first_14d_ngn"].to_numpy(), b["value_first_14d_ngn"].to_numpy()
+boot = [rng.choice(vb, len(vb)).mean() - rng.choice(va, len(va)).mean() for _ in range(2000)]
+low, high = np.percentile(boot, [2.5, 97.5])
+print(f"Difference in mean value: {vb.mean() - va.mean():,.0f}   bootstrap 95% CI {low:,.0f} to {high:,.0f}")
+
+cap = np.percentile(np.concatenate([va, vb]), 99)
+print(f"Capped at ₦{cap:,.0f}: A {np.minimum(va, cap).mean():,.0f}  B {np.minimum(vb, cap).mean():,.0f}")
+```
+
+```text
+Difference in mean value: 3,081   bootstrap 95% CI 1,301 to 4,911
+Capped at ₦244,550: A 22,448  B 25,677
+```
+
+The bootstrap interval is clear of zero, and the capped means show the same direction. The flow's value effect is real and broad-based, though its size is uncertain: the interval is wide because money is so variable.
+
+## Walkthrough
+
+1. Run the cells. Plot a histogram of `value_first_14d_ngn` with a log scale on the x-axis to see the skew.
+2. Bootstrap the difference in **medians** instead of means.
+3. Remove the top 10 users by value from each group. Does the conclusion change?
+4. Write one sentence for finance with the difference in mean value and its interval.
+
+## Practice
+
+```answer
+{
+  "id": "ab-05-p1",
+  "prompt": "What is the average number of transactions in the first 14 days for variant **B**? Two decimal places.",
+  "answer": 1.82,
+  "format": "number",
+  "dataset": "experiments",
+  "files": ["onboarding"],
+  "pyVerify": "round(b['txns_first_14d'].mean(), 2)",
+  "hint": "B's mean in the first line of output.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "ab-05-p2",
+  "prompt": "What is the difference in **mean** 14-day value per user (B − A)? (A rounded figure is fine.)",
+  "answer": 3081,
+  "format": "naira",
+  "dataset": "experiments",
+  "files": ["onboarding"],
+  "pyVerify": "round(vb.mean() - va.mean())",
+  "hint": "The first number in the bootstrap cell's output.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why use Welch's t-test rather than the standard t-test?",
+    "options": ["It's newer", "It doesn't assume the two groups have equal spread, so it's a safer default", "It's only for small samples", "It ignores outliers"],
+    "answer": 1,
+    "explanation": "Treatments often change the spread as well as the mean."
+  },
+  {
+    "prompt": "B's mean value is up but its median is unchanged. What might be happening?",
+    "options": ["Nothing", "A few large users may be driving the mean; check capped means and the top users", "The median is wrong", "The test failed"],
+    "answer": 1,
+    "explanation": "Skewed metrics need more than one summary."
+  },
+  {
+    "prompt": "How does a bootstrap confidence interval work?",
+    "options": ["It uses a fixed formula", "Resample the data with replacement many times, recompute the statistic, and take the middle 95%", "It removes outliers", "It needs normal data"],
+    "answer": 1,
+    "explanation": "It works for almost any statistic."
+  }
+]
+```
+$md$, true, true, 5, array['ab-05-p1', 'ab-05-p2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('abt-m06', 'experimentation-ab-testing', 'Segments, Multiple Tests and Novelty', 6, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('experimentation-ab-testing:segments-multiple-tests-and-novelty', 'experimentation-ab-testing', 'abt-m06', 'segments-multiple-tests-and-novelty', 'Segments, multiple tests and novelty', 'Look inside a result by segment without fooling yourself, correct for running many tests at once, and spot novelty effects that fade once users get used to a change.', 25, $md$
+## The problem
+
+The onboarding result is in, and everyone wants to slice it. Marketing asks for it by acquisition channel, the regional managers by state, the mobile team by platform. Ten regions later, four show a "significant" effect and six don't. The Kano manager wants credit; the Delta manager wants to know what went wrong.
+
+Meanwhile, the banner test (setting aside its broken split) showed a click rate far above control in its first week, which the marketing team is already quoting. By week three, the gap had gone.
+
+Both are classic ways to over-read an experiment. Segment results are noisy, and every extra comparison is another chance of a false alarm. And people often react to something **new** in ways that don't last.
+
+## The concept
+
+**Segments: look, but carefully**
+
+- Each segment has fewer users, so its estimate is much noisier than the overall one.
+- "Significant here, not there" doesn't mean the effect **differs** between segments. Compare the segments' effects directly, or look at whether their confidence intervals overlap.
+- Trust a segment difference when it was **planned in advance**, is large, and has a **mechanism** (a reason it should differ).
+
+**Multiple comparisons**
+
+Test 10 segments at α = 5% and, even with no real differences, you'd expect about one false alarm by chance. The simplest correction is **Bonferroni**: with m tests, use α ÷ m (here 0.05 ÷ 10 = 0.005) for each.
+
+**Novelty effects**
+
+Existing users often click on something just because it's new. The effect fades as they get used to it. Plot the effect **by week**: if it shrinks towards zero, judge the change on the later weeks, or run the test longer. (Its mirror image, a **primacy** effect, is when users first resist a change and then adapt.)
+
+## Example
+
+The onboarding effect by platform, where there's a reason to expect a difference (the new flow fixed an Android camera step):
+
+```python
+import pandas as pd
+import numpy as np
+from scipy import stats
+
+base = "https://academy.cloudtechanalytics.com/datasets/experiments/"
+onboarding = pd.read_csv(base + "onboarding.csv")
+
+def effect(df):
+    a = df.loc[df["variant"] == "A", "completed_kyc_7d"]
+    b = df.loc[df["variant"] == "B", "completed_kyc_7d"]
+    pooled = (a.sum() + b.sum()) / (len(a) + len(b))
+    z = (b.mean() - a.mean()) / np.sqrt(pooled * (1 - pooled) * (1 / len(a) + 1 / len(b)))
+    return pd.Series({"users": len(df), "effect_pts": round((b.mean() - a.mean()) * 100, 1), "p_value": round(2 * stats.norm.sf(abs(z)), 4)})
+
+onboarding.groupby("platform").apply(effect, include_groups=False)
+```
+
+```text
+users  effect_pts  p_value
+platform
+Android   9288.0         5.2   0.0000
+iOS       2712.0         1.7   0.3745
+```
+
+The effect is much larger on Android, as the mechanism predicts. Now the regions, with no particular reason to expect differences:
+
+```python
+regions = onboarding.groupby("region").apply(effect, include_groups=False).sort_values("p_value")
+regions["significant_at_5pct"] = regions["p_value"] < 0.05
+regions["significant_bonferroni"] = regions["p_value"] < 0.05 / len(regions)
+regions
+```
+
+```text
+users  effect_pts  p_value  significant_at_5pct  significant_bonferroni
+region
+Kano     1249.0         9.7   0.0005                 True                    True
+Kaduna    853.0         9.6   0.0038                 True                    True
+Enugu     862.0         7.2   0.0329                 True                   False
+Anambra   826.0         7.3   0.0347                 True                   False
+Lagos    3120.0         2.7   0.1240                False                   False
+Oyo      1018.0         3.2   0.2851                False                   False
+Rivers   1098.0         3.2   0.2872                False                   False
+Delta     977.0         3.1   0.3251                False                   False
+Ogun      793.0         2.5   0.4748                False                   False
+FCT      1204.0         0.7   0.7907                False                   False
+```
+
+The new flow works everywhere on average; the regional estimates scatter around the overall effect because each region is small. After the Bonferroni correction fewer regions pass, and nothing here suggests the flow works differently in Kano from Delta. Now the banner's novelty effect, by week:
+
+```python
+banner = pd.read_csv(base + "banner_daily.csv")
+banner["week"] = (pd.to_datetime(banner["date"]) - pd.Timestamp("2026-06-01")).dt.days // 7 + 1
+weekly = banner.groupby(["week", "variant"])[["users", "clicks"]].sum()
+(weekly["clicks"] / weekly["users"]).unstack().round(4)
+```
+
+```text
+variant       A       B
+week
+1        0.0308  0.0466
+2        0.0304  0.0374
+3        0.0316  0.0312
+4        0.0305  0.0335
+```
+
+B's first-week click rate is far above A's, but by weeks three and four the two are close. The first week was novelty. (And remember lesson 3: this test's split is broken anyway.)
+
+## Walkthrough
+
+1. Run the cells. Compare the Android and iOS confidence intervals for the effect.
+2. Check the effect by acquisition channel. Is there a mechanism that would make it differ?
+3. Count how many regions you'd expect to be "significant" by chance alone if the flow did nothing.
+4. Write what you'd tell the Kano and Delta managers (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "ab-06-p1",
+  "prompt": "What is the effect of the new flow on **Android** users, in percentage points? One decimal place.",
+  "answer": 5.2,
+  "format": "number",
+  "dataset": "experiments",
+  "files": ["onboarding"],
+  "pyVerify": "float(effect(onboarding[onboarding['platform'] == 'Android'])['effect_pts'])",
+  "hint": "The Android row of the first table.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "ab-06-p2",
+  "prompt": "How many regions are significant **after the Bonferroni correction**?",
+  "answer": 2,
+  "format": "number",
+  "dataset": "experiments",
+  "files": ["onboarding"],
+  "pyVerify": "int(regions['significant_bonferroni'].sum())",
+  "hint": "Count the True values in the significant_bonferroni column.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "ab-06-t1",
+  "prompt": "The Delta regional manager asks why the new flow \"didn't work\" in Delta. Write a reply (40 to 110 words) explaining **noise in small segments**, **multiple comparisons**, and what the evidence actually says about Delta.",
+  "minutes": 6,
+  "rows": 6,
+  "placeholder": "The flow did work in Delta, as far as we can tell ...",
+  "rules": [
+    { "label": "Explains that segments are small or noisy", "pattern": "small|noisy|noise|fewer users|uncertain|wide" },
+    { "label": "Mentions multiple comparisons (many regions, by chance, false alarm)", "pattern": "by chance|many (regions|tests|comparisons)|ten regions|10 regions|false alarm|multiple" },
+    { "label": "Says the overall effect is the best estimate for Delta", "pattern": "overall|on average|across all|best estimate" },
+    { "label": "Between 40 and 110 words", "minWords": 40, "maxWords": 110 }
+  ],
+  "sample": "The flow did work in Delta, as far as we can tell. Delta had fewer than 1,000 users in the test, so its estimate is noisy, and with ten regions some will look stronger or weaker than others purely by chance. Nothing in the data suggests the flow works differently in Delta: its result is consistent with the overall effect of about 4.5 points, which is our best estimate for every region. The difference that is real is between Android and iOS, because the new flow fixed an Android camera step.",
+  "note": "Pointing to the real, explained difference (platform) helps the manager see why the regional one isn't.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "You test 20 segments at α = 5%, and the treatment does nothing. How many 'significant' results would you expect?",
+    "options": ["0", "About 1", "About 5", "20"],
+    "answer": 1,
+    "explanation": "20 × 5% = 1 false alarm on average."
+  },
+  {
+    "prompt": "What Bonferroni threshold would you use for 10 tests at an overall 5%?",
+    "options": ["0.05", "0.005", "0.5", "0.10"],
+    "answer": 1,
+    "explanation": "0.05 ÷ 10."
+  },
+  {
+    "prompt": "A new button's click rate is high in week 1 and back to normal by week 3. What is this?",
+    "options": ["A primacy effect", "A novelty effect", "Sample ratio mismatch", "Seasonality"],
+    "answer": 1,
+    "explanation": "Judge the change on the later weeks."
+  }
+]
+```
+$md$, true, true, 6, array['ab-06-p1', 'ab-06-p2', 'ab-06-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('abt-m07', 'experimentation-ab-testing', 'Guardrails and Decisions', 7, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('experimentation-ab-testing:guardrails-and-decisions', 'experimentation-ab-testing', 'abt-m07', 'guardrails-and-decisions', 'Guardrails and decisions', 'Weigh a winning primary metric against guardrails that get worse, value both sides in money over a sensible horizon, and make a decision you can defend.', 25, $md$
+## The problem
+
+Paystream tested raising its transfer fee from ₦10 to ₦25. The finance director is delighted: fee revenue per user more than doubled in four weeks. The product team is worried: users made fewer transfers, and more of them had stopped using the app by day 28.
+
+Both are right, and that's the point of guardrails. An experiment that only looks at its primary metric can recommend changes that win this month and lose the customer base. The decision needs both sides on the same scale, usually money, over a long enough time to see the cost.
+
+## The concept
+
+**Primary metric and guardrails, together**
+
+Report every pre-agreed metric with its effect and confidence interval. A change that improves the primary metric but significantly harms a guardrail isn't a win; it's a trade-off to decide.
+
+**Put both sides in naira**
+
+- The gain: extra fee revenue per user per month.
+- The cost: users lost, each worth their future revenue (fees, interest on balances, other products) over a horizon such as a year.
+
+Short tests measure the gain fully but the cost only partly: churn keeps accumulating long after four weeks. A decision based only on the test window favours changes that harvest revenue and pay for it later.
+
+**Decision options**
+
+Not just "ship" or "don't": a smaller increase (₦15 or ₦20), the higher fee only for large transfers, or a further test that measures retention over longer.
+
+## Example
+
+```python
+import pandas as pd
+import numpy as np
+from scipy import stats
+
+fee = pd.read_csv("https://academy.cloudtechanalytics.com/datasets/experiments/fee_test.csv")
+summary = fee.groupby("variant")[["transfers_28d", "fee_revenue_28d_ngn", "active_on_day_28"]].mean()
+summary.round(3)
+```
+
+```text
+transfers_28d  fee_revenue_28d_ngn  active_on_day_28
+variant
+Control             8.810               88.099             0.937
+Higher fee          7.586              189.654             0.903
+```
+
+Each difference, with its test:
+
+```python
+c = fee[fee["variant"] == "Control"]
+t = fee[fee["variant"] == "Higher fee"]
+for metric in ["fee_revenue_28d_ngn", "transfers_28d", "active_on_day_28"]:
+    test = stats.ttest_ind(t[metric], c[metric], equal_var=False)
+    change = t[metric].mean() - c[metric].mean()
+    print(f"{metric}: change {change:+.3f}  ({change / c[metric].mean():+.1%})  p = {test.pvalue:.2g}")
+```
+
+```text
+fee_revenue_28d_ngn: change +101.555  (+115.3%)  p = 6.5e-178
+transfers_28d: change -1.224  (-13.9%)  p = 2.2e-10
+active_on_day_28: change -0.034  (-3.6%)  p = 2.5e-08
+```
+
+Revenue per user more than doubles, but transfers fall and more users are inactive by day 28: all three changes are far too large to be chance. Now value the trade-off over a year for 100,000 users, assuming a retained user is worth ₦3,000 a year across all products. The test can't say whether the churn gap was a one-off or will repeat every month, so try both:
+
+```python
+users = 100_000                    # active users who'd get the higher fee
+extra_fee_per_user_year = (t["fee_revenue_28d_ngn"].mean() - c["fee_revenue_28d_ngn"].mean()) * 13
+extra_churn = c["active_on_day_28"].mean() - t["active_on_day_28"].mean()
+value_per_user_year = 3000
+
+scenarios = {
+    "Gap stays at the 4-week level": extra_churn,
+    "Same gap again every month": 1 - (1 - extra_churn) ** 12,
+}
+for name, lost_share in scenarios.items():
+    gain = users * extra_fee_per_user_year * (1 - lost_share)
+    loss = users * lost_share * value_per_user_year
+    print(f"{name}: extra fees ₦{gain / 1e6:,.1f}m, users lost worth ₦{loss / 1e6:,.1f}m, net ₦{(gain - loss) / 1e6:,.1f}m")
+```
+
+```text
+Gap stays at the 4-week level: extra fees ₦127.6m, users lost worth ₦10.1m, net ₦117.4m
+Same gap again every month: extra fees ₦87.4m, users lost worth ₦101.3m, net ₦-13.8m
+```
+
+If the extra churn is a one-off, the fee increase pays handsomely. If the same gap opens up again every month, a third of the affected users are gone within a year and the higher fee loses money. A four-week test can't tell these apart, so the responsible decision is not "ship ₦25": it's to test smaller increases and measure retention for longer.
+
+## Walkthrough
+
+1. Run the cells. Add confidence intervals for each difference.
+2. Change the value of a retained user to ₦6,000. Does the decision flip?
+3. Find the monthly churn gap at which the two sides break even.
+4. Write the recommendation (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "ab-07-p1",
+  "prompt": "What is the average **fee revenue per user** over 28 days in the **Higher fee** group? (A rounded figure is fine.)",
+  "answer": 189.65,
+  "format": "naira",
+  "dataset": "experiments",
+  "files": ["fee_test"],
+  "pyVerify": "round(t['fee_revenue_28d_ngn'].mean(), 2)",
+  "hint": "The Higher fee row of the first table.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "ab-07-p2",
+  "prompt": "By how many **percentage points** is the share of users active on day 28 lower in the Higher fee group? One decimal place.",
+  "answer": 3.4,
+  "format": "number",
+  "dataset": "experiments",
+  "files": ["fee_test"],
+  "pyVerify": "round(extra_churn * 100, 1)",
+  "hint": "Control's active share minus Higher fee's.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "ab-07-t1",
+  "prompt": "Write the **recommendation** to the finance director and head of product (60 to 150 words): what the test showed on the **primary metric** and the **guardrails**, the value of each side, the **key uncertainty**, and your recommended **next step**.",
+  "minutes": 8,
+  "rows": 8,
+  "placeholder": "The ₦25 fee more than doubled ...",
+  "rules": [
+    { "label": "Reports the revenue gain", "pattern": "revenue|fee income" },
+    { "label": "Reports a guardrail (transfers or users active)", "pattern": "transfer|active|retention|churn|inactive" },
+    { "label": "Uses naira values", "pattern": "₦\\s*\\d|naira" },
+    { "label": "Names the key uncertainty (longer term, beyond four weeks, value of a user)", "pattern": "longer|beyond (the )?(four|4)|after (four|4)|value of a (retained )?user|uncertain|depends|can'?t tell|one-off|every month" },
+    { "label": "Recommends a next step (test, smaller, ₦15, ₦20, large transfers)", "pattern": "test|smaller|₦\\s*(15|20)|large transfers|pilot" },
+    { "label": "Between 60 and 150 words", "minWords": 60, "maxWords": 150 }
+  ],
+  "sample": "The ₦25 fee more than doubled fee revenue per user in four weeks, but users made about 14% fewer transfers and the share still active on day 28 fell by about 3 points. Over a year for 100,000 users, the extra fees easily outweigh the users lost if that churn gap is a one-off, but if the same gap opens every month the fee increase loses money, and a four-week test can't tell which. We recommend not rolling out ₦25 yet: test ₦15 and ₦20 against ₦10 for at least eight weeks, measuring retention as the guardrail, before deciding.",
+  "note": "Both directors get their concern answered with a number, and the next step tests exactly the uncertainty that matters.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "A change raises revenue per user but significantly lowers retention. What is the result?",
+    "options": ["A win", "A trade-off to value and decide, not an automatic win", "A failed test", "Inconclusive"],
+    "answer": 1,
+    "explanation": "Guardrails exist to catch exactly this."
+  },
+  {
+    "prompt": "Why do short tests tend to favour price increases?",
+    "options": ["They don't", "The revenue gain appears immediately, but churn keeps accumulating after the test ends", "Prices are seasonal", "Short tests have more users"],
+    "answer": 1,
+    "explanation": "Measure retention over a long enough horizon."
+  },
+  {
+    "prompt": "Which is a sensible next step when a trade-off is close?",
+    "options": ["Ship the bigger change", "Test smaller changes for longer, with the guardrail measured properly", "Stop testing", "Ignore the guardrail"],
+    "answer": 1,
+    "explanation": "Reduce the uncertainty that drives the decision."
+  }
+]
+```
+$md$, true, true, 7, array['ab-07-p1', 'ab-07-p2', 'ab-07-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('abt-m08', 'experimentation-ab-testing', 'When You Can''t Randomise', 8, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('experimentation-ab-testing:when-you-cant-randomise', 'experimentation-ab-testing', 'abt-m08', 'when-you-cant-randomise', 'When you can''t randomise', 'Estimate an effect when a change was rolled out to some places and not others, with difference-in-differences, and check the parallel-trends assumption it depends on.', 25, $md$
+## The problem
+
+In week 14 of 2026, Paystream launched cash-out agents (shops where customers can withdraw cash from their wallet) in three northern and south-eastern states: Kano, Kaduna and Enugu. Nobody randomised anything: the operations team chose states where it already had partners. Three months later, the question is whether agents increased weekly active users.
+
+Weekly active users in the three agent states rose by about 6%. But a before-and-after comparison can't separate the agents' effect from everything else that changed in those weeks: seasons, salaries, a competitor, a fuel price rise. You need a comparison group, and a method that uses it.
+
+## The concept
+
+**Difference-in-differences (DiD)**
+
+Compare the **change** in the treated group with the **change** in a comparison group over the same period:
+
+> effect ≈ (treated after − treated before) − (comparison after − comparison before)
+
+or, in percentages, the treated group's growth minus the comparison group's growth. The comparison group's change stands in for what would have happened to the treated states without the agents.
+
+**The parallel-trends assumption**
+
+DiD only works if, without the treatment, both groups would have moved in parallel. You can't check that directly, but you can check that they **did** move in parallel **before** the change. If their pre-period trends differ, the estimate is suspect.
+
+**Other options when you can't randomise**
+
+- A **staggered rollout**: launch in different places at different times, which gives several before-and-after comparisons.
+- **Holdouts**: keep a random set of places or users without the change for a while.
+- If possible, randomise next time. Even randomising which states go first would have made this question easy.
+
+## Example
+
+```python
+import pandas as pd
+import numpy as np
+
+rollout = pd.read_csv("https://academy.cloudtechanalytics.com/datasets/experiments/rollout.csv")
+rollout["group"] = np.where(rollout["state"].isin(["Kano", "Kaduna", "Enugu"]), "Agent states", "Other states")
+rollout["period"] = np.where(rollout["week"] >= 14, "after", "before")
+
+weekly = rollout.groupby(["group", "period", "week"])["weekly_active_users"].sum().groupby(["group", "period"]).mean()
+table = weekly.unstack()[["before", "after"]]
+table["change_pct"] = (table["after"] / table["before"] - 1) * 100
+table.round(1)
+```
+
+```text
+period         before    after  change_pct
+group
+Agent states   5242.2   5545.5         5.8
+Other states  15861.1  15538.2        -2.0
+```
+
+The agent states grew while the other states shrank slightly over the same weeks. The difference-in-differences:
+
+```python
+did = (table.loc["Agent states", "change_pct"] - table.loc["Other states", "change_pct"]) / 100
+print(f"Before-and-after in agent states: {table.loc['Agent states', 'change_pct'] / 100:+.1%}")
+print(f"Difference-in-differences estimate: {did:+.1%}")
+```
+
+```text
+Before-and-after in agent states: +5.8%
+Difference-in-differences estimate: +7.8%
+```
+
+The before-and-after figure understates the effect, because the other states show that this period was a slightly weaker one. Now the parallel-trends check: the two groups' weekly totals, each indexed to their own average in the weeks before the launch:
+
+```python
+pre = rollout[rollout["week"] < 14]
+idx = rollout.groupby(["group", "week"])["weekly_active_users"].sum().unstack(0)
+idx = idx / idx.loc[1:13].mean()
+idx.loc[[1, 5, 9, 13, 14, 18, 22, 26]].round(3)
+```
+
+```text
+group  Agent states  Other states
+week
+1             0.949         0.949
+5             1.001         0.994
+9             0.996         1.007
+13            1.014         1.016
+14            1.053         0.978
+18            1.033         0.949
+22            1.064         0.979
+26            1.128         1.044
+```
+
+Before week 14, the two groups move closely together; after it, the agent states pull ahead. That's the pattern that makes the DiD estimate believable.
+
+## Walkthrough
+
+1. Run the cells and plot the indexed weekly totals for both groups, with a line at week 14.
+2. Calculate the DiD for each agent state separately. Are they similar?
+3. Run a "placebo" DiD: pretend the launch was in week 7, using only weeks 1 to 13. The estimate should be close to zero.
+4. Write the result for the operations director (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "ab-08-p1",
+  "prompt": "What is the **difference-in-differences** estimate of the agents' effect on weekly active users? As a percentage, one decimal place.",
+  "answer": 7.8,
+  "format": "percent",
+  "dataset": "experiments",
+  "files": ["rollout"],
+  "pyVerify": "round(did * 100, 1)",
+  "hint": "The second line printed.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "ab-08-t1",
+  "prompt": "Write the result for the operations director (50 to 130 words): the **estimate**, why the **before-and-after** figure alone was misleading, the **assumption** behind it and the evidence for it, and how to make the next rollout easier to measure.",
+  "minutes": 8,
+  "rows": 7,
+  "placeholder": "Cash-out agents increased weekly active users by about ...",
+  "rules": [
+    { "label": "Gives the estimate as a percentage", "pattern": "\\d+(\\.\\d+)?\\s*%" },
+    { "label": "Explains the before-and-after problem (other states, same period, would have happened)", "pattern": "other states|same (period|weeks)|would have|comparison" },
+    { "label": "Names the parallel-trends assumption or its check", "pattern": "parallel|moved together|same trend|before the launch" },
+    { "label": "Suggests randomising, staggering or a holdout next time", "pattern": "random|stagger|holdout|hold-out|phase" },
+    { "label": "Between 50 and 130 words", "minWords": 50, "maxWords": 130 }
+  ],
+  "sample": "Cash-out agents increased weekly active users in Kano, Kaduna and Enugu by about 8%. A simple before-and-after comparison showed only about 6%, because weekly active users in the other states fell by about 2% over the same weeks, so without agents the three states would probably have dipped too. The estimate assumes the two groups would have moved in parallel without agents; before the launch they did move closely together, which supports it. For the next rollout, we suggest choosing the launch states at random from those with partners, or launching in stages, so the effect can be measured directly.",
+  "note": "The suggestion at the end costs nothing operationally and would make the next answer far more certain.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Treated states grew 6% after a launch; comparison states fell 2% over the same weeks. What's the difference-in-differences estimate?",
+    "options": ["6%", "+8%", "4%", "−2%"],
+    "answer": 1,
+    "explanation": "6% − (−2%) = 8%."
+  },
+  {
+    "prompt": "What assumption does difference-in-differences rely on?",
+    "options": ["Random assignment", "Without the treatment, both groups would have followed parallel trends", "Equal group sizes", "Normal data"],
+    "answer": 1,
+    "explanation": "Check that they moved together before the change."
+  },
+  {
+    "prompt": "A 'placebo' test pretends the launch happened earlier and finds a large effect. What does that suggest?",
+    "options": ["The real effect is larger", "The groups weren't moving in parallel, so the DiD estimate is suspect", "The data is perfect", "Nothing"],
+    "answer": 1,
+    "explanation": "A placebo should find nothing."
+  }
+]
+```
+$md$, true, true, 8, array['ab-08-p1', 'ab-08-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('abt-m09', 'experimentation-ab-testing', 'Final Project', 9, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('experimentation-ab-testing:final-project', 'experimentation-ab-testing', 'abt-m09', 'final-project', '"Final project: Paystream''s experiment review"', 'Plan your final project, a full review of Paystream''s four experiments and a design for the next one, and start by checking every test before trusting any result.', 20, $md$
+## The problem
+
+Paystream's leadership wants a review of the quarter's experiments before it makes three decisions: whether to roll out the new signup flow, whether to raise the transfer fee, and whether to expand cash-out agents to more states. It also wants to know whether the banner result the marketing team keeps quoting can be trusted.
+
+Your final project is that review, plus a properly designed next experiment. The first step in any review is the one people skip: check that each test is sound before reading its results.
+
+## The concept
+
+**A review checklist for every experiment**
+
+| Check | Question |
+| :-- | :-- |
+| **Design** | Was there one primary metric, an MDE and a planned sample size? |
+| **Randomisation** | Does the split match the plan (sample ratio mismatch)? Are the groups balanced? |
+| **Duration** | Whole weeks? Long enough for the guardrails? Any novelty? |
+| **Analysis** | Effect with a confidence interval, not just a p-value? Skewed metrics handled? |
+| **Segments** | Planned, with a mechanism, and corrected for multiple comparisons? |
+| **Decision** | Guardrails valued? Next step clear? |
+
+**What each test can support**
+
+- **Onboarding**: a clean randomised test with a clear effect. Ready to decide.
+- **Banner**: broken split and a novelty effect. Not trustworthy; rerun.
+- **Fee**: clean, but a trade-off with an uncertain long-run cost. Needs a follow-up test.
+- **Agents**: not randomised; difference-in-differences with a plausible parallel-trends check. Reasonable evidence, to be confirmed by the next rollout.
+
+## Example
+
+The quick health check across the user-level tests:
+
+```python
+import pandas as pd
+from scipy import stats
+
+base = "https://academy.cloudtechanalytics.com/datasets/experiments/"
+onboarding = pd.read_csv(base + "onboarding.csv")
+fee = pd.read_csv(base + "fee_test.csv")
+banner = pd.read_csv(base + "banner_daily.csv")
+
+checks = {
+    "onboarding": onboarding["variant"].value_counts(),
+    "fee": fee["variant"].value_counts(),
+    "banner": banner.groupby("variant")["users"].sum(),
+}
+for name, counts in checks.items():
+    print(f"{name:11s} split {counts.to_dict()}  SRM p-value {stats.chisquare(counts).pvalue:.3g}")
+```
+
+```text
+onboarding  split {'B': 6054, 'A': 5946}  SRM p-value 0.324
+fee         split {'Control': 4025, 'Higher fee': 3975}  SRM p-value 0.576
+banner      split {'A': 110094, 'B': 104210}  SRM p-value 5.18e-37
+```
+
+Only the banner test fails. Everything else in your review can build on the other three.
+
+## Walkthrough
+
+1. Run the health check, then work through the checklist for each experiment.
+2. Write a one-paragraph verdict per experiment: trustworthy or not, what it shows, and the decision.
+3. Design the follow-up fee test: variants, primary metric, guardrails, MDE, sample size and duration.
+4. Open the project brief on the course page and plan the write-up.
+
+## Practice
+
+```dataset
+{"dataset": "experiments", "files": ["onboarding", "banner_daily", "fee_test", "rollout"]}
+```
+
+```answer
+{
+  "id": "ab-09-p1",
+  "prompt": "What is the SRM p-value for the **fee** test? Two decimal places.",
+  "answer": 0.58,
+  "format": "number",
+  "tolerance": 0.006,
+  "dataset": "experiments",
+  "files": ["fee_test"],
+  "pyVerify": "round(stats.chisquare(fee['variant'].value_counts()).pvalue, 2)",
+  "hint": "The fee line of the output.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "ab-09-t1",
+  "prompt": "Write a **verdict** for each of the four experiments, one line each in the form **Experiment | trustworthy? | what it shows | decision**.",
+  "minutes": 8,
+  "rows": 6,
+  "placeholder": "Onboarding | yes | ... | roll out",
+  "rules": [
+    { "label": "Four lines in the form Experiment | trustworthy | shows | decision", "pattern": "^[^|\\n]+\\|[^|\\n]+\\|[^|\\n]+\\|[^|\\n]+$", "min": 4 },
+    { "label": "The banner test is marked untrustworthy", "pattern": "banner[^|\\n]*\\|\\s*(no|not)" },
+    { "label": "Mentions the sample ratio mismatch or novelty for the banner", "pattern": "mismatch|srm|split|novelty" },
+    { "label": "The fee decision is a follow-up test, not a straight rollout", "pattern": "fee[^\\n]*(test|smaller|₦\\s*(15|20)|longer)" }
+  ],
+  "sample": "Onboarding | yes | KYC completion up 4.5 points (95% CI 2.7 to 6.2), mostly on Android | roll out to all users\nBanner | no | broken split (SRM p near zero) and a first-week novelty effect | fix the randomiser and rerun for four weeks\nFee | yes | revenue per user more than doubled, but transfers fell 14% and day-28 activity 3.4 points | test ₦15 and ₦20 for eight weeks with retention as the guardrail\nAgents | partly (not randomised) | about +8% weekly active users by difference-in-differences, with parallel pre-trends | expand gradually, choosing new states at random so the effect can be confirmed",
+  "note": "\"Partly\" for the agents is the honest answer: good evidence, not proof. Saying so is what makes the rest of the review credible.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "What should be the first step in reviewing any experiment?",
+    "options": ["Read the p-value", "Check the design and randomisation, such as sample ratio mismatch, before trusting results", "Look at segments", "Calculate revenue"],
+    "answer": 1,
+    "explanation": "A broken test gives confident wrong answers."
+  },
+  {
+    "prompt": "A clean test shows a primary win and a guardrail loss. What's the right verdict?",
+    "options": ["Ship it", "A trade-off: value both sides and usually test a smaller change", "Discard it", "Ignore the guardrail"],
+    "answer": 1,
+    "explanation": "Guardrails turn wins into decisions."
+  },
+  {
+    "prompt": "How strong is evidence from a difference-in-differences with parallel pre-trends?",
+    "options": ["As strong as a randomised test", "Reasonable but not proof; confirm with a randomised or staggered rollout", "Worthless", "Stronger than an A/B test"],
+    "answer": 1,
+    "explanation": "Be honest about the strength of each kind of evidence."
+  }
+]
+```
+$md$, true, true, 9, array['ab-09-p1', 'ab-09-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+
 -- Course: Data Analyst Capstone: End-to-End BI Project
 insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
-values ('data-analyst-capstone', 'full', null, 'data-analyst-capstone', 'CAP', 'Data Analyst Capstone: End-to-End BI Project', 'Take a retail chain''s raw till export all the way to a reviewed dashboard and a board-ready executive summary, using the tools of your choice.', 'The capstone of the Data Analyst track. Voltline Electronics, a chain of eight stores, sends you 18 months of raw till data and one question from its chief executive: what''s really driving our 37% growth? You''ll plan the analysis, profile and clean a genuinely messy export (a duplicated upload, mixed date formats, inconsistent store names and test transactions), build a model that looks up costs by date and compares sales with monthly targets, decompose the growth, find what''s going wrong where, and put a value on missed sales. Then you''ll build a dashboard, write an executive summary, prepare for the board''s questions and publish the project for your portfolio. Use Excel, Power BI, SQL or Python: the work is assessed on the answers, not the tool.', 'data-analytics', 'intermediate', 4, 'Career project', 14, true, 'available', true, array['Turning a business brief into an analysis plan', 'Profiling and cleaning raw data with a quality log', 'Modelling data at the right grain', 'Decomposing growth into price, new stores and volume', 'Judging targets fairly', 'Estimating lost sales with stated assumptions', 'Finding-led dashboards and executive summaries', 'Presenting and publishing a portfolio project']::text[], array['The core Data Analyst courses: Excel, SQL and Power BI (or Python)', 'Comfort cleaning data and building a dashboard in at least one tool']::text[], 'Voltline Electronics: commercial review', true, true, true, true, false, 60, 27)
+values ('data-analyst-capstone', 'full', null, 'data-analyst-capstone', 'CAP', 'Data Analyst Capstone: End-to-End BI Project', 'Take a retail chain''s raw till export all the way to a reviewed dashboard and a board-ready executive summary, using the tools of your choice.', 'The capstone of the Data Analyst track. Voltline Electronics, a chain of eight stores, sends you 18 months of raw till data and one question from its chief executive: what''s really driving our 37% growth? You''ll plan the analysis, profile and clean a genuinely messy export (a duplicated upload, mixed date formats, inconsistent store names and test transactions), build a model that looks up costs by date and compares sales with monthly targets, decompose the growth, find what''s going wrong where, and put a value on missed sales. Then you''ll build a dashboard, write an executive summary, prepare for the board''s questions and publish the project for your portfolio. Use Excel, Power BI, SQL or Python: the work is assessed on the answers, not the tool.', 'data-analytics', 'intermediate', 4, 'Career project', 14, true, 'available', true, array['Turning a business brief into an analysis plan', 'Profiling and cleaning raw data with a quality log', 'Modelling data at the right grain', 'Decomposing growth into price, new stores and volume', 'Judging targets fairly', 'Estimating lost sales with stated assumptions', 'Finding-led dashboards and executive summaries', 'Presenting and publishing a portfolio project']::text[], array['The core Data Analyst courses: Excel, SQL and Power BI (or Python)', 'Comfort cleaning data and building a dashboard in at least one tool']::text[], 'Voltline Electronics: commercial review', true, true, true, true, false, 60, 28)
 on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level = excluded.level, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
@@ -35517,6 +36959,108 @@ on conflict (id) do update set assessment_id = excluded.assessment_id, position 
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
 values ('femq12', 1, 'Plan for the delay, and watch leading signals in the meantime.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Experimentation and A/B Testing: final assessment
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('experimentation-ab-testing-final', 'experimentation-ab-testing', 'final', null, 'Experimentation and A/B Testing: final assessment', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('abtq01', 'experimentation-ab-testing-final', 1, 'Users who turned on a savings feature saved 40% more. What can you conclude about the feature''s effect?', '["It increases savings by 40%","Nothing causal: users who chose it may differ in ways that explain the gap","It reduces savings","It works only for some users"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('abtq01', 1, 'Self-selection creates confounders; randomise to measure the effect.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('abtq02', 'experimentation-ab-testing-final', 2, 'Baseline conversion is 20%. You halve the minimum detectable effect from 4 points to 2. Roughly what happens to the sample size?', '["It halves","It roughly quadruples","It doubles","No change"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('abtq02', 1, 'Sample size scales with 1 ÷ effect².')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('abtq03', 'experimentation-ab-testing-final', 3, 'A 50/50 test has 52,000 users in A and 48,000 in B. The SRM p-value is far below 0.001. What do you do?', '["Analyse as normal","Investigate and fix the cause before trusting any result","Drop 4,000 A users","Report B''s lift only"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('abtq03', 1, 'A broken split can bias every metric.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('abtq04', 'experimentation-ab-testing-final', 4, 'Checking a test daily and stopping at the first p < 0.05 does what to false alarms?', '["Keeps them at 5%","Raises them well above 5%","Lowers them","Nothing"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('abtq04', 1, 'Every look is another chance for noise to cross the line.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('abtq05', 'experimentation-ab-testing-final', 5, 'An effect is +1.0 points with a 95% CI of −0.6 to +2.6. What should you report?', '["B wins","Inconclusive: the data are consistent with no effect","B loses","The test proves no effect"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('abtq05', 1, 'An interval including zero means the test couldn''t tell.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('abtq06', 'experimentation-ab-testing-final', 6, 'A money metric''s mean rises in B, but its median and capped mean don''t. What''s likely?', '["A broad effect","A few large users drive the mean; the typical user hasn''t changed","A broken split","Novelty"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('abtq06', 1, 'Check skewed metrics more than one way.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('abtq07', 'experimentation-ab-testing-final', 7, 'You test 10 regions at 5% each. With no real differences, how many false alarms would you expect?', '["None","About 0.5","About 5","10"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('abtq07', 1, '10 × 5% = 0.5 on average; use a correction such as Bonferroni.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('abtq08', 'experimentation-ab-testing-final', 8, 'A redesigned button''s click rate is high in week 1 and normal by week 3. How should you judge it?', '["On week 1","On the later weeks, after the novelty has worn off","On the average of week 1","Ship it now"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('abtq08', 1, 'Novelty effects fade.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('abtq09', 'experimentation-ab-testing-final', 9, 'A price rise doubles revenue per user in a 4-week test but lowers retention. Why be cautious?', '["The test is invalid","Churn may keep accumulating after the test, which a short test can''t see","Revenue can''t double","Retention doesn''t matter"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('abtq09', 1, 'Value guardrails over a realistic horizon.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('abtq10', 'experimentation-ab-testing-final', 10, 'Treated states grew 6% after a launch; other states fell 2% in the same weeks. What''s the DiD estimate?', '["6%","8%","4%","−2%"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('abtq10', 1, '6 − (−2) = 8 points.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('abtq11', 'experimentation-ab-testing-final', 11, 'What must hold for difference-in-differences to be credible?', '["Random assignment","The groups would have moved in parallel without the change, as they did beforehand","Equal sizes","Normal data"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('abtq11', 1, 'Check parallel pre-trends and run a placebo test.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('abtq12', 'experimentation-ab-testing-final', 12, 'Why write the primary metric and MDE down before a test starts?', '["It''s a formality","So nobody can choose the metric or stopping point after seeing the data","Tools need it","To make the report longer"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('abtq12', 1, 'Pre-registration protects against cherry-picking.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 
@@ -38792,6 +40336,14 @@ Work in Google Colab. Submit a link to your notebook (shared so anyone with the 
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
 
 
+-- Project: Paystream: experiment review and next test
+insert into public.projects (id, course_id, title, summary, brief_md, tasks, datasets, rubric, required)
+values ('abt-paystream-review', 'experimentation-ab-testing', 'Paystream: experiment review and next test', 'Review four product experiments for soundness and results, make three decisions with evidence, and design the next test properly.', $md$Paystream's leadership will decide whether to roll out the new signup flow, raise the transfer fee and expand cash-out agents, and wants to know whether the banner result can be trusted. Review all four experiments and design the follow-up fee test.
+
+Work in Google Colab with the experiments dataset. Submit a link to your notebook (shared so anyone with the link can view it), and paste your **verdicts** and your **follow-up test design** below.$md$, array['Health checks for every experiment: sample ratio mismatch, balance of the groups and duration.', 'Onboarding: the KYC effect with a confidence interval, the transaction and value effects (handling skew), and the platform result with its mechanism.', 'Segments: the regional results with a multiple-comparisons correction, and what can and can''t be concluded.', 'Banner: why the result can''t be trusted (split and novelty), and how to rerun it.', 'Fee: every metric with its effect and test, the trade-off valued in naira under at least two churn scenarios, and a decision.', 'Agents: a difference-in-differences estimate with a parallel-trends check and a placebo test.', 'The follow-up fee test: hypothesis, variants, primary metric, guardrails, MDE, sample size and duration.']::text[], array['experiments']::text[], array['Every experiment is checked for soundness before its results are used.', 'Effects are reported with confidence intervals and translated into business terms.', 'Skewed metrics are handled with medians, capping or a bootstrap.', 'Segment results are corrected for multiple comparisons and only trusted with a mechanism.', 'Guardrails are valued, uncertainty about longer-term effects is made explicit, and decisions follow from it.', 'The non-randomised rollout is analysed with difference-in-differences and its assumption is tested.', 'The follow-up design states its metric, MDE, sample size and duration before any data is seen.']::text[], true)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
+
+
 -- Track: Become a Data Analyst
 insert into public.tracks (id, slug, title, summary, badge_name, badge_code, skills, position, published)
 values ('data-analyst', 'data-analyst', 'Become a Data Analyst', 'The route we recommend from no experience to a junior data analyst role. Learn how analysis works, then the tools teams use every day (Excel, SQL, Power BI and Python) on realistic company data. Build portfolio projects that answer real business questions, and finish with your CV, LinkedIn and interview preparation.', 'CloudTech Data Analyst', 'DATAANALYST', array['Spreadsheet analysis in Excel', 'Statistics: averages, spread, confidence intervals and tests', 'Querying databases with SQL, from first SELECT to cohorts and window functions', 'Data modelling and star schemas', 'Dashboards in Power BI, with DAX measures you can trust', 'Analysis in Python and pandas', 'Turning data into findings a manager can act on']::text[], 1, true)
@@ -38936,11 +40488,15 @@ values ('data-scientist', 'feature-engineering-model-evaluation', 'Core', true, 
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 insert into public.track_courses (track_id, course_id, stage, required, position)
-values ('data-scientist', 'career-essentials', 'Career', true, 7)
+values ('data-scientist', 'experimentation-ab-testing', 'Specialist', true, 7)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 insert into public.track_courses (track_id, course_id, stage, required, position)
-values ('data-scientist', 'build-your-student-portfolio', 'Career', false, 8)
+values ('data-scientist', 'career-essentials', 'Career', true, 8)
+on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
+
+insert into public.track_courses (track_id, course_id, stage, required, position)
+values ('data-scientist', 'build-your-student-portfolio', 'Career', false, 9)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 
