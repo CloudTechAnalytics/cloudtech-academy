@@ -4,6 +4,7 @@ import { ArrowLeft, ArrowRight, Award, CheckCircle2, Clock, ListTree, Lock, X } 
 import { useSeo } from "@/lib/seo";
 import { useCourse, useLearner } from "@/lib/data";
 import { moduleTaskIds, publishedLessons } from "@/lib/certificates";
+import { RESET_AFTER_DAYS } from "@/lib/inactivity";
 import { breadcrumbs } from "@/lib/schema";
 import { getBackend } from "@/lib/backend";
 import { PageLoading } from "@/lib/auth";
@@ -183,6 +184,11 @@ export default function Learn() {
                 Create a free account
               </Link>{" "}
               to save your progress and earn your badges.
+            </p>
+          )}
+          {learner.wasReset && (
+            <p className="mt-5 rounded-lg border border-line-strong bg-sand px-4 py-3 text-[0.9rem]">
+              It's been more than {RESET_AFTER_DAYS} days since you last worked on this course, so it has started over. Any badges you earned are still yours.
             </p>
           )}
         </header>

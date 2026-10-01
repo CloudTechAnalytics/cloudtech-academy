@@ -73,7 +73,7 @@ Without Supabase keys the Academy runs in **demo mode**:
 ## Connecting Supabase
 
 1. Create a project at [supabase.com](https://supabase.com).
-2. In **SQL Editor**, run [`supabase/migrations/0001_academy.sql`](supabase/migrations/0001_academy.sql), then [`0002_public_profiles.sql`](supabase/migrations/0002_public_profiles.sql) and [`0003_module_tasks.sql`](supabase/migrations/0003_module_tasks.sql).
+2. In **SQL Editor**, run [`supabase/migrations/0001_academy.sql`](supabase/migrations/0001_academy.sql), then [`0002_public_profiles.sql`](supabase/migrations/0002_public_profiles.sql), [`0003_module_tasks.sql`](supabase/migrations/0003_module_tasks.sql) and [`0004_inactivity_and_remove.sql`](supabase/migrations/0004_inactivity_and_remove.sql).
 3. Then run [`supabase/seed.sql`](supabase/seed.sql). It loads the courses, lessons, assessment and project.
 4. In **Authentication → URL Configuration**:
    - Set the Site URL to the Academy's address.
@@ -94,6 +94,7 @@ On Vercel, add the same variables under Project Settings → Environment Variabl
 - Row-level security is on for every table.
 - Learners can read and write only their own progress.
 - Assessment answer keys are readable by admins only. `submit_assessment()` grades attempts on the server.
+- A learner can remove a course from My Learning with `remove_course()`, which clears its lessons, tasks and assessment attempts (unless the course is complete). An unfinished course with no activity for 14 days starts over the same way: `apply_inactivity_resets()` runs when the learner next opens the dashboard or a course. Earned badges and credentials are never touched. Activity (opening a lesson, completing something, taking an assessment) is recorded in `enrollments.last_active_at` by triggers.
 - Module badges are only created by `claim_module_badge()`, after every required task in the module is complete and the module check is passed.
 - Course completion credentials are only created by `issue_course_credential()`. It re-checks every requirement the course sets: module badges, lessons, required exercises, a passed final assessment, the project, and a full name on the profile.
 - A learner can only start an order (`start_certificate_order()`) for a course they've completed, at the price stored in `certificate_prices`.

@@ -8,6 +8,7 @@ import { BUNDLED_ASSESSMENTS, BUNDLED_COURSES, BUNDLED_PROJECTS } from "@/conten
 import type { AssessmentDef, Course } from "@/content/types";
 import { requiredExerciseIds } from "../lesson-format";
 import { certificateNumber, eligibility, moduleTaskIds, newCredentialId } from "../certificates";
+import { isStale } from "../inactivity";
 import { PROFILE_SLUG_RE, SLUG_HELP } from "../profile";
 import {
   BackendError,
@@ -170,6 +171,26 @@ export function createDemoBackend(): Backend {
   /** A module's check when moduleId is given, otherwise the course's final assessment. */
   const findAssessment = (courseId: string, moduleId?: string) =>
     assessments().find((a) => a.courseId === courseId && (moduleId ? a.kind === "module" && a.moduleId === moduleId : a.kind !== "module"));
+  const assessmentCourse = (s: Store, assessmentId: string) => assessments(s).find((a) => a.id === assessmentId)?.courseId;
+  /** Marks a course as active now (opening a lesson, completing something, taking an assessment). */
+  const touch = (s: Store, userId: string, courseId: string | undefined) => {
+    const e = (s.enrollments[userId] ?? []).find((x) => x.courseId === courseId);
+    if (e) e.lastActiveAt = now();
+  };
+  const courseCompleted = (s: Store, userId: string, courseId: string) =>
+    (s.enrollments[userId] ?? []).some((e) => e.courseId === courseId && e.completedAt) ||
+    s.credentials.some((c) => c.userId === userId && c.courseId === courseId && c.kind === "course_completion" && c.status === "valid");
+  /** Clears a learner's lessons, tasks and assessment attempts in one course. Badges stay. */
+  const clearCourseProgress = (s: Store, userId: string, courseId: string) => {
+    delete s.lessons[key(userId, courseId)];
+    delete s.exercises[key(userId, courseId)];
+    s.attempts[userId] = (s.attempts[userId] ?? []).filter((t) => assessmentCourse(s, t.assessmentId) !== courseId);
+    const e = (s.enrollments[userId] ?? []).find((x) => x.courseId === courseId);
+    if (e) {
+      e.lastLessonId = null;
+      e.lastActiveAt = now();
+    }
+  };
 
   if (typeof window !== "undefined") window.addEventListener("storage", (e) => e.key === KEY && notify());
 
@@ -329,13 +350,14 @@ export function createDemoBackend(): Backend {
 
     async listEnrollments() {
       const u = current();
-      return u ? (load().enrollments[u.id] ?? []) : [];
+      // Enrollments saved before activity was tracked count as active from when they started.
+      return u ? (load().enrollments[u.id] ?? []).map((e) => ({ ...e, lastActiveAt: e.lastActiveAt ?? e.enrolledAt })) : [];
     },
     async enroll(courseId) {
       const u = requireUser();
       const s = load();
       const list = (s.enrollments[u.id] ??= []);
-      if (!list.some((e) => e.courseId === courseId)) list.push({ courseId, enrolledAt: now(), completedAt: null, lastLessonId: null });
+      if (!list.some((e) => e.courseId === courseId)) list.push({ courseId, enrolledAt: now(), completedAt: null, lastLessonId: null, lastActiveAt: now() });
       save(s);
     },
     async setLastLesson(courseId, lessonId) {
@@ -345,8 +367,31 @@ export function createDemoBackend(): Backend {
       const e = (s.enrollments[u.id] ?? []).find((x) => x.courseId === courseId);
       if (e) {
         e.lastLessonId = lessonId;
+        e.lastActiveAt = now();
         save(s);
       }
+    },
+    async removeCourse(courseId) {
+      const u = requireUser();
+      const s = load();
+      if (!courseCompleted(s, u.id, courseId)) clearCourseProgress(s, u.id, courseId);
+      s.enrollments[u.id] = (s.enrollments[u.id] ?? []).filter((e) => e.courseId !== courseId);
+      save(s);
+    },
+    async applyInactivityResets() {
+      const u = current();
+      if (!u) return [];
+      const s = load();
+      const reset: string[] = [];
+      for (const e of s.enrollments[u.id] ?? []) {
+        if (!isStale(e.lastActiveAt ?? e.enrolledAt) || courseCompleted(s, u.id, e.courseId)) continue;
+        const k = key(u.id, e.courseId);
+        const hadProgress = !!(s.lessons[k]?.length || s.exercises[k]?.length || (s.attempts[u.id] ?? []).some((t) => assessmentCourse(s, t.assessmentId) === e.courseId));
+        clearCourseProgress(s, u.id, e.courseId);
+        if (hadProgress) reset.push(e.courseId);
+      }
+      save(s);
+      return reset;
     },
     async getProgress(courseId) {
       const u = current();
@@ -363,6 +408,7 @@ export function createDemoBackend(): Backend {
       else set.delete(lessonId);
       s.lessons[key(u.id, courseId)] = [...set];
       s.activity[u.id] = now();
+      touch(s, u.id, courseId);
       save(s);
     },
     async recordExercise(courseId, _lessonId, exerciseId) {
@@ -373,6 +419,7 @@ export function createDemoBackend(): Backend {
       set.add(exerciseId);
       s.exercises[key(u.id, courseId)] = [...set];
       s.activity[u.id] = now();
+      touch(s, u.id, courseId);
       save(s);
     },
     async submitAssessment(assessmentId, answers) {
@@ -385,6 +432,7 @@ export function createDemoBackend(): Backend {
       const s = load();
       (s.attempts[u.id] ??= []).push(result);
       s.activity[u.id] = now();
+      touch(s, u.id, a.courseId);
       save(s);
       return result;
     },

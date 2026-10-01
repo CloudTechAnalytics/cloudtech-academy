@@ -302,6 +302,7 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
         enrolledAt: r.enrolled_at,
         completedAt: r.completed_at,
         lastLessonId: r.last_lesson_id,
+        lastActiveAt: r.last_active_at ?? r.enrolled_at,
       }));
     },
     async enroll(courseId) {
@@ -313,6 +314,16 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
       const id = data.session?.user.id;
       if (!id) return;
       await sb.from("enrollments").update({ last_lesson_id: lessonId }).eq("user_id", id).eq("course_id", courseId);
+    },
+    async removeCourse(courseId) {
+      await requireUserId();
+      check(await sb.rpc("remove_course", { p_course_id: courseId }));
+    },
+    async applyInactivityResets() {
+      const { data } = await sb.auth.getSession();
+      if (!data.session) return [];
+      const rows = check(await sb.rpc("apply_inactivity_resets")) as unknown;
+      return Array.isArray(rows) ? rows.map((r) => (typeof r === "string" ? r : String(Object.values(r as Row)[0]))) : [];
     },
     async getProgress(courseId) {
       const { data } = await sb.auth.getSession();

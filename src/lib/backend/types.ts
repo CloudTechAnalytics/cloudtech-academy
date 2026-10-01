@@ -14,6 +14,8 @@ export type Enrollment = {
   enrolledAt: string;
   completedAt: string | null;
   lastLessonId: string | null;
+  /** Last time the learner opened a lesson, completed something or took an assessment in this course. */
+  lastActiveAt: string;
 };
 
 export type Progress = {
@@ -177,6 +179,10 @@ export interface Backend {
   listEnrollments(): Promise<Enrollment[]>;
   enroll(courseId: string): Promise<void>;
   setLastLesson(courseId: string, lessonId: string): Promise<void>;
+  /** Removes a course from My Learning. Its progress is cleared unless the course is complete; badges stay. */
+  removeCourse(courseId: string): Promise<void>;
+  /** Starts over unfinished courses untouched for 14 days. Returns the ids of courses whose progress was cleared. */
+  applyInactivityResets(): Promise<string[]>;
   getProgress(courseId: string): Promise<Progress>;
   setLessonComplete(courseId: string, lessonId: string, done: boolean): Promise<void>;
   recordExercise(courseId: string, lessonId: string, exerciseId: string): Promise<void>;
