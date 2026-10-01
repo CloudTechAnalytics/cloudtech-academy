@@ -31,7 +31,7 @@ values ('business-intelligence', 'Business Intelligence', 'Dashboards, reporting
 on conflict (id) do update set name = excluded.name, description = excluded.description, is_future = excluded.is_future, position = excluded.position;
 
 insert into public.course_categories (id, name, description, is_future, position)
-values ('data-science', 'Data Science', 'Statistics and predictive modelling.', true, 8)
+values ('data-science', 'Data Science', 'Statistics and predictive modelling.', false, 8)
 on conflict (id) do update set name = excluded.name, description = excluded.description, is_future = excluded.is_future, position = excluded.position;
 
 insert into public.course_categories (id, name, description, is_future, position)
@@ -29177,9 +29177,1960 @@ $md$, true, true, 10, array['pil-10-p1', 'pil-10-p2', 'pil-10-t1']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 
+-- Course: Machine Learning Fundamentals
+insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
+values ('machine-learning-fundamentals', 'full', null, 'machine-learning-fundamentals', 'ML', 'Machine Learning Fundamentals', 'Build, test and explain machine learning models in Python with scikit-learn: regression on Lagos and Abuja rents, classification on microfinance loans, and the evaluation, fairness and deployment that make models trustworthy.', 'Machine learning is for problems where you have many examples but can''t write the rule down. In this course you build two real models in Google Colab with scikit-learn. First, a rent estimator for Lagos and Abuja listings: prepare messy data, set baselines, fit linear regression and discover why the log of rent works far better, then trees and forests, overfitting and cross-validation. Then a loan default model for a microfinance bank: logistic regression, why accuracy misleads when defaults are rare, precision, recall and AUC, and a threshold chosen from what each mistake costs. You''ll explain the model, test it for unfair proxies, package it as a pipeline, write a model card and plan its monitoring. Every lesson''s code runs, and every answer is checked against it.', 'data-science', 'intermediate', 3, 'Intermediate', 9, true, 'available', true, array['Framing problems as regression or classification', 'Preparing features: missing values, outliers, encoding, leakage', 'Train/test splits, baselines and error measures', 'Linear regression and log targets', 'Decision trees, random forests and overfitting', 'Cross-validation and tuning', 'Logistic regression and imbalanced classes', 'Precision, recall, AUC and cost-based thresholds', 'Permutation importance, fairness checks, pipelines and model cards']::text[], array['Python for Data Analytics, or comfort with pandas', 'Statistics for Data Analysis helps', 'A free Google account for Google Colab']::text[], 'Ladder Microfinance: a responsible credit model', true, true, true, true, false, 60, 25)
+on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level = excluded.level, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('ml-m01', 'machine-learning-fundamentals', 'What Machine Learning Is', 1, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('machine-learning-fundamentals:what-machine-learning-is', 'machine-learning-fundamentals', 'ml-m01', 'what-machine-learning-is', 'What machine learning is', 'What machine learning can and can''t do, the difference between regression and classification, the workflow every project follows, and your first look at the two datasets this course uses.', 25, $md$
+## The problem
+
+A property company in Lagos wants to tell landlords what rent to ask for a flat, instantly, from a few details. A microfinance bank wants to know, before it lends, which small-business borrowers are likely to default. Both have years of records. Neither can write down the rules: rent depends on area, size, power, finishing and a dozen other things at once, and nobody can say exactly how much each one adds.
+
+That's the kind of problem **machine learning** (ML) is for: when you have many examples with known answers, but the rule connecting the inputs to the answer is too complicated to write by hand. This course teaches you to build, test and explain such models in Python with scikit-learn, the library most data scientists start with, and to recognise when a model isn't the answer at all.
+
+## The concept
+
+**What a model learns**
+
+A machine learning model learns a function from **features** (the inputs, such as area, bedrooms, size) to a **target** (the answer, such as rent), from examples where both are known. It then predicts the target for new cases where only the features are known.
+
+**Two kinds of supervised learning**
+
+| Type | Target | Examples |
+| :-- | :-- | :-- |
+| **Regression** | a number | rent, delivery time, monthly sales |
+| **Classification** | a category | default or not, fraud or not, will the customer leave? |
+
+Both are **supervised**: the training data includes the right answers. **Unsupervised** learning (such as grouping customers into segments) has no target; this course focuses on supervised learning, which is where most business value is.
+
+**The workflow**
+
+1. **Frame** the question: what will be predicted, for whom, and what decision will it change?
+2. **Prepare** the data: clean it, handle gaps, turn categories into numbers.
+3. **Split** it: train on some data, test on data the model hasn't seen.
+4. **Start with a baseline**: the simplest possible prediction, to beat.
+5. **Train and compare** models.
+6. **Evaluate** honestly, with the right measure for the decision.
+7. **Explain and deploy** responsibly, and keep monitoring.
+
+**When not to use machine learning**
+
+- When a simple rule works ("loans over ₦5m need a manager's approval").
+- When you have too few examples, or none with known answers.
+- When nobody will act differently because of the prediction.
+- When mistakes would be harmful and you can't explain the model's decisions.
+
+## Example
+
+The two datasets for this course. First, 2,400 rental listings in Lagos and Abuja:
+
+```python
+import pandas as pd
+
+rentals = pd.read_csv("https://academy.cloudtechanalytics.com/datasets/rentals/listings.csv")
+print(rentals.shape)
+rentals.head(3)
+```
+
+```text
+(2400, 14)
+  listing_id   city      area property_type  bedrooms  bathrooms  size_sqm serviced furnished                        power  parking_spaces  year_built listed_date  annual_rent_ngn
+0   RL-00001  Lagos      Yaba     Mini flat         1          1       NaN       No       Yes                24-hour power               0        1995  2025-08-08          1550000
+1   RL-00002  Lagos      Ajah          Flat         1          1      69.0       No        No  Prepaid meter and generator               1        2014  2026-05-17          1550000
+2   RL-00003  Lagos  Surulere          Flat         1          1      90.0       No        No  Prepaid meter and generator               0        1990  2025-09-02          1600000
+```
+
+And 5,000 microfinance loans, with whether each one defaulted:
+
+```python
+loans = pd.read_csv("https://academy.cloudtechanalytics.com/datasets/loans/loans.csv")
+print(loans.shape)
+loans["defaulted"].value_counts()
+```
+
+```text
+(5000, 16)
+defaulted
+0    4407
+1     593
+Name: count, dtype: int64
+```
+
+The rentals are a **regression** problem (predict `annual_rent_ngn`). The loans are a **classification** problem (predict `defaulted`, 1 or 0). Notice that only about 1 loan in 8 defaulted. That imbalance will matter a great deal in lesson 7.
+
+## Walkthrough
+
+1. Open a new notebook in Google Colab (colab.research.google.com). scikit-learn is already installed.
+2. Load both datasets with the code above.
+3. Look at the rentals with `rentals.describe()` and `rentals["area"].value_counts()`. Which areas are most listed?
+4. Look at the loans with `loans.describe()`. What's the range of loan amounts and monthly revenue?
+5. For each dataset, write down the target, three features you'd expect to matter, and the decision a prediction would change.
+
+## Practice
+
+```dataset
+{"dataset": "rentals", "files": ["listings"]}
+```
+
+```answer
+{
+  "id": "ml-01-p1",
+  "prompt": "What is the **median** annual rent across all listings?",
+  "answer": 3300000,
+  "format": "naira",
+  "dataset": "rentals",
+  "files": ["listings"],
+  "pyVerify": "rentals['annual_rent_ngn'].median()",
+  "hint": "rentals['annual_rent_ngn'].median()",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "ml-01-p2",
+  "prompt": "What percentage of loans **defaulted**? One decimal place.",
+  "answer": 11.9,
+  "format": "percent",
+  "dataset": "loans",
+  "files": ["loans"],
+  "pyVerify": "round(loans['defaulted'].mean() * 100, 1)",
+  "hint": "The mean of a 0/1 column is the share of 1s: loans['defaulted'].mean().",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "ml-01-t1",
+  "prompt": "For each of these four problems, say whether it's **regression**, **classification** or **not a machine learning problem**, with a one-line reason. One per line in the form **Problem | answer | reason**.\n\n1. Estimating how many days a shipment will take\n2. Deciding whether an insurance claim looks fraudulent\n3. Applying a 10% discount to orders over ₦1m\n4. Predicting whether a customer will cancel their subscription next month",
+  "minutes": 5,
+  "rows": 6,
+  "placeholder": "Shipment days | regression | ...",
+  "rules": [
+    { "label": "Four lines in the form Problem | answer | reason", "pattern": "^[^|\\n]+\\|\\s*(regression|classification|not (a )?(machine learning|ml)[^|\\n]*)\\s*\\|[^|\\n]+$", "min": 4 },
+    { "label": "Shipment days is regression", "pattern": "(shipment|days)[^|\\n]*\\|\\s*regression" },
+    { "label": "The discount rule is not machine learning", "pattern": "discount[^|\\n]*\\|\\s*not" },
+    { "label": "Fraud and cancellation are classification", "pattern": "\\|\\s*classification", "min": 2 }
+  ],
+  "sample": "Shipment days | regression | the target is a number of days\nInsurance fraud | classification | the target is a category: fraudulent or not\n10% discount over ₦1m | not machine learning | it's a fixed rule that can be written down exactly\nSubscription cancellation | classification | the target is yes or no: cancels or stays",
+  "note": "The discount is the important one. If the rule can be written down, write it down: a model would only learn it imperfectly.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "What is the target in a model that predicts rent from area, size and bedrooms?",
+    "options": ["Area", "Rent", "Bedrooms", "All of them"],
+    "answer": 1,
+    "explanation": "The target is what you predict; the rest are features."
+  },
+  {
+    "prompt": "Predicting whether a borrower will default is:",
+    "options": ["Regression", "Classification", "Unsupervised learning", "Not machine learning"],
+    "answer": 1,
+    "explanation": "The target is a category: default or not."
+  },
+  {
+    "prompt": "When is machine learning usually the wrong tool?",
+    "options": ["When there are many examples with known answers", "When a simple, exact rule already does the job", "When the relationship is complicated", "When predictions change decisions"],
+    "answer": 1,
+    "explanation": "Write down rules that can be written down."
+  }
+]
+```
+$md$, true, true, 1, array['ml-01-p1', 'ml-01-p2', 'ml-01-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('ml-m02', 'machine-learning-fundamentals', 'Preparing Data for a Model', 2, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('machine-learning-fundamentals:preparing-data-for-a-model', 'machine-learning-fundamentals', 'ml-m02', 'preparing-data-for-a-model', 'Preparing data for a model', 'Separate features from the target, deal with missing values and outliers without fooling yourself, turn categories into numbers, and spot leakage before it ruins a model.', 30, $md$
+## The problem
+
+A model learns whatever is in the data, including its mistakes. Six of the rental listings have a rent typed with an extra zero: a one-bedroom flat in Ajah at ₦20.5m a year. Leave them in and the model learns that some one-bedroom flats in Ajah cost ten times the others. 154 listings have no floor size, and scikit-learn models refuse to train on missing values. And `area`, the most important feature, is text, which a model can't use at all until it's converted.
+
+Data preparation usually takes more time than modelling, and it decides most of the result. This lesson prepares the rental data properly, step by step, so every later lesson can build on it.
+
+## The concept
+
+**Features and target**
+
+Put the features in a table called `X` and the target in a column called `y`. Leave out anything that identifies a row (`listing_id`) or that you wouldn't know at the moment of prediction.
+
+**Missing values**
+
+| Option | When |
+| :-- | :-- |
+| Drop the rows | very few are missing, and they're missing at random |
+| Fill (impute) with a typical value | the column matters; use a group median (for size: the median for that property type and number of bedrooms) |
+| Add a "was missing" flag | the fact that it's missing may itself be informative |
+
+**Outliers: errors or real?**
+
+Compare each value with similar rows, not with the whole column. A ₦54m flat is normal in Ikoyi and impossible in Kubwa. Here, a listing whose rent is more than **4 times** the median for its area, type and bedrooms is a likely typo. Check a few by eye, remove the confirmed errors, and **write down the rule**.
+
+**Categories to numbers: one-hot encoding**
+
+`pd.get_dummies` turns a text column into one 0/1 column per category (`area_Yaba`, `area_Ikoyi`, and so on). With `drop_first=True`, one category is left out as the reference, since it's implied when all the others are 0.
+
+**Leakage: the silent killer**
+
+**Leakage** is information in the features that wouldn't be available when you make a real prediction, or that's derived from the target. A model with leakage scores brilliantly in testing and fails in use. Examples: "days in arrears" when predicting default (it's only known after default starts); "final sale price" when predicting the asking rent. Always ask of each feature: **would I know this at the moment I need the prediction?**
+
+## Example
+
+Load the data, find the likely typos, and remove them:
+
+```python
+import pandas as pd
+
+rentals = pd.read_csv("https://academy.cloudtechanalytics.com/datasets/rentals/listings.csv")
+
+typical = rentals.groupby(["area", "property_type", "bedrooms"])["annual_rent_ngn"].transform("median")
+suspect = rentals["annual_rent_ngn"] > 4 * typical
+rentals.loc[suspect, ["listing_id", "area", "property_type", "bedrooms", "annual_rent_ngn"]]
+```
+
+```text
+listing_id           area property_type  bedrooms  annual_rent_ngn
+57     RL-00058          Kubwa     Mini flat         1          6500000
+412    RL-00413        Gbagada          Flat         1         19000000
+903    RL-00904           Ajah          Flat         1         20500000
+1388   RL-01389  Lekki Phase 1        Duplex         3        275000000
+1940   RL-01941        Ikorodu     Mini flat         1          6500000
+2207   RL-02208  Lekki Phase 1          Flat         1         54000000
+```
+
+All six look like an extra zero: each is roughly ten times the typical rent for its kind of property. Remove them, then fill the missing sizes with the median for the same property type and number of bedrooms:
+
+```python
+rentals = rentals[~suspect].copy()
+print("missing sizes before:", rentals["size_sqm"].isna().sum())
+rentals["size_sqm"] = rentals["size_sqm"].fillna(
+    rentals.groupby(["property_type", "bedrooms"])["size_sqm"].transform("median")
+)
+print("missing sizes after:", rentals["size_sqm"].isna().sum())
+```
+
+```text
+missing sizes before: 154
+missing sizes after: 0
+```
+
+Finally, build `X` and `y`, one-hot encoding the text columns:
+
+```python
+features = ["area", "property_type", "bedrooms", "bathrooms", "size_sqm", "serviced",
+            "furnished", "power", "parking_spaces", "year_built"]
+X = pd.get_dummies(rentals[features], drop_first=True, dtype=int)
+y = rentals["annual_rent_ngn"]
+print(X.shape)
+list(X.columns[:8])
+```
+
+```text
+(2394, 26)
+['bedrooms', 'bathrooms', 'size_sqm', 'parking_spaces', 'year_built', 'area_Gbagada', 'area_Gwarinpa', 'area_Ikeja GRA']
+```
+
+## Walkthrough
+
+1. Run the three cells above in a new Colab notebook.
+2. Look at the six suspect listings. Would you remove all of them? Write down the rule you used.
+3. Check how many sizes were missing and that none are left.
+4. Look at `X.columns`: one column per area except the reference one (Ajah, first alphabetically), one per property type except one, and so on.
+5. Go through the original columns and ask the leakage question for each. (`listed_date` is fine; a column like "rent agreed after negotiation" would not be.)
+
+## Practice
+
+```answer
+{
+  "id": "ml-02-p1",
+  "prompt": "How many listings have no **size_sqm** in the original data?",
+  "answer": 154,
+  "format": "number",
+  "dataset": "rentals",
+  "files": ["listings"],
+  "pyVerify": "int(pd.read_csv('https://academy.cloudtechanalytics.com/datasets/rentals/listings.csv')['size_sqm'].isna().sum())",
+  "hint": "rentals['size_sqm'].isna().sum(), before removing anything.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "ml-02-p2",
+  "prompt": "After one-hot encoding with drop_first=True, how many **columns** does X have?",
+  "answer": 26,
+  "format": "number",
+  "dataset": "rentals",
+  "files": ["listings"],
+  "pyVerify": "X.shape[1]",
+  "hint": "X.shape gives (rows, columns).",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "ml-02-t1",
+  "prompt": "The loans dataset will be used to predict default **at the moment of applying**. For each of these possible features, say **keep** or **leakage** with a reason, one per line in the form **Feature | keep or leakage | reason**: monthly_revenue_ngn; previous_late_payments; months_in_arrears (a column the bank could add); loan_amount_ngn; recovered_amount_ngn (another possible column).",
+  "minutes": 6,
+  "rows": 6,
+  "placeholder": "monthly_revenue_ngn | keep | ...",
+  "rules": [
+    { "label": "Five lines in the form Feature | keep or leakage | reason", "pattern": "^[^|\\n]+\\|\\s*(keep|leakage)\\s*\\|[^|\\n]+$", "min": 5 },
+    { "label": "months_in_arrears is leakage", "pattern": "arrears[^|\\n]*\\|\\s*leakage" },
+    { "label": "recovered_amount_ngn is leakage", "pattern": "recovered[^|\\n]*\\|\\s*leakage" },
+    { "label": "previous_late_payments is kept (it's about earlier loans)", "pattern": "previous_late[^|\\n]*\\|\\s*keep" }
+  ],
+  "sample": "monthly_revenue_ngn | keep | collected on the application form\nprevious_late_payments | keep | from the borrower's earlier loans, known before this one\nmonths_in_arrears | leakage | only exists after the borrower has started missing payments on this loan\nloan_amount_ngn | keep | requested on the application\nrecovered_amount_ngn | leakage | only known after a default and recovery",
+  "note": "Leakage hides in columns that are recorded later in the loan's life. The test is always about timing: would this value exist on the day of the application?",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "A ₦54m one-bedroom flat appears in Lekki. How should you decide whether it's an error?",
+    "options": ["Compare it with the whole dataset's average", "Compare it with similar listings (same area, type and bedrooms), check by eye, and write down the rule", "Delete every value over ₦50m", "Keep everything"],
+    "answer": 1,
+    "explanation": "Outliers are judged against similar rows."
+  },
+  {
+    "prompt": "What does one-hot encoding do?",
+    "options": ["Removes text columns", "Turns each category into its own 0/1 column", "Sorts categories alphabetically", "Fills missing values"],
+    "answer": 1,
+    "explanation": "Models need numbers; one-hot encoding gives one column per category."
+  },
+  {
+    "prompt": "A default model scores 99% in testing using 'days in arrears' as a feature. What's the likely problem?",
+    "options": ["Nothing, it's excellent", "Leakage: days in arrears is only known after default begins", "Too few features", "The test set is too big"],
+    "answer": 1,
+    "explanation": "Suspiciously good results usually mean leakage."
+  }
+]
+```
+$md$, true, true, 2, array['ml-02-p1', 'ml-02-p2', 'ml-02-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('ml-m03', 'machine-learning-fundamentals', 'Train, Test and Baselines', 3, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('machine-learning-fundamentals:train-test-split-and-baselines', 'machine-learning-fundamentals', 'ml-m03', 'train-test-split-and-baselines', 'Train, test and baselines', 'Hold back data the model never sees so you can measure it honestly, choose a sensible error measure, and set a baseline that any model must beat to be worth using.', 15, $md$
+## The problem
+
+A colleague builds a rent model and reports that its average error is ₦0: it predicts every listing's rent exactly. It sounds perfect, and it's useless. The model was tested on the same listings it learned from, so it had simply memorised them. Ask it about a flat it hasn't seen and it may be badly wrong.
+
+The only honest test of a model is on data it **didn't** learn from. And "₦800,000 average error" means nothing on its own: is that good? It depends on how well you could do **without** a model. That's what a baseline tells you.
+
+## The concept
+
+**Train and test sets**
+
+Split the data before you do anything else with the model:
+
+- The **training set** (usually 70–80%) is what the model learns from.
+- The **test set** (the rest) is kept aside and used **once**, at the end, to measure performance.
+
+`train_test_split` from scikit-learn shuffles the rows and splits them. Set `random_state` to a fixed number so the split, and therefore your results, are the same every time.
+
+**Error measures for regression**
+
+| Measure | What it is | Use when |
+| :-- | :-- | :-- |
+| **MAE** (mean absolute error) | average size of the error, in naira | you want an error people understand: "off by ₦800k on average" |
+| **RMSE** (root mean squared error) | like MAE but punishes big errors more | big misses are especially costly |
+| **R²** | share of the variation explained, from 0 to 1 | comparing models on the same data |
+
+**Baselines**
+
+A **baseline** is the best you can do without machine learning, using a simple rule:
+
+- predict the **median** rent for every listing;
+- or a slightly smarter rule: predict the median rent **for that area**.
+
+A model is only useful if it clearly beats the baseline. If it doesn't, the extra complexity isn't worth it.
+
+## Example
+
+The setup from lesson 2, in one cell, so this notebook stands on its own:
+
+```python
+import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_absolute_error
+
+rentals = pd.read_csv("https://academy.cloudtechanalytics.com/datasets/rentals/listings.csv")
+typical = rentals.groupby(["area", "property_type", "bedrooms"])["annual_rent_ngn"].transform("median")
+rentals = rentals[rentals["annual_rent_ngn"] <= 4 * typical].copy()
+rentals["size_sqm"] = rentals["size_sqm"].fillna(
+    rentals.groupby(["property_type", "bedrooms"])["size_sqm"].transform("median")
+)
+features = ["area", "property_type", "bedrooms", "bathrooms", "size_sqm", "serviced",
+            "furnished", "power", "parking_spaces", "year_built"]
+X = pd.get_dummies(rentals[features], drop_first=True, dtype=int)
+y = rentals["annual_rent_ngn"]
+```
+
+Split, then score two baselines on the test set:
+
+```python
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+print(len(X_train), "training rows,", len(X_test), "test rows")
+
+median_guess = np.full(len(y_test), y_train.median())
+print("Baseline 1 (overall median) MAE:", round(mean_absolute_error(y_test, median_guess)))
+
+area_medians = y_train.groupby(rentals.loc[X_train.index, "area"]).median()
+area_guess = rentals.loc[X_test.index, "area"].map(area_medians)
+print("Baseline 2 (median for the area) MAE:", round(mean_absolute_error(y_test, area_guess)))
+```
+
+```text
+1915 training rows, 479 test rows
+Baseline 1 (overall median) MAE: 3857724
+Baseline 2 (median for the area) MAE: 2871503
+```
+
+The area rule alone cuts the error of a single median by about a quarter, from ₦3.86m to ₦2.87m. That's the bar the models in the next lessons have to clear, and it's a high one: location really is most of the story in Lagos and Abuja rents. Notice that both baselines are calculated from the **training** data only. Using the test set to set a baseline would be a small leak.
+
+## Walkthrough
+
+1. Run the two cells above.
+2. Change `random_state` to 1 and run the split again. The MAEs change a little. That's the natural variation of a test set; it's why you fix the seed when comparing models.
+3. Try a third baseline: the median for the area **and** the number of bedrooms. Does it beat baseline 2?
+4. Write down your best baseline MAE. Every model from now on gets compared with it.
+
+## Practice
+
+```answer
+{
+  "id": "ml-03-p1",
+  "prompt": "How many listings are in the **test** set?",
+  "answer": 479,
+  "format": "number",
+  "dataset": "rentals",
+  "files": ["listings"],
+  "pyVerify": "len(X_test)",
+  "hint": "len(X_test) after the split.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "ml-03-p2",
+  "prompt": "What is the test-set **MAE** of baseline 2 (the median rent for the listing's area)? (A rounded figure is fine.)",
+  "answer": 2871503,
+  "format": "naira",
+  "dataset": "rentals",
+  "files": ["listings"],
+  "pyVerify": "round(mean_absolute_error(y_test, area_guess))",
+  "hint": "The second number printed by the cell above.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why test a model on data it didn't train on?",
+    "options": ["It's faster", "A model can memorise its training data; only unseen data shows how it will perform on new cases", "Training data is always wrong", "To use less memory"],
+    "answer": 1,
+    "explanation": "The test set stands in for the future."
+  },
+  {
+    "prompt": "A model's MAE is ₦1.2m and the area-median baseline's MAE is ₦1.3m. What should you conclude?",
+    "options": ["The model is excellent", "It barely beats a simple rule, so its extra complexity may not be worth it", "The baseline is wrong", "MAE is the wrong measure"],
+    "answer": 1,
+    "explanation": "Always judge a model against a baseline."
+  },
+  {
+    "prompt": "Why set random_state when splitting?",
+    "options": ["To make the model more accurate", "So the split, and the results, are the same every time and models can be compared fairly", "It's required by scikit-learn", "To shuffle better"],
+    "answer": 1,
+    "explanation": "Reproducibility makes comparisons meaningful."
+  }
+]
+```
+$md$, true, true, 3, array['ml-03-p1', 'ml-03-p2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('ml-m04', 'machine-learning-fundamentals', 'Linear Regression', 4, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('machine-learning-fundamentals:linear-regression', 'machine-learning-fundamentals', 'ml-m04', 'linear-regression', 'Linear regression', 'Fit your first model, measure it against the baseline, discover why predicting the log of the target works far better for prices, and read the model''s coefficients as business facts.', 30, $md$
+## The problem
+
+The property company wants more than a number. Landlords ask: "How much more could I charge if I made the flat serviced? Is 24-hour power worth it?" A model that predicts rent well is useful; a model that also explains **what drives rent** is far more useful, because it answers those questions too.
+
+**Linear regression** does both. It's the oldest and simplest machine learning model, and still one of the most used, precisely because you can read it. This lesson fits one, finds an important flaw, and fixes it with one line of code.
+
+## The concept
+
+**What linear regression learns**
+
+It predicts the target as a weighted sum of the features:
+
+> rent ≈ intercept + w₁ × bedrooms + w₂ × size + w₃ × serviced + w₄ × (is it in Ikoyi?) + …
+
+Training finds the weights (the **coefficients**) that make the predictions as close as possible to the real rents in the training data.
+
+**The flaw: prices multiply, they don't add**
+
+A linear model says being serviced adds a fixed amount, say ₦1.5m, everywhere. But in reality it adds a **percentage**: about the same proportion in Kubwa as in Ikoyi, so many more naira in Ikoyi. Prices, salaries and sales usually behave like this.
+
+**The fix: model the log of the target**
+
+Train on `np.log(rent)` and convert predictions back with `np.exp`. On the log scale, percentage effects become additive, which is exactly what a linear model can learn. A coefficient `c` then means: this feature multiplies rent by `exp(c)`, a change of `(exp(c) − 1) × 100` percent.
+
+**Reading the error**
+
+Use the same test set and the same measure (MAE) as the baselines, so the comparison is fair. Add R² to see how much of the variation the model explains.
+
+## Example
+
+The setup, then a plain linear regression:
+
+```python
+import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_absolute_error, r2_score
+
+rentals = pd.read_csv("https://academy.cloudtechanalytics.com/datasets/rentals/listings.csv")
+typical = rentals.groupby(["area", "property_type", "bedrooms"])["annual_rent_ngn"].transform("median")
+rentals = rentals[rentals["annual_rent_ngn"] <= 4 * typical].copy()
+rentals["size_sqm"] = rentals["size_sqm"].fillna(
+    rentals.groupby(["property_type", "bedrooms"])["size_sqm"].transform("median")
+)
+features = ["area", "property_type", "bedrooms", "bathrooms", "size_sqm", "serviced",
+            "furnished", "power", "parking_spaces", "year_built"]
+X = pd.get_dummies(rentals[features], drop_first=True, dtype=int)
+y = rentals["annual_rent_ngn"]
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+plain = LinearRegression().fit(X_train, y_train)
+pred = plain.predict(X_test)
+print("Plain linear MAE:", round(mean_absolute_error(y_test, pred)), " R²:", round(r2_score(y_test, pred), 3))
+```
+
+```text
+Plain linear MAE: 2216317  R²: 0.759
+```
+
+Better than the area baseline (₦2.87m), but only a little. Now the same model on the log of rent:
+
+```python
+log_model = LinearRegression().fit(X_train, np.log(y_train))
+pred_log = np.exp(log_model.predict(X_test))
+print("Log-rent linear MAE:", round(mean_absolute_error(y_test, pred_log)), " R²:", round(r2_score(y_test, pred_log), 3))
+```
+
+```text
+Log-rent linear MAE: 827735  R²: 0.934
+```
+
+The error falls by almost two-thirds. Same features, same model, one transformation. And now the coefficients answer the landlords' questions:
+
+```python
+effect = (np.exp(pd.Series(log_model.coef_, index=X.columns)) - 1) * 100
+effect[["serviced_Yes", "furnished_Yes", "power_Prepaid meter", "bedrooms"]].round(1)
+```
+
+```text
+serviced_Yes           29.4
+furnished_Yes          19.3
+power_Prepaid meter    -8.9
+bedrooms               24.3
+dtype: float64
+```
+
+Read them as: a serviced flat rents for about 29% more than a similar unserviced one; furnished adds about 19%; a flat with only a prepaid meter rents for about 9% less than one with 24-hour power (the reference category); each extra bedroom adds about 24%, holding the other features constant.
+
+## Walkthrough
+
+1. Run the cells. Compare both models' MAE with your baselines from lesson 3.
+2. Plot predicted against actual rent for the log model (`plt.scatter(y_test, pred_log)`), with log scales on both axes. The points should lie close to a diagonal line.
+3. Look at the area coefficients: `effect.filter(like="area_").sort_values()`. They're relative to Ajah, the reference area.
+4. Find a listing in the test set with a large error. Can you see why the model got it wrong?
+5. Write down the log model's MAE: it's the number to beat in lesson 5.
+
+## Practice
+
+```answer
+{
+  "id": "ml-04-p1",
+  "prompt": "What is the test **MAE** of the **log-rent** linear model? (A rounded figure is fine.)",
+  "answer": 827735,
+  "format": "naira",
+  "dataset": "rentals",
+  "files": ["listings"],
+  "pyVerify": "round(mean_absolute_error(y_test, pred_log))",
+  "hint": "The cell that fits LinearRegression on np.log(y_train).",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "ml-04-p2",
+  "prompt": "According to the log model, by what percentage does being **serviced** increase rent, all else equal? One decimal place.",
+  "answer": 29.4,
+  "format": "percent",
+  "dataset": "rentals",
+  "files": ["listings"],
+  "pyVerify": "round(effect['serviced_Yes'], 1)",
+  "hint": "(exp(coefficient) − 1) × 100 for serviced_Yes.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "ml-04-t1",
+  "prompt": "A landlord in Gwarinpa asks: *\"If I make my 3-bedroom flat serviced and furnished, how much more could I charge?\"* Write a short answer (40 to 120 words) using the model's coefficients, with the **percentages**, a sensible **caveat** about what the model can't tell you, and **no** promise of an exact figure.",
+  "minutes": 6,
+  "rows": 6,
+  "placeholder": "Similar flats that are serviced rent for about ...",
+  "rules": [
+    { "label": "Uses the serviced and furnished percentages", "pattern": "(29|30)\\s*%[\\s\\S]*(19|18|20)\\s*%|(19|18|20)\\s*%[\\s\\S]*(29|30)\\s*%" },
+    { "label": "Includes a caveat (on average, similar flats, doesn't account for, cost, depends)", "pattern": "on average|similar|doesn'?t (account|include|know)|depends|cost|estimate|not guaranteed" },
+    { "label": "No exact promise (guarantee, definitely, will get)", "pattern": "guarantee|definitely|you will get|certainly", "absent": true },
+    { "label": "Between 40 and 120 words", "minWords": 40, "maxWords": 120 }
+  ],
+  "sample": "Across similar listings, serviced flats rent for about 29% more and furnished ones about 19% more, so together roughly 50% more than an otherwise similar unserviced, unfurnished flat (the effects multiply: 1.29 × 1.19 ≈ 1.54). That's an average across listings, not a promise for your flat: it doesn't account for the cost of providing the service and furniture, the quality of the finish, or how quickly a higher-priced flat will let in Gwarinpa. Treat it as a starting point for setting the asking rent.",
+  "note": "The multiplication point (29% and 19% together make about 54%, not 48%) follows straight from the log model, and it's the kind of detail that shows you understand what the model says.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why does modelling log(rent) work better than modelling rent directly?",
+    "options": ["Logs are smaller numbers", "Features change rent by a percentage, which becomes additive on the log scale, matching what a linear model can learn", "It removes outliers", "It's required by scikit-learn"],
+    "answer": 1,
+    "explanation": "Multiplicative effects become additive after a log."
+  },
+  {
+    "prompt": "In a log model, a coefficient of 0.26 for serviced means:",
+    "options": ["Serviced adds ₦0.26m", "Serviced multiplies rent by exp(0.26) ≈ 1.30, about 30% more", "Serviced explains 26% of rent", "Nothing useful"],
+    "answer": 1,
+    "explanation": "exp(c) − 1 gives the percentage effect."
+  },
+  {
+    "prompt": "Coefficients in a model with 'all else equal' mean:",
+    "options": ["Causal effects you can rely on", "The average difference between listings that differ only in that feature, in this data", "Exact prices", "Nothing"],
+    "answer": 1,
+    "explanation": "They're associations in the data, useful but not guaranteed causes."
+  }
+]
+```
+$md$, true, true, 4, array['ml-04-p1', 'ml-04-p2', 'ml-04-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('ml-m05', 'machine-learning-fundamentals', 'Trees, Forests and Overfitting', 5, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('machine-learning-fundamentals:trees-forests-and-overfitting', 'machine-learning-fundamentals', 'ml-m05', 'trees-forests-and-overfitting', 'Trees, forests and overfitting', 'Fit decision trees and random forests, watch a model memorise its training data, control overfitting, and learn why the most complex model isn''t always the best one.', 30, $md$
+## The problem
+
+Linear regression assumes every feature adds (or, on the log scale, multiplies) its effect in the same way everywhere. Real life has interactions: 24-hour power may matter more in a Lekki duplex than in an Ikorodu self-contain. **Decision trees** and **random forests** learn such interactions on their own, and in many competitions they beat linear models easily.
+
+But they bring a new danger. A tree can grow until it has a rule for every single training listing, memorising the data instead of learning from it. That's **overfitting**, and it's the most important idea in machine learning.
+
+## The concept
+
+**Decision trees**
+
+A decision tree asks a sequence of yes/no questions ("Is it in Ikoyi?", "Is the size over 120 m²?") and predicts the average rent of the training listings that end up in each final group (**leaf**). It handles interactions and doesn't need log transforms or scaling.
+
+**Overfitting and underfitting**
+
+| | Training error | Test error | Cause |
+| :-- | :-- | :-- | :-- |
+| **Underfitting** | high | high | model too simple to capture the pattern |
+| **Good fit** | low | low, close to training | model captures the pattern, not the noise |
+| **Overfitting** | very low | much higher | model memorised the training data, noise included |
+
+The tell-tale sign of overfitting is a big **gap** between training and test error. Control it by limiting the tree: `max_depth` (how many questions deep), or `min_samples_leaf` (smallest group allowed).
+
+**Random forests**
+
+A random forest grows hundreds of trees, each on a random sample of the rows and features, and averages their predictions. Individual trees overfit in different ways; averaging cancels much of it out. Forests are among the most reliable general-purpose models.
+
+**Feature importance**
+
+Forests report how much each feature contributed to their splits. It's a useful first look at what matters, but it favours features with many distinct values (like size). Lesson 9 shows a more reliable method.
+
+## Example
+
+The setup is the same as in lesson 4. First, a tree with no limits:
+
+```python
+import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeRegressor
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.metrics import mean_absolute_error, r2_score
+
+rentals = pd.read_csv("https://academy.cloudtechanalytics.com/datasets/rentals/listings.csv")
+typical = rentals.groupby(["area", "property_type", "bedrooms"])["annual_rent_ngn"].transform("median")
+rentals = rentals[rentals["annual_rent_ngn"] <= 4 * typical].copy()
+rentals["size_sqm"] = rentals["size_sqm"].fillna(
+    rentals.groupby(["property_type", "bedrooms"])["size_sqm"].transform("median")
+)
+features = ["area", "property_type", "bedrooms", "bathrooms", "size_sqm", "serviced",
+            "furnished", "power", "parking_spaces", "year_built"]
+X = pd.get_dummies(rentals[features], drop_first=True, dtype=int)
+y = rentals["annual_rent_ngn"]
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+for depth in [None, 4, 8, 12]:
+    tree = DecisionTreeRegressor(max_depth=depth, random_state=42).fit(X_train, y_train)
+    train_mae = mean_absolute_error(y_train, tree.predict(X_train))
+    test_mae = mean_absolute_error(y_test, tree.predict(X_test))
+    print(f"max_depth={depth}: train MAE {train_mae:,.0f}   test MAE {test_mae:,.0f}")
+```
+
+```text
+max_depth=None: train MAE 209   test MAE 1,357,411
+max_depth=4: train MAE 2,687,441   test MAE 2,873,049
+max_depth=8: train MAE 1,113,828   test MAE 1,642,545
+max_depth=12: train MAE 416,389   test MAE 1,332,464
+```
+
+The unlimited tree has a training error of a few hundred naira: it has memorised the training listings. Its test error is over ₦1.3m. A depth of 4 underfits (both errors are high); somewhere in between is better. Now a random forest:
+
+```python
+forest = RandomForestRegressor(n_estimators=300, random_state=42, n_jobs=-1).fit(X_train, y_train)
+forest_pred = forest.predict(X_test)
+print("Random forest MAE:", round(mean_absolute_error(y_test, forest_pred)), " R²:", round(r2_score(y_test, forest_pred), 3))
+pd.Series(forest.feature_importances_, index=X.columns).sort_values(ascending=False).head(5).round(3)
+```
+
+```text
+Random forest MAE: 964479  R²: 0.912
+size_sqm                0.243
+area_Ikoyi              0.176
+area_Victoria Island    0.103
+serviced_Yes            0.102
+area_Lekki Phase 1      0.091
+dtype: float64
+```
+
+The forest beats every single tree. But compare it with lesson 4: the **log-rent linear model** had an MAE of about ₦0.83m, better than the forest. With the right transformation, the simple, explainable model wins. That isn't always true, which is exactly why you compare.
+
+## Walkthrough
+
+1. Run both cells. Note the gap between training and test error for each tree depth.
+2. Try `min_samples_leaf=10` instead of `max_depth`. Does it close the gap?
+3. Try the forest on `np.log(y_train)`, converting predictions back with `np.exp`. Does the log trick help the forest too?
+4. Make a table of every model so far: baselines, plain linear, log linear, best tree, forest. Which would you recommend, and why?
+
+## Practice
+
+```answer
+{
+  "id": "ml-05-p1",
+  "prompt": "What is the **test MAE** of the decision tree with **no depth limit** (max_depth=None)? (A rounded figure is fine.)",
+  "answer": 1357411,
+  "format": "naira",
+  "dataset": "rentals",
+  "files": ["listings"],
+  "pyVerify": "round(mean_absolute_error(y_test, DecisionTreeRegressor(random_state=42).fit(X_train, y_train).predict(X_test)))",
+  "hint": "The first line of the loop's output.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "ml-05-p2",
+  "prompt": "Which feature does the random forest rank as **most important**? Type the column name.",
+  "answer": "size_sqm",
+  "accept": ["size", "size sqm"],
+  "format": "text",
+  "dataset": "rentals",
+  "files": ["listings"],
+  "pyVerify": "pd.Series(forest.feature_importances_, index=X.columns).idxmax()",
+  "hint": "The top row of the importance list.",
+  "explanation": "Size, but be careful: impurity-based importance favours features with many distinct values. In the log model, location is the dominant driver. Lesson 9 shows a fairer way to measure importance.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "ml-05-t1",
+  "prompt": "Write a **model comparison** for the property company's head of product: a table or list of at least **four** models with their test MAE, then a **recommendation** with two reasons. Mention **overfitting** at least once.",
+  "minutes": 8,
+  "rows": 10,
+  "placeholder": "- Area-median baseline: MAE ₦2.87m\n- ...\nRecommendation: ...",
+  "rules": [
+    { "label": "At least four models, each with an MAE", "pattern": "^[^\\n]*(baseline|linear|tree|forest)[^\\n]*\\d", "min": 4 },
+    { "label": "A recommendation line", "pattern": "recommend" },
+    { "label": "Mentions overfitting", "pattern": "overfit" },
+    { "label": "Gives reasons (because, since, easier, explain)", "pattern": "because|since|easier|explain|simpler|faster", "min": 2 }
+  ],
+  "sample": "- Area-median baseline: MAE ₦2.87m\n- Plain linear regression: MAE ₦2.22m\n- Decision tree, no limit: MAE ₦1.36m (overfits: training error is almost zero)\n- Random forest (300 trees): MAE ₦0.96m\n- Linear regression on log rent: MAE ₦0.83m\nRecommendation: use the log-rent linear model, because it has the lowest test error and because its coefficients can be explained to landlords as percentages (serviced +29%, furnished +19%). It's also simpler to run and check than a forest.",
+  "note": "\"The forest is more advanced\" isn't a reason. The best model is the one that predicts best on unseen data and that the business can trust and explain.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "A model has a training MAE of ₦1,000 and a test MAE of ₦1.4m. What's happening?",
+    "options": ["Underfitting", "Overfitting: it memorised the training data", "A perfect model", "A bug in MAE"],
+    "answer": 1,
+    "explanation": "A huge gap between training and test error is the sign of overfitting."
+  },
+  {
+    "prompt": "Why does a random forest usually overfit less than one deep tree?",
+    "options": ["It uses fewer features", "It averages many trees trained on different samples, so their individual errors partly cancel out", "It's linear", "It ignores the training data"],
+    "answer": 1,
+    "explanation": "Averaging reduces variance."
+  },
+  {
+    "prompt": "The log-linear model beats the forest. What's the lesson?",
+    "options": ["Forests are bad", "More complex isn't automatically better; compare models on the same test data", "Always use linear models", "The test set is wrong"],
+    "answer": 1,
+    "explanation": "Let the test results decide, and value explainability."
+  }
+]
+```
+$md$, true, true, 5, array['ml-05-p1', 'ml-05-p2', 'ml-05-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('ml-m06', 'machine-learning-fundamentals', 'Cross-validation and Tuning', 6, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('machine-learning-fundamentals:cross-validation-and-tuning', 'machine-learning-fundamentals', 'ml-m06', 'cross-validation-and-tuning', 'Cross-validation and tuning', 'Choose model settings without peeking at the test set, using k-fold cross-validation, and understand why a single train/test split can mislead.', 15, $md$
+## The problem
+
+In lesson 5 you tried tree depths of 4, 8 and 12 and looked at the test error for each. That felt sensible, but it's a trap. If you choose the depth that does best on the test set, the test set is no longer unseen: you've tuned the model to it, and its error is now an optimistic guess of how the model will do on genuinely new data.
+
+The test set must be used **once**, at the end. So how do you choose settings like depth in the meantime? With **cross-validation**: a way to get reliable estimates of performance from the training data alone.
+
+## The concept
+
+**Hyperparameters**
+
+Settings you choose before training, rather than ones the model learns: a tree's `max_depth`, a forest's number of trees, `min_samples_leaf`. Choosing them is called **tuning**.
+
+**k-fold cross-validation**
+
+1. Split the **training** data into k parts (folds), often 5.
+2. Train on 4 folds and measure the error on the 5th.
+3. Repeat 5 times, so each fold is used once for measuring.
+4. Average the 5 errors.
+
+Every training row is used for both learning and checking, and the average over 5 folds is far more stable than one split. Use it to compare settings, pick the best, then retrain on all the training data and score the **test set once**.
+
+**Grid search**
+
+`GridSearchCV` automates this: give it a model, a list of settings to try and a scoring measure, and it cross-validates every combination and reports the best.
+
+**The three-way discipline**
+
+| Data | Used for |
+| :-- | :-- |
+| Training folds | fitting models |
+| Validation folds (inside cross-validation) | choosing settings and models |
+| Test set | one final, honest score |
+
+## Example
+
+Cross-validate tree depths on the training data only:
+
+```python
+import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split, cross_val_score, KFold
+from sklearn.tree import DecisionTreeRegressor
+from sklearn.metrics import mean_absolute_error
+
+rentals = pd.read_csv("https://academy.cloudtechanalytics.com/datasets/rentals/listings.csv")
+typical = rentals.groupby(["area", "property_type", "bedrooms"])["annual_rent_ngn"].transform("median")
+rentals = rentals[rentals["annual_rent_ngn"] <= 4 * typical].copy()
+rentals["size_sqm"] = rentals["size_sqm"].fillna(
+    rentals.groupby(["property_type", "bedrooms"])["size_sqm"].transform("median")
+)
+features = ["area", "property_type", "bedrooms", "bathrooms", "size_sqm", "serviced",
+            "furnished", "power", "parking_spaces", "year_built"]
+X = pd.get_dummies(rentals[features], drop_first=True, dtype=int)
+y = rentals["annual_rent_ngn"]
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+folds = KFold(n_splits=5, shuffle=True, random_state=42)
+cv_mae = {}
+for depth in [3, 5, 7, 9, 11, 13, 15]:
+    scores = cross_val_score(DecisionTreeRegressor(max_depth=depth, random_state=42),
+                             X_train, y_train, cv=folds, scoring="neg_mean_absolute_error")
+    cv_mae[depth] = -scores.mean()
+pd.Series(cv_mae).round(0)
+```
+
+```text
+3     3353924.0
+5     2477227.0
+7     1852143.0
+9     1608691.0
+11    1495930.0
+13    1441609.0
+15    1470272.0
+dtype: float64
+```
+
+scikit-learn's scores are "higher is better", so MAE comes back negative; the minus sign turns it back. The cross-validated error falls as the tree grows, bottoms out, then starts rising again as deeper trees overfit. Choose the depth with the lowest error, retrain on all the training data and score the test set once:
+
+```python
+best_depth = min(cv_mae, key=cv_mae.get)
+final_tree = DecisionTreeRegressor(max_depth=best_depth, random_state=42).fit(X_train, y_train)
+print("Best depth:", best_depth)
+print("Test MAE:", round(mean_absolute_error(y_test, final_tree.predict(X_test))))
+```
+
+```text
+Best depth: 13
+Test MAE: 1329910
+```
+
+## Walkthrough
+
+1. Run both cells. Plot `cv_mae` as a line chart: the U shape is overfitting made visible.
+2. Use `GridSearchCV` to tune `max_depth` and `min_samples_leaf` together:
+
+```python norun
+from sklearn.model_selection import GridSearchCV
+grid = GridSearchCV(DecisionTreeRegressor(random_state=42),
+                    {"max_depth": [9, 11, 13, 15], "min_samples_leaf": [1, 3, 5, 10]},
+                    cv=folds, scoring="neg_mean_absolute_error")
+grid.fit(X_train, y_train)
+grid.best_params_, -grid.best_score_
+```
+
+3. Cross-validate the log-rent linear model the same way (on `np.log(y_train)`). Its errors are in log units, so compare models on the test set at the very end, in naira.
+4. Record the final test score of your chosen model. That's the number you'd report.
+
+## Practice
+
+```answer
+{
+  "id": "ml-06-p1",
+  "prompt": "Which **max_depth** has the lowest cross-validated MAE?",
+  "answer": 13,
+  "format": "number",
+  "dataset": "rentals",
+  "files": ["listings"],
+  "pyVerify": "best_depth",
+  "hint": "The depth with the smallest value in cv_mae.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "ml-06-p2",
+  "prompt": "What is the cross-validated MAE at that depth? (A rounded figure is fine.)",
+  "answer": 1441609,
+  "format": "naira",
+  "dataset": "rentals",
+  "files": ["listings"],
+  "pyVerify": "round(cv_mae[best_depth])",
+  "hint": "cv_mae[best_depth].",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why shouldn't you choose a tree's depth by its test-set error?",
+    "options": ["It takes too long", "The test set then influences the model, so its score is no longer an honest estimate for new data", "Depth can't be tuned", "Test sets are too small"],
+    "answer": 1,
+    "explanation": "Use cross-validation on the training data to tune; use the test set once."
+  },
+  {
+    "prompt": "In 5-fold cross-validation, how many times is each training row used for measuring error?",
+    "options": ["Never", "Once", "Five times", "Four times"],
+    "answer": 1,
+    "explanation": "Each fold is held out exactly once."
+  },
+  {
+    "prompt": "Why is scoring='neg_mean_absolute_error' negative?",
+    "options": ["A bug", "scikit-learn treats higher scores as better, so error measures are made negative", "MAE is always negative", "To confuse beginners"],
+    "answer": 1,
+    "explanation": "Multiply by −1 to read it as an error."
+  }
+]
+```
+$md$, true, true, 6, array['ml-06-p1', 'ml-06-p2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('ml-m07', 'machine-learning-fundamentals', 'Classification and Logistic Regression', 7, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('machine-learning-fundamentals:classification-and-logistic-regression', 'machine-learning-fundamentals', 'ml-m07', 'classification-and-logistic-regression', 'Classification and logistic regression', 'Predict a yes-or-no outcome with logistic regression, work with probabilities rather than labels, and see why accuracy is a dangerous measure when one outcome is rare.', 20, $md$
+## The problem
+
+Ladder Microfinance lends ₦50,000 to ₦5m to small businesses: shops, food vendors, tailors, transporters, farmers. About 12% of its loans default, and each default loses the bank most of the money lent. The credit team wants a model that flags risky applications so they can be reviewed more carefully, lent less, or asked for a guarantor.
+
+A data scientist builds one and reports **88.6% accuracy**. The credit manager is impressed. She shouldn't be: a "model" that simply says *no one will default* is 88.2% accurate on the same loans, and it would never flag a single risky borrower.
+
+## The concept
+
+**Classification**
+
+The target is a category: here `defaulted`, 1 or 0. Classifiers usually predict a **probability** ("this loan has a 31% chance of default"), which you then turn into a decision with a **threshold** (flag if the probability is above 0.25).
+
+**Logistic regression**
+
+The classification version of linear regression. It combines the features into a score, like linear regression, then squeezes that score into a probability between 0 and 1 with the S-shaped logistic function. It's fast, robust and explainable, and in credit scoring it's still the industry standard.
+
+Logistic regression works best when the numeric features are on similar scales, so put a **StandardScaler** in front of it in a **pipeline**: one object that scales the data and then fits the model, in the right order, every time.
+
+**Imbalanced classes**
+
+When one outcome is rare (defaults, fraud, rare diseases):
+
+- **Accuracy misleads**: predicting the common outcome every time scores highly.
+- **Split with `stratify=y`**, so the training and test sets have the same share of defaults.
+- **Look at the rare class directly**: how many of the defaults did the model catch? That's **recall**, and lesson 8 covers it properly.
+
+## Example
+
+Prepare the features, including a ratio that credit officers already use (loan amount ÷ monthly revenue):
+
+```python
+import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.preprocessing import StandardScaler
+from sklearn.pipeline import make_pipeline
+from sklearn.metrics import accuracy_score
+
+loans = pd.read_csv("https://academy.cloudtechanalytics.com/datasets/loans/loans.csv")
+loans["amount_to_revenue"] = loans["loan_amount_ngn"] / loans["monthly_revenue_ngn"]
+features = ["region", "business_type", "borrower_age", "years_in_business", "monthly_revenue_ngn",
+            "loan_amount_ngn", "amount_to_revenue", "term_months", "interest_rate_monthly_pct",
+            "previous_loans", "previous_late_payments", "group_loan", "has_guarantor",
+            "mobile_money_txns_per_month"]
+X = pd.get_dummies(loans[features], drop_first=True, dtype=int)
+y = loans["defaulted"]
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=42, stratify=y)
+print("Default rate in the test set:", round(y_test.mean(), 3))
+```
+
+```text
+Default rate in the test set: 0.118
+```
+
+Train the model, and compare it with the "nobody defaults" baseline:
+
+```python
+model = make_pipeline(StandardScaler(), LogisticRegression(max_iter=1000))
+model.fit(X_train, y_train)
+
+prob = model.predict_proba(X_test)[:, 1]   # probability of default for each test loan
+labels = (prob >= 0.5).astype(int)          # the default threshold
+
+print("Always 'no default' accuracy:", round(accuracy_score(y_test, np.zeros(len(y_test))), 4))
+print("Model accuracy at 0.5:       ", round(accuracy_score(y_test, labels), 4))
+print("Defaults in test set:", int(y_test.sum()), " caught by the model:", int(((labels == 1) & (y_test == 1)).sum()))
+```
+
+```text
+Always 'no default' accuracy: 0.8816
+Model accuracy at 0.5:        0.8856
+Defaults in test set: 148  caught by the model: 11
+```
+
+The model is barely more accurate than saying "no" to everything, and at a threshold of 0.5 it catches only a handful of the defaults. That doesn't mean the model is useless. It means 0.5 is the wrong threshold for this problem and accuracy is the wrong measure. The probabilities are where the value is:
+
+```python
+pd.Series(prob).describe().round(3)
+```
+
+```text
+count    1250.000
+mean        0.115
+std         0.110
+min         0.002
+25%         0.041
+50%         0.081
+75%         0.151
+max         0.708
+dtype: float64
+```
+
+Most loans get a low probability, but some get much higher ones. The question for lesson 8 is where to draw the line.
+
+## Walkthrough
+
+1. Run the three cells.
+2. Check the stratification: compare `y_train.mean()` with `y_test.mean()`.
+3. Look at the 10 loans with the highest predicted probability: `loans.loc[X_test.index].assign(prob=prob).nlargest(10, "prob")`. What do they have in common?
+4. Try a threshold of 0.25 instead of 0.5. How many defaults are caught now, and how many good loans are flagged by mistake?
+
+## Practice
+
+```dataset
+{"dataset": "loans", "files": ["loans"]}
+```
+
+```answer
+{
+  "id": "ml-07-p1",
+  "prompt": "What is the accuracy of the **always 'no default'** baseline on the test set, as a percentage? One decimal place.",
+  "answer": 88.2,
+  "format": "percent",
+  "dataset": "loans",
+  "files": ["loans"],
+  "pyVerify": "round((1 - y_test.mean()) * 100, 1)",
+  "hint": "It's the share of test loans that didn't default.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "ml-07-p2",
+  "prompt": "At a threshold of **0.5**, how many of the test set's defaults does the model catch?",
+  "answer": 11,
+  "format": "number",
+  "dataset": "loans",
+  "files": ["loans"],
+  "pyVerify": "int(((labels == 1) & (y_test == 1)).sum())",
+  "hint": "Count the loans where both the label and the actual outcome are 1.",
+  "explanation": "11 of 148: about 7%. High accuracy, almost no use to the credit team.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Only 2% of transactions are fraudulent. A model is 98% accurate. What should you check first?",
+    "options": ["Nothing, it's excellent", "Whether it catches any fraud at all: predicting 'not fraud' every time is also 98% accurate", "Its training time", "The number of features"],
+    "answer": 1,
+    "explanation": "With rare outcomes, accuracy can hide a useless model."
+  },
+  {
+    "prompt": "Why use stratify=y when splitting imbalanced data?",
+    "options": ["To make the model faster", "So the training and test sets have the same share of the rare outcome", "To remove duplicates", "It's required for logistic regression"],
+    "answer": 1,
+    "explanation": "Otherwise the test set might have too few defaults to measure anything reliably."
+  },
+  {
+    "prompt": "What does predict_proba give you that predict doesn't?",
+    "options": ["Nothing", "The probability of each outcome, so you can choose the threshold that suits the decision", "The features", "The accuracy"],
+    "answer": 1,
+    "explanation": "Probabilities let the business, not the default 0.5, decide where to draw the line."
+  }
+]
+```
+$md$, true, true, 7, array['ml-07-p1', 'ml-07-p2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('ml-m08', 'machine-learning-fundamentals', 'Evaluating Classifiers and Choosing Thresholds', 8, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('machine-learning-fundamentals:evaluating-classifiers-and-choosing-thresholds', 'machine-learning-fundamentals', 'ml-m08', 'evaluating-classifiers-and-choosing-thresholds', 'Evaluating classifiers and choosing thresholds', 'Read a confusion matrix, measure precision, recall and AUC, and choose the decision threshold from what each kind of mistake costs the business.', 30, $md$
+## The problem
+
+Ladder's model gives every application a probability of default. The credit manager now has a decision to make: above what probability should an application be declined (or sent for extra checks)?
+
+Set the line low and the bank declines many borrowers who would have repaid, losing their interest. Set it high and it lends to borrowers who default, losing the principal. Neither mistake is free, and they don't cost the same. The right threshold isn't a statistics question; it's a business one, and the BA or data scientist's job is to put naira on both kinds of mistake so the bank can choose.
+
+## The concept
+
+**The confusion matrix**
+
+| | Predicted: repays | Predicted: defaults |
+| :-- | :-- | :-- |
+| **Actually repays** | true negative (TN) | false positive (FP): a good borrower turned away |
+| **Actually defaults** | false negative (FN): a default we lent to | true positive (TP): a default caught |
+
+**Measures from it**
+
+- **Recall** (sensitivity) = TP ÷ (TP + FN): of all the defaults, how many did we catch?
+- **Precision** = TP ÷ (TP + FP): of the loans we flagged, how many really defaulted?
+- Lowering the threshold raises recall and lowers precision. There's always a trade-off.
+
+**AUC: ranking quality, independent of threshold**
+
+The **ROC AUC** measures how well the model ranks risky loans above safe ones, across all thresholds: 0.5 is random guessing, 1.0 is perfect. Credit scoring models typically score 0.70 to 0.85. Use it to compare models; use the threshold analysis to make the decision.
+
+**Choosing the threshold from costs**
+
+For each possible threshold, simulate the decision on the test set:
+
+- each **approved loan that repays** earns the bank its interest margin;
+- each **approved loan that defaults** loses the bank part of the principal;
+- each **declined loan** earns and loses nothing.
+
+Add it up, and pick the threshold with the highest total. The assumptions (what a default really loses, what a good loan really earns) must come from the finance team, and you should show how the answer changes if they're different.
+
+## Example
+
+The setup from lesson 7, in one cell:
+
+```python
+import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.preprocessing import StandardScaler
+from sklearn.pipeline import make_pipeline
+from sklearn.metrics import confusion_matrix, precision_score, recall_score, roc_auc_score
+
+loans = pd.read_csv("https://academy.cloudtechanalytics.com/datasets/loans/loans.csv")
+loans["amount_to_revenue"] = loans["loan_amount_ngn"] / loans["monthly_revenue_ngn"]
+features = ["region", "business_type", "borrower_age", "years_in_business", "monthly_revenue_ngn",
+            "loan_amount_ngn", "amount_to_revenue", "term_months", "interest_rate_monthly_pct",
+            "previous_loans", "previous_late_payments", "group_loan", "has_guarantor",
+            "mobile_money_txns_per_month"]
+X = pd.get_dummies(loans[features], drop_first=True, dtype=int)
+y = loans["defaulted"]
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=42, stratify=y)
+model = make_pipeline(StandardScaler(), LogisticRegression(max_iter=1000)).fit(X_train, y_train)
+prob = model.predict_proba(X_test)[:, 1]
+print("AUC:", round(roc_auc_score(y_test, prob), 3))
+```
+
+```text
+AUC: 0.76
+```
+
+Precision and recall at several thresholds:
+
+```python
+for t in [0.10, 0.15, 0.20, 0.25, 0.30, 0.50]:
+    flag = prob >= t
+    print(f"threshold {t:.2f}: recall {recall_score(y_test, flag):.2f}  precision {precision_score(y_test, flag):.2f}  declined {flag.mean():.0%}")
+```
+
+```text
+threshold 0.10: recall 0.78  precision 0.22  declined 41%
+threshold 0.15: recall 0.58  precision 0.27  declined 25%
+threshold 0.20: recall 0.47  precision 0.34  declined 16%
+threshold 0.25: recall 0.37  precision 0.41  declined 11%
+threshold 0.30: recall 0.27  precision 0.43  declined 7%
+threshold 0.50: recall 0.07  precision 0.65  declined 1%
+```
+
+Now put naira on it. Finance's assumptions: a loan that repays earns half its total interest as margin (after funding and operating costs); a default loses 60% of the amount lent.
+
+```python
+test = loans.loc[X_test.index]
+margin = test["loan_amount_ngn"] * test["interest_rate_monthly_pct"] / 100 * test["term_months"] * 0.5
+loss = test["loan_amount_ngn"] * 0.6
+outcome = np.where(y_test == 1, -loss, margin)   # what each loan earns or loses if approved
+
+profit = {}
+for t in [0.10, 0.15, 0.20, 0.25, 0.30, 0.40, 0.50, 1.01]:
+    approve = prob < t
+    profit[t] = outcome[approve].sum() / 1e6
+pd.Series(profit).round(1)   # ₦ millions; 1.01 means approve everyone
+```
+
+```text
+0.10    52.7
+0.15    60.1
+0.20    66.1
+0.25    68.9
+0.30    64.0
+0.40    59.2
+0.50    53.6
+1.01    46.7
+dtype: float64
+```
+
+Approving everyone earns about ₦46.7m on these loans. Declining applications above a probability of 0.25 earns about ₦68.9m: roughly ₦22m more, from the same borrowers, by turning away about 1 in 10 applicants.
+
+## Walkthrough
+
+1. Run the cells. Print the confusion matrix at 0.25: `confusion_matrix(y_test, prob >= 0.25)`.
+2. Change the loss on default from 60% to 80% and rerun the profit table. Does the best threshold move?
+3. Change the margin from 50% to 30% of interest. What happens now?
+4. Write down the threshold you'd recommend, and how sensitive it is to finance's assumptions.
+
+## Practice
+
+```answer
+{
+  "id": "ml-08-p1",
+  "prompt": "What is the model's **ROC AUC** on the test set? Two decimal places.",
+  "answer": 0.76,
+  "tolerance": 0.011,
+  "format": "number",
+  "dataset": "loans",
+  "files": ["loans"],
+  "pyVerify": "round(roc_auc_score(y_test, prob), 2)",
+  "hint": "roc_auc_score(y_test, prob).",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "ml-08-p2",
+  "prompt": "At a threshold of **0.25**, what is the model's **recall** (share of defaults caught)? As a percentage, one decimal place.",
+  "answer": 37.2,
+  "format": "percent",
+  "dataset": "loans",
+  "files": ["loans"],
+  "pyVerify": "round(recall_score(y_test, prob >= 0.25) * 100, 1)",
+  "hint": "recall_score(y_test, prob >= 0.25).",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "ml-08-p3",
+  "prompt": "Which threshold in the profit table gives the **highest** total profit?",
+  "answer": 0.25,
+  "format": "number",
+  "tolerance": 0.001,
+  "dataset": "loans",
+  "files": ["loans"],
+  "pyVerify": "max(profit, key=profit.get)",
+  "hint": "The threshold with the largest value in the profit series.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "ml-08-t1",
+  "prompt": "Write a recommendation to Ladder's credit committee (60 to 150 words): which **threshold** to use, the **profit** compared with approving everyone, the **trade-off** in plain words (good borrowers turned away, defaults still let through), and how **sensitive** the choice is to finance's assumptions.",
+  "minutes": 8,
+  "rows": 8,
+  "placeholder": "We recommend declining (or reviewing) applications with a default probability above ...",
+  "rules": [
+    { "label": "Names a threshold", "pattern": "0\\.\\d+|\\d+\\s*%\\s*(probability|chance)" },
+    { "label": "Gives the profit comparison in naira", "pattern": "₦\\s*\\d|naira" },
+    { "label": "Explains the trade-off (turned away, declined good, let through, missed)", "pattern": "turn(ed)? away|declin\\w+ [^.]*(good|repa)|let through|miss|still lend" },
+    { "label": "Mentions sensitivity to assumptions", "pattern": "assum|sensitiv|if the loss|if (the )?margin|depends" },
+    { "label": "Between 60 and 150 words", "minWords": 60, "maxWords": 150 }
+  ],
+  "sample": "We recommend reviewing or declining applications with a predicted default probability of 0.25 or more. On the test loans, that would have earned about ₦68.9m, against ₦46.7m for approving everyone: about ₦22m more. The trade-off: we'd decline about 11% of applicants, and some of them (about 6 in 10 of those flagged) would actually have repaid; and we'd still lend to about 63% of the borrowers who default. The best threshold depends on finance's assumptions: if a default costs more than 60% of the loan, a lower threshold such as 0.20 becomes better. We suggest piloting 0.25 on new applications and reviewing the results after three months.",
+  "note": "The committee doesn't need to know what AUC is. It needs the decision, what it's worth, who it affects and how confident to be, in that order.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Of 148 defaults, the model flags 55. What is its recall?",
+    "options": ["55%", "About 37%", "148%", "Impossible to say"],
+    "answer": 1,
+    "explanation": "Recall = caught ÷ all defaults = 55 ÷ 148."
+  },
+  {
+    "prompt": "Lowering the threshold from 0.5 to 0.2 usually:",
+    "options": ["Raises precision and lowers recall", "Raises recall and lowers precision", "Changes nothing", "Raises both"],
+    "answer": 1,
+    "explanation": "You catch more of the defaults but flag more good borrowers too."
+  },
+  {
+    "prompt": "What should decide the threshold for a lending model?",
+    "options": ["Always 0.5", "The costs of each kind of mistake, from the business", "Whatever gives the highest accuracy", "The AUC"],
+    "answer": 1,
+    "explanation": "Put naira on the mistakes and choose the threshold that maximises value."
+  }
+]
+```
+$md$, true, true, 8, array['ml-08-p1', 'ml-08-p2', 'ml-08-p3', 'ml-08-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('ml-m09', 'machine-learning-fundamentals', 'Explaining Models and Responsible ML', 9, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('machine-learning-fundamentals:explaining-models-and-responsible-ml', 'machine-learning-fundamentals', 'ml-m09', 'explaining-models-and-responsible-ml', 'Explaining models and responsible ML', 'Explain what drives a model''s predictions with coefficients and permutation importance, check it for unfair patterns, and plan how to monitor it once it''s making real decisions.', 30, $md$
+## The problem
+
+Ladder's credit committee likes the profit table. Then the head of compliance asks three questions:
+
+1. "When we decline someone, can we tell them why?"
+2. "Is the model treating borrowers in some regions unfairly?"
+3. "How will we know if it stops working?"
+
+A model that can't answer these shouldn't be making decisions about people's livelihoods, however profitable it looks. Explaining, checking for fairness and monitoring aren't optional extras; in lending they're often legal requirements, and they're always good practice.
+
+## The concept
+
+**Global explanations: what drives the model overall?**
+
+- **Coefficients** (for logistic regression on scaled features): the sign says which way a feature pushes the risk, and the size says how strongly, per standard deviation.
+- **Permutation importance**: shuffle one feature's values in the test set and measure how much the model's AUC drops. A big drop means the model relies on that feature. It works for any model and doesn't favour features with many values.
+
+**Local explanations: why this applicant?**
+
+For one application, list the features that pushed its probability up most (for logistic regression, each feature's scaled value × its coefficient). Turn the top two or three into plain reasons: "loan large relative to revenue", "late payments on previous loans".
+
+**Fairness**
+
+- Don't use **protected characteristics** (sex, religion, ethnicity) as features. This dataset doesn't contain them.
+- Watch for **proxies**: features that stand in for a protected group. In Nigeria, **region** can be a proxy for ethnicity or religion.
+- Ask whether a feature reflects **behaviour** the borrower controls (late payments, the loan's size compared with revenue) or **who they are** (where they live). Prefer behaviour.
+- Test it: does dropping the feature lose real predictive power? If not, drop it.
+
+**Monitoring: models age**
+
+The world changes: interest rates, the economy, the bank's own lending policy. Track, monthly:
+
+- the **default rate** of new loans against what the model predicted;
+- the **distribution of key features** (are applicants borrowing more relative to revenue than before?);
+- the **AUC** on loans that have now matured.
+
+Retrain when they drift.
+
+## Example
+
+The setup, then permutation importance on the test set:
+
+```python
+import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.preprocessing import StandardScaler
+from sklearn.pipeline import make_pipeline
+from sklearn.metrics import roc_auc_score
+from sklearn.inspection import permutation_importance
+
+loans = pd.read_csv("https://academy.cloudtechanalytics.com/datasets/loans/loans.csv")
+loans["amount_to_revenue"] = loans["loan_amount_ngn"] / loans["monthly_revenue_ngn"]
+features = ["region", "business_type", "borrower_age", "years_in_business", "monthly_revenue_ngn",
+            "loan_amount_ngn", "amount_to_revenue", "term_months", "interest_rate_monthly_pct",
+            "previous_loans", "previous_late_payments", "group_loan", "has_guarantor",
+            "mobile_money_txns_per_month"]
+X = pd.get_dummies(loans[features], drop_first=True, dtype=int)
+y = loans["defaulted"]
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=42, stratify=y)
+model = make_pipeline(StandardScaler(), LogisticRegression(max_iter=1000)).fit(X_train, y_train)
+
+result = permutation_importance(model, X_test, y_test, scoring="roc_auc", n_repeats=10, random_state=42)
+importance = pd.Series(result.importances_mean, index=X.columns).sort_values(ascending=False)
+importance.head(6).round(3)
+```
+
+```text
+previous_late_payments           0.080
+amount_to_revenue                0.069
+years_in_business                0.049
+has_guarantor_Yes                0.021
+business_type_Hair and beauty    0.020
+mobile_money_txns_per_month      0.019
+dtype: float64
+```
+
+The model relies most on previous late payments, the loan's size relative to revenue and years in business. Those are things a credit officer would recognise and could explain to a borrower. Now the fairness question. Does region add anything?
+
+```python
+no_region = [c for c in X.columns if not c.startswith("region_")]
+model_nr = make_pipeline(StandardScaler(), LogisticRegression(max_iter=1000)).fit(X_train[no_region], y_train)
+print("AUC with region:   ", round(roc_auc_score(y_test, model.predict_proba(X_test)[:, 1]), 3))
+print("AUC without region:", round(roc_auc_score(y_test, model_nr.predict_proba(X_test[no_region])[:, 1]), 3))
+```
+
+```text
+AUC with region:    0.76
+AUC without region: 0.764
+```
+
+Dropping region makes almost no difference to the model's ability to rank risk. Region adds little real information and carries a fairness risk, so the responsible choice is clear: drop it. Finally, a first monitoring check, comparing default rates by the year the loan was made:
+
+```python
+loans.groupby(loans["disbursed_date"].str[:4])["defaulted"].mean().round(3)
+```
+
+```text
+disbursed_date
+2024    0.129
+2025    0.108
+Name: defaulted, dtype: float64
+```
+
+Loans made in 2025 defaulted less often than those made in 2024. Some 2025 loans may not have finished their terms yet, which flatters the recent rate, and conditions may have changed. Either way, it's the kind of shift that should trigger a review of the model.
+
+## Walkthrough
+
+1. Run the cells. Compare permutation importance with the coefficients: `pd.Series(model[-1].coef_[0], index=X.columns).sort_values()`.
+2. Pick the test loan with the highest predicted probability. Multiply its scaled feature values by the coefficients, and list the three biggest contributions as reasons a credit officer could give.
+3. Rebuild the model without region and use it from now on.
+4. Write a one-paragraph monitoring plan: what you'd check each month, and what would trigger retraining.
+
+## Practice
+
+```answer
+{
+  "id": "ml-09-p1",
+  "prompt": "Which feature has the **highest permutation importance**? Type the column name.",
+  "answer": "previous_late_payments",
+  "accept": ["previous late payments"],
+  "format": "text",
+  "dataset": "loans",
+  "files": ["loans"],
+  "pyVerify": "importance.idxmax()",
+  "hint": "The top row of the importance table.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "ml-09-p2",
+  "prompt": "What is the default rate of loans disbursed in **2024**? As a percentage, one decimal place.",
+  "answer": 12.9,
+  "format": "percent",
+  "dataset": "loans",
+  "files": ["loans"],
+  "pyVerify": "round(loans.loc[loans['disbursed_date'].str[:4] == '2024', 'defaulted'].mean() * 100, 1)",
+  "hint": "Group by the year of disbursed_date and take the mean of defaulted.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "ml-09-t1",
+  "prompt": "Answer the head of compliance's three questions in 3 short paragraphs or bullets (80 to 200 words): **explaining** a decline to a borrower, **fairness** (with what you found about region), and **monitoring** (what you'll check and how often).",
+  "minutes": 10,
+  "rows": 10,
+  "placeholder": "Explaining declines: ...\nFairness: ...\nMonitoring: ...",
+  "rules": [
+    { "label": "Covers explaining a decline with specific reasons", "pattern": "late payment|relative to (revenue|income)|amount to revenue|years in business|reason" },
+    { "label": "Covers fairness and region", "pattern": "region" },
+    { "label": "Says region was dropped or will be", "pattern": "drop|remov|exclud|without region|not use" },
+    { "label": "Covers monitoring with a frequency", "pattern": "monitor[\\s\\S]*(monthly|weekly|quarterly|every)|(monthly|weekly|quarterly|every)[\\s\\S]*monitor" },
+    { "label": "Between 80 and 200 words", "minWords": 80, "maxWords": 200 }
+  ],
+  "sample": "Explaining declines: for each declined application we'll list the two or three factors that raised its risk most, such as late payments on previous loans, a loan that's large relative to monthly revenue, or few years in business. These are things the borrower can understand and, in time, change.\n\nFairness: the model doesn't use sex, religion or ethnicity. We tested region, which can act as a proxy for ethnicity: removing it barely changed the model's accuracy (AUC about 0.76 either way), so we've dropped it.\n\nMonitoring: every month we'll compare the predicted and actual default rates of loans as they mature, check whether applicants' loan-to-revenue ratios are shifting, and recalculate the AUC each quarter. A gap of more than 2 percentage points between predicted and actual defaults, or an AUC below 0.70, triggers a review and retraining.",
+  "note": "Concrete triggers (\"more than 2 points\", \"below 0.70\") turn monitoring from a promise into a procedure.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "What does permutation importance measure?",
+    "options": ["How often a feature appears", "How much the model's performance drops when that feature's values are shuffled", "The feature's correlation with the target", "The size of its coefficient"],
+    "answer": 1,
+    "explanation": "If shuffling a feature hurts the model, the model relies on it."
+  },
+  {
+    "prompt": "Dropping 'region' barely changes AUC. What should you do?",
+    "options": ["Keep it, every bit helps", "Drop it: it adds little predictive value and may act as a proxy for protected groups", "Add more regions", "Use only region"],
+    "answer": 1,
+    "explanation": "Little value plus fairness risk means it shouldn't be used."
+  },
+  {
+    "prompt": "Why monitor a model after deployment?",
+    "options": ["It's optional", "Conditions change, so a model that was accurate can drift and quietly make worse decisions", "To retrain every day", "Regulators don't care"],
+    "answer": 1,
+    "explanation": "Track predicted versus actual outcomes and retrain when they drift."
+  }
+]
+```
+$md$, true, true, 9, array['ml-09-p1', 'ml-09-p2', 'ml-09-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('ml-m10', 'machine-learning-fundamentals', 'From Model to Decision', 10, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('machine-learning-fundamentals:from-model-to-decision', 'machine-learning-fundamentals', 'ml-m10', 'from-model-to-decision', 'From model to decision', 'Package a model as a pipeline that takes raw applications, score new cases with reasons, save it for others to use, and document it with a model card.', 30, $md$
+## The problem
+
+Your notebook contains a good default model, but nobody at Ladder can use a notebook. The credit officers need to enter an application (business type, revenue, loan amount, and so on) and get back a probability, a recommendation and the main reasons, in a form they trust. The data team needs to run the same model next month without redoing your cleaning steps by hand.
+
+Getting from "a model in a notebook" to "a model the business uses" is where many data science projects stall. The two tools that bridge the gap are a **pipeline** that does every step from raw data to prediction, and a **model card** that tells everyone what the model is for and where it shouldn't be trusted.
+
+## The concept
+
+**A full pipeline**
+
+Until now, you've one-hot encoded with `pd.get_dummies` before training. That's fragile: a new application has one row, so `get_dummies` can't create the same columns. A scikit-learn **ColumnTransformer** does the preparation inside the model:
+
+- `OneHotEncoder(handle_unknown="ignore")` for text columns, remembering the categories it saw in training;
+- `StandardScaler()` for numbers;
+- then the model.
+
+Fit the whole pipeline on the training data, and it takes **raw** rows, exactly like the CSV, from then on.
+
+**Scoring and reasons**
+
+For each new application, return the probability, the decision at the agreed threshold, and the top reasons. Reasons matter as much as the score: they're what a credit officer can act on and explain.
+
+**Saving and loading**
+
+`joblib.dump(pipeline, "default_model.joblib")` saves the fitted pipeline to a file; `joblib.load` brings it back, ready to score. Record the date, the data used and the scikit-learn version alongside it.
+
+**A model card**
+
+A one-page description of the model: purpose, intended users, data, features (and those deliberately excluded), performance, threshold and its business basis, known limitations, fairness checks, monitoring plan, owner and review date.
+
+## Example
+
+The production pipeline, trained on raw columns without region:
+
+```python
+import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.compose import ColumnTransformer
+from sklearn.preprocessing import OneHotEncoder, StandardScaler
+from sklearn.pipeline import Pipeline
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import roc_auc_score
+
+loans = pd.read_csv("https://academy.cloudtechanalytics.com/datasets/loans/loans.csv")
+loans["amount_to_revenue"] = loans["loan_amount_ngn"] / loans["monthly_revenue_ngn"]
+categorical = ["business_type", "group_loan", "has_guarantor"]
+numeric = ["borrower_age", "years_in_business", "monthly_revenue_ngn", "loan_amount_ngn",
+           "amount_to_revenue", "term_months", "interest_rate_monthly_pct", "previous_loans",
+           "previous_late_payments", "mobile_money_txns_per_month"]
+X = loans[categorical + numeric]
+y = loans["defaulted"]
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=42, stratify=y)
+
+pipeline = Pipeline([
+    ("prepare", ColumnTransformer([
+        ("categories", OneHotEncoder(handle_unknown="ignore", drop="first"), categorical),
+        ("numbers", StandardScaler(), numeric),
+    ])),
+    ("model", LogisticRegression(max_iter=1000)),
+])
+pipeline.fit(X_train, y_train)
+print("Test AUC:", round(roc_auc_score(y_test, pipeline.predict_proba(X_test)[:, 1]), 3))
+```
+
+```text
+Test AUC: 0.765
+```
+
+Now score a new application, exactly as a credit officer would enter it:
+
+```python
+application = pd.DataFrame([{
+    "business_type": "Food vendor", "group_loan": "No", "has_guarantor": "No",
+    "borrower_age": 31, "years_in_business": 1, "monthly_revenue_ngn": 250000,
+    "loan_amount_ngn": 600000, "term_months": 6, "interest_rate_monthly_pct": 4.5,
+    "previous_loans": 1, "previous_late_payments": 2, "mobile_money_txns_per_month": 8,
+}])
+application["amount_to_revenue"] = application["loan_amount_ngn"] / application["monthly_revenue_ngn"]
+
+p = pipeline.predict_proba(application[categorical + numeric])[0, 1]
+print(f"Probability of default: {p:.0%}")
+print("Recommendation:", "refer for review" if p >= 0.25 else "approve")
+```
+
+```text
+Probability of default: 59%
+Recommendation: refer for review
+```
+
+And the reasons, from each feature's contribution to the score:
+
+```python
+prepare, model = pipeline.named_steps["prepare"], pipeline.named_steps["model"]
+contrib = pd.Series(prepare.transform(application[categorical + numeric])[0] * model.coef_[0],
+                    index=prepare.get_feature_names_out())
+contrib.sort_values(ascending=False).head(3).round(2)
+```
+
+```text
+numbers__amount_to_revenue         0.85
+numbers__previous_late_payments    0.52
+numbers__years_in_business         0.38
+dtype: float64
+```
+
+The biggest pushes towards default are the loan's size relative to revenue (2.4 times monthly revenue), two late payments on the previous loan and little time in business: three reasons a credit officer can explain, and that a guarantor or a smaller loan could address.
+
+## Walkthrough
+
+1. Run the cells, then save the pipeline: `import joblib; joblib.dump(pipeline, "default_model.joblib")`, and load it back in a new cell to check it scores the same.
+2. Change the application: add a guarantor, or halve the loan amount. How much does the probability fall?
+3. Score five real applications from the test set and compare the recommendations with what actually happened.
+4. Write the model card (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "ml-10-p1",
+  "prompt": "What probability of default does the pipeline give the **example application**? As a percentage, rounded to the nearest whole number.",
+  "answer": 59,
+  "format": "percent",
+  "dataset": "loans",
+  "files": ["loans"],
+  "pyVerify": "round(p * 100)",
+  "hint": "The first line printed by the scoring cell.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "ml-10-t1",
+  "prompt": "Write a **model card** for Ladder's default model, with one line each starting: **Purpose:**, **Users:**, **Data:**, **Features excluded:**, **Performance:**, **Threshold:**, **Limitations:**, **Monitoring:** and **Owner:**.",
+  "minutes": 10,
+  "rows": 12,
+  "placeholder": "Purpose: ...\nUsers: ...",
+  "rules": [
+    { "label": "Purpose, Users and Data lines", "pattern": "^\\s*[-*]?\\s*(purpose|users|data)\\s*:", "min": 3 },
+    { "label": "Features excluded line, mentioning region", "pattern": "^\\s*[-*]?\\s*features excluded\\s*:[^\\n]*region" },
+    { "label": "Performance line with a number", "pattern": "^\\s*[-*]?\\s*performance\\s*:[^\\n]*\\d" },
+    { "label": "Threshold line with a number and its basis", "pattern": "^\\s*[-*]?\\s*threshold\\s*:[^\\n]*\\d[^\\n]*(profit|cost|loss|margin)" },
+    { "label": "Limitations, Monitoring and Owner lines", "pattern": "^\\s*[-*]?\\s*(limitations|monitoring|owner)\\s*:", "min": 3 }
+  ],
+  "sample": "Purpose: estimate the probability that a new small-business loan application will default, to decide whether to approve it or refer it for review.\nUsers: Ladder's credit officers and credit committee.\nData: 5,000 loans disbursed January 2024 to December 2025, with their outcomes.\nFeatures excluded: region (a possible proxy for ethnicity; removing it didn't reduce accuracy) and anything recorded after disbursement, such as arrears.\nPerformance: test AUC about 0.76; at the 0.25 threshold it catches about 37% of defaults while referring about 11% of applicants.\nThreshold: 0.25, chosen to maximise profit with a default costing 60% of the loan and a good loan earning half its interest.\nLimitations: trained on two years of data; some 2025 loans hadn't matured; not tested on loans above ₦5m or new business types.\nMonitoring: monthly predicted vs actual default rate; quarterly AUC; review if the gap exceeds 2 points or AUC falls below 0.70.\nOwner: head of credit risk; next review March 2027.",
+  "note": "The limitations line protects the bank: it says where the model shouldn't be trusted, before anyone uses it there.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why put the one-hot encoding inside a ColumnTransformer instead of using pd.get_dummies?",
+    "options": ["It's faster", "The pipeline remembers the training categories, so a single new row gets exactly the same columns", "get_dummies is deprecated", "It removes missing values"],
+    "answer": 1,
+    "explanation": "A pipeline takes raw rows and prepares them consistently every time."
+  },
+  {
+    "prompt": "What does handle_unknown='ignore' do?",
+    "options": ["Deletes rows", "Lets the encoder accept a category it didn't see in training, instead of failing", "Ignores the target", "Skips scaling"],
+    "answer": 1,
+    "explanation": "A new business type won't crash the model; it just gets zeros for that feature."
+  },
+  {
+    "prompt": "What belongs in a model card?",
+    "options": ["Only the accuracy", "Purpose, data, excluded features, performance, threshold, limitations, monitoring and owner", "The source code", "Marketing claims"],
+    "answer": 1,
+    "explanation": "It tells everyone what the model is for and where not to trust it."
+  }
+]
+```
+$md$, true, true, 10, array['ml-10-p1', 'ml-10-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('ml-m11', 'machine-learning-fundamentals', 'Final Project', 11, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('machine-learning-fundamentals:final-project', 'machine-learning-fundamentals', 'ml-m11', 'final-project', '"Final project: Ladder''s credit model"', 'Plan your final project, a complete, responsible default model and lending recommendation for a microfinance bank, and start with the questions every credit model must answer.', 25, $md$
+## The problem
+
+Ladder Microfinance's board has approved a pilot: for six months, new applications will be scored by a model, and those above the threshold will be referred for review rather than approved automatically. The head of credit risk asks you to deliver the model and everything around it: the analysis behind it, the evidence it works, the threshold and what it's worth, the explanation for declined borrowers, the fairness checks, and the plan for monitoring it.
+
+This is what a junior data scientist's first real project looks like. The modelling is perhaps a third of the work. The rest is making sure the model is honest, explainable, fair and useful, which is what this course has been about.
+
+## The concept
+
+**The project, step by step**
+
+| Step | Deliverable | Lesson |
+| :-- | :-- | :-- |
+| Frame | the prediction, the decision it changes, the measure of success | 1 |
+| Prepare | features, leakage checks, engineered features such as amount ÷ revenue | 2 |
+| Split and baseline | a stratified split and the "no default" baseline | 3, 7 |
+| Model | logistic regression and at least one tree-based model, compared fairly | 4, 5, 7 |
+| Tune | cross-validated settings, test set used once | 6 |
+| Evaluate | AUC, precision and recall, and the profit-based threshold | 8 |
+| Explain and check | permutation importance, reasons for declines, fairness checks | 9 |
+| Deploy | a pipeline, a scored example, a model card, a monitoring plan | 10 |
+
+**What makes it responsible**
+
+- No leakage: every feature exists on the day of the application.
+- No protected characteristics, and proxies tested and removed if they add nothing.
+- A threshold chosen from business costs, with sensitivity shown.
+- Reasons a borrower can understand.
+- Monitoring with concrete triggers for review.
+
+## Example
+
+Two warm-up questions that belong in your exploratory analysis. Group loans (where borrowers guarantee each other) and the loan's size relative to revenue are two of the strongest signals in the data:
+
+```python
+import pandas as pd
+
+loans = pd.read_csv("https://academy.cloudtechanalytics.com/datasets/loans/loans.csv")
+loans["amount_to_revenue"] = loans["loan_amount_ngn"] / loans["monthly_revenue_ngn"]
+print(loans.groupby("group_loan")["defaulted"].mean().round(3))
+loans.groupby("defaulted")["amount_to_revenue"].median().round(2)
+```
+
+```text
+group_loan
+No     0.140
+Yes    0.086
+Name: defaulted, dtype: float64
+defaulted
+0    1.51
+1    1.86
+Name: amount_to_revenue, dtype: float64
+```
+
+Group loans default less often, and borrowers who defaulted had typically borrowed a larger multiple of their monthly revenue. Both make business sense, which is reassuring: a model built on them will be easier to explain and to trust.
+
+## Walkthrough
+
+1. Frame the project in a short paragraph: what's predicted, the decision, and how success will be measured in the pilot.
+2. Build the features, check each one for leakage, and decide about region before you start modelling.
+3. Compare at least two models with cross-validation, choose one, and score the test set once.
+4. Build the profit table, choose the threshold, and show how it changes if a default costs 80% of the loan.
+5. Open the project brief on the course page and plan the rest: explanations, fairness, pipeline and model card.
+
+## Practice
+
+```dataset
+{"dataset": "loans", "files": ["loans"]}
+```
+
+```answer
+{
+  "id": "ml-11-p1",
+  "prompt": "What is the default rate of **group loans**? As a percentage, one decimal place.",
+  "answer": 8.6,
+  "format": "percent",
+  "dataset": "loans",
+  "files": ["loans"],
+  "pyVerify": "round(loans.loc[loans['group_loan'] == 'Yes', 'defaulted'].mean() * 100, 1)",
+  "hint": "The 'Yes' row of the first output.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "ml-11-p2",
+  "prompt": "What is the **median amount-to-revenue ratio** for loans that **defaulted**? Two decimal places.",
+  "answer": 1.86,
+  "format": "number",
+  "dataset": "loans",
+  "files": ["loans"],
+  "pyVerify": "round(loans.loc[loans['defaulted'] == 1, 'amount_to_revenue'].median(), 2)",
+  "hint": "The row for defaulted = 1 in the second output.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "ml-11-t1",
+  "prompt": "Write the **project framing** for Ladder's pilot in 60 to 150 words: what the model **predicts**, the **decision** it changes, who **uses** it, and how **success** will be measured after six months (with at least one number).",
+  "minutes": 8,
+  "rows": 8,
+  "placeholder": "The model predicts ...",
+  "rules": [
+    { "label": "Says what is predicted (probability of default)", "pattern": "probabilit\\w* (of|that)[^.]*default|default (probability|risk)|predict\\w*[^.]*default" },
+    { "label": "Says the decision it changes (approve, refer, decline, review)", "pattern": "approv|refer|declin|review" },
+    { "label": "Names the users", "pattern": "credit officer|credit team|credit committee|loan officer|underwriter" },
+    { "label": "Success measure with a number", "pattern": "(success|measur|target|compar|judge)[^\\n]*\\d" },
+    { "label": "Between 60 and 150 words", "minWords": 60, "maxWords": 150 }
+  ],
+  "sample": "The model predicts the probability that a new small-business loan will default, using only information available on the application form and from the borrower's previous loans. Credit officers will use it to decide whether to approve an application directly or refer it for review: applications at or above the agreed threshold will be referred. After six months, we'll judge the pilot by comparing scored applications with the same months last year: the default rate of approved loans should fall from about 12% to under 9%, without reducing the number of loans approved by more than 10%, and the model's AUC on matured pilot loans should stay above 0.72.",
+  "note": "The success measure has two sides: fewer defaults and not too many good borrowers turned away. A model that cuts defaults by refusing everyone would \"succeed\" on the first measure alone.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Which part of a credit-model project usually takes most of the effort?",
+    "options": ["Choosing the algorithm", "Everything around the model: data, leakage checks, evaluation, thresholds, explanation, fairness and monitoring", "Writing the code", "Tuning hyperparameters"],
+    "answer": 1,
+    "explanation": "The model itself is often the smallest part."
+  },
+  {
+    "prompt": "Why measure the pilot on both default rate and approval volume?",
+    "options": ["Regulators require two numbers", "A model could cut defaults simply by refusing almost everyone, which would hurt the business", "Approval volume doesn't matter", "To make the report longer"],
+    "answer": 1,
+    "explanation": "Success has to balance risk against lending."
+  },
+  {
+    "prompt": "A feature makes good business sense and the model relies on it. Why is that reassuring?",
+    "options": ["It isn't", "Predictions are easier to explain and less likely to be built on a quirk of the data", "It guarantees accuracy", "It removes the need to test"],
+    "answer": 1,
+    "explanation": "Sensible drivers are a good sign, though you still test everything."
+  }
+]
+```
+$md$, true, true, 11, array['ml-11-p1', 'ml-11-p2', 'ml-11-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+
 -- Course: Data Analyst Capstone: End-to-End BI Project
 insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
-values ('data-analyst-capstone', 'full', null, 'data-analyst-capstone', 'CAP', 'Data Analyst Capstone: End-to-End BI Project', 'Take a retail chain''s raw till export all the way to a reviewed dashboard and a board-ready executive summary, using the tools of your choice.', 'The capstone of the Data Analyst track. Voltline Electronics, a chain of eight stores, sends you 18 months of raw till data and one question from its chief executive: what''s really driving our 37% growth? You''ll plan the analysis, profile and clean a genuinely messy export (a duplicated upload, mixed date formats, inconsistent store names and test transactions), build a model that looks up costs by date and compares sales with monthly targets, decompose the growth, find what''s going wrong where, and put a value on missed sales. Then you''ll build a dashboard, write an executive summary, prepare for the board''s questions and publish the project for your portfolio. Use Excel, Power BI, SQL or Python: the work is assessed on the answers, not the tool.', 'data-analytics', 'intermediate', 4, 'Career project', 14, true, 'available', true, array['Turning a business brief into an analysis plan', 'Profiling and cleaning raw data with a quality log', 'Modelling data at the right grain', 'Decomposing growth into price, new stores and volume', 'Judging targets fairly', 'Estimating lost sales with stated assumptions', 'Finding-led dashboards and executive summaries', 'Presenting and publishing a portfolio project']::text[], array['The core Data Analyst courses: Excel, SQL and Power BI (or Python)', 'Comfort cleaning data and building a dashboard in at least one tool']::text[], 'Voltline Electronics: commercial review', true, true, true, true, false, 60, 25)
+values ('data-analyst-capstone', 'full', null, 'data-analyst-capstone', 'CAP', 'Data Analyst Capstone: End-to-End BI Project', 'Take a retail chain''s raw till export all the way to a reviewed dashboard and a board-ready executive summary, using the tools of your choice.', 'The capstone of the Data Analyst track. Voltline Electronics, a chain of eight stores, sends you 18 months of raw till data and one question from its chief executive: what''s really driving our 37% growth? You''ll plan the analysis, profile and clean a genuinely messy export (a duplicated upload, mixed date formats, inconsistent store names and test transactions), build a model that looks up costs by date and compares sales with monthly targets, decompose the growth, find what''s going wrong where, and put a value on missed sales. Then you''ll build a dashboard, write an executive summary, prepare for the board''s questions and publish the project for your portfolio. Use Excel, Power BI, SQL or Python: the work is assessed on the answers, not the tool.', 'data-analytics', 'intermediate', 4, 'Career project', 14, true, 'available', true, array['Turning a business brief into an analysis plan', 'Profiling and cleaning raw data with a quality log', 'Modelling data at the right grain', 'Decomposing growth into price, new stores and volume', 'Judging targets fairly', 'Estimating lost sales with stated assumptions', 'Finding-led dashboards and executive summaries', 'Presenting and publishing a portfolio project']::text[], array['The core Data Analyst courses: Excel, SQL and Power BI (or Python)', 'Comfort cleaning data and building a dashboard in at least one tool']::text[], 'Voltline Electronics: commercial review', true, true, true, true, false, 60, 26)
 on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level = excluded.level, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
@@ -31855,6 +33806,116 @@ on conflict (id) do update set assessment_id = excluded.assessment_id, position 
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
 values ('pilq13', 1, 'Each cycle starts from where the last one left off.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Machine Learning Fundamentals: final assessment
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('machine-learning-fundamentals-final', 'machine-learning-fundamentals', 'final', null, 'Machine Learning Fundamentals: final assessment', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('mlq01', 'machine-learning-fundamentals-final', 1, 'Which of these is best solved with a fixed rule rather than machine learning?', '["Predicting next month''s sales","Flagging transactions over ₦5m for a manager''s approval","Estimating rent from a flat''s features","Predicting which customers will leave"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('mlq01', 1, 'If the rule can be written down exactly, write it down.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('mlq02', 'machine-learning-fundamentals-final', 2, 'A churn model scores 99% in testing using ''cancellation date'' as a feature. What''s wrong?', '["Nothing","Leakage: the cancellation date only exists after the customer has left","Too few features","The test set is too large"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('mlq02', 1, 'Ask of every feature: would I know this when I need the prediction?')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('mlq03', 'machine-learning-fundamentals-final', 3, 'A model''s test MAE is ₦2.6m; predicting each area''s median rent gives ₦2.9m. What should you conclude?', '["The model is excellent","It only modestly beats a simple rule; check whether its complexity is worth it","The baseline is wrong","MAE is the wrong measure"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('mlq03', 1, 'Always compare with a baseline.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('mlq04', 'machine-learning-fundamentals-final', 4, 'Rents are driven by percentage effects (serviced adds about 30% everywhere). What helps a linear model most?', '["More rows","Modelling the log of rent and converting predictions back","Removing area","Using accuracy"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('mlq04', 1, 'Percentage effects become additive on the log scale.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('mlq05', 'machine-learning-fundamentals-final', 5, 'Training MAE ₦200, test MAE ₦1.4m. What''s happening?', '["Underfitting","Overfitting","A perfect model","Data leakage in the test set"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('mlq05', 1, 'A big gap between training and test error means memorisation.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('mlq06', 'machine-learning-fundamentals-final', 6, 'How should you choose a tree''s max_depth?', '["By the test-set error","By cross-validation on the training data, then score the test set once","Always use the deepest tree","By training error"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('mlq06', 1, 'Tuning on the test set makes its score optimistic.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('mlq07', 'machine-learning-fundamentals-final', 7, '12% of loans default. A model is 88.6% accurate. What should you check first?', '["Nothing, it''s good","How many defaults it actually catches: always predicting ''no default'' is 88% accurate","Its training time","The number of trees"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('mlq07', 1, 'Accuracy misleads when one class is rare.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('mlq08', 'machine-learning-fundamentals-final', 8, 'Lowering the threshold from 0.5 to 0.2 usually:', '["Raises precision, lowers recall","Raises recall, lowers precision","Changes nothing","Raises both"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('mlq08', 1, 'You catch more defaults but flag more good borrowers.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('mlq09', 'machine-learning-fundamentals-final', 9, 'What should decide a lending model''s threshold?', '["Always 0.5","The business cost of each kind of mistake","Whatever maximises accuracy","The AUC"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('mlq09', 1, 'Put naira on false positives and false negatives.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('mlq10', 'machine-learning-fundamentals-final', 10, 'Removing ''region'' from a credit model barely changes its AUC. What should you do?', '["Keep it","Drop it: it adds little and may act as a proxy for protected groups","Add more regions","Use only region"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('mlq10', 1, 'Little value plus fairness risk.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('mlq11', 'machine-learning-fundamentals-final', 11, 'Why put preprocessing inside a scikit-learn Pipeline?', '["It''s faster to type","So raw new rows are prepared exactly as in training, every time","Pipelines are more accurate","It''s required"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('mlq11', 1, 'Consistent preparation prevents silent errors in production.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('mlq12', 'machine-learning-fundamentals-final', 12, 'A deployed model''s predicted default rate is 10%, but loans are now defaulting at 15%. What should happen?', '["Nothing","Investigate drift and review or retrain the model","Lower the threshold to 0","Delete the model"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('mlq12', 1, 'Monitoring triggers exist for exactly this.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('mlq13', 'machine-learning-fundamentals-final', 13, 'Impurity-based feature importance in a random forest ranks ''borrower_age'' highly, but permutation importance shows almost nothing. Which is more trustworthy?', '["Impurity-based","Permutation importance, which measures how much performance actually drops","Neither","Both equally"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('mlq13', 1, 'Impurity importance favours features with many distinct values.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 
@@ -35114,6 +37175,14 @@ Use the process dataset, with the pilot period (May and June 2026) as your basel
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
 
 
+-- Project: Ladder Microfinance: a responsible credit model
+insert into public.projects (id, course_id, title, summary, brief_md, tasks, datasets, rubric, required)
+values ('ml-ladder-credit-model', 'machine-learning-fundamentals', 'Ladder Microfinance: a responsible credit model', 'Build, evaluate and document a loan default model for a microfinance bank, with a profit-based threshold, explanations, fairness checks and a monitoring plan.', $md$Ladder Microfinance will pilot a credit model for six months: applications scored above a threshold will be referred for review instead of approved automatically. Deliver the model and everything the head of credit risk needs to trust it.
+
+Work in Google Colab with the loans dataset. Submit a link to your notebook (shared so anyone with the link can view it) and paste your **model card** below, followed by a short note on where each task is answered in the notebook.$md$, array['Framing: what''s predicted, the decision it changes, the users and how the pilot''s success will be measured.', 'Data preparation: the features you used, an engineered feature, and a leakage check of every column.', 'Modelling: a stratified split, the ''no default'' baseline, logistic regression and at least one tree-based model, compared with cross-validation; the test set used once.', 'Evaluation: AUC, a confusion matrix, and precision and recall at your chosen threshold.', 'Threshold: a profit table with the bank''s assumptions, the threshold you recommend, and how it changes if a default costs 80% of the loan.', 'Explanation and fairness: permutation importance, reasons for one declined application, and your decision on region with evidence.', 'Deployment: a pipeline that scores a raw application, and a model card with a monitoring plan and review triggers.']::text[], array['loans']::text[], array['The problem is framed around a decision, with success measured on both defaults and lending volume.', 'Features are available at application time; leakage and protected or proxy features are checked and handled.', 'Models are compared fairly against a baseline, with cross-validation for choices and one final test score.', 'Evaluation uses measures suited to imbalanced data, not accuracy alone.', 'The threshold is chosen from business costs, with sensitivity shown.', 'Predictions are explained in terms a credit officer and a borrower could understand.', 'The pipeline works on raw input, and the model card states limitations and concrete monitoring triggers.']::text[], true)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
+
+
 -- Track: Become a Data Analyst
 insert into public.tracks (id, slug, title, summary, badge_name, badge_code, skills, position, published)
 values ('data-analyst', 'data-analyst', 'Become a Data Analyst', 'The route we recommend from no experience to a junior data analyst role. Learn how analysis works, then the tools teams use every day (Excel, SQL, Power BI and Python) on realistic company data. Build portfolio projects that answer real business questions, and finish with your CV, LinkedIn and interview preparation.', 'CloudTech Data Analyst', 'DATAANALYST', array['Spreadsheet analysis in Excel', 'Statistics: averages, spread, confidence intervals and tests', 'Querying databases with SQL, from first SELECT to cohorts and window functions', 'Data modelling and star schemas', 'Dashboards in Power BI, with DAX measures you can trust', 'Analysis in Python and pandas', 'Turning data into findings a manager can act on']::text[], 1, true)
@@ -35226,9 +37295,45 @@ values ('business-analyst', 'get-your-first-internship', 'Career', false, 11)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 
+-- Track: Become a Data Scientist
+insert into public.tracks (id, slug, title, summary, badge_name, badge_code, skills, position, published)
+values ('data-scientist', 'data-scientist', 'Become a Data Scientist', 'The route to a junior data scientist role. Build the analyst''s foundations (statistics, SQL and Python), then learn to build, test and explain machine learning models on realistic Nigerian business data, and to use them responsibly. Data science jobs ask for more than models: they ask for clean data, honest evaluation and results a business can act on, which is what this track teaches.', 'CloudTech Data Scientist', 'DATASCIENTIST', array['Statistics: distributions, confidence intervals and tests', 'Data wrangling in SQL and pandas', 'Regression and classification with scikit-learn', 'Cross-validation, tuning and honest evaluation', 'Cost-based decisions, explanation and fairness', 'Communicating models to non-technical decision-makers']::text[], 3, true)
+on conflict (id) do update set slug = excluded.slug, title = excluded.title, summary = excluded.summary, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, position = excluded.position, published = excluded.published;
+
+delete from public.track_courses where track_id = 'data-scientist';
+
+insert into public.track_courses (track_id, course_id, stage, required, position)
+values ('data-scientist', 'statistics-for-data-analysis', 'Foundation', true, 1)
+on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
+
+insert into public.track_courses (track_id, course_id, stage, required, position)
+values ('data-scientist', 'python-for-data-analytics', 'Foundation', true, 2)
+on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
+
+insert into public.track_courses (track_id, course_id, stage, required, position)
+values ('data-scientist', 'sql-for-data-analysis', 'Foundation', true, 3)
+on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
+
+insert into public.track_courses (track_id, course_id, stage, required, position)
+values ('data-scientist', 'machine-learning-fundamentals', 'Core', true, 4)
+on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
+
+insert into public.track_courses (track_id, course_id, stage, required, position)
+values ('data-scientist', 'advanced-sql', 'Core', false, 5)
+on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
+
+insert into public.track_courses (track_id, course_id, stage, required, position)
+values ('data-scientist', 'career-essentials', 'Career', true, 6)
+on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
+
+insert into public.track_courses (track_id, course_id, stage, required, position)
+values ('data-scientist', 'build-your-student-portfolio', 'Career', false, 7)
+on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
+
+
 -- Track: Career & Study Skills
 insert into public.tracks (id, slug, title, summary, badge_name, badge_code, skills, position, published)
-values ('career-study-skills', 'career-study-skills', 'Career & Study Skills', 'The practical skills that sit under every career: using AI honestly and well, researching and citing properly, everyday digital tools, and a CV, LinkedIn profile and portfolio that get you noticed. Short courses you can finish alongside school or work.', 'CloudTech Career Ready', 'CAREERREADY', array['Using AI assistants well and honestly', 'Research and referencing', 'Professional email and digital tools', 'CV, LinkedIn and portfolio']::text[], 3, true)
+values ('career-study-skills', 'career-study-skills', 'Career & Study Skills', 'The practical skills that sit under every career: using AI honestly and well, researching and citing properly, everyday digital tools, and a CV, LinkedIn profile and portfolio that get you noticed. Short courses you can finish alongside school or work.', 'CloudTech Career Ready', 'CAREERREADY', array['Using AI assistants well and honestly', 'Research and referencing', 'Professional email and digital tools', 'CV, LinkedIn and portfolio']::text[], 4, true)
 on conflict (id) do update set slug = excluded.slug, title = excluded.title, summary = excluded.summary, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, position = excluded.position, published = excluded.published;
 
 delete from public.track_courses where track_id = 'career-study-skills';

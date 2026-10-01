@@ -45,6 +45,7 @@ Each short course ends with a final assessment of at least 8 questions. Module c
 | Business Analysis Fundamentals | 11 | Problem statements, stakeholder registers, interview plans, process maps, requirements, user stories and business cases checked against rules, plus answer tasks on the legal data | Harbourline tracking request: business analysis pack |
 | Agile Business Analysis | 10 | Answer tasks on a Scrum team's real backlog (velocity, cycle time, scope growth) plus visions, story maps, splits, definitions of ready and done, WSJF and pilot plans checked against rules | Harbourline delay notifications: agile delivery pack |
 | Process Improvement with BPMN and Lean | 10 | Answer tasks on a port clearance event log (waits, flow efficiency, bottlenecks, pilot results) plus BPMN models, waste lists, five whys, future states and control plans checked against rules | Harbourline clearance: the next improvement cycle |
+| Machine Learning Fundamentals | 11 | Python in Colab with scikit-learn; every code block and answer checked by running the lesson (rentals regression, loan default classification) | Ladder Microfinance: a responsible credit model |
 | Data Analyst Capstone | 7 | Answer tasks on a raw retail export, checked against SQL; written plan, data quality log, executive summary and portfolio tasks checked against rules | Voltline Electronics commercial review |
 | Python for Data Analytics | 12 | Answer tasks on real datasets, checked against both SQL and the pandas the lesson teaches | Kolanut customer health review |
 

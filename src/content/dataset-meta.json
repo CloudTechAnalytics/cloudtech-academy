@@ -1081,6 +1081,245 @@
    }
   }
  },
+ "loans": {
+  "zipBytes": 99953,
+  "files": {
+   "loans": {
+    "rows": 5000,
+    "bytes": 398035,
+    "columns": [
+     {
+      "name": "loan_id",
+      "type": "text",
+      "missing": 0,
+      "distinct": 5000
+     },
+     {
+      "name": "disbursed_date",
+      "type": "date",
+      "missing": 0,
+      "distinct": 730,
+      "min": "2024-01-01",
+      "max": "2025-12-30"
+     },
+     {
+      "name": "region",
+      "type": "text",
+      "missing": 0,
+      "distinct": 9
+     },
+     {
+      "name": "business_type",
+      "type": "text",
+      "missing": 0,
+      "distinct": 7
+     },
+     {
+      "name": "borrower_age",
+      "type": "number",
+      "missing": 0,
+      "distinct": 47,
+      "min": 19,
+      "max": 65
+     },
+     {
+      "name": "years_in_business",
+      "type": "number",
+      "missing": 0,
+      "distinct": 32,
+      "min": 0,
+      "max": 42
+     },
+     {
+      "name": "monthly_revenue_ngn",
+      "type": "number",
+      "missing": 0,
+      "distinct": 1166,
+      "min": 41000,
+      "max": 3118000
+     },
+     {
+      "name": "loan_amount_ngn",
+      "type": "number",
+      "missing": 0,
+      "distinct": 560,
+      "min": 50000,
+      "max": 9460000
+     },
+     {
+      "name": "term_months",
+      "type": "number",
+      "missing": 0,
+      "distinct": 4,
+      "min": 3,
+      "max": 12
+     },
+     {
+      "name": "interest_rate_monthly_pct",
+      "type": "number",
+      "missing": 0,
+      "distinct": 21,
+      "min": 3,
+      "max": 5
+     },
+     {
+      "name": "previous_loans",
+      "type": "number",
+      "missing": 0,
+      "distinct": 6,
+      "min": 0,
+      "max": 5
+     },
+     {
+      "name": "previous_late_payments",
+      "type": "number",
+      "missing": 0,
+      "distinct": 13,
+      "min": 0,
+      "max": 13
+     },
+     {
+      "name": "group_loan",
+      "type": "text",
+      "missing": 0,
+      "distinct": 2
+     },
+     {
+      "name": "has_guarantor",
+      "type": "text",
+      "missing": 0,
+      "distinct": 2
+     },
+     {
+      "name": "mobile_money_txns_per_month",
+      "type": "number",
+      "missing": 0,
+      "distinct": 183,
+      "min": 2,
+      "max": 490
+     },
+     {
+      "name": "defaulted",
+      "type": "number",
+      "missing": 0,
+      "distinct": 2,
+      "min": 0,
+      "max": 1
+     }
+    ],
+    "preview": [
+     [
+      "LN-00001",
+      "2025-09-23",
+      "Enugu",
+      "Phone and accessories",
+      "30",
+      "5",
+      "679000",
+      "1145000",
+      "3",
+      "4.1",
+      "1",
+      "1",
+      "No",
+      "No",
+      "16",
+      "0"
+     ],
+     [
+      "LN-00002",
+      "2024-01-20",
+      "Lagos",
+      "Transport",
+      "38",
+      "6",
+      "1774000",
+      "1210000",
+      "3",
+      "4.2",
+      "0",
+      "0",
+      "No",
+      "No",
+      "27",
+      "0"
+     ],
+     [
+      "LN-00003",
+      "2024-11-11",
+      "FCT",
+      "Hair and beauty",
+      "33",
+      "6",
+      "596000",
+      "840000",
+      "9",
+      "3.3",
+      "0",
+      "0",
+      "Yes",
+      "No",
+      "18",
+      "0"
+     ],
+     [
+      "LN-00004",
+      "2024-11-23",
+      "Enugu",
+      "Transport",
+      "40",
+      "8",
+      "398000",
+      "265000",
+      "6",
+      "4.4",
+      "0",
+      "0",
+      "No",
+      "No",
+      "68",
+      "0"
+     ],
+     [
+      "LN-00005",
+      "2025-12-30",
+      "Anambra",
+      "Hair and beauty",
+      "36",
+      "5",
+      "765000",
+      "1925000",
+      "6",
+      "4.3",
+      "2",
+      "0",
+      "No",
+      "No",
+      "59",
+      "0"
+     ],
+     [
+      "LN-00006",
+      "2024-10-21",
+      "Enugu",
+      "Retail shop",
+      "24",
+      "0",
+      "276000",
+      "305000",
+      "9",
+      "3.9",
+      "3",
+      "0",
+      "No",
+      "Yes",
+      "44",
+      "0"
+     ]
+    ]
+   }
+  }
+ },
  "logistics": {
   "zipBytes": 76594,
   "files": {
@@ -1848,6 +2087,213 @@
       "Finance",
       "2026-01-14 09:00",
       "2026-01-14 09:30"
+     ]
+    ]
+   }
+  }
+ },
+ "rentals": {
+  "zipBytes": 38252,
+  "files": {
+   "listings": {
+    "rows": 2400,
+    "bytes": 216410,
+    "columns": [
+     {
+      "name": "listing_id",
+      "type": "text",
+      "missing": 0,
+      "distinct": 2400
+     },
+     {
+      "name": "city",
+      "type": "text",
+      "missing": 0,
+      "distinct": 2
+     },
+     {
+      "name": "area",
+      "type": "text",
+      "missing": 0,
+      "distinct": 14
+     },
+     {
+      "name": "property_type",
+      "type": "text",
+      "missing": 0,
+      "distinct": 5
+     },
+     {
+      "name": "bedrooms",
+      "type": "number",
+      "missing": 0,
+      "distinct": 5,
+      "min": 1,
+      "max": 5
+     },
+     {
+      "name": "bathrooms",
+      "type": "number",
+      "missing": 0,
+      "distinct": 6,
+      "min": 1,
+      "max": 6
+     },
+     {
+      "name": "size_sqm",
+      "type": "number",
+      "missing": 154,
+      "distinct": 306,
+      "min": 19,
+      "max": 390
+     },
+     {
+      "name": "serviced",
+      "type": "text",
+      "missing": 0,
+      "distinct": 2
+     },
+     {
+      "name": "furnished",
+      "type": "text",
+      "missing": 0,
+      "distinct": 2
+     },
+     {
+      "name": "power",
+      "type": "text",
+      "missing": 0,
+      "distinct": 3
+     },
+     {
+      "name": "parking_spaces",
+      "type": "number",
+      "missing": 0,
+      "distinct": 5,
+      "min": 0,
+      "max": 4
+     },
+     {
+      "name": "year_built",
+      "type": "number",
+      "missing": 0,
+      "distinct": 41,
+      "min": 1985,
+      "max": 2025
+     },
+     {
+      "name": "listed_date",
+      "type": "date",
+      "missing": 0,
+      "distinct": 365,
+      "min": "2025-07-01",
+      "max": "2026-06-30"
+     },
+     {
+      "name": "annual_rent_ngn",
+      "type": "number",
+      "missing": 0,
+      "distinct": 453,
+      "min": 200000,
+      "max": 275000000
+     }
+    ],
+    "preview": [
+     [
+      "RL-00001",
+      "Lagos",
+      "Yaba",
+      "Mini flat",
+      "1",
+      "1",
+      "",
+      "No",
+      "Yes",
+      "24-hour power",
+      "0",
+      "1995",
+      "2025-08-08",
+      "1550000"
+     ],
+     [
+      "RL-00002",
+      "Lagos",
+      "Ajah",
+      "Flat",
+      "1",
+      "1",
+      "69",
+      "No",
+      "No",
+      "Prepaid meter and generator",
+      "1",
+      "2014",
+      "2026-05-17",
+      "1550000"
+     ],
+     [
+      "RL-00003",
+      "Lagos",
+      "Surulere",
+      "Flat",
+      "1",
+      "1",
+      "90",
+      "No",
+      "No",
+      "Prepaid meter and generator",
+      "0",
+      "1990",
+      "2025-09-02",
+      "1600000"
+     ],
+     [
+      "RL-00004",
+      "Lagos",
+      "Ikeja GRA",
+      "Flat",
+      "3",
+      "3",
+      "155",
+      "Yes",
+      "No",
+      "24-hour power",
+      "2",
+      "2016",
+      "2025-07-12",
+      "12650000"
+     ],
+     [
+      "RL-00005",
+      "Abuja",
+      "Kubwa",
+      "Mini flat",
+      "1",
+      "1",
+      "55",
+      "No",
+      "No",
+      "Prepaid meter",
+      "1",
+      "2008",
+      "2026-06-26",
+      "850000"
+     ],
+     [
+      "RL-00006",
+      "Lagos",
+      "Ajah",
+      "Terrace",
+      "4",
+      "4",
+      "200",
+      "No",
+      "No",
+      "24-hour power",
+      "2",
+      "1992",
+      "2026-01-27",
+      "3300000"
      ]
     ]
    }

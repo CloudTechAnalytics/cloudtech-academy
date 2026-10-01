@@ -173,6 +173,68 @@ export const TRACKS: Track[] = [
     ],
   },
   {
+    id: "data-scientist",
+    slug: "data-scientist",
+    title: "Become a Data Scientist",
+    outcome: "Get job-ready as a junior data scientist",
+    summary:
+      "The route to a junior data scientist role. Build the analyst's foundations (statistics, SQL and Python), then learn to build, test and explain machine learning models on realistic Nigerian business data, and to use them responsibly. Data science jobs ask for more than models: they ask for clean data, honest evaluation and results a business can act on, which is what this track teaches.",
+    badge: "CloudTech Data Scientist",
+    badgeCode: "DATASCIENTIST",
+    skills: [
+      "Statistics: distributions, confidence intervals and tests",
+      "Data wrangling in SQL and pandas",
+      "Regression and classification with scikit-learn",
+      "Cross-validation, tuning and honest evaluation",
+      "Cost-based decisions, explanation and fairness",
+      "Communicating models to non-technical decision-makers",
+    ],
+    stages: [
+      {
+        title: "Foundation",
+        summary: "The statistics and Python every data scientist relies on.",
+        items: [
+          { kind: "course", courseId: "statistics-for-data-analysis", why: "Distributions, sampling, confidence intervals and tests: the language of uncertainty." },
+          { kind: "course", courseId: "python-for-data-analytics", why: "pandas for loading, cleaning, reshaping and exploring data." },
+          { kind: "course", courseId: "sql-for-data-analysis", why: "Get your own data out of databases." },
+        ],
+      },
+      {
+        title: "Core",
+        summary: "Build and evaluate models properly.",
+        items: [
+          { kind: "course", courseId: "machine-learning-fundamentals", why: "Regression and classification with scikit-learn, from baselines to cost-based thresholds and model cards." },
+          { kind: "course", courseId: "advanced-sql", why: "Window functions, cohorts and data quality checks for building features.", required: false },
+          { kind: "upcoming", title: "Feature Engineering and Model Evaluation", why: "Time-based features, gradient boosting, calibration and validation for data that changes over time.", level: 3 },
+        ],
+      },
+      {
+        title: "Specialist",
+        summary: "Go further into the methods data science teams use.",
+        items: [
+          { kind: "upcoming", title: "Time Series Forecasting", why: "Forecast demand and sales with seasonality, trends and honest backtesting.", level: 3 },
+          { kind: "upcoming", title: "Experimentation and A/B Testing", why: "Design tests, size samples and read results without fooling yourself.", level: 3 },
+        ],
+      },
+      {
+        title: "Projects",
+        summary: "Portfolio work that shows you can take a model from data to decision.",
+        items: [
+          { kind: "project", projectId: "employee-analytics", why: "Who leaves, when, and why: a natural first prediction problem." },
+          { kind: "project", projectId: "sales-performance", why: "Explore drivers of revenue before modelling them." },
+        ],
+      },
+      {
+        title: "Career",
+        summary: "Turn your skills into applications that get interviews.",
+        items: [
+          { kind: "course", courseId: "career-essentials", why: "An ATS-friendly CV and a LinkedIn profile recruiters can find." },
+          { kind: "course", courseId: "build-your-student-portfolio", why: "One link that shows your notebooks and model cards.", required: false },
+        ],
+      },
+    ],
+  },
+  {
     id: "career-study-skills",
     slug: "career-study-skills",
     title: "Career & Study Skills",

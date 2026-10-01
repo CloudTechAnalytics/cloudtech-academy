@@ -876,6 +876,118 @@ function processLog() {
   return { cases, events };
 }
 
+/* ------------------------------------------------------------------ machine learning */
+// Two datasets with real, learnable structure plus the noise and mess real data has.
+// Generated last, each from its own seed, so nothing above changes.
+const normal = () => {
+  // Box-Muller from the seeded generator.
+  const u = Math.max(rand(), 1e-9);
+  const v = rand();
+  return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
+};
+
+function rentals() {
+  seed = 20261001;
+  // [area, city, base annual rent for a 2-bedroom flat in naira, share of listings]
+  const AREAS = [
+    ["Ikoyi", "Lagos", 14000000, 5], ["Victoria Island", "Lagos", 11000000, 5], ["Lekki Phase 1", "Lagos", 8500000, 9],
+    ["Ikeja GRA", "Lagos", 6000000, 6], ["Yaba", "Lagos", 3200000, 9], ["Surulere", "Lagos", 2600000, 9],
+    ["Gbagada", "Lagos", 2800000, 7], ["Ajah", "Lagos", 2200000, 10], ["Ikorodu", "Lagos", 1100000, 6],
+    ["Maitama", "Abuja", 10000000, 4], ["Wuse 2", "Abuja", 6500000, 6], ["Gwarinpa", "Abuja", 3000000, 8],
+    ["Kubwa", "Abuja", 1400000, 8], ["Lugbe", "Abuja", 1200000, 8],
+  ];
+  const TYPES = [["Self-contain", 0, 0.32], ["Mini flat", 1, 0.55], ["Flat", null, 1], ["Terrace", null, 1.35], ["Duplex", null, 1.7]];
+  const listings = [];
+  for (let k = 1; k <= 2400; k++) {
+    const [area, city, base] = weighted(AREAS, AREAS.map((a) => a[3]));
+    const [type, fixedBeds, typeFactor] = weighted(TYPES, [14, 16, 42, 14, 14]);
+    const bedrooms = fixedBeds !== null ? Math.max(1, fixedBeds) : type === "Flat" ? weighted([1, 2, 3, 4], [10, 40, 38, 12]) : weighted([3, 4, 5], [35, 45, 20]);
+    const bathrooms = type === "Self-contain" || type === "Mini flat" ? 1 : Math.max(1, bedrooms + weighted([-1, 0, 1], [30, 55, 15]));
+    const size = Math.round((type === "Self-contain" ? 28 : type === "Mini flat" ? 45 : 35 + bedrooms * 38 * (type === "Flat" ? 1 : 1.25)) * Math.exp(normal() * 0.15));
+    const serviced = rand() < (base > 5000000 ? 0.55 : 0.18);
+    const furnished = rand() < (serviced ? 0.35 : 0.08);
+    const power = weighted(["Prepaid meter", "Prepaid meter and generator", "24-hour power"], serviced ? [10, 40, 50] : [55, 35, 10]);
+    const yearBuilt = int(1985, 2025);
+    const parking = type === "Self-contain" ? 0 : Math.min(4, Math.max(0, Math.round(bedrooms / 2 + normal() * 0.7)));
+    let rent =
+      base *
+      typeFactor *
+      (type === "Flat" ? [0, 0.72, 1, 1.32, 1.65][bedrooms] : type === "Self-contain" || type === "Mini flat" ? 1 : 0.8 + bedrooms * 0.12) *
+      Math.pow(size / (type === "Flat" ? 35 + bedrooms * 38 : size), 0.35) *
+      (serviced ? 1.28 : 1) *
+      (furnished ? 1.18 : 1) *
+      (power === "24-hour power" ? 1.12 : power === "Prepaid meter and generator" ? 1.05 : 1) *
+      (1 - Math.min(0.25, (2025 - yearBuilt) * 0.006)) *
+      Math.exp(normal() * 0.18);
+    rent = round(rent, 50000);
+    listings.push({
+      listing_id: `RL-${String(k).padStart(5, "0")}`,
+      city,
+      area,
+      property_type: type,
+      bedrooms,
+      bathrooms,
+      size_sqm: rand() < 0.06 ? null : size, // agents often leave the size out
+      serviced: serviced ? "Yes" : "No",
+      furnished: furnished ? "Yes" : "No",
+      power,
+      parking_spaces: parking,
+      year_built: yearBuilt,
+      listed_date: iso(d("2025-07-01") + int(0, 364) * day),
+      annual_rent_ngn: rent,
+    });
+  }
+  // A few listings typed with an extra zero.
+  for (const i of [57, 412, 903, 1388, 1940, 2207]) listings[i].annual_rent_ngn *= 10;
+  return { listings };
+}
+
+function loans() {
+  seed = 20261101;
+  const REGIONS = ["Lagos", "Ogun", "Oyo", "Kano", "Kaduna", "Enugu", "Anambra", "Rivers", "FCT"];
+  const BUSINESS = [["Retail shop", 1], ["Food vendor", 1.15], ["Tailoring", 0.9], ["Transport", 1.25], ["Farming", 1.35], ["Hair and beauty", 0.95], ["Phone and accessories", 1.0]];
+  const loans = [];
+  for (let k = 1; k <= 5000; k++) {
+    const region = weighted(REGIONS, [22, 9, 10, 12, 8, 10, 9, 10, 10]);
+    const [business, bizRisk] = weighted(BUSINESS, [26, 18, 10, 12, 10, 12, 12]);
+    const age = Math.min(65, Math.max(19, Math.round(36 + normal() * 9)));
+    const years = Math.max(0, Math.round(Math.exp(1.3 + normal() * 0.7) - 1));
+    const revenue = round(Math.exp(Math.log(380000) + normal() * 0.6) * (1 + years * 0.03), 1000);
+    const previous = weighted([0, 1, 2, 3, 4, 5], [35, 22, 16, 12, 9, 6]);
+    const lates = previous === 0 ? 0 : Math.min(previous * 3, Math.max(0, Math.round(Math.exp(normal() * 0.9) - 1 + (rand() < 0.15 ? 2 : 0))));
+    const amount = round(Math.max(50000, revenue * (0.6 + rand() * 1.4) * (1 + previous * 0.15)), 5000);
+    const term = weighted([3, 6, 9, 12], [20, 40, 20, 20]);
+    const group = rand() < 0.4;
+    const guarantor = !group && rand() < 0.45;
+    const momo = Math.max(0, Math.round(Math.exp(Math.log(25) + normal() * 0.8)));
+    const rate = round(3.5 + (lates > 0 ? 0.5 : 0) + (group ? -0.5 : 0) + rand(), 0.1); // % per month
+    const ratio = amount / revenue;
+    const logit =
+      -1.55 + 1.0 * (ratio - 1.3) + 0.65 * Math.min(lates, 4) - 0.22 * Math.min(years, 8) + Math.log(bizRisk) * 2.5 -
+      0.8 * (group ? 1 : 0) - 0.7 * (guarantor ? 1 : 0) - 0.6 * Math.log1p(momo / 10) + 0.07 * (term - 6) + 0.35 * (previous === 0 ? 1 : 0) + normal() * 0.35;
+    const defaulted = rand() < 1 / (1 + Math.exp(-logit)) ? 1 : 0;
+    loans.push({
+      loan_id: `LN-${String(k).padStart(5, "0")}`,
+      disbursed_date: iso(d("2024-01-01") + int(0, 729) * day),
+      region,
+      business_type: business,
+      borrower_age: age,
+      years_in_business: years,
+      monthly_revenue_ngn: revenue,
+      loan_amount_ngn: amount,
+      term_months: term,
+      interest_rate_monthly_pct: Number(rate.toFixed(1)),
+      previous_loans: previous,
+      previous_late_payments: lates,
+      group_loan: group ? "Yes" : "No",
+      has_guarantor: guarantor ? "Yes" : "No",
+      mobile_money_txns_per_month: momo,
+      defaulted,
+    });
+  }
+  return { loans };
+}
+
 /* ------------------------------------------------------------------ write */
 const SQL = await initSqlJs();
 const L = logistics();
@@ -908,6 +1020,8 @@ for (const [name, data] of [["sales", S], ["cleaning", customerExport(S.customer
 for (const [table, rows] of Object.entries(retail())) writeCsv("retail", table, rows);
 for (const [table, rows] of Object.entries(agile())) writeCsv("agile", table, rows);
 for (const [table, rows] of Object.entries(processLog())) writeCsv("process", table, rows);
+for (const [table, rows] of Object.entries(rentals())) writeCsv("rentals", table, rows);
+for (const [table, rows] of Object.entries(loans())) writeCsv("loans", table, rows);
 
 // Summary for the build log
 const counts = db.exec("SELECT (SELECT COUNT(*) FROM customers), (SELECT COUNT(*) FROM shipments), (SELECT COUNT(*) FROM payments), (SELECT COUNT(*) FROM routes), (SELECT COUNT(*) FROM employees)")[0].values[0];
