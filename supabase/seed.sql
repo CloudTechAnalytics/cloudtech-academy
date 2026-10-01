@@ -31128,9 +31128,1508 @@ $md$, true, true, 11, array['ml-11-p1', 'ml-11-p2', 'ml-11-t1']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 
+-- Course: Feature Engineering and Model Evaluation
+insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
+values ('feature-engineering-model-evaluation', 'full', null, 'feature-engineering-model-evaluation', 'FEM', 'Feature Engineering and Model Evaluation', 'Build features from raw events as of a date, validate models over time instead of at random, compare gradient boosting fairly, check calibration, target with lift and costs, and catch drift, on a mobile wallet''s churn.', 'Most models that fail in production don''t fail because of the algorithm. They fail because the features used the future, the test was a random split of the past, or the world changed after training. In this course you build a churn model for Paystream, a mobile wallet, from 65,825 raw transactions: define churn at a snapshot, engineer recency, frequency, value, trend and failure features as of each month-end, and see a leaked feature push the AUC to 0.98 and a random split flatter the model. You''ll validate on later months with labels that were really known in time, compare gradient boosting with logistic regression, check calibration, turn lift into a costed calling plan, and watch a competitor''s launch drift the model before retraining can catch up.', 'data-science', 'intermediate', 3, 'Intermediate to advanced', 7, true, 'available', true, array['Snapshots, horizons and target definitions', 'Point-in-time features from event data', 'Recency, frequency, value, trend and failure features', 'Leakage through features and through splits', 'Time-based validation with complete labels', 'Gradient boosting and fair model comparison', 'Calibration, reliability tables and the Brier score', 'Gains, lift and cost-based targeting', 'Drift detection, segment monitoring and retraining']::text[], array['Machine Learning Fundamentals, or experience with scikit-learn', 'Comfort with pandas groupby and dates']::text[], 'Paystream: a retention model that stays honest', true, true, true, true, false, 60, 26)
+on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level = excluded.level, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('fem-m01', 'feature-engineering-model-evaluation', 'Features and Point-in-Time Thinking', 1, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('feature-engineering-model-evaluation:features-and-point-in-time-thinking', 'feature-engineering-model-evaluation', 'fem-m01', 'features-and-point-in-time-thinking', 'Features and point-in-time thinking', 'Why good features matter more than clever algorithms, how to frame a prediction around a snapshot date, and how to define a target like churn precisely enough to build on.', 25, $md$
+## The problem
+
+Paystream is a mobile wallet with 1,500 customers in this dataset. They send money, buy airtime, pay bills and cash out. Some stop using it. By the time anyone notices, they're gone. The head of growth wants to know, at the end of each month, which active customers are likely to leave in the next two months, so the retention team can call them before they do.
+
+There's no table with a "churn" column waiting for you. There's a list of customers and 65,825 transactions. Everything the model will learn from (how often someone transacts, whether that's falling, how often their payments fail) has to be **engineered** from those raw events. And it has to be engineered **as of a date**, using only what was known on that date. Get that wrong and the model will look brilliant in testing and fail in real use.
+
+## The concept
+
+**Features beat algorithms**
+
+In most business problems, the difference between a weak and a strong model comes from the features, not the algorithm. A logistic regression with well-built features usually beats a sophisticated model given raw data. Feature engineering is where domain knowledge enters the model.
+
+**The snapshot**
+
+Every row in a training table describes a customer **at a moment in time**: the **snapshot date**. Then:
+
+- **Features** use only data from **on or before** the snapshot.
+- The **target** uses only data from **after** the snapshot, over a fixed **horizon**.
+
+```
+          features: look back            target: look ahead
+  ◄──────────────────────────────── | ──────────────────────────►
+                                 snapshot           snapshot + 60 days
+```
+
+**Defining churn precisely**
+
+Paystream has no contract to cancel, so "churn" must be defined from behaviour. This course uses:
+
+- **Population**: customers with at least one transaction in the **90 days** up to the snapshot (active customers).
+- **Churned** = 1 if they make **no transaction** in the **60 days** after the snapshot; otherwise 0.
+
+The choices (90 days, 60 days) are business decisions. Write them down; every number in the project depends on them.
+
+## Example
+
+Load the data:
+
+```python
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/wallet/"
+customers = pd.read_csv(base + "customers.csv", parse_dates=["signup_date"])
+tx = pd.read_csv(base + "transactions.csv", parse_dates=["transaction_date"])
+print(customers.shape, tx.shape)
+print(tx["transaction_date"].min().date(), "to", tx["transaction_date"].max().date())
+```
+
+```text
+(1500, 6) (65825, 6)
+2025-01-01 to 2026-06-30
+```
+
+Now apply the definition at one snapshot, 31 January 2026:
+
+```python
+snapshot = pd.Timestamp("2026-01-31")
+past = tx[tx["transaction_date"] <= snapshot]
+future = tx[(tx["transaction_date"] > snapshot) & (tx["transaction_date"] <= snapshot + pd.Timedelta(days=60))]
+
+active_ids = past.loc[past["transaction_date"] > snapshot - pd.Timedelta(days=90), "customer_id"].unique()
+table = customers[customers["customer_id"].isin(active_ids)].copy()
+table["churned"] = (~table["customer_id"].isin(future["customer_id"])).astype(int)
+print("Active customers at the snapshot:", len(table))
+print("Churn rate in the next 60 days:", round(table["churned"].mean(), 3))
+```
+
+```text
+Active customers at the snapshot: 1176
+Churn rate in the next 60 days: 0.091
+```
+
+About 9% of active customers make no transaction in the following two months. That's the event the model will try to predict, and, as later lessons show, the rate doesn't stay the same from month to month.
+
+## Walkthrough
+
+1. Load both files and look at a few transactions: `tx.head()`, `tx["type"].value_counts()`, `tx["status"].value_counts()`.
+2. Apply the churn definition at the snapshot above.
+3. Repeat it at 31 March 2026 by changing one line. Is the churn rate higher or lower?
+4. Write down your definitions (population, horizon, target) at the top of your notebook.
+
+## Practice
+
+```dataset
+{"dataset": "wallet", "files": ["customers", "transactions"]}
+```
+
+```answer
+{
+  "id": "fe-01-p1",
+  "prompt": "How many customers were **active** (at least one transaction in the 90 days up to and including the snapshot) on **31 January 2026**?",
+  "answer": 1176,
+  "format": "number",
+  "dataset": "wallet",
+  "files": ["transactions"],
+  "pyVerify": "len(table)",
+  "hint": "The first number printed by the snapshot cell.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "fe-01-p2",
+  "prompt": "Using the same definitions, what is the churn rate at the **31 March 2026** snapshot? As a percentage, one decimal place.",
+  "answer": 10.7,
+  "format": "percent",
+  "dataset": "wallet",
+  "files": ["transactions"],
+  "pyVerify": "(lambda s: round(100 * (~customers[customers['customer_id'].isin(tx.loc[(tx['transaction_date'] <= s) & (tx['transaction_date'] > s - pd.Timedelta(days=90)), 'customer_id'])]['customer_id'].isin(tx.loc[(tx['transaction_date'] > s) & (tx['transaction_date'] <= s + pd.Timedelta(days=60)), 'customer_id'])).mean(), 1))(pd.Timestamp('2026-03-31'))",
+  "hint": "Change snapshot to pd.Timestamp('2026-03-31') and rerun the cell.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "fe-01-t1",
+  "prompt": "Write the **churn definition** for a different business: a gym chain with monthly memberships that customers can pause or stop paying without telling anyone. Give one line each for **Population:**, **Snapshot:**, **Horizon:** and **Churned =**, and a final **Why:** line explaining your choice of horizon.",
+  "minutes": 6,
+  "rows": 6,
+  "placeholder": "Population: ...\nSnapshot: ...\nHorizon: ...\nChurned = ...\nWhy: ...",
+  "rules": [
+    { "label": "A Population line", "pattern": "^\\s*[-*]?\\s*population\\s*:" },
+    { "label": "A Snapshot line", "pattern": "^\\s*[-*]?\\s*snapshot\\s*:" },
+    { "label": "A Horizon line with a number of days or months", "pattern": "^\\s*[-*]?\\s*horizon\\s*:[^\\n]*\\d+\\s*(day|week|month)" },
+    { "label": "A Churned = line", "pattern": "^\\s*[-*]?\\s*churned\\s*=" },
+    { "label": "A Why line", "pattern": "^\\s*[-*]?\\s*why\\s*:" }
+  ],
+  "sample": "Population: members who paid for the current month and visited at least once in the last 60 days.\nSnapshot: the last day of each month.\nHorizon: 2 months.\nChurned = no payment and no visit in the 2 months after the snapshot.\nWhy: members often skip a month (holidays, travel), so one month of no payment would label too many returning members as churned; two months separates a pause from leaving.",
+  "note": "The horizon has to fit how customers actually behave. Too short and normal gaps look like churn; too long and the retention team learns about it after the customer has already gone.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "A feature for a snapshot on 31 January uses transactions from February. What's the problem?",
+    "options": ["None", "It uses information that wouldn't be known on 31 January: leakage", "February has fewer days", "It makes the model slower"],
+    "answer": 1,
+    "explanation": "Features look back from the snapshot; only the target looks forward."
+  },
+  {
+    "prompt": "Why define churn with an explicit population and horizon?",
+    "options": ["It's a convention", "Every number in the project depends on them, and different choices give different churn rates", "To make the dataset smaller", "Models require it"],
+    "answer": 1,
+    "explanation": "Write the definitions down before building anything."
+  },
+  {
+    "prompt": "Which usually improves a model most?",
+    "options": ["A more complex algorithm", "Better features built with knowledge of the business", "More decimal places", "Fewer rows"],
+    "answer": 1,
+    "explanation": "Features carry the domain knowledge."
+  }
+]
+```
+$md$, true, true, 1, array['fe-01-p1', 'fe-01-p2', 'fe-01-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('fem-m02', 'feature-engineering-model-evaluation', 'Features from Events', 2, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('feature-engineering-model-evaluation:features-from-events', 'feature-engineering-model-evaluation', 'fem-m02', 'features-from-events', 'Features from events', 'Turn a stream of transactions into one row per customer with recency, frequency, value, time windows, trends and failure rates, and check each feature actually relates to churn.', 15, $md$
+## The problem
+
+A model can't learn from 65,825 separate transactions. It needs one row per customer at the snapshot, with numbers that summarise their behaviour: how recently they transacted, how often, how much, and whether things are getting better or worse. Paystream's retention team already has hunches: "people who stop transacting are leaving", "failed payments drive people away". Good features turn those hunches into columns a model can test.
+
+## The concept
+
+**The building blocks**
+
+| Family | Feature | Idea |
+| :-- | :-- | :-- |
+| **Recency** | days since last transaction | someone who hasn't transacted in 50 days is drifting |
+| **Frequency** | transactions in the last 30 and 90 days | how engaged they are |
+| **Monetary** | value transacted in the last 30 and 90 days | how much they rely on the wallet |
+| **Trend** | last 30 days compared with the 60 days before | is activity falling? |
+| **Experience** | failed transactions, and the failure rate | are they having a bad time? |
+| **Profile** | tenure, KYC tier, acquisition channel | who they are and how they arrived |
+
+**Time windows**
+
+Calculate the same measure over several windows (30 and 90 days). Comparing windows gives **trend** features, often the most predictive of all, because churn is usually a fade, not a sudden stop:
+
+> trend = transactions in the last 30 days ÷ (monthly average over the 60 days before + 1)
+
+The `+ 1` stops division by zero for customers with no earlier activity. A trend below 1 means activity is falling.
+
+**Missing means zero (here)**
+
+A customer with no failed transactions in the window has no rows to count, so the count comes back missing. Here, missing genuinely means zero: fill it with 0. Don't do that blindly elsewhere: sometimes missing means unknown.
+
+**Check before you model**
+
+For each new feature, look at the churn rate across its range (for example by quartile). If churn barely changes, the feature probably won't help.
+
+## Example
+
+Build the features at one snapshot. This is the function you'll reuse for the rest of the course:
+
+```python
+import pandas as pd
+import numpy as np
+
+base = "https://academy.cloudtechanalytics.com/datasets/wallet/"
+customers = pd.read_csv(base + "customers.csv", parse_dates=["signup_date"])
+tx = pd.read_csv(base + "transactions.csv", parse_dates=["transaction_date"])
+
+def build_table(snapshot, horizon=60):
+    """One row per customer active in the 90 days to the snapshot.
+    Features use data up to the snapshot; the label uses the horizon after it."""
+    s = pd.Timestamp(snapshot)
+    past = tx[tx["transaction_date"] <= s]
+    future = tx[(tx["transaction_date"] > s) & (tx["transaction_date"] <= s + pd.Timedelta(days=horizon))]
+    recent = past[past["transaction_date"] > s - pd.Timedelta(days=90)]
+    t = customers[customers["customer_id"].isin(recent["customer_id"])].copy()
+    t["snapshot"] = s
+    t["tenure_days"] = (s - t["signup_date"]).dt.days
+    t["days_since_last"] = t["customer_id"].map((s - past.groupby("customer_id")["transaction_date"].max()).dt.days)
+    for w in [30, 90]:
+        window = past[past["transaction_date"] > s - pd.Timedelta(days=w)]
+        by = window.groupby("customer_id")
+        t[f"txns_{w}d"] = t["customer_id"].map(by.size()).fillna(0)
+        t[f"value_{w}d"] = t["customer_id"].map(by["amount_ngn"].sum()).fillna(0)
+        t[f"failed_{w}d"] = t["customer_id"].map(window[window["status"] == "Failed"].groupby("customer_id").size()).fillna(0)
+    t["trend"] = t["txns_30d"] / ((t["txns_90d"] - t["txns_30d"]) / 2 + 1)
+    t["fail_rate_90d"] = t["failed_90d"] / t["txns_90d"].clip(lower=1)
+    t["churned"] = (~t["customer_id"].isin(future["customer_id"])).astype(int)
+    return t
+
+jan = build_table("2026-01-31")
+jan[["customer_id", "days_since_last", "txns_30d", "txns_90d", "trend", "fail_rate_90d", "churned"]].head()
+```
+
+```text
+customer_id  days_since_last  txns_30d  txns_90d     trend  fail_rate_90d  churned
+1    PS-00002                7       3.0         4  2.000000       0.000000        0
+2    PS-00003                1       5.0        16  0.769231       0.062500        0
+3    PS-00004                0       7.0        35  0.466667       0.057143        0
+4    PS-00005               18       1.0         6  0.285714       0.000000        0
+5    PS-00006                4      10.0        28  1.000000       0.000000        0
+```
+
+Now the check: does churn change across each feature's range?
+
+```python
+jan["trend_band"] = pd.qcut(jan["trend"], 4, labels=["lowest", "low", "high", "highest"])
+print(jan.groupby("trend_band", observed=True)["churned"].mean().round(3))
+print(jan.groupby(jan["days_since_last"] > 30)["churned"].mean().round(3))
+```
+
+```text
+trend_band
+lowest     0.276
+low        0.048
+high       0.018
+highest    0.010
+Name: churned, dtype: float64
+days_since_last
+False    0.042
+True     0.539
+Name: churned, dtype: float64
+```
+
+Customers whose activity is falling fastest churn far more often (28%) than those whose activity is rising (1%), and customers who haven't transacted for more than 30 days churn more than ten times as often as the rest (54% against 4%). Both hunches hold, and both are now columns.
+
+## Walkthrough
+
+1. Run the cells. Read `build_table` line by line: find where the past and future are separated.
+2. Check the churn rate by quartile of `fail_rate_90d` and of `value_90d`. Which looks stronger?
+3. Add a feature of your own, such as the number of different transaction types used in the last 90 days, and check it the same way.
+4. Look at `jan.describe()`: any features with strange values?
+
+## Practice
+
+```answer
+{
+  "id": "fe-02-p1",
+  "prompt": "At the 31 January 2026 snapshot, what is the **median days_since_last** among active customers?",
+  "answer": 4,
+  "format": "number",
+  "dataset": "wallet",
+  "files": ["customers", "transactions"],
+  "pyVerify": "jan['days_since_last'].median()",
+  "hint": "jan['days_since_last'].median()",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "fe-02-p2",
+  "prompt": "What is the churn rate of customers in the **lowest** quarter of **trend**? As a percentage, one decimal place.",
+  "answer": 27.6,
+  "format": "percent",
+  "dataset": "wallet",
+  "files": ["customers", "transactions"],
+  "pyVerify": "round(jan.groupby('trend_band', observed=True)['churned'].mean()['lowest'] * 100, 1)",
+  "hint": "The 'lowest' row of the first output.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why are trend features often so predictive of churn?",
+    "options": ["They're the most complex", "Customers usually fade out before leaving, so falling activity is an early warning", "They remove outliers", "Models prefer ratios"],
+    "answer": 1,
+    "explanation": "Compare a recent window with an earlier one."
+  },
+  {
+    "prompt": "A customer has no failed transactions in the window, so the count comes back missing. What should it be?",
+    "options": ["Missing: leave it", "0: here, missing genuinely means none", "The average", "Delete the customer"],
+    "answer": 1,
+    "explanation": "But check what missing means each time; sometimes it means unknown."
+  },
+  {
+    "prompt": "Churn is about the same in every quartile of a new feature. What does that suggest?",
+    "options": ["It's the best feature", "It probably won't help the model much", "The data is wrong", "Use more quartiles"],
+    "answer": 1,
+    "explanation": "Check each feature's relationship with the target before modelling."
+  }
+]
+```
+$md$, true, true, 2, array['fe-02-p1', 'fe-02-p2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('fem-m03', 'feature-engineering-model-evaluation', 'Leakage Across Time', 3, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('feature-engineering-model-evaluation:leakage-across-time', 'feature-engineering-model-evaluation', 'fem-m03', 'leakage-across-time', 'Leakage across time', 'See how a random train/test split and one careless feature make a model look far better than it is, and learn the time-based split that gives an honest answer.', 30, $md$
+## The problem
+
+A data scientist at Paystream reports a churn model with an AUC of 0.98. The head of growth is delighted and asks for it in production next week. Two months later it has predicted almost nothing useful.
+
+What went wrong? Two of the commonest mistakes in applied machine learning. The model had a feature that quietly used the future, and it was tested by shuffling rows at random, as if the past and the future were interchangeable. Both make a model look better in testing than it will ever be in use. This lesson recreates both, so you'll recognise them.
+
+## The concept
+
+**Leakage through a feature**
+
+Any feature calculated with data from after the snapshot leaks the answer. With events, it's easy to do by accident: "transactions in the last 30 days" computed on the full table, instead of the table cut at the snapshot, includes the very period you're predicting.
+
+**Leakage through the split**
+
+A random split puts customers from the same month in both training and test. Even with clean features, the model is tested on the **same period** it learned from: same season, same competitor activity, same app version. Real use is different: you train on the past and predict the **future**, which is always a little different.
+
+**The time-based split**
+
+- Build tables at several snapshots.
+- **Train** on earlier snapshots, **test** on a later one.
+- Only train on snapshots whose labels were **complete** by the time you'd make the test prediction. With a 60-day horizon, a model used on 31 March can only learn from snapshots up to 31 December: January's outcomes run until early April, so they weren't known yet.
+
+The time-based score is usually lower. It's also the honest one.
+
+## Example
+
+The shared setup: the `build_table` function from lesson 2, and a `features` helper that one-hot encodes and lines up columns between tables:
+
+```python
+import pandas as pd
+import numpy as np
+
+base = "https://academy.cloudtechanalytics.com/datasets/wallet/"
+customers = pd.read_csv(base + "customers.csv", parse_dates=["signup_date"])
+tx = pd.read_csv(base + "transactions.csv", parse_dates=["transaction_date"])
+
+def build_table(snapshot, horizon=60):
+    """One row per customer active in the 90 days to the snapshot.
+    Features use data up to the snapshot; the label uses the horizon after it."""
+    s = pd.Timestamp(snapshot)
+    past = tx[tx["transaction_date"] <= s]
+    future = tx[(tx["transaction_date"] > s) & (tx["transaction_date"] <= s + pd.Timedelta(days=horizon))]
+    recent = past[past["transaction_date"] > s - pd.Timedelta(days=90)]
+    t = customers[customers["customer_id"].isin(recent["customer_id"])].copy()
+    t["snapshot"] = s
+    t["tenure_days"] = (s - t["signup_date"]).dt.days
+    t["days_since_last"] = t["customer_id"].map((s - past.groupby("customer_id")["transaction_date"].max()).dt.days)
+    for w in [30, 90]:
+        window = past[past["transaction_date"] > s - pd.Timedelta(days=w)]
+        by = window.groupby("customer_id")
+        t[f"txns_{w}d"] = t["customer_id"].map(by.size()).fillna(0)
+        t[f"value_{w}d"] = t["customer_id"].map(by["amount_ngn"].sum()).fillna(0)
+        t[f"failed_{w}d"] = t["customer_id"].map(window[window["status"] == "Failed"].groupby("customer_id").size()).fillna(0)
+    t["trend"] = t["txns_30d"] / ((t["txns_90d"] - t["txns_30d"]) / 2 + 1)
+    t["fail_rate_90d"] = t["failed_90d"] / t["txns_90d"].clip(lower=1)
+    t["churned"] = (~t["customer_id"].isin(future["customer_id"])).astype(int)
+    return t
+
+numeric = ["tenure_days", "days_since_last", "txns_30d", "txns_90d", "value_30d", "value_90d",
+           "failed_30d", "failed_90d", "trend", "fail_rate_90d", "kyc_tier"]
+categorical = ["acquisition_channel", "age_band"]
+
+def features(t, columns=None):
+    X = pd.get_dummies(t[numeric + categorical], columns=categorical, drop_first=True, dtype=int)
+    return X if columns is None else X.reindex(columns=columns, fill_value=0)
+```
+
+First, the mistakes. A random split on one snapshot, then the same with a leaked feature (transactions in the 30 days **after** the snapshot):
+
+```python
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.preprocessing import StandardScaler
+from sklearn.pipeline import make_pipeline
+from sklearn.metrics import roc_auc_score
+
+jan = build_table("2026-01-31")
+X, y = features(jan), jan["churned"]
+X_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=0.3, random_state=42, stratify=y)
+model = make_pipeline(StandardScaler(), LogisticRegression(max_iter=2000)).fit(X_tr, y_tr)
+print("Random split AUC:", round(roc_auc_score(y_te, model.predict_proba(X_te)[:, 1]), 3))
+
+s = pd.Timestamp("2026-01-31")
+next30 = tx[(tx["transaction_date"] > s) & (tx["transaction_date"] <= s + pd.Timedelta(days=30))]
+X_leak = X.assign(txns_next_30d=jan["customer_id"].map(next30.groupby("customer_id").size()).fillna(0))
+X_tr, X_te, y_tr, y_te = train_test_split(X_leak, y, test_size=0.3, random_state=42, stratify=y)
+leaky = make_pipeline(StandardScaler(), LogisticRegression(max_iter=2000)).fit(X_tr, y_tr)
+print("With a leaked feature AUC:", round(roc_auc_score(y_te, leaky.predict_proba(X_te)[:, 1]), 3))
+```
+
+```text
+Random split AUC: 0.904
+With a leaked feature AUC: 0.983
+```
+
+Now the honest version. Train on four month-end snapshots whose outcomes were known by 31 March, and test on 31 March:
+
+```python
+train = pd.concat([build_table(d) for d in ["2025-09-30", "2025-10-31", "2025-11-30", "2025-12-31"]])
+test = build_table("2026-03-31")
+X_train, y_train = features(train), train["churned"]
+X_test, y_test = features(test, X_train.columns), test["churned"]
+
+model = make_pipeline(StandardScaler(), LogisticRegression(max_iter=2000)).fit(X_train, y_train)
+p_test = model.predict_proba(X_test)[:, 1]
+print("Training rows:", len(X_train), " test rows:", len(X_test))
+print("Time-based AUC:", round(roc_auc_score(y_test, p_test), 3))
+```
+
+```text
+Training rows: 4257  test rows: 1207
+Time-based AUC: 0.871
+```
+
+The leaked model is almost perfect and completely useless: in real use, nobody knows next month's transactions. The random split is honest about features but still flatters the model a little. The time-based score is the one to report.
+
+## Walkthrough
+
+1. Run the cells and compare the three AUCs.
+2. Move the test snapshot to 30 April and the training snapshots forward by a month. Is the AUC stable?
+3. Try training on January to March snapshots and testing on 31 March. Why is that wrong? (Hint: when were those labels known?)
+4. Write the rule for your notebook: which snapshots can train a model used on a given date?
+
+## Practice
+
+```answer
+{
+  "id": "fe-03-p1",
+  "prompt": "What AUC does the model with the **leaked** feature get? Three decimal places.",
+  "answer": 0.983,
+  "tolerance": 0.006,
+  "format": "number",
+  "dataset": "wallet",
+  "files": ["customers", "transactions"],
+  "pyVerify": "round(roc_auc_score(y_te, leaky.predict_proba(X_te)[:, 1]), 3)",
+  "hint": "The second line printed by the first cell.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "fe-03-p2",
+  "prompt": "What is the **time-based** AUC on the 31 March 2026 snapshot? Three decimal places.",
+  "answer": 0.871,
+  "tolerance": 0.006,
+  "format": "number",
+  "dataset": "wallet",
+  "files": ["customers", "transactions"],
+  "pyVerify": "round(roc_auc_score(y_test, p_test), 3)",
+  "hint": "The last line of the second cell.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "fe-03-t1",
+  "prompt": "A colleague's churn model scores an AUC of 0.97. Write **four questions** you'd ask before trusting it, one per line ending with a question mark, covering at least: how the data was **split**, whether any feature could use the **future**, and how the **labels** were defined.",
+  "minutes": 6,
+  "rows": 6,
+  "placeholder": "Was the test set ...?",
+  "rules": [
+    { "label": "Four questions, each ending with ?", "pattern": "\\?\\s*$", "min": 4 },
+    { "label": "Asks about the split (random, time, later, period)", "pattern": "split|random|time|later (month|period|snapshot)|period" },
+    { "label": "Asks about features using the future (after, future, snapshot)", "pattern": "after the snapshot|future|after the prediction|known (at|on|by)" },
+    { "label": "Asks about the label definition (churn, label, target, defined)", "pattern": "label|target|defin" }
+  ],
+  "sample": "Was the test set a later period than the training data, or a random sample of the same months?\nCould any feature use information from after the snapshot date, such as transactions in the prediction window?\nHow exactly were churned customers defined, and over what horizon?\nWere the training labels complete by the date the model would have been used?",
+  "note": "An AUC of 0.97 for churn is a warning sign, not a triumph. Real behaviour is noisy; models that look almost perfect usually know something they shouldn't.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "A model is used on 31 March with a 60-day horizon. Which training snapshot has labels that weren't yet known on 31 March?",
+    "options": ["30 November", "31 December", "31 January", "31 October"],
+    "answer": 2,
+    "explanation": "January's 60-day window runs to early April."
+  },
+  {
+    "prompt": "Why does a random split usually flatter a churn model?",
+    "options": ["It uses fewer rows", "The model is tested on the same period it learned from, which is easier than predicting a later one", "Random splits remove churners", "It doesn't"],
+    "answer": 1,
+    "explanation": "Real use always means predicting a future that's a little different."
+  },
+  {
+    "prompt": "What's the surest sign of feature leakage?",
+    "options": ["A slightly better AUC", "Results that look too good to be true, driven by a feature that couldn't be known at prediction time", "Many features", "A slow model"],
+    "answer": 1,
+    "explanation": "Check every feature's timing."
+  }
+]
+```
+$md$, true, true, 3, array['fe-03-p1', 'fe-03-p2', 'fe-03-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('fem-m04', 'feature-engineering-model-evaluation', 'Gradient Boosting and Model Comparison', 4, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('feature-engineering-model-evaluation:gradient-boosting-and-model-comparison', 'feature-engineering-model-evaluation', 'fem-m04', 'gradient-boosting-and-model-comparison', 'Gradient boosting and model comparison', 'Train gradient-boosted trees, the workhorse of tabular machine learning, compare them fairly with logistic regression on a time-based test, and decide when the extra complexity earns its keep.', 20, $md$
+## The problem
+
+Search any data science forum and you'll read that gradient boosting (XGBoost, LightGBM, scikit-learn's HistGradientBoosting) wins most competitions on tabular data. Paystream's head of data asks whether the churn model should use it.
+
+The honest answer is "let's test it". Boosting is powerful when there are complex interactions and lots of data. With well-engineered features and a few thousand rows, a simple logistic regression can be just as good, and much easier to explain. The only way to know is a fair comparison on the same time-based test.
+
+## The concept
+
+**Gradient boosting**
+
+Boosting builds trees **one after another**, each new tree correcting the errors the previous ones made. Compared with a random forest (independent trees, averaged), boosting usually reaches higher accuracy, but has more settings to tune and overfits more easily.
+
+scikit-learn's `HistGradientBoostingClassifier` is fast, handles missing values on its own and needs no scaling. Key settings:
+
+| Setting | Effect |
+| :-- | :-- |
+| `learning_rate` | how big a correction each tree makes; smaller is slower but often better |
+| `max_iter` | how many trees |
+| `max_depth` or `max_leaf_nodes` | how complex each tree is |
+| `early_stopping` | stop adding trees when a validation score stops improving |
+
+**A fair comparison**
+
+- Same training snapshots, same test snapshot, same features.
+- Same measure (AUC here), and look at more than one: calibration (lesson 5) and the top-decile capture that matters for the business (lesson 6).
+- Prefer the simpler model if the scores are close. It's easier to explain, check and maintain.
+
+## Example
+
+```python
+import pandas as pd
+import numpy as np
+
+base = "https://academy.cloudtechanalytics.com/datasets/wallet/"
+customers = pd.read_csv(base + "customers.csv", parse_dates=["signup_date"])
+tx = pd.read_csv(base + "transactions.csv", parse_dates=["transaction_date"])
+
+def build_table(snapshot, horizon=60):
+    """One row per customer active in the 90 days to the snapshot.
+    Features use data up to the snapshot; the label uses the horizon after it."""
+    s = pd.Timestamp(snapshot)
+    past = tx[tx["transaction_date"] <= s]
+    future = tx[(tx["transaction_date"] > s) & (tx["transaction_date"] <= s + pd.Timedelta(days=horizon))]
+    recent = past[past["transaction_date"] > s - pd.Timedelta(days=90)]
+    t = customers[customers["customer_id"].isin(recent["customer_id"])].copy()
+    t["snapshot"] = s
+    t["tenure_days"] = (s - t["signup_date"]).dt.days
+    t["days_since_last"] = t["customer_id"].map((s - past.groupby("customer_id")["transaction_date"].max()).dt.days)
+    for w in [30, 90]:
+        window = past[past["transaction_date"] > s - pd.Timedelta(days=w)]
+        by = window.groupby("customer_id")
+        t[f"txns_{w}d"] = t["customer_id"].map(by.size()).fillna(0)
+        t[f"value_{w}d"] = t["customer_id"].map(by["amount_ngn"].sum()).fillna(0)
+        t[f"failed_{w}d"] = t["customer_id"].map(window[window["status"] == "Failed"].groupby("customer_id").size()).fillna(0)
+    t["trend"] = t["txns_30d"] / ((t["txns_90d"] - t["txns_30d"]) / 2 + 1)
+    t["fail_rate_90d"] = t["failed_90d"] / t["txns_90d"].clip(lower=1)
+    t["churned"] = (~t["customer_id"].isin(future["customer_id"])).astype(int)
+    return t
+
+numeric = ["tenure_days", "days_since_last", "txns_30d", "txns_90d", "value_30d", "value_90d",
+           "failed_30d", "failed_90d", "trend", "fail_rate_90d", "kyc_tier"]
+categorical = ["acquisition_channel", "age_band"]
+
+def features(t, columns=None):
+    X = pd.get_dummies(t[numeric + categorical], columns=categorical, drop_first=True, dtype=int)
+    return X if columns is None else X.reindex(columns=columns, fill_value=0)
+```
+
+```python
+from sklearn.linear_model import LogisticRegression
+from sklearn.ensemble import HistGradientBoostingClassifier
+from sklearn.preprocessing import StandardScaler
+from sklearn.pipeline import make_pipeline
+from sklearn.metrics import roc_auc_score
+
+train = pd.concat([build_table(d) for d in ["2025-09-30", "2025-10-31", "2025-11-30", "2025-12-31"]])
+test = build_table("2026-03-31")
+X_train, y_train = features(train), train["churned"]
+X_test, y_test = features(test, X_train.columns), test["churned"]
+
+logit = make_pipeline(StandardScaler(), LogisticRegression(max_iter=2000)).fit(X_train, y_train)
+boost = HistGradientBoostingClassifier(random_state=42).fit(X_train, y_train)
+p_logit = logit.predict_proba(X_test)[:, 1]
+p_boost = boost.predict_proba(X_test)[:, 1]
+print("Logistic regression AUC:", round(roc_auc_score(y_test, p_logit), 3))
+print("Gradient boosting AUC:  ", round(roc_auc_score(y_test, p_boost), 3))
+```
+
+```text
+Logistic regression AUC: 0.871
+Gradient boosting AUC:   0.865
+```
+
+Now tune the boosting model a little: a smaller learning rate and shallower trees, which often help on small data:
+
+```python
+tuned = HistGradientBoostingClassifier(learning_rate=0.05, max_depth=3, max_iter=300,
+                                       random_state=42).fit(X_train, y_train)
+p_tuned = tuned.predict_proba(X_test)[:, 1]
+print("Tuned gradient boosting AUC:", round(roc_auc_score(y_test, p_tuned), 3))
+```
+
+```text
+Tuned gradient boosting AUC: 0.87
+```
+
+With good features, logistic regression holds its own against boosting here. The features already capture the main pattern (activity fading out), so there's little left for the trees to find. That won't always be true: with more data, raw features or strong interactions, boosting often pulls ahead. The point is to test rather than assume.
+
+(One caution: the settings above were chosen by looking at the test snapshot, which is the trap from lesson 3 of Machine Learning Fundamentals. In a real project, tune on a validation snapshot before the test one.)
+
+## Walkthrough
+
+1. Run the cells and record the three AUCs in a comparison table.
+2. Tune properly: use 31 December as a validation snapshot (training on September to November), choose the settings there, then retrain on all four and score 31 March once.
+3. Try dropping the trend and fail-rate features from both models. Which model suffers more? (That tells you how much work the features are doing.)
+4. Decide which model you'd put in front of the retention team, and why.
+
+## Practice
+
+```answer
+{
+  "id": "fe-04-p1",
+  "prompt": "What is the **logistic regression** AUC on the 31 March test snapshot? Three decimal places.",
+  "answer": 0.871,
+  "tolerance": 0.006,
+  "format": "number",
+  "dataset": "wallet",
+  "files": ["customers", "transactions"],
+  "pyVerify": "round(roc_auc_score(y_test, p_logit), 3)",
+  "hint": "The first line of the first cell's output.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "fe-04-t1",
+  "prompt": "Write your **model choice** for the head of data (50 to 130 words): which model, the **AUCs** you compared, and at least **two reasons** beyond the score.",
+  "minutes": 6,
+  "rows": 6,
+  "placeholder": "I recommend ...",
+  "rules": [
+    { "label": "Names the chosen model", "pattern": "logistic|boost" },
+    { "label": "Gives at least two AUC values", "pattern": "0\\.\\d{2,3}", "min": 2 },
+    { "label": "Gives reasons beyond the score (explain, simpler, maintain, calibrat, faster, interpret)", "pattern": "explain|simpler|maintain|calibrat|faster|interpret|transparent|check", "min": 2 },
+    { "label": "Between 50 and 130 words", "minWords": 50, "maxWords": 130 }
+  ],
+  "sample": "I recommend logistic regression. On the 31 March test snapshot it scored an AUC of 0.871, against 0.865 for default gradient boosting and 0.870 after light tuning, so boosting doesn't earn its extra complexity here. Logistic regression is also easier to explain to the retention team (falling activity and days since the last transaction drive the score), simpler to check and maintain, and its probabilities are straightforward to calibrate. We'll revisit boosting when we add more data sources, such as app logins.",
+  "note": "\"Boosting won the competition\" is not a reason. A small gain in AUC is rarely worth a model nobody can explain.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "How does gradient boosting differ from a random forest?",
+    "options": ["It uses one tree", "It builds trees one after another, each correcting the previous ones' errors", "It doesn't use trees", "It averages independent trees"],
+    "answer": 1,
+    "explanation": "Forests average independent trees; boosting builds them in sequence."
+  },
+  {
+    "prompt": "Logistic regression scores 0.871 and boosting 0.865 on the same time-based test. What should you conclude?",
+    "options": ["Boosting is broken", "With these features, the simpler model is at least as good, so prefer it", "Always use boosting", "The test is wrong"],
+    "answer": 1,
+    "explanation": "Test, don't assume, and prefer simplicity when scores are close."
+  },
+  {
+    "prompt": "Why tune settings on a validation snapshot rather than the test snapshot?",
+    "options": ["It's faster", "Tuning on the test snapshot makes its score optimistic", "Validation snapshots are bigger", "It doesn't matter"],
+    "answer": 1,
+    "explanation": "The test snapshot must stay unseen until the end."
+  }
+]
+```
+$md$, true, true, 4, array['fe-04-p1', 'fe-04-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('fem-m05', 'feature-engineering-model-evaluation', 'Calibration', 5, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('feature-engineering-model-evaluation:calibration', 'feature-engineering-model-evaluation', 'fem-m05', 'calibration', 'Calibration', 'Check whether a model''s probabilities mean what they say, measure calibration with a reliability table and the Brier score, and understand why it matters whenever probabilities drive money.', 25, $md$
+## The problem
+
+The retention team plans its budget from the model: "the model says these 200 customers have an average 30% chance of leaving, so about 60 will leave without a call". That only works if a 30% prediction really means 30 out of 100 such customers leave. If the model's 30% really means 15%, the budget is wrong by half.
+
+A model can rank customers well (high AUC) and still give probabilities that are too high or too low. Whether the probabilities can be taken at face value is called **calibration**, and it matters whenever you add predictions up, compare them with costs, or forecast.
+
+## The concept
+
+**AUC and calibration measure different things**
+
+- **AUC**: does the model put churners above non-churners? Only the **order** matters.
+- **Calibration**: when the model says 20%, do about 20% churn? The **values** matter.
+
+**The reliability table**
+
+Group customers by predicted probability (for example into deciles) and compare, in each group, the **average prediction** with the **actual churn rate**. A calibrated model's two columns match. Plotted, the points lie on the diagonal.
+
+**The Brier score**
+
+The average of (prediction − outcome)², from 0 (perfect) upwards. Lower is better. It rewards both good ranking and good calibration. Compare it with the Brier score of predicting the overall churn rate for everyone.
+
+**Fixing calibration**
+
+`CalibratedClassifierCV` re-maps a model's probabilities using cross-validation (with `method="sigmoid"` or `"isotonic"`). It needs enough data, and it fixes the shape of the probabilities, not a change in the world (lesson 7).
+
+## Example
+
+```python
+import pandas as pd
+import numpy as np
+
+base = "https://academy.cloudtechanalytics.com/datasets/wallet/"
+customers = pd.read_csv(base + "customers.csv", parse_dates=["signup_date"])
+tx = pd.read_csv(base + "transactions.csv", parse_dates=["transaction_date"])
+
+def build_table(snapshot, horizon=60):
+    """One row per customer active in the 90 days to the snapshot.
+    Features use data up to the snapshot; the label uses the horizon after it."""
+    s = pd.Timestamp(snapshot)
+    past = tx[tx["transaction_date"] <= s]
+    future = tx[(tx["transaction_date"] > s) & (tx["transaction_date"] <= s + pd.Timedelta(days=horizon))]
+    recent = past[past["transaction_date"] > s - pd.Timedelta(days=90)]
+    t = customers[customers["customer_id"].isin(recent["customer_id"])].copy()
+    t["snapshot"] = s
+    t["tenure_days"] = (s - t["signup_date"]).dt.days
+    t["days_since_last"] = t["customer_id"].map((s - past.groupby("customer_id")["transaction_date"].max()).dt.days)
+    for w in [30, 90]:
+        window = past[past["transaction_date"] > s - pd.Timedelta(days=w)]
+        by = window.groupby("customer_id")
+        t[f"txns_{w}d"] = t["customer_id"].map(by.size()).fillna(0)
+        t[f"value_{w}d"] = t["customer_id"].map(by["amount_ngn"].sum()).fillna(0)
+        t[f"failed_{w}d"] = t["customer_id"].map(window[window["status"] == "Failed"].groupby("customer_id").size()).fillna(0)
+    t["trend"] = t["txns_30d"] / ((t["txns_90d"] - t["txns_30d"]) / 2 + 1)
+    t["fail_rate_90d"] = t["failed_90d"] / t["txns_90d"].clip(lower=1)
+    t["churned"] = (~t["customer_id"].isin(future["customer_id"])).astype(int)
+    return t
+
+numeric = ["tenure_days", "days_since_last", "txns_30d", "txns_90d", "value_30d", "value_90d",
+           "failed_30d", "failed_90d", "trend", "fail_rate_90d", "kyc_tier"]
+categorical = ["acquisition_channel", "age_band"]
+
+def features(t, columns=None):
+    X = pd.get_dummies(t[numeric + categorical], columns=categorical, drop_first=True, dtype=int)
+    return X if columns is None else X.reindex(columns=columns, fill_value=0)
+```
+
+```python
+from sklearn.linear_model import LogisticRegression
+from sklearn.preprocessing import StandardScaler
+from sklearn.pipeline import make_pipeline
+from sklearn.metrics import brier_score_loss
+
+train = pd.concat([build_table(d) for d in ["2025-09-30", "2025-10-31", "2025-11-30", "2025-12-31"]])
+test = build_table("2026-03-31")
+X_train, y_train = features(train), train["churned"]
+X_test, y_test = features(test, X_train.columns), test["churned"]
+model = make_pipeline(StandardScaler(), LogisticRegression(max_iter=2000)).fit(X_train, y_train)
+p = model.predict_proba(X_test)[:, 1]
+
+print("Average predicted churn:", round(p.mean(), 3), " actual churn:", round(y_test.mean(), 3))
+print("Brier score, model:        ", round(brier_score_loss(y_test, p), 4))
+print("Brier score, one rate for all:", round(brier_score_loss(y_test, np.full(len(y_test), y_train.mean())), 4))
+```
+
+```text
+Average predicted churn: 0.102  actual churn: 0.107
+Brier score, model:         0.0607
+Brier score, one rate for all: 0.0958
+```
+
+The model is clearly better than one rate for everyone (a Brier score of 0.061 against 0.096), and its average prediction (10.2%) is a little below March's actual churn (10.7%). Look at where:
+
+```python
+reliability = pd.DataFrame({"predicted": p, "actual": y_test.to_numpy()})
+reliability["decile"] = pd.qcut(reliability["predicted"], 10, labels=False, duplicates="drop") + 1
+reliability.groupby("decile").agg(customers=("actual", "size"), predicted=("predicted", "mean"),
+                                  actual=("actual", "mean")).round(3)
+```
+
+```text
+customers  predicted  actual
+decile
+1             121      0.002   0.000
+2             121      0.007   0.008
+3             120      0.012   0.008
+4             121      0.019   0.025
+5             121      0.028   0.058
+6             120      0.038   0.083
+7             121      0.054   0.058
+8             120      0.084   0.075
+9             121      0.179   0.140
+10            121      0.598   0.612
+```
+
+In most deciles the predictions and actual rates are close, so the model's ranking and probabilities are broadly sound. But overall it slightly under-predicts March's churn: it learned from September to December, when churn was lower. That's not a calibration flaw you can fix with `CalibratedClassifierCV`; it's the world changing, and lesson 7 deals with it.
+
+## Walkthrough
+
+1. Run the cells. Plot the reliability table: predicted on the x-axis, actual on the y-axis, with a diagonal line.
+2. Repeat for the gradient boosting model from lesson 4. Is it better or worse calibrated?
+3. Try `CalibratedClassifierCV(model, method="sigmoid", cv=5)` on the training data. Does it change the March averages?
+4. Use the reliability table to estimate how many of the top 100 customers will churn. Compare with the actual number.
+
+## Practice
+
+```answer
+{
+  "id": "fe-05-p1",
+  "prompt": "What is the model's **average predicted churn probability** on the 31 March snapshot? As a percentage, one decimal place.",
+  "answer": 10.2,
+  "format": "percent",
+  "dataset": "wallet",
+  "files": ["customers", "transactions"],
+  "pyVerify": "round(p.mean() * 100, 1)",
+  "hint": "The first number printed.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "fe-05-p2",
+  "prompt": "What is the model's **Brier score** on the 31 March snapshot? Four decimal places.",
+  "answer": 0.0607,
+  "tolerance": 0.0006,
+  "format": "number",
+  "dataset": "wallet",
+  "files": ["customers", "transactions"],
+  "pyVerify": "round(brier_score_loss(y_test, p), 4)",
+  "hint": "The second line printed.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "A model ranks customers perfectly but every probability is twice the true rate. What's its AUC, and is it calibrated?",
+    "options": ["AUC 1.0, calibrated", "AUC 1.0, not calibrated", "AUC 0.5, calibrated", "AUC 0.5, not calibrated"],
+    "answer": 1,
+    "explanation": "AUC only measures order; calibration measures whether values are right."
+  },
+  {
+    "prompt": "When does calibration matter most?",
+    "options": ["Never", "When probabilities are added up, compared with costs or used to forecast", "Only for regression", "Only when AUC is low"],
+    "answer": 1,
+    "explanation": "Budgets and expected values need probabilities you can take at face value."
+  },
+  {
+    "prompt": "A model under-predicts because churn rose after it was trained. Will CalibratedClassifierCV on the old training data fix it?",
+    "options": ["Yes", "No: that's a change in the world, which needs recent data and retraining", "Only with isotonic", "Only with more trees"],
+    "answer": 1,
+    "explanation": "Calibration fixes the model's shape, not drift."
+  }
+]
+```
+$md$, true, true, 5, array['fe-05-p1', 'fe-05-p2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('fem-m06', 'feature-engineering-model-evaluation', 'Lift and Targeting', 6, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('feature-engineering-model-evaluation:lift-and-targeting', 'feature-engineering-model-evaluation', 'fem-m06', 'lift-and-targeting', 'Lift and targeting', 'Evaluate a model the way the business will use it, with gains and lift for the top of the list, and choose how many customers to contact from the cost of a call and the value of a save.', 25, $md$
+## The problem
+
+Paystream's retention team can make about 120 calls a month: roughly the top 10% of active customers. Nobody on the team cares about AUC. They care about one thing: **if we call the people the model ranks highest, how many of the real leavers will we reach?**
+
+That's a different question from "how good is the model overall", and it has a direct answer: the **gains** and **lift** at the top of the list. Combined with what a call costs and what a saved customer is worth, it tells the team how many people to call.
+
+## The concept
+
+**Gains and lift**
+
+Sort customers by predicted probability, highest first, and cut the list into deciles:
+
+- **Capture rate (gains)**: the share of all churners found in the top k% of the list.
+- **Lift**: the churn rate in the top k%, divided by the overall churn rate. A lift of 5 means the top of the list has five times as many churners as a random selection.
+
+A random list captures 10% of churners in its top 10%. A useful model captures far more.
+
+**From lift to a decision**
+
+For the top k% of the list:
+
+> value = (churners reached × save rate × value of a saved customer) − (calls × cost per call)
+
+- **Save rate**: the share of churners a call actually keeps (from past campaigns or a test).
+- **Value of a saved customer**: for example, the margin they'd generate in the next year.
+
+The best k is where the value is highest. Beyond it, each extra call reaches too few churners to pay for itself.
+
+## Example
+
+```python
+import pandas as pd
+import numpy as np
+
+base = "https://academy.cloudtechanalytics.com/datasets/wallet/"
+customers = pd.read_csv(base + "customers.csv", parse_dates=["signup_date"])
+tx = pd.read_csv(base + "transactions.csv", parse_dates=["transaction_date"])
+
+def build_table(snapshot, horizon=60):
+    """One row per customer active in the 90 days to the snapshot.
+    Features use data up to the snapshot; the label uses the horizon after it."""
+    s = pd.Timestamp(snapshot)
+    past = tx[tx["transaction_date"] <= s]
+    future = tx[(tx["transaction_date"] > s) & (tx["transaction_date"] <= s + pd.Timedelta(days=horizon))]
+    recent = past[past["transaction_date"] > s - pd.Timedelta(days=90)]
+    t = customers[customers["customer_id"].isin(recent["customer_id"])].copy()
+    t["snapshot"] = s
+    t["tenure_days"] = (s - t["signup_date"]).dt.days
+    t["days_since_last"] = t["customer_id"].map((s - past.groupby("customer_id")["transaction_date"].max()).dt.days)
+    for w in [30, 90]:
+        window = past[past["transaction_date"] > s - pd.Timedelta(days=w)]
+        by = window.groupby("customer_id")
+        t[f"txns_{w}d"] = t["customer_id"].map(by.size()).fillna(0)
+        t[f"value_{w}d"] = t["customer_id"].map(by["amount_ngn"].sum()).fillna(0)
+        t[f"failed_{w}d"] = t["customer_id"].map(window[window["status"] == "Failed"].groupby("customer_id").size()).fillna(0)
+    t["trend"] = t["txns_30d"] / ((t["txns_90d"] - t["txns_30d"]) / 2 + 1)
+    t["fail_rate_90d"] = t["failed_90d"] / t["txns_90d"].clip(lower=1)
+    t["churned"] = (~t["customer_id"].isin(future["customer_id"])).astype(int)
+    return t
+
+numeric = ["tenure_days", "days_since_last", "txns_30d", "txns_90d", "value_30d", "value_90d",
+           "failed_30d", "failed_90d", "trend", "fail_rate_90d", "kyc_tier"]
+categorical = ["acquisition_channel", "age_band"]
+
+def features(t, columns=None):
+    X = pd.get_dummies(t[numeric + categorical], columns=categorical, drop_first=True, dtype=int)
+    return X if columns is None else X.reindex(columns=columns, fill_value=0)
+```
+
+```python
+from sklearn.linear_model import LogisticRegression
+from sklearn.preprocessing import StandardScaler
+from sklearn.pipeline import make_pipeline
+
+train = pd.concat([build_table(d) for d in ["2025-09-30", "2025-10-31", "2025-11-30", "2025-12-31"]])
+test = build_table("2026-03-31")
+X_train, y_train = features(train), train["churned"]
+X_test, y_test = features(test, X_train.columns), test["churned"]
+model = make_pipeline(StandardScaler(), LogisticRegression(max_iter=2000)).fit(X_train, y_train)
+
+ranked = pd.DataFrame({"prob": model.predict_proba(X_test)[:, 1], "churned": y_test.to_numpy()})
+ranked = ranked.sort_values("prob", ascending=False).reset_index(drop=True)
+ranked["decile"] = ranked.index * 10 // len(ranked) + 1
+
+gains = ranked.groupby("decile").agg(customers=("churned", "size"), churners=("churned", "sum"))
+gains["capture_cum"] = (gains["churners"].cumsum() / gains["churners"].sum()).round(3)
+gains["lift"] = (gains["churners"] / gains["customers"] / ranked["churned"].mean()).round(2)
+gains
+```
+
+```text
+customers  churners  capture_cum  lift
+decile
+1             121        74        0.574  5.72
+2             121        17        0.705  1.31
+3             121         9        0.775  0.70
+4             120         7        0.829  0.55
+5             121        10        0.907  0.77
+6             121         7        0.961  0.54
+7             120         3        0.984  0.23
+8             121         1        0.992  0.08
+9             121         1        1.000  0.08
+10            120         0        1.000  0.00
+```
+
+The top decile alone contains 57% of all March churners: a lift of over 5. The bottom half of the list contains almost none. Now put money on it. Assume a call costs ₦1,500 (staff time and an airtime gift), a call saves 30% of the churners it reaches, and a saved customer is worth ₦12,000 in margin over the next year:
+
+```python
+cost_per_call, save_rate, value_saved = 1500, 0.30, 12000
+plan = gains.cumsum()[["customers", "churners"]]
+plan["value_ngn"] = plan["churners"] * save_rate * value_saved - plan["customers"] * cost_per_call
+plan
+```
+
+```text
+customers  churners  value_ngn
+decile
+1             121        74    84900.0
+2             242        91   -35400.0
+3             363       100  -184500.0
+4             483       107  -339300.0
+5             604       117  -484800.0
+6             725       124  -641100.0
+7             845       127  -810300.0
+8             966       128  -988200.0
+9            1087       129 -1166100.0
+10           1207       129 -1346100.0
+```
+
+Calling the top decile is worth it, about ₦85,000 a month on these assumptions. Extending to the second decile already loses money: it reaches only 17 more churners for 121 more calls.
+
+## Walkthrough
+
+1. Run the cells and plot the cumulative capture rate against the share of customers called (a gains chart), with the diagonal for a random list.
+2. Change the save rate to 20%. How many deciles are worth calling now?
+3. Check the top decile's capture rate for the gradient boosting model from lesson 4. Does the comparison change?
+4. Write the calling recommendation (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "fe-06-p1",
+  "prompt": "What share of all March churners are in the **top decile** of the list? As a percentage, one decimal place.",
+  "answer": 57.4,
+  "format": "percent",
+  "dataset": "wallet",
+  "files": ["customers", "transactions"],
+  "pyVerify": "round(gains.loc[1, 'capture_cum'] * 100, 1)",
+  "hint": "capture_cum in the first row of the gains table.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "fe-06-p2",
+  "prompt": "Under the cost assumptions, what is the value of calling **only the top decile**? (A rounded figure is fine.)",
+  "answer": 84900,
+  "format": "naira",
+  "dataset": "wallet",
+  "files": ["customers", "transactions"],
+  "pyVerify": "plan.loc[1, 'value_ngn']",
+  "hint": "value_ngn in the first row of the plan table.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "fe-06-t1",
+  "prompt": "Write the **calling recommendation** for the retention team (50 to 130 words): how many customers to call each month, how many churners that should reach, the expected **value**, and which **assumption** most needs checking.",
+  "minutes": 6,
+  "rows": 6,
+  "placeholder": "Call the top ... customers each month ...",
+  "rules": [
+    { "label": "Says how many to call (a number or a decile)", "pattern": "\\d+\\s*(customers|people|calls)|top (\\d+|ten|10)\\s*%|top decile" },
+    { "label": "Says how many churners or what share they reach", "pattern": "\\d+\\s*%[^.]*churn|churn[^.]*\\d+\\s*%|\\d+\\s*churners" },
+    { "label": "Gives a value in naira", "pattern": "₦\\s*\\d|naira" },
+    { "label": "Names an assumption to check (save rate, value, cost)", "pattern": "save rate|assum|value of a saved|cost per call|test" },
+    { "label": "Between 50 and 130 words", "minWords": 50, "maxWords": 130 }
+  ],
+  "sample": "Call the top 10% of active customers by predicted churn each month, about 120 people. On the March snapshot, that list contained 57% of all customers who went on to churn, more than five times as many as a random list. With a call costing ₦1,500, a 30% save rate and ₦12,000 of margin per saved customer, calling the top decile is worth about ₦85,000 a month, and extending the list beyond it would lose money. The save rate is the assumption that most needs checking: we should test it by calling half of the top decile next month and comparing churn with the half we don't call.",
+  "note": "The test at the end matters most: without it, the save rate is a guess, and the whole plan depends on it.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "The top 10% of a model's list contains 50% of churners. What is the lift in that decile?",
+    "options": ["0.5", "5", "10", "50"],
+    "answer": 1,
+    "explanation": "It finds churners at five times the rate of a random 10%."
+  },
+  {
+    "prompt": "Why evaluate a targeting model by gains and lift rather than only AUC?",
+    "options": ["AUC is wrong", "The team acts only on the top of the list, so what matters is how many churners are there", "Lift is easier to calculate", "AUC can't be used for churn"],
+    "answer": 1,
+    "explanation": "Measure the model the way it will be used."
+  },
+  {
+    "prompt": "Extending the call list adds calls that reach few churners. When should you stop?",
+    "options": ["Never", "When the value of the extra churners saved no longer covers the cost of the extra calls", "At exactly 10%", "When the team is tired"],
+    "answer": 1,
+    "explanation": "Stop where the marginal value turns negative."
+  }
+]
+```
+$md$, true, true, 6, array['fe-06-p1', 'fe-06-p2', 'fe-06-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('fem-m07', 'feature-engineering-model-evaluation', 'Drift and Retraining', 7, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('feature-engineering-model-evaluation:drift-and-retraining', 'feature-engineering-model-evaluation', 'fem-m07', 'drift-and-retraining', 'Drift and retraining', 'Detect when the world a model learned from has changed, find which customers changed, and retrain on recent snapshots so the model keeps up.', 25, $md$
+## The problem
+
+In March 2026 a competitor launched a rival wallet with heavy social media advertising. Paystream's churn model, trained on late 2025, didn't know. By the end of April, churn among active customers had climbed above 13%, but the model, still predicting as if it were last year, expected about 11.5%. The retention team planned too few calls, aimed at last year's kind of leaver.
+
+Every model is a snapshot of the past. When the past stops being a good guide to the future, which is called **drift**, the model quietly gets worse. Monitoring for drift and retraining on recent data is the part of machine learning that never ends.
+
+## The concept
+
+**Kinds of drift**
+
+| Kind | What changes | Paystream example |
+| :-- | :-- | :-- |
+| **Label drift** | the overall rate of the outcome | churn rises from about 9% to 13% |
+| **Concept drift** | the relationship between features and outcome | social-ads customers now churn far more at the same activity level |
+| **Feature drift** | the distribution of the inputs | a new product changes how often people transact |
+
+**Monitoring signals**
+
+- **Predicted vs actual rate**, once outcomes are known: the clearest sign.
+- **Performance** (AUC, top-decile capture) on each new month as labels mature.
+- **Rates by segment**: a change in one group (one channel, one region) shows where the world moved.
+- **Feature distributions** compared with training data.
+
+**Retraining**
+
+Retrain on the most recent snapshots whose labels are complete, on a schedule (for example monthly) and whenever monitoring flags drift. Keep the same time-based test discipline: the new model is judged on a later snapshot than any it trained on.
+
+## Example
+
+```python
+import pandas as pd
+import numpy as np
+
+base = "https://academy.cloudtechanalytics.com/datasets/wallet/"
+customers = pd.read_csv(base + "customers.csv", parse_dates=["signup_date"])
+tx = pd.read_csv(base + "transactions.csv", parse_dates=["transaction_date"])
+
+def build_table(snapshot, horizon=60):
+    """One row per customer active in the 90 days to the snapshot.
+    Features use data up to the snapshot; the label uses the horizon after it."""
+    s = pd.Timestamp(snapshot)
+    past = tx[tx["transaction_date"] <= s]
+    future = tx[(tx["transaction_date"] > s) & (tx["transaction_date"] <= s + pd.Timedelta(days=horizon))]
+    recent = past[past["transaction_date"] > s - pd.Timedelta(days=90)]
+    t = customers[customers["customer_id"].isin(recent["customer_id"])].copy()
+    t["snapshot"] = s
+    t["tenure_days"] = (s - t["signup_date"]).dt.days
+    t["days_since_last"] = t["customer_id"].map((s - past.groupby("customer_id")["transaction_date"].max()).dt.days)
+    for w in [30, 90]:
+        window = past[past["transaction_date"] > s - pd.Timedelta(days=w)]
+        by = window.groupby("customer_id")
+        t[f"txns_{w}d"] = t["customer_id"].map(by.size()).fillna(0)
+        t[f"value_{w}d"] = t["customer_id"].map(by["amount_ngn"].sum()).fillna(0)
+        t[f"failed_{w}d"] = t["customer_id"].map(window[window["status"] == "Failed"].groupby("customer_id").size()).fillna(0)
+    t["trend"] = t["txns_30d"] / ((t["txns_90d"] - t["txns_30d"]) / 2 + 1)
+    t["fail_rate_90d"] = t["failed_90d"] / t["txns_90d"].clip(lower=1)
+    t["churned"] = (~t["customer_id"].isin(future["customer_id"])).astype(int)
+    return t
+
+numeric = ["tenure_days", "days_since_last", "txns_30d", "txns_90d", "value_30d", "value_90d",
+           "failed_30d", "failed_90d", "trend", "fail_rate_90d", "kyc_tier"]
+categorical = ["acquisition_channel", "age_band"]
+
+def features(t, columns=None):
+    X = pd.get_dummies(t[numeric + categorical], columns=categorical, drop_first=True, dtype=int)
+    return X if columns is None else X.reindex(columns=columns, fill_value=0)
+```
+
+Train on September to December 2025, as before, then score the 30 April 2026 snapshot:
+
+```python
+from sklearn.linear_model import LogisticRegression
+from sklearn.preprocessing import StandardScaler
+from sklearn.pipeline import make_pipeline
+from sklearn.metrics import roc_auc_score
+
+old_train = pd.concat([build_table(d) for d in ["2025-09-30", "2025-10-31", "2025-11-30", "2025-12-31"]])
+april = build_table("2026-04-30")
+X_old, y_old = features(old_train), old_train["churned"]
+X_apr, y_apr = features(april, X_old.columns), april["churned"]
+
+old_model = make_pipeline(StandardScaler(), LogisticRegression(max_iter=2000)).fit(X_old, y_old)
+p_old = old_model.predict_proba(X_apr)[:, 1]
+print("Old model, April: predicted", round(p_old.mean(), 3), " actual", round(y_apr.mean(), 3),
+      " AUC", round(roc_auc_score(y_apr, p_old), 3))
+```
+
+```text
+Old model, April: predicted 0.115  actual 0.133  AUC 0.876
+```
+
+The model still ranks customers well (AUC 0.876), but it under-predicts how many will leave: 11.5% against 13.3%, about 20 fewer leavers than really left. Where did the world change? Compare churn by acquisition channel over time:
+
+```python
+by_month = pd.concat([build_table(d) for d in ["2025-12-31", "2026-01-31", "2026-02-28", "2026-03-31", "2026-04-30"]])
+by_month.pivot_table(index="snapshot", columns="acquisition_channel", values="churned", aggfunc="mean").round(3)
+```
+
+```text
+acquisition_channel  Agent  Organic  Referral  Social ads
+snapshot
+2025-12-31           0.086    0.092     0.066       0.114
+2026-01-31           0.072    0.121     0.064       0.118
+2026-02-28           0.088    0.092     0.071       0.127
+2026-03-31           0.097    0.100     0.069       0.164
+2026-04-30           0.126    0.131     0.064       0.216
+```
+
+Customers acquired through social ads, the competitor's target, are leaving at a much higher rate from March. Now retrain on the most recent snapshots whose labels are complete by 30 April (December to February):
+
+```python
+new_train = pd.concat([build_table(d) for d in ["2025-12-31", "2026-01-31", "2026-02-28"]])
+X_new, y_new = features(new_train), new_train["churned"]
+new_model = make_pipeline(StandardScaler(), LogisticRegression(max_iter=2000)).fit(X_new, y_new)
+p_new = new_model.predict_proba(features(april, X_new.columns))[:, 1]
+print("Retrained model, April: predicted", round(p_new.mean(), 3), " actual", round(y_apr.mean(), 3),
+      " AUC", round(roc_auc_score(y_apr, p_new), 3))
+```
+
+```text
+Retrained model, April: predicted 0.112  actual 0.133  AUC 0.88
+```
+
+Retraining barely changes the April prediction (11.2%), even though it uses the most recent complete data. The reason is timing: the newest snapshot with known outcomes is 28 February, and its outcomes only partly reflect a competitor that launched in March. A model can only learn from outcomes that have already happened. While a change is still unfolding, retraining can't catch up on its own, which is why monitoring and human judgement ("the competitor launched in March; expect churn among social-ads customers to stay high") matter.
+
+## Walkthrough
+
+1. Run the cells and compare the old and retrained models' predicted rates with the actual April rate. Why didn't retraining help much?
+2. Calculate each model's churn rate by channel in the top decile. Has the retrained model shifted towards social-ads customers?
+3. Write a monitoring plan with triggers (the task below).
+4. Discuss: what could the business do while the model catches up? (A short-term adjustment, extra calls to social-ads customers, a counter-offer.)
+
+## Practice
+
+```answer
+{
+  "id": "fe-07-p1",
+  "prompt": "What is the **actual churn rate** at the 30 April 2026 snapshot? As a percentage, one decimal place.",
+  "answer": 13.3,
+  "format": "percent",
+  "dataset": "wallet",
+  "files": ["customers", "transactions"],
+  "pyVerify": "round(y_apr.mean() * 100, 1)",
+  "hint": "The 'actual' value in the first cell's output.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "fe-07-p2",
+  "prompt": "At the 30 April snapshot, what is the churn rate of customers acquired through **Social ads**? As a percentage, one decimal place.",
+  "answer": 21.6,
+  "format": "percent",
+  "dataset": "wallet",
+  "files": ["customers", "transactions"],
+  "pyVerify": "round(april.loc[april['acquisition_channel'] == 'Social ads', 'churned'].mean() * 100, 1)",
+  "hint": "The Social ads value in the 2026-04-30 row of the table.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "fe-07-t1",
+  "prompt": "Write a **monitoring plan** for Paystream's churn model, one line each for: **What we track**, **How often**, **Trigger for review** (with a number), **Retraining** (which snapshots), and **Owner**.",
+  "minutes": 6,
+  "rows": 6,
+  "placeholder": "What we track: ...\nHow often: ...",
+  "rules": [
+    { "label": "What we track line", "pattern": "^\\s*[-*]?\\s*what we track\\s*:" },
+    { "label": "How often line with a frequency", "pattern": "^\\s*[-*]?\\s*how often\\s*:[^\\n]*(daily|weekly|monthly|quarterly|every|each)" },
+    { "label": "Trigger line with a number", "pattern": "^\\s*[-*]?\\s*trigger[^:\\n]*:[^\\n]*\\d" },
+    { "label": "Retraining line mentioning snapshots or recent data", "pattern": "^\\s*[-*]?\\s*retrain\\w*\\s*:[^\\n]*(snapshot|recent|latest|month)" },
+    { "label": "Owner line", "pattern": "^\\s*[-*]?\\s*owner\\s*:" }
+  ],
+  "sample": "What we track: predicted vs actual churn rate, AUC and top-decile capture as each month's outcomes mature, and churn by acquisition channel and region.\nHow often: monthly, when the 60-day outcomes for the snapshot two months earlier become available.\nTrigger for review: actual churn more than 2 percentage points above predicted, top-decile capture below 40%, or any channel's churn rate doubling.\nRetraining: every month on the latest three snapshots with complete labels, and immediately when a trigger fires; the new model must beat the old one on the most recent complete snapshot.\nOwner: the growth data scientist, reporting to the head of growth.",
+  "note": "Notice the delay built into \"How often\": with a 60-day horizon, you only learn how good March's predictions were at the end of May. Monitoring always lags.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "A model's AUC holds steady, but its predicted churn rate is far below the actual rate. What kind of drift is most obvious?",
+    "options": ["None", "Label drift: the overall outcome rate has risen", "Feature drift only", "Overfitting"],
+    "answer": 1,
+    "explanation": "The ranking still works; the level has moved."
+  },
+  {
+    "prompt": "Why can't the model be retrained on April's own outcomes at the end of April?",
+    "options": ["It can", "April's 60-day outcomes aren't known until the end of June", "April has too few customers", "Retraining is monthly"],
+    "answer": 1,
+    "explanation": "Labels always arrive after the horizon."
+  },
+  {
+    "prompt": "Churn jumps only among social-ads customers. What does that tell you?",
+    "options": ["The data is wrong", "Where the world changed, which guides both the investigation and the business response", "Nothing", "To drop that channel from the model"],
+    "answer": 1,
+    "explanation": "Segment monitoring locates drift."
+  }
+]
+```
+$md$, true, true, 7, array['fe-07-p1', 'fe-07-p2', 'fe-07-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('fem-m08', 'feature-engineering-model-evaluation', 'Final Project', 8, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('feature-engineering-model-evaluation:final-project', 'feature-engineering-model-evaluation', 'fem-m08', 'final-project', '"Final project: Paystream''s retention model"', 'Plan your final project, an end-to-end churn model with point-in-time features, time-based validation, calibration, targeting and monitoring, and start with a feature of your own.', 20, $md$
+## The problem
+
+Paystream's head of growth wants a churn model the retention team can use every month from June 2026, and a plan for keeping it honest as the competitor keeps pushing. You'll build it end to end: features as of each month-end, a time-based test, a fair model comparison, calibrated probabilities, a calling plan with its value, and monitoring.
+
+The best projects also add something the course didn't: a new feature that captures behaviour the others miss. This lesson starts you on that.
+
+## The concept
+
+**The project, step by step**
+
+| Step | Deliverable | Lesson |
+| :-- | :-- | :-- |
+| Define | population, snapshot, horizon and target, written down | 1 |
+| Engineer | the course's features plus at least two of your own, each checked against churn | 2 |
+| Validate | training snapshots with complete labels, a later test snapshot, the leakage checks | 3 |
+| Compare | logistic regression and gradient boosting, with reasons for the choice | 4 |
+| Calibrate | a reliability table and the Brier score | 5 |
+| Target | gains, lift and a calling plan with its value | 6 |
+| Monitor | drift checks by segment, a retraining rule and triggers | 7 |
+
+**Ideas for new features**
+
+- **Variety**: the number of different transaction types in the last 90 days. Customers who use several services may be stickier.
+- **Large-value share**: the share of value from transfers, where competitors usually compete.
+- **Weekday pattern**: whether activity is concentrated on salary week.
+- **Failure streaks**: the longest run of consecutive failed transactions.
+
+## Example
+
+A first new feature, variety, built point-in-time like the others:
+
+```python
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/wallet/"
+customers = pd.read_csv(base + "customers.csv", parse_dates=["signup_date"])
+tx = pd.read_csv(base + "transactions.csv", parse_dates=["transaction_date"])
+
+s = pd.Timestamp("2026-03-31")
+recent = tx[(tx["transaction_date"] <= s) & (tx["transaction_date"] > s - pd.Timedelta(days=90))]
+future = tx[(tx["transaction_date"] > s) & (tx["transaction_date"] <= s + pd.Timedelta(days=60))]
+march = pd.DataFrame({"variety": recent.groupby("customer_id")["type"].nunique()})
+march["churned"] = (~march.index.isin(future["customer_id"])).astype(int)
+march.groupby("variety")["churned"].agg(["size", "mean"]).round(3)
+```
+
+```text
+size   mean
+variety
+1          59  0.373
+2         136  0.221
+3         227  0.145
+4         339  0.086
+5         446  0.034
+```
+
+Check the pattern before trusting it: does churn fall steadily as variety rises, or is the difference driven by a small group?
+
+## Walkthrough
+
+1. Write your definitions at the top of the notebook.
+2. Add the variety feature to `build_table`, and design one more of your own.
+3. Check each new feature's relationship with churn, and confirm neither uses data after the snapshot.
+4. Open the project brief on the course page and plan the remaining steps.
+
+## Practice
+
+```dataset
+{"dataset": "wallet", "files": ["customers", "transactions"]}
+```
+
+```answer
+{
+  "id": "fe-08-p1",
+  "prompt": "At the 31 March 2026 snapshot, what is the churn rate of active customers who used **only one** transaction type in the previous 90 days? As a percentage, one decimal place.",
+  "answer": 37.3,
+  "format": "percent",
+  "dataset": "wallet",
+  "files": ["transactions"],
+  "pyVerify": "round(march.groupby('variety')['churned'].mean()[1] * 100, 1)",
+  "hint": "The mean in the variety = 1 row.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "fe-08-t1",
+  "prompt": "Describe **two new features** you'll add to the churn model, one per line in the form **Name | how it's calculated (with its time window) | why it might predict churn**. Neither may use data after the snapshot.",
+  "minutes": 6,
+  "rows": 5,
+  "placeholder": "variety_90d | number of distinct transaction types in the 90 days to the snapshot | ...",
+  "rules": [
+    { "label": "Two lines in the form Name | calculation | reason", "pattern": "^[^|\\n]+\\|[^|\\n]+\\|[^|\\n]+$", "min": 2 },
+    { "label": "Each calculation names a time window", "pattern": "\\|[^|\\n]*(\\d+\\s*days?|last (week|month)|since signup|to the snapshot)[^|\\n]*\\|", "min": 2 },
+    { "label": "No future data (after the snapshot, next, following)", "pattern": "after the snapshot|next \\d+ days|following \\d+ days|in the horizon", "absent": true }
+  ],
+  "sample": "variety_90d | number of distinct transaction types in the 90 days to the snapshot | customers who use several services depend on the wallet more and are harder to lure away\ntransfer_share_90d | share of transaction value from transfers in the 90 days to the snapshot | competitors target transfers with free-transfer offers, so transfer-heavy customers may be most at risk",
+  "note": "Each feature comes with a hypothesis. Test it: if churn doesn't change across the feature's range, drop it, however clever it sounds.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "What makes a new feature worth keeping?",
+    "options": ["It sounds clever", "It's built point-in-time, it relates to churn, and it improves the model on a later test snapshot", "It has many values", "It's correlated with another feature"],
+    "answer": 1,
+    "explanation": "Test every feature the same way."
+  },
+  {
+    "prompt": "Which snapshot should the final model be judged on?",
+    "options": ["One of the training snapshots", "A later snapshot than any used for training or tuning", "A random sample of all snapshots", "The earliest one"],
+    "answer": 1,
+    "explanation": "The honest test is always the future."
+  },
+  {
+    "prompt": "The retention team asks how many customers to call. What evidence answers it?",
+    "options": ["The AUC", "The gains table and the value of each extra decile, given the costs and save rate", "The Brier score", "The number of features"],
+    "answer": 1,
+    "explanation": "Targeting decisions come from lift and money."
+  }
+]
+```
+$md$, true, true, 8, array['fe-08-p1', 'fe-08-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+
 -- Course: Data Analyst Capstone: End-to-End BI Project
 insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
-values ('data-analyst-capstone', 'full', null, 'data-analyst-capstone', 'CAP', 'Data Analyst Capstone: End-to-End BI Project', 'Take a retail chain''s raw till export all the way to a reviewed dashboard and a board-ready executive summary, using the tools of your choice.', 'The capstone of the Data Analyst track. Voltline Electronics, a chain of eight stores, sends you 18 months of raw till data and one question from its chief executive: what''s really driving our 37% growth? You''ll plan the analysis, profile and clean a genuinely messy export (a duplicated upload, mixed date formats, inconsistent store names and test transactions), build a model that looks up costs by date and compares sales with monthly targets, decompose the growth, find what''s going wrong where, and put a value on missed sales. Then you''ll build a dashboard, write an executive summary, prepare for the board''s questions and publish the project for your portfolio. Use Excel, Power BI, SQL or Python: the work is assessed on the answers, not the tool.', 'data-analytics', 'intermediate', 4, 'Career project', 14, true, 'available', true, array['Turning a business brief into an analysis plan', 'Profiling and cleaning raw data with a quality log', 'Modelling data at the right grain', 'Decomposing growth into price, new stores and volume', 'Judging targets fairly', 'Estimating lost sales with stated assumptions', 'Finding-led dashboards and executive summaries', 'Presenting and publishing a portfolio project']::text[], array['The core Data Analyst courses: Excel, SQL and Power BI (or Python)', 'Comfort cleaning data and building a dashboard in at least one tool']::text[], 'Voltline Electronics: commercial review', true, true, true, true, false, 60, 26)
+values ('data-analyst-capstone', 'full', null, 'data-analyst-capstone', 'CAP', 'Data Analyst Capstone: End-to-End BI Project', 'Take a retail chain''s raw till export all the way to a reviewed dashboard and a board-ready executive summary, using the tools of your choice.', 'The capstone of the Data Analyst track. Voltline Electronics, a chain of eight stores, sends you 18 months of raw till data and one question from its chief executive: what''s really driving our 37% growth? You''ll plan the analysis, profile and clean a genuinely messy export (a duplicated upload, mixed date formats, inconsistent store names and test transactions), build a model that looks up costs by date and compares sales with monthly targets, decompose the growth, find what''s going wrong where, and put a value on missed sales. Then you''ll build a dashboard, write an executive summary, prepare for the board''s questions and publish the project for your portfolio. Use Excel, Power BI, SQL or Python: the work is assessed on the answers, not the tool.', 'data-analytics', 'intermediate', 4, 'Career project', 14, true, 'available', true, array['Turning a business brief into an analysis plan', 'Profiling and cleaning raw data with a quality log', 'Modelling data at the right grain', 'Decomposing growth into price, new stores and volume', 'Judging targets fairly', 'Estimating lost sales with stated assumptions', 'Finding-led dashboards and executive summaries', 'Presenting and publishing a portfolio project']::text[], array['The core Data Analyst courses: Excel, SQL and Power BI (or Python)', 'Comfort cleaning data and building a dashboard in at least one tool']::text[], 'Voltline Electronics: commercial review', true, true, true, true, false, 60, 27)
 on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level = excluded.level, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
@@ -33916,6 +35415,108 @@ on conflict (id) do update set assessment_id = excluded.assessment_id, position 
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
 values ('mlq13', 1, 'Impurity importance favours features with many distinct values.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Feature Engineering and Model Evaluation: final assessment
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('feature-engineering-model-evaluation-final', 'feature-engineering-model-evaluation', 'final', null, 'Feature Engineering and Model Evaluation: final assessment', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('femq01', 'feature-engineering-model-evaluation-final', 1, 'For a snapshot on 31 March, which data may a feature use?', '["Anything in the database","Only data dated on or before 31 March","Data up to the end of the horizon","Only data from March"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('femq01', 1, 'Features look back; only the target looks forward.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('femq02', 'feature-engineering-model-evaluation-final', 2, 'Which feature best captures a customer fading out?', '["Total transactions since signup","Transactions in the last 30 days compared with the 60 days before","Customer ID","Signup date"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('femq02', 1, 'Trend features compare a recent window with an earlier one.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('femq03', 'feature-engineering-model-evaluation-final', 3, 'A churn model scores AUC 0.98 and includes ''transactions in the next 30 days''. What''s wrong?', '["Nothing","Leakage: that feature isn''t known at the snapshot","Too few features","The horizon is too short"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('femq03', 1, 'Too-good-to-be-true results usually mean leakage.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('femq04', 'feature-engineering-model-evaluation-final', 4, 'A model will be used on 31 March with a 60-day horizon. Which is the latest training snapshot with complete labels?', '["31 March","28 February","31 January","31 December"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('femq04', 3, 'January''s outcomes run into April; December''s are known by early March.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('femq05', 'feature-engineering-model-evaluation-final', 5, 'A random split gives AUC 0.90; a time-based test gives 0.87. Which should you report?', '["0.90","0.87, because real use always predicts a later period","The average","Neither"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('femq05', 1, 'The time-based score is the honest one.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('femq06', 'feature-engineering-model-evaluation-final', 6, 'Gradient boosting scores 0.865 and logistic regression 0.871 on the same time-based test. What should you choose?', '["Boosting, because it''s more advanced","Logistic regression: at least as good, simpler and easier to explain","Neither","Average them"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('femq06', 1, 'Prefer the simpler model when scores are close.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('femq07', 'feature-engineering-model-evaluation-final', 7, 'A model ranks perfectly but every probability is half the true rate. What''s true?', '["AUC is low","AUC is high, but the model isn''t calibrated","It''s calibrated","Its Brier score is perfect"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('femq07', 1, 'AUC measures order; calibration measures values.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('femq08', 'feature-engineering-model-evaluation-final', 8, 'The top 10% of a list contains 57% of churners. What is the lift there?', '["0.57","About 5.7","10","57"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('femq08', 1, '57% ÷ 10% ≈ 5.7.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('femq09', 'feature-engineering-model-evaluation-final', 9, 'Calling the second decile reaches 17 churners for 121 calls. A call costs ₦1,500; a save is worth ₦12,000 with a 30% save rate. Is it worth it?', '["Yes","No: 17 × 0.3 × ₦12,000 ≈ ₦61,000 is less than 121 × ₦1,500 ≈ ₦182,000","Only in December","Impossible to say"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('femq09', 1, 'Stop where the marginal value turns negative.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('femq10', 'feature-engineering-model-evaluation-final', 10, 'Churn rises sharply only among customers acquired through social ads. What is this?', '["Overfitting","Drift, located in one segment","Leakage","Calibration"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('femq10', 1, 'Segment monitoring shows where the world changed.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('femq11', 'feature-engineering-model-evaluation-final', 11, 'A competitor launched in March. Why doesn''t retraining at the end of April fix the model?', '["Retraining never helps","The newest complete labels predate most of the change, so the model can''t learn it yet","April has too few customers","The model is calibrated"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('femq11', 1, 'Models learn only from outcomes that have already happened.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('femq12', 'feature-engineering-model-evaluation-final', 12, 'Why does monitoring a 60-day churn model always lag?', '["It doesn''t","You only learn whether a month''s predictions were right 60 days later","Dashboards are slow","Data arrives quarterly"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('femq12', 1, 'Plan for the delay, and watch leading signals in the meantime.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 
@@ -37183,6 +38784,14 @@ Work in Google Colab with the loans dataset. Submit a link to your notebook (sha
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
 
 
+-- Project: Paystream: a retention model that stays honest
+insert into public.projects (id, course_id, title, summary, brief_md, tasks, datasets, rubric, required)
+values ('fem-paystream-retention', 'feature-engineering-model-evaluation', 'Paystream: a retention model that stays honest', 'An end-to-end churn model for a mobile wallet, with point-in-time features, time-based validation, calibration, a costed calling plan and drift monitoring.', $md$Paystream's retention team will call the customers most likely to leave each month from June 2026. Build the model and everything around it, from the raw customers and transactions files.
+
+Work in Google Colab. Submit a link to your notebook (shared so anyone with the link can view it), and paste your **definitions**, your **final test results** and your **calling recommendation** below, followed by a short note on where each task is answered.$md$, array['Definitions: population, snapshot dates, horizon and target, with reasons.', 'Features: the course''s features plus at least two of your own, each built point-in-time and checked against churn.', 'Validation: training snapshots whose labels were complete by the test date, a later test snapshot, and a demonstration that your features don''t leak.', 'Models: logistic regression and gradient boosting compared on the same time-based test, tuned on a validation snapshot, with your choice and reasons.', 'Calibration: a reliability table and Brier score for your chosen model.', 'Targeting: a gains and lift table, and a calling plan with its expected value and the assumption you''d test first.', 'Monitoring: churn by segment over time, a retraining rule, and triggers for review.']::text[], array['wallet']::text[], array['Definitions are explicit, sensible for the business, and used consistently.', 'Every feature uses only data up to its snapshot, and new features are justified and tested.', 'Validation is time-based, with training labels complete before the test date; no random splits for the final result.', 'Model comparison is fair, tuning avoids the test snapshot, and the choice weighs simplicity and explainability.', 'Probabilities are checked for calibration before being used for planning.', 'The calling plan is based on lift and costs, with the key assumption identified and a way to test it.', 'Monitoring explains the delay in labels, tracks segments, and sets concrete triggers.']::text[], true)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
+
+
 -- Track: Become a Data Analyst
 insert into public.tracks (id, slug, title, summary, badge_name, badge_code, skills, position, published)
 values ('data-analyst', 'data-analyst', 'Become a Data Analyst', 'The route we recommend from no experience to a junior data analyst role. Learn how analysis works, then the tools teams use every day (Excel, SQL, Power BI and Python) on realistic company data. Build portfolio projects that answer real business questions, and finish with your CV, LinkedIn and interview preparation.', 'CloudTech Data Analyst', 'DATAANALYST', array['Spreadsheet analysis in Excel', 'Statistics: averages, spread, confidence intervals and tests', 'Querying databases with SQL, from first SELECT to cohorts and window functions', 'Data modelling and star schemas', 'Dashboards in Power BI, with DAX measures you can trust', 'Analysis in Python and pandas', 'Turning data into findings a manager can act on']::text[], 1, true)
@@ -37323,11 +38932,15 @@ values ('data-scientist', 'advanced-sql', 'Core', false, 5)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 insert into public.track_courses (track_id, course_id, stage, required, position)
-values ('data-scientist', 'career-essentials', 'Career', true, 6)
+values ('data-scientist', 'feature-engineering-model-evaluation', 'Core', true, 6)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 insert into public.track_courses (track_id, course_id, stage, required, position)
-values ('data-scientist', 'build-your-student-portfolio', 'Career', false, 7)
+values ('data-scientist', 'career-essentials', 'Career', true, 7)
+on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
+
+insert into public.track_courses (track_id, course_id, stage, required, position)
+values ('data-scientist', 'build-your-student-portfolio', 'Career', false, 8)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 

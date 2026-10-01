@@ -3154,5 +3154,202 @@
     ]
    }
   }
+ },
+ "wallet": {
+  "zipBytes": 620606,
+  "files": {
+   "customers": {
+    "rows": 1500,
+    "bytes": 63215,
+    "columns": [
+     {
+      "name": "customer_id",
+      "type": "text",
+      "missing": 0,
+      "distinct": 1500
+     },
+     {
+      "name": "signup_date",
+      "type": "date",
+      "missing": 0,
+      "distinct": 581,
+      "min": "2024-06-01",
+      "max": "2026-02-28"
+     },
+     {
+      "name": "state",
+      "type": "text",
+      "missing": 0,
+      "distinct": 10
+     },
+     {
+      "name": "age_band",
+      "type": "text",
+      "missing": 0,
+      "distinct": 5
+     },
+     {
+      "name": "acquisition_channel",
+      "type": "text",
+      "missing": 0,
+      "distinct": 4
+     },
+     {
+      "name": "kyc_tier",
+      "type": "number",
+      "missing": 0,
+      "distinct": 3,
+      "min": 1,
+      "max": 3
+     }
+    ],
+    "preview": [
+     [
+      "PS-00001",
+      "2024-11-28",
+      "Delta",
+      "35-44",
+      "Referral",
+      "1"
+     ],
+     [
+      "PS-00002",
+      "2025-12-20",
+      "Oyo",
+      "55+",
+      "Referral",
+      "2"
+     ],
+     [
+      "PS-00003",
+      "2025-03-31",
+      "Delta",
+      "35-44",
+      "Referral",
+      "1"
+     ],
+     [
+      "PS-00004",
+      "2025-04-21",
+      "Enugu",
+      "35-44",
+      "Referral",
+      "1"
+     ],
+     [
+      "PS-00005",
+      "2025-05-03",
+      "Rivers",
+      "18-24",
+      "Referral",
+      "1"
+     ],
+     [
+      "PS-00006",
+      "2025-04-11",
+      "FCT",
+      "25-34",
+      "Organic",
+      "2"
+     ]
+    ]
+   },
+   "transactions": {
+    "rows": 65825,
+    "bytes": 3437638,
+    "columns": [
+     {
+      "name": "transaction_id",
+      "type": "text",
+      "missing": 0,
+      "distinct": 65825
+     },
+     {
+      "name": "customer_id",
+      "type": "text",
+      "missing": 0,
+      "distinct": 1488
+     },
+     {
+      "name": "transaction_date",
+      "type": "date",
+      "missing": 0,
+      "distinct": 546,
+      "min": "2025-01-01",
+      "max": "2026-06-30"
+     },
+     {
+      "name": "type",
+      "type": "text",
+      "missing": 0,
+      "distinct": 5
+     },
+     {
+      "name": "amount_ngn",
+      "type": "number",
+      "missing": 0,
+      "distinct": 1839,
+      "min": 100,
+      "max": 243700
+     },
+     {
+      "name": "status",
+      "type": "text",
+      "missing": 0,
+      "distinct": 2
+     }
+    ],
+    "preview": [
+     [
+      "T0000001",
+      "PS-00035",
+      "2025-01-01",
+      "Airtime",
+      "2250",
+      "Success"
+     ],
+     [
+      "T0000002",
+      "PS-00064",
+      "2025-01-01",
+      "Card payment",
+      "11800",
+      "Success"
+     ],
+     [
+      "T0000003",
+      "PS-00066",
+      "2025-01-01",
+      "Bill payment",
+      "2100",
+      "Success"
+     ],
+     [
+      "T0000004",
+      "PS-00095",
+      "2025-01-01",
+      "Bill payment",
+      "18750",
+      "Success"
+     ],
+     [
+      "T0000005",
+      "PS-00101",
+      "2025-01-01",
+      "Card payment",
+      "12200",
+      "Success"
+     ],
+     [
+      "T0000006",
+      "PS-00131",
+      "2025-01-01",
+      "Transfer",
+      "43200",
+      "Success"
+     ]
+    ]
+   }
+  }
  }
 }

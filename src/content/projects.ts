@@ -70,6 +70,12 @@ export const DATASETS: DatasetInfo[] = [
     files: ["loans"],
   },
   {
+    id: "wallet",
+    name: "Paystream mobile wallet (customers and transactions)",
+    description: "1,500 customers of a mobile wallet and their 65,825 transactions from January 2025 to June 2026. A competitor launched in March 2026. Used in Feature Engineering and Model Evaluation.",
+    files: ["customers", "transactions"],
+  },
+  {
     id: "legal",
     name: "Ashgrove Chambers (legal)",
     description: "A Lagos law firm's clients, matters, court hearings and invoices from 2024 to August 2026.",
@@ -267,6 +273,30 @@ export const DATA_DICTIONARY: Record<string, Record<string, { about: string; col
         amount_ngn: "Invoice amount in naira.",
         status: "Paid, Outstanding or Overdue.",
         paid_date: "Date it was paid. Blank if unpaid.",
+      },
+    },
+  },
+  wallet: {
+    customers: {
+      about: "One row per customer.",
+      columns: {
+        customer_id: "Unique customer ID. Links to transactions.customer_id.",
+        signup_date: "Date the customer opened their wallet.",
+        state: "State of residence.",
+        age_band: "Age group.",
+        acquisition_channel: "How the customer joined: Referral, Agent, Social ads or Organic.",
+        kyc_tier: "Identity verification level, 1 (basic) to 3 (full). Higher tiers have higher limits.",
+      },
+    },
+    transactions: {
+      about: "One row per transaction attempt.",
+      columns: {
+        transaction_id: "Unique transaction ID, in date order.",
+        customer_id: "Links to customers.customer_id.",
+        transaction_date: "Date of the transaction.",
+        type: "Transfer, Airtime, Bill payment, Card payment or Cash out.",
+        amount_ngn: "Amount in naira.",
+        status: "Success or Failed.",
       },
     },
   },

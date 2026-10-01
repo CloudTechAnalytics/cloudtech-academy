@@ -205,7 +205,7 @@ export const TRACKS: Track[] = [
         items: [
           { kind: "course", courseId: "machine-learning-fundamentals", why: "Regression and classification with scikit-learn, from baselines to cost-based thresholds and model cards." },
           { kind: "course", courseId: "advanced-sql", why: "Window functions, cohorts and data quality checks for building features.", required: false },
-          { kind: "upcoming", title: "Feature Engineering and Model Evaluation", why: "Time-based features, gradient boosting, calibration and validation for data that changes over time.", level: 3 },
+          { kind: "course", courseId: "feature-engineering-model-evaluation", why: "Point-in-time features, time-based validation, calibration, lift and drift, on a mobile wallet's churn." },
         ],
       },
       {

@@ -988,6 +988,84 @@ function loans() {
   return { loans };
 }
 
+/* ------------------------------------------------------------------ wallet (churn, time-based) */
+// Paystream, a mobile wallet: customers and every transaction from January 2025 to June 2026.
+// Customers who leave fade out first (fewer transactions, more failures). A competitor's
+// launch in March 2026 raises churn among customers acquired through social ads. Generated
+// last, from its own seed.
+function wallet() {
+  seed = 20261201;
+  const START = d("2025-01-01");
+  const END = d("2026-06-30");
+  const STATES = ["Lagos", "Oyo", "Ogun", "Kano", "Kaduna", "Rivers", "Enugu", "Anambra", "FCT", "Delta"];
+  const TYPES = [["Transfer", 30, 18000], ["Airtime", 30, 1500], ["Bill payment", 15, 9000], ["Card payment", 15, 7000], ["Cash out", 10, 15000]];
+  const customers = [];
+  const transactions = [];
+  let tid = 0;
+  for (let k = 1; k <= 1500; k++) {
+    const signup = d("2024-06-01") + int(0, 637) * day; // to 2026-02-28
+    const channel = weighted(["Referral", "Agent", "Social ads", "Organic"], [25, 30, 25, 20]);
+    const kyc = weighted([1, 2, 3], [35, 45, 20]);
+    const engagement = Math.exp(normal() * 0.6);
+    const failProne = rand() < 0.2;
+    const pFail = failProne ? 0.09 : 0.025;
+    // Monthly churn hazard, then a churn date (or none).
+    let churnAt = null;
+    for (let m = Math.max(START, signup + 30 * day); m <= END; m += 30 * day) {
+      let h = 0.022;
+      if (kyc === 1) h *= 1.6;
+      if (channel === "Social ads") h *= 1.3;
+      if (channel === "Referral") h *= 0.7;
+      if (engagement < 0.6) h *= 1.6;
+      if (failProne) h *= 1.6;
+      if (channel === "Social ads" && m >= d("2026-03-01")) h *= 2.2; // competitor launch
+      if (rand() < h) {
+        churnAt = m + int(0, 29) * day;
+        break;
+      }
+    }
+    customers.push({
+      customer_id: `PS-${String(k).padStart(5, "0")}`,
+      signup_date: iso(signup),
+      state: weighted(STATES, [26, 9, 7, 10, 7, 9, 7, 7, 10, 8]),
+      age_band: weighted(["18-24", "25-34", "35-44", "45-54", "55+"], [24, 38, 22, 11, 5]),
+      acquisition_channel: channel,
+      kyc_tier: kyc,
+    });
+    const id = customers[customers.length - 1].customer_id;
+    const lambda = 3.2 * engagement; // transactions per month when fully active
+    const first = Math.max(START, signup);
+    const last = churnAt === null ? END : Math.min(END, churnAt);
+    for (let t = first; t <= last; t += day) {
+      let rate = lambda / 30;
+      // Fade-out: activity falls over the 45 days before leaving, and failures rise.
+      let fail = pFail;
+      if (churnAt !== null && churnAt - t < 45 * day) {
+        rate *= 0.25 + (0.75 * (churnAt - t)) / (45 * day);
+        fail *= 2.2;
+      }
+      // Salary week and December bumps.
+      const dt = new Date(t);
+      if (dt.getUTCDate() >= 25) rate *= 1.3;
+      if (dt.getUTCMonth() === 11) rate *= 1.25;
+      if (rand() < rate) {
+        const [type, , avg] = weighted(TYPES, TYPES.map((x) => x[1]));
+        transactions.push({
+          transaction_id: `T${String(++tid).padStart(7, "0")}`,
+          customer_id: id,
+          transaction_date: iso(t),
+          type,
+          amount_ngn: round(Math.max(100, avg * Math.exp(normal() * 0.7)), 50),
+          status: rand() < fail ? "Failed" : "Success",
+        });
+      }
+    }
+  }
+  transactions.sort((a, b) => (a.transaction_date < b.transaction_date ? -1 : a.transaction_date > b.transaction_date ? 1 : a.transaction_id < b.transaction_id ? -1 : 1));
+  transactions.forEach((x, i) => (x.transaction_id = `T${String(i + 1).padStart(7, "0")}`));
+  return { customers, transactions };
+}
+
 /* ------------------------------------------------------------------ write */
 const SQL = await initSqlJs();
 const L = logistics();
@@ -1022,6 +1100,7 @@ for (const [table, rows] of Object.entries(agile())) writeCsv("agile", table, ro
 for (const [table, rows] of Object.entries(processLog())) writeCsv("process", table, rows);
 for (const [table, rows] of Object.entries(rentals())) writeCsv("rentals", table, rows);
 for (const [table, rows] of Object.entries(loans())) writeCsv("loans", table, rows);
+for (const [table, rows] of Object.entries(wallet())) writeCsv("wallet", table, rows);
 
 // Summary for the build log
 const counts = db.exec("SELECT (SELECT COUNT(*) FROM customers), (SELECT COUNT(*) FROM shipments), (SELECT COUNT(*) FROM payments), (SELECT COUNT(*) FROM routes), (SELECT COUNT(*) FROM employees)")[0].values[0];
