@@ -1,4 +1,565 @@
 {
+ "agents": {
+  "zipBytes": 49117,
+  "files": {
+   "accounts": {
+    "rows": 400,
+    "bytes": 14171,
+    "columns": [
+     {
+      "name": "account_id",
+      "type": "text",
+      "missing": 0,
+      "distinct": 400
+     },
+     {
+      "name": "tier",
+      "type": "number",
+      "missing": 0,
+      "distinct": 3,
+      "min": 1,
+      "max": 3
+     },
+     {
+      "name": "status",
+      "type": "text",
+      "missing": 0,
+      "distinct": 3
+     },
+     {
+      "name": "card_status",
+      "type": "text",
+      "missing": 0,
+      "distinct": 3
+     },
+     {
+      "name": "opened_date",
+      "type": "date",
+      "missing": 0,
+      "distinct": 354,
+      "min": "2023-01-01",
+      "max": "2026-07-24"
+     }
+    ],
+    "preview": [
+     [
+      "PS100001",
+      "3",
+      "active",
+      "active",
+      "2025-11-30"
+     ],
+     [
+      "PS100002",
+      "1",
+      "frozen",
+      "active",
+      "2025-03-09"
+     ],
+     [
+      "PS100003",
+      "1",
+      "active",
+      "active",
+      "2024-04-13"
+     ],
+     [
+      "PS100004",
+      "1",
+      "active",
+      "none",
+      "2024-06-17"
+     ],
+     [
+      "PS100005",
+      "1",
+      "active",
+      "active",
+      "2026-05-10"
+     ],
+     [
+      "PS100006",
+      "2",
+      "active",
+      "active",
+      "2024-08-11"
+     ]
+    ]
+   },
+   "requests": {
+    "rows": 150,
+    "bytes": 15132,
+    "columns": [
+     {
+      "name": "request_id",
+      "type": "text",
+      "missing": 0,
+      "distinct": 150
+     },
+     {
+      "name": "account_id",
+      "type": "text",
+      "missing": 0,
+      "distinct": 124
+     },
+     {
+      "name": "received_at",
+      "type": "text",
+      "missing": 0,
+      "distinct": 139
+     },
+     {
+      "name": "message",
+      "type": "text",
+      "missing": 0,
+      "distinct": 129
+     },
+     {
+      "name": "expected_action",
+      "type": "text",
+      "missing": 0,
+      "distinct": 6
+     }
+    ],
+    "preview": [
+     [
+      "RQ001",
+      "PS100150",
+      "2026-09-10 18:40",
+      "My transfer TRF401805 of ₦34,000 failed but I was debited",
+      "answer"
+     ],
+     [
+      "RQ002",
+      "PS100272",
+      "2026-09-10 20:00",
+      "Transfer TRF401801 failed and the money left my account. Please refund.",
+      "answer"
+     ],
+     [
+      "RQ003",
+      "PS100034",
+      "2026-09-10 22:14",
+      "I was debited ₦355,000 for TRF401843 but it says failed",
+      "answer"
+     ],
+     [
+      "RQ004",
+      "PS100056",
+      "2026-09-11 03:10",
+      "abeg my transfer TRF401845 fail but dem debit me ₦87,000",
+      "answer"
+     ],
+     [
+      "RQ005",
+      "PS100256",
+      "2026-09-11 03:16",
+      "I was debited ₦363,000 for TRF401839 but it says failed",
+      "answer"
+     ],
+     [
+      "RQ006",
+      "PS100015",
+      "2026-09-11 03:34",
+      "Transfer TRF401827 failed and the money left my account. Please refund.",
+      "answer"
+     ]
+    ]
+   },
+   "runs": {
+    "rows": 300,
+    "bytes": 17015,
+    "columns": [
+     {
+      "name": "run_id",
+      "type": "text",
+      "missing": 0,
+      "distinct": 300
+     },
+     {
+      "name": "request_id",
+      "type": "text",
+      "missing": 0,
+      "distinct": 150
+     },
+     {
+      "name": "version",
+      "type": "text",
+      "missing": 0,
+      "distinct": 2
+     },
+     {
+      "name": "steps",
+      "type": "number",
+      "missing": 0,
+      "distinct": 5,
+      "min": 2,
+      "max": 14
+     },
+     {
+      "name": "final_action",
+      "type": "text",
+      "missing": 0,
+      "distinct": 8
+     },
+     {
+      "name": "stop_reason",
+      "type": "text",
+      "missing": 0,
+      "distinct": 2
+     },
+     {
+      "name": "input_tokens",
+      "type": "number",
+      "missing": 0,
+      "distinct": 203,
+      "min": 2185,
+      "max": 37406
+     },
+     {
+      "name": "output_tokens",
+      "type": "number",
+      "missing": 0,
+      "distinct": 133,
+      "min": 98,
+      "max": 667
+     },
+     {
+      "name": "seconds",
+      "type": "number",
+      "missing": 0,
+      "distinct": 77,
+      "min": 4.8,
+      "max": 41.1
+     }
+    ],
+    "preview": [
+     [
+      "RQ001-v1",
+      "RQ001",
+      "v1",
+      "2",
+      "answer",
+      "completed",
+      "2200",
+      "114",
+      "5.5"
+     ],
+     [
+      "RQ001-v2",
+      "RQ001",
+      "v2",
+      "3",
+      "answer",
+      "completed",
+      "5538",
+      "204",
+      "9.6"
+     ],
+     [
+      "RQ002-v1",
+      "RQ002",
+      "v1",
+      "3",
+      "open_transfer_case",
+      "completed",
+      "3700",
+      "241",
+      "9.8"
+     ],
+     [
+      "RQ002-v2",
+      "RQ002",
+      "v2",
+      "3",
+      "answer",
+      "completed",
+      "5526",
+      "249",
+      "10.4"
+     ],
+     [
+      "RQ003-v1",
+      "RQ003",
+      "v1",
+      "3",
+      "open_transfer_case",
+      "completed",
+      "3718",
+      "189",
+      "9.1"
+     ],
+     [
+      "RQ003-v2",
+      "RQ003",
+      "v2",
+      "3",
+      "answer",
+      "completed",
+      "5508",
+      "222",
+      "10"
+     ]
+    ]
+   },
+   "steps": {
+    "rows": 892,
+    "bytes": 74749,
+    "columns": [
+     {
+      "name": "run_id",
+      "type": "text",
+      "missing": 0,
+      "distinct": 300
+     },
+     {
+      "name": "step",
+      "type": "number",
+      "missing": 0,
+      "distinct": 14,
+      "min": 1,
+      "max": 14
+     },
+     {
+      "name": "tool",
+      "type": "text",
+      "missing": 0,
+      "distinct": 8
+     },
+     {
+      "name": "arguments",
+      "type": "text",
+      "missing": 0,
+      "distinct": 300
+     },
+     {
+      "name": "result",
+      "type": "text",
+      "missing": 0,
+      "distinct": 3
+     },
+     {
+      "name": "input_tokens",
+      "type": "number",
+      "missing": 0,
+      "distinct": 300,
+      "min": 960,
+      "max": 4375
+     },
+     {
+      "name": "output_tokens",
+      "type": "number",
+      "missing": 0,
+      "distinct": 116,
+      "min": 25,
+      "max": 140
+     },
+     {
+      "name": "seconds",
+      "type": "number",
+      "missing": 0,
+      "distinct": 22,
+      "min": 2.1,
+      "max": 4.2
+     }
+    ],
+    "preview": [
+     [
+      "RQ001-v1",
+      "1",
+      "get_transfer",
+      "{\"transfer_id\":\"TRF401805\"}",
+      "ok",
+      "962",
+      "32",
+      "2.4"
+     ],
+     [
+      "RQ001-v1",
+      "2",
+      "reply",
+      "{\"message\":\"(reply to customer)\"}",
+      "ok",
+      "1238",
+      "82",
+      "3.1"
+     ],
+     [
+      "RQ001-v2",
+      "1",
+      "get_transfer",
+      "{\"account_id\":\"PS100150\",\"transfer_id\":\"TRF401805\"}",
+      "ok",
+      "1594",
+      "45",
+      "2.9"
+     ],
+     [
+      "RQ001-v2",
+      "2",
+      "check_reversal_eligibility",
+      "{\"account_id\":\"PS100150\",\"transfer_id\":\"TRF401805\"}",
+      "ok",
+      "1832",
+      "26",
+      "2.7"
+     ],
+     [
+      "RQ001-v2",
+      "3",
+      "reply",
+      "{\"message\":\"(reply to customer)\"}",
+      "ok",
+      "2112",
+      "133",
+      "4"
+     ],
+     [
+      "RQ002-v1",
+      "1",
+      "get_transfer",
+      "{\"transfer_id\":\"TRF401801\"}",
+      "ok",
+      "987",
+      "48",
+      "2.5"
+     ]
+    ]
+   },
+   "transfers": {
+    "rows": 1898,
+    "bytes": 139530,
+    "columns": [
+     {
+      "name": "transfer_id",
+      "type": "text",
+      "missing": 0,
+      "distinct": 1898
+     },
+     {
+      "name": "account_id",
+      "type": "text",
+      "missing": 0,
+      "distinct": 398
+     },
+     {
+      "name": "created_at",
+      "type": "text",
+      "missing": 0,
+      "distinct": 1870
+     },
+     {
+      "name": "amount_ngn",
+      "type": "number",
+      "missing": 0,
+      "distinct": 350,
+      "min": 100,
+      "max": 498000
+     },
+     {
+      "name": "destination",
+      "type": "text",
+      "missing": 0,
+      "distinct": 9
+     },
+     {
+      "name": "status",
+      "type": "text",
+      "missing": 0,
+      "distinct": 3
+     },
+     {
+      "name": "debited",
+      "type": "number",
+      "missing": 0,
+      "distinct": 2,
+      "min": 0,
+      "max": 1
+     },
+     {
+      "name": "reversed_at",
+      "type": "text",
+      "missing": 1840,
+      "distinct": 58
+     },
+     {
+      "name": "narration",
+      "type": "text",
+      "missing": 428,
+      "distinct": 13
+     }
+    ],
+    "preview": [
+     [
+      "TRF400662",
+      "PS100033",
+      "2026-07-17 12:16",
+      "3200",
+      "Paystream user",
+      "successful",
+      "1",
+      "",
+      "contribution"
+     ],
+     [
+      "TRF400339",
+      "PS100394",
+      "2026-07-17 13:05",
+      "300",
+      "Access",
+      "successful",
+      "1",
+      "",
+      "rent"
+     ],
+     [
+      "TRF400636",
+      "PS100217",
+      "2026-07-17 14:11",
+      "38000",
+      "Paystream user",
+      "successful",
+      "1",
+      "",
+      "school fees"
+     ],
+     [
+      "TRF401482",
+      "PS100159",
+      "2026-07-17 16:12",
+      "82000",
+      "Paystream user",
+      "successful",
+      "1",
+      "",
+      "phone repair"
+     ],
+     [
+      "TRF400079",
+      "PS100066",
+      "2026-07-17 17:00",
+      "1900",
+      "Paystream user",
+      "successful",
+      "1",
+      "",
+      "school fees"
+     ],
+     [
+      "TRF401450",
+      "PS100328",
+      "2026-07-17 17:13",
+      "2600",
+      "Access",
+      "successful",
+      "1",
+      "",
+      "food stuff"
+     ]
+    ]
+   }
+  }
+ },
  "agile": {
   "zipBytes": 2312,
   "files": {

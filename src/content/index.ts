@@ -54,6 +54,8 @@ import { TSF_ASSESSMENT } from "./forecasting/assessment";
 import { TSF_PROJECT } from "./forecasting/project";
 import { GAI_ASSESSMENT } from "./genai/assessment";
 import { GAI_PROJECT } from "./genai/project";
+import { AGT_ASSESSMENT } from "./agents/assessment";
+import { AGT_PROJECT } from "./agents/project";
 import { parseFrontmatter, requiredExerciseIds } from "@/lib/lesson-format";
 
 /** Lesson files live in one folder per course, named NN-slug.md. */
@@ -76,6 +78,7 @@ const COURSE_DIRS: Record<string, string> = {
   experiments: "experimentation-ab-testing",
   forecasting: "time-series-forecasting",
   genai: "generative-ai-engineering",
+  agents: "ai-agents-tool-use",
   "ai-productivity": "ai-productivity-fundamentals",
   "design-content": "design-content-essentials",
   career: "career-essentials",
@@ -157,6 +160,7 @@ export const BUNDLED_ASSESSMENTS: AssessmentDef[] = [
   ABT_ASSESSMENT,
   TSF_ASSESSMENT,
   GAI_ASSESSMENT,
+  AGT_ASSESSMENT,
   ...AIPF_ASSESSMENTS,
   ...DCE_ASSESSMENTS,
   ...CAREER_ASSESSMENTS,
@@ -171,6 +175,6 @@ export const BUNDLED_ASSESSMENTS: AssessmentDef[] = [
   ...INTERN_ASSESSMENTS,
   ...FREEL_ASSESSMENTS,
 ].map((a) => ({ ...a, kind: a.kind ?? "final" }));
-export const BUNDLED_PROJECTS: ProjectDef[] = [SQL_PROJECT, DAF_PROJECT, XLS_PROJECT, PBI_PROJECT, DMO_PROJECT, PYAN_PROJECT, STAT_PROJECT, ASQL_PROJECT, DAX_PROJECT, CAP_PROJECT, BA_PROJECT, ABA_PROJECT, PIL_PROJECT, ML_PROJECT, FEM_PROJECT, ABT_PROJECT, TSF_PROJECT, GAI_PROJECT];
+export const BUNDLED_PROJECTS: ProjectDef[] = [SQL_PROJECT, DAF_PROJECT, XLS_PROJECT, PBI_PROJECT, DMO_PROJECT, PYAN_PROJECT, STAT_PROJECT, ASQL_PROJECT, DAX_PROJECT, CAP_PROJECT, BA_PROJECT, ABA_PROJECT, PIL_PROJECT, ML_PROJECT, FEM_PROJECT, ABT_PROJECT, TSF_PROJECT, GAI_PROJECT, AGT_PROJECT];
 
 export { CATEGORIES, categoryName } from "./catalog";
