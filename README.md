@@ -42,6 +42,7 @@ Each short course ends with a final assessment of at least 8 questions. Module c
 | Power BI DAX | 11 | Answer tasks checked against SQL over the sales, HR and legal data, plus DAX writing tasks checked against rules | Kolanut commercial dashboard |
 | Data Modelling | 9 | SQL checks and answer tasks, built around diagrams | Ashgrove Chambers data model |
 | Statistics for Data Analysis | 11 | Answer tasks in Excel or Sheets, checked against SQL and pandas (including medians, percentiles and p-values) | Harbourline delivery performance review |
+| Data Analyst Capstone | 7 | Answer tasks on a raw retail export, checked against SQL; written plan, data quality log, executive summary and portfolio tasks checked against rules | Voltline Electronics commercial review |
 | Python for Data Analytics | 12 | Answer tasks on real datasets, checked against both SQL and the pandas the lesson teaches | Kolanut customer health review |
 
 Every full-course lesson also has a **More practice** section of optional drills (often on a different dataset from the lesson), which don't count towards the certificate.

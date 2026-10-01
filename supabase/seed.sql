@@ -24977,6 +24977,1105 @@ $md$, true, true, 12, array['pyan-12-p1', 'pyan-12-p2', 'pyan-12-p3']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 
+-- Course: Data Analyst Capstone: End-to-End BI Project
+insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
+values ('data-analyst-capstone', 'full', null, 'data-analyst-capstone', 'CAP', 'Data Analyst Capstone: End-to-End BI Project', 'Take a retail chain''s raw till export all the way to a reviewed dashboard and a board-ready executive summary, using the tools of your choice.', 'The capstone of the Data Analyst track. Voltline Electronics, a chain of eight stores, sends you 18 months of raw till data and one question from its chief executive: what''s really driving our 37% growth? You''ll plan the analysis, profile and clean a genuinely messy export (a duplicated upload, mixed date formats, inconsistent store names and test transactions), build a model that looks up costs by date and compares sales with monthly targets, decompose the growth, find what''s going wrong where, and put a value on missed sales. Then you''ll build a dashboard, write an executive summary, prepare for the board''s questions and publish the project for your portfolio. Use Excel, Power BI, SQL or Python: the work is assessed on the answers, not the tool.', 'data-analytics', 'intermediate', 4, 'Career project', 14, true, 'available', true, array['Turning a business brief into an analysis plan', 'Profiling and cleaning raw data with a quality log', 'Modelling data at the right grain', 'Decomposing growth into price, new stores and volume', 'Judging targets fairly', 'Estimating lost sales with stated assumptions', 'Finding-led dashboards and executive summaries', 'Presenting and publishing a portfolio project']::text[], array['The core Data Analyst courses: Excel, SQL and Power BI (or Python)', 'Comfort cleaning data and building a dashboard in at least one tool']::text[], 'Voltline Electronics: commercial review', true, true, true, true, false, 60, 22)
+on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level = excluded.level, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('cap-m01', 'data-analyst-capstone', 'The Brief and the Plan', 1, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('data-analyst-capstone:the-brief-and-the-plan', 'data-analyst-capstone', 'cap-m01', 'the-brief-and-the-plan', 'The brief and the plan', 'Meet Voltline Electronics, turn a chief executive''s questions into an analysis plan with definitions and deliverables, and get to know the raw data.', 25, $md$
+## The problem
+
+This is the capstone of the Data Analyst track. There are no new functions to learn. Instead, you'll do what a junior analyst is hired to do: take a business problem and a pile of raw data, and come back with answers a leadership team can act on.
+
+The company is **Voltline Electronics**, a chain of eight stores selling phones, laptops, accessories, home appliances and solar power equipment in Lagos, Abuja, Port Harcourt and Ibadan. The chief executive, Ngozi Afolabi, has sent you this:
+
+> "We grew 37% in the first half of this year and the board is delighted. I'm not sure I am. I want to know what's really driving it, which stores and products are doing well and which aren't, and whether our targets make sense. The data is whatever the tills export. I need something I can take to the board in a month, and I need to trust it."
+
+The data comes straight from the stores' tills, with all the problems that implies. Nobody has cleaned it, and nobody has checked it. That's your job too.
+
+## The concept
+
+**Every analysis project follows the same arc**
+
+| Stage | Output | Lesson |
+| :-- | :-- | :-- |
+| 1. Brief and plan | Questions, definitions, deliverables, a plan | 1 |
+| 2. Profile | A list of every problem in the raw data | 2 |
+| 3. Clean and prepare | Clean tables and a cleaning log | 3 |
+| 4. Model and measures | A model and tested measures | 4 |
+| 5. Analyse | Answers, each backed by a number | 5 |
+| 6. Dashboard and story | A report and an executive summary | 6 |
+| 7. Review and present | A checked, presented, published piece of work | 7 |
+
+Use whichever tools you like: Excel, Power BI, SQL or Python, or a mix. The lessons show the key steps in more than one. What's assessed is the quality of the answers, not the tool.
+
+**A plan starts from the questions, not the data**
+
+Turn the brief into specific questions you can answer with numbers:
+
+1. How much of the 37% growth is real? (Price rise? The new store? More customers?)
+2. Which stores are improving, and which are struggling? Why?
+3. Which categories make money, not just sales?
+4. Are the store targets fair and achievable?
+5. Where is money being left on the table (stock-outs, returns, missed add-on sales)?
+
+**Definitions before numbers**
+
+Write these down before you calculate anything, because every number depends on them:
+
+- **Net sales** = quantity × unit price − discount, with returns (negative quantities) included.
+- **Gross profit** = net sales − quantity × unit cost, using the cost price in force on the sale date.
+- **Like for like** = stores open for the whole of both periods being compared.
+- **The analysis period** = 1 January 2025 to 30 June 2026. "H1" means January to June.
+
+**Deliverables**
+
+Agree what you'll hand over: a cleaned dataset with a cleaning log, a dashboard of two or three pages, a one-page executive summary with three recommendations, and your working (queries, workbook or notebook) so someone can check it.
+
+## Example
+
+A first look at the files. The dataset has six CSV files:
+
+| File | Rows | What it is |
+| :-- | --: | :-- |
+| `sales_raw.csv` | 27,978 | every till line, exactly as exported |
+| `stores.csv` | 8 | the eight stores |
+| `products.csv` | 22 | the product list with current prices |
+| `cost_prices.csv` | 44 | what Voltline pays for each product, with the date each cost applies from |
+| `targets.csv` | 138 | monthly net-sales targets by store |
+| `stockouts.csv` | 8 | periods when a store had run out of a product |
+
+Look at the grain (what one row represents) of each file. `sales_raw` is one row per **line** of a till transaction, `targets` is one row per **store per month**, and `cost_prices` is one row per **product per cost change**. Combining files at different grains is where many analyses go wrong. You'll deal with it in lesson 4.
+
+## Walkthrough
+
+1. Download the retail dataset and open every file. Write down the grain of each one in a sentence.
+2. Read the data dictionary on the dataset card. Note any column whose meaning you're unsure of.
+3. Open `sales_raw.csv` and scroll. Without doing any analysis yet, write down three things that look odd.
+4. Write your analysis plan (the task below): the questions, your definitions and your deliverables.
+5. Set up a project folder: `raw/` (never edited), `clean/`, `analysis/` and `report/`. Keeping the raw files untouched means you can always start again.
+
+## Practice
+
+```dataset
+{"dataset": "retail", "files": ["sales_raw", "stores", "products", "cost_prices", "targets", "stockouts"]}
+```
+
+```answer
+{
+  "id": "cap-01-p1",
+  "prompt": "How many rows (excluding the header) are in **sales_raw.csv**?",
+  "answer": 27978,
+  "format": "number",
+  "dataset": "retail",
+  "files": ["sales_raw"],
+  "verify": "SELECT COUNT(*) FROM sales_raw",
+  "hint": "In Excel, select a column and read the count in the status bar, then subtract the header. In pandas, len(df).",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "cap-01-p2",
+  "prompt": "How many monthly targets does **Lekki** (store_id 2) have in targets.csv?",
+  "answer": 12,
+  "format": "number",
+  "dataset": "retail",
+  "files": ["targets"],
+  "verify": "SELECT COUNT(*) FROM targets WHERE store_id = 2",
+  "hint": "Filter targets.csv to store_id 2.",
+  "explanation": "12 months, from July 2025, when it opened. Every other store has 18. Remember that when you compare stores.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "cap-01-t1",
+  "prompt": "Write your **analysis plan** for Voltline. Use three headings on their own lines: **Questions**, **Definitions** and **Deliverables**. Under Questions, list at least four specific questions as bullets. Under Definitions, define at least net sales, gross profit and like for like. Under Deliverables, list what you'll hand over.",
+  "minutes": 12,
+  "rows": 16,
+  "placeholder": "Questions\n- ...\n\nDefinitions\n- Net sales: ...\n\nDeliverables\n- ...",
+  "rules": [
+    { "label": "Has a Questions heading", "pattern": "^\\W*questions\\W*$" },
+    { "label": "Has a Definitions heading", "pattern": "^\\W*definitions\\W*$" },
+    { "label": "Has a Deliverables heading", "pattern": "^\\W*deliverables\\W*$" },
+    { "label": "At least four questions, each ending with a question mark", "pattern": "^\\s*[-*]\\s+.*\\?\\s*$", "min": 4 },
+    { "label": "Defines net sales", "pattern": "net sales\\s*[:=-]" },
+    { "label": "Defines gross profit", "pattern": "gross (profit|margin)\\s*[:=-]" },
+    { "label": "Defines like for like", "pattern": "like[- ]for[- ]like\\s*[:=-]" },
+    { "label": "Enough detail: at least 120 words", "minWords": 120 }
+  ],
+  "sample": "**Questions**\n- How much of H1 2026's growth comes from the price rise, the new Lekki store and real volume?\n- Which stores are growing on a like-for-like basis, and which are falling? Why?\n- Which categories make the most gross profit, not just the most sales?\n- Are the 2026 store targets fair, given the price rise and Lekki's opening?\n- How much do stock-outs, returns and missed accessory sales cost us?\n\n**Definitions**\n- Net sales: quantity × unit price − discount, including returns as negative lines, excluding test transactions and duplicate rows.\n- Gross profit: net sales − quantity × unit cost, using the cost price in force on the sale date.\n- Like for like: stores open for the whole of both periods compared (all except Lekki for 2025 against 2026).\n- Period: 1 January 2025 to 30 June 2026; H1 = January to June.\n\n**Deliverables**\n- Cleaned sales table and a cleaning log.\n- A Power BI report: overview, stores, products and customers pages.\n- A one-page executive summary with three recommendations.\n- My SQL and Power Query steps, so the work can be checked.",
+  "note": "Notice how specific the questions are. \"Analyse sales\" can't be finished; \"how much of the growth is the price rise?\" can be answered with one number. Your plan will change as you learn more, and that's normal. Update it rather than abandoning it.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why write definitions such as 'net sales' before calculating anything?",
+    "options": ["It's a formality", "Every number depends on them, and agreeing them first stops two people producing different answers to the same question", "Tools require it", "To make the report longer"],
+    "answer": 1,
+    "explanation": "Most disagreements about numbers are really disagreements about definitions."
+  },
+  {
+    "prompt": "sales_raw has one row per till line; targets has one row per store per month. What does that mean for joining them?",
+    "options": ["Join them directly on store", "They're at different grains: total sales to store and month first, then compare with targets", "They can't be used together", "Use a CROSS JOIN"],
+    "answer": 1,
+    "explanation": "Joining line-level sales directly to monthly targets would repeat each target once per line."
+  },
+  {
+    "prompt": "Why keep the raw files untouched in their own folder?",
+    "options": ["To save space", "So you can always repeat or check your cleaning from the original data", "Tools can't read edited files", "It's required by law"],
+    "answer": 1,
+    "explanation": "Clean into new files, and keep a record of every step."
+  }
+]
+```
+$md$, true, true, 1, array['cap-01-p1', 'cap-01-p2', 'cap-01-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('cap-m02', 'data-analyst-capstone', 'Profile the Raw Data', 2, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('data-analyst-capstone:profile-the-raw-data', 'data-analyst-capstone', 'cap-m02', 'profile-the-raw-data', 'Profile the raw data', 'Check every column of a raw till export systematically, find the problems before they find you, and decide what to do about each one.', 25, $md$
+## The problem
+
+Before you calculate a single total, imagine the board meeting. A director asks, "How do you know these numbers are right?" If your answer is "I loaded the file and summed it", you're in trouble, because Voltline's till export has problems that would quietly inflate, split or distort almost every number in the report.
+
+**Profiling** means looking at every column of every file systematically, before analysing anything, so you know exactly what you're dealing with. It's the step most beginners skip, and the step experienced analysts never do.
+
+## The concept
+
+**A profiling checklist**
+
+For each file, and each column in it:
+
+| Check | Question | Finds |
+| :-- | :-- | :-- |
+| Row count | How many rows? Does that make sense? | missing or extra data |
+| Key | Is the ID unique? Is the combination that should be unique, unique? | duplicates |
+| Text values | What are the distinct values, and how many of each? | inconsistent spellings, stray spaces |
+| Dates | What format? What's the earliest and latest? | mixed formats, impossible dates |
+| Numbers | Min, max, any negatives or zeros? | returns, errors, outliers |
+| Blanks | How many missing values per column? | gaps to explain |
+| Relationships | Does every code match a row in its lookup file? | orphans, test data |
+
+**The same checks in each tool**
+
+| Check | Excel / Power BI | SQL | pandas |
+| :-- | :-- | :-- | :-- |
+| Distinct values and counts | Filter drop-down, or Power Query's **Column distribution** | `SELECT col, COUNT(*) … GROUP BY col` | `df['col'].value_counts()` |
+| Min and max | `MIN`, `MAX`, or **Column profile** | `MIN(col)`, `MAX(col)` | `df.describe()` |
+| Exact duplicate rows | Remove Duplicates (count the difference) | `COUNT(*)` against `COUNT(*)` of `SELECT DISTINCT *` | `df.duplicated().sum()` |
+| Codes with no match | XLOOKUP returning `#N/A` | `LEFT JOIN … WHERE … IS NULL` | `merge(…, indicator=True)` |
+
+In Power Query, turn on **View → Column quality, Column distribution and Column profile**, and set profiling to **the entire data set** (bottom-left of the window). By default it only profiles the first 1,000 rows, and most of Voltline's problems are further down.
+
+**Every problem gets a decision**
+
+For each problem, record what you found, how many rows it affects and what you decided. Some problems you fix. Some you exclude. Some aren't problems at all (returns are real business events, not errors). That record, the **data quality log**, is what lets you answer the director's question.
+
+## Example
+
+Profiling the `branch` column in SQL:
+
+```sql
+SELECT branch, COUNT(*) AS lines
+FROM sales_raw
+GROUP BY branch
+ORDER BY branch;
+```
+
+There are **10** distinct values for **8** stores. `IKEJA` and `Ikeja Store` are the same shop: the till's settings changed in September 2025. `Port Harcourt` and `P/Harcourt` are the same too, and `Yaba ` has a trailing space that you can't even see in Excel.
+
+But look at `txn_id`: every ID starts with a three-letter **store code** (`IKJ-000123`), and those codes match `stores.csv` exactly. The branch text is unreliable; the code inside the ID isn't. Finding a reliable column to replace an unreliable one is a typical profiling win.
+
+## Walkthrough
+
+1. Profile `branch`, as in the example, and list the spellings for each store.
+2. Profile `txn_date`. Most dates look like `2025-03-14`, but one store's look like `14/03/2025`. Which store? In Excel these may turn into real dates or stay as text depending on your settings, so check carefully.
+3. Look for exact duplicate rows. In pandas, `df.duplicated().sum()`; in SQL, compare `COUNT(*)` with `SELECT COUNT(*) FROM (SELECT DISTINCT * FROM sales_raw)`. Then find which store and month they come from.
+4. Profile `product_code` against `products.csv`. One code isn't in the product list. Look at those rows: their dates, prices and store.
+5. Profile `qty`. Some values are negative. Look at a few: are they errors, or returns?
+6. Check `stores.csv` against the sales: when did Lekki open, and do any sales appear before that?
+7. Write each finding in your data quality log (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "cap-02-p1",
+  "prompt": "How many rows in sales_raw are **exact duplicates** of another row (the extra copies only)?",
+  "answer": 376,
+  "format": "number",
+  "dataset": "retail",
+  "files": ["sales_raw"],
+  "verify": "SELECT COUNT(*) - (SELECT COUNT(*) FROM (SELECT DISTINCT * FROM sales_raw)) FROM sales_raw",
+  "hint": "Total rows minus distinct rows. In Excel, copy the sheet, use Remove Duplicates and compare the counts.",
+  "explanation": "376 rows, all from Surulere in November 2025: that month's file was uploaded twice. Left in, they'd add Black Friday sales to Surulere a second time.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "cap-02-p2",
+  "prompt": "How many rows have a product_code that **isn't in products.csv**?",
+  "answer": 14,
+  "format": "number",
+  "dataset": "retail",
+  "files": ["sales_raw", "products"],
+  "verify": "SELECT COUNT(*) FROM sales_raw s LEFT JOIN products p ON p.product_code = s.product_code WHERE p.product_code IS NULL",
+  "hint": "A LEFT JOIN (or XLOOKUP) from sales to products, counting the rows with no match.",
+  "explanation": "14 rows with code TEST, priced at ₦1, at Lekki in the week before it opened: staff training on the new tills. They were never real sales, so exclude them.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "cap-02-p3",
+  "prompt": "How many rows have their date in **DD/MM/YYYY** format?",
+  "answer": 3473,
+  "format": "number",
+  "dataset": "retail",
+  "files": ["sales_raw"],
+  "verify": "SELECT COUNT(*) FROM sales_raw WHERE txn_date LIKE '__/__/____'",
+  "hint": "Count the dates containing a slash. In pandas: df['txn_date'].str.contains('/').sum().",
+  "explanation": "Every Port Harcourt row: that store's till exports dates the British way. Read them as YYYY-MM-DD dates and 3 April becomes 4 March, or fails to convert at all.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "cap-02-t1",
+  "prompt": "Write your **data quality log**: at least four problems you found in the raw data. Put each on its own line starting with `-`, in the form **Issue | Rows affected | Decision**, for example `- Trailing spaces in branch | 3,559 | trim, then map to store codes`.",
+  "minutes": 10,
+  "rows": 10,
+  "placeholder": "- Issue | Rows affected | Decision\n- ...",
+  "rules": [
+    { "label": "At least four entries, each a line starting with -", "pattern": "^\\s*-\\s+\\S", "min": 4 },
+    { "label": "Each entry has three parts separated by |", "pattern": "^\\s*-[^|\\n]+\\|[^|\\n]+\\|[^|\\n]+$", "min": 4 },
+    { "label": "Each entry gives a number of rows", "pattern": "^\\s*-[^|\\n]+\\|[^|\\n]*\\d", "min": 4 },
+    { "label": "Covers the duplicate upload", "pattern": "duplicat" },
+    { "label": "Covers the date format", "pattern": "date|dd/mm" },
+    { "label": "Covers the test transactions", "pattern": "test" }
+  ],
+  "sample": "- Duplicate upload of Surulere's November 2025 file | 376 | remove exact duplicate rows\n- Port Harcourt dates in DD/MM/YYYY format | 3,473 | convert to real dates, day first\n- TEST product code at Lekki before opening (staff training) | 14 | exclude\n- Branch names spelled 10 ways for 8 stores (case, spaces, renamed in the till) | 27,978 | ignore branch; use the store code from txn_id\n- Negative quantities | 577 after removing duplicates | keep: these are returns, which reduce net sales",
+  "note": "The last entry matters as much as the others: returns *look* like a problem but aren't one. Writing \"keep\" as the decision, with the reason, saves the next person from \"fixing\" them.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Power Query's column profile shows no problems in the date column. Why might it still have some?",
+    "options": ["Power Query can't read dates", "By default it profiles only the first 1,000 rows; switch to the entire data set", "Dates never have problems", "The profile only checks text"],
+    "answer": 1,
+    "explanation": "Set column profiling to the entire data set at the bottom of the Power Query window."
+  },
+  {
+    "prompt": "Some sales lines have a negative quantity. What should you do first?",
+    "options": ["Delete them", "Look at them: they may be returns, which are real business events", "Change them to positive", "Average them"],
+    "answer": 1,
+    "explanation": "Investigate before deciding. Returns should reduce net sales, not be deleted."
+  },
+  {
+    "prompt": "The branch column has 10 spellings for 8 stores, but txn_id starts with a reliable store code. What's the best approach?",
+    "options": ["Fix each spelling by hand", "Use the store code from txn_id to identify the store", "Drop the branch column and ignore stores", "Use the most common spelling"],
+    "answer": 1,
+    "explanation": "Prefer a reliable field to patching an unreliable one, and note the decision in the log."
+  }
+]
+```
+$md$, true, true, 2, array['cap-02-p1', 'cap-02-p2', 'cap-02-p3', 'cap-02-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('cap-m03', 'data-analyst-capstone', 'Clean and Prepare', 3, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('data-analyst-capstone:clean-and-prepare', 'data-analyst-capstone', 'cap-m03', 'clean-and-prepare', 'Clean and prepare', 'Turn the raw till export into a clean sales table you can rerun, in Power Query, SQL or pandas, and reconcile it with the raw data so you can prove nothing was lost.', 25, $md$
+## The problem
+
+You have a data quality log with five decisions in it. Now you have to carry them out, and in a way that survives next month. Voltline's tills export a new file every month with the same problems. If your cleaning is a series of manual edits in Excel, you'll redo it every month, slightly differently each time, and nobody will be able to check it.
+
+The goal is a cleaning process that's **repeatable** (rerun it on new data with one click or one command), **documented** (each step says what it does), and **reconciled** (you can show exactly which rows were removed and why).
+
+## The concept
+
+**The cleaning steps for Voltline**
+
+1. **Remove exact duplicate rows** (Surulere's double upload).
+2. **Exclude test transactions** (`product_code = 'TEST'`).
+3. **Take the store from the transaction ID**: the first three characters of `txn_id`.
+4. **Convert dates to real dates**, reading `DD/MM/YYYY` day first.
+5. **Calculate net sales**: `qty × unit_price − discount`. Returns have a negative quantity and a negative discount, so they reduce net sales automatically.
+6. **Keep the raw columns** you might need later, and **drop** the ones you've replaced (`branch`).
+
+**The order matters.** Remove duplicates *before* you calculate anything. Exclude test rows *before* you check the totals. And convert dates *before* you filter by month.
+
+**Reconcile**
+
+Write down the row counts at every step: raw rows, minus duplicates, minus test rows, equals clean rows. If the counts don't add up, a step did something you didn't intend. It's the cleaning equivalent of balancing a bank statement.
+
+## Example
+
+The same cleaning in three tools. Pick the one you'll use for the project.
+
+**SQL** (in SQLite, DB Browser for SQLite or any database you load the CSVs into):
+
+```sql
+CREATE VIEW sales_clean AS
+SELECT DISTINCT
+  txn_id,
+  line_no,
+  substr(txn_id, 1, 3) AS store_code,
+  CASE
+    WHEN txn_date LIKE '__/__/____'                     -- Port Harcourt: DD/MM/YYYY
+      THEN substr(txn_date, 7, 4) || '-' || substr(txn_date, 4, 2) || '-' || substr(txn_date, 1, 2)
+    ELSE txn_date
+  END AS sale_date,
+  product_code,
+  qty,
+  unit_price,
+  discount,
+  qty * unit_price - discount AS net_sales,
+  payment_method
+FROM sales_raw
+WHERE product_code <> 'TEST';
+```
+
+**pandas**:
+
+```python
+import pandas as pd
+
+raw = pd.read_csv("raw/sales_raw.csv", dtype={"txn_date": str})
+sales = (
+    raw.drop_duplicates()
+       .query("product_code != 'TEST'")
+       .assign(
+           store_code=lambda d: d["txn_id"].str[:3],
+           sale_date=lambda d: pd.to_datetime(d["txn_date"], format="mixed", dayfirst=True),
+           net_sales=lambda d: d["qty"] * d["unit_price"] - d["discount"],
+       )
+       .drop(columns=["branch", "txn_date"])
+)
+print(len(raw), len(raw.drop_duplicates()), len(sales))
+```
+
+**Power Query**: Home → Remove Rows → **Remove Duplicates**; filter `product_code` to exclude TEST; **Add Column → Extract → First Characters** (3) on `txn_id`; for the date, add a custom column that uses `Date.FromText([txn_date], [Format = "dd/MM/yyyy"])` when the text contains "/" and `Date.FromText([txn_date])` otherwise; then a custom column for net sales.
+
+> [!WARNING]
+> `dayfirst=True` with `format="mixed"` reads every date day first when it's ambiguous, which is right for `14/03/2025` and harmless for `2025-03-14`. Never let a tool guess silently: check a known Port Harcourt row, such as 3 April, before and after converting.
+
+## Walkthrough
+
+1. Copy the raw files into a `raw/` folder and never edit them.
+2. Build your cleaning steps in your chosen tool, one step at a time, checking the row count after each.
+3. Fill in a reconciliation table: raw rows → after removing duplicates → after removing test rows. It should read 27,978 → 27,602 → 27,588.
+4. Check the date conversion: count rows per month for Port Harcourt. Every month from January 2025 to June 2026 should appear, with no dates after June 2026.
+5. Check net sales: returns should appear as negative net sales, and the total for a test day should match a hand calculation of a few lines.
+6. Save the clean table to `clean/sales_clean.csv` (or keep the query or view), and note the steps in your cleaning log.
+
+## Practice
+
+```answer
+{
+  "id": "cap-03-p1",
+  "prompt": "After cleaning, what is total **net sales** across the whole period (January 2025 to June 2026)? (A rounded figure is fine.)",
+  "answer": 5811600950,
+  "format": "naira",
+  "dataset": "retail",
+  "files": ["sales_raw"],
+  "verify": "SELECT SUM(qty * unit_price - discount) FROM (SELECT DISTINCT * FROM sales_raw WHERE product_code <> 'TEST')",
+  "hint": "Remove duplicates and test rows first, then sum qty × unit_price − discount.",
+  "explanation": "₦5.81bn. Without removing the duplicates, you'd report about ₦65m more, all of it a second copy of Surulere's November.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "cap-03-p2",
+  "prompt": "After cleaning, how many lines are **returns** (negative quantity)?",
+  "answer": 577,
+  "format": "number",
+  "dataset": "retail",
+  "files": ["sales_raw"],
+  "verify": "SELECT COUNT(*) FROM (SELECT DISTINCT * FROM sales_raw WHERE product_code <> 'TEST') WHERE qty < 0",
+  "hint": "Count the clean rows where qty < 0.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "cap-03-p3",
+  "prompt": "What were Port Harcourt's net sales in **April 2026**? (A rounded figure is fine.) This checks your date conversion: get the day and month the wrong way round and the answer changes.",
+  "answer": 35577150,
+  "format": "naira",
+  "dataset": "retail",
+  "files": ["sales_raw"],
+  "verify": "SELECT SUM(qty * unit_price - discount) FROM (SELECT DISTINCT * FROM sales_raw WHERE product_code <> 'TEST') WHERE substr(txn_id, 1, 3) = 'PHC' AND substr(txn_date, 4, 7) = '04/2026'",
+  "hint": "Store code PHC, sale dates from 1 to 30 April 2026.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why remove duplicate rows before calculating any totals?",
+    "options": ["It's faster", "Every total calculated before would include the duplicates, and they're easy to forget later", "Tools require it", "It doesn't matter when"],
+    "answer": 1,
+    "explanation": "Clean first, then calculate, in a fixed order you can repeat."
+  },
+  {
+    "prompt": "Raw 27,978 rows; after removing duplicates 27,602; after removing test rows 27,588. What does this reconciliation prove?",
+    "options": ["The data is perfect", "Exactly which rows were removed at each step, and that nothing else was lost", "The analysis is finished", "The dates are correct"],
+    "answer": 1,
+    "explanation": "Each step removed what it was meant to, and only that."
+  },
+  {
+    "prompt": "Why is a cleaning process in Power Query, SQL or Python better than editing the file by hand in Excel?",
+    "options": ["It looks more professional", "It can be rerun on next month's file and checked step by step", "Excel can't remove duplicates", "It's always faster the first time"],
+    "answer": 1,
+    "explanation": "Repeatable and documented beats quick and manual for anything you'll do more than once."
+  }
+]
+```
+$md$, true, true, 3, array['cap-03-p1', 'cap-03-p2', 'cap-03-p3']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('cap-m04', 'data-analyst-capstone', 'Model and Measures', 4, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('data-analyst-capstone:model-and-measures', 'data-analyst-capstone', 'cap-m04', 'model-and-measures', 'Model and measures', 'Build a model that joins tables at the right grain, look up the cost price in force on each sale date, compare actuals with monthly targets, and test the core measures.', 25, $md$
+## The problem
+
+Two traps wait between a clean sales table and a correct profit figure.
+
+**The cost trap.** Voltline's costs went up 18% on 1 January 2026. Join sales to `cost_prices` on product code alone and every sale matches **two** cost rows: 27,588 lines become 55,176, and every total doubles. Pick just the latest cost instead, and 2025's sales are costed at 2026 prices: the first half of 2025 shows a gross margin of **−2.7%**, as if Voltline sold everything at a loss.
+
+**The target trap.** Targets are one number per store per **month**. Join them to sales lines and each target is repeated once per line, so a store's target appears hundreds of times over.
+
+Both are **grain** problems, and both are invisible unless you check. This lesson builds the model that avoids them.
+
+## The concept
+
+**The star schema**
+
+| Table | Grain | Key | Role |
+| :-- | :-- | :-- | :-- |
+| `sales_clean` | one till line | `txn_id` + `line_no` | fact |
+| `stores` | one store | `store_code` | dimension |
+| `products` | one product | `product_code` | dimension |
+| `Date` | one day | `Date` | dimension |
+| `targets` | one store per month | `store_id` + `month` | a second fact, at a coarser grain |
+
+**Looking up a cost that changes over time**
+
+Each sale needs the cost whose `effective_from` is the latest one **on or before** the sale date. That's a "range lookup":
+
+| Tool | How |
+| :-- | :-- |
+| SQL | a correlated subquery: `(SELECT unit_cost FROM cost_prices cp WHERE cp.product_code = s.product_code AND cp.effective_from <= s.sale_date ORDER BY cp.effective_from DESC LIMIT 1)` |
+| Excel | `XLOOKUP` with match mode `-1` (exact or next smaller) on a key of product and date, or `MAXIFS` to find the effective date, then a lookup |
+| pandas | `pd.merge_asof(sales.sort_values("sale_date"), costs.sort_values("effective_from"), left_on="sale_date", right_on="effective_from", by="product_code")` |
+| Power BI | a merge in Power Query, or the calculated column below |
+
+The Power BI calculated column, on `sales_clean`:
+
+```dax
+Unit Cost =
+VAR Code = sales_clean[product_code]
+VAR SaleDate = sales_clean[sale_date]
+VAR Effective =
+    MAXX (
+        FILTER ( cost_prices, cost_prices[product_code] = Code && cost_prices[effective_from] <= SaleDate ),
+        cost_prices[effective_from]
+    )
+RETURN
+    MAXX (
+        FILTER ( cost_prices, cost_prices[product_code] = Code && cost_prices[effective_from] = Effective ),
+        cost_prices[unit_cost]
+    )
+```
+
+Whichever you use, check that the row count **doesn't change** after the lookup.
+
+**Comparing with targets: aggregate first**
+
+Total the sales to store and month, then compare with the targets. In Power BI, relate `targets` to `stores` (via `store_id`) and to `Date` (via a month-start date column you add to `targets`), and write `Target = SUM ( targets[net_sales_target] )`. The measure only makes sense at month level or above. On a single day it would show the whole month's target.
+
+**The core measures**
+
+```dax
+Net Sales = SUM ( sales_clean[net_sales] )
+Gross Profit = SUMX ( sales_clean, sales_clean[net_sales] - sales_clean[qty] * sales_clean[unit_cost] )
+Gross Margin % = DIVIDE ( [Gross Profit], [Net Sales] )
+Target = SUM ( targets[net_sales_target] )
+Target Attainment % = DIVIDE ( [Net Sales], [Target] )
+Transactions = DISTINCTCOUNT ( sales_clean[txn_id] )
+```
+
+## Example
+
+Gross margin by category for January to June 2026, with costs looked up correctly:
+
+| Category | Net sales (₦m) | Gross margin |
+| :-- | --: | --: |
+| Phones | 688.5 | 9.3% |
+| Solar & power | 676.7 | 18.4% |
+| Laptops | 369.2 | 9.6% |
+| Home appliances | 341.7 | 13.2% |
+| Accessories | 57.1 | 44.4% |
+
+Phones and solar bring in almost the same sales, but solar's margin is twice as high, so solar now earns about **twice the gross profit** of phones. Accessories are tiny in sales but earn 44p in every naira. Keep that in mind for lesson 5.
+
+## Walkthrough
+
+1. Add `unit_cost` to the clean sales with a range lookup in your chosen tool. Check the row count is still 27,588.
+2. Calculate gross margin for January to June 2025. It should be about 12.9%. If you get −2.7%, your lookup used 2026 costs for 2025 sales.
+3. Build the model: relate the fact to stores, products and a date table, and the targets to stores and dates (at month start).
+4. Write the six core measures (or the equivalent SQL or pandas summaries) and format them.
+5. Test them: total net sales should be ₦5,811,600,950 (from lesson 3), and target attainment for one store and month should match a hand calculation.
+
+## Practice
+
+```answer
+{
+  "id": "cap-04-p1",
+  "prompt": "What was Voltline's **gross margin %** for **January to June 2026**? One decimal place.",
+  "answer": 13.8,
+  "format": "percent",
+  "dataset": "retail",
+  "files": ["sales_raw", "cost_prices"],
+  "verify": "WITH c AS (SELECT * FROM (SELECT DISTINCT * FROM sales_raw WHERE product_code <> 'TEST') WHERE txn_date LIKE '2026-%' OR txn_date LIKE '__/__/2026'), k AS (SELECT c.*, (SELECT unit_cost FROM cost_prices cp WHERE cp.product_code = c.product_code AND cp.effective_from = '2026-01-01') AS unit_cost FROM c) SELECT ROUND(100.0 * (SUM(qty * unit_price - discount) - SUM(qty * unit_cost)) / SUM(qty * unit_price - discount), 1) FROM k",
+  "hint": "Gross profit ÷ net sales, for sales dated 2026, using the 2026 costs.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "cap-04-p2",
+  "prompt": "What was the **gross profit** of the **Solar & power** category for **January to June 2026**? (A rounded figure is fine.)",
+  "answer": 124251650,
+  "format": "naira",
+  "dataset": "retail",
+  "files": ["sales_raw", "cost_prices", "products"],
+  "verify": "WITH c AS (SELECT * FROM (SELECT DISTINCT * FROM sales_raw WHERE product_code <> 'TEST') WHERE txn_date LIKE '2026-%' OR txn_date LIKE '__/__/2026') SELECT SUM(c.qty * c.unit_price - c.discount - c.qty * cp.unit_cost) FROM c JOIN cost_prices cp ON cp.product_code = c.product_code AND cp.effective_from = '2026-01-01' JOIN products p ON p.product_code = c.product_code WHERE p.category = 'Solar & power'",
+  "hint": "Gross profit filtered to the Solar & power category and to 2026.",
+  "explanation": "₦124.3m, against ₦64.2m from phones. Solar is now Voltline's biggest profit earner.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "cap-04-p3",
+  "prompt": "Across all stores, what was **Target Attainment %** for **January to June 2026**? One decimal place.",
+  "answer": 101.4,
+  "format": "percent",
+  "dataset": "retail",
+  "files": ["sales_raw", "targets"],
+  "verify": "SELECT ROUND(100.0 * (SELECT SUM(qty * unit_price - discount) FROM (SELECT DISTINCT * FROM sales_raw WHERE product_code <> 'TEST') WHERE txn_date LIKE '2026-%' OR txn_date LIKE '__/__/2026') / (SELECT SUM(net_sales_target) FROM targets WHERE month >= '2026-01'), 1)",
+  "hint": "Net sales for 2026 divided by the sum of the 2026 targets.",
+  "explanation": "Just over 100% for the chain, but that hides a wide range by store, which is lesson 5's job.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Joining 27,588 sales lines to cost_prices on product code gives 55,176 rows. What happened?",
+    "options": ["The data doubled overnight", "Each product has two cost rows, so every sale matched both; the lookup must pick the cost in force on the sale date", "The join is correct", "Duplicates weren't removed"],
+    "answer": 1,
+    "explanation": "Always check the row count after a join or lookup."
+  },
+  {
+    "prompt": "Why does 2025's gross margin come out at −2.7% with the latest costs?",
+    "options": ["Voltline lost money in 2025", "2025 sales at 2025 prices were costed at the higher 2026 costs", "The margins are wrong in the source", "Returns were included"],
+    "answer": 1,
+    "explanation": "Use the cost in force on each sale date."
+  },
+  {
+    "prompt": "Targets are monthly. At what level can a Target measure be shown meaningfully?",
+    "options": ["Any level, including single days", "Month, quarter, year: the target's grain or coarser", "Only the grand total", "Only by product"],
+    "answer": 1,
+    "explanation": "Below the target's grain, the number repeats or misleads."
+  }
+]
+```
+$md$, true, true, 4, array['cap-04-p1', 'cap-04-p2', 'cap-04-p3']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('cap-m05', 'data-analyst-capstone', 'Analyse', 5, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('data-analyst-capstone:analyse', 'data-analyst-capstone', 'cap-m05', 'analyse', 'Analyse', 'Answer the chief executive''s questions one by one, separate real growth from price and new stores, find what''s going wrong where, and put a naira value on missed sales.', 30, $md$
+## The problem
+
+The board is celebrating 37% growth. Your job now is to find out what's underneath it. A headline number like that almost always mixes several stories, some good and some bad, and the bad ones are easy to miss when the total looks healthy.
+
+This lesson works through the plan from lesson 1. For each question you'll get a number, check it, and write down what it means. Those notes become your executive summary in lesson 6.
+
+## The concept
+
+**Decompose the headline**
+
+Revenue growth = price + new stores + everything else (volume and mix in the existing stores). Separate them:
+
+- **New stores**: compare like for like, leaving out stores not open in both periods (Lekki).
+- **Price**: compare the like-for-like growth with the 18% price rise. Whatever's left is real change in volume or mix.
+
+**Compare like with like, then look inside**
+
+For each store, compare January to June 2026 with January to June 2025: sales, transactions and average transaction value. When something changes sharply, find the **date** it changed. A step change on a particular date usually has a specific cause.
+
+**Look for money left on the table**
+
+| Leak | Measure |
+| :-- | :-- |
+| Missed add-on sales | **Attach rate**: the share of phone transactions that include an accessory |
+| Returns | **Return rate**: units returned ÷ units sold, by product |
+| Stock-outs | **Lost sales estimate**: normal daily sales × days out of stock × price |
+
+**Every estimate needs its assumptions**
+
+A lost-sales figure is an estimate, not a fact. Say how you made it: which period you took as "normal", how many days, which price, and what you ignored (customers who bought a different model instead, for example). An estimate with clear assumptions is useful; one without them isn't trusted.
+
+## Example
+
+The growth, decomposed, for January to June:
+
+| | H1 2025 (₦m) | H1 2026 (₦m) | Growth |
+| :-- | --: | --: | --: |
+| All stores | 1,551.9 | 2,133.2 | +37.5% |
+| Like for like (excluding Lekki) | 1,551.9 | 1,835.2 | +18.3% |
+| Lekki (opened July 2025) | 0 | 298.0 | |
+
+Prices rose 18% in January 2026. Like-for-like growth of 18.3% means the existing stores sold almost **exactly the same volume** as a year earlier. The real growth story is one new store and a price rise. That's not a disaster, but it's not what the board thinks either.
+
+## Walkthrough
+
+1. Reproduce the decomposition above in your tool, and check that Lekki plus like for like adds up to the total.
+2. Build a table of each store's H1 2025 and H1 2026 net sales and transactions (sales transactions only, not returns). Which store stands out?
+3. For that store, plot weekly transactions over the whole period. Find the month the change starts, then check with the business. (When you ask, Voltline's regional manager tells you a competitor opened next door in February 2026. In a real project, that conversation is part of the analysis.)
+4. Calculate the attach rate for each store: among transactions that include a phone, the share that also include an accessory.
+5. Calculate the return rate for each product. One stands far above the rest.
+6. Use `stockouts.csv` to estimate lost sales for the Wuse 5kVA inverter stock-out (the task below).
+7. For each finding, write one sentence: the number, and what it means.
+
+## Practice
+
+```answer
+{
+  "id": "cap-05-p1",
+  "prompt": "What was **like-for-like** net sales growth, January to June 2026 against January to June 2025, excluding Lekki? One decimal place.",
+  "answer": 18.3,
+  "format": "percent",
+  "dataset": "retail",
+  "files": ["sales_raw"],
+  "verify": "WITH c AS (SELECT * FROM (SELECT DISTINCT * FROM sales_raw WHERE product_code <> 'TEST') WHERE substr(txn_id, 1, 3) <> 'LKI') SELECT ROUND(100.0 * (1.0 * SUM(CASE WHEN txn_date LIKE '2026-%' OR txn_date LIKE '__/__/2026' THEN qty * unit_price - discount END) / SUM(CASE WHEN (txn_date BETWEEN '2025-01-01' AND '2025-06-30') OR (txn_date LIKE '__/0_/2025' AND substr(txn_date, 4, 2) BETWEEN '01' AND '06') THEN qty * unit_price - discount END) - 1), 1) FROM c",
+  "hint": "Net sales for the seven stores open in both periods, H1 2026 ÷ H1 2025 − 1.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "cap-05-p2",
+  "prompt": "At **Port Harcourt**, by how much did the number of **sales transactions** (excluding returns) change between February–June 2025 and February–June 2026? One decimal place (it's negative).",
+  "answer": -27.3,
+  "format": "percent",
+  "dataset": "retail",
+  "files": ["sales_raw"],
+  "verify": "WITH c AS (SELECT DISTINCT txn_id, substr(txn_date, 7, 4) || '-' || substr(txn_date, 4, 2) AS ym FROM sales_raw WHERE substr(txn_id, 1, 3) = 'PHC' AND qty > 0) SELECT ROUND(100.0 * (SUM(ym BETWEEN '2026-02' AND '2026-06') * 1.0 / SUM(ym BETWEEN '2025-02' AND '2025-06') - 1), 1) FROM c",
+  "hint": "Count distinct txn_id where qty > 0, for store code PHC, in each period.",
+  "explanation": "Down 27%, starting in February 2026, while every other existing store held steady. A competitor opening nearby is the obvious explanation, and the store manager can confirm it.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "cap-05-p3",
+  "prompt": "What is **Garki**'s accessory **attach rate**: the share of its phone transactions that also include an accessory, across the whole period? One decimal place.",
+  "answer": 26.9,
+  "format": "percent",
+  "dataset": "retail",
+  "files": ["sales_raw", "products"],
+  "verify": "WITH c AS (SELECT DISTINCT s.txn_id, s.line_no, p.category FROM sales_raw s JOIN products p ON p.product_code = s.product_code WHERE substr(s.txn_id, 1, 3) = 'GRK' AND s.qty > 0), t AS (SELECT txn_id, MAX(category = 'Phones') AS phone, MAX(category = 'Accessories') AS acc FROM c GROUP BY txn_id) SELECT ROUND(100.0 * SUM(acc) / COUNT(*), 1) FROM t WHERE phone = 1",
+  "hint": "Group lines by transaction; flag whether each has a phone and whether it has an accessory; then, among phone transactions, the share with an accessory.",
+  "explanation": "26.9% at Garki against 54.2% at Ikeja. Accessories earn a 44% margin, so lifting Garki to even 40% would add real profit at almost no cost: a training opportunity.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "cap-05-p4",
+  "prompt": "What is the **return rate** (units returned ÷ units sold) of the **Zentro Z5 64GB** (VP-101)? One decimal place.",
+  "answer": 9.5,
+  "format": "percent",
+  "dataset": "retail",
+  "files": ["sales_raw"],
+  "verify": "SELECT ROUND(100.0 * -SUM(CASE WHEN qty < 0 THEN qty END) / SUM(CASE WHEN qty > 0 THEN qty END), 1) FROM (SELECT DISTINCT * FROM sales_raw WHERE product_code = 'VP-101')",
+  "hint": "Returned units are the negative quantities. Remove duplicates first.",
+  "explanation": "9.5%, against under 2.5% for every other product. That's a quality problem to raise with the supplier, and each return costs a sale, staff time and often the margin.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "cap-05-t1",
+  "prompt": "Estimate the **sales lost** while Wuse was out of stock of the **Inverter 5kVA** (VP-403), from 2 March to 23 April 2026. Give your **method**, your **assumptions** and the **estimate** in naira, in a short paragraph or a few bullets.",
+  "minutes": 10,
+  "rows": 8,
+  "placeholder": "Method: ...\nAssumptions: ...\nEstimate: ₦...",
+  "rules": [
+    { "label": "Gives the number of days out of stock", "pattern": "\\b5[23]\\b\\s*days" },
+    { "label": "Uses a normal sales rate (per day, week or month) from a period before the stock-out", "pattern": "per (day|week|month)|a (day|week|month)|daily|weekly|monthly" },
+    { "label": "States at least one assumption", "pattern": "assum" },
+    { "label": "Gives an estimate in naira", "pattern": "₦\\s*\\d|\\bN\\s*\\d|naira" },
+    { "label": "Mentions price or margin", "pattern": "price|margin|profit" },
+    { "label": "Enough detail: at least 50 words", "minWords": 50 }
+  ],
+  "sample": "- **Method**: Wuse sold 8 of the 5kVA inverter in the 60 days from 1 January to 1 March 2026, about 0.13 a day. The stock-out lasted 53 days (2 March to 23 April), so about 7 sales were lost.\n- **Estimate**: 7 × ₦932,000 (the 2026 price) ≈ **₦6.5m** of net sales, or about **₦1.1m** of gross profit at the 17% margin.\n- **Assumptions**: January and February were a normal rate (the same months of 2025 were similar); no customer bought a 3.5kVA instead (that one was also out for part of the period, so substitution was limited); lost customers didn't come back later.",
+  "note": "Your numbers may differ a little depending on the period you call normal. That's fine, as long as you say what you did. Presenting a range (say ₦5m–₦8m) is often more honest than one precise figure.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Total growth is 37.5%, like-for-like growth is 18.3%, and prices rose 18%. What's the best summary?",
+    "options": ["Volume grew strongly", "Existing stores sold about the same volume; the growth came from the price rise and the new Lekki store", "Prices fell", "Lekki is failing"],
+    "answer": 1,
+    "explanation": "Decompose the headline before celebrating it."
+  },
+  {
+    "prompt": "A store's transactions drop 27% from one particular month. What's the most useful next step?",
+    "options": ["Assume the manager is underperforming", "Find the exact date of the change and ask what happened then: a competitor, roadworks, a staff change", "Ignore it", "Average it with other stores"],
+    "answer": 1,
+    "explanation": "A step change usually has a specific cause. Find the date, then ask."
+  },
+  {
+    "prompt": "Why should a lost-sales estimate state its assumptions?",
+    "options": ["To make it longer", "Because it's an estimate: readers need to know what it depends on to judge and trust it", "Assumptions are required by law", "It doesn't need to"],
+    "answer": 1,
+    "explanation": "An estimate with clear assumptions is useful; one without them gets ignored."
+  }
+]
+```
+$md$, true, true, 5, array['cap-05-p1', 'cap-05-p2', 'cap-05-p3', 'cap-05-p4', 'cap-05-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('cap-m06', 'data-analyst-capstone', 'Dashboard and Story', 6, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('data-analyst-capstone:dashboard-and-story', 'data-analyst-capstone', 'cap-m06', 'dashboard-and-story', 'Dashboard and story', 'Turn findings into a report a chief executive can read in five minutes, with chart titles that state the finding, an honest view of the targets and a one-page executive summary.', 30, $md$
+## The problem
+
+You now have a dozen solid findings. Put all of them on one page with equal weight and the chief executive will remember none of them. A board has perhaps ten minutes for your work. What they need is the **three things that matter most**, the evidence for each, and what to do about it.
+
+There's one more question in the brief you haven't answered yet: "Do our targets make sense?" The answer turns out to change how the board should read the whole report.
+
+## The concept
+
+**Structure the report like an argument**
+
+| Page | Purpose | Contents |
+| :-- | :-- | :-- |
+| 1. Overview | the answer, at a glance | net sales, like-for-like growth, gross margin, target attainment; a trend line; the three key messages in text |
+| 2. Stores | where it's going well and badly | like-for-like growth by store, target attainment, Port Harcourt's trend |
+| 3. Products | where the profit is | sales and gross profit by category, return rates |
+| 4. Opportunities | money left on the table | attach rate by store, stock-out estimates |
+
+**Titles that say the finding**
+
+A chart titled "Net sales by store" makes the reader work out the message. "Port Harcourt is the only store to shrink, down 27% in transactions since February" tells them, and the chart becomes the proof. Write every title as a sentence with the finding in it.
+
+**Targets: is the measuring stick fair?**
+
+Before you judge a store against its target, judge the target. Lekki's target was set at ₦52m a month **from its first month**, the level of a mature store. Of course it "failed" for its first six months: no new store starts at full speed. Judged on its trajectory, Lekki is a success: it beat ₦52m in April, May and June 2026. A report that just says "Lekki: 55% of target" in 2025 would be accurate and badly misleading.
+
+**The executive summary**
+
+One page, in this order:
+
+1. **The answer first**: one or two sentences answering the chief executive's main question.
+2. **Three key findings**, each with its number.
+3. **Three recommendations**, each linked to a finding, specific enough to act on.
+4. **Caveats**: what the data can't tell you, and any estimate's assumptions.
+
+## Example
+
+An executive summary opening that works:
+
+> **Growth is real but narrower than it looks.** Net sales rose 37.5% in January to June 2026, but 18 points of that is January's price rise and most of the rest is the new Lekki store. Like for like, our existing stores sold almost exactly the same volume as a year ago.
+
+It gives the answer in the first line, puts a number on each claim, and doesn't hide the uncomfortable part. Compare it with "This report presents an analysis of Voltline's sales performance across eight stores", which tells the reader nothing.
+
+## Walkthrough
+
+1. Sketch the four pages on paper first: which visual goes where, and what each title will say.
+2. Build page 1. Put the KPI cards along the top, the monthly trend (with a like-for-like line) in the middle, and a text box with your three messages.
+3. Build pages 2 to 4. Give every visual a finding as its title, and remove anything that doesn't support a message.
+4. Add a target view that's fair to Lekki: attainment by month, so the climb is visible, not a single six-month figure.
+5. Write the executive summary (the task below).
+6. Read the summary aloud. Cut every sentence that doesn't contain a fact or a recommendation.
+
+## Practice
+
+```answer
+{
+  "id": "cap-06-p1",
+  "prompt": "What was Lekki's **Target Attainment %** for **June 2026**? One decimal place.",
+  "answer": 110.1,
+  "format": "percent",
+  "dataset": "retail",
+  "files": ["sales_raw", "targets"],
+  "verify": "SELECT ROUND(100.0 * (SELECT SUM(qty * unit_price - discount) FROM (SELECT DISTINCT * FROM sales_raw WHERE product_code <> 'TEST') WHERE substr(txn_id, 1, 3) = 'LKI' AND txn_date LIKE '2026-06-%') / (SELECT net_sales_target FROM targets WHERE store_id = 2 AND month = '2026-06'), 1)",
+  "hint": "Lekki's June 2026 net sales ÷ its June 2026 target.",
+  "explanation": "110%: a store that 'missed target' every month of 2025 is now beating a target set for a mature store.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "cap-06-p2",
+  "prompt": "What was Lekki's **Target Attainment %** over its first six months, **July to December 2025**? One decimal place.",
+  "answer": 55.0,
+  "format": "percent",
+  "dataset": "retail",
+  "files": ["sales_raw", "targets"],
+  "verify": "SELECT ROUND(100.0 * (SELECT SUM(qty * unit_price - discount) FROM (SELECT DISTINCT * FROM sales_raw WHERE product_code <> 'TEST') WHERE substr(txn_id, 1, 3) = 'LKI' AND txn_date LIKE '2025-%') / (SELECT SUM(net_sales_target) FROM targets WHERE store_id = 2 AND month BETWEEN '2025-07' AND '2025-12'), 1)",
+  "hint": "Lekki's 2025 net sales ÷ the sum of its 2025 targets.",
+  "explanation": "55%. Both numbers are true; together they tell the real story of a new store ramping up against an unrealistic target.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "cap-06-t1",
+  "prompt": "Write the **executive summary** for Voltline's chief executive: the answer first, then **three findings** and **three recommendations**, then a **caveat**. Use the headings **Findings**, **Recommendations** and **Caveats** on their own lines, with bullets under each. Maximum 300 words.",
+  "minutes": 20,
+  "rows": 18,
+  "placeholder": "Growth is real but narrower than it looks. ...\n\nFindings\n- ...\n\nRecommendations\n- ...\n\nCaveats\n- ...",
+  "rules": [
+    { "label": "Opens with the answer: the first line isn't a heading and mentions growth", "pattern": "(?<![\\s\\S])\\s*[^\\n]*grow" },
+    { "label": "Has a Findings heading", "pattern": "^\\W*(key )?findings\\W*$" },
+    { "label": "Has a Recommendations heading", "pattern": "^\\W*recommendations\\W*$" },
+    { "label": "Has a Caveats heading", "pattern": "^\\W*caveats?\\W*$" },
+    { "label": "At least six bullets", "pattern": "^\\s*[-*]\\s+\\S", "min": 6 },
+    { "label": "Mentions like-for-like growth", "pattern": "like[- ]for[- ]like" },
+    { "label": "At least six numbers as evidence", "pattern": "\\d+(\\.\\d+)?\\s*(%|m\\b|bn\\b|points?)", "min": 6 },
+    { "label": "No more than 300 words", "maxWords": 300 }
+  ],
+  "sample": "Growth is real but narrower than it looks. Net sales rose 37.5% in January to June 2026, but 18 points of that is January's price rise and most of the rest is the new Lekki store. Like for like, existing stores sold the same volume as a year ago.\n\n**Findings**\n- Like-for-like growth was 18.3%, matching the 18% price rise: underlying volume is flat.\n- Solar & power now earns ₦124.3m of gross profit, twice as much as phones (₦64.2m), on similar sales.\n- Port Harcourt's transactions are down 27.3% since a competitor opened in February; every other existing store held steady.\n\n**Recommendations**\n- Prioritise solar: protect stock (Wuse lost about ₦6.5m of 5kVA inverter sales in a 53-day stock-out) and train staff in every store.\n- Lift accessory attach rates to 40% in Garki (26.9%), Ibadan (31.3%) and Port Harcourt (37.1%) with Ikeja's sales script (54.2%).\n- Raise the Zentro Z5's 9.5% return rate with the supplier, and pause promoting it until it's fixed.\n\n**Caveats**\n- Lekki's 2025 targets were set at a mature store's level, so its 55% attainment last year says more about the target than the store; it beat target by 10% in June 2026.\n- Lost-sales figures are estimates based on each store's normal sales rate before the stock-out.",
+  "note": "Every bullet has a number, and every recommendation names who should do what. The caveat about Lekki isn't a footnote: it stops the board drawing exactly the wrong conclusion about the newest store.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Which chart title is best?",
+    "options": ["Net sales by store", "Store performance", "Port Harcourt is the only store to shrink, down 27% in transactions since February", "Chart 3"],
+    "answer": 2,
+    "explanation": "A title that states the finding tells the reader what to see."
+  },
+  {
+    "prompt": "A new store reached 55% of its target in its first six months, then beat it. What should the report say?",
+    "options": ["The store failed in 2025", "The target was set at a mature store's level from day one; judged on its trajectory, the store is succeeding", "Close the store", "Nothing about targets"],
+    "answer": 1,
+    "explanation": "Judge the measuring stick before you judge the store."
+  },
+  {
+    "prompt": "What should come first in an executive summary?",
+    "options": ["The methodology", "The answer to the main question", "A description of the data", "The caveats"],
+    "answer": 1,
+    "explanation": "Busy readers may read only the first lines. Put the answer there."
+  }
+]
+```
+$md$, true, true, 6, array['cap-06-p1', 'cap-06-p2', 'cap-06-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('cap-m07', 'data-analyst-capstone', 'Review, Present and Publish', 7, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('data-analyst-capstone:review-present-and-publish', 'data-analyst-capstone', 'cap-m07', 'review-present-and-publish', 'Review, present and publish', 'Check your own work the way a reviewer will, prepare for the board''s hardest questions, and turn the capstone into a portfolio piece employers will read.', 25, $md$
+## The problem
+
+Your report is built. Three things still stand between it and being useful.
+
+First, **it hasn't been checked**. Every analyst makes mistakes; good ones catch them before anyone else does. Second, **it hasn't been presented**. The board will ask questions, and "I'll get back to you" on an obvious one undoes a month of work. Third, **nobody outside Voltline will ever see it**. As a job seeker, the capstone is your strongest proof that you can do the job, but only if you publish it in a form a recruiter can take in within two minutes.
+
+## The concept
+
+**Review your own work like a stranger**
+
+Leave it for a day, then check:
+
+| Check | How |
+| :-- | :-- |
+| Totals reconcile | net sales matches the cleaning reconciliation; store totals add up to the chain |
+| Definitions are visible | net sales, gross profit, like for like and the period are stated on the report |
+| Every number is explained | each chart title states a finding; every KPI has a comparison |
+| Caveats are honest | estimates have assumptions; Lekki's targets are explained |
+| Someone else could rerun it | your cleaning steps, queries and measures are saved and labelled |
+
+Then ask someone else to read the executive summary and tell you, in their own words, the three main messages. If they can't, the summary isn't finished.
+
+**Prepare for the questions you'll be asked**
+
+Boards ask predictable questions: "How do you know?", "Compared with what?", "What would you do?" and "What could make this wrong?" Write down the three hardest questions you expect and your answer to each, with the number you'll point to.
+
+**Publish it for your portfolio**
+
+A portfolio entry is a short case study, not the full report:
+
+1. **The problem**, in one or two sentences.
+2. **The data**: what it was and what was wrong with it.
+3. **What you did**: the tools and the main steps.
+4. **What you found**: two or three findings with numbers.
+5. **Links**: the report (PDF or Power BI link), and your code or workbook.
+
+Publish it on GitHub (a README with screenshots), a portfolio site, or a LinkedIn post linking to them. The Build Your Student Portfolio course covers the details.
+
+> [!NOTE]
+> Voltline is fictional, so you can publish everything. With a real employer's data you'd need permission first, and you'd often have to anonymise or recreate the data.
+
+## Example
+
+A portfolio summary that a recruiter can read in a minute:
+
+> **Voltline Electronics: what's really driving 37% growth?** A capstone project for an 8-store electronics chain. I cleaned a raw till export of 27,978 lines (a duplicated upload, three date and naming problems, and test transactions), built a star-schema model in Power BI with date-based cost lookups, and analysed 18 months of sales. Like-for-like growth was 18.3%, matching the 18% price rise, so the existing stores' volume was flat. Solar now earns twice the gross profit of phones, and one store's transactions fell 27% after a competitor opened. Tools: Power Query, DAX, SQL. [Report] [Code]
+
+## Walkthrough
+
+1. Run through the review checklist and fix what you find. Note what you changed.
+2. Ask a friend or classmate to read your executive summary and repeat the three messages back to you.
+3. Write your three hardest board questions and answers (the first task below).
+4. Rehearse a 10-minute presentation: 1 minute on the question, 6 on the three findings, 3 on the recommendations. Leave the remaining time for questions.
+5. Export the report to PDF, take two or three screenshots, and write your portfolio summary (the second task).
+6. Publish: a GitHub repository with a README, or a page on your portfolio site, then share the link.
+
+## Practice
+
+```task
+{
+  "id": "cap-07-t1",
+  "prompt": "Write the **three hardest questions** you expect from Voltline's board, each with your answer. Start each question on its own line with `Q:` and each answer on its own line with `A:`. Each answer should point to a number.",
+  "minutes": 10,
+  "rows": 12,
+  "placeholder": "Q: ...\nA: ...\n\nQ: ...\nA: ...",
+  "rules": [
+    { "label": "Three questions, each on a line starting with Q:", "pattern": "^\\s*Q\\s*:", "min": 3 },
+    { "label": "Three answers, each on a line starting with A:", "pattern": "^\\s*A\\s*:", "min": 3 },
+    { "label": "Each answer includes a number", "pattern": "^\\s*A\\s*:.*\\d", "min": 3 },
+    { "label": "Enough detail: at least 80 words", "minWords": 80 }
+  ],
+  "sample": "Q: If like-for-like volume is flat, why did gross profit grow?\nA: Mix. Solar & power, at an 18.4% margin, rose from ₦60.4m to ₦124.3m of gross profit, while phones, at 9.3%, grew far less. Gross margin rose from 12.9% to 13.8%.\n\nQ: Is Port Harcourt's fall really the competitor, or the store team?\nA: The drop starts in February 2026, the month the competitor opened, and transactions fell 27.3% while the store's average sale held up. Every other existing store held steady. I'd still ask the store manager before concluding.\n\nQ: How sure are you about the ₦6.5m lost on inverters at Wuse?\nA: It's an estimate: 8 sold in the 60 days before the stock-out, times 53 days out, times the ₦932,000 price. A range of ₦5m to ₦8m is fair, depending on the period taken as normal.",
+  "note": "Good answers concede what's uncertain (\"I'd still ask the store manager\") while standing by the numbers. That's what makes a board trust the rest of the report.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "cap-07-t2",
+  "prompt": "Write your **portfolio summary** for the capstone: the problem, the data and its problems, what you did (with your tools), and at least two findings with numbers. Between 80 and 200 words.",
+  "minutes": 10,
+  "rows": 10,
+  "placeholder": "Voltline Electronics: ...",
+  "rules": [
+    { "label": "Names the company or project", "pattern": "voltline" },
+    { "label": "Mentions the data problems you fixed (duplicates, dates, test rows or names)", "pattern": "duplicat|date|test|clean" },
+    { "label": "Names at least one tool", "pattern": "power bi|power query|dax|sql|excel|python|pandas" },
+    { "label": "At least two findings with numbers", "pattern": "\\d+(\\.\\d+)?\\s*(%|m\\b|bn\\b)", "min": 2 },
+    { "label": "Between 80 and 200 words", "minWords": 80, "maxWords": 200 }
+  ],
+  "sample": "**Voltline Electronics: what's really driving 37% growth?** A capstone project for an 8-store electronics chain. I cleaned a raw till export of 27,978 lines (a duplicated upload, mixed date formats, ten spellings of eight store names and test transactions), built a star-schema model in Power BI with date-based cost lookups, and analysed 18 months of sales. Like-for-like growth was 18.3%, matching the 18% price rise, so the existing stores' volume was flat. Solar now earns twice the gross profit of phones (₦124.3m against ₦64.2m), and Port Harcourt's transactions fell 27.3% after a competitor opened next door. I recommended prioritising solar stock, an accessory sales script for three stores and a supplier review of one phone with a 9.5% return rate. Tools: Power Query, DAX and SQL.",
+  "note": "A recruiter will spend about a minute on this. Lead with the question, prove you can handle messy data, and finish with numbers and recommendations: the three things a hiring manager is looking for in a junior analyst.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "A friend reads your executive summary but can't say what the three main messages are. What should you do?",
+    "options": ["Find a different reader", "Rewrite the summary: if a reader can't repeat the messages, they aren't clear yet", "Add more charts", "Make it longer"],
+    "answer": 1,
+    "explanation": "The test of a summary is what the reader remembers."
+  },
+  {
+    "prompt": "A board member asks a question you can't answer from the data. What's the best response?",
+    "options": ["Guess", "Say what the data does and doesn't show, and offer to find out", "Change the subject", "Say the data is wrong"],
+    "answer": 1,
+    "explanation": "Honesty about the limits of the data builds trust in everything else you said."
+  },
+  {
+    "prompt": "What belongs in a portfolio case study?",
+    "options": ["The full report and every query", "A short summary of the problem, the data, what you did and what you found, with links to the full work", "Only screenshots", "Only the tools you used"],
+    "answer": 1,
+    "explanation": "Make it readable in a minute, with the full detail one click away."
+  }
+]
+```
+$md$, true, true, 7, array['cap-07-t1', 'cap-07-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+
 -- Assessment: SQL for Data Analysis: final assessment
 insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
 values ('sql-for-data-analysis-final', 'sql-for-data-analysis', 'final', null, 'SQL for Data Analysis: final assessment', 60, true)
@@ -26108,6 +27207,108 @@ on conflict (id) do update set assessment_id = excluded.assessment_id, position 
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
 values ('daxq15', 1, 'That''s left-censoring. Only trust the measure after the start of the data.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Data Analyst Capstone: final assessment
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('data-analyst-capstone-final', 'data-analyst-capstone', 'final', null, 'Data Analyst Capstone: final assessment', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('capq01', 'data-analyst-capstone-final', 1, 'A manager asks you to ''analyse sales''. What should you do first?', '["Build a dashboard of everything","Agree specific questions, definitions and deliverables","Clean the data","Ask for more data"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('capq01', 1, 'A plan with specific questions tells you when you''re finished.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('capq02', 'data-analyst-capstone-final', 2, 'Power Query''s column profile shows no problems, but you haven''t changed any settings. What might you be missing?', '["Nothing","Problems after the first 1,000 rows, because profiling defaults to the top 1,000","Problems in the column names","Hidden columns"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('capq02', 1, 'Profile the entire data set.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('capq03', 'data-analyst-capstone-final', 3, 'A month''s file was uploaded twice. Which step order is right?', '["Calculate totals, then remove duplicates","Remove duplicates, then calculate","Either order","Average the two copies"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('capq03', 1, 'Clean first, then calculate.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('capq04', 'data-analyst-capstone-final', 4, 'Joining sales lines to a cost table on product code alone doubles the row count. Why?', '["The sales doubled","Each product has several cost rows over time; you must pick the cost in force on the sale date","The join type is wrong","Duplicates in sales"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('capq04', 1, 'A range lookup keeps one cost per sale; check row counts after every join.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('capq05', 'data-analyst-capstone-final', 5, 'Revenue grew 37%, like-for-like growth was 18%, and prices rose 18%. What''s the best summary?', '["Strong volume growth","Existing stores'' volume was flat; growth came from the price rise and a new store","Prices fell","The data is wrong"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('capq05', 1, 'Decompose the headline before reporting it.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('capq06', 'data-analyst-capstone-final', 6, 'A new store opened in July with a mature store''s target from day one and reached 55% of target by December, then beat target in the spring. What should the report say?', '["The store is failing","The target was unrealistic for a new store; on its trajectory, the store is doing well","Remove the store from the report","Report only the 55%"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('capq06', 1, 'Judge the target before judging the store.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('capq07', 'data-analyst-capstone-final', 7, 'Which chart title is best for a board report?', '["Gross profit by category","Solar now earns twice the gross profit of phones","Category analysis","Figure 2"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('capq07', 1, 'State the finding in the title.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('capq08', 'data-analyst-capstone-final', 8, 'You estimate ₦6.5m of sales lost to a stock-out. What must accompany the figure?', '["Nothing; it''s a number","The method and assumptions, ideally with a range","A chart","The SQL code"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('capq08', 1, 'An estimate without assumptions won''t be trusted.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('capq09', 'data-analyst-capstone-final', 9, 'What comes first in an executive summary?', '["The methodology","The answer to the main question","The data sources","Acknowledgements"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('capq09', 1, 'Busy readers may read only the first lines.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('capq10', 'data-analyst-capstone-final', 10, 'One store''s transactions fall 27% starting in a particular month. What''s the best next step?', '["Blame the store manager","Find the date it started and ask the business what changed then","Exclude the store","Wait another year"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('capq10', 1, 'Step changes usually have a specific cause; the business can often tell you.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('capq11', 'data-analyst-capstone-final', 11, 'Some sales lines have negative quantities. After investigation they''re customer returns. What do you do?', '["Delete them","Keep them, so returns reduce net sales, and note the decision in your log","Make them positive","Move them to another file"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('capq11', 1, 'Returns are real business events.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('capq12', 'data-analyst-capstone-final', 12, 'You want to publish your capstone for employers. What works best?', '["The raw files only","A short case study (problem, data, approach, findings with numbers) with links to the full report and code","A long PDF with every query","Nothing: employers don''t look"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('capq12', 1, 'Readable in a minute, with the detail one click away.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 
@@ -29329,6 +30530,16 @@ In the text box, for each task give the **DAX** of the key measures, the **numbe
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
 
 
+-- Project: Voltline Electronics: commercial review
+insert into public.projects (id, course_id, title, summary, brief_md, tasks, datasets, rubric, required)
+values ('cap-voltline-review', 'data-analyst-capstone', 'Voltline Electronics: commercial review', 'An end-to-end analysis of a retail chain from its raw till export: cleaning, modelling, analysis, a dashboard and a board-ready executive summary.', $md$Voltline Electronics' chief executive wants to know what's really driving the business, from 18 months of raw till data. Take it from the raw files to a reviewed dashboard and recommendations, in the tools of your choice.
+
+Submit one link to your work: a folder or repository (Google Drive, OneDrive or GitHub) containing your cleaning steps (Power Query, SQL or a notebook), your report (a .pbix, workbook or notebook plus a PDF export), your data quality log and your executive summary.
+
+In the text box, paste your **executive summary**, then a short note for each task below saying where to find it and the key number.$md$, array['Analysis plan: questions, definitions (net sales, gross profit, like for like, the period) and deliverables.', 'Data quality log and cleaning: every problem found, rows affected and the decision, with a reconciliation from 27,978 raw rows to your clean table.', 'Model and measures: the tables and their grain, the date-based cost lookup, and the measures for net sales, gross profit, margin and target attainment, with the tests you ran.', 'Growth: total against like-for-like growth for January to June 2026, and how much is price, the new store and volume.', 'Stores and targets: like-for-like performance by store, Port Harcourt''s decline, and a fair assessment of Lekki against its targets.', 'Products and leaks: gross profit by category, return rates, accessory attach rates and at least one stock-out estimate with assumptions.', 'A dashboard of three or four pages with titles that state findings, and a one-page executive summary with three recommendations and caveats.']::text[], array['retail']::text[], array['The raw data was profiled and cleaned with repeatable steps; every problem is logged with a decision, and the row counts reconcile.', 'Grain is handled correctly: costs are looked up by sale date, targets are compared at month level, and no join inflates totals.', 'Growth is decomposed: like-for-like growth is separated from the new store and the price rise.', 'Findings are backed by numbers and checked; estimates state their assumptions.', 'Targets are judged fairly, with Lekki''s ramp-up explained rather than reported as failure.', 'The dashboard leads with the main messages, with finding-led titles and no clutter.', 'The executive summary gives the answer first, three findings and three specific recommendations, and honest caveats.']::text[], true)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
+
+
 -- Track: Become a Data Analyst
 insert into public.tracks (id, slug, title, summary, badge_name, badge_code, skills, position, published)
 values ('data-analyst', 'data-analyst', 'Become a Data Analyst', 'The route we recommend from no experience to a junior data analyst role. Learn how analysis works, then the tools teams use every day (Excel, SQL, Power BI and Python) on realistic company data. Build portfolio projects that answer real business questions, and finish with your CV, LinkedIn and interview preparation.', 'CloudTech Data Analyst', 'DATAANALYST', array['Spreadsheet analysis in Excel', 'Statistics: averages, spread, confidence intervals and tests', 'Querying databases with SQL, from first SELECT to cohorts and window functions', 'Data modelling and star schemas', 'Dashboards in Power BI, with DAX measures you can trust', 'Analysis in Python and pandas', 'Turning data into findings a manager can act on']::text[], 1, true)
@@ -29373,15 +30584,19 @@ values ('data-analyst', 'advanced-sql', 'Advanced', true, 9)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 insert into public.track_courses (track_id, course_id, stage, required, position)
-values ('data-analyst', 'career-essentials', 'Career', true, 10)
+values ('data-analyst', 'data-analyst-capstone', 'Projects', true, 10)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 insert into public.track_courses (track_id, course_id, stage, required, position)
-values ('data-analyst', 'build-your-student-portfolio', 'Career', false, 11)
+values ('data-analyst', 'career-essentials', 'Career', true, 11)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 insert into public.track_courses (track_id, course_id, stage, required, position)
-values ('data-analyst', 'get-your-first-internship', 'Career', false, 12)
+values ('data-analyst', 'build-your-student-portfolio', 'Career', false, 12)
+on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
+
+insert into public.track_courses (track_id, course_id, stage, required, position)
+values ('data-analyst', 'get-your-first-internship', 'Career', false, 13)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 

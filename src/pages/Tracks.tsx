@@ -129,7 +129,7 @@ function ItemCard({ item, courses, mine }: { item: TrackItem; courses: Course[];
   return (
     <div className={`rounded-2xl border p-5 ${done ? "border-success/40 bg-success-bg/40" : "border-line bg-paper"}`}>
       <div className="flex flex-wrap items-center gap-2">
-        <Badge tone={c.format === "short" ? "neutral" : "free"}>{c.format === "short" ? "Short course" : "Professional course"}</Badge>
+        <Badge tone={c.format === "short" ? "neutral" : "free"}>{c.format === "short" ? "Short course" : c.level === 4 ? "Capstone" : "Professional course"}</Badge>
         <span className="text-[0.8125rem] text-muted">Level {c.level} · {LEVELS[c.level].name}</span>
         {item.required === false && <span className="text-[0.8125rem] text-muted">· Optional</span>}
       </div>

@@ -95,7 +95,7 @@ export const TRACKS: Track[] = [
           { kind: "project", projectId: "logistics-operations", why: "Find the late routes and the customers who owe money." },
           { kind: "project", projectId: "employee-analytics", why: "Who leaves, when, and why: an HR analysis." },
           { kind: "project", projectId: "customer-data-cleanup", why: "Turn a messy export into a list a business can trust." },
-          { kind: "upcoming", title: "Capstone: End-to-End Business Intelligence Project", why: "From raw data to a reviewed dashboard and written recommendations.", level: 4 },
+          { kind: "course", courseId: "data-analyst-capstone", why: "From a raw till export to a reviewed dashboard and a board-ready executive summary." },
         ],
       },
       {

@@ -37,6 +37,13 @@ export const DATASETS: DatasetInfo[] = [
     files: ["employees", "attendance", "leave"],
   },
   {
+    id: "retail",
+    name: "Voltline Electronics (retail, raw)",
+    description:
+      "An eight-store electronics chain's raw till export from January 2025 to June 2026, as the tills produced it: a duplicated upload, mixed date formats, inconsistent store names and test transactions. With stores, products, dated cost prices, monthly targets and stock-out records. Used in the Data Analyst Capstone.",
+    files: ["sales_raw", "stores", "products", "cost_prices", "targets", "stockouts"],
+  },
+  {
     id: "legal",
     name: "Ashgrove Chambers (legal)",
     description: "A Lagos law firm's clients, matters, court hearings and invoices from 2024 to August 2026.",
@@ -234,6 +241,70 @@ export const DATA_DICTIONARY: Record<string, Record<string, { about: string; col
         amount_ngn: "Invoice amount in naira.",
         status: "Paid, Outstanding or Overdue.",
         paid_date: "Date it was paid. Blank if unpaid.",
+      },
+    },
+  },
+  retail: {
+    sales_raw: {
+      about: "Every line of every till transaction, exactly as the stores' tills exported it. Not cleaned: profile it before you use it.",
+      columns: {
+        txn_id: "Transaction ID. The first three letters are the store code (see stores.store_code). A transaction can have several lines.",
+        line_no: "Line number within the transaction.",
+        txn_date: "Date of the transaction, as exported. Most stores use YYYY-MM-DD; check them all.",
+        txn_time: "Time of the transaction (24-hour HH:MM).",
+        branch: "Store name as typed into each till's settings. Not consistent.",
+        product_code: "Product sold. Links to products.product_code.",
+        qty: "Quantity. Negative for a return.",
+        unit_price: "Selling price per unit in naira, before discount.",
+        discount: "Discount on the line in naira (negative on a return of a discounted item).",
+        payment_method: "Cash, Card, Transfer or Instalment.",
+      },
+    },
+    stores: {
+      about: "Voltline's eight stores.",
+      columns: {
+        store_id: "Unique store number. Links to targets and stockouts.",
+        store_code: "Three-letter code used at the start of every txn_id.",
+        store_name: "The store's official name.",
+        city: "City.",
+        opened_date: "Date the store opened.",
+        floor_area_sqm: "Sales floor area in square metres.",
+        manager: "Store manager.",
+      },
+    },
+    products: {
+      about: "The 22 products Voltline sells, with current (2026) list prices.",
+      columns: {
+        product_code: "Unique product code.",
+        product_name: "Product name.",
+        category: "Phones, Laptops, Accessories, Solar & power or Home appliances.",
+        brand: "Brand.",
+        list_price: "Current list price in naira (from January 2026). 2025 sales were at lower prices.",
+      },
+    },
+    cost_prices: {
+      about: "What Voltline pays for each product, and the date each cost applies from.",
+      columns: {
+        product_code: "Links to products.product_code.",
+        effective_from: "The cost applies to sales on or after this date, until the next row for the same product.",
+        unit_cost: "Cost per unit in naira.",
+      },
+    },
+    targets: {
+      about: "Monthly net-sales targets for each store, set at the start of each year.",
+      columns: {
+        store_id: "Links to stores.store_id.",
+        month: "Month, as YYYY-MM.",
+        net_sales_target: "Target net sales for the store that month, in naira.",
+      },
+    },
+    stockouts: {
+      about: "Periods when a store had run out of a product.",
+      columns: {
+        store_id: "Links to stores.store_id.",
+        product_code: "Links to products.product_code.",
+        out_from: "First day out of stock.",
+        back_in: "First day back in stock.",
       },
     },
   },

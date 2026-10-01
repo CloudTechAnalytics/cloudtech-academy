@@ -1357,6 +1357,545 @@
    }
   }
  },
+ "retail": {
+  "zipBytes": 269961,
+  "files": {
+   "cost_prices": {
+    "rows": 44,
+    "bytes": 1118,
+    "columns": [
+     {
+      "name": "product_code",
+      "type": "text",
+      "missing": 0,
+      "distinct": 22
+     },
+     {
+      "name": "effective_from",
+      "type": "date",
+      "missing": 0,
+      "distinct": 2,
+      "min": "2025-01-01",
+      "max": "2026-01-01"
+     },
+     {
+      "name": "unit_cost",
+      "type": "number",
+      "missing": 0,
+      "distinct": 44,
+      "min": 1800,
+      "max": 1063900
+     }
+    ],
+    "preview": [
+     [
+      "VP-101",
+      "2025-01-01",
+      "81000"
+     ],
+     [
+      "VP-101",
+      "2026-01-01",
+      "95600"
+     ],
+     [
+      "VP-102",
+      "2025-01-01",
+      "151200"
+     ],
+     [
+      "VP-102",
+      "2026-01-01",
+      "178400"
+     ],
+     [
+      "VP-103",
+      "2025-01-01",
+      "191400"
+     ],
+     [
+      "VP-103",
+      "2026-01-01",
+      "225800"
+     ]
+    ]
+   },
+   "products": {
+    "rows": 22,
+    "bytes": 1140,
+    "columns": [
+     {
+      "name": "product_code",
+      "type": "text",
+      "missing": 0,
+      "distinct": 22
+     },
+     {
+      "name": "product_name",
+      "type": "text",
+      "missing": 0,
+      "distinct": 22
+     },
+     {
+      "name": "category",
+      "type": "text",
+      "missing": 0,
+      "distinct": 5
+     },
+     {
+      "name": "brand",
+      "type": "text",
+      "missing": 0,
+      "distinct": 8
+     },
+     {
+      "name": "list_price",
+      "type": "number",
+      "missing": 0,
+      "distinct": 21,
+      "min": 5500,
+      "max": 1156500
+     }
+    ],
+    "preview": [
+     [
+      "VP-101",
+      "Zentro Z5 64GB",
+      "Phones",
+      "Zentro",
+      "105000"
+     ],
+     [
+      "VP-102",
+      "Zentro Z9 128GB",
+      "Phones",
+      "Zentro",
+      "198000"
+     ],
+     [
+      "VP-103",
+      "Kora A15 128GB",
+      "Phones",
+      "Kora",
+      "253500"
+     ],
+     [
+      "VP-104",
+      "Kora A35 256GB",
+      "Phones",
+      "Kora",
+      "430500"
+     ],
+     [
+      "VP-105",
+      "Lumio X Pro 256GB",
+      "Phones",
+      "Lumio",
+      "755000"
+     ],
+     [
+      "VP-201",
+      "Kora Book 14",
+      "Laptops",
+      "Kora",
+      "537000"
+     ]
+    ]
+   },
+   "sales_raw": {
+    "rows": 27978,
+    "bytes": 1774173,
+    "columns": [
+     {
+      "name": "txn_id",
+      "type": "text",
+      "missing": 0,
+      "distinct": 21554
+     },
+     {
+      "name": "line_no",
+      "type": "number",
+      "missing": 0,
+      "distinct": 3,
+      "min": 1,
+      "max": 3
+     },
+     {
+      "name": "txn_date",
+      "type": "text",
+      "missing": 0,
+      "distinct": 1092
+     },
+     {
+      "name": "txn_time",
+      "type": "text",
+      "missing": 0,
+      "distinct": 660
+     },
+     {
+      "name": "branch",
+      "type": "text",
+      "missing": 0,
+      "distinct": 10
+     },
+     {
+      "name": "product_code",
+      "type": "text",
+      "missing": 0,
+      "distinct": 23
+     },
+     {
+      "name": "qty",
+      "type": "number",
+      "missing": 0,
+      "distinct": 4,
+      "min": -2,
+      "max": 2
+     },
+     {
+      "name": "unit_price",
+      "type": "number",
+      "missing": 0,
+      "distinct": 43,
+      "min": 1,
+      "max": 1156500
+     },
+     {
+      "name": "discount",
+      "type": "number",
+      "missing": 0,
+      "distinct": 99,
+      "min": -38500,
+      "max": 98000
+     },
+     {
+      "name": "payment_method",
+      "type": "text",
+      "missing": 0,
+      "distinct": 4
+     }
+    ],
+    "preview": [
+     [
+      "PHC-000001",
+      "1",
+      "01/01/2025",
+      "11:18",
+      "Port Harcourt",
+      "VP-104",
+      "1",
+      "365000",
+      "0",
+      "Cash"
+     ],
+     [
+      "PHC-000002",
+      "1",
+      "01/01/2025",
+      "17:05",
+      "Port Harcourt",
+      "VP-101",
+      "1",
+      "89000",
+      "4450",
+      "Card"
+     ],
+     [
+      "PHC-000002",
+      "2",
+      "01/01/2025",
+      "17:05",
+      "Port Harcourt",
+      "VP-301",
+      "1",
+      "9500",
+      "0",
+      "Card"
+     ],
+     [
+      "PHC-000003",
+      "1",
+      "01/01/2025",
+      "18:04",
+      "Port Harcourt",
+      "VP-304",
+      "2",
+      "32000",
+      "0",
+      "Cash"
+     ],
+     [
+      "PHC-000003",
+      "2",
+      "01/01/2025",
+      "18:04",
+      "Port Harcourt",
+      "VP-304",
+      "1",
+      "32000",
+      "0",
+      "Cash"
+     ],
+     [
+      "PHC-000004",
+      "1",
+      "01/01/2025",
+      "15:38",
+      "Port Harcourt",
+      "VP-401",
+      "1",
+      "118000",
+      "0",
+      "Cash"
+     ]
+    ]
+   },
+   "stockouts": {
+    "rows": 8,
+    "bytes": 287,
+    "columns": [
+     {
+      "name": "store_id",
+      "type": "number",
+      "missing": 0,
+      "distinct": 7,
+      "min": 1,
+      "max": 8
+     },
+     {
+      "name": "product_code",
+      "type": "text",
+      "missing": 0,
+      "distinct": 8
+     },
+     {
+      "name": "out_from",
+      "type": "date",
+      "missing": 0,
+      "distinct": 8,
+      "min": "2025-05-05",
+      "max": "2026-05-18"
+     },
+     {
+      "name": "back_in",
+      "type": "date",
+      "missing": 0,
+      "distinct": 8,
+      "min": "2025-06-09",
+      "max": "2026-06-08"
+     }
+    ],
+    "preview": [
+     [
+      "5",
+      "VP-403",
+      "2026-03-02",
+      "2026-04-24"
+     ],
+     [
+      "5",
+      "VP-402",
+      "2026-03-09",
+      "2026-04-03"
+     ],
+     [
+      "1",
+      "VP-105",
+      "2025-10-06",
+      "2025-10-27"
+     ],
+     [
+      "3",
+      "VP-404",
+      "2026-01-12",
+      "2026-02-02"
+     ],
+     [
+      "7",
+      "VP-202",
+      "2025-05-05",
+      "2025-06-09"
+     ],
+     [
+      "4",
+      "VP-304",
+      "2026-05-18",
+      "2026-06-08"
+     ]
+    ]
+   },
+   "stores": {
+    "rows": 8,
+    "bytes": 456,
+    "columns": [
+     {
+      "name": "store_id",
+      "type": "number",
+      "missing": 0,
+      "distinct": 8,
+      "min": 1,
+      "max": 8
+     },
+     {
+      "name": "store_code",
+      "type": "text",
+      "missing": 0,
+      "distinct": 8
+     },
+     {
+      "name": "store_name",
+      "type": "text",
+      "missing": 0,
+      "distinct": 8
+     },
+     {
+      "name": "city",
+      "type": "text",
+      "missing": 0,
+      "distinct": 4
+     },
+     {
+      "name": "opened_date",
+      "type": "date",
+      "missing": 0,
+      "distinct": 8,
+      "min": "2016-11-02",
+      "max": "2025-07-01"
+     },
+     {
+      "name": "floor_area_sqm",
+      "type": "number",
+      "missing": 0,
+      "distinct": 8,
+      "min": 140,
+      "max": 260
+     },
+     {
+      "name": "manager",
+      "type": "text",
+      "missing": 0,
+      "distinct": 8
+     }
+    ],
+    "preview": [
+     [
+      "1",
+      "IKJ",
+      "Ikeja",
+      "Lagos",
+      "2018-03-10",
+      "240",
+      "Bisi Adeyemi"
+     ],
+     [
+      "2",
+      "LKI",
+      "Lekki",
+      "Lagos",
+      "2025-07-01",
+      "260",
+      "Tobi Okafor"
+     ],
+     [
+      "3",
+      "SRL",
+      "Surulere",
+      "Lagos",
+      "2016-11-02",
+      "180",
+      "Kunle Bello"
+     ],
+     [
+      "4",
+      "YAB",
+      "Yaba",
+      "Lagos",
+      "2021-05-15",
+      "150",
+      "Amaka Nwosu"
+     ],
+     [
+      "5",
+      "WSE",
+      "Wuse",
+      "Abuja",
+      "2019-09-01",
+      "210",
+      "Musa Danjuma"
+     ],
+     [
+      "6",
+      "GRK",
+      "Garki",
+      "Abuja",
+      "2022-02-20",
+      "140",
+      "Hauwa Suleiman"
+     ]
+    ]
+   },
+   "targets": {
+    "rows": 138,
+    "bytes": 2654,
+    "columns": [
+     {
+      "name": "store_id",
+      "type": "number",
+      "missing": 0,
+      "distinct": 8,
+      "min": 1,
+      "max": 8
+     },
+     {
+      "name": "month",
+      "type": "text",
+      "missing": 0,
+      "distinct": 18
+     },
+     {
+      "name": "net_sales_target",
+      "type": "number",
+      "missing": 0,
+      "distinct": 108,
+      "min": 19600000,
+      "max": 84800000
+     }
+    ],
+    "preview": [
+     [
+      "1",
+      "2025-01",
+      "47700000"
+     ],
+     [
+      "1",
+      "2025-02",
+      "48400000"
+     ],
+     [
+      "1",
+      "2025-03",
+      "52000000"
+     ],
+     [
+      "1",
+      "2025-04",
+      "52800000"
+     ],
+     [
+      "1",
+      "2025-05",
+      "55900000"
+     ],
+     [
+      "1",
+      "2025-06",
+      "52200000"
+     ]
+    ]
+   }
+  }
+ },
  "sales": {
   "zipBytes": 39526,
   "files": {

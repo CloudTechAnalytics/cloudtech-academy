@@ -1,0 +1,23 @@
+product_code,product_name,category,brand,list_price
+VP-101,Zentro Z5 64GB,Phones,Zentro,105000
+VP-102,Zentro Z9 128GB,Phones,Zentro,198000
+VP-103,Kora A15 128GB,Phones,Kora,253500
+VP-104,Kora A35 256GB,Phones,Kora,430500
+VP-105,Lumio X Pro 256GB,Phones,Lumio,755000
+VP-201,Kora Book 14,Laptops,Kora,537000
+VP-202,Lumio Air 13,Laptops,Lumio,1156500
+VP-203,Nexa Student 11,Laptops,Nexa,336500
+VP-301,Fast charger 25W,Accessories,Voltline,11000
+VP-302,Phone case and screen guard,Accessories,Voltline,7500
+VP-303,"Power bank 20,000mAh",Accessories,Volt+,28500
+VP-304,Wireless earbuds,Accessories,Volt+,38000
+VP-305,USB-C cable 2m,Accessories,Voltline,5500
+VP-401,Solar panel 300W,Solar & power,SunCore,139000
+VP-402,Inverter 3.5kVA,Solar & power,SunCore,613500
+VP-403,Inverter 5kVA,Solar & power,SunCore,932000
+VP-404,Lithium battery 2.5kWh,Solar & power,SunCore,755000
+VP-405,Solar generator 1kW,Solar & power,Volt+,484000
+VP-501,Chest freezer 200L,Home appliances,Coolmax,454500
+VP-502,Smart TV 43-inch,Home appliances,Nexa,395500
+VP-503,Air conditioner 1.5HP,Home appliances,Coolmax,643000
+VP-504,Blender 1.5L,Home appliances,Coolmax,49500

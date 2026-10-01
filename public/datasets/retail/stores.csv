@@ -1,0 +1,9 @@
+store_id,store_code,store_name,city,opened_date,floor_area_sqm,manager
+1,IKJ,Ikeja,Lagos,2018-03-10,240,Bisi Adeyemi
+2,LKI,Lekki,Lagos,2025-07-01,260,Tobi Okafor
+3,SRL,Surulere,Lagos,2016-11-02,180,Kunle Bello
+4,YAB,Yaba,Lagos,2021-05-15,150,Amaka Nwosu
+5,WSE,Wuse,Abuja,2019-09-01,210,Musa Danjuma
+6,GRK,Garki,Abuja,2022-02-20,140,Hauwa Suleiman
+7,PHC,Port Harcourt,Port Harcourt,2017-06-12,200,Ifeoma Eze
+8,IBD,Ibadan,Ibadan,2023-04-08,160,Segun Olawale

@@ -26,7 +26,7 @@ export function CourseCard({ course, progress }: { course: Course; progress?: nu
     <article className="group relative flex h-full flex-col rounded-2xl border border-line bg-paper p-6 transition-[transform,box-shadow] duration-300 hover:-translate-y-0.5 hover:shadow-[0_28px_56px_-40px_rgba(23,23,23,0.45)] sm:p-7">
       <div className="flex flex-wrap items-center gap-2">
         <Badge tone={available ? "free" : "soon"}>{available ? "Free" : "Coming soon"}</Badge>
-        <Badge>{short ? "Short course" : "Professional course"}</Badge>
+        <Badge>{short ? "Short course" : course.level === 4 ? "Capstone" : "Professional course"}</Badge>
         <span className="text-[0.8125rem] text-muted">{categoryName(course.categoryId)}</span>
       </div>
       <h3 className="mt-4 font-serif text-[1.5rem] leading-tight">
