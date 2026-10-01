@@ -1,0 +1,4 @@
+incident_id,title,started,detected,resolved,how_detected,severity
+INC-01,Provider outage: slow responses,2026-06-20,2026-06-20,2026-06-20,Latency alert,Medium
+INC-02,Refusals rose after a provider model update,2026-07-14,2026-07-18,2026-07-19,Customer complaints to support leads,High
+INC-03,Search index rebuilt without six help articles,2026-08-04,2026-08-16,2026-08-17,A customer's social media post,High

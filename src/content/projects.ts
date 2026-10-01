@@ -88,6 +88,12 @@ export const DATASETS: DatasetInfo[] = [
     files: ["daily_sales", "holidays"],
   },
   {
+    id: "llmops",
+    name: "Paystream assistant in production (evaluation and safety)",
+    description: "A 400-case regression suite with results for the live release and two candidates, 240 red-team attacks run with and without a guardrail, guardrail scores on 3,000 reviewed messages, four months of daily metrics, and the incident log. Used in LLM Evaluation and Safety in Production.",
+    files: ["eval_cases", "eval_results", "redteam_attacks", "redteam_results", "guardrail_reviews", "daily_metrics", "incidents"],
+  },
+  {
     id: "agents",
     name: "Paystream support agent (tools and recorded runs)",
     description: "The accounts and transfers a support agent's tools read, 150 support requests labelled with the right action, and step-by-step recordings of two agent versions handling every request. Used in AI Agents and Tool Use.",
@@ -297,6 +303,82 @@ export const DATA_DICTIONARY: Record<string, Record<string, { about: string; col
         amount_ngn: "Invoice amount in naira.",
         status: "Paid, Outstanding or Overdue.",
         paid_date: "Date it was paid. Blank if unpaid.",
+      },
+    },
+  },
+  llmops: {
+    eval_cases: {
+      about: "The regression suite: one row per test case.",
+      columns: {
+        case_id: "Case ID.",
+        category: "Topic, or Out of scope and Safety for cases the assistant must decline.",
+        difficulty: "easy, medium or hard.",
+        input: "The customer message used in the test.",
+        expected_behaviour: "What a passing answer must do.",
+      },
+    },
+    eval_results: {
+      about: "One row per case per release.",
+      columns: {
+        release: "r1-live, r2-new-prompt or r3-small-model.",
+        case_id: "Case tested.",
+        passed: "1 if the answer met the expected behaviour.",
+        input_tokens: "Tokens sent to the model.",
+        output_tokens: "Tokens in the answer.",
+        latency_ms: "Time to answer, in milliseconds.",
+      },
+    },
+    redteam_attacks: {
+      about: "Attacks written by the security team.",
+      columns: {
+        attack_id: "Attack ID.",
+        technique: "Attack technique, such as Obfuscation or Role-play.",
+        prompt: "The attack text.",
+      },
+    },
+    redteam_results: {
+      about: "Each attack run against each release, with the input guardrail off and on.",
+      columns: {
+        attack_id: "Attack run.",
+        release: "Release attacked.",
+        guardrail: "off or on.",
+        succeeded: "1 if the attack achieved its goal.",
+      },
+    },
+    guardrail_reviews: {
+      about: "Production messages scored by the guardrail and reviewed by people.",
+      columns: {
+        message_id: "Message ID.",
+        language: "English or Pidgin.",
+        guardrail_score: "The guardrail's score from 0 to 1: higher means more likely harmful.",
+        harmful: "1 if reviewers judged the message harmful.",
+      },
+    },
+    daily_metrics: {
+      about: "One row per day of the live assistant, May to August 2026.",
+      columns: {
+        date: "Day.",
+        release: "Release live that day.",
+        conversations: "Conversations handled.",
+        thumbs_up: "Thumbs-up ratings.",
+        thumbs_down: "Thumbs-down ratings.",
+        handovers: "Conversations handed to a person.",
+        refusals: "Conversations where the assistant refused to help.",
+        p95_latency_ms: "95th percentile response time, in milliseconds.",
+        graded_sample: "Conversations randomly sampled and graded by a support lead.",
+        graded_correct: "Of those, how many were graded correct.",
+      },
+    },
+    incidents: {
+      about: "Incidents during the period.",
+      columns: {
+        incident_id: "Incident ID.",
+        title: "What happened.",
+        started: "Date it started.",
+        detected: "Date it was detected.",
+        resolved: "Date it was fixed.",
+        how_detected: "How the team found out.",
+        severity: "High or Medium.",
       },
     },
   },

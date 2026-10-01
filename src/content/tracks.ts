@@ -274,7 +274,7 @@ export const TRACKS: Track[] = [
         summary: "Go further into AI systems.",
         items: [
           { kind: "course", courseId: "ai-agents-tool-use", why: "Scoped tools, rules in code, guarded loops, approvals and injection defences, on a support agent's recorded runs." },
-          { kind: "upcoming", title: "LLM Evaluation and Safety in Production", why: "Monitoring, red-teaming, regression tests and incident response for live AI features.", level: 4 },
+          { kind: "course", courseId: "llm-evaluation-safety-production", why: "Release gates, red-teaming, fair guardrails, alerts and incident response for a live assistant." },
         ],
       },
       {
