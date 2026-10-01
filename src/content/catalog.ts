@@ -4,6 +4,8 @@
  * is also loaded into the database by `npm run seed` so it can be managed from /admin.
  */
 
+import type { Level } from "./tracks";
+
 export type Difficulty = "beginner" | "intermediate" | "advanced";
 export type CourseStatus = "available" | "coming_soon";
 
@@ -62,6 +64,8 @@ export type CourseDef = {
   description: string;
   categoryId: string;
   difficulty: Difficulty;
+  /** 1 Foundations, 2 Practical Skills, 3 Professional, 4 Career Projects (see LEVELS in tracks.ts). */
+  level: Level;
   levelLabel: string;
   /**
    * Study time for the required path, shown on cards: the lessons' minutes (which npm run
@@ -111,6 +115,7 @@ export const COURSES: CourseDef[] = [
       "Learn practical ways to use AI assistants at work, at school and in your business. Write prompts that get useful answers, work with your own documents in Claude, research with sources in ChatGPT, and turn an idea into a presentation. Each module takes about 30 minutes, including tasks you do yourself, and ends with a check and a badge.",
     categoryId: "ai-productivity",
     difficulty: "beginner",
+    level: 1,
     levelLabel: "Beginner",
     isFree: true,
     status: "available",
@@ -136,6 +141,7 @@ export const COURSES: CourseDef[] = [
       "Create content people stop scrolling for. Plan a month of posts and write captions in your brand voice with AI, design clean graphics in Canva using four simple rules, and edit a short vertical video in CapCut with captions and music. Each module takes 30 to 40 minutes, including tasks you do yourself, and ends with a check and a badge.",
     categoryId: "design-content",
     difficulty: "beginner",
+    level: 1,
     levelLabel: "Beginner",
     isFree: true,
     status: "available",
@@ -160,6 +166,7 @@ export const COURSES: CourseDef[] = [
       "Get ready for your next job. Use AI to write and tailor a CV that stays true to you, set up a LinkedIn profile recruiters can find, and learn the Excel basics employers expect: sorting, filtering, formulas, PivotTables and charts. Each module takes about 30 minutes, including tasks you do yourself, and ends with a check and a badge.",
     categoryId: "career",
     difficulty: "beginner",
+    level: 1,
     levelLabel: "Beginner",
     isFree: true,
     status: "available",
@@ -184,6 +191,7 @@ export const COURSES: CourseDef[] = [
       "Learn how AI assistants work and where they go wrong, then use them to study smarter: explain hard topics, make revision questions, plan research and improve your writing without handing in work that isn't yours. Each module takes 20 to 30 minutes, including tasks you do yourself, and ends with a check and a badge.",
     categoryId: "study-skills",
     difficulty: "beginner",
+    level: 1,
     levelLabel: "Beginner",
     isFree: true,
     status: "available",
@@ -209,6 +217,7 @@ export const COURSES: CourseDef[] = [
       "Find better information faster. Use search operators and Google Scholar, check whether a source is reliable, and cite and organise references so assignments and projects are easy to write. Each module takes 25 to 35 minutes, including tasks you do yourself, and ends with a check and a badge.",
     categoryId: "study-skills",
     difficulty: "beginner",
+    level: 1,
     levelLabel: "Beginner",
     isFree: true,
     status: "available",
@@ -233,6 +242,7 @@ export const COURSES: CourseDef[] = [
       "A portfolio shows what you can do, which matters most when you don't have much work experience yet. Pick your three best pieces, present each one clearly, publish a simple portfolio page for free, and share your work on LinkedIn without sounding like you're bragging. Each module takes 20 to 25 minutes, including tasks you do yourself, and ends with a check and a badge.",
     categoryId: "career",
     difficulty: "beginner",
+    level: 1,
     levelLabel: "Beginner",
     isFree: true,
     status: "available",
@@ -258,6 +268,7 @@ export const COURSES: CourseDef[] = [
       "Learn what version control is and why every developer and data analyst uses it. Create repositories and commit changes in your browser, publish projects from your computer with GitHub Desktop, and write READMEs that show off your work. Each module takes 15 to 25 minutes, including tasks you do yourself, and ends with a check and a badge.",
     categoryId: "coding",
     difficulty: "beginner",
+    level: 1,
     levelLabel: "Beginner",
     isFree: true,
     status: "available",
@@ -282,6 +293,7 @@ export const COURSES: CourseDef[] = [
       "Build a real website from scratch. Structure a page with HTML, style it with CSS, add interaction with JavaScript, and publish it at your own free web address with GitHub Pages. Each module takes 25 to 30 minutes, including tasks you do yourself, and ends with a check and a badge.",
     categoryId: "coding",
     difficulty: "beginner",
+    level: 1,
     levelLabel: "Beginner",
     isFree: true,
     status: "available",
@@ -307,6 +319,7 @@ export const COURSES: CourseDef[] = [
       "Start programming with one of the world's most popular languages, with nothing to install. Learn values and variables, make decisions with if statements, repeat work with loops, and write your own functions, then build a small budget tracker for your portfolio. Each module takes 20 to 25 minutes, including tasks you do yourself, and ends with a check and a badge.",
     categoryId: "python",
     difficulty: "beginner",
+    level: 1,
     levelLabel: "Beginner",
     isFree: true,
     status: "available",
@@ -331,6 +344,7 @@ export const COURSES: CourseDef[] = [
       "Analyse a real-world style sales dataset of over 4,000 orders with pandas. Explore it, fix types and add calculated columns, filter and sort, join tables, summarise with groupby and turn your answers into charts. Each module takes 15 to 25 minutes, including tasks you do yourself, and ends with a check and a badge.",
     categoryId: "python",
     difficulty: "beginner",
+    level: 2,
     levelLabel: "Beginner",
     isFree: true,
     status: "available",
@@ -355,6 +369,7 @@ export const COURSES: CourseDef[] = [
       "The everyday digital skills every student and new graduate needs. Organise and back up your files in the cloud, collaborate on group work in Google Docs, Sheets and Forms, write emails lecturers and employers take seriously, and protect your accounts from hackers and scams. Each module takes 20 to 25 minutes, including tasks you do yourself, and ends with a check and a badge.",
     categoryId: "study-skills",
     difficulty: "beginner",
+    level: 1,
     levelLabel: "Beginner",
     isFree: true,
     status: "available",
@@ -380,6 +395,7 @@ export const COURSES: CourseDef[] = [
       "A practical guide to landing an internship or SIWES placement. Get your documents ready, find opportunities (including remote ones) and avoid fake offers, write short applications that get read, and prepare for interviews with the STAR method. Each module takes 20 to 25 minutes, including tasks you do yourself, and ends with a check and a badge.",
     categoryId: "career",
     difficulty: "beginner",
+    level: 1,
     levelLabel: "Beginner",
     isFree: true,
     status: "available",
@@ -405,6 +421,7 @@ export const COURSES: CourseDef[] = [
       "Start earning from a skill you already have. Shape a clear offer and samples, set up profiles on platforms like Fiverr and Upwork, find direct clients, price and pitch your work, get paid safely, and deliver in a way that brings reviews and repeat work. Each module takes 20 to 40 minutes, including tasks you do yourself, and ends with a check and a badge.",
     categoryId: "career",
     difficulty: "beginner",
+    level: 1,
     levelLabel: "Beginner",
     isFree: true,
     status: "available",
@@ -428,6 +445,7 @@ export const COURSES: CourseDef[] = [
       "Learn what data analytics is, how businesses use data to make decisions, and the core skills required to begin a career in data analytics. The course ends with your first small analytics project.",
     categoryId: "data-analytics",
     difficulty: "beginner",
+    level: 1,
     levelLabel: "Beginner",
     estimatedHours: 6,
     isFree: true,
@@ -459,6 +477,7 @@ export const COURSES: CourseDef[] = [
       "Excel is still where most business analysis happens. Learn to work with real datasets: sort and filter, write the formulas analysts use every day, clean messy data, summarise with pivot tables and present results with clear charts.",
     categoryId: "data-analytics",
     difficulty: "beginner",
+    level: 2,
     levelLabel: "Beginner",
     estimatedHours: 7,
     isFree: true,
@@ -491,6 +510,7 @@ export const COURSES: CourseDef[] = [
       "SQL is how analysts get answers out of databases. In this course you work with Harbourline Freight, a fictional logistics company, and answer the questions its managers actually ask: who ships the most, which routes run late, what customers still owe. Every lesson starts with a business problem, explains the idea in plain language, and gives you queries to write in a live SQL editor in your browser.",
     categoryId: "data-analytics",
     difficulty: "beginner",
+    level: 2,
     levelLabel: "Beginner to intermediate",
     estimatedHours: 7,
     isFree: true,
@@ -536,6 +556,7 @@ export const COURSES: CourseDef[] = [
       "Every reliable report sits on a well-designed model. Learn to turn business questions into entities and keys, draw entity-relationship diagrams in crow's-foot notation, normalise away repeated data, and design the star schemas that Power BI and data warehouses run on. Every lesson is built around diagrams, and you practise on real databases in your browser.",
     categoryId: "databases",
     difficulty: "intermediate",
+    level: 3,
     levelLabel: "Beginner to intermediate",
     estimatedHours: 6,
     isFree: true,
@@ -566,6 +587,7 @@ export const COURSES: CourseDef[] = [
       "Power BI turns data into dashboards. Learn the full workflow: import and clean data with Power Query, relate tables in a model, write DAX measures, and design a dashboard that tells a clear business story.",
     categoryId: "business-intelligence",
     difficulty: "beginner",
+    level: 2,
     levelLabel: "Beginner to intermediate",
     estimatedHours: 8,
     isFree: true,
@@ -601,6 +623,7 @@ export const COURSES: CourseDef[] = [
       "Python lets analysts write an analysis once and run it again in seconds, with every step on record. In this course you work in Google Colab, with nothing to install, on the data of Kolanut Distribution and its HR and legal sister datasets. Learn the Python an analyst actually uses, then pandas: loading and exploring data, filtering, calculated columns and dates, cleaning a genuinely messy export, groupby, merging, pivot tables and trends, and charts with titles that say what they show. Every lesson ends with tasks checked against the real data, and the course ends with a customer health review you can put in your portfolio.",
     categoryId: "python",
     difficulty: "beginner",
+    level: 2,
     levelLabel: "Beginner to intermediate",
     estimatedHours: 9,
     isFree: true,

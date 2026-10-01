@@ -22,4 +22,11 @@ You can use Google Sheets or Excel. A link to your spreadsheet is welcome but op
     "Recommendation: what should HR do next, and what are the limits of this data?",
   ],
   datasets: ["hr"],
+  rubric: [
+    "Every question is answered with numbers from the HR data, with counts shown next to percentages.",
+    "Comparisons use rates, not raw counts, when groups differ in size.",
+    "The chart chosen fits the finding, and its title states the point.",
+    "The obvious explanation is tested rather than assumed (for example pay versus job level).",
+    "The recommendation follows from the findings, and the limits of the data are stated honestly.",
+  ],
 };

@@ -13,6 +13,7 @@ import { Button, ButtonLink } from "@/components/Button";
 import { ProgressBar } from "@/components/ProgressBar";
 import { PageLoading } from "@/lib/auth";
 import NotFound from "./NotFound";
+import { LEVELS } from "@/content/tracks";
 
 export default function CourseDetail() {
   const { slug } = useParams();
@@ -72,7 +73,7 @@ export default function CourseDetail() {
             <div className="mt-5 flex flex-wrap items-center gap-2">
               <Badge tone={available ? "free" : "soon"}>{available ? "Free" : "Coming soon"}</Badge>
               {short && <Badge>Short course</Badge>}
-              <Badge>{course.levelLabel}</Badge>
+              <Badge>{`Level ${course.level} · ${LEVELS[course.level].name}`}</Badge>
             </div>
             <h1 className="mt-4 font-serif text-[2.5rem] leading-[1.06] tracking-[-0.02em] sm:text-[3.3rem]">{course.title}</h1>
             <p className="mt-5 max-w-2xl text-[1.0625rem] leading-relaxed text-muted">{course.description}</p>

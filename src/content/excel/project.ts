@@ -23,4 +23,12 @@ Upload your workbook to OneDrive or Google Drive, set the link so anyone with it
     "Three recommendations for the board, each linked to a number in your analysis.",
   ],
   datasets: ["sales"],
+  rubric: [
+    "Revenue is calculated correctly after discounts, and the totals reconcile in at least two ways.",
+    "Comparisons are like for like: H1 2026 against H1 2025, not a half year against a full year.",
+    "Growth is reported in both naira and percent, by region, with the regions that drove the change named.",
+    "Charts are the right type for each question, readable, and have action titles.",
+    "The workbook is organised: a raw data sheet left untouched, clear calculations, and a summary a manager can read.",
+    "Each of the three recommendations is linked to a specific number in the analysis.",
+  ],
 };

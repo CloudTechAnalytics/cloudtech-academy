@@ -31,6 +31,8 @@ export type ProjectDef = {
   brief: string;
   tasks: string[];
   datasets: string[];
+  /** What a reviewer checks a submission against. Shown to the learner before they submit. */
+  rubric: string[];
 };
 
 /* ---------- runtime content model (what pages render) ---------- */

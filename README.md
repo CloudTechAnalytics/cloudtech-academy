@@ -73,7 +73,7 @@ Without Supabase keys the Academy runs in **demo mode**:
 ## Connecting Supabase
 
 1. Create a project at [supabase.com](https://supabase.com).
-2. In **SQL Editor**, run [`supabase/migrations/0001_academy.sql`](supabase/migrations/0001_academy.sql), then [`0002_public_profiles.sql`](supabase/migrations/0002_public_profiles.sql), [`0003_module_tasks.sql`](supabase/migrations/0003_module_tasks.sql) and [`0004_inactivity_and_remove.sql`](supabase/migrations/0004_inactivity_and_remove.sql).
+2. In **SQL Editor**, run [`supabase/migrations/0001_academy.sql`](supabase/migrations/0001_academy.sql), then [`0002_public_profiles.sql`](supabase/migrations/0002_public_profiles.sql), [`0003_module_tasks.sql`](supabase/migrations/0003_module_tasks.sql), [`0004_inactivity_and_remove.sql`](supabase/migrations/0004_inactivity_and_remove.sql) and [`0005_tracks_and_levels.sql`](supabase/migrations/0005_tracks_and_levels.sql).
 3. Then run [`supabase/seed.sql`](supabase/seed.sql). It loads the courses, lessons, assessment and project.
 4. In **Authentication → URL Configuration**:
    - Set the Site URL to the Academy's address.
@@ -106,9 +106,10 @@ On Vercel, add the same variables under Project Settings → Environment Variabl
 
 The course content lives in `src/content/`:
 
-- `catalog.ts`: courses, modules and completion rules. A short course has `format: "short"`; each of its modules has a `badge` name, a `badgeCode` (used in credential IDs) and `skills` (shown on the credential page).
+- `tracks.ts`: career tracks (stages of courses, recommended practice projects, and courses still `upcoming`) and the four levels: 1 Foundations, 2 Practical Skills, 3 Professional, 4 Career Projects. Completing every required course in a track earns its track badge, issued by `issue_track_credential()`. Pages: `/tracks` and `/tracks/:slug`.
+- `catalog.ts`: courses, modules and completion rules. Every course has a `level` (1-4). A short course has `format: "short"`; each of its modules has a `badge` name, a `badgeCode` (used in credential IDs) and `skills` (shown on the credential page).
 - `<course>/NN-slug.md`: lessons. The front matter holds `title`, `minutes` and `summary`, and optionally `handsOn` (see **Honest timing** below). Full-course lessons have six sections (The problem … Check your understanding); short-course lessons have a few `##` steps including `## Try it`.
-- `<course>/assessment.ts`: the final assessment and, for short courses, a module check (`kind: "module"`, `moduleId`) for each badge module. `<course>/project.ts`: the project, for full courses.
+- `<course>/assessment.ts`: the final assessment and, for short courses, a module check (`kind: "module"`, `moduleId`) for each badge module. `<course>/project.ts`: the project, for full courses, with a `rubric`: the criteria shown to learners and ticked by reviewers in /admin.
 
 Lesson Markdown supports these custom code fences:
 

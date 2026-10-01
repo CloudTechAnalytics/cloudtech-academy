@@ -1,5 +1,5 @@
 import { lazy } from "react";
-import { Route, Routes } from "react-router";
+import { Navigate, Route, Routes } from "react-router";
 import { Layout } from "@/components/Layout";
 import { AuthProvider } from "@/lib/auth";
 import Home from "@/pages/Home";
@@ -12,7 +12,8 @@ const Project = lazy(() => import("@/pages/Project"));
 const CourseComplete = lazy(() => import("@/pages/CourseComplete"));
 const CertificatePurchase = lazy(() => import("@/pages/CertificatePurchase"));
 const CredentialView = lazy(() => import("@/pages/CredentialView"));
-const Paths = lazy(() => import("@/pages/Paths"));
+const TracksList = lazy(() => import("@/pages/Tracks").then((m) => ({ default: m.TracksList })));
+const TrackDetail = lazy(() => import("@/pages/Tracks").then((m) => ({ default: m.TrackDetail })));
 const Students = lazy(() => import("@/pages/Students"));
 const LearnerProfile = lazy(() => import("@/pages/LearnerProfile"));
 const Projects = lazy(() => import("@/pages/Projects"));
@@ -57,7 +58,9 @@ export function AppRoutes() {
           <Route path="courses/:slug/certificate" element={<CertificatePurchase />} />
           <Route path="credentials/:credentialId" element={<CredentialView />} />
           <Route path="learn/:course/:lesson" element={<Learn />} />
-          <Route path="paths" element={<Paths />} />
+          <Route path="tracks" element={<TracksList />} />
+          <Route path="tracks/:slug" element={<TrackDetail />} />
+          <Route path="paths" element={<Navigate to="/tracks/data-analyst" replace />} />
           <Route path="students" element={<Students />} />
           <Route path="learners/:slug" element={<LearnerProfile />} />
           <Route path="projects" element={<Projects />} />

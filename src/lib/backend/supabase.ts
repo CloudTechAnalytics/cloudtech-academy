@@ -64,6 +64,7 @@ const toCourse = (r: Row): Course => ({
   description: r.description,
   categoryId: r.category_id,
   difficulty: r.difficulty,
+  level: r.level ?? 1,
   levelLabel: r.level_label,
   estimatedHours: r.estimated_hours ?? undefined,
   isFree: r.is_free,
@@ -102,7 +103,8 @@ const toCredential = (r: Row): Credential => ({
   credentialId: r.credential_id,
   userId: r.user_id,
   kind: r.kind,
-  courseId: r.course_id,
+  courseId: r.course_id ?? "",
+  trackId: r.track_id ?? null,
   moduleId: r.module_id ?? null,
   badgeName: r.badge_name,
   courseTitle: r.course_title,
@@ -173,6 +175,7 @@ const toProject = (r: Row): ProjectDef => ({
   brief: r.brief_md,
   tasks: r.tasks ?? [],
   datasets: r.datasets ?? [],
+  rubric: r.rubric ?? [],
 });
 
 const LESSON_LIST_COLUMNS = "id, course_id, module_id, slug, title, summary, minutes, required, published, position, required_exercises";
@@ -377,6 +380,9 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
     async issueCourseCredential(courseId) {
       return toCredential(check(await sb.rpc("issue_course_credential", { p_course_id: courseId })) as Row);
     },
+    async issueTrackCredential(trackId) {
+      return toCredential(check(await sb.rpc("issue_track_credential", { p_track_id: trackId })) as Row);
+    },
     async listMyCredentials() {
       const { data } = await sb.auth.getSession();
       if (!data.session) return [];
@@ -391,7 +397,8 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
             credentialId: r.credential_id,
             kind: r.kind,
             badgeName: r.badge_name,
-            courseId: r.course_id,
+            courseId: r.course_id ?? "",
+            trackId: r.track_id ?? null,
             courseTitle: r.course_title,
             moduleTitle: r.module_title ?? null,
             recipientName: r.recipient_name,
@@ -457,6 +464,7 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
             description: c.description,
             category_id: c.categoryId,
             difficulty: c.difficulty,
+            level: c.level,
             level_label: c.levelLabel,
             estimated_hours: c.estimatedHours ?? null,
             is_free: c.isFree,

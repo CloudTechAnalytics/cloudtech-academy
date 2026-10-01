@@ -7,6 +7,7 @@ import { getBackend, IS_LIVE, type PublicCredential } from "@/lib/backend";
 import { credentialBadge } from "@/lib/badges";
 import { formatDate } from "@/lib/format";
 import { BUNDLED_COURSES } from "@/content";
+import { TRACKS } from "@/content/tracks";
 import { BadgeArtwork } from "@/components/BadgeArtwork";
 import { ShareMenu } from "@/components/ShareMenu";
 import { ButtonLink } from "@/components/Button";
@@ -55,6 +56,8 @@ export default function CredentialView() {
     );
 
   const course = BUNDLED_COURSES.find((c) => c.id === cred.courseId) ?? null;
+  const track = cred.kind === "track_completion" ? (TRACKS.find((t) => t.id === cred.trackId) ?? null) : null;
+  const kindLabel = cred.kind === "track_completion" ? "Career track completion" : cred.kind === "course_completion" ? "Course completion" : `Module badge · ${cred.courseTitle}`;
   const valid = cred.status === "valid";
   const mine = auth.status === "signed-in" && auth.user.fullName.trim() === cred.recipientName;
 
@@ -73,7 +76,7 @@ export default function CredentialView() {
             </p>
           )}
           <h1 className="mt-4 font-serif text-[2.4rem] leading-[1.08]">{cred.badgeName}</h1>
-          <p className="mt-2 text-muted">{cred.kind === "course_completion" ? "Course completion" : `Module badge · ${cred.courseTitle}`}</p>
+          <p className="mt-2 text-muted">{kindLabel}</p>
 
           <dl className="mt-6 grid gap-4 border-y border-line py-5 sm:grid-cols-2">
             <div>
@@ -85,9 +88,13 @@ export default function CredentialView() {
               <dd>{formatDate(cred.issuedAt)}</dd>
             </div>
             <div>
-              <dt className="text-[0.8125rem] text-muted">Course</dt>
+              <dt className="text-[0.8125rem] text-muted">{track || cred.kind === "track_completion" ? "Career track" : "Course"}</dt>
               <dd>
-                {course ? (
+                {track ? (
+                  <Link to={`/tracks/${track.slug}`} className="hover:text-brass-dark">
+                    {cred.courseTitle}
+                  </Link>
+                ) : course ? (
                   <Link to={`/courses/${course.slug}`} className="hover:text-brass-dark">
                     {cred.courseTitle}
                   </Link>
@@ -126,11 +133,11 @@ export default function CredentialView() {
               <ShareMenu credential={cred} art={art} />
             </div>
           )}
-          {!mine && course && (
+          {!mine && (course || track) && (
             <div className="mt-8 rounded-xl border border-line bg-paper p-5">
               <p className="font-semibold">Earn this badge yourself</p>
               <p className="mt-1 text-[0.9375rem] text-muted">It's free: learn at your own pace, do the tasks, and pass the checks.</p>
-              <ButtonLink to={`/courses/${course.slug}`} className="mt-3">
+              <ButtonLink to={track ? `/tracks/${track.slug}` : `/courses/${course!.slug}`} className="mt-3">
                 Start learning — Free
               </ButtonLink>
             </div>

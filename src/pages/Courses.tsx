@@ -7,6 +7,7 @@ import { useCourses } from "@/lib/data";
 import { CATEGORIES } from "@/content";
 import { CourseCard } from "@/components/CourseCard";
 import { breadcrumbs } from "@/lib/schema";
+import { LEVELS } from "@/content/tracks";
 
 const TYPES = [
   { id: "", label: "All types" },
@@ -42,12 +43,7 @@ const KINDS = [
   },
 ];
 
-const LEVELS = [
-  { id: "", label: "All levels" },
-  { id: "beginner", label: "Beginner" },
-  { id: "intermediate", label: "Intermediate" },
-  { id: "advanced", label: "Advanced" },
-];
+const LEVEL_FILTERS = [{ id: "", label: "All levels" }, ...([1, 2, 3, 4] as const).map((l) => ({ id: String(l), label: `${l}. ${LEVELS[l].name}` }))];
 
 function CourseGroup({ id, title, intro, courses }: { id: string; title: string; intro: string; courses: Course[] }) {
   if (!courses.length) return null;
@@ -88,7 +84,7 @@ export default function Courses() {
     return courses.filter(
       (c) =>
         (!category || c.categoryId === category) &&
-        (!level || c.difficulty === level) &&
+        (!level || c.level === Number(level)) &&
         (!type || (type === "short") === (c.format === "short")) &&
         (!term || [c.title, c.summary, ...c.skills].some((s) => s.toLowerCase().includes(term))),
     );
@@ -179,7 +175,7 @@ export default function Courses() {
               Difficulty
             </label>
             <select id="course-level" value={level} onChange={(e) => setLevel(e.target.value)} className={select}>
-              {LEVELS.map((l) => (
+              {LEVEL_FILTERS.map((l) => (
                 <option key={l.id} value={l.id}>
                   {l.label}
                 </option>

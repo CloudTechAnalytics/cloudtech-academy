@@ -5,6 +5,7 @@ import { categoryName } from "@/content";
 import { durationLabel } from "@/lib/format";
 import { badgeCount, courseMinutes } from "@/lib/certificates";
 import { ProgressBar } from "./ProgressBar";
+import { LEVELS } from "@/content/tracks";
 
 export function Badge({ children, tone = "neutral" }: { children: string; tone?: "neutral" | "free" | "soon" | "success" }) {
   const tones = {
@@ -39,7 +40,9 @@ export function CourseCard({ course, progress }: { course: Course; progress?: nu
         <div className="flex items-center gap-2">
           <dt className="sr-only">Level</dt>
           <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-brass" />
-          <dd>{course.levelLabel}</dd>
+          <dd>
+            Level {course.level} · {LEVELS[course.level].name}
+          </dd>
         </div>
         <div className="flex items-center gap-2">
           <Clock aria-hidden className="h-3.5 w-3.5 text-subtle" />

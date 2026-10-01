@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
-import { Download } from "lucide-react";
+import { Download, CheckCircle2 } from "lucide-react";
 import { useSeo } from "@/lib/seo";
 import { useCourse, useLearner } from "@/lib/data";
 import { getBackend } from "@/lib/backend";
@@ -37,16 +37,21 @@ function ProjectInner() {
     if (learner.submission) {
       setContent(learner.submission.content);
       setUrl(learner.submission.url);
-    } else setContent(project.tasks.map((t, i) => `Question ${i + 1}: ${t}\n\nSQL:\n\n\nWhat it means:\n\n`).join("\n"));
+    } else {
+      // SQL projects work against the Harbourline database; the others in Excel, Power BI or Python.
+      const workLabel = project.datasets.includes("logistics") ? "SQL" : "Your work (numbers, formulas or steps)";
+      setContent(project.tasks.map((t, i) => `Question ${i + 1}: ${t}\n\n${workLabel}:\n\n\nWhat it means:\n\n`).join("\n"));
+    }
   }, [project, learner.submission]);
 
   if (!course) return loading ? <PageLoading /> : <NotFound />;
   if (learner.loading) return <PageLoading />;
   if (!project) return <NotFound />;
+  const isSql = project.datasets.includes("logistics");
 
   const submit = async () => {
     if (content.trim().length < 50) {
-      setMessage({ tone: "error", text: "Add your queries and explanations before submitting." });
+      setMessage({ tone: "error", text: isSql ? "Add your queries and explanations before submitting." : "Add your answers and explanations before submitting." });
       return;
     }
     if (url && !/^https?:\/\//i.test(url)) {
@@ -90,11 +95,29 @@ function ProjectInner() {
             ))}
           </ol>
 
-          <h2 className="mt-10 font-serif text-[1.6rem]">Work on it here</h2>
-          <p className="mt-2 text-[0.9375rem] text-muted">A SQL editor connected to the Harbourline database. Run anything; nothing you do here is graded.</p>
-          <div className="mt-4">
-            <SqlScratchpad />
-          </div>
+          {project.rubric.length > 0 && (
+            <>
+              <h2 className="mt-10 font-serif text-[1.6rem]">How your project is assessed</h2>
+              <p className="mt-2 text-[0.9375rem] text-muted">A reviewer checks your submission against these criteria, and either accepts it or tells you what to improve.</p>
+              <ul className="mt-4 space-y-2">
+                {project.rubric.map((r) => (
+                  <li key={r} className="flex items-start gap-2.5 text-[0.9688rem]">
+                    <CheckCircle2 aria-hidden className="mt-0.5 h-4 w-4 shrink-0 text-brass-dark" /> {r}
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
+
+          {isSql && (
+            <>
+              <h2 className="mt-10 font-serif text-[1.6rem]">Work on it here</h2>
+              <p className="mt-2 text-[0.9375rem] text-muted">A SQL editor connected to the Harbourline database. Run anything; nothing you do here is graded.</p>
+              <div className="mt-4">
+                <SqlScratchpad />
+              </div>
+            </>
+          )}
         </div>
 
         <aside className="space-y-8 lg:col-span-5">
@@ -119,7 +142,7 @@ function ProjectInner() {
                 void submit();
               }}
             >
-              <TextArea label="Your queries and explanations" value={content} onChange={(e) => setContent(e.target.value)} rows={18} className="font-mono text-[0.8125rem]" />
+              <TextArea label={isSql ? "Your queries and explanations" : "Your answers and explanations"} value={content} onChange={(e) => setContent(e.target.value)} rows={18} className="font-mono text-[0.8125rem]" />
               <TextField
                 label="Link to your work (optional)"
                 type="url"

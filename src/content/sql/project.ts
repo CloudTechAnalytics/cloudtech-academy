@@ -20,4 +20,12 @@ State any definitions you choose. For example, say whether you counted cancelled
     "Analyse delivery performance: the on-time rate by mode, and the three routes with the lowest on-time rate.",
   ],
   datasets: ["logistics"],
+  rubric: [
+    "Every question is answered with a query that runs against the Harbourline database and returns the result described.",
+    "Definitions are stated where they matter: for example whether cancelled shipments are counted, and what revenue means.",
+    "Queries are readable: clear aliases, one clause per line, and CTEs used where a query has several steps.",
+    "Each result has one or two sentences explaining what it means for the business, written for a manager who doesn't read SQL.",
+    "Numbers are checked: at least one total is reconciled another way (for example a sum that should match a known figure).",
+    "The findings end in a clear recommendation the leadership team could act on.",
+  ],
 };

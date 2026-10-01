@@ -18,19 +18,20 @@ type CourseGroup = {
   badges: PublicCredential[];
 };
 
-/** Group a learner's credentials by course, newest course first. */
+/** Group a learner's credentials by course (a track badge is a group of its own), newest first. */
 function byCourse(credentials: PublicCredential[]): CourseGroup[] {
   const groups = new Map<string, CourseGroup>();
   for (const c of credentials) {
-    const g = groups.get(c.courseId) ?? {
-      courseId: c.courseId,
+    const k = c.kind === "track_completion" ? `track:${c.trackId}` : c.courseId;
+    const g = groups.get(k) ?? {
+      courseId: k,
       courseTitle: c.courseTitle,
       completion: null,
       badges: [],
     };
-    if (c.kind === "course_completion") g.completion = c;
+    if (c.kind !== "module_badge") g.completion = c;
     else g.badges.push(c);
-    groups.set(c.courseId, g);
+    groups.set(k, g);
   }
   return [...groups.values()];
 }
@@ -38,7 +39,7 @@ function byCourse(credentials: PublicCredential[]): CourseGroup[] {
 function BadgeTile({ cred }: { cred: PublicCredential }) {
   const course = BUNDLED_COURSES.find((c) => c.id === cred.courseId);
   const module = course?.modules.find((m) => m.title === cred.moduleTitle || m.badge === cred.badgeName);
-  const completion = cred.kind === "course_completion";
+  const completion = cred.kind !== "module_badge";
   const Icon = badgeIcon({ code: module?.badgeCode, categoryId: course?.categoryId, completion });
   return (
     <li>
@@ -56,7 +57,7 @@ function BadgeTile({ cred }: { cred: PublicCredential }) {
             {cred.badgeName}
           </span>
           <span className="mt-0.5 block text-[0.8125rem] text-muted">
-            {completion ? "Course completion" : "Module badge"} · {formatDate(cred.issuedAt)}
+            {cred.kind === "track_completion" ? "Career track" : completion ? "Course completion" : "Module badge"} · {formatDate(cred.issuedAt)}
           </span>
           <span className="mt-1 block font-mono text-[0.75rem] text-subtle">{cred.credentialId}</span>
         </span>

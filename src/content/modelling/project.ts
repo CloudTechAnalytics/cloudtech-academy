@@ -21,4 +21,12 @@ In the text box, answer each task below. Put your diagrams in a shared folder (G
     "Explain how your model answers two of the questions from task 1: which tables and joins each one uses.",
   ],
   datasets: ["legal"],
+  rubric: [
+    "The ERD shows every primary and foreign key, and correct crow's-foot cardinality for each relationship.",
+    "Each table's grain is stated precisely in one sentence.",
+    "Key checks are run and reported with numbers: unique primary keys and no orphan rows (or the orphans are listed).",
+    "The normalisation issue identified is real, and the fix removes the repetition without losing information.",
+    "The star schema has a single, clearly stated fact grain, sensible measures, a date dimension and dimension attributes that answer the questions.",
+    "Slowly changing dimension choices are justified, and the model is shown to answer two of the stated questions.",
+  ],
 };

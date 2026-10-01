@@ -20,4 +20,12 @@ Write the findings for the managing director: no code, numbers in every point, a
     "Include at least two charts with action titles, and finish with three to five findings, a recommendation and an honest caveat.",
   ],
   datasets: ["sales"],
+  rubric: [
+    "The notebook runs from top to bottom with Runtime → Run all, with no errors.",
+    "Data checks are shown: merges use validate, row counts before and after, and missing values reported.",
+    "Each analysis section ends with a sentence saying what the result shows.",
+    "At least two charts with action titles, of the right type for their question.",
+    "The North West's fall is explained with the customers behind it, by name and with numbers.",
+    "Findings are written for a manager, with a recommendation the sales team can act on and an honest caveat.",
+  ],
 };

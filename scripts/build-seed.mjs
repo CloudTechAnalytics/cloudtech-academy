@@ -17,7 +17,7 @@ await build({
   logLevel: "warn",
   build: { ssr: "scripts/seed-entry.ts", outDir, emptyOutDir: true, copyPublicDir: false },
 });
-const { BUNDLED_COURSES, BUNDLED_ASSESSMENTS, BUNDLED_PROJECTS, CATEGORIES } = await import(pathToFileURL(path.join(outDir, "seed-entry.js")).href);
+const { BUNDLED_COURSES, BUNDLED_ASSESSMENTS, BUNDLED_PROJECTS, CATEGORIES, TRACKS } = await import(pathToFileURL(path.join(outDir, "seed-entry.js")).href);
 
 const str = (s) => (s === null || s === undefined ? "null" : `'${String(s).replace(/'/g, "''")}'`);
 /** Dollar quoting for long Markdown, with a tag that can't appear in the text. */
@@ -55,6 +55,7 @@ for (const c of BUNDLED_COURSES) {
       description: str(c.description),
       category_id: str(c.categoryId),
       difficulty: str(c.difficulty),
+      level: num(c.level),
       level_label: str(c.levelLabel),
       estimated_hours: num(c.estimatedHours),
       is_free: bool(c.isFree),
@@ -135,12 +136,25 @@ for (const p of BUNDLED_PROJECTS) {
       brief_md: doc(p.brief),
       tasks: arr(p.tasks),
       datasets: arr(p.datasets),
+      rubric: arr(p.rubric ?? []),
       required: bool(p.required),
     }),
   );
 }
 
+TRACKS.forEach((t, i) => {
+  out.push(`\n-- Track: ${t.title}`);
+  out.push(upsert("tracks", { id: str(t.id), slug: str(t.slug), title: str(t.title), summary: str(t.summary), badge_name: str(t.badge), badge_code: str(t.badgeCode), skills: arr(t.skills), position: num(i + 1), published: "true" }));
+  // The track's course list is replaced each time, so courses moved or removed in the file don't linger.
+  out.push(`delete from public.track_courses where track_id = ${str(t.id)};\n`);
+  let pos = 0;
+  for (const stage of t.stages)
+    for (const item of stage.items)
+      if (item.kind === "course")
+        out.push(upsert("track_courses", { track_id: str(t.id), course_id: str(item.courseId), stage: str(stage.title), required: bool(item.required !== false), position: num(++pos) }, "track_id, course_id"));
+});
+
 out.push("", "commit;", "");
 fs.writeFileSync(path.join(root, "supabase", "seed.sql"), out.join("\n"));
 fs.rmSync(outDir, { recursive: true, force: true });
-console.log(`supabase/seed.sql written: ${BUNDLED_COURSES.length} courses, ${BUNDLED_COURSES.flatMap((c) => c.modules.flatMap((m) => m.lessons)).length} lessons, ${BUNDLED_ASSESSMENTS.length} assessment(s), ${BUNDLED_PROJECTS.length} project(s).`);
+console.log(`supabase/seed.sql written: ${BUNDLED_COURSES.length} courses, ${TRACKS.length} tracks, ${BUNDLED_COURSES.flatMap((c) => c.modules.flatMap((m) => m.lessons)).length} lessons, ${BUNDLED_ASSESSMENTS.length} assessment(s), ${BUNDLED_PROJECTS.length} project(s).`);

@@ -308,5 +308,19 @@ for (const p of PRACTICE_PROJECTS) {
 }
 console.log(`\nProjects: ${PRACTICE_PROJECTS.length} projects on ${DATASETS.length} datasets, every column described`);
 
+// Career tracks point only at real courses and practice projects, and every course has a level.
+const { TRACKS } = await import(pathToFileURL(path.resolve("src/content/tracks.ts")).href);
+const courseIds = [...catalog.matchAll(/^    id: "([a-z0-9-]+)",/gm)].map((m) => m[1]);
+if ((catalog.match(/^    level: [1-4],/gm) ?? []).length !== courseIds.length) fail("every course in catalog.ts needs a level from 1 to 4");
+for (const t of TRACKS) {
+  const items = t.stages.flatMap((s) => s.items);
+  for (const i of items) {
+    if (i.kind === "course" && !courseIds.includes(i.courseId)) fail(`track ${t.id}: unknown course ${i.courseId}`);
+    if (i.kind === "project" && !PRACTICE_PROJECTS.some((p) => p.id === i.projectId)) fail(`track ${t.id}: unknown project ${i.projectId}`);
+  }
+  if (!items.some((i) => i.kind === "course" && i.required !== false)) fail(`track ${t.id}: needs at least one required course`);
+}
+console.log(`Tracks: ${TRACKS.map((t) => t.title).join(", ")}`);
+
 console.log(failures ? `\n${failures} problem(s)` : `\nAll ${lessonCount} lessons OK, ${ids.size} practice tasks, ${checkCount} module checks, ${badgeModules.length} module badges`);
 process.exit(failures ? 1 : 0);

@@ -6,7 +6,7 @@ import { useAuth, PageLoading, RequireAuth } from "@/lib/auth";
 import { useCourses } from "@/lib/data";
 import { getBackend, type AttemptResult, type Certificate, type Credential, type Enrollment, type Progress } from "@/lib/backend";
 import { eligibility } from "@/lib/certificates";
-import { credentialBadge } from "@/lib/badges";
+import { credentialBadge, credentialKindLabel } from "@/lib/badges";
 import { formatDate } from "@/lib/format";
 import { Button, ButtonLink } from "@/components/Button";
 import { daysUntilReset, RESET_AFTER_DAYS } from "@/lib/inactivity";
@@ -323,7 +323,7 @@ function DashboardInner() {
                   ...credentials.map((c) => ({
                     key: c.id,
                     name: c.badgeName,
-                    type: c.kind === "course_completion" ? "Course completion" : "Module badge",
+                    type: credentialKindLabel(c.kind),
                     date: c.issuedAt,
                     id: c.credentialId,
                     href: `/credentials/${c.credentialId}`,

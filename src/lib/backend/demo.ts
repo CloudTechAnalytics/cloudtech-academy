@@ -9,6 +9,7 @@ import type { AssessmentDef, Course } from "@/content/types";
 import { requiredExerciseIds } from "../lesson-format";
 import { certificateNumber, eligibility, moduleTaskIds, newCredentialId } from "../certificates";
 import { isStale } from "../inactivity";
+import { requiredCourses, TRACKS } from "@/content/tracks";
 import { PROFILE_SLUG_RE, SLUG_HELP } from "../profile";
 import {
   BackendError,
@@ -106,13 +107,13 @@ function recipientName(u: User) {
 function newCredential(
   s: Store,
   u: User,
-  f: Pick<Credential, "kind" | "courseId" | "moduleId" | "badgeName" | "courseTitle" | "moduleTitle" | "skills"> & { code: string },
+  f: Pick<Credential, "kind" | "courseId" | "moduleId" | "badgeName" | "courseTitle" | "moduleTitle" | "skills"> & { code: string; trackId?: string | null },
 ): Credential {
   let credentialId = newCredentialId(f.code);
   while (s.credentials.some((c) => c.credentialId === credentialId)) credentialId = newCredentialId(f.code);
   const { code: _code, ...fields } = f;
   void _code;
-  const cred: Credential = { id: uid(), credentialId, userId: u.id, recipientName: recipientName(u), issuedAt: now(), status: "valid", revokedReason: null, ...fields };
+  const cred: Credential = { id: uid(), credentialId, userId: u.id, recipientName: recipientName(u), issuedAt: now(), status: "valid", revokedReason: null, ...fields, trackId: fields.trackId ?? null };
   s.credentials.push(cred);
   s.activity[u.id] = now();
   return cred;
@@ -291,6 +292,7 @@ export function createDemoBackend(): Backend {
               kind,
               badgeName,
               courseId,
+              trackId,
               courseTitle,
               moduleTitle,
               recipientName,
@@ -302,6 +304,7 @@ export function createDemoBackend(): Backend {
               kind,
               badgeName,
               courseId,
+              trackId: trackId ?? null,
               courseTitle,
               moduleTitle,
               recipientName,
@@ -515,15 +518,41 @@ export function createDemoBackend(): Backend {
       save(s);
       return cred;
     },
+    async issueTrackCredential(trackId) {
+      const u = requireUser();
+      const s = load();
+      const existing = s.credentials.find((c) => c.userId === u.id && c.kind === "track_completion" && c.trackId === trackId && c.status === "valid");
+      if (existing) return existing;
+      const track = TRACKS.find((t) => t.id === trackId);
+      if (!track) throw new BackendError("Track not found.");
+      const published = new Set(courses(s).filter((c) => c.published && c.status === "available").map((c) => c.id));
+      const missing = requiredCourses(track).filter(
+        (id) => published.has(id) && !s.credentials.some((c) => c.userId === u.id && c.courseId === id && c.kind === "course_completion" && c.status === "valid"),
+      );
+      if (missing.length) throw new BackendError(`Complete every required course in the track first (${missing.length} left).`);
+      const cred = newCredential(s, u, {
+        kind: "track_completion",
+        code: track.badgeCode,
+        courseId: "",
+        trackId: track.id,
+        moduleId: null,
+        badgeName: track.badge,
+        courseTitle: track.title,
+        moduleTitle: null,
+        skills: track.skills,
+      });
+      save(s);
+      return cred;
+    },
     async listMyCredentials() {
       const u = current();
-      return u ? load().credentials.filter((c) => c.userId === u.id) : [];
+      return u ? load().credentials.filter((c) => c.userId === u.id).map((c) => ({ ...c, trackId: c.trackId ?? null })) : [];
     },
     async verifyCredential(credentialId) {
       const c = load().credentials.find((x) => x.credentialId === credentialId.trim().toUpperCase());
       if (!c) return null;
-      const { credentialId: id, kind, badgeName, courseId, courseTitle, moduleTitle, recipientName, skills, issuedAt, status } = c;
-      return { credentialId: id, kind, badgeName, courseId, courseTitle, moduleTitle, recipientName, skills, issuedAt, status };
+      const { credentialId: id, kind, badgeName, courseId, trackId, courseTitle, moduleTitle, recipientName, skills, issuedAt, status } = c;
+      return { credentialId: id, kind, badgeName, courseId, trackId: trackId ?? null, courseTitle, moduleTitle, recipientName, skills, issuedAt, status };
     },
 
     paymentsEnabled: true,

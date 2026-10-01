@@ -6,7 +6,7 @@ import { SITE } from "@/lib/site";
 const HOST = SITE.url.replace(/^https?:\/\//, "");
 
 export type BadgeData = {
-  kind: "module_badge" | "course_completion";
+  kind: "module_badge" | "course_completion" | "track_completion";
   badgeName: string;
   courseTitle: string;
   icon: LucideIcon;
@@ -35,7 +35,9 @@ export const BadgeArtwork = forwardRef<SVGSVGElement, { data: BadgeData; classNa
   const sans = "Inter, 'Segoe UI', Arial, sans-serif";
   const mono = "'Cascadia Code', Consolas, 'Courier New', monospace";
   const Icon = data.icon;
-  const completion = data.kind === "course_completion";
+  // Course and track completions share the richer frame.
+  const completion = data.kind !== "module_badge";
+  const track = data.kind === "track_completion";
   const cx = S / 2;
   const cy = 430;
   const gid = `medal-${completion ? "c" : "m"}`;
@@ -80,7 +82,7 @@ export const BadgeArtwork = forwardRef<SVGSVGElement, { data: BadgeData; classNa
       <circle cx={cx} cy={cy} r="180" fill="none" stroke="#FFFFFF" strokeOpacity="0.35" strokeWidth="3" />
       <Icon x={cx - 84} y={cy - 104} width={168} height={168} color="#FFFFFF" strokeWidth={1.6} />
       <text x={cx} y={cy + 122} textAnchor="middle" fontFamily={sans} fontSize="20" fontWeight="700" letterSpacing="6" fill="#FFFFFF" fillOpacity="0.9">
-        {completion ? "COURSE COMPLETION" : "MODULE BADGE"}
+        {track ? "CAREER TRACK" : completion ? "COURSE COMPLETION" : "MODULE BADGE"}
       </text>
 
       {/* Ribbon with the badge name */}
@@ -90,7 +92,7 @@ export const BadgeArtwork = forwardRef<SVGSVGElement, { data: BadgeData; classNa
       </text>
 
       <text x={cx} y="772" textAnchor="middle" fontFamily={serif} fontSize={titleSize(data.courseTitle)} fontWeight="600" fill="#171717">
-        {completion ? (data.badgeName === data.courseTitle ? "Course completion credential" : data.courseTitle) : `Module of ${data.courseTitle}`}
+        {track ? data.courseTitle : completion ? (data.badgeName === data.courseTitle ? "Course completion credential" : data.courseTitle) : `Module of ${data.courseTitle}`}
       </text>
 
       {earned ? (
