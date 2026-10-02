@@ -364,6 +364,7 @@ export const TRACKS: Track[] = [
         items: [
           { kind: "course", courseId: "python-for-beginners", why: "Python from the first line: variables, lists, loops and functions." },
           { kind: "course", courseId: "git-and-github-for-beginners", why: "Version control and GitHub, so your work is saved, shared and visible." },
+          { kind: "course", courseId: "web-development-for-beginners", why: "HTML, CSS and a first website published with GitHub Pages.", required: false },
           { kind: "course", courseId: "linux-networking-basics", why: "The command line, files, processes and HTTP that every server runs on.", required: false },
         ],
       },
@@ -379,7 +380,7 @@ export const TRACKS: Track[] = [
         title: "Specialist",
         summary: "Build for the web and ship safely.",
         items: [
-          { kind: "upcoming", title: "Web Development with JavaScript", why: "HTML, CSS and JavaScript for the pages people use, with tests and accessibility.", level: 2 },
+          { kind: "course", courseId: "web-development-with-javascript", why: "An accessible, responsive payment page with exact money, validation, fetch and tests." },
           { kind: "course", courseId: "databases-and-apis-for-developers", why: "Schemas, constraints, transactions, migrations and a tested REST API, on a real company's invoicing data." },
           { kind: "course", courseId: "cicd-and-containers", why: "Containers, pipelines and safe releases for the code you write.", required: false },
         ],

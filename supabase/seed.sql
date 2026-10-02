@@ -51901,9 +51901,1465 @@ $md$, true, true, 10, array['dba-10-p1', 'dba-10-t1']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 
+-- Course: Web Development with JavaScript
+insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
+values ('web-development-with-javascript', 'full', null, 'web-development-with-javascript', 'WJS', 'Web Development with JavaScript', 'Build a real payment page: JavaScript essentials and exact money, arrays and formatting, accessible HTML, responsive CSS, the DOM and events, accessible form validation, fetch with every API outcome handled, and tests, all in your browser.', 'Go beyond a first website to the kind of page businesses depend on. You''ll build the pay-an-invoice page of Tallybook''s customer portal, talking to the API from Databases and APIs for Developers. You''ll learn JavaScript''s essentials and its money traps (why Math.floor(8.95 * 100) loses a kobo), reshape API data with map, filter and reduce and format it for Nigerian users with Intl, write semantic, accessible HTML, lay it out mobile-first with CSS grid and media queries, update the balance live as customers type, validate with clear messages that screen readers announce, handle every outcome of a payment request including a dropped connection, and test the logic. Everything runs in the browser you already have. Every JavaScript example''s output is checked, and the finished page is tested in a real browser for layout, keyboard use and accessible errors.', 'coding', 'intermediate', 2, 'Beginner to intermediate', 7, true, 'available', true, array['JavaScript variables, functions and numbers', 'Exact money in kobo', 'Arrays, objects, JSON and Intl formatting', 'Semantic, accessible HTML', 'Mobile-first responsive CSS', 'The DOM and events', 'Accessible form validation', 'fetch, async and await, and error states', 'Testing JavaScript']::text[], array['Web Development for Beginners, or basic HTML and CSS', 'Databases and APIs for Developers is helpful for lesson 8']::text[], 'Tallybook''s pay-an-invoice page', true, true, true, true, false, 60, 39)
+on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level = excluded.level, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('wjs-m01', 'web-development-with-javascript', 'How the Web Works', 1, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('web-development-with-javascript:how-the-web-works', 'web-development-with-javascript', 'wjs-m01', 'how-the-web-works', 'How the web works', 'What happens when someone opens a web page, what HTML, CSS and JavaScript each do, and how to run your first JavaScript in the browser you already have, with nothing to install.', 10, $md$
+## The problem
+
+Tallybook's customers pay invoices from a web page on their phones. The page today is a single form that reloads everything on every click, shows totals only after submitting, and is hard to use with a screen reader or on a small screen. In this course you'll build a better one: the "pay an invoice" page of Tallybook's customer portal, talking to the API from the Databases and APIs course.
+
+## The concept
+
+**A page load, step by step**
+
+1. The browser asks a server for a page (an HTTP request, as in the Linux course).
+2. The server returns **HTML**, which links to **CSS** and **JavaScript** files; the browser fetches those too.
+3. The browser builds the **DOM**, a live tree of the page's elements, applies the CSS, and runs the JavaScript.
+4. JavaScript can change the DOM, react to clicks and typing, and call APIs without reloading the page.
+
+**Three languages, three jobs**
+
+| Language | Job | Example |
+| :-- | :-- | :-- |
+| **HTML** | structure and meaning | "this is a form with a field labelled Amount" |
+| **CSS** | presentation and layout | "on phones, stack the summary under the table" |
+| **JavaScript** | behaviour | "when the amount changes, update the balance shown" |
+
+**Running JavaScript today**
+
+Every browser has a **console** for running JavaScript. Open any page, press **F12** (or Ctrl+Shift+J on Windows, Cmd+Option+J on a Mac) and choose **Console**. Type a line and press Enter. Every JavaScript example in this course runs there. For the HTML examples, save the code as a file ending in `.html` and open it in your browser, or paste it into a free online editor such as CodePen.
+
+## Example
+
+Your first lines of JavaScript. `console.log` prints a value:
+
+```js
+console.log("Hello from Tallybook");
+console.log(2 + 2, typeof "2", "2" + 2, "6" * 2);
+```
+
+```text
+Hello from Tallybook
+4 string 22 12
+```
+
+The last two results surprise most people. `+` with a string **joins** text, so `"2" + 2` is `"22"`. But `*` only works on numbers, so JavaScript quietly converts `"6"` to a number. Values from forms always arrive as **text**, so this matters on a payment page: convert them deliberately (lesson 2).
+
+```js
+const amountFromForm = "1500";
+console.log(amountFromForm + 500);
+console.log(Number(amountFromForm) + 500);
+```
+
+```text
+1500500
+2000
+```
+
+## Walkthrough
+
+1. Open your browser's console and run both blocks. Then try `"10" - 3` and `"10" + 3`.
+2. On any website, open DevTools' **Elements** tab and find the page's `<h1>`. That's the DOM.
+3. Open DevTools' **Network** tab and reload a page. How many files did it load?
+4. For Tallybook's pay-an-invoice page, list one job for each of HTML, CSS and JavaScript.
+
+## Practice
+
+```answer
+{
+  "id": "web-01-p1",
+  "prompt": "What does `\"2\" + 2` give in JavaScript?",
+  "answer": "22",
+  "jsVerify": "\"2\" + 2",
+  "hint": "With a string, + joins text.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Which language describes a page's structure and meaning?",
+    "options": ["CSS", "HTML", "JavaScript", "SQL"],
+    "answer": 1,
+    "explanation": "CSS styles it; JavaScript adds behaviour."
+  },
+  {
+    "prompt": "A form field's value is \"1500\". What is `value + 500`?",
+    "options": ["2000", "\"1500500\"", "An error", "1500"],
+    "answer": 1,
+    "explanation": "Form values are text; convert with Number() first."
+  },
+  {
+    "prompt": "What is the DOM?",
+    "options": ["A database", "The browser's live tree of the page's elements, which JavaScript can read and change", "A CSS file", "A server"],
+    "answer": 1,
+    "explanation": "JavaScript changes pages through the DOM."
+  }
+]
+```
+$md$, true, true, 1, array['web-01-p1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('wjs-m02', 'web-development-with-javascript', 'JavaScript Essentials', 2, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('web-development-with-javascript:javascript-essentials', 'web-development-with-javascript', 'wjs-m02', 'javascript-essentials', 'JavaScript essentials', 'Variables, functions and numbers in JavaScript, and the money traps they hide (floating point and rounding), by writing the invoice total function the payment page needs.', 25, $md$
+## The problem
+
+The payment page must show an invoice's total, with discount and VAT, exactly as the server calculates it. If the page and the API disagree by a kobo, customers lose trust and support gets calls. JavaScript's numbers have the same floating-point traps as Python's, plus a few of their own.
+
+## The concept
+
+**Variables**
+
+`const` for values that won't be reassigned (most of them), `let` for those that will. Avoid the old `var`.
+
+**Functions**
+
+```js norun
+function invoiceTotal(lines, discountPct = 0, vatExempt = false) {
+  // ...
+  return total;
+}
+```
+
+Arrow functions are a shorter form: `const double = (n) => n * 2;`
+
+**Numbers**
+
+JavaScript has one number type, a 64-bit float. Whole numbers are exact up to about 9 million billion, so **kobo as whole numbers** is safe; fractions like `0.075` are not exact.
+
+**Rounding**
+
+`Math.round` rounds halves **up** for positive numbers (`Math.round(16.5)` is 17), unlike Python's `round`. But it rounds `-16.5` to -16, and it can only round what it's given: if a calculation lands on 16.499999999999996 instead of 16.5, it rounds down.
+
+## Example
+
+The traps, one line each:
+
+```js
+console.log(0.1 + 0.2);
+console.log(Math.round(16.5), Math.round(-16.5));
+console.log(3 * 0.075, (3 * 75) / 1000);
+console.log(8.95 * 100, Math.floor(8.95 * 100));
+console.log(Number.isInteger(1250050), Number.MAX_SAFE_INTEGER);
+```
+
+```text
+0.30000000000000004
+17 -16
+0.22499999999999998 0.225
+894.9999999999999 894
+true 9007199254740991
+```
+
+`3 * 0.075` isn't exactly 0.225, because 0.075 can't be stored exactly. The error is tiny, but tiny errors become wrong kobo as soon as code rounds down or truncates: `8.95 * 100` comes out just under 895, so the common `Math.floor(price * 100)` loses a kobo. Multiplying by 75 and dividing by 1000 keeps the arithmetic in whole numbers until the last step, and lesson 6 converts typed amounts by splitting the text at the decimal point instead of multiplying. Now the invoice total, matching Tallybook's rules from the Software Engineering course:
+
+```js
+const VAT_PER_THOUSAND = 75;          // 7.5%
+const MAX_DISCOUNT_PCT = 20;
+
+function roundHalfUp(n) {
+  return Math.sign(n) * Math.round(Math.abs(n));
+}
+
+function invoiceTotal(lines, discountPct = 0, vatExempt = false) {
+  if (discountPct < 0 || discountPct > MAX_DISCOUNT_PCT) {
+    throw new RangeError(`discountPct must be between 0 and ${MAX_DISCOUNT_PCT}`);
+  }
+  const subtotal = lines.reduce((sum, [quantity, unitPriceKobo]) => sum + quantity * unitPriceKobo, 0);
+  const afterDiscount = subtotal - roundHalfUp((subtotal * discountPct) / 100);
+  const vat = vatExempt ? 0 : roundHalfUp((afterDiscount * VAT_PER_THOUSAND) / 1000);
+  return afterDiscount + vat;
+}
+
+console.log(invoiceTotal([[2, 100000]]));
+console.log(invoiceTotal([[2, 100000]], 10));
+console.log(invoiceTotal([[1, 220]]));
+console.log(invoiceTotal([[1, 10000], [2, 5000], [4, 2500]], 15));
+```
+
+```text
+215000
+193500
+237
+27413
+```
+
+These are the same totals the Python tests in the Software Engineering course expect, including the half-kobo case (220 kobo: VAT 16.5 rounds up to 17). The page and the server now agree because they implement the same rules the same way. In a real system, the page would also show the server's total, so a mismatch is caught (lesson 8).
+
+## Walkthrough
+
+1. Run the blocks in your console. Try `invoiceTotal([[1, 100000]], 25)`. What happens?
+2. Why does `roundHalfUp` use `Math.abs` and `Math.sign`? Test it on -16.5.
+3. Rewrite `roundHalfUp` as an arrow function.
+4. Write a function that formats kobo as naira (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "web-02-p1",
+  "prompt": "What does `invoiceTotal([[3, 250000]], 5)` return, in kobo?",
+  "answer": 765938,
+  "format": "number",
+  "jsVerify": "invoiceTotal([[3, 250000]], 5)",
+  "hint": "750,000 less 5% is 712,500; VAT is 53,437.5, which rounds up.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "web-02-t1",
+  "prompt": "Write a JavaScript function **koboToNaira(kobo)** that returns text like **\"₦12,500.50\"** for 1250050, using whole-number arithmetic for the naira and kobo parts (no dividing by 100 into a float). Show **two** example calls in comments with their results.",
+  "minutes": 8,
+  "rows": 10,
+  "placeholder": "function koboToNaira(kobo) {\n  ...",
+  "rules": [
+    { "label": "A function named koboToNaira", "pattern": "function\\s+koboToNaira\\s*\\(|const\\s+koboToNaira\\s*=" },
+    { "label": "Uses whole-number division (Math.floor or Math.trunc)", "pattern": "Math\\.(floor|trunc)\\s*\\(" },
+    { "label": "Uses the remainder for kobo (%)", "pattern": "%\\s*100" },
+    { "label": "Pads kobo to two digits", "pattern": "padStart\\(\\s*2" },
+    { "label": "Adds thousands separators", "pattern": "toLocaleString|Intl\\.NumberFormat|replace\\(" },
+    { "label": "Example calls in comments", "pattern": "//[^\\n]*₦", "min": 2 }
+  ],
+  "sample": "function koboToNaira(kobo) {\n  const naira = Math.floor(kobo / 100);\n  const rest = kobo % 100;\n  return `₦${naira.toLocaleString(\"en-NG\")}.${String(rest).padStart(2, \"0\")}`;\n}\n\n// koboToNaira(1250050) -> \"₦12,500.50\"\n// koboToNaira(237)     -> \"₦2.37\"",
+  "note": "Splitting into naira and kobo with integer operations never produces 12500.499999.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "What does `Math.round(16.5)` give in JavaScript?",
+    "options": ["16", "17", "16.5", "An error"],
+    "answer": 1,
+    "explanation": "Halves round up for positive numbers, unlike Python's round()."
+  },
+  {
+    "prompt": "Why compute VAT as `amount * 75 / 1000` instead of `amount * 0.075`?",
+    "options": ["It's shorter", "0.075 can't be stored exactly; whole-number arithmetic avoids the error", "Browsers require it", "It's faster"],
+    "answer": 1,
+    "explanation": "Keep money in whole numbers as long as possible."
+  },
+  {
+    "prompt": "When should you use `const` instead of `let`?",
+    "options": ["Never", "Whenever the variable won't be reassigned, which is most of the time", "Only for numbers", "Only in functions"],
+    "answer": 1,
+    "explanation": "It makes accidental reassignment an error."
+  }
+]
+```
+$md$, true, true, 2, array['web-02-p1', 'web-02-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('wjs-m03', 'web-development-with-javascript', 'Arrays, Objects and Formatting', 3, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('web-development-with-javascript:arrays-objects-and-formatting', 'web-development-with-javascript', 'wjs-m03', 'arrays-objects-and-formatting', 'Arrays, objects and formatting', 'Work with lists of records the way web pages do (objects, arrays, map, filter, reduce and sort), find a customer''s overdue invoices, and format money and dates for Nigerian users with Intl.', 10, $md$
+## The problem
+
+When a customer opens the portal, the page receives their invoices from the API as **JSON**: a list of objects. It has to show the unpaid ones, most urgent first, mark which are overdue, total what's owed, and format every amount and date the way Nigerian users expect. That's most of what front-end code does: reshape data for people.
+
+## The concept
+
+**Objects and arrays**
+
+```js norun
+const invoice = { id: "INV-100357", dueDate: "2026-08-03", totalKobo: 4250458, paidKobo: 0 };
+const invoices = [invoice, /* ... */];
+invoice.totalKobo;                 // read a property
+```
+
+**Array methods**
+
+| Method | Returns |
+| :-- | :-- |
+| `filter(fn)` | the items where `fn` is true |
+| `map(fn)` | a new array with `fn` applied to each item |
+| `reduce(fn, start)` | one value built from all items (a sum) |
+| `toSorted(fn)` | a sorted copy (`sort` sorts in place) |
+| `find(fn)` | the first matching item |
+
+**Intl**
+
+`Intl.NumberFormat` and `Intl.DateTimeFormat` format numbers, currencies and dates for a locale, such as `en-NG`.
+
+**JSON**
+
+`JSON.parse(text)` turns API text into objects; `JSON.stringify(value)` turns objects into text.
+
+## Example
+
+A customer's invoices, as the API might send them:
+
+```js
+const json = `[
+  {"id": "INV-100357", "dueDate": "2026-08-03", "totalKobo": 4250458, "paidKobo": 0},
+  {"id": "INV-100760", "dueDate": "2026-08-27", "totalKobo": 1161518, "paidKobo": 1161518},
+  {"id": "INV-100832", "dueDate": "2026-09-12", "totalKobo": 2783050, "paidKobo": 1000000},
+  {"id": "INV-101104", "dueDate": "2026-09-30", "totalKobo": 645000, "paidKobo": 0}
+]`;
+const invoices = JSON.parse(json);
+const today = "2026-09-15";
+
+const unpaid = invoices
+  .map((inv) => ({ ...inv, balanceKobo: inv.totalKobo - inv.paidKobo, overdue: inv.dueDate < today }))
+  .filter((inv) => inv.balanceKobo > 0)
+  .toSorted((a, b) => a.dueDate.localeCompare(b.dueDate));
+
+const owed = unpaid.reduce((sum, inv) => sum + inv.balanceKobo, 0);
+console.log(unpaid.map((inv) => `${inv.id} ${inv.overdue ? "OVERDUE" : "due"} ${inv.balanceKobo}`).join("\n"));
+console.log("Total owed (kobo):", owed);
+```
+
+```text
+INV-100357 OVERDUE 4250458
+INV-100832 OVERDUE 1783050
+INV-101104 due 645000
+Total owed (kobo): 6678508
+```
+
+ISO dates (`YYYY-MM-DD`) compare correctly as text, which is why `inv.dueDate < today` works. Now format for people:
+
+```js
+const naira = new Intl.NumberFormat("en-NG", { style: "currency", currency: "NGN" });
+const longDate = new Intl.DateTimeFormat("en-NG", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" });
+
+for (const inv of unpaid) {
+  const due = longDate.format(new Date(inv.dueDate + "T00:00:00Z"));
+  console.log(`${inv.id}: ${naira.format(inv.balanceKobo / 100)} ${inv.overdue ? "overdue since" : "due"} ${due}`);
+}
+console.log("You owe", naira.format(owed / 100));
+```
+
+```text
+INV-100357: ₦42,504.58 overdue since 3 August 2026
+INV-100832: ₦17,830.50 overdue since 12 September 2026
+INV-101104: ₦6,450.00 due 30 September 2026
+You owe ₦66,785.08
+```
+
+Dividing by 100 only at the moment of display is fine: the money arithmetic was already done exactly in kobo.
+
+## Walkthrough
+
+1. Run the blocks in your console. Change `today` to `"2026-09-20"`. Which invoices become overdue?
+2. Use `find` to get INV-100832, and print how much has been paid on it.
+3. Why does the code use `toSorted` rather than `sort`?
+4. Count the overdue invoices with `filter(...).length`.
+
+## Practice
+
+```answer
+{
+  "id": "web-03-p1",
+  "prompt": "How much does the customer owe in total, in kobo?",
+  "answer": 6678508,
+  "format": "number",
+  "jsVerify": "owed",
+  "hint": "The 'Total owed' line.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Which array method keeps only the items that match a condition?",
+    "options": ["map", "filter", "reduce", "join"],
+    "answer": 1,
+    "explanation": "map transforms; reduce combines."
+  },
+  {
+    "prompt": "Why can ISO dates like 2026-09-15 be compared as text?",
+    "options": ["They can't", "Year, month and day are in order with fixed widths, so text order is date order", "JavaScript converts them", "Only in Chrome"],
+    "answer": 1,
+    "explanation": "One reason to keep dates in ISO format."
+  },
+  {
+    "prompt": "What does Intl.NumberFormat('en-NG', { style: 'currency', currency: 'NGN' }) do?",
+    "options": ["Converts currencies", "Formats numbers as naira the way Nigerian users expect", "Rounds money", "Validates input"],
+    "answer": 1,
+    "explanation": "Formatting, not calculation."
+  }
+]
+```
+$md$, true, true, 3, array['web-03-p1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('wjs-m04', 'web-development-with-javascript', 'HTML and Accessibility', 4, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('web-development-with-javascript:html-and-accessibility', 'web-development-with-javascript', 'wjs-m04', 'html-and-accessibility', 'HTML and accessibility', 'Write semantic HTML for the payment page (landmarks, headings, a proper table and a labelled form) so it works for everyone, including people using screen readers or keyboards, and check it.', 15, $md$
+## The problem
+
+Tallybook's old payment page was built from `<div>`s styled to look like a form. It looked fine. But a screen reader announced the amount box as just "edit text", the "Pay" button couldn't be reached with the keyboard, and the invoice table read out as a jumble of numbers. About 1 in 6 people live with some form of disability, and many more use phones in bright sun or with one hand.
+
+Accessible HTML isn't extra work: it's using the right element for each job, which also makes pages easier to style, test and maintain.
+
+## The concept
+
+**Semantic elements**
+
+| Use | Instead of |
+| :-- | :-- |
+| `<header>`, `<main>`, `<nav>`, `<footer>` | anonymous `<div>`s |
+| one `<h1>`, then `<h2>`, `<h3>` in order | bold text that looks like a heading |
+| `<table>` with `<caption>` and `<th scope="col">` | a grid of `<div>`s for tabular data |
+| `<button>` | a clickable `<div>` (no keyboard, no role) |
+| `<label for="amount">` linked to `<input id="amount">` | placeholder text as the only label |
+
+**Forms**
+
+Every input needs a visible **label**. Give inputs the right `type` and `inputmode` (phones show a number pad for `inputmode="decimal"`), and connect hints and errors with `aria-describedby`.
+
+**Checking**
+
+Use the keyboard only (Tab, Shift+Tab, Enter, Space), zoom to 200%, and run the **Lighthouse** accessibility audit in Chrome's DevTools.
+
+## Example
+
+The payment page's structure. Save it as `pay.html` and open it in your browser:
+
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pay invoice INV-100832 · Tallybook</title>
+</head>
+<body>
+  <header>
+    <p>Tallybook · Ada Stores</p>
+  </header>
+  <main>
+    <h1>Pay invoice INV-100832</h1>
+
+    <table>
+      <caption>Invoice lines</caption>
+      <thead>
+        <tr><th scope="col">Item</th><th scope="col">Quantity</th><th scope="col">Price</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Bookkeeping, monthly</td><td>1</td><td>₦25,890.00</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Balance</h2>
+    <p>Total ₦27,830.50 · paid ₦10,000.00 · <strong>due ₦17,830.50</strong></p>
+
+    <h2>Make a payment</h2>
+    <form id="payment-form">
+      <label for="amount">Amount in naira</label>
+      <input id="amount" name="amount" inputmode="decimal" autocomplete="off" aria-describedby="amount-hint" required>
+      <p id="amount-hint">Up to ₦17,830.50</p>
+
+      <label for="reference">Bank transfer reference</label>
+      <input id="reference" name="reference" aria-describedby="reference-hint" required>
+      <p id="reference-hint">From your bank's transfer confirmation</p>
+
+      <button type="submit">Record payment</button>
+    </form>
+  </main>
+</body>
+</html>
+```
+
+Open it and press Tab: focus moves from the amount, to the reference, to the button, and Enter submits. Click the words "Amount in naira": the cursor jumps into the box, because the label is linked to the input. A screen reader would announce "Amount in naira, edit text, Up to ₦17,830.50". None of that needed any JavaScript or CSS.
+
+## Walkthrough
+
+1. Save and open the page. Navigate it with the keyboard only. Can you do everything?
+2. Remove the `for="amount"` attribute and click the label again. What changed?
+3. In Chrome DevTools, run Lighthouse with the Accessibility category. What score does it give, and what does it suggest?
+4. Fix an inaccessible form (the task below).
+
+## Practice
+
+```task
+{
+  "id": "web-04-t1",
+  "prompt": "This form is inaccessible: `<div class=\"field\">Email</div><input placeholder=\"Email\"><div class=\"btn\" onclick=\"send()\">Send receipt</div>`. Rewrite it as accessible HTML: a **form**, a **label linked** to an **email input**, and a real **button**.",
+  "minutes": 5,
+  "rows": 6,
+  "placeholder": "<form ...>",
+  "rules": [
+    { "label": "A form element", "pattern": "<form[\\s>]" },
+    { "label": "A label with for=", "pattern": "<label[^>]*\\bfor=\"([\\w-]+)\"" },
+    { "label": "An input with a matching id", "pattern": "<input[^>]*\\bid=\"[\\w-]+\"" },
+    { "label": "type=\"email\"", "pattern": "<input[^>]*type=\"email\"" },
+    { "label": "A real button", "pattern": "<button[^>]*>\\s*Send receipt\\s*</button>" },
+    { "label": "No clickable div", "pattern": "<div[^>]*onclick", "absent": true }
+  ],
+  "sample": "<form id=\"receipt-form\">\n  <label for=\"receipt-email\">Email for your receipt</label>\n  <input id=\"receipt-email\" name=\"email\" type=\"email\" autocomplete=\"email\" required>\n  <button type=\"submit\">Send receipt</button>\n</form>",
+  "note": "type=\"email\" also gives phone users an @ key, and autocomplete=\"email\" lets them fill it in one tap.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why use `<button>` instead of a `<div>` with a click handler?",
+    "options": ["It's prettier", "Buttons work with the keyboard and are announced as buttons by screen readers", "Divs are deprecated", "Buttons are faster"],
+    "answer": 1,
+    "explanation": "The right element brings behaviour for free."
+  },
+  {
+    "prompt": "Why isn't placeholder text enough as a label?",
+    "options": ["It's too small", "It disappears when typing starts and isn't reliably announced", "Browsers ignore it", "It's slow"],
+    "answer": 1,
+    "explanation": "Use a visible, linked label."
+  },
+  {
+    "prompt": "What does `inputmode=\"decimal\"` do on a phone?",
+    "options": ["Validates the number", "Shows a numeric keypad with a decimal point", "Rounds input", "Nothing"],
+    "answer": 1,
+    "explanation": "Small detail, big difference for mobile users."
+  }
+]
+```
+$md$, true, true, 4, array['web-04-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('wjs-m05', 'web-development-with-javascript', 'CSS Layout and Responsive Design', 5, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('web-development-with-javascript:css-layout-and-responsive-design', 'web-development-with-javascript', 'wjs-m05', 'css-layout-and-responsive-design', 'CSS layout and responsive design', 'Style the payment page with CSS, lay it out with flexbox and grid, design for phones first, and use a media query so it adapts to wider screens without separate pages.', 15, $md$
+## The problem
+
+Most of Tallybook's customers open invoices on a phone, from a link in an email or WhatsApp message. The old page was designed on a laptop: on a phone, the table ran off the edge, the buttons were tiny, and customers had to pinch and zoom to pay.
+
+**Responsive design** means one page that works at every width, designed for the smallest screen first.
+
+## The concept
+
+**CSS rules**
+
+```css
+selector { property: value; }
+```
+
+Select by element (`button`), class (`.summary`) or id (`#amount`), and set properties such as `color`, `padding`, `font-size`.
+
+**Layout**
+
+- **Flexbox** (`display: flex`) lines items up in a row or column, with gaps and alignment.
+- **Grid** (`display: grid`) places items in rows and columns.
+
+**Mobile first**
+
+Write the phone layout as the default. Then add **media queries** that change the layout when there's room:
+
+```css
+@media (min-width: 700px) { /* rules for wider screens */ }
+```
+
+**Touch-friendly**
+
+Tap targets at least about 44 pixels tall, body text at least 16px (which also stops phones zooming into form fields), and enough contrast to read in daylight.
+
+## Example
+
+Add a stylesheet to `pay.html` from lesson 4. Put this inside `<head>`, and wrap the table and the balance in `<div class="layout">` with the balance in `<section class="summary">`:
+
+```html
+<style>
+  :root { --ink: #1c1917; --muted: #57534e; --brand: #0f766e; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 16px/1.5 system-ui, sans-serif; color: var(--ink); }
+  main { padding: 16px; max-width: 960px; margin: 0 auto; }
+  table { width: 100%; border-collapse: collapse; }
+  th, td { text-align: left; padding: 8px; border-bottom: 1px solid #e7e5e4; }
+  .layout { display: grid; gap: 24px; }
+  .summary { padding: 16px; border: 1px solid #e7e5e4; border-radius: 12px; }
+  form { display: flex; flex-direction: column; gap: 8px; }
+  input { font-size: 16px; padding: 12px; border: 1px solid var(--muted); border-radius: 8px; }
+  button { min-height: 48px; font-size: 16px; color: white; background: var(--brand); border: 0; border-radius: 8px; }
+  @media (min-width: 700px) {
+    .layout { grid-template-columns: 2fr 1fr; align-items: start; }
+  }
+</style>
+```
+
+On a phone, `.layout` is a single column: the invoice table, then the summary. From 700 pixels wide, the media query turns it into two columns, table on the left and summary on the right, with no change to the HTML. The inputs are 16px with generous padding, and the button is 48px tall, so it's easy to tap.
+
+## Walkthrough
+
+1. Add the styles and resize the browser window across 700 pixels. Watch the layout switch.
+2. In DevTools, turn on the device toolbar (Ctrl+Shift+M) and pick a phone. Is everything usable without zooming?
+3. Change the brand colour to a pale yellow. Use DevTools' contrast checker on the button: does it pass?
+4. Write a media query for very wide screens (the task below).
+
+## Practice
+
+```task
+{
+  "id": "web-05-t1",
+  "prompt": "Write CSS so that the payment **form's fields sit side by side** (amount and reference in one row) on screens **at least 1000 pixels** wide, but stay stacked on smaller screens. Use a **media query** and **grid or flexbox**.",
+  "minutes": 6,
+  "rows": 8,
+  "placeholder": "@media (min-width: 1000px) {\n  ...",
+  "rules": [
+    { "label": "A min-width media query of 1000px", "pattern": "@media\\s*\\(\\s*min-width\\s*:\\s*1000px\\s*\\)" },
+    { "label": "Targets the form", "pattern": "form|#payment-form|\\.payment" },
+    { "label": "Uses grid or flex in a row", "pattern": "grid-template-columns|flex-direction\\s*:\\s*row|display\\s*:\\s*grid" },
+    { "label": "No fixed pixel width on the page body", "pattern": "body\\s*\\{[^}]*\\bwidth\\s*:\\s*\\d+px", "absent": true }
+  ],
+  "sample": "@media (min-width: 1000px) {\n  form {\n    display: grid;\n    grid-template-columns: 1fr 1fr;\n    column-gap: 16px;\n    align-items: end;\n  }\n  form button { grid-column: 1 / -1; }\n}",
+  "note": "The base styles still stack the fields; the media query only adds the two-column grid when there's room.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "What does 'mobile first' mean?",
+    "options": ["Only support phones", "Write the phone layout as the default, then add rules for wider screens", "Build an app instead", "Test on phones last"],
+    "answer": 1,
+    "explanation": "Media queries add, rather than undo."
+  },
+  {
+    "prompt": "Why set input font-size to at least 16px?",
+    "options": ["It looks modern", "It's readable, and stops phones zooming in when the field is tapped", "Browsers require it", "It's faster"],
+    "answer": 1,
+    "explanation": "A common mobile annoyance avoided."
+  },
+  {
+    "prompt": "What does `@media (min-width: 700px)` apply to?",
+    "options": ["Screens narrower than 700px", "Screens at least 700px wide", "Printers only", "All screens"],
+    "answer": 1,
+    "explanation": "The wider layout switches on at 700px."
+  }
+]
+```
+$md$, true, true, 5, array['web-05-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('wjs-m06', 'web-development-with-javascript', 'The DOM and Events', 6, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('web-development-with-javascript:the-dom-and-events', 'web-development-with-javascript', 'wjs-m06', 'the-dom-and-events', 'The DOM and events', 'Find elements with querySelector, react to typing and clicks with event listeners, and update the page live (the balance after a payment) while keeping the calculation in a plain, testable function.', 15, $md$
+## The problem
+
+On the old page, customers typed an amount, pressed Pay, waited for a whole new page, and only then saw what they'd still owe. Many typed the full invoice total instead of the balance, and the payment was refused. The page should tell them, as they type, what their balance will be.
+
+## The concept
+
+**Finding elements**
+
+```js norun
+const amount = document.querySelector("#amount");   // CSS selectors
+const output = document.querySelector("#after-payment");
+```
+
+**Reading and changing them**
+
+`input.value` is what's typed (always text). `element.textContent = "..."` changes visible text safely. Avoid `innerHTML` with anything a user typed: it can run as HTML.
+
+**Events**
+
+```js norun
+amount.addEventListener("input", () => { /* runs on every keystroke */ });
+form.addEventListener("submit", (event) => { event.preventDefault(); /* ... */ });
+```
+
+**Keep logic out of event handlers**
+
+Put the calculation in a plain function that takes values and returns a result. The event handler only reads the page, calls the function, and writes the result. The function can then be tested without a page (lesson 9).
+
+**Announce changes**
+
+`aria-live="polite"` on an element makes screen readers read out its new text when it changes.
+
+## Example
+
+First the plain function: given what's due and what was typed, describe the balance after paying.
+
+```js
+function balanceAfter(dueKobo, typed) {
+  const cleaned = typed.replace(/[₦,\s]/g, "");
+  if (cleaned === "") return { ok: false, message: "" };
+  if (!/^\d+(\.\d{1,2})?$/.test(cleaned)) return { ok: false, message: "Enter an amount like 5000 or 5000.50" };
+  const [naira, kobo = ""] = cleaned.split(".");
+  const amountKobo = Number(naira) * 100 + Number(kobo.padEnd(2, "0"));
+  if (amountKobo === 0) return { ok: false, message: "Enter an amount above zero" };
+  if (amountKobo > dueKobo) return { ok: false, message: "That's more than you owe" };
+  return { ok: true, amountKobo, remainingKobo: dueKobo - amountKobo };
+}
+
+for (const typed of ["5000", "₦17,830.50", "17830.51", "50.5", "abc", "0"]) {
+  console.log(JSON.stringify(typed), "->", JSON.stringify(balanceAfter(1783050, typed)));
+}
+```
+
+```text
+"5000" -> {"ok":true,"amountKobo":500000,"remainingKobo":1283050}
+"₦17,830.50" -> {"ok":true,"amountKobo":1783050,"remainingKobo":0}
+"17830.51" -> {"ok":false,"message":"That's more than you owe"}
+"50.5" -> {"ok":true,"amountKobo":5050,"remainingKobo":1778000}
+"abc" -> {"ok":false,"message":"Enter an amount like 5000 or 5000.50"}
+"0" -> {"ok":false,"message":"Enter an amount above zero"}
+```
+
+The amount is turned into kobo by splitting at the decimal point, never through a float. Now wire it to the page from lesson 4. Add this inside `<main>`, after the form, then the script before `</body>`:
+
+```html
+<p id="after-payment" aria-live="polite"></p>
+
+<script>
+  const DUE_KOBO = 1783050;
+  const naira = new Intl.NumberFormat("en-NG", { style: "currency", currency: "NGN" });
+  const amountInput = document.querySelector("#amount");
+  const afterPayment = document.querySelector("#after-payment");
+
+  // balanceAfter() from the example goes here, unchanged.
+
+  amountInput.addEventListener("input", () => {
+    const result = balanceAfter(DUE_KOBO, amountInput.value);
+    afterPayment.textContent = result.ok
+      ? `After this payment you'll owe ${naira.format(result.remainingKobo / 100)}`
+      : result.message;
+  });
+</script>
+```
+
+Type `5000` and the line under the form reads "After this payment you'll owe ₦12,830.50"; type the full balance and it reads "After this payment you'll owe ₦0.00"; type one kobo too much and it says "That's more than you owe", before anything is sent.
+
+## Walkthrough
+
+1. Add the code to `pay.html` and try the amounts from the example.
+2. Disable the Pay button while the amount isn't valid (`button.disabled = !result.ok`).
+3. Why does the handler use `textContent` rather than `innerHTML`?
+4. Write a handler for a "Pay full balance" button (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "web-06-p1",
+  "prompt": "What is `remainingKobo` after typing **\"5000\"** against a balance of 1,783,050 kobo?",
+  "answer": 1283050,
+  "format": "number",
+  "jsVerify": "balanceAfter(1783050, '5000').remainingKobo",
+  "hint": "5000 naira is 500,000 kobo.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "web-06-t1",
+  "prompt": "Write JavaScript for a **\"Pay full balance\"** button (id `pay-all`): when **clicked**, it fills the amount input with the full balance in naira (like \"17830.50\") and **updates the message** the same way typing does.",
+  "minutes": 6,
+  "rows": 8,
+  "placeholder": "document.querySelector(\"#pay-all\").addEventListener(...",
+  "rules": [
+    { "label": "Selects the pay-all button", "pattern": "querySelector\\(\\s*[\"']#pay-all[\"']\\s*\\)|getElementById\\(\\s*[\"']pay-all[\"']\\s*\\)" },
+    { "label": "Listens for click", "pattern": "addEventListener\\(\\s*[\"']click[\"']" },
+    { "label": "Sets the input's value", "pattern": "\\.value\\s*=" },
+    { "label": "Formats kobo as naira with two decimals", "pattern": "padStart\\(\\s*2|toFixed\\(\\s*2\\s*\\)|% ?100" },
+    { "label": "Updates the message (dispatches input or calls the same code)", "pattern": "dispatchEvent|balanceAfter\\(" }
+  ],
+  "sample": "document.querySelector(\"#pay-all\").addEventListener(\"click\", () => {\n  const naira = Math.floor(DUE_KOBO / 100);\n  const kobo = String(DUE_KOBO % 100).padStart(2, \"0\");\n  amountInput.value = `${naira}.${kobo}`;\n  amountInput.dispatchEvent(new Event(\"input\"));\n});",
+  "note": "Dispatching an input event reuses the existing handler, so the message logic lives in one place.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "What type is `input.value` always?",
+    "options": ["A number", "A string (text)", "An object", "It depends on the input type"],
+    "answer": 1,
+    "explanation": "Convert deliberately."
+  },
+  {
+    "prompt": "Why keep the calculation in a separate function from the event handler?",
+    "options": ["It's faster", "So it can be tested without a page, and reused", "Browsers require it", "To use less memory"],
+    "answer": 1,
+    "explanation": "Handlers read and write the page; functions decide."
+  },
+  {
+    "prompt": "What does aria-live=\"polite\" do?",
+    "options": ["Styles the text", "Makes screen readers announce the element's text when it changes", "Validates input", "Slows updates"],
+    "answer": 1,
+    "explanation": "Live updates for everyone."
+  }
+]
+```
+$md$, true, true, 6, array['web-06-p1', 'web-06-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('wjs-m07', 'web-development-with-javascript', 'Form Validation', 7, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('web-development-with-javascript:form-validation', 'web-development-with-javascript', 'wjs-m07', 'form-validation', 'Form validation', 'Validate a form in the browser so people get fast, clear, accessible error messages, and understand why the server must validate everything again anyway.', 25, $md$
+## The problem
+
+The payment form must stop obvious mistakes before they're sent: an empty reference, an amount with letters, more than what's owed. But the old page only showed a red border with no text, so screen reader users never knew what was wrong, and some customers gave up.
+
+There's a second lesson hiding here: browser validation is for **people**, not for **security**. Anyone can send a request to the API without using the page at all.
+
+## The concept
+
+**Validate in two places**
+
+| Where | Purpose |
+| :-- | :-- |
+| Browser | fast, friendly feedback while people type or submit |
+| Server (the API) | the real rules, for every request, from any client |
+
+The API from the Databases and APIs course already refuses bad payments with 400 and 409. The page's checks are a courtesy on top.
+
+**Good error messages**
+
+- Say what's wrong and how to fix it ("Enter the reference from your bank transfer"), not just "Invalid".
+- Show them next to the field, and link them with `aria-describedby`, so they're announced.
+- Mark the field with `aria-invalid="true"`, and move focus to the first field with an error on submit.
+- Don't rely on colour alone.
+
+**Built-in or custom**
+
+HTML attributes (`required`, `type="email"`, `pattern`) give basic checks for free. For messages you control, add `novalidate` to the form and validate in JavaScript.
+
+## Example
+
+The validation as a plain function that returns every problem, keyed by field:
+
+```js
+function validatePayment({ amount, reference }, dueKobo) {
+  const errors = {};
+  const cleaned = amount.replace(/[₦,\s]/g, "");
+  if (cleaned === "") {
+    errors.amount = "Enter how much you're paying";
+  } else if (!/^\d+(\.\d{1,2})?$/.test(cleaned)) {
+    errors.amount = "Enter an amount in naira, like 5000 or 5000.50";
+  } else {
+    const [naira, kobo = ""] = cleaned.split(".");
+    const amountKobo = Number(naira) * 100 + Number(kobo.padEnd(2, "0"));
+    if (amountKobo === 0) errors.amount = "Enter an amount above zero";
+    else if (amountKobo > dueKobo) errors.amount = "That's more than you owe on this invoice";
+  }
+  const ref = reference.trim();
+  if (ref === "") errors.reference = "Enter the reference from your bank transfer";
+  else if (!/^[A-Za-z0-9-]{6,30}$/.test(ref)) errors.reference = "References are 6 to 30 letters, numbers or dashes";
+  return errors;
+}
+
+const cases = [
+  { amount: "", reference: "" },
+  { amount: "5,000", reference: "TRF-2026-0915-0042" },
+  { amount: "20000", reference: "abc" },
+  { amount: "5000.555", reference: "TRF-2026-0915-0042" },
+];
+for (const c of cases) console.log(JSON.stringify(c), "->", JSON.stringify(validatePayment(c, 1783050)));
+```
+
+```text
+{"amount":"","reference":""} -> {"amount":"Enter how much you're paying","reference":"Enter the reference from your bank transfer"}
+{"amount":"5,000","reference":"TRF-2026-0915-0042"} -> {}
+{"amount":"20000","reference":"abc"} -> {"amount":"That's more than you owe on this invoice","reference":"References are 6 to 30 letters, numbers or dashes"}
+{"amount":"5000.555","reference":"TRF-2026-0915-0042"} -> {"amount":"Enter an amount in naira, like 5000 or 5000.50"}
+```
+
+An empty object means valid. Now show the errors accessibly. On the page from lesson 6, add `novalidate` to the `<form>` and an empty error paragraph after each input (`<p id="amount-error" class="error"></p>` and `<p id="reference-error" class="error"></p>`), then:
+
+```html
+<script>
+  // validatePayment() from the example goes here, unchanged.
+  const form = document.querySelector("#payment-form");
+
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const values = { amount: form.amount.value, reference: form.reference.value };
+    const errors = validatePayment(values, DUE_KOBO);
+    for (const field of ["amount", "reference"]) {
+      const input = form[field];
+      const message = document.querySelector(`#${field}-error`);
+      message.textContent = errors[field] ?? "";
+      input.setAttribute("aria-invalid", errors[field] ? "true" : "false");
+      input.setAttribute("aria-describedby", errors[field] ? `${field}-error` : `${field}-hint`);
+    }
+    const firstError = ["amount", "reference"].find((field) => errors[field]);
+    if (firstError) form[firstError].focus();
+    else sendPayment(values);   // lesson 8
+  });
+</script>
+```
+
+Submit the empty form: both messages appear under their fields in words, the fields are marked invalid, focus moves to the amount, and a screen reader reads the amount's error.
+
+## Walkthrough
+
+1. Run the example in your console with a case of your own.
+2. Add the script to `pay.html` and submit with each kind of mistake.
+3. Bypass the page: in the console, call the API (lesson 8) with a negative amount. What protects Tallybook now?
+4. Write a validation rule for a new field (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "web-07-p1",
+  "prompt": "How many error messages does `validatePayment({ amount: \"20000\", reference: \"abc\" }, 1783050)` return?",
+  "answer": 2,
+  "format": "number",
+  "jsVerify": "Object.keys(validatePayment({ amount: '20000', reference: 'abc' }, 1783050)).length",
+  "hint": "₦20,000 is more than ₦17,830.50, and 'abc' is too short.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "web-07-t1",
+  "prompt": "Add a **phone number** field for a payment receipt by SMS. Write the JavaScript lines for `validatePayment` that check `phone`: optional, but if given it must be a Nigerian mobile number, **11 digits starting with 0** (spaces allowed), with a **clear message**.",
+  "minutes": 6,
+  "rows": 6,
+  "placeholder": "const phone = (values.phone ?? \"\").replace(...)",
+  "rules": [
+    { "label": "Removes spaces", "pattern": "replace\\([^)]*\\\\s" },
+    { "label": "Optional: skips the check when empty", "pattern": "!==\\s*[\"']{2}|\\.length\\s*>\\s*0|if\\s*\\(\\s*phone\\s*&&|if\\s*\\(\\s*phone\\s*\\)" },
+    { "label": "Checks 11 digits starting with 0", "pattern": "\\^0\\\\d\\{10\\}\\$|\\^0\\[0-9\\]\\{10\\}\\$" },
+    { "label": "Sets errors.phone with a helpful message", "pattern": "errors\\.phone\\s*=\\s*[\"'`][^\"'`]{15,}" }
+  ],
+  "sample": "const phone = (values.phone ?? \"\").replace(/\\s/g, \"\");\nif (phone !== \"\" && !/^0\\d{10}$/.test(phone)) {\n  errors.phone = \"Enter an 11-digit mobile number starting with 0, like 0803 123 4567\";\n}",
+  "note": "The example in the message shows the format, which helps more than describing it.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "The page validates the amount. Does the API still need to?",
+    "options": ["No", "Yes: anyone can send requests without the page", "Only for large amounts", "Only on weekends"],
+    "answer": 1,
+    "explanation": "Browser checks are for people; server checks are the rules."
+  },
+  {
+    "prompt": "Which error message is most helpful?",
+    "options": ["Invalid", "Error 400", "Enter the reference from your bank transfer", "Red border only"],
+    "answer": 2,
+    "explanation": "Say what to do."
+  },
+  {
+    "prompt": "How do you make an error message announced by screen readers with its field?",
+    "options": ["Make it red", "Link it with aria-describedby and set aria-invalid", "Use a tooltip", "Use an alert box"],
+    "answer": 1,
+    "explanation": "Connect message and field in the markup."
+  }
+]
+```
+$md$, true, true, 7, array['web-07-p1', 'web-07-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('wjs-m08', 'web-development-with-javascript', 'Fetch and Async Code', 8, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('web-development-with-javascript:fetch-and-async', 'web-development-with-javascript', 'wjs-m08', 'fetch-and-async', 'Fetch and async code', 'Call an API from the page with fetch, async and await, handle every kind of response (success, 400, 409, 404 and network failure), and show loading and error states so customers always know what happened.', 15, $md$
+## The problem
+
+The old page sent the payment and then showed either "Success" or nothing at all. If the network dropped on a weak mobile connection, the customer didn't know whether they'd paid, pressed again, and the second attempt was refused as a duplicate, which looked like an error. Talking to an API means planning for every outcome, including the request never arriving.
+
+## The concept
+
+**fetch, async and await**
+
+```js norun
+async function sendPayment(invoiceId, body) {
+  const response = await fetch(`/invoices/${invoiceId}/payments`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+  const data = await response.json();
+  // ...
+}
+```
+
+`await` pauses the function until the response arrives, without freezing the page.
+
+**fetch only throws on network failure**
+
+A 400 or 409 response is still a **response**: `fetch` succeeds, and you must check `response.ok` or `response.status`. Only a lost connection makes `fetch` throw.
+
+**Every outcome has a message**
+
+| Outcome | What the customer sees |
+| :-- | :-- |
+| 201 | "Payment recorded", and the new balance from the server |
+| 400 | the server's message, next to the form |
+| 409 | "already recorded" or "more than you owe", explained |
+| 404 | "This invoice link isn't valid" |
+| network error | "We couldn't reach Tallybook. Your payment wasn't recorded. Check your connection and try again." |
+
+**States**
+
+Disable the button and show "Recording payment..." while waiting, so it can't be pressed twice.
+
+## Example
+
+To try this without a server, make a stand-in `fetch` that behaves like the Databases and APIs course's API: it returns real `Response` objects with the same status codes.
+
+```js
+let balanceKobo = 1783050;
+const recorded = new Set();
+let networkUp = true;
+
+async function fakeFetch(url, options) {
+  if (!networkUp) throw new TypeError("Failed to fetch");
+  if (!url.startsWith("/invoices/INV-100832/")) return Response.json({ error: "No such invoice" }, { status: 404 });
+  const { amount_kobo: amount, bank_reference: reference } = JSON.parse(options.body);
+  if (!Number.isInteger(amount) || amount <= 0 || !reference) return Response.json({ error: "Send a positive amount_kobo and a bank_reference" }, { status: 400 });
+  if (recorded.has(reference)) return Response.json({ error: "This bank_reference has already been recorded" }, { status: 409 });
+  if (amount > balanceKobo) return Response.json({ error: `Payment exceeds the balance of ${balanceKobo} kobo` }, { status: 409 });
+  recorded.add(reference);
+  balanceKobo -= amount;
+  return Response.json({ balance_kobo: balanceKobo }, { status: 201 });
+}
+```
+
+Now the function the page uses. It turns every outcome into something to show:
+
+```js
+async function sendPayment(invoiceId, amountKobo, reference, fetchFn = fetch) {
+  let response;
+  try {
+    response = await fetchFn(`/invoices/${invoiceId}/payments`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ amount_kobo: amountKobo, bank_reference: reference }),
+    });
+  } catch {
+    return { ok: false, message: "We couldn't reach Tallybook. Your payment wasn't recorded. Check your connection and try again." };
+  }
+  const data = await response.json();
+  if (response.status === 201) return { ok: true, message: `Payment recorded. You now owe ${data.balance_kobo} kobo.`, balanceKobo: data.balance_kobo };
+  if (response.status === 404) return { ok: false, message: "This invoice link isn't valid. Please use the link in your latest email." };
+  if (response.status === 409 && data.error.includes("already")) return { ok: false, message: "This transfer reference has already been recorded, so you don't need to submit it again." };
+  return { ok: false, message: data.error };
+}
+
+const attempts = [
+  ["INV-100832", 500000, "TRF-2026-0915-0042"],
+  ["INV-100832", 500000, "TRF-2026-0915-0042"],
+  ["INV-100832", 2000000, "TRF-2026-0915-0043"],
+  ["INV-999999", 1000, "TRF-2026-0915-0044"],
+];
+for (const [invoice, amount, reference] of attempts) {
+  const result = await sendPayment(invoice, amount, reference, fakeFetch);
+  console.log(result.ok ? "OK  " : "FAIL", result.message);
+}
+networkUp = false;
+console.log((await sendPayment("INV-100832", 1000, "TRF-2026-0915-0045", fakeFetch)).message);
+```
+
+```text
+OK   Payment recorded. You now owe 1283050 kobo.
+FAIL This transfer reference has already been recorded, so you don't need to submit it again.
+FAIL Payment exceeds the balance of 1283050 kobo
+FAIL This invoice link isn't valid. Please use the link in your latest email.
+We couldn't reach Tallybook. Your payment wasn't recorded. Check your connection and try again.
+```
+
+The second attempt with the same reference is the weak-connection case from the problem: the first one did succeed, and the message now tells the customer so, instead of looking like a failure. On the real page, pass the browser's `fetch` (the default), disable the button before the `await`, and show `result.message` afterwards.
+
+## Walkthrough
+
+1. Run both blocks in your console. Then set `networkUp = true` and pay the remaining balance exactly.
+2. Why does `sendPayment` take `fetchFn` as a parameter?
+3. Add the loading state: write the three lines that disable the button, change its text, and restore both afterwards.
+4. Handle one more outcome (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "web-08-p1",
+  "prompt": "After the attempts in the example, what is the invoice's balance in kobo?",
+  "answer": 1283050,
+  "format": "number",
+  "jsVerify": "balanceKobo",
+  "hint": "Only the first payment of 500,000 kobo was recorded.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "web-08-t1",
+  "prompt": "The API may return **503** when it's being updated, with a `Retry-After` header in seconds. Write the lines to add to `sendPayment` that handle **503** with a message telling the customer their payment **wasn't recorded** and **when** to try again.",
+  "minutes": 5,
+  "rows": 6,
+  "placeholder": "if (response.status === 503) {\n  ...",
+  "rules": [
+    { "label": "Checks status 503", "pattern": "status\\s*===?\\s*503" },
+    { "label": "Reads the Retry-After header", "pattern": "headers\\.get\\(\\s*[\"']retry-after[\"']\\s*\\)" },
+    { "label": "Returns ok: false", "pattern": "ok\\s*:\\s*false" },
+    { "label": "Says it wasn't recorded", "pattern": "wasn't recorded|was not recorded|not recorded" },
+    { "label": "Says when to try again", "pattern": "try again" }
+  ],
+  "sample": "if (response.status === 503) {\n  const seconds = Number(response.headers.get(\"Retry-After\")) || 60;\n  const minutes = Math.ceil(seconds / 60);\n  return { ok: false, message: `Tallybook is being updated. Your payment wasn't recorded. Please try again in about ${minutes} minute${minutes === 1 ? \"\" : \"s\"}.` };\n}",
+  "note": "Header names are case-insensitive, so get(\"Retry-After\") and get(\"retry-after\") both work.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "The API returns 409. Does `await fetch(...)` throw?",
+    "options": ["Yes", "No: it returns a response; check response.status", "Only in Firefox", "Only for POST"],
+    "answer": 1,
+    "explanation": "fetch only throws when the request can't be made."
+  },
+  {
+    "prompt": "Why disable the Pay button while waiting for the response?",
+    "options": ["It looks nicer", "So it can't be pressed twice and send two payments", "Browsers require it", "To save data"],
+    "answer": 1,
+    "explanation": "Clear states prevent double submissions."
+  },
+  {
+    "prompt": "A network error happens before the server replies. What should the customer be told?",
+    "options": ["Nothing", "That the payment wasn't recorded, and to check their connection and try again", "That it succeeded", "Error"],
+    "answer": 1,
+    "explanation": "Always say what happened to their money."
+  }
+]
+```
+$md$, true, true, 8, array['web-08-p1', 'web-08-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('wjs-m09', 'web-development-with-javascript', 'Testing JavaScript', 9, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('web-development-with-javascript:testing-javascript', 'web-development-with-javascript', 'wjs-m09', 'testing-javascript', 'Testing JavaScript', 'Test the page''s logic (totals, validation and API handling) with small automated tests, using a tiny test runner you can run in the browser console, and see how real projects do the same with Vitest or Jest.', 20, $md$
+## The problem
+
+The payment page now has four pieces of logic: the invoice total, the live balance, validation and the API handling. Each was checked by hand once. The next developer who changes the reference format or the rounding will check by hand again, if they remember. Front-end logic deserves the same automated tests as the server's.
+
+## The concept
+
+**Test the functions, not the clicks**
+
+Because the logic lives in plain functions (lessons 6 to 8), most of it can be tested without a browser page at all: call the function, compare the result.
+
+**A test is still just an assertion**
+
+Every test framework does the same thing: run named checks, report which passed and which failed.
+
+**Real projects**
+
+In a project with Node.js, use a test framework: **Vitest** or **Jest** (`npm install -D vitest`, then `npx vitest`). They find `*.test.js` files, run them on every change, and can simulate a page for DOM tests. For checking whole pages in real browsers, teams use **Playwright** or Cypress. The tests you write here move into those files almost unchanged.
+
+## Example
+
+A test runner small enough to read, then tests for the functions from lessons 2 and 7. Paste the functions into the console first (they're repeated here so this block runs on its own):
+
+```js
+const results = [];
+function test(name, fn) {
+  try {
+    fn();
+    results.push(["PASS", name]);
+  } catch (error) {
+    results.push(["FAIL", `${name}: ${error.message}`]);
+  }
+}
+function expectEqual(actual, expected) {
+  if (JSON.stringify(actual) !== JSON.stringify(expected)) {
+    throw new Error(`expected ${JSON.stringify(expected)}, got ${JSON.stringify(actual)}`);
+  }
+}
+
+const roundHalfUp = (n) => Math.sign(n) * Math.round(Math.abs(n));
+function invoiceTotal(lines, discountPct = 0, vatExempt = false) {
+  if (discountPct < 0 || discountPct > 20) throw new RangeError("discountPct must be between 0 and 20");
+  const subtotal = lines.reduce((sum, [q, p]) => sum + q * p, 0);
+  const afterDiscount = subtotal - roundHalfUp((subtotal * discountPct) / 100);
+  return afterDiscount + (vatExempt ? 0 : roundHalfUp((afterDiscount * 75) / 1000));
+}
+function validateReference(reference) {
+  const ref = reference.trim();
+  if (ref === "") return "Enter the reference from your bank transfer";
+  if (!/^[A-Za-z0-9-]{6,30}$/.test(ref)) return "References are 6 to 30 letters, numbers or dashes";
+  return null;
+}
+
+test("single line with VAT", () => expectEqual(invoiceTotal([[2, 100000]]), 215000));
+test("VAT-exempt customer pays no VAT", () => expectEqual(invoiceTotal([[2, 100000]], 0, true), 200000));
+test("VAT half a kobo rounds up", () => expectEqual(invoiceTotal([[1, 220]]), 237));
+test("discount above 20% is refused", () => {
+  let threw = false;
+  try { invoiceTotal([[1, 100]], 25); } catch { threw = true; }
+  expectEqual(threw, true);
+});
+test("empty reference has a message", () => expectEqual(validateReference("  "), "Enter the reference from your bank transfer"));
+test("valid reference passes", () => expectEqual(validateReference("TRF-2026-0915-0042"), null));
+test("reference of 5 characters is too short", () => expectEqual(validateReference("AB-12"), null));
+
+console.log(results.map(([status, name]) => `${status}  ${name}`).join("\n"));
+console.log(`${results.filter(([s]) => s === "PASS").length} passed, ${results.filter(([s]) => s === "FAIL").length} failed`);
+```
+
+```text
+PASS  single line with VAT
+PASS  VAT-exempt customer pays no VAT
+PASS  VAT half a kobo rounds up
+PASS  discount above 20% is refused
+PASS  empty reference has a message
+PASS  valid reference passes
+FAIL  reference of 5 characters is too short: expected null, got "References are 6 to 30 letters, numbers or dashes"
+6 passed, 1 failed
+```
+
+One test fails, and the failure is in the **test**, not the code: a 5-character reference is too short (the rule says 6 to 30), so `validateReference` correctly returns a message. The test's expectation was wrong. Reading a failure carefully, and deciding whether the code or the test is wrong, is half of testing. The fix is to expect the message.
+
+## Walkthrough
+
+1. Run the block. Fix the failing test's expected value and run it again.
+2. Add boundary tests for references of exactly 6 and exactly 30 characters, and of 31.
+3. Write tests for `sendPayment` from lesson 8 using `fakeFetch` (they'll need `await`).
+4. Turn one of these into a Vitest test file (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "web-09-p1",
+  "prompt": "How many of the seven tests **pass** in the example?",
+  "answer": 6,
+  "format": "number",
+  "jsVerify": "results.filter(([s]) => s === 'PASS').length",
+  "hint": "The last line printed.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "web-09-t1",
+  "prompt": "Write a **Vitest** test file for `validateReference` (imported from `./validate.js`), with a **describe** block and at least **three** tests: an empty reference, a valid one, and one that's **too long** (31 characters).",
+  "minutes": 6,
+  "rows": 12,
+  "placeholder": "import { describe, it, expect } from \"vitest\";",
+  "rules": [
+    { "label": "Imports from vitest", "pattern": "from\\s+[\"']vitest[\"']" },
+    { "label": "Imports validateReference", "pattern": "import\\s*\\{[^}]*validateReference[^}]*\\}\\s*from\\s*[\"']\\./validate(\\.js)?[\"']" },
+    { "label": "A describe block", "pattern": "describe\\(" },
+    { "label": "At least three tests", "pattern": "\\b(it|test)\\(\\s*[\"'`]", "min": 3 },
+    { "label": "Uses expect", "pattern": "expect\\(" },
+    { "label": "A 31-character case", "pattern": "repeat\\(\\s*31\\s*\\)|[A-Za-z0-9-]{31}" }
+  ],
+  "sample": "import { describe, it, expect } from \"vitest\";\nimport { validateReference } from \"./validate.js\";\n\ndescribe(\"validateReference\", () => {\n  it(\"asks for a reference when it's empty\", () => {\n    expect(validateReference(\"  \")).toBe(\"Enter the reference from your bank transfer\");\n  });\n\n  it(\"accepts a normal bank reference\", () => {\n    expect(validateReference(\"TRF-2026-0915-0042\")).toBeNull();\n  });\n\n  it(\"refuses a reference of 31 characters\", () => {\n    expect(validateReference(\"A\".repeat(31))).toMatch(/6 to 30/);\n  });\n});",
+  "note": "The test names read as sentences, so a failure report explains itself.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "A test fails. What's the first thing to decide?",
+    "options": ["Delete it", "Whether the code or the test's expectation is wrong", "Rerun until it passes", "Ignore it"],
+    "answer": 1,
+    "explanation": "Tests can be wrong too."
+  },
+  {
+    "prompt": "Why can most of the page's logic be tested without a browser?",
+    "options": ["It can't", "It's in plain functions that take values and return results", "Browsers are slow", "Tests ignore the DOM"],
+    "answer": 1,
+    "explanation": "Design for testability."
+  },
+  {
+    "prompt": "Which tool runs JavaScript unit tests in a Node.js project?",
+    "options": ["Lighthouse", "Vitest or Jest", "CSS", "fetch"],
+    "answer": 1,
+    "explanation": "And Playwright for whole pages in real browsers."
+  }
+]
+```
+$md$, true, true, 9, array['web-09-p1', 'web-09-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('wjs-m10', 'web-development-with-javascript', 'Final Project', 10, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('web-development-with-javascript:final-project', 'web-development-with-javascript', 'wjs-m10', 'final-project', '"Final project: Tallybook''s pay-an-invoice page"', 'Plan your final project, an accessible, responsive payment page that calculates exactly, validates clearly, talks to the API safely and is backed by tests.', 20, $md$
+## The problem
+
+Tallybook wants the new pay-an-invoice page live before the next month-end. Your final project is the page itself, and the evidence that it works for every customer: on a small phone, with a keyboard, with a screen reader, on a bad connection, and when someone types something unexpected.
+
+## The concept
+
+**What the page includes**
+
+| Part | Built in |
+| :-- | :-- |
+| Exact money: totals and formatting in kobo | lessons 2 and 3 |
+| Semantic, accessible HTML | lesson 4 |
+| Mobile-first, responsive CSS | lesson 5 |
+| Live balance as the customer types | lesson 6 |
+| Clear, accessible validation | lesson 7 |
+| Every API outcome handled, with loading states | lesson 8 |
+| Automated tests for the logic | lesson 9 |
+
+**Evidence**
+
+A checklist with a result for each item: keyboard only, screen reader (NVDA on Windows, VoiceOver on a phone), 320px wide, 200% zoom, Lighthouse accessibility score, slow network (DevTools' "Slow 3G"), and the test results.
+
+## Example
+
+The checklist as data, so it can be scored and reported the same way each time you re-check the page:
+
+```js
+const checks = [
+  { area: "Keyboard", check: "Every control reachable and usable with Tab, Enter and Space", passed: true },
+  { area: "Screen reader", check: "Labels, errors and the live balance are announced", passed: true },
+  { area: "Small screen", check: "Usable at 320px wide without horizontal scrolling", passed: true },
+  { area: "Zoom", check: "Usable at 200% zoom", passed: true },
+  { area: "Money", check: "Totals match the API for the test invoices", passed: true },
+  { area: "Validation", check: "Every error has a visible, linked message", passed: true },
+  { area: "Network", check: "Slow and failed requests show clear messages and no double payments", passed: false },
+  { area: "Tests", check: "All logic tests pass", passed: true },
+];
+const failed = checks.filter((c) => !c.passed);
+console.log(`${checks.length - failed.length} of ${checks.length} checks passed`);
+for (const c of failed) console.log(`To fix: ${c.area}: ${c.check}`);
+```
+
+```text
+7 of 8 checks passed
+To fix: Network: Slow and failed requests show clear messages and no double payments
+```
+
+A page isn't finished when it looks right on your laptop; it's finished when this list is all passes on real devices.
+
+## Walkthrough
+
+1. Build the page from lessons 4 to 8 in one file, with the tests from lesson 9.
+2. Run every check on a real phone as well as your computer, and record the results honestly.
+3. Fix what fails, re-check, and keep the before-and-after.
+4. Open the project brief on the course page and plan the write-up.
+
+## Practice
+
+```answer
+{
+  "id": "web-10-p1",
+  "prompt": "How many checks fail in the example checklist?",
+  "answer": 1,
+  "format": "number",
+  "jsVerify": "failed.length",
+  "hint": "The 'To fix' lines.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "web-10-t1",
+  "prompt": "Write the **release note** for the new page (60 to 140 words): what's **better for customers**, how it was **checked for accessibility** (at least **two** methods), how **network problems** are handled, and anything **still to do**.",
+  "minutes": 6,
+  "rows": 7,
+  "placeholder": "The new pay-an-invoice page ...",
+  "rules": [
+    { "label": "Benefits for customers (live balance, phone, clear errors)", "pattern": "live|as (they|you) type|phone|mobile|clear" },
+    { "label": "At least two accessibility checks", "pattern": "keyboard|screen reader|nvda|voiceover|lighthouse|zoom", "min": 2 },
+    { "label": "Network handling", "pattern": "network|connection|offline|retry|twice|duplicate" },
+    { "label": "Still to do", "pattern": "still|next|to do|remaining|will" },
+    { "label": "Between 60 and 140 words", "minWords": 60, "maxWords": 140 }
+  ],
+  "sample": "The new pay-an-invoice page works on any phone without zooming, shows what you'll owe as you type, and explains every problem in plain words next to the field. Totals are calculated in kobo exactly as our API does. We checked it with the keyboard alone, with NVDA and VoiceOver, at 320 pixels wide and at 200% zoom, and Lighthouse's accessibility audit found no issues. If the connection drops, the page says the payment wasn't recorded, and if a payment was actually recorded, a second attempt is recognised instead of looking like an error. Still to do: a 'Pay full balance' button and receipts by SMS, both planned for next month.",
+  "note": "Naming the checks used is what makes 'accessible' a claim people can trust.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "When is a web page finished?",
+    "options": ["When it looks right on your laptop", "When it passes checks for keyboard, screen readers, small screens, slow networks and its tests", "When the code compiles", "When the designer approves"],
+    "answer": 1,
+    "explanation": "Check how real people will use it."
+  },
+  {
+    "prompt": "Which is a real accessibility check?",
+    "options": ["Looking at it", "Using the page with only the keyboard", "Making it blue", "Removing labels"],
+    "answer": 1,
+    "explanation": "And screen readers, zoom and Lighthouse."
+  },
+  {
+    "prompt": "Why record checks as data?",
+    "options": ["It's required", "So the same checks are repeated and reported consistently after every change", "To hide failures", "To slow releases"],
+    "answer": 1,
+    "explanation": "Repeatable evidence."
+  }
+]
+```
+$md$, true, true, 10, array['web-10-p1', 'web-10-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+
 -- Course: Data Analyst Capstone: End-to-End BI Project
 insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
-values ('data-analyst-capstone', 'full', null, 'data-analyst-capstone', 'CAP', 'Data Analyst Capstone: End-to-End BI Project', 'Take a retail chain''s raw till export all the way to a reviewed dashboard and a board-ready executive summary, using the tools of your choice.', 'The capstone of the Data Analyst track. Voltline Electronics, a chain of eight stores, sends you 18 months of raw till data and one question from its chief executive: what''s really driving our 37% growth? You''ll plan the analysis, profile and clean a genuinely messy export (a duplicated upload, mixed date formats, inconsistent store names and test transactions), build a model that looks up costs by date and compares sales with monthly targets, decompose the growth, find what''s going wrong where, and put a value on missed sales. Then you''ll build a dashboard, write an executive summary, prepare for the board''s questions and publish the project for your portfolio. Use Excel, Power BI, SQL or Python: the work is assessed on the answers, not the tool.', 'data-analytics', 'intermediate', 4, 'Career project', 14, true, 'available', true, array['Turning a business brief into an analysis plan', 'Profiling and cleaning raw data with a quality log', 'Modelling data at the right grain', 'Decomposing growth into price, new stores and volume', 'Judging targets fairly', 'Estimating lost sales with stated assumptions', 'Finding-led dashboards and executive summaries', 'Presenting and publishing a portfolio project']::text[], array['The core Data Analyst courses: Excel, SQL and Power BI (or Python)', 'Comfort cleaning data and building a dashboard in at least one tool']::text[], 'Voltline Electronics: commercial review', true, true, true, true, false, 60, 39)
+values ('data-analyst-capstone', 'full', null, 'data-analyst-capstone', 'CAP', 'Data Analyst Capstone: End-to-End BI Project', 'Take a retail chain''s raw till export all the way to a reviewed dashboard and a board-ready executive summary, using the tools of your choice.', 'The capstone of the Data Analyst track. Voltline Electronics, a chain of eight stores, sends you 18 months of raw till data and one question from its chief executive: what''s really driving our 37% growth? You''ll plan the analysis, profile and clean a genuinely messy export (a duplicated upload, mixed date formats, inconsistent store names and test transactions), build a model that looks up costs by date and compares sales with monthly targets, decompose the growth, find what''s going wrong where, and put a value on missed sales. Then you''ll build a dashboard, write an executive summary, prepare for the board''s questions and publish the project for your portfolio. Use Excel, Power BI, SQL or Python: the work is assessed on the answers, not the tool.', 'data-analytics', 'intermediate', 4, 'Career project', 14, true, 'available', true, array['Turning a business brief into an analysis plan', 'Profiling and cleaning raw data with a quality log', 'Modelling data at the right grain', 'Decomposing growth into price, new stores and volume', 'Judging targets fairly', 'Estimating lost sales with stated assumptions', 'Finding-led dashboards and executive summaries', 'Presenting and publishing a portfolio project']::text[], array['The core Data Analyst courses: Excel, SQL and Power BI (or Python)', 'Comfort cleaning data and building a dashboard in at least one tool']::text[], 'Voltline Electronics: commercial review', true, true, true, true, false, 60, 40)
 on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level = excluded.level, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
@@ -56018,6 +57474,108 @@ values ('dbaq12', 1, 'Trustworthy tests.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 
+-- Assessment: Web Development with JavaScript: final assessment
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('web-development-with-javascript-final', 'web-development-with-javascript', 'final', null, 'Web Development with JavaScript: final assessment', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('wjsq01', 'web-development-with-javascript-final', 1, 'A form field holds "1500". What does `field.value + 500` give?', '["2000","\"1500500\"","An error","NaN"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('wjsq01', 1, 'Form values are text; convert deliberately.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('wjsq02', 'web-development-with-javascript-final', 2, 'Why might `Math.floor(price * 100)` give the wrong number of kobo?', '["Math.floor is slow","price * 100 can land just below the true value, such as 894.999... for 8.95","It rounds up","It never does"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('wjsq02', 1, 'Avoid floats for money; parse the text instead.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('wjsq03', 'web-development-with-javascript-final', 3, 'Which array method adds up the balances of a list of invoices?', '["filter","map","reduce","find"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('wjsq03', 2, 'reduce combines items into one value.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('wjsq04', 'web-development-with-javascript-final', 4, 'Why use a `<button>` instead of a clickable `<div>`?', '["It looks better","It works with the keyboard and is announced as a button","Divs can''t be clicked","It''s newer"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('wjsq04', 1, 'The right element brings accessibility for free.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('wjsq05', 'web-development-with-javascript-final', 5, 'What does `<label for="amount">` do for an `<input id="amount">`?', '["Styles it","Links the label to the input, for screen readers and clicking","Validates it","Nothing"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('wjsq05', 1, 'Every input needs a linked label.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('wjsq06', 'web-development-with-javascript-final', 6, 'What does mobile-first CSS mean?', '["A separate mobile site","Phone layout as the default, with media queries adding wider layouts","Only phones are supported","Testing on phones last"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('wjsq06', 1, 'Add, don''t undo.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('wjsq07', 'web-development-with-javascript-final', 7, 'Why use `textContent` rather than `innerHTML` to show what a user typed?', '["It''s faster","innerHTML can run what was typed as HTML","textContent is newer","No reason"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('wjsq07', 1, 'Treat user input as text.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('wjsq08', 'web-development-with-javascript-final', 8, 'The page checks the payment amount. Must the API check it too?', '["No","Yes: requests can be sent without the page","Only for large amounts","Only on mobile"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('wjsq08', 1, 'Browser checks are for people; server checks are the rules.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('wjsq09', 'web-development-with-javascript-final', 9, 'How do you make an error message announced with its field?', '["Colour it red","Link it with aria-describedby and set aria-invalid on the field","Use alert()","Use a tooltip"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('wjsq09', 1, 'Connect messages and fields in the markup.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('wjsq10', 'web-development-with-javascript-final', 10, 'The API returns 409. What does `await fetch(...)` do?', '["Throws an error","Returns a response whose status you must check","Retries","Returns null"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('wjsq10', 1, 'fetch only throws on network failure.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('wjsq11', 'web-development-with-javascript-final', 11, 'A customer''s connection drops while paying. What should the page say?', '["Nothing","That the payment wasn''t recorded, and to check their connection and try again","Success","Error 0"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('wjsq11', 1, 'Always say what happened to their money.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('wjsq12', 'web-development-with-javascript-final', 12, 'Why put the page''s calculations in plain functions?', '["Style","So they can be tested without a page and reused","Browsers require it","Speed"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('wjsq12', 1, 'Testable logic, thin event handlers.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
 -- Assessment: Prompting Essentials: module check
 insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
 values ('aipf-m01-check', 'ai-productivity-fundamentals', 'module', 'aipf-m01', 'Prompting Essentials: module check', 60, true)
@@ -59395,6 +60953,14 @@ Work in Google Colab (or on your own computer) with the invoicing dataset (https
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
 
 
+-- Project: Tallybook's pay-an-invoice page
+insert into public.projects (id, course_id, title, summary, brief_md, tasks, datasets, rubric, required)
+values ('wjs-tallybook-pay-invoice-page', 'web-development-with-javascript', 'Tallybook''s pay-an-invoice page', 'An accessible, responsive payment page that calculates in kobo, shows the balance live, validates clearly, handles every API outcome and is backed by tests and a checklist of real-device checks.', $md$Tallybook wants a new pay-an-invoice page before the next month-end. Build it, and show that it works for every customer: on a small phone, with a keyboard, with a screen reader and on a bad connection.
+
+Build the page as an HTML file with its CSS and JavaScript (in one file or separate files), and publish it free with GitHub Pages, as in Web Development for Beginners. Submit the link to the live page and to its GitHub repository, and paste your **test results** and your **checklist with results** below, followed by a short note on where each part is in the code.$md$, array['Semantic, accessible HTML: landmarks, headings in order, a captioned table and a labelled form with hints.', 'Mobile-first CSS that works from 320px wide, with a wider layout from a breakpoint you choose.', 'Exact money: totals and formatting in kobo, matching the API''s rules.', 'A live balance as the customer types, announced to screen readers.', 'Validation with clear messages linked to their fields, and focus moved to the first problem.', 'Payment through fetch, handling 201, 400, 404, 409 and network failure, with a loading state that prevents double submission.', 'Automated tests for the logic, and a checklist of keyboard, screen reader, zoom, small-screen and slow-network checks with results.']::text[], '{}'::text[], array['The HTML uses the right elements, and every input has a linked label.', 'The page is usable at 320px and at 200% zoom without horizontal scrolling.', 'Money is calculated in whole kobo and matches the API''s rules.', 'The live balance and errors are announced to screen readers.', 'Every API outcome gives the customer a clear, true message about their payment.', 'The logic is in testable functions, and the tests pass.', 'The checklist was done on real devices and reported honestly.']::text[], true)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
+
+
 -- Track: Become a Data Analyst
 insert into public.tracks (id, slug, title, summary, badge_name, badge_code, skills, position, published)
 values ('data-analyst', 'data-analyst', 'Become a Data Analyst', 'The route we recommend from no experience to a junior data analyst role. Learn how analysis works, then the tools teams use every day (Excel, SQL, Power BI and Python) on realistic company data. Build portfolio projects that answer real business questions, and finish with your CV, LinkedIn and interview preparation.', 'CloudTech Data Analyst', 'DATAANALYST', array['Spreadsheet analysis in Excel', 'Statistics: averages, spread, confidence intervals and tests', 'Querying databases with SQL, from first SELECT to cohorts and window functions', 'Data modelling and star schemas', 'Dashboards in Power BI, with DAX measures you can trust', 'Analysis in Python and pandas', 'Turning data into findings a manager can act on']::text[], 1, true)
@@ -59659,31 +61225,39 @@ values ('software-developer', 'git-and-github-for-beginners', 'Foundation', true
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 insert into public.track_courses (track_id, course_id, stage, required, position)
-values ('software-developer', 'linux-networking-basics', 'Foundation', false, 3)
+values ('software-developer', 'web-development-for-beginners', 'Foundation', false, 3)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 insert into public.track_courses (track_id, course_id, stage, required, position)
-values ('software-developer', 'software-engineering-with-python', 'Core', true, 4)
+values ('software-developer', 'linux-networking-basics', 'Foundation', false, 4)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 insert into public.track_courses (track_id, course_id, stage, required, position)
-values ('software-developer', 'sql-for-data-analysis', 'Core', false, 5)
+values ('software-developer', 'software-engineering-with-python', 'Core', true, 5)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 insert into public.track_courses (track_id, course_id, stage, required, position)
-values ('software-developer', 'databases-and-apis-for-developers', 'Specialist', true, 6)
+values ('software-developer', 'sql-for-data-analysis', 'Core', false, 6)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 insert into public.track_courses (track_id, course_id, stage, required, position)
-values ('software-developer', 'cicd-and-containers', 'Specialist', false, 7)
+values ('software-developer', 'web-development-with-javascript', 'Specialist', true, 7)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 insert into public.track_courses (track_id, course_id, stage, required, position)
-values ('software-developer', 'career-essentials', 'Career', true, 8)
+values ('software-developer', 'databases-and-apis-for-developers', 'Specialist', true, 8)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 insert into public.track_courses (track_id, course_id, stage, required, position)
-values ('software-developer', 'build-your-student-portfolio', 'Career', false, 9)
+values ('software-developer', 'cicd-and-containers', 'Specialist', false, 9)
+on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
+
+insert into public.track_courses (track_id, course_id, stage, required, position)
+values ('software-developer', 'career-essentials', 'Career', true, 10)
+on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
+
+insert into public.track_courses (track_id, course_id, stage, required, position)
+values ('software-developer', 'build-your-student-portfolio', 'Career', false, 11)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 

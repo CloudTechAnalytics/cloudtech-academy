@@ -24,7 +24,7 @@ const SQL = await initSqlJs();
 const IMAGE_SIZES = JSON.parse(fs.readFileSync("src/content/image-sizes.json", "utf8"));
 const logistics = new SQL.Database(fs.readFileSync("public/datasets/logistics.sqlite"));
 const CONTENT = "src/content";
-const FULL = ["sql", "daf", "excel", "powerbi", "modelling", "python-analytics", "statistics", "advanced-sql", "dax", "capstone", "ba", "agile-ba", "process", "ml", "features", "experiments", "forecasting", "genai", "agents", "llmops", "cloud", "linux", "terraform", "cicd", "observability", "swe", "dbapi"];
+const FULL = ["sql", "daf", "excel", "powerbi", "modelling", "python-analytics", "statistics", "advanced-sql", "dax", "capstone", "ba", "agile-ba", "process", "ml", "features", "experiments", "forecasting", "genai", "agents", "llmops", "cloud", "linux", "terraform", "cicd", "observability", "swe", "dbapi", "webjs"];
 /** Short courses: one lesson per module, a module check each, and a final assessment. */
 const SHORT = [
   "ai-productivity",

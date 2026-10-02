@@ -24,7 +24,7 @@ const decode = (s: string) =>
   s.replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&#39;/g, "'");
 
 /** Labels for formula code blocks, e.g. ```excel or ```dax. */
-const CODE_LABELS: Record<string, string> = { excel: "Excel formula", sheets: "Google Sheets formula", dax: "DAX", m: "Power Query (M)", sql: "SQL", bash: "Shell (bash)", hcl: "Terraform (HCL)", dockerfile: "Dockerfile", yaml: "YAML" };
+const CODE_LABELS: Record<string, string> = { excel: "Excel formula", sheets: "Google Sheets formula", dax: "DAX", m: "Power Query (M)", sql: "SQL", bash: "Shell (bash)", hcl: "Terraform (HCL)", dockerfile: "Dockerfile", yaml: "YAML", js: "JavaScript", html: "HTML" };
 
 const safeHref = (href: string) => (/^(https?:|mailto:|\/|#)/i.test(href) ? href : "#");
 
