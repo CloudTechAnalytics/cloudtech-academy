@@ -280,6 +280,13 @@ export const TRACKS: Track[] = [
         ],
       },
       {
+        title: "Capstone",
+        summary: "One LLM feature from design to production, as a portfolio piece.",
+        items: [
+          { kind: "course", courseId: "ai-engineer-capstone", why: "Build, evaluate, gate and monitor an insurer's WhatsApp claims assistant, in English and Pidgin." },
+        ],
+      },
+      {
         title: "Career",
         summary: "Turn your skills into applications that get interviews.",
         items: [

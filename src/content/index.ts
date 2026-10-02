@@ -42,6 +42,8 @@ import { BAC_ASSESSMENT } from "./ba-capstone/assessment";
 import { BAC_PROJECT } from "./ba-capstone/project";
 import { DSC_ASSESSMENT } from "./ds-capstone/assessment";
 import { DSC_PROJECT } from "./ds-capstone/project";
+import { AIC_ASSESSMENT } from "./ai-capstone/assessment";
+import { AIC_PROJECT } from "./ai-capstone/project";
 import { BA_ASSESSMENT } from "./ba/assessment";
 import { BA_PROJECT } from "./ba/project";
 import { ABA_ASSESSMENT } from "./agile-ba/assessment";
@@ -98,6 +100,7 @@ const COURSE_DIRS: Record<string, string> = {
   capstone: "data-analyst-capstone",
   "ba-capstone": "business-analyst-capstone",
   "ds-capstone": "data-scientist-capstone",
+  "ai-capstone": "ai-engineer-capstone",
   ba: "business-analysis-fundamentals",
   "agile-ba": "agile-business-analysis",
   process: "process-improvement-bpmn-lean",
@@ -193,6 +196,7 @@ export const BUNDLED_ASSESSMENTS: AssessmentDef[] = [
   CAP_ASSESSMENT,
   BAC_ASSESSMENT,
   DSC_ASSESSMENT,
+  AIC_ASSESSMENT,
   BA_ASSESSMENT,
   ABA_ASSESSMENT,
   PIL_ASSESSMENT,
@@ -227,6 +231,6 @@ export const BUNDLED_ASSESSMENTS: AssessmentDef[] = [
   ...INTERN_ASSESSMENTS,
   ...FREEL_ASSESSMENTS,
 ].map((a) => ({ ...a, kind: a.kind ?? "final" }));
-export const BUNDLED_PROJECTS: ProjectDef[] = [SQL_PROJECT, DAF_PROJECT, XLS_PROJECT, PBI_PROJECT, DMO_PROJECT, PYAN_PROJECT, STAT_PROJECT, ASQL_PROJECT, DAX_PROJECT, CAP_PROJECT, BA_PROJECT, ABA_PROJECT, PIL_PROJECT, ML_PROJECT, FEM_PROJECT, ABT_PROJECT, TSF_PROJECT, GAI_PROJECT, AGT_PROJECT, OPS_PROJECT, CLD_PROJECT, LNX_PROJECT, IAC_PROJECT, CICD_PROJECT, SRE_PROJECT, SWE_PROJECT, DBA_PROJECT, WJS_PROJECT, PMF_PROJECT, PDM_PROJECT, BAC_PROJECT, DSC_PROJECT];
+export const BUNDLED_PROJECTS: ProjectDef[] = [SQL_PROJECT, DAF_PROJECT, XLS_PROJECT, PBI_PROJECT, DMO_PROJECT, PYAN_PROJECT, STAT_PROJECT, ASQL_PROJECT, DAX_PROJECT, CAP_PROJECT, BA_PROJECT, ABA_PROJECT, PIL_PROJECT, ML_PROJECT, FEM_PROJECT, ABT_PROJECT, TSF_PROJECT, GAI_PROJECT, AGT_PROJECT, OPS_PROJECT, CLD_PROJECT, LNX_PROJECT, IAC_PROJECT, CICD_PROJECT, SRE_PROJECT, SWE_PROJECT, DBA_PROJECT, WJS_PROJECT, PMF_PROJECT, PDM_PROJECT, BAC_PROJECT, DSC_PROJECT, AIC_PROJECT];
 
 export { CATEGORIES, categoryName } from "./catalog";

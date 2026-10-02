@@ -60813,6 +60813,1574 @@ $md$, true, true, 8, array['dsc-08-p1', 'dsc-08-t1']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 
+-- Course: AI Engineer Capstone: From Prototype to Production
+insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
+values ('ai-engineer-capstone', 'full', null, 'ai-engineer-capstone', 'AIC', 'AI Engineer Capstone: From Prototype to Production', 'Build, evaluate and run an insurer''s WhatsApp claims assistant: validated extraction in English and Pidgin, rules in code, retrieval and grounded answers, a checked LLM judge, red-teaming with fair guardrails, a release gate with cost and latency, and production monitoring through a real incident.', 'The capstone of the AI Engineer track. Shieldline Insurance, from the Business Analyst Capstone, wants a WhatsApp assistant that turns a customer''s first message into a structured claim, asks for exactly the documents still needed, answers policy questions, and hands serious cases to a person. Working from recorded outputs of three configurations on 600 real messages, you''ll write the validator that repairs plate numbers and catches invented ones, put escalation rules in code and measure their recall, test retrieval against a keyword baseline, and find out why an LLM judge that agrees with people 90% of the time still can''t run alone. Then you''ll red-team two guardrails and discover one blocks Pidgin speakers and angry customers far more often, price and time each configuration, pass one through a release gate, and watch it in production as an unannounced voice-note feature quietly breaks it. No API key needed; every number comes from running the code.', 'ai-ml', 'advanced', 4, 'Career project', 12, true, 'available', true, array['Designing LLM features: the model reads, code decides', 'Validating and grounding structured outputs', 'Escalation rules with fail-safes', 'Measuring retrieval and grounded answers', 'Checking an LLM judge against people', 'Red-teaming and fair guardrails', 'Cost, latency and release gates', 'Production monitoring and incident response']::text[], array['Generative AI Engineering', 'LLM Evaluation and Safety in Production and AI Agents and Tool Use are helpful']::text[], 'Shieldline''s WhatsApp claims assistant', true, true, true, true, false, 60, 45)
+on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level = excluded.level, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('aic-m01', 'ai-engineer-capstone', 'The Brief and the Design', 1, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('ai-engineer-capstone:the-brief-and-the-design', 'ai-engineer-capstone', 'aic-m01', 'the-brief-and-the-design', 'The brief and the design', 'Meet Shieldline''s WhatsApp claims assistant, decide what the model does and what code decides, define what it must never do, and get to know the recorded test data.', 25, $md$
+## The problem
+
+This is the capstone of the AI Engineer track. You'll take one LLM feature all the way from design to production monitoring, using the habits from the track: validated outputs, rules in code, retrieval, evaluation, red-teaming, release gates and alerts.
+
+The company is **Shieldline Insurance**, the motor insurer from the Business Analyst Capstone. Its claims were slow partly because customers sent incomplete information and then heard nothing. Most customers already message Shieldline on WhatsApp, so the head of claims has asked for an assistant that:
+
+1. reads a customer's first message about an incident and turns it into a **structured claim** (type, date, plate number, injuries, police report);
+2. tells the customer exactly which **documents** are still needed;
+3. answers **policy questions** from the policy wording;
+4. hands anything serious to a **person**.
+
+The team has already run three configurations over 600 real messages and recorded every output, so you can evaluate them without an API key.
+
+## The concept
+
+**The model reads; code decides**
+
+An LLM is good at reading messy text, including Pidgin, and at writing a clear reply from a source. It is not reliable at enforcing rules. So split the work:
+
+| The model does | Code does |
+| :-- | :-- |
+| Extract fields from the message | Validate every field, and reject or repair what's wrong |
+| Answer questions **from retrieved policy text** | Decide which documents are needed, from the policy table |
+| Suggest whether a person is needed | Escalate by rule: injuries, theft, large amounts, anger, or any output that fails validation |
+
+**What it must never do**
+
+Approve, reject or promise payment for a claim; quote an amount Shieldline will pay; reveal anything about another customer; or answer from memory when the policy doesn't say.
+
+**The test data**
+
+`messages.csv` holds 600 messages with **gold** labels (what a claims officer extracted) and the recorded outputs of three configurations:
+
+| Configuration | What it is |
+| :-- | :-- |
+| `small_v1` | A small, cheap model with a short prompt |
+| `large_v1` | A large model with the same prompt |
+| `large_v2` | The large model with a JSON schema, three worked examples and today's date in the prompt |
+
+## Example
+
+```python
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/assistant/"
+messages = pd.read_csv(base + "messages.csv", keep_default_na=False)
+print(f"{len(messages)} messages")
+print(messages["language"].value_counts().to_string(), "\n")
+print(messages["gold_claim_type"].value_counts().to_string(), "\n")
+print(f"Need a person (gold): {messages['gold_needs_human'].mean():.1%}")
+```
+
+```text
+600 messages
+language
+English    482
+Pidgin     118
+
+gold_claim_type
+Accident damage    250
+Windscreen         180
+Third party         90
+Theft               80
+
+Need a person (gold): 36.0%
+```
+
+One message, and what each configuration made of it:
+
+```python
+example = messages[messages["message_id"] == "MSG-0001"].iloc[0]
+print(example["text"], "\n")
+for config in ["small_v1", "large_v1", "large_v2"]:
+    print(f"{config}: {example[config + '_output']}")
+```
+
+```text
+Good morning o, stone break my windscreen on 26/06/2026 for Wuse 2. Na Lexus RX 350, number na FKJ 471 KT. Mechanic talk say e go cost like ₦275k. Which document una need?
+
+small_v1: {"claim_type":"Windscreen","incident_date":"2026-06-26","vehicle_reg":"FKJ 471 KT","injuries":false,"police_report":false,"needs_human":false}
+large_v1: {"claim_type":"Windscreen","incident_date":"2026-06-26","vehicle_reg":"FKJ 471 KT","injuries":false,"police_report":false,"needs_human":false}
+large_v2: {"claim_type":"Windscreen","incident_date":"2026-06-26","vehicle_reg":"FKJ471KT","injuries":false,"police_report":false,"needs_human":false}
+```
+
+All three got this one essentially right, but notice `large_v2` wrote the plate without spaces. Small differences like that matter when the plate is matched against Shieldline's policy records. The rest of this course measures them properly.
+
+## Walkthrough
+
+1. Download the dataset below and open `messages.csv` in Colab.
+2. Read twenty messages, including some in Pidgin. What makes them hard to extract?
+3. Draw the design: message in, model calls, the checks in code, and the three ways out (reply with a checklist, answer a question, hand to a person).
+4. List what the assistant must never do, and where in the design each rule is enforced.
+5. Write the design note (the task below).
+
+## Practice
+
+```dataset
+{"dataset": "assistant", "files": ["messages", "policy", "questions", "redteam", "daily"]}
+```
+
+```answer
+{
+  "id": "aic-01-p1",
+  "prompt": "What percentage of the 600 messages need a **person** according to the gold labels? One decimal place.",
+  "answer": 36.0,
+  "format": "percent",
+  "dataset": "assistant",
+  "files": ["messages"],
+  "pyVerify": "round(100 * messages['gold_needs_human'].mean(), 1)",
+  "hint": "The last line of the first cell.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "aic-01-p2",
+  "prompt": "How many of the messages are in **Pidgin**?",
+  "answer": 118,
+  "format": "number",
+  "dataset": "assistant",
+  "files": ["messages"],
+  "pyVerify": "int((messages['language'] == 'Pidgin').sum())",
+  "hint": "The language counts.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "aic-01-t1",
+  "prompt": "Write the **design note** (70 to 160 words): what the **model** does, what **code** decides, when a **person** takes over, and at least **three** things the assistant must **never** do.",
+  "minutes": 8,
+  "rows": 8,
+  "placeholder": "The model ...\nCode ...",
+  "rules": [
+    { "label": "Says what the model does (extract, read, answer)", "pattern": "extract|read|answer" },
+    { "label": "Says what code decides (validate, rules, checklist)", "pattern": "validat|rule|checklist|code" },
+    { "label": "Says when a person takes over (escalate, hand over)", "pattern": "escalat|hand (it )?(to|over)|person|human" },
+    { "label": "Lists things it must never do", "pattern": "never|must not|mustn't", "min": 1 },
+    { "label": "Covers approving or promising payment", "pattern": "approv|promis|pay" },
+    { "label": "Covers other customers' data", "pattern": "other customer|another customer|personal data|someone else" },
+    { "label": "Between 70 and 160 words", "minWords": 70, "maxWords": 160 }
+  ],
+  "sample": "The model reads the customer's message and extracts the claim type, incident date, plate number, injuries and police report as JSON. It also answers policy questions, but only from policy sections retrieved for that question.\nCode validates every field and repairs or rejects bad ones, works out the documents still needed from the policy table, and decides escalation by rule.\nA person takes over for injuries, theft, amounts of ₦5m or more, angry customers, and any output that fails validation.\nThe assistant must never approve, reject or promise payment for a claim; never quote what Shieldline will pay; never reveal anything about another customer; and never answer from memory when the policy doesn't cover the question.",
+  "note": "Every \"never\" needs a place in the design where it's enforced, ideally in code.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why should code, not the model, decide which documents a customer must send?",
+    "options": ["Code is faster", "The rules are fixed and known, and code applies them the same way every time", "The model can't read", "To save tokens only"],
+    "answer": 1,
+    "explanation": "Deterministic rules belong in code."
+  },
+  {
+    "prompt": "Why record the outputs of each configuration on 600 messages?",
+    "options": ["For storage", "So every configuration can be evaluated on the same inputs, repeatedly, without calling the API", "Because it's required by law", "To train the model"],
+    "answer": 1,
+    "explanation": "A fixed evaluation set makes comparisons fair and repeatable."
+  },
+  {
+    "prompt": "Which of these should the assistant never do?",
+    "options": ["Ask for a missing photo", "Promise the customer their claim will be paid", "Answer a question about the excess from the policy", "Hand an injury case to a person"],
+    "answer": 1,
+    "explanation": "Decisions on claims stay with people."
+  }
+]
+```
+$md$, true, true, 1, array['aic-01-p1', 'aic-01-p2', 'aic-01-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('aic-m02', 'ai-engineer-capstone', 'Extraction and Validation', 2, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('ai-engineer-capstone:extraction-and-validation', 'ai-engineer-capstone', 'aic-m02', 'extraction-and-validation', 'Extraction and validation', 'Parse and validate the model''s JSON in code, repair what can safely be repaired, catch invented plate numbers without gold labels, and measure each configuration field by field and by language.', 30, $md$
+## The problem
+
+The model's output goes straight into Shieldline's claims system. A missing bracket crashes the pipeline. A plate number in the wrong format doesn't match any policy. And an **invented** plate number is worse than none: it attaches the claim to someone else's car. Before comparing models, write the code that stands between the model and the system.
+
+## The concept
+
+**Validate everything**
+
+| Field | Check |
+| :-- | :-- |
+| The whole output | Parses as JSON |
+| `claim_type` | One of the four allowed types |
+| `incident_date` | A real date, not after the message was sent |
+| `vehicle_reg` | Standard Nigerian format, `ABC 123 DE`, or null |
+| `injuries`, `police_report`, `needs_human` | True or false |
+
+**Repair only what's safe**
+
+A plate written `FKJ471KT` can be safely rewritten as `FKJ 471 KT`. A claim type the model made up can't be repaired; the message goes to a person.
+
+**Grounding checks in code**
+
+If the model returns a plate number, it should appear in the customer's message. You can check that with no gold labels at all, so the check works in production too.
+
+**Measure by field and by group**
+
+Overall accuracy hides which fields fail and for whom. Measure each field, and compare English with Pidgin.
+
+## Example
+
+The validator:
+
+```python
+import json
+import re
+
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/assistant/"
+messages = pd.read_csv(base + "messages.csv", keep_default_na=False)
+
+CLAIM_TYPES = {"Windscreen", "Accident damage", "Third party", "Theft"}
+PLATE = re.compile(r"^([A-Z]{3})\s*(\d{3})\s*([A-Z]{2})$")
+
+def validate(raw, text, sent_at):
+    """Parse one model output. Returns (record or None, list of problems)."""
+    try:
+        rec = json.loads(raw)
+    except json.JSONDecodeError:
+        return None, ["not valid JSON"]
+    problems = []
+    if rec.get("claim_type") not in CLAIM_TYPES:
+        problems.append("unknown claim type")
+    date = rec.get("incident_date")
+    if not (isinstance(date, str) and re.fullmatch(r"\d{4}-\d{2}-\d{2}", date) and date <= sent_at[:10]):
+        problems.append("bad or future date")
+    reg = rec.get("vehicle_reg")
+    if reg is not None:
+        match = PLATE.match(reg)
+        if not match:
+            problems.append("plate not recognised")
+        else:
+            rec["vehicle_reg"] = " ".join(match.groups())  # safe repair: standard spacing
+            if rec["vehicle_reg"].replace(" ", "") not in text.replace(" ", ""):
+                problems.append("plate not in the message")
+    for field in ["injuries", "police_report", "needs_human"]:
+        if not isinstance(rec.get(field), bool):
+            problems.append(f"{field} not true or false")
+    return rec, problems
+
+rec, problems = validate('{"claim_type": "Theft", "incident_date": "2026-06-02", "vehicle_reg": "KJA482TL", '
+                         '"injuries": false, "police_report": true, "needs_human": true}',
+                         "My car was stolen yesterday. Plate KJA 482 TL.", "2026-06-03 10:00")
+print(rec["vehicle_reg"], problems)
+```
+
+```text
+KJA 482 TL []
+```
+
+The plate was repaired and found in the message. Now run all three configurations through it, and compare each field with the gold labels:
+
+```python
+def evaluate(config):
+    rows = []
+    for _, m in messages.iterrows():
+        rec, problems = validate(m[config + "_output"], m["text"], m["sent_at"])
+        rec = rec or {}
+        rows.append({
+            "valid_json": "not valid JSON" not in problems,
+            "passes_checks": not problems,
+            "claim_type": rec.get("claim_type") == m["gold_claim_type"],
+            "incident_date": rec.get("incident_date") == m["gold_incident_date"],
+            "vehicle_reg": (rec.get("vehicle_reg") or "") == m["gold_vehicle_reg"],
+            "invented_plate": m["gold_vehicle_reg"] == "" and rec.get("vehicle_reg") is not None,
+            "caught_by_check": "plate not in the message" in problems,
+            "language": m["language"],
+        })
+    return pd.DataFrame(rows)
+
+results = {config: evaluate(config) for config in ["small_v1", "large_v1", "large_v2"]}
+summary = pd.DataFrame({config: r.drop(columns="language").mean() for config, r in results.items()})
+summary.round(3)
+```
+
+```text
+small_v1  large_v1  large_v2
+valid_json          0.932     0.955     0.997
+passes_checks       0.887     0.947     0.992
+claim_type          0.812     0.887     0.962
+incident_date       0.873     0.923     0.973
+vehicle_reg         0.900     0.953     0.993
+invented_plate      0.042     0.007     0.003
+caught_by_check     0.042     0.007     0.003
+```
+
+`large_v2` is better on every field. The schema and examples almost eliminated invalid JSON, and giving the model today's date fixed most relative dates such as "yesterday". Look at `invented_plate`: the small model invents a plate for a large share of the messages that don't contain one. The `caught_by_check` row shows the grounding check catches those inventions without needing any gold labels. By language:
+
+```python
+pd.DataFrame({config: r.groupby("language")["claim_type"].mean() for config, r in results.items()}).round(3)
+```
+
+```text
+small_v1  large_v1  large_v2
+language
+English      0.838     0.902     0.969
+Pidgin       0.703     0.822     0.932
+```
+
+Every configuration does worse on Pidgin, and the small model much worse. Since a fifth of customers write in Pidgin, that gap is part of the decision, not a footnote.
+
+## Walkthrough
+
+1. Run the cells.
+2. Print ten messages where `large_v2` got the claim type wrong. Is there a pattern?
+3. Look at the outputs that aren't valid JSON. Which could a simple repair fix (such as removing a "Here is the JSON:" prefix), and which should go to a person?
+4. Add a check of your own: for example, that a theft claim has `police_report` set.
+5. Write the extraction report (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "aic-02-p1",
+  "prompt": "What percentage of `small_v1` outputs **invent** a plate number for a message that doesn't contain one? (As a share of all 600 messages.) One decimal place.",
+  "answer": 4.2,
+  "format": "percent",
+  "dataset": "assistant",
+  "files": ["messages"],
+  "pyVerify": "round(100 * results['small_v1']['invented_plate'].mean(), 1)",
+  "hint": "The invented_plate row, small_v1 column.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "aic-02-p2",
+  "prompt": "What is `large_v2`'s claim type accuracy on **Pidgin** messages? One decimal place.",
+  "answer": 93.2,
+  "format": "percent",
+  "dataset": "assistant",
+  "files": ["messages"],
+  "pyVerify": "round(100 * results['large_v2'].groupby('language')['claim_type'].mean()['Pidgin'], 1)",
+  "hint": "The Pidgin row, large_v2 column.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "aic-02-t1",
+  "prompt": "Write the **extraction report** (60 to 150 words): the configuration you'd use and **why**, its field accuracy with **numbers**, the gap for **Pidgin**, and what the **validator** catches.",
+  "minutes": 8,
+  "rows": 7,
+  "placeholder": "Use large_v2 ...",
+  "rules": [
+    { "label": "Names a configuration", "pattern": "small_v1|large_v1|large_v2" },
+    { "label": "Uses numbers", "pattern": "\\d+(\\.\\d+)?\\s*%", "min": 3 },
+    { "label": "Covers Pidgin", "pattern": "pidgin" },
+    { "label": "Covers the validator or checks", "pattern": "validat|check" },
+    { "label": "Covers invented plates", "pattern": "invent|hallucinat|made.up" },
+    { "label": "Between 60 and 150 words", "minWords": 60, "maxWords": 150 }
+  ],
+  "sample": "Use large_v2: the schema, examples and today's date cut invalid JSON to almost nothing and lifted every field, with claim type at 96.2% and incident date at 97.3%. It still does worse on Pidgin (93.2% claim type against 96.9% in English), so Pidgin messages need a closer eye in monitoring. The small model invents a plate number for about 4% of messages, which would attach claims to the wrong car; large_v2 does so far less. The validator rejects anything that isn't valid JSON or uses an unknown claim type, repairs plate spacing, and flags any plate that doesn't appear in the message, which catches invented plates without gold labels. Anything that fails goes to a person.",
+  "note": "The validator is part of the product, not a test: it runs on every message in production.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "The model returns the plate \"FKJ471KT\" and the message says \"FKJ 471 KT\". What should code do?",
+    "options": ["Reject the message", "Repair the spacing to the standard format", "Ask the model again", "Ignore the plate"],
+    "answer": 1,
+    "explanation": "A safe, deterministic repair."
+  },
+  {
+    "prompt": "How can you catch an invented plate number in production, without gold labels?",
+    "options": ["You can't", "Check that the plate appears in the customer's message", "Ask the model if it's sure", "Use a bigger model"],
+    "answer": 1,
+    "explanation": "A grounding check in code."
+  },
+  {
+    "prompt": "Why measure accuracy separately for Pidgin messages?",
+    "options": ["For the report's length", "Overall accuracy can hide a group of customers the assistant serves badly", "Pidgin messages are shorter", "It's required"],
+    "answer": 1,
+    "explanation": "Averages hide groups."
+  }
+]
+```
+$md$, true, true, 2, array['aic-02-p1', 'aic-02-p2', 'aic-02-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('aic-m03', 'ai-engineer-capstone', 'Rules in Code', 3, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('ai-engineer-capstone:rules-in-code', 'ai-engineer-capstone', 'aic-m03', 'rules-in-code', 'Rules in code', 'Decide escalation by rule as well as by the model''s judgement, measure what each catches, and build the document checklist in code from the policy, so the assistant asks for exactly what''s missing.', 25, $md$
+## The problem
+
+The model's JSON includes `needs_human`: its own judgement of whether a person should take over. It's a useful signal, but the cases that **must** reach a person are not a matter of judgement. An injured passenger, a stolen car, a ₦9m claim or a furious customer must reach a person every time. Missing one is far worse than escalating a message that didn't need it.
+
+The same goes for documents. The policy says exactly what each claim type needs, so a model shouldn't be inventing the list.
+
+## The concept
+
+**Two signals, combined**
+
+- **Rules in code**: escalate if the extraction says injuries, the claim is theft, the message mentions ₦5m or more, or the wording is angry. Rules are predictable and testable.
+- **The model's flag**: catches cases the rules don't describe.
+- **Fail safe**: if the output failed validation, escalate.
+
+Escalate if **any** of them fires. Measure **recall** (of messages that needed a person, the share escalated) first. Then check the cost: the share of all messages escalated.
+
+**Record the reason**
+
+Every escalation should carry its reasons ("injuries", "theft"). The person who picks it up knows why, and you can later see which rule fires most.
+
+**The checklist from the policy**
+
+Sections S05 to S07 of the policy list the documents for each claim type. Put them in a table in code. The only thing the message itself proves is whether photos were attached. Mentioning a police report isn't the same as sending it.
+
+## Example
+
+The escalation rules, applied to `large_v2`'s outputs:
+
+```python
+import json
+import re
+
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/assistant/"
+messages = pd.read_csv(base + "messages.csv", keep_default_na=False)
+
+def parse(raw):
+    try:
+        return json.loads(raw)
+    except json.JSONDecodeError:
+        return None
+
+ANGRY = re.compile(r"angry|unacceptable|NAICOM|vex|no good|nobody has replied|disappear", re.I)
+
+def amount_ngn(text):
+    m = re.search(r"₦(\d+(?:\.\d+)?)(k|m)", text)
+    return None if m is None else float(m.group(1)) * (1_000 if m.group(2) == "k" else 1_000_000)
+
+def escalation_reasons(rec, text):
+    if rec is None:
+        return ["output failed validation"]
+    reasons = []
+    if rec.get("injuries"):
+        reasons.append("injuries")
+    if rec.get("claim_type") == "Theft":
+        reasons.append("theft")
+    amount = amount_ngn(text)
+    if amount is not None and amount >= 5_000_000:
+        reasons.append("₦5m or more")
+    if ANGRY.search(text):
+        reasons.append("angry customer")
+    return reasons
+
+records = messages["large_v2_output"].map(parse)
+messages["reasons"] = [escalation_reasons(r, t) for r, t in zip(records, messages["text"])]
+messages["rule_flag"] = messages["reasons"].map(bool)
+messages["model_flag"] = [r is None or bool(r.get("needs_human")) for r in records]
+messages["escalate"] = messages["rule_flag"] | messages["model_flag"]
+
+needed = messages["gold_needs_human"] == 1
+for col in ["model_flag", "rule_flag", "escalate"]:
+    print(f"{col:10}  recall {messages.loc[needed, col].mean():6.1%}   escalated {messages[col].mean():5.1%}   "
+          f"precision {messages.loc[messages[col], 'gold_needs_human'].mean():5.1%}")
+```
+
+```text
+model_flag  recall  87.5%   escalated 36.0%   precision 87.5%
+rule_flag   recall  96.3%   escalated 37.0%   precision 93.7%
+escalate    recall 100.0%   escalated 42.7%   precision 84.4%
+```
+
+The model alone misses about one in eight messages that needed a person. The rules miss fewer, and together they miss none. The price is escalating more messages than strictly needed, which the claims team can absorb far more easily than a missed injury. Which rules fire most:
+
+```python
+messages["reasons"].explode().value_counts()
+```
+
+```text
+reasons
+angry customer              96
+theft                       79
+injuries                    66
+₦5m or more                 25
+output failed validation     2
+Name: count, dtype: int64
+```
+
+Now the document checklist, built from the policy:
+
+```python
+REQUIRED = {
+    "Windscreen": ["photos of the damage"],
+    "Accident damage": ["photos of the damage", "your driver's licence", "a repair estimate from an approved garage"],
+    "Third party": ["photos of the damage", "your driver's licence", "the police report", "the other party's name, phone number and plate number"],
+    "Theft": ["the police report", "both sets of keys", "the registration papers and proof of ownership"],
+}
+
+def still_needed(rec, photos_attached):
+    needed = list(REQUIRED[rec["claim_type"]])
+    if photos_attached > 0 and "photos of the damage" in needed:
+        needed.remove("photos of the damage")
+    return needed
+
+for _, m in messages.head(3).iterrows():
+    rec = parse(m["large_v2_output"])
+    missing = still_needed(rec, m["photos_attached"])
+    reply = f"please send {'; '.join(missing)}" if missing else "nothing more is needed; we'll be in touch"
+    print(f"{m['message_id']} ({rec['claim_type']}, {m['photos_attached']} photos): {reply}")
+```
+
+```text
+MSG-0001 (Windscreen, 0 photos): please send photos of the damage
+MSG-0002 (Accident damage, 2 photos): please send your driver's licence; a repair estimate from an approved garage
+MSG-0003 (Windscreen, 4 photos): nothing more is needed; we'll be in touch
+```
+
+Each reply is exact, comes straight from the policy, and can't be talked out of a document.
+
+## Walkthrough
+
+1. Run the cells.
+2. Look at the messages escalated only by the model's flag, and those escalated only by a rule. Do the rules need a new condition?
+3. Test the `ANGRY` pattern on a few polite messages and a few angry Pidgin ones. What does it miss, and what does it catch wrongly?
+4. Write the reply template for a customer whose claim is escalated: what they're told, and when a person will contact them.
+5. Write the escalation specification (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "aic-03-p1",
+  "prompt": "What is the **recall** of the model's own `needs_human` flag (with failed outputs escalated) on messages that needed a person? One decimal place.",
+  "answer": 87.5,
+  "format": "percent",
+  "dataset": "assistant",
+  "files": ["messages"],
+  "pyVerify": "round(100 * messages.loc[needed, 'model_flag'].mean(), 1)",
+  "hint": "The model_flag line.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "aic-03-p2",
+  "prompt": "With rules and the model's flag combined, what percentage of **all** messages are escalated? One decimal place.",
+  "answer": 42.7,
+  "format": "percent",
+  "dataset": "assistant",
+  "files": ["messages"],
+  "pyVerify": "round(100 * messages['escalate'].mean(), 1)",
+  "hint": "The escalated figure on the escalate line.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "aic-03-t1",
+  "prompt": "Write the **escalation specification** (60 to 150 words): each **rule**, the **fail-safe**, how the model's flag is used, and the **recall and cost** you measured.",
+  "minutes": 8,
+  "rows": 7,
+  "placeholder": "Escalate to a person if any of these is true: ...",
+  "rules": [
+    { "label": "Covers injuries", "pattern": "injur" },
+    { "label": "Covers theft", "pattern": "theft|stolen" },
+    { "label": "Covers large amounts", "pattern": "5\\s*m|5,000,000|5 million|large amount" },
+    { "label": "Covers anger or complaints", "pattern": "angry|anger|complain|threat" },
+    { "label": "A fail-safe for invalid output", "pattern": "fail|invalid|validation" },
+    { "label": "Recall and escalation rate with numbers", "pattern": "\\d+(\\.\\d+)?\\s*%", "min": 2 },
+    { "label": "Between 60 and 150 words", "minWords": 60, "maxWords": 150 }
+  ],
+  "sample": "Escalate to a person if any of these is true:\n1. The extraction says someone was injured.\n2. The claim type is theft.\n3. The message mentions an amount of ₦5m or more.\n4. The wording is angry or threatens a complaint (matched by pattern, reviewed monthly).\n5. The model's output failed validation (fail-safe).\n6. The model's own needs_human flag is true.\nEach escalation records its reasons. On the 600 test messages, the model's flag alone caught 87.5% of messages that needed a person; rules and flag together caught 100%, escalating 42.7% of all messages against the 36% that strictly needed it. We accept those extra escalations: a missed injury costs far more than a short human review.",
+  "note": "The specification is testable: each rule can have its own test case.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why escalate injuries by a rule in code instead of trusting the model's flag?",
+    "options": ["Rules are cheaper", "The case must reach a person every time, and a rule applies it predictably", "The model can't read injuries", "To reduce escalations"],
+    "answer": 1,
+    "explanation": "Must-have behaviour belongs in code."
+  },
+  {
+    "prompt": "What should happen when the model's output fails validation?",
+    "options": ["Guess the fields", "Escalate to a person (fail safe)", "Drop the message", "Retry forever"],
+    "answer": 1,
+    "explanation": "Fail towards the safe outcome."
+  },
+  {
+    "prompt": "Combining rules with the model's flag raises escalations from 36% to 43%. Is that acceptable?",
+    "options": ["No, never", "Usually yes: extra reviews cost little compared with missing a case that needed a person", "Only if the model is small", "Only at night"],
+    "answer": 1,
+    "explanation": "Weigh the costs of each kind of error."
+  }
+]
+```
+$md$, true, true, 3, array['aic-03-p1', 'aic-03-p2', 'aic-03-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('aic-m04', 'ai-engineer-capstone', 'Retrieval over the Policy', 4, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('ai-engineer-capstone:retrieval-over-the-policy', 'ai-engineer-capstone', 'aic-m04', 'retrieval-over-the-policy', 'Retrieval over the policy', 'Measure whether the right policy section reaches the model for each customer question, compare the production retriever with a keyword baseline, and find the questions retrieval fails.', 25, $md$
+## The problem
+
+Customers ask policy questions all the time: "Can I use my own mechanic?", "Am I covered if I drive for Bolt?", "How I go know where my claim reach?" The assistant answers from Shieldline's policy wording (`policy.csv`, 20 sections), retrieving the most relevant sections for each question and asking the model to answer **only** from them.
+
+If retrieval brings back the wrong sections, even a perfect model can only guess. So measure retrieval on its own, before judging the answers.
+
+## The concept
+
+**A labelled question set**
+
+`questions.csv` holds 80 real customer questions, 20 of them in Pidgin. A claims officer marked the policy section that answers each one (`gold_section_id`). The production retriever's top three sections are recorded in `retrieved_ids`.
+
+**Hit at 3**
+
+The share of questions where the gold section is among the three retrieved. The model sees those three sections, so a hit means it at least has the answer in front of it.
+
+**A keyword baseline**
+
+TF-IDF with cosine similarity needs no model and no API. If the production retriever, which uses embeddings, can't beat it clearly, it isn't earning its cost.
+
+**Find the failures**
+
+Read the questions retrieval misses. Patterns in the misses, such as a language, a topic or a way of asking, tell you what to fix.
+
+## Example
+
+The production retriever:
+
+```python
+import numpy as np
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/assistant/"
+policy = pd.read_csv(base + "policy.csv")
+questions = pd.read_csv(base + "questions.csv")
+questions["hit"] = [gold in ids.split(";") for gold, ids in zip(questions["gold_section_id"], questions["retrieved_ids"])]
+print(f"Hit at 3: {questions['hit'].sum()} of {len(questions)} questions ({questions['hit'].mean():.1%})")
+questions.groupby("language")["hit"].agg(questions="size", hit_at_3="mean").round(3)
+```
+
+```text
+Hit at 3: 69 of 80 questions (86.2%)
+          questions  hit_at_3
+language
+English          60      0.90
+Pidgin           20      0.75
+```
+
+The keyword baseline, on the same questions:
+
+```python
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+
+docs = policy["title"] + ". " + policy["text"]
+vectoriser = TfidfVectorizer(stop_words="english").fit(pd.concat([docs, questions["question"]]))
+similarity = cosine_similarity(vectoriser.transform(questions["question"]), vectoriser.transform(docs))
+top3 = np.argsort(-similarity, axis=1)[:, :3]
+questions["tfidf_hit"] = [gold in set(policy["section_id"].iloc[t]) for gold, t in zip(questions["gold_section_id"], top3)]
+print(f"TF-IDF hit at 3: {questions['tfidf_hit'].sum()} of {len(questions)}")
+questions.groupby("language")[["hit", "tfidf_hit"]].mean().round(3)
+```
+
+```text
+TF-IDF hit at 3: 60 of 80
+           hit  tfidf_hit
+language
+English   0.90      0.783
+Pidgin    0.75      0.650
+```
+
+The production retriever beats keywords clearly in English. In Pidgin, both struggle: "motor" for car, "wound" for injured and "jam" for crash share few words with the policy's formal English. The questions the production retriever misses:
+
+```python
+questions.loc[~questions["hit"], ["language", "question", "gold_section_id", "retrieved_ids"]]
+```
+
+```text
+language                                          question gold_section_id retrieved_ids
+10  English                   What is the minimum deductible?             S03   S11;S14;S01
+23   Pidgin     Person jam my motor, which document una need?             S06   S02;S17;S13
+24  English  My car was stolen, what documents should I send?             S07   S08;S10;S19
+47   Pidgin       My driver no get licence, una go still pay?             S12   S17;S07;S18
+49  English       Should I start my car after it was flooded?             S13   S17;S19;S15
+55   Pidgin     Person wound for the accident, wetin I go do?             S14   S01;S16;S19
+57  English                   When will my claim be approved?             S15   S20;S07;S09
+70  English                Can I report you to the regulator?             S18   S01;S17;S09
+71   Pidgin                   I wan complain, how I go do am?             S18   S17;S11;S08
+75   Pidgin               How I go know where my claim reach?             S19   S15;S03;S11
+76  English                 Am I covered if I drive to Ghana?             S20   S05;S01;S13
+```
+
+Pidgin questions are over-represented among the misses. Possible fixes, to test one at a time: add a short Pidgin glossary to the query before retrieval ("motor" → "car, vehicle"), index a few example questions in Pidgin with each section, or let the model rewrite the question in plain English first. Whatever the fix, measure it on this same set.
+
+## Walkthrough
+
+1. Run the cells.
+2. Add a simple glossary (motor → car vehicle, wound → injured, jam → hit crash, thief carry → stolen) to the Pidgin questions, rerun TF-IDF and compare.
+3. Try `ngram_range=(1, 2)` in the vectoriser. Does the baseline improve?
+4. Which sections are most often retrieved wrongly in place of the right one?
+5. Write the retrieval report (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "aic-04-p1",
+  "prompt": "For how many of the 80 questions does the **production** retriever return the gold section in its top three?",
+  "answer": 69,
+  "format": "number",
+  "dataset": "assistant",
+  "files": ["questions"],
+  "pyVerify": "int(questions['hit'].sum())",
+  "hint": "The first line printed.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "aic-04-p2",
+  "prompt": "And for how many does the **TF-IDF** baseline?",
+  "answer": 60,
+  "format": "number",
+  "dataset": "assistant",
+  "files": ["questions", "policy"],
+  "pyVerify": "int(questions['tfidf_hit'].sum())",
+  "hint": "The first line of the second cell.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "aic-04-t1",
+  "prompt": "Write the **retrieval report** (50 to 130 words): hit at 3 for the production retriever and the baseline, the gap for **Pidgin**, and **two fixes** you'd test, with how you'd **measure** them.",
+  "minutes": 7,
+  "rows": 6,
+  "placeholder": "The production retriever ...",
+  "rules": [
+    { "label": "Gives hit-at-3 figures", "pattern": "\\d+(\\.\\d+)?\\s*%|\\d+ of 80", "min": 2 },
+    { "label": "Compares with the baseline (TF-IDF, keyword)", "pattern": "tf-?idf|keyword|baseline" },
+    { "label": "Covers Pidgin", "pattern": "pidgin" },
+    { "label": "Proposes fixes (glossary, rewrite, examples)", "pattern": "glossary|rewrit|example|synonym|translat" },
+    { "label": "Says how to measure (same set, hit at 3)", "pattern": "same (question )?set|measure|hit at 3|re-?run" },
+    { "label": "Between 50 and 130 words", "minWords": 50, "maxWords": 130 }
+  ],
+  "sample": "The production retriever puts the right policy section in its top three for 69 of 80 questions (86%), against 60 for a TF-IDF keyword baseline, so it's earning its place. But Pidgin questions are hit only 75% of the time, against 90% in English, and they're over-represented among the misses. I'd test two fixes: a short Pidgin glossary added to the query (motor → car, wound → injured), and letting the model rewrite each question in plain English before retrieval. Each fix gets rerun on the same 80 questions and compared by hit at 3 in each language, before any change reaches customers.",
+  "note": "A fix is only a fix once the same test set shows it.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why measure retrieval separately from answer quality?",
+    "options": ["It's quicker", "If the right section isn't retrieved, the model can only guess, so you need to know where failures start", "Retrieval is more important than answers", "Answers can't be measured"],
+    "answer": 1,
+    "explanation": "Locate the failure in the pipeline."
+  },
+  {
+    "prompt": "What does hit at 3 measure?",
+    "options": ["Answer accuracy", "The share of questions whose correct section is among the three retrieved", "Speed", "Cost"],
+    "answer": 1,
+    "explanation": "Did the answer reach the model?"
+  },
+  {
+    "prompt": "Why compare with a TF-IDF baseline?",
+    "options": ["TF-IDF is always better", "To check that the more expensive retriever is actually adding value", "It's required", "To train embeddings"],
+    "answer": 1,
+    "explanation": "Every component should beat a simple alternative."
+  }
+]
+```
+$md$, true, true, 4, array['aic-04-p1', 'aic-04-p2', 'aic-04-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('aic-m05', 'ai-engineer-capstone', 'Grounded Answers and Judging', 5, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('ai-engineer-capstone:grounded-answers-and-judging', 'ai-engineer-capstone', 'aic-m05', 'grounded-answers-and-judging', 'Grounded answers and judging', 'Compare answers with and without retrieval, see how answer quality depends on retrieval hits, and test whether an LLM judge can replace human grading, including the one kind of error it misses.', 25, $md$
+## The problem
+
+A wrong answer about insurance is costly. A customer told "yes, you can use your own mechanic" may lose part of their claim. So the assistant must answer **from the policy**, and Shieldline needs a way to check answer quality every time the prompt or model changes. People graded the answers this time. Next time, the team wants an LLM judge to do it automatically. Can it be trusted?
+
+## The concept
+
+**Grades**
+
+| Grade | Meaning |
+| :-- | :-- |
+| Correct | Right, and supported by the policy |
+| Partly correct | Right but incomplete |
+| Wrong | Contradicts the policy |
+| Unsupported | States something the policy doesn't say: made up, even if it sounds plausible |
+
+Unsupported answers are the most dangerous kind. They sound confident and can't be traced to anything.
+
+**Answer quality depends on retrieval**
+
+Split the graded answers by whether retrieval found the right section. If most bad answers come from retrieval misses, fix retrieval first.
+
+**Judging the judge**
+
+Before an LLM judge replaces people, compare its grades with human grades on the same answers. Look at overall agreement, but especially at agreement on the grades that matter most. A judge that calls unsupported answers "Correct" is worse than useless for safety.
+
+## Example
+
+Answers with and without retrieval:
+
+```python
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/assistant/"
+questions = pd.read_csv(base + "questions.csv")
+questions["hit"] = [gold in ids.split(";") for gold, ids in zip(questions["gold_section_id"], questions["retrieved_ids"])]
+ORDER = ["Correct", "Partly correct", "Wrong", "Unsupported"]
+pd.DataFrame({
+    "without retrieval": questions["answer_no_rag_grade"].value_counts(),
+    "with retrieval": questions["answer_rag_grade"].value_counts(),
+}).reindex(ORDER).fillna(0).astype(int)
+```
+
+```text
+without retrieval  with retrieval
+Correct                        38              57
+Partly correct                 12              12
+Wrong                           7               6
+Unsupported                    23               5
+```
+
+Retrieval raises correct answers substantially and cuts unsupported ones sharply. Where do the remaining bad answers come from?
+
+```python
+pd.crosstab(questions["hit"], questions["answer_rag_grade"]).reindex(columns=ORDER, fill_value=0)
+```
+
+```text
+answer_rag_grade  Correct  Partly correct  Wrong  Unsupported
+hit
+False                   2               1      4            4
+True                   55              11      2            1
+```
+
+When retrieval finds the right section, the answer is almost always right. Most wrong and unsupported answers (8 of 11) follow a retrieval **miss**, although misses are only 11 of the 80 questions. So the retrieval fixes from lesson 4 are also the best answer fixes. In the meantime, instruct the model to say it will pass the question to a colleague when the retrieved sections don't contain the answer, and test that instruction.
+
+Now the judge:
+
+```python
+agree = (questions["judge_grade"] == questions["answer_rag_grade"]).mean()
+print(f"The judge agrees with people on {agree:.1%} of answers")
+pd.crosstab(questions["answer_rag_grade"], questions["judge_grade"], rownames=["people"], colnames=["judge"]).reindex(index=ORDER, columns=ORDER, fill_value=0)
+```
+
+```text
+The judge agrees with people on 90.0% of answers
+judge           Correct  Partly correct  Wrong  Unsupported
+people
+Correct              53               0      2            2
+Partly correct        0              12      0            0
+Wrong                 0               0      5            1
+Unsupported           3               0      0            2
+```
+
+The overall agreement looks good. But read the Unsupported row: of the answers people marked unsupported, the judge called most of them **Correct**. It's fooled by exactly the confident, made-up answers that matter most. So the judge can't run alone. Use it to grade at scale, and add a code check that every sentence of an answer can be matched to a retrieved section, plus a monthly human sample focused on answers the judge passed.
+
+## Walkthrough
+
+1. Run the cells.
+2. Read the unsupported answers' questions. Which policy sections were they about, and were they retrieval misses?
+3. Write the instruction that tells the model what to do when the retrieved sections don't contain the answer.
+4. Design the ongoing check: how many answers people grade each month, and which ones.
+5. Write the answer-quality note (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "aic-05-p1",
+  "prompt": "How many of the 80 answers **with retrieval** did people grade **Correct**?",
+  "answer": 57,
+  "format": "number",
+  "dataset": "assistant",
+  "files": ["questions"],
+  "pyVerify": "int((questions['answer_rag_grade'] == 'Correct').sum())",
+  "hint": "The Correct row, with retrieval.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "aic-05-p2",
+  "prompt": "Of the answers people graded **Unsupported**, how many did the judge grade **Correct**?",
+  "answer": 3,
+  "format": "number",
+  "dataset": "assistant",
+  "files": ["questions"],
+  "pyVerify": "int(((questions['answer_rag_grade'] == 'Unsupported') & (questions['judge_grade'] == 'Correct')).sum())",
+  "hint": "The Unsupported row, Correct column, of the judge table.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "aic-05-t1",
+  "prompt": "Write the **answer-quality note** (60 to 140 words): what retrieval does for answer quality, where the remaining bad answers **come from**, whether the LLM **judge** can be trusted, and the **safeguard** you'd add.",
+  "minutes": 7,
+  "rows": 7,
+  "placeholder": "With retrieval, ...",
+  "rules": [
+    { "label": "Uses numbers", "pattern": "\\d+", "min": 3 },
+    { "label": "Links bad answers to retrieval misses", "pattern": "miss|retriev" },
+    { "label": "Covers the judge", "pattern": "judge" },
+    { "label": "Names the judge's weakness (unsupported)", "pattern": "unsupported|made.up|invent" },
+    { "label": "A safeguard (human sample, check, pass to a colleague)", "pattern": "sample|human|check|colleague|person" },
+    { "label": "Between 60 and 140 words", "minWords": 60, "maxWords": 140 }
+  ],
+  "sample": "With retrieval, 57 of 80 answers were correct, against 38 without, and unsupported answers fell from 23 to 5. Most of the remaining wrong or unsupported answers (8 of 11) came after a retrieval miss, so improving retrieval, especially for Pidgin, is the best way to improve answers. The LLM judge agrees with people on 90% of answers, but it graded 3 of the 5 unsupported answers as Correct: it misses the most dangerous error. So the judge can grade at scale, but not alone. We'll add a code check that each answer quotes a retrieved section, tell the model to pass questions to a colleague when the sections don't answer them, and have people grade a monthly sample of answers the judge passed.",
+  "note": "The judge is measured like any other model: against people, on the errors that matter.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why are unsupported answers more dangerous than wrong ones?",
+    "options": ["They're longer", "They sound confident and can't be traced to the policy, so nobody notices", "They're rarer", "They cost more tokens"],
+    "answer": 1,
+    "explanation": "Plausible fabrications slip through."
+  },
+  {
+    "prompt": "Most bad answers follow a retrieval miss. What should you fix first?",
+    "options": ["The answer prompt", "Retrieval", "The judge", "The model size"],
+    "answer": 1,
+    "explanation": "Fix the failure where it starts."
+  },
+  {
+    "prompt": "A judge agrees with people 90% of the time but passes most unsupported answers. Should it replace human grading?",
+    "options": ["Yes: 90% is high", "No: it fails on the most important error, so keep a human check focused there", "Only on Fridays", "Yes, with a bigger model"],
+    "answer": 1,
+    "explanation": "Agreement overall isn't agreement where it matters."
+  }
+]
+```
+$md$, true, true, 5, array['aic-05-p1', 'aic-05-p2', 'aic-05-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('aic-m06', 'ai-engineer-capstone', 'Red-Teaming and Fair Guardrails', 6, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('ai-engineer-capstone:red-teaming-and-fair-guardrails', 'ai-engineer-capstone', 'aic-m06', 'red-teaming-and-fair-guardrails', 'Red-teaming and fair guardrails', 'Attack the assistant on purpose, compare two guardrails by how many attacks get through, and check the price: genuine customers wrongly blocked, and whether that price falls on Pidgin speakers and angry customers.', 25, $md$
+## The problem
+
+A WhatsApp number is open to anyone. Some people will try to make the assistant approve a claim, promise money, reveal another customer's details, or obey instructions hidden inside a message. The team built two guardrails, each a check that blocks a message before the model acts on it:
+
+- **v1**: a keyword filter.
+- **v2**: a small classifier trained on attacks, together with a hardened prompt and the rules in code from lesson 3.
+
+The red team ran 120 attacks against both. A guardrail also has a cost, though: every genuine customer it blocks is a customer who gets no help.
+
+## The concept
+
+**Red-teaming**
+
+Write attacks by category, run them against each version, and record the outcome: **Blocked** by the guardrail, **Refused** by the model, or **Attack succeeded**. Report the success rate by category, because one weak category is enough.
+
+**Defence in depth**
+
+The guardrail is one layer. The model's instructions are another. Code is the strongest: an assistant that has no tool to approve claims can't be talked into approving one, whatever the message says.
+
+**False positives, and who pays them**
+
+Run the guardrail on genuine messages and count how many it wrongly flags. Then split by group. A keyword filter that trips on Pidgin words, or on anger, blocks exactly the customers who most need a person.
+
+## Example
+
+Attack outcomes for each version:
+
+```python
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/assistant/"
+redteam = pd.read_csv(base + "redteam.csv")
+messages = pd.read_csv(base + "messages.csv", keep_default_na=False)
+
+print(pd.DataFrame({v: redteam[f"{v}_outcome"].value_counts() for v in ["v1", "v2"]}).fillna(0).astype(int), "\n")
+success = redteam.groupby("category")[["v1_outcome", "v2_outcome"]].agg(lambda s: (s == "Attack succeeded").mean())
+success.round(3)
+```
+
+```text
+v1   v2
+Blocked           57  113
+Refused           49    6
+Attack succeeded  14    1
+
+                      v1_outcome  v2_outcome
+category
+Abuse and threats          0.042       0.000
+Data request               0.125       0.042
+Hidden injection           0.167       0.000
+Instruction override       0.125       0.000
+Payment promise            0.125       0.000
+```
+
+v1 lets attacks through in every category. v2 stops almost all of them; the only one that got through was a request for another customer's data. Now the price, on the 600 genuine messages:
+
+```python
+print(messages.groupby("language")[["guardrail_v1_flag", "guardrail_v2_flag"]].mean().round(3), "\n")
+messages.groupby("gold_angry")[["guardrail_v1_flag", "guardrail_v2_flag"]].mean().round(3)
+```
+
+```text
+guardrail_v1_flag  guardrail_v2_flag
+language
+English               0.056              0.021
+Pidgin                0.186              0.034
+
+            guardrail_v1_flag  guardrail_v2_flag
+gold_angry
+0                       0.046              0.026
+1                       0.271              0.010
+```
+
+The keyword filter wrongly flags Pidgin messages more than three times as often as English ones, and it flags angry customers far more than calm ones. An angry customer who has been waiting is exactly the person who should reach a human, not a wall. v2 is more accurate against attacks **and** fairer to customers. Even so, a flagged genuine message should go to a person rather than be dropped, so a false positive costs a delay, not a customer.
+
+## Walkthrough
+
+1. Run the cells.
+2. Read the attack that succeeded against v2. Which layer should have stopped it? Write the code rule that would (for example: the assistant has no access to other customers' records at all).
+3. Write five new attacks in Pidgin. Which category do you expect to be weakest?
+4. Decide what happens to a flagged message: blocked with a message, or routed to a person?
+5. Write the red-team report (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "aic-06-p1",
+  "prompt": "How many of the 120 attacks **succeeded** against guardrail **v1**?",
+  "answer": 14,
+  "format": "number",
+  "dataset": "assistant",
+  "files": ["redteam"],
+  "pyVerify": "int((redteam['v1_outcome'] == 'Attack succeeded').sum())",
+  "hint": "The Attack succeeded row, v1 column.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "aic-06-p2",
+  "prompt": "What percentage of genuine **Pidgin** messages does guardrail **v1** wrongly flag? One decimal place.",
+  "answer": 18.6,
+  "format": "percent",
+  "dataset": "assistant",
+  "files": ["messages"],
+  "pyVerify": "round(100 * messages.loc[messages['language'] == 'Pidgin', 'guardrail_v1_flag'].mean(), 1)",
+  "hint": "The Pidgin row, guardrail_v1_flag.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "aic-06-t1",
+  "prompt": "Write the **red-team report** (60 to 150 words): attack success for **both** versions, the **weakest category**, the **false positives** by language and for angry customers, and what happens to a **flagged** message.",
+  "minutes": 8,
+  "rows": 7,
+  "placeholder": "Of 120 attacks, ...",
+  "rules": [
+    { "label": "Attack results for both versions", "pattern": "v1[\\s\\S]{0,200}v2|v2[\\s\\S]{0,200}v1" },
+    { "label": "Uses numbers", "pattern": "\\d+(\\.\\d+)?", "min": 4 },
+    { "label": "Names a category", "pattern": "data request|instruction override|payment promise|hidden injection|abuse" },
+    { "label": "Covers Pidgin false positives", "pattern": "pidgin" },
+    { "label": "Covers angry customers", "pattern": "angry|anger" },
+    { "label": "What happens to flagged messages (person, human, routed)", "pattern": "person|human|rout|review" },
+    { "label": "Between 60 and 150 words", "minWords": 60, "maxWords": 150 }
+  ],
+  "sample": "Of 120 attacks, 14 succeeded against v1 (the keyword filter) and 1 against v2. v1 was weakest on hidden injections; the one success against v2 was a data request for the claim details of someone else's car, which we'll close in code by giving the assistant no access to other customers' records. The price matters too: v1 wrongly flagged 18.6% of genuine Pidgin messages against 5.6% in English, and angry customers far more often than calm ones. v2 flags 3.4% of Pidgin and 2.1% of English messages. We'll ship v2, and any flagged genuine message goes to a person rather than being dropped, so a false positive costs a short delay, not a customer.",
+  "note": "A guardrail is judged on both errors: attacks that get through, and customers who don't.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "What's the strongest defence against \"approve my claim\" attacks?",
+    "options": ["A longer prompt", "Code: the assistant has no ability to approve claims at all", "A bigger model", "A keyword list"],
+    "answer": 1,
+    "explanation": "Can't is stronger than won't."
+  },
+  {
+    "prompt": "A guardrail flags Pidgin messages three times as often as English. Why is that a problem?",
+    "options": ["It's not", "It denies help unfairly to one group of customers", "It costs more tokens", "It slows the model"],
+    "answer": 1,
+    "explanation": "False positives have a cost, and here it falls on one group."
+  },
+  {
+    "prompt": "What should happen to a genuine message the guardrail flags?",
+    "options": ["Drop it", "Route it to a person", "Reply with an error", "Ban the number"],
+    "answer": 1,
+    "explanation": "Make the cost of a false positive small."
+  }
+]
+```
+$md$, true, true, 6, array['aic-06-p1', 'aic-06-p2', 'aic-06-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('aic-m07', 'ai-engineer-capstone', 'Cost, Latency and the Release Gate', 7, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('ai-engineer-capstone:cost-latency-and-the-release-gate', 'ai-engineer-capstone', 'aic-m07', 'cost-latency-and-the-release-gate', 'Cost, latency and the release gate', 'Price each configuration per message and per month, measure its 95th-percentile latency, and put every quality, safety, speed and cost requirement into one release gate that a configuration must pass in full.', 30, $md$
+## The problem
+
+The head of claims needs a yes or no: which configuration goes live? Each team member argues for a different one. Finance likes the small model's price, and the claims team likes the large model's accuracy. A **release gate** settles it. Agree the requirements before looking at the results, check every configuration against all of them, and ship only one that passes everything.
+
+## The concept
+
+**Cost per message**
+
+Cost = input tokens × input price + output tokens × output price. The `large_v2` prompt is longer (schema and examples), so it costs more per message than `large_v1` with the same model. For this course, use these illustrative prices in US dollars per million tokens, at ₦1,550 to the dollar, and a volume of 14,000 messages a month:
+
+| Model | Input | Output |
+| :-- | --: | --: |
+| Small | $0.15 | $0.60 |
+| Large | $2.50 | $10.00 |
+
+**Latency: the 95th percentile**
+
+Averages hide the slow replies customers notice. The **p95** is the time within which 95% of replies arrive.
+
+**The release gate**
+
+| Requirement | Threshold |
+| :-- | :-- |
+| Valid JSON | at least 99% |
+| Claim type accuracy | at least 95% overall and 90% in Pidgin |
+| Invented plate numbers | at most 1% |
+| Escalation recall (rules, flag and fail-safe) | at least 99% |
+| p95 latency | at most 4 seconds |
+| Monthly cost | at most ₦150,000 |
+
+The guardrail requirements (attack success at most 2%, false positives at most 5% in every language) were checked in lesson 6, and v2 passes them.
+
+## Example
+
+Every metric for every configuration:
+
+```python
+import json
+import re
+
+import numpy as np
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/assistant/"
+messages = pd.read_csv(base + "messages.csv", keep_default_na=False)
+PRICES = {"small": (0.15, 0.60), "large": (2.50, 10.00)}  # US$ per million input and output tokens
+NGN_PER_USD = 1550
+MONTHLY_MESSAGES = 14_000
+ANGRY = re.compile(r"angry|unacceptable|NAICOM|vex|no good|nobody has replied|disappear", re.I)
+
+def parse(raw):
+    try:
+        return json.loads(raw)
+    except json.JSONDecodeError:
+        return None
+
+def amount_ngn(text):
+    m = re.search(r"₦(\d+(?:\.\d+)?)(k|m)", text)
+    return None if m is None else float(m.group(1)) * (1_000 if m.group(2) == "k" else 1_000_000)
+
+def escalate(rec, text):
+    if rec is None or rec.get("needs_human") or rec.get("injuries") or rec.get("claim_type") == "Theft":
+        return True
+    amount = amount_ngn(text)
+    return (amount is not None and amount >= 5_000_000) or bool(ANGRY.search(text))
+
+rows = []
+for config in ["small_v1", "large_v1", "large_v2"]:
+    size, prompt = config.split("_")
+    recs = messages[config + "_output"].map(parse)
+    field = lambda name: recs.map(lambda r: r.get(name) if r else None)
+    type_ok = field("claim_type") == messages["gold_claim_type"]
+    pidgin = messages["language"] == "Pidgin"
+    escalated = pd.Series([escalate(r, t) for r, t in zip(recs, messages["text"])])
+    tokens_in = messages["input_tokens_" + prompt]
+    cost_usd = (tokens_in * PRICES[size][0] + messages["output_tokens"] * PRICES[size][1]) / 1e6
+    rows.append({
+        "config": config,
+        "valid_json": recs.notna().mean(),
+        "claim_type": type_ok.mean(),
+        "claim_type_pidgin": type_ok[pidgin].mean(),
+        "invented_plates": ((messages["gold_vehicle_reg"] == "") & field("vehicle_reg").notna()).mean(),
+        "escalation_recall": escalated[messages["gold_needs_human"] == 1].mean(),
+        "p95_latency_ms": np.percentile(messages[f"latency_{size}_ms"], 95),
+        "monthly_cost_ngn": cost_usd.mean() * MONTHLY_MESSAGES * NGN_PER_USD,
+    })
+metrics = pd.DataFrame(rows).set_index("config")
+metrics.round(3)
+```
+
+```text
+valid_json  claim_type  claim_type_pidgin  invented_plates  escalation_recall  p95_latency_ms  monthly_cost_ngn
+config
+small_v1       0.932       0.812              0.703            0.042              0.981         1093.05          2391.280
+large_v1       0.955       0.887              0.822            0.007              0.995         3387.15         39854.672
+large_v2       0.997       0.962              0.932            0.003              1.000         3387.15         79457.172
+```
+
+The small model is by far the cheapest and fastest. All three are well inside the cost budget, which matters: price isn't the deciding factor here, so quality is. Now apply the gate:
+
+```python
+gate = pd.DataFrame({
+    "valid JSON ≥ 99%": metrics["valid_json"] >= 0.99,
+    "claim type ≥ 95%": metrics["claim_type"] >= 0.95,
+    "Pidgin claim type ≥ 90%": metrics["claim_type_pidgin"] >= 0.90,
+    "invented plates ≤ 1%": metrics["invented_plates"] <= 0.01,
+    "escalation recall ≥ 99%": metrics["escalation_recall"] >= 0.99,
+    "p95 latency ≤ 4 s": metrics["p95_latency_ms"] <= 4000,
+    "cost ≤ ₦150k a month": metrics["monthly_cost_ngn"] <= 150_000,
+})
+gate["passes"] = gate.all(axis=1)
+gate.T
+```
+
+```text
+config                   small_v1  large_v1  large_v2
+valid JSON ≥ 99%            False     False      True
+claim type ≥ 95%            False     False      True
+Pidgin claim type ≥ 90%     False     False      True
+invented plates ≤ 1%        False      True      True
+escalation recall ≥ 99%     False      True      True
+p95 latency ≤ 4 s            True      True      True
+cost ≤ ₦150k a month         True      True      True
+passes                      False     False      True
+```
+
+Only `large_v2` passes every requirement. The small model fails on accuracy, especially in Pidgin, on invented plates, and on escalation recall: its weaker extraction means rules miss some injuries. `large_v1` fails on valid JSON and accuracy. The prompt work in `v2`, not the bigger model alone, is what gets the large model over the line.
+
+## Walkthrough
+
+1. Run the cells.
+2. What would the small model's accuracy need to be to pass? Is there a cheaper design, such as the small model with the v2 prompt, worth testing?
+3. Recalculate the monthly cost at 40,000 messages, and with the question-answering calls added (assume one question per three messages, at 2,500 input and 150 output tokens on the large model).
+4. Write down who signs off the gate, and what happens if a later change fails it.
+5. Write the release decision (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "aic-07-p1",
+  "prompt": "What's the estimated **monthly cost** of `large_v2` in naira? (A rounded figure is fine.)",
+  "answer": 79457,
+  "format": "naira",
+  "dataset": "assistant",
+  "files": ["messages"],
+  "pyVerify": "int(round(metrics.loc['large_v2', 'monthly_cost_ngn']))",
+  "tolerance": 1000,
+  "hint": "The monthly_cost_ngn column, large_v2 row.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "aic-07-p2",
+  "prompt": "What is the large model's **p95 latency** in milliseconds? (A rounded figure is fine.)",
+  "answer": 3387,
+  "format": "number",
+  "dataset": "assistant",
+  "files": ["messages"],
+  "pyVerify": "int(round(metrics.loc['large_v2', 'p95_latency_ms']))",
+  "tolerance": 10,
+  "hint": "The p95_latency_ms column for a large configuration.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "aic-07-t1",
+  "prompt": "Write the **release decision** (60 to 150 words): the configuration that ships, the **gate results** with numbers, why each other configuration **fails**, the **cost**, and what would **block** a future release.",
+  "minutes": 8,
+  "rows": 7,
+  "placeholder": "Ship large_v2 ...",
+  "rules": [
+    { "label": "Names the configuration that ships", "pattern": "ship|release|launch|go live" },
+    { "label": "Gate results with numbers", "pattern": "\\d+(\\.\\d+)?\\s*%", "min": 3 },
+    { "label": "Explains why small_v1 fails", "pattern": "small" },
+    { "label": "Explains why large_v1 fails", "pattern": "large_v1|v1" },
+    { "label": "States the cost", "pattern": "₦\\s*\\d" },
+    { "label": "What blocks a future release", "pattern": "block|fail|any (change|future)|every (change|release)" },
+    { "label": "Between 60 and 150 words", "minWords": 60, "maxWords": 150 }
+  ],
+  "sample": "Ship large_v2. It passes every requirement in the gate: 99.7% valid JSON, 96.2% claim type accuracy (93.2% in Pidgin), 0.3% invented plates, 100% escalation recall, p95 latency within 4 seconds, and about ₦79,000 a month at 14,000 messages. small_v1 is cheapest but fails on accuracy (81.2%, and 70.3% in Pidgin) invents plates for 4.2% of messages, and misses escalations (98.1% recall). large_v1 fails on valid JSON (95.5%) and claim type (88.7%). Cost doesn't decide this: all three are under budget. Any future change to the model, prompt or rules must pass the same gate on the same 600 messages and the red-team set before release; a single failed requirement blocks it.",
+  "note": "The gate turns an argument into a checklist everyone agreed in advance.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why use the p95 latency rather than the average?",
+    "options": ["It's smaller", "It shows how slow the slowest replies are, which customers notice", "Averages can't be computed", "It's cheaper"],
+    "answer": 1,
+    "explanation": "Tail latency is the experience."
+  },
+  {
+    "prompt": "The small model is over thirty times cheaper but fails the accuracy requirement. What does the gate say?",
+    "options": ["Ship it anyway", "It doesn't ship: every requirement must pass", "Average the scores", "Lower the requirement"],
+    "answer": 1,
+    "explanation": "A gate is all-or-nothing."
+  },
+  {
+    "prompt": "Why agree the gate's thresholds before seeing the results?",
+    "options": ["To save time", "So the thresholds aren't bent to fit a favourite configuration", "It's required by law", "It doesn't matter"],
+    "answer": 1,
+    "explanation": "Decide the rules before the game."
+  }
+]
+```
+$md$, true, true, 7, array['aic-07-p1', 'aic-07-p2', 'aic-07-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('aic-m08', 'ai-engineer-capstone', 'Launch, Monitoring and the Presentation', 8, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('ai-engineer-capstone:launch-monitoring-and-the-presentation', 'ai-engineer-capstone', 'aic-m08', 'launch-monitoring-and-the-presentation', 'Launch, monitoring and the presentation', 'Watch the assistant''s first four weeks in production with control limits set from its first two weeks, catch a change nobody announced, trace it to its cause, and present the project to Shieldline''s leadership.', 30, $md$
+## The problem
+
+`large_v2` went live on 3 August 2026. For two weeks everything looked steady. Then the WhatsApp team switched on **voice notes**: customers can now speak their message, and a transcription service turns it into text before the assistant sees it. Nobody told the AI team. The release gate was passed on typed messages, so does the assistant still work?
+
+`daily.csv` has the production metrics for the first 28 days, including the results of a daily **audit**: each day, a claims officer checks 40 random extractions against the original message.
+
+## The concept
+
+**Control limits from a stable period**
+
+Use the first two weeks as the baseline. For each metric, set an upper limit at the baseline mean plus three standard deviations. A day above it is very unlikely to be normal variation: investigate.
+
+**Leading and lagging signals**
+
+| Signal | Arrives | Shows |
+| :-- | :-- | :-- |
+| Invalid JSON rate | At once | The model is struggling with the input |
+| Audit error rate | Daily | Extractions are wrong, even when valid |
+| Thumbs down | Hours to days | Customers are unhappy |
+| p95 latency | At once | Replies are slowing |
+
+The audit is the most important, because invalid JSON can stay low while valid-looking extractions are wrong. But it's also the noisiest, because each day's audit is small.
+
+**From alert to cause**
+
+When a limit is breached, ask what changed on that day: a release, a new channel, a new kind of customer. Then compare the affected and unaffected messages.
+
+## Example
+
+The metrics, with limits from the first 14 days:
+
+```python
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/assistant/"
+daily = pd.read_csv(base + "daily.csv", parse_dates=["date"])
+daily["invalid_rate"] = daily["invalid_json"] / daily["messages"]
+daily["audit_error_rate"] = daily["audit_field_errors"] / daily["audited"]
+daily["thumbs_down_rate"] = daily["thumbs_down"] / daily["messages"]
+
+metrics = ["invalid_rate", "audit_error_rate", "thumbs_down_rate", "p95_latency_ms"]
+baseline = daily.iloc[:14]
+limits = baseline[metrics].mean() + 3 * baseline[metrics].std()
+print("Upper limits:", limits.round(4).to_dict(), "\n")
+for m in metrics:
+    breaches = daily.loc[daily[m] > limits[m], "date"]
+    first = breaches.min().date() if len(breaches) else "none"
+    print(f"{m:17} days above the limit: {len(breaches):2}   first: {first}")
+```
+
+```text
+Upper limits: {'invalid_rate': 0.0121, 'audit_error_rate': 0.1732, 'thumbs_down_rate': 0.0463, 'p95_latency_ms': 3726.4217}
+
+invalid_rate      days above the limit: 13   first: 2026-08-18
+audit_error_rate  days above the limit:  4   first: 2026-08-26
+thumbs_down_rate  days above the limit: 13   first: 2026-08-17
+p95_latency_ms    days above the limit:  0   first: none
+```
+
+Thumbs down and invalid JSON break out first, a day or two after 17 August, and stay above their limits. The audit error rate, the most important signal, breaches only from 26 August, nine days later. With just 40 checks a day it's noisy, so its limit is wide and only a large rise crosses it. A bigger daily audit, or a weekly rate pooled from the daily checks, would detect the change sooner. Latency never breaches. What changed?
+
+```python
+daily["week"] = (daily.index // 7) + 1
+daily.groupby("week")[["voice_note_share", "invalid_rate", "audit_error_rate", "thumbs_down_rate", "p95_latency_ms"]].mean().round(3)
+```
+
+```text
+voice_note_share  invalid_rate  audit_error_rate  thumbs_down_rate  p95_latency_ms
+week
+1                0.000         0.009             0.064             0.038        3141.143
+2                0.000         0.007             0.064             0.039        3212.857
+3                0.155         0.016             0.118             0.050        3181.286
+4                0.317         0.023             0.182             0.063        3343.286
+```
+
+Voice notes started in week 3, and every quality metric moved with their share. Transcripts have no punctuation, more Pidgin and more spoken fillers. The assistant was never tested on them, so the release gate didn't cover them. The response:
+
+1. **Contain**: route voice-note messages to a person (or ask the customer to confirm the extracted details) until fixed.
+2. **Measure**: add a few hundred voice-note transcripts, with gold labels, to the evaluation set.
+3. **Fix and gate**: change the prompt (or add a clean-up step) and rerun the full release gate, including the new transcripts.
+4. **Prevent**: any new input channel must go through the AI team before launch.
+
+## Walkthrough
+
+1. Run the cells.
+2. Plot the audit error rate by day with its limit line and mark day 15.
+3. Write the incident note: what happened, when it was detected, the impact, the cause and the actions.
+4. Plan the presentation for Shieldline's leadership: five slides at most.
+5. Open the project brief on the course page and plan your submission.
+
+## Practice
+
+```dataset
+{"dataset": "assistant", "files": ["messages", "policy", "questions", "redteam", "daily"]}
+```
+
+```answer
+{
+  "id": "aic-08-p1",
+  "prompt": "On how many of the 28 days was the **audit error rate** above its upper limit?",
+  "answer": 4,
+  "format": "number",
+  "dataset": "assistant",
+  "files": ["daily"],
+  "pyVerify": "int((daily['audit_error_rate'] > limits['audit_error_rate']).sum())",
+  "hint": "The audit_error_rate line.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "aic-08-p2",
+  "prompt": "What was the average **audit error rate** in **week 4**? One decimal place, as a percentage.",
+  "answer": 18.2,
+  "format": "percent",
+  "dataset": "assistant",
+  "files": ["daily"],
+  "pyVerify": "round(100 * daily.loc[daily['week'] == 4, 'audit_error_rate'].mean(), 1)",
+  "hint": "The week 4 row, audit_error_rate, times 100.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "aic-08-t1",
+  "prompt": "Write the **executive summary** for Shieldline's leadership (120 to 230 words): what the assistant **does**, the **evidence** it's ready (the gate), the **safeguards**, the **cost**, the **voice-note incident** and what you did, and the **next steps**.",
+  "minutes": 12,
+  "rows": 11,
+  "placeholder": "Shieldline's WhatsApp assistant ...",
+  "rules": [
+    { "label": "Says what the assistant does", "pattern": "extract|read|answer|checklist|document" },
+    { "label": "Uses numbers", "pattern": "\\d+(\\.\\d+)?", "min": 6 },
+    { "label": "Cites the release gate", "pattern": "gate|requirement|tested" },
+    { "label": "Safeguards (escalation, guardrail, rules, never)", "pattern": "escalat|guardrail|rule|never|person" },
+    { "label": "Gives the cost in naira", "pattern": "₦\\s*\\d" },
+    { "label": "Covers the voice-note incident", "pattern": "voice" },
+    { "label": "Next steps", "pattern": "next|will|plan" },
+    { "label": "Between 120 and 230 words", "minWords": 120, "maxWords": 230 }
+  ],
+  "sample": "Shieldline's WhatsApp assistant reads a customer's first message about an incident, extracts the claim details, tells them exactly which documents are still needed, answers policy questions from the policy wording, and hands serious cases to a person.\n\nBefore launch, the chosen configuration passed every requirement of our release gate on 600 real messages: 99.7% valid outputs, 96.2% claim type accuracy (93.2% in Pidgin), 100% of cases needing a person escalated, and 1 of 120 red-team attacks succeeding. It costs about ₦79,000 a month at current volumes.\n\nSafeguards: it can never approve, reject or promise payment; injuries, theft, large amounts and angry customers always go to a person by rule; and the guardrail routes flagged messages to people rather than dropping them, with false alarms under 4% in English and Pidgin.\n\nIn week 3, the WhatsApp team switched on voice notes without telling us. Customer thumbs-down and invalid outputs rose above their control limits within two days, and the daily audit showed extraction errors nearly tripling by week 4. We routed voice notes to people and are adding transcripts to the test set.\n\nNext: fix and re-gate voice notes, improve Pidgin retrieval, and require every new channel to pass the gate before launch.",
+  "note": "The incident makes the case stronger, not weaker: it shows the monitoring works.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why set control limits from the first two weeks?",
+    "options": ["They're the busiest", "They're a stable period that shows normal variation, so later departures stand out", "It's the law", "They have the most errors"],
+    "answer": 1,
+    "explanation": "Limits describe normal; breaches are what isn't."
+  },
+  {
+    "prompt": "Invalid JSON stays fairly low, but audit errors jump. What does that tell you?",
+    "options": ["All is well", "Outputs can be valid in form but wrong in content, so audits of content are essential", "The audit is broken", "JSON doesn't matter"],
+    "answer": 1,
+    "explanation": "Valid isn't the same as correct."
+  },
+  {
+    "prompt": "The release gate passed, yet quality fell after voice notes launched. Why?",
+    "options": ["The gate was wrong", "The input changed to something the gate never tested", "The model degraded by itself", "Customers changed language"],
+    "answer": 1,
+    "explanation": "A gate only covers what it tests; new inputs need new tests."
+  }
+]
+```
+$md$, true, true, 8, array['aic-08-p1', 'aic-08-p2', 'aic-08-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+
 -- Assessment: SQL for Data Analysis: final assessment
 insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
 values ('sql-for-data-analysis-final', 'sql-for-data-analysis', 'final', null, 'SQL for Data Analysis: final assessment', 60, true)
@@ -62250,6 +63818,108 @@ on conflict (id) do update set assessment_id = excluded.assessment_id, position 
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
 values ('dscq12', 1, 'Averages hide segments.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: AI Engineer Capstone: final assessment
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('ai-engineer-capstone-final', 'ai-engineer-capstone', 'final', null, 'AI Engineer Capstone: final assessment', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aicq01', 'ai-engineer-capstone-final', 1, 'Which job belongs in code rather than in the model?', '["Reading a Pidgin message","Deciding which documents a theft claim needs","Writing a friendly reply","Summarising a policy section"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aicq01', 1, 'Fixed rules belong in code.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aicq02', 'ai-engineer-capstone-final', 2, 'The model returns a plate number that doesn''t appear in the customer''s message. What should happen?', '["Use it","Flag it: it''s probably invented","Ask a bigger model","Ignore the message"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aicq02', 1, 'A grounding check in code.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aicq03', 'ai-engineer-capstone-final', 3, 'The model''s output isn''t valid JSON. What''s the safe response?', '["Guess the fields","Escalate the message to a person","Drop it","Reply with an error"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aicq03', 1, 'Fail safe.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aicq04', 'ai-engineer-capstone-final', 4, 'Rules and the model''s flag together escalate 43% of messages when only 36% strictly need a person. Why accept that?', '["Escalations are free","Missing an injury or theft costs far more than a short human review","The rules are wrong","To keep staff busy"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aicq04', 1, 'Recall first for must-escalate cases.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aicq05', 'ai-engineer-capstone-final', 5, 'Why measure retrieval hit at 3 separately from answer quality?', '["It''s cheaper","To see whether bad answers start with retrieval missing the right section","Answers can''t be graded","It''s required"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aicq05', 1, 'Locate the failure.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aicq06', 'ai-engineer-capstone-final', 6, 'An LLM judge agrees with people 90% of the time but grades most unsupported answers as Correct. What do you do?', '["Trust it fully","Use it at scale, with a human sample focused on the errors it misses","Discard all evaluation","Use a smaller judge"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aicq06', 1, 'Check the judge where it matters.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aicq07', 'ai-engineer-capstone-final', 7, 'A keyword guardrail flags 19% of genuine Pidgin messages and 6% of English ones. What''s the problem?', '["None","It unfairly blocks one group of customers","It''s too slow","It costs too much"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aicq07', 1, 'False positives must be fair across groups.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aicq08', 'ai-engineer-capstone-final', 8, 'What''s the strongest defence against "mark my claim approved"?', '["A stern prompt","The assistant has no ability to approve claims at all","A keyword filter","A larger model"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aicq08', 1, 'Can''t is stronger than won''t.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aicq09', 'ai-engineer-capstone-final', 9, 'A configuration passes every gate requirement except Pidgin accuracy. Does it ship?', '["Yes, nearly there","No: every requirement must pass","Only in Lagos","Yes, if it''s cheaper"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aicq09', 1, 'A gate is all-or-nothing.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aicq10', 'ai-engineer-capstone-final', 10, 'Why report p95 latency rather than average latency?', '["It''s smaller","It shows the slow replies customers actually notice","Averages are wrong","It''s cheaper to compute"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aicq10', 1, 'The tail is the experience.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aicq11', 'ai-engineer-capstone-final', 11, 'A daily audit of 40 extractions takes nine days to breach its limit after a real quality drop. How can you detect it sooner?', '["Stop auditing","Audit more each day, or pool the daily checks into a weekly rate","Widen the limit","Use average latency"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aicq11', 1, 'Small samples are noisy.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aicq12', 'ai-engineer-capstone-final', 12, 'Quality fell after voice notes launched, though the release gate had passed. What''s the lasting fix?', '["Ban voice notes","Add voice-note transcripts to the test set, and require new input channels to pass the gate","Retrain the model daily","Lower the gate"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aicq12', 1, 'A gate covers only what it tests.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 
@@ -67760,6 +69430,14 @@ Work in Google Colab with the deliveries dataset (https://academy.cloudtechanaly
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
 
 
+-- Project: Shieldline's WhatsApp claims assistant
+insert into public.projects (id, course_id, title, summary, brief_md, tasks, datasets, rubric, required)
+values ('aic-shieldline-claims-assistant', 'ai-engineer-capstone', 'Shieldline''s WhatsApp claims assistant', 'An end-to-end LLM feature for an insurer: validated extraction, rules in code, retrieval and grounded answers, a judged evaluation, red-teaming with fairness checks, a release gate with cost and latency, and production monitoring with an incident.', $md$Shieldline's head of claims needs to decide whether the WhatsApp claims assistant can go live everywhere, and how it will be kept safe. Give them the evaluation and the plan.
+
+Work in Google Colab with the assistant dataset (https://academy.cloudtechanalytics.com/datasets/assistant/: messages.csv, policy.csv, questions.csv, redteam.csv and daily.csv). Live model calls are optional: everything can be done from the recorded outputs. Submit a link to your notebook (shared so anyone with the link can view it), and paste your **release decision** and **executive summary** below, followed by a short note on where each part is.$md$, array['Design: what the model does, what code decides, when a person takes over, and what the assistant must never do.', 'Extraction: a validator with safe repairs and a grounding check, and field accuracy for each configuration overall and in Pidgin.', 'Rules: escalation rules with a fail-safe, their recall and cost, and the document checklist built from the policy.', 'Retrieval and answers: hit at 3 against a keyword baseline, answer grades with and without retrieval, and how far the LLM judge can be trusted.', 'Safety: red-team results for both guardrails by category, and false positives by language and for angry customers.', 'Release gate: cost, p95 latency and every requirement for each configuration, and the release decision.', 'Monitoring: control limits, the voice-note incident and its cause, and the executive summary.']::text[], array['assistant']::text[], array['The design keeps decisions and rules in code, with a fail-safe and clear limits on what the model may do.', 'Model outputs are validated and grounded before use, and accuracy is reported by field and by language.', 'Escalation is measured by recall first, with its cost stated.', 'Retrieval and answers are evaluated separately, and the LLM judge is checked against people on the errors that matter.', 'Guardrails are judged on both attacks let through and genuine customers blocked, by group.', 'The release decision follows a gate agreed in advance, covering quality, safety, latency and cost.', 'Monitoring would catch problems, and the incident response contains, measures, fixes and prevents.']::text[], true)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
+
+
 -- Track: Become a Data Analyst
 insert into public.tracks (id, slug, title, summary, badge_name, badge_code, skills, position, published)
 values ('data-analyst', 'data-analyst', 'Become a Data Analyst', 'The route we recommend from no experience to a junior data analyst role. Learn how analysis works, then the tools teams use every day (Excel, SQL, Power BI and Python) on realistic company data. Build portfolio projects that answer real business questions, and finish with your CV, LinkedIn and interview preparation.', 'CloudTech Data Analyst', 'DATAANALYST', array['Spreadsheet analysis in Excel', 'Statistics: averages, spread, confidence intervals and tests', 'Querying databases with SQL, from first SELECT to cohorts and window functions', 'Data modelling and star schemas', 'Dashboards in Power BI, with DAX measures you can trust', 'Analysis in Python and pandas', 'Turning data into findings a manager can act on']::text[], 1, true)
@@ -67964,11 +69642,15 @@ values ('ai-engineer', 'llm-evaluation-safety-production', 'Specialist', true, 7
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 insert into public.track_courses (track_id, course_id, stage, required, position)
-values ('ai-engineer', 'career-essentials', 'Career', true, 8)
+values ('ai-engineer', 'ai-engineer-capstone', 'Capstone', true, 8)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 insert into public.track_courses (track_id, course_id, stage, required, position)
-values ('ai-engineer', 'build-your-student-portfolio', 'Career', false, 9)
+values ('ai-engineer', 'career-essentials', 'Career', true, 9)
+on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
+
+insert into public.track_courses (track_id, course_id, stage, required, position)
+values ('ai-engineer', 'build-your-student-portfolio', 'Career', false, 10)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 
