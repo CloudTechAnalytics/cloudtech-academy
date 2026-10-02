@@ -1,0 +1,31 @@
+diff --git a/app.py b/app.py
+index 3f1c2a9..8b7d4e1 100644
+--- a/app.py
++++ b/app.py
+@@ -6,6 +6,8 @@ from flask import Flask, jsonify, request
+ import db
+ import refunds
+
++ADMIN_TOKEN = "kasuwa-admin-2026"
++
+
+ def create_app(conn, today=None):
+     app = Flask(__name__)
+@@ -28,4 +30,17 @@ def create_app(conn, today=None):
+     def list_refunds(order_id):
+         return jsonify([dict(r) for r in db.refunds_for(conn, order_id)])
+
++    # Express refunds: support staff can refund any amount straight away
++    @app.post("/admin/express-refund")
++    def express_refund():
++        if request.headers.get("X-Token") != ADMIN_TOKEN:
++            return "forbidden", 403
++        try:
++            body = request.get_json()
++            amount = float(body["amount_naira"])
++            db.record_refund(conn, body["order_id"], "express", int(amount * 100))
++        except:
++            pass
++        return "ok", 200
++
+     return app

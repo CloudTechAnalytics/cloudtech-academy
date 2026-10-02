@@ -6,7 +6,7 @@ import { SITE } from "@/lib/site";
 const HOST = SITE.url.replace(/^https?:\/\//, "");
 
 export type BadgeData = {
-  kind: "module_badge" | "course_completion" | "project_badge";
+  kind: "module_badge" | "course_completion" | "track_completion" | "project_badge";
   badgeName: string;
   courseTitle: string;
   icon: LucideIcon;
@@ -21,6 +21,7 @@ export type BadgeData = {
 const MEDAL = {
   module_badge: ["#D2AE66", "#8C6A2C"],
   course_completion: ["#DDBB74", "#7A5C24"],
+  track_completion: ["#DDBB74", "#7A5C24"],
   project_badge: ["#6B7F95", "#2B3A4C"],
 } as const;
 
@@ -43,7 +44,9 @@ export const BadgeArtwork = forwardRef<SVGSVGElement, { data: BadgeData; classNa
   const sans = "Inter, 'Segoe UI', Arial, sans-serif";
   const mono = "'Cascadia Code', Consolas, 'Courier New', monospace";
   const Icon = data.icon;
-  const completion = data.kind === "course_completion";
+  // Course and track completions share the richer frame; project badges have their own medal colour.
+  const completion = data.kind === "course_completion" || data.kind === "track_completion";
+  const track = data.kind === "track_completion";
   const project = data.kind === "project_badge";
   const cx = S / 2;
   const cy = 430;
@@ -89,7 +92,7 @@ export const BadgeArtwork = forwardRef<SVGSVGElement, { data: BadgeData; classNa
       <circle cx={cx} cy={cy} r="180" fill="none" stroke="#FFFFFF" strokeOpacity="0.35" strokeWidth="3" />
       <Icon x={cx - 84} y={cy - 104} width={168} height={168} color="#FFFFFF" strokeWidth={1.6} />
       <text x={cx} y={cy + 122} textAnchor="middle" fontFamily={sans} fontSize="20" fontWeight="700" letterSpacing="6" fill="#FFFFFF" fillOpacity="0.9">
-        {completion ? "COURSE COMPLETION" : project ? "PROJECT BADGE" : "MODULE BADGE"}
+        {track ? "CAREER TRACK" : completion ? "COURSE COMPLETION" : project ? "PROJECT BADGE" : "MODULE BADGE"}
       </text>
 
       {/* Ribbon with the badge name */}
@@ -103,11 +106,13 @@ export const BadgeArtwork = forwardRef<SVGSVGElement, { data: BadgeData; classNa
           ? data.reviewed
             ? "Practice project · Reviewed by CloudTech"
             : "Practice project"
-          : completion
-            ? data.badgeName === data.courseTitle
-              ? "Course completion credential"
-              : data.courseTitle
-            : `Module of ${data.courseTitle}`}
+          : track
+            ? data.courseTitle
+            : completion
+              ? data.badgeName === data.courseTitle
+                ? "Course completion credential"
+                : data.courseTitle
+              : `Module of ${data.courseTitle}`}
       </text>
 
       {earned ? (

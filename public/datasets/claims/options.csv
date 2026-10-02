@@ -1,0 +1,4 @@
+option_id,option,description,one_off_cost_ngn,annual_running_cost_ngn,months_to_deliver,supplier_estimate_days_saved
+O1,Do nothing,Keep the current process and system.,0,0,0,
+O2,Fix the process,"Document checklist app for agents and phone staff, photo assessment for windscreens, assessor approval up to ₦1m for windscreen and accident claims, and SMS status updates.",42000000,12000000,4,
+O3,New claims system,"Replace the claims system with a vendor package including a customer portal, workflow and the O2 changes.",280000000,60000000,14,18

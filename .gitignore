@@ -4,3 +4,6 @@ dist
 .env
 *.log
 *.tsbuildinfo
+
+# Practice logs for the Linux course are course content, not build logs.
+!public/datasets/linux/*.log

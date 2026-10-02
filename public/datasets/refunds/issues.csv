@@ -1,0 +1,7 @@
+issue_id,opened_on,reported_by,title,description,order_id
+ISSUE-101,2026-09-15,Customer support,Refund is a kobo short,"Order K-1001: one T-shirt pack at ₦2,499.99, returned damaged. The customer was refunded ₦3,999.98 but expected ₦3,999.99 (₦2,499.99 plus the ₦1,500 delivery fee).",K-1001
+ISSUE-102,2026-09-16,Finance,Customer refunded twice,Order K-1002 was refunded twice for the same shoes. The customer says the app froze and they tapped Submit again.,K-1002
+ISSUE-103,2026-09-16,Customer support,Return on day 14 rejected,"Order K-1003 was delivered on 1 September. The customer asked to return it on 15 September, within the 14 days on our website, and was told it was outside the return window.",K-1003
+ISSUE-104,2026-09-17,Security review,Order search shows other customers' orders,Typing ' OR '1'='1 into the support tool's email search returns every order in the system.,
+ISSUE-105,2026-09-18,Finance,Refunds add up to more than the order,"Order K-1005 was returned in two parts, both damaged. Each refund included the ₦3,000 delivery fee, so the customer got the fee back twice.",K-1005
+ISSUE-106,2026-09-18,Mobile team,Server error for a missing order,Requesting a refund for an order that doesn't exist returns a 500 error instead of a clear message.,

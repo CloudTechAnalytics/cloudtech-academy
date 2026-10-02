@@ -93,6 +93,33 @@ In a month, Kolanut delivered **1,240** orders. **62** arrived later than promis
 }
 ```
 
+
+## More practice
+
+Optional drills. They don't count towards the certificate, but each one checks you can apply the lesson to a new situation.
+
+```answer
+{
+  "id": "daf-02-d1",
+  "prompt": "Kolanut had **80** active customers last year and **90** this year. What is the customer growth rate? One decimal place.",
+  "answer": 12.5,
+  "format": "percent",
+  "hint": "(new − old) ÷ old × 100.",
+  "required": false
+}
+```
+
+```answer
+{
+  "id": "daf-02-d2",
+  "prompt": "A warehouse shipped **2,400** orders and **36** came back as returns. What is the return rate? One decimal place.",
+  "answer": 1.5,
+  "format": "percent",
+  "hint": "Returns ÷ orders × 100.",
+  "required": false
+}
+```
+
 ## Check your understanding
 
 ```quiz

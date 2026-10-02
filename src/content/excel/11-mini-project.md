@@ -1,6 +1,6 @@
 ---
 title: "Mini project: what do discounts cost?"
-minutes: 45
+minutes: 15
 summary: A guided analysis of Kolanut's discounts from question to recommendation, using everything in the course.
 ---
 
@@ -97,6 +97,44 @@ Discounts cost ₦29.1m, **3.4% of gross sales**, and nearly nine naira in ten o
   "verify": "SELECT ROUND(AVG(o.quantity), 1) FROM orders o JOIN customers c ON c.customer_id = o.customer_id WHERE c.channel = 'Wholesale' AND o.discount_pct = 0",
   "hint": "Same as before with discount_pct = 0.",
   "explanation": "Discounted and full-price wholesale lines are almost the same size. In this data, discounts don't appear to buy bigger orders, which is worth raising with the finance manager.",
+  "required": false
+}
+```
+
+
+## More practice
+
+Optional drills. They don't count towards the certificate, but they're the fastest way to make this lesson stick. Several use a different dataset from the lesson on purpose: if you can do the same thing on unfamiliar data, you've really learned it.
+
+```answer
+{
+  "id": "xls-11-d1",
+  "prompt": "On order lines that **had** a discount, what was the **average discount_pct**? One decimal place.",
+  "answer": 6.5,
+  "format": "number",
+  "dataset": "sales",
+  "files": [
+    "orders"
+  ],
+  "verify": "SELECT ROUND(AVG(discount_pct), 1) FROM orders WHERE discount_pct > 0",
+  "hint": "=AVERAGEIF(Orders[discount_pct], \">0\")",
+  "required": false
+}
+```
+
+```answer
+{
+  "id": "xls-11-d2",
+  "prompt": "What share of all revenue came from Kolanut's **10 biggest customers**? One decimal place.",
+  "answer": 44.6,
+  "format": "percent",
+  "dataset": "sales",
+  "files": [
+    "orders"
+  ],
+  "verify": "SELECT ROUND(100.0 * (SELECT SUM(t) FROM (SELECT SUM(quantity * unit_price * (1 - discount_pct / 100.0)) AS t FROM orders GROUP BY customer_id ORDER BY t DESC LIMIT 10)) / SUM(quantity * unit_price * (1 - discount_pct / 100.0)), 1) FROM orders",
+  "hint": "Pivot revenue by customer, sort descending, add up the top 10 and divide by the grand total.",
+  "explanation": "A useful number for any business: how much depends on a handful of customers.",
   "required": false
 }
 ```

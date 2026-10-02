@@ -71,7 +71,7 @@ export function ShareMenu({ credential, art }: Props) {
           </button>
         )}
       </div>
-      {(credential.kind === "course_completion" || credential.kind === "project_badge") && (
+      {credential.kind !== "module_badge" && (
         <a href={linkedInAddToProfile({ ...credential, issuedAt: credential.issuedAt })} target="_blank" rel="noopener noreferrer" className={`mt-3 ${buttonClass("ghost")} px-0`}>
           Add to your LinkedIn profile (Licences & certifications) →
         </a>

@@ -1,6 +1,6 @@
 ---
 title: Power Query
-minutes: 35
+minutes: 20
 summary: Shape data with Power Query - applied steps, types, custom columns, merges - and profile columns to spot problems.
 ---
 
@@ -110,6 +110,44 @@ You don't have to type that: the Custom Column dialog writes it. In the dialog y
   "verify": "SELECT SUM(o.quantity) FROM orders o JOIN products p ON p.product_id = o.product_id WHERE p.category = 'Snacks'",
   "hint": "Table or card visual with Sum of quantity, filtered to category = Snacks.",
   "required": true
+}
+```
+
+
+## More practice
+
+Optional drills. They don't count towards the certificate, but they're the fastest way to make this lesson stick. Several use a different dataset from the lesson on purpose: if you can do the same thing on unfamiliar data, you've really learned it.
+
+```answer
+{
+  "id": "pbi-04-d1",
+  "prompt": "In Power Query, merge `category` from products into orders. What is total revenue from **Personal care**?",
+  "answer": 235483370,
+  "format": "naira",
+  "dataset": "sales",
+  "files": [
+    "orders",
+    "products"
+  ],
+  "verify": "SELECT SUM(o.quantity * o.unit_price * (1 - o.discount_pct / 100.0)) FROM orders o JOIN products p ON p.product_id = o.product_id WHERE p.category = 'Personal care'",
+  "hint": "Merge Queries on product_id, expand category, then filter it in a visual.",
+  "required": false
+}
+```
+
+```answer
+{
+  "id": "pbi-04-d2",
+  "prompt": "In Power Query, filter the HR `leave.csv` to **approved = Yes** only. How many leave **days** remain in total?",
+  "answer": 570,
+  "format": "number",
+  "dataset": "hr",
+  "files": [
+    "leave"
+  ],
+  "verify": "SELECT SUM(days) FROM leave WHERE approved = 'Yes'",
+  "hint": "Filter the approved column in Power Query, Close & Apply, then a Card with Sum of days.",
+  "required": false
 }
 ```
 

@@ -1,3 +1,4 @@
+import { credentialKindLabel } from "@/lib/badges";
 import { useState } from "react";
 import { Link } from "react-router";
 import { getBackend } from "@/lib/backend";
@@ -88,7 +89,7 @@ export default function AdminCredentials() {
                     {c.badgeName}
                     <span className="block text-[0.75rem] text-muted">{c.courseTitle}</span>
                   </td>
-                  <td className="whitespace-nowrap">{c.kind === "course_completion" ? "Course completion" : c.kind === "project_badge" ? "Project badge" : "Module badge"}</td>
+                  <td className="whitespace-nowrap">{credentialKindLabel(c.kind)}</td>
                   <td>{c.recipientName}</td>
                   <td className="whitespace-nowrap">{formatDate(c.issuedAt)}</td>
                   <td>

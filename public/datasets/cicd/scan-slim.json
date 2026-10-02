@@ -1,0 +1,822 @@
+{
+  "SchemaVersion": 2,
+  "CreatedAt": "2026-09-01T08:00:00Z",
+  "ArtifactName": "tallybook-web:slim",
+  "ArtifactType": "container_image",
+  "Results": [
+    {
+      "Target": "tallybook-web:slim (debian 12.6)",
+      "Class": "os-pkgs",
+      "Type": "debian",
+      "Vulnerabilities": [
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0397",
+          "PkgName": "libexpat1",
+          "InstalledVersion": "8.18.10-3",
+          "FixedVersion": "7.18.38-4",
+          "Severity": "CRITICAL",
+          "Title": "libexpat1: improper input validation"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0398",
+          "PkgName": "libsqlite3-0",
+          "InstalledVersion": "4.16.18-3",
+          "FixedVersion": "3.19.59-4",
+          "Severity": "HIGH",
+          "Title": "libsqlite3-0: improper input validation"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0399",
+          "PkgName": "perl-base",
+          "InstalledVersion": "4.9.1-4",
+          "FixedVersion": "",
+          "Severity": "HIGH",
+          "Title": "perl-base: integer overflow"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0400",
+          "PkgName": "gnupg",
+          "InstalledVersion": "4.2.26-1",
+          "FixedVersion": "5.12.60-1",
+          "Severity": "HIGH",
+          "Title": "gnupg: denial of service"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0401",
+          "PkgName": "tar",
+          "InstalledVersion": "3.15.23-1",
+          "FixedVersion": "",
+          "Severity": "HIGH",
+          "Title": "tar: denial of service"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0402",
+          "PkgName": "tar",
+          "InstalledVersion": "5.14.24-2",
+          "FixedVersion": "9.10.45-4",
+          "Severity": "HIGH",
+          "Title": "tar: improper input validation"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0403",
+          "PkgName": "python3.11",
+          "InstalledVersion": "7.15.26-1",
+          "FixedVersion": "5.15.37-3",
+          "Severity": "HIGH",
+          "Title": "python3.11: out-of-bounds read"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0404",
+          "PkgName": "curl",
+          "InstalledVersion": "1.7.3-2",
+          "FixedVersion": "",
+          "Severity": "HIGH",
+          "Title": "curl: improper input validation"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0405",
+          "PkgName": "libxml2",
+          "InstalledVersion": "6.16.4-3",
+          "FixedVersion": "3.12.59-2",
+          "Severity": "HIGH",
+          "Title": "libxml2: buffer overflow"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0406",
+          "PkgName": "libxml2",
+          "InstalledVersion": "2.17.19-2",
+          "FixedVersion": "",
+          "Severity": "MEDIUM",
+          "Title": "libxml2: denial of service"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0407",
+          "PkgName": "curl",
+          "InstalledVersion": "4.7.11-1",
+          "FixedVersion": "",
+          "Severity": "MEDIUM",
+          "Title": "curl: use after free"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0408",
+          "PkgName": "zlib1g",
+          "InstalledVersion": "6.10.20-2",
+          "FixedVersion": "",
+          "Severity": "MEDIUM",
+          "Title": "zlib1g: buffer overflow"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0409",
+          "PkgName": "perl-base",
+          "InstalledVersion": "2.11.17-2",
+          "FixedVersion": "",
+          "Severity": "MEDIUM",
+          "Title": "perl-base: denial of service"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0410",
+          "PkgName": "git",
+          "InstalledVersion": "1.6.22-1",
+          "FixedVersion": "",
+          "Severity": "MEDIUM",
+          "Title": "git: buffer overflow"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0411",
+          "PkgName": "libkrb5-3",
+          "InstalledVersion": "9.2.9-3",
+          "FixedVersion": "",
+          "Severity": "MEDIUM",
+          "Title": "libkrb5-3: improper input validation"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0412",
+          "PkgName": "libsqlite3-0",
+          "InstalledVersion": "2.9.14-3",
+          "FixedVersion": "",
+          "Severity": "MEDIUM",
+          "Title": "libsqlite3-0: buffer overflow"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0413",
+          "PkgName": "libcurl4",
+          "InstalledVersion": "8.19.29-1",
+          "FixedVersion": "",
+          "Severity": "MEDIUM",
+          "Title": "libcurl4: denial of service"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0414",
+          "PkgName": "git",
+          "InstalledVersion": "7.14.4-4",
+          "FixedVersion": "",
+          "Severity": "MEDIUM",
+          "Title": "git: out-of-bounds read"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0415",
+          "PkgName": "libxml2",
+          "InstalledVersion": "9.10.30-3",
+          "FixedVersion": "5.18.60-4",
+          "Severity": "MEDIUM",
+          "Title": "libxml2: out-of-bounds read"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0416",
+          "PkgName": "libssl3",
+          "InstalledVersion": "6.19.15-2",
+          "FixedVersion": "",
+          "Severity": "MEDIUM",
+          "Title": "libssl3: buffer overflow"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0417",
+          "PkgName": "libc6",
+          "InstalledVersion": "1.3.11-1",
+          "FixedVersion": "",
+          "Severity": "MEDIUM",
+          "Title": "libc6: improper input validation"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0418",
+          "PkgName": "libssl3",
+          "InstalledVersion": "5.4.2-2",
+          "FixedVersion": "",
+          "Severity": "MEDIUM",
+          "Title": "libssl3: use after free"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0419",
+          "PkgName": "zlib1g",
+          "InstalledVersion": "6.18.26-3",
+          "FixedVersion": "",
+          "Severity": "MEDIUM",
+          "Title": "zlib1g: improper input validation"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0420",
+          "PkgName": "libexpat1",
+          "InstalledVersion": "3.15.23-1",
+          "FixedVersion": "3.4.33-2",
+          "Severity": "MEDIUM",
+          "Title": "libexpat1: integer overflow"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0421",
+          "PkgName": "perl-base",
+          "InstalledVersion": "4.7.22-2",
+          "FixedVersion": "9.16.45-1",
+          "Severity": "MEDIUM",
+          "Title": "perl-base: integer overflow"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0422",
+          "PkgName": "libsqlite3-0",
+          "InstalledVersion": "4.6.4-3",
+          "FixedVersion": "",
+          "Severity": "MEDIUM",
+          "Title": "libsqlite3-0: integer overflow"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0423",
+          "PkgName": "libexpat1",
+          "InstalledVersion": "2.8.15-3",
+          "FixedVersion": "4.3.33-3",
+          "Severity": "MEDIUM",
+          "Title": "libexpat1: improper input validation"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0424",
+          "PkgName": "python3.11",
+          "InstalledVersion": "8.0.11-4",
+          "FixedVersion": "",
+          "Severity": "MEDIUM",
+          "Title": "python3.11: out-of-bounds read"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0425",
+          "PkgName": "imagemagick",
+          "InstalledVersion": "8.2.19-4",
+          "FixedVersion": "7.10.35-3",
+          "Severity": "MEDIUM",
+          "Title": "imagemagick: buffer overflow"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0426",
+          "PkgName": "curl",
+          "InstalledVersion": "4.10.22-2",
+          "FixedVersion": "7.1.45-4",
+          "Severity": "MEDIUM",
+          "Title": "curl: integer overflow"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0427",
+          "PkgName": "perl-base",
+          "InstalledVersion": "2.15.5-4",
+          "FixedVersion": "",
+          "Severity": "MEDIUM",
+          "Title": "perl-base: integer overflow"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0428",
+          "PkgName": "libsqlite3-0",
+          "InstalledVersion": "2.16.17-1",
+          "FixedVersion": "",
+          "Severity": "MEDIUM",
+          "Title": "libsqlite3-0: buffer overflow"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0429",
+          "PkgName": "libsqlite3-0",
+          "InstalledVersion": "8.18.29-1",
+          "FixedVersion": "",
+          "Severity": "MEDIUM",
+          "Title": "libsqlite3-0: integer overflow"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0430",
+          "PkgName": "libexpat1",
+          "InstalledVersion": "1.4.6-2",
+          "FixedVersion": "6.9.38-4",
+          "Severity": "MEDIUM",
+          "Title": "libexpat1: denial of service"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0431",
+          "PkgName": "libssl3",
+          "InstalledVersion": "9.19.20-4",
+          "FixedVersion": "",
+          "Severity": "MEDIUM",
+          "Title": "libssl3: use after free"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0432",
+          "PkgName": "libexpat1",
+          "InstalledVersion": "6.18.17-3",
+          "FixedVersion": "4.4.47-1",
+          "Severity": "MEDIUM",
+          "Title": "libexpat1: improper input validation"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0433",
+          "PkgName": "curl",
+          "InstalledVersion": "7.5.25-2",
+          "FixedVersion": "9.2.45-1",
+          "Severity": "LOW",
+          "Title": "curl: buffer overflow"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0434",
+          "PkgName": "libxml2",
+          "InstalledVersion": "8.10.1-1",
+          "FixedVersion": "",
+          "Severity": "LOW",
+          "Title": "libxml2: denial of service"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0435",
+          "PkgName": "zlib1g",
+          "InstalledVersion": "3.0.3-3",
+          "FixedVersion": "1.3.56-4",
+          "Severity": "LOW",
+          "Title": "zlib1g: improper input validation"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0436",
+          "PkgName": "libkrb5-3",
+          "InstalledVersion": "9.13.5-1",
+          "FixedVersion": "",
+          "Severity": "LOW",
+          "Title": "libkrb5-3: out-of-bounds read"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0437",
+          "PkgName": "libcurl4",
+          "InstalledVersion": "5.15.2-1",
+          "FixedVersion": "5.2.60-4",
+          "Severity": "LOW",
+          "Title": "libcurl4: improper input validation"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0438",
+          "PkgName": "git",
+          "InstalledVersion": "7.2.13-3",
+          "FixedVersion": "2.9.45-3",
+          "Severity": "LOW",
+          "Title": "git: integer overflow"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0439",
+          "PkgName": "libc6",
+          "InstalledVersion": "2.0.7-4",
+          "FixedVersion": "",
+          "Severity": "LOW",
+          "Title": "libc6: out-of-bounds read"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0440",
+          "PkgName": "libkrb5-3",
+          "InstalledVersion": "6.14.20-3",
+          "FixedVersion": "",
+          "Severity": "LOW",
+          "Title": "libkrb5-3: integer overflow"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0441",
+          "PkgName": "curl",
+          "InstalledVersion": "1.10.7-1",
+          "FixedVersion": "",
+          "Severity": "LOW",
+          "Title": "curl: use after free"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0442",
+          "PkgName": "perl-base",
+          "InstalledVersion": "3.7.20-2",
+          "FixedVersion": "",
+          "Severity": "LOW",
+          "Title": "perl-base: out-of-bounds read"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0443",
+          "PkgName": "tar",
+          "InstalledVersion": "8.15.27-4",
+          "FixedVersion": "",
+          "Severity": "LOW",
+          "Title": "tar: buffer overflow"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0444",
+          "PkgName": "perl-base",
+          "InstalledVersion": "7.13.24-3",
+          "FixedVersion": "",
+          "Severity": "LOW",
+          "Title": "perl-base: out-of-bounds read"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0445",
+          "PkgName": "libxml2",
+          "InstalledVersion": "4.19.9-2",
+          "FixedVersion": "",
+          "Severity": "LOW",
+          "Title": "libxml2: denial of service"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0446",
+          "PkgName": "libxml2",
+          "InstalledVersion": "1.15.6-1",
+          "FixedVersion": "",
+          "Severity": "LOW",
+          "Title": "libxml2: out-of-bounds read"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0447",
+          "PkgName": "python3.11",
+          "InstalledVersion": "6.9.17-2",
+          "FixedVersion": "2.13.33-3",
+          "Severity": "LOW",
+          "Title": "python3.11: use after free"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0448",
+          "PkgName": "zlib1g",
+          "InstalledVersion": "5.1.2-2",
+          "FixedVersion": "",
+          "Severity": "LOW",
+          "Title": "zlib1g: integer overflow"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0449",
+          "PkgName": "tar",
+          "InstalledVersion": "1.6.8-3",
+          "FixedVersion": "1.8.58-1",
+          "Severity": "LOW",
+          "Title": "tar: buffer overflow"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0450",
+          "PkgName": "openssl",
+          "InstalledVersion": "6.20.24-1",
+          "FixedVersion": "",
+          "Severity": "LOW",
+          "Title": "openssl: improper input validation"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0451",
+          "PkgName": "curl",
+          "InstalledVersion": "6.19.25-1",
+          "FixedVersion": "1.9.33-4",
+          "Severity": "LOW",
+          "Title": "curl: out-of-bounds read"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0452",
+          "PkgName": "git",
+          "InstalledVersion": "2.3.29-1",
+          "FixedVersion": "6.17.48-1",
+          "Severity": "LOW",
+          "Title": "git: improper input validation"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0453",
+          "PkgName": "curl",
+          "InstalledVersion": "7.16.6-2",
+          "FixedVersion": "",
+          "Severity": "LOW",
+          "Title": "curl: buffer overflow"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0454",
+          "PkgName": "libc6",
+          "InstalledVersion": "1.10.19-3",
+          "FixedVersion": "",
+          "Severity": "LOW",
+          "Title": "libc6: denial of service"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0455",
+          "PkgName": "curl",
+          "InstalledVersion": "4.4.23-4",
+          "FixedVersion": "5.9.59-3",
+          "Severity": "LOW",
+          "Title": "curl: buffer overflow"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0456",
+          "PkgName": "libkrb5-3",
+          "InstalledVersion": "1.16.25-1",
+          "FixedVersion": "",
+          "Severity": "LOW",
+          "Title": "libkrb5-3: denial of service"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0457",
+          "PkgName": "git",
+          "InstalledVersion": "4.12.29-1",
+          "FixedVersion": "6.7.36-4",
+          "Severity": "LOW",
+          "Title": "git: out-of-bounds read"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0458",
+          "PkgName": "gnupg",
+          "InstalledVersion": "9.13.9-2",
+          "FixedVersion": "",
+          "Severity": "LOW",
+          "Title": "gnupg: denial of service"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0459",
+          "PkgName": "libsqlite3-0",
+          "InstalledVersion": "6.3.0-2",
+          "FixedVersion": "",
+          "Severity": "LOW",
+          "Title": "libsqlite3-0: use after free"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0460",
+          "PkgName": "gnupg",
+          "InstalledVersion": "7.19.24-4",
+          "FixedVersion": "",
+          "Severity": "LOW",
+          "Title": "gnupg: denial of service"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0461",
+          "PkgName": "perl-base",
+          "InstalledVersion": "8.12.28-3",
+          "FixedVersion": "5.13.36-3",
+          "Severity": "LOW",
+          "Title": "perl-base: improper input validation"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0462",
+          "PkgName": "libexpat1",
+          "InstalledVersion": "3.4.23-4",
+          "FixedVersion": "",
+          "Severity": "LOW",
+          "Title": "libexpat1: denial of service"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0463",
+          "PkgName": "libkrb5-3",
+          "InstalledVersion": "9.1.20-1",
+          "FixedVersion": "1.17.42-1",
+          "Severity": "LOW",
+          "Title": "libkrb5-3: out-of-bounds read"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0464",
+          "PkgName": "perl-base",
+          "InstalledVersion": "2.15.13-3",
+          "FixedVersion": "",
+          "Severity": "LOW",
+          "Title": "perl-base: integer overflow"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0465",
+          "PkgName": "libsqlite3-0",
+          "InstalledVersion": "1.16.21-3",
+          "FixedVersion": "",
+          "Severity": "LOW",
+          "Title": "libsqlite3-0: denial of service"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0466",
+          "PkgName": "libkrb5-3",
+          "InstalledVersion": "6.2.30-4",
+          "FixedVersion": "",
+          "Severity": "LOW",
+          "Title": "libkrb5-3: improper input validation"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0467",
+          "PkgName": "libsqlite3-0",
+          "InstalledVersion": "5.19.15-3",
+          "FixedVersion": "6.13.46-2",
+          "Severity": "LOW",
+          "Title": "libsqlite3-0: improper input validation"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0468",
+          "PkgName": "imagemagick",
+          "InstalledVersion": "3.14.23-4",
+          "FixedVersion": "",
+          "Severity": "LOW",
+          "Title": "imagemagick: integer overflow"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0469",
+          "PkgName": "libkrb5-3",
+          "InstalledVersion": "8.1.1-4",
+          "FixedVersion": "",
+          "Severity": "LOW",
+          "Title": "libkrb5-3: use after free"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0470",
+          "PkgName": "curl",
+          "InstalledVersion": "1.8.13-2",
+          "FixedVersion": "5.11.50-3",
+          "Severity": "LOW",
+          "Title": "curl: integer overflow"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0471",
+          "PkgName": "libcurl4",
+          "InstalledVersion": "8.16.20-1",
+          "FixedVersion": "",
+          "Severity": "LOW",
+          "Title": "libcurl4: improper input validation"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0472",
+          "PkgName": "libssl3",
+          "InstalledVersion": "1.16.14-4",
+          "FixedVersion": "1.19.32-2",
+          "Severity": "LOW",
+          "Title": "libssl3: use after free"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0473",
+          "PkgName": "git",
+          "InstalledVersion": "8.15.21-4",
+          "FixedVersion": "4.6.44-1",
+          "Severity": "LOW",
+          "Title": "git: improper input validation"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0474",
+          "PkgName": "git",
+          "InstalledVersion": "7.8.19-1",
+          "FixedVersion": "",
+          "Severity": "LOW",
+          "Title": "git: improper input validation"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0475",
+          "PkgName": "zlib1g",
+          "InstalledVersion": "7.7.6-4",
+          "FixedVersion": "5.19.58-1",
+          "Severity": "LOW",
+          "Title": "zlib1g: out-of-bounds read"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0476",
+          "PkgName": "libssl3",
+          "InstalledVersion": "1.14.28-2",
+          "FixedVersion": "",
+          "Severity": "LOW",
+          "Title": "libssl3: integer overflow"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0477",
+          "PkgName": "libxml2",
+          "InstalledVersion": "3.18.2-2",
+          "FixedVersion": "",
+          "Severity": "LOW",
+          "Title": "libxml2: buffer overflow"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0478",
+          "PkgName": "zlib1g",
+          "InstalledVersion": "6.18.20-3",
+          "FixedVersion": "",
+          "Severity": "LOW",
+          "Title": "zlib1g: buffer overflow"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0479",
+          "PkgName": "curl",
+          "InstalledVersion": "8.6.10-4",
+          "FixedVersion": "",
+          "Severity": "LOW",
+          "Title": "curl: buffer overflow"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0480",
+          "PkgName": "libexpat1",
+          "InstalledVersion": "5.20.21-1",
+          "FixedVersion": "5.10.42-1",
+          "Severity": "LOW",
+          "Title": "libexpat1: out-of-bounds read"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0481",
+          "PkgName": "libsqlite3-0",
+          "InstalledVersion": "1.19.18-4",
+          "FixedVersion": "4.16.53-2",
+          "Severity": "LOW",
+          "Title": "libsqlite3-0: buffer overflow"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0482",
+          "PkgName": "libc6",
+          "InstalledVersion": "5.11.3-3",
+          "FixedVersion": "",
+          "Severity": "LOW",
+          "Title": "libc6: buffer overflow"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0483",
+          "PkgName": "libc6",
+          "InstalledVersion": "7.0.7-4",
+          "FixedVersion": "",
+          "Severity": "LOW",
+          "Title": "libc6: use after free"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0484",
+          "PkgName": "openssl",
+          "InstalledVersion": "9.17.3-2",
+          "FixedVersion": "3.15.54-2",
+          "Severity": "LOW",
+          "Title": "openssl: improper input validation"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0485",
+          "PkgName": "libkrb5-3",
+          "InstalledVersion": "1.17.24-4",
+          "FixedVersion": "3.19.41-2",
+          "Severity": "LOW",
+          "Title": "libkrb5-3: improper input validation"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0486",
+          "PkgName": "zlib1g",
+          "InstalledVersion": "6.20.2-2",
+          "FixedVersion": "",
+          "Severity": "LOW",
+          "Title": "zlib1g: denial of service"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0487",
+          "PkgName": "libc6",
+          "InstalledVersion": "6.7.28-4",
+          "FixedVersion": "8.6.49-4",
+          "Severity": "LOW",
+          "Title": "libc6: buffer overflow"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0488",
+          "PkgName": "libcurl4",
+          "InstalledVersion": "5.1.9-1",
+          "FixedVersion": "",
+          "Severity": "LOW",
+          "Title": "libcurl4: integer overflow"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0489",
+          "PkgName": "gnupg",
+          "InstalledVersion": "7.20.11-1",
+          "FixedVersion": "2.16.54-1",
+          "Severity": "LOW",
+          "Title": "gnupg: use after free"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0490",
+          "PkgName": "libc6",
+          "InstalledVersion": "9.4.28-4",
+          "FixedVersion": "",
+          "Severity": "LOW",
+          "Title": "libc6: improper input validation"
+        }
+      ]
+    },
+    {
+      "Target": "Node.js",
+      "Class": "lang-pkgs",
+      "Type": "node-pkg",
+      "Vulnerabilities": [
+        {
+          "VulnerabilityID": "EXAMPLE-2026-A1",
+          "PkgName": "jsonwebtoken",
+          "InstalledVersion": "8.5.1",
+          "FixedVersion": "9.0.0",
+          "Severity": "CRITICAL",
+          "Title": "jsonwebtoken: Signature verification can be bypassed with a crafted token"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-A2",
+          "PkgName": "express",
+          "InstalledVersion": "4.17.1",
+          "FixedVersion": "4.19.2",
+          "Severity": "MEDIUM",
+          "Title": "express: Open redirect in malformed URLs"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-A3",
+          "PkgName": "axios",
+          "InstalledVersion": "0.21.1",
+          "FixedVersion": "1.6.0",
+          "Severity": "HIGH",
+          "Title": "axios: Server-side request forgery through absolute URLs"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-A4",
+          "PkgName": "lodash",
+          "InstalledVersion": "4.17.15",
+          "FixedVersion": "4.17.21",
+          "Severity": "HIGH",
+          "Title": "lodash: Command injection through template"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-A5",
+          "PkgName": "semver",
+          "InstalledVersion": "5.7.1",
+          "FixedVersion": "5.7.2",
+          "Severity": "MEDIUM",
+          "Title": "semver: Regular expression denial of service"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-A6",
+          "PkgName": "multer",
+          "InstalledVersion": "1.4.2",
+          "FixedVersion": "",
+          "Severity": "LOW",
+          "Title": "multer: Uncontrolled resource consumption on large uploads"
+        }
+      ]
+    }
+  ]
+}

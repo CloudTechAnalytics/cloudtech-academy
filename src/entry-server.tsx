@@ -7,6 +7,7 @@ import { sitewideJsonLd } from "./lib/schema";
 import { publishedLessons } from "./lib/certificates";
 import { BUNDLED_COURSES } from "./content";
 import { PRACTICE_PROJECTS } from "./content/projects";
+import { TRACKS } from "./content/tracks";
 import { SITE } from "./lib/site";
 
 const courses = BUNDLED_COURSES.filter((c) => c.published);
@@ -18,7 +19,8 @@ export const ROUTES = [
   ...courses.map((c) => `/courses/${c.slug}`),
   ...courses.flatMap((c) => publishedLessons(c).map((l) => `/learn/${c.slug}/${l.slug}`)),
   "/students",
-  "/paths",
+  "/tracks",
+  ...TRACKS.map((t) => `/tracks/${t.slug}`),
   "/projects",
   ...PRACTICE_PROJECTS.map((p) => `/projects/${p.id}`),
   "/certificates",

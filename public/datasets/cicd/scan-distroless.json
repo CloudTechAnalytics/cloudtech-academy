@@ -1,0 +1,118 @@
+{
+  "SchemaVersion": 2,
+  "CreatedAt": "2026-09-01T08:00:00Z",
+  "ArtifactName": "tallybook-web:distroless",
+  "ArtifactType": "container_image",
+  "Results": [
+    {
+      "Target": "tallybook-web:distroless (debian 12.6)",
+      "Class": "os-pkgs",
+      "Type": "debian",
+      "Vulnerabilities": [
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0501",
+          "PkgName": "libcurl4",
+          "InstalledVersion": "9.17.17-2",
+          "FixedVersion": "",
+          "Severity": "HIGH",
+          "Title": "libcurl4: integer overflow"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0502",
+          "PkgName": "python3.11",
+          "InstalledVersion": "8.14.23-3",
+          "FixedVersion": "",
+          "Severity": "MEDIUM",
+          "Title": "python3.11: use after free"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0503",
+          "PkgName": "libssl3",
+          "InstalledVersion": "5.2.8-1",
+          "FixedVersion": "3.6.54-2",
+          "Severity": "MEDIUM",
+          "Title": "libssl3: denial of service"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0504",
+          "PkgName": "gnupg",
+          "InstalledVersion": "5.7.20-3",
+          "FixedVersion": "7.5.56-3",
+          "Severity": "MEDIUM",
+          "Title": "gnupg: denial of service"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0505",
+          "PkgName": "libexpat1",
+          "InstalledVersion": "1.16.7-2",
+          "FixedVersion": "",
+          "Severity": "LOW",
+          "Title": "libexpat1: improper input validation"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0506",
+          "PkgName": "libcurl4",
+          "InstalledVersion": "5.4.6-2",
+          "FixedVersion": "",
+          "Severity": "LOW",
+          "Title": "libcurl4: improper input validation"
+        }
+      ]
+    },
+    {
+      "Target": "Node.js",
+      "Class": "lang-pkgs",
+      "Type": "node-pkg",
+      "Vulnerabilities": [
+        {
+          "VulnerabilityID": "EXAMPLE-2026-A1",
+          "PkgName": "jsonwebtoken",
+          "InstalledVersion": "8.5.1",
+          "FixedVersion": "9.0.0",
+          "Severity": "CRITICAL",
+          "Title": "jsonwebtoken: Signature verification can be bypassed with a crafted token"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-A2",
+          "PkgName": "express",
+          "InstalledVersion": "4.17.1",
+          "FixedVersion": "4.19.2",
+          "Severity": "MEDIUM",
+          "Title": "express: Open redirect in malformed URLs"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-A3",
+          "PkgName": "axios",
+          "InstalledVersion": "0.21.1",
+          "FixedVersion": "1.6.0",
+          "Severity": "HIGH",
+          "Title": "axios: Server-side request forgery through absolute URLs"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-A4",
+          "PkgName": "lodash",
+          "InstalledVersion": "4.17.15",
+          "FixedVersion": "4.17.21",
+          "Severity": "HIGH",
+          "Title": "lodash: Command injection through template"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-A5",
+          "PkgName": "semver",
+          "InstalledVersion": "5.7.1",
+          "FixedVersion": "5.7.2",
+          "Severity": "MEDIUM",
+          "Title": "semver: Regular expression denial of service"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-A6",
+          "PkgName": "multer",
+          "InstalledVersion": "1.4.2",
+          "FixedVersion": "",
+          "Severity": "LOW",
+          "Title": "multer: Uncontrolled resource consumption on large uploads"
+        }
+      ]
+    }
+  ]
+}

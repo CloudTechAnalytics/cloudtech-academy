@@ -56,8 +56,42 @@ Focus on **what you learned and who helped**, rather than how great you are. "I'
 
 ## Try it
 
-1. Pick one project or badge from your portfolio.
-2. Write a post using the four parts: hook, story, result, thanks and a question.
-3. Add one image and 3–5 hashtags.
-4. Read the first two lines alone: would you click "see more"? If not, rewrite the hook.
-5. Post it, or save it as a draft to post this week.
+Here are two opening lines for the same post. Only the first two lines show before "…see more".
+
+- **A.** *I am very pleased and honoured to announce that I have successfully completed yet another course on my learning journey.*
+- **B.** *I just built my first sales dashboard, and it found something I didn't expect.*
+
+```answer
+{
+  "id": "portf-m04-a1",
+  "prompt": "Which opening is the stronger hook? Type the letter.",
+  "answer": "B",
+  "format": "text",
+  "accept": ["b.", "(b)"],
+  "explanation": "B is specific and makes you curious about what it found. A is about the poster, not the work, and says nothing anyone would click for.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "portf-m04-t1",
+  "prompt": "Write a LinkedIn post about one project or badge from your portfolio, with the four parts: a **hook** in the first line, the **story** (what you did and learned), a **result or proof** with a number, and **thanks plus a question**. End with 3 to 5 hashtags.",
+  "minutes": 12,
+  "rows": 12,
+  "placeholder": "Hook...\n\nWhat I did...\nWhat I learned...\n\nThanks to ... Question?\n#tag #tag #tag",
+  "rules": [
+    { "label": "A short hook on the first line (under 20 words)", "pattern": "(?<![\\s\\S])\\s*(\\S+[ \\t]+){0,19}\\S+[ \\t]*\\n" },
+    { "label": "Says what you learned", "pattern": "learn|taught me|lesson|realised|realized|discovered|found out" },
+    { "label": "Includes a number or result", "pattern": "\\d" },
+    { "label": "Asks readers a question", "pattern": "\\?" },
+    { "label": "3 to 5 hashtags", "pattern": "#\\w+", "min": 3 },
+    { "label": "Not more than 5 hashtags", "pattern": "(#\\w+[^#]*){6}", "absent": true },
+    { "label": "Honest and humble: no \"humbled and honoured\" or \"another milestone\"", "pattern": "humbled|honou?red to announce|another milestone|yet another", "absent": true }
+  ],
+  "sample": "I just built my first sales dashboard, and it found something I didn't expect.\n\nFor the CloudTech Academy Power BI course, I analysed 4,000 orders from a (fictional) drinks distributor. Revenue grew 19%, but one region's sales nearly halved.\n\nWhat I learned:\n→ Clean data first: half my time was fixing dates and duplicates.\n→ The interesting finding is usually in the breakdown, not the total.\n\nThanks to my study group for testing it with me. Which do you use for analysis: Excel or Power BI?\n#PowerBI #DataAnalytics #StudentProject",
+  "required": true
+}
+```
+
+Read your first two lines on their own: would you click "see more"? If not, rewrite the hook. Then post it, or schedule it for this week. If it's about a CloudTech badge, use the badge's **Share on LinkedIn** button so the post links to your verifiable credential.

@@ -1,0 +1,14 @@
+rule_id,group,direction,protocol,port_from,port_to,source,description
+R01,web-servers,inbound,tcp,443,443,0.0.0.0/0,HTTPS from anywhere
+R02,web-servers,inbound,tcp,80,80,0.0.0.0/0,HTTP from anywhere (redirects to HTTPS)
+R03,web-servers,inbound,tcp,22,22,0.0.0.0/0,"SSH - temporary, for the 2025 migration"
+R04,web-servers,inbound,tcp,22,22,102.89.34.0/28,SSH from the office
+R05,web-servers,inbound,tcp,22,22,10.0.2.0/24,SSH from the deployment network
+R06,web-servers,inbound,tcp,3000,3001,10.0.1.0/24,App ports from the load balancer
+R07,web-servers,inbound,tcp,9100,9100,10.0.3.0/24,Monitoring
+R08,admin-panel,inbound,tcp,8080,8080,0.0.0.0/0,Admin panel
+R09,database,inbound,tcp,5432,5432,10.0.0.0/16,Postgres from inside the network
+R10,database,inbound,tcp,5432,5432,0.0.0.0/0,Postgres - for the reporting tool
+R11,database,inbound,tcp,22,22,102.89.34.0/28,SSH from the office
+R12,web-servers,outbound,all,0,65535,0.0.0.0/0,All outbound traffic
+R13,cache,inbound,tcp,6379,6379,10.0.0.0/16,Redis from inside the network

@@ -1,6 +1,6 @@
 ---
 title: Business storytelling
-minutes: 30
+minutes: 15
 summary: Turn a report into an argument - context, finding, cause and recommendation - with titles, annotations, bookmarks and navigation.
 ---
 
@@ -82,6 +82,28 @@ Buttons at the bottom of each page move to the next.
   "verify": "SELECT SUM(CASE WHEN o.order_date <= '2025-06-30' THEN o.quantity * o.unit_price * (1 - o.discount_pct / 100.0) ELSE 0 END) - SUM(CASE WHEN o.order_date >= '2026-01-01' THEN o.quantity * o.unit_price * (1 - o.discount_pct / 100.0) ELSE 0 END) FROM orders o JOIN customers c ON c.customer_id = o.customer_id WHERE c.region = 'North West'",
   "required": true,
   "hint": "Compare North West revenue for January–June 2025 with January–June 2026, then subtract."
+}
+```
+
+
+## More practice
+
+Optional drills. They don't count towards the certificate, but they're the fastest way to make this lesson stick. Several use a different dataset from the lesson on purpose: if you can do the same thing on unfamiliar data, you've really learned it.
+
+```answer
+{
+  "id": "pbi-12-d1",
+  "prompt": "Which **channel** grew the most **in naira** from H1 2025 to H1 2026?",
+  "answer": "Wholesale",
+  "format": "text",
+  "dataset": "sales",
+  "files": [
+    "orders",
+    "customers"
+  ],
+  "verify": "SELECT c.channel FROM orders o JOIN customers c ON c.customer_id = o.customer_id GROUP BY c.channel ORDER BY SUM(CASE WHEN o.order_date BETWEEN '2026-01-01' AND '2026-06-30' THEN o.quantity * o.unit_price * (1 - o.discount_pct / 100.0) ELSE 0 END) - SUM(CASE WHEN o.order_date BETWEEN '2025-01-01' AND '2025-06-30' THEN o.quantity * o.unit_price * (1 - o.discount_pct / 100.0) ELSE 0 END) DESC LIMIT 1",
+  "hint": "A matrix of channel by half-year, plus a measure for the difference.",
+  "required": false
 }
 ```
 

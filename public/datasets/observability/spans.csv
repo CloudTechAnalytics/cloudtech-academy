@@ -1,0 +1,886 @@
+trace_id,span_id,parent_span_id,window,captured_at,service,operation,start_ms,duration_ms,status
+e3fff170c7c40f05,s00001,,normal,2026-08-31 08:30,web,GET /api/invoices,0,106,ok
+e3fff170c7c40f05,s00002,s00001,normal,2026-08-31 08:30,api,GET /invoices,2,98,ok
+e3fff170c7c40f05,s00003,s00002,normal,2026-08-31 08:30,db,acquire connection,5,7,ok
+e3fff170c7c40f05,s00004,s00002,normal,2026-08-31 08:30,db,SELECT invoices,12,84,ok
+85e49af5b4194cc4,s00005,,normal,2026-08-31 08:30,web,GET /api/dashboard,0,73,ok
+85e49af5b4194cc4,s00006,s00005,normal,2026-08-31 08:30,api,GET /dashboard,2,65,ok
+85e49af5b4194cc4,s00007,s00006,normal,2026-08-31 08:30,db,acquire connection,5,2,ok
+85e49af5b4194cc4,s00008,s00006,normal,2026-08-31 08:30,db,SELECT invoices,7,56,ok
+76f7cf49e75c092d,s00009,,normal,2026-08-31 08:30,web,GET /api/dashboard,0,93,ok
+76f7cf49e75c092d,s00010,s00009,normal,2026-08-31 08:30,api,GET /dashboard,2,85,ok
+76f7cf49e75c092d,s00011,s00010,normal,2026-08-31 08:30,db,acquire connection,5,5,ok
+76f7cf49e75c092d,s00012,s00010,normal,2026-08-31 08:30,db,SELECT invoices,10,73,ok
+031735b24586e100,s00013,,normal,2026-08-31 08:30,web,GET /api/invoices,0,77,ok
+031735b24586e100,s00014,s00013,normal,2026-08-31 08:30,api,GET /invoices,2,69,ok
+031735b24586e100,s00015,s00014,normal,2026-08-31 08:30,db,acquire connection,5,4,ok
+031735b24586e100,s00016,s00014,normal,2026-08-31 08:30,db,SELECT invoices,9,58,ok
+df3b3fd78bdec483,s00017,,normal,2026-08-31 08:30,web,POST /api/invoices/send,0,447,ok
+df3b3fd78bdec483,s00018,s00017,normal,2026-08-31 08:30,api,POST /invoices/send,2,439,ok
+df3b3fd78bdec483,s00019,s00018,normal,2026-08-31 08:30,db,acquire connection,5,2,ok
+df3b3fd78bdec483,s00020,s00018,normal,2026-08-31 08:30,db,"SELECT invoice, lines, customer",7,52,ok
+df3b3fd78bdec483,s00021,s00018,normal,2026-08-31 08:30,api,render invoice pdf,59,139,ok
+df3b3fd78bdec483,s00022,s00018,normal,2026-08-31 08:30,email-provider,POST /v3/mail/send,229,208,ok
+1ca474f9cb961e97,s00023,,normal,2026-08-31 08:30,web,GET /api/dashboard,0,95,ok
+1ca474f9cb961e97,s00024,s00023,normal,2026-08-31 08:30,api,GET /dashboard,2,87,ok
+1ca474f9cb961e97,s00025,s00024,normal,2026-08-31 08:30,db,acquire connection,5,8,ok
+1ca474f9cb961e97,s00026,s00024,normal,2026-08-31 08:30,db,SELECT invoices,13,72,ok
+a1125fc50df60439,s00027,,normal,2026-08-31 08:30,web,POST /api/invoices/send,0,382,ok
+a1125fc50df60439,s00028,s00027,normal,2026-08-31 08:30,api,POST /invoices/send,2,374,ok
+a1125fc50df60439,s00029,s00028,normal,2026-08-31 08:30,db,acquire connection,5,5,ok
+a1125fc50df60439,s00030,s00028,normal,2026-08-31 08:30,db,"SELECT invoice, lines, customer",10,60,ok
+a1125fc50df60439,s00031,s00028,normal,2026-08-31 08:30,api,render invoice pdf,70,133,ok
+a1125fc50df60439,s00032,s00028,normal,2026-08-31 08:30,email-provider,POST /v3/mail/send,240,132,ok
+4c40ca0f77f818e3,s00033,,normal,2026-08-31 08:30,web,POST /api/invoices/send,0,524,ok
+4c40ca0f77f818e3,s00034,s00033,normal,2026-08-31 08:30,api,POST /invoices/send,2,516,ok
+4c40ca0f77f818e3,s00035,s00034,normal,2026-08-31 08:30,db,acquire connection,5,3,ok
+4c40ca0f77f818e3,s00036,s00034,normal,2026-08-31 08:30,db,"SELECT invoice, lines, customer",8,84,ok
+4c40ca0f77f818e3,s00037,s00034,normal,2026-08-31 08:30,api,render invoice pdf,92,121,ok
+4c40ca0f77f818e3,s00038,s00034,normal,2026-08-31 08:30,email-provider,POST /v3/mail/send,262,252,ok
+c6b0050176d29eac,s00039,,normal,2026-08-31 08:30,web,GET /api/invoices,0,73,ok
+c6b0050176d29eac,s00040,s00039,normal,2026-08-31 08:30,api,GET /invoices,2,65,ok
+c6b0050176d29eac,s00041,s00040,normal,2026-08-31 08:30,db,acquire connection,5,8,ok
+c6b0050176d29eac,s00042,s00040,normal,2026-08-31 08:30,db,SELECT invoices,13,50,ok
+7d4b7d6d8ff44b48,s00043,,normal,2026-08-31 08:30,web,POST /api/invoices,0,96,ok
+7d4b7d6d8ff44b48,s00044,s00043,normal,2026-08-31 08:30,api,POST /invoices,2,88,ok
+7d4b7d6d8ff44b48,s00045,s00044,normal,2026-08-31 08:30,db,acquire connection,5,1,ok
+7d4b7d6d8ff44b48,s00046,s00044,normal,2026-08-31 08:30,db,SELECT invoices,6,80,ok
+929d44e03d84ca8a,s00047,,normal,2026-08-31 08:30,web,GET /api/invoices,0,76,ok
+929d44e03d84ca8a,s00048,s00047,normal,2026-08-31 08:30,api,GET /invoices,2,68,ok
+929d44e03d84ca8a,s00049,s00048,normal,2026-08-31 08:30,db,acquire connection,5,4,ok
+929d44e03d84ca8a,s00050,s00048,normal,2026-08-31 08:30,db,SELECT invoices,9,57,ok
+0577884e9620e1b2,s00051,,normal,2026-08-31 08:30,web,POST /api/invoices/send,0,382,ok
+0577884e9620e1b2,s00052,s00051,normal,2026-08-31 08:30,api,POST /invoices/send,2,374,ok
+0577884e9620e1b2,s00053,s00052,normal,2026-08-31 08:30,db,acquire connection,5,6,ok
+0577884e9620e1b2,s00054,s00052,normal,2026-08-31 08:30,db,"SELECT invoice, lines, customer",11,54,ok
+0577884e9620e1b2,s00055,s00052,normal,2026-08-31 08:30,api,render invoice pdf,65,126,ok
+0577884e9620e1b2,s00056,s00052,normal,2026-08-31 08:30,email-provider,POST /v3/mail/send,235,137,ok
+a934f314890df230,s00057,,normal,2026-08-31 08:30,web,POST /api/invoices,0,60,ok
+a934f314890df230,s00058,s00057,normal,2026-08-31 08:30,api,POST /invoices,2,52,ok
+a934f314890df230,s00059,s00058,normal,2026-08-31 08:30,db,acquire connection,5,8,ok
+a934f314890df230,s00060,s00058,normal,2026-08-31 08:30,db,SELECT invoices,13,37,ok
+1cb5c608c33cc8b2,s00061,,normal,2026-08-31 08:30,web,GET /api/invoices,0,66,ok
+1cb5c608c33cc8b2,s00062,s00061,normal,2026-08-31 08:30,api,GET /invoices,2,58,ok
+1cb5c608c33cc8b2,s00063,s00062,normal,2026-08-31 08:30,db,acquire connection,5,6,ok
+1cb5c608c33cc8b2,s00064,s00062,normal,2026-08-31 08:30,db,SELECT invoices,11,45,ok
+9810cc8fc9008cc2,s00065,,normal,2026-08-31 08:30,web,GET /api/dashboard,0,95,ok
+9810cc8fc9008cc2,s00066,s00065,normal,2026-08-31 08:30,api,GET /dashboard,2,87,ok
+9810cc8fc9008cc2,s00067,s00066,normal,2026-08-31 08:30,db,acquire connection,5,2,ok
+9810cc8fc9008cc2,s00068,s00066,normal,2026-08-31 08:30,db,SELECT invoices,7,78,ok
+43d7a6a815c5a95f,s00069,,normal,2026-08-31 08:30,web,POST /api/invoices,0,101,ok
+43d7a6a815c5a95f,s00070,s00069,normal,2026-08-31 08:30,api,POST /invoices,2,93,ok
+43d7a6a815c5a95f,s00071,s00070,normal,2026-08-31 08:30,db,acquire connection,5,6,ok
+43d7a6a815c5a95f,s00072,s00070,normal,2026-08-31 08:30,db,SELECT invoices,11,80,ok
+f4e58335be608619,s00073,,normal,2026-08-31 08:30,web,GET /api/invoices,0,56,ok
+f4e58335be608619,s00074,s00073,normal,2026-08-31 08:30,api,GET /invoices,2,48,ok
+f4e58335be608619,s00075,s00074,normal,2026-08-31 08:30,db,acquire connection,5,1,ok
+f4e58335be608619,s00076,s00074,normal,2026-08-31 08:30,db,SELECT invoices,6,40,ok
+62e933a72d0f1eb8,s00077,,normal,2026-08-31 08:30,web,GET /api/dashboard,0,76,ok
+62e933a72d0f1eb8,s00078,s00077,normal,2026-08-31 08:30,api,GET /dashboard,2,68,ok
+62e933a72d0f1eb8,s00079,s00078,normal,2026-08-31 08:30,db,acquire connection,5,3,ok
+62e933a72d0f1eb8,s00080,s00078,normal,2026-08-31 08:30,db,SELECT invoices,8,58,ok
+3e0953c61389ee2a,s00081,,normal,2026-08-31 08:30,web,POST /api/invoices/send,0,495,ok
+3e0953c61389ee2a,s00082,s00081,normal,2026-08-31 08:30,api,POST /invoices/send,2,487,ok
+3e0953c61389ee2a,s00083,s00082,normal,2026-08-31 08:30,db,acquire connection,5,4,ok
+3e0953c61389ee2a,s00084,s00082,normal,2026-08-31 08:30,db,"SELECT invoice, lines, customer",9,54,ok
+3e0953c61389ee2a,s00085,s00082,normal,2026-08-31 08:30,api,render invoice pdf,63,160,ok
+3e0953c61389ee2a,s00086,s00082,normal,2026-08-31 08:30,email-provider,POST /v3/mail/send,233,252,ok
+a11f4f243c46d100,s00087,,normal,2026-08-31 08:30,web,POST /api/invoices/send,0,363,ok
+a11f4f243c46d100,s00088,s00087,normal,2026-08-31 08:30,api,POST /invoices/send,2,355,ok
+a11f4f243c46d100,s00089,s00088,normal,2026-08-31 08:30,db,acquire connection,5,6,ok
+a11f4f243c46d100,s00090,s00088,normal,2026-08-31 08:30,db,"SELECT invoice, lines, customer",11,52,ok
+a11f4f243c46d100,s00091,s00088,normal,2026-08-31 08:30,api,render invoice pdf,63,139,ok
+a11f4f243c46d100,s00092,s00088,normal,2026-08-31 08:30,email-provider,POST /v3/mail/send,233,120,ok
+311f31ea7e7a6c69,s00093,,normal,2026-08-31 08:30,web,GET /api/dashboard,0,66,ok
+311f31ea7e7a6c69,s00094,s00093,normal,2026-08-31 08:30,api,GET /dashboard,2,58,ok
+311f31ea7e7a6c69,s00095,s00094,normal,2026-08-31 08:30,db,acquire connection,5,5,ok
+311f31ea7e7a6c69,s00096,s00094,normal,2026-08-31 08:30,db,SELECT invoices,10,46,ok
+905ca031c21c288d,s00097,,normal,2026-08-31 08:30,web,POST /api/invoices/send,0,427,ok
+905ca031c21c288d,s00098,s00097,normal,2026-08-31 08:30,api,POST /invoices/send,2,419,ok
+905ca031c21c288d,s00099,s00098,normal,2026-08-31 08:30,db,acquire connection,5,2,ok
+905ca031c21c288d,s00100,s00098,normal,2026-08-31 08:30,db,"SELECT invoice, lines, customer",7,88,ok
+905ca031c21c288d,s00101,s00098,normal,2026-08-31 08:30,api,render invoice pdf,95,130,ok
+905ca031c21c288d,s00102,s00098,normal,2026-08-31 08:30,email-provider,POST /v3/mail/send,265,152,ok
+9274d1a15389beb4,s00103,,normal,2026-08-31 08:30,web,GET /api/invoices,0,91,ok
+9274d1a15389beb4,s00104,s00103,normal,2026-08-31 08:30,api,GET /invoices,2,83,ok
+9274d1a15389beb4,s00105,s00104,normal,2026-08-31 08:30,db,acquire connection,5,4,ok
+9274d1a15389beb4,s00106,s00104,normal,2026-08-31 08:30,db,SELECT invoices,9,72,ok
+426eda6ec791d557,s00107,,normal,2026-08-31 08:30,web,GET /api/dashboard,0,101,ok
+426eda6ec791d557,s00108,s00107,normal,2026-08-31 08:30,api,GET /dashboard,2,93,ok
+426eda6ec791d557,s00109,s00108,normal,2026-08-31 08:30,db,acquire connection,5,2,ok
+426eda6ec791d557,s00110,s00108,normal,2026-08-31 08:30,db,SELECT invoices,7,84,ok
+5e1848b0c30395cb,s00111,,normal,2026-08-31 08:30,web,POST /api/invoices,0,70,ok
+5e1848b0c30395cb,s00112,s00111,normal,2026-08-31 08:30,api,POST /invoices,2,62,ok
+5e1848b0c30395cb,s00113,s00112,normal,2026-08-31 08:30,db,acquire connection,5,4,ok
+5e1848b0c30395cb,s00114,s00112,normal,2026-08-31 08:30,db,SELECT invoices,9,51,ok
+37dfd64617ad1294,s00115,,normal,2026-08-31 08:30,web,POST /api/invoices/send,0,466,ok
+37dfd64617ad1294,s00116,s00115,normal,2026-08-31 08:30,api,POST /invoices/send,2,458,ok
+37dfd64617ad1294,s00117,s00116,normal,2026-08-31 08:30,db,acquire connection,5,3,ok
+37dfd64617ad1294,s00118,s00116,normal,2026-08-31 08:30,db,"SELECT invoice, lines, customer",8,88,ok
+37dfd64617ad1294,s00119,s00116,normal,2026-08-31 08:30,api,render invoice pdf,96,103,ok
+37dfd64617ad1294,s00120,s00116,normal,2026-08-31 08:30,email-provider,POST /v3/mail/send,266,190,ok
+bc395b72f193ac0f,s00121,,normal,2026-08-31 08:30,web,GET /api/dashboard,0,62,ok
+bc395b72f193ac0f,s00122,s00121,normal,2026-08-31 08:30,api,GET /dashboard,2,54,ok
+bc395b72f193ac0f,s00123,s00122,normal,2026-08-31 08:30,db,acquire connection,5,2,ok
+bc395b72f193ac0f,s00124,s00122,normal,2026-08-31 08:30,db,SELECT invoices,7,45,ok
+85e0d44f05f50e97,s00125,,normal,2026-08-31 08:30,web,POST /api/invoices,0,48,ok
+85e0d44f05f50e97,s00126,s00125,normal,2026-08-31 08:30,api,POST /invoices,2,40,ok
+85e0d44f05f50e97,s00127,s00126,normal,2026-08-31 08:30,db,acquire connection,5,1,ok
+85e0d44f05f50e97,s00128,s00126,normal,2026-08-31 08:30,db,SELECT invoices,6,32,ok
+4913d896720d5025,s00129,,normal,2026-08-31 08:30,web,GET /api/invoices,0,98,ok
+4913d896720d5025,s00130,s00129,normal,2026-08-31 08:30,api,GET /invoices,2,90,ok
+4913d896720d5025,s00131,s00130,normal,2026-08-31 08:30,db,acquire connection,5,3,ok
+4913d896720d5025,s00132,s00130,normal,2026-08-31 08:30,db,SELECT invoices,8,80,ok
+31e9049676c19bd2,s00133,,normal,2026-08-31 08:30,web,GET /api/dashboard,0,73,ok
+31e9049676c19bd2,s00134,s00133,normal,2026-08-31 08:30,api,GET /dashboard,2,65,ok
+31e9049676c19bd2,s00135,s00134,normal,2026-08-31 08:30,db,acquire connection,5,3,ok
+31e9049676c19bd2,s00136,s00134,normal,2026-08-31 08:30,db,SELECT invoices,8,55,ok
+b32425cfe2582e01,s00137,,normal,2026-08-31 08:30,web,POST /api/invoices,0,66,ok
+b32425cfe2582e01,s00138,s00137,normal,2026-08-31 08:30,api,POST /invoices,2,58,ok
+b32425cfe2582e01,s00139,s00138,normal,2026-08-31 08:30,db,acquire connection,5,3,ok
+b32425cfe2582e01,s00140,s00138,normal,2026-08-31 08:30,db,SELECT invoices,8,48,ok
+fb8d584da14351fc,s00141,,normal,2026-08-31 08:30,web,GET /api/dashboard,0,99,ok
+fb8d584da14351fc,s00142,s00141,normal,2026-08-31 08:30,api,GET /dashboard,2,91,ok
+fb8d584da14351fc,s00143,s00142,normal,2026-08-31 08:30,db,acquire connection,5,5,ok
+fb8d584da14351fc,s00144,s00142,normal,2026-08-31 08:30,db,SELECT invoices,10,79,ok
+29b89bc5d12a3dc4,s00145,,normal,2026-08-31 08:30,web,POST /api/invoices,0,92,ok
+29b89bc5d12a3dc4,s00146,s00145,normal,2026-08-31 08:30,api,POST /invoices,2,84,ok
+29b89bc5d12a3dc4,s00147,s00146,normal,2026-08-31 08:30,db,acquire connection,5,2,ok
+29b89bc5d12a3dc4,s00148,s00146,normal,2026-08-31 08:30,db,SELECT invoices,7,75,ok
+9a1cd6a35b95460b,s00149,,normal,2026-08-31 08:30,web,POST /api/invoices/send,0,477,ok
+9a1cd6a35b95460b,s00150,s00149,normal,2026-08-31 08:30,api,POST /invoices/send,2,469,ok
+9a1cd6a35b95460b,s00151,s00150,normal,2026-08-31 08:30,db,acquire connection,5,6,ok
+9a1cd6a35b95460b,s00152,s00150,normal,2026-08-31 08:30,db,"SELECT invoice, lines, customer",11,58,ok
+9a1cd6a35b95460b,s00153,s00150,normal,2026-08-31 08:30,api,render invoice pdf,69,135,ok
+9a1cd6a35b95460b,s00154,s00150,normal,2026-08-31 08:30,email-provider,POST /v3/mail/send,239,228,ok
+7ba27da1d9a14b34,s00155,,normal,2026-08-31 08:30,web,POST /api/invoices/send,0,422,ok
+7ba27da1d9a14b34,s00156,s00155,normal,2026-08-31 08:30,api,POST /invoices/send,2,414,ok
+7ba27da1d9a14b34,s00157,s00156,normal,2026-08-31 08:30,db,acquire connection,5,8,ok
+7ba27da1d9a14b34,s00158,s00156,normal,2026-08-31 08:30,db,"SELECT invoice, lines, customer",13,50,ok
+7ba27da1d9a14b34,s00159,s00156,normal,2026-08-31 08:30,api,render invoice pdf,63,149,ok
+7ba27da1d9a14b34,s00160,s00156,normal,2026-08-31 08:30,email-provider,POST /v3/mail/send,233,179,ok
+5d3f8a300f3802e4,s00161,,normal,2026-08-31 08:30,web,POST /api/invoices/send,0,394,ok
+5d3f8a300f3802e4,s00162,s00161,normal,2026-08-31 08:30,api,POST /invoices/send,2,386,ok
+5d3f8a300f3802e4,s00163,s00162,normal,2026-08-31 08:30,db,acquire connection,5,5,ok
+5d3f8a300f3802e4,s00164,s00162,normal,2026-08-31 08:30,db,"SELECT invoice, lines, customer",10,68,ok
+5d3f8a300f3802e4,s00165,s00162,normal,2026-08-31 08:30,api,render invoice pdf,78,103,ok
+5d3f8a300f3802e4,s00166,s00162,normal,2026-08-31 08:30,email-provider,POST /v3/mail/send,248,136,ok
+bd0b1523f9eedb1e,s00167,,normal,2026-08-31 08:30,web,GET /api/dashboard,0,58,ok
+bd0b1523f9eedb1e,s00168,s00167,normal,2026-08-31 08:30,api,GET /dashboard,2,50,ok
+bd0b1523f9eedb1e,s00169,s00168,normal,2026-08-31 08:30,db,acquire connection,5,6,ok
+bd0b1523f9eedb1e,s00170,s00168,normal,2026-08-31 08:30,db,SELECT invoices,11,37,ok
+a2310169c2a8d341,s00171,,normal,2026-08-31 08:30,web,POST /api/invoices,0,61,ok
+a2310169c2a8d341,s00172,s00171,normal,2026-08-31 08:30,api,POST /invoices,2,53,ok
+a2310169c2a8d341,s00173,s00172,normal,2026-08-31 08:30,db,acquire connection,5,3,ok
+a2310169c2a8d341,s00174,s00172,normal,2026-08-31 08:30,db,SELECT invoices,8,43,ok
+69d3dbf5e4d0aca2,s00175,,normal,2026-08-31 08:30,web,POST /api/invoices/send,0,391,ok
+69d3dbf5e4d0aca2,s00176,s00175,normal,2026-08-31 08:30,api,POST /invoices/send,2,383,ok
+69d3dbf5e4d0aca2,s00177,s00176,normal,2026-08-31 08:30,db,acquire connection,5,1,ok
+69d3dbf5e4d0aca2,s00178,s00176,normal,2026-08-31 08:30,db,"SELECT invoice, lines, customer",6,46,ok
+69d3dbf5e4d0aca2,s00179,s00176,normal,2026-08-31 08:30,api,render invoice pdf,52,140,ok
+69d3dbf5e4d0aca2,s00180,s00176,normal,2026-08-31 08:30,email-provider,POST /v3/mail/send,222,159,ok
+2d80c0ba381c215a,s00181,,normal,2026-08-31 08:30,web,GET /api/dashboard,0,98,ok
+2d80c0ba381c215a,s00182,s00181,normal,2026-08-31 08:30,api,GET /dashboard,2,90,ok
+2d80c0ba381c215a,s00183,s00182,normal,2026-08-31 08:30,db,acquire connection,5,8,ok
+2d80c0ba381c215a,s00184,s00182,normal,2026-08-31 08:30,db,SELECT invoices,13,75,ok
+83a0ff4ff36ec061,s00185,,normal,2026-08-31 08:30,web,GET /api/dashboard,0,58,ok
+83a0ff4ff36ec061,s00186,s00185,normal,2026-08-31 08:30,api,GET /dashboard,2,50,ok
+83a0ff4ff36ec061,s00187,s00186,normal,2026-08-31 08:30,db,acquire connection,5,5,ok
+83a0ff4ff36ec061,s00188,s00186,normal,2026-08-31 08:30,db,SELECT invoices,10,38,ok
+1b7d5cfec5c85128,s00189,,normal,2026-08-31 08:30,web,POST /api/invoices/send,0,467,ok
+1b7d5cfec5c85128,s00190,s00189,normal,2026-08-31 08:30,api,POST /invoices/send,2,459,ok
+1b7d5cfec5c85128,s00191,s00190,normal,2026-08-31 08:30,db,acquire connection,5,1,ok
+1b7d5cfec5c85128,s00192,s00190,normal,2026-08-31 08:30,db,"SELECT invoice, lines, customer",6,61,ok
+1b7d5cfec5c85128,s00193,s00190,normal,2026-08-31 08:30,api,render invoice pdf,67,97,ok
+1b7d5cfec5c85128,s00194,s00190,normal,2026-08-31 08:30,email-provider,POST /v3/mail/send,237,220,ok
+d41fa823b10b5149,s00195,,normal,2026-08-31 08:30,web,POST /api/invoices,0,64,ok
+d41fa823b10b5149,s00196,s00195,normal,2026-08-31 08:30,api,POST /invoices,2,56,ok
+d41fa823b10b5149,s00197,s00196,normal,2026-08-31 08:30,db,acquire connection,5,2,ok
+d41fa823b10b5149,s00198,s00196,normal,2026-08-31 08:30,db,SELECT invoices,7,47,ok
+56bf89863c4972dc,s00199,,normal,2026-08-31 08:30,web,GET /api/dashboard,0,70,ok
+56bf89863c4972dc,s00200,s00199,normal,2026-08-31 08:30,api,GET /dashboard,2,62,ok
+56bf89863c4972dc,s00201,s00200,normal,2026-08-31 08:30,db,acquire connection,5,3,ok
+56bf89863c4972dc,s00202,s00200,normal,2026-08-31 08:30,db,SELECT invoices,8,52,ok
+2b6d00c9ea5bd61e,s00203,,normal,2026-08-31 08:30,web,GET /api/invoices,0,70,ok
+2b6d00c9ea5bd61e,s00204,s00203,normal,2026-08-31 08:30,api,GET /invoices,2,62,ok
+2b6d00c9ea5bd61e,s00205,s00204,normal,2026-08-31 08:30,db,acquire connection,5,7,ok
+2b6d00c9ea5bd61e,s00206,s00204,normal,2026-08-31 08:30,db,SELECT invoices,12,48,ok
+6aa2834b13f26bed,s00207,,normal,2026-08-31 08:30,web,POST /api/invoices/send,0,431,ok
+6aa2834b13f26bed,s00208,s00207,normal,2026-08-31 08:30,api,POST /invoices/send,2,423,ok
+6aa2834b13f26bed,s00209,s00208,normal,2026-08-31 08:30,db,acquire connection,5,6,ok
+6aa2834b13f26bed,s00210,s00208,normal,2026-08-31 08:30,db,"SELECT invoice, lines, customer",11,59,ok
+6aa2834b13f26bed,s00211,s00208,normal,2026-08-31 08:30,api,render invoice pdf,70,121,ok
+6aa2834b13f26bed,s00212,s00208,normal,2026-08-31 08:30,email-provider,POST /v3/mail/send,240,181,ok
+d7c8c235a0cd2a88,s00213,,normal,2026-08-31 08:30,web,POST /api/invoices/send,0,442,ok
+d7c8c235a0cd2a88,s00214,s00213,normal,2026-08-31 08:30,api,POST /invoices/send,2,434,ok
+d7c8c235a0cd2a88,s00215,s00214,normal,2026-08-31 08:30,db,acquire connection,5,5,ok
+d7c8c235a0cd2a88,s00216,s00214,normal,2026-08-31 08:30,db,"SELECT invoice, lines, customer",10,75,ok
+d7c8c235a0cd2a88,s00217,s00214,normal,2026-08-31 08:30,api,render invoice pdf,85,109,ok
+d7c8c235a0cd2a88,s00218,s00214,normal,2026-08-31 08:30,email-provider,POST /v3/mail/send,255,177,ok
+acf59941f53aa96a,s00219,,normal,2026-08-31 08:30,web,POST /api/invoices/send,0,516,ok
+acf59941f53aa96a,s00220,s00219,normal,2026-08-31 08:30,api,POST /invoices/send,2,508,ok
+acf59941f53aa96a,s00221,s00220,normal,2026-08-31 08:30,db,acquire connection,5,5,ok
+acf59941f53aa96a,s00222,s00220,normal,2026-08-31 08:30,db,"SELECT invoice, lines, customer",10,76,ok
+acf59941f53aa96a,s00223,s00220,normal,2026-08-31 08:30,api,render invoice pdf,86,102,ok
+acf59941f53aa96a,s00224,s00220,normal,2026-08-31 08:30,email-provider,POST /v3/mail/send,256,250,ok
+1f348104aef8e7d2,s00225,,normal,2026-08-31 08:30,web,GET /api/dashboard,0,91,ok
+1f348104aef8e7d2,s00226,s00225,normal,2026-08-31 08:30,api,GET /dashboard,2,83,ok
+1f348104aef8e7d2,s00227,s00226,normal,2026-08-31 08:30,db,acquire connection,5,6,ok
+1f348104aef8e7d2,s00228,s00226,normal,2026-08-31 08:30,db,SELECT invoices,11,70,ok
+b7c539c46f87cc67,s00229,,normal,2026-08-31 08:30,web,GET /api/dashboard,0,97,ok
+b7c539c46f87cc67,s00230,s00229,normal,2026-08-31 08:30,api,GET /dashboard,2,89,ok
+b7c539c46f87cc67,s00231,s00230,normal,2026-08-31 08:30,db,acquire connection,5,4,ok
+b7c539c46f87cc67,s00232,s00230,normal,2026-08-31 08:30,db,SELECT invoices,9,78,ok
+8ac46a6c9c29af8b,s00233,,normal,2026-08-31 08:30,web,POST /api/invoices/send,0,445,ok
+8ac46a6c9c29af8b,s00234,s00233,normal,2026-08-31 08:30,api,POST /invoices/send,2,437,ok
+8ac46a6c9c29af8b,s00235,s00234,normal,2026-08-31 08:30,db,acquire connection,5,2,ok
+8ac46a6c9c29af8b,s00236,s00234,normal,2026-08-31 08:30,db,"SELECT invoice, lines, customer",7,47,ok
+8ac46a6c9c29af8b,s00237,s00234,normal,2026-08-31 08:30,api,render invoice pdf,54,122,ok
+8ac46a6c9c29af8b,s00238,s00234,normal,2026-08-31 08:30,email-provider,POST /v3/mail/send,224,211,ok
+6ff2b4a649d6acfb,s00239,,normal,2026-08-31 08:30,web,POST /api/invoices/send,0,436,ok
+6ff2b4a649d6acfb,s00240,s00239,normal,2026-08-31 08:30,api,POST /invoices/send,2,428,ok
+6ff2b4a649d6acfb,s00241,s00240,normal,2026-08-31 08:30,db,acquire connection,5,3,ok
+6ff2b4a649d6acfb,s00242,s00240,normal,2026-08-31 08:30,db,"SELECT invoice, lines, customer",8,47,ok
+6ff2b4a649d6acfb,s00243,s00240,normal,2026-08-31 08:30,api,render invoice pdf,55,141,ok
+6ff2b4a649d6acfb,s00244,s00240,normal,2026-08-31 08:30,email-provider,POST /v3/mail/send,225,201,ok
+a44930a42f2fe1fc,s00245,,normal,2026-08-31 08:30,web,POST /api/invoices/send,0,443,ok
+a44930a42f2fe1fc,s00246,s00245,normal,2026-08-31 08:30,api,POST /invoices/send,2,435,ok
+a44930a42f2fe1fc,s00247,s00246,normal,2026-08-31 08:30,db,acquire connection,5,1,ok
+a44930a42f2fe1fc,s00248,s00246,normal,2026-08-31 08:30,db,"SELECT invoice, lines, customer",6,34,ok
+a44930a42f2fe1fc,s00249,s00246,normal,2026-08-31 08:30,api,render invoice pdf,40,146,ok
+a44930a42f2fe1fc,s00250,s00246,normal,2026-08-31 08:30,email-provider,POST /v3/mail/send,210,223,ok
+873bb4f7b5248c8a,s00251,,normal,2026-08-31 08:30,web,GET /api/invoices,0,90,ok
+873bb4f7b5248c8a,s00252,s00251,normal,2026-08-31 08:30,api,GET /invoices,2,82,ok
+873bb4f7b5248c8a,s00253,s00252,normal,2026-08-31 08:30,db,acquire connection,5,7,ok
+873bb4f7b5248c8a,s00254,s00252,normal,2026-08-31 08:30,db,SELECT invoices,12,68,ok
+5d110700d5976dc5,s00255,,normal,2026-08-31 08:30,web,POST /api/invoices/send,0,453,ok
+5d110700d5976dc5,s00256,s00255,normal,2026-08-31 08:30,api,POST /invoices/send,2,445,ok
+5d110700d5976dc5,s00257,s00256,normal,2026-08-31 08:30,db,acquire connection,5,5,ok
+5d110700d5976dc5,s00258,s00256,normal,2026-08-31 08:30,db,"SELECT invoice, lines, customer",10,44,ok
+5d110700d5976dc5,s00259,s00256,normal,2026-08-31 08:30,api,render invoice pdf,54,143,ok
+5d110700d5976dc5,s00260,s00256,normal,2026-08-31 08:30,email-provider,POST /v3/mail/send,224,219,ok
+a266e2b324ddd416,s00261,,normal,2026-08-31 08:30,web,POST /api/invoices/send,0,476,ok
+a266e2b324ddd416,s00262,s00261,normal,2026-08-31 08:30,api,POST /invoices/send,2,468,ok
+a266e2b324ddd416,s00263,s00262,normal,2026-08-31 08:30,db,acquire connection,5,6,ok
+a266e2b324ddd416,s00264,s00262,normal,2026-08-31 08:30,db,"SELECT invoice, lines, customer",11,86,ok
+a266e2b324ddd416,s00265,s00262,normal,2026-08-31 08:30,api,render invoice pdf,97,132,ok
+a266e2b324ddd416,s00266,s00262,normal,2026-08-31 08:30,email-provider,POST /v3/mail/send,267,199,ok
+198bc6f0e9867000,s00267,,normal,2026-08-31 08:30,web,POST /api/invoices/send,0,467,ok
+198bc6f0e9867000,s00268,s00267,normal,2026-08-31 08:30,api,POST /invoices/send,2,459,ok
+198bc6f0e9867000,s00269,s00268,normal,2026-08-31 08:30,db,acquire connection,5,7,ok
+198bc6f0e9867000,s00270,s00268,normal,2026-08-31 08:30,db,"SELECT invoice, lines, customer",12,40,ok
+198bc6f0e9867000,s00271,s00268,normal,2026-08-31 08:30,api,render invoice pdf,52,117,ok
+198bc6f0e9867000,s00272,s00268,normal,2026-08-31 08:30,email-provider,POST /v3/mail/send,222,235,ok
+c731b8abd6f8acf7,s00273,,normal,2026-08-31 08:30,web,POST /api/invoices/send,0,450,ok
+c731b8abd6f8acf7,s00274,s00273,normal,2026-08-31 08:30,api,POST /invoices/send,2,442,ok
+c731b8abd6f8acf7,s00275,s00274,normal,2026-08-31 08:30,db,acquire connection,5,3,ok
+c731b8abd6f8acf7,s00276,s00274,normal,2026-08-31 08:30,db,"SELECT invoice, lines, customer",8,43,ok
+c731b8abd6f8acf7,s00277,s00274,normal,2026-08-31 08:30,api,render invoice pdf,51,147,ok
+c731b8abd6f8acf7,s00278,s00274,normal,2026-08-31 08:30,email-provider,POST /v3/mail/send,221,219,ok
+e6caaf4ab6320580,s00279,,normal,2026-08-31 08:30,web,POST /api/invoices,0,100,ok
+e6caaf4ab6320580,s00280,s00279,normal,2026-08-31 08:30,api,POST /invoices,2,92,ok
+e6caaf4ab6320580,s00281,s00280,normal,2026-08-31 08:30,db,acquire connection,5,1,ok
+e6caaf4ab6320580,s00282,s00280,normal,2026-08-31 08:30,db,SELECT invoices,6,84,ok
+343bc0708b384446,s00283,,normal,2026-08-31 08:30,web,GET /api/invoices,0,89,ok
+343bc0708b384446,s00284,s00283,normal,2026-08-31 08:30,api,GET /invoices,2,81,ok
+343bc0708b384446,s00285,s00284,normal,2026-08-31 08:30,db,acquire connection,5,2,ok
+343bc0708b384446,s00286,s00284,normal,2026-08-31 08:30,db,SELECT invoices,7,72,ok
+e95ed27676b8e59e,s00287,,normal,2026-08-31 08:30,web,GET /api/invoices,0,109,ok
+e95ed27676b8e59e,s00288,s00287,normal,2026-08-31 08:30,api,GET /invoices,2,101,ok
+e95ed27676b8e59e,s00289,s00288,normal,2026-08-31 08:30,db,acquire connection,5,7,ok
+e95ed27676b8e59e,s00290,s00288,normal,2026-08-31 08:30,db,SELECT invoices,12,87,ok
+ada895c037999381,s00291,,normal,2026-08-31 08:30,web,POST /api/invoices/send,0,388,ok
+ada895c037999381,s00292,s00291,normal,2026-08-31 08:30,api,POST /invoices/send,2,380,ok
+ada895c037999381,s00293,s00292,normal,2026-08-31 08:30,db,acquire connection,5,7,ok
+ada895c037999381,s00294,s00292,normal,2026-08-31 08:30,db,"SELECT invoice, lines, customer",12,44,ok
+ada895c037999381,s00295,s00292,normal,2026-08-31 08:30,api,render invoice pdf,56,116,ok
+ada895c037999381,s00296,s00292,normal,2026-08-31 08:30,email-provider,POST /v3/mail/send,226,152,ok
+212c18d2ac010247,s00297,,normal,2026-08-31 08:30,web,GET /api/invoices,0,84,ok
+212c18d2ac010247,s00298,s00297,normal,2026-08-31 08:30,api,GET /invoices,2,76,ok
+212c18d2ac010247,s00299,s00298,normal,2026-08-31 08:30,db,acquire connection,5,5,ok
+212c18d2ac010247,s00300,s00298,normal,2026-08-31 08:30,db,SELECT invoices,10,64,ok
+17b46b7ccb2719d4,s00301,,normal,2026-08-31 08:30,web,POST /api/invoices/send,0,502,ok
+17b46b7ccb2719d4,s00302,s00301,normal,2026-08-31 08:30,api,POST /invoices/send,2,494,ok
+17b46b7ccb2719d4,s00303,s00302,normal,2026-08-31 08:30,db,acquire connection,5,3,ok
+17b46b7ccb2719d4,s00304,s00302,normal,2026-08-31 08:30,db,"SELECT invoice, lines, customer",8,74,ok
+17b46b7ccb2719d4,s00305,s00302,normal,2026-08-31 08:30,api,render invoice pdf,82,99,ok
+17b46b7ccb2719d4,s00306,s00302,normal,2026-08-31 08:30,email-provider,POST /v3/mail/send,252,240,ok
+4714f5fdf7678c92,s00307,,normal,2026-08-31 08:30,web,POST /api/invoices/send,0,397,ok
+4714f5fdf7678c92,s00308,s00307,normal,2026-08-31 08:30,api,POST /invoices/send,2,389,ok
+4714f5fdf7678c92,s00309,s00308,normal,2026-08-31 08:30,db,acquire connection,5,2,ok
+4714f5fdf7678c92,s00310,s00308,normal,2026-08-31 08:30,db,"SELECT invoice, lines, customer",7,32,ok
+4714f5fdf7678c92,s00311,s00308,normal,2026-08-31 08:30,api,render invoice pdf,39,104,ok
+4714f5fdf7678c92,s00312,s00308,normal,2026-08-31 08:30,email-provider,POST /v3/mail/send,209,178,ok
+655aa499c2fc70e0,s00313,,normal,2026-08-31 08:30,web,GET /api/invoices,0,78,ok
+655aa499c2fc70e0,s00314,s00313,normal,2026-08-31 08:30,api,GET /invoices,2,70,ok
+655aa499c2fc70e0,s00315,s00314,normal,2026-08-31 08:30,db,acquire connection,5,5,ok
+655aa499c2fc70e0,s00316,s00314,normal,2026-08-31 08:30,db,SELECT invoices,10,58,ok
+35eaab5c710600cd,s00317,,normal,2026-08-31 08:30,web,POST /api/invoices/send,0,393,ok
+35eaab5c710600cd,s00318,s00317,normal,2026-08-31 08:30,api,POST /invoices/send,2,385,ok
+35eaab5c710600cd,s00319,s00318,normal,2026-08-31 08:30,db,acquire connection,5,3,ok
+35eaab5c710600cd,s00320,s00318,normal,2026-08-31 08:30,db,"SELECT invoice, lines, customer",8,57,ok
+35eaab5c710600cd,s00321,s00318,normal,2026-08-31 08:30,api,render invoice pdf,65,148,ok
+35eaab5c710600cd,s00322,s00318,normal,2026-08-31 08:30,email-provider,POST /v3/mail/send,235,148,ok
+5c1f53e08008a651,s00323,,normal,2026-08-31 08:30,web,GET /api/dashboard,0,93,ok
+5c1f53e08008a651,s00324,s00323,normal,2026-08-31 08:30,api,GET /dashboard,2,85,ok
+5c1f53e08008a651,s00325,s00324,normal,2026-08-31 08:30,db,acquire connection,5,8,ok
+5c1f53e08008a651,s00326,s00324,normal,2026-08-31 08:30,db,SELECT invoices,13,70,ok
+205a9ed455ff4fd0,s00327,,normal,2026-08-31 08:30,web,POST /api/invoices/send,0,453,ok
+205a9ed455ff4fd0,s00328,s00327,normal,2026-08-31 08:30,api,POST /invoices/send,2,445,ok
+205a9ed455ff4fd0,s00329,s00328,normal,2026-08-31 08:30,db,acquire connection,5,5,ok
+205a9ed455ff4fd0,s00330,s00328,normal,2026-08-31 08:30,db,"SELECT invoice, lines, customer",10,72,ok
+205a9ed455ff4fd0,s00331,s00328,normal,2026-08-31 08:30,api,render invoice pdf,82,135,ok
+205a9ed455ff4fd0,s00332,s00328,normal,2026-08-31 08:30,email-provider,POST /v3/mail/send,252,191,ok
+fe65231664b43278,s00333,,normal,2026-08-31 08:30,web,GET /api/dashboard,0,85,ok
+fe65231664b43278,s00334,s00333,normal,2026-08-31 08:30,api,GET /dashboard,2,77,ok
+fe65231664b43278,s00335,s00334,normal,2026-08-31 08:30,db,acquire connection,5,6,ok
+fe65231664b43278,s00336,s00334,normal,2026-08-31 08:30,db,SELECT invoices,11,64,ok
+484b954ca8bbef60,s00337,,normal,2026-08-31 08:30,web,POST /api/invoices,0,97,ok
+484b954ca8bbef60,s00338,s00337,normal,2026-08-31 08:30,api,POST /invoices,2,89,ok
+484b954ca8bbef60,s00339,s00338,normal,2026-08-31 08:30,db,acquire connection,5,7,ok
+484b954ca8bbef60,s00340,s00338,normal,2026-08-31 08:30,db,SELECT invoices,12,75,ok
+b174c632d3035ec9,s00341,,normal,2026-08-31 08:30,web,GET /api/invoices,0,63,ok
+b174c632d3035ec9,s00342,s00341,normal,2026-08-31 08:30,api,GET /invoices,2,55,ok
+b174c632d3035ec9,s00343,s00342,normal,2026-08-31 08:30,db,acquire connection,5,1,ok
+b174c632d3035ec9,s00344,s00342,normal,2026-08-31 08:30,db,SELECT invoices,6,47,ok
+95d2621d0fb47d3d,s00345,,normal,2026-08-31 08:30,web,GET /api/dashboard,0,52,ok
+95d2621d0fb47d3d,s00346,s00345,normal,2026-08-31 08:30,api,GET /dashboard,2,44,ok
+95d2621d0fb47d3d,s00347,s00346,normal,2026-08-31 08:30,db,acquire connection,5,6,ok
+95d2621d0fb47d3d,s00348,s00346,normal,2026-08-31 08:30,db,SELECT invoices,11,31,ok
+306409432a4039b0,s00349,,normal,2026-08-31 08:30,web,GET /api/dashboard,0,87,ok
+306409432a4039b0,s00350,s00349,normal,2026-08-31 08:30,api,GET /dashboard,2,79,ok
+306409432a4039b0,s00351,s00350,normal,2026-08-31 08:30,db,acquire connection,5,6,ok
+306409432a4039b0,s00352,s00350,normal,2026-08-31 08:30,db,SELECT invoices,11,66,ok
+6b6f8c0b1e7119fc,s00353,,normal,2026-08-31 08:30,web,POST /api/invoices/send,0,507,ok
+6b6f8c0b1e7119fc,s00354,s00353,normal,2026-08-31 08:30,api,POST /invoices/send,2,499,ok
+6b6f8c0b1e7119fc,s00355,s00354,normal,2026-08-31 08:30,db,acquire connection,5,4,ok
+6b6f8c0b1e7119fc,s00356,s00354,normal,2026-08-31 08:30,db,"SELECT invoice, lines, customer",9,82,ok
+6b6f8c0b1e7119fc,s00357,s00354,normal,2026-08-31 08:30,api,render invoice pdf,91,154,ok
+6b6f8c0b1e7119fc,s00358,s00354,normal,2026-08-31 08:30,email-provider,POST /v3/mail/send,261,236,ok
+44490c30ba4dbae2,s00359,,normal,2026-08-31 08:30,web,GET /api/dashboard,0,73,ok
+44490c30ba4dbae2,s00360,s00359,normal,2026-08-31 08:30,api,GET /dashboard,2,65,ok
+44490c30ba4dbae2,s00361,s00360,normal,2026-08-31 08:30,db,acquire connection,5,5,ok
+44490c30ba4dbae2,s00362,s00360,normal,2026-08-31 08:30,db,SELECT invoices,10,53,ok
+9c757f600b3b5d15,s00363,,normal,2026-08-31 08:30,web,GET /api/invoices,0,97,ok
+9c757f600b3b5d15,s00364,s00363,normal,2026-08-31 08:30,api,GET /invoices,2,89,ok
+9c757f600b3b5d15,s00365,s00364,normal,2026-08-31 08:30,db,acquire connection,5,6,ok
+9c757f600b3b5d15,s00366,s00364,normal,2026-08-31 08:30,db,SELECT invoices,11,76,ok
+e71869aa7eff07d0,s00367,,normal,2026-08-31 08:30,web,POST /api/invoices/send,0,345,ok
+e71869aa7eff07d0,s00368,s00367,normal,2026-08-31 08:30,api,POST /invoices/send,2,337,ok
+e71869aa7eff07d0,s00369,s00368,normal,2026-08-31 08:30,db,acquire connection,5,6,ok
+e71869aa7eff07d0,s00370,s00368,normal,2026-08-31 08:30,db,"SELECT invoice, lines, customer",11,31,ok
+e71869aa7eff07d0,s00371,s00368,normal,2026-08-31 08:30,api,render invoice pdf,42,111,ok
+e71869aa7eff07d0,s00372,s00368,normal,2026-08-31 08:30,email-provider,POST /v3/mail/send,212,123,ok
+e525f43986c74d1c,s00373,,normal,2026-08-31 08:30,web,GET /api/invoices,0,66,ok
+e525f43986c74d1c,s00374,s00373,normal,2026-08-31 08:30,api,GET /invoices,2,58,ok
+e525f43986c74d1c,s00375,s00374,normal,2026-08-31 08:30,db,acquire connection,5,8,ok
+e525f43986c74d1c,s00376,s00374,normal,2026-08-31 08:30,db,SELECT invoices,13,43,ok
+1f30e2128e272fea,s00377,,normal,2026-08-31 08:30,web,GET /api/dashboard,0,101,ok
+1f30e2128e272fea,s00378,s00377,normal,2026-08-31 08:30,api,GET /dashboard,2,93,ok
+1f30e2128e272fea,s00379,s00378,normal,2026-08-31 08:30,db,acquire connection,5,6,ok
+1f30e2128e272fea,s00380,s00378,normal,2026-08-31 08:30,db,SELECT invoices,11,80,ok
+30514c4a021ad4a6,s00381,,normal,2026-08-31 08:30,web,POST /api/invoices/send,0,428,ok
+30514c4a021ad4a6,s00382,s00381,normal,2026-08-31 08:30,api,POST /invoices/send,2,420,ok
+30514c4a021ad4a6,s00383,s00382,normal,2026-08-31 08:30,db,acquire connection,5,2,ok
+30514c4a021ad4a6,s00384,s00382,normal,2026-08-31 08:30,db,"SELECT invoice, lines, customer",7,35,ok
+30514c4a021ad4a6,s00385,s00382,normal,2026-08-31 08:30,api,render invoice pdf,42,120,ok
+30514c4a021ad4a6,s00386,s00382,normal,2026-08-31 08:30,email-provider,POST /v3/mail/send,212,206,ok
+522148e67c0a2b9e,s00387,,normal,2026-08-31 08:30,web,POST /api/invoices/send,0,425,ok
+522148e67c0a2b9e,s00388,s00387,normal,2026-08-31 08:30,api,POST /invoices/send,2,417,ok
+522148e67c0a2b9e,s00389,s00388,normal,2026-08-31 08:30,db,acquire connection,5,3,ok
+522148e67c0a2b9e,s00390,s00388,normal,2026-08-31 08:30,db,"SELECT invoice, lines, customer",8,42,ok
+522148e67c0a2b9e,s00391,s00388,normal,2026-08-31 08:30,api,render invoice pdf,50,147,ok
+522148e67c0a2b9e,s00392,s00388,normal,2026-08-31 08:30,email-provider,POST /v3/mail/send,220,195,ok
+c85470f026e34a4d,s00393,,normal,2026-08-31 08:30,web,POST /api/invoices,0,82,ok
+c85470f026e34a4d,s00394,s00393,normal,2026-08-31 08:30,api,POST /invoices,2,74,ok
+c85470f026e34a4d,s00395,s00394,normal,2026-08-31 08:30,db,acquire connection,5,4,ok
+c85470f026e34a4d,s00396,s00394,normal,2026-08-31 08:30,db,SELECT invoices,9,63,ok
+15a4c1a042af4e63,s00397,,normal,2026-08-31 08:30,web,POST /api/invoices/send,0,500,ok
+15a4c1a042af4e63,s00398,s00397,normal,2026-08-31 08:30,api,POST /invoices/send,2,492,ok
+15a4c1a042af4e63,s00399,s00398,normal,2026-08-31 08:30,db,acquire connection,5,6,ok
+15a4c1a042af4e63,s00400,s00398,normal,2026-08-31 08:30,db,"SELECT invoice, lines, customer",11,72,ok
+15a4c1a042af4e63,s00401,s00398,normal,2026-08-31 08:30,api,render invoice pdf,83,154,ok
+15a4c1a042af4e63,s00402,s00398,normal,2026-08-31 08:30,email-provider,POST /v3/mail/send,253,237,ok
+62b14fea713f70d9,s00403,,normal,2026-08-31 08:30,web,POST /api/invoices/send,0,465,ok
+62b14fea713f70d9,s00404,s00403,normal,2026-08-31 08:30,api,POST /invoices/send,2,457,ok
+62b14fea713f70d9,s00405,s00404,normal,2026-08-31 08:30,db,acquire connection,5,7,ok
+62b14fea713f70d9,s00406,s00404,normal,2026-08-31 08:30,db,"SELECT invoice, lines, customer",12,82,ok
+62b14fea713f70d9,s00407,s00404,normal,2026-08-31 08:30,api,render invoice pdf,94,137,ok
+62b14fea713f70d9,s00408,s00404,normal,2026-08-31 08:30,email-provider,POST /v3/mail/send,264,191,ok
+bf539bc2b265d4fa,s00409,,normal,2026-08-31 08:30,web,POST /api/invoices/send,0,408,ok
+bf539bc2b265d4fa,s00410,s00409,normal,2026-08-31 08:30,api,POST /invoices/send,2,400,ok
+bf539bc2b265d4fa,s00411,s00410,normal,2026-08-31 08:30,db,acquire connection,5,2,ok
+bf539bc2b265d4fa,s00412,s00410,normal,2026-08-31 08:30,db,"SELECT invoice, lines, customer",7,38,ok
+bf539bc2b265d4fa,s00413,s00410,normal,2026-08-31 08:30,api,render invoice pdf,45,90,ok
+bf539bc2b265d4fa,s00414,s00410,normal,2026-08-31 08:30,email-provider,POST /v3/mail/send,215,183,ok
+fc3f0d16fd0834fe,s00415,,normal,2026-08-31 08:30,web,GET /api/dashboard,0,105,ok
+fc3f0d16fd0834fe,s00416,s00415,normal,2026-08-31 08:30,api,GET /dashboard,2,97,ok
+fc3f0d16fd0834fe,s00417,s00416,normal,2026-08-31 08:30,db,acquire connection,5,1,ok
+fc3f0d16fd0834fe,s00418,s00416,normal,2026-08-31 08:30,db,SELECT invoices,6,89,ok
+15318dea6c4a8b68,s00419,,normal,2026-08-31 08:30,web,POST /api/invoices,0,95,ok
+15318dea6c4a8b68,s00420,s00419,normal,2026-08-31 08:30,api,POST /invoices,2,87,ok
+15318dea6c4a8b68,s00421,s00420,normal,2026-08-31 08:30,db,acquire connection,5,3,ok
+15318dea6c4a8b68,s00422,s00420,normal,2026-08-31 08:30,db,SELECT invoices,8,77,ok
+0d069635ea9a1995,s00423,,normal,2026-08-31 08:30,web,POST /api/invoices/send,0,428,ok
+0d069635ea9a1995,s00424,s00423,normal,2026-08-31 08:30,api,POST /invoices/send,2,420,ok
+0d069635ea9a1995,s00425,s00424,normal,2026-08-31 08:30,db,acquire connection,5,3,ok
+0d069635ea9a1995,s00426,s00424,normal,2026-08-31 08:30,db,"SELECT invoice, lines, customer",8,33,ok
+0d069635ea9a1995,s00427,s00424,normal,2026-08-31 08:30,api,render invoice pdf,41,91,ok
+0d069635ea9a1995,s00428,s00424,normal,2026-08-31 08:30,email-provider,POST /v3/mail/send,211,207,ok
+7ed1c2360c21ba13,s00429,,normal,2026-08-31 08:30,web,POST /api/invoices,0,107,ok
+7ed1c2360c21ba13,s00430,s00429,normal,2026-08-31 08:30,api,POST /invoices,2,99,ok
+7ed1c2360c21ba13,s00431,s00430,normal,2026-08-31 08:30,db,acquire connection,5,2,ok
+7ed1c2360c21ba13,s00432,s00430,normal,2026-08-31 08:30,db,SELECT invoices,7,90,ok
+513eb21748117e63,s00433,,normal,2026-08-31 08:30,web,POST /api/invoices/send,0,456,ok
+513eb21748117e63,s00434,s00433,normal,2026-08-31 08:30,api,POST /invoices/send,2,448,ok
+513eb21748117e63,s00435,s00434,normal,2026-08-31 08:30,db,acquire connection,5,5,ok
+513eb21748117e63,s00436,s00434,normal,2026-08-31 08:30,db,"SELECT invoice, lines, customer",10,37,ok
+513eb21748117e63,s00437,s00434,normal,2026-08-31 08:30,api,render invoice pdf,47,132,ok
+513eb21748117e63,s00438,s00434,normal,2026-08-31 08:30,email-provider,POST /v3/mail/send,217,229,ok
+51aa6fd58be4e1c0,s00439,,normal,2026-08-31 08:30,web,POST /api/invoices,0,66,ok
+51aa6fd58be4e1c0,s00440,s00439,normal,2026-08-31 08:30,api,POST /invoices,2,58,ok
+51aa6fd58be4e1c0,s00441,s00440,normal,2026-08-31 08:30,db,acquire connection,5,1,ok
+51aa6fd58be4e1c0,s00442,s00440,normal,2026-08-31 08:30,db,SELECT invoices,6,50,ok
+31057a6db0e7b8e1,s00443,,normal,2026-08-31 08:30,web,POST /api/invoices,0,66,ok
+31057a6db0e7b8e1,s00444,s00443,normal,2026-08-31 08:30,api,POST /invoices,2,58,ok
+31057a6db0e7b8e1,s00445,s00444,normal,2026-08-31 08:30,db,acquire connection,5,3,ok
+31057a6db0e7b8e1,s00446,s00444,normal,2026-08-31 08:30,db,SELECT invoices,8,48,ok
+e3733129aa511195,s00447,,normal,2026-08-31 08:30,web,GET /api/invoices,0,60,ok
+e3733129aa511195,s00448,s00447,normal,2026-08-31 08:30,api,GET /invoices,2,52,ok
+e3733129aa511195,s00449,s00448,normal,2026-08-31 08:30,db,acquire connection,5,2,ok
+e3733129aa511195,s00450,s00448,normal,2026-08-31 08:30,db,SELECT invoices,7,43,ok
+7029db8bf98c9577,s00451,,normal,2026-08-31 08:30,web,POST /api/invoices/send,0,397,ok
+7029db8bf98c9577,s00452,s00451,normal,2026-08-31 08:30,api,POST /invoices/send,2,389,ok
+7029db8bf98c9577,s00453,s00452,normal,2026-08-31 08:30,db,acquire connection,5,7,ok
+7029db8bf98c9577,s00454,s00452,normal,2026-08-31 08:30,db,"SELECT invoice, lines, customer",12,70,ok
+7029db8bf98c9577,s00455,s00452,normal,2026-08-31 08:30,api,render invoice pdf,82,125,ok
+7029db8bf98c9577,s00456,s00452,normal,2026-08-31 08:30,email-provider,POST /v3/mail/send,252,135,ok
+0cbe80abc0de7167,s00457,,normal,2026-08-31 08:30,web,POST /api/invoices/send,0,423,ok
+0cbe80abc0de7167,s00458,s00457,normal,2026-08-31 08:30,api,POST /invoices/send,2,415,ok
+0cbe80abc0de7167,s00459,s00458,normal,2026-08-31 08:30,db,acquire connection,5,1,ok
+0cbe80abc0de7167,s00460,s00458,normal,2026-08-31 08:30,db,"SELECT invoice, lines, customer",6,61,ok
+0cbe80abc0de7167,s00461,s00458,normal,2026-08-31 08:30,api,render invoice pdf,67,145,ok
+0cbe80abc0de7167,s00462,s00458,normal,2026-08-31 08:30,email-provider,POST /v3/mail/send,237,176,ok
+60f175948da7cc34,s00463,,normal,2026-08-31 08:30,web,GET /api/invoices,0,100,ok
+60f175948da7cc34,s00464,s00463,normal,2026-08-31 08:30,api,GET /invoices,2,92,ok
+60f175948da7cc34,s00465,s00464,normal,2026-08-31 08:30,db,acquire connection,5,5,ok
+60f175948da7cc34,s00466,s00464,normal,2026-08-31 08:30,db,SELECT invoices,10,80,ok
+1ca18faa3136a0bb,s00467,,normal,2026-08-31 08:30,web,POST /api/invoices/send,0,436,ok
+1ca18faa3136a0bb,s00468,s00467,normal,2026-08-31 08:30,api,POST /invoices/send,2,428,ok
+1ca18faa3136a0bb,s00469,s00468,normal,2026-08-31 08:30,db,acquire connection,5,4,ok
+1ca18faa3136a0bb,s00470,s00468,normal,2026-08-31 08:30,db,"SELECT invoice, lines, customer",9,39,ok
+1ca18faa3136a0bb,s00471,s00468,normal,2026-08-31 08:30,api,render invoice pdf,48,104,ok
+1ca18faa3136a0bb,s00472,s00468,normal,2026-08-31 08:30,email-provider,POST /v3/mail/send,218,208,ok
+0c5cdd2c8420f821,s00473,,normal,2026-08-31 08:30,web,GET /api/invoices,0,74,ok
+0c5cdd2c8420f821,s00474,s00473,normal,2026-08-31 08:30,api,GET /invoices,2,66,ok
+0c5cdd2c8420f821,s00475,s00474,normal,2026-08-31 08:30,db,acquire connection,5,3,ok
+0c5cdd2c8420f821,s00476,s00474,normal,2026-08-31 08:30,db,SELECT invoices,8,56,ok
+d88f16dfcd810e67,s00477,,normal,2026-08-31 08:30,web,GET /api/dashboard,0,112,ok
+d88f16dfcd810e67,s00478,s00477,normal,2026-08-31 08:30,api,GET /dashboard,2,104,ok
+d88f16dfcd810e67,s00479,s00478,normal,2026-08-31 08:30,db,acquire connection,5,8,ok
+d88f16dfcd810e67,s00480,s00478,normal,2026-08-31 08:30,db,SELECT invoices,13,89,ok
+6e55e4514c20b62b,s00481,,incident,2026-08-31 09:55,web,POST /api/invoices/send,0,5015,error
+6e55e4514c20b62b,s00482,s00481,incident,2026-08-31 09:55,api,POST /invoices/send,2,5007,error
+6e55e4514c20b62b,s00483,s00482,incident,2026-08-31 09:55,db,acquire connection,5,5000,error
+9128eb04b37996f4,s00484,,incident,2026-08-31 09:55,web,POST /api/invoices/send,0,5015,error
+9128eb04b37996f4,s00485,s00484,incident,2026-08-31 09:55,api,POST /invoices/send,2,5007,error
+9128eb04b37996f4,s00486,s00485,incident,2026-08-31 09:55,db,acquire connection,5,5000,error
+8f0e91363abe7140,s00487,,incident,2026-08-31 09:55,web,POST /api/invoices/send,0,5015,error
+8f0e91363abe7140,s00488,s00487,incident,2026-08-31 09:55,api,POST /invoices/send,2,5007,error
+8f0e91363abe7140,s00489,s00488,incident,2026-08-31 09:55,db,acquire connection,5,5000,error
+2f44810f439f4c28,s00490,,incident,2026-08-31 09:55,web,GET /api/invoices,0,4316,ok
+2f44810f439f4c28,s00491,s00490,incident,2026-08-31 09:55,api,GET /invoices,2,4308,ok
+2f44810f439f4c28,s00492,s00491,incident,2026-08-31 09:55,db,acquire connection,5,4186,ok
+2f44810f439f4c28,s00493,s00491,incident,2026-08-31 09:55,db,SELECT invoices,4191,115,ok
+94de73bbd6187fd1,s00494,,incident,2026-08-31 09:55,web,POST /api/invoices/send,0,3202,ok
+94de73bbd6187fd1,s00495,s00494,incident,2026-08-31 09:55,api,POST /invoices/send,2,3194,ok
+94de73bbd6187fd1,s00496,s00495,incident,2026-08-31 09:55,db,acquire connection,5,2730,ok
+94de73bbd6187fd1,s00497,s00495,incident,2026-08-31 09:55,db,"SELECT invoice, lines, customer",2735,128,ok
+94de73bbd6187fd1,s00498,s00495,incident,2026-08-31 09:55,api,render invoice pdf,2863,157,ok
+94de73bbd6187fd1,s00499,s00495,incident,2026-08-31 09:55,email-provider,POST /v3/mail/send,3033,159,ok
+0160a92fc06da6e7,s00500,,incident,2026-08-31 09:55,web,GET /api/invoices,0,5015,error
+0160a92fc06da6e7,s00501,s00500,incident,2026-08-31 09:55,api,GET /invoices,2,5007,error
+0160a92fc06da6e7,s00502,s00501,incident,2026-08-31 09:55,db,acquire connection,5,5000,error
+aac3f9e43c522d1a,s00503,,incident,2026-08-31 09:55,web,GET /api/invoices,0,5015,error
+aac3f9e43c522d1a,s00504,s00503,incident,2026-08-31 09:55,api,GET /invoices,2,5007,error
+aac3f9e43c522d1a,s00505,s00504,incident,2026-08-31 09:55,db,acquire connection,5,5000,error
+b80cee885c26b8e9,s00506,,incident,2026-08-31 09:55,web,POST /api/invoices/send,0,5302,ok
+b80cee885c26b8e9,s00507,s00506,incident,2026-08-31 09:55,api,POST /invoices/send,2,5294,ok
+b80cee885c26b8e9,s00508,s00507,incident,2026-08-31 09:55,db,acquire connection,5,4822,ok
+b80cee885c26b8e9,s00509,s00507,incident,2026-08-31 09:55,db,"SELECT invoice, lines, customer",4827,99,ok
+b80cee885c26b8e9,s00510,s00507,incident,2026-08-31 09:55,api,render invoice pdf,4926,157,ok
+b80cee885c26b8e9,s00511,s00507,incident,2026-08-31 09:55,email-provider,POST /v3/mail/send,5096,196,ok
+6eeec5d6a4fc1939,s00512,,incident,2026-08-31 09:55,web,POST /api/invoices/send,0,3753,ok
+6eeec5d6a4fc1939,s00513,s00512,incident,2026-08-31 09:55,api,POST /invoices/send,2,3745,ok
+6eeec5d6a4fc1939,s00514,s00513,incident,2026-08-31 09:55,db,acquire connection,5,3306,ok
+6eeec5d6a4fc1939,s00515,s00513,incident,2026-08-31 09:55,db,"SELECT invoice, lines, customer",3311,125,ok
+6eeec5d6a4fc1939,s00516,s00513,incident,2026-08-31 09:55,api,render invoice pdf,3436,149,ok
+6eeec5d6a4fc1939,s00517,s00513,incident,2026-08-31 09:55,email-provider,POST /v3/mail/send,3606,137,ok
+b8ceb9c903b7ed9d,s00518,,incident,2026-08-31 09:55,web,GET /api/dashboard,0,1097,ok
+b8ceb9c903b7ed9d,s00519,s00518,incident,2026-08-31 09:55,api,GET /dashboard,2,1089,ok
+b8ceb9c903b7ed9d,s00520,s00519,incident,2026-08-31 09:55,db,acquire connection,5,971,ok
+b8ceb9c903b7ed9d,s00521,s00519,incident,2026-08-31 09:55,db,SELECT invoices,976,111,ok
+0b0b10df141f68da,s00522,,incident,2026-08-31 09:55,web,POST /api/invoices,0,5015,error
+0b0b10df141f68da,s00523,s00522,incident,2026-08-31 09:55,api,POST /invoices,2,5007,error
+0b0b10df141f68da,s00524,s00523,incident,2026-08-31 09:55,db,acquire connection,5,5000,error
+c229f1e8f69f04db,s00525,,incident,2026-08-31 09:55,web,GET /api/invoices,0,5015,error
+c229f1e8f69f04db,s00526,s00525,incident,2026-08-31 09:55,api,GET /invoices,2,5007,error
+c229f1e8f69f04db,s00527,s00526,incident,2026-08-31 09:55,db,acquire connection,5,5000,error
+71fd7787522bbc30,s00528,,incident,2026-08-31 09:55,web,GET /api/dashboard,0,5015,error
+71fd7787522bbc30,s00529,s00528,incident,2026-08-31 09:55,api,GET /dashboard,2,5007,error
+71fd7787522bbc30,s00530,s00529,incident,2026-08-31 09:55,db,acquire connection,5,5000,error
+3a9503ecd3bfd85c,s00531,,incident,2026-08-31 09:55,web,POST /api/invoices,0,1987,ok
+3a9503ecd3bfd85c,s00532,s00531,incident,2026-08-31 09:55,api,POST /invoices,2,1979,ok
+3a9503ecd3bfd85c,s00533,s00532,incident,2026-08-31 09:55,db,acquire connection,5,1881,ok
+3a9503ecd3bfd85c,s00534,s00532,incident,2026-08-31 09:55,db,SELECT invoices,1886,91,ok
+e58975f295449d19,s00535,,incident,2026-08-31 09:55,web,POST /api/invoices,0,1497,ok
+e58975f295449d19,s00536,s00535,incident,2026-08-31 09:55,api,POST /invoices,2,1489,ok
+e58975f295449d19,s00537,s00536,incident,2026-08-31 09:55,db,acquire connection,5,1411,ok
+e58975f295449d19,s00538,s00536,incident,2026-08-31 09:55,db,SELECT invoices,1416,71,ok
+578e918577045483,s00539,,incident,2026-08-31 09:55,web,POST /api/invoices/send,0,5015,error
+578e918577045483,s00540,s00539,incident,2026-08-31 09:55,api,POST /invoices/send,2,5007,error
+578e918577045483,s00541,s00540,incident,2026-08-31 09:55,db,acquire connection,5,5000,error
+fdf11e3f2aae6977,s00542,,incident,2026-08-31 09:55,web,POST /api/invoices/send,0,5015,error
+fdf11e3f2aae6977,s00543,s00542,incident,2026-08-31 09:55,api,POST /invoices/send,2,5007,error
+fdf11e3f2aae6977,s00544,s00543,incident,2026-08-31 09:55,db,acquire connection,5,5000,error
+d9508c327aa71fb7,s00545,,incident,2026-08-31 09:55,web,GET /api/invoices,0,3402,ok
+d9508c327aa71fb7,s00546,s00545,incident,2026-08-31 09:55,api,GET /invoices,2,3394,ok
+d9508c327aa71fb7,s00547,s00546,incident,2026-08-31 09:55,db,acquire connection,5,3263,ok
+d9508c327aa71fb7,s00548,s00546,incident,2026-08-31 09:55,db,SELECT invoices,3268,124,ok
+9ec4772202a2ea20,s00549,,incident,2026-08-31 09:55,web,POST /api/invoices,0,5015,error
+9ec4772202a2ea20,s00550,s00549,incident,2026-08-31 09:55,api,POST /invoices,2,5007,error
+9ec4772202a2ea20,s00551,s00550,incident,2026-08-31 09:55,db,acquire connection,5,5000,error
+5a2cf035f0a1fff8,s00552,,incident,2026-08-31 09:55,web,POST /api/invoices/send,0,4180,ok
+5a2cf035f0a1fff8,s00553,s00552,incident,2026-08-31 09:55,api,POST /invoices/send,2,4172,ok
+5a2cf035f0a1fff8,s00554,s00553,incident,2026-08-31 09:55,db,acquire connection,5,3638,ok
+5a2cf035f0a1fff8,s00555,s00553,incident,2026-08-31 09:55,db,"SELECT invoice, lines, customer",3643,117,ok
+5a2cf035f0a1fff8,s00556,s00553,incident,2026-08-31 09:55,api,render invoice pdf,3760,152,ok
+5a2cf035f0a1fff8,s00557,s00553,incident,2026-08-31 09:55,email-provider,POST /v3/mail/send,3930,240,ok
+e6353a31d551b31f,s00558,,incident,2026-08-31 09:55,web,GET /api/dashboard,0,1403,ok
+e6353a31d551b31f,s00559,s00558,incident,2026-08-31 09:55,api,GET /dashboard,2,1395,ok
+e6353a31d551b31f,s00560,s00559,incident,2026-08-31 09:55,db,acquire connection,5,1313,ok
+e6353a31d551b31f,s00561,s00559,incident,2026-08-31 09:55,db,SELECT invoices,1318,75,ok
+6a74d335cba703c5,s00562,,incident,2026-08-31 09:55,web,POST /api/invoices/send,0,5209,ok
+6a74d335cba703c5,s00563,s00562,incident,2026-08-31 09:55,api,POST /invoices/send,2,5201,ok
+6a74d335cba703c5,s00564,s00563,incident,2026-08-31 09:55,db,acquire connection,5,4786,ok
+6a74d335cba703c5,s00565,s00563,incident,2026-08-31 09:55,db,"SELECT invoice, lines, customer",4791,93,ok
+6a74d335cba703c5,s00566,s00563,incident,2026-08-31 09:55,api,render invoice pdf,4884,90,ok
+6a74d335cba703c5,s00567,s00563,incident,2026-08-31 09:55,email-provider,POST /v3/mail/send,5054,145,ok
+9183dda400bb35ae,s00568,,incident,2026-08-31 09:55,web,POST /api/invoices/send,0,4881,ok
+9183dda400bb35ae,s00569,s00568,incident,2026-08-31 09:55,api,POST /invoices/send,2,4873,ok
+9183dda400bb35ae,s00570,s00569,incident,2026-08-31 09:55,db,acquire connection,5,4468,ok
+9183dda400bb35ae,s00571,s00569,incident,2026-08-31 09:55,db,"SELECT invoice, lines, customer",4473,99,ok
+9183dda400bb35ae,s00572,s00569,incident,2026-08-31 09:55,api,render invoice pdf,4572,111,ok
+9183dda400bb35ae,s00573,s00569,incident,2026-08-31 09:55,email-provider,POST /v3/mail/send,4742,129,ok
+38e22369b4ff4948,s00574,,incident,2026-08-31 09:55,web,GET /api/invoices,0,5015,error
+38e22369b4ff4948,s00575,s00574,incident,2026-08-31 09:55,api,GET /invoices,2,5007,error
+38e22369b4ff4948,s00576,s00575,incident,2026-08-31 09:55,db,acquire connection,5,5000,error
+aca82642886b75e0,s00577,,incident,2026-08-31 09:55,web,GET /api/invoices,0,5015,error
+aca82642886b75e0,s00578,s00577,incident,2026-08-31 09:55,api,GET /invoices,2,5007,error
+aca82642886b75e0,s00579,s00578,incident,2026-08-31 09:55,db,acquire connection,5,5000,error
+053bd01cfdb2abbf,s00580,,incident,2026-08-31 09:55,web,POST /api/invoices,0,5015,error
+053bd01cfdb2abbf,s00581,s00580,incident,2026-08-31 09:55,api,POST /invoices,2,5007,error
+053bd01cfdb2abbf,s00582,s00581,incident,2026-08-31 09:55,db,acquire connection,5,5000,error
+7c681fb6857fb297,s00583,,incident,2026-08-31 09:55,web,POST /api/invoices,0,2842,ok
+7c681fb6857fb297,s00584,s00583,incident,2026-08-31 09:55,api,POST /invoices,2,2834,ok
+7c681fb6857fb297,s00585,s00584,incident,2026-08-31 09:55,db,acquire connection,5,2754,ok
+7c681fb6857fb297,s00586,s00584,incident,2026-08-31 09:55,db,SELECT invoices,2759,73,ok
+3c67f872ea74d6f1,s00587,,incident,2026-08-31 09:55,web,GET /api/invoices,0,5015,error
+3c67f872ea74d6f1,s00588,s00587,incident,2026-08-31 09:55,api,GET /invoices,2,5007,error
+3c67f872ea74d6f1,s00589,s00588,incident,2026-08-31 09:55,db,acquire connection,5,5000,error
+67cbe8f2e54140aa,s00590,,incident,2026-08-31 09:55,web,GET /api/invoices,0,5015,error
+67cbe8f2e54140aa,s00591,s00590,incident,2026-08-31 09:55,api,GET /invoices,2,5007,error
+67cbe8f2e54140aa,s00592,s00591,incident,2026-08-31 09:55,db,acquire connection,5,5000,error
+ad1cda3233bb22d9,s00593,,incident,2026-08-31 09:55,web,POST /api/invoices/send,0,5015,error
+ad1cda3233bb22d9,s00594,s00593,incident,2026-08-31 09:55,api,POST /invoices/send,2,5007,error
+ad1cda3233bb22d9,s00595,s00594,incident,2026-08-31 09:55,db,acquire connection,5,5000,error
+f3a99c66cf704593,s00596,,incident,2026-08-31 09:55,web,POST /api/invoices,0,5015,error
+f3a99c66cf704593,s00597,s00596,incident,2026-08-31 09:55,api,POST /invoices,2,5007,error
+f3a99c66cf704593,s00598,s00597,incident,2026-08-31 09:55,db,acquire connection,5,5000,error
+3b5693f132366f05,s00599,,incident,2026-08-31 09:55,web,POST /api/invoices,0,5015,error
+3b5693f132366f05,s00600,s00599,incident,2026-08-31 09:55,api,POST /invoices,2,5007,error
+3b5693f132366f05,s00601,s00600,incident,2026-08-31 09:55,db,acquire connection,5,5000,error
+cb20fbd0512b4491,s00602,,incident,2026-08-31 09:55,web,POST /api/invoices/send,0,5015,error
+cb20fbd0512b4491,s00603,s00602,incident,2026-08-31 09:55,api,POST /invoices/send,2,5007,error
+cb20fbd0512b4491,s00604,s00603,incident,2026-08-31 09:55,db,acquire connection,5,5000,error
+d79f94d02d0cfde2,s00605,,incident,2026-08-31 09:55,web,POST /api/invoices/send,0,3241,ok
+d79f94d02d0cfde2,s00606,s00605,incident,2026-08-31 09:55,api,POST /invoices/send,2,3233,ok
+d79f94d02d0cfde2,s00607,s00606,incident,2026-08-31 09:55,db,acquire connection,5,2739,ok
+d79f94d02d0cfde2,s00608,s00606,incident,2026-08-31 09:55,db,"SELECT invoice, lines, customer",2744,99,ok
+d79f94d02d0cfde2,s00609,s00606,incident,2026-08-31 09:55,api,render invoice pdf,2843,131,ok
+d79f94d02d0cfde2,s00610,s00606,incident,2026-08-31 09:55,email-provider,POST /v3/mail/send,3013,218,ok
+8978f7ea60bc973d,s00611,,incident,2026-08-31 09:55,web,GET /api/dashboard,0,3081,ok
+8978f7ea60bc973d,s00612,s00611,incident,2026-08-31 09:55,api,GET /dashboard,2,3073,ok
+8978f7ea60bc973d,s00613,s00612,incident,2026-08-31 09:55,db,acquire connection,5,2975,ok
+8978f7ea60bc973d,s00614,s00612,incident,2026-08-31 09:55,db,SELECT invoices,2980,91,ok
+9f5c3e725420a881,s00615,,incident,2026-08-31 09:55,web,POST /api/invoices/send,0,3482,ok
+9f5c3e725420a881,s00616,s00615,incident,2026-08-31 09:55,api,POST /invoices/send,2,3474,ok
+9f5c3e725420a881,s00617,s00616,incident,2026-08-31 09:55,db,acquire connection,5,3047,ok
+9f5c3e725420a881,s00618,s00616,incident,2026-08-31 09:55,db,"SELECT invoice, lines, customer",3052,110,ok
+9f5c3e725420a881,s00619,s00616,incident,2026-08-31 09:55,api,render invoice pdf,3162,153,ok
+9f5c3e725420a881,s00620,s00616,incident,2026-08-31 09:55,email-provider,POST /v3/mail/send,3332,140,ok
+c58d5ab96d5f29b3,s00621,,incident,2026-08-31 09:55,web,POST /api/invoices/send,0,4950,ok
+c58d5ab96d5f29b3,s00622,s00621,incident,2026-08-31 09:55,api,POST /invoices/send,2,4942,ok
+c58d5ab96d5f29b3,s00623,s00622,incident,2026-08-31 09:55,db,acquire connection,5,4513,ok
+c58d5ab96d5f29b3,s00624,s00622,incident,2026-08-31 09:55,db,"SELECT invoice, lines, customer",4518,84,ok
+c58d5ab96d5f29b3,s00625,s00622,incident,2026-08-31 09:55,api,render invoice pdf,4602,157,ok
+c58d5ab96d5f29b3,s00626,s00622,incident,2026-08-31 09:55,email-provider,POST /v3/mail/send,4772,168,ok
+1abbfe3fa8587edc,s00627,,incident,2026-08-31 09:55,web,POST /api/invoices,0,2395,ok
+1abbfe3fa8587edc,s00628,s00627,incident,2026-08-31 09:55,api,POST /invoices,2,2387,ok
+1abbfe3fa8587edc,s00629,s00628,incident,2026-08-31 09:55,db,acquire connection,5,2294,ok
+1abbfe3fa8587edc,s00630,s00628,incident,2026-08-31 09:55,db,SELECT invoices,2299,86,ok
+a5bcb51372e3886b,s00631,,incident,2026-08-31 09:55,web,POST /api/invoices/send,0,5015,error
+a5bcb51372e3886b,s00632,s00631,incident,2026-08-31 09:55,api,POST /invoices/send,2,5007,error
+a5bcb51372e3886b,s00633,s00632,incident,2026-08-31 09:55,db,acquire connection,5,5000,error
+842b4c698cf87404,s00634,,incident,2026-08-31 09:55,web,POST /api/invoices/send,0,5015,error
+842b4c698cf87404,s00635,s00634,incident,2026-08-31 09:55,api,POST /invoices/send,2,5007,error
+842b4c698cf87404,s00636,s00635,incident,2026-08-31 09:55,db,acquire connection,5,5000,error
+3b68f929a611d01a,s00637,,incident,2026-08-31 09:55,web,POST /api/invoices,0,4690,ok
+3b68f929a611d01a,s00638,s00637,incident,2026-08-31 09:55,api,POST /invoices,2,4682,ok
+3b68f929a611d01a,s00639,s00638,incident,2026-08-31 09:55,db,acquire connection,5,4537,ok
+3b68f929a611d01a,s00640,s00638,incident,2026-08-31 09:55,db,SELECT invoices,4542,138,ok
+68efc79b08526101,s00641,,incident,2026-08-31 09:55,web,GET /api/invoices,0,5015,error
+68efc79b08526101,s00642,s00641,incident,2026-08-31 09:55,api,GET /invoices,2,5007,error
+68efc79b08526101,s00643,s00642,incident,2026-08-31 09:55,db,acquire connection,5,5000,error
+91909fa47bcee3ce,s00644,,incident,2026-08-31 09:55,web,GET /api/invoices,0,5015,error
+91909fa47bcee3ce,s00645,s00644,incident,2026-08-31 09:55,api,GET /invoices,2,5007,error
+91909fa47bcee3ce,s00646,s00645,incident,2026-08-31 09:55,db,acquire connection,5,5000,error
+245115a9a61d2886,s00647,,incident,2026-08-31 09:55,web,POST /api/invoices/send,0,3513,ok
+245115a9a61d2886,s00648,s00647,incident,2026-08-31 09:55,api,POST /invoices/send,2,3505,ok
+245115a9a61d2886,s00649,s00648,incident,2026-08-31 09:55,db,acquire connection,5,3068,ok
+245115a9a61d2886,s00650,s00648,incident,2026-08-31 09:55,db,"SELECT invoice, lines, customer",3073,125,ok
+245115a9a61d2886,s00651,s00648,incident,2026-08-31 09:55,api,render invoice pdf,3198,98,ok
+245115a9a61d2886,s00652,s00648,incident,2026-08-31 09:55,email-provider,POST /v3/mail/send,3368,135,ok
+777e00abb41d9969,s00653,,incident,2026-08-31 09:55,web,POST /api/invoices/send,0,5015,error
+777e00abb41d9969,s00654,s00653,incident,2026-08-31 09:55,api,POST /invoices/send,2,5007,error
+777e00abb41d9969,s00655,s00654,incident,2026-08-31 09:55,db,acquire connection,5,5000,error
+4471acbba433eb2c,s00656,,incident,2026-08-31 09:55,web,POST /api/invoices/send,0,5015,error
+4471acbba433eb2c,s00657,s00656,incident,2026-08-31 09:55,api,POST /invoices/send,2,5007,error
+4471acbba433eb2c,s00658,s00657,incident,2026-08-31 09:55,db,acquire connection,5,5000,error
+19acbab0b40153cc,s00659,,incident,2026-08-31 09:55,web,GET /api/dashboard,0,5015,error
+19acbab0b40153cc,s00660,s00659,incident,2026-08-31 09:55,api,GET /dashboard,2,5007,error
+19acbab0b40153cc,s00661,s00660,incident,2026-08-31 09:55,db,acquire connection,5,5000,error
+04a8e2a065c35292,s00662,,incident,2026-08-31 09:55,web,POST /api/invoices/send,0,2950,ok
+04a8e2a065c35292,s00663,s00662,incident,2026-08-31 09:55,api,POST /invoices/send,2,2942,ok
+04a8e2a065c35292,s00664,s00663,incident,2026-08-31 09:55,db,acquire connection,5,2495,ok
+04a8e2a065c35292,s00665,s00663,incident,2026-08-31 09:55,db,"SELECT invoice, lines, customer",2500,112,ok
+04a8e2a065c35292,s00666,s00663,incident,2026-08-31 09:55,api,render invoice pdf,2612,115,ok
+04a8e2a065c35292,s00667,s00663,incident,2026-08-31 09:55,email-provider,POST /v3/mail/send,2782,158,ok
+02336afc8181bf8a,s00668,,incident,2026-08-31 09:55,web,POST /api/invoices/send,0,4083,ok
+02336afc8181bf8a,s00669,s00668,incident,2026-08-31 09:55,api,POST /invoices/send,2,4075,ok
+02336afc8181bf8a,s00670,s00669,incident,2026-08-31 09:55,db,acquire connection,5,3628,ok
+02336afc8181bf8a,s00671,s00669,incident,2026-08-31 09:55,db,"SELECT invoice, lines, customer",3633,93,ok
+02336afc8181bf8a,s00672,s00669,incident,2026-08-31 09:55,api,render invoice pdf,3726,106,ok
+02336afc8181bf8a,s00673,s00669,incident,2026-08-31 09:55,email-provider,POST /v3/mail/send,3896,177,ok
+905259b7529625f6,s00674,,incident,2026-08-31 09:55,web,POST /api/invoices/send,0,3560,ok
+905259b7529625f6,s00675,s00674,incident,2026-08-31 09:55,api,POST /invoices/send,2,3552,ok
+905259b7529625f6,s00676,s00675,incident,2026-08-31 09:55,db,acquire connection,5,3129,ok
+905259b7529625f6,s00677,s00675,incident,2026-08-31 09:55,db,"SELECT invoice, lines, customer",3134,89,ok
+905259b7529625f6,s00678,s00675,incident,2026-08-31 09:55,api,render invoice pdf,3223,135,ok
+905259b7529625f6,s00679,s00675,incident,2026-08-31 09:55,email-provider,POST /v3/mail/send,3393,157,ok
+903704eec0b4cef0,s00680,,incident,2026-08-31 09:55,web,POST /api/invoices,0,3234,ok
+903704eec0b4cef0,s00681,s00680,incident,2026-08-31 09:55,api,POST /invoices,2,3226,ok
+903704eec0b4cef0,s00682,s00681,incident,2026-08-31 09:55,db,acquire connection,5,3113,ok
+903704eec0b4cef0,s00683,s00681,incident,2026-08-31 09:55,db,SELECT invoices,3118,106,ok
+0fa898b9e8b0d30f,s00684,,incident,2026-08-31 09:55,web,GET /api/dashboard,0,5015,error
+0fa898b9e8b0d30f,s00685,s00684,incident,2026-08-31 09:55,api,GET /dashboard,2,5007,error
+0fa898b9e8b0d30f,s00686,s00685,incident,2026-08-31 09:55,db,acquire connection,5,5000,error
+42837e37c6ebb0b4,s00687,,incident,2026-08-31 09:55,web,GET /api/dashboard,0,3483,ok
+42837e37c6ebb0b4,s00688,s00687,incident,2026-08-31 09:55,api,GET /dashboard,2,3475,ok
+42837e37c6ebb0b4,s00689,s00688,incident,2026-08-31 09:55,db,acquire connection,5,3364,ok
+42837e37c6ebb0b4,s00690,s00688,incident,2026-08-31 09:55,db,SELECT invoices,3369,104,ok
+481d361fbd0f5916,s00691,,incident,2026-08-31 09:55,web,POST /api/invoices,0,5015,error
+481d361fbd0f5916,s00692,s00691,incident,2026-08-31 09:55,api,POST /invoices,2,5007,error
+481d361fbd0f5916,s00693,s00692,incident,2026-08-31 09:55,db,acquire connection,5,5000,error
+666da3d0f1109809,s00694,,incident,2026-08-31 09:55,web,GET /api/invoices,0,5015,error
+666da3d0f1109809,s00695,s00694,incident,2026-08-31 09:55,api,GET /invoices,2,5007,error
+666da3d0f1109809,s00696,s00695,incident,2026-08-31 09:55,db,acquire connection,5,5000,error
+b7f191b565715ee1,s00697,,incident,2026-08-31 09:55,web,GET /api/invoices,0,5015,error
+b7f191b565715ee1,s00698,s00697,incident,2026-08-31 09:55,api,GET /invoices,2,5007,error
+b7f191b565715ee1,s00699,s00698,incident,2026-08-31 09:55,db,acquire connection,5,5000,error
+2d67a26a6e8bb0de,s00700,,incident,2026-08-31 09:55,web,GET /api/dashboard,0,5015,error
+2d67a26a6e8bb0de,s00701,s00700,incident,2026-08-31 09:55,api,GET /dashboard,2,5007,error
+2d67a26a6e8bb0de,s00702,s00701,incident,2026-08-31 09:55,db,acquire connection,5,5000,error
+cb9bb9180d97f025,s00703,,incident,2026-08-31 09:55,web,POST /api/invoices/send,0,2862,ok
+cb9bb9180d97f025,s00704,s00703,incident,2026-08-31 09:55,api,POST /invoices/send,2,2854,ok
+cb9bb9180d97f025,s00705,s00704,incident,2026-08-31 09:55,db,acquire connection,5,2380,ok
+cb9bb9180d97f025,s00706,s00704,incident,2026-08-31 09:55,db,"SELECT invoice, lines, customer",2385,99,ok
+cb9bb9180d97f025,s00707,s00704,incident,2026-08-31 09:55,api,render invoice pdf,2484,129,ok
+cb9bb9180d97f025,s00708,s00704,incident,2026-08-31 09:55,email-provider,POST /v3/mail/send,2654,198,ok
+e0b4566226a8c06a,s00709,,incident,2026-08-31 09:55,web,POST /api/invoices/send,0,1486,ok
+e0b4566226a8c06a,s00710,s00709,incident,2026-08-31 09:55,api,POST /invoices/send,2,1478,ok
+e0b4566226a8c06a,s00711,s00710,incident,2026-08-31 09:55,db,acquire connection,5,1011,ok
+e0b4566226a8c06a,s00712,s00710,incident,2026-08-31 09:55,db,"SELECT invoice, lines, customer",1016,85,ok
+e0b4566226a8c06a,s00713,s00710,incident,2026-08-31 09:55,api,render invoice pdf,1101,160,ok
+e0b4566226a8c06a,s00714,s00710,incident,2026-08-31 09:55,email-provider,POST /v3/mail/send,1271,205,ok
+63117813136786f5,s00715,,incident,2026-08-31 09:55,web,GET /api/dashboard,0,5015,error
+63117813136786f5,s00716,s00715,incident,2026-08-31 09:55,api,GET /dashboard,2,5007,error
+63117813136786f5,s00717,s00716,incident,2026-08-31 09:55,db,acquire connection,5,5000,error
+b90a922a6a63dc6d,s00718,,incident,2026-08-31 09:55,web,POST /api/invoices/send,0,2953,ok
+b90a922a6a63dc6d,s00719,s00718,incident,2026-08-31 09:55,api,POST /invoices/send,2,2945,ok
+b90a922a6a63dc6d,s00720,s00719,incident,2026-08-31 09:55,db,acquire connection,5,2430,ok
+b90a922a6a63dc6d,s00721,s00719,incident,2026-08-31 09:55,db,"SELECT invoice, lines, customer",2435,92,ok
+b90a922a6a63dc6d,s00722,s00719,incident,2026-08-31 09:55,api,render invoice pdf,2527,125,ok
+b90a922a6a63dc6d,s00723,s00719,incident,2026-08-31 09:55,email-provider,POST /v3/mail/send,2697,246,ok
+d3ce4b49b2ed14c3,s00724,,incident,2026-08-31 09:55,web,GET /api/dashboard,0,5015,error
+d3ce4b49b2ed14c3,s00725,s00724,incident,2026-08-31 09:55,api,GET /dashboard,2,5007,error
+d3ce4b49b2ed14c3,s00726,s00725,incident,2026-08-31 09:55,db,acquire connection,5,5000,error
+328dace1e81b46cb,s00727,,incident,2026-08-31 09:55,web,GET /api/invoices,0,5015,error
+328dace1e81b46cb,s00728,s00727,incident,2026-08-31 09:55,api,GET /invoices,2,5007,error
+328dace1e81b46cb,s00729,s00728,incident,2026-08-31 09:55,db,acquire connection,5,5000,error
+7ff13add020295c2,s00730,,incident,2026-08-31 09:55,web,GET /api/invoices,0,5015,error
+7ff13add020295c2,s00731,s00730,incident,2026-08-31 09:55,api,GET /invoices,2,5007,error
+7ff13add020295c2,s00732,s00731,incident,2026-08-31 09:55,db,acquire connection,5,5000,error
+b972bbe6835ae226,s00733,,incident,2026-08-31 09:55,web,POST /api/invoices,0,4056,ok
+b972bbe6835ae226,s00734,s00733,incident,2026-08-31 09:55,api,POST /invoices,2,4048,ok
+b972bbe6835ae226,s00735,s00734,incident,2026-08-31 09:55,db,acquire connection,5,3926,ok
+b972bbe6835ae226,s00736,s00734,incident,2026-08-31 09:55,db,SELECT invoices,3931,115,ok
+439a58b0d238393b,s00737,,incident,2026-08-31 09:55,web,GET /api/invoices,0,5015,error
+439a58b0d238393b,s00738,s00737,incident,2026-08-31 09:55,api,GET /invoices,2,5007,error
+439a58b0d238393b,s00739,s00738,incident,2026-08-31 09:55,db,acquire connection,5,5000,error
+f283f1af08faa24b,s00740,,incident,2026-08-31 09:55,web,POST /api/invoices,0,4809,ok
+f283f1af08faa24b,s00741,s00740,incident,2026-08-31 09:55,api,POST /invoices,2,4801,ok
+f283f1af08faa24b,s00742,s00741,incident,2026-08-31 09:55,db,acquire connection,5,4673,ok
+f283f1af08faa24b,s00743,s00741,incident,2026-08-31 09:55,db,SELECT invoices,4678,121,ok
+238907fc01e517cc,s00744,,incident,2026-08-31 09:55,web,GET /api/invoices,0,5015,error
+238907fc01e517cc,s00745,s00744,incident,2026-08-31 09:55,api,GET /invoices,2,5007,error
+238907fc01e517cc,s00746,s00745,incident,2026-08-31 09:55,db,acquire connection,5,5000,error
+a7c0d854b6f7f898,s00747,,incident,2026-08-31 09:55,web,GET /api/dashboard,0,1438,ok
+a7c0d854b6f7f898,s00748,s00747,incident,2026-08-31 09:55,api,GET /dashboard,2,1430,ok
+a7c0d854b6f7f898,s00749,s00748,incident,2026-08-31 09:55,db,acquire connection,5,1323,ok
+a7c0d854b6f7f898,s00750,s00748,incident,2026-08-31 09:55,db,SELECT invoices,1328,100,ok
+0609d5dd59ccd15f,s00751,,incident,2026-08-31 09:55,web,GET /api/dashboard,0,4811,ok
+0609d5dd59ccd15f,s00752,s00751,incident,2026-08-31 09:55,api,GET /dashboard,2,4803,ok
+0609d5dd59ccd15f,s00753,s00752,incident,2026-08-31 09:55,db,acquire connection,5,4727,ok
+0609d5dd59ccd15f,s00754,s00752,incident,2026-08-31 09:55,db,SELECT invoices,4732,69,ok
+f7251ceefa5e14c4,s00755,,incident,2026-08-31 09:55,web,POST /api/invoices/send,0,4689,ok
+f7251ceefa5e14c4,s00756,s00755,incident,2026-08-31 09:55,api,POST /invoices/send,2,4681,ok
+f7251ceefa5e14c4,s00757,s00756,incident,2026-08-31 09:55,db,acquire connection,5,4231,ok
+f7251ceefa5e14c4,s00758,s00756,incident,2026-08-31 09:55,db,"SELECT invoice, lines, customer",4236,66,ok
+f7251ceefa5e14c4,s00759,s00756,incident,2026-08-31 09:55,api,render invoice pdf,4302,116,ok
+f7251ceefa5e14c4,s00760,s00756,incident,2026-08-31 09:55,email-provider,POST /v3/mail/send,4472,207,ok
+2ace6f3e377091cd,s00761,,incident,2026-08-31 09:55,web,GET /api/invoices,0,3055,ok
+2ace6f3e377091cd,s00762,s00761,incident,2026-08-31 09:55,api,GET /invoices,2,3047,ok
+2ace6f3e377091cd,s00763,s00762,incident,2026-08-31 09:55,db,acquire connection,5,2945,ok
+2ace6f3e377091cd,s00764,s00762,incident,2026-08-31 09:55,db,SELECT invoices,2950,95,ok
+c7f4943b25226fb9,s00765,,incident,2026-08-31 09:55,web,GET /api/dashboard,0,4541,ok
+c7f4943b25226fb9,s00766,s00765,incident,2026-08-31 09:55,api,GET /dashboard,2,4533,ok
+c7f4943b25226fb9,s00767,s00766,incident,2026-08-31 09:55,db,acquire connection,5,4445,ok
+c7f4943b25226fb9,s00768,s00766,incident,2026-08-31 09:55,db,SELECT invoices,4450,81,ok
+6aac0f375a82a63d,s00769,,incident,2026-08-31 09:55,web,GET /api/dashboard,0,2460,ok
+6aac0f375a82a63d,s00770,s00769,incident,2026-08-31 09:55,api,GET /dashboard,2,2452,ok
+6aac0f375a82a63d,s00771,s00770,incident,2026-08-31 09:55,db,acquire connection,5,2371,ok
+6aac0f375a82a63d,s00772,s00770,incident,2026-08-31 09:55,db,SELECT invoices,2376,74,ok
+6ed9df20a91c4694,s00773,,incident,2026-08-31 09:55,web,POST /api/invoices/send,0,1919,ok
+6ed9df20a91c4694,s00774,s00773,incident,2026-08-31 09:55,api,POST /invoices/send,2,1911,ok
+6ed9df20a91c4694,s00775,s00774,incident,2026-08-31 09:55,db,acquire connection,5,1486,ok
+6ed9df20a91c4694,s00776,s00774,incident,2026-08-31 09:55,db,"SELECT invoice, lines, customer",1491,92,ok
+6ed9df20a91c4694,s00777,s00774,incident,2026-08-31 09:55,api,render invoice pdf,1583,92,ok
+6ed9df20a91c4694,s00778,s00774,incident,2026-08-31 09:55,email-provider,POST /v3/mail/send,1753,156,ok
+729d582096f6c731,s00779,,incident,2026-08-31 09:55,web,GET /api/dashboard,0,4330,ok
+729d582096f6c731,s00780,s00779,incident,2026-08-31 09:55,api,GET /dashboard,2,4322,ok
+729d582096f6c731,s00781,s00780,incident,2026-08-31 09:55,db,acquire connection,5,4171,ok
+729d582096f6c731,s00782,s00780,incident,2026-08-31 09:55,db,SELECT invoices,4176,144,ok
+2fb12be993a0ca3a,s00783,,incident,2026-08-31 09:55,web,POST /api/invoices,0,5015,error
+2fb12be993a0ca3a,s00784,s00783,incident,2026-08-31 09:55,api,POST /invoices,2,5007,error
+2fb12be993a0ca3a,s00785,s00784,incident,2026-08-31 09:55,db,acquire connection,5,5000,error
+71ff513ea86d6e88,s00786,,incident,2026-08-31 09:55,web,POST /api/invoices/send,0,5015,error
+71ff513ea86d6e88,s00787,s00786,incident,2026-08-31 09:55,api,POST /invoices/send,2,5007,error
+71ff513ea86d6e88,s00788,s00787,incident,2026-08-31 09:55,db,acquire connection,5,5000,error
+e26265b4d4869703,s00789,,incident,2026-08-31 09:55,web,POST /api/invoices,0,5015,error
+e26265b4d4869703,s00790,s00789,incident,2026-08-31 09:55,api,POST /invoices,2,5007,error
+e26265b4d4869703,s00791,s00790,incident,2026-08-31 09:55,db,acquire connection,5,5000,error
+565770a78c2a8d49,s00792,,incident,2026-08-31 09:55,web,GET /api/invoices,0,4542,ok
+565770a78c2a8d49,s00793,s00792,incident,2026-08-31 09:55,api,GET /invoices,2,4534,ok
+565770a78c2a8d49,s00794,s00793,incident,2026-08-31 09:55,db,acquire connection,5,4389,ok
+565770a78c2a8d49,s00795,s00793,incident,2026-08-31 09:55,db,SELECT invoices,4394,138,ok
+3144f862266ecd7f,s00796,,incident,2026-08-31 09:55,web,POST /api/invoices/send,0,1524,ok
+3144f862266ecd7f,s00797,s00796,incident,2026-08-31 09:55,api,POST /invoices/send,2,1516,ok
+3144f862266ecd7f,s00798,s00797,incident,2026-08-31 09:55,db,acquire connection,5,1030,ok
+3144f862266ecd7f,s00799,s00797,incident,2026-08-31 09:55,db,"SELECT invoice, lines, customer",1035,81,ok
+3144f862266ecd7f,s00800,s00797,incident,2026-08-31 09:55,api,render invoice pdf,1116,154,ok
+3144f862266ecd7f,s00801,s00797,incident,2026-08-31 09:55,email-provider,POST /v3/mail/send,1286,228,ok
+93764fbd565335bc,s00802,,incident,2026-08-31 09:55,web,GET /api/dashboard,0,5015,error
+93764fbd565335bc,s00803,s00802,incident,2026-08-31 09:55,api,GET /dashboard,2,5007,error
+93764fbd565335bc,s00804,s00803,incident,2026-08-31 09:55,db,acquire connection,5,5000,error
+89af9a45e62f6e2b,s00805,,incident,2026-08-31 09:55,web,POST /api/invoices,0,3512,ok
+89af9a45e62f6e2b,s00806,s00805,incident,2026-08-31 09:55,api,POST /invoices,2,3504,ok
+89af9a45e62f6e2b,s00807,s00806,incident,2026-08-31 09:55,db,acquire connection,5,3415,ok
+89af9a45e62f6e2b,s00808,s00806,incident,2026-08-31 09:55,db,SELECT invoices,3420,82,ok
+df362919bf5e2a78,s00809,,incident,2026-08-31 09:55,web,POST /api/invoices/send,0,3655,ok
+df362919bf5e2a78,s00810,s00809,incident,2026-08-31 09:55,api,POST /invoices/send,2,3647,ok
+df362919bf5e2a78,s00811,s00810,incident,2026-08-31 09:55,db,acquire connection,5,3083,ok
+df362919bf5e2a78,s00812,s00810,incident,2026-08-31 09:55,db,"SELECT invoice, lines, customer",3088,132,ok
+df362919bf5e2a78,s00813,s00810,incident,2026-08-31 09:55,api,render invoice pdf,3220,102,ok
+df362919bf5e2a78,s00814,s00810,incident,2026-08-31 09:55,email-provider,POST /v3/mail/send,3390,255,ok
+1b9e092d39be4c51,s00815,,incident,2026-08-31 09:55,web,POST /api/invoices/send,0,1729,ok
+1b9e092d39be4c51,s00816,s00815,incident,2026-08-31 09:55,api,POST /invoices/send,2,1721,ok
+1b9e092d39be4c51,s00817,s00816,incident,2026-08-31 09:55,db,acquire connection,5,1241,ok
+1b9e092d39be4c51,s00818,s00816,incident,2026-08-31 09:55,db,"SELECT invoice, lines, customer",1246,111,ok
+1b9e092d39be4c51,s00819,s00816,incident,2026-08-31 09:55,api,render invoice pdf,1357,138,ok
+1b9e092d39be4c51,s00820,s00816,incident,2026-08-31 09:55,email-provider,POST /v3/mail/send,1527,192,ok
+485a56f03fa310fa,s00821,,incident,2026-08-31 09:55,web,POST /api/invoices/send,0,5295,ok
+485a56f03fa310fa,s00822,s00821,incident,2026-08-31 09:55,api,POST /invoices/send,2,5287,ok
+485a56f03fa310fa,s00823,s00822,incident,2026-08-31 09:55,db,acquire connection,5,4806,ok
+485a56f03fa310fa,s00824,s00822,incident,2026-08-31 09:55,db,"SELECT invoice, lines, customer",4811,93,ok
+485a56f03fa310fa,s00825,s00822,incident,2026-08-31 09:55,api,render invoice pdf,4904,107,ok
+485a56f03fa310fa,s00826,s00822,incident,2026-08-31 09:55,email-provider,POST /v3/mail/send,5074,211,ok
+6db392abebd1853f,s00827,,incident,2026-08-31 09:55,web,GET /api/dashboard,0,995,ok
+6db392abebd1853f,s00828,s00827,incident,2026-08-31 09:55,api,GET /dashboard,2,987,ok
+6db392abebd1853f,s00829,s00828,incident,2026-08-31 09:55,db,acquire connection,5,869,ok
+6db392abebd1853f,s00830,s00828,incident,2026-08-31 09:55,db,SELECT invoices,874,111,ok
+92f81eea75cc59ca,s00831,,incident,2026-08-31 09:55,web,POST /api/invoices,0,2924,ok
+92f81eea75cc59ca,s00832,s00831,incident,2026-08-31 09:55,api,POST /invoices,2,2916,ok
+92f81eea75cc59ca,s00833,s00832,incident,2026-08-31 09:55,db,acquire connection,5,2787,ok
+92f81eea75cc59ca,s00834,s00832,incident,2026-08-31 09:55,db,SELECT invoices,2792,122,ok
+a2d5610143f2a53b,s00835,,incident,2026-08-31 09:55,web,GET /api/invoices,0,1639,ok
+a2d5610143f2a53b,s00836,s00835,incident,2026-08-31 09:55,api,GET /invoices,2,1631,ok
+a2d5610143f2a53b,s00837,s00836,incident,2026-08-31 09:55,db,acquire connection,5,1509,ok
+a2d5610143f2a53b,s00838,s00836,incident,2026-08-31 09:55,db,SELECT invoices,1514,115,ok
+d34af2287f7e9e57,s00839,,incident,2026-08-31 09:55,web,POST /api/invoices/send,0,4379,ok
+d34af2287f7e9e57,s00840,s00839,incident,2026-08-31 09:55,api,POST /invoices/send,2,4371,ok
+d34af2287f7e9e57,s00841,s00840,incident,2026-08-31 09:55,db,acquire connection,5,3942,ok
+d34af2287f7e9e57,s00842,s00840,incident,2026-08-31 09:55,db,"SELECT invoice, lines, customer",3947,75,ok
+d34af2287f7e9e57,s00843,s00840,incident,2026-08-31 09:55,api,render invoice pdf,4022,156,ok
+d34af2287f7e9e57,s00844,s00840,incident,2026-08-31 09:55,email-provider,POST /v3/mail/send,4192,177,ok
+06e63c612a579a2a,s00845,,incident,2026-08-31 09:55,web,GET /api/dashboard,0,5015,error
+06e63c612a579a2a,s00846,s00845,incident,2026-08-31 09:55,api,GET /dashboard,2,5007,error
+06e63c612a579a2a,s00847,s00846,incident,2026-08-31 09:55,db,acquire connection,5,5000,error
+341af6ad7f501456,s00848,,incident,2026-08-31 09:55,web,GET /api/dashboard,0,1860,ok
+341af6ad7f501456,s00849,s00848,incident,2026-08-31 09:55,api,GET /dashboard,2,1852,ok
+341af6ad7f501456,s00850,s00849,incident,2026-08-31 09:55,db,acquire connection,5,1705,ok
+341af6ad7f501456,s00851,s00849,incident,2026-08-31 09:55,db,SELECT invoices,1710,140,ok
+f20e0ffe5feb3e3f,s00852,,incident,2026-08-31 09:55,web,GET /api/invoices,0,4072,ok
+f20e0ffe5feb3e3f,s00853,s00852,incident,2026-08-31 09:55,api,GET /invoices,2,4064,ok
+f20e0ffe5feb3e3f,s00854,s00853,incident,2026-08-31 09:55,db,acquire connection,5,3983,ok
+f20e0ffe5feb3e3f,s00855,s00853,incident,2026-08-31 09:55,db,SELECT invoices,3988,74,ok
+69b74f71caa69b3b,s00856,,incident,2026-08-31 09:55,web,POST /api/invoices/send,0,1612,ok
+69b74f71caa69b3b,s00857,s00856,incident,2026-08-31 09:55,api,POST /invoices/send,2,1604,ok
+69b74f71caa69b3b,s00858,s00857,incident,2026-08-31 09:55,db,acquire connection,5,1177,ok
+69b74f71caa69b3b,s00859,s00857,incident,2026-08-31 09:55,db,"SELECT invoice, lines, customer",1182,78,ok
+69b74f71caa69b3b,s00860,s00857,incident,2026-08-31 09:55,api,render invoice pdf,1260,107,ok
+69b74f71caa69b3b,s00861,s00857,incident,2026-08-31 09:55,email-provider,POST /v3/mail/send,1430,172,ok
+f9fa70c57b17381c,s00862,,incident,2026-08-31 09:55,web,POST /api/invoices/send,0,5015,error
+f9fa70c57b17381c,s00863,s00862,incident,2026-08-31 09:55,api,POST /invoices/send,2,5007,error
+f9fa70c57b17381c,s00864,s00863,incident,2026-08-31 09:55,db,acquire connection,5,5000,error
+b9a351f8f37f7d28,s00865,,incident,2026-08-31 09:55,web,POST /api/invoices/send,0,4492,ok
+b9a351f8f37f7d28,s00866,s00865,incident,2026-08-31 09:55,api,POST /invoices/send,2,4484,ok
+b9a351f8f37f7d28,s00867,s00866,incident,2026-08-31 09:55,db,acquire connection,5,4002,ok
+b9a351f8f37f7d28,s00868,s00866,incident,2026-08-31 09:55,db,"SELECT invoice, lines, customer",4007,96,ok
+b9a351f8f37f7d28,s00869,s00866,incident,2026-08-31 09:55,api,render invoice pdf,4103,127,ok
+b9a351f8f37f7d28,s00870,s00866,incident,2026-08-31 09:55,email-provider,POST /v3/mail/send,4273,209,ok
+db5d4eee547fe78e,s00871,,incident,2026-08-31 09:55,web,GET /api/invoices,0,5015,error
+db5d4eee547fe78e,s00872,s00871,incident,2026-08-31 09:55,api,GET /invoices,2,5007,error
+db5d4eee547fe78e,s00873,s00872,incident,2026-08-31 09:55,db,acquire connection,5,5000,error
+ff7c534c4b6f70ae,s00874,,incident,2026-08-31 09:55,web,GET /api/dashboard,0,5015,error
+ff7c534c4b6f70ae,s00875,s00874,incident,2026-08-31 09:55,api,GET /dashboard,2,5007,error
+ff7c534c4b6f70ae,s00876,s00875,incident,2026-08-31 09:55,db,acquire connection,5,5000,error
+04f25cd9439c19ee,s00877,,incident,2026-08-31 09:55,web,POST /api/invoices/send,0,4333,ok
+04f25cd9439c19ee,s00878,s00877,incident,2026-08-31 09:55,api,POST /invoices/send,2,4325,ok
+04f25cd9439c19ee,s00879,s00878,incident,2026-08-31 09:55,db,acquire connection,5,3821,ok
+04f25cd9439c19ee,s00880,s00878,incident,2026-08-31 09:55,db,"SELECT invoice, lines, customer",3826,122,ok
+04f25cd9439c19ee,s00881,s00878,incident,2026-08-31 09:55,api,render invoice pdf,3948,94,ok
+04f25cd9439c19ee,s00882,s00878,incident,2026-08-31 09:55,email-provider,POST /v3/mail/send,4118,205,ok
+db6e985f0e9778b8,s00883,,incident,2026-08-31 09:55,web,POST /api/invoices/send,0,5015,error
+db6e985f0e9778b8,s00884,s00883,incident,2026-08-31 09:55,api,POST /invoices/send,2,5007,error
+db6e985f0e9778b8,s00885,s00884,incident,2026-08-31 09:55,db,acquire connection,5,5000,error

@@ -55,6 +55,8 @@ export type LearnerState = {
   credentials: Credential[];
   /** The official certificate, if they got one. */
   certificate: Certificate | null;
+  /** True when this course's progress was just cleared after 14 days without activity. */
+  wasReset: boolean;
 };
 
 const EMPTY: LearnerState = {
@@ -67,6 +69,7 @@ const EMPTY: LearnerState = {
   assessment: null,
   credentials: [],
   certificate: null,
+  wasReset: false,
 };
 
 /** Everything about the signed-in learner's relationship with one course. */
@@ -86,6 +89,8 @@ export function useLearner(course: Course | null) {
       setState({ ...EMPTY, loading: false, project, assessment });
       return;
     }
+    // Apply any 14-day reset before reading progress, so the page never shows stale progress.
+    const reset = await b.applyInactivityResets().catch(() => [] as string[]);
     const [enrollments, progress, attempts, submission, credentials, certificates] = await Promise.all([
       b.listEnrollments(),
       b.getProgress(courseId),
@@ -104,6 +109,7 @@ export function useLearner(course: Course | null) {
       assessment,
       credentials: credentials.filter((c) => c.courseId === courseId && c.status === "valid"),
       certificate: certificates.find((c) => c.courseId === courseId && c.status === "valid") ?? null,
+      wasReset: reset.includes(courseId),
     });
   }, [courseId, auth.status]);
 

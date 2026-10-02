@@ -1,6 +1,6 @@
 ---
 title: Data modelling
-minutes: 35
+minutes: 15
 summary: Finish the star schema with a proper date table, sort months correctly, and tidy the model so reports are easy to build.
 ---
 
@@ -95,6 +95,43 @@ Now `Date[Year]` and `Date[Month]` on a matrix, `orders[revenue]` in values, giv
   "hint": "It covers 1 January 2025 to 31 December 2026: two full years, neither a leap year.",
   "explanation": "365 + 365 = 730 days, one row each.",
   "required": true
+}
+```
+
+
+## More practice
+
+Optional drills. They don't count towards the certificate, but they're the fastest way to make this lesson stick. Several use a different dataset from the lesson on purpose: if you can do the same thing on unfamiliar data, you've really learned it.
+
+```answer
+{
+  "id": "pbi-07-d1",
+  "prompt": "Using your date table, what was Kolanut's revenue in **March 2026**?",
+  "answer": 51202475,
+  "format": "naira",
+  "dataset": "sales",
+  "files": [
+    "orders"
+  ],
+  "verify": "SELECT SUM(quantity * unit_price * (1 - discount_pct / 100.0)) FROM orders WHERE order_date BETWEEN '2026-03-01' AND '2026-03-31'",
+  "hint": "Put Year and Month from the date table in a matrix with the revenue measure.",
+  "required": false
+}
+```
+
+```answer
+{
+  "id": "pbi-07-d2",
+  "prompt": "In the legal dataset, what was the total value of invoices **issued in 2025**?",
+  "answer": 613730000,
+  "format": "naira",
+  "dataset": "legal",
+  "files": [
+    "invoices"
+  ],
+  "verify": "SELECT SUM(amount_ngn) FROM invoices WHERE issued_date BETWEEN '2025-01-01' AND '2025-12-31'",
+  "hint": "Relate a date table to invoices[issued_date] and slice by Year.",
+  "required": false
 }
 ```
 

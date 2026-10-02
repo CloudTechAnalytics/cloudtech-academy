@@ -1,6 +1,6 @@
 ---
 title: Normalisation
-minutes: 35
+minutes: 15
 summary: Remove repetition step by step - first, second and third normal form - so every fact is stored exactly once.
 ---
 
@@ -79,6 +79,43 @@ Normalising a flat sheet, in order:
   "verify": "SELECT COUNT(DISTINCT sales_rep) FROM customers",
   "hint": "Count the distinct values in the sales_rep column: remove duplicates or use UNIQUE / COUNTUNIQUE.",
   "required": true
+}
+```
+
+
+## More practice
+
+Optional drills. They don't count towards the certificate, but they're the fastest way to make this lesson stick. Several use a different dataset from the lesson on purpose: if you can do the same thing on unfamiliar data, you've really learned it.
+
+```answer
+{
+  "id": "dmo-06-d1",
+  "prompt": "Lawyer names are typed out on every row of the legal `matters.csv`. If you normalised them into a `lawyers` table, how many rows would it have?",
+  "answer": 8,
+  "format": "number",
+  "dataset": "legal",
+  "files": [
+    "matters"
+  ],
+  "verify": "SELECT COUNT(DISTINCT responsible_lawyer) FROM matters",
+  "hint": "Count the different values in responsible_lawyer.",
+  "required": false
+}
+```
+
+```answer
+{
+  "id": "dmo-06-d2",
+  "prompt": "Court names repeat in `hearings.csv`. How many rows would a `courts` table have?",
+  "answer": 5,
+  "format": "number",
+  "dataset": "legal",
+  "files": [
+    "hearings"
+  ],
+  "verify": "SELECT COUNT(DISTINCT court) FROM hearings",
+  "hint": "Count the different values in court.",
+  "required": false
 }
 ```
 

@@ -1,0 +1,9 @@
+sprint,start_date,end_date,goal,committed_points,status
+1,2026-03-02,2026-03-13,A kiosk owner can sign up and log in with a phone number,16,Closed
+2,2026-03-16,2026-03-27,Kiosks can browse the catalogue with current prices,19,Closed
+3,2026-03-30,2026-04-10,A kiosk can build a basket and place an order,20,Closed
+4,2026-04-13,2026-04-24,Kiosks can pay by transfer or on delivery,23,Closed
+5,2026-04-27,2026-05-08,Kiosks can pay by transfer or on delivery,21,Closed
+6,2026-05-11,2026-05-22,Sales reps can see and help their kiosks' orders,24,Closed
+7,2026-05-25,2026-06-05,Reorder last week's basket in two taps,,Planned
+8,2026-06-08,2026-06-19,"Release candidate: fix, polish and pilot in Surulere",,Future

@@ -1,5 +1,4 @@
 import type { Backend } from "./types";
-import { createDemoBackend } from "./demo";
 
 export * from "./types";
 
@@ -31,8 +30,13 @@ export async function getBackend(): Promise<Backend> {
   if (IS_LIVE) {
     const { createSupabaseBackend } = await import("./supabase");
     instance = createSupabaseBackend(SUPABASE_URL!, SUPABASE_KEY!);
-  } else {
+  } else if (!import.meta.env.PROD) {
+    // Demo mode exists for local development only. Loading it this way keeps it, and the practice
+    // project answer keys it grades with, out of production builds, which always use Supabase.
+    const { createDemoBackend } = await import("./demo");
     instance = createDemoBackend();
+  } else {
+    throw new Error("Supabase isn't configured.");
   }
   return instance;
 }

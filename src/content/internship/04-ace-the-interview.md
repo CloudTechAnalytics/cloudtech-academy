@@ -65,7 +65,58 @@ Efosa Igbinedion
 
 ## Try it
 
-1. Write and practise your 60-second "tell me about yourself" answer out loud.
-2. Write one STAR story about teamwork and one about solving a problem.
-3. Prepare two questions to ask an interviewer.
-4. Do a practice video call with a friend and ask for honest feedback.
+```task
+{
+  "id": "intern-m04-t1",
+  "prompt": "Write your **\"Tell me about yourself\"** answer: about 60 seconds spoken (roughly 110 to 170 words). Cover what you study, one or two skills with evidence, and why you want **this kind** of internship. Then practise it out loud.",
+  "minutes": 10,
+  "rows": 9,
+  "placeholder": "I'm a ... student at ...",
+  "rules": [
+    { "label": "Says what you study and where", "pattern": "\\b(i'm|i am)\\b[^.\\n]*(student|studying|graduate)" },
+    { "label": "Names a skill or tool", "pattern": "excel|sql|python|canva|power bi|google|writing|research|sales|customer|design|social media|data|accounting|coding" },
+    { "label": "Gives evidence (a project, role or result with a number)", "pattern": "\\d" },
+    { "label": "Says why you want this internship", "pattern": "want|keen|interested|excited|looking for|hope to|would like" },
+    { "label": "About 60 seconds spoken (110 to 170 words)", "minWords": 110, "maxWords": 170 }
+  ],
+  "sample": "I'm a 300 level Statistics student at the University of Benin. Most of my best work has been with data: in my second year I cleaned and analysed survey responses from 400 students for a departmental project on transport costs, and presented the results to our head of department. Since then I've taught myself Excel pivot tables and Power BI, and I built a dashboard of a fictional distributor's sales that I've put in my portfolio. Outside class, I'm treasurer of our departmental association, which has taught me to keep records accurate and explain numbers to people who don't like them. I'm looking for a data internship because I want to see how real businesses use data to make decisions, and to learn from analysts who do it every day. Your team's weekly sales reviews are exactly the kind of work I'd like to be part of.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "intern-m04-t2",
+  "prompt": "Write one **STAR story** about solving a problem or working in a team, one part per line: `Situation:`, `Task:`, `Action:` (what **you** did, using \"I\") and `Result:` (with a number if you can).",
+  "minutes": 10,
+  "rows": 8,
+  "placeholder": "Situation: ...\nTask: ...\nAction: ...\nResult: ...",
+  "rules": [
+    { "label": "Situation:", "pattern": "^\\s*situation\\s*:\\s*\\S" },
+    { "label": "Task:", "pattern": "^\\s*task\\s*:\\s*\\S" },
+    { "label": "Action: in the first person (I…)", "pattern": "^\\s*action\\s*:[^\\n]*\\bI\\b" },
+    { "label": "Result: with a number or clear outcome", "pattern": "^\\s*result\\s*:[^\\n]*(\\d|doubled|half|all |every|on time|sold out|first)" }
+  ],
+  "sample": "Situation: Two weeks before our departmental dinner, sign-ups were 40% below what we needed to cover the venue.\nTask: As publicity lead, I had to fill the gap without extra budget.\nAction: I asked class reps for their WhatsApp groups, made three short posts with a countdown in Canva, and offered a group price for tables of five.\nResult: We reached 120 sign-ups, 20 more than our target, and covered the venue cost.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "intern-m04-t3",
+  "prompt": "Write **two questions** you'd ask an interviewer at the end, one per line. They should show you're thinking about doing the job well, not about time off.",
+  "minutes": 3,
+  "rows": 3,
+  "placeholder": "...?\n...?",
+  "rules": [
+    { "label": "Two questions", "pattern": "\\?", "min": 2 },
+    { "label": "About the work, the team or success in the role", "pattern": "day|week|success|team|work with|learn|project|expect|measure|first month|tools" },
+    { "label": "Not about leave, pay or finishing early", "pattern": "leave|holiday|days off|salary|pay|finish early|work from home every", "absent": true }
+  ],
+  "sample": "What would success look like for an intern at the end of the six months?\nWhich tools does the team use most for its weekly reports?",
+  "required": true
+}
+```
+
+Then do a practice video call with a friend using your answers, and ask for honest feedback on one thing to improve.

@@ -71,7 +71,45 @@ linkedin.com/in/amaka-obi · 0803 000 0000
 
 ## Try it
 
-1. Create a professional email address if yours isn't one.
-2. Add a signature.
-3. Write an email to a lecturer or an organisation asking one clear question, using the six parts above.
-4. Read it aloud before sending, and check the subject line makes sense on its own.
+You need to ask the course adviser whether you can register a fifth elective. Which subject line is best?
+
+- **A.** `Hello`
+- **B.** `URGENT!!! Please read`
+- **C.** `Request to register a fifth elective - 300 Level, Matric 21/0453`
+- **D.** `Question`
+
+```answer
+{
+  "id": "digi-m03-a1",
+  "prompt": "Type the letter.",
+  "answer": "C",
+  "format": "text",
+  "accept": ["c.", "(c)"],
+  "explanation": "It says what the email is about and who you are before it's even opened.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "digi-m03-t1",
+  "prompt": "Write a complete email to a lecturer, course adviser or organisation asking **one clear question** (real or realistic). Include all six parts: a specific `Subject:` line, a greeting, who you are, the point, a thank-you, and a sign-off with your name.",
+  "minutes": 10,
+  "rows": 14,
+  "placeholder": "Subject: ...\n\nDear Dr ...,\n\nI'm ...\n\n...\n\nKind regards,\n...",
+  "rules": [
+    { "label": "A specific Subject: line (at least 4 words)", "pattern": "^\\s*subject\\s*:\\s*(\\S+\\s+){3,}\\S+" },
+    { "label": "A formal greeting (Dear…, Good morning…)", "pattern": "^\\s*(dear|good (morning|afternoon|evening))\\b" },
+    { "label": "Says who you are (I'm, I am, my name is…)", "pattern": "\\b(i'm|i am|my name is)\\b" },
+    { "label": "Asks clearly (could, would, may, please…)", "pattern": "\\b(could|would|may|please|can i|is it possible)\\b" },
+    { "label": "Thanks them", "pattern": "thank" },
+    { "label": "A professional sign-off (Kind regards, Best regards, Yours sincerely…)", "pattern": "^\\s*(kind regards|best regards|regards|yours sincerely|yours faithfully|best wishes|many thanks)\\s*,?\\s*$" },
+    { "label": "No text-speak (pls, u, ur, thx) or shouting (!!!)", "pattern": "\\b(pls|plz|thx|ur)\\b|\\bu\\b|!!", "absent": true },
+    { "label": "Brief: under 180 words", "minWords": 40, "maxWords": 180 }
+  ],
+  "sample": "Subject: Request to register a fifth elective - 300 Level, Matric 21/0453\n\nDear Dr Okoro,\n\nI'm Amaka Obi, a 300 level Economics student and one of your advisees.\n\nI would like to take GST 311 (Entrepreneurship) as a fifth elective this semester, which would bring me to 24 units. Could you please confirm whether this is allowed, and whether I need your signature on the registration form?\n\nThank you for your time.\n\nKind regards,\nAmaka Obi\n300 Level, Economics\n21/0453",
+  "required": true
+}
+```
+
+Then set up your email signature, and send your email if it's a real question.

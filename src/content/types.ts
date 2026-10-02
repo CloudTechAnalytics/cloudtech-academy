@@ -31,6 +31,8 @@ export type ProjectDef = {
   brief: string;
   tasks: string[];
   datasets: string[];
+  /** What a reviewer checks a submission against. Shown to the learner before they submit. */
+  rubric: string[];
 };
 
 /* ---------- runtime content model (what pages render) ---------- */
@@ -121,6 +123,47 @@ export type AnswerSpec = {
   files?: string[];
   /** SQL over the CSV files that reproduces `answer`. Run by npm run test:content, never in the browser. */
   verify?: string;
+  /** A Python expression, evaluated after the lesson's code has run, that reproduces `answer`. Run by scripts/test-python.py. */
+  pyVerify?: string;
+};
+
+/**
+ * One rule a written task must meet. With `pattern` (a case-insensitive regular expression)
+ * the text must match at least `min` times, or with `absent` must not match at all; with
+ * `perLine` every non-empty line must match instead. The length rules count words or lines.
+ */
+export type TaskRule = {
+  /** What the learner sees in the checklist, e.g. "Each bullet includes a number". */
+  label: string;
+  pattern?: string;
+  min?: number;
+  absent?: boolean;
+  perLine?: boolean;
+  minWords?: number;
+  maxWords?: number;
+  minLines?: number;
+};
+
+/**
+ * A practice task where the learner writes or pastes real work (a CV bullet, a prompt,
+ * an email, some HTML) and it's checked against concrete rules, then compared with a
+ * model answer: ```task {...}
+ */
+export type TaskSpec = {
+  id: string;
+  prompt: string;
+  /** Honest time the task takes, used to work out the lesson's length. */
+  minutes: number;
+  rules: TaskRule[];
+  /** A model answer, shown once the task passes. Markdown. It must pass the task's own rules. */
+  sample?: string;
+  /** Commentary shown under the model answer: why it works, other good answers. Markdown. */
+  note?: string;
+  placeholder?: string;
+  hint?: string;
+  /** Height of the text box in lines. Default 8. */
+  rows?: number;
+  required?: boolean;
 };
 
 /** Download card for a practice dataset: ```dataset {"dataset": "sales", "files": ["orders"]} */

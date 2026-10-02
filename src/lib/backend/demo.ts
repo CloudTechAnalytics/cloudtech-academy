@@ -7,7 +7,9 @@
 import { BUNDLED_ASSESSMENTS, BUNDLED_COURSES, BUNDLED_PROJECTS } from "@/content";
 import type { AssessmentDef, Course } from "@/content/types";
 import { requiredExerciseIds } from "../lesson-format";
-import { certificateNumber, eligibility, newCredentialId } from "../certificates";
+import { certificateNumber, eligibility, moduleTaskIds, newCredentialId } from "../certificates";
+import { isStale } from "../inactivity";
+import { requiredCourses, TRACKS } from "@/content/tracks";
 import { PROFILE_SLUG_RE, SLUG_HELP } from "../profile";
 import { PRACTICE_PROJECTS } from "@/content/projects";
 import { PROJECT_ANSWERS } from "@/content/project-answers";
@@ -112,13 +114,13 @@ function recipientName(u: User) {
 function newCredential(
   s: Store,
   u: User,
-  f: Pick<Credential, "kind" | "courseId" | "moduleId" | "badgeName" | "courseTitle" | "moduleTitle" | "skills" | "projectId"> & { code: string },
+  f: Pick<Credential, "kind" | "courseId" | "moduleId" | "badgeName" | "courseTitle" | "moduleTitle" | "skills" | "projectId"> & { code: string; trackId?: string | null },
 ): Credential {
   let credentialId = newCredentialId(f.code);
   while (s.credentials.some((c) => c.credentialId === credentialId)) credentialId = newCredentialId(f.code);
   const { code: _code, ...fields } = f;
   void _code;
-  const cred: Credential = { id: uid(), credentialId, userId: u.id, recipientName: recipientName(u), issuedAt: now(), status: "valid", revokedReason: null, ...fields };
+  const cred: Credential = { id: uid(), credentialId, userId: u.id, recipientName: recipientName(u), issuedAt: now(), status: "valid", revokedReason: null, ...fields, trackId: fields.trackId ?? null };
   s.credentials.push(cred);
   s.activity[u.id] = now();
   return cred;
@@ -132,9 +134,9 @@ function withWork(s: Store, c: Credential): Credential {
 }
 
 function publicCredential(s: Store, c: Credential): PublicCredential {
-  const { credentialId, kind, badgeName, courseId, courseTitle, moduleTitle, recipientName, skills, issuedAt, status } = c;
+  const { credentialId, kind, badgeName, courseId, trackId, courseTitle, moduleTitle, recipientName, skills, issuedAt, status } = c;
   const w = withWork(s, c);
-  return { credentialId, kind, badgeName, courseId, courseTitle, moduleTitle, recipientName, skills, issuedAt, status, projectId: c.projectId ?? null, workUrl: w.workUrl ?? null, reviewed: !!w.reviewed };
+  return { credentialId, kind, badgeName, courseId, trackId: trackId ?? null, courseTitle, moduleTitle, recipientName, skills, issuedAt, status, projectId: c.projectId ?? null, workUrl: w.workUrl ?? null, reviewed: !!w.reviewed };
 }
 
 /** Issues the certificate for a paid or granted order (the caller saves). */
@@ -190,6 +192,26 @@ export function createDemoBackend(): Backend {
   /** A module's check when moduleId is given, otherwise the course's final assessment. */
   const findAssessment = (courseId: string, moduleId?: string) =>
     assessments().find((a) => a.courseId === courseId && (moduleId ? a.kind === "module" && a.moduleId === moduleId : a.kind !== "module"));
+  const assessmentCourse = (s: Store, assessmentId: string) => assessments(s).find((a) => a.id === assessmentId)?.courseId;
+  /** Marks a course as active now (opening a lesson, completing something, taking an assessment). */
+  const touch = (s: Store, userId: string, courseId: string | undefined) => {
+    const e = (s.enrollments[userId] ?? []).find((x) => x.courseId === courseId);
+    if (e) e.lastActiveAt = now();
+  };
+  const courseCompleted = (s: Store, userId: string, courseId: string) =>
+    (s.enrollments[userId] ?? []).some((e) => e.courseId === courseId && e.completedAt) ||
+    s.credentials.some((c) => c.userId === userId && c.courseId === courseId && c.kind === "course_completion" && c.status === "valid");
+  /** Clears a learner's lessons, tasks and assessment attempts in one course. Badges stay. */
+  const clearCourseProgress = (s: Store, userId: string, courseId: string) => {
+    delete s.lessons[key(userId, courseId)];
+    delete s.exercises[key(userId, courseId)];
+    s.attempts[userId] = (s.attempts[userId] ?? []).filter((t) => assessmentCourse(s, t.assessmentId) !== courseId);
+    const e = (s.enrollments[userId] ?? []).find((x) => x.courseId === courseId);
+    if (e) {
+      e.lastLessonId = null;
+      e.lastActiveAt = now();
+    }
+  };
 
   if (typeof window !== "undefined") window.addEventListener("storage", (e) => e.key === KEY && notify());
 
@@ -325,13 +347,14 @@ export function createDemoBackend(): Backend {
 
     async listEnrollments() {
       const u = current();
-      return u ? (load().enrollments[u.id] ?? []) : [];
+      // Enrollments saved before activity was tracked count as active from when they started.
+      return u ? (load().enrollments[u.id] ?? []).map((e) => ({ ...e, lastActiveAt: e.lastActiveAt ?? e.enrolledAt })) : [];
     },
     async enroll(courseId) {
       const u = requireUser();
       const s = load();
       const list = (s.enrollments[u.id] ??= []);
-      if (!list.some((e) => e.courseId === courseId)) list.push({ courseId, enrolledAt: now(), completedAt: null, lastLessonId: null });
+      if (!list.some((e) => e.courseId === courseId)) list.push({ courseId, enrolledAt: now(), completedAt: null, lastLessonId: null, lastActiveAt: now() });
       save(s);
     },
     async setLastLesson(courseId, lessonId) {
@@ -341,8 +364,31 @@ export function createDemoBackend(): Backend {
       const e = (s.enrollments[u.id] ?? []).find((x) => x.courseId === courseId);
       if (e) {
         e.lastLessonId = lessonId;
+        e.lastActiveAt = now();
         save(s);
       }
+    },
+    async removeCourse(courseId) {
+      const u = requireUser();
+      const s = load();
+      if (!courseCompleted(s, u.id, courseId)) clearCourseProgress(s, u.id, courseId);
+      s.enrollments[u.id] = (s.enrollments[u.id] ?? []).filter((e) => e.courseId !== courseId);
+      save(s);
+    },
+    async applyInactivityResets() {
+      const u = current();
+      if (!u) return [];
+      const s = load();
+      const reset: string[] = [];
+      for (const e of s.enrollments[u.id] ?? []) {
+        if (!isStale(e.lastActiveAt ?? e.enrolledAt) || courseCompleted(s, u.id, e.courseId)) continue;
+        const k = key(u.id, e.courseId);
+        const hadProgress = !!(s.lessons[k]?.length || s.exercises[k]?.length || (s.attempts[u.id] ?? []).some((t) => assessmentCourse(s, t.assessmentId) === e.courseId));
+        clearCourseProgress(s, u.id, e.courseId);
+        if (hadProgress) reset.push(e.courseId);
+      }
+      save(s);
+      return reset;
     },
     async getProgress(courseId) {
       const u = current();
@@ -359,6 +405,7 @@ export function createDemoBackend(): Backend {
       else set.delete(lessonId);
       s.lessons[key(u.id, courseId)] = [...set];
       s.activity[u.id] = now();
+      touch(s, u.id, courseId);
       save(s);
     },
     async recordExercise(courseId, _lessonId, exerciseId) {
@@ -369,6 +416,7 @@ export function createDemoBackend(): Backend {
       set.add(exerciseId);
       s.exercises[key(u.id, courseId)] = [...set];
       s.activity[u.id] = now();
+      touch(s, u.id, courseId);
       save(s);
     },
     async submitAssessment(assessmentId, answers) {
@@ -381,6 +429,7 @@ export function createDemoBackend(): Backend {
       const s = load();
       (s.attempts[u.id] ??= []).push(result);
       s.activity[u.id] = now();
+      touch(s, u.id, a.courseId);
       save(s);
       return result;
     },
@@ -415,7 +464,10 @@ export function createDemoBackend(): Backend {
       const course = courses(s).find((c) => c.modules.some((m) => m.id === moduleId));
       const mod = course?.modules.find((m) => m.id === moduleId);
       if (!course || !mod?.badge) throw new BackendError("This module has no badge.");
-      const check = assessments(s).find((a) => a.kind === "module" && a.moduleId === moduleId);
+      const done = s.exercises[key(u.id, course.id)] ?? [];
+      const missing = moduleTaskIds(mod).filter((id) => !done.includes(id)).length;
+      if (missing) throw new BackendError(`Complete the tasks in this module first (${missing} left).`);
+      const check =assessments(s).find((a) => a.kind === "module" && a.moduleId === moduleId);
       if (!check || !(s.attempts[u.id] ?? []).some((t) => t.assessmentId === check.id && t.passed)) throw new BackendError("Pass the module check first.");
       const cred = newCredential(s, u, {
         kind: "module_badge",
@@ -460,11 +512,37 @@ export function createDemoBackend(): Backend {
       save(s);
       return cred;
     },
+    async issueTrackCredential(trackId) {
+      const u = requireUser();
+      const s = load();
+      const existing = s.credentials.find((c) => c.userId === u.id && c.kind === "track_completion" && c.trackId === trackId && c.status === "valid");
+      if (existing) return existing;
+      const track = TRACKS.find((t) => t.id === trackId);
+      if (!track) throw new BackendError("Track not found.");
+      const published = new Set(courses(s).filter((c) => c.published && c.status === "available").map((c) => c.id));
+      const missing = requiredCourses(track).filter(
+        (id) => published.has(id) && !s.credentials.some((c) => c.userId === u.id && c.courseId === id && c.kind === "course_completion" && c.status === "valid"),
+      );
+      if (missing.length) throw new BackendError(`Complete every required course in the track first (${missing.length} left).`);
+      const cred = newCredential(s, u, {
+        kind: "track_completion",
+        code: track.badgeCode,
+        courseId: "",
+        trackId: track.id,
+        moduleId: null,
+        badgeName: track.badge,
+        courseTitle: track.title,
+        moduleTitle: null,
+        skills: track.skills,
+      });
+      save(s);
+      return cred;
+    },
     async listMyCredentials() {
       const u = current();
       if (!u) return [];
       const s = load();
-      return s.credentials.filter((c) => c.userId === u.id).map((c) => withWork(s, c));
+      return s.credentials.filter((c) => c.userId === u.id).map((c) => withWork(s, { ...c, trackId: c.trackId ?? null }));
     },
     async verifyCredential(credentialId) {
       const s = load();
@@ -480,7 +558,7 @@ export function createDemoBackend(): Backend {
       const u = current();
       return u ? load().practice.filter((p) => p.userId === u.id).sort((a, b) => b.updatedAt.localeCompare(a.updatedAt)) : [];
     },
-    // Mirrors submit_practice_project() in supabase/migrations/0003_project_badges.sql.
+    // Mirrors submit_practice_project() in supabase/migrations/0006_project_badges.sql.
     async submitPracticeProject({ projectId, workUrl, summary, answers }) {
       const u = requireUser();
       const project = PRACTICE_PROJECTS.find((p) => p.id === projectId);
@@ -520,7 +598,7 @@ export function createDemoBackend(): Backend {
         cred = newCredential(s, u, {
           kind: "project_badge",
           code: project.badge.code,
-          courseId: null,
+          courseId: "",
           moduleId: null,
           projectId,
           badgeName: project.badge.name,

@@ -1,6 +1,6 @@
 ---
 title: Pivot tables
-minutes: 40
+minutes: 20
 summary: Summarise thousands of rows in seconds - by region, month, channel or rep - with pivot tables, grouping, percentages and slicers.
 ---
 
@@ -116,6 +116,61 @@ To get the channel percentages in the Example: `channel` in Rows, `revenue` in V
   "files": ["orders"],
   "verify": "SELECT CASE substr(order_date, 6, 2) WHEN '01' THEN 'January' WHEN '02' THEN 'February' WHEN '03' THEN 'March' WHEN '04' THEN 'April' WHEN '05' THEN 'May' WHEN '06' THEN 'June' WHEN '07' THEN 'July' WHEN '08' THEN 'August' WHEN '09' THEN 'September' WHEN '10' THEN 'October' WHEN '11' THEN 'November' ELSE 'December' END || ' ' || substr(order_date, 1, 4) FROM orders GROUP BY substr(order_date, 1, 7) ORDER BY SUM(quantity * unit_price * (1 - discount_pct / 100.0)) DESC LIMIT 1",
   "hint": "Pivot with order_date grouped by Years and Months in Rows, revenue in Values, then sort largest to smallest.",
+  "required": false
+}
+```
+
+
+## More practice
+
+Optional drills. They don't count towards the certificate, but they're the fastest way to make this lesson stick. Several use a different dataset from the lesson on purpose: if you can do the same thing on unfamiliar data, you've really learned it.
+
+```answer
+{
+  "id": "xls-08-d1",
+  "prompt": "Build a pivot table on the HR `employees.csv` with department in Rows and a count of **Active** employees. Which department has the most active employees?",
+  "answer": "Operations",
+  "format": "text",
+  "dataset": "hr",
+  "files": [
+    "employees"
+  ],
+  "verify": "SELECT department FROM employees WHERE status = 'Active' GROUP BY department ORDER BY COUNT(*) DESC LIMIT 1",
+  "hint": "Put status in Filters and choose Active.",
+  "required": false
+}
+```
+
+```answer
+{
+  "id": "xls-08-d2",
+  "prompt": "Pivot `attendance.csv` with status in Filters (Late) and employee_id in Rows. How many **different employees** were late at least once in June?",
+  "answer": 51,
+  "format": "number",
+  "dataset": "hr",
+  "files": [
+    "attendance"
+  ],
+  "verify": "SELECT COUNT(DISTINCT employee_id) FROM attendance WHERE status = 'Late'",
+  "hint": "Count the rows of the pivot (not counting Grand Total), or select the employee_id cells and read Count in the status bar.",
+  "explanation": "Lateness is spread across most of the staff, not a few people: that changes what HR should do about it.",
+  "required": false
+}
+```
+
+```answer
+{
+  "id": "xls-08-d3",
+  "prompt": "Which **channel** brought Kolanut the most revenue in **2025**? (Add channel to the orders with XLOOKUP, or build the pivot on the data model.)",
+  "answer": "Wholesale",
+  "format": "text",
+  "dataset": "sales",
+  "files": [
+    "orders",
+    "customers"
+  ],
+  "verify": "SELECT c.channel FROM orders o JOIN customers c ON c.customer_id = o.customer_id WHERE o.order_date BETWEEN '2025-01-01' AND '2025-12-31' GROUP BY c.channel ORDER BY SUM(o.quantity * o.unit_price * (1 - o.discount_pct / 100.0)) DESC LIMIT 1",
+  "hint": "Channel in Rows, Sum of revenue in Values, a year filter on order_date.",
   "required": false
 }
 ```

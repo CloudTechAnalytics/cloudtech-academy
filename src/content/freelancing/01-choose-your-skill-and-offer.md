@@ -1,6 +1,6 @@
 ---
 title: Choose Your Skill and Offer
-minutes: 20
+minutes: 40
 summary: Pick one skill you can sell now, turn it into a clear offer with a fixed scope, and build a few samples to show clients.
 ---
 
@@ -49,7 +49,38 @@ Clients want to see work. If you don't have clients yet:
 
 ## Try it
 
-1. List three skills you have and pick the one you could sell this month.
-2. Write your offer in one sentence using the four questions.
-3. Create three sample pieces for that offer.
-4. Put them in one place with a shareable link.
+```task
+{
+  "id": "freel-m01-t1",
+  "prompt": "Write your **offer in one sentence**, answering all four questions: what exactly they get (with a number), for whom, how fast, and what's included (like rounds of changes or file formats).",
+  "minutes": 6,
+  "rows": 3,
+  "placeholder": "I design ... for ..., delivered in ... with ...",
+  "rules": [
+    { "label": "Says exactly what they get, with a number (3 flyers, 5 posts, 1 dashboard…)", "pattern": "\\b(\\d+|one|two|three|four|five|six|ten)\\s+[a-z-]+" },
+    { "label": "Says who it's for (for small businesses, restaurants, students…)", "pattern": "\\bfor\\s+(small|local|food|restaurants?|salons?|shops?|students?|businesses|startups?|churches|schools|brands?|ngos?|clinics?|[a-z]+\\s+(businesses|owners|brands))" },
+    { "label": "Says how fast (days, hours, within…)", "pattern": "\\d+\\s*(days?|hours?|working days)|within|same day|next day|48|24" },
+    { "label": "Says what's included (changes, revisions, editable file, formats…)", "pattern": "change|revision|edit|source file|canva link|png|pdf|xlsx|format" },
+    { "label": "One sentence (under 45 words)", "minWords": 12, "maxWords": 45 }
+  ],
+  "sample": "I design three Instagram flyers for small food businesses, in square and story sizes, delivered in 3 days with two rounds of changes and an editable Canva link.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "freel-m01-t2",
+  "prompt": "Create **three sample pieces** for your offer (concept pieces for imaginary or real businesses, clearly labelled as concepts), and put them in one place with a shareable link. Paste the link and list the three samples, one per line.",
+  "minutes": 30,
+  "rows": 5,
+  "placeholder": "https://...\n1. ...\n2. ...\n3. ...",
+  "rules": [
+    { "label": "A shareable link", "pattern": "https?://\\S+\\.\\S+" },
+    { "label": "Three samples listed", "minLines": 4 },
+    { "label": "Says they're concept or sample pieces", "pattern": "concept|sample|mock|practice|example|imaginary" }
+  ],
+  "sample": "https://www.canva.com/design/DAGxxxxxxxx/view\n1. Weekend promo flyer for an imaginary suya spot (concept)\n2. Menu post for a café, square and story sizes (concept)\n3. Grand opening flyer redesign for a real bakery's old flyer (concept, not used by them)",
+  "required": true
+}
+```

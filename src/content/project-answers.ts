@@ -84,8 +84,8 @@ export const PROJECT_ANSWERS: Record<string, ProjectAnswer> = {
     verify: `SELECT COUNT(*) - COUNT(DISTINCT lower(trim(replace(replace("Customer Name", '   ', ' '), '  ', ' ')))) FROM customer_list_raw`,
   },
   "cd-region-spellings": { answer: 23, tolerance: 1, verify: "SELECT COUNT(DISTINCT Region) FROM customer_list_raw" },
-  "cd-blank-credit": { answer: 5, verify: `SELECT COUNT(*) FROM customer_list_raw WHERE "Credit Limit" IS NULL OR trim("Credit Limit") = ''` },
-  "cd-day-first": { answer: 30, verify: `SELECT COUNT(*) FROM customer_list_raw WHERE "Date Joined" LIKE '__/__/____'` },
+  "cd-blank-credit": { answer: 3, verify: `SELECT COUNT(*) FROM customer_list_raw WHERE "Credit Limit" IS NULL OR trim("Credit Limit") = ''` },
+  "cd-day-first": { answer: 28, verify: `SELECT COUNT(*) FROM customer_list_raw WHERE "Date Joined" LIKE '__/__/____'` },
 
   // Law Firm Operations Analysis
   "lf-open": { answer: 34, verify: "SELECT COUNT(*) FROM matters WHERE status = 'Open'" },

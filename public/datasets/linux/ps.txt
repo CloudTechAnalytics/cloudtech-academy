@@ -1,0 +1,18 @@
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+backup     48211 187.4  2.1 2459712 345120 ?     Ssl  Aug30 2981:07 /tmp/.x/kdevtmpfsi
+tallyb+     1187 61.3 14.2 11834512 2329600 ?    Ssl  Aug28 1873:22 node /srv/tallybook/server.js --port 3000
+tallyb+     1188 58.9 13.8 11790336 2263552 ?    Ssl  Aug28 1790:41 node /srv/tallybook/server.js --port 3001
+www-data     902  6.2  0.4 156804 68112 ?        S    Aug28 188:12 nginx: worker process
+www-data     903  5.8  0.4 156804 67904 ?        S    Aug28 176:55 nginx: worker process
+www-data     904  5.5  0.4 156804 67520 ?        S    Aug28 168:03 nginx: worker process
+www-data     905  5.1  0.4 156804 67288 ?        S    Aug28 155:47 nginx: worker process
+root         512  1.2  0.6 1324548 98304 ?       Ssl  Aug28  36:10 /usr/bin/node_exporter
+root         388  0.4  0.3 289116 52224 ?        Ss   Aug28  12:31 /lib/systemd/systemd-journald
+syslog       611  0.3  0.1 222400 18432 ?        Ssl  Aug28   9:02 /usr/sbin/rsyslogd -n
+root         901  0.0  0.1 156220 12288 ?        Ss   Aug28   0:00 nginx: master process /usr/sbin/nginx
+root         702  0.0  0.0  15436  9216 ?        Ss   Aug28   0:02 sshd: /usr/sbin/sshd -D
+root         655  0.0  0.0   9180  3072 ?        Ss   Aug28   0:01 /usr/sbin/cron -f
+root           1  0.0  0.1 167740 13312 ?        Ss   Aug28   0:41 /sbin/init
+root         640  0.0  0.1 241040 11264 ?        Ssl  Aug28   0:09 /usr/lib/policykit-1/polkitd --no-debug
+deploy     51022  0.0  0.0  10072  5120 pts/0    Ss   10:02   0:00 -bash
+deploy     51190  0.0  0.0  11532  4096 pts/0    R+   10:05   0:00 ps aux --sort=-%cpu

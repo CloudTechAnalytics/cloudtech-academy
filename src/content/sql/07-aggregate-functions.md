@@ -1,6 +1,6 @@
 ---
 title: Aggregate functions
-minutes: 25
+minutes: 15
 summary: Summarise many rows into one answer with COUNT, SUM, AVG, MIN and MAX.
 ---
 
@@ -97,6 +97,54 @@ FROM customers;
   "starter": "",
   "solution": "SELECT COUNT(DISTINCT customer_id), MAX(containers), ROUND(AVG(weight_kg)) FROM shipments WHERE booking_date >= '2026-01-01';",
   "hint": "COUNT(DISTINCT customer_id), MAX(containers) and ROUND(AVG(weight_kg)), filtered with WHERE booking_date >= '2026-01-01'.",
+  "required": false
+}
+```
+
+## More practice
+
+Optional drills on the same skills. They don't count towards the certificate, but each one is a small, realistic request from someone at Harbourline. Do as many as you need until the pattern feels automatic.
+
+```exercise
+{
+  "id": "sql-06-d1",
+  "prompt": "How many customers does Harbourline have in Lagos? Return one number.",
+  "starter": "",
+  "solution": "SELECT COUNT(*) FROM customers WHERE city = 'Lagos';",
+  "hint": "COUNT(*) with a WHERE filter.",
+  "required": false
+}
+```
+
+```exercise
+{
+  "id": "sql-06-d2",
+  "prompt": "What are the smallest and largest freight_charge ever billed? Return them in one row as min_charge and max_charge.",
+  "starter": "",
+  "solution": "SELECT MIN(freight_charge) AS min_charge, MAX(freight_charge) AS max_charge FROM shipments;",
+  "hint": "MIN and MAX in the same SELECT.",
+  "required": false
+}
+```
+
+```exercise
+{
+  "id": "sql-06-d3",
+  "prompt": "How many different shipments were paid, at least partly, by Cheque? Return one number.",
+  "starter": "",
+  "solution": "SELECT COUNT(DISTINCT shipment_id) FROM payments WHERE method = 'Cheque';",
+  "hint": "COUNT(DISTINCT shipment_id) counts each shipment once, even if it was paid in several cheques.",
+  "required": false
+}
+```
+
+```exercise
+{
+  "id": "sql-06-d4",
+  "prompt": "What was the average freight_charge of delivered shipments, rounded to the nearest naira? Name it avg_charge.",
+  "starter": "",
+  "solution": "SELECT ROUND(AVG(freight_charge)) AS avg_charge FROM shipments WHERE status = 'Delivered';",
+  "hint": "ROUND(AVG(freight_charge)) with WHERE status = 'Delivered'.",
   "required": false
 }
 ```

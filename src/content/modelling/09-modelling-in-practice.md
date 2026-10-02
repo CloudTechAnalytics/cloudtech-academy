@@ -1,6 +1,6 @@
 ---
 title: Modelling in practice
-minutes: 40
+minutes: 15
 summary: A repeatable process for designing a model, turning it into tables, and testing it with real queries before anyone builds a report on it.
 ---
 

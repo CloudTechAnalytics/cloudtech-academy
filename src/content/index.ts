@@ -28,6 +28,66 @@ import { PYDA_ASSESSMENTS } from "./python-data/assessment";
 import { DIGI_ASSESSMENTS } from "./digital/assessment";
 import { INTERN_ASSESSMENTS } from "./internship/assessment";
 import { FREEL_ASSESSMENTS } from "./freelancing/assessment";
+import { PYAN_ASSESSMENT } from "./python-analytics/assessment";
+import { PYAN_PROJECT } from "./python-analytics/project";
+import { STAT_ASSESSMENT } from "./statistics/assessment";
+import { STAT_PROJECT } from "./statistics/project";
+import { ASQL_ASSESSMENT } from "./advanced-sql/assessment";
+import { ASQL_PROJECT } from "./advanced-sql/project";
+import { DAX_ASSESSMENT } from "./dax/assessment";
+import { DAX_PROJECT } from "./dax/project";
+import { CAP_ASSESSMENT } from "./capstone/assessment";
+import { CAP_PROJECT } from "./capstone/project";
+import { BAC_ASSESSMENT } from "./ba-capstone/assessment";
+import { BAC_PROJECT } from "./ba-capstone/project";
+import { DSC_ASSESSMENT } from "./ds-capstone/assessment";
+import { DSC_PROJECT } from "./ds-capstone/project";
+import { AIC_ASSESSMENT } from "./ai-capstone/assessment";
+import { AIC_PROJECT } from "./ai-capstone/project";
+import { CDC_ASSESSMENT } from "./devops-capstone/assessment";
+import { CDC_PROJECT } from "./devops-capstone/project";
+import { SDC_ASSESSMENT } from "./swe-capstone/assessment";
+import { SDC_PROJECT } from "./swe-capstone/project";
+import { BA_ASSESSMENT } from "./ba/assessment";
+import { BA_PROJECT } from "./ba/project";
+import { ABA_ASSESSMENT } from "./agile-ba/assessment";
+import { ABA_PROJECT } from "./agile-ba/project";
+import { PIL_ASSESSMENT } from "./process/assessment";
+import { PIL_PROJECT } from "./process/project";
+import { ML_ASSESSMENT } from "./ml/assessment";
+import { ML_PROJECT } from "./ml/project";
+import { FEM_ASSESSMENT } from "./features/assessment";
+import { FEM_PROJECT } from "./features/project";
+import { ABT_ASSESSMENT } from "./experiments/assessment";
+import { ABT_PROJECT } from "./experiments/project";
+import { TSF_ASSESSMENT } from "./forecasting/assessment";
+import { TSF_PROJECT } from "./forecasting/project";
+import { GAI_ASSESSMENT } from "./genai/assessment";
+import { GAI_PROJECT } from "./genai/project";
+import { AGT_ASSESSMENT } from "./agents/assessment";
+import { AGT_PROJECT } from "./agents/project";
+import { OPS_ASSESSMENT } from "./llmops/assessment";
+import { OPS_PROJECT } from "./llmops/project";
+import { CLD_ASSESSMENT } from "./cloud/assessment";
+import { CLD_PROJECT } from "./cloud/project";
+import { LNX_ASSESSMENT } from "./linux/assessment";
+import { LNX_PROJECT } from "./linux/project";
+import { IAC_ASSESSMENT } from "./terraform/assessment";
+import { IAC_PROJECT } from "./terraform/project";
+import { CICD_ASSESSMENT } from "./cicd/assessment";
+import { CICD_PROJECT } from "./cicd/project";
+import { SRE_ASSESSMENT } from "./observability/assessment";
+import { SRE_PROJECT } from "./observability/project";
+import { SWE_ASSESSMENT } from "./swe/assessment";
+import { SWE_PROJECT } from "./swe/project";
+import { DBA_ASSESSMENT } from "./dbapi/assessment";
+import { DBA_PROJECT } from "./dbapi/project";
+import { WJS_ASSESSMENT } from "./webjs/assessment";
+import { WJS_PROJECT } from "./webjs/project";
+import { PMF_ASSESSMENT } from "./pm/assessment";
+import { PMF_PROJECT } from "./pm/project";
+import { PDM_ASSESSMENT } from "./product/assessment";
+import { PDM_PROJECT } from "./product/project";
 import { parseFrontmatter, requiredExerciseIds } from "@/lib/lesson-format";
 
 /** Lesson files live in one folder per course, named NN-slug.md. */
@@ -37,6 +97,36 @@ const COURSE_DIRS: Record<string, string> = {
   excel: "excel-for-data-analysis",
   powerbi: "power-bi-fundamentals",
   modelling: "data-modelling",
+  "python-analytics": "python-for-data-analytics",
+  statistics: "statistics-for-data-analysis",
+  "advanced-sql": "advanced-sql",
+  dax: "power-bi-dax",
+  capstone: "data-analyst-capstone",
+  "ba-capstone": "business-analyst-capstone",
+  "ds-capstone": "data-scientist-capstone",
+  "ai-capstone": "ai-engineer-capstone",
+  "devops-capstone": "cloud-devops-capstone",
+  "swe-capstone": "software-developer-capstone",
+  ba: "business-analysis-fundamentals",
+  "agile-ba": "agile-business-analysis",
+  process: "process-improvement-bpmn-lean",
+  ml: "machine-learning-fundamentals",
+  features: "feature-engineering-model-evaluation",
+  experiments: "experimentation-ab-testing",
+  forecasting: "time-series-forecasting",
+  genai: "generative-ai-engineering",
+  agents: "ai-agents-tool-use",
+  llmops: "llm-evaluation-safety-production",
+  cloud: "cloud-fundamentals-cost-reliability",
+  linux: "linux-networking-basics",
+  terraform: "terraform-infrastructure-as-code",
+  cicd: "cicd-and-containers",
+  observability: "observability-site-reliability",
+  swe: "software-engineering-with-python",
+  dbapi: "databases-and-apis-for-developers",
+  webjs: "web-development-with-javascript",
+  pm: "project-management-fundamentals",
+  product: "product-management-fundamentals",
   "ai-productivity": "ai-productivity-fundamentals",
   "design-content": "design-content-essentials",
   career: "career-essentials",
@@ -105,6 +195,36 @@ export const BUNDLED_ASSESSMENTS: AssessmentDef[] = [
   XLS_ASSESSMENT,
   PBI_ASSESSMENT,
   DMO_ASSESSMENT,
+  PYAN_ASSESSMENT,
+  STAT_ASSESSMENT,
+  ASQL_ASSESSMENT,
+  DAX_ASSESSMENT,
+  CAP_ASSESSMENT,
+  BAC_ASSESSMENT,
+  DSC_ASSESSMENT,
+  AIC_ASSESSMENT,
+  CDC_ASSESSMENT,
+  SDC_ASSESSMENT,
+  BA_ASSESSMENT,
+  ABA_ASSESSMENT,
+  PIL_ASSESSMENT,
+  ML_ASSESSMENT,
+  FEM_ASSESSMENT,
+  ABT_ASSESSMENT,
+  TSF_ASSESSMENT,
+  GAI_ASSESSMENT,
+  AGT_ASSESSMENT,
+  OPS_ASSESSMENT,
+  CLD_ASSESSMENT,
+  LNX_ASSESSMENT,
+  IAC_ASSESSMENT,
+  CICD_ASSESSMENT,
+  SRE_ASSESSMENT,
+  SWE_ASSESSMENT,
+  DBA_ASSESSMENT,
+  WJS_ASSESSMENT,
+  PMF_ASSESSMENT,
+  PDM_ASSESSMENT,
   ...AIPF_ASSESSMENTS,
   ...DCE_ASSESSMENTS,
   ...CAREER_ASSESSMENTS,
@@ -119,6 +239,6 @@ export const BUNDLED_ASSESSMENTS: AssessmentDef[] = [
   ...INTERN_ASSESSMENTS,
   ...FREEL_ASSESSMENTS,
 ].map((a) => ({ ...a, kind: a.kind ?? "final" }));
-export const BUNDLED_PROJECTS: ProjectDef[] = [SQL_PROJECT, DAF_PROJECT, XLS_PROJECT, PBI_PROJECT, DMO_PROJECT];
+export const BUNDLED_PROJECTS: ProjectDef[] = [SQL_PROJECT, DAF_PROJECT, XLS_PROJECT, PBI_PROJECT, DMO_PROJECT, PYAN_PROJECT, STAT_PROJECT, ASQL_PROJECT, DAX_PROJECT, CAP_PROJECT, BA_PROJECT, ABA_PROJECT, PIL_PROJECT, ML_PROJECT, FEM_PROJECT, ABT_PROJECT, TSF_PROJECT, GAI_PROJECT, AGT_PROJECT, OPS_PROJECT, CLD_PROJECT, LNX_PROJECT, IAC_PROJECT, CICD_PROJECT, SRE_PROJECT, SWE_PROJECT, DBA_PROJECT, WJS_PROJECT, PMF_PROJECT, PDM_PROJECT, BAC_PROJECT, DSC_PROJECT, AIC_PROJECT, CDC_PROJECT, SDC_PROJECT];
 
 export { CATEGORIES, categoryName } from "./catalog";

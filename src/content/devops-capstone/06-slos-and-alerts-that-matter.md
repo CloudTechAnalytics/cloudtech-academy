@@ -1,0 +1,191 @@
+---
+title: SLOs and alerts that matter
+minutes: 30
+summary: Set a checkout SLO, measure how much error budget last year's outage burned, replay burn-rate alerts against sale day to see when each would have fired, and clear out the alerts nobody acts on.
+---
+
+## The problem
+
+Last year, customers complained on social media at about 09:30, and the team only started looking after that. Meanwhile on-call gets about seven alerts a day, and almost none need action, so people have learned to ignore them. Kasuwa needs fewer alerts, and the ones it keeps must fire **before** customers notice.
+
+## The concept
+
+**An SLO and its error budget**
+
+The checkout SLO: **99.5% of checkout requests succeed over 30 days**. The error budget is the 0.5% allowed to fail. At normal traffic of about 25 requests a second, that's a fixed number of failed requests per month.
+
+**Burn rate**
+
+Burn rate = current error rate ÷ 0.5%. A burn rate of 1 uses the budget exactly over 30 days; 14.4 uses 2% of it in an hour.
+
+**Multi-window alerts**
+
+A common page fires when the burn rate is at least 14.4 over the last **hour** and over the last **5 minutes**. The long window avoids paging on blips; the short one makes the alert stop soon after recovery. But a long window also **delays** the alert at the start of an incident. Replay alerts against real incidents to see when they would have fired.
+
+**Alerts that matter**
+
+An alert should be actionable, urgent and real. Measure each alert's history: how often it fires, the share that needed action, and how long people took to respond. Remove or fix the rest.
+
+## Example
+
+The error budget, and last year's sale:
+
+```python
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/platform/"
+metrics = pd.read_csv(base + "sale_metrics.csv", parse_dates=["minute"])
+metrics["requests"] = metrics["requests_per_s"] * 60
+metrics["failed"] = metrics["requests"] * metrics["error_rate"]
+
+SLO = 0.995
+NORMAL_RPS = 25
+budget = NORMAL_RPS * 86400 * 30 * (1 - SLO)
+print(f"Monthly error budget: {budget:,.0f} failed requests")
+print(f"Sale day used: {metrics['failed'].sum():,.0f} ({metrics['failed'].sum() / budget:.1%} of the month's budget)")
+```
+
+```text
+Monthly error budget: 324,000 failed requests
+Sale day used: 151,697 (46.8% of the month's budget)
+```
+
+Almost half the month's budget went in one morning. Now replay three alert designs against sale day:
+
+```python
+for window in [60, 5]:
+    metrics[f"burn_{window}m"] = (metrics["failed"].rolling(window, min_periods=1).sum()
+                                  / metrics["requests"].rolling(window, min_periods=1).sum()) / (1 - SLO)
+start = metrics.loc[metrics["error_rate"] > 0.05, "minute"].min()
+designs = {
+    "burn ≥ 14.4 over 1 hour and 5 minutes": (metrics["burn_60m"] >= 14.4) & (metrics["burn_5m"] >= 14.4),
+    "burn ≥ 14.4 over 5 minutes only": metrics["burn_5m"] >= 14.4,
+    "existing: 5xx above 5% for 5 minutes": metrics["error_rate"].rolling(5).min() > 0.05,
+}
+print(f"Outage started {start:%H:%M}")
+for name, fired in designs.items():
+    first = metrics.loc[fired, "minute"].min()
+    print(f"{name:40} fires {first:%H:%M}, {(first - start).seconds // 60} minutes after the start")
+```
+
+```text
+Outage started 09:19
+burn ≥ 14.4 over 1 hour and 5 minutes    fires 09:45, 26 minutes after the start
+burn ≥ 14.4 over 5 minutes only          fires 09:26, 7 minutes after the start
+existing: 5xx above 5% for 5 minutes     fires 09:27, 8 minutes after the start
+```
+
+The standard one-hour design fires **after** customers had started complaining, because its long window takes time to fill. On a normal day that trade-off is fine. On sale day, when minutes cost the most and on-call is watching anyway, add a fast page as well. The five-minute burn alert and the existing 5xx alert behave almost identically here (7 and 8 minutes). Either works, as long as it actually pages someone and isn't lost among the noise below.
+
+Now the alerts on-call actually gets:
+
+```python
+alerts = pd.read_csv(base + "alerts.csv", parse_dates=["fired_at"])
+days = (alerts["fired_at"].max() - alerts["fired_at"].min()).days + 1
+review = alerts.groupby("alert_name").agg(fired=("alert_id", "size"), actionable=("actionable", "mean"),
+                                          median_minutes_to_ack=("minutes_to_acknowledge", "median"))
+review["per_day"] = review["fired"] / days
+review["decision"] = review["actionable"].map(lambda a: "keep" if a >= 0.5 else "fix or remove")
+print(f"{len(alerts)} alerts in {days} days ({len(alerts) / days:.1f} a day), {alerts['actionable'].mean():.0%} actionable\n")
+review.sort_values("fired", ascending=False).round(2)
+```
+
+```text
+646 alerts in 90 days (7.2 a day), 9% actionable
+
+                                     fired  actionable  median_minutes_to_ack  per_day       decision
+alert_name
+CPU above 70% on any instance          450        0.04                   25.0     5.00  fix or remove
+Heartbeat missed: order-worker         112        0.05                   21.5     1.24  fix or remove
+Payment gateway error rate above 2%     47        0.43                   14.0     0.52  fix or remove
+Disk above 80% on bastion               17        0.00                   22.0     0.19  fix or remove
+Checkout p95 latency above 2s           10        0.70                    6.5     0.11           keep
+Database connections above 90%           7        0.86                    6.0     0.08           keep
+Checkout 5xx above 5% for 5 minutes      3        1.00                    7.0     0.03           keep
+```
+
+Two alerts make up most of the noise. CPU above 70% fires every day and almost never needs action: high CPU is the point of autoscaling, not a problem. The worker heartbeat flaps. Remove the CPU alert, fix the heartbeat, and the alerts that matter stop getting lost. Notice too how much faster people acknowledge the actionable ones.
+
+## Walkthrough
+
+1. Run the cells.
+2. Try a burn rate of 6 over 30 minutes and 5 minutes. When would it have fired?
+3. Replay the fast alert over the rest of the day. Would it have paged falsely after recovery?
+4. Write the paging policy: which alerts page, which go to a ticket, and who's on call during the sale.
+5. Write the alerting plan (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "cdc-06-p1",
+  "prompt": "What percentage of the month's error budget did sale day use? One decimal place.",
+  "answer": 46.8,
+  "format": "percent",
+  "dataset": "platform",
+  "files": ["sale_metrics"],
+  "pyVerify": "round(100 * metrics['failed'].sum() / budget, 1)",
+  "hint": "Failed requests ÷ monthly budget.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "cdc-06-p2",
+  "prompt": "How many minutes after the outage started would the **1 hour and 5 minutes** burn-rate alert have fired?",
+  "answer": 26,
+  "format": "number",
+  "dataset": "platform",
+  "files": ["sale_metrics"],
+  "pyVerify": "(metrics.loc[(metrics['burn_60m'] >= 14.4) & (metrics['burn_5m'] >= 14.4), 'minute'].min() - start).seconds // 60",
+  "hint": "The first design's line.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "cdc-06-t1",
+  "prompt": "Write the **alerting plan** (60 to 150 words): the **SLO**, what last year **burned**, the **pages** you'll keep or add and **when** they'd have fired last year, and the alerts you'll **remove or fix**.",
+  "minutes": 8,
+  "rows": 7,
+  "placeholder": "SLO: ...",
+  "rules": [
+    { "label": "States the SLO", "pattern": "99\\.5" },
+    { "label": "Budget burned", "pattern": "budget" },
+    { "label": "Burn-rate pages", "pattern": "burn" },
+    { "label": "When they'd have fired (minutes)", "pattern": "\\d+\\s*minutes" },
+    { "label": "Removes or fixes noisy alerts (CPU, heartbeat)", "pattern": "cpu|heartbeat" },
+    { "label": "Between 60 and 150 words", "minWords": 60, "maxWords": 150 }
+  ],
+  "sample": "SLO: 99.5% of checkout requests succeed over 30 days, a budget of about 324,000 failed requests a month. Last year's sale used almost half of it in one morning. We'll page on a burn rate of 14.4 over both 1 hour and 5 minutes, which would have fired 26 minutes into last year's outage, after customers noticed; so for sale week we'll add a page on a burn rate of 14.4 over 5 minutes alone, which would have fired within 7 minutes. We'll remove the CPU-above-70% alert (450 alerts in 90 days, 4% actionable, and high CPU is what autoscaling is for) and fix the flapping worker heartbeat. That cuts on-call noise by most of the volume.",
+  "note": "Every alert you remove makes the important ones easier to hear.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "What does a burn rate of 14.4 mean for a 30-day SLO?",
+    "options": ["14.4% errors", "The error budget is being used 14.4 times faster than allowed: about 2% of it per hour", "14.4 minutes of downtime", "Nothing"],
+    "answer": 1,
+    "explanation": "Burn rate is relative to the budget."
+  },
+  {
+    "prompt": "Why did the one-hour alert fire late on sale day?",
+    "options": ["It was broken", "Its long window took time to fill with bad minutes", "Traffic was low", "The SLO was wrong"],
+    "answer": 1,
+    "explanation": "Long windows trade speed for stability."
+  },
+  {
+    "prompt": "An alert fires 5 times a day and is actionable 4% of the time. What should you do?",
+    "options": ["Keep it", "Remove or fix it: it trains people to ignore alerts", "Page more people", "Raise its priority"],
+    "answer": 1,
+    "explanation": "Noise hides signal."
+  }
+]
+```

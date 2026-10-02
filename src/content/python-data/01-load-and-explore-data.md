@@ -1,6 +1,6 @@
 ---
 title: Load and Explore Data
-minutes: 25
+minutes: 15
 summary: Load a real sales dataset into pandas in Google Colab and find out what's in it with head, shape, info and describe.
 ---
 
@@ -75,7 +75,51 @@ orders["discount_pct"].value_counts()
 
 ## Try it
 
-1. Load the orders data and check the shape is (4266, 7).
-2. Use `describe()` to find the largest single quantity ordered.
-3. Use `value_counts()` on `product_id` to find the product that appears in the most order lines.
-4. Write two sentences in a text cell describing the dataset in your own words.
+Load the orders in a Colab notebook and answer these with pandas.
+
+```answer
+{
+  "id": "pyda-m01-a1",
+  "prompt": "What is the **largest single quantity** ordered on one order line?",
+  "answer": 30,
+  "format": "number",
+  "dataset": "sales",
+  "files": ["orders"],
+  "verify": "SELECT MAX(quantity) FROM orders",
+  "pyVerify": "orders['quantity'].max()",
+  "hint": "orders[\"quantity\"].max(), or the max row of describe()",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "pyda-m01-a2",
+  "prompt": "Which **product_id** appears in the most order lines?",
+  "answer": 2,
+  "format": "number",
+  "dataset": "sales",
+  "files": ["orders"],
+  "verify": "SELECT product_id FROM orders GROUP BY product_id ORDER BY COUNT(*) DESC LIMIT 1",
+  "pyVerify": "orders['product_id'].value_counts().index[0]",
+  "hint": "orders[\"product_id\"].value_counts().head()",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "pyda-m01-a3",
+  "prompt": "How many **different customers** placed orders?",
+  "answer": 90,
+  "format": "number",
+  "dataset": "sales",
+  "files": ["orders"],
+  "verify": "SELECT COUNT(DISTINCT customer_id) FROM orders",
+  "pyVerify": "orders['customer_id'].nunique()",
+  "hint": "orders[\"customer_id\"].nunique()",
+  "required": true
+}
+```
+
+Then write two sentences in a text cell describing the dataset in your own words: what one row is, and the period it covers.

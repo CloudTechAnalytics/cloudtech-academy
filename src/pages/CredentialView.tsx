@@ -8,6 +8,7 @@ import { credentialBadge } from "@/lib/badges";
 import { formatDate } from "@/lib/format";
 import { BUNDLED_COURSES } from "@/content";
 import { findProject } from "@/content/projects";
+import { TRACKS } from "@/content/tracks";
 import { BadgeArtwork } from "@/components/BadgeArtwork";
 import { ShareMenu } from "@/components/ShareMenu";
 import { ButtonLink } from "@/components/Button";
@@ -57,6 +58,15 @@ export default function CredentialView() {
 
   const course = BUNDLED_COURSES.find((c) => c.id === cred.courseId) ?? null;
   const project = cred.kind === "project_badge" ? (findProject(cred.projectId ?? undefined) ?? null) : null;
+  const track = cred.kind === "track_completion" ? (TRACKS.find((t) => t.id === cred.trackId) ?? null) : null;
+  const kindLabel =
+    cred.kind === "track_completion"
+      ? "Career track completion"
+      : cred.kind === "course_completion"
+        ? "Course completion"
+        : cred.kind === "project_badge"
+          ? "Practice project badge"
+          : `Module badge · ${cred.courseTitle}`;
   const valid = cred.status === "valid";
   const mine = auth.status === "signed-in" && auth.user.fullName.trim() === cred.recipientName;
 
@@ -75,9 +85,7 @@ export default function CredentialView() {
             </p>
           )}
           <h1 className="mt-4 font-serif text-[2.4rem] leading-[1.08]">{cred.badgeName}</h1>
-          <p className="mt-2 text-muted">
-            {cred.kind === "course_completion" ? "Course completion" : cred.kind === "project_badge" ? "Practice project badge" : `Module badge · ${cred.courseTitle}`}
-          </p>
+          <p className="mt-2 text-muted">{kindLabel}</p>
           {cred.kind === "project_badge" && cred.reviewed && (
             <p className="mt-3 inline-flex items-center gap-1.5 text-[0.9375rem] font-semibold text-success">
               <ShieldCheck aria-hidden className="h-4 w-4" /> Work reviewed by CloudTech
@@ -94,7 +102,7 @@ export default function CredentialView() {
               <dd>{formatDate(cred.issuedAt)}</dd>
             </div>
             <div>
-              <dt className="text-[0.8125rem] text-muted">{project ? "Project" : "Course"}</dt>
+              <dt className="text-[0.8125rem] text-muted">{project ? "Project" : track || cred.kind === "track_completion" ? "Career track" : "Course"}</dt>
               <dd>
                 {project ? (
                   <>
@@ -103,6 +111,10 @@ export default function CredentialView() {
                     </Link>
                     <span className="block text-[0.875rem] text-muted">{project.company}</span>
                   </>
+                ) : track ? (
+                  <Link to={`/tracks/${track.slug}`} className="hover:text-brass-dark">
+                    {cred.courseTitle}
+                  </Link>
                 ) : course ? (
                   <Link to={`/courses/${course.slug}`} className="hover:text-brass-dark">
                     {cred.courseTitle}
@@ -164,11 +176,11 @@ export default function CredentialView() {
               </ButtonLink>
             </div>
           )}
-          {!mine && course && (
+          {!mine && (course || track) && (
             <div className="mt-8 rounded-xl border border-line bg-paper p-5">
               <p className="font-semibold">Earn this badge yourself</p>
-              <p className="mt-1 text-[0.9375rem] text-muted">It's free: learn at your own pace and pass the short checks.</p>
-              <ButtonLink to={`/courses/${course.slug}`} className="mt-3">
+              <p className="mt-1 text-[0.9375rem] text-muted">It's free: learn at your own pace, do the tasks, and pass the checks.</p>
+              <ButtonLink to={track ? `/tracks/${track.slug}` : `/courses/${course!.slug}`} className="mt-3">
                 Start learning — Free
               </ButtonLink>
             </div>

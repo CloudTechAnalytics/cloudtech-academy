@@ -1,6 +1,6 @@
 ---
 title: Data cleaning in Power Query
-minutes: 40
+minutes: 20
 summary: Clean a messy export with Trim, Capitalize Each Word, Replace Values, locale-aware dates and case-sensitive duplicate removal.
 ---
 
@@ -24,7 +24,7 @@ Kolanut's customer list exported from its old system has stray spaces, random ca
 
 **Replace Values** (Transform → Replace Values) swaps one value for another in a column: `SW` → `South West`. For many variants, it's cleaner to lower-case and trim first, which collapses `Lagos`, `LAGOS` and `lagos ` into one, then replace what's left.
 
-**Types with a locale.** Right-click a column → **Change Type → Using Locale…** Choose the type and the *locale the data was written in*. **English (United Kingdom)** reads `01/09/2022` as 1 September. The same step handles ISO dates like `2023-07-11` and text like `5-Mar-2024`.
+**Types with a locale.** Right-click a column → **Change Type → Using Locale…** Choose the type and the *locale the data was written in*. **English (United Kingdom)** reads `01/09/2022` as 1 September. The same step handles ISO dates like `2023-07-11` and text like `30-Sep-2023`.
 
 ![The data type menu of a Power Query column header, listing Decimal Number, Fixed decimal number, Whole Number and others, with Using Locale at the bottom.](/images/courses/powerbi/type-menu.webp "Click the type icon on any column header for this menu. Decimal Number is at the top (1); Using Locale is at the bottom (2).")
 
@@ -90,6 +90,45 @@ Look at **Applied Steps**: that list is your cleaning log.
   "verify": "SELECT COUNT(*) FROM sales_customers WHERE region = 'North West'",
   "hint": "North West appears as North West, North-West, north west and NW in the raw file. After replacing them all and removing duplicates, count with a Card or the column profile.",
   "required": true
+}
+```
+
+
+## More practice
+
+Optional drills. They don't count towards the certificate, but they're the fastest way to make this lesson stick. Several use a different dataset from the lesson on purpose: if you can do the same thing on unfamiliar data, you've really learned it.
+
+```answer
+{
+  "id": "pbi-05-d1",
+  "prompt": "Before cleaning, how many rows of `customer_list_raw.csv` have a **Credit Limit** typed with the ₦ sign?",
+  "answer": 15,
+  "format": "number",
+  "dataset": "cleaning",
+  "files": [
+    "customer_list_raw"
+  ],
+  "verify": "SELECT COUNT(*) FROM customer_list_raw WHERE \"Credit Limit\" LIKE '%₦%'",
+  "hint": "In Power Query, filter Credit Limit with Text Filters → Contains → ₦, and read the row count.",
+  "explanation": "Those rows load as text, not numbers, until you remove the ₦ and the commas.",
+  "required": false
+}
+```
+
+```answer
+{
+  "id": "pbi-05-d2",
+  "prompt": "Before cleaning, how many **different spellings** of Region are there (counting LAGOS and Lagos as different)?",
+  "answer": 23,
+  "format": "number",
+  "dataset": "cleaning",
+  "files": [
+    "customer_list_raw"
+  ],
+  "verify": "SELECT COUNT(DISTINCT \"Region\") FROM customer_list_raw WHERE \"Region\" IS NOT NULL",
+  "hint": "View → Column distribution shows the distinct count for each column. Power Query compares text case-sensitively.",
+  "explanation": "That's why the lesson standardises case before grouping: otherwise one region becomes several.",
+  "required": false
 }
 ```
 

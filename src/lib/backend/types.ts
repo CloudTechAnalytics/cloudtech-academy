@@ -14,6 +14,8 @@ export type Enrollment = {
   enrolledAt: string;
   completedAt: string | null;
   lastLessonId: string | null;
+  /** Last time the learner opened a lesson, completed something or took an assessment in this course. */
+  lastActiveAt: string;
 };
 
 export type Progress = {
@@ -45,7 +47,7 @@ export type ProjectSubmission = {
 
 export type CertificateStatus = "valid" | "revoked";
 
-export type CredentialKind = "module_badge" | "course_completion" | "project_badge";
+export type CredentialKind = "module_badge" | "course_completion" | "track_completion" | "project_badge";
 
 /** A free credential: a module badge or a course completion badge. */
 export type Credential = {
@@ -53,8 +55,10 @@ export type Credential = {
   credentialId: string;
   userId: string;
   kind: CredentialKind;
-  /** Null for project badges. */
-  courseId: string | null;
+  /** The course it belongs to; empty for a track badge or a project badge. */
+  courseId: string;
+  /** The career track, for a track badge. */
+  trackId: string | null;
   moduleId: string | null;
   /** The practice project, for project badges. */
   projectId?: string | null;
@@ -74,7 +78,7 @@ export type Credential = {
 /** What anyone can see on a public credential page. No email or account details. */
 export type PublicCredential = Pick<
   Credential,
-  "credentialId" | "kind" | "badgeName" | "courseId" | "courseTitle" | "moduleTitle" | "recipientName" | "skills" | "issuedAt" | "status" | "projectId" | "workUrl" | "reviewed"
+  "credentialId" | "kind" | "badgeName" | "courseId" | "trackId" | "courseTitle" | "moduleTitle" | "recipientName" | "skills" | "issuedAt" | "status" | "projectId" | "workUrl" | "reviewed"
 >;
 
 /** A learner's submission for a practice project (/projects/:id). */
@@ -208,6 +212,10 @@ export interface Backend {
   listEnrollments(): Promise<Enrollment[]>;
   enroll(courseId: string): Promise<void>;
   setLastLesson(courseId: string, lessonId: string): Promise<void>;
+  /** Removes a course from My Learning. Its progress is cleared unless the course is complete; badges stay. */
+  removeCourse(courseId: string): Promise<void>;
+  /** Starts over unfinished courses untouched for 14 days. Returns the ids of courses whose progress was cleared. */
+  applyInactivityResets(): Promise<string[]>;
   getProgress(courseId: string): Promise<Progress>;
   setLessonComplete(courseId: string, lessonId: string, done: boolean): Promise<void>;
   recordExercise(courseId: string, lessonId: string, exerciseId: string): Promise<void>;
@@ -221,6 +229,8 @@ export interface Backend {
   claimModuleBadge(moduleId: string): Promise<Credential>;
   /** Issues (or returns) the course completion credential. The server checks every requirement. */
   issueCourseCredential(courseId: string): Promise<Credential>;
+  /** Issues (or returns) a career track's badge. The server checks every required course is complete. */
+  issueTrackCredential(trackId: string): Promise<Credential>;
   listMyCredentials(): Promise<Credential[]>;
   verifyCredential(credentialId: string): Promise<PublicCredential | null>;
 

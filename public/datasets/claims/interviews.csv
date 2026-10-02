@@ -1,0 +1,11 @@
+interview_id,role,team,influence,interest,main_concern,quote
+INT-01,Managing director,Executive,High,High,Lost renewals,"Our claims experience is losing us customers we spent a fortune to win. I want it fixed, not studied."
+INT-02,Head of claims,Claims,High,High,Incomplete documents,Half my team's day is chasing documents that should have come with the claim in the first place.
+INT-03,"Claims manager, Lagos",Claims,Medium,High,Weekly approvals,"I sign off every claim, even a ₦150,000 windscreen. I do them on Fridays because the week is full of meetings."
+INT-04,Claims officer,Claims,Low,High,No update,Customers call three or four times a week asking where their claim is. We don't know either without opening five screens.
+INT-05,Senior assessor,Assessors,Medium,High,Inspection backlog,We drive across Lagos to look at a cracked windscreen. A photo would do. Port Harcourt has only two assessors.
+INT-06,Agency manager,Sales,High,Medium,Agent paperwork,"Agents send forms by bus to the branch. Half are missing the police report or the photos. Agents are paid on sales, not claims."
+INT-07,Finance controller,Finance,High,Medium,Fraud risk,"If assessors can approve payments, who checks them? Any change has to keep a second pair of eyes on the money."
+INT-08,Head of IT,IT,High,Medium,System capacity,"The claims system is fifteen years old. I'd rather replace it than patch it, but that's a year's work."
+INT-09,Compliance officer,Risk,High,Low,Regulatory deadlines,The regulator expects claims settled promptly and complaints answered. Our complaint numbers are starting to be noticed.
+INT-10,Customer (accident damage),Customer,Low,High,No update,I sent my documents twice. Nobody told me what was missing until I called. It took seven weeks.

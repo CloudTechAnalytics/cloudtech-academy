@@ -6,6 +6,7 @@ import { ButtonLink } from "@/components/Button";
 import { CourseCard } from "@/components/CourseCard";
 import { Reveal } from "@/components/Reveal";
 import { webSiteJsonLd } from "@/lib/schema";
+import { LEVELS, TRACKS } from "@/content/tracks";
 
 /** A learner in an online lesson, with the kind of progress card the Academy shows. Photo: Unsplash licence. */
 function LearnerVisual() {
@@ -46,7 +47,7 @@ const PRINCIPLES = [
   { title: "Career-focused", body: "Finish with projects you can show and explain to an employer, not only a certificate." },
 ];
 
-const STEPS = ["Read", "Understand", "Practise", "Apply", "Assess", "Earn"];
+const STEPS = ["Learn", "Practise", "Assess", "Earn a badge", "Build a project", "Get certified"];
 
 export default function Home() {
   useSeo({
@@ -71,8 +72,8 @@ export default function Home() {
               expensive course fees.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <ButtonLink to="/courses" arrow>
-                Explore courses
+              <ButtonLink to="/tracks" arrow>
+                See career tracks
               </ButtonLink>
               <ButtonLink to="/sign-up" variant="secondary">
                 Start learning free
@@ -93,33 +94,47 @@ export default function Home() {
         </div>
       </section>
 
-      <section aria-labelledby="short-title" className="border-b border-line bg-paper py-16 sm:py-20">
+      <section aria-labelledby="tracks-title" className="border-b border-line bg-paper py-16 sm:py-20">
         <div className="container-page">
           <Reveal className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div className="max-w-2xl">
-              <p className="kicker">Short courses · Free badges</p>
-              <h2 id="short-title" className="mt-3 font-serif text-[2.1rem] leading-[1.1] sm:text-[2.5rem]">
-                Short modules. A badge for each one.
+              <p className="kicker">Career tracks</p>
+              <h2 id="tracks-title" className="mt-3 font-serif text-[2.1rem] leading-[1.1] sm:text-[2.5rem]">
+                Learn skills. Build projects. Earn credentials.
               </h2>
               <p className="mt-3 text-[1.0625rem] leading-relaxed text-muted">
-                AI tools, design, careers, coding and Python in modules of about 20 minutes. Pass each short check to earn a free badge you can share,
-                with its own credential ID.
+                Follow a track from Foundations to Career Projects: the right courses in the right order, portfolio projects on realistic data, and a track badge when
+                you finish.
               </p>
             </div>
-            <Link to="/courses" className="inline-flex items-center gap-1.5 text-[0.9375rem] font-semibold text-brass-dark hover:text-ink">
-              All courses <ArrowRight aria-hidden className="h-4 w-4" />
+            <Link to="/tracks" className="inline-flex items-center gap-1.5 text-[0.9375rem] font-semibold text-brass-dark hover:text-ink">
+              All tracks <ArrowRight aria-hidden className="h-4 w-4" />
             </Link>
           </Reveal>
-          <ul className="mt-8 grid gap-5 md:grid-cols-3">
-            {courses
-              .filter((c) => c.format === "short")
-              .slice(0, 3)
-              .map((c, i) => (
-                <Reveal as="li" key={c.id} delay={i * 80} className="h-full">
-                  <CourseCard course={c} />
-                </Reveal>
-              ))}
+          <ul className="mt-8 grid gap-5 md:grid-cols-2">
+            {TRACKS.map((t, i) => (
+              <Reveal as="li" key={t.id} delay={i * 80} className="h-full">
+                <Link to={`/tracks/${t.slug}`} className="group flex h-full flex-col rounded-2xl border border-line bg-ivory p-6 transition-colors hover:border-brass sm:p-7">
+                  <p className="kicker">{t.outcome}</p>
+                  <h3 className="mt-2 font-serif text-[1.6rem] leading-tight group-hover:text-brass-dark">{t.title}</h3>
+                  <p className="mt-2 text-[0.9375rem] leading-relaxed text-muted">{t.summary}</p>
+                  <p className="mt-auto pt-5 text-[0.875rem] font-semibold text-brass-dark">
+                    {t.stages.map((st) => st.title).join(" → ")}
+                  </p>
+                </Link>
+              </Reveal>
+            ))}
           </ul>
+          <ol className="mt-8 grid gap-3 sm:grid-cols-4" aria-label="Course levels">
+            {([1, 2, 3, 4] as const).map((l) => (
+              <li key={l} className="rounded-xl border border-line p-4">
+                <p className="font-serif text-[1.05rem]">
+                  <span className="text-brass-dark">{l}.</span> {LEVELS[l].name}
+                </p>
+                <p className="mt-1 text-[0.8125rem] text-muted">{LEVELS[l].description}</p>
+              </li>
+            ))}
+          </ol>
         </div>
       </section>
 
@@ -191,7 +206,7 @@ export default function Home() {
               <h2 id="courses-title" className="font-serif text-[2.1rem] leading-[1.1] sm:text-[2.6rem]">
                 Courses
               </h2>
-              <p className="mt-3 max-w-xl text-muted">All five courses are open and free. New to data? Start with Data Analytics Foundations, or go straight to the tool you need.</p>
+              <p className="mt-3 max-w-xl text-muted">Every course is open and free. New to data? Start with Data Analytics Foundations, or go straight to the tool you need.</p>
             </Reveal>
             <Link to="/courses" className="inline-flex items-center gap-1.5 text-[0.9rem] font-semibold text-ink hover:text-brass-dark">
               All courses <ArrowRight aria-hidden className="h-4 w-4" />

@@ -46,6 +46,7 @@ export default function AdminCourses() {
         description: "",
         categoryId: CATEGORIES[0].id,
         difficulty: "beginner",
+        level: 1,
         levelLabel: "Beginner",
         isFree: true,
         status: "coming_soon",

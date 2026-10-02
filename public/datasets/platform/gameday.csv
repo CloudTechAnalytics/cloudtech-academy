@@ -1,0 +1,8 @@
+drill_id,scenario,success_criterion,target_minutes,actual_minutes,passed,notes
+G-1,Kill two checkout-api instances under load,Service stays within SLO,5,3,1,Autoscaling replaced both in 3 minutes; no errors seen by users.
+G-2,Fail over orders-db to the replica,Writes resume,5,4,1,Failover took 4 minutes; 31 checkouts failed during the switch.
+G-3,Restore orders-db from last night's backup,Database restored and verified,60,155,0,Backup bucket unencrypted and unlabelled; restore steps were not written down; took 2.5 hours.
+G-4,Roll back a bad checkout-api deploy,Previous version serving,10,7,1,One-click rollback in the pipeline worked.
+G-5,Payment gateway returns errors for 10 minutes,"Customers see a retry message, orders queued",2,18,0,No fallback: checkout showed a blank error page until the gateway recovered.
+G-6,Burn-rate alert fires and reaches on-call,On-call acknowledges,5,9,0,Alert went to an email list; on-call saw it 9 minutes later.
+G-7,Traffic at 1.6x last year's peak in staging,"p95 under 800 ms, errors under 1%",,,1,"Passed with the pooler and the larger database: p95 610 ms, errors 0.2%."

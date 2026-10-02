@@ -1,6 +1,6 @@
 ---
 title: CTEs
-minutes: 30
+minutes: 15
 summary: Break complex questions into named steps with WITH, and avoid double-counting when combining totals.
 ---
 
@@ -91,6 +91,44 @@ Why two separate summaries? If you joined shipments and payments first and then 
   "hint": "CTE: SELECT DISTINCT shipment_id FROM payments. Then LEFT JOIN it to delivered shipments and keep rows where it IS NULL.",
   "required": false,
   "orderMatters": true
+}
+```
+
+## More practice
+
+Optional drills on the same skills. They don't count towards the certificate, but each one is a small, realistic request from someone at Harbourline. Do as many as you need until the pattern feels automatic.
+
+```exercise
+{
+  "id": "sql-12-d1",
+  "prompt": "Using a CTE named totals with each customer_id and their total freight_charge, show the company_name and total for the 5 biggest customers.",
+  "starter": "",
+  "solution": "WITH totals AS (SELECT customer_id, SUM(freight_charge) AS total FROM shipments GROUP BY customer_id) SELECT c.company_name, t.total FROM totals AS t JOIN customers AS c ON c.customer_id = t.customer_id ORDER BY t.total DESC LIMIT 5;",
+  "hint": "Build totals in the CTE, then join it to customers and sort.",
+  "required": false,
+  "orderMatters": true
+}
+```
+
+```exercise
+{
+  "id": "sql-12-d2",
+  "prompt": "Using a CTE, find the average number of shipments per customer. Count each customer's shipments in the CTE, then average the counts, rounded to 1 decimal place.",
+  "starter": "",
+  "solution": "WITH per_customer AS (SELECT customer_id, COUNT(*) AS shipments FROM shipments GROUP BY customer_id) SELECT ROUND(AVG(shipments), 1) FROM per_customer;",
+  "hint": "The CTE has one row per customer; the main query averages its shipments column.",
+  "required": false
+}
+```
+
+```exercise
+{
+  "id": "sql-12-d3",
+  "prompt": "For each customer with shipments, show company_name, total charged (freight_charge) and total paid (payments.amount), using one CTE for charges and one for payments. Show customers whose total paid is less than total charged.",
+  "starter": "",
+  "solution": "WITH charged AS (SELECT customer_id, SUM(freight_charge) AS charged FROM shipments GROUP BY customer_id), paid AS (SELECT s.customer_id, SUM(p.amount) AS paid FROM payments AS p JOIN shipments AS s ON s.shipment_id = p.shipment_id GROUP BY s.customer_id) SELECT c.company_name, ch.charged, COALESCE(pd.paid, 0) AS paid FROM charged AS ch JOIN customers AS c ON c.customer_id = ch.customer_id LEFT JOIN paid AS pd ON pd.customer_id = ch.customer_id WHERE COALESCE(pd.paid, 0) < ch.charged;",
+  "hint": "Two CTEs separated by a comma. LEFT JOIN the payments so customers who've paid nothing still appear, and use COALESCE to turn their NULL into 0.",
+  "required": false
 }
 ```
 

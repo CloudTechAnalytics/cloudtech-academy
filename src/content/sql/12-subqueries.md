@@ -1,6 +1,6 @@
 ---
 title: Subqueries
-minutes: 30
+minutes: 10
 summary: Use the result of one query inside another, in WHERE, SELECT and FROM.
 ---
 
@@ -87,6 +87,43 @@ The inner query gives one row per customer; the outer query averages those count
   "starter": "",
   "solution": "SELECT company_name FROM customers WHERE customer_id IN (SELECT customer_id FROM shipments WHERE route_id IN (SELECT route_id FROM routes WHERE mode = 'Air'));",
   "hint": "Work inside out: air route_ids from routes, then customer_ids from shipments on those routes, then company names.",
+  "required": false
+}
+```
+
+## More practice
+
+Optional drills on the same skills. They don't count towards the certificate, but each one is a small, realistic request from someone at Harbourline. Do as many as you need until the pattern feels automatic.
+
+```exercise
+{
+  "id": "sql-11-d1",
+  "prompt": "Show the company_name of every customer who has booked at least one shipment with 8 containers. Use IN with a subquery.",
+  "starter": "",
+  "solution": "SELECT company_name FROM customers WHERE customer_id IN (SELECT customer_id FROM shipments WHERE containers = 8);",
+  "hint": "The subquery returns the customer_ids with an 8-container shipment.",
+  "required": false
+}
+```
+
+```exercise
+{
+  "id": "sql-11-d2",
+  "prompt": "Show payment_id and amount for every payment larger than the average payment.",
+  "starter": "",
+  "solution": "SELECT payment_id, amount FROM payments WHERE amount > (SELECT AVG(amount) FROM payments);",
+  "hint": "Compare amount with (SELECT AVG(amount) FROM payments).",
+  "required": false
+}
+```
+
+```exercise
+{
+  "id": "sql-11-d3",
+  "prompt": "Which routes carried no shipments booked in August 2026 (from '2026-08-01')? Show route_id, origin and destination. Use NOT IN.",
+  "starter": "",
+  "solution": "SELECT route_id, origin, destination FROM routes WHERE route_id NOT IN (SELECT route_id FROM shipments WHERE booking_date >= '2026-08-01');",
+  "hint": "NOT IN with a subquery of the route_ids booked since 1 August 2026.",
   "required": false
 }
 ```

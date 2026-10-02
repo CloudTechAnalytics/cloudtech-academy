@@ -1,6 +1,6 @@
 ---
 title: What is a data model?
-minutes: 20
+minutes: 15
 summary: Why data needs a design before it needs a dashboard, and the three levels a model moves through - conceptual, logical and physical.
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: XLOOKUP
-minutes: 35
+minutes: 20
 summary: Bring columns from one table into another with XLOOKUP, and recognise VLOOKUP and INDEX/MATCH in older files.
 ---
 
@@ -110,6 +110,62 @@ After the walkthrough below, the Orders table has three looked-up columns:
   "verify": "SELECT customer_name FROM customers WHERE customer_id = 42",
   "hint": "=XLOOKUP(42, Customers[customer_id], Customers[customer_name])",
   "required": true
+}
+```
+
+
+## More practice
+
+Optional drills. They don't count towards the certificate, but they're the fastest way to make this lesson stick. Several use a different dataset from the lesson on purpose: if you can do the same thing on unfamiliar data, you've really learned it.
+
+```answer
+{
+  "id": "xls-06-d1",
+  "prompt": "Bring each product's category into the orders table with XLOOKUP. What is total revenue from the **Household** category?",
+  "answer": 244769040,
+  "format": "naira",
+  "dataset": "sales",
+  "files": [
+    "orders",
+    "products"
+  ],
+  "verify": "SELECT SUM(o.quantity * o.unit_price * (1 - o.discount_pct / 100.0)) FROM orders o JOIN products p ON p.product_id = o.product_id WHERE p.category = 'Household'",
+  "hint": "=XLOOKUP([@product_id], Products[product_id], Products[category]) in a new column, then SUMIF on it.",
+  "required": false
+}
+```
+
+```answer
+{
+  "id": "xls-06-d2",
+  "prompt": "In the legal dataset, bring each client's `client_type` into `matters.csv` with XLOOKUP. How many matters belong to **Individual** clients?",
+  "answer": 62,
+  "format": "number",
+  "dataset": "legal",
+  "files": [
+    "matters",
+    "clients"
+  ],
+  "verify": "SELECT COUNT(*) FROM matters m JOIN clients c ON c.client_id = m.client_id WHERE c.client_type = 'Individual'",
+  "hint": "=XLOOKUP([@client_id], Clients[client_id], Clients[client_type]), then COUNTIF the new column.",
+  "required": false
+}
+```
+
+```answer
+{
+  "id": "xls-06-d3",
+  "prompt": "What is Kolanut's total revenue from **Supermarket** customers? (Look up each order's channel from `customers.csv`.)",
+  "answer": 210387665,
+  "format": "naira",
+  "dataset": "sales",
+  "files": [
+    "orders",
+    "customers"
+  ],
+  "verify": "SELECT SUM(o.quantity * o.unit_price * (1 - o.discount_pct / 100.0)) FROM orders o JOIN customers c ON c.customer_id = o.customer_id WHERE c.channel = 'Supermarket'",
+  "hint": "XLOOKUP the channel by customer_id, then SUMIF.",
+  "required": false
 }
 ```
 

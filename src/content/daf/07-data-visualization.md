@@ -1,6 +1,6 @@
 ---
 title: Data visualization
-minutes: 25
+minutes: 15
 summary: Which chart answers which question, and the design habits that make a chart clear in five seconds.
 ---
 
@@ -83,6 +83,27 @@ To build the strong version in a spreadsheet:
   "hint": "Bar length is read as size. What must the baseline be for lengths to be honest?",
   "explanation": "Bars must start at zero, otherwise their lengths exaggerate differences.",
   "required": true
+}
+```
+
+
+## More practice
+
+Optional drills. They don't count towards the certificate, but they're the fastest way to make this lesson stick. Several use a different dataset from the lesson on purpose: if you can do the same thing on unfamiliar data, you've really learned it.
+
+```answer
+{
+  "id": "daf-07-d1",
+  "prompt": "You're making a bar chart of employees by department from the HR `employees.csv` (all 80, active or not). Which department is the **longest** bar?",
+  "answer": "Operations",
+  "format": "text",
+  "dataset": "hr",
+  "files": [
+    "employees"
+  ],
+  "verify": "SELECT department FROM employees GROUP BY department ORDER BY COUNT(*) DESC LIMIT 1",
+  "hint": "Count employees per department; the biggest count is the longest bar.",
+  "required": false
 }
 ```
 

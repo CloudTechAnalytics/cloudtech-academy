@@ -1,6 +1,6 @@
 ---
 title: Introduction to business intelligence with Power BI
-minutes: 20
+minutes: 15
 summary: What Power BI is, its parts (Desktop, Service, Mobile), the workflow you'll follow in this course, and how to get set up.
 ---
 
@@ -85,6 +85,27 @@ and then a dashboard of your own for a law firm as the final project.
   "explanation": "Power Query, the same engine as Excel's Get & Transform.",
   "required": true,
   "hint": "It opens from Home → Transform data."
+}
+```
+
+
+## More practice
+
+Optional drills. They don't count towards the certificate, but each one checks you can apply the lesson to a new situation.
+
+```answer
+{
+  "id": "pbi-01-d1",
+  "prompt": "A manager wants the same sales report every Monday without anyone rebuilding it. Which Power BI feature, set up after publishing, keeps the data up to date on its own? (Two words.)",
+  "answer": "scheduled refresh",
+  "format": "text",
+  "accept": [
+    "schedule refresh",
+    "scheduled refreshes",
+    "refresh schedule"
+  ],
+  "hint": "It runs on a timetable in the Power BI service.",
+  "required": false
 }
 ```
 

@@ -7,6 +7,7 @@ import { useCourses } from "@/lib/data";
 import { CATEGORIES } from "@/content";
 import { CourseCard } from "@/components/CourseCard";
 import { breadcrumbs } from "@/lib/schema";
+import { LEVELS } from "@/content/tracks";
 
 const TYPES = [
   { id: "", label: "All types" },
@@ -19,8 +20,8 @@ const KINDS = [
   {
     Icon: Briefcase,
     title: "Professional courses",
-    time: "6 to 12 hours each",
-    body: "In-depth training for a job skill: Data Analytics, Excel, SQL, Data Modelling and Power BI. Full lessons, hands-on practice on realistic company data, a final assessment and a portfolio project.",
+    time: "6 to 9 hours each",
+    body: "In-depth training for a job skill: Data Analytics, Business Analysis, Excel, Statistics, SQL, Advanced SQL, Data Modelling, Power BI, DAX, Python and Machine Learning, plus a capstone project. Full lessons, hands-on practice on realistic company data, a final assessment and a portfolio project.",
     href: "#professional",
     cta: "See professional courses",
   },
@@ -28,7 +29,7 @@ const KINDS = [
     Icon: Timer,
     title: "Short courses",
     time: "1 to 2 hours each",
-    body: "Quick, practical skills like AI tools, Canva, CVs, Git or Python basics. Modules of about 20 minutes, each ending with a short check and a badge you can share.",
+    body: "Quick, practical skills like AI tools, Canva, CVs, Git or Python basics. Modules of 15 to 40 minutes, with tasks you do yourself and a check that earns a badge you can share.",
     href: "#short",
     cta: "See short courses",
   },
@@ -42,12 +43,7 @@ const KINDS = [
   },
 ];
 
-const LEVELS = [
-  { id: "", label: "All levels" },
-  { id: "beginner", label: "Beginner" },
-  { id: "intermediate", label: "Intermediate" },
-  { id: "advanced", label: "Advanced" },
-];
+const LEVEL_FILTERS = [{ id: "", label: "All levels" }, ...([1, 2, 3, 4] as const).map((l) => ({ id: String(l), label: `${l}. ${LEVELS[l].name}` }))];
 
 function CourseGroup({ id, title, intro, courses }: { id: string; title: string; intro: string; courses: Course[] }) {
   if (!courses.length) return null;
@@ -74,7 +70,7 @@ function CourseGroup({ id, title, intro, courses }: { id: string; title: string;
 export default function Courses() {
   useSeo({
     title: "Courses | CloudTech Academy",
-    description: "Free professional courses in data analytics, Excel, SQL and Power BI, and short courses in AI, design, careers, coding and Python. Earn badges and an optional certificate.",
+    description: "Free professional courses in data analytics, Excel, SQL, Power BI and Python, and short courses in AI, design, careers, coding and Python. Earn badges and an optional certificate.",
     jsonLd: breadcrumbs([["Home", "/"], ["Courses", "/courses"]]),
   });
   const courses = useCourses();
@@ -88,7 +84,7 @@ export default function Courses() {
     return courses.filter(
       (c) =>
         (!category || c.categoryId === category) &&
-        (!level || c.difficulty === level) &&
+        (!level || c.level === Number(level)) &&
         (!type || (type === "short") === (c.format === "short")) &&
         (!term || [c.title, c.summary, ...c.skills].some((s) => s.toLowerCase().includes(term))),
     );
@@ -179,7 +175,7 @@ export default function Courses() {
               Difficulty
             </label>
             <select id="course-level" value={level} onChange={(e) => setLevel(e.target.value)} className={select}>
-              {LEVELS.map((l) => (
+              {LEVEL_FILTERS.map((l) => (
                 <option key={l.id} value={l.id}>
                   {l.label}
                 </option>
@@ -199,7 +195,7 @@ export default function Courses() {
               intro="In-depth courses for a job skill, with hands-on practice, a final assessment and a portfolio project."
               courses={professional}
             />
-            <CourseGroup id="short" title="Short courses" intro="Quick, practical skills in modules of about 20 minutes, with a badge for each module." courses={short} />
+            <CourseGroup id="short" title="Short courses" intro="Quick, practical skills in modules of 15 to 40 minutes. Do the tasks, pass the check, and earn a badge for each module." courses={short} />
           </div>
         ) : (
           <div className="mt-4 rounded-2xl border border-dashed border-line-strong p-10 text-center">

@@ -1,6 +1,6 @@
 ---
 title: Charts and visualization
-minutes: 35
+minutes: 20
 summary: Build clear line, bar and combo charts from pivot tables, and use conditional formatting and sparklines to make tables readable.
 ---
 
@@ -95,6 +95,45 @@ Then, for the regional table, select the H1 2026 revenue column → **Home → C
   "hint": "Your monthly line chart shows it, or sort the monthly pivot filtered to 2026.",
   "explanation": "April 2026, at ₦54.6m. Easter fell on 5 April that year.",
   "required": true
+}
+```
+
+
+## More practice
+
+Optional drills. They don't count towards the certificate, but they're the fastest way to make this lesson stick. Several use a different dataset from the lesson on purpose: if you can do the same thing on unfamiliar data, you've really learned it.
+
+```answer
+{
+  "id": "xls-09-d1",
+  "prompt": "Chart revenue by region for **2025** as a bar chart. Which region is the **smallest** bar?",
+  "answer": "South East",
+  "format": "text",
+  "dataset": "sales",
+  "files": [
+    "orders",
+    "customers"
+  ],
+  "verify": "SELECT c.region FROM orders o JOIN customers c ON c.customer_id = o.customer_id WHERE o.order_date BETWEEN '2025-01-01' AND '2025-12-31' GROUP BY c.region ORDER BY SUM(o.quantity * o.unit_price * (1 - o.discount_pct / 100.0)) LIMIT 1",
+  "hint": "Pivot by region for 2025, insert a bar chart, sort it so the smallest is easy to see.",
+  "required": false
+}
+```
+
+```answer
+{
+  "id": "xls-09-d2",
+  "prompt": "Chart the number of court hearings per month in the legal `hearings.csv` (a column chart of hearings by month). How many hearings fall in **March 2026**?",
+  "answer": 20,
+  "format": "number",
+  "dataset": "legal",
+  "files": [
+    "hearings"
+  ],
+  "verify": "SELECT COUNT(*) FROM hearings WHERE hearing_date BETWEEN '2026-03-01' AND '2026-03-31'",
+  "hint": "Pivot with hearing_date grouped by Years and Months, count of hearing_id, then insert a column chart and read the March 2026 bar.",
+  "explanation": "March and September 2026 tie as the busiest months: a chart shows that at a glance, where a table hides it.",
+  "required": false
 }
 ```
 

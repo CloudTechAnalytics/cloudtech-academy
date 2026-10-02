@@ -3,3 +3,4 @@ export { BUNDLED_COURSES, BUNDLED_ASSESSMENTS, BUNDLED_PROJECTS, CATEGORIES } fr
 export { PRACTICE_PROJECTS } from "../src/content/projects";
 export { PROJECT_ANSWERS } from "../src/content/project-answers";
 export { gradingKey } from "../src/lib/project-grading";
+export { TRACKS, requiredCourses } from "../src/content/tracks";

@@ -1,6 +1,6 @@
 ---
 title: Relationships and cardinality
-minutes: 30
+minutes: 20
 summary: One-to-one, one-to-many and many-to-many relationships, optional vs mandatory, and why many-to-many needs a bridge table.
 ---
 
@@ -93,6 +93,27 @@ Ashgrove Chambers, the law firm: can a client have many matters? Yes. Can a matt
   "explanation": "A bridge (or junction) table such as appointments(doctor_id, patient_id, appointment_date) resolves the many-to-many.",
   "required": true,
   "hint": "It sits between the two tables and holds both keys. The lesson's diagram shows one for students and courses."
+}
+```
+
+
+## More practice
+
+Optional drills. They don't count towards the certificate, but they're the fastest way to make this lesson stick. Several use a different dataset from the lesson on purpose: if you can do the same thing on unfamiliar data, you've really learned it.
+
+```answer
+{
+  "id": "dmo-04-d1",
+  "prompt": "One client has many matters. How many matters does client **37** have in the legal `matters.csv`?",
+  "answer": 3,
+  "format": "number",
+  "dataset": "legal",
+  "files": [
+    "matters"
+  ],
+  "verify": "SELECT COUNT(*) FROM matters WHERE client_id = 37",
+  "hint": "Filter client_id to 37.",
+  "required": false
 }
 ```
 

@@ -1,6 +1,6 @@
 ---
 title: Dashboard design
-minutes: 30
+minutes: 20
 summary: Lay out a report page people understand in five seconds - hierarchy, consistency, restraint and accessibility.
 ---
 
@@ -94,6 +94,28 @@ Redesign your page from the previous lesson:
   "explanation": "About 5–7. Beyond that, visuals compete for attention.",
   "required": true,
   "hint": "The lesson gives a range of about five to seven. Type the top of it."
+}
+```
+
+
+## More practice
+
+Optional drills. They don't count towards the certificate, but they're the fastest way to make this lesson stick. Several use a different dataset from the lesson on purpose: if you can do the same thing on unfamiliar data, you've really learned it.
+
+```answer
+{
+  "id": "pbi-11-d1",
+  "prompt": "Across **all dates**, which customer is first in your Top 10 customers table?",
+  "answer": "Chuks Trading Co.",
+  "format": "text",
+  "dataset": "sales",
+  "files": [
+    "orders",
+    "customers"
+  ],
+  "verify": "SELECT c.customer_name FROM orders o JOIN customers c ON c.customer_id = o.customer_id GROUP BY c.customer_id ORDER BY SUM(o.quantity * o.unit_price * (1 - o.discount_pct / 100.0)) DESC LIMIT 1",
+  "hint": "Clear the year slicer, then sort the table by revenue.",
+  "required": false
 }
 ```
 

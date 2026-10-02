@@ -1,6 +1,6 @@
 ---
 title: Data analysis
-minutes: 30
+minutes: 15
 summary: The handful of calculations behind most business analysis - totals, averages, shares and growth - and the traps in each.
 ---
 
@@ -110,6 +110,43 @@ One overall average (13.8 packs) would describe none of these customers well.
   "verify": "SELECT ROUND(AVG(quantity), 1) FROM orders",
   "hint": "Use =AVERAGE() on the quantity column, then round to one decimal place.",
   "required": true
+}
+```
+
+
+## More practice
+
+Optional drills. They don't count towards the certificate, but they're the fastest way to make this lesson stick. Several use a different dataset from the lesson on purpose: if you can do the same thing on unfamiliar data, you've really learned it.
+
+```answer
+{
+  "id": "daf-06-d1",
+  "prompt": "In the HR `employees.csv`, what is the **average monthly salary** of **Senior** staff? Round to the nearest naira.",
+  "answer": 891667,
+  "format": "naira",
+  "dataset": "hr",
+  "files": [
+    "employees"
+  ],
+  "verify": "SELECT ROUND(AVG(monthly_salary)) FROM employees WHERE job_level = 'Senior'",
+  "hint": "=AVERAGEIF(job_level column, \"Senior\", salary column)",
+  "required": false
+}
+```
+
+```answer
+{
+  "id": "daf-06-d2",
+  "prompt": "In the legal `invoices.csv`, what is the **average invoice** amount? Round to the nearest naira.",
+  "answer": 2931098,
+  "format": "naira",
+  "dataset": "legal",
+  "files": [
+    "invoices"
+  ],
+  "verify": "SELECT ROUND(AVG(amount_ngn)) FROM invoices",
+  "hint": "=AVERAGE over amount_ngn.",
+  "required": false
 }
 ```
 

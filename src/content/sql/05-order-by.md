@@ -1,6 +1,6 @@
 ---
 title: ORDER BY
-minutes: 20
+minutes: 9
 summary: Sort results by one or more columns, in ascending or descending order.
 ---
 
@@ -76,6 +76,46 @@ ORDER BY mode, target_transit_days DESC;
   "starter": "",
   "solution": "SELECT company_name, signup_date FROM customers WHERE city = 'Lagos' ORDER BY signup_date DESC, company_name ASC;",
   "hint": "Filter with WHERE first, then ORDER BY two columns separated by a comma, each with its own direction.",
+  "required": false,
+  "orderMatters": true
+}
+```
+
+## More practice
+
+Optional drills on the same skills. They don't count towards the certificate, but each one is a small, realistic request from someone at Harbourline. Do as many as you need until the pattern feels automatic.
+
+```exercise
+{
+  "id": "sql-04-d1",
+  "prompt": "List every employee's full_name and hire_date, from the longest-serving to the newest.",
+  "starter": "",
+  "solution": "SELECT full_name, hire_date FROM employees ORDER BY hire_date ASC, employee_id;",
+  "hint": "The earliest hire_date first means ascending order. Add employee_id as a tie-breaker.",
+  "required": false,
+  "orderMatters": true
+}
+```
+
+```exercise
+{
+  "id": "sql-04-d2",
+  "prompt": "Show shipment_id, booking_date and freight_charge for shipments booked on '2026-07-15', most expensive first.",
+  "starter": "",
+  "solution": "SELECT shipment_id, booking_date, freight_charge FROM shipments WHERE booking_date = '2026-07-15' ORDER BY freight_charge DESC, shipment_id;",
+  "hint": "WHERE comes before ORDER BY. Add shipment_id after freight_charge DESC to break ties.",
+  "required": false,
+  "orderMatters": true
+}
+```
+
+```exercise
+{
+  "id": "sql-04-d3",
+  "prompt": "Show company_name, industry and city for every customer, sorted by industry A to Z, then by company_name A to Z within each industry.",
+  "starter": "",
+  "solution": "SELECT company_name, industry, city FROM customers ORDER BY industry, company_name;",
+  "hint": "ORDER BY industry, company_name sorts by the second column only when the first is tied.",
   "required": false,
   "orderMatters": true
 }

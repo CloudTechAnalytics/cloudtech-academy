@@ -102,6 +102,39 @@ When you receive a new table, test its keys before building on it:
 }
 ```
 
+
+## More practice
+
+Optional drills. They don't count towards the certificate, but they're the fastest way to make this lesson stick. Several use a different dataset from the lesson on purpose: if you can do the same thing on unfamiliar data, you've really learned it.
+
+```answer
+{
+  "id": "dmo-03-d1",
+  "prompt": "In the legal `hearings.csv`, which column is the **foreign key** that links a hearing to its matter?",
+  "answer": "matter_id",
+  "format": "text",
+  "hint": "It ends in _id and isn't the table's own key.",
+  "required": false
+}
+```
+
+```answer
+{
+  "id": "dmo-03-d2",
+  "prompt": "employee_id identifies an employee, but it is **not** unique in `attendance.csv`. How many times does employee **1005** appear there?",
+  "answer": 22,
+  "format": "number",
+  "dataset": "hr",
+  "files": [
+    "attendance"
+  ],
+  "verify": "SELECT COUNT(*) FROM attendance WHERE employee_id = 1005",
+  "hint": "Filter employee_id to 1005.",
+  "explanation": "So attendance needs a composite key: (employee_id, date).",
+  "required": false
+}
+```
+
 ## Check your understanding
 
 ```quiz

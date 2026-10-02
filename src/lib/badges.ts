@@ -15,7 +15,12 @@ export function credentialBadge(c: PublicCredential | Credential, course?: Cours
     kind: c.kind,
     badgeName: c.badgeName,
     courseTitle: c.courseTitle,
-    icon: badgeIcon({ code: c.kind === "project_badge" ? projectBadgeCode(c.projectId) : mod?.badgeCode, categoryId: course?.categoryId, completion: c.kind === "course_completion", project: c.kind === "project_badge" }),
+    icon: badgeIcon({
+      code: c.kind === "project_badge" ? projectBadgeCode(c.projectId) : mod?.badgeCode,
+      categoryId: course?.categoryId,
+      completion: c.kind === "course_completion" || c.kind === "track_completion",
+      project: c.kind === "project_badge",
+    }),
     recipientName: c.recipientName,
     issuedAt: c.issuedAt,
     credentialId: c.credentialId,
@@ -26,6 +31,7 @@ export function credentialBadge(c: PublicCredential | Credential, course?: Cours
 /** The text people share with a credential. */
 export function shareText(c: Pick<PublicCredential, "kind" | "badgeName" | "courseTitle">) {
   if (c.kind === "project_badge") return `I've completed the "${c.badgeName}" practice project on CloudTech Academy and earned the project badge.`;
+  if (c.kind === "track_completion") return `I've completed the "${c.courseTitle}" career track on CloudTech Academy and earned the ${c.badgeName} badge.`;
   return c.kind === "course_completion"
     ? `I've completed ${c.courseTitle} on CloudTech Academy and earned my course completion badge.`
     : `I've earned the "${c.badgeName}" badge from CloudTech Academy, part of ${c.courseTitle}.`;
@@ -60,3 +66,7 @@ export function linkedInAddToProfile(c: Pick<PublicCredential, "badgeName" | "cr
   });
   return `https://www.linkedin.com/profile/add?${params}`;
 }
+
+/** What kind of credential this is, in words. */
+export const credentialKindLabel = (kind: PublicCredential["kind"]) =>
+  kind === "track_completion" ? "Career track" : kind === "course_completion" ? "Course completion" : "Module badge";

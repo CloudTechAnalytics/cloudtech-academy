@@ -1,3 +1,4 @@
+import { credentialKindLabel } from "@/lib/badges";
 import { useState } from "react";
 import { Link, useParams } from "react-router";
 import { getBackend } from "@/lib/backend";
@@ -297,7 +298,7 @@ export function AdminStudent() {
               <span>
                 <span className="font-medium">{c.badgeName}</span>
                 <span className="block text-[0.8125rem] text-muted">
-                  {c.kind === "course_completion" ? "Course completion" : c.kind === "project_badge" ? `Project badge · ${c.courseTitle}` : `Module badge · ${c.courseTitle}`}
+                  {c.kind === "module_badge" || c.kind === "project_badge" ? `${credentialKindLabel(c.kind)} · ${c.courseTitle}` : credentialKindLabel(c.kind)}
                 </span>
               </span>
               <span className="text-[0.8125rem] text-muted">

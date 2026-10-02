@@ -1,6 +1,6 @@
 ---
 title: IF, SUMIF and COUNTIF
-minutes: 35
+minutes: 15
 summary: Make decisions inside formulas with IF, and total or count only the rows that meet conditions with SUMIFS and COUNTIFS.
 ---
 
@@ -139,6 +139,60 @@ Check step 4 with a filter (order_date in 2026, discount_pct not 0). Two methods
   "files": ["orders"],
   "verify": "SELECT COUNT(*) FROM orders WHERE quantity >= 20",
   "hint": "Either COUNTIF on a size column, or directly: =COUNTIF(Orders[quantity], \">=20\").",
+  "required": false
+}
+```
+
+
+## More practice
+
+Optional drills. They don't count towards the certificate, but they're the fastest way to make this lesson stick. Several use a different dataset from the lesson on purpose: if you can do the same thing on unfamiliar data, you've really learned it.
+
+```answer
+{
+  "id": "xls-05-d1",
+  "prompt": "In `attendance.csv`, how many times was employee **1073** marked **Late**?",
+  "answer": 5,
+  "format": "number",
+  "dataset": "hr",
+  "files": [
+    "attendance"
+  ],
+  "verify": "SELECT COUNT(*) FROM attendance WHERE employee_id = 1073 AND status = 'Late'",
+  "hint": "=COUNTIFS(Attendance[employee_id], 1073, Attendance[status], \"Late\")",
+  "required": false
+}
+```
+
+```answer
+{
+  "id": "xls-05-d2",
+  "prompt": "What is the total value of **Overdue** invoices in the legal dataset?",
+  "answer": 188070000,
+  "format": "naira",
+  "dataset": "legal",
+  "files": [
+    "invoices"
+  ],
+  "verify": "SELECT SUM(amount_ngn) FROM invoices WHERE status = 'Overdue'",
+  "hint": "=SUMIF(Invoices[status], \"Overdue\", Invoices[amount_ngn])",
+  "explanation": "That's money the firm has earned but not collected: exactly the kind of figure a partner wants on page one.",
+  "required": false
+}
+```
+
+```answer
+{
+  "id": "xls-05-d3",
+  "prompt": "What is the total **monthly salary** of **Active** employees in the **Sales** department?",
+  "answer": 8115000,
+  "format": "naira",
+  "dataset": "hr",
+  "files": [
+    "employees"
+  ],
+  "verify": "SELECT SUM(monthly_salary) FROM employees WHERE department = 'Sales' AND status = 'Active'",
+  "hint": "SUMIFS with two conditions: department = \"Sales\" and status = \"Active\".",
   "required": false
 }
 ```

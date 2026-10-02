@@ -168,7 +168,8 @@ export function ProjectSubmit({ project }: { project: PracticeProject }) {
       const b = await getBackend();
       const r = await b.submitPracticeProject({ projectId: project.id, workUrl: url.trim(), summary: summary.trim(), answers: sent });
       setResult(r);
-      setSub(await b.getPracticeSubmission(project.id));
+      // Refresh the saved submission in the background so the learner can correct an answer and resubmit straight away.
+      void b.getPracticeSubmission(project.id).then(setSub);
       if (r.credentialId) setBadgeId(r.credentialId);
       if (r.passed) setEditing(false);
     } catch (e) {

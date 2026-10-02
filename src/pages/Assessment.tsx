@@ -7,7 +7,7 @@ import { useCourse, useLearner } from "@/lib/data";
 import { getBackend, type AttemptResult, type Credential } from "@/lib/backend";
 import { PageLoading, RequireAuth } from "@/lib/auth";
 import { credentialBadge } from "@/lib/badges";
-import { eligibility } from "@/lib/certificates";
+import { eligibility, moduleTaskIds } from "@/lib/certificates";
 import { Button, ButtonLink } from "@/components/Button";
 import { Alert } from "@/components/Form";
 import { BadgeArtwork } from "@/components/BadgeArtwork";
@@ -62,6 +62,29 @@ function AssessmentInner() {
         <p className="mt-3 text-muted">{mod ? "This module doesn't have a check yet." : "This course doesn't have a final assessment yet."}</p>
       </div>
     );
+
+  // A module check unlocks once the module's tasks are done (the server checks this again).
+  const tasksLeft = mod ? moduleTaskIds(mod).filter((id) => !learner.progress.completedExercises.includes(id)).length : 0;
+  if (mod && tasksLeft > 0 && !attempts.some((x) => x.passed)) {
+    const first = mod.lessons.find((l) => l.published);
+    return (
+      <div className="container-page max-w-3xl py-12 sm:py-16">
+        <p className="kicker">Module check · {course.title}</p>
+        <h1 className="mt-3 font-serif text-[2.3rem] leading-tight">{mod.title}</h1>
+        <div className="mt-6">
+          <Alert tone="info">
+            <p className="font-semibold">Finish {tasksLeft === 1 ? "the last task" : `the ${tasksLeft} tasks`} in this module first.</p>
+            <p className="mt-1">The {mod.badge} badge shows you've done the work, not just read about it. Complete the tasks in the lesson, then come back.</p>
+          </Alert>
+        </div>
+        {first && (
+          <ButtonLink to={`/learn/${course.slug}/${first.slug}`} className="mt-6">
+            Back to the lesson
+          </ButtonLink>
+        )}
+      </div>
+    );
+  }
 
   const answered = a.questions.filter((q) => answers[q.id] !== undefined).length;
   const best = attempts.reduce((m, x) => Math.max(m, x.score), 0);

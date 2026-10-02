@@ -1,6 +1,6 @@
 ---
 title: DAX fundamentals
-minutes: 40
+minutes: 15
 summary: The difference between calculated columns and measures, how filter context works, and the core DAX functions.
 ---
 
@@ -111,6 +111,43 @@ Category = RELATED ( products[category] )
   "verify": "SELECT COUNT(*) FROM orders WHERE order_date BETWEEN '2026-01-01' AND '2026-03-31'",
   "hint": "The Order Lines measure in a matrix with Date[Year] and Date[Quarter] in Rows.",
   "required": true
+}
+```
+
+
+## More practice
+
+Optional drills. They don't count towards the certificate, but they're the fastest way to make this lesson stick. Several use a different dataset from the lesson on purpose: if you can do the same thing on unfamiliar data, you've really learned it.
+
+```answer
+{
+  "id": "pbi-08-d1",
+  "prompt": "Write a measure `Total Quantity = SUM(orders[quantity])`. How many packs were sold in **2026**?",
+  "answer": 19630,
+  "format": "number",
+  "dataset": "sales",
+  "files": [
+    "orders"
+  ],
+  "verify": "SELECT SUM(quantity) FROM orders WHERE order_date >= '2026-01-01'",
+  "hint": "Card with the measure, sliced to 2026 by your date table.",
+  "required": false
+}
+```
+
+```answer
+{
+  "id": "pbi-08-d2",
+  "prompt": "In the HR data, write `Avg Salary = AVERAGE(employees[monthly_salary])`. What is it for **Managers** (job_level)? Round to the nearest naira.",
+  "answer": 1403000,
+  "format": "naira",
+  "dataset": "hr",
+  "files": [
+    "employees"
+  ],
+  "verify": "SELECT ROUND(AVG(monthly_salary)) FROM employees WHERE job_level = 'Manager'",
+  "hint": "Put job_level in a table next to the measure.",
+  "required": false
 }
 ```
 

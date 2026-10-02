@@ -85,6 +85,54 @@ Click the button: the page switches between light and dark. This is the pattern 
 
 ## Try it
 
-1. Link `script.js` and add the dark mode button.
-2. Add a second button that shows or hides your "Contact" section. Hint: toggle a class that sets `display: none`.
-3. Open the Console, cause an error on purpose (misspell a variable), read the message, then fix it.
+This code is meant to switch dark mode on, but clicking does nothing, and the Console shows **`Uncaught ReferenceError: button is not defined`**:
+
+```js
+const buton = document.querySelector("#theme-btn");
+button.addEventListener("click", function () {
+  document.body.classList.toggle("dark");
+});
+```
+
+```answer
+{
+  "id": "web-m03-a1",
+  "prompt": "Which variable name has a typo? Type the misspelled name exactly as it appears in the code.",
+  "answer": "buton",
+  "format": "text",
+  "explanation": "The variable is created as buton but used as button. The error message names the one JavaScript can't find, which points you to the mismatch.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "web-m03-a2",
+  "prompt": "You need a variable for a score that will change as a quiz goes on. Which keyword should you declare it with: `let` or `const`?",
+  "answer": "let",
+  "format": "text",
+  "explanation": "let for values that change; const for values that won't.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "web-m03-t1",
+  "prompt": "Add a button that **shows and hides your Contact section**. Paste the three pieces: the **HTML** (the button and the section with an `id`), the **CSS** (a class that hides it), and the **JavaScript** (find the button, listen for a click, toggle the class).",
+  "minutes": 15,
+  "rows": 16,
+  "placeholder": "<button id=\"contact-btn\">...</button>\n<section id=\"contact\">...</section>\n\n.hidden { ... }\n\nconst ...",
+  "rules": [
+    { "label": "A <button> with an id", "pattern": "<button[^>]*\\bid=\"[^\"]+\"" },
+    { "label": "A contact section with an id", "pattern": "<(section|div|footer)[^>]*\\bid=\"contact[^\"]*\"" },
+    { "label": "A CSS class that hides it (display: none)", "pattern": "\\.[\\w-]+\\s*\\{[^}]*display\\s*:\\s*none" },
+    { "label": "Finds elements with document.querySelector or getElementById", "pattern": "document\\.(querySelector|getElementById)\\(", "min": 2 },
+    { "label": "Listens for a click", "pattern": "addEventListener\\(\\s*[\"']click[\"']" },
+    { "label": "Toggles the class", "pattern": "classList\\.toggle\\(" }
+  ],
+  "sample": "<button id=\"contact-btn\">Show contact details</button>\n<section id=\"contact\" class=\"hidden\">\n  <h2>Contact</h2>\n  <p>Email me at chioma.eze@example.com</p>\n</section>\n\n.hidden {\n  display: none;\n}\n\nconst contactButton = document.querySelector(\"#contact-btn\");\nconst contact = document.querySelector(\"#contact\");\ncontactButton.addEventListener(\"click\", function () {\n  contact.classList.toggle(\"hidden\");\n});",
+  "note": "Find an element, listen for an event, change something: the same three steps as the dark mode button, and as most interaction on the web.",
+  "required": true
+}
+```

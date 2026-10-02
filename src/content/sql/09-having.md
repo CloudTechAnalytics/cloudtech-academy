@@ -96,6 +96,45 @@ ORDER BY avg_charge DESC;
 }
 ```
 
+## More practice
+
+Optional drills on the same skills. They don't count towards the certificate, but each one is a small, realistic request from someone at Harbourline. Do as many as you need until the pattern feels automatic.
+
+```exercise
+{
+  "id": "sql-08-d1",
+  "prompt": "Which cities have more than 10 customers? Show city and the number of customers.",
+  "starter": "",
+  "solution": "SELECT city, COUNT(*) AS customers FROM customers GROUP BY city HAVING COUNT(*) > 10;",
+  "hint": "HAVING filters the groups after counting.",
+  "required": false
+}
+```
+
+```exercise
+{
+  "id": "sql-08-d2",
+  "prompt": "Which routes carried more than 100 shipments in 2025? Show route_id and shipments, busiest first.",
+  "starter": "",
+  "solution": "SELECT route_id, COUNT(*) AS shipments FROM shipments WHERE booking_date BETWEEN '2025-01-01' AND '2025-12-31' GROUP BY route_id HAVING COUNT(*) > 100 ORDER BY shipments DESC, route_id;",
+  "hint": "WHERE picks the 2025 rows before grouping; HAVING keeps the busy routes after.",
+  "required": false,
+  "orderMatters": true
+}
+```
+
+```exercise
+{
+  "id": "sql-08-d3",
+  "prompt": "Which customers have been charged more than 600,000,000 naira in freight in total? Show customer_id and total_charge, highest first.",
+  "starter": "",
+  "solution": "SELECT customer_id, SUM(freight_charge) AS total_charge FROM shipments GROUP BY customer_id HAVING SUM(freight_charge) > 600000000 ORDER BY total_charge DESC;",
+  "hint": "HAVING SUM(freight_charge) > 600000000",
+  "required": false,
+  "orderMatters": true
+}
+```
+
 ## Check your understanding
 
 ```quiz

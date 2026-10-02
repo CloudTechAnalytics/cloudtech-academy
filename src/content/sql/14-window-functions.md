@@ -1,6 +1,6 @@
 ---
 title: Window functions
-minutes: 35
+minutes: 10
 summary: Rank rows, number them within groups and calculate running totals without losing detail.
 ---
 
@@ -123,6 +123,45 @@ The customers at the top of this list are the ones who haven't booked for longes
   "starter": "",
   "solution": "WITH monthly AS (SELECT strftime('%Y-%m', booking_date) AS month, COUNT(*) AS shipments FROM shipments WHERE booking_date BETWEEN '2025-01-01' AND '2025-12-31' GROUP BY month) SELECT month, shipments, LAG(shipments) OVER (ORDER BY month) AS previous_month FROM monthly ORDER BY month;",
   "hint": "Count per month in a CTE, then LAG(shipments) OVER (ORDER BY month). January has no previous month, so it shows NULL.",
+  "required": false,
+  "orderMatters": true
+}
+```
+
+## More practice
+
+Optional drills on the same skills. They don't count towards the certificate, but each one is a small, realistic request from someone at Harbourline. Do as many as you need until the pattern feels automatic.
+
+```exercise
+{
+  "id": "sql-13-d1",
+  "prompt": "Rank customers by total freight_charge with DENSE_RANK. Show customer_id, total_charge and charge_rank, top 10 only.",
+  "starter": "",
+  "solution": "SELECT customer_id, SUM(freight_charge) AS total_charge, DENSE_RANK() OVER (ORDER BY SUM(freight_charge) DESC) AS charge_rank FROM shipments GROUP BY customer_id ORDER BY charge_rank, customer_id LIMIT 10;",
+  "hint": "You can rank by an aggregate: DENSE_RANK() OVER (ORDER BY SUM(freight_charge) DESC).",
+  "required": false,
+  "orderMatters": true
+}
+```
+
+```exercise
+{
+  "id": "sql-13-d2",
+  "prompt": "For each mode, find the single most expensive shipment. Show mode, shipment_id and freight_charge. Use ROW_NUMBER partitioned by mode in a CTE.",
+  "starter": "",
+  "solution": "WITH ranked AS (SELECT r.mode, s.shipment_id, s.freight_charge, ROW_NUMBER() OVER (PARTITION BY r.mode ORDER BY s.freight_charge DESC, s.shipment_id) AS rn FROM shipments AS s JOIN routes AS r ON r.route_id = s.route_id) SELECT mode, shipment_id, freight_charge FROM ranked WHERE rn = 1;",
+  "hint": "Number the rows within each mode, most expensive first, then keep rn = 1.",
+  "required": false
+}
+```
+
+```exercise
+{
+  "id": "sql-13-d3",
+  "prompt": "Show a running total of payments received in 2026 by month: month ('YYYY-MM'), received, and running_total. Order by month.",
+  "starter": "",
+  "solution": "WITH m AS (SELECT strftime('%Y-%m', payment_date) AS month, SUM(amount) AS received FROM payments WHERE payment_date >= '2026-01-01' GROUP BY month) SELECT month, received, SUM(received) OVER (ORDER BY month) AS running_total FROM m ORDER BY month;",
+  "hint": "Total by month in a CTE, then SUM(received) OVER (ORDER BY month).",
   "required": false,
   "orderMatters": true
 }

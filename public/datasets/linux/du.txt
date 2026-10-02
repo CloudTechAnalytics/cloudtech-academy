@@ -1,0 +1,9 @@
+1.1G	/var/log/tallybook
+36G	/var/log/nginx
+2.9G	/var/log/journal
+48K	/var/log/apt
+212M	/var/log/auth.log
+96M	/var/log/syslog
+4.0K	/var/log/btmp
+640M	/var/log/node_exporter
+12K	/var/log/cloud-init.log

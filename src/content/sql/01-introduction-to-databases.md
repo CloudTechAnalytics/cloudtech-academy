@@ -1,6 +1,6 @@
 ---
 title: Introduction to databases
-minutes: 20
+minutes: 9
 summary: What a database is, how tables connect, and your first query against a real one.
 ---
 
@@ -79,6 +79,32 @@ The result is every row and column of the `routes` table: 30 routes, from sea la
   "starter": "",
   "solution": "SELECT * FROM customers;",
   "hint": "The same pattern as before, with a different table name. Then look for columns that end in _id.",
+  "required": false
+}
+```
+
+## More practice
+
+Optional drills on the same skills. They don't count towards the certificate, but each one is a small, realistic request from someone at Harbourline. Do as many as you need until the pattern feels automatic.
+
+```exercise
+{
+  "id": "sql-01-d1",
+  "prompt": "Show every column of the routes table. Look at the mode column: which three ways does Harbourline move freight?",
+  "starter": "",
+  "solution": "SELECT * FROM routes;",
+  "hint": "SELECT * FROM followed by the table name.",
+  "required": false
+}
+```
+
+```exercise
+{
+  "id": "sql-01-d2",
+  "prompt": "Show every column of the payments table. Which column links a payment to the shipment it pays for?",
+  "starter": "",
+  "solution": "SELECT * FROM payments;",
+  "hint": "The same pattern again. Look for the column ending in _id that isn't payment_id.",
   "required": false
 }
 ```

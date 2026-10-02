@@ -5,7 +5,7 @@ The learning platform of [CloudTech Analytics](https://www.cloudtechanalytics.co
 **Learn free. Earn badges free. The official certificate is optional.**
 
 - Every course, lesson and assessment is free.
-- Short courses are made of 15–30 minute modules. Passing a module's check earns its badge.
+- Short courses are made of 15–40 minute modules. Each module has tasks the learner does and submits (checked as they go), and its check unlocks only when they're done. Passing the check earns the module's badge.
 - Passing the final assessment earns the free course completion badge.
 - Every badge is a credential with an ID (`CTA-PROMPT-8F72K`) and a public page at `/credentials/:id`.
 - After completing a course, a learner can optionally buy the official PDF certificate (₦3,000 or $7, set by admins). It has a certificate number (`CTA-CERT-2026-000124`) and a QR code that opens `/verify/:id`.
@@ -23,12 +23,12 @@ The learning platform of [CloudTech Analytics](https://www.cloudtechanalytics.co
 | Git & GitHub for Beginners | What Git and GitHub Are, Your First Repository, Show Your Projects on GitHub |
 | Web Development for Beginners | HTML, CSS, JavaScript, Publish Your First Website |
 | Python for Beginners | First Steps in Python, Decisions Lists and Loops, Functions and a Mini Project |
-| Python for Data Analysis | Load and Explore Data, Clean Filter and Calculate, Group Join and Chart |
+| pandas Quick Start | Load and Explore Data, Clean Filter and Calculate, Group Join and Chart |
 | Digital Skills for Students | Files and Cloud Storage, Google Workspace for Students, Professional Email, Stay Safe Online |
 | Get Your First Internship | Get Ready, Find Opportunities (Including Remote), Apply and Stand Out, Ace the Interview |
 | Freelancing for Beginners | Choose Your Skill and Offer, Find Clients and Get Paid, Price and Pitch, Deliver and Get Reviews |
 
-Each short course ends with an 8-question final assessment.
+Each short course ends with a final assessment of at least 8 questions. Module checks are scenario questions with plausible wrong answers.
 
 **Student Starter** (`/students`) lists 25 skills for students, grouped by theme. Each links to a whole course or to a single module of one (for example, AI prompting is the first module of AI Productivity Fundamentals). The list is in `src/pages/Students.tsx`.
 
@@ -36,11 +36,43 @@ Each short course ends with an 8-question final assessment.
 | --- | --: | --- | --- |
 | Data Analytics Foundations | 10 | Answer tasks on real datasets, one SQL taster | Kolanut people review (HR data) |
 | Excel for Data Analysis | 11 | Answer tasks: formulas, XLOOKUP, cleaning, pivots | Kolanut sales performance review |
-| SQL for Data Analysis | 16 | 36 SQL exercises checked in the browser | Harbourline Freight operations review |
+| SQL for Data Analysis | 16 | SQL exercises checked in the browser, plus optional drills | Harbourline Freight operations review |
+| Advanced SQL | 11 | SQL exercises checked in the browser: NULL traps, dates, data quality, window frames, cohorts, pivots, recursive CTEs, query plans | Harbourline commercial health check |
 | Power BI Fundamentals | 14 | Answer tasks: Power Query, modelling, DAX, visuals | Ashgrove Chambers practice dashboard |
+| Power BI DAX | 11 | Answer tasks checked against SQL over the sales, HR and legal data, plus DAX writing tasks checked against rules | Kolanut commercial dashboard |
 | Data Modelling | 9 | SQL checks and answer tasks, built around diagrams | Ashgrove Chambers data model |
+| Statistics for Data Analysis | 11 | Answer tasks in Excel or Sheets, checked against SQL and pandas (including medians, percentiles and p-values) | Harbourline delivery performance review |
+| Business Analysis Fundamentals | 11 | Problem statements, stakeholder registers, interview plans, process maps, requirements, user stories and business cases checked against rules, plus answer tasks on the legal data | Harbourline tracking request: business analysis pack |
+| Agile Business Analysis | 10 | Answer tasks on a Scrum team's real backlog (velocity, cycle time, scope growth) plus visions, story maps, splits, definitions of ready and done, WSJF and pilot plans checked against rules | Harbourline delay notifications: agile delivery pack |
+| Process Improvement with BPMN and Lean | 10 | Answer tasks on a port clearance event log (waits, flow efficiency, bottlenecks, pilot results) plus BPMN models, waste lists, five whys, future states and control plans checked against rules | Harbourline clearance: the next improvement cycle |
+| Machine Learning Fundamentals | 11 | Python in Colab with scikit-learn; every code block and answer checked by running the lesson (rentals regression, loan default classification) | Ladder Microfinance: a responsible credit model |
+| Feature Engineering and Model Evaluation | 8 | Python in Colab; point-in-time features from 65,825 wallet transactions, time-based validation, calibration, lift and drift, all checked by running the lessons | Paystream: a retention model that stays honest |
+| Experimentation and A/B Testing | 9 | Python in Colab with scipy; sample sizes, SRM, a peeking simulation, z-tests, bootstrap, segments, guardrail valuation and difference-in-differences, all checked by running the lessons | Paystream: experiment review and next test |
+| Product Management Fundamentals | 10 | Python in Colab on a wallet's signups, activity, feedback, interviews, backlog and a launch with a holdout: outcomes, funnels, cohorts, RICE, roadmaps, launch measurement and specs, all checked by running the lessons | Paystream's next quarter |
+| Project Management Fundamentals | 10 | Python in Colab on a depot launch's tasks, weekly progress, risks and change requests: PERT, critical path, Monte Carlo schedule risk, earned value, forecasting, EMV and change control, all checked by running the lessons | The depot's week 10 review |
+| Web Development with JavaScript | 10 | Browser console and HTML files: JavaScript and exact money, arrays and Intl, accessible HTML, responsive CSS, DOM events, accessible validation, fetch with every outcome, and tests; every JavaScript example's output checked by `npm run test:js` | Tallybook's pay-an-invoice page |
+| Databases and APIs for Developers | 10 | Python with SQLite and Flask in Colab: schema design, named constraints refusing bad export rows, parameterised queries, transactions, query plans, migrations, REST design and pytest fixtures, on Tallybook's invoicing data; all checked by running the lessons | Tallybook's invoicing database and API |
+| Software Engineering with Python | 10 | Python and %%bash cells in Colab: functions, kobo and Decimal money, pytest tests and boundary cases, debugging, validation, Git, code review and a Flask API, on Tallybook's invoicing data; pytest and git output checked by `npm run test:shell` (with SHELL_TEST_PATH pointing at a Python that has pytest and flask) | Tallybook's invoicing service |
+| Observability and Site Reliability | 10 | Python in Colab on per-minute metrics, structured logs, traces, daily SLIs, alert history and toil: golden signals, percentiles, burn-rate alerts, alert clean-up, Little's law and error budgets, all checked by running the lessons | Tallybook's reliability review |
+| CI/CD and Containers | 10 | Python in Colab on deployments, pipeline runs, canary checks, image builds, Trivy-format scans, a Dockerfile and a GitHub Actions workflow: DORA measures, Dockerfile and workflow checkers, caching, canary analysis and recovery, all checked by running the lessons | Tallybook's delivery review |
+| Infrastructure as Code with Terraform | 10 | Python in Colab on Terraform 1.9 state, variable files and six pull requests' plan JSON: coverage against the cloud inventory, secrets in state, dangerous changes, policy as code, drift and imports; HCL examples pass `terraform fmt` | Tallybook's infrastructure review |
+| Linux and Networking Basics | 10 | Shell commands in Colab %%bash cells on a web server's access and auth logs and system snapshots: grep, awk, permissions, processes, SSH, firewall rules, DNS, HTTP, scripts and cron; every command's output checked by `npm run test:shell` | What happened on prod-web-01 |
+| Cloud Fundamentals: Cost, Scaling and Reliability | 10 | Python in Colab; billing analysis, rightsizing, idle resources, schedules and pricing models, autoscaling, availability and SLOs, access reviews and cost governance on a SaaS company's cloud account, all checked by running the lessons | Tallybook's cloud review |
+| LLM Evaluation and Safety in Production | 10 | Python in Colab; regression suites with intervals, paired release comparison and gates, red-teaming, guardrail thresholds and fairness, control-limit alerts, sampled grading and postmortems, all checked by running the lessons | Paystream's AI quality and safety plan |
+| AI Agents and Tool Use | 10 | Python in Colab; tool design and scoping, guarded loops replayed from recorded runs, rules in code, approvals, outcome and trajectory evaluation, injection through tool results, cost and monitoring, all checked by running the lessons; live calls optional | Paystream support agent: v3 design and evaluation |
+| Generative AI Engineering | 10 | Python in Colab; prompts, validated outputs, LLM classifier evaluation against a classic baseline, retrieval and RAG, LLM judges checked against human grades, privacy, injection and cost, all checked by running the lessons; live calls optional | Paystream support assistant: prototype and evaluation |
+| Time Series Forecasting | 9 | Python in Colab; baselines, calendar regression, promotions and breaks, rolling backtests, intervals and safety stock on four years of daily depot sales, all checked by running the lessons | Kolanut Lagos depot: forecasting and ordering |
+| Software Developer Capstone | 8 | %%bash cells in Colab on a Flask and SQLite refunds service with planted bugs: failing tests from bug reports, Decimal money, SQL injection, idempotency keys and transactions, API validation, code review, Git and CI; output checked by `npm run test:shell` | Kasuwa's refunds service, fixed and shipped |
+| Cloud & DevOps Engineer Capstone | 8 | Python in Colab on an online shop's cloud inventory, outage metrics and logs, a Terraform plan, deployments, a load test, alerts and game-day results: postmortem, policy as code, DORA, capacity, burn-rate alerts, cost and a go/no-go, all checked by running the lessons | Kasuwa: sale readiness review |
+| AI Engineer Capstone | 8 | Python in Colab on recorded LLM outputs: validation and grounding, rules in code, retrieval against a baseline, judge checking, red-teaming and fair guardrails, a release gate and production monitoring, all checked by running the lessons; no API key needed | Shieldline's WhatsApp claims assistant |
+| Data Scientist Capstone | 8 | Python in Colab on an online shop's orders: leakage audit, point-in-time features, time-based validation, calibration, uplift from a randomised trial, cost-based thresholds, fairness by city and monitoring, all checked by running the lessons | Kasuwa: who to call before dispatch |
+| Business Analyst Capstone | 8 | Answer tasks on a motor insurer's claims, event log, renewals and UAT results, checked against SQL; problem statement, root causes, pilot result, recommendation, user story and decision paper checked against rules | Shieldline Insurance: fixing slow motor claims |
+| Data Analyst Capstone | 7 | Answer tasks on a raw retail export, checked against SQL; written plan, data quality log, executive summary and portfolio tasks checked against rules | Voltline Electronics commercial review |
+| Python for Data Analytics | 12 | Answer tasks on real datasets, checked against both SQL and the pandas the lesson teaches | Kolanut customer health review |
 
-Each full course has a 15-question final assessment. Every assessment has a pass mark of 60%, shuffled options, and is graded on the server.
+Every full-course lesson also has a **More practice** section of optional drills (often on a different dataset from the lesson), which don't count towards the certificate.
+
+Each full course has a final assessment of at least 10 questions (15 in most). Every assessment has a pass mark of 60%, shuffled options, and is graded on the server.
 
 | Platform | Status |
 | --- | --- |
@@ -60,6 +92,7 @@ npm install
 npm run dev          # http://localhost:5173
 npm run build        # typecheck, build, then prerender public pages into dist/
 npm run test:content # checks every lesson; recomputes every answer from the CSV files
+npm run test:python  # runs every Python example and checks the outputs and answers (needs Python 3 with pandas and matplotlib)
 ```
 
 Without Supabase keys the Academy runs in **demo mode**:
@@ -70,7 +103,7 @@ Without Supabase keys the Academy runs in **demo mode**:
 ## Connecting Supabase
 
 1. Create a project at [supabase.com](https://supabase.com).
-2. In **SQL Editor**, run [`supabase/migrations/0001_academy.sql`](supabase/migrations/0001_academy.sql), then [`0002_public_profiles.sql`](supabase/migrations/0002_public_profiles.sql) and [`0003_project_badges.sql`](supabase/migrations/0003_project_badges.sql).
+2. In **SQL Editor**, run [`supabase/migrations/0001_academy.sql`](supabase/migrations/0001_academy.sql), then [`0002_public_profiles.sql`](supabase/migrations/0002_public_profiles.sql), [`0003_module_tasks.sql`](supabase/migrations/0003_module_tasks.sql), [`0004_inactivity_and_remove.sql`](supabase/migrations/0004_inactivity_and_remove.sql) and [`0005_tracks_and_levels.sql`](supabase/migrations/0005_tracks_and_levels.sql), then [`0006_project_badges.sql`](supabase/migrations/0006_project_badges.sql).
 3. Then run [`supabase/seed.sql`](supabase/seed.sql). It loads the courses, lessons, assessment and project.
 4. In **Authentication → URL Configuration**:
    - Set the Site URL to the Academy's address.
@@ -91,7 +124,8 @@ On Vercel, add the same variables under Project Settings → Environment Variabl
 - Row-level security is on for every table.
 - Learners can read and write only their own progress.
 - Assessment answer keys are readable by admins only. `submit_assessment()` grades attempts on the server.
-- Module badges are only created by `claim_module_badge()`, after a passed module check.
+- A learner can remove a course from My Learning with `remove_course()`, which clears its lessons, tasks and assessment attempts (unless the course is complete). An unfinished course with no activity for 14 days starts over the same way: `apply_inactivity_resets()` runs when the learner next opens the dashboard or a course. Earned badges and credentials are never touched. Activity (opening a lesson, completing something, taking an assessment) is recorded in `enrollments.last_active_at` by triggers.
+- Module badges are only created by `claim_module_badge()`, after every required task in the module is complete and the module check is passed.
 - Course completion credentials are only created by `issue_course_credential()`. It re-checks every requirement the course sets: module badges, lessons, required exercises, a passed final assessment, the project, and a full name on the profile.
 - A learner can only start an order (`start_certificate_order()`) for a course they've completed, at the price stored in `certificate_prices`.
 - Official certificates are only issued for an order that is paid or granted: by `complete_certificate_order()`, which only the payment server (service role) can call, or by an admin with `admin_grant_certificate()`.
@@ -102,19 +136,28 @@ On Vercel, add the same variables under Project Settings → Environment Variabl
 
 The course content lives in `src/content/`:
 
-- `catalog.ts`: courses, modules and completion rules. A short course has `format: "short"`; each of its modules has a `badge` name, a `badgeCode` (used in credential IDs) and `skills` (shown on the credential page).
-- `<course>/NN-slug.md`: lessons. The front matter holds `title`, `minutes` and `summary`. Full-course lessons have six sections (The problem … Check your understanding); short-course lessons have a few `##` steps including `## Try it`.
-- `<course>/assessment.ts`: the final assessment and, for short courses, a module check (`kind: "module"`, `moduleId`) for each badge module. `<course>/project.ts`: the project, for full courses.
+- `tracks.ts`: career tracks (stages of courses, recommended practice projects, and courses still `upcoming`) and the four levels: 1 Foundations, 2 Practical Skills, 3 Professional, 4 Career Projects. Completing every required course in a track earns its track badge, issued by `issue_track_credential()`. Pages: `/tracks` and `/tracks/:slug`.
+- `catalog.ts`: courses, modules and completion rules. Every course has a `level` (1-4). A short course has `format: "short"`; each of its modules has a `badge` name, a `badgeCode` (used in credential IDs) and `skills` (shown on the credential page).
+- `<course>/NN-slug.md`: lessons. The front matter holds `title`, `minutes` and `summary`, and optionally `handsOn` (see **Honest timing** below). Full-course lessons have six sections (The problem … Check your understanding); short-course lessons have a few `##` steps including `## Try it`.
+- `<course>/assessment.ts`: the final assessment and, for short courses, a module check (`kind: "module"`, `moduleId`) for each badge module. `<course>/project.ts`: the project, for full courses, with a `rubric`: the criteria shown to learners and ticked by reviewers in /admin.
 
-Lesson Markdown supports three custom code fences:
+Lesson Markdown supports these custom code fences:
 
 - ```` ```sql run ````: a runnable example.
 - ```` ```exercise ````: JSON with `id`, `prompt`, `starter`, `solution`, `hint`, `required` and `orderMatters`. An answer counts as correct when its result matches the result of `solution`.
 - ```` ```answer ````: a task done in Excel, Sheets or Power BI, checked by its result. JSON with `id`, `prompt`, `answer` (number or text), optional `accept`, `tolerance`, `format` (`naira`, `percent`, `number`, `text`), `hint`, `explanation`, `required`, and `dataset` + `files` for download links. Tasks that use a dataset must include `verify`, a SQL query over the CSV files that reproduces the answer; `npm run test:content` runs it.
+- ```` ```task ````: written work the learner types or pastes (a CV bullet, a prompt, an email, some HTML), checked against `rules` and then compared with a model answer. JSON with `id`, `prompt`, `minutes`, `rules`, `sample` (the model answer, which must pass its own rules), optional `note` (commentary shown under the model answer), `placeholder`, `hint`, `rows` and `required`. Each rule has a `label` and a `pattern` (a regular expression, case-insensitive and line by line) with optional `min` (matches needed), `absent` (must not match) or `perLine` (every line must match), or a length limit: `minWords`, `maxWords`, `minLines`.
+- In Python lessons, an `answer` can also have `pyVerify`: a Python expression evaluated after the lesson's code runs; `npm run test:python` checks it equals the answer.
 - ```` ```dataset ````: a download card, `{ "dataset": "sales", "files": ["orders"] }`.
 - ```` ```quiz ````: JSON questions.
 
 Callouts use `> [!TIP]`, `[!NOTE]`, `[!WARNING]` or `[!BUSINESS]`.
+
+**Honest timing.** A lesson's `minutes` must match what it actually takes, and `npm run test:content` fails if it doesn't. The estimate is reading at 200 words a minute, one minute per runnable example and per numbered Walkthrough step, the time of each required task (a task's own `minutes`; 4 for a SQL exercise, 3 for an answer task) and half a minute per quiz question. Optional work isn't counted. Hands-on work the content can't show, such as building a slide deck or a page outside a Walkthrough, is declared as `handsOn: <minutes>` in the front matter. `node scripts/fix-lesson-minutes.mjs <course>` sets the minutes for you.
+
+**Short-course rules.** Every short-course lesson needs a `## Try it` step and at least two required tasks, and no lesson quiz (the module check is in `assessment.ts`).
+
+**Python lessons.** `npm run test:python` runs every ````python```` block. A ````text```` block straight after a Python block is the output the learner should see, and must match what the code prints (fence it ````text nocheck```` if it's only an illustration; fence code ````python norun```` if it's meant to fail). `py scripts/test-python.py --fix <course>` writes the real output into the lesson.
 
 After editing content:
 

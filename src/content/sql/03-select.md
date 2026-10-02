@@ -1,6 +1,6 @@
 ---
 title: SELECT
-minutes: 25
+minutes: 10
 summary: Choose the columns you need, rename them, calculate new ones and remove duplicates.
 ---
 
@@ -96,6 +96,54 @@ Harbourline runs three transport modes, so you get three rows.
   "starter": "",
   "solution": "SELECT DISTINCT industry FROM customers;",
   "hint": "DISTINCT goes straight after SELECT.",
+  "required": false
+}
+```
+
+## More practice
+
+Optional drills on the same skills. They don't count towards the certificate, but each one is a small, realistic request from someone at Harbourline. Do as many as you need until the pattern feels automatic.
+
+```exercise
+{
+  "id": "sql-02-d1",
+  "prompt": "Operations wants a list of lanes: show origin, destination and mode for every route.",
+  "starter": "",
+  "solution": "SELECT origin, destination, mode FROM routes;",
+  "hint": "List the three columns after SELECT, separated by commas.",
+  "required": false
+}
+```
+
+```exercise
+{
+  "id": "sql-02-d2",
+  "prompt": "Show shipment_id, weight_kg, and the weight in tonnes as weight_tonnes (weight_kg divided by 1000.0).",
+  "starter": "",
+  "solution": "SELECT shipment_id, weight_kg, weight_kg / 1000.0 AS weight_tonnes FROM shipments;",
+  "hint": "Divide by 1000.0, not 1000, so SQLite keeps the decimals. Name the column with AS.",
+  "required": false
+}
+```
+
+```exercise
+{
+  "id": "sql-02-d3",
+  "prompt": "Which payment methods has Harbourline received money by? List each method once.",
+  "starter": "",
+  "solution": "SELECT DISTINCT method FROM payments;",
+  "hint": "DISTINCT goes straight after SELECT.",
+  "required": false
+}
+```
+
+```exercise
+{
+  "id": "sql-02-d4",
+  "prompt": "HR wants a staff list with friendlier headings: show each employee's full_name as name and role as job_title.",
+  "starter": "",
+  "solution": "SELECT full_name AS name, role AS job_title FROM employees;",
+  "hint": "Rename each column with AS.",
   "required": false
 }
 ```

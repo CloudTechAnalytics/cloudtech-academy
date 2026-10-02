@@ -1,12 +1,13 @@
 import { Fragment, useMemo, type ReactNode } from "react";
 import { marked, type Token, type Tokens } from "marked";
 import { AlertTriangle, Briefcase, Info, Lightbulb } from "lucide-react";
-import { parseAnswer, parseDataset, parseExercise, parseQuiz } from "@/lib/lesson-format";
+import { parseAnswer, parseDataset, parseExercise, parseQuiz, parseTask } from "@/lib/lesson-format";
 import { RunnableSql } from "./sql/RunnableSql";
 import { SqlExercise } from "./sql/SqlExercise";
 import { LessonQuiz } from "./LessonQuiz";
 import { CopyButton } from "./sql/SqlParts";
 import { AnswerExercise } from "./AnswerExercise";
+import { WrittenTask } from "./WrittenTask";
 import { DatasetCard } from "./DatasetCard";
 import IMAGE_SIZES from "@/content/image-sizes.json";
 
@@ -15,13 +16,15 @@ import IMAGE_SIZES from "@/content/image-sizes.json";
  * never injected, so lesson content (including admin edits) can't run scripts.
  */
 
-const SECTIONS = ["The problem", "The concept", "Example", "Walkthrough", "Practice", "Challenge", "Check your understanding"];
+const SECTIONS = ["The problem", "The concept", "Example", "Walkthrough", "Practice", "Challenge", "More practice", "Check your understanding"];
+/** What practice blocks are called under each section heading. */
+const EXERCISE_LABELS: Record<string, string> = { Challenge: "Challenge", "More practice": "Drill" };
 
 const decode = (s: string) =>
   s.replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&#39;/g, "'");
 
 /** Labels for formula code blocks, e.g. ```excel or ```dax. */
-const CODE_LABELS: Record<string, string> = { excel: "Excel formula", sheets: "Google Sheets formula", dax: "DAX", m: "Power Query (M)", sql: "SQL" };
+const CODE_LABELS: Record<string, string> = { excel: "Excel formula", sheets: "Google Sheets formula", dax: "DAX", m: "Power Query (M)", sql: "SQL", bash: "Shell (bash)", hcl: "Terraform (HCL)", dockerfile: "Dockerfile", yaml: "YAML", js: "JavaScript", html: "HTML" };
 
 const safeHref = (href: string) => (/^(https?:|mailto:|\/|#)/i.test(href) ? href : "#");
 
@@ -124,7 +127,7 @@ function Block({ token, ctx }: { token: Token; ctx: Ctx }): ReactNode {
         const known = SECTIONS.includes(text);
         if (known) {
           ctx.sectionIndex.n += 1;
-          ctx.exerciseLabel.current = text === "Challenge" ? "Challenge" : "Practice";
+          ctx.exerciseLabel.current = EXERCISE_LABELS[text] ?? "Practice";
         }
         return (
           <h2 id={slugify(text)} className="!mt-14 flex items-baseline gap-3 border-t border-line pt-8 first:!mt-0 first:border-t-0 first:pt-0">
@@ -159,7 +162,8 @@ function Block({ token, ctx }: { token: Token; ctx: Ctx }): ReactNode {
       const l = token as Tokens.List;
       const Tag = l.ordered ? "ol" : "ul";
       return (
-        <Tag>
+        // A numbered list that continues after a code block keeps its numbering (5., 6., …).
+        <Tag start={l.ordered && typeof l.start === "number" && l.start !== 1 ? l.start : undefined}>
           {l.items.map((item, i) => (
             <li key={i}>
               {item.tokens.map((t, j) => {
@@ -220,7 +224,7 @@ function Block({ token, ctx }: { token: Token; ctx: Ctx }): ReactNode {
           <p className="mb-1 flex items-center gap-2 text-[0.75rem] font-semibold uppercase tracking-[0.14em] text-ink/80">
             <c.icon aria-hidden className="h-4 w-4 text-brass-dark" /> {c.label}
           </p>
-          <div className="space-y-2 [&_code]:rounded [&_code]:bg-ivory/70 [&_code]:px-1 [&_code]:font-mono [&_code]:text-[0.88em]">
+          <div className="space-y-2 [&_:not(pre)>code]:rounded [&_:not(pre)>code]:bg-ivory/70 [&_:not(pre)>code]:px-1 [&_:not(pre)>code]:font-mono [&_:not(pre)>code]:text-[0.88em]">
             {inner.map((t, i) => (
               <Block key={i} token={t} ctx={ctx} />
             ))}
@@ -237,7 +241,10 @@ function Block({ token, ctx }: { token: Token; ctx: Ctx }): ReactNode {
           return (
             <SqlExercise
               spec={spec}
-              label={ctx.exerciseLabel.current === "Challenge" ? "Challenge" : "Practice"}
+              prompt={marked.lexer(spec.prompt).map((t, i) => (
+                <Block key={i} token={t} ctx={ctx} />
+              ))}
+              label={ctx.exerciseLabel.current}
               completed={ctx.completedExercises.includes(spec.id)}
               onSolved={ctx.onExerciseSolved}
             />
@@ -252,7 +259,22 @@ function Block({ token, ctx }: { token: Token; ctx: Ctx }): ReactNode {
               prompt={marked.lexer(spec.prompt).map((t, i) => (
                 <Block key={i} token={t} ctx={ctx} />
               ))}
-              label={ctx.exerciseLabel.current === "Challenge" ? "Challenge" : "Practice"}
+              label={ctx.exerciseLabel.current}
+              completed={ctx.completedExercises.includes(spec.id)}
+              onSolved={ctx.onExerciseSolved}
+            />
+          );
+        }
+        if (lang === "task") {
+          const spec = parseTask(c.text);
+          const md = (s: string) => marked.lexer(s).map((t, i) => <Block key={i} token={t} ctx={ctx} />);
+          return (
+            <WrittenTask
+              spec={spec}
+              prompt={md(spec.prompt)}
+              sample={spec.sample ? md(spec.sample) : null}
+              note={spec.note ? md(spec.note) : undefined}
+              label={ctx.exerciseLabel.current === "Practice" ? "Task" : ctx.exerciseLabel.current}
               completed={ctx.completedExercises.includes(spec.id)}
               onSolved={ctx.onExerciseSolved}
             />

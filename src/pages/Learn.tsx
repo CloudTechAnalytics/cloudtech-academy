@@ -1,9 +1,10 @@
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { Link, useParams } from "react-router";
-import { ArrowLeft, ArrowRight, Award, CheckCircle2, Clock, ListTree, X } from "lucide-react";
+import { ArrowLeft, ArrowRight, Award, CheckCircle2, Clock, ListTree, Lock, X } from "lucide-react";
 import { useSeo } from "@/lib/seo";
 import { useCourse, useLearner } from "@/lib/data";
-import { publishedLessons } from "@/lib/certificates";
+import { moduleTaskIds, publishedLessons } from "@/lib/certificates";
+import { RESET_AFTER_DAYS } from "@/lib/inactivity";
 import { breadcrumbs } from "@/lib/schema";
 import { getBackend } from "@/lib/backend";
 import { PageLoading } from "@/lib/auth";
@@ -130,6 +131,7 @@ export default function Learn() {
   const badgeModule = module?.badge ? module : null;
   const badgeEarned = !!badgeModule && learner.badgeModules.has(badgeModule.id);
   const checkUrl = badgeModule ? `/courses/${course.slug}/modules/${badgeModule.id}/check` : "";
+  const tasksLeft = badgeModule ? moduleTaskIds(badgeModule).filter((id) => !completedExercises.includes(id)).length : 0;
   const nextUrl = next ? `/learn/${course.slug}/${next.slug}` : `/courses/${course.slug}/assessment`;
 
   const sidebar = <LessonSidebar course={course} currentLessonId={lesson.id} completed={completedLessons} />;
@@ -184,6 +186,11 @@ export default function Learn() {
               to save your progress and earn your badges.
             </p>
           )}
+          {learner.wasReset && (
+            <p className="mt-5 rounded-lg border border-line-strong bg-sand px-4 py-3 text-[0.9rem]">
+              It's been more than {RESET_AFTER_DAYS} days since you last worked on this course, so it has started over. Any badges you earned are still yours.
+            </p>
+          )}
         </header>
 
         <div className="max-w-[46rem] pt-8">
@@ -209,11 +216,22 @@ export default function Learn() {
                   Take the module check
                 </h2>
                 <p className="mt-2 text-[0.9375rem] text-muted">
-                  Five quick questions about this module. Pass and you earn the <strong className="font-semibold text-ink">{badgeModule.badge}</strong> badge, free.
+                  Questions on this module. Pass and you earn the <strong className="font-semibold text-ink">{badgeModule.badge}</strong> badge, free.
                 </p>
-                <ButtonLink to={learner.signedIn ? checkUrl : `/sign-up?next=${encodeURIComponent(checkUrl)}`} className="mt-4">
-                  <Award aria-hidden className="h-4 w-4" /> {learner.signedIn ? "Take the module check" : "Create a free account to earn the badge"}
-                </ButtonLink>
+                {!learner.signedIn ? (
+                  <ButtonLink to={`/sign-up?next=${encodeURIComponent(checkUrl)}`} className="mt-4">
+                    <Award aria-hidden className="h-4 w-4" /> Create a free account to earn the badge
+                  </ButtonLink>
+                ) : tasksLeft > 0 ? (
+                  <p className="mt-4 flex items-start gap-2 rounded-lg border border-line-strong bg-sand px-4 py-3 text-[0.9375rem]">
+                    <Lock aria-hidden className="mt-0.5 h-4 w-4 shrink-0 text-brass-dark" />
+                    <span>Complete {tasksLeft === 1 ? "the last task" : `the ${tasksLeft} tasks`} in this module to unlock the check. The badge says you can do this, so you do it first.</span>
+                  </p>
+                ) : (
+                  <ButtonLink to={checkUrl} className="mt-4">
+                    <Award aria-hidden className="h-4 w-4" /> Take the module check
+                  </ButtonLink>
+                )}
               </>
             )}
           </section>

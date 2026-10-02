@@ -46,7 +46,40 @@ Great for class surveys, event registration and research questionnaires:
 
 ## Try it
 
-1. Create a Google Doc for a group assignment, share it with a classmate, and leave them a comment using `@name`.
-2. Build a course tracker in Sheets with a status dropdown.
-3. Make a three-question Google Form and link it to a Sheet.
-4. Add this week's lectures to Google Calendar as weekly events.
+```task
+{
+  "id": "digi-m02-t1",
+  "prompt": "Build a **group task list** in Google Sheets with columns Task, Owner, Due date and Status (a dropdown: To do, Doing, Done), with tasks in rows 2 to 20. Write the formula that **counts how many tasks are Done**, if Status is column D.",
+  "minutes": 8,
+  "rows": 2,
+  "placeholder": "=...",
+  "rules": [
+    { "label": "Starts with =", "pattern": "^\\s*=" },
+    { "label": "Uses COUNTIF", "pattern": "countif\\(" },
+    { "label": "Looks in column D, rows 2 to 20", "pattern": "d2\\s*:\\s*d20" },
+    { "label": "Counts \"Done\"", "pattern": "[\"“]done[\"”]" }
+  ],
+  "sample": "=COUNTIF(D2:D20, \"Done\")",
+  "note": "Put it under the table with a label like \"Tasks done:\". It updates every time someone changes a status.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "digi-m02-t2",
+  "prompt": "Make a **three-question Google Form** for something real (a class survey, an event sign-up, a study group poll) and link it to a Sheet. Paste the form's **send link** on the first line, then your three questions, one per line.",
+  "minutes": 10,
+  "rows": 5,
+  "placeholder": "https://forms.gle/...\n1. ...\n2. ...\n3. ...",
+  "rules": [
+    { "label": "A Google Form link", "pattern": "https?://(forms\\.gle/\\S+|docs\\.google\\.com/forms/\\S+)" },
+    { "label": "Not the editing link (it should end in viewform, or be a forms.gle link)", "pattern": "docs\\.google\\.com/forms/[^\\s]*/edit", "absent": true },
+    { "label": "Three questions listed", "pattern": "\\?", "min": 3 }
+  ],
+  "sample": "https://forms.gle/AbCdEfGh1234\n1. Which day suits you for the ECO 201 study group?\n2. How many hours a week can you commit?\n3. Which topic do you most want to revise first?",
+  "required": true
+}
+```
+
+Then put this week's lectures in Google Calendar as weekly events, and add your next test with a reminder three days before.

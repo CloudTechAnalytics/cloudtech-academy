@@ -1,6 +1,6 @@
 ---
 title: Measures with CALCULATE and time intelligence
-minutes: 45
+minutes: 15
 summary: Change the filter context with CALCULATE, build percentage-of-total, year-to-date and year-on-year measures.
 ---
 
@@ -114,6 +114,44 @@ And **Revenue YTD** at 2026 March shows Q1 2026 in total.
   "files": ["orders"],
   "verify": "SELECT ROUND(100.0 * (SUM(CASE WHEN order_date BETWEEN '2026-01-01' AND '2026-03-31' THEN quantity * unit_price * (1 - discount_pct / 100.0) END) / SUM(CASE WHEN order_date BETWEEN '2025-01-01' AND '2025-03-31' THEN quantity * unit_price * (1 - discount_pct / 100.0) END) - 1), 1) FROM orders",
   "hint": "Put Date[Year] → Date[Quarter] in the matrix rows; read YoY % at 2026 Q1.",
+  "required": false
+}
+```
+
+
+## More practice
+
+Optional drills. They don't count towards the certificate, but they're the fastest way to make this lesson stick. Several use a different dataset from the lesson on purpose: if you can do the same thing on unfamiliar data, you've really learned it.
+
+```answer
+{
+  "id": "pbi-09-d1",
+  "prompt": "Write a measure for the share of revenue from the **Lagos** region using CALCULATE and DIVIDE. What is it across all dates? One decimal place.",
+  "answer": 49.5,
+  "format": "percent",
+  "dataset": "sales",
+  "files": [
+    "orders",
+    "customers"
+  ],
+  "verify": "SELECT ROUND(100.0 * SUM(CASE WHEN c.region = 'Lagos' THEN o.quantity * o.unit_price * (1 - o.discount_pct / 100.0) END) / SUM(o.quantity * o.unit_price * (1 - o.discount_pct / 100.0)), 1) FROM orders o JOIN customers c ON c.customer_id = o.customer_id",
+  "hint": "DIVIDE(CALCULATE([Revenue], customers[region] = \"Lagos\"), CALCULATE([Revenue], ALL(customers)))",
+  "required": false
+}
+```
+
+```answer
+{
+  "id": "pbi-09-d2",
+  "prompt": "In the HR data, write an **Absence Rate** measure: Absent records ÷ all attendance records. What is it? One decimal place.",
+  "answer": 2.6,
+  "format": "percent",
+  "dataset": "hr",
+  "files": [
+    "attendance"
+  ],
+  "verify": "SELECT ROUND(100.0 * SUM(status = 'Absent') / COUNT(*), 1) FROM attendance",
+  "hint": "DIVIDE(CALCULATE(COUNTROWS(attendance), attendance[status] = \"Absent\"), COUNTROWS(attendance))",
   "required": false
 }
 ```

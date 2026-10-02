@@ -1,6 +1,6 @@
 ---
 title: Your first analytics project
-minutes: 40
+minutes: 15
 summary: Run the whole cycle on Kolanut's staff data, from question to recommendation, and prepare for the final project.
 ---
 
@@ -93,6 +93,27 @@ How to produce the table above in a spreadsheet:
   "hint": "Filter the status column to Late and count, or use COUNTIF on the status column.",
   "explanation": "The final project asks you to break this down by department. One department stands out.",
   "required": true
+}
+```
+
+
+## More practice
+
+Optional drills. They don't count towards the certificate, but they're the fastest way to make this lesson stick. Several use a different dataset from the lesson on purpose: if you can do the same thing on unfamiliar data, you've really learned it.
+
+```answer
+{
+  "id": "daf-10-d1",
+  "prompt": "What is the **average length** (days) of an **approved** leave request in `leave.csv`? One decimal place.",
+  "answer": 8,
+  "format": "number",
+  "dataset": "hr",
+  "files": [
+    "leave"
+  ],
+  "verify": "SELECT ROUND(AVG(days), 1) FROM leave WHERE approved = 'Yes'",
+  "hint": "=AVERAGEIF(approved column, \"Yes\", days column)",
+  "required": false
 }
 ```
 

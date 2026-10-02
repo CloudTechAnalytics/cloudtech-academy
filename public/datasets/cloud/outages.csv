@@ -1,0 +1,7 @@
+outage_id,start,minutes,component,cause
+OUT-01,2026-06-09 02:14,38,Database,Single-zone database restarted for provider maintenance
+OUT-02,2026-06-23 09:05,31,Load balancer,TLS certificate expired
+OUT-03,2026-07-02 16:40,22,API,Faulty release deployed to all API servers at once
+OUT-04,2026-07-21 11:02,64,Database,Power failure in the zone hosting the single-zone database
+OUT-05,2026-08-28 10:15,47,Web,Month-end traffic exceeded the fixed web fleet
+OUT-06,2026-08-31 09:40,55,Web,Month-end traffic exceeded the fixed web fleet

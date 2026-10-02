@@ -51,7 +51,31 @@ Before you apply anywhere, have these ready in one Drive folder:
 
 ## Try it
 
-1. Write down the dates your internship or SIWES should start and end.
-2. List three kinds of organisations where you'd learn something useful in your field.
-3. Create an "Internship" folder in Drive with your CV, a cover letter draft and scans of your documents.
-4. Add one skill you'll build before you apply, and pick a course to build it.
+```answer
+{
+  "id": "intern-m01-a1",
+  "prompt": "Which organisation runs SIWES together with universities and polytechnics? Give its short name.",
+  "answer": "ITF",
+  "format": "text",
+  "accept": ["industrial training fund", "the itf", "the industrial training fund"],
+  "required": true
+}
+```
+
+```task
+{
+  "id": "intern-m01-t1",
+  "prompt": "Write your **internship plan**, one item per line: `Dates:` (when it should start and end), `Where:` (three kinds of organisation where you'd learn something useful in your field), `Folder:` (what's in your Internship folder now), and `Skill:` (one skill you'll build before applying, and how).",
+  "minutes": 10,
+  "rows": 6,
+  "placeholder": "Dates: ...\nWhere: ...\nFolder: ...\nSkill: ...",
+  "rules": [
+    { "label": "Dates: with a month or year", "pattern": "^\\s*dates?\\s*:[^\\n]*(20\\d\\d|jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)" },
+    { "label": "Where: with at least three kinds of organisation", "pattern": "^\\s*where\\s*:[^\\n]*,[^\\n]*,[^\\n]*" },
+    { "label": "Folder: lists your documents (CV, cover letter, ID, letter, transcript…)", "pattern": "^\\s*folder\\s*:[^\\n]*(cv|cover letter|transcript|id|letter|result|photo)" },
+    { "label": "Skill: names a skill and how you'll build it (course, practise, project…)", "pattern": "^\\s*skill\\s*:[^\\n]*(course|practi|project|learn|tutorial|class|by )" }
+  ],
+  "sample": "Dates: February to July 2027 (six months of SIWES)\nWhere: accounting firms, bank operations teams, the finance department of a manufacturing company\nFolder: CV-Chinedu-Okeke.pdf, cover letter draft, student ID, SIWES placement letter, result slip\nSkill: Excel pivot tables and XLOOKUP, by finishing CloudTech's Excel for Data Analysis course by December",
+  "required": true
+}
+```

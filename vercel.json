@@ -73,6 +73,11 @@
   ],
   "redirects": [
     {
+      "source": "/paths",
+      "destination": "/tracks/data-analyst",
+      "permanent": true
+    },
+    {
       "source": "/quick",
       "destination": "/courses",
       "permanent": true

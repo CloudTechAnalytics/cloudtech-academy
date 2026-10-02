@@ -5,6 +5,7 @@ import { categoryName } from "@/content";
 import { durationLabel } from "@/lib/format";
 import { badgeCount, courseMinutes } from "@/lib/certificates";
 import { ProgressBar } from "./ProgressBar";
+import { LEVELS } from "@/content/tracks";
 
 export function Badge({ children, tone = "neutral" }: { children: string; tone?: "neutral" | "free" | "soon" | "success" }) {
   const tones = {
@@ -25,7 +26,7 @@ export function CourseCard({ course, progress }: { course: Course; progress?: nu
     <article className="group relative flex h-full flex-col rounded-2xl border border-line bg-paper p-6 transition-[transform,box-shadow] duration-300 hover:-translate-y-0.5 hover:shadow-[0_28px_56px_-40px_rgba(23,23,23,0.45)] sm:p-7">
       <div className="flex flex-wrap items-center gap-2">
         <Badge tone={available ? "free" : "soon"}>{available ? "Free" : "Coming soon"}</Badge>
-        <Badge>{short ? "Short course" : "Professional course"}</Badge>
+        <Badge>{short ? "Short course" : course.level === 4 ? "Capstone" : "Professional course"}</Badge>
         <span className="text-[0.8125rem] text-muted">{categoryName(course.categoryId)}</span>
       </div>
       <h3 className="mt-4 font-serif text-[1.5rem] leading-tight">
@@ -39,7 +40,9 @@ export function CourseCard({ course, progress }: { course: Course; progress?: nu
         <div className="flex items-center gap-2">
           <dt className="sr-only">Level</dt>
           <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-brass" />
-          <dd>{course.levelLabel}</dd>
+          <dd>
+            Level {course.level} · {LEVELS[course.level].name}
+          </dd>
         </div>
         <div className="flex items-center gap-2">
           <Clock aria-hidden className="h-3.5 w-3.5 text-subtle" />

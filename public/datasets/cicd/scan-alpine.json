@@ -1,0 +1,150 @@
+{
+  "SchemaVersion": 2,
+  "CreatedAt": "2026-09-01T08:00:00Z",
+  "ArtifactName": "tallybook-web:alpine",
+  "ArtifactType": "container_image",
+  "Results": [
+    {
+      "Target": "tallybook-web:alpine (alpine 3.20.2)",
+      "Class": "os-pkgs",
+      "Type": "alpine",
+      "Vulnerabilities": [
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0491",
+          "PkgName": "python3.11",
+          "InstalledVersion": "2.14.10-2",
+          "FixedVersion": "8.1.52-1",
+          "Severity": "HIGH",
+          "Title": "python3.11: out-of-bounds read"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0492",
+          "PkgName": "openssl",
+          "InstalledVersion": "8.6.9-4",
+          "FixedVersion": "9.5.43-3",
+          "Severity": "HIGH",
+          "Title": "openssl: buffer overflow"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0493",
+          "PkgName": "curl",
+          "InstalledVersion": "9.8.19-4",
+          "FixedVersion": "6.1.55-2",
+          "Severity": "MEDIUM",
+          "Title": "curl: out-of-bounds read"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0494",
+          "PkgName": "python3.11",
+          "InstalledVersion": "5.5.15-4",
+          "FixedVersion": "",
+          "Severity": "MEDIUM",
+          "Title": "python3.11: improper input validation"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0495",
+          "PkgName": "perl-base",
+          "InstalledVersion": "3.10.20-3",
+          "FixedVersion": "1.19.41-4",
+          "Severity": "MEDIUM",
+          "Title": "perl-base: denial of service"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0496",
+          "PkgName": "libsqlite3-0",
+          "InstalledVersion": "2.20.1-2",
+          "FixedVersion": "2.15.49-4",
+          "Severity": "MEDIUM",
+          "Title": "libsqlite3-0: improper input validation"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0497",
+          "PkgName": "openssl",
+          "InstalledVersion": "6.14.17-3",
+          "FixedVersion": "",
+          "Severity": "MEDIUM",
+          "Title": "openssl: use after free"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0498",
+          "PkgName": "openssl",
+          "InstalledVersion": "6.7.25-1",
+          "FixedVersion": "5.14.56-1",
+          "Severity": "LOW",
+          "Title": "openssl: buffer overflow"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0499",
+          "PkgName": "git",
+          "InstalledVersion": "3.19.0-2",
+          "FixedVersion": "",
+          "Severity": "LOW",
+          "Title": "git: integer overflow"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-0500",
+          "PkgName": "libkrb5-3",
+          "InstalledVersion": "8.12.12-2",
+          "FixedVersion": "",
+          "Severity": "LOW",
+          "Title": "libkrb5-3: buffer overflow"
+        }
+      ]
+    },
+    {
+      "Target": "Node.js",
+      "Class": "lang-pkgs",
+      "Type": "node-pkg",
+      "Vulnerabilities": [
+        {
+          "VulnerabilityID": "EXAMPLE-2026-A1",
+          "PkgName": "jsonwebtoken",
+          "InstalledVersion": "8.5.1",
+          "FixedVersion": "9.0.0",
+          "Severity": "CRITICAL",
+          "Title": "jsonwebtoken: Signature verification can be bypassed with a crafted token"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-A2",
+          "PkgName": "express",
+          "InstalledVersion": "4.17.1",
+          "FixedVersion": "4.19.2",
+          "Severity": "MEDIUM",
+          "Title": "express: Open redirect in malformed URLs"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-A3",
+          "PkgName": "axios",
+          "InstalledVersion": "0.21.1",
+          "FixedVersion": "1.6.0",
+          "Severity": "HIGH",
+          "Title": "axios: Server-side request forgery through absolute URLs"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-A4",
+          "PkgName": "lodash",
+          "InstalledVersion": "4.17.15",
+          "FixedVersion": "4.17.21",
+          "Severity": "HIGH",
+          "Title": "lodash: Command injection through template"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-A5",
+          "PkgName": "semver",
+          "InstalledVersion": "5.7.1",
+          "FixedVersion": "5.7.2",
+          "Severity": "MEDIUM",
+          "Title": "semver: Regular expression denial of service"
+        },
+        {
+          "VulnerabilityID": "EXAMPLE-2026-A6",
+          "PkgName": "multer",
+          "InstalledVersion": "1.4.2",
+          "FixedVersion": "",
+          "Severity": "LOW",
+          "Title": "multer: Uncontrolled resource consumption on large uploads"
+        }
+      ]
+    }
+  ]
+}

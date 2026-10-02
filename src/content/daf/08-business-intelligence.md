@@ -1,6 +1,6 @@
 ---
 title: Business intelligence
-minutes: 25
+minutes: 15
 summary: How BI turns one-off analysis into dashboards people use every week, and the pipeline behind them.
 ---
 
@@ -95,6 +95,27 @@ Step 4 is the one people skip. A dashboard that is wrong once loses trust for mo
   "hint": "Filter the status column to Overdue and count the rows.",
   "explanation": "70 invoices, worth ₦188 million in total, a good candidate for a weekly 'who to chase' list on the dashboard.",
   "required": true
+}
+```
+
+
+## More practice
+
+Optional drills. They don't count towards the certificate, but they're the fastest way to make this lesson stick. Several use a different dataset from the lesson on purpose: if you can do the same thing on unfamiliar data, you've really learned it.
+
+```answer
+{
+  "id": "daf-08-d1",
+  "prompt": "An HR dashboard KPI: **attendance rate** = Present records ÷ all records in `attendance.csv`. What is it? One decimal place.",
+  "answer": 88.8,
+  "format": "percent",
+  "dataset": "hr",
+  "files": [
+    "attendance"
+  ],
+  "verify": "SELECT ROUND(100.0 * SUM(status = 'Present') / COUNT(*), 1) FROM attendance",
+  "hint": "COUNTIF(status, \"Present\") ÷ COUNTA(status).",
+  "required": false
 }
 ```
 

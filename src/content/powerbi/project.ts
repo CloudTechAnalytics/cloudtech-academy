@@ -23,4 +23,12 @@ For the link, share your work so a reviewer can see it: a Power BI Service link 
     "Three recommendations for the managing partner, each linked to a number in your report.",
   ],
   datasets: ["legal"],
+  rubric: [
+    "The model has correct one-to-many relationships, a marked date table, and no unnecessary bidirectional filters.",
+    "Measures are written in DAX (not implicit sums), are named clearly, and give the right numbers.",
+    "The report answers every question, with filters and slicers that behave as expected.",
+    "The page has a clear visual hierarchy: the main message is the first thing you see, with no clutter.",
+    "Numbers are formatted for a reader (naira, percentages, sensible rounding) and every visual has a meaningful title.",
+    "Each recommendation is linked to a number in the report.",
+  ],
 };

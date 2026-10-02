@@ -1,0 +1,24 @@
+task_id,name,phase,owner,optimistic_days,likely_days,pessimistic_days,predecessors,daily_cost_ngn
+A1,Approve business case and charter,Initiation,Finance,2,3,5,,180000
+A2,Select site and sign lease,Initiation,Operations,8,10,15,A1,220000
+A3,Obtain building and trading permits,Initiation,Operations,10,15,30,A2,150000
+B1,Design depot layout,Facilities,Facilities,5,7,10,A2,260000
+B2,"Fit-out works: floor, power and security",Facilities,Contractor,20,25,40,A3;B1,950000
+B3,Order racking,Facilities,Procurement,3,5,8,B1,120000
+B4,Import and clear racking,Facilities,Procurement,15,20,35,B3,400000
+B5,Install racking,Facilities,Contractor,5,6,9,B2;B4,700000
+B6,Install generator and solar backup,Facilities,Contractor,6,8,12,B2,850000
+C1,Choose warehouse system,Systems,IT,5,7,10,A1,200000
+C2,"Buy laptops, scanners and printers",Systems,IT,5,10,20,C1,650000
+C3,Install network and internet,Systems,IT,4,5,9,B2,300000
+C4,Configure system and load data,Systems,IT,8,10,15,C1,280000
+C5,Test the system end to end,Systems,IT,4,5,8,C2;C3;C4,240000
+D1,Hire depot manager,People,HR,15,20,30,A1,90000
+D2,Hire 12 depot staff,People,HR,15,20,25,D1,110000
+D3,Train staff,People,Operations,5,6,8,D2;C5,420000
+E1,Agree supplier delivery schedules,Operations,Procurement,5,8,12,A2,100000
+E2,Stock opening inventory,Operations,Operations,4,5,7,B5;E1;C5,600000
+E3,Set up delivery routes and trucks,Operations,Operations,8,10,14,E1,380000
+F1,Safety inspection,Launch,Facilities,2,3,6,B5;B6,150000
+F2,Trial run,Launch,Operations,4,5,7,D3;E2;F1;E3,520000
+F3,Opening day,Launch,Operations,1,1,2,F2,800000

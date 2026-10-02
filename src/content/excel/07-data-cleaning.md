@@ -1,6 +1,6 @@
 ---
 title: Data cleaning in Excel
-minutes: 45
+minutes: 20
 summary: Clean a real messy export with TRIM, PROPER, SUBSTITUTE, VALUE, Remove Duplicates, a mapping table and Power Query's locale-aware dates.
 ---
 
@@ -51,7 +51,7 @@ Anything that shows `CHECK` is a spelling you haven't mapped yet.
 
 **Remove duplicates** (**Data → Remove Duplicates**) deletes rows that repeat in the columns you choose. Excel ignores capital letters when comparing, but **not** spaces, so trim first.
 
-**Dates: the trap.** The export mixes `2023-07-11`, `22/10/2023` and `5-Mar-2024`. On a computer set to US format, Excel reads `01/09/2022` as **9 January** and leaves `22/10/2023` as text, because there is no 22nd month. Half your dates are wrong and the other half aren't dates. The reliable fix is to import through Power Query and tell it the dates are day-first:
+**Dates: the trap.** The export mixes `2023-07-11`, `22/10/2023` and `30-Sep-2023`. On a computer set to US format, Excel reads `01/09/2022` as **9 January** and leaves `22/10/2023` as text, because there is no 22nd month. Half your dates are wrong and the other half aren't dates. The reliable fix is to import through Power Query and tell it the dates are day-first:
 
 1. **Data → From Text/CSV** → choose the file → **Transform Data**.
 2. Right-click the **Date Joined** column → **Change Type → Using Locale…**
@@ -115,13 +115,13 @@ A clean, repeatable workflow:
 {
   "id": "xls-07-p1",
   "prompt": "Before any cleaning, how many rows of the raw export have a **blank** Credit Limit?",
-  "answer": 5,
+  "answer": 3,
   "format": "number",
   "dataset": "cleaning",
   "files": ["customer_list_raw"],
   "verify": "SELECT COUNT(*) FROM customer_list_raw WHERE \"Credit Limit\" IS NULL OR TRIM(\"Credit Limit\") = ''",
   "hint": "=COUNTBLANK() on the Credit Limit column, or filter it to (Blanks).",
-  "explanation": "Five blanks. Decide on a rule, such as leaving them blank and flagging them for the finance team, rather than guessing a number.",
+  "explanation": "Three blanks. Decide on a rule, such as leaving them blank and flagging them for the finance team, rather than guessing a number.",
   "required": true
 }
 ```
@@ -162,14 +162,52 @@ A clean, repeatable workflow:
 {
   "id": "xls-07-c1",
   "prompt": "What is the **total credit limit** of the cleaned, de-duplicated customers, counting only customers whose limit is known? Where a customer appears twice and only one copy has a limit, keep the copy with the limit.",
-  "answer": 133500000,
+  "answer": 132950000,
   "tolerance": 1,
   "format": "naira",
   "dataset": "cleaning",
   "files": ["customer_list_raw"],
-  "verify": "SELECT SUM(credit_limit) FROM sales_customers WHERE LOWER(customer_name) <> 'bola mini mart'",
+  "verify": "SELECT SUM(credit_limit) FROM sales_customers WHERE LOWER(customer_name) NOT IN ('bola mini mart', 'ada provisions')",
   "hint": "Clean the limits to numbers. Before removing duplicates, sort the limit column largest to smallest so rows with a value come first: Remove Duplicates keeps the first copy it meets.",
-  "explanation": "₦133,500,000 for 89 customers. Four of the five blanks were on duplicate rows whose other copy had the limit; one customer (Bola Mini Mart) has no limit on file at all, which is something to send back to the finance team, not to guess.",
+  "explanation": "₦132,950,000 for 88 customers. Two customers have no limit on file at all: Ada Provisions (blank on both of its copies) and Bola Mini Mart. That goes back to the finance team; it isn't something to guess.",
+  "required": false
+}
+```
+
+
+## More practice
+
+Optional drills. They don't count towards the certificate, but they're the fastest way to make this lesson stick. Several use a different dataset from the lesson on purpose: if you can do the same thing on unfamiliar data, you've really learned it.
+
+```answer
+{
+  "id": "xls-07-d1",
+  "prompt": "Before cleaning anything: how many rows of `customer_list_raw.csv` have a **Customer Name with extra spaces** at the start or end?",
+  "answer": 42,
+  "format": "number",
+  "dataset": "cleaning",
+  "files": [
+    "customer_list_raw"
+  ],
+  "verify": "SELECT COUNT(*) FROM customer_list_raw WHERE \"Customer Name\" <> TRIM(\"Customer Name\")",
+  "hint": "Add a helper column =[@[Customer Name]]<>TRIM([@[Customer Name]]) and count the TRUEs.",
+  "explanation": "Finding the problems before you fix them is half of cleaning: you can then check the fix worked.",
+  "required": false
+}
+```
+
+```answer
+{
+  "id": "xls-07-d2",
+  "prompt": "How many rows of the raw export have a **Phone** number containing a space?",
+  "answer": 42,
+  "format": "number",
+  "dataset": "cleaning",
+  "files": [
+    "customer_list_raw"
+  ],
+  "verify": "SELECT COUNT(*) FROM customer_list_raw WHERE \"Phone\" LIKE '% %'",
+  "hint": "=ISNUMBER(SEARCH(\" \", [@Phone])) in a helper column, then count TRUE. Or filter Phone with 'Contains' and a space.",
   "required": false
 }
 ```

@@ -55,7 +55,41 @@ A project tracked by Git is called a **repository** (or **repo**). When you put 
 
 ## Try it
 
-1. Create your GitHub account with a professional username.
-2. Add a photo and a one-line bio.
-3. Turn on two-factor authentication.
-4. Write down, in your own words, the difference between Git and GitHub.
+```answer
+{
+  "id": "git-m01-a1",
+  "prompt": "Which one is a tool that runs on your computer and records the history of your files: **Git** or **GitHub**?",
+  "answer": "Git",
+  "format": "text",
+  "explanation": "Git tracks changes on your computer. GitHub is the website that stores Git repositories online so you can back them up, share them and work with others.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "git-m01-a2",
+  "prompt": "You saved a change with the message \"Add revenue chart\". What is that saved snapshot called in Git? (One word.)",
+  "answer": "commit",
+  "format": "text",
+  "accept": ["a commit"],
+  "required": true
+}
+```
+
+```task
+{
+  "id": "git-m01-t1",
+  "prompt": "Create your GitHub account with a professional username, add a photo and a one-line bio, and turn on two-factor authentication. Paste your **profile link** on the first line and your **bio** on the second.",
+  "minutes": 10,
+  "rows": 3,
+  "placeholder": "https://github.com/your-username\nEconomics student · learning Python and SQL",
+  "rules": [
+    { "label": "Your GitHub profile link", "pattern": "https?://(www\\.)?github\\.com/[A-Za-z0-9-]+/?\\s*$" },
+    { "label": "A professional username (no nicknames or birth years)", "pattern": "github\\.com/[^\\s/]*(cool|boy|girl|baby|babe|king|queen|dude|sexy|(19|20)\\d\\d)", "absent": true },
+    { "label": "A bio line saying what you study or do", "pattern": "\\n\\s*\\S+(\\s+\\S+){2,}" }
+  ],
+  "sample": "https://github.com/adaeze-okafor\nEconomics student at UNN · learning Python and SQL for data analysis",
+  "required": true
+}
+```

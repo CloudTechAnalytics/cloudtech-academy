@@ -1,65 +1,145 @@
 ---
 title: Video Editing with CapCut
-minutes: 30
-summary: Edit a short vertical video from start to finish in CapCut, the free video editor for phone and computer. Cut, add text and captions, add music and export.
+minutes: 40
+handsOn: 20
+summary: Plan and edit a short vertical video in CapCut, the free editor for phone and computer. Write a shot list, cut to the point in two seconds, add text and corrected captions, add sound, and export in good quality.
 ---
 
+## Plan before you film
 
-## Set up your project
+Most short videos that don't work have the same problem: they take too long to get to the point. Before you record anything, write **one sentence** for what the video says, and a **shot list** with timings.
 
-**CapCut** is a free video editor with apps for phone and computer, and a version in the browser. Menu names can differ slightly between versions and devices, so if a button here looks different, look for the nearest match.
+For a small food business in Ikeja:
+
+> **Message:** Our new jollof party pack feeds four for ₦8,000, delivered in Ikeja.
+
+**Shot list (20 seconds):**
+
+```text
+0-2s    Steam rising as the lid comes off a full pack of jollof. Text: "Feeds 4 for ₦8,000"
+2-6s    Spoon scooping rice, chicken and plantain into a takeaway pack.
+6-11s   Four friends at a table sharing it, laughing.
+11-16s  Rider handing the bag over at a gate in Ikeja.
+16-20s  The pack, the price and how to order. Text: "WhatsApp 0803 555 0177"
+```
+
+Notice the order: **the result first**, then how, then proof, then the action. Most people decide in the first two seconds whether to keep watching, so a logo or "Hi guys, welcome back" in the opening seconds loses them.
+
+## Set up the project
+
+**CapCut** is a free video editor for phone and computer, with a browser version too. Menu names differ slightly between versions and devices; if a button here looks different, look for the nearest match.
 
 1. Open CapCut and tap **New project**.
-2. Select the clips and photos you want, in roughly the right order, and tap **Add**.
-3. Check the **aspect ratio** (the shape of the video). For Reels, TikTok, Shorts and WhatsApp status, choose **9:16**, which is tall. For YouTube, use **16:9**, which is wide.
+2. Select your clips in roughly the right order and tap **Add**.
+3. Set the **aspect ratio** (the video's shape): **9:16** (tall) for Reels, TikTok, YouTube Shorts and WhatsApp status; **16:9** (wide) for normal YouTube videos.
 
-> [!TIP]
-> Before you edit, decide your video's one message in a sentence, for example "Our new jollof pack feeds four for ₦8,000." Anything that doesn't help that message gets cut.
+## Cut to the point
 
-## Cut out the boring parts
+On the **timeline** at the bottom:
 
-Short videos work when every second earns its place. On the **timeline** at the bottom:
+- **Trim:** tap a clip and drag its white edges inward to remove the slow start or end.
+- **Split:** move the playhead (the white line) to a point, tap **Split**, select the part you don't want, and tap **Delete**.
+- **Reorder:** press and hold a clip and drag it.
 
-- **Trim:** tap a clip and drag its white edges inward to remove the start or end.
-- **Split:** move the playhead (the white line) to where you want to cut, tap **Split**, then select the part you don't want and tap **Delete**.
-- **Reorder:** press and hold a clip, then drag it to a new position.
+Be ruthless. If a moment doesn't help the one message, cut it. A tight 20 seconds beats a loose 45.
 
-Aim to get to the point in the first **two seconds**. Most people scroll past slow openings.
+## Text and captions
 
-## Add text and captions
+Many people watch with the sound off, so words on screen carry the message.
 
-Many people watch with the sound off, so words on screen matter.
+- **Headline text:** **Text → Add text**. Keep it short ("Feeds 4 for ₦8,000"), in a clear font, and away from the very bottom and right edge, where app buttons and captions cover it.
+- **Automatic captions:** under **Captions** (or **Text → Auto captions**), CapCut listens to the speech and writes subtitles. They're a huge time saver, and they're often wrong on names, places and Nigerian words. **Read every line.**
 
-- **Text:** tap **Text → Add text**, type a short headline such as "3 ways to keep your braids neat", choose a clear style, and drag it into place. Keep it away from the very bottom and right edge, where the app's buttons cover it.
-- **Automatic captions:** tap **Captions** (sometimes under Text) and choose **auto captions**. CapCut listens to the speech and writes subtitles. **Read them all**; it often mishears names and Nigerian words, so tap any caption to fix the spelling.
+Here's what auto-captions produced for a 10-second voiceover:
 
-Adjust how long text stays on screen by dragging its edges on the timeline, just like a clip.
+```text
+Our new jolo off party pack is here.
+It feeds four people for just 8000 naira.
+Fresh from our kitchen in Ikea, delivered to your door.
+Order on whats up today.
+```
 
-## Add music and sound
+The speaker said **jollof**, **₦8,000**, **Ikeja** and **WhatsApp**. Left uncorrected, "Ikea" and "jolo off" make a business look careless. Tap each caption to edit it.
 
-Tap **Audio** to add music or sound effects, or record a voiceover.
+## Sound, export and check
 
-- Lower the music volume when someone is speaking, so the voice is clear.
-- Keep sound effects few and purposeful.
+- **Audio → Music** or **Sounds** to add music or effects, or **Voiceover** to record yourself.
+- Lower the music when someone speaks, so the voice is clear.
 
 > [!WARNING]
-> Be careful with music for business videos. Popular songs are usually copyrighted, and a video can be muted or taken down. For a business page, use music that's licensed for commercial use, or record a voiceover.
+> Popular songs are usually copyrighted. On a business page, a video with unlicensed music can be muted or removed. Use music licensed for commercial use (CapCut marks some as such, and platforms have business-safe libraries), or record a voiceover.
 
-## Export and post
+**Export:**
 
-1. Watch the whole video once, with the sound on and once with it off.
-2. Tap the **export** button (often an arrow at the top).
-3. Choose **1080p** resolution and 30 frames per second. That's good quality for social media without a huge file.
-4. Save to your phone, then post it on your chosen platform.
+1. Watch the whole video twice: once with sound, once **muted**. Does it still make sense muted?
+2. Tap **Export** (often an arrow at the top). Choose **1080p** and **30 fps**: good quality without a huge file.
+3. Save it to your phone or computer. Some versions add a CapCut ending clip; you can usually delete it from the timeline before exporting.
 
-Some versions of CapCut add an ending clip with its logo. If you don't want it, you can usually delete that last clip from the timeline before exporting.
+**Share a link** to your video, for this module's last task: post it (Reel, TikTok, Short, status), or upload it to Google Drive and copy a link with "Anyone with the link" access.
 
 ## Try it
 
-Make a 15–30 second vertical video about something you do or sell:
+```answer
+{
+  "id": "dce-m03-a1",
+  "prompt": "Which aspect ratio should you choose for an Instagram Reel or TikTok? Type it like `16:9`.",
+  "answer": "9:16",
+  "format": "text",
+  "accept": ["9 : 16", "9x16", "9 by 16"],
+  "required": true
+}
+```
 
-1. Record three or four short clips on your phone.
-2. Start a **9:16** project in CapCut and add the clips.
-3. Trim and split so it gets to the point within two seconds.
-4. Add one headline and automatic captions, and correct any wrong words.
-5. Add music at a low volume, or a short voiceover, and export in **1080p**.
+```task
+{
+  "id": "dce-m03-t1",
+  "prompt": "Correct the auto-captions from the lesson. Type all four lines with every mistake fixed.",
+  "minutes": 3,
+  "rows": 5,
+  "placeholder": "Our new ...",
+  "rules": [
+    { "label": "\"jolo off\" corrected to jollof", "pattern": "jollof" },
+    { "label": "\"Ikea\" corrected to Ikeja", "pattern": "ikeja" },
+    { "label": "\"whats up\" corrected to WhatsApp", "pattern": "whatsapp" },
+    { "label": "No uncorrected mistakes left", "pattern": "jolo off|\\bikea\\b|whats up", "absent": true },
+    { "label": "All four lines", "minLines": 4 }
+  ],
+  "sample": "Our new jollof party pack is here.\nIt feeds four people for just ₦8,000.\nFresh from our kitchen in Ikeja, delivered to your door.\nOrder on WhatsApp today.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "dce-m03-t2",
+  "prompt": "Write the **message sentence and shot list** for your own 15-30 second video: the message on the first line, then one line per shot starting with its time (e.g. `0-2s:`). The first shot must show the result or the hook, not a logo.",
+  "minutes": 8,
+  "rows": 8,
+  "placeholder": "Message: ...\n0-2s: ...\n2-6s: ...",
+  "rules": [
+    { "label": "A message line first", "pattern": "^\\s*message\\s*:" },
+    { "label": "At least four timed shots (0-2s: …)", "pattern": "^\\s*\\d+\\s*[-–]\\s*\\d+\\s*s(ec)?\\s*:", "min": 4 },
+    { "label": "The first shot starts at 0 seconds", "pattern": "^\\s*0\\s*[-–]" },
+    { "label": "The opening shot isn't a logo or a greeting", "pattern": "^\\s*0\\s*[-–][^\\n]*(logo|hi guys|welcome|hello everyone|intro)", "absent": true },
+    { "label": "Ends with an action (order, book, follow, visit, DM…)", "pattern": "order|book|follow|visit|dm|whatsapp|call|link|subscribe|buy|join|register" }
+  ],
+  "sample": "Message: Our new jollof party pack feeds four for ₦8,000, delivered in Ikeja.\n0-2s: Steam rising as the lid comes off a full pack. Text: \"Feeds 4 for ₦8,000\"\n2-6s: Spoon scooping rice, chicken and plantain into the pack.\n6-11s: Four friends sharing it at a table.\n11-16s: Rider handing the bag over at a gate in Ikeja.\n16-20s: Pack, price and \"WhatsApp 0803 555 0177 to order\".",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "dce-m03-t3",
+  "prompt": "Film and edit your video in CapCut (9:16, cut to the point, headline text, corrected captions, sound, exported in 1080p). Paste a **link** to it (a post, or Google Drive with link sharing on), and one line on what you cut to make it tighter.",
+  "minutes": 2,
+  "rows": 3,
+  "placeholder": "https://...\nI cut ...",
+  "rules": [
+    { "label": "A link to your video", "pattern": "https?://\\S+\\.\\S+" },
+    { "label": "Says what you cut or tightened", "pattern": "cut|trim|remov|deleted|shorten|split" }
+  ],
+  "sample": "https://drive.google.com/file/d/1AbCdEfGhIjK/view\nI cut the first four seconds where I was setting the pot down, so it now opens on the steam.",
+  "required": true
+}
+```

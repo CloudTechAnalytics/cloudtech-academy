@@ -1,0 +1,84 @@
+question_id,question,relevant_article_id
+Q001,How do I open an account?,KB001
+Q002,What do I need to sign up for Paystream?,KB001
+Q003,Can I start using the app before verifying my BVN?,KB001
+Q004,What is the maximum I can send in a day on tier 1?,KB002
+Q005,How much money can I keep in my wallet without BVN?,KB002
+Q006,What are the limits for tier 3?,KB002
+Q007,How do I add my BVN?,KB003
+Q008,"My BVN verification is taking long, is that normal?",KB003
+Q009,"BVN says name mismatch, what do I do",KB003
+Q010,How can I upgrade to tier 3?,KB004
+Q011,Which ID cards do you accept for tier 3?,KB004
+Q012,How long does the tier 3 review take?,KB004
+Q013,How much is the charge to send money to GTBank?,KB005
+Q014,Is it free to send to another Paystream user?,KB005
+Q015,"What is the fee for sending 100,000 naira to another bank?",KB005
+Q016,I was debited but the transfer failed,KB006
+Q017,My money hasn't been reversed after a failed transfer,KB006
+Q018,How long does a reversal take?,KB006
+Q019,My transfer has been pending for an hour,KB007
+Q020,Should I resend a pending transfer?,KB007
+Q021,Why is my transfer still processing?,KB007
+Q022,"I sent money to the wrong person, help",KB008
+Q023,Can you reverse a transfer to a wrong account?,KB008
+Q024,How do I report a transfer to the wrong account?,KB008
+Q025,Can I buy Glo data on Paystream?,KB009
+Q026,Do I get cashback on airtime?,KB009
+Q027,My airtime didn't arrive,KB009
+Q028,I paid for electricity but no token,KB010
+Q029,How do I resend my electricity token?,KB010
+Q030,Can I pay my DStv subscription?,KB010
+Q031,How much does a virtual card cost?,KB011
+Q032,Is there a monthly fee for the virtual card?,KB011
+Q033,Can I use my virtual card on foreign websites?,KB011
+Q034,How do I get a physical card?,KB012
+Q035,How long does card delivery take to Kano?,KB012
+Q036,How do I activate my new card?,KB012
+Q037,Why was my card declined?,KB013
+Q038,My card is blocked after wrong PIN,KB013
+Q039,Card declined on an international website,KB013
+Q040,How do I withdraw cash at an agent?,KB014
+Q041,What is the agent cash out fee?,KB014
+Q042,"The agent asked for my PIN, is that okay?",KB014
+Q043,I forgot my PIN,KB015
+Q044,How do I reset my app PIN?,KB015
+Q045,Will resetting my PIN affect my card?,KB015
+Q046,How do I change my phone number?,KB016
+Q047,Can I transfer while my phone number change is processing?,KB016
+Q048,Will my account number change if I change my phone number?,KB016
+Q049,"My phone was stolen, what should I do?",KB017
+Q050,How do I freeze my account?,KB017
+Q051,How do I unfreeze my account on a new phone?,KB017
+Q052,"Someone called asking for my OTP, is that Paystream?",KB018
+Q053,How do I report a scam message?,KB018
+Q054,Does Paystream ever ask for my PIN?,KB018
+Q055,There's a transaction I didn't make,KB019
+Q056,How long does a fraud investigation take?,KB019
+Q057,How do I report fraud on my account?,KB019
+Q058,It says daily limit reached,KB020
+Q059,When does my daily limit reset?,KB020
+Q060,How do I increase my daily transfer limit?,KB020
+Q061,What interest does Paystream Save pay?,KB021
+Q062,Can I withdraw from Save anytime?,KB021
+Q063,How is interest calculated on Save?,KB021
+Q064,What is the interest on Paystream Lock?,KB022
+Q065,Can I break my Lock early?,KB022
+Q066,What happens when my Lock ends?,KB022
+Q067,How does the referral bonus work?,KB023
+Q068,When do I get my referral reward?,KB023
+Q069,Is there a limit on referrals?,KB023
+Q070,How do I close my account?,KB024
+Q071,How long does account closure take?,KB024
+Q072,Will you delete my data when I close my account?,KB024
+Q073,What time does phone support open?,KB025
+Q074,Is customer support available on Sunday night?,KB025
+Q075,What is the support email?,KB025
+Q076,Can I buy shares on Paystream?,
+Q077,Does Paystream give loans?,
+Q078,What is your dollar exchange rate?,
+Q079,Can I open a joint account with my wife?,
+Q080,Do you have a branch in Ibadan?,
+Q081,Can I pay school fees in instalments?,
+Q082,Can I send money to Ghana?,
+Q083,Does Paystream offer health insurance?,

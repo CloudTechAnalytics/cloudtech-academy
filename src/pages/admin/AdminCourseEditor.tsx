@@ -11,6 +11,7 @@ import { Alert, TextArea, TextField } from "@/components/Form";
 import NotFound from "../NotFound";
 import { AdminHeading } from "./AdminLayout";
 import { courseInput, randomId, useAdminCourse } from "./useAdmin";
+import { LEVELS, type Level } from "@/content/tracks";
 
 const selectCls = "mt-1.5 block w-full rounded-lg border border-line-strong bg-paper px-3 py-2.5 text-[1rem]";
 
@@ -91,6 +92,18 @@ function Details({ course, onSaved }: { course: Course; onSaved: () => Promise<u
             <option value="beginner">Beginner</option>
             <option value="intermediate">Intermediate</option>
             <option value="advanced">Advanced</option>
+          </select>
+        </div>
+        <div>
+          <label className="text-[0.875rem] font-medium" htmlFor="level">
+            Level
+          </label>
+          <select id="level" className={selectCls} value={c.level} onChange={(e) => set("level", Number(e.target.value) as Level)}>
+            {([1, 2, 3, 4] as Level[]).map((l) => (
+              <option key={l} value={l}>
+                {l}. {LEVELS[l].name}
+              </option>
+            ))}
           </select>
         </div>
         <TextField label="Level label" value={c.levelLabel} onChange={(e) => set("levelLabel", e.target.value)} />

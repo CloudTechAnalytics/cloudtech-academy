@@ -1,6 +1,7 @@
 ---
 title: Find Opportunities (Including Remote)
 minutes: 25
+handsOn: 6
 summary: Find internships through job boards, LinkedIn, direct approaches and your network, find remote roles, and spot fake offers before they cost you.
 ---
 
@@ -62,7 +63,55 @@ Check the company: look it up on its official website and LinkedIn, and search i
 
 ## Try it
 
-1. Search LinkedIn Jobs for internships in your field and save five.
-2. Find two companies you'd like to intern at and check their career pages.
-3. Write a direct enquiry email to one small business in your field.
-4. Find one remote opportunity and check it against the fake-internship warning signs.
+This message arrived in a student's inbox:
+
+```text
+From: hr.crestlinebank.recruitment2026@gmail.com
+Subject: CONGRATULATIONS! Remote Internship Offer
+
+Dear Candidate, you have been selected for a remote data entry internship
+with Crestline Bank, paying ₦250,000 weekly. No interview needed. To secure
+your place, pay ₦12,500 for training materials to the account below
+within 48 hours, and reply with your BVN for payroll set-up.
+```
+
+```task
+{
+  "id": "intern-m02-t1",
+  "prompt": "List the **warning signs** that this is a fake internship, one per line.",
+  "minutes": 5,
+  "rows": 7,
+  "placeholder": "- ...\n- ...",
+  "rules": [
+    { "label": "Spots the request for money", "pattern": "pay|fee|₦12,500|12,500|training materials|money" },
+    { "label": "Spots the free email address for a big company", "pattern": "gmail|free (email|address)|not (the|an) official|personal email" },
+    { "label": "Spots the missing interview", "pattern": "interview" },
+    { "label": "Spots the BVN request", "pattern": "bvn" },
+    { "label": "Spots the unrealistic pay or urgency", "pattern": "250,000|too (high|good)|unrealistic|48 hours|urgen|pressure" },
+    { "label": "At least four signs", "minLines": 4 }
+  ],
+  "sample": "- They want me to pay ₦12,500: genuine employers pay you, not the other way round.\n- It's from a Gmail address, not the bank's official email.\n- There was no interview.\n- They want my BVN, which no employer needs before I've even started.\n- ₦250,000 a week for student data entry is far too high, and the 48-hour deadline is pressure.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "intern-m02-t2",
+  "prompt": "Write a **direct enquiry email** to a real small business or organisation in your field that doesn't advertise internships. Include a `Subject:` line, who you are, when you're available, one thing you can already do (with a link if you have one), a clear question, and a sign-off.",
+  "minutes": 10,
+  "rows": 12,
+  "placeholder": "Subject: Internship enquiry - ...\n\nDear ...,\n\nI'm ...",
+  "rules": [
+    { "label": "A Subject: line that says it's an internship enquiry", "pattern": "^\\s*subject\\s*:[^\\n]*(intern|siwes|placement|industrial training|it )" },
+    { "label": "A greeting", "pattern": "^\\s*(dear|good (morning|afternoon))\\b" },
+    { "label": "Says who you are and what you study", "pattern": "\\b(i'm|i am)\\b[^\\n]*(student|level|graduate|studying)" },
+    { "label": "Says when you're available (months or dates)", "pattern": "20\\d\\d|january|february|march|april|may|june|july|august|september|october|november|december|months?" },
+    { "label": "Asks a clear question", "pattern": "\\?" },
+    { "label": "A sign-off", "pattern": "regards|sincerely|best wishes|thank you" },
+    { "label": "Short: under 160 words", "minWords": 40, "maxWords": 160 }
+  ],
+  "sample": "Subject: Internship enquiry - 300 Level Accounting student (UNILAG)\n\nDear Mrs Adeyemi,\n\nI'm a 300 level Accounting student at the University of Lagos looking for a 6-month industrial training placement from February 2027.\n\nI use Excel confidently, including pivot tables and XLOOKUP (portfolio: sites.google.com/view/chinedu-okeke), and I'm keen to learn how an accounting practice like yours works day to day.\n\nCould your firm take an intern next year? My CV is attached.\n\nKind regards,\nChinedu Okeke",
+  "required": true
+}
+```

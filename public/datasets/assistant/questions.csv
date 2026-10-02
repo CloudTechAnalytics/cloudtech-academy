@@ -1,0 +1,81 @@
+question_id,language,question,gold_section_id,retrieved_ids,answer_no_rag_grade,answer_rag_grade,judge_grade
+Q001,English,Does my policy cover flood?,S01,S01;S16;S11,Unsupported,Correct,Unsupported
+Q002,English,What exactly is covered under comprehensive?,S01,S01;S17;S15,Partly correct,Correct,Correct
+Q003,English,Am I covered if my car catches fire?,S01,S01;S05;S20,Correct,Correct,Correct
+Q004,Pidgin,Wetin this insurance dey cover?,S01,S01;S06;S14,Partly correct,Correct,Correct
+Q005,English,How long do I have to report an accident?,S02,S02;S15;S14,Unsupported,Unsupported,Correct
+Q006,English,Is there a deadline to tell you about a claim?,S02,S02;S07;S14,Unsupported,Correct,Correct
+Q007,English,"My car was stolen 3 days ago, is it too late to report?",S02,S10;S02;S17,Wrong,Correct,Correct
+Q008,Pidgin,How many days I get to report accident?,S02,S02;S08;S15,Unsupported,Correct,Correct
+Q009,English,How much is the excess?,S03,S12;S20;S03,Correct,Correct,Correct
+Q010,English,Do I have to pay anything myself when I claim?,S03,S20;S04;S03,Unsupported,Correct,Correct
+Q011,English,What is the minimum deductible?,S03,S11;S14;S01,Unsupported,Unsupported,Correct
+Q012,Pidgin,How much I go pay from my pocket?,S03,S14;S19;S03,Wrong,Correct,Correct
+Q013,English,Is windscreen replacement covered?,S04,S04;S20;S09,Partly correct,Partly correct,Partly correct
+Q014,English,What's the limit for a broken windscreen?,S04,S04;S12;S02,Correct,Correct,Correct
+Q015,English,Will a windscreen claim affect my discount?,S04,S15;S04;S09,Correct,Correct,Correct
+Q016,Pidgin,Una dey pay for broken glass?,S04,S04;S05;S01,Unsupported,Partly correct,Partly correct
+Q017,English,What documents do I need after an accident?,S05,S11;S17;S05,Wrong,Wrong,Unsupported
+Q018,English,Do I need a repair estimate for a crash claim?,S05,S05;S01;S16,Partly correct,Correct,Correct
+Q019,English,What should I send for accident damage?,S05,S05;S11;S14,Partly correct,Correct,Wrong
+Q020,Pidgin,Which paper I go bring for accident?,S05,S05;S15;S12,Correct,Correct,Correct
+Q021,English,"Another car hit me, what do you need from me?",S06,S06;S16;S14,Correct,Correct,Correct
+Q022,English,Do I need a police report if someone else hit me?,S06,S06;S18;S04,Partly correct,Correct,Correct
+Q023,English,What details of the other driver should I send?,S06,S15;S06;S13,Correct,Correct,Correct
+Q024,Pidgin,"Person jam my motor, which document una need?",S06,S02;S17;S13,Wrong,Wrong,Wrong
+Q025,English,"My car was stolen, what documents should I send?",S07,S08;S10;S19,Correct,Wrong,Wrong
+Q026,English,Do you need the spare key for a theft claim?,S07,S07;S10;S11,Unsupported,Partly correct,Partly correct
+Q027,English,What papers are required for theft?,S07,S07;S02;S13,Partly correct,Correct,Correct
+Q028,Pidgin,"Thief carry my motor, wetin I go submit?",S07,S07;S02;S13,Correct,Correct,Correct
+Q029,English,Can I use my own mechanic?,S08,S08;S05;S15,Correct,Correct,Correct
+Q030,English,Where can I get my car repaired?,S08,S16;S17;S08,Unsupported,Correct,Correct
+Q031,English,Do I have to use your garage?,S08,S08;S13;S01,Correct,Correct,Correct
+Q032,Pidgin,I fit use my own mechanic?,S08,S08;S18;S04,Correct,Partly correct,Partly correct
+Q033,English,Will I get a replacement car during repairs?,S09,S14;S09;S15,Unsupported,Correct,Correct
+Q034,English,Do you provide a courtesy car?,S09,S08;S09;S02,Correct,Correct,Correct
+Q035,English,How long can I keep a hire car while mine is fixed?,S09,S09;S03;S07,Correct,Correct,Correct
+Q036,Pidgin,Una go give me motor while dem dey fix my own?,S09,S09;S07;S17,Correct,Correct,Unsupported
+Q037,English,How does the no-claim bonus work?,S10,S10;S05;S08,Unsupported,Correct,Correct
+Q038,English,Will claiming increase my premium?,S10,S10;S04;S03,Correct,Correct,Correct
+Q039,English,What is the maximum no-claims discount?,S10,S10;S11;S05,Correct,Correct,Correct
+Q040,Pidgin,"If I claim, my discount go reduce?",S10,S10;S14;S02,Correct,Partly correct,Partly correct
+Q041,English,Am I covered if I drive for Bolt?,S11,S11;S12;S07,Correct,Correct,Correct
+Q042,English,Can I use my car for Uber?,S11,S11;S16;S20,Partly correct,Correct,Correct
+Q043,English,Is delivery work covered?,S11,S11;S13;S10,Unsupported,Correct,Correct
+Q044,Pidgin,"I dey use my motor do ride-hailing, una go cover am?",S11,S11;S05;S09,Wrong,Partly correct,Partly correct
+Q045,English,Is my son covered when he drives my car?,S12,S12;S04;S06,Partly correct,Partly correct,Partly correct
+Q046,English,What if the driver had been drinking?,S12,S12;S02;S20,Correct,Correct,Correct
+Q047,English,Is an unlicensed driver covered?,S12,S12;S17;S18,Unsupported,Partly correct,Partly correct
+Q048,Pidgin,"My driver no get licence, una go still pay?",S12,S17;S07;S18,Correct,Correct,Correct
+Q049,English,"My car was in a flood, is that covered?",S13,S13;S11;S05,Wrong,Correct,Wrong
+Q050,English,Should I start my car after it was flooded?,S13,S17;S19;S15,Correct,Partly correct,Partly correct
+Q051,English,Does the policy pay for storm damage?,S13,S13;S01;S09,Partly correct,Correct,Correct
+Q052,Pidgin,"Flood enter my motor, una go pay?",S13,S13;S04;S02,Correct,Correct,Correct
+Q053,English,"Someone was injured in the accident, are they covered?",S14,S14;S17;S15,Unsupported,Partly correct,Partly correct
+Q054,English,What is the limit for injury to other people?,S14,S18;S01;S14,Unsupported,Wrong,Wrong
+Q055,English,Are my passengers covered if they're hurt?,S14,S14;S11;S13,Correct,Correct,Correct
+Q056,Pidgin,"Person wound for the accident, wetin I go do?",S14,S01;S16;S19,Correct,Wrong,Wrong
+Q057,English,How long does it take to get paid?,S15,S17;S15;S08,Correct,Correct,Correct
+Q058,English,When will my claim be approved?,S15,S20;S07;S09,Correct,Correct,Correct
+Q059,English,How many days to settle a claim?,S15,S20;S05;S15,Unsupported,Correct,Correct
+Q060,Pidgin,When una go pay me?,S15,S15;S11;S01,Correct,Correct,Correct
+Q061,English,What happens if my car is written off?,S16,S16;S09;S01,Correct,Correct,Correct
+Q062,English,"If my stolen car is never found, how much do you pay?",S16,S10;S16;S18,Correct,Correct,Correct
+Q063,English,How is a total loss valued?,S16,S16;S20;S17,Unsupported,Correct,Correct
+Q064,Pidgin,"If dem no find my motor, una go pay how much?",S16,S03;S16;S09,Partly correct,Correct,Correct
+Q065,English,How do I cancel my policy?,S17,S16;S17;S11,Unsupported,Correct,Correct
+Q066,English,Will I get a refund if I cancel?,S17,S17;S08;S02,Correct,Correct,Correct
+Q067,English,Is there a fee for cancelling?,S17,S07;S17;S02,Wrong,Correct,Correct
+Q068,Pidgin,"I wan cancel, una go return my money?",S17,S17;S15;S19,Unsupported,Correct,Correct
+Q069,English,How do I make a complaint?,S18,S18;S06;S16,Correct,Correct,Correct
+Q070,English,How long do you take to reply to complaints?,S18,S07;S18;S11,Unsupported,Partly correct,Partly correct
+Q071,English,Can I report you to the regulator?,S18,S01;S17;S09,Unsupported,Wrong,Wrong
+Q072,Pidgin,"I wan complain, how I go do am?",S18,S17;S11;S08,Correct,Unsupported,Unsupported
+Q073,English,How can I check my claim status?,S19,S19;S15;S14,Unsupported,Correct,Correct
+Q074,English,Will you update me on my claim?,S19,S04;S19;S14,Partly correct,Partly correct,Partly correct
+Q075,English,Where do I track my claim?,S19,S16;S19;S07,Correct,Correct,Correct
+Q076,Pidgin,How I go know where my claim reach?,S19,S15;S03;S11,Unsupported,Unsupported,Correct
+Q077,English,Am I covered if I drive to Ghana?,S20,S05;S01;S13,Correct,Unsupported,Unsupported
+Q078,English,Does the policy work outside Nigeria?,S20,S20;S11;S12,Correct,Correct,Correct
+Q079,English,Can I take my car to Benin Republic?,S20,S20;S13;S08,Correct,Correct,Correct
+Q080,Pidgin,"I wan drive go Cotonou, una go cover me?",S20,S20;S18;S02,Correct,Correct,Correct

@@ -1,0 +1,25 @@
+interview_id,segment,job_to_be_done,biggest_pain,quote
+I01,Market trader,Keep the day's takings safe,BVN verification problems,I tried three times. My BVN has my old name. In the end I went back to the bank.
+I02,Salary earner,Track where the money goes,Savings goals,"If I don't put rent money aside, it disappears. I want to lock it."
+I03,Student,Make small payments without fees,Split bills,Every weekend one person pays and then we chase each other for days.
+I04,Small business,Get paid by customers in other states,Bulk payroll payments,Every month-end I do 15 transfers one by one. It takes an hour.
+I05,Market trader,Collect payment from customers quickly at the stall,No USSD or offline access,"When network is bad at the market, I can't collect payment. Customers walk away."
+I06,Salary earner,Track where the money goes,Transfer fees,"Ten naira here, twenty-five there. For small amounts it adds up."
+I07,Student,Make small payments without fees,Transfer fees,"Ten naira here, twenty-five there. For small amounts it adds up."
+I08,Small business,Separate business and personal money,Transfer fees,"Ten naira here, twenty-five there. For small amounts it adds up."
+I09,Market trader,Send money to suppliers in other cities,App crashes,"My phone is old. The app closes when I open it, so I use it only at home."
+I10,Salary earner,Track where the money goes,Card delivery delays,"I paid for the card. Three weeks, nothing."
+I11,Student,Make small payments without fees,Savings goals,"If I don't put rent money aside, it disappears. I want to lock it."
+I12,Small business,Separate business and personal money,BVN verification problems,I tried three times. My BVN has my old name. In the end I went back to the bank.
+I13,Market trader,Collect payment from customers quickly at the stall,BVN verification problems,I tried three times. My BVN has my old name. In the end I went back to the bank.
+I14,Salary earner,Pay bills and family on payday,Savings goals,"If I don't put rent money aside, it disappears. I want to lock it."
+I15,Student,Split costs with friends,Split bills,Every weekend one person pays and then we chase each other for days.
+I16,Small business,Pay staff and suppliers,Bulk payroll payments,Every month-end I do 15 transfers one by one. It takes an hour.
+I17,Market trader,Send money to suppliers in other cities,No USSD or offline access,"When network is bad at the market, I can't collect payment. Customers walk away."
+I18,Salary earner,Track where the money goes,Transfer fees,"Ten naira here, twenty-five there. For small amounts it adds up."
+I19,Student,Split costs with friends,Transfer fees,"Ten naira here, twenty-five there. For small amounts it adds up."
+I20,Small business,Pay staff and suppliers,Transfer fees,"Ten naira here, twenty-five there. For small amounts it adds up."
+I21,Market trader,Send money to suppliers in other cities,App crashes,"My phone is old. The app closes when I open it, so I use it only at home."
+I22,Salary earner,Pay bills and family on payday,Card delivery delays,"I paid for the card. Three weeks, nothing."
+I23,Student,Receive allowance from family,Savings goals,"If I don't put rent money aside, it disappears. I want to lock it."
+I24,Small business,Separate business and personal money,BVN verification problems,I tried three times. My BVN has my old name. In the end I went back to the bank.

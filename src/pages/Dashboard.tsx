@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router";
-import { Award, BookOpen, CheckCircle2, ExternalLink, GraduationCap, ShieldCheck, Trophy } from "lucide-react";
+import { AlertTriangle, Award, BookOpen, CheckCircle2, ExternalLink, GraduationCap, ShieldCheck, Trophy, X } from "lucide-react";
 import { useSeo } from "@/lib/seo";
 import { useAuth, PageLoading, RequireAuth } from "@/lib/auth";
 import { useCourses } from "@/lib/data";
@@ -8,9 +8,10 @@ import { getBackend, type AttemptResult, type Certificate, type Credential, type
 import { findProject } from "@/content/projects";
 import { ProjectCover } from "@/components/ProjectCover";
 import { eligibility } from "@/lib/certificates";
-import { credentialBadge } from "@/lib/badges";
+import { credentialBadge, credentialKindLabel } from "@/lib/badges";
 import { formatDate } from "@/lib/format";
-import { ButtonLink } from "@/components/Button";
+import { Button, ButtonLink } from "@/components/Button";
+import { daysUntilReset, RESET_AFTER_DAYS } from "@/lib/inactivity";
 import { CourseCard } from "@/components/CourseCard";
 import { ProgressBar } from "@/components/ProgressBar";
 import { BadgeArtwork } from "@/components/BadgeArtwork";
@@ -27,27 +28,55 @@ function DashboardInner() {
   const [certs, setCerts] = useState<Certificate[]>([]);
   const [practice, setPractice] = useState<PracticeSubmission[]>([]);
   const [open, setOpen] = useState<string | null>(null);
+  const [resetIds, setResetIds] = useState<string[]>([]);
+  const [confirming, setConfirming] = useState<string | null>(null);
+  const [removing, setRemoving] = useState(false);
+  const [removeError, setRemoveError] = useState<string | null>(null);
   const art = useRef<SVGSVGElement>(null);
 
-  useEffect(() => {
-    void (async () => {
-      const b = await getBackend();
-      const [enrollments, creds, certificates, subs] = await Promise.all([b.listEnrollments(), b.listMyCredentials(), b.listMyCertificates(), b.listMyPracticeSubmissions()]);
-      const [progress, attempts] = await Promise.all([
-        Promise.all(enrollments.map((e) => b.getProgress(e.courseId))),
-        Promise.all(
-          enrollments.map(async (e) => {
-            const a = await b.getAssessment(e.courseId);
-            return a ? b.listAttempts(a.id) : [];
-          }),
-        ),
-      ]);
-      setRows(enrollments.map((enrollment, i) => ({ enrollment, progress: progress[i], attempts: attempts[i] })));
-      setCredentials(creds);
-      setCerts(certificates);
-      setPractice(subs);
-    })().catch(() => setRows([]));
+  const load = useCallback(async () => {
+    const b = await getBackend();
+    // Courses untouched for 14 days start over before anything is shown.
+    const reset = await b.applyInactivityResets().catch(() => [] as string[]);
+    if (reset.length) setResetIds(reset);
+    const [enrollments, creds, certificates, subs] = await Promise.all([
+      b.listEnrollments(),
+      b.listMyCredentials(),
+      b.listMyCertificates(),
+      b.listMyPracticeSubmissions().catch(() => []),
+    ]);
+    const [progress, attempts] = await Promise.all([
+      Promise.all(enrollments.map((e) => b.getProgress(e.courseId))),
+      Promise.all(
+        enrollments.map(async (e) => {
+          const a = await b.getAssessment(e.courseId);
+          return a ? b.listAttempts(a.id) : [];
+        }),
+      ),
+    ]);
+    setRows(enrollments.map((enrollment, i) => ({ enrollment, progress: progress[i], attempts: attempts[i] })));
+    setCredentials(creds);
+    setCerts(certificates);
+    setPractice(subs);
   }, []);
+
+  useEffect(() => {
+    void load().catch(() => setRows([]));
+  }, [load]);
+
+  const remove = async (courseId: string) => {
+    setRemoving(true);
+    setRemoveError(null);
+    try {
+      await (await getBackend()).removeCourse(courseId);
+      setConfirming(null);
+      await load();
+    } catch (e) {
+      setRemoveError(e instanceof Error ? e.message : "Couldn't remove the course. Try again.");
+    } finally {
+      setRemoving(false);
+    }
+  };
 
   useSeo({ title: "Dashboard | CloudTech Academy", description: "Your learning, badges, certificates and credentials.", noindex: true });
   if (!rows || auth.status !== "signed-in") return <PageLoading />;
@@ -63,7 +92,10 @@ function DashboardInner() {
       const status = eligibility(course, r.progress, r.attempts, null, null, badges);
       const completion = valid.find((c) => c.courseId === course.id && c.kind === "course_completion");
       const resume = lessons.find((l) => l.id === r.enrollment.lastLessonId) ?? lessons.find((l) => !r.progress.completedLessons.includes(l.id)) ?? lessons[0];
-      return { course, percent: completion ? 100 : status.percent, completion, resume };
+      // Warn only when there's something to lose: done lessons, tasks or assessment attempts.
+      const hasProgress = r.progress.completedLessons.length > 0 || r.progress.completedExercises.length > 0 || r.attempts.length > 0;
+      const resetsIn = !completion && hasProgress ? daysUntilReset(r.enrollment.lastActiveAt) : null;
+      return { course, percent: completion ? 100 : status.percent, completion, resume, resetsIn };
     })
     .filter((x) => x !== null);
   const inProgress = learning.filter((l) => !l.completion);
@@ -100,6 +132,16 @@ function DashboardInner() {
         <h2 id="my-learning" className="font-serif text-[1.7rem]">
           My Learning
         </h2>
+        <p className="mt-1 text-[0.9375rem] text-muted">
+          A course you haven't worked on for {RESET_AFTER_DAYS} days starts over from the beginning. Badges you've earned always stay.
+        </p>
+        {resetIds.length > 0 && (
+          <p role="status" className="mt-4 rounded-lg border border-line-strong bg-sand px-4 py-3 text-[0.9375rem]">
+            {resetIds.map((id) => courses.find((c) => c.id === id)?.title ?? id).join(", ")} {resetIds.length === 1 ? "has" : "have"} started over after{" "}
+            {RESET_AFTER_DAYS} days without activity. Your badges are still yours.
+          </p>
+        )}
+        {removeError && <p className="mt-4 rounded-lg border border-danger/40 bg-danger/10 px-4 py-3 text-[0.9375rem]">{removeError}</p>}
         {learning.length === 0 ? (
           <div className="mt-5 rounded-2xl border border-dashed border-line-strong p-8 text-center">
             <p className="text-[1.0625rem]">You haven't started a course yet.</p>
@@ -112,21 +154,57 @@ function DashboardInner() {
           </div>
         ) : (
           <ul className="mt-5 grid gap-4 lg:grid-cols-2">
-            {[...inProgress, ...completed].map(({ course, percent, completion, resume }) => (
+            {[...inProgress, ...completed].map(({ course, percent, completion, resume, resetsIn }) => (
               <li key={course.id} className="flex flex-col rounded-2xl border border-line bg-paper p-6">
                 <div className="flex items-start justify-between gap-3">
                   <Link to={`/courses/${course.slug}`} className="font-serif text-[1.35rem] leading-snug hover:text-brass-dark">
                     {course.title}
                   </Link>
-                  {completion && (
-                    <span className="inline-flex shrink-0 items-center gap-1 rounded-full border border-success/40 bg-success-bg px-2.5 py-0.5 text-[0.75rem] font-medium text-success">
-                      <CheckCircle2 aria-hidden className="h-3.5 w-3.5" /> Completed
-                    </span>
-                  )}
+                  <div className="flex shrink-0 items-center gap-2">
+                    {completion && (
+                      <span className="inline-flex items-center gap-1 rounded-full border border-success/40 bg-success-bg px-2.5 py-0.5 text-[0.75rem] font-medium text-success">
+                        <CheckCircle2 aria-hidden className="h-3.5 w-3.5" /> Completed
+                      </span>
+                    )}
+                    <button
+                      type="button"
+                      onClick={() => setConfirming(course.id)}
+                      aria-label={`Remove ${course.title} from My Learning`}
+                      title="Remove from My Learning"
+                      className="flex h-8 w-8 items-center justify-center rounded-lg text-muted hover:bg-sand hover:text-ink"
+                    >
+                      <X aria-hidden className="h-4 w-4" />
+                    </button>
+                  </div>
                 </div>
+                {confirming === course.id && (
+                  <div role="alertdialog" aria-label={`Remove ${course.title}?`} className="mt-4 rounded-xl border border-line-strong bg-sand p-4 text-[0.9375rem]">
+                    <p className="font-semibold">Remove {course.title} from My Learning?</p>
+                    <p className="mt-1 text-muted">
+                      {completion
+                        ? "Your completion badge and any certificate stay valid. You can open the course again any time."
+                        : "Your progress in this course will be cleared, so starting it again begins from the first lesson. Badges you've earned stay."}
+                    </p>
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      <Button onClick={() => void remove(course.id)} loading={removing}>
+                        Remove
+                      </Button>
+                      <Button variant="secondary" onClick={() => setConfirming(null)} disabled={removing}>
+                        Cancel
+                      </Button>
+                    </div>
+                  </div>
+                )}
                 <div className="mt-5">
                   <ProgressBar value={percent} label={`${course.title} progress`} />
                 </div>
+                {resetsIn !== null && (
+                  <p className="mt-3 flex items-start gap-2 text-[0.875rem] text-ink">
+                    <AlertTriangle aria-hidden className="mt-0.5 h-4 w-4 shrink-0 text-brass-dark" />
+                    {resetsIn === 0 ? "Starts over today" : `Starts over in ${resetsIn} ${resetsIn === 1 ? "day" : "days"}`} unless you continue. Open a lesson to keep your
+                    progress.
+                  </p>
+                )}
                 <div className="mt-6 flex flex-wrap gap-3">
                   {completion ? (
                     <ButtonLink to={`/credentials/${completion.credentialId}`} variant="secondary">
@@ -302,7 +380,7 @@ function DashboardInner() {
                   ...credentials.map((c) => ({
                     key: c.id,
                     name: c.badgeName,
-                    type: c.kind === "course_completion" ? "Course completion" : c.kind === "project_badge" ? "Project badge" : "Module badge",
+                    type: credentialKindLabel(c.kind),
                     date: c.issuedAt,
                     id: c.credentialId,
                     href: `/credentials/${c.credentialId}`,

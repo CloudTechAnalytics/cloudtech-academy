@@ -1,4 +1,4 @@
-import { useEffect, useId, useRef, useState, type KeyboardEvent } from "react";
+import { useEffect, useId, useRef, useState, type KeyboardEvent, type ReactNode } from "react";
 import { CheckCircle2, Eye, Lightbulb, RotateCcw } from "lucide-react";
 import type { ExerciseSpec } from "@/content/types";
 import { runForCheck, runQuery, resetDatabase, type QueryResult } from "@/lib/sql/sandbox";
@@ -13,11 +13,14 @@ type Feedback = { tone: "success" | "error" | "info"; text: string } | null;
  */
 export function SqlExercise({
   spec,
+  prompt,
   label,
   completed,
   onSolved,
 }: {
   spec: ExerciseSpec;
+  /** The prompt rendered from Markdown; the plain text is used when it isn't given. */
+  prompt?: ReactNode;
   label: string;
   completed: boolean;
   onSolved: (exerciseId: string) => void;
@@ -102,7 +105,7 @@ export function SqlExercise({
           </span>
         )}
       </div>
-      <p className="mt-2 text-[1rem] leading-relaxed text-ink">{spec.prompt}</p>
+      <div className="mt-2 space-y-2 text-[1rem] leading-relaxed text-ink [&_:not(pre)>code]:rounded [&_:not(pre)>code]:bg-sand [&_:not(pre)>code]:px-1 [&_:not(pre)>code]:font-mono [&_:not(pre)>code]:text-[0.88em]">{prompt ?? <p>{spec.prompt}</p>}</div>
 
       <div className="mt-4">
         <SchemaToggle />

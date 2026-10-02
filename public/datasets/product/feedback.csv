@@ -1,0 +1,1501 @@
+feedback_id,date,source,segment,theme,text,rating
+F0001,2026-07-11,App review,Small business,Bulk payroll payments,Payroll feature needed for our company,3
+F0002,2026-08-04,App review,Small business,Bulk payroll payments,Payroll feature needed for our company,4
+F0003,2026-08-18,App review,Market trader,App crashes,Keeps closing when I open transfers,1
+F0004,2026-08-29,Support ticket,Student,Split bills,Let me split bills with friends,
+F0005,2026-07-13,Support ticket,Market trader,No USSD or offline access,Please add USSD like the banks,
+F0006,2026-08-21,Support ticket,Salary earner,Split bills,Let me split bills with friends,
+F0007,2026-07-10,Support ticket,Student,BVN verification problems,abeg help me verify my BVN,
+F0008,2026-07-29,Support ticket,Student,Transfer fees,Fees too high for small transfers,
+F0009,2026-07-11,App review,Market trader,Transfer fees,Fees too high for small transfers,2
+F0010,2026-08-13,App review,Student,Transfer fees,Charges on every transfer are too much,3
+F0011,2026-07-30,Support ticket,Salary earner,Split bills,Need a way to collect money from my group,
+F0012,2026-07-17,App review,Market trader,App crashes,Crashes on Android 9,5
+F0013,2026-07-06,Sales team,Small business,Bulk payroll payments,Payroll feature needed for our company,
+F0014,2026-08-16,App review,Salary earner,BVN verification problems,My name doesn't match my BVN so I can't verify,4
+F0015,2026-07-28,App review,Market trader,App crashes,App crashes on my phone,1
+F0016,2026-08-07,Survey,Student,App crashes,Keeps closing when I open transfers,
+F0017,2026-08-07,App review,Market trader,BVN verification problems,My name doesn't match my BVN so I can't verify,2
+F0018,2026-07-16,App review,Market trader,App crashes,Crashes on Android 9,1
+F0019,2026-07-24,App review,Salary earner,Transfer fees,Charges on every transfer are too much,1
+F0020,2026-07-30,Sales team,Small business,Bulk payroll payments,Bulk transfers for salaries please,
+F0021,2026-08-18,Support ticket,Market trader,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",
+F0022,2026-07-23,App review,Small business,Card delivery delays,Card delivery is too slow,1
+F0023,2026-08-30,App review,Salary earner,BVN verification problems,BVN verification keeps failing,1
+F0024,2026-08-25,Support ticket,Market trader,BVN verification problems,BVN verification keeps failing,
+F0025,2026-07-18,App review,Salary earner,BVN verification problems,abeg help me verify my BVN,2
+F0026,2026-07-18,Sales team,Student,Bulk payroll payments,We need to pay all our staff at once,
+F0027,2026-07-11,App review,Market trader,BVN verification problems,Stuck on verification for days,1
+F0028,2026-07-30,App review,Small business,BVN verification problems,abeg help me verify my BVN,1
+F0029,2026-08-28,App review,Salary earner,BVN verification problems,Stuck on verification for days,2
+F0030,2026-08-15,Support ticket,Market trader,BVN verification problems,My name doesn't match my BVN so I can't verify,
+F0031,2026-07-28,Support ticket,Salary earner,Savings goals,Add a savings goal for rent,
+F0032,2026-07-16,Support ticket,Salary earner,Card delivery delays,Still waiting for my physical card,
+F0033,2026-07-19,Support ticket,Market trader,BVN verification problems,My name doesn't match my BVN so I can't verify,
+F0034,2026-08-17,Survey,Market trader,No USSD or offline access,I need to send money without data,
+F0035,2026-08-21,App review,Student,Split bills,Add split payment for hangouts,5
+F0036,2026-07-14,Survey,Salary earner,Bulk payroll payments,Payroll feature needed for our company,
+F0037,2026-07-21,App review,Salary earner,Card delivery delays,My card hasn't arrived after 3 weeks,3
+F0038,2026-07-31,Support ticket,Student,BVN verification problems,abeg help me verify my BVN,
+F0039,2026-08-17,App review,Market trader,App crashes,Crashes on Android 9,1
+F0040,2026-07-16,Support ticket,Market trader,App crashes,App crashes on my phone,
+F0041,2026-07-28,Support ticket,Salary earner,Savings goals,Add a savings goal for rent,
+F0042,2026-07-06,App review,Salary earner,No USSD or offline access,I need to send money without data,5
+F0043,2026-07-29,Support ticket,Salary earner,Transfer fees,Charges on every transfer are too much,
+F0044,2026-07-09,Support ticket,Salary earner,Split bills,Let me split bills with friends,
+F0045,2026-07-17,App review,Salary earner,Bulk payroll payments,We need to pay all our staff at once,2
+F0046,2026-08-28,Support ticket,Student,BVN verification problems,abeg help me verify my BVN,
+F0047,2026-08-21,App review,Salary earner,Split bills,Need a way to collect money from my group,4
+F0048,2026-08-13,Sales team,Small business,Bulk payroll payments,We need to pay all our staff at once,
+F0049,2026-08-10,App review,Student,Split bills,Let me split bills with friends,3
+F0050,2026-08-14,Survey,Market trader,BVN verification problems,Stuck on verification for days,
+F0051,2026-07-14,Support ticket,Salary earner,Savings goals,Add a savings goal for rent,
+F0052,2026-07-28,App review,Market trader,No USSD or offline access,Please add USSD like the banks,4
+F0053,2026-07-26,Support ticket,Small business,Bulk payroll payments,We need to pay all our staff at once,
+F0054,2026-07-31,Support ticket,Salary earner,Savings goals,Let me save towards a target,
+F0055,2026-08-07,App review,Salary earner,BVN verification problems,abeg help me verify my BVN,1
+F0056,2026-07-31,Support ticket,Salary earner,Card delivery delays,Card delivery is too slow,
+F0057,2026-08-05,Support ticket,Student,Savings goals,I want to lock money for school fees,
+F0058,2026-08-07,Support ticket,Student,Savings goals,Let me save towards a target,
+F0059,2026-07-20,App review,Market trader,BVN verification problems,BVN verification keeps failing,1
+F0060,2026-08-28,App review,Market trader,App crashes,App crashes on my phone,1
+F0061,2026-07-08,Support ticket,Market trader,BVN verification problems,abeg help me verify my BVN,
+F0062,2026-07-06,Survey,Small business,Bulk payroll payments,Payroll feature needed for our company,
+F0063,2026-07-21,Survey,Student,Savings goals,I want to lock money for school fees,
+F0064,2026-08-11,Support ticket,Student,Savings goals,Add a savings goal for rent,
+F0065,2026-07-09,Survey,Market trader,Transfer fees,Charges on every transfer are too much,
+F0066,2026-08-08,Sales team,Small business,Split bills,Need a way to collect money from my group,
+F0067,2026-07-17,Support ticket,Student,Split bills,Add split payment for hangouts,
+F0068,2026-07-30,App review,Salary earner,Split bills,Let me split bills with friends,2
+F0069,2026-08-16,App review,Market trader,No USSD or offline access,"No network at the market, can't use the app",5
+F0070,2026-08-10,Support ticket,Student,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",
+F0071,2026-08-12,App review,Salary earner,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",5
+F0072,2026-07-08,App review,Salary earner,Bulk payroll payments,Payroll feature needed for our company,3
+F0073,2026-08-30,Sales team,Small business,Bulk payroll payments,We need to pay all our staff at once,
+F0074,2026-07-08,App review,Salary earner,Transfer fees,Charges on every transfer are too much,5
+F0075,2026-08-25,App review,Salary earner,Savings goals,I want to lock money for school fees,5
+F0076,2026-07-20,Support ticket,Student,Split bills,Let me split bills with friends,
+F0077,2026-08-10,Support ticket,Small business,Transfer fees,Charges on every transfer are too much,
+F0078,2026-08-22,Survey,Market trader,Transfer fees,Fees too high for small transfers,
+F0079,2026-07-15,App review,Salary earner,App crashes,App crashes on my phone,2
+F0080,2026-08-04,App review,Market trader,Transfer fees,Charges on every transfer are too much,2
+F0081,2026-07-17,App review,Salary earner,App crashes,Crashes on Android 9,1
+F0082,2026-08-01,Support ticket,Salary earner,Transfer fees,Fees too high for small transfers,
+F0083,2026-08-12,Support ticket,Market trader,BVN verification problems,My name doesn't match my BVN so I can't verify,
+F0084,2026-07-28,App review,Market trader,No USSD or offline access,I need to send money without data,4
+F0085,2026-08-17,App review,Market trader,App crashes,Keeps closing when I open transfers,3
+F0086,2026-07-08,App review,Student,Split bills,Let me split bills with friends,2
+F0087,2026-08-12,Sales team,Small business,Bulk payroll payments,Payroll feature needed for our company,
+F0088,2026-08-14,App review,Student,Split bills,Need a way to collect money from my group,5
+F0089,2026-08-11,Support ticket,Market trader,No USSD or offline access,I need to send money without data,
+F0090,2026-08-24,Survey,Salary earner,Savings goals,Add a savings goal for rent,
+F0091,2026-08-13,Sales team,Small business,Bulk payroll payments,Bulk transfers for salaries please,
+F0092,2026-08-21,Support ticket,Salary earner,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",
+F0093,2026-08-10,App review,Small business,Savings goals,Let me save towards a target,3
+F0094,2026-07-12,Support ticket,Small business,Bulk payroll payments,Bulk transfers for salaries please,
+F0095,2026-07-17,App review,Salary earner,App crashes,Keeps closing when I open transfers,1
+F0096,2026-07-15,App review,Student,BVN verification problems,Stuck on verification for days,3
+F0097,2026-08-28,App review,Student,Savings goals,Add a savings goal for rent,5
+F0098,2026-08-09,App review,Student,Transfer fees,Fees too high for small transfers,4
+F0099,2026-08-30,App review,Market trader,Split bills,Let me split bills with friends,4
+F0100,2026-08-27,App review,Market trader,BVN verification problems,BVN verification keeps failing,3
+F0101,2026-07-15,App review,Salary earner,Savings goals,Let me save towards a target,4
+F0102,2026-08-30,Support ticket,Market trader,No USSD or offline access,I need to send money without data,
+F0103,2026-07-26,Survey,Market trader,BVN verification problems,Stuck on verification for days,
+F0104,2026-08-24,App review,Student,Savings goals,I want to lock money for school fees,5
+F0105,2026-08-20,Support ticket,Market trader,Card delivery delays,Still waiting for my physical card,
+F0106,2026-07-13,App review,Market trader,Card delivery delays,Still waiting for my physical card,1
+F0107,2026-08-18,App review,Salary earner,Savings goals,Let me save towards a target,5
+F0108,2026-07-07,App review,Small business,App crashes,App crashes on my phone,2
+F0109,2026-08-27,Support ticket,Market trader,BVN verification problems,BVN verification keeps failing,
+F0110,2026-08-21,App review,Student,Split bills,Let me split bills with friends,2
+F0111,2026-08-19,App review,Student,Split bills,Let me split bills with friends,3
+F0112,2026-07-26,App review,Student,BVN verification problems,Stuck on verification for days,1
+F0113,2026-08-09,App review,Small business,Bulk payroll payments,We need to pay all our staff at once,3
+F0114,2026-07-15,Support ticket,Market trader,BVN verification problems,BVN verification keeps failing,
+F0115,2026-08-07,Sales team,Small business,Bulk payroll payments,Payroll feature needed for our company,
+F0116,2026-07-08,Survey,Small business,Bulk payroll payments,Payroll feature needed for our company,
+F0117,2026-07-16,App review,Salary earner,Transfer fees,Charges on every transfer are too much,1
+F0118,2026-07-22,Survey,Student,Split bills,Add split payment for hangouts,
+F0119,2026-07-26,Survey,Market trader,No USSD or offline access,"No network at the market, can't use the app",
+F0120,2026-07-07,Support ticket,Salary earner,Savings goals,Let me save towards a target,
+F0121,2026-08-24,Support ticket,Small business,No USSD or offline access,Please add USSD like the banks,
+F0122,2026-07-29,App review,Market trader,BVN verification problems,BVN verification keeps failing,1
+F0123,2026-08-13,Support ticket,Student,BVN verification problems,abeg help me verify my BVN,
+F0124,2026-07-26,App review,Market trader,App crashes,Keeps closing when I open transfers,4
+F0125,2026-07-27,Sales team,Small business,Bulk payroll payments,We need to pay all our staff at once,
+F0126,2026-07-23,App review,Market trader,BVN verification problems,BVN verification keeps failing,1
+F0127,2026-08-20,Survey,Student,Savings goals,I want to lock money for school fees,
+F0128,2026-08-03,App review,Student,Split bills,Add split payment for hangouts,1
+F0129,2026-08-06,App review,Small business,Bulk payroll payments,We need to pay all our staff at once,5
+F0130,2026-07-06,Survey,Market trader,Bulk payroll payments,Payroll feature needed for our company,
+F0131,2026-08-15,Support ticket,Small business,Transfer fees,Charges on every transfer are too much,
+F0132,2026-08-14,App review,Student,Transfer fees,Charges on every transfer are too much,4
+F0133,2026-08-10,App review,Salary earner,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",3
+F0134,2026-07-30,Survey,Salary earner,Transfer fees,Charges on every transfer are too much,
+F0135,2026-08-16,Sales team,Small business,Bulk payroll payments,We need to pay all our staff at once,
+F0136,2026-07-13,App review,Market trader,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",5
+F0137,2026-07-21,Support ticket,Salary earner,Savings goals,Add a savings goal for rent,
+F0138,2026-07-31,App review,Student,Split bills,Add split payment for hangouts,3
+F0139,2026-08-30,App review,Student,App crashes,App crashes on my phone,1
+F0140,2026-07-07,Support ticket,Salary earner,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",
+F0141,2026-08-09,Support ticket,Market trader,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",
+F0142,2026-08-21,App review,Market trader,No USSD or offline access,Please add USSD like the banks,3
+F0143,2026-07-25,App review,Market trader,BVN verification problems,Stuck on verification for days,2
+F0144,2026-07-17,Support ticket,Student,Transfer fees,Charges on every transfer are too much,
+F0145,2026-08-05,Sales team,Salary earner,Bulk payroll payments,We need to pay all our staff at once,
+F0146,2026-08-19,App review,Market trader,Bulk payroll payments,Payroll feature needed for our company,1
+F0147,2026-08-12,App review,Market trader,Card delivery delays,Card delivery is too slow,5
+F0148,2026-08-30,App review,Student,Split bills,Need a way to collect money from my group,2
+F0149,2026-07-12,App review,Small business,App crashes,Crashes on Android 9,2
+F0150,2026-08-01,App review,Salary earner,Card delivery delays,Still waiting for my physical card,3
+F0151,2026-08-02,App review,Salary earner,Savings goals,Add a savings goal for rent,3
+F0152,2026-07-30,Support ticket,Salary earner,Split bills,Need a way to collect money from my group,
+F0153,2026-08-29,App review,Small business,Bulk payroll payments,Payroll feature needed for our company,4
+F0154,2026-07-17,Support ticket,Salary earner,Transfer fees,Fees too high for small transfers,
+F0155,2026-08-14,App review,Market trader,App crashes,Keeps closing when I open transfers,3
+F0156,2026-07-12,App review,Market trader,No USSD or offline access,"No network at the market, can't use the app",5
+F0157,2026-07-19,App review,Market trader,Transfer fees,Fees too high for small transfers,2
+F0158,2026-07-26,App review,Student,Savings goals,I want to lock money for school fees,3
+F0159,2026-08-30,Support ticket,Market trader,BVN verification problems,abeg help me verify my BVN,
+F0160,2026-07-31,Survey,Student,Split bills,Add split payment for hangouts,
+F0161,2026-07-21,App review,Market trader,App crashes,App crashes on my phone,1
+F0162,2026-07-09,App review,Salary earner,Card delivery delays,My card hasn't arrived after 3 weeks,3
+F0163,2026-07-10,App review,Market trader,No USSD or offline access,Please add USSD like the banks,2
+F0164,2026-08-19,Support ticket,Salary earner,App crashes,Crashes on Android 9,
+F0165,2026-08-13,App review,Market trader,Card delivery delays,Still waiting for my physical card,3
+F0166,2026-07-10,App review,Market trader,No USSD or offline access,Please add USSD like the banks,5
+F0167,2026-07-19,App review,Salary earner,Savings goals,Let me save towards a target,5
+F0168,2026-08-13,App review,Market trader,Card delivery delays,Card delivery is too slow,3
+F0169,2026-07-31,Sales team,Salary earner,Bulk payroll payments,Payroll feature needed for our company,
+F0170,2026-07-08,App review,Market trader,BVN verification problems,BVN verification keeps failing,2
+F0171,2026-07-16,Support ticket,Market trader,App crashes,Crashes on Android 9,
+F0172,2026-07-11,Support ticket,Salary earner,Card delivery delays,Still waiting for my physical card,
+F0173,2026-07-09,Support ticket,Salary earner,BVN verification problems,Stuck on verification for days,
+F0174,2026-07-26,App review,Small business,BVN verification problems,BVN verification keeps failing,1
+F0175,2026-07-30,App review,Salary earner,Card delivery delays,Still waiting for my physical card,5
+F0176,2026-08-10,App review,Market trader,App crashes,Keeps closing when I open transfers,1
+F0177,2026-07-28,Sales team,Small business,Bulk payroll payments,Bulk transfers for salaries please,
+F0178,2026-07-17,Support ticket,Salary earner,App crashes,Keeps closing when I open transfers,
+F0179,2026-08-28,Survey,Small business,Transfer fees,Fees too high for small transfers,
+F0180,2026-07-11,App review,Market trader,Transfer fees,Charges on every transfer are too much,3
+F0181,2026-08-12,App review,Student,Split bills,Let me split bills with friends,3
+F0182,2026-07-19,Survey,Market trader,BVN verification problems,BVN verification keeps failing,
+F0183,2026-07-28,Support ticket,Student,Savings goals,Add a savings goal for rent,
+F0184,2026-07-07,App review,Salary earner,Savings goals,Let me save towards a target,3
+F0185,2026-08-24,App review,Student,Savings goals,Add a savings goal for rent,5
+F0186,2026-08-21,Support ticket,Student,BVN verification problems,Stuck on verification for days,
+F0187,2026-08-30,App review,Salary earner,Split bills,Add split payment for hangouts,5
+F0188,2026-07-16,App review,Salary earner,Card delivery delays,Card delivery is too slow,1
+F0189,2026-07-29,App review,Salary earner,Transfer fees,Charges on every transfer are too much,5
+F0190,2026-07-14,Sales team,Small business,Bulk payroll payments,Payroll feature needed for our company,
+F0191,2026-08-11,Support ticket,Small business,BVN verification problems,My name doesn't match my BVN so I can't verify,
+F0192,2026-07-21,App review,Market trader,BVN verification problems,abeg help me verify my BVN,5
+F0193,2026-07-30,Survey,Student,Card delivery delays,Card delivery is too slow,
+F0194,2026-08-16,App review,Student,Split bills,Add split payment for hangouts,5
+F0195,2026-07-22,Support ticket,Small business,App crashes,Crashes on Android 9,
+F0196,2026-07-12,App review,Market trader,Savings goals,I want to lock money for school fees,1
+F0197,2026-07-22,App review,Market trader,BVN verification problems,My name doesn't match my BVN so I can't verify,1
+F0198,2026-07-19,App review,Student,Transfer fees,Fees too high for small transfers,1
+F0199,2026-07-21,Sales team,Small business,Bulk payroll payments,We need to pay all our staff at once,
+F0200,2026-07-27,Support ticket,Market trader,Split bills,Add split payment for hangouts,
+F0201,2026-07-28,Support ticket,Student,No USSD or offline access,I need to send money without data,
+F0202,2026-07-30,App review,Market trader,BVN verification problems,My name doesn't match my BVN so I can't verify,1
+F0203,2026-08-26,App review,Small business,Card delivery delays,Still waiting for my physical card,2
+F0204,2026-08-03,App review,Market trader,Split bills,Need a way to collect money from my group,5
+F0205,2026-07-14,App review,Salary earner,Split bills,Add split payment for hangouts,4
+F0206,2026-08-28,App review,Market trader,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",1
+F0207,2026-08-02,Survey,Salary earner,No USSD or offline access,I need to send money without data,
+F0208,2026-08-24,App review,Market trader,BVN verification problems,BVN verification keeps failing,2
+F0209,2026-08-09,App review,Salary earner,Savings goals,Add a savings goal for rent,3
+F0210,2026-08-07,App review,Student,Split bills,Add split payment for hangouts,2
+F0211,2026-08-08,App review,Small business,Bulk payroll payments,Payroll feature needed for our company,3
+F0212,2026-08-07,Support ticket,Student,No USSD or offline access,Please add USSD like the banks,
+F0213,2026-08-29,App review,Market trader,BVN verification problems,abeg help me verify my BVN,3
+F0214,2026-07-17,Support ticket,Market trader,No USSD or offline access,Please add USSD like the banks,
+F0215,2026-07-26,Support ticket,Student,App crashes,Crashes on Android 9,
+F0216,2026-07-30,Sales team,Small business,Bulk payroll payments,Payroll feature needed for our company,
+F0217,2026-08-17,Support ticket,Market trader,App crashes,Crashes on Android 9,
+F0218,2026-07-08,Support ticket,Market trader,BVN verification problems,BVN verification keeps failing,
+F0219,2026-07-17,App review,Student,Split bills,Add split payment for hangouts,4
+F0220,2026-08-03,App review,Student,No USSD or offline access,"No network at the market, can't use the app",3
+F0221,2026-07-26,Support ticket,Market trader,App crashes,Crashes on Android 9,
+F0222,2026-07-19,App review,Market trader,App crashes,Keeps closing when I open transfers,2
+F0223,2026-08-10,Sales team,Small business,Bulk payroll payments,Payroll feature needed for our company,
+F0224,2026-07-25,Sales team,Small business,Bulk payroll payments,Bulk transfers for salaries please,
+F0225,2026-08-03,Support ticket,Market trader,Split bills,Add split payment for hangouts,
+F0226,2026-07-24,App review,Student,Savings goals,Let me save towards a target,2
+F0227,2026-08-27,App review,Market trader,App crashes,Crashes on Android 9,1
+F0228,2026-08-10,Support ticket,Small business,Bulk payroll payments,Bulk transfers for salaries please,
+F0229,2026-08-06,App review,Market trader,Savings goals,Let me save towards a target,3
+F0230,2026-08-29,App review,Salary earner,App crashes,Keeps closing when I open transfers,1
+F0231,2026-08-09,App review,Student,Split bills,Need a way to collect money from my group,5
+F0232,2026-07-30,App review,Market trader,Transfer fees,Charges on every transfer are too much,2
+F0233,2026-08-04,App review,Salary earner,Split bills,Let me split bills with friends,3
+F0234,2026-07-12,Support ticket,Student,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",
+F0235,2026-08-03,App review,Salary earner,Savings goals,Add a savings goal for rent,5
+F0236,2026-07-28,Support ticket,Small business,Bulk payroll payments,Bulk transfers for salaries please,
+F0237,2026-08-28,Support ticket,Student,Split bills,Need a way to collect money from my group,
+F0238,2026-08-10,Support ticket,Market trader,BVN verification problems,BVN verification keeps failing,
+F0239,2026-07-17,App review,Student,Transfer fees,Fees too high for small transfers,3
+F0240,2026-07-21,Support ticket,Market trader,No USSD or offline access,I need to send money without data,
+F0241,2026-07-14,Support ticket,Small business,Savings goals,Let me save towards a target,
+F0242,2026-07-19,Support ticket,Small business,Bulk payroll payments,We need to pay all our staff at once,
+F0243,2026-08-30,Support ticket,Market trader,No USSD or offline access,Please add USSD like the banks,
+F0244,2026-08-11,Support ticket,Market trader,BVN verification problems,Stuck on verification for days,
+F0245,2026-08-27,Survey,Student,BVN verification problems,abeg help me verify my BVN,
+F0246,2026-07-29,App review,Market trader,Card delivery delays,Card delivery is too slow,3
+F0247,2026-07-08,App review,Student,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",5
+F0248,2026-07-24,Survey,Student,Savings goals,I want to lock money for school fees,
+F0249,2026-08-27,Sales team,Small business,App crashes,Keeps closing when I open transfers,
+F0250,2026-08-29,App review,Student,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",3
+F0251,2026-07-14,Survey,Student,Savings goals,I want to lock money for school fees,
+F0252,2026-08-13,Support ticket,Market trader,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",
+F0253,2026-07-23,App review,Market trader,No USSD or offline access,"No network at the market, can't use the app",2
+F0254,2026-07-28,Sales team,Small business,Bulk payroll payments,We need to pay all our staff at once,
+F0255,2026-08-30,Support ticket,Small business,Bulk payroll payments,Bulk transfers for salaries please,
+F0256,2026-07-06,App review,Market trader,No USSD or offline access,Please add USSD like the banks,2
+F0257,2026-07-17,App review,Salary earner,Split bills,Let me split bills with friends,1
+F0258,2026-07-27,Support ticket,Salary earner,Transfer fees,Charges on every transfer are too much,
+F0259,2026-08-19,Support ticket,Student,Savings goals,Let me save towards a target,
+F0260,2026-08-26,Support ticket,Market trader,BVN verification problems,Stuck on verification for days,
+F0261,2026-08-16,App review,Salary earner,App crashes,App crashes on my phone,2
+F0262,2026-07-08,Support ticket,Salary earner,Transfer fees,Charges on every transfer are too much,
+F0263,2026-08-19,Support ticket,Salary earner,Savings goals,Let me save towards a target,
+F0264,2026-07-27,App review,Salary earner,BVN verification problems,BVN verification keeps failing,2
+F0265,2026-07-13,App review,Salary earner,BVN verification problems,BVN verification keeps failing,1
+F0266,2026-08-10,Survey,Market trader,App crashes,App crashes on my phone,
+F0267,2026-07-10,App review,Salary earner,Split bills,Let me split bills with friends,5
+F0268,2026-07-24,Support ticket,Student,BVN verification problems,Stuck on verification for days,
+F0269,2026-07-09,Support ticket,Student,Split bills,Let me split bills with friends,
+F0270,2026-08-10,Support ticket,Market trader,Card delivery delays,Still waiting for my physical card,
+F0271,2026-07-14,Support ticket,Student,Split bills,Add split payment for hangouts,
+F0272,2026-07-09,App review,Market trader,No USSD or offline access,I need to send money without data,2
+F0273,2026-08-19,App review,Market trader,App crashes,App crashes on my phone,1
+F0274,2026-08-14,App review,Market trader,No USSD or offline access,Please add USSD like the banks,3
+F0275,2026-08-06,App review,Student,Split bills,Add split payment for hangouts,3
+F0276,2026-07-19,Support ticket,Market trader,BVN verification problems,Stuck on verification for days,
+F0277,2026-08-08,Sales team,Small business,Split bills,Need a way to collect money from my group,
+F0278,2026-08-30,Survey,Salary earner,App crashes,Crashes on Android 9,
+F0279,2026-08-06,App review,Market trader,Bulk payroll payments,We need to pay all our staff at once,4
+F0280,2026-08-04,App review,Salary earner,Card delivery delays,Card delivery is too slow,3
+F0281,2026-08-29,Support ticket,Small business,App crashes,Crashes on Android 9,
+F0282,2026-08-17,App review,Salary earner,App crashes,Keeps closing when I open transfers,1
+F0283,2026-07-06,Support ticket,Market trader,Split bills,Add split payment for hangouts,
+F0284,2026-07-10,Support ticket,Market trader,No USSD or offline access,I need to send money without data,
+F0285,2026-08-19,App review,Market trader,No USSD or offline access,Please add USSD like the banks,1
+F0286,2026-07-27,App review,Market trader,App crashes,Keeps closing when I open transfers,3
+F0287,2026-08-27,Support ticket,Salary earner,Split bills,Let me split bills with friends,
+F0288,2026-08-24,App review,Salary earner,App crashes,App crashes on my phone,1
+F0289,2026-08-12,Support ticket,Small business,Transfer fees,Fees too high for small transfers,
+F0290,2026-08-20,Survey,Student,Savings goals,I want to lock money for school fees,
+F0291,2026-07-31,Support ticket,Market trader,App crashes,App crashes on my phone,
+F0292,2026-08-11,App review,Student,App crashes,Crashes on Android 9,1
+F0293,2026-08-16,App review,Market trader,App crashes,App crashes on my phone,1
+F0294,2026-07-25,Sales team,Salary earner,Bulk payroll payments,We need to pay all our staff at once,
+F0295,2026-08-19,App review,Salary earner,No USSD or offline access,"No network at the market, can't use the app",2
+F0296,2026-08-28,App review,Student,Savings goals,Add a savings goal for rent,3
+F0297,2026-08-12,Sales team,Small business,Bulk payroll payments,Payroll feature needed for our company,
+F0298,2026-08-04,App review,Salary earner,Savings goals,Add a savings goal for rent,5
+F0299,2026-07-31,App review,Student,Savings goals,I want to lock money for school fees,4
+F0300,2026-08-30,App review,Market trader,No USSD or offline access,"No network at the market, can't use the app",5
+F0301,2026-08-01,App review,Market trader,App crashes,Keeps closing when I open transfers,1
+F0302,2026-08-28,Survey,Market trader,App crashes,Keeps closing when I open transfers,
+F0303,2026-08-27,App review,Salary earner,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",2
+F0304,2026-07-14,App review,Student,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",4
+F0305,2026-07-27,App review,Market trader,Savings goals,Let me save towards a target,1
+F0306,2026-07-21,Sales team,Small business,Bulk payroll payments,Bulk transfers for salaries please,
+F0307,2026-07-27,App review,Salary earner,Card delivery delays,Still waiting for my physical card,1
+F0308,2026-08-23,Support ticket,Salary earner,Savings goals,Let me save towards a target,
+F0309,2026-07-06,App review,Salary earner,App crashes,Keeps closing when I open transfers,1
+F0310,2026-08-15,Support ticket,Salary earner,Transfer fees,Fees too high for small transfers,
+F0311,2026-08-14,Sales team,Small business,BVN verification problems,Stuck on verification for days,
+F0312,2026-08-04,Survey,Market trader,No USSD or offline access,I need to send money without data,
+F0313,2026-08-30,App review,Market trader,Card delivery delays,Card delivery is too slow,4
+F0314,2026-08-12,Support ticket,Market trader,No USSD or offline access,I need to send money without data,
+F0315,2026-08-18,Support ticket,Market trader,App crashes,App crashes on my phone,
+F0316,2026-08-21,App review,Small business,Bulk payroll payments,We need to pay all our staff at once,1
+F0317,2026-07-19,App review,Student,Split bills,Add split payment for hangouts,5
+F0318,2026-07-29,Sales team,Small business,Bulk payroll payments,Bulk transfers for salaries please,
+F0319,2026-08-04,App review,Market trader,Transfer fees,Charges on every transfer are too much,5
+F0320,2026-08-19,Sales team,Small business,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",
+F0321,2026-08-27,Support ticket,Student,Savings goals,Let me save towards a target,
+F0322,2026-07-23,Support ticket,Market trader,App crashes,App crashes on my phone,
+F0323,2026-07-11,App review,Market trader,No USSD or offline access,I need to send money without data,5
+F0324,2026-08-23,Sales team,Student,Split bills,Add split payment for hangouts,
+F0325,2026-07-29,App review,Market trader,No USSD or offline access,"No network at the market, can't use the app",3
+F0326,2026-07-27,Support ticket,Student,Split bills,Add split payment for hangouts,
+F0327,2026-07-24,Support ticket,Student,BVN verification problems,abeg help me verify my BVN,
+F0328,2026-08-16,Survey,Market trader,BVN verification problems,abeg help me verify my BVN,
+F0329,2026-07-30,Support ticket,Market trader,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",
+F0330,2026-07-12,Support ticket,Market trader,Card delivery delays,Card delivery is too slow,
+F0331,2026-08-09,App review,Student,Split bills,Let me split bills with friends,2
+F0332,2026-07-10,Survey,Market trader,BVN verification problems,Stuck on verification for days,
+F0333,2026-07-07,App review,Market trader,Savings goals,I want to lock money for school fees,4
+F0334,2026-07-08,Support ticket,Student,Savings goals,Add a savings goal for rent,
+F0335,2026-07-23,Support ticket,Salary earner,App crashes,Crashes on Android 9,
+F0336,2026-08-09,Sales team,Small business,Bulk payroll payments,We need to pay all our staff at once,
+F0337,2026-07-07,Support ticket,Salary earner,App crashes,App crashes on my phone,
+F0338,2026-07-21,App review,Salary earner,Savings goals,I want to lock money for school fees,3
+F0339,2026-08-29,Survey,Market trader,App crashes,App crashes on my phone,
+F0340,2026-07-10,App review,Market trader,BVN verification problems,BVN verification keeps failing,3
+F0341,2026-07-15,Survey,Salary earner,Split bills,Add split payment for hangouts,
+F0342,2026-08-04,App review,Student,BVN verification problems,abeg help me verify my BVN,2
+F0343,2026-07-31,Support ticket,Student,Card delivery delays,Still waiting for my physical card,
+F0344,2026-08-26,App review,Small business,Bulk payroll payments,We need to pay all our staff at once,2
+F0345,2026-07-11,Support ticket,Small business,App crashes,Keeps closing when I open transfers,
+F0346,2026-08-14,App review,Market trader,App crashes,Keeps closing when I open transfers,4
+F0347,2026-08-02,App review,Salary earner,Savings goals,Add a savings goal for rent,3
+F0348,2026-07-14,App review,Student,No USSD or offline access,"No network at the market, can't use the app",4
+F0349,2026-08-14,App review,Student,App crashes,App crashes on my phone,2
+F0350,2026-07-16,Support ticket,Student,Savings goals,Add a savings goal for rent,
+F0351,2026-07-30,App review,Salary earner,App crashes,Crashes on Android 9,2
+F0352,2026-08-12,Support ticket,Salary earner,App crashes,Crashes on Android 9,
+F0353,2026-08-05,App review,Student,Split bills,Need a way to collect money from my group,5
+F0354,2026-08-06,Sales team,Small business,Bulk payroll payments,Bulk transfers for salaries please,
+F0355,2026-08-03,Support ticket,Salary earner,Transfer fees,Fees too high for small transfers,
+F0356,2026-08-23,Support ticket,Market trader,Bulk payroll payments,Bulk transfers for salaries please,
+F0357,2026-07-31,Support ticket,Market trader,No USSD or offline access,I need to send money without data,
+F0358,2026-08-05,App review,Student,BVN verification problems,Stuck on verification for days,1
+F0359,2026-07-29,Survey,Salary earner,Transfer fees,Charges on every transfer are too much,
+F0360,2026-07-07,Support ticket,Salary earner,No USSD or offline access,Please add USSD like the banks,
+F0361,2026-08-12,Sales team,Small business,Transfer fees,Charges on every transfer are too much,
+F0362,2026-08-26,Support ticket,Salary earner,Transfer fees,Fees too high for small transfers,
+F0363,2026-08-07,Support ticket,Student,App crashes,App crashes on my phone,
+F0364,2026-08-04,App review,Salary earner,Card delivery delays,Card delivery is too slow,3
+F0365,2026-07-17,App review,Salary earner,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",5
+F0366,2026-07-23,Survey,Student,Split bills,Need a way to collect money from my group,
+F0367,2026-07-26,App review,Salary earner,App crashes,Crashes on Android 9,2
+F0368,2026-08-02,App review,Salary earner,Transfer fees,Charges on every transfer are too much,5
+F0369,2026-08-27,App review,Market trader,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",3
+F0370,2026-07-14,Support ticket,Salary earner,Savings goals,Let me save towards a target,
+F0371,2026-08-01,App review,Salary earner,Savings goals,Add a savings goal for rent,4
+F0372,2026-08-10,Sales team,Small business,Bulk payroll payments,We need to pay all our staff at once,
+F0373,2026-07-21,Sales team,Small business,BVN verification problems,Stuck on verification for days,
+F0374,2026-08-07,App review,Student,Split bills,Need a way to collect money from my group,3
+F0375,2026-08-15,Support ticket,Market trader,Transfer fees,Charges on every transfer are too much,
+F0376,2026-07-30,Sales team,Small business,BVN verification problems,BVN verification keeps failing,
+F0377,2026-08-10,Survey,Market trader,Card delivery delays,Still waiting for my physical card,
+F0378,2026-08-18,Support ticket,Market trader,BVN verification problems,abeg help me verify my BVN,
+F0379,2026-08-26,Survey,Market trader,BVN verification problems,Stuck on verification for days,
+F0380,2026-08-07,Support ticket,Student,Savings goals,Add a savings goal for rent,
+F0381,2026-07-23,App review,Salary earner,Transfer fees,Charges on every transfer are too much,1
+F0382,2026-08-07,App review,Market trader,Savings goals,I want to lock money for school fees,5
+F0383,2026-08-27,Sales team,Small business,Bulk payroll payments,We need to pay all our staff at once,
+F0384,2026-07-25,App review,Student,Savings goals,I want to lock money for school fees,1
+F0385,2026-08-17,App review,Small business,Card delivery delays,Card delivery is too slow,3
+F0386,2026-07-30,App review,Salary earner,Card delivery delays,Card delivery is too slow,3
+F0387,2026-07-31,App review,Salary earner,Split bills,Let me split bills with friends,4
+F0388,2026-08-23,App review,Student,Split bills,Let me split bills with friends,4
+F0389,2026-08-12,Sales team,Small business,Bulk payroll payments,Bulk transfers for salaries please,
+F0390,2026-08-07,Support ticket,Market trader,BVN verification problems,My name doesn't match my BVN so I can't verify,
+F0391,2026-07-12,Support ticket,Small business,Bulk payroll payments,We need to pay all our staff at once,
+F0392,2026-08-01,App review,Market trader,App crashes,Keeps closing when I open transfers,2
+F0393,2026-07-17,Sales team,Small business,Bulk payroll payments,Bulk transfers for salaries please,
+F0394,2026-08-13,App review,Salary earner,Transfer fees,Fees too high for small transfers,5
+F0395,2026-07-23,Support ticket,Market trader,No USSD or offline access,"No network at the market, can't use the app",
+F0396,2026-08-08,Support ticket,Small business,Bulk payroll payments,Payroll feature needed for our company,
+F0397,2026-07-09,App review,Market trader,Card delivery delays,Still waiting for my physical card,1
+F0398,2026-07-06,Survey,Student,Savings goals,I want to lock money for school fees,
+F0399,2026-08-14,Support ticket,Salary earner,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",
+F0400,2026-07-07,Support ticket,Market trader,Split bills,Let me split bills with friends,
+F0401,2026-08-10,App review,Student,BVN verification problems,Stuck on verification for days,2
+F0402,2026-08-06,Sales team,Small business,Bulk payroll payments,Bulk transfers for salaries please,
+F0403,2026-07-30,Sales team,Small business,Transfer fees,Fees too high for small transfers,
+F0404,2026-07-21,Sales team,Small business,Bulk payroll payments,Bulk transfers for salaries please,
+F0405,2026-08-19,Support ticket,Salary earner,Savings goals,Add a savings goal for rent,
+F0406,2026-07-20,Support ticket,Student,Savings goals,Add a savings goal for rent,
+F0407,2026-07-29,Support ticket,Small business,Split bills,Need a way to collect money from my group,
+F0408,2026-08-03,App review,Market trader,Savings goals,I want to lock money for school fees,2
+F0409,2026-07-25,App review,Salary earner,Transfer fees,Charges on every transfer are too much,4
+F0410,2026-08-15,Support ticket,Salary earner,Split bills,Need a way to collect money from my group,
+F0411,2026-08-20,Support ticket,Market trader,App crashes,Keeps closing when I open transfers,
+F0412,2026-07-21,App review,Student,App crashes,Keeps closing when I open transfers,2
+F0413,2026-07-30,Survey,Market trader,BVN verification problems,My name doesn't match my BVN so I can't verify,
+F0414,2026-08-20,App review,Student,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",3
+F0415,2026-07-16,Survey,Salary earner,Card delivery delays,Still waiting for my physical card,
+F0416,2026-08-04,Sales team,Market trader,Bulk payroll payments,Bulk transfers for salaries please,
+F0417,2026-07-10,Sales team,Small business,Bulk payroll payments,Payroll feature needed for our company,
+F0418,2026-08-28,App review,Small business,No USSD or offline access,"No network at the market, can't use the app",3
+F0419,2026-07-08,App review,Market trader,No USSD or offline access,Please add USSD like the banks,2
+F0420,2026-07-22,App review,Student,BVN verification problems,Stuck on verification for days,2
+F0421,2026-07-27,App review,Market trader,No USSD or offline access,"No network at the market, can't use the app",2
+F0422,2026-08-13,Survey,Salary earner,Savings goals,Let me save towards a target,
+F0423,2026-08-24,App review,Market trader,BVN verification problems,My name doesn't match my BVN so I can't verify,2
+F0424,2026-08-01,App review,Student,Split bills,Add split payment for hangouts,4
+F0425,2026-08-20,Support ticket,Market trader,Transfer fees,Charges on every transfer are too much,
+F0426,2026-08-16,Sales team,Small business,Bulk payroll payments,Payroll feature needed for our company,
+F0427,2026-07-07,App review,Small business,BVN verification problems,Stuck on verification for days,1
+F0428,2026-07-24,App review,Market trader,No USSD or offline access,"No network at the market, can't use the app",5
+F0429,2026-08-17,App review,Salary earner,Bulk payroll payments,Bulk transfers for salaries please,4
+F0430,2026-07-23,Sales team,Small business,Bulk payroll payments,Payroll feature needed for our company,
+F0431,2026-08-01,Support ticket,Salary earner,Savings goals,Let me save towards a target,
+F0432,2026-07-26,App review,Salary earner,App crashes,App crashes on my phone,4
+F0433,2026-08-27,Support ticket,Salary earner,Transfer fees,Fees too high for small transfers,
+F0434,2026-08-19,Survey,Market trader,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",
+F0435,2026-08-25,Support ticket,Market trader,BVN verification problems,BVN verification keeps failing,
+F0436,2026-08-21,App review,Market trader,BVN verification problems,BVN verification keeps failing,2
+F0437,2026-08-21,Support ticket,Salary earner,Savings goals,Let me save towards a target,
+F0438,2026-07-11,Sales team,Salary earner,BVN verification problems,My name doesn't match my BVN so I can't verify,
+F0439,2026-07-09,App review,Salary earner,Split bills,Let me split bills with friends,3
+F0440,2026-08-01,App review,Salary earner,Card delivery delays,Still waiting for my physical card,4
+F0441,2026-07-09,App review,Market trader,No USSD or offline access,I need to send money without data,4
+F0442,2026-07-26,App review,Market trader,Split bills,Need a way to collect money from my group,4
+F0443,2026-07-11,Survey,Market trader,App crashes,Crashes on Android 9,
+F0444,2026-08-22,App review,Student,Savings goals,I want to lock money for school fees,5
+F0445,2026-08-13,Support ticket,Salary earner,App crashes,Crashes on Android 9,
+F0446,2026-07-19,Survey,Student,Transfer fees,Fees too high for small transfers,
+F0447,2026-08-04,Support ticket,Student,Split bills,Let me split bills with friends,
+F0448,2026-08-21,Support ticket,Market trader,Split bills,Let me split bills with friends,
+F0449,2026-08-18,App review,Student,BVN verification problems,abeg help me verify my BVN,3
+F0450,2026-07-13,Support ticket,Market trader,No USSD or offline access,Please add USSD like the banks,
+F0451,2026-07-11,Support ticket,Student,BVN verification problems,My name doesn't match my BVN so I can't verify,
+F0452,2026-07-24,App review,Market trader,No USSD or offline access,Please add USSD like the banks,4
+F0453,2026-08-28,App review,Student,Card delivery delays,Card delivery is too slow,3
+F0454,2026-07-29,Support ticket,Market trader,Savings goals,Add a savings goal for rent,
+F0455,2026-07-27,Support ticket,Salary earner,Savings goals,Let me save towards a target,
+F0456,2026-07-15,App review,Market trader,BVN verification problems,BVN verification keeps failing,1
+F0457,2026-07-27,Support ticket,Market trader,BVN verification problems,abeg help me verify my BVN,
+F0458,2026-08-10,App review,Market trader,No USSD or offline access,"No network at the market, can't use the app",3
+F0459,2026-08-09,Support ticket,Market trader,BVN verification problems,abeg help me verify my BVN,
+F0460,2026-08-12,Sales team,Small business,Bulk payroll payments,We need to pay all our staff at once,
+F0461,2026-08-18,App review,Small business,Split bills,Need a way to collect money from my group,3
+F0462,2026-08-18,Sales team,Salary earner,Bulk payroll payments,Payroll feature needed for our company,
+F0463,2026-08-22,Support ticket,Salary earner,Bulk payroll payments,Bulk transfers for salaries please,
+F0464,2026-07-06,App review,Market trader,BVN verification problems,abeg help me verify my BVN,2
+F0465,2026-07-12,Sales team,Small business,Bulk payroll payments,Bulk transfers for salaries please,
+F0466,2026-07-20,App review,Salary earner,App crashes,Crashes on Android 9,1
+F0467,2026-08-18,App review,Student,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",3
+F0468,2026-07-26,Support ticket,Salary earner,No USSD or offline access,Please add USSD like the banks,
+F0469,2026-07-29,App review,Market trader,No USSD or offline access,Please add USSD like the banks,5
+F0470,2026-07-29,App review,Salary earner,Bulk payroll payments,Bulk transfers for salaries please,3
+F0471,2026-07-12,Survey,Market trader,BVN verification problems,abeg help me verify my BVN,
+F0472,2026-08-21,Support ticket,Student,App crashes,App crashes on my phone,
+F0473,2026-08-03,App review,Salary earner,Transfer fees,Fees too high for small transfers,3
+F0474,2026-07-09,Support ticket,Market trader,App crashes,Keeps closing when I open transfers,
+F0475,2026-08-03,Sales team,Small business,Bulk payroll payments,Bulk transfers for salaries please,
+F0476,2026-08-14,Sales team,Small business,Bulk payroll payments,Payroll feature needed for our company,
+F0477,2026-08-19,App review,Market trader,BVN verification problems,BVN verification keeps failing,1
+F0478,2026-08-19,App review,Student,Savings goals,I want to lock money for school fees,2
+F0479,2026-08-20,App review,Salary earner,No USSD or offline access,Please add USSD like the banks,5
+F0480,2026-08-29,App review,Small business,Savings goals,Add a savings goal for rent,4
+F0481,2026-07-13,Support ticket,Market trader,No USSD or offline access,Please add USSD like the banks,
+F0482,2026-07-23,Sales team,Market trader,Bulk payroll payments,Payroll feature needed for our company,
+F0483,2026-07-29,Support ticket,Market trader,App crashes,App crashes on my phone,
+F0484,2026-08-14,Support ticket,Market trader,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",
+F0485,2026-07-06,Survey,Market trader,Transfer fees,Charges on every transfer are too much,
+F0486,2026-08-13,Support ticket,Market trader,No USSD or offline access,I need to send money without data,
+F0487,2026-08-20,Survey,Market trader,App crashes,App crashes on my phone,
+F0488,2026-08-30,App review,Small business,BVN verification problems,abeg help me verify my BVN,3
+F0489,2026-08-29,App review,Salary earner,Bulk payroll payments,Bulk transfers for salaries please,5
+F0490,2026-07-08,App review,Student,Split bills,Add split payment for hangouts,2
+F0491,2026-08-07,App review,Salary earner,BVN verification problems,Stuck on verification for days,5
+F0492,2026-08-26,App review,Student,BVN verification problems,My name doesn't match my BVN so I can't verify,1
+F0493,2026-08-23,App review,Salary earner,Split bills,Need a way to collect money from my group,5
+F0494,2026-07-11,App review,Market trader,App crashes,Keeps closing when I open transfers,1
+F0495,2026-07-26,App review,Small business,BVN verification problems,Stuck on verification for days,1
+F0496,2026-07-28,App review,Small business,Bulk payroll payments,Bulk transfers for salaries please,1
+F0497,2026-07-10,App review,Small business,BVN verification problems,My name doesn't match my BVN so I can't verify,1
+F0498,2026-08-24,Support ticket,Student,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",
+F0499,2026-07-19,App review,Student,BVN verification problems,My name doesn't match my BVN so I can't verify,2
+F0500,2026-07-31,App review,Market trader,No USSD or offline access,"No network at the market, can't use the app",3
+F0501,2026-08-12,Survey,Salary earner,Split bills,Need a way to collect money from my group,
+F0502,2026-07-19,App review,Student,Card delivery delays,Still waiting for my physical card,4
+F0503,2026-08-19,Support ticket,Salary earner,Card delivery delays,Card delivery is too slow,
+F0504,2026-07-23,Support ticket,Student,Transfer fees,Charges on every transfer are too much,
+F0505,2026-08-04,Survey,Market trader,App crashes,Crashes on Android 9,
+F0506,2026-07-16,Support ticket,Market trader,No USSD or offline access,I need to send money without data,
+F0507,2026-08-20,App review,Market trader,No USSD or offline access,Please add USSD like the banks,2
+F0508,2026-08-26,Support ticket,Salary earner,BVN verification problems,Stuck on verification for days,
+F0509,2026-07-06,Support ticket,Small business,Transfer fees,Charges on every transfer are too much,
+F0510,2026-07-27,App review,Salary earner,Transfer fees,Fees too high for small transfers,2
+F0511,2026-07-29,App review,Salary earner,Transfer fees,Fees too high for small transfers,1
+F0512,2026-08-01,Support ticket,Small business,Bulk payroll payments,We need to pay all our staff at once,
+F0513,2026-08-14,App review,Market trader,No USSD or offline access,"No network at the market, can't use the app",2
+F0514,2026-07-23,App review,Salary earner,Card delivery delays,Card delivery is too slow,1
+F0515,2026-07-18,Survey,Student,BVN verification problems,abeg help me verify my BVN,
+F0516,2026-08-14,Support ticket,Market trader,BVN verification problems,My name doesn't match my BVN so I can't verify,
+F0517,2026-07-30,Survey,Salary earner,BVN verification problems,abeg help me verify my BVN,
+F0518,2026-08-15,Support ticket,Market trader,Transfer fees,Charges on every transfer are too much,
+F0519,2026-08-10,App review,Student,Savings goals,Let me save towards a target,2
+F0520,2026-07-09,Support ticket,Market trader,No USSD or offline access,I need to send money without data,
+F0521,2026-07-19,App review,Student,Savings goals,I want to lock money for school fees,5
+F0522,2026-07-14,Support ticket,Market trader,No USSD or offline access,Please add USSD like the banks,
+F0523,2026-07-23,App review,Market trader,No USSD or offline access,Please add USSD like the banks,1
+F0524,2026-07-13,Support ticket,Salary earner,App crashes,App crashes on my phone,
+F0525,2026-08-24,Support ticket,Market trader,App crashes,App crashes on my phone,
+F0526,2026-07-10,App review,Salary earner,Transfer fees,Fees too high for small transfers,4
+F0527,2026-08-30,App review,Market trader,App crashes,Crashes on Android 9,3
+F0528,2026-08-18,Support ticket,Salary earner,Card delivery delays,My card hasn't arrived after 3 weeks,
+F0529,2026-07-24,App review,Student,Split bills,Need a way to collect money from my group,5
+F0530,2026-07-11,Support ticket,Salary earner,Transfer fees,Fees too high for small transfers,
+F0531,2026-07-07,App review,Salary earner,App crashes,Crashes on Android 9,1
+F0532,2026-07-26,Support ticket,Small business,Bulk payroll payments,We need to pay all our staff at once,
+F0533,2026-08-24,App review,Small business,Bulk payroll payments,Bulk transfers for salaries please,3
+F0534,2026-08-20,Sales team,Small business,Bulk payroll payments,Payroll feature needed for our company,
+F0535,2026-08-18,App review,Market trader,App crashes,Keeps closing when I open transfers,1
+F0536,2026-07-14,Sales team,Small business,Bulk payroll payments,Payroll feature needed for our company,
+F0537,2026-08-21,App review,Market trader,App crashes,App crashes on my phone,1
+F0538,2026-08-15,Sales team,Small business,Bulk payroll payments,Payroll feature needed for our company,
+F0539,2026-08-12,App review,Small business,Bulk payroll payments,We need to pay all our staff at once,3
+F0540,2026-08-03,App review,Market trader,Split bills,Let me split bills with friends,1
+F0541,2026-07-08,Support ticket,Market trader,BVN verification problems,My name doesn't match my BVN so I can't verify,
+F0542,2026-08-04,Support ticket,Salary earner,Split bills,Need a way to collect money from my group,
+F0543,2026-08-17,App review,Student,BVN verification problems,Stuck on verification for days,2
+F0544,2026-08-29,Sales team,Small business,Savings goals,Let me save towards a target,
+F0545,2026-07-06,Support ticket,Market trader,App crashes,Crashes on Android 9,
+F0546,2026-07-12,Support ticket,Salary earner,Card delivery delays,Still waiting for my physical card,
+F0547,2026-08-01,App review,Small business,Bulk payroll payments,We need to pay all our staff at once,3
+F0548,2026-08-23,Support ticket,Salary earner,App crashes,App crashes on my phone,
+F0549,2026-08-11,App review,Small business,Transfer fees,Charges on every transfer are too much,3
+F0550,2026-08-30,Support ticket,Small business,Savings goals,Add a savings goal for rent,
+F0551,2026-08-02,Support ticket,Student,Split bills,Add split payment for hangouts,
+F0552,2026-08-09,Support ticket,Market trader,BVN verification problems,abeg help me verify my BVN,
+F0553,2026-07-29,App review,Student,Split bills,Add split payment for hangouts,5
+F0554,2026-07-19,App review,Small business,Transfer fees,Charges on every transfer are too much,5
+F0555,2026-08-03,Support ticket,Salary earner,Savings goals,I want to lock money for school fees,
+F0556,2026-08-25,Survey,Salary earner,Savings goals,Let me save towards a target,
+F0557,2026-08-18,App review,Market trader,BVN verification problems,BVN verification keeps failing,3
+F0558,2026-07-10,App review,Market trader,No USSD or offline access,I need to send money without data,5
+F0559,2026-07-16,Survey,Salary earner,Split bills,Need a way to collect money from my group,
+F0560,2026-08-06,App review,Salary earner,Savings goals,Let me save towards a target,3
+F0561,2026-07-25,App review,Small business,BVN verification problems,Stuck on verification for days,2
+F0562,2026-08-04,Support ticket,Market trader,Transfer fees,Charges on every transfer are too much,
+F0563,2026-07-06,Support ticket,Market trader,No USSD or offline access,Please add USSD like the banks,
+F0564,2026-07-26,Sales team,Student,Card delivery delays,My card hasn't arrived after 3 weeks,
+F0565,2026-08-06,Support ticket,Salary earner,Split bills,Add split payment for hangouts,
+F0566,2026-08-04,Support ticket,Salary earner,Card delivery delays,Card delivery is too slow,
+F0567,2026-07-06,Support ticket,Small business,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",
+F0568,2026-08-15,App review,Market trader,No USSD or offline access,"No network at the market, can't use the app",2
+F0569,2026-07-07,App review,Student,Savings goals,Let me save towards a target,2
+F0570,2026-08-16,App review,Market trader,Transfer fees,Charges on every transfer are too much,3
+F0571,2026-07-14,App review,Student,App crashes,App crashes on my phone,1
+F0572,2026-08-04,App review,Student,Split bills,Need a way to collect money from my group,4
+F0573,2026-07-14,Sales team,Small business,Bulk payroll payments,Bulk transfers for salaries please,
+F0574,2026-08-08,Sales team,Small business,BVN verification problems,Stuck on verification for days,
+F0575,2026-08-29,App review,Student,Savings goals,Add a savings goal for rent,4
+F0576,2026-07-14,App review,Market trader,BVN verification problems,BVN verification keeps failing,1
+F0577,2026-07-11,App review,Salary earner,App crashes,Keeps closing when I open transfers,1
+F0578,2026-08-13,App review,Market trader,App crashes,Crashes on Android 9,1
+F0579,2026-07-14,App review,Market trader,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",2
+F0580,2026-08-27,Sales team,Small business,Bulk payroll payments,We need to pay all our staff at once,
+F0581,2026-07-15,Support ticket,Salary earner,Transfer fees,Fees too high for small transfers,
+F0582,2026-08-24,App review,Market trader,Transfer fees,Charges on every transfer are too much,5
+F0583,2026-07-07,Survey,Market trader,No USSD or offline access,I need to send money without data,
+F0584,2026-07-09,App review,Salary earner,Split bills,Need a way to collect money from my group,2
+F0585,2026-08-19,Support ticket,Salary earner,App crashes,App crashes on my phone,
+F0586,2026-08-28,Survey,Salary earner,BVN verification problems,BVN verification keeps failing,
+F0587,2026-08-29,Sales team,Small business,Split bills,Let me split bills with friends,
+F0588,2026-07-23,Support ticket,Market trader,BVN verification problems,BVN verification keeps failing,
+F0589,2026-08-11,Sales team,Salary earner,Bulk payroll payments,Payroll feature needed for our company,
+F0590,2026-08-01,App review,Student,Transfer fees,Charges on every transfer are too much,3
+F0591,2026-08-25,Support ticket,Student,Split bills,Let me split bills with friends,
+F0592,2026-08-19,App review,Small business,Bulk payroll payments,We need to pay all our staff at once,2
+F0593,2026-08-17,App review,Market trader,App crashes,Keeps closing when I open transfers,1
+F0594,2026-07-22,Support ticket,Student,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",
+F0595,2026-07-17,App review,Market trader,No USSD or offline access,"No network at the market, can't use the app",2
+F0596,2026-07-10,App review,Salary earner,Card delivery delays,Still waiting for my physical card,1
+F0597,2026-08-19,Support ticket,Salary earner,Savings goals,Add a savings goal for rent,
+F0598,2026-08-13,Support ticket,Salary earner,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",
+F0599,2026-07-28,Survey,Salary earner,Transfer fees,Charges on every transfer are too much,
+F0600,2026-08-23,Support ticket,Student,BVN verification problems,BVN verification keeps failing,
+F0601,2026-08-24,Sales team,Small business,Bulk payroll payments,Payroll feature needed for our company,
+F0602,2026-07-22,Support ticket,Student,Savings goals,I want to lock money for school fees,
+F0603,2026-08-04,Support ticket,Market trader,No USSD or offline access,I need to send money without data,
+F0604,2026-07-19,App review,Salary earner,App crashes,App crashes on my phone,2
+F0605,2026-08-03,Support ticket,Market trader,BVN verification problems,My name doesn't match my BVN so I can't verify,
+F0606,2026-07-18,App review,Salary earner,BVN verification problems,abeg help me verify my BVN,1
+F0607,2026-07-14,Support ticket,Salary earner,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",
+F0608,2026-07-18,App review,Market trader,BVN verification problems,My name doesn't match my BVN so I can't verify,2
+F0609,2026-07-16,App review,Market trader,BVN verification problems,BVN verification keeps failing,1
+F0610,2026-07-30,App review,Salary earner,Transfer fees,Charges on every transfer are too much,3
+F0611,2026-08-18,Support ticket,Salary earner,Transfer fees,Fees too high for small transfers,
+F0612,2026-07-11,Support ticket,Small business,Bulk payroll payments,Payroll feature needed for our company,
+F0613,2026-08-24,Support ticket,Student,Split bills,Let me split bills with friends,
+F0614,2026-07-09,App review,Salary earner,Savings goals,I want to lock money for school fees,1
+F0615,2026-07-26,App review,Student,BVN verification problems,BVN verification keeps failing,5
+F0616,2026-08-24,Sales team,Small business,Bulk payroll payments,Bulk transfers for salaries please,
+F0617,2026-07-26,Support ticket,Small business,Bulk payroll payments,Bulk transfers for salaries please,
+F0618,2026-08-28,Support ticket,Salary earner,App crashes,Keeps closing when I open transfers,
+F0619,2026-07-31,Support ticket,Student,Savings goals,Let me save towards a target,
+F0620,2026-08-24,Support ticket,Small business,Transfer fees,Fees too high for small transfers,
+F0621,2026-08-18,App review,Salary earner,App crashes,App crashes on my phone,1
+F0622,2026-07-23,Support ticket,Small business,Bulk payroll payments,We need to pay all our staff at once,
+F0623,2026-08-14,Sales team,Small business,Bulk payroll payments,Payroll feature needed for our company,
+F0624,2026-08-25,App review,Market trader,Savings goals,Add a savings goal for rent,3
+F0625,2026-07-08,Support ticket,Salary earner,Savings goals,Let me save towards a target,
+F0626,2026-07-22,App review,Salary earner,Savings goals,Add a savings goal for rent,5
+F0627,2026-07-19,App review,Salary earner,App crashes,Keeps closing when I open transfers,1
+F0628,2026-07-08,Support ticket,Market trader,Savings goals,I want to lock money for school fees,
+F0629,2026-07-21,App review,Salary earner,Split bills,Need a way to collect money from my group,5
+F0630,2026-07-31,Support ticket,Salary earner,Transfer fees,Fees too high for small transfers,
+F0631,2026-08-19,Survey,Market trader,Savings goals,I want to lock money for school fees,
+F0632,2026-08-08,App review,Student,Savings goals,Let me save towards a target,5
+F0633,2026-07-25,App review,Salary earner,Card delivery delays,Still waiting for my physical card,3
+F0634,2026-07-09,App review,Salary earner,Savings goals,Let me save towards a target,3
+F0635,2026-07-06,App review,Small business,App crashes,App crashes on my phone,1
+F0636,2026-08-16,App review,Salary earner,Savings goals,I want to lock money for school fees,5
+F0637,2026-07-25,App review,Market trader,Transfer fees,Fees too high for small transfers,1
+F0638,2026-07-13,Support ticket,Salary earner,Bulk payroll payments,Payroll feature needed for our company,
+F0639,2026-08-02,App review,Student,BVN verification problems,Stuck on verification for days,1
+F0640,2026-08-16,Sales team,Small business,Bulk payroll payments,Bulk transfers for salaries please,
+F0641,2026-07-24,Sales team,Small business,Bulk payroll payments,Bulk transfers for salaries please,
+F0642,2026-07-21,Support ticket,Student,Savings goals,Add a savings goal for rent,
+F0643,2026-07-12,Support ticket,Student,App crashes,Keeps closing when I open transfers,
+F0644,2026-07-09,Support ticket,Small business,App crashes,App crashes on my phone,
+F0645,2026-08-01,Support ticket,Student,Split bills,Add split payment for hangouts,
+F0646,2026-08-08,Support ticket,Salary earner,Savings goals,Add a savings goal for rent,
+F0647,2026-07-30,Support ticket,Student,Savings goals,Let me save towards a target,
+F0648,2026-08-27,App review,Market trader,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",3
+F0649,2026-08-24,App review,Student,Savings goals,I want to lock money for school fees,1
+F0650,2026-08-08,Support ticket,Salary earner,Transfer fees,Fees too high for small transfers,
+F0651,2026-08-19,Support ticket,Student,Savings goals,Add a savings goal for rent,
+F0652,2026-08-11,Support ticket,Market trader,Transfer fees,Fees too high for small transfers,
+F0653,2026-08-10,App review,Salary earner,Transfer fees,Charges on every transfer are too much,3
+F0654,2026-08-12,App review,Market trader,No USSD or offline access,"No network at the market, can't use the app",5
+F0655,2026-08-20,App review,Market trader,No USSD or offline access,Please add USSD like the banks,1
+F0656,2026-08-02,App review,Salary earner,Split bills,Need a way to collect money from my group,3
+F0657,2026-08-22,App review,Market trader,BVN verification problems,Stuck on verification for days,5
+F0658,2026-07-13,App review,Market trader,No USSD or offline access,"No network at the market, can't use the app",3
+F0659,2026-08-16,App review,Small business,Bulk payroll payments,Payroll feature needed for our company,4
+F0660,2026-08-02,Survey,Market trader,No USSD or offline access,Please add USSD like the banks,
+F0661,2026-07-24,App review,Market trader,Transfer fees,Charges on every transfer are too much,2
+F0662,2026-07-10,Sales team,Small business,Bulk payroll payments,Payroll feature needed for our company,
+F0663,2026-07-31,Support ticket,Student,BVN verification problems,Stuck on verification for days,
+F0664,2026-08-29,Survey,Student,Split bills,Need a way to collect money from my group,
+F0665,2026-08-24,App review,Salary earner,Card delivery delays,Card delivery is too slow,4
+F0666,2026-08-12,Support ticket,Salary earner,Card delivery delays,My card hasn't arrived after 3 weeks,
+F0667,2026-07-15,Support ticket,Market trader,Transfer fees,Charges on every transfer are too much,
+F0668,2026-07-23,Support ticket,Student,Savings goals,Let me save towards a target,
+F0669,2026-08-25,App review,Market trader,BVN verification problems,My name doesn't match my BVN so I can't verify,1
+F0670,2026-08-25,Support ticket,Student,No USSD or offline access,"No network at the market, can't use the app",
+F0671,2026-08-19,App review,Market trader,BVN verification problems,abeg help me verify my BVN,2
+F0672,2026-08-25,Support ticket,Salary earner,App crashes,Keeps closing when I open transfers,
+F0673,2026-08-01,Support ticket,Salary earner,Card delivery delays,My card hasn't arrived after 3 weeks,
+F0674,2026-07-30,Survey,Market trader,Transfer fees,Charges on every transfer are too much,
+F0675,2026-07-09,App review,Small business,Card delivery delays,Card delivery is too slow,3
+F0676,2026-07-24,Support ticket,Market trader,BVN verification problems,abeg help me verify my BVN,
+F0677,2026-07-24,App review,Small business,Card delivery delays,Card delivery is too slow,2
+F0678,2026-08-13,Support ticket,Market trader,Card delivery delays,Card delivery is too slow,
+F0679,2026-08-03,App review,Market trader,BVN verification problems,BVN verification keeps failing,2
+F0680,2026-07-20,Support ticket,Salary earner,App crashes,Crashes on Android 9,
+F0681,2026-07-14,Support ticket,Market trader,Savings goals,Let me save towards a target,
+F0682,2026-08-09,Support ticket,Salary earner,BVN verification problems,Stuck on verification for days,
+F0683,2026-07-15,Support ticket,Salary earner,Savings goals,I want to lock money for school fees,
+F0684,2026-08-19,App review,Salary earner,Transfer fees,Fees too high for small transfers,5
+F0685,2026-08-16,Survey,Market trader,BVN verification problems,BVN verification keeps failing,
+F0686,2026-08-23,App review,Market trader,Transfer fees,Fees too high for small transfers,2
+F0687,2026-07-09,App review,Salary earner,Transfer fees,Charges on every transfer are too much,2
+F0688,2026-08-03,Sales team,Student,Split bills,Let me split bills with friends,
+F0689,2026-08-01,Support ticket,Small business,App crashes,Keeps closing when I open transfers,
+F0690,2026-08-16,App review,Student,Bulk payroll payments,We need to pay all our staff at once,4
+F0691,2026-07-13,App review,Small business,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",1
+F0692,2026-08-16,App review,Salary earner,Savings goals,Let me save towards a target,4
+F0693,2026-08-10,App review,Student,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",4
+F0694,2026-07-17,App review,Market trader,BVN verification problems,abeg help me verify my BVN,2
+F0695,2026-08-24,Support ticket,Small business,BVN verification problems,BVN verification keeps failing,
+F0696,2026-07-09,Support ticket,Market trader,Transfer fees,Charges on every transfer are too much,
+F0697,2026-08-07,Support ticket,Salary earner,Savings goals,Add a savings goal for rent,
+F0698,2026-08-04,App review,Market trader,BVN verification problems,BVN verification keeps failing,5
+F0699,2026-07-12,Support ticket,Student,App crashes,App crashes on my phone,
+F0700,2026-08-13,App review,Salary earner,Card delivery delays,My card hasn't arrived after 3 weeks,4
+F0701,2026-08-27,Support ticket,Student,Transfer fees,Charges on every transfer are too much,
+F0702,2026-07-20,Sales team,Small business,Bulk payroll payments,We need to pay all our staff at once,
+F0703,2026-07-30,App review,Student,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",3
+F0704,2026-08-20,App review,Salary earner,Savings goals,Let me save towards a target,5
+F0705,2026-08-29,Support ticket,Salary earner,Savings goals,Add a savings goal for rent,
+F0706,2026-07-29,App review,Market trader,BVN verification problems,My name doesn't match my BVN so I can't verify,1
+F0707,2026-08-29,App review,Salary earner,App crashes,Keeps closing when I open transfers,1
+F0708,2026-07-08,Support ticket,Salary earner,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",
+F0709,2026-08-07,Support ticket,Salary earner,App crashes,Keeps closing when I open transfers,
+F0710,2026-07-26,App review,Student,BVN verification problems,Stuck on verification for days,2
+F0711,2026-08-14,Survey,Salary earner,Card delivery delays,My card hasn't arrived after 3 weeks,
+F0712,2026-07-22,App review,Small business,App crashes,App crashes on my phone,5
+F0713,2026-08-08,Support ticket,Small business,Bulk payroll payments,We need to pay all our staff at once,
+F0714,2026-07-15,Support ticket,Market trader,App crashes,Keeps closing when I open transfers,
+F0715,2026-07-25,Support ticket,Student,App crashes,Keeps closing when I open transfers,
+F0716,2026-08-30,App review,Salary earner,Card delivery delays,Card delivery is too slow,2
+F0717,2026-07-27,App review,Salary earner,No USSD or offline access,I need to send money without data,1
+F0718,2026-08-15,Support ticket,Market trader,No USSD or offline access,I need to send money without data,
+F0719,2026-07-17,Support ticket,Salary earner,Savings goals,I want to lock money for school fees,
+F0720,2026-08-20,App review,Market trader,No USSD or offline access,"No network at the market, can't use the app",5
+F0721,2026-08-04,Survey,Salary earner,Savings goals,Add a savings goal for rent,
+F0722,2026-08-17,App review,Salary earner,Savings goals,Add a savings goal for rent,1
+F0723,2026-08-02,App review,Market trader,Savings goals,I want to lock money for school fees,1
+F0724,2026-08-03,Support ticket,Market trader,Card delivery delays,Card delivery is too slow,
+F0725,2026-08-29,Support ticket,Student,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",
+F0726,2026-07-30,App review,Student,Savings goals,Let me save towards a target,2
+F0727,2026-08-05,Support ticket,Small business,BVN verification problems,Stuck on verification for days,
+F0728,2026-07-18,Support ticket,Salary earner,Savings goals,Add a savings goal for rent,
+F0729,2026-08-03,App review,Student,BVN verification problems,BVN verification keeps failing,2
+F0730,2026-07-06,Support ticket,Salary earner,Card delivery delays,Card delivery is too slow,
+F0731,2026-08-03,Sales team,Small business,Bulk payroll payments,Bulk transfers for salaries please,
+F0732,2026-07-27,Support ticket,Market trader,BVN verification problems,Stuck on verification for days,
+F0733,2026-07-19,Survey,Student,Split bills,Need a way to collect money from my group,
+F0734,2026-08-10,App review,Small business,Bulk payroll payments,Payroll feature needed for our company,4
+F0735,2026-08-11,Support ticket,Market trader,Transfer fees,Charges on every transfer are too much,
+F0736,2026-07-06,App review,Student,Card delivery delays,My card hasn't arrived after 3 weeks,5
+F0737,2026-07-11,App review,Salary earner,App crashes,Crashes on Android 9,1
+F0738,2026-07-21,App review,Student,No USSD or offline access,I need to send money without data,4
+F0739,2026-07-11,App review,Market trader,Split bills,Let me split bills with friends,4
+F0740,2026-08-11,App review,Student,Savings goals,I want to lock money for school fees,2
+F0741,2026-08-22,Support ticket,Salary earner,Savings goals,Add a savings goal for rent,
+F0742,2026-08-29,Support ticket,Market trader,No USSD or offline access,"No network at the market, can't use the app",
+F0743,2026-08-04,Survey,Salary earner,BVN verification problems,BVN verification keeps failing,
+F0744,2026-08-21,Support ticket,Salary earner,App crashes,Crashes on Android 9,
+F0745,2026-08-22,Support ticket,Small business,Bulk payroll payments,We need to pay all our staff at once,
+F0746,2026-08-23,Support ticket,Salary earner,Card delivery delays,My card hasn't arrived after 3 weeks,
+F0747,2026-07-10,Support ticket,Small business,Bulk payroll payments,We need to pay all our staff at once,
+F0748,2026-07-10,Support ticket,Salary earner,Savings goals,Add a savings goal for rent,
+F0749,2026-07-22,Support ticket,Small business,Transfer fees,Fees too high for small transfers,
+F0750,2026-07-11,App review,Market trader,Bulk payroll payments,Bulk transfers for salaries please,5
+F0751,2026-07-12,App review,Salary earner,Savings goals,Let me save towards a target,1
+F0752,2026-07-23,App review,Salary earner,Split bills,Need a way to collect money from my group,1
+F0753,2026-07-17,Support ticket,Salary earner,Transfer fees,Fees too high for small transfers,
+F0754,2026-08-13,Sales team,Small business,Bulk payroll payments,We need to pay all our staff at once,
+F0755,2026-08-07,Support ticket,Market trader,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",
+F0756,2026-08-12,App review,Market trader,Transfer fees,Fees too high for small transfers,3
+F0757,2026-07-07,Sales team,Small business,Bulk payroll payments,Bulk transfers for salaries please,
+F0758,2026-07-29,Sales team,Small business,Bulk payroll payments,Payroll feature needed for our company,
+F0759,2026-07-20,App review,Salary earner,Card delivery delays,Still waiting for my physical card,2
+F0760,2026-07-27,Support ticket,Market trader,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",
+F0761,2026-07-06,App review,Market trader,BVN verification problems,abeg help me verify my BVN,1
+F0762,2026-08-06,Support ticket,Student,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",
+F0763,2026-07-26,Support ticket,Market trader,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",
+F0764,2026-07-06,Support ticket,Salary earner,Transfer fees,Charges on every transfer are too much,
+F0765,2026-07-15,Survey,Market trader,App crashes,App crashes on my phone,
+F0766,2026-08-14,Support ticket,Salary earner,Savings goals,Let me save towards a target,
+F0767,2026-08-08,Support ticket,Salary earner,Savings goals,Add a savings goal for rent,
+F0768,2026-07-29,Support ticket,Market trader,Card delivery delays,My card hasn't arrived after 3 weeks,
+F0769,2026-08-26,Support ticket,Market trader,No USSD or offline access,I need to send money without data,
+F0770,2026-07-24,App review,Salary earner,Savings goals,I want to lock money for school fees,5
+F0771,2026-07-30,Sales team,Small business,Bulk payroll payments,Bulk transfers for salaries please,
+F0772,2026-07-15,Survey,Salary earner,Card delivery delays,Still waiting for my physical card,
+F0773,2026-07-20,App review,Student,Transfer fees,Charges on every transfer are too much,2
+F0774,2026-08-07,Sales team,Small business,Bulk payroll payments,We need to pay all our staff at once,
+F0775,2026-07-11,App review,Salary earner,BVN verification problems,My name doesn't match my BVN so I can't verify,1
+F0776,2026-08-21,Survey,Market trader,App crashes,Crashes on Android 9,
+F0777,2026-07-10,Survey,Market trader,BVN verification problems,My name doesn't match my BVN so I can't verify,
+F0778,2026-08-08,App review,Small business,Bulk payroll payments,We need to pay all our staff at once,2
+F0779,2026-07-25,App review,Salary earner,Transfer fees,Fees too high for small transfers,2
+F0780,2026-08-06,Sales team,Small business,Transfer fees,Charges on every transfer are too much,
+F0781,2026-08-08,Support ticket,Market trader,App crashes,App crashes on my phone,
+F0782,2026-07-11,Support ticket,Student,Split bills,Let me split bills with friends,
+F0783,2026-08-07,App review,Market trader,BVN verification problems,abeg help me verify my BVN,2
+F0784,2026-08-02,Support ticket,Salary earner,Transfer fees,Fees too high for small transfers,
+F0785,2026-07-15,Survey,Market trader,App crashes,Crashes on Android 9,
+F0786,2026-07-20,Support ticket,Student,BVN verification problems,BVN verification keeps failing,
+F0787,2026-07-10,Survey,Market trader,No USSD or offline access,I need to send money without data,
+F0788,2026-07-28,Support ticket,Salary earner,Split bills,Add split payment for hangouts,
+F0789,2026-08-23,App review,Market trader,App crashes,App crashes on my phone,2
+F0790,2026-07-31,App review,Salary earner,Transfer fees,Charges on every transfer are too much,2
+F0791,2026-07-28,App review,Market trader,No USSD or offline access,I need to send money without data,4
+F0792,2026-07-27,App review,Market trader,BVN verification problems,Stuck on verification for days,1
+F0793,2026-08-01,Support ticket,Salary earner,BVN verification problems,abeg help me verify my BVN,
+F0794,2026-07-06,App review,Small business,Card delivery delays,Still waiting for my physical card,5
+F0795,2026-08-27,Survey,Salary earner,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",
+F0796,2026-08-01,Support ticket,Market trader,App crashes,Keeps closing when I open transfers,
+F0797,2026-08-23,App review,Market trader,No USSD or offline access,Please add USSD like the banks,2
+F0798,2026-07-12,App review,Market trader,BVN verification problems,My name doesn't match my BVN so I can't verify,1
+F0799,2026-07-09,Support ticket,Salary earner,Transfer fees,Fees too high for small transfers,
+F0800,2026-08-24,Support ticket,Salary earner,App crashes,Keeps closing when I open transfers,
+F0801,2026-07-12,App review,Salary earner,App crashes,App crashes on my phone,1
+F0802,2026-08-17,App review,Market trader,No USSD or offline access,Please add USSD like the banks,3
+F0803,2026-08-10,Support ticket,Student,Transfer fees,Charges on every transfer are too much,
+F0804,2026-07-08,Support ticket,Salary earner,Savings goals,Add a savings goal for rent,
+F0805,2026-08-05,Sales team,Salary earner,App crashes,Crashes on Android 9,
+F0806,2026-08-14,Support ticket,Student,Card delivery delays,Card delivery is too slow,
+F0807,2026-08-24,App review,Student,Savings goals,Let me save towards a target,1
+F0808,2026-07-08,App review,Student,Split bills,Need a way to collect money from my group,4
+F0809,2026-07-18,Support ticket,Market trader,App crashes,Keeps closing when I open transfers,
+F0810,2026-08-07,Support ticket,Small business,App crashes,Crashes on Android 9,
+F0811,2026-08-07,App review,Student,Split bills,Let me split bills with friends,4
+F0812,2026-08-20,App review,Student,Card delivery delays,My card hasn't arrived after 3 weeks,3
+F0813,2026-08-16,App review,Student,Transfer fees,Fees too high for small transfers,1
+F0814,2026-08-01,App review,Student,Split bills,Add split payment for hangouts,4
+F0815,2026-07-29,Support ticket,Salary earner,Split bills,Add split payment for hangouts,
+F0816,2026-08-26,App review,Market trader,No USSD or offline access,I need to send money without data,1
+F0817,2026-08-17,Support ticket,Market trader,BVN verification problems,BVN verification keeps failing,
+F0818,2026-08-01,Support ticket,Market trader,BVN verification problems,My name doesn't match my BVN so I can't verify,
+F0819,2026-07-09,Survey,Market trader,App crashes,Crashes on Android 9,
+F0820,2026-07-09,Sales team,Small business,Bulk payroll payments,Bulk transfers for salaries please,
+F0821,2026-08-24,Support ticket,Market trader,Bulk payroll payments,Payroll feature needed for our company,
+F0822,2026-08-26,Survey,Salary earner,Bulk payroll payments,Bulk transfers for salaries please,
+F0823,2026-07-26,Sales team,Small business,Bulk payroll payments,Bulk transfers for salaries please,
+F0824,2026-08-15,Support ticket,Market trader,Savings goals,Let me save towards a target,
+F0825,2026-07-19,App review,Market trader,No USSD or offline access,"No network at the market, can't use the app",1
+F0826,2026-07-17,App review,Salary earner,Card delivery delays,Card delivery is too slow,4
+F0827,2026-07-24,App review,Market trader,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",4
+F0828,2026-07-29,Support ticket,Student,Split bills,Need a way to collect money from my group,
+F0829,2026-07-22,Survey,Salary earner,Savings goals,Let me save towards a target,
+F0830,2026-08-16,Sales team,Student,Bulk payroll payments,Bulk transfers for salaries please,
+F0831,2026-08-10,Support ticket,Market trader,No USSD or offline access,Please add USSD like the banks,
+F0832,2026-08-14,Support ticket,Student,App crashes,Crashes on Android 9,
+F0833,2026-07-09,Support ticket,Market trader,No USSD or offline access,"No network at the market, can't use the app",
+F0834,2026-07-23,Survey,Market trader,Savings goals,I want to lock money for school fees,
+F0835,2026-08-13,App review,Market trader,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",4
+F0836,2026-08-13,App review,Salary earner,Transfer fees,Fees too high for small transfers,4
+F0837,2026-07-07,App review,Small business,Transfer fees,Fees too high for small transfers,3
+F0838,2026-07-19,App review,Student,Savings goals,Let me save towards a target,2
+F0839,2026-07-19,App review,Market trader,Transfer fees,Charges on every transfer are too much,4
+F0840,2026-08-09,Sales team,Salary earner,Bulk payroll payments,Bulk transfers for salaries please,
+F0841,2026-07-12,Sales team,Small business,Bulk payroll payments,Bulk transfers for salaries please,
+F0842,2026-07-27,Sales team,Student,Split bills,Add split payment for hangouts,
+F0843,2026-07-31,Support ticket,Salary earner,Card delivery delays,Still waiting for my physical card,
+F0844,2026-07-28,Support ticket,Market trader,Card delivery delays,Still waiting for my physical card,
+F0845,2026-08-06,App review,Salary earner,Savings goals,Let me save towards a target,4
+F0846,2026-08-26,Support ticket,Student,No USSD or offline access,I need to send money without data,
+F0847,2026-07-13,Sales team,Salary earner,Split bills,Need a way to collect money from my group,
+F0848,2026-08-18,Survey,Salary earner,Split bills,Need a way to collect money from my group,
+F0849,2026-08-29,App review,Salary earner,BVN verification problems,BVN verification keeps failing,2
+F0850,2026-07-25,Support ticket,Student,BVN verification problems,Stuck on verification for days,
+F0851,2026-07-07,App review,Salary earner,Savings goals,I want to lock money for school fees,5
+F0852,2026-07-25,Sales team,Student,Bulk payroll payments,Payroll feature needed for our company,
+F0853,2026-07-13,App review,Market trader,BVN verification problems,BVN verification keeps failing,1
+F0854,2026-08-24,App review,Salary earner,Savings goals,Add a savings goal for rent,5
+F0855,2026-08-05,App review,Salary earner,App crashes,App crashes on my phone,1
+F0856,2026-08-06,App review,Student,Savings goals,Add a savings goal for rent,2
+F0857,2026-07-10,Sales team,Small business,Bulk payroll payments,We need to pay all our staff at once,
+F0858,2026-08-15,Sales team,Small business,Bulk payroll payments,Bulk transfers for salaries please,
+F0859,2026-08-17,App review,Market trader,App crashes,Keeps closing when I open transfers,1
+F0860,2026-07-16,App review,Small business,Bulk payroll payments,Payroll feature needed for our company,3
+F0861,2026-08-10,Support ticket,Market trader,BVN verification problems,My name doesn't match my BVN so I can't verify,
+F0862,2026-08-22,App review,Market trader,BVN verification problems,BVN verification keeps failing,2
+F0863,2026-07-17,Sales team,Small business,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",
+F0864,2026-08-20,Support ticket,Salary earner,Transfer fees,Fees too high for small transfers,
+F0865,2026-08-10,Support ticket,Salary earner,Transfer fees,Charges on every transfer are too much,
+F0866,2026-08-20,Sales team,Small business,Bulk payroll payments,We need to pay all our staff at once,
+F0867,2026-08-18,App review,Salary earner,Savings goals,Let me save towards a target,4
+F0868,2026-07-24,Survey,Student,Split bills,Add split payment for hangouts,
+F0869,2026-07-23,Support ticket,Salary earner,App crashes,Keeps closing when I open transfers,
+F0870,2026-08-22,Support ticket,Salary earner,App crashes,App crashes on my phone,
+F0871,2026-08-02,App review,Market trader,App crashes,App crashes on my phone,2
+F0872,2026-08-23,App review,Market trader,BVN verification problems,My name doesn't match my BVN so I can't verify,1
+F0873,2026-08-12,App review,Market trader,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",1
+F0874,2026-08-27,App review,Salary earner,Transfer fees,Charges on every transfer are too much,3
+F0875,2026-07-07,App review,Market trader,BVN verification problems,abeg help me verify my BVN,2
+F0876,2026-07-22,App review,Market trader,Card delivery delays,My card hasn't arrived after 3 weeks,3
+F0877,2026-07-16,App review,Student,App crashes,Crashes on Android 9,1
+F0878,2026-08-17,Support ticket,Salary earner,Split bills,Let me split bills with friends,
+F0879,2026-08-05,App review,Student,Card delivery delays,Card delivery is too slow,4
+F0880,2026-08-04,Support ticket,Market trader,No USSD or offline access,"No network at the market, can't use the app",
+F0881,2026-08-28,Support ticket,Salary earner,No USSD or offline access,"No network at the market, can't use the app",
+F0882,2026-08-28,App review,Market trader,BVN verification problems,abeg help me verify my BVN,1
+F0883,2026-08-26,Support ticket,Market trader,No USSD or offline access,I need to send money without data,
+F0884,2026-08-20,Support ticket,Student,Split bills,Let me split bills with friends,
+F0885,2026-07-18,Sales team,Small business,Bulk payroll payments,Bulk transfers for salaries please,
+F0886,2026-08-14,Support ticket,Student,Split bills,Add split payment for hangouts,
+F0887,2026-07-27,App review,Salary earner,BVN verification problems,Stuck on verification for days,2
+F0888,2026-07-14,App review,Market trader,BVN verification problems,Stuck on verification for days,1
+F0889,2026-08-20,Support ticket,Market trader,No USSD or offline access,I need to send money without data,
+F0890,2026-08-06,Support ticket,Small business,Split bills,Let me split bills with friends,
+F0891,2026-07-17,Survey,Market trader,Savings goals,Let me save towards a target,
+F0892,2026-08-10,Support ticket,Student,Split bills,Add split payment for hangouts,
+F0893,2026-08-03,App review,Salary earner,Savings goals,Let me save towards a target,3
+F0894,2026-08-26,Support ticket,Small business,Bulk payroll payments,Bulk transfers for salaries please,
+F0895,2026-07-11,Sales team,Small business,Bulk payroll payments,We need to pay all our staff at once,
+F0896,2026-08-14,Support ticket,Market trader,App crashes,Keeps closing when I open transfers,
+F0897,2026-08-01,Support ticket,Salary earner,Savings goals,Let me save towards a target,
+F0898,2026-07-22,Support ticket,Salary earner,Split bills,Need a way to collect money from my group,
+F0899,2026-07-22,App review,Market trader,BVN verification problems,BVN verification keeps failing,1
+F0900,2026-07-24,Support ticket,Salary earner,Savings goals,I want to lock money for school fees,
+F0901,2026-07-15,App review,Small business,No USSD or offline access,Please add USSD like the banks,3
+F0902,2026-08-25,Support ticket,Student,App crashes,App crashes on my phone,
+F0903,2026-08-04,Survey,Market trader,App crashes,Crashes on Android 9,
+F0904,2026-07-26,App review,Student,BVN verification problems,Stuck on verification for days,1
+F0905,2026-08-10,Support ticket,Market trader,BVN verification problems,BVN verification keeps failing,
+F0906,2026-08-21,Support ticket,Market trader,BVN verification problems,Stuck on verification for days,
+F0907,2026-08-10,Support ticket,Market trader,Card delivery delays,My card hasn't arrived after 3 weeks,
+F0908,2026-08-18,Sales team,Small business,Bulk payroll payments,Bulk transfers for salaries please,
+F0909,2026-08-13,Support ticket,Small business,App crashes,Crashes on Android 9,
+F0910,2026-08-28,App review,Salary earner,Transfer fees,Charges on every transfer are too much,2
+F0911,2026-08-30,App review,Student,App crashes,Keeps closing when I open transfers,5
+F0912,2026-08-05,App review,Student,App crashes,Crashes on Android 9,1
+F0913,2026-08-20,Sales team,Small business,BVN verification problems,abeg help me verify my BVN,
+F0914,2026-08-21,Survey,Market trader,BVN verification problems,BVN verification keeps failing,
+F0915,2026-07-07,Support ticket,Market trader,BVN verification problems,My name doesn't match my BVN so I can't verify,
+F0916,2026-07-24,Support ticket,Market trader,No USSD or offline access,I need to send money without data,
+F0917,2026-07-25,App review,Student,Savings goals,Add a savings goal for rent,3
+F0918,2026-08-16,Survey,Market trader,No USSD or offline access,I need to send money without data,
+F0919,2026-08-06,Support ticket,Salary earner,Savings goals,Add a savings goal for rent,
+F0920,2026-07-21,Support ticket,Student,BVN verification problems,Stuck on verification for days,
+F0921,2026-07-18,App review,Salary earner,Transfer fees,Charges on every transfer are too much,5
+F0922,2026-08-30,App review,Market trader,Transfer fees,Fees too high for small transfers,1
+F0923,2026-08-13,Support ticket,Market trader,BVN verification problems,My name doesn't match my BVN so I can't verify,
+F0924,2026-07-18,Support ticket,Market trader,Transfer fees,Fees too high for small transfers,
+F0925,2026-07-21,Support ticket,Market trader,Transfer fees,Fees too high for small transfers,
+F0926,2026-07-18,Support ticket,Salary earner,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",
+F0927,2026-07-23,Survey,Market trader,No USSD or offline access,"No network at the market, can't use the app",
+F0928,2026-07-07,App review,Small business,Bulk payroll payments,Payroll feature needed for our company,2
+F0929,2026-08-22,Support ticket,Salary earner,Transfer fees,Charges on every transfer are too much,
+F0930,2026-08-24,App review,Salary earner,Bulk payroll payments,Payroll feature needed for our company,4
+F0931,2026-08-05,Support ticket,Salary earner,Savings goals,Let me save towards a target,
+F0932,2026-08-17,Support ticket,Student,Split bills,Let me split bills with friends,
+F0933,2026-08-22,Sales team,Small business,Transfer fees,Fees too high for small transfers,
+F0934,2026-08-02,App review,Market trader,BVN verification problems,My name doesn't match my BVN so I can't verify,1
+F0935,2026-08-26,Support ticket,Market trader,Transfer fees,Charges on every transfer are too much,
+F0936,2026-08-14,App review,Student,Split bills,Let me split bills with friends,1
+F0937,2026-08-22,App review,Student,Transfer fees,Charges on every transfer are too much,4
+F0938,2026-08-24,Survey,Small business,Bulk payroll payments,Bulk transfers for salaries please,
+F0939,2026-07-26,App review,Market trader,BVN verification problems,My name doesn't match my BVN so I can't verify,1
+F0940,2026-08-25,Sales team,Small business,Bulk payroll payments,Payroll feature needed for our company,
+F0941,2026-07-16,App review,Market trader,App crashes,Crashes on Android 9,2
+F0942,2026-07-16,Support ticket,Salary earner,Card delivery delays,My card hasn't arrived after 3 weeks,
+F0943,2026-07-22,Support ticket,Salary earner,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",
+F0944,2026-07-23,App review,Student,Savings goals,Let me save towards a target,4
+F0945,2026-07-21,Sales team,Small business,Bulk payroll payments,Bulk transfers for salaries please,
+F0946,2026-07-29,Sales team,Small business,Bulk payroll payments,Payroll feature needed for our company,
+F0947,2026-08-17,Survey,Salary earner,No USSD or offline access,Please add USSD like the banks,
+F0948,2026-07-09,App review,Market trader,BVN verification problems,BVN verification keeps failing,1
+F0949,2026-08-15,Support ticket,Student,BVN verification problems,My name doesn't match my BVN so I can't verify,
+F0950,2026-08-10,App review,Market trader,App crashes,App crashes on my phone,1
+F0951,2026-07-06,Support ticket,Market trader,BVN verification problems,Stuck on verification for days,
+F0952,2026-08-06,Sales team,Small business,BVN verification problems,abeg help me verify my BVN,
+F0953,2026-07-26,Support ticket,Market trader,App crashes,App crashes on my phone,
+F0954,2026-07-21,App review,Market trader,BVN verification problems,Stuck on verification for days,1
+F0955,2026-07-29,Survey,Market trader,No USSD or offline access,"No network at the market, can't use the app",
+F0956,2026-08-25,App review,Market trader,App crashes,App crashes on my phone,2
+F0957,2026-08-08,Support ticket,Salary earner,Card delivery delays,My card hasn't arrived after 3 weeks,
+F0958,2026-08-21,Support ticket,Salary earner,Savings goals,Add a savings goal for rent,
+F0959,2026-07-08,Support ticket,Market trader,No USSD or offline access,I need to send money without data,
+F0960,2026-08-18,Sales team,Small business,Bulk payroll payments,Payroll feature needed for our company,
+F0961,2026-07-30,Sales team,Small business,Bulk payroll payments,We need to pay all our staff at once,
+F0962,2026-08-29,App review,Market trader,No USSD or offline access,Please add USSD like the banks,4
+F0963,2026-08-05,App review,Market trader,BVN verification problems,Stuck on verification for days,3
+F0964,2026-07-20,App review,Salary earner,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",1
+F0965,2026-07-15,Support ticket,Small business,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",
+F0966,2026-08-22,App review,Salary earner,App crashes,App crashes on my phone,3
+F0967,2026-08-15,Support ticket,Small business,Bulk payroll payments,Payroll feature needed for our company,
+F0968,2026-07-27,App review,Small business,Bulk payroll payments,Bulk transfers for salaries please,4
+F0969,2026-08-14,App review,Salary earner,Transfer fees,Charges on every transfer are too much,4
+F0970,2026-08-01,App review,Student,App crashes,Keeps closing when I open transfers,3
+F0971,2026-08-07,App review,Market trader,No USSD or offline access,"No network at the market, can't use the app",4
+F0972,2026-07-31,Survey,Salary earner,Transfer fees,Charges on every transfer are too much,
+F0973,2026-07-28,Support ticket,Market trader,BVN verification problems,abeg help me verify my BVN,
+F0974,2026-08-20,App review,Market trader,Transfer fees,Charges on every transfer are too much,1
+F0975,2026-07-25,App review,Salary earner,App crashes,Keeps closing when I open transfers,2
+F0976,2026-07-06,Support ticket,Market trader,BVN verification problems,My name doesn't match my BVN so I can't verify,
+F0977,2026-08-23,Support ticket,Market trader,App crashes,Crashes on Android 9,
+F0978,2026-07-21,Support ticket,Market trader,BVN verification problems,Stuck on verification for days,
+F0979,2026-08-25,App review,Small business,No USSD or offline access,I need to send money without data,5
+F0980,2026-07-26,Support ticket,Student,Savings goals,I want to lock money for school fees,
+F0981,2026-07-22,Support ticket,Salary earner,Transfer fees,Fees too high for small transfers,
+F0982,2026-08-19,Support ticket,Market trader,BVN verification problems,My name doesn't match my BVN so I can't verify,
+F0983,2026-07-17,App review,Salary earner,BVN verification problems,BVN verification keeps failing,1
+F0984,2026-07-12,Sales team,Small business,App crashes,Keeps closing when I open transfers,
+F0985,2026-08-20,Support ticket,Salary earner,Savings goals,Let me save towards a target,
+F0986,2026-07-27,App review,Student,BVN verification problems,My name doesn't match my BVN so I can't verify,1
+F0987,2026-08-01,Sales team,Small business,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",
+F0988,2026-08-03,Support ticket,Market trader,BVN verification problems,My name doesn't match my BVN so I can't verify,
+F0989,2026-08-23,Support ticket,Salary earner,Bulk payroll payments,Bulk transfers for salaries please,
+F0990,2026-08-28,Support ticket,Market trader,App crashes,Keeps closing when I open transfers,
+F0991,2026-07-16,App review,Market trader,Savings goals,I want to lock money for school fees,4
+F0992,2026-07-08,Sales team,Small business,Split bills,Let me split bills with friends,
+F0993,2026-07-26,Support ticket,Student,Transfer fees,Fees too high for small transfers,
+F0994,2026-08-25,Sales team,Small business,Bulk payroll payments,Bulk transfers for salaries please,
+F0995,2026-07-22,Support ticket,Market trader,App crashes,Keeps closing when I open transfers,
+F0996,2026-08-27,Support ticket,Salary earner,Card delivery delays,Still waiting for my physical card,
+F0997,2026-08-13,Support ticket,Salary earner,Transfer fees,Fees too high for small transfers,
+F0998,2026-08-02,Support ticket,Market trader,BVN verification problems,abeg help me verify my BVN,
+F0999,2026-07-09,Support ticket,Salary earner,Transfer fees,Charges on every transfer are too much,
+F1000,2026-08-15,Support ticket,Salary earner,Transfer fees,Fees too high for small transfers,
+F1001,2026-07-23,Sales team,Small business,Bulk payroll payments,Payroll feature needed for our company,
+F1002,2026-07-22,App review,Salary earner,Savings goals,Let me save towards a target,2
+F1003,2026-08-30,Survey,Market trader,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",
+F1004,2026-08-22,App review,Salary earner,App crashes,App crashes on my phone,1
+F1005,2026-08-18,Support ticket,Salary earner,BVN verification problems,Stuck on verification for days,
+F1006,2026-08-12,App review,Market trader,No USSD or offline access,I need to send money without data,5
+F1007,2026-07-25,Survey,Student,Savings goals,Add a savings goal for rent,
+F1008,2026-08-21,App review,Salary earner,BVN verification problems,abeg help me verify my BVN,5
+F1009,2026-08-15,App review,Market trader,App crashes,Crashes on Android 9,1
+F1010,2026-08-09,Sales team,Small business,Bulk payroll payments,Payroll feature needed for our company,
+F1011,2026-07-07,App review,Salary earner,Split bills,Add split payment for hangouts,4
+F1012,2026-07-14,App review,Market trader,BVN verification problems,My name doesn't match my BVN so I can't verify,1
+F1013,2026-07-09,Support ticket,Student,Bulk payroll payments,Bulk transfers for salaries please,
+F1014,2026-07-28,App review,Student,Savings goals,I want to lock money for school fees,4
+F1015,2026-08-05,Support ticket,Salary earner,Card delivery delays,Card delivery is too slow,
+F1016,2026-07-23,App review,Student,Savings goals,Add a savings goal for rent,4
+F1017,2026-07-22,Support ticket,Market trader,Transfer fees,Fees too high for small transfers,
+F1018,2026-08-21,Support ticket,Market trader,Transfer fees,Charges on every transfer are too much,
+F1019,2026-08-26,App review,Salary earner,Savings goals,I want to lock money for school fees,4
+F1020,2026-07-25,App review,Market trader,BVN verification problems,abeg help me verify my BVN,3
+F1021,2026-08-20,App review,Salary earner,Savings goals,I want to lock money for school fees,5
+F1022,2026-08-29,App review,Student,Split bills,Let me split bills with friends,1
+F1023,2026-08-24,Support ticket,Salary earner,Savings goals,Let me save towards a target,
+F1024,2026-07-08,Support ticket,Market trader,Savings goals,Add a savings goal for rent,
+F1025,2026-08-16,Support ticket,Market trader,App crashes,App crashes on my phone,
+F1026,2026-08-11,Support ticket,Salary earner,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",
+F1027,2026-07-19,Support ticket,Small business,Bulk payroll payments,We need to pay all our staff at once,
+F1028,2026-07-28,App review,Market trader,No USSD or offline access,"No network at the market, can't use the app",3
+F1029,2026-08-30,Support ticket,Small business,Bulk payroll payments,We need to pay all our staff at once,
+F1030,2026-08-17,Sales team,Student,Bulk payroll payments,Bulk transfers for salaries please,
+F1031,2026-08-06,App review,Salary earner,Transfer fees,Charges on every transfer are too much,4
+F1032,2026-07-28,App review,Salary earner,Card delivery delays,Card delivery is too slow,4
+F1033,2026-07-10,App review,Salary earner,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",5
+F1034,2026-08-11,App review,Salary earner,Savings goals,Let me save towards a target,4
+F1035,2026-08-07,Sales team,Small business,Bulk payroll payments,We need to pay all our staff at once,
+F1036,2026-07-13,App review,Salary earner,Card delivery delays,My card hasn't arrived after 3 weeks,1
+F1037,2026-07-20,Survey,Market trader,Transfer fees,Fees too high for small transfers,
+F1038,2026-08-28,App review,Salary earner,Split bills,Add split payment for hangouts,5
+F1039,2026-08-15,Support ticket,Market trader,BVN verification problems,My name doesn't match my BVN so I can't verify,
+F1040,2026-07-07,App review,Market trader,No USSD or offline access,I need to send money without data,4
+F1041,2026-07-27,Support ticket,Student,Card delivery delays,Still waiting for my physical card,
+F1042,2026-07-10,App review,Market trader,No USSD or offline access,"No network at the market, can't use the app",3
+F1043,2026-07-11,Support ticket,Small business,Bulk payroll payments,Bulk transfers for salaries please,
+F1044,2026-08-13,Survey,Market trader,Card delivery delays,My card hasn't arrived after 3 weeks,
+F1045,2026-08-10,Survey,Salary earner,App crashes,Crashes on Android 9,
+F1046,2026-08-29,Support ticket,Salary earner,Savings goals,Add a savings goal for rent,
+F1047,2026-08-10,App review,Student,Transfer fees,Charges on every transfer are too much,1
+F1048,2026-07-31,App review,Salary earner,Card delivery delays,Card delivery is too slow,1
+F1049,2026-07-11,Survey,Salary earner,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",
+F1050,2026-07-17,App review,Market trader,BVN verification problems,abeg help me verify my BVN,2
+F1051,2026-07-21,Support ticket,Market trader,No USSD or offline access,I need to send money without data,
+F1052,2026-08-19,App review,Salary earner,Savings goals,Let me save towards a target,4
+F1053,2026-08-09,App review,Salary earner,Card delivery delays,Card delivery is too slow,5
+F1054,2026-08-07,Survey,Salary earner,Split bills,Need a way to collect money from my group,
+F1055,2026-08-17,App review,Student,Transfer fees,Charges on every transfer are too much,1
+F1056,2026-08-09,Sales team,Small business,Bulk payroll payments,Bulk transfers for salaries please,
+F1057,2026-08-16,Support ticket,Salary earner,Savings goals,I want to lock money for school fees,
+F1058,2026-07-29,Support ticket,Student,App crashes,Crashes on Android 9,
+F1059,2026-07-24,App review,Market trader,App crashes,Crashes on Android 9,1
+F1060,2026-08-20,Sales team,Small business,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",
+F1061,2026-08-02,App review,Student,BVN verification problems,abeg help me verify my BVN,1
+F1062,2026-08-17,Sales team,Market trader,Bulk payroll payments,We need to pay all our staff at once,
+F1063,2026-07-30,App review,Market trader,Transfer fees,Charges on every transfer are too much,3
+F1064,2026-08-09,Support ticket,Market trader,BVN verification problems,abeg help me verify my BVN,
+F1065,2026-07-14,App review,Student,Split bills,Need a way to collect money from my group,1
+F1066,2026-08-01,App review,Salary earner,Card delivery delays,Card delivery is too slow,3
+F1067,2026-07-27,Sales team,Small business,Transfer fees,Fees too high for small transfers,
+F1068,2026-08-19,App review,Salary earner,Savings goals,I want to lock money for school fees,4
+F1069,2026-07-09,App review,Salary earner,BVN verification problems,Stuck on verification for days,2
+F1070,2026-08-26,App review,Salary earner,Bulk payroll payments,Bulk transfers for salaries please,5
+F1071,2026-07-26,Support ticket,Market trader,No USSD or offline access,"No network at the market, can't use the app",
+F1072,2026-08-22,Support ticket,Market trader,App crashes,Keeps closing when I open transfers,
+F1073,2026-07-07,Support ticket,Small business,Bulk payroll payments,Payroll feature needed for our company,
+F1074,2026-07-26,Support ticket,Salary earner,BVN verification problems,abeg help me verify my BVN,
+F1075,2026-08-25,App review,Market trader,No USSD or offline access,I need to send money without data,4
+F1076,2026-07-09,App review,Small business,Bulk payroll payments,Payroll feature needed for our company,1
+F1077,2026-08-09,App review,Salary earner,BVN verification problems,abeg help me verify my BVN,3
+F1078,2026-08-06,Survey,Small business,Bulk payroll payments,We need to pay all our staff at once,
+F1079,2026-07-23,Support ticket,Market trader,BVN verification problems,BVN verification keeps failing,
+F1080,2026-08-26,Support ticket,Market trader,App crashes,Keeps closing when I open transfers,
+F1081,2026-07-10,App review,Market trader,BVN verification problems,BVN verification keeps failing,5
+F1082,2026-07-24,Support ticket,Salary earner,Savings goals,Add a savings goal for rent,
+F1083,2026-07-21,App review,Salary earner,Transfer fees,Fees too high for small transfers,3
+F1084,2026-07-31,App review,Salary earner,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",3
+F1085,2026-08-26,Sales team,Salary earner,Bulk payroll payments,We need to pay all our staff at once,
+F1086,2026-07-26,Support ticket,Student,BVN verification problems,My name doesn't match my BVN so I can't verify,
+F1087,2026-08-02,Support ticket,Market trader,BVN verification problems,Stuck on verification for days,
+F1088,2026-08-14,Support ticket,Market trader,BVN verification problems,abeg help me verify my BVN,
+F1089,2026-08-24,Sales team,Small business,Bulk payroll payments,Bulk transfers for salaries please,
+F1090,2026-08-29,Support ticket,Student,App crashes,App crashes on my phone,
+F1091,2026-08-19,App review,Salary earner,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",3
+F1092,2026-08-18,Support ticket,Market trader,App crashes,App crashes on my phone,
+F1093,2026-08-07,Survey,Small business,Bulk payroll payments,Payroll feature needed for our company,
+F1094,2026-07-13,App review,Small business,Bulk payroll payments,We need to pay all our staff at once,3
+F1095,2026-08-18,Support ticket,Market trader,Transfer fees,Charges on every transfer are too much,
+F1096,2026-07-28,App review,Market trader,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",3
+F1097,2026-08-29,App review,Market trader,BVN verification problems,My name doesn't match my BVN so I can't verify,1
+F1098,2026-07-31,Support ticket,Salary earner,Savings goals,Add a savings goal for rent,
+F1099,2026-08-10,Sales team,Student,Bulk payroll payments,We need to pay all our staff at once,
+F1100,2026-08-14,App review,Student,Card delivery delays,Card delivery is too slow,3
+F1101,2026-08-09,App review,Salary earner,Savings goals,Let me save towards a target,3
+F1102,2026-07-26,Survey,Market trader,App crashes,Keeps closing when I open transfers,
+F1103,2026-08-22,Support ticket,Student,Split bills,Let me split bills with friends,
+F1104,2026-08-25,Survey,Student,Split bills,Need a way to collect money from my group,
+F1105,2026-08-01,Support ticket,Market trader,BVN verification problems,My name doesn't match my BVN so I can't verify,
+F1106,2026-08-01,App review,Salary earner,Savings goals,Let me save towards a target,4
+F1107,2026-08-08,Support ticket,Market trader,Transfer fees,Fees too high for small transfers,
+F1108,2026-08-05,Sales team,Small business,Bulk payroll payments,Payroll feature needed for our company,
+F1109,2026-08-26,Sales team,Small business,App crashes,Keeps closing when I open transfers,
+F1110,2026-07-19,Support ticket,Student,BVN verification problems,abeg help me verify my BVN,
+F1111,2026-07-08,App review,Market trader,App crashes,Keeps closing when I open transfers,3
+F1112,2026-08-18,App review,Market trader,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",2
+F1113,2026-08-22,Support ticket,Small business,Bulk payroll payments,Bulk transfers for salaries please,
+F1114,2026-08-27,Sales team,Salary earner,Bulk payroll payments,Payroll feature needed for our company,
+F1115,2026-08-24,App review,Market trader,Transfer fees,Fees too high for small transfers,3
+F1116,2026-07-09,Support ticket,Student,BVN verification problems,My name doesn't match my BVN so I can't verify,
+F1117,2026-08-02,Support ticket,Student,Split bills,Let me split bills with friends,
+F1118,2026-07-19,App review,Market trader,No USSD or offline access,Please add USSD like the banks,3
+F1119,2026-07-19,Support ticket,Salary earner,Transfer fees,Charges on every transfer are too much,
+F1120,2026-07-16,Sales team,Small business,Bulk payroll payments,Bulk transfers for salaries please,
+F1121,2026-07-09,App review,Small business,Bulk payroll payments,Bulk transfers for salaries please,4
+F1122,2026-08-22,App review,Market trader,App crashes,App crashes on my phone,1
+F1123,2026-07-09,App review,Market trader,No USSD or offline access,"No network at the market, can't use the app",3
+F1124,2026-08-03,Support ticket,Salary earner,Savings goals,Let me save towards a target,
+F1125,2026-08-21,App review,Student,App crashes,Crashes on Android 9,4
+F1126,2026-07-14,Support ticket,Market trader,App crashes,Keeps closing when I open transfers,
+F1127,2026-07-23,Support ticket,Market trader,No USSD or offline access,"No network at the market, can't use the app",
+F1128,2026-08-16,Support ticket,Market trader,App crashes,Keeps closing when I open transfers,
+F1129,2026-08-08,App review,Market trader,BVN verification problems,BVN verification keeps failing,1
+F1130,2026-08-22,App review,Salary earner,Bulk payroll payments,Bulk transfers for salaries please,2
+F1131,2026-08-13,Support ticket,Salary earner,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",
+F1132,2026-07-25,Sales team,Small business,Split bills,Add split payment for hangouts,
+F1133,2026-08-16,App review,Student,Savings goals,I want to lock money for school fees,4
+F1134,2026-07-06,Support ticket,Student,App crashes,App crashes on my phone,
+F1135,2026-08-20,App review,Salary earner,App crashes,Crashes on Android 9,3
+F1136,2026-07-20,App review,Student,Split bills,Let me split bills with friends,4
+F1137,2026-08-11,App review,Market trader,App crashes,App crashes on my phone,2
+F1138,2026-07-07,App review,Market trader,Transfer fees,Charges on every transfer are too much,3
+F1139,2026-08-05,Support ticket,Market trader,Bulk payroll payments,We need to pay all our staff at once,
+F1140,2026-08-12,App review,Market trader,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",3
+F1141,2026-08-06,App review,Market trader,App crashes,App crashes on my phone,1
+F1142,2026-08-06,Support ticket,Small business,Bulk payroll payments,We need to pay all our staff at once,
+F1143,2026-07-12,Support ticket,Salary earner,Split bills,Let me split bills with friends,
+F1144,2026-07-12,Sales team,Small business,Bulk payroll payments,Payroll feature needed for our company,
+F1145,2026-08-25,App review,Salary earner,Split bills,Let me split bills with friends,2
+F1146,2026-07-28,App review,Market trader,Transfer fees,Fees too high for small transfers,3
+F1147,2026-07-12,App review,Student,BVN verification problems,My name doesn't match my BVN so I can't verify,1
+F1148,2026-08-16,App review,Market trader,Split bills,Let me split bills with friends,3
+F1149,2026-07-09,Support ticket,Market trader,No USSD or offline access,I need to send money without data,
+F1150,2026-08-08,App review,Market trader,Card delivery delays,Card delivery is too slow,1
+F1151,2026-08-14,Support ticket,Salary earner,App crashes,App crashes on my phone,
+F1152,2026-08-09,App review,Student,App crashes,Crashes on Android 9,1
+F1153,2026-08-15,Support ticket,Market trader,Card delivery delays,Still waiting for my physical card,
+F1154,2026-07-21,App review,Market trader,Split bills,Need a way to collect money from my group,5
+F1155,2026-07-21,App review,Salary earner,Savings goals,Let me save towards a target,1
+F1156,2026-07-31,App review,Salary earner,Savings goals,Let me save towards a target,1
+F1157,2026-07-11,App review,Market trader,BVN verification problems,Stuck on verification for days,2
+F1158,2026-07-13,Sales team,Small business,Card delivery delays,Still waiting for my physical card,
+F1159,2026-08-23,App review,Market trader,Card delivery delays,Still waiting for my physical card,4
+F1160,2026-08-24,App review,Salary earner,Savings goals,Let me save towards a target,4
+F1161,2026-08-12,Support ticket,Student,Split bills,Need a way to collect money from my group,
+F1162,2026-08-11,App review,Market trader,BVN verification problems,Stuck on verification for days,1
+F1163,2026-08-09,App review,Student,Split bills,Add split payment for hangouts,1
+F1164,2026-08-16,Support ticket,Student,App crashes,Keeps closing when I open transfers,
+F1165,2026-07-18,Support ticket,Market trader,Split bills,Need a way to collect money from my group,
+F1166,2026-08-02,Support ticket,Salary earner,App crashes,Crashes on Android 9,
+F1167,2026-07-07,Sales team,Small business,Bulk payroll payments,Payroll feature needed for our company,
+F1168,2026-07-16,Survey,Salary earner,Transfer fees,Charges on every transfer are too much,
+F1169,2026-08-11,Sales team,Small business,Bulk payroll payments,We need to pay all our staff at once,
+F1170,2026-08-16,Support ticket,Market trader,BVN verification problems,Stuck on verification for days,
+F1171,2026-08-23,Support ticket,Salary earner,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",
+F1172,2026-08-20,App review,Market trader,No USSD or offline access,"No network at the market, can't use the app",2
+F1173,2026-08-07,Sales team,Market trader,Bulk payroll payments,We need to pay all our staff at once,
+F1174,2026-07-21,Survey,Market trader,Transfer fees,Fees too high for small transfers,
+F1175,2026-07-07,Sales team,Small business,Transfer fees,Charges on every transfer are too much,
+F1176,2026-08-16,Support ticket,Salary earner,No USSD or offline access,"No network at the market, can't use the app",
+F1177,2026-08-03,Support ticket,Market trader,BVN verification problems,abeg help me verify my BVN,
+F1178,2026-08-13,Support ticket,Market trader,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",
+F1179,2026-07-28,App review,Market trader,App crashes,Crashes on Android 9,4
+F1180,2026-07-29,App review,Small business,Split bills,Need a way to collect money from my group,2
+F1181,2026-07-26,App review,Salary earner,BVN verification problems,abeg help me verify my BVN,1
+F1182,2026-08-16,App review,Market trader,No USSD or offline access,Please add USSD like the banks,4
+F1183,2026-07-12,App review,Market trader,BVN verification problems,abeg help me verify my BVN,1
+F1184,2026-07-10,Support ticket,Student,Split bills,Let me split bills with friends,
+F1185,2026-07-27,App review,Market trader,BVN verification problems,Stuck on verification for days,2
+F1186,2026-08-15,Survey,Market trader,No USSD or offline access,Please add USSD like the banks,
+F1187,2026-07-16,Support ticket,Market trader,No USSD or offline access,I need to send money without data,
+F1188,2026-07-07,Support ticket,Salary earner,BVN verification problems,abeg help me verify my BVN,
+F1189,2026-08-29,Survey,Student,Split bills,Add split payment for hangouts,
+F1190,2026-08-02,App review,Market trader,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",1
+F1191,2026-08-21,App review,Salary earner,App crashes,Crashes on Android 9,1
+F1192,2026-08-08,App review,Market trader,App crashes,Crashes on Android 9,1
+F1193,2026-08-11,Survey,Salary earner,App crashes,Keeps closing when I open transfers,
+F1194,2026-08-19,Support ticket,Market trader,Card delivery delays,Card delivery is too slow,
+F1195,2026-08-03,App review,Market trader,App crashes,Crashes on Android 9,1
+F1196,2026-08-02,App review,Market trader,App crashes,Crashes on Android 9,1
+F1197,2026-07-25,Survey,Salary earner,Savings goals,Let me save towards a target,
+F1198,2026-08-24,App review,Salary earner,App crashes,App crashes on my phone,2
+F1199,2026-07-18,Support ticket,Salary earner,Savings goals,Add a savings goal for rent,
+F1200,2026-08-12,App review,Student,BVN verification problems,BVN verification keeps failing,5
+F1201,2026-07-22,Support ticket,Market trader,No USSD or offline access,I need to send money without data,
+F1202,2026-07-21,Support ticket,Student,Savings goals,Add a savings goal for rent,
+F1203,2026-07-13,App review,Salary earner,Savings goals,Add a savings goal for rent,3
+F1204,2026-07-09,Sales team,Small business,Bulk payroll payments,Bulk transfers for salaries please,
+F1205,2026-08-25,App review,Student,Transfer fees,Charges on every transfer are too much,5
+F1206,2026-07-26,App review,Salary earner,Savings goals,Add a savings goal for rent,3
+F1207,2026-07-10,Support ticket,Small business,Bulk payroll payments,Payroll feature needed for our company,
+F1208,2026-07-23,App review,Salary earner,App crashes,App crashes on my phone,2
+F1209,2026-07-28,App review,Salary earner,App crashes,App crashes on my phone,1
+F1210,2026-08-12,Support ticket,Student,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",
+F1211,2026-07-08,Support ticket,Market trader,Bulk payroll payments,Payroll feature needed for our company,
+F1212,2026-07-12,App review,Student,Split bills,Let me split bills with friends,4
+F1213,2026-08-15,Support ticket,Student,Split bills,Let me split bills with friends,
+F1214,2026-08-14,Support ticket,Market trader,Card delivery delays,My card hasn't arrived after 3 weeks,
+F1215,2026-08-22,Support ticket,Market trader,Savings goals,I want to lock money for school fees,
+F1216,2026-07-06,Support ticket,Salary earner,App crashes,Crashes on Android 9,
+F1217,2026-07-24,App review,Student,App crashes,Keeps closing when I open transfers,1
+F1218,2026-07-27,Support ticket,Student,Split bills,Need a way to collect money from my group,
+F1219,2026-08-17,Support ticket,Market trader,Transfer fees,Fees too high for small transfers,
+F1220,2026-08-19,App review,Market trader,BVN verification problems,Stuck on verification for days,3
+F1221,2026-07-16,Sales team,Small business,Bulk payroll payments,Bulk transfers for salaries please,
+F1222,2026-08-13,Support ticket,Student,Savings goals,I want to lock money for school fees,
+F1223,2026-07-15,Support ticket,Student,Split bills,Add split payment for hangouts,
+F1224,2026-07-27,Support ticket,Small business,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",
+F1225,2026-07-14,Support ticket,Market trader,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",
+F1226,2026-08-22,App review,Market trader,App crashes,Keeps closing when I open transfers,2
+F1227,2026-08-11,Support ticket,Salary earner,Card delivery delays,My card hasn't arrived after 3 weeks,
+F1228,2026-07-16,App review,Market trader,App crashes,App crashes on my phone,4
+F1229,2026-07-16,Support ticket,Salary earner,Split bills,Let me split bills with friends,
+F1230,2026-08-26,App review,Market trader,No USSD or offline access,I need to send money without data,2
+F1231,2026-07-24,Survey,Student,Transfer fees,Charges on every transfer are too much,
+F1232,2026-07-11,Support ticket,Salary earner,Split bills,Let me split bills with friends,
+F1233,2026-07-27,Support ticket,Market trader,Savings goals,I want to lock money for school fees,
+F1234,2026-07-30,App review,Small business,Bulk payroll payments,We need to pay all our staff at once,5
+F1235,2026-07-24,App review,Student,BVN verification problems,My name doesn't match my BVN so I can't verify,1
+F1236,2026-08-16,App review,Market trader,Transfer fees,Charges on every transfer are too much,2
+F1237,2026-08-11,Sales team,Small business,Bulk payroll payments,Payroll feature needed for our company,
+F1238,2026-07-17,Survey,Salary earner,No USSD or offline access,"No network at the market, can't use the app",
+F1239,2026-08-23,Survey,Small business,App crashes,App crashes on my phone,
+F1240,2026-07-16,App review,Student,Split bills,Need a way to collect money from my group,5
+F1241,2026-08-13,App review,Small business,Transfer fees,Charges on every transfer are too much,1
+F1242,2026-07-31,App review,Small business,Bulk payroll payments,Bulk transfers for salaries please,5
+F1243,2026-07-22,Sales team,Small business,No USSD or offline access,I need to send money without data,
+F1244,2026-08-03,Survey,Salary earner,Transfer fees,Charges on every transfer are too much,
+F1245,2026-08-27,App review,Student,Savings goals,Add a savings goal for rent,3
+F1246,2026-08-05,Survey,Salary earner,App crashes,App crashes on my phone,
+F1247,2026-08-05,Survey,Salary earner,Card delivery delays,Card delivery is too slow,
+F1248,2026-07-08,App review,Salary earner,Savings goals,Let me save towards a target,1
+F1249,2026-08-11,App review,Market trader,BVN verification problems,abeg help me verify my BVN,1
+F1250,2026-08-10,App review,Student,Savings goals,Let me save towards a target,3
+F1251,2026-07-31,Survey,Market trader,App crashes,Crashes on Android 9,
+F1252,2026-08-25,App review,Salary earner,Bulk payroll payments,We need to pay all our staff at once,4
+F1253,2026-08-29,App review,Market trader,Transfer fees,Charges on every transfer are too much,3
+F1254,2026-08-10,Sales team,Small business,Bulk payroll payments,Payroll feature needed for our company,
+F1255,2026-08-09,Support ticket,Salary earner,Card delivery delays,My card hasn't arrived after 3 weeks,
+F1256,2026-08-21,App review,Market trader,Split bills,Add split payment for hangouts,3
+F1257,2026-07-09,Survey,Market trader,No USSD or offline access,Please add USSD like the banks,
+F1258,2026-08-05,App review,Small business,Transfer fees,Fees too high for small transfers,2
+F1259,2026-08-10,App review,Small business,Transfer fees,Charges on every transfer are too much,3
+F1260,2026-08-15,App review,Student,Split bills,Need a way to collect money from my group,3
+F1261,2026-07-06,Support ticket,Small business,Transfer fees,Charges on every transfer are too much,
+F1262,2026-08-26,Support ticket,Student,Split bills,Let me split bills with friends,
+F1263,2026-07-09,Survey,Market trader,Savings goals,Let me save towards a target,
+F1264,2026-08-17,Support ticket,Salary earner,Savings goals,I want to lock money for school fees,
+F1265,2026-07-13,Sales team,Small business,Bulk payroll payments,Payroll feature needed for our company,
+F1266,2026-07-08,App review,Salary earner,Savings goals,Let me save towards a target,4
+F1267,2026-08-09,App review,Market trader,BVN verification problems,Stuck on verification for days,1
+F1268,2026-08-30,App review,Student,Savings goals,Add a savings goal for rent,2
+F1269,2026-07-06,App review,Salary earner,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",4
+F1270,2026-07-14,Support ticket,Student,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",
+F1271,2026-07-25,Support ticket,Market trader,App crashes,App crashes on my phone,
+F1272,2026-08-05,App review,Salary earner,Savings goals,Let me save towards a target,3
+F1273,2026-08-19,App review,Market trader,BVN verification problems,BVN verification keeps failing,2
+F1274,2026-08-21,App review,Salary earner,Transfer fees,Fees too high for small transfers,1
+F1275,2026-08-28,App review,Salary earner,Transfer fees,Fees too high for small transfers,4
+F1276,2026-07-28,Survey,Student,Split bills,Add split payment for hangouts,
+F1277,2026-08-15,App review,Market trader,BVN verification problems,BVN verification keeps failing,3
+F1278,2026-07-29,Support ticket,Student,Savings goals,Add a savings goal for rent,
+F1279,2026-08-17,Support ticket,Salary earner,Transfer fees,Charges on every transfer are too much,
+F1280,2026-08-09,Support ticket,Salary earner,Transfer fees,Fees too high for small transfers,
+F1281,2026-08-27,Survey,Market trader,Split bills,Add split payment for hangouts,
+F1282,2026-08-30,Support ticket,Student,Split bills,Let me split bills with friends,
+F1283,2026-07-31,App review,Market trader,BVN verification problems,BVN verification keeps failing,1
+F1284,2026-07-18,Support ticket,Student,BVN verification problems,Stuck on verification for days,
+F1285,2026-07-13,App review,Student,Transfer fees,Fees too high for small transfers,3
+F1286,2026-08-10,App review,Student,Split bills,Add split payment for hangouts,3
+F1287,2026-08-01,Support ticket,Student,BVN verification problems,Stuck on verification for days,
+F1288,2026-08-14,Support ticket,Market trader,BVN verification problems,Stuck on verification for days,
+F1289,2026-07-21,Support ticket,Market trader,App crashes,App crashes on my phone,
+F1290,2026-08-26,App review,Salary earner,BVN verification problems,BVN verification keeps failing,5
+F1291,2026-08-09,Survey,Market trader,No USSD or offline access,Please add USSD like the banks,
+F1292,2026-07-17,App review,Salary earner,Bulk payroll payments,Bulk transfers for salaries please,4
+F1293,2026-07-31,App review,Market trader,No USSD or offline access,"No network at the market, can't use the app",4
+F1294,2026-07-28,App review,Market trader,No USSD or offline access,I need to send money without data,3
+F1295,2026-08-20,App review,Salary earner,Savings goals,Let me save towards a target,1
+F1296,2026-08-23,Survey,Salary earner,Transfer fees,Fees too high for small transfers,
+F1297,2026-08-12,Survey,Salary earner,Savings goals,Let me save towards a target,
+F1298,2026-08-17,App review,Small business,Bulk payroll payments,We need to pay all our staff at once,4
+F1299,2026-08-01,Support ticket,Market trader,Card delivery delays,Card delivery is too slow,
+F1300,2026-08-27,App review,Small business,Bulk payroll payments,Bulk transfers for salaries please,3
+F1301,2026-07-20,Support ticket,Market trader,No USSD or offline access,"No network at the market, can't use the app",
+F1302,2026-07-08,Support ticket,Salary earner,Card delivery delays,My card hasn't arrived after 3 weeks,
+F1303,2026-08-11,Survey,Student,Split bills,Let me split bills with friends,
+F1304,2026-08-15,App review,Student,App crashes,Keeps closing when I open transfers,3
+F1305,2026-08-13,App review,Market trader,BVN verification problems,Stuck on verification for days,1
+F1306,2026-07-20,App review,Market trader,No USSD or offline access,I need to send money without data,4
+F1307,2026-07-18,Survey,Student,Transfer fees,Fees too high for small transfers,
+F1308,2026-08-23,Sales team,Small business,App crashes,Crashes on Android 9,
+F1309,2026-08-14,App review,Market trader,Transfer fees,Charges on every transfer are too much,3
+F1310,2026-08-14,App review,Student,Split bills,Let me split bills with friends,1
+F1311,2026-07-18,Sales team,Small business,BVN verification problems,abeg help me verify my BVN,
+F1312,2026-07-25,Survey,Small business,Bulk payroll payments,Payroll feature needed for our company,
+F1313,2026-08-30,Support ticket,Small business,No USSD or offline access,"No network at the market, can't use the app",
+F1314,2026-07-19,App review,Salary earner,Bulk payroll payments,Payroll feature needed for our company,1
+F1315,2026-08-27,Support ticket,Student,BVN verification problems,abeg help me verify my BVN,
+F1316,2026-07-15,Support ticket,Salary earner,Card delivery delays,Card delivery is too slow,
+F1317,2026-08-28,App review,Market trader,Transfer fees,Charges on every transfer are too much,4
+F1318,2026-07-18,Support ticket,Market trader,No USSD or offline access,"No network at the market, can't use the app",
+F1319,2026-08-02,Sales team,Small business,Bulk payroll payments,Bulk transfers for salaries please,
+F1320,2026-07-20,App review,Student,Card delivery delays,Card delivery is too slow,2
+F1321,2026-08-10,App review,Small business,Bulk payroll payments,We need to pay all our staff at once,5
+F1322,2026-07-09,App review,Market trader,Card delivery delays,Card delivery is too slow,3
+F1323,2026-07-29,App review,Salary earner,Transfer fees,Charges on every transfer are too much,3
+F1324,2026-08-25,App review,Salary earner,Transfer fees,Charges on every transfer are too much,3
+F1325,2026-07-15,App review,Small business,Bulk payroll payments,We need to pay all our staff at once,3
+F1326,2026-07-09,App review,Student,BVN verification problems,My name doesn't match my BVN so I can't verify,1
+F1327,2026-08-21,Support ticket,Small business,Bulk payroll payments,We need to pay all our staff at once,
+F1328,2026-07-23,Support ticket,Market trader,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",
+F1329,2026-08-25,Sales team,Small business,Bulk payroll payments,Bulk transfers for salaries please,
+F1330,2026-07-07,App review,Salary earner,No USSD or offline access,"No network at the market, can't use the app",1
+F1331,2026-07-12,App review,Salary earner,Savings goals,I want to lock money for school fees,3
+F1332,2026-07-13,App review,Student,Split bills,Let me split bills with friends,4
+F1333,2026-07-30,App review,Market trader,App crashes,Crashes on Android 9,1
+F1334,2026-07-12,Sales team,Small business,Bulk payroll payments,Payroll feature needed for our company,
+F1335,2026-08-28,App review,Small business,App crashes,Keeps closing when I open transfers,2
+F1336,2026-07-14,App review,Student,Split bills,Add split payment for hangouts,4
+F1337,2026-07-06,App review,Salary earner,Card delivery delays,My card hasn't arrived after 3 weeks,4
+F1338,2026-07-08,Survey,Market trader,No USSD or offline access,Please add USSD like the banks,
+F1339,2026-07-11,App review,Salary earner,Bulk payroll payments,Payroll feature needed for our company,4
+F1340,2026-08-27,Support ticket,Salary earner,Savings goals,I want to lock money for school fees,
+F1341,2026-07-16,Support ticket,Market trader,BVN verification problems,abeg help me verify my BVN,
+F1342,2026-08-13,Support ticket,Market trader,Transfer fees,Fees too high for small transfers,
+F1343,2026-08-20,App review,Small business,Savings goals,Add a savings goal for rent,1
+F1344,2026-07-06,Support ticket,Salary earner,App crashes,Crashes on Android 9,
+F1345,2026-08-10,Support ticket,Market trader,Transfer fees,Fees too high for small transfers,
+F1346,2026-07-21,Support ticket,Student,Split bills,Add split payment for hangouts,
+F1347,2026-07-26,App review,Salary earner,Card delivery delays,Card delivery is too slow,4
+F1348,2026-07-12,Support ticket,Salary earner,Savings goals,I want to lock money for school fees,
+F1349,2026-07-12,App review,Student,Split bills,Add split payment for hangouts,5
+F1350,2026-08-08,Support ticket,Small business,Card delivery delays,Card delivery is too slow,
+F1351,2026-07-10,App review,Salary earner,BVN verification problems,BVN verification keeps failing,2
+F1352,2026-08-21,App review,Market trader,BVN verification problems,BVN verification keeps failing,2
+F1353,2026-08-13,App review,Market trader,Transfer fees,Fees too high for small transfers,1
+F1354,2026-07-14,Sales team,Small business,App crashes,Crashes on Android 9,
+F1355,2026-08-28,App review,Market trader,No USSD or offline access,I need to send money without data,4
+F1356,2026-08-07,Support ticket,Salary earner,Card delivery delays,My card hasn't arrived after 3 weeks,
+F1357,2026-07-11,App review,Student,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",1
+F1358,2026-07-18,App review,Market trader,App crashes,App crashes on my phone,3
+F1359,2026-07-24,App review,Salary earner,Transfer fees,Fees too high for small transfers,1
+F1360,2026-07-09,App review,Market trader,No USSD or offline access,Please add USSD like the banks,3
+F1361,2026-07-18,Survey,Market trader,BVN verification problems,BVN verification keeps failing,
+F1362,2026-08-30,Sales team,Small business,Bulk payroll payments,Bulk transfers for salaries please,
+F1363,2026-08-20,App review,Market trader,BVN verification problems,My name doesn't match my BVN so I can't verify,1
+F1364,2026-08-02,App review,Market trader,Transfer fees,Fees too high for small transfers,3
+F1365,2026-07-28,App review,Small business,Bulk payroll payments,Payroll feature needed for our company,3
+F1366,2026-07-09,App review,Market trader,Transfer fees,Charges on every transfer are too much,2
+F1367,2026-07-25,Sales team,Small business,Bulk payroll payments,Payroll feature needed for our company,
+F1368,2026-07-31,App review,Salary earner,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",2
+F1369,2026-08-05,Support ticket,Market trader,BVN verification problems,abeg help me verify my BVN,
+F1370,2026-07-19,Support ticket,Student,Card delivery delays,Card delivery is too slow,
+F1371,2026-07-16,Support ticket,Salary earner,Card delivery delays,My card hasn't arrived after 3 weeks,
+F1372,2026-08-05,App review,Market trader,App crashes,App crashes on my phone,1
+F1373,2026-07-29,Support ticket,Market trader,No USSD or offline access,"No network at the market, can't use the app",
+F1374,2026-07-18,App review,Market trader,App crashes,App crashes on my phone,1
+F1375,2026-08-04,Support ticket,Salary earner,Savings goals,Let me save towards a target,
+F1376,2026-08-03,App review,Student,Savings goals,Let me save towards a target,4
+F1377,2026-08-15,App review,Salary earner,BVN verification problems,Stuck on verification for days,1
+F1378,2026-07-20,Sales team,Small business,Card delivery delays,Still waiting for my physical card,
+F1379,2026-08-17,Survey,Student,Split bills,Need a way to collect money from my group,
+F1380,2026-08-11,Support ticket,Salary earner,Transfer fees,Charges on every transfer are too much,
+F1381,2026-07-24,App review,Student,Split bills,Need a way to collect money from my group,3
+F1382,2026-08-14,Support ticket,Student,No USSD or offline access,Please add USSD like the banks,
+F1383,2026-08-16,App review,Market trader,App crashes,Crashes on Android 9,1
+F1384,2026-07-23,App review,Salary earner,Transfer fees,Charges on every transfer are too much,4
+F1385,2026-08-23,App review,Student,BVN verification problems,My name doesn't match my BVN so I can't verify,1
+F1386,2026-08-30,App review,Salary earner,Card delivery delays,My card hasn't arrived after 3 weeks,1
+F1387,2026-08-16,Sales team,Small business,BVN verification problems,My name doesn't match my BVN so I can't verify,
+F1388,2026-07-21,App review,Market trader,BVN verification problems,My name doesn't match my BVN so I can't verify,5
+F1389,2026-07-17,Survey,Market trader,Bulk payroll payments,We need to pay all our staff at once,
+F1390,2026-08-04,Support ticket,Salary earner,Bulk payroll payments,Payroll feature needed for our company,
+F1391,2026-08-03,Sales team,Small business,Bulk payroll payments,Bulk transfers for salaries please,
+F1392,2026-08-19,Support ticket,Market trader,No USSD or offline access,I need to send money without data,
+F1393,2026-08-21,App review,Market trader,BVN verification problems,abeg help me verify my BVN,2
+F1394,2026-08-28,App review,Market trader,BVN verification problems,My name doesn't match my BVN so I can't verify,1
+F1395,2026-08-19,App review,Market trader,No USSD or offline access,Please add USSD like the banks,3
+F1396,2026-08-29,Survey,Salary earner,No USSD or offline access,Please add USSD like the banks,
+F1397,2026-08-02,Support ticket,Small business,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",
+F1398,2026-08-29,Survey,Student,No USSD or offline access,Please add USSD like the banks,
+F1399,2026-08-12,App review,Market trader,Card delivery delays,Still waiting for my physical card,3
+F1400,2026-08-16,App review,Salary earner,App crashes,App crashes on my phone,1
+F1401,2026-07-26,App review,Salary earner,Split bills,Need a way to collect money from my group,1
+F1402,2026-08-06,App review,Salary earner,Transfer fees,Charges on every transfer are too much,3
+F1403,2026-08-19,Support ticket,Small business,Bulk payroll payments,We need to pay all our staff at once,
+F1404,2026-08-14,Support ticket,Market trader,BVN verification problems,My name doesn't match my BVN so I can't verify,
+F1405,2026-07-22,App review,Market trader,Savings goals,Add a savings goal for rent,4
+F1406,2026-07-11,Support ticket,Market trader,Transfer fees,Fees too high for small transfers,
+F1407,2026-07-18,Support ticket,Small business,Bulk payroll payments,We need to pay all our staff at once,
+F1408,2026-07-13,Sales team,Small business,Bulk payroll payments,We need to pay all our staff at once,
+F1409,2026-07-07,Support ticket,Student,Split bills,Need a way to collect money from my group,
+F1410,2026-08-22,App review,Market trader,BVN verification problems,abeg help me verify my BVN,2
+F1411,2026-07-27,Support ticket,Small business,Transfer fees,Charges on every transfer are too much,
+F1412,2026-07-07,App review,Student,Transfer fees,Fees too high for small transfers,3
+F1413,2026-07-06,Support ticket,Salary earner,Transfer fees,Charges on every transfer are too much,
+F1414,2026-07-31,Support ticket,Salary earner,BVN verification problems,Stuck on verification for days,
+F1415,2026-07-28,Support ticket,Student,Card delivery delays,My card hasn't arrived after 3 weeks,
+F1416,2026-07-29,App review,Student,Savings goals,I want to lock money for school fees,3
+F1417,2026-08-26,App review,Market trader,BVN verification problems,abeg help me verify my BVN,2
+F1418,2026-07-10,Support ticket,Market trader,BVN verification problems,Stuck on verification for days,
+F1419,2026-08-21,App review,Market trader,No USSD or offline access,Please add USSD like the banks,5
+F1420,2026-08-16,Support ticket,Salary earner,Card delivery delays,Still waiting for my physical card,
+F1421,2026-08-04,Support ticket,Student,Savings goals,Let me save towards a target,
+F1422,2026-08-17,Support ticket,Market trader,No USSD or offline access,Please add USSD like the banks,
+F1423,2026-08-08,Support ticket,Market trader,BVN verification problems,BVN verification keeps failing,
+F1424,2026-07-11,App review,Student,BVN verification problems,abeg help me verify my BVN,1
+F1425,2026-07-13,Support ticket,Small business,BVN verification problems,abeg help me verify my BVN,
+F1426,2026-08-02,Survey,Student,Split bills,Need a way to collect money from my group,
+F1427,2026-07-27,App review,Salary earner,App crashes,Keeps closing when I open transfers,1
+F1428,2026-07-12,Support ticket,Student,App crashes,Crashes on Android 9,
+F1429,2026-08-27,Support ticket,Market trader,App crashes,Crashes on Android 9,
+F1430,2026-08-23,Sales team,Small business,Bulk payroll payments,Bulk transfers for salaries please,
+F1431,2026-07-20,Sales team,Small business,Bulk payroll payments,Bulk transfers for salaries please,
+F1432,2026-08-02,Survey,Salary earner,Savings goals,Let me save towards a target,
+F1433,2026-07-12,Support ticket,Market trader,No USSD or offline access,I need to send money without data,
+F1434,2026-07-16,App review,Salary earner,Split bills,Let me split bills with friends,4
+F1435,2026-07-30,Support ticket,Market trader,Transfer fees,Charges on every transfer are too much,
+F1436,2026-07-06,App review,Market trader,BVN verification problems,My name doesn't match my BVN so I can't verify,2
+F1437,2026-07-14,Survey,Student,Split bills,Let me split bills with friends,
+F1438,2026-08-13,App review,Market trader,No USSD or offline access,I need to send money without data,3
+F1439,2026-08-25,Support ticket,Student,Transfer fees,Fees too high for small transfers,
+F1440,2026-08-21,Support ticket,Student,BVN verification problems,Stuck on verification for days,
+F1441,2026-07-16,Support ticket,Market trader,App crashes,Crashes on Android 9,
+F1442,2026-08-30,App review,Salary earner,Transfer fees,Charges on every transfer are too much,3
+F1443,2026-07-29,App review,Salary earner,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",4
+F1444,2026-07-13,Support ticket,Student,No USSD or offline access,"No network at the market, can't use the app",
+F1445,2026-07-24,Support ticket,Student,BVN verification problems,My name doesn't match my BVN so I can't verify,
+F1446,2026-07-07,Support ticket,Market trader,BVN verification problems,BVN verification keeps failing,
+F1447,2026-08-08,Support ticket,Student,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",
+F1448,2026-08-08,App review,Market trader,Transfer fees,Charges on every transfer are too much,4
+F1449,2026-07-17,Support ticket,Student,BVN verification problems,BVN verification keeps failing,
+F1450,2026-07-25,Support ticket,Small business,App crashes,App crashes on my phone,
+F1451,2026-07-25,Support ticket,Market trader,No USSD or offline access,Please add USSD like the banks,
+F1452,2026-08-05,App review,Market trader,Savings goals,I want to lock money for school fees,3
+F1453,2026-07-28,Support ticket,Student,Savings goals,I want to lock money for school fees,
+F1454,2026-08-19,Sales team,Small business,Bulk payroll payments,Bulk transfers for salaries please,
+F1455,2026-08-21,Support ticket,Salary earner,App crashes,App crashes on my phone,
+F1456,2026-08-26,App review,Student,App crashes,Crashes on Android 9,1
+F1457,2026-07-21,App review,Salary earner,Savings goals,Add a savings goal for rent,1
+F1458,2026-08-29,App review,Market trader,BVN verification problems,Stuck on verification for days,1
+F1459,2026-07-20,App review,Student,Split bills,Let me split bills with friends,5
+F1460,2026-08-06,Support ticket,Market trader,BVN verification problems,abeg help me verify my BVN,
+F1461,2026-07-28,App review,Market trader,Transfer fees,Fees too high for small transfers,1
+F1462,2026-08-22,App review,Market trader,Card delivery delays,Card delivery is too slow,5
+F1463,2026-07-31,App review,Salary earner,Transfer fees,Charges on every transfer are too much,2
+F1464,2026-07-31,App review,Market trader,BVN verification problems,BVN verification keeps failing,1
+F1465,2026-07-31,App review,Market trader,BVN verification problems,Stuck on verification for days,1
+F1466,2026-08-06,Support ticket,Small business,Transfer fees,Fees too high for small transfers,
+F1467,2026-07-22,App review,Student,Split bills,Add split payment for hangouts,4
+F1468,2026-08-16,App review,Salary earner,Transfer fees,Fees too high for small transfers,1
+F1469,2026-08-01,App review,Salary earner,Savings goals,I want to lock money for school fees,5
+F1470,2026-07-28,App review,Market trader,BVN verification problems,Stuck on verification for days,2
+F1471,2026-08-09,Support ticket,Salary earner,App crashes,App crashes on my phone,
+F1472,2026-07-11,App review,Student,Transfer fees,"Why do I pay ₦10 to send ₦1,000?",2
+F1473,2026-07-15,App review,Market trader,BVN verification problems,My name doesn't match my BVN so I can't verify,2
+F1474,2026-07-23,Support ticket,Market trader,App crashes,App crashes on my phone,
+F1475,2026-08-03,Survey,Market trader,Card delivery delays,Card delivery is too slow,
+F1476,2026-08-24,App review,Salary earner,BVN verification problems,Stuck on verification for days,2
+F1477,2026-08-01,Support ticket,Market trader,Card delivery delays,My card hasn't arrived after 3 weeks,
+F1478,2026-07-19,Survey,Market trader,No USSD or offline access,"No network at the market, can't use the app",
+F1479,2026-07-16,Support ticket,Salary earner,Transfer fees,Fees too high for small transfers,
+F1480,2026-08-14,Survey,Market trader,BVN verification problems,BVN verification keeps failing,
+F1481,2026-08-13,App review,Market trader,BVN verification problems,abeg help me verify my BVN,1
+F1482,2026-07-10,App review,Student,BVN verification problems,BVN verification keeps failing,2
+F1483,2026-07-06,App review,Small business,Bulk payroll payments,Payroll feature needed for our company,1
+F1484,2026-08-18,Support ticket,Market trader,App crashes,App crashes on my phone,
+F1485,2026-08-05,App review,Student,BVN verification problems,BVN verification keeps failing,1
+F1486,2026-08-08,App review,Student,Savings goals,Let me save towards a target,4
+F1487,2026-08-18,App review,Salary earner,Savings goals,I want to lock money for school fees,5
+F1488,2026-07-18,App review,Salary earner,Card delivery delays,Still waiting for my physical card,2
+F1489,2026-08-06,Sales team,Student,Bulk payroll payments,Payroll feature needed for our company,
+F1490,2026-07-07,App review,Salary earner,Card delivery delays,My card hasn't arrived after 3 weeks,1
+F1491,2026-07-13,Survey,Salary earner,Card delivery delays,Card delivery is too slow,
+F1492,2026-07-20,App review,Salary earner,Savings goals,Add a savings goal for rent,2
+F1493,2026-08-06,App review,Student,Split bills,Add split payment for hangouts,2
+F1494,2026-07-20,App review,Student,Savings goals,I want to lock money for school fees,3
+F1495,2026-07-19,App review,Student,Card delivery delays,My card hasn't arrived after 3 weeks,1
+F1496,2026-08-13,App review,Market trader,BVN verification problems,BVN verification keeps failing,5
+F1497,2026-08-02,Sales team,Small business,Bulk payroll payments,Bulk transfers for salaries please,
+F1498,2026-08-21,Support ticket,Market trader,BVN verification problems,abeg help me verify my BVN,
+F1499,2026-08-22,App review,Student,Savings goals,Let me save towards a target,3
+F1500,2026-08-05,Support ticket,Small business,Bulk payroll payments,Payroll feature needed for our company,

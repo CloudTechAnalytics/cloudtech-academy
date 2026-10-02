@@ -1,6 +1,6 @@
 ---
 title: Publishing reports
-minutes: 30
+minutes: 15
 summary: Publish to the Power BI Service, share safely, keep data fresh with scheduled refresh, and show your work in a portfolio.
 ---
 

@@ -1,4 +1,4 @@
-import type { Course, ProjectDef } from "@/content/types";
+import type { Course, Module, ProjectDef } from "@/content/types";
 import type { AttemptResult, Progress, ProjectSubmission } from "./backend/types";
 
 export type Requirement = { key: string; label: string; done: boolean; detail: string };
@@ -76,6 +76,9 @@ export function eligibility(
           : 0,
   };
 }
+
+/** Required practice tasks in a module's lessons. A module's check unlocks once they're all done. */
+export const moduleTaskIds = (module: Module) => module.lessons.filter((l) => l.published).flatMap((l) => l.requiredExercises);
 
 /** Modules that award a badge, in order. */
 export const badgeModulesOf = (course: Course) => course.modules.filter((m) => m.badge);

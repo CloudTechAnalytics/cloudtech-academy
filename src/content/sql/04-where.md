@@ -1,6 +1,6 @@
 ---
 title: WHERE
-minutes: 30
+minutes: 15
 summary: Filter rows with comparisons, AND/OR, IN, BETWEEN, LIKE and NULL checks.
 ---
 
@@ -116,6 +116,65 @@ WHERE account_manager_id IS NULL;
   "starter": "",
   "solution": "SELECT company_name FROM customers WHERE industry IN ('Food & Beverage', 'Agriculture') AND city IN ('Lagos', 'Port Harcourt');",
   "hint": "Two IN lists joined with AND keeps the logic clear without brackets.",
+  "required": false
+}
+```
+
+## More practice
+
+Optional drills on the same skills. They don't count towards the certificate, but each one is a small, realistic request from someone at Harbourline. Do as many as you need until the pattern feels automatic.
+
+```exercise
+{
+  "id": "sql-03-d1",
+  "prompt": "Show company_name and industry for every customer based in Abuja.",
+  "starter": "",
+  "solution": "SELECT company_name, industry FROM customers WHERE city = 'Abuja';",
+  "hint": "Text values go in single quotes: WHERE city = 'Abuja'.",
+  "required": false
+}
+```
+
+```exercise
+{
+  "id": "sql-03-d2",
+  "prompt": "Show shipment_id, containers and freight_charge for shipments of 6 or more containers booked in 2026 (from '2026-01-01').",
+  "starter": "",
+  "solution": "SELECT shipment_id, containers, freight_charge FROM shipments WHERE containers >= 6 AND booking_date >= '2026-01-01';",
+  "hint": "Two conditions joined with AND. Dates in YYYY-MM-DD compare correctly as text.",
+  "required": false
+}
+```
+
+```exercise
+{
+  "id": "sql-03-d3",
+  "prompt": "List company_name, city and country for every customer outside Nigeria.",
+  "starter": "",
+  "solution": "SELECT company_name, city, country FROM customers WHERE country <> 'Nigeria';",
+  "hint": "Use <> (or !=) for 'not equal to'.",
+  "required": false
+}
+```
+
+```exercise
+{
+  "id": "sql-03-d4",
+  "prompt": "Which shipments haven't arrived yet? Show shipment_id and status for shipments that are 'Booked' or 'In transit'. Use IN.",
+  "starter": "",
+  "solution": "SELECT shipment_id, status FROM shipments WHERE status IN ('Booked', 'In transit');",
+  "hint": "WHERE status IN ('Booked', 'In transit')",
+  "required": false
+}
+```
+
+```exercise
+{
+  "id": "sql-03-d5",
+  "prompt": "Find every customer whose company_name contains the word 'Foods'. Show company_name and city.",
+  "starter": "",
+  "solution": "SELECT company_name, city FROM customers WHERE company_name LIKE '%Foods%';",
+  "hint": "LIKE with % on both sides matches the word anywhere in the name.",
   "required": false
 }
 ```

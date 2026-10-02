@@ -1,0 +1,893 @@
+run_id,step,tool,arguments,result,input_tokens,output_tokens,seconds
+RQ001-v1,1,get_transfer,"{""transfer_id"":""TRF401805""}",ok,962,32,2.4
+RQ001-v1,2,reply,"{""message"":""(reply to customer)""}",ok,1238,82,3.1
+RQ001-v2,1,get_transfer,"{""account_id"":""PS100150"",""transfer_id"":""TRF401805""}",ok,1594,45,2.9
+RQ001-v2,2,check_reversal_eligibility,"{""account_id"":""PS100150"",""transfer_id"":""TRF401805""}",ok,1832,26,2.7
+RQ001-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2112,133,4
+RQ002-v1,1,get_transfer,"{""transfer_id"":""TRF401801""}",ok,987,48,2.5
+RQ002-v1,2,open_transfer_case,"{""transfer_id"":""TRF401801""}",ok,1231,59,3.4
+RQ002-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1482,134,3.9
+RQ002-v2,1,get_transfer,"{""account_id"":""PS100272"",""transfer_id"":""TRF401801""}",ok,1585,59,2.7
+RQ002-v2,2,check_reversal_eligibility,"{""account_id"":""PS100272"",""transfer_id"":""TRF401801""}",ok,1842,58,3.6
+RQ002-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2099,132,4.1
+RQ003-v1,1,get_transfer,"{""transfer_id"":""TRF401843""}",ok,985,59,3.1
+RQ003-v1,2,open_transfer_case,"{""transfer_id"":""TRF401843""}",ok,1225,56,2.9
+RQ003-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1508,74,3.1
+RQ003-v2,1,get_transfer,"{""account_id"":""PS100034"",""transfer_id"":""TRF401843""}",ok,1567,46,2.8
+RQ003-v2,2,check_reversal_eligibility,"{""account_id"":""PS100034"",""transfer_id"":""TRF401843""}",ok,1827,47,3.7
+RQ003-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2114,129,3.5
+RQ004-v1,1,get_transfer,"{""transfer_id"":""TRF401845""}",ok,973,52,3.1
+RQ004-v1,2,open_transfer_case,"{""transfer_id"":""TRF401845""}",ok,1245,60,3.1
+RQ004-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1502,65,2.6
+RQ004-v2,1,get_transfer,"{""account_id"":""PS100056"",""transfer_id"":""TRF401845""}",ok,1593,34,2.9
+RQ004-v2,2,check_reversal_eligibility,"{""account_id"":""PS100056"",""transfer_id"":""TRF401845""}",ok,1831,25,2.8
+RQ004-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2080,102,3.4
+RQ005-v1,1,get_transfer,"{""transfer_id"":""TRF401839""}",ok,973,46,2.9
+RQ005-v1,2,reply,"{""message"":""(reply to customer)""}",ok,1235,120,3.6
+RQ005-v2,1,get_transfer,"{""account_id"":""PS100256"",""transfer_id"":""TRF401839""}",ok,1592,43,3.3
+RQ005-v2,2,check_reversal_eligibility,"{""account_id"":""PS100256"",""transfer_id"":""TRF401839""}",ok,1844,26,2.9
+RQ005-v2,3,escalate,"{""team"":""support"",""summary"":""Unsure how to help""}",ok,2083,55,3.2
+RQ005-v2,4,reply,"{""message"":""(reply to customer)""}",ok,2357,106,3.3
+RQ006-v1,1,open_transfer_case,"{""transfer_id"":""TRF401827""}",ok,992,46,2.4
+RQ006-v1,2,reply,"{""message"":""(reply to customer)""}",ok,1243,81,2.6
+RQ006-v2,1,get_transfer,"{""account_id"":""PS100015"",""transfer_id"":""TRF401827""}",ok,1572,58,3.1
+RQ006-v2,2,check_reversal_eligibility,"{""account_id"":""PS100015"",""transfer_id"":""TRF401827""}",ok,1851,53,3.2
+RQ006-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2083,98,3
+RQ007-v1,1,get_transfer,"{""transfer_id"":""TRF401837""}",ok,968,34,3.1
+RQ007-v1,2,open_transfer_case,"{""transfer_id"":""TRF401837""}",ok,1232,38,2.5
+RQ007-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1494,66,2.9
+RQ007-v2,1,get_transfer,"{""account_id"":""PS100253"",""transfer_id"":""TRF401837""}",ok,1595,57,3.3
+RQ007-v2,2,check_reversal_eligibility,"{""account_id"":""PS100253"",""transfer_id"":""TRF401837""}",ok,1821,33,3.1
+RQ007-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2096,64,3
+RQ008-v1,1,get_transfer,"{""transfer_id"":""TRF401816""}",ok,977,51,3
+RQ008-v1,2,open_transfer_case,"{""transfer_id"":""TRF401816""}",ok,1246,38,2.5
+RQ008-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1482,112,3.4
+RQ008-v2,1,get_transfer,"{""account_id"":""PS100128"",""transfer_id"":""TRF401816""}",ok,1588,59,3.2
+RQ008-v2,2,check_reversal_eligibility,"{""account_id"":""PS100128"",""transfer_id"":""TRF401816""}",ok,1844,31,2.8
+RQ008-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2097,138,4.2
+RQ009-v1,1,get_transfer,"{""transfer_id"":""TRF401812""}",ok,993,38,3.1
+RQ009-v1,2,issue_refund,"{""transfer_id"":""TRF401812"",""amount_ngn"":5600}",ok,1232,43,3
+RQ009-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1516,110,3.8
+RQ009-v2,1,get_transfer,"{""account_id"":""PS100367"",""transfer_id"":""TRF401812""}",ok,1599,32,2.5
+RQ009-v2,2,check_reversal_eligibility,"{""account_id"":""PS100367"",""transfer_id"":""TRF401812""}",ok,1860,35,2.5
+RQ009-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2110,124,3.4
+RQ010-v1,1,get_transfer,"{""transfer_id"":""TRF401840""}",ok,992,54,3
+RQ010-v1,2,reply,"{""message"":""(reply to customer)""}",ok,1220,98,3.4
+RQ010-v2,1,get_transfer,"{""account_id"":""PS100383"",""transfer_id"":""TRF401840""}",ok,1596,59,2.5
+RQ010-v2,2,check_reversal_eligibility,"{""account_id"":""PS100383"",""transfer_id"":""TRF401840""}",ok,1834,36,3
+RQ010-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2093,135,3.5
+RQ011-v1,1,open_transfer_case,"{""transfer_id"":""TRF401841""}",ok,983,40,2.6
+RQ011-v1,2,reply,"{""message"":""(reply to customer)""}",ok,1230,119,3.8
+RQ011-v2,1,get_transfer,"{""account_id"":""PS100124"",""transfer_id"":""TRF401841""}",ok,1564,41,3.3
+RQ011-v2,2,check_reversal_eligibility,"{""account_id"":""PS100124"",""transfer_id"":""TRF401841""}",ok,1828,40,2.5
+RQ011-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2084,129,4.1
+RQ012-v1,1,get_transfer,"{""transfer_id"":""TRF401808""}",ok,1000,38,3
+RQ012-v1,2,reply,"{""message"":""(reply to customer)""}",ok,1235,127,3.7
+RQ012-v2,1,get_transfer,"{""account_id"":""PS100004"",""transfer_id"":""TRF401808""}",ok,1576,55,3.1
+RQ012-v2,2,check_reversal_eligibility,"{""account_id"":""PS100004"",""transfer_id"":""TRF401808""}",ok,1853,42,2.8
+RQ012-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2120,115,3.5
+RQ013-v1,1,get_transfer,"{""transfer_id"":""TRF401803""}",ok,962,45,3.3
+RQ013-v1,2,open_transfer_case,"{""transfer_id"":""TRF401803""}",ok,1256,32,2.9
+RQ013-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1508,64,2.3
+RQ013-v2,1,get_transfer,"{""account_id"":""PS100032"",""transfer_id"":""TRF401803""}",ok,1574,48,2.8
+RQ013-v2,2,check_reversal_eligibility,"{""account_id"":""PS100032"",""transfer_id"":""TRF401803""}",ok,1849,35,2.6
+RQ013-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2102,67,2.9
+RQ014-v1,1,get_transfer,"{""transfer_id"":""TRF401821""}",ok,964,56,2.8
+RQ014-v1,2,reply,"{""message"":""(reply to customer)""}",ok,1246,72,3.1
+RQ014-v2,1,get_transfer,"{""account_id"":""PS100256"",""transfer_id"":""TRF401821""}",ok,1560,34,2.7
+RQ014-v2,2,check_reversal_eligibility,"{""account_id"":""PS100256"",""transfer_id"":""TRF401821""}",ok,1831,30,2.7
+RQ014-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2116,137,3.8
+RQ015-v1,1,get_transfer,"{""transfer_id"":""TRF401828""}",ok,989,37,2.9
+RQ015-v1,2,open_transfer_case,"{""transfer_id"":""TRF401828""}",ok,1239,52,3.1
+RQ015-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1501,140,4
+RQ015-v2,1,get_transfer,"{""account_id"":""PS100204"",""transfer_id"":""TRF401828""}",ok,1582,52,3
+RQ015-v2,2,check_reversal_eligibility,"{""account_id"":""PS100204"",""transfer_id"":""TRF401828""}",ok,1854,57,3.5
+RQ015-v2,3,open_transfer_case,"{""account_id"":""PS100204"",""transfer_id"":""TRF401828""}",ok,2108,36,2.6
+RQ015-v2,4,reply,"{""message"":""(reply to customer)""}",ok,2358,80,3.1
+RQ016-v1,1,open_transfer_case,"{""transfer_id"":""TRF401830""}",ok,999,30,3.3
+RQ016-v1,2,reply,"{""message"":""(reply to customer)""}",ok,1223,129,3.4
+RQ016-v2,1,get_transfer,"{""account_id"":""PS100304"",""transfer_id"":""TRF401830""}",ok,1560,49,3.3
+RQ016-v2,2,check_reversal_eligibility,"{""account_id"":""PS100304"",""transfer_id"":""TRF401830""}",ok,1859,45,3.2
+RQ016-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2098,99,3.3
+RQ017-v1,1,get_transfer,"{""transfer_id"":""TRF401806""}",ok,965,60,3.5
+RQ017-v1,2,issue_refund,"{""transfer_id"":""TRF401806"",""amount_ngn"":5000}",ok,1248,43,2.5
+RQ017-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1504,106,3.4
+RQ017-v2,1,get_transfer,"{""account_id"":""PS100280"",""transfer_id"":""TRF401806""}",error,1569,60,3.1
+RQ017-v2,2,get_transfer,"{""account_id"":""PS100280"",""transfer_id"":""TRF401806""}",ok,1829,59,2.8
+RQ017-v2,3,check_reversal_eligibility,"{""account_id"":""PS100280"",""transfer_id"":""TRF401806""}",ok,2111,60,2.8
+RQ017-v2,4,open_transfer_case,"{""account_id"":""PS100280"",""transfer_id"":""TRF401806""}",ok,2371,41,3.1
+RQ017-v2,5,reply,"{""message"":""(reply to customer)""}",ok,2632,95,3.5
+RQ018-v1,1,open_transfer_case,"{""transfer_id"":""TRF401832""}",ok,963,51,3
+RQ018-v1,2,reply,"{""message"":""(reply to customer)""}",ok,1257,139,4.2
+RQ018-v2,1,get_transfer,"{""account_id"":""PS100389"",""transfer_id"":""TRF401832""}",ok,1585,28,2.9
+RQ018-v2,2,check_reversal_eligibility,"{""account_id"":""PS100389"",""transfer_id"":""TRF401832""}",ok,1826,38,2.8
+RQ018-v2,3,open_transfer_case,"{""account_id"":""PS100389"",""transfer_id"":""TRF401832""}",ok,2083,43,2.7
+RQ018-v2,4,reply,"{""message"":""(reply to customer)""}",ok,2378,127,3.6
+RQ019-v1,1,open_transfer_case,"{""transfer_id"":""TRF401813""}",ok,961,50,3.4
+RQ019-v1,2,reply,"{""message"":""(reply to customer)""}",ok,1238,84,2.7
+RQ019-v2,1,get_transfer,"{""account_id"":""PS100271"",""transfer_id"":""TRF401813""}",ok,1563,59,3.5
+RQ019-v2,2,check_reversal_eligibility,"{""account_id"":""PS100271"",""transfer_id"":""TRF401813""}",ok,1825,32,3.1
+RQ019-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2113,83,3.1
+RQ020-v1,1,open_transfer_case,"{""transfer_id"":""TRF401838""}",ok,971,41,2.5
+RQ020-v1,2,reply,"{""message"":""(reply to customer)""}",ok,1240,80,2.9
+RQ020-v2,1,get_transfer,"{""account_id"":""PS100060"",""transfer_id"":""TRF401838""}",ok,1597,46,3.5
+RQ020-v2,2,check_reversal_eligibility,"{""account_id"":""PS100060"",""transfer_id"":""TRF401838""}",ok,1840,29,2.7
+RQ020-v2,3,escalate,"{""team"":""support"",""summary"":""Unsure how to help""}",ok,2108,53,2.9
+RQ020-v2,4,reply,"{""message"":""(reply to customer)""}",ok,2362,116,3.2
+RQ021-v1,1,get_transfer,"{""transfer_id"":""TRF401895""}",ok,989,44,3.2
+RQ021-v1,2,escalate,"{""team"":""support"",""summary"":""Wrong recipient on TRF401895""}",ok,1256,26,3.1
+RQ021-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1498,96,3
+RQ021-v2,1,get_transfer,"{""account_id"":""PS100138"",""transfer_id"":""TRF401895""}",ok,1588,57,3
+RQ021-v2,2,escalate,"{""team"":""support"",""summary"":""Wrong recipient on TRF401895""}",ok,1859,48,3.3
+RQ021-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2096,125,4
+RQ022-v1,1,open_transfer_case,"{""transfer_id"":""TRF401822""}",ok,964,46,2.7
+RQ022-v1,2,reply,"{""message"":""(reply to customer)""}",ok,1256,72,2.5
+RQ022-v2,1,get_transfer,"{""account_id"":""PS100054"",""transfer_id"":""TRF401822""}",ok,1588,52,2.9
+RQ022-v2,2,check_reversal_eligibility,"{""account_id"":""PS100054"",""transfer_id"":""TRF401822""}",ok,1833,60,3.1
+RQ022-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2101,123,3.6
+RQ023-v1,1,get_transfer,"{""transfer_id"":""TRF401826""}",error,998,52,2.6
+RQ023-v1,2,get_transfer,"{""transfer_id"":""TRF401826""}",ok,1236,59,2.9
+RQ023-v1,3,open_transfer_case,"{""transfer_id"":""TRF401826""}",ok,1511,30,2.8
+RQ023-v1,4,reply,"{""message"":""(reply to customer)""}",ok,1751,132,3.7
+RQ023-v2,1,get_transfer,"{""account_id"":""PS100392"",""transfer_id"":""TRF401826""}",ok,1565,43,2.7
+RQ023-v2,2,check_reversal_eligibility,"{""account_id"":""PS100392"",""transfer_id"":""TRF401826""}",ok,1858,34,3
+RQ023-v2,3,open_transfer_case,"{""account_id"":""PS100392"",""transfer_id"":""TRF401826""}",ok,2089,57,3.5
+RQ023-v2,4,reply,"{""message"":""(reply to customer)""}",ok,2364,126,3.6
+RQ024-v1,1,get_transfer,"{""transfer_id"":""TRF401898""}",ok,981,34,2.7
+RQ024-v1,2,escalate,"{""team"":""support"",""summary"":""Wrong recipient on TRF401898""}",ok,1250,38,2.6
+RQ024-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1514,60,2.8
+RQ024-v2,1,get_transfer,"{""account_id"":""PS100042"",""transfer_id"":""TRF401898""}",ok,1583,47,2.7
+RQ024-v2,2,escalate,"{""team"":""support"",""summary"":""Wrong recipient on TRF401898""}",ok,1849,27,2.9
+RQ024-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2094,119,3.6
+RQ025-v1,1,get_transfer,"{""transfer_id"":""TRF401886""}",ok,965,32,3
+RQ025-v1,2,issue_refund,"{""transfer_id"":""TRF401886"",""amount_ngn"":277000}",ok,1239,41,3.1
+RQ025-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1515,84,2.9
+RQ025-v2,1,get_transfer,"{""account_id"":""PS100382"",""transfer_id"":""TRF401886""}",ok,1591,41,3.3
+RQ025-v2,2,escalate,"{""team"":""support"",""summary"":""Wrong recipient on TRF401886""}",ok,1828,56,3
+RQ025-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2103,77,2.9
+RQ026-v1,1,get_transfer,"{""transfer_id"":""TRF401876""}",ok,985,38,2.8
+RQ026-v1,2,escalate,"{""team"":""fraud"",""summary"":""Customer reports TRF401876 as unauthorised""}",ok,1252,35,2.5
+RQ026-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1511,104,3.7
+RQ026-v2,1,get_transfer,"{""account_id"":""PS100088"",""transfer_id"":""TRF401876""}",ok,1596,42,3.4
+RQ026-v2,2,escalate,"{""team"":""fraud"",""summary"":""Customer reports TRF401876 as unauthorised""}",ok,1854,57,3.6
+RQ026-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2118,107,3.6
+RQ027-v1,1,get_transfer,"{""transfer_id"":""TRF401893""}",ok,981,41,2.9
+RQ027-v1,2,escalate,"{""team"":""support"",""summary"":""Wrong recipient on TRF401893""}",ok,1249,35,2.4
+RQ027-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1508,88,3.1
+RQ027-v2,1,get_transfer,"{""account_id"":""PS100220"",""transfer_id"":""TRF401893""}",ok,1578,37,3
+RQ027-v2,2,escalate,"{""team"":""support"",""summary"":""Wrong recipient on TRF401893""}",ok,1839,41,2.9
+RQ027-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2104,114,3.2
+RQ028-v1,1,get_transfer,"{""transfer_id"":""TRF401824""}",ok,964,25,2.6
+RQ028-v1,2,open_transfer_case,"{""transfer_id"":""TRF401824""}",ok,1252,60,3.1
+RQ028-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1514,94,2.8
+RQ028-v2,1,get_transfer,"{""account_id"":""PS100338"",""transfer_id"":""TRF401824""}",ok,1587,34,2.9
+RQ028-v2,2,check_reversal_eligibility,"{""account_id"":""PS100338"",""transfer_id"":""TRF401824""}",ok,1846,36,3.3
+RQ028-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2110,92,3.1
+RQ029-v1,1,get_transfer,"{""transfer_id"":""TRF401871""}",ok,966,43,2.6
+RQ029-v1,2,escalate,"{""team"":""fraud"",""summary"":""Customer reports TRF401871 as unauthorised""}",ok,1249,38,2.9
+RQ029-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1488,109,3.3
+RQ029-v2,1,get_transfer,"{""account_id"":""PS100253"",""transfer_id"":""TRF401871""}",ok,1569,53,3.6
+RQ029-v2,2,escalate,"{""team"":""fraud"",""summary"":""Customer reports TRF401871 as unauthorised""}",ok,1824,35,2.8
+RQ029-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2090,70,2.9
+RQ030-v1,1,open_transfer_case,"{""transfer_id"":""TRF401831""}",ok,988,44,2.7
+RQ030-v1,2,reply,"{""message"":""(reply to customer)""}",ok,1228,92,3
+RQ030-v2,1,get_transfer,"{""account_id"":""PS100122"",""transfer_id"":""TRF401831""}",ok,1562,35,2.5
+RQ030-v2,2,check_reversal_eligibility,"{""account_id"":""PS100122"",""transfer_id"":""TRF401831""}",ok,1847,55,3
+RQ030-v2,3,open_transfer_case,"{""account_id"":""PS100122"",""transfer_id"":""TRF401831""}",ok,2101,47,3.2
+RQ030-v2,4,reply,"{""message"":""(reply to customer)""}",ok,2378,106,3.7
+RQ031-v1,1,get_transfer,"{""transfer_id"":""TRF401883""}",ok,966,53,3.1
+RQ031-v1,2,escalate,"{""team"":""fraud"",""summary"":""Customer reports TRF401883 as unauthorised""}",ok,1235,49,3.4
+RQ031-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1483,119,3.7
+RQ031-v2,1,get_transfer,"{""account_id"":""PS100045"",""transfer_id"":""TRF401883""}",ok,1571,45,2.6
+RQ031-v2,2,escalate,"{""team"":""fraud"",""summary"":""Customer reports TRF401883 as unauthorised""}",ok,1852,37,2.4
+RQ031-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2106,127,3.9
+RQ032-v1,1,get_transfer,"{""transfer_id"":""TRF401885""}",ok,988,54,3.1
+RQ032-v1,2,escalate,"{""team"":""support"",""summary"":""Wrong recipient on TRF401885""}",ok,1239,57,3.3
+RQ032-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1495,121,3.5
+RQ032-v2,1,get_transfer,"{""account_id"":""PS100376"",""transfer_id"":""TRF401885""}",ok,1572,43,2.3
+RQ032-v2,2,escalate,"{""team"":""support"",""summary"":""Wrong recipient on TRF401885""}",ok,1854,58,3
+RQ032-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2113,71,3.2
+RQ033-v1,1,get_transfer,"{""transfer_id"":""TRF401844""}",ok,972,57,2.8
+RQ033-v1,2,open_transfer_case,"{""transfer_id"":""TRF401844""}",ok,1238,52,3
+RQ033-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1511,83,2.8
+RQ033-v2,1,get_transfer,"{""account_id"":""PS100012"",""transfer_id"":""TRF401844""}",ok,1585,28,2.3
+RQ033-v2,2,check_reversal_eligibility,"{""account_id"":""PS100012"",""transfer_id"":""TRF401844""}",ok,1854,30,2.4
+RQ033-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2098,139,4.1
+RQ034-v1,1,get_transfer,"{""transfer_id"":""TRF401817""}",error,975,49,3.1
+RQ034-v1,2,get_transfer,"{""transfer_id"":""TRF401817""}",ok,1232,37,2.3
+RQ034-v1,3,open_transfer_case,"{""transfer_id"":""TRF401817""}",ok,1483,26,2.8
+RQ034-v1,4,reply,"{""message"":""(reply to customer)""}",ok,1755,105,3.2
+RQ034-v2,1,get_transfer,"{""account_id"":""PS100207"",""transfer_id"":""TRF401817""}",ok,1576,29,2.4
+RQ034-v2,2,check_reversal_eligibility,"{""account_id"":""PS100207"",""transfer_id"":""TRF401817""}",ok,1820,50,3
+RQ034-v2,3,open_transfer_case,"{""account_id"":""PS100207"",""transfer_id"":""TRF401817""}",ok,2119,34,3.1
+RQ034-v2,4,reply,"{""message"":""(reply to customer)""}",ok,2375,69,3
+RQ035-v1,1,get_transfer,"{""transfer_id"":""TRF401894""}",ok,991,51,2.9
+RQ035-v1,2,escalate,"{""team"":""support"",""summary"":""Wrong recipient on TRF401894""}",ok,1236,37,2.5
+RQ035-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1515,100,3.5
+RQ035-v2,1,get_transfer,"{""account_id"":""PS100326"",""transfer_id"":""TRF401894""}",ok,1599,37,2.9
+RQ035-v2,2,escalate,"{""team"":""support"",""summary"":""Wrong recipient on TRF401894""}",ok,1827,51,3.3
+RQ035-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2081,138,3.8
+RQ036-v1,1,get_transfer,"{""transfer_id"":""TRF401807""}",ok,960,49,3.2
+RQ036-v1,2,reply,"{""message"":""(reply to customer)""}",ok,1245,111,3.5
+RQ036-v2,1,get_transfer,"{""account_id"":""PS100019"",""transfer_id"":""TRF401807""}",ok,1577,27,2.9
+RQ036-v2,2,check_reversal_eligibility,"{""account_id"":""PS100019"",""transfer_id"":""TRF401807""}",ok,1843,53,3.4
+RQ036-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2104,81,2.6
+RQ037-v1,1,get_transfer,"{""transfer_id"":""TRF401869""}",ok,983,45,3.2
+RQ037-v1,2,escalate,"{""team"":""fraud"",""summary"":""Customer reports TRF401869 as unauthorised""}",ok,1256,51,3.1
+RQ037-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1520,87,3.4
+RQ037-v2,1,get_transfer,"{""account_id"":""PS100116"",""transfer_id"":""TRF401869""}",ok,1588,54,3.1
+RQ037-v2,2,escalate,"{""team"":""fraud"",""summary"":""Customer reports TRF401869 as unauthorised""}",ok,1855,47,2.9
+RQ037-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2105,84,2.7
+RQ038-v1,1,get_transfer,"{""transfer_id"":""TRF401872""}",ok,971,56,3.1
+RQ038-v1,2,escalate,"{""team"":""fraud"",""summary"":""Customer reports TRF401872 as unauthorised""}",ok,1254,32,2.8
+RQ038-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1492,107,3.1
+RQ038-v2,1,get_transfer,"{""account_id"":""PS100165"",""transfer_id"":""TRF401872""}",ok,1590,28,2.2
+RQ038-v2,2,escalate,"{""team"":""fraud"",""summary"":""Customer reports TRF401872 as unauthorised""}",ok,1837,50,3
+RQ038-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2109,128,3.5
+RQ039-v1,1,get_account,"{""account_id"":""PS100005""}",ok,996,33,2.7
+RQ039-v1,2,reply,"{""message"":""(reply to customer)""}",ok,1253,72,3.2
+RQ039-v2,1,get_account,"{""account_id"":""PS100005""}",ok,1575,53,2.8
+RQ039-v2,2,reply,"{""message"":""(reply to customer)""}",ok,1852,63,3
+RQ040-v1,1,get_transfer,"{""transfer_id"":""TRF401882""}",ok,982,25,2.6
+RQ040-v1,2,escalate,"{""team"":""fraud"",""summary"":""Customer reports TRF401882 as unauthorised""}",ok,1221,55,3.1
+RQ040-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1480,117,3.8
+RQ040-v2,1,get_transfer,"{""account_id"":""PS100007"",""transfer_id"":""TRF401882""}",ok,1589,45,3.1
+RQ040-v2,2,escalate,"{""team"":""fraud"",""summary"":""Customer reports TRF401882 as unauthorised""}",ok,1836,26,2.8
+RQ040-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2084,125,3.4
+RQ041-v1,1,get_transfer,"{""transfer_id"":""TRF401892""}",ok,975,36,2.5
+RQ041-v1,2,escalate,"{""team"":""support"",""summary"":""Wrong recipient on TRF401892""}",ok,1240,27,2.3
+RQ041-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1504,129,3.6
+RQ041-v2,1,get_transfer,"{""account_id"":""PS100177"",""transfer_id"":""TRF401892""}",ok,1597,59,3
+RQ041-v2,2,escalate,"{""team"":""support"",""summary"":""Wrong recipient on TRF401892""}",ok,1831,51,3.2
+RQ041-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2103,127,3.5
+RQ042-v1,1,get_transfer,"{""transfer_id"":""TRF401866""}",ok,977,50,2.5
+RQ042-v1,2,escalate,"{""team"":""fraud"",""summary"":""Customer reports TRF401866 as unauthorised""}",ok,1260,29,2.9
+RQ042-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1497,117,3.5
+RQ042-v2,1,get_transfer,"{""account_id"":""PS100308"",""transfer_id"":""TRF401866""}",ok,1597,51,2.8
+RQ042-v2,2,escalate,"{""team"":""fraud"",""summary"":""Customer reports TRF401866 as unauthorised""}",ok,1840,43,2.7
+RQ042-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2088,131,4.1
+RQ043-v1,1,get_account,"{""account_id"":""PS100263""}",ok,986,46,2.9
+RQ043-v1,2,reply,"{""message"":""(reply to customer)""}",ok,1229,110,3.5
+RQ043-v2,1,get_account,"{""account_id"":""PS100263""}",ok,1565,35,3.1
+RQ043-v2,2,reply,"{""message"":""(reply to customer)""}",ok,1827,94,3.1
+RQ044-v1,1,get_transfer,"{""transfer_id"":""TRF401825""}",ok,976,25,2.2
+RQ044-v1,2,open_transfer_case,"{""transfer_id"":""TRF401825""}",ok,1228,42,3.1
+RQ044-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1498,124,3.8
+RQ044-v2,1,get_transfer,"{""account_id"":""PS100201"",""transfer_id"":""TRF401825""}",ok,1599,57,3.5
+RQ044-v2,2,check_reversal_eligibility,"{""account_id"":""PS100201"",""transfer_id"":""TRF401825""}",ok,1849,54,3.1
+RQ044-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2117,106,3.5
+RQ045-v1,1,get_transfer,"{""transfer_id"":""TRF401415""}",ok,981,51,3
+RQ045-v1,2,reply,"{""message"":""(reply to customer)""}",ok,1234,112,3.2
+RQ045-v2,1,get_transfer,"{""account_id"":""PS100159"",""transfer_id"":""TRF401415""}",not_found,1579,43,3.5
+RQ045-v2,2,reply,"{""message"":""(reply to customer)""}",ok,1830,118,3.6
+RQ046-v1,1,get_transfer,"{""transfer_id"":""TRF401888""}",ok,995,50,3.5
+RQ046-v1,2,escalate,"{""team"":""support"",""summary"":""Wrong recipient on TRF401888""}",ok,1225,26,2.8
+RQ046-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1504,77,3.3
+RQ046-v2,1,get_transfer,"{""account_id"":""PS100109"",""transfer_id"":""TRF401888""}",ok,1592,29,2.5
+RQ046-v2,2,escalate,"{""team"":""support"",""summary"":""Wrong recipient on TRF401888""}",ok,1844,38,2.4
+RQ046-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2103,136,3.7
+RQ047-v1,1,get_transfer,"{""transfer_id"":""TRF400806""}",ok,995,39,3.2
+RQ047-v1,2,open_transfer_case,"{""transfer_id"":""TRF400806""}",ok,1244,41,3.5
+RQ047-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1496,118,3.6
+RQ047-v2,1,get_transfer,"{""account_id"":""PS100090"",""transfer_id"":""TRF400806""}",not_found,1578,43,3.3
+RQ047-v2,2,escalate,"{""team"":""support"",""summary"":""Unsure how to help""}",ok,1840,37,2.7
+RQ047-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2087,96,3.3
+RQ048-v1,1,open_transfer_case,"{""transfer_id"":""TRF401834""}",ok,997,56,3.5
+RQ048-v1,2,reply,"{""message"":""(reply to customer)""}",ok,1244,101,3.7
+RQ048-v2,1,get_transfer,"{""account_id"":""PS100138"",""transfer_id"":""TRF401834""}",ok,1569,39,2.2
+RQ048-v2,2,check_reversal_eligibility,"{""account_id"":""PS100138"",""transfer_id"":""TRF401834""}",ok,1827,58,3.8
+RQ048-v2,3,open_transfer_case,"{""account_id"":""PS100138"",""transfer_id"":""TRF401834""}",ok,2087,38,2.9
+RQ048-v2,4,reply,"{""message"":""(reply to customer)""}",ok,2376,75,2.6
+RQ049-v1,1,get_transfer,"{""transfer_id"":""TRF401881""}",ok,994,55,3.4
+RQ049-v1,2,escalate,"{""team"":""fraud"",""summary"":""Customer reports TRF401881 as unauthorised""}",ok,1225,49,3.1
+RQ049-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1482,133,4.1
+RQ049-v2,1,get_transfer,"{""account_id"":""PS100258"",""transfer_id"":""TRF401881""}",ok,1586,34,2.2
+RQ049-v2,2,escalate,"{""team"":""fraud"",""summary"":""Customer reports TRF401881 as unauthorised""}",ok,1823,52,3.5
+RQ049-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2108,72,2.8
+RQ050-v1,1,open_transfer_case,"{""transfer_id"":""TRF401815""}",ok,989,52,3.3
+RQ050-v1,2,reply,"{""message"":""(reply to customer)""}",ok,1242,113,3.7
+RQ050-v2,1,get_transfer,"{""account_id"":""PS100357"",""transfer_id"":""TRF401815""}",ok,1585,25,2.9
+RQ050-v2,2,check_reversal_eligibility,"{""account_id"":""PS100357"",""transfer_id"":""TRF401815""}",ok,1834,55,3.4
+RQ050-v2,3,open_transfer_case,"{""account_id"":""PS100357"",""transfer_id"":""TRF401815""}",ok,2081,31,2.6
+RQ050-v2,4,reply,"{""message"":""(reply to customer)""}",ok,2365,84,3.3
+RQ051-v1,1,get_account,"{""account_id"":""PS100084""}",ok,980,60,3.4
+RQ051-v1,2,reply,"{""message"":""(reply to customer)""}",ok,1251,127,4
+RQ051-v2,1,get_account,"{""account_id"":""PS100084""}",ok,1579,27,2.1
+RQ051-v2,2,reply,"{""message"":""(reply to customer)""}",ok,1843,98,3.1
+RQ052-v1,1,get_transfer,"{""transfer_id"":""TRF401835""}",ok,997,55,2.8
+RQ052-v1,2,open_transfer_case,"{""transfer_id"":""TRF401835""}",ok,1234,50,3.2
+RQ052-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1520,109,3.3
+RQ052-v2,1,get_transfer,"{""account_id"":""PS100223"",""transfer_id"":""TRF401835""}",ok,1586,45,2.7
+RQ052-v2,2,check_reversal_eligibility,"{""account_id"":""PS100223"",""transfer_id"":""TRF401835""}",ok,1845,58,3
+RQ052-v2,3,open_transfer_case,"{""account_id"":""PS100223"",""transfer_id"":""TRF401835""}",ok,2082,50,2.8
+RQ052-v2,4,reply,"{""message"":""(reply to customer)""}",ok,2358,60,2.9
+RQ053-v1,1,get_transfer,"{""transfer_id"":""TRF401880""}",ok,966,32,2.6
+RQ053-v1,2,escalate,"{""team"":""fraud"",""summary"":""Customer reports TRF401880 as unauthorised""}",ok,1249,53,2.9
+RQ053-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1495,80,2.9
+RQ053-v2,1,get_transfer,"{""account_id"":""PS100259"",""transfer_id"":""TRF401880""}",ok,1570,50,3.3
+RQ053-v2,2,escalate,"{""team"":""fraud"",""summary"":""Customer reports TRF401880 as unauthorised""}",ok,1854,43,3
+RQ053-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2093,77,2.9
+RQ054-v1,1,get_transfer,"{""transfer_id"":""TRF401884""}",ok,974,37,2.9
+RQ054-v1,2,issue_refund,"{""transfer_id"":""TRF401884"",""amount_ngn"":84000}",ok,1249,44,2.9
+RQ054-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1515,108,3
+RQ054-v2,1,get_transfer,"{""account_id"":""PS100256"",""transfer_id"":""TRF401884""}",ok,1571,53,2.9
+RQ054-v2,2,escalate,"{""team"":""support"",""summary"":""Wrong recipient on TRF401884""}",ok,1839,42,3.4
+RQ054-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2089,89,2.9
+RQ055-v1,1,get_transfer,"{""transfer_id"":""TRF401890""}",ok,988,30,3.2
+RQ055-v1,2,escalate,"{""team"":""support"",""summary"":""Wrong recipient on TRF401890""}",ok,1225,57,3.7
+RQ055-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1519,85,3
+RQ055-v2,1,get_transfer,"{""account_id"":""PS100197"",""transfer_id"":""TRF401890""}",ok,1570,49,3.2
+RQ055-v2,2,escalate,"{""team"":""support"",""summary"":""Wrong recipient on TRF401890""}",ok,1834,27,2.6
+RQ055-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2117,113,3.7
+RQ056-v1,1,get_transfer,"{""transfer_id"":""TRF797405""}",not_found,997,46,3.4
+RQ056-v1,2,get_transfer,"{""transfer_id"":""TRF797405""}",not_found,1234,41,3.1
+RQ056-v1,3,get_transfer,"{""transfer_id"":""TRF797405""}",not_found,1510,45,2.9
+RQ056-v1,4,get_transfer,"{""transfer_id"":""TRF797405""}",not_found,1745,51,2.7
+RQ056-v1,5,get_transfer,"{""transfer_id"":""TRF797405""}",not_found,2032,53,3.4
+RQ056-v1,6,get_transfer,"{""transfer_id"":""TRF797405""}",not_found,2273,44,2.9
+RQ056-v1,7,get_transfer,"{""transfer_id"":""TRF797405""}",not_found,2560,33,2.5
+RQ056-v1,8,get_transfer,"{""transfer_id"":""TRF797405""}",not_found,2814,53,2.6
+RQ056-v1,9,get_transfer,"{""transfer_id"":""TRF797405""}",not_found,3048,47,2.7
+RQ056-v1,10,get_transfer,"{""transfer_id"":""TRF797405""}",not_found,3313,60,3.1
+RQ056-v1,11,get_transfer,"{""transfer_id"":""TRF797405""}",not_found,3586,59,2.6
+RQ056-v1,12,get_transfer,"{""transfer_id"":""TRF797405""}",not_found,3838,46,2.9
+RQ056-v1,13,get_transfer,"{""transfer_id"":""TRF797405""}",not_found,4089,60,3.2
+RQ056-v1,14,get_transfer,"{""transfer_id"":""TRF797405""}",not_found,4341,29,2.7
+RQ056-v2,1,get_transfer,"{""account_id"":""PS100176"",""transfer_id"":""TRF797405""}",not_found,1579,49,2.9
+RQ056-v2,2,get_transfer,"{""account_id"":""PS100176"",""transfer_id"":""TRF797405""}",not_found,1843,33,2.9
+RQ056-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2093,140,4.2
+RQ057-v1,1,open_transfer_case,"{""transfer_id"":""TRF401804""}",ok,966,56,2.9
+RQ057-v1,2,reply,"{""message"":""(reply to customer)""}",ok,1259,124,3.8
+RQ057-v2,1,get_transfer,"{""account_id"":""PS100081"",""transfer_id"":""TRF401804""}",ok,1598,37,2.8
+RQ057-v2,2,check_reversal_eligibility,"{""account_id"":""PS100081"",""transfer_id"":""TRF401804""}",ok,1840,30,2.9
+RQ057-v2,3,open_transfer_case,"{""account_id"":""PS100081"",""transfer_id"":""TRF401804""}",ok,2080,55,2.8
+RQ057-v2,4,reply,"{""message"":""(reply to customer)""}",ok,2377,126,3.4
+RQ058-v1,1,get_account,"{""account_id"":""PS100036""}",ok,973,36,3.4
+RQ058-v1,2,reply,"{""message"":""(reply to customer)""}",ok,1257,98,3.5
+RQ058-v2,1,get_account,"{""account_id"":""PS100036""}",ok,1574,25,2.2
+RQ058-v2,2,reply,"{""message"":""(reply to customer)""}",ok,1847,88,3
+RQ059-v1,1,get_transfer,"{""transfer_id"":""TRF400252""}",ok,990,37,2.6
+RQ059-v1,2,open_transfer_case,"{""transfer_id"":""TRF400252""}",ok,1245,54,3.2
+RQ059-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1509,100,3.5
+RQ059-v2,1,get_transfer,"{""account_id"":""PS100030"",""transfer_id"":""TRF400252""}",not_found,1600,35,3.1
+RQ059-v2,2,reply,"{""message"":""(reply to customer)""}",ok,1844,131,3.5
+RQ060-v1,1,get_account,"{""account_id"":""PS100256""}",ok,987,48,2.8
+RQ060-v1,2,reply,"{""message"":""(reply to customer)""}",ok,1223,96,3.2
+RQ060-v2,1,get_account,"{""account_id"":""PS100256""}",ok,1562,50,3
+RQ060-v2,2,reply,"{""message"":""(reply to customer)""}",ok,1851,71,2.9
+RQ061-v1,1,get_account,"{""account_id"":""PS100154""}",ok,994,53,2.7
+RQ061-v1,2,reply,"{""message"":""(reply to customer)""}",ok,1247,86,2.8
+RQ061-v2,1,get_account,"{""account_id"":""PS100154""}",ok,1582,46,2.8
+RQ061-v2,2,reply,"{""message"":""(reply to customer)""}",ok,1840,95,3.1
+RQ062-v1,1,get_transfer,"{""transfer_id"":""TRF401874""}",ok,990,48,2.6
+RQ062-v1,2,escalate,"{""team"":""fraud"",""summary"":""Customer reports TRF401874 as unauthorised""}",ok,1257,50,2.6
+RQ062-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1489,129,3.9
+RQ062-v2,1,get_transfer,"{""account_id"":""PS100263"",""transfer_id"":""TRF401874""}",ok,1599,44,2.7
+RQ062-v2,2,escalate,"{""team"":""fraud"",""summary"":""Customer reports TRF401874 as unauthorised""}",ok,1854,54,3.1
+RQ062-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2097,61,2.7
+RQ063-v1,1,get_transfer,"{""transfer_id"":""TRF401896""}",ok,966,35,3.3
+RQ063-v1,2,escalate,"{""team"":""support"",""summary"":""Wrong recipient on TRF401896""}",ok,1255,50,3
+RQ063-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1519,112,3.5
+RQ063-v2,1,get_transfer,"{""account_id"":""PS100165"",""transfer_id"":""TRF401896""}",ok,1572,32,2.4
+RQ063-v2,2,escalate,"{""team"":""support"",""summary"":""Wrong recipient on TRF401896""}",ok,1840,55,3.7
+RQ063-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2091,94,2.8
+RQ064-v1,1,get_account,"{""account_id"":""PS100088""}",ok,969,29,2.5
+RQ064-v1,2,reply,"{""message"":""(reply to customer)""}",ok,1236,110,3.3
+RQ064-v2,1,get_account,"{""account_id"":""PS100088""}",ok,1565,50,3.4
+RQ064-v2,2,reply,"{""message"":""(reply to customer)""}",ok,1852,84,3.2
+RQ065-v1,1,get_transfer,"{""transfer_id"":""TRF401823""}",error,993,54,3
+RQ065-v1,2,get_transfer,"{""transfer_id"":""TRF401823""}",ok,1244,26,2.1
+RQ065-v1,3,open_transfer_case,"{""transfer_id"":""TRF401823""}",ok,1506,49,3.2
+RQ065-v1,4,reply,"{""message"":""(reply to customer)""}",ok,1750,96,3.1
+RQ065-v2,1,get_transfer,"{""account_id"":""PS100011"",""transfer_id"":""TRF401823""}",ok,1588,59,3.7
+RQ065-v2,2,check_reversal_eligibility,"{""account_id"":""PS100011"",""transfer_id"":""TRF401823""}",ok,1849,31,2.9
+RQ065-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2105,128,3.8
+RQ066-v1,1,get_transfer,"{""transfer_id"":""TRF401818""}",ok,984,46,2.9
+RQ066-v1,2,open_transfer_case,"{""transfer_id"":""TRF401818""}",ok,1254,47,3
+RQ066-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1496,112,3.2
+RQ066-v2,1,get_transfer,"{""account_id"":""PS100088"",""transfer_id"":""TRF401818""}",ok,1569,37,3
+RQ066-v2,2,check_reversal_eligibility,"{""account_id"":""PS100088"",""transfer_id"":""TRF401818""}",ok,1823,58,3.1
+RQ066-v2,3,open_transfer_case,"{""account_id"":""PS100088"",""transfer_id"":""TRF401818""}",ok,2104,54,2.9
+RQ066-v2,4,reply,"{""message"":""(reply to customer)""}",ok,2354,115,3.7
+RQ067-v1,1,get_transfer,"{""transfer_id"":""TRF401810""}",ok,976,47,2.9
+RQ067-v1,2,open_transfer_case,"{""transfer_id"":""TRF401810""}",ok,1256,49,2.9
+RQ067-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1493,139,3.7
+RQ067-v2,1,get_transfer,"{""account_id"":""PS100035"",""transfer_id"":""TRF401810""}",ok,1582,48,3.1
+RQ067-v2,2,check_reversal_eligibility,"{""account_id"":""PS100035"",""transfer_id"":""TRF401810""}",ok,1846,52,3.1
+RQ067-v2,3,open_transfer_case,"{""account_id"":""PS100035"",""transfer_id"":""TRF401810""}",ok,2106,53,3.1
+RQ067-v2,4,reply,"{""message"":""(reply to customer)""}",ok,2364,139,3.9
+RQ068-v1,1,get_transfer,"{""transfer_id"":""TRF401802""}",error,963,60,3
+RQ068-v1,2,get_transfer,"{""transfer_id"":""TRF401802""}",ok,1244,33,2.9
+RQ068-v1,3,open_transfer_case,"{""transfer_id"":""TRF401802""}",ok,1513,40,3.1
+RQ068-v1,4,reply,"{""message"":""(reply to customer)""}",ok,1777,102,3.1
+RQ068-v2,1,get_transfer,"{""account_id"":""PS100274"",""transfer_id"":""TRF401802""}",ok,1582,48,3
+RQ068-v2,2,check_reversal_eligibility,"{""account_id"":""PS100274"",""transfer_id"":""TRF401802""}",ok,1837,32,2.9
+RQ068-v2,3,open_transfer_case,"{""account_id"":""PS100274"",""transfer_id"":""TRF401802""}",ok,2082,25,2.4
+RQ068-v2,4,reply,"{""message"":""(reply to customer)""}",ok,2361,106,3.7
+RQ069-v1,1,get_transfer,"{""transfer_id"":""TRF773909""}",not_found,965,31,3
+RQ069-v1,2,get_transfer,"{""transfer_id"":""TRF773909""}",not_found,1249,29,2.4
+RQ069-v1,3,get_transfer,"{""transfer_id"":""TRF773909""}",not_found,1495,56,3
+RQ069-v1,4,get_transfer,"{""transfer_id"":""TRF773909""}",not_found,1741,38,2.6
+RQ069-v1,5,get_transfer,"{""transfer_id"":""TRF773909""}",not_found,2012,35,2.6
+RQ069-v1,6,get_transfer,"{""transfer_id"":""TRF773909""}",not_found,2262,40,2.6
+RQ069-v1,7,get_transfer,"{""transfer_id"":""TRF773909""}",not_found,2560,32,2.8
+RQ069-v1,8,get_transfer,"{""transfer_id"":""TRF773909""}",not_found,2811,43,3
+RQ069-v1,9,get_transfer,"{""transfer_id"":""TRF773909""}",not_found,3054,52,2.6
+RQ069-v1,10,get_transfer,"{""transfer_id"":""TRF773909""}",not_found,3316,25,2.4
+RQ069-v1,11,get_transfer,"{""transfer_id"":""TRF773909""}",not_found,3598,57,2.9
+RQ069-v1,12,get_transfer,"{""transfer_id"":""TRF773909""}",not_found,3841,41,2.7
+RQ069-v1,13,get_transfer,"{""transfer_id"":""TRF773909""}",not_found,4090,48,2.6
+RQ069-v1,14,get_transfer,"{""transfer_id"":""TRF773909""}",not_found,4354,43,3.1
+RQ069-v2,1,get_transfer,"{""account_id"":""PS100221"",""transfer_id"":""TRF773909""}",not_found,1579,60,2.9
+RQ069-v2,2,reply,"{""message"":""(reply to customer)""}",ok,1838,116,3.3
+RQ070-v1,1,get_account,"{""account_id"":""PS100339""}",ok,995,52,2.9
+RQ070-v1,2,reply,"{""message"":""(reply to customer)""}",ok,1236,80,2.6
+RQ070-v2,1,get_account,"{""account_id"":""PS100339""}",ok,1561,45,2.6
+RQ070-v2,2,reply,"{""message"":""(reply to customer)""}",ok,1830,106,3.3
+RQ071-v1,1,get_account,"{""account_id"":""PS100356""}",ok,968,47,2.5
+RQ071-v1,2,reply,"{""message"":""(reply to customer)""}",ok,1253,63,2.3
+RQ071-v2,1,get_account,"{""account_id"":""PS100356""}",error,1569,38,3
+RQ071-v2,2,get_account,"{""account_id"":""PS100356""}",ok,1834,43,2.7
+RQ071-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2112,140,3.7
+RQ072-v1,1,get_account,"{""account_id"":""PS100094""}",ok,973,52,3
+RQ072-v1,2,freeze_card,"{""account_id"":""PS100094""}",ok,1249,53,3.1
+RQ072-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1505,87,3.2
+RQ072-v2,1,get_account,"{""account_id"":""PS100094""}",ok,1576,42,2.5
+RQ072-v2,2,freeze_card,"{""account_id"":""PS100094""}",ok,1844,58,3.6
+RQ072-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2082,102,2.9
+RQ073-v1,1,open_transfer_case,"{""transfer_id"":""TRF401820""}",ok,961,49,2.8
+RQ073-v1,2,reply,"{""message"":""(reply to customer)""}",ok,1234,110,3.7
+RQ073-v2,1,get_transfer,"{""account_id"":""PS100269"",""transfer_id"":""TRF401820""}",ok,1571,60,3.2
+RQ073-v2,2,check_reversal_eligibility,"{""account_id"":""PS100269"",""transfer_id"":""TRF401820""}",ok,1831,27,2.2
+RQ073-v2,3,open_transfer_case,"{""account_id"":""PS100269"",""transfer_id"":""TRF401820""}",ok,2120,55,3
+RQ073-v2,4,escalate,"{""team"":""support"",""summary"":""Unsure how to help""}",ok,2345,48,3.5
+RQ073-v2,5,reply,"{""message"":""(reply to customer)""}",ok,2625,92,3.4
+RQ074-v1,1,get_transfer,"{""transfer_id"":""TRF735553""}",not_found,974,60,3.3
+RQ074-v1,2,get_transfer,"{""transfer_id"":""TRF735553""}",not_found,1260,48,3.3
+RQ074-v1,3,get_transfer,"{""transfer_id"":""TRF735553""}",not_found,1520,58,3.1
+RQ074-v1,4,get_transfer,"{""transfer_id"":""TRF735553""}",not_found,1761,25,2.9
+RQ074-v1,5,get_transfer,"{""transfer_id"":""TRF735553""}",not_found,2006,31,2.6
+RQ074-v1,6,get_transfer,"{""transfer_id"":""TRF735553""}",not_found,2272,34,2.8
+RQ074-v1,7,get_transfer,"{""transfer_id"":""TRF735553""}",not_found,2550,54,3.1
+RQ074-v1,8,get_transfer,"{""transfer_id"":""TRF735553""}",not_found,2798,26,2.9
+RQ074-v1,9,get_transfer,"{""transfer_id"":""TRF735553""}",not_found,3078,39,2.7
+RQ074-v1,10,get_transfer,"{""transfer_id"":""TRF735553""}",not_found,3302,59,3.4
+RQ074-v1,11,get_transfer,"{""transfer_id"":""TRF735553""}",not_found,3598,43,3.2
+RQ074-v1,12,get_transfer,"{""transfer_id"":""TRF735553""}",not_found,3826,33,2.4
+RQ074-v1,13,get_transfer,"{""transfer_id"":""TRF735553""}",not_found,4086,51,3.3
+RQ074-v1,14,get_transfer,"{""transfer_id"":""TRF735553""}",not_found,4375,29,2.1
+RQ074-v2,1,get_transfer,"{""account_id"":""PS100395"",""transfer_id"":""TRF735553""}",not_found,1569,38,2.4
+RQ074-v2,2,reply,"{""message"":""(reply to customer)""}",ok,1847,75,2.9
+RQ075-v1,1,open_transfer_case,"{""transfer_id"":""TRF401811""}",ok,988,54,3
+RQ075-v1,2,reply,"{""message"":""(reply to customer)""}",ok,1222,65,2.9
+RQ075-v2,1,get_transfer,"{""account_id"":""PS100272"",""transfer_id"":""TRF401811""}",ok,1576,37,2.9
+RQ075-v2,2,check_reversal_eligibility,"{""account_id"":""PS100272"",""transfer_id"":""TRF401811""}",ok,1824,56,3
+RQ075-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2108,137,3.7
+RQ076-v1,1,get_transfer,"{""transfer_id"":""TRF795081""}",not_found,961,52,2.4
+RQ076-v1,2,reply,"{""message"":""(reply to customer)""}",ok,1240,80,2.6
+RQ076-v2,1,get_transfer,"{""account_id"":""PS100254"",""transfer_id"":""TRF795081""}",not_found,1576,49,2.8
+RQ076-v2,2,reply,"{""message"":""(reply to customer)""}",ok,1827,101,3.6
+RQ077-v1,1,get_transfer,"{""transfer_id"":""TRF401897""}",ok,996,49,2.7
+RQ077-v1,2,escalate,"{""team"":""support"",""summary"":""Wrong recipient on TRF401897""}",ok,1255,46,2.6
+RQ077-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1501,87,3.2
+RQ077-v2,1,get_transfer,"{""account_id"":""PS100162"",""transfer_id"":""TRF401897""}",ok,1580,29,2.2
+RQ077-v2,2,escalate,"{""team"":""support"",""summary"":""Wrong recipient on TRF401897""}",ok,1827,42,3.3
+RQ077-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2105,113,3.2
+RQ078-v1,1,get_account,"{""account_id"":""PS100318""}",ok,969,32,2.5
+RQ078-v1,2,reply,"{""message"":""(reply to customer)""}",ok,1257,133,3.8
+RQ078-v2,1,get_account,"{""account_id"":""PS100318""}",ok,1591,40,2.3
+RQ078-v2,2,reply,"{""message"":""(reply to customer)""}",ok,1838,99,3
+RQ079-v1,1,get_account,"{""account_id"":""PS100394""}",ok,963,50,3.1
+RQ079-v1,2,reply,"{""message"":""(reply to customer)""}",ok,1238,112,3.6
+RQ079-v2,1,get_account,"{""account_id"":""PS100394""}",ok,1600,38,2.4
+RQ079-v2,2,freeze_card,"{""account_id"":""PS100394""}",ok,1831,51,3.3
+RQ079-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2083,98,2.9
+RQ080-v1,1,get_account,"{""account_id"":""PS100392""}",ok,988,53,3.2
+RQ080-v1,2,freeze_card,"{""account_id"":""PS100392""}",ok,1260,48,2.3
+RQ080-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1508,72,2.8
+RQ080-v2,1,get_account,"{""account_id"":""PS100392""}",ok,1598,59,3.2
+RQ080-v2,2,reply,"{""message"":""(reply to customer)""}",ok,1841,98,3.2
+RQ081-v1,1,get_account,"{""account_id"":""PS100017""}",ok,972,33,3.1
+RQ081-v1,2,freeze_card,"{""account_id"":""PS100017""}",ok,1252,52,3.6
+RQ081-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1515,128,4
+RQ081-v2,1,get_account,"{""account_id"":""PS100017""}",ok,1598,40,2.6
+RQ081-v2,2,freeze_card,"{""account_id"":""PS100017""}",ok,1821,29,2.8
+RQ081-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2090,133,3.7
+RQ082-v1,1,get_transfer,"{""transfer_id"":""TRF401833""}",ok,961,54,3.3
+RQ082-v1,2,reply,"{""message"":""(reply to customer)""}",ok,1224,72,3.2
+RQ082-v2,1,get_transfer,"{""account_id"":""PS100063"",""transfer_id"":""TRF401833""}",ok,1562,45,3.4
+RQ082-v2,2,check_reversal_eligibility,"{""account_id"":""PS100063"",""transfer_id"":""TRF401833""}",ok,1824,37,2.9
+RQ082-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2105,97,3.2
+RQ083-v1,1,get_account,"{""account_id"":""PS100057""}",ok,973,33,2.3
+RQ083-v1,2,reply,"{""message"":""(reply to customer)""}",ok,1247,105,3.1
+RQ083-v2,1,get_account,"{""account_id"":""PS100057""}",ok,1563,31,2.9
+RQ083-v2,2,reply,"{""message"":""(reply to customer)""}",ok,1841,73,2.7
+RQ084-v1,1,get_transfer,"{""transfer_id"":""TRF401889""}",ok,971,41,2.6
+RQ084-v1,2,issue_refund,"{""transfer_id"":""TRF401889"",""amount_ngn"":35000}",ok,1221,32,2.7
+RQ084-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1505,126,3.9
+RQ084-v2,1,get_transfer,"{""account_id"":""PS100201"",""transfer_id"":""TRF401889""}",ok,1573,46,3.4
+RQ084-v2,2,escalate,"{""team"":""support"",""summary"":""Wrong recipient on TRF401889""}",ok,1846,49,2.7
+RQ084-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2117,95,3.5
+RQ085-v1,1,get_account,"{""account_id"":""PS100019""}",ok,969,54,3
+RQ085-v1,2,reply,"{""message"":""(reply to customer)""}",ok,1237,75,2.6
+RQ085-v2,1,get_account,"{""account_id"":""PS100019""}",ok,1588,41,3.5
+RQ085-v2,2,reply,"{""message"":""(reply to customer)""}",ok,1833,132,3.5
+RQ086-v1,1,get_account,"{""account_id"":""PS100354""}",ok,974,26,2.6
+RQ086-v1,2,freeze_card,"{""account_id"":""PS100354""}",ok,1223,46,3.1
+RQ086-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1480,130,3.4
+RQ086-v2,1,get_account,"{""account_id"":""PS100354""}",ok,1573,39,2.9
+RQ086-v2,2,freeze_card,"{""account_id"":""PS100354""}",ok,1856,41,2.4
+RQ086-v2,3,escalate,"{""team"":""support"",""summary"":""Unsure how to help""}",ok,2116,50,3.4
+RQ086-v2,4,reply,"{""message"":""(reply to customer)""}",ok,2361,89,3
+RQ087-v1,1,get_account,"{""account_id"":""PS100238""}",ok,994,29,3
+RQ087-v1,2,reply,"{""message"":""(reply to customer)""}",ok,1235,140,4.2
+RQ087-v2,1,get_account,"{""account_id"":""PS100238""}",ok,1588,49,2.8
+RQ087-v2,2,reply,"{""message"":""(reply to customer)""}",ok,1828,108,3.3
+RQ088-v1,1,get_account,"{""account_id"":""PS100173""}",ok,995,38,2.4
+RQ088-v1,2,freeze_card,"{""account_id"":""PS100173""}",ok,1239,52,3.1
+RQ088-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1497,63,2.5
+RQ088-v2,1,get_account,"{""account_id"":""PS100173""}",ok,1597,41,3.5
+RQ088-v2,2,reply,"{""message"":""(reply to customer)""}",ok,1827,91,3
+RQ089-v1,1,get_account,"{""account_id"":""PS100204""}",ok,985,59,2.6
+RQ089-v1,2,reply,"{""message"":""(reply to customer)""}",ok,1221,122,3.6
+RQ089-v2,1,get_account,"{""account_id"":""PS100204""}",ok,1580,39,2.7
+RQ089-v2,2,freeze_card,"{""account_id"":""PS100204""}",ok,1827,53,2.8
+RQ089-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2081,126,4
+RQ090-v1,1,get_account,"{""account_id"":""PS100278""}",ok,986,53,2.9
+RQ090-v1,2,reply,"{""message"":""(reply to customer)""}",ok,1255,135,4.2
+RQ090-v2,1,get_account,"{""account_id"":""PS100278""}",ok,1561,47,3.2
+RQ090-v2,2,reply,"{""message"":""(reply to customer)""}",ok,1854,70,2.6
+RQ091-v1,1,get_transfer,"{""transfer_id"":""TRF401878""}",ok,978,34,3.2
+RQ091-v1,2,open_transfer_case,"{""transfer_id"":""TRF401878""}",ok,1238,25,2.5
+RQ091-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1502,68,2.6
+RQ091-v2,1,get_transfer,"{""account_id"":""PS100340"",""transfer_id"":""TRF401878""}",ok,1569,53,3
+RQ091-v2,2,escalate,"{""team"":""fraud"",""summary"":""Customer reports TRF401878 as unauthorised""}",ok,1833,47,2.7
+RQ091-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2091,73,3.2
+RQ092-v1,1,get_transfer,"{""transfer_id"":""TRF401870""}",ok,987,33,3.2
+RQ092-v1,2,escalate,"{""team"":""fraud"",""summary"":""Customer reports TRF401870 as unauthorised""}",ok,1242,40,2.7
+RQ092-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1503,101,3.4
+RQ092-v2,1,get_transfer,"{""account_id"":""PS100285"",""transfer_id"":""TRF401870""}",ok,1579,48,3.3
+RQ092-v2,2,escalate,"{""team"":""fraud"",""summary"":""Customer reports TRF401870 as unauthorised""}",ok,1858,30,2.8
+RQ092-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2098,128,3.8
+RQ093-v1,1,get_transfer,"{""transfer_id"":""TRF729615""}",not_found,980,33,2.8
+RQ093-v1,2,reply,"{""message"":""(reply to customer)""}",ok,1231,73,2.8
+RQ093-v2,1,get_transfer,"{""account_id"":""PS100138"",""transfer_id"":""TRF729615""}",not_found,1570,41,2.5
+RQ093-v2,2,reply,"{""message"":""(reply to customer)""}",ok,1833,98,3.4
+RQ094-v1,1,get_transfer,"{""transfer_id"":""TRF401237""}",ok,981,55,2.7
+RQ094-v1,2,reply,"{""message"":""(reply to customer)""}",ok,1231,137,3.7
+RQ094-v2,1,get_transfer,"{""account_id"":""PS100366"",""transfer_id"":""TRF401237""}",not_found,1589,25,2.9
+RQ094-v2,2,reply,"{""message"":""(reply to customer)""}",ok,1838,109,3.6
+RQ095-v1,1,get_account,"{""account_id"":""PS100003""}",ok,960,32,2.7
+RQ095-v1,2,freeze_card,"{""account_id"":""PS100003""}",ok,1245,46,3
+RQ095-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1494,120,4
+RQ095-v2,1,get_account,"{""account_id"":""PS100003""}",ok,1563,60,2.8
+RQ095-v2,2,freeze_card,"{""account_id"":""PS100003""}",ok,1835,41,2.9
+RQ095-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2112,127,3.7
+RQ096-v1,1,open_transfer_case,"{""transfer_id"":""TRF401842""}",ok,984,51,2.8
+RQ096-v1,2,reply,"{""message"":""(reply to customer)""}",ok,1246,127,3.9
+RQ096-v2,1,get_transfer,"{""account_id"":""PS100205"",""transfer_id"":""TRF401842""}",ok,1579,59,3.6
+RQ096-v2,2,check_reversal_eligibility,"{""account_id"":""PS100205"",""transfer_id"":""TRF401842""}",ok,1834,27,2.3
+RQ096-v2,3,open_transfer_case,"{""account_id"":""PS100205"",""transfer_id"":""TRF401842""}",ok,2094,55,3.5
+RQ096-v2,4,escalate,"{""team"":""support"",""summary"":""Unsure how to help""}",ok,2346,50,3.5
+RQ096-v2,5,reply,"{""message"":""(reply to customer)""}",ok,2600,109,3.1
+RQ097-v1,1,get_account,"{""account_id"":""PS100177""}",ok,994,26,2.6
+RQ097-v1,2,reply,"{""message"":""(reply to customer)""}",ok,1223,72,3
+RQ097-v2,1,get_account,"{""account_id"":""PS100177""}",ok,1577,37,2.7
+RQ097-v2,2,reply,"{""message"":""(reply to customer)""}",ok,1831,112,3.2
+RQ098-v1,1,get_transfer,"{""transfer_id"":""TRF401868""}",ok,998,29,2.9
+RQ098-v1,2,escalate,"{""team"":""fraud"",""summary"":""Customer reports TRF401868 as unauthorised""}",ok,1236,40,3.5
+RQ098-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1518,102,3.5
+RQ098-v2,1,get_transfer,"{""account_id"":""PS100244"",""transfer_id"":""TRF401868""}",ok,1563,33,2.9
+RQ098-v2,2,escalate,"{""team"":""fraud"",""summary"":""Customer reports TRF401868 as unauthorised""}",ok,1854,44,2.6
+RQ098-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2088,110,3.1
+RQ099-v1,1,get_account,"{""account_id"":""PS100144""}",ok,990,27,2.7
+RQ099-v1,2,freeze_card,"{""account_id"":""PS100144""}",ok,1245,37,2.3
+RQ099-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1507,83,3.2
+RQ099-v2,1,get_account,"{""account_id"":""PS100144""}",ok,1600,32,2.8
+RQ099-v2,2,freeze_card,"{""account_id"":""PS100144""}",ok,1851,60,3.1
+RQ099-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2102,60,2.7
+RQ100-v1,1,get_account,"{""account_id"":""PS100232""}",ok,960,60,3.2
+RQ100-v1,2,reply,"{""message"":""(reply to customer)""}",ok,1240,132,3.5
+RQ100-v2,1,get_account,"{""account_id"":""PS100232""}",ok,1600,36,2.5
+RQ100-v2,2,reply,"{""message"":""(reply to customer)""}",ok,1829,80,2.7
+RQ101-v1,1,get_account,"{""account_id"":""PS100327""}",ok,961,49,3.1
+RQ101-v1,2,freeze_card,"{""account_id"":""PS100327""}",ok,1249,41,3.3
+RQ101-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1480,117,3.2
+RQ101-v2,1,get_account,"{""account_id"":""PS100327""}",ok,1583,33,2.7
+RQ101-v2,2,freeze_card,"{""account_id"":""PS100327""}",ok,1820,29,3.2
+RQ101-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2109,107,3.4
+RQ102-v1,1,get_account,"{""account_id"":""PS100279""}",ok,993,55,3
+RQ102-v1,2,reply,"{""message"":""(reply to customer)""}",ok,1233,134,4
+RQ102-v2,1,get_account,"{""account_id"":""PS100279""}",ok,1561,53,3
+RQ102-v2,2,reply,"{""message"":""(reply to customer)""}",ok,1855,119,3.5
+RQ103-v1,1,get_transfer,"{""transfer_id"":""TRF401867""}",ok,962,29,2.9
+RQ103-v1,2,open_transfer_case,"{""transfer_id"":""TRF401867""}",ok,1253,54,2.9
+RQ103-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1481,86,3.3
+RQ103-v2,1,get_transfer,"{""account_id"":""PS100119"",""transfer_id"":""TRF401867""}",ok,1560,56,2.8
+RQ103-v2,2,escalate,"{""team"":""fraud"",""summary"":""Customer reports TRF401867 as unauthorised""}",ok,1853,53,2.8
+RQ103-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2100,61,3
+RQ104-v1,1,get_account,"{""account_id"":""PS100292""}",ok,971,26,2.2
+RQ104-v1,2,freeze_card,"{""account_id"":""PS100292""}",ok,1227,55,2.8
+RQ104-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1488,105,3.1
+RQ104-v2,1,get_account,"{""account_id"":""PS100292""}",ok,1581,41,2.9
+RQ104-v2,2,freeze_card,"{""account_id"":""PS100292""}",ok,1858,42,2.7
+RQ104-v2,3,escalate,"{""team"":""support"",""summary"":""Unsure how to help""}",ok,2116,51,2.8
+RQ104-v2,4,reply,"{""message"":""(reply to customer)""}",ok,2341,99,3.6
+RQ105-v1,1,get_account,"{""account_id"":""PS100074""}",ok,960,39,2.8
+RQ105-v1,2,freeze_card,"{""account_id"":""PS100074""}",ok,1229,33,2.9
+RQ105-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1517,119,3.9
+RQ105-v2,1,get_account,"{""account_id"":""PS100074""}",ok,1595,52,3.6
+RQ105-v2,2,freeze_card,"{""account_id"":""PS100074""}",ok,1821,52,2.5
+RQ105-v2,3,escalate,"{""team"":""support"",""summary"":""Unsure how to help""}",ok,2089,34,3.3
+RQ105-v2,4,reply,"{""message"":""(reply to customer)""}",ok,2355,66,3
+RQ106-v1,1,get_transfer,"{""transfer_id"":""TRF735411""}",not_found,963,58,3.2
+RQ106-v1,2,reply,"{""message"":""(reply to customer)""}",ok,1253,103,3.6
+RQ106-v2,1,get_transfer,"{""account_id"":""PS100181"",""transfer_id"":""TRF735411""}",not_found,1584,58,3.4
+RQ106-v2,2,get_transfer,"{""account_id"":""PS100181"",""transfer_id"":""TRF735411""}",not_found,1821,29,2.8
+RQ106-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2097,113,3.7
+RQ107-v1,1,get_transfer,"{""transfer_id"":""TRF401877""}",ok,962,27,2.7
+RQ107-v1,2,open_transfer_case,"{""transfer_id"":""TRF401877""}",ok,1259,44,3.5
+RQ107-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1512,98,3.5
+RQ107-v2,1,get_transfer,"{""account_id"":""PS100220"",""transfer_id"":""TRF401877""}",ok,1582,56,2.9
+RQ107-v2,2,escalate,"{""team"":""fraud"",""summary"":""Customer reports TRF401877 as unauthorised""}",ok,1836,60,3.1
+RQ107-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2080,102,3.4
+RQ108-v1,1,get_transfer,"{""transfer_id"":""TRF401875""}",ok,991,27,2.9
+RQ108-v1,2,open_transfer_case,"{""transfer_id"":""TRF401875""}",ok,1250,55,3.6
+RQ108-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1483,67,3
+RQ108-v2,1,get_transfer,"{""account_id"":""PS100204"",""transfer_id"":""TRF401875""}",ok,1600,29,2.4
+RQ108-v2,2,escalate,"{""team"":""fraud"",""summary"":""Customer reports TRF401875 as unauthorised""}",ok,1826,37,2.9
+RQ108-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2084,133,4.1
+RQ109-v1,1,get_account,"{""account_id"":""PS100398""}",ok,980,27,2.6
+RQ109-v1,2,freeze_card,"{""account_id"":""PS100398""}",ok,1232,30,3
+RQ109-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1480,60,2.3
+RQ109-v2,1,get_account,"{""account_id"":""PS100398""}",ok,1595,40,2.4
+RQ109-v2,2,freeze_card,"{""account_id"":""PS100398""}",ok,1822,47,2.7
+RQ109-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2083,98,3.6
+RQ110-v1,1,get_account,"{""account_id"":""PS100036""}",ok,963,48,3
+RQ110-v1,2,reply,"{""message"":""(reply to customer)""}",ok,1245,83,2.6
+RQ110-v2,1,get_account,"{""account_id"":""PS100036""}",ok,1590,41,2.9
+RQ110-v2,2,reply,"{""message"":""(reply to customer)""}",ok,1823,97,2.9
+RQ111-v1,1,get_transfer,"{""transfer_id"":""TRF401854""}",ok,967,43,3.2
+RQ111-v1,2,open_transfer_case,"{""transfer_id"":""TRF401854""}",ok,1233,46,3
+RQ111-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1509,109,3.1
+RQ111-v2,1,get_transfer,"{""account_id"":""PS100364"",""transfer_id"":""TRF401854""}",ok,1579,50,3.3
+RQ111-v2,2,check_reversal_eligibility,"{""account_id"":""PS100364"",""transfer_id"":""TRF401854""}",ok,1850,60,2.8
+RQ111-v2,3,open_transfer_case,"{""account_id"":""PS100364"",""transfer_id"":""TRF401854""}",ok,2082,50,3.1
+RQ111-v2,4,reply,"{""message"":""(reply to customer)""}",ok,2346,128,4
+RQ112-v1,1,get_account,"{""account_id"":""PS100233""}",ok,988,50,3
+RQ112-v1,2,freeze_card,"{""account_id"":""PS100233""}",ok,1260,28,2.3
+RQ112-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1506,77,2.5
+RQ112-v2,1,get_account,"{""account_id"":""PS100233""}",ok,1560,34,3.3
+RQ112-v2,2,freeze_card,"{""account_id"":""PS100233""}",ok,1824,38,3.4
+RQ112-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2115,117,3.3
+RQ113-v1,1,get_transfer,"{""transfer_id"":""TRF401858""}",ok,981,42,3.2
+RQ113-v1,2,open_transfer_case,"{""transfer_id"":""TRF401858""}",ok,1243,41,2.9
+RQ113-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1481,79,2.9
+RQ113-v2,1,get_transfer,"{""account_id"":""PS100376"",""transfer_id"":""TRF401858""}",ok,1571,29,2.2
+RQ113-v2,2,check_reversal_eligibility,"{""account_id"":""PS100376"",""transfer_id"":""TRF401858""}",ok,1828,50,3.3
+RQ113-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2081,135,3.7
+RQ114-v1,1,get_transfer,"{""transfer_id"":""TRF401873""}",ok,977,59,3.5
+RQ114-v1,2,escalate,"{""team"":""fraud"",""summary"":""Customer reports TRF401873 as unauthorised""}",ok,1229,56,3
+RQ114-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1492,78,2.9
+RQ114-v2,1,get_transfer,"{""account_id"":""PS100294"",""transfer_id"":""TRF401873""}",ok,1588,47,3.1
+RQ114-v2,2,escalate,"{""team"":""fraud"",""summary"":""Customer reports TRF401873 as unauthorised""}",ok,1847,39,2.8
+RQ114-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2114,136,3.7
+RQ115-v1,1,get_transfer,"{""transfer_id"":""TRF401879""}",ok,998,50,3
+RQ115-v1,2,escalate,"{""team"":""fraud"",""summary"":""Customer reports TRF401879 as unauthorised""}",ok,1250,43,2.7
+RQ115-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1519,125,3.8
+RQ115-v2,1,get_transfer,"{""account_id"":""PS100199"",""transfer_id"":""TRF401879""}",ok,1582,49,3
+RQ115-v2,2,escalate,"{""team"":""fraud"",""summary"":""Customer reports TRF401879 as unauthorised""}",ok,1850,30,2.6
+RQ115-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2097,69,3
+RQ116-v1,1,get_transfer,"{""transfer_id"":""TRF401865""}",ok,978,36,3
+RQ116-v1,2,reply,"{""message"":""(reply to customer)""}",ok,1238,131,3.9
+RQ116-v2,1,get_transfer,"{""account_id"":""PS100147"",""transfer_id"":""TRF401865""}",ok,1561,55,3
+RQ116-v2,2,check_reversal_eligibility,"{""account_id"":""PS100147"",""transfer_id"":""TRF401865""}",ok,1852,40,3.5
+RQ116-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2085,137,3.8
+RQ117-v1,1,get_transfer,"{""transfer_id"":""TRF401863""}",ok,988,53,2.8
+RQ117-v1,2,reply,"{""message"":""(reply to customer)""}",ok,1255,63,2.8
+RQ117-v2,1,get_transfer,"{""account_id"":""PS100385"",""transfer_id"":""TRF401863""}",ok,1579,54,2.8
+RQ117-v2,2,check_reversal_eligibility,"{""account_id"":""PS100385"",""transfer_id"":""TRF401863""}",ok,1841,43,2.9
+RQ117-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2082,60,2.5
+RQ118-v1,1,get_transfer,"{""transfer_id"":""TRF401851""}",ok,999,49,3.7
+RQ118-v1,2,open_transfer_case,"{""transfer_id"":""TRF401851""}",ok,1236,44,3.2
+RQ118-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1494,135,3.8
+RQ118-v2,1,get_transfer,"{""account_id"":""PS100081"",""transfer_id"":""TRF401851""}",ok,1595,58,2.9
+RQ118-v2,2,check_reversal_eligibility,"{""account_id"":""PS100081"",""transfer_id"":""TRF401851""}",ok,1845,43,2.6
+RQ118-v2,3,open_transfer_case,"{""account_id"":""PS100081"",""transfer_id"":""TRF401851""}",ok,2106,35,3.3
+RQ118-v2,4,reply,"{""message"":""(reply to customer)""}",ok,2374,68,2.4
+RQ119-v1,1,get_transfer,"{""transfer_id"":""TRF401852""}",ok,998,33,2.7
+RQ119-v1,2,open_transfer_case,"{""transfer_id"":""TRF401852""}",ok,1242,44,2.9
+RQ119-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1484,72,2.8
+RQ119-v2,1,get_transfer,"{""account_id"":""PS100372"",""transfer_id"":""TRF401852""}",ok,1562,39,2.9
+RQ119-v2,2,check_reversal_eligibility,"{""account_id"":""PS100372"",""transfer_id"":""TRF401852""}",ok,1835,45,2.7
+RQ119-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2093,98,3.5
+RQ120-v1,1,open_transfer_case,"{""transfer_id"":""TRF401809""}",ok,973,26,2.4
+RQ120-v1,2,reply,"{""message"":""(reply to customer)""}",ok,1235,93,3.5
+RQ120-v2,1,get_transfer,"{""account_id"":""PS100378"",""transfer_id"":""TRF401809""}",ok,1584,54,2.8
+RQ120-v2,2,check_reversal_eligibility,"{""account_id"":""PS100378"",""transfer_id"":""TRF401809""}",ok,1849,52,3.2
+RQ120-v2,3,open_transfer_case,"{""account_id"":""PS100378"",""transfer_id"":""TRF401809""}",ok,2110,26,3
+RQ120-v2,4,reply,"{""message"":""(reply to customer)""}",ok,2378,94,2.9
+RQ121-v1,1,get_account,"{""account_id"":""PS100042""}",ok,985,56,3.4
+RQ121-v1,2,freeze_card,"{""account_id"":""PS100042""}",ok,1227,50,3.2
+RQ121-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1483,124,3.7
+RQ121-v2,1,get_account,"{""account_id"":""PS100042""}",ok,1597,25,3
+RQ121-v2,2,freeze_card,"{""account_id"":""PS100042""}",ok,1849,45,3
+RQ121-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2092,116,3.9
+RQ122-v1,1,get_account,"{""account_id"":""PS100370""}",ok,978,37,2.6
+RQ122-v1,2,freeze_card,"{""account_id"":""PS100370""}",ok,1242,33,3
+RQ122-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1512,108,3.3
+RQ122-v2,1,get_account,"{""account_id"":""PS100370""}",ok,1600,38,3.3
+RQ122-v2,2,freeze_card,"{""account_id"":""PS100370""}",ok,1854,26,2.5
+RQ122-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2090,109,3.4
+RQ123-v1,1,get_transfer,"{""transfer_id"":""TRF401864""}",ok,971,35,3
+RQ123-v1,2,open_transfer_case,"{""transfer_id"":""TRF401864""}",ok,1235,31,2.7
+RQ123-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1515,76,2.6
+RQ123-v2,1,get_transfer,"{""account_id"":""PS100021"",""transfer_id"":""TRF401864""}",ok,1581,26,2.2
+RQ123-v2,2,check_reversal_eligibility,"{""account_id"":""PS100021"",""transfer_id"":""TRF401864""}",ok,1851,53,2.7
+RQ123-v2,3,open_transfer_case,"{""account_id"":""PS100021"",""transfer_id"":""TRF401864""}",ok,2114,37,2.8
+RQ123-v2,4,reply,"{""message"":""(reply to customer)""}",ok,2373,124,3.8
+RQ124-v1,1,get_transfer,"{""transfer_id"":""TRF401846""}",ok,963,40,2.4
+RQ124-v1,2,open_transfer_case,"{""transfer_id"":""TRF401846""}",ok,1253,33,3.3
+RQ124-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1487,116,3.4
+RQ124-v2,1,get_transfer,"{""account_id"":""PS100293"",""transfer_id"":""TRF401846""}",ok,1583,40,2.9
+RQ124-v2,2,check_reversal_eligibility,"{""account_id"":""PS100293"",""transfer_id"":""TRF401846""}",ok,1823,36,2.9
+RQ124-v2,3,open_transfer_case,"{""account_id"":""PS100293"",""transfer_id"":""TRF401846""}",ok,2113,47,2.9
+RQ124-v2,4,reply,"{""message"":""(reply to customer)""}",ok,2369,90,3
+RQ125-v1,1,get_transfer,"{""transfer_id"":""TRF401891""}",ok,982,56,2.9
+RQ125-v1,2,escalate,"{""team"":""support"",""summary"":""Wrong recipient on TRF401891""}",ok,1249,32,2.4
+RQ125-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1519,117,3.9
+RQ125-v2,1,get_transfer,"{""account_id"":""PS100215"",""transfer_id"":""TRF401891""}",ok,1583,37,3
+RQ125-v2,2,escalate,"{""team"":""support"",""summary"":""Wrong recipient on TRF401891""}",ok,1855,54,3.1
+RQ125-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2094,67,3
+RQ126-v1,1,get_account,"{""account_id"":""PS100148""}",ok,965,46,3.4
+RQ126-v1,2,freeze_card,"{""account_id"":""PS100148""}",ok,1227,51,2.7
+RQ126-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1513,128,3.6
+RQ126-v2,1,get_account,"{""account_id"":""PS100148""}",ok,1584,47,2.9
+RQ126-v2,2,freeze_card,"{""account_id"":""PS100148""}",ok,1838,25,2.6
+RQ126-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2082,70,2.9
+RQ127-v1,1,get_transfer,"{""transfer_id"":""TRF401887""}",ok,970,40,3.1
+RQ127-v1,2,escalate,"{""team"":""support"",""summary"":""Wrong recipient on TRF401887""}",ok,1242,33,2.5
+RQ127-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1506,62,2.6
+RQ127-v2,1,get_transfer,"{""account_id"":""PS100127"",""transfer_id"":""TRF401887""}",ok,1581,36,3.4
+RQ127-v2,2,escalate,"{""team"":""support"",""summary"":""Wrong recipient on TRF401887""}",ok,1831,43,2.5
+RQ127-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2080,105,3
+RQ128-v1,1,get_account,"{""account_id"":""PS100301""}",ok,980,60,3.1
+RQ128-v1,2,freeze_card,"{""account_id"":""PS100301""}",ok,1249,34,2.8
+RQ128-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1512,61,2.5
+RQ128-v2,1,get_account,"{""account_id"":""PS100301""}",ok,1579,47,3.3
+RQ128-v2,2,freeze_card,"{""account_id"":""PS100301""}",ok,1846,42,2.9
+RQ128-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2109,85,2.7
+RQ129-v1,1,get_transfer,"{""transfer_id"":""TRF401855""}",ok,971,52,3
+RQ129-v1,2,reply,"{""message"":""(reply to customer)""}",ok,1233,128,3.8
+RQ129-v2,1,get_transfer,"{""account_id"":""PS100289"",""transfer_id"":""TRF401855""}",ok,1581,52,3.3
+RQ129-v2,2,check_reversal_eligibility,"{""account_id"":""PS100289"",""transfer_id"":""TRF401855""}",ok,1849,27,2.3
+RQ129-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2082,135,3.8
+RQ130-v1,1,get_transfer,"{""transfer_id"":""TRF401850""}",ok,960,42,3
+RQ130-v1,2,open_transfer_case,"{""transfer_id"":""TRF401850""}",ok,1237,27,3
+RQ130-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1490,92,2.8
+RQ130-v2,1,get_transfer,"{""account_id"":""PS100338"",""transfer_id"":""TRF401850""}",ok,1590,46,2.4
+RQ130-v2,2,check_reversal_eligibility,"{""account_id"":""PS100338"",""transfer_id"":""TRF401850""}",ok,1832,38,3
+RQ130-v2,3,open_transfer_case,"{""account_id"":""PS100338"",""transfer_id"":""TRF401850""}",ok,2110,56,3.1
+RQ130-v2,4,reply,"{""message"":""(reply to customer)""}",ok,2368,136,3.8
+RQ131-v1,1,get_transfer,"{""transfer_id"":""TRF401862""}",ok,974,41,2.5
+RQ131-v1,2,reply,"{""message"":""(reply to customer)""}",ok,1235,76,2.9
+RQ131-v2,1,get_transfer,"{""account_id"":""PS100111"",""transfer_id"":""TRF401862""}",ok,1570,38,3.3
+RQ131-v2,2,check_reversal_eligibility,"{""account_id"":""PS100111"",""transfer_id"":""TRF401862""}",ok,1851,30,2.7
+RQ131-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2111,139,3.9
+RQ132-v1,1,get_transfer,"{""transfer_id"":""TRF400736""}",ok,975,51,2.9
+RQ132-v1,2,open_transfer_case,"{""transfer_id"":""TRF400736""}",ok,1235,41,2.7
+RQ132-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1498,69,2.6
+RQ132-v2,1,get_transfer,"{""account_id"":""PS100040"",""transfer_id"":""TRF400736""}",not_found,1587,41,3.4
+RQ132-v2,2,reply,"{""message"":""(reply to customer)""}",ok,1841,139,3.8
+RQ133-v1,1,get_transfer,"{""transfer_id"":""TRF401847""}",ok,995,46,3.3
+RQ133-v1,2,open_transfer_case,"{""transfer_id"":""TRF401847""}",ok,1253,31,3.1
+RQ133-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1501,112,3.8
+RQ133-v2,1,get_transfer,"{""account_id"":""PS100200"",""transfer_id"":""TRF401847""}",ok,1568,32,2.6
+RQ133-v2,2,check_reversal_eligibility,"{""account_id"":""PS100200"",""transfer_id"":""TRF401847""}",ok,1820,58,2.7
+RQ133-v2,3,open_transfer_case,"{""account_id"":""PS100200"",""transfer_id"":""TRF401847""}",ok,2080,45,2.7
+RQ133-v2,4,reply,"{""message"":""(reply to customer)""}",ok,2371,76,3
+RQ134-v1,1,open_transfer_case,"{""transfer_id"":""TRF401848""}",ok,989,30,2.8
+RQ134-v1,2,reply,"{""message"":""(reply to customer)""}",ok,1222,101,3.6
+RQ134-v2,1,get_transfer,"{""account_id"":""PS100397"",""transfer_id"":""TRF401848""}",ok,1599,55,3.2
+RQ134-v2,2,check_reversal_eligibility,"{""account_id"":""PS100397"",""transfer_id"":""TRF401848""}",ok,1823,48,2.5
+RQ134-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2104,98,3.5
+RQ135-v1,1,get_transfer,"{""transfer_id"":""TRF401861""}",ok,972,38,3
+RQ135-v1,2,open_transfer_case,"{""transfer_id"":""TRF401861""}",ok,1226,35,3.2
+RQ135-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1491,63,3
+RQ135-v2,1,get_transfer,"{""account_id"":""PS100156"",""transfer_id"":""TRF401861""}",ok,1588,27,2.8
+RQ135-v2,2,check_reversal_eligibility,"{""account_id"":""PS100156"",""transfer_id"":""TRF401861""}",ok,1858,25,2.8
+RQ135-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2105,100,3.5
+RQ136-v1,1,open_transfer_case,"{""transfer_id"":""TRF401853""}",ok,989,42,2.5
+RQ136-v1,2,reply,"{""message"":""(reply to customer)""}",ok,1250,115,3.7
+RQ136-v2,1,get_transfer,"{""account_id"":""PS100001"",""transfer_id"":""TRF401853""}",error,1592,44,3.2
+RQ136-v2,2,get_transfer,"{""account_id"":""PS100001"",""transfer_id"":""TRF401853""}",ok,1851,29,2.9
+RQ136-v2,3,check_reversal_eligibility,"{""account_id"":""PS100001"",""transfer_id"":""TRF401853""}",ok,2109,38,3
+RQ136-v2,4,open_transfer_case,"{""account_id"":""PS100001"",""transfer_id"":""TRF401853""}",ok,2355,52,3.5
+RQ136-v2,5,reply,"{""message"":""(reply to customer)""}",ok,2623,128,3.5
+RQ137-v1,1,get_account,"{""account_id"":""PS100124""}",ok,977,39,3.1
+RQ137-v1,2,freeze_card,"{""account_id"":""PS100124""}",ok,1238,34,3
+RQ137-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1506,106,3.6
+RQ137-v2,1,get_account,"{""account_id"":""PS100124""}",ok,1576,44,3.2
+RQ137-v2,2,reply,"{""message"":""(reply to customer)""}",ok,1859,124,3.8
+RQ138-v1,1,get_transfer,"{""transfer_id"":""TRF401849""}",ok,961,43,2.8
+RQ138-v1,2,open_transfer_case,"{""transfer_id"":""TRF401849""}",ok,1225,55,2.8
+RQ138-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1485,77,3
+RQ138-v2,1,get_transfer,"{""account_id"":""PS100269"",""transfer_id"":""TRF401849""}",ok,1586,36,3.2
+RQ138-v2,2,check_reversal_eligibility,"{""account_id"":""PS100269"",""transfer_id"":""TRF401849""}",ok,1825,57,3.2
+RQ138-v2,3,open_transfer_case,"{""account_id"":""PS100269"",""transfer_id"":""TRF401849""}",ok,2089,48,3.1
+RQ138-v2,4,reply,"{""message"":""(reply to customer)""}",ok,2359,120,3.7
+RQ139-v1,1,get_transfer,"{""transfer_id"":""TRF401859""}",ok,999,34,3
+RQ139-v1,2,open_transfer_case,"{""transfer_id"":""TRF401859""}",ok,1231,51,3.1
+RQ139-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1484,86,2.7
+RQ139-v2,1,get_transfer,"{""account_id"":""PS100013"",""transfer_id"":""TRF401859""}",ok,1599,55,2.9
+RQ139-v2,2,check_reversal_eligibility,"{""account_id"":""PS100013"",""transfer_id"":""TRF401859""}",ok,1854,51,3.5
+RQ139-v2,3,open_transfer_case,"{""account_id"":""PS100013"",""transfer_id"":""TRF401859""}",ok,2105,46,2.7
+RQ139-v2,4,reply,"{""message"":""(reply to customer)""}",ok,2373,63,2.4
+RQ140-v1,1,get_account,"{""account_id"":""PS100341""}",ok,974,51,2.5
+RQ140-v1,2,reply,"{""message"":""(reply to customer)""}",ok,1229,110,3.6
+RQ140-v2,1,get_account,"{""account_id"":""PS100341""}",ok,1590,44,3.2
+RQ140-v2,2,reply,"{""message"":""(reply to customer)""}",ok,1852,111,3.1
+RQ141-v1,1,open_transfer_case,"{""transfer_id"":""TRF401857""}",ok,993,47,3
+RQ141-v1,2,reply,"{""message"":""(reply to customer)""}",ok,1248,97,3.1
+RQ141-v2,1,get_transfer,"{""account_id"":""PS100372"",""transfer_id"":""TRF401857""}",ok,1588,28,2.8
+RQ141-v2,2,check_reversal_eligibility,"{""account_id"":""PS100372"",""transfer_id"":""TRF401857""}",ok,1836,59,2.8
+RQ141-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2108,87,3.1
+RQ142-v1,1,get_account,"{""account_id"":""PS100313""}",ok,974,33,2.3
+RQ142-v1,2,freeze_card,"{""account_id"":""PS100313""}",ok,1254,49,2.5
+RQ142-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1511,60,2.6
+RQ142-v2,1,get_account,"{""account_id"":""PS100313""}",ok,1566,38,2.9
+RQ142-v2,2,freeze_card,"{""account_id"":""PS100313""}",ok,1834,44,3.3
+RQ142-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2089,104,3.2
+RQ143-v1,1,get_transfer,"{""transfer_id"":""TRF401860""}",ok,992,25,2.3
+RQ143-v1,2,open_transfer_case,"{""transfer_id"":""TRF401860""}",ok,1232,58,3
+RQ143-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1511,103,3.4
+RQ143-v2,1,get_transfer,"{""account_id"":""PS100059"",""transfer_id"":""TRF401860""}",ok,1570,49,3.2
+RQ143-v2,2,check_reversal_eligibility,"{""account_id"":""PS100059"",""transfer_id"":""TRF401860""}",ok,1859,42,3.4
+RQ143-v2,3,open_transfer_case,"{""account_id"":""PS100059"",""transfer_id"":""TRF401860""}",ok,2090,34,2.7
+RQ143-v2,4,escalate,"{""team"":""support"",""summary"":""Unsure how to help""}",ok,2350,26,2.1
+RQ143-v2,5,reply,"{""message"":""(reply to customer)""}",ok,2625,95,3.5
+RQ144-v1,1,get_account,"{""account_id"":""PS100076""}",ok,968,55,2.8
+RQ144-v1,2,reply,"{""message"":""(reply to customer)""}",ok,1228,84,3.2
+RQ144-v2,1,get_account,"{""account_id"":""PS100076""}",ok,1578,34,2.9
+RQ144-v2,2,reply,"{""message"":""(reply to customer)""}",ok,1830,107,3.3
+RQ145-v1,1,get_transfer,"{""transfer_id"":""TRF401856""}",ok,980,55,3.4
+RQ145-v1,2,open_transfer_case,"{""transfer_id"":""TRF401856""}",ok,1239,36,2.6
+RQ145-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1515,102,3.5
+RQ145-v2,1,get_transfer,"{""account_id"":""PS100396"",""transfer_id"":""TRF401856""}",ok,1597,44,2.8
+RQ145-v2,2,check_reversal_eligibility,"{""account_id"":""PS100396"",""transfer_id"":""TRF401856""}",ok,1837,35,2.7
+RQ145-v2,3,open_transfer_case,"{""account_id"":""PS100396"",""transfer_id"":""TRF401856""}",ok,2092,55,3.5
+RQ145-v2,4,reply,"{""message"":""(reply to customer)""}",ok,2358,99,3.1
+RQ146-v1,1,get_transfer,"{""transfer_id"":""TRF400320""}",ok,976,39,2.5
+RQ146-v1,2,open_transfer_case,"{""transfer_id"":""TRF400320""}",ok,1258,57,3.3
+RQ146-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1494,101,3
+RQ146-v2,1,get_transfer,"{""account_id"":""PS100332"",""transfer_id"":""TRF400320""}",not_found,1582,59,3.3
+RQ146-v2,2,escalate,"{""team"":""support"",""summary"":""Unsure how to help""}",ok,1820,43,2.7
+RQ146-v2,3,reply,"{""message"":""(reply to customer)""}",ok,2091,109,3.8
+RQ147-v1,1,get_transfer,"{""transfer_id"":""TRF401814""}",ok,990,29,2.3
+RQ147-v1,2,open_transfer_case,"{""transfer_id"":""TRF401814""}",ok,1225,45,2.9
+RQ147-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1509,110,3.7
+RQ147-v2,1,get_transfer,"{""account_id"":""PS100025"",""transfer_id"":""TRF401814""}",ok,1590,45,3.3
+RQ147-v2,2,check_reversal_eligibility,"{""account_id"":""PS100025"",""transfer_id"":""TRF401814""}",ok,1836,53,3.3
+RQ147-v2,3,open_transfer_case,"{""account_id"":""PS100025"",""transfer_id"":""TRF401814""}",ok,2091,34,3.2
+RQ147-v2,4,reply,"{""message"":""(reply to customer)""}",ok,2369,77,2.7
+RQ148-v1,1,get_transfer,"{""transfer_id"":""TRF401819""}",ok,990,25,2.5
+RQ148-v1,2,open_transfer_case,"{""transfer_id"":""TRF401819""}",ok,1254,34,2.4
+RQ148-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1485,92,3.2
+RQ148-v2,1,get_transfer,"{""account_id"":""PS100130"",""transfer_id"":""TRF401819""}",ok,1571,41,3
+RQ148-v2,2,check_reversal_eligibility,"{""account_id"":""PS100130"",""transfer_id"":""TRF401819""}",ok,1860,27,2.5
+RQ148-v2,3,open_transfer_case,"{""account_id"":""PS100130"",""transfer_id"":""TRF401819""}",ok,2082,39,2.8
+RQ148-v2,4,reply,"{""message"":""(reply to customer)""}",ok,2340,124,3.6
+RQ149-v1,1,get_transfer,"{""transfer_id"":""TRF401829""}",ok,992,44,3.1
+RQ149-v1,2,open_transfer_case,"{""transfer_id"":""TRF401829""}",ok,1259,44,2.9
+RQ149-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1508,99,3.2
+RQ149-v2,1,get_transfer,"{""account_id"":""PS100195"",""transfer_id"":""TRF401829""}",ok,1581,59,3.8
+RQ149-v2,2,check_reversal_eligibility,"{""account_id"":""PS100195"",""transfer_id"":""TRF401829""}",ok,1859,45,3.1
+RQ149-v2,3,open_transfer_case,"{""account_id"":""PS100195"",""transfer_id"":""TRF401829""}",ok,2113,53,3.1
+RQ149-v2,4,reply,"{""message"":""(reply to customer)""}",ok,2347,98,3.1
+RQ150-v1,1,get_transfer,"{""transfer_id"":""TRF401836""}",ok,995,32,2.6
+RQ150-v1,2,issue_refund,"{""transfer_id"":""TRF401836"",""amount_ngn"":640000}",ok,1236,35,2.6
+RQ150-v1,3,reply,"{""message"":""(reply to customer)""}",ok,1493,123,3.4
+RQ150-v2,1,get_transfer,"{""account_id"":""PS100152"",""transfer_id"":""TRF401836""}",ok,1574,37,3.2
+RQ150-v2,2,check_reversal_eligibility,"{""account_id"":""PS100152"",""transfer_id"":""TRF401836""}",ok,1827,37,2.9
+RQ150-v2,3,open_transfer_case,"{""account_id"":""PS100152"",""transfer_id"":""TRF401836""}",ok,2107,60,2.8
+RQ150-v2,4,reply,"{""message"":""(reply to customer)""}",ok,2376,71,2.4

@@ -1,0 +1,151 @@
+request_id,account_id,received_at,message,expected_action
+RQ001,PS100150,2026-09-10 18:40,"My transfer TRF401805 of ₦34,000 failed but I was debited",answer
+RQ002,PS100272,2026-09-10 20:00,Transfer TRF401801 failed and the money left my account. Please refund.,answer
+RQ003,PS100034,2026-09-10 22:14,"I was debited ₦355,000 for TRF401843 but it says failed",answer
+RQ004,PS100056,2026-09-11 03:10,"abeg my transfer TRF401845 fail but dem debit me ₦87,000",answer
+RQ005,PS100256,2026-09-11 03:16,"I was debited ₦363,000 for TRF401839 but it says failed",answer
+RQ006,PS100015,2026-09-11 03:34,Transfer TRF401827 failed and the money left my account. Please refund.,answer
+RQ007,PS100253,2026-09-11 08:11,"My transfer TRF401837 of ₦31,000 failed but I was debited",answer
+RQ008,PS100128,2026-09-11 10:42,My transfer TRF401816 of ₦500 failed but I was debited,answer
+RQ009,PS100367,2026-09-11 11:05,"I was debited ₦2,800 for TRF401812 but it says failed",answer
+RQ010,PS100383,2026-09-11 15:15,Transfer TRF401840 failed and the money left my account. Please refund.,answer
+RQ011,PS100124,2026-09-11 15:28,"I was debited ₦2,000 for TRF401841 but it says failed",answer
+RQ012,PS100004,2026-09-11 15:47,"My transfer TRF401808 of ₦82,000 failed but I was debited",answer
+RQ013,PS100032,2026-09-11 18:52,I was debited ₦500 for TRF401803 but it says failed,answer
+RQ014,PS100256,2026-09-11 19:33,Transfer TRF401821 failed and the money left my account. Please refund.,answer
+RQ015,PS100204,2026-09-11 23:00,"My transfer TRF401828 of ₦15,000 failed but I was debited",open_transfer_case
+RQ016,PS100304,2026-09-12 02:03,"I was debited ₦490,000 for TRF401830 but it says failed",answer
+RQ017,PS100280,2026-09-12 03:01,"abeg my transfer TRF401806 fail but dem debit me ₦2,500",open_transfer_case
+RQ018,PS100389,2026-09-12 05:15,"I was debited ₦91,000 for TRF401832 but it says failed",open_transfer_case
+RQ019,PS100271,2026-09-12 08:04,"abeg my transfer TRF401813 fail but dem debit me ₦254,000",answer
+RQ020,PS100060,2026-09-12 13:04,"abeg my transfer TRF401838 fail but dem debit me ₦424,000",answer
+RQ021,PS100138,2026-09-12 15:00,"Please refund TRF401895, I typed the wrong account number",escalate_human
+RQ022,PS100054,2026-09-12 15:36,"abeg my transfer TRF401822 fail but dem debit me ₦5,000",answer
+RQ023,PS100392,2026-09-12 15:43,Transfer TRF401826 failed and the money left my account. Please refund.,open_transfer_case
+RQ024,PS100042,2026-09-12 16:00,"Please refund TRF401898, I typed the wrong account number",escalate_human
+RQ025,PS100382,2026-09-12 18:00,"I mistakenly send ₦277,000 to wrong account TRF401886, abeg return am",escalate_human
+RQ026,PS100088,2026-09-12 19:00,"I think my account was hacked, TRF401876 is not mine",escalate_fraud
+RQ027,PS100220,2026-09-12 21:00,"Wrong recipient on TRF401893, I need my money back",escalate_human
+RQ028,PS100338,2026-09-12 21:39,"My transfer TRF401824 of ₦3,000 failed but I was debited",answer
+RQ029,PS100253,2026-09-12 23:00,"I think my account was hacked, TRF401871 is not mine",escalate_fraud
+RQ030,PS100122,2026-09-13 00:39,"I was debited ₦27,000 for TRF401831 but it says failed",open_transfer_case
+RQ031,PS100045,2026-09-13 01:00,"There's a transfer TRF401883 of ₦64,000 I didn't make",escalate_fraud
+RQ032,PS100376,2026-09-13 03:00,"I sent ₦400 to the wrong account (TRF401885), please reverse it",escalate_human
+RQ033,PS100012,2026-09-13 04:14,Transfer TRF401844 failed and the money left my account. Please refund.,answer
+RQ034,PS100207,2026-09-13 06:58,"I was debited ₦1,800 for TRF401817 but it says failed",open_transfer_case
+RQ035,PS100326,2026-09-13 09:00,"Wrong recipient on TRF401894, I need my money back",escalate_human
+RQ036,PS100019,2026-09-13 09:52,"My transfer TRF401807 of ₦5,000 failed but I was debited",answer
+RQ037,PS100116,2026-09-13 10:00,"I no send this money TRF401869, somebody don enter my account",escalate_fraud
+RQ038,PS100165,2026-09-13 10:00,"There's a transfer TRF401872 of ₦38,000 I didn't make",escalate_fraud
+RQ039,PS100005,2026-09-13 11:07,"What is my daily limit? I want to send ₦100,000",answer
+RQ040,PS100007,2026-09-13 12:00,"Someone sent ₦3,800 from my account without permission (TRF401882)",escalate_fraud
+RQ041,PS100177,2026-09-13 12:00,"Wrong recipient on TRF401892, I need my money back",escalate_human
+RQ042,PS100308,2026-09-13 13:00,"There's a transfer TRF401866 of ₦2,500 I didn't make",escalate_fraud
+RQ043,PS100263,2026-09-13 14:36,"Why can't I send ₦500,000? It says limit reached",answer
+RQ044,PS100201,2026-09-13 14:38,"I was debited ₦4,600 for TRF401825 but it says failed",answer
+RQ045,PS100159,2026-09-13 14:39,What happened to TRF401415? I need the details,ask_for_details
+RQ046,PS100109,2026-09-13 15:00,"Wrong recipient on TRF401888, I need my money back",escalate_human
+RQ047,PS100090,2026-09-13 16:07,"Please check transfer TRF400806, it has not arrived",ask_for_details
+RQ048,PS100138,2026-09-13 16:13,Transfer TRF401834 failed and the money left my account. Please refund.,open_transfer_case
+RQ049,PS100258,2026-09-13 17:00,"I no send this money TRF401881, somebody don enter my account",escalate_fraud
+RQ050,PS100357,2026-09-13 17:16,"My transfer TRF401815 of ₦290,000 failed but I was debited",open_transfer_case
+RQ051,PS100084,2026-09-13 17:21,"What is my daily limit? I want to send ₦250,000",answer
+RQ052,PS100223,2026-09-13 17:40,"My transfer TRF401835 of ₦456,000 failed but I was debited",open_transfer_case
+RQ053,PS100259,2026-09-13 18:00,"I think my account was hacked, TRF401880 is not mine",escalate_fraud
+RQ054,PS100256,2026-09-13 18:00,"I sent ₦84,000 to the wrong account (TRF401884), please reverse it",escalate_human
+RQ055,PS100197,2026-09-13 18:00,"Wrong recipient on TRF401890, I need my money back",escalate_human
+RQ056,PS100176,2026-09-13 18:01,What happened to TRF797405? I need the details,ask_for_details
+RQ057,PS100081,2026-09-13 18:03,"abeg my transfer TRF401804 fail but dem debit me ₦99,000",open_transfer_case
+RQ058,PS100036,2026-09-13 18:06,"What is my daily limit? I want to send ₦300,000",answer
+RQ059,PS100030,2026-09-13 19:13,"Please check transfer TRF400252, it has not arrived",ask_for_details
+RQ060,PS100256,2026-09-13 19:24,"why I no fit send ₦250,000 today",answer
+RQ061,PS100154,2026-09-13 22:58,"I need to send ₦300,000 but the app won't allow me",answer
+RQ062,PS100263,2026-09-13 23:00,"I think my account was hacked, TRF401874 is not mine",escalate_fraud
+RQ063,PS100165,2026-09-13 23:00,"Please refund TRF401896, I typed the wrong account number",escalate_human
+RQ064,PS100088,2026-09-13 23:13,"What is my daily limit? I want to send ₦60,000",answer
+RQ065,PS100011,2026-09-14 01:32,Transfer TRF401823 failed and the money left my account. Please refund.,answer
+RQ066,PS100088,2026-09-14 02:13,"abeg my transfer TRF401818 fail but dem debit me ₦1,300",open_transfer_case
+RQ067,PS100035,2026-09-14 03:13,I was debited ₦700 for TRF401810 but it says failed,open_transfer_case
+RQ068,PS100274,2026-09-14 03:55,"I was debited ₦2,600 for TRF401802 but it says failed",open_transfer_case
+RQ069,PS100221,2026-09-14 04:38,"Transfer TRF773909 failed, refund me",ask_for_details
+RQ070,PS100339,2026-09-14 05:01,"why I no fit send ₦60,000 today",answer
+RQ071,PS100356,2026-09-14 05:03,"What is my daily limit? I want to send ₦80,000",answer
+RQ072,PS100094,2026-09-14 05:11,"Can't find my debit card, please disable it",freeze_card
+RQ073,PS100269,2026-09-14 05:20,Transfer TRF401820 failed and the money left my account. Please refund.,open_transfer_case
+RQ074,PS100395,2026-09-14 05:56,"Please check transfer TRF735553, it has not arrived",ask_for_details
+RQ075,PS100272,2026-09-14 06:14,Transfer TRF401811 failed and the money left my account. Please refund.,answer
+RQ076,PS100254,2026-09-14 06:50,What happened to TRF795081? I need the details,ask_for_details
+RQ077,PS100162,2026-09-14 08:00,"I sent ₦2,700 to the wrong account (TRF401897), please reverse it",escalate_human
+RQ078,PS100318,2026-09-14 08:21,"Why can't I send ₦80,000? It says limit reached",answer
+RQ079,PS100394,2026-09-14 08:30,"I don lose my card, abeg block am",freeze_card
+RQ080,PS100392,2026-09-14 09:30,"I lost my Paystream card, please block it",answer
+RQ081,PS100017,2026-09-14 09:31,"Can't find my debit card, please disable it",freeze_card
+RQ082,PS100063,2026-09-14 09:40,"I was debited ₦49,000 for TRF401833 but it says failed",answer
+RQ083,PS100057,2026-09-14 09:53,"Why can't I send ₦250,000? It says limit reached",answer
+RQ084,PS100201,2026-09-14 10:00,"Wrong recipient on TRF401889, I need my money back",escalate_human
+RQ085,PS100019,2026-09-14 10:08,"Why can't I send ₦60,000? It says limit reached",answer
+RQ086,PS100354,2026-09-14 10:12,"I lost my Paystream card, please block it",freeze_card
+RQ087,PS100238,2026-09-14 10:36,"why I no fit send ₦100,000 today",answer
+RQ088,PS100173,2026-09-14 10:48,"I lost my Paystream card, please block it",answer
+RQ089,PS100204,2026-09-14 11:53,"Can't find my debit card, please disable it",freeze_card
+RQ090,PS100278,2026-09-14 12:35,"What is my daily limit? I want to send ₦300,000",answer
+RQ091,PS100340,2026-09-14 13:00,"I think my account was hacked, TRF401878 is not mine",escalate_fraud
+RQ092,PS100285,2026-09-14 14:00,"I no send this money TRF401870, somebody don enter my account",escalate_fraud
+RQ093,PS100138,2026-09-14 14:37,"Please check transfer TRF729615, it has not arrived",ask_for_details
+RQ094,PS100366,2026-09-14 14:50,"Transfer TRF401237 failed, refund me",ask_for_details
+RQ095,PS100003,2026-09-14 14:58,"I don lose my card, abeg block am",freeze_card
+RQ096,PS100205,2026-09-14 15:02,Transfer TRF401842 failed and the money left my account. Please refund.,open_transfer_case
+RQ097,PS100177,2026-09-14 15:07,"Why can't I send ₦300,000? It says limit reached",answer
+RQ098,PS100244,2026-09-14 16:00,"Someone sent ₦37,000 from my account without permission (TRF401868)",escalate_fraud
+RQ099,PS100144,2026-09-14 16:01,"My card was stolen at the market, freeze it now",freeze_card
+RQ100,PS100232,2026-09-14 16:33,"I need to send ₦500,000 but the app won't allow me",answer
+RQ101,PS100327,2026-09-14 17:00,"My card was stolen at the market, freeze it now",freeze_card
+RQ102,PS100279,2026-09-14 17:26,"What is my daily limit? I want to send ₦80,000",answer
+RQ103,PS100119,2026-09-14 19:00,"There's a transfer TRF401867 of ₦414,000 I didn't make",escalate_fraud
+RQ104,PS100292,2026-09-14 21:20,"My card was stolen at the market, freeze it now",freeze_card
+RQ105,PS100074,2026-09-14 21:58,"I lost my Paystream card, please block it",freeze_card
+RQ106,PS100181,2026-09-14 21:58,"Transfer TRF735411 failed, refund me",ask_for_details
+RQ107,PS100220,2026-09-14 23:00,"I no send this money TRF401877, somebody don enter my account",escalate_fraud
+RQ108,PS100204,2026-09-15 00:00,"There's a transfer TRF401875 of ₦76,000 I didn't make",escalate_fraud
+RQ109,PS100398,2026-09-15 00:18,"My card was stolen at the market, freeze it now",freeze_card
+RQ110,PS100036,2026-09-15 02:22,"What is my daily limit? I want to send ₦300,000",answer
+RQ111,PS100364,2026-09-15 02:33,my transfer TRF401854 still dey pending o,open_transfer_case
+RQ112,PS100233,2026-09-15 02:48,"My card was stolen at the market, freeze it now",freeze_card
+RQ113,PS100376,2026-09-15 02:59,"My transfer of ₦1,600 (TRF401858) has been processing for a long time",answer
+RQ114,PS100294,2026-09-15 03:00,"There's a transfer TRF401873 of ₦182,000 I didn't make",escalate_fraud
+RQ115,PS100199,2026-09-15 03:00,"There's a transfer TRF401879 of ₦78,000 I didn't make",escalate_fraud
+RQ116,PS100147,2026-09-15 03:02,My transfer of ₦200 (TRF401865) has been processing for a long time,answer
+RQ117,PS100385,2026-09-15 03:28,my transfer TRF401863 still dey pending o,answer
+RQ118,PS100081,2026-09-15 03:51,"My transfer of ₦37,000 (TRF401851) has been processing for a long time",open_transfer_case
+RQ119,PS100372,2026-09-15 03:52,Why is TRF401852 still pending? The recipient hasn't received it,answer
+RQ120,PS100378,2026-09-15 03:56,"abeg my transfer TRF401809 fail but dem debit me ₦27,000",open_transfer_case
+RQ121,PS100042,2026-09-15 03:57,"I lost my Paystream card, please block it",freeze_card
+RQ122,PS100370,2026-09-15 04:10,"I lost my Paystream card, please block it",freeze_card
+RQ123,PS100021,2026-09-15 04:20,Why is TRF401864 still pending? The recipient hasn't received it,open_transfer_case
+RQ124,PS100293,2026-09-15 04:46,"My transfer of ₦79,000 (TRF401846) has been processing for a long time",open_transfer_case
+RQ125,PS100215,2026-09-15 05:00,"I sent ₦76,000 to the wrong account (TRF401891), please reverse it",escalate_human
+RQ126,PS100148,2026-09-15 05:32,"I don lose my card, abeg block am",freeze_card
+RQ127,PS100127,2026-09-15 06:00,"Wrong recipient on TRF401887, I need my money back",escalate_human
+RQ128,PS100301,2026-09-15 06:14,"I don lose my card, abeg block am",freeze_card
+RQ129,PS100289,2026-09-15 06:24,"My transfer of ₦3,500 (TRF401855) has been processing for a long time",answer
+RQ130,PS100338,2026-09-15 06:25,Transfer TRF401850 is still pending,open_transfer_case
+RQ131,PS100111,2026-09-15 07:41,My transfer of ₦200 (TRF401862) has been processing for a long time,answer
+RQ132,PS100040,2026-09-15 07:53,"Transfer TRF400736 failed, refund me",ask_for_details
+RQ133,PS100200,2026-09-15 07:54,my transfer TRF401847 still dey pending o,open_transfer_case
+RQ134,PS100397,2026-09-15 07:54,Transfer TRF401848 is still pending,answer
+RQ135,PS100156,2026-09-15 08:02,Transfer TRF401861 is still pending,answer
+RQ136,PS100001,2026-09-15 08:36,Why is TRF401853 still pending? The recipient hasn't received it,open_transfer_case
+RQ137,PS100124,2026-09-15 08:45,"I don lose my card, abeg block am",answer
+RQ138,PS100269,2026-09-15 08:52,My transfer of ₦300 (TRF401849) has been processing for a long time,open_transfer_case
+RQ139,PS100013,2026-09-15 09:00,my transfer TRF401859 still dey pending o,open_transfer_case
+RQ140,PS100341,2026-09-15 09:32,"What is my daily limit? I want to send ₦80,000",answer
+RQ141,PS100372,2026-09-15 09:48,"My transfer of ₦231,000 (TRF401857) has been processing for a long time",answer
+RQ142,PS100313,2026-09-15 09:59,"I don lose my card, abeg block am",freeze_card
+RQ143,PS100059,2026-09-15 11:06,"My transfer of ₦4,900 (TRF401860) has been processing for a long time",open_transfer_case
+RQ144,PS100076,2026-09-15 11:14,"why I no fit send ₦60,000 today",answer
+RQ145,PS100396,2026-09-15 11:25,my transfer TRF401856 still dey pending o,open_transfer_case
+RQ146,PS100332,2026-09-15 11:37,What happened to TRF400320? I need the details,ask_for_details
+RQ147,PS100025,2026-09-15 11:50,"I was debited ₦22,000 for TRF401814 but it says failed",open_transfer_case
+RQ148,PS100130,2026-09-15 11:50,"abeg my transfer TRF401819 fail but dem debit me ₦357,000",open_transfer_case
+RQ149,PS100195,2026-09-15 11:50,My transfer TRF401829 of ₦600 failed but I was debited,open_transfer_case
+RQ150,PS100152,2026-09-15 11:50,"abeg my transfer TRF401836 fail but dem debit me ₦320,000",open_transfer_case

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { BUNDLED_PROJECTS } from "@/content";
 import { getBackend, type AdminSubmission, type SubmissionStatus } from "@/lib/backend";
 import { PageLoading } from "@/lib/auth";
 import { formatDate } from "@/lib/format";
@@ -14,13 +15,19 @@ function Review({ s, onDone }: { s: AdminSubmission; onDone: () => Promise<unkno
   const [feedback, setFeedback] = useState(s.feedback ?? "");
   const [busy, setBusy] = useState<SubmissionStatus | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const rubric = BUNDLED_PROJECTS.find((p) => p.id === s.projectId)?.rubric ?? [];
+  const [met, setMet] = useState<boolean[]>(() => rubric.map(() => false));
 
   const decide = async (status: SubmissionStatus) => {
-    if (status === "needs_changes" && !feedback.trim()) return setError("Say what needs to change so the learner can fix it.");
+    // Unmet criteria go into the feedback, so the learner knows exactly what to improve.
+    const missing = rubric.filter((_, i) => !met[i]);
+    const fullFeedback = [feedback.trim(), status === "needs_changes" && missing.length ? `Still needed:\n${missing.map((m) => `- ${m}`).join("\n")}` : ""].filter(Boolean).join("\n\n");
+    if (status === "needs_changes" && !fullFeedback) return setError("Say what needs to change so the learner can fix it.");
+    if (status === "accepted" && missing.length && !confirm(`${missing.length} rubric ${missing.length === 1 ? "criterion isn't" : "criteria aren't"} ticked. Accept anyway?`)) return;
     setBusy(status);
     setError(null);
     try {
-      await (await getBackend()).admin.reviewSubmission(s.id, status, feedback.trim());
+      await (await getBackend()).admin.reviewSubmission(s.id, status, fullFeedback);
       await onDone();
       setOpen(false);
     } catch (e) {
@@ -54,6 +61,24 @@ function Review({ s, onDone }: { s: AdminSubmission; onDone: () => Promise<unkno
                 {s.url}
               </a>
             </p>
+          )}
+          {rubric.length > 0 && (
+            <fieldset className="rounded-xl border border-line p-4">
+              <legend className="px-1 text-[0.875rem] font-semibold">Rubric: tick each criterion the submission meets</legend>
+              <ul className="mt-1 space-y-2">
+                {rubric.map((r, i) => (
+                  <li key={r}>
+                    <label className="flex cursor-pointer items-start gap-2.5 text-[0.9375rem]">
+                      <input type="checkbox" checked={met[i]} onChange={(e) => setMet((m) => m.map((x, j) => (j === i ? e.target.checked : x)))} className="mt-1" />
+                      {r}
+                    </label>
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-3 text-[0.8125rem] text-muted">
+                {met.filter(Boolean).length} of {rubric.length} met. Requesting changes adds the unticked criteria to your feedback.
+              </p>
+            </fieldset>
           )}
           <TextArea label="Feedback for the learner" rows={3} value={feedback} onChange={(e) => setFeedback(e.target.value)} />
           {error && <Alert tone="error">{error}</Alert>}

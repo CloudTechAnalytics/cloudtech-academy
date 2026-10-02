@@ -1,6 +1,6 @@
 ---
 title: Final project
-minutes: 15
+minutes: 9
 summary: The brief for your final project, the Harbourline Freight operations review, and how it's assessed.
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: Final dashboard project
-minutes: 45
+minutes: 20
 summary: Plan and start a practice-management dashboard for a law firm, checking your model against known numbers before you build.
 ---
 
@@ -110,6 +110,45 @@ A three-page structure that works:
   "verify": "SELECT COUNT(*) FROM matters WHERE status = 'Open'",
   "required": true,
   "hint": "Use the Open Matters measure: count the matters whose status is Open."
+}
+```
+
+
+## More practice
+
+Optional drills. They don't count towards the certificate, but they're the fastest way to make this lesson stick. Several use a different dataset from the lesson on purpose: if you can do the same thing on unfamiliar data, you've really learned it.
+
+```answer
+{
+  "id": "pbi-14-d1",
+  "prompt": "Which **practice area** has the most **Open** matters?",
+  "answer": "Commercial litigation",
+  "format": "text",
+  "dataset": "legal",
+  "files": [
+    "matters"
+  ],
+  "verify": "SELECT practice_area FROM matters WHERE status = 'Open' GROUP BY practice_area ORDER BY COUNT(*) DESC LIMIT 1",
+  "hint": "A bar chart of matters by practice area, filtered to status = Open.",
+  "required": false
+}
+```
+
+```answer
+{
+  "id": "pbi-14-d2",
+  "prompt": "Which **responsible lawyer** has the largest total of **Overdue** invoices on their matters?",
+  "answer": "Zainab Abdullahi",
+  "format": "text",
+  "dataset": "legal",
+  "files": [
+    "matters",
+    "invoices"
+  ],
+  "verify": "SELECT m.responsible_lawyer FROM invoices i JOIN matters m ON m.matter_id = i.matter_id WHERE i.status = 'Overdue' GROUP BY m.responsible_lawyer ORDER BY SUM(i.amount_ngn) DESC LIMIT 1",
+  "hint": "Overdue Amount by responsible_lawyer, sorted descending.",
+  "explanation": "This is who the managing partner calls first about collections.",
+  "required": false
 }
 ```
 

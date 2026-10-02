@@ -79,6 +79,46 @@ This skips the ten earliest customers and shows the next ten.
 }
 ```
 
+## More practice
+
+Optional drills on the same skills. They don't count towards the certificate, but each one is a small, realistic request from someone at Harbourline. Do as many as you need until the pattern feels automatic.
+
+```exercise
+{
+  "id": "sql-05-d1",
+  "prompt": "Show shipment_id, customer_id and freight_charge for the 10 most expensive shipments. Break ties by shipment_id.",
+  "starter": "",
+  "solution": "SELECT shipment_id, customer_id, freight_charge FROM shipments ORDER BY freight_charge DESC, shipment_id LIMIT 10;",
+  "hint": "ORDER BY freight_charge DESC, then LIMIT 10.",
+  "required": false,
+  "orderMatters": true
+}
+```
+
+```exercise
+{
+  "id": "sql-05-d2",
+  "prompt": "Who are the 3 customers who signed up most recently? Show company_name and signup_date. Break ties by customer_id.",
+  "starter": "",
+  "solution": "SELECT company_name, signup_date FROM customers ORDER BY signup_date DESC, customer_id LIMIT 3;",
+  "hint": "Most recent first means DESC.",
+  "required": false,
+  "orderMatters": true
+}
+```
+
+```exercise
+{
+  "id": "sql-05-d3",
+  "prompt": "Show the 5 smallest payments ever received: payment_id, amount and method. Break ties by payment_id.",
+  "starter": "",
+  "solution": "SELECT payment_id, amount, method FROM payments ORDER BY amount, payment_id LIMIT 5;",
+  "hint": "Smallest first is the default, ascending order.",
+  "required": false,
+  "orderMatters": true
+}
+```
+
 ## Check your understanding
 
 ```quiz
