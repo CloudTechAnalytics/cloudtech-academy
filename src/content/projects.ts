@@ -88,6 +88,12 @@ export const DATASETS: DatasetInfo[] = [
     files: ["daily_sales", "holidays"],
   },
   {
+    id: "invoicing",
+    name: "Tallybook invoicing (customers, raw invoice export and lines)",
+    description: "A SaaS company's customers, a raw invoice export with real-world problems (formatted amounts, two date formats, duplicates, out-of-range discounts, unknown customers) and invoice lines; the downloadable ZIP also has the original billing module, billing.py. Used in Software Engineering with Python.",
+    files: ["customers", "invoices_raw", "invoice_lines"],
+  },
+  {
     id: "observability",
     name: "Tallybook telemetry (metrics, traces, SLIs and alerts)",
     description: "Per-minute metrics and database pool figures for a month-end day with an outage, sampled request traces, August's daily SLI totals, alert history and a toil list; the downloadable ZIP also has the structured application logs (JSON lines) around the incident. Used in Observability and Site Reliability.",
@@ -321,6 +327,39 @@ export const DATA_DICTIONARY: Record<string, Record<string, { about: string; col
         amount_ngn: "Invoice amount in naira.",
         status: "Paid, Outstanding or Overdue.",
         paid_date: "Date it was paid. Blank if unpaid.",
+      },
+    },
+  },
+  invoicing: {
+    customers: {
+      about: "One row per business customer.",
+      columns: {
+        customer_id: "Customer ID.",
+        business_name: "The customer's business name.",
+        city: "City.",
+        vat_exempt: "1 if the customer doesn't pay VAT.",
+        payment_terms_days: "Days the customer has to pay.",
+      },
+    },
+    invoices_raw: {
+      about: "The raw invoice export, June to August 2026, as the old system produced it, problems included.",
+      columns: {
+        invoice_id: "Invoice ID. A few appear twice.",
+        customer_id: "Customer ID. A few are missing or don't exist.",
+        issue_date: "Date issued, usually YYYY-MM-DD but sometimes DD/MM/YYYY.",
+        due_date: "Date payment is due.",
+        discount_pct: "Discount in per cent. The limit is 20; a few exceed it.",
+        amount_paid: "Amount paid in naira, usually a plain number but sometimes formatted like ₦12,500.00.",
+      },
+    },
+    invoice_lines: {
+      about: "One row per invoice line.",
+      columns: {
+        invoice_id: "Invoice the line belongs to.",
+        line_no: "Line number within the invoice.",
+        description: "What was sold.",
+        quantity: "Quantity. A few are zero or negative.",
+        unit_price: "Price per unit in naira, with two decimals.",
       },
     },
   },

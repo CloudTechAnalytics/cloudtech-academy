@@ -1,0 +1,301 @@
+customer_id,business_name,city,vat_exempt,payment_terms_days
+C0001,Zainab Foods,Lagos,0,30
+C0002,Bisi Stores,Ibadan,0,30
+C0003,Sade Bakery,Enugu,0,14
+C0004,Sade Electronics,Abuja,0,14
+C0005,Tunde Foods,Lagos,0,30
+C0006,Chinedu Supplies,Kano,0,30
+C0007,Emeka Fashion,Lagos,0,14
+C0008,Adaeze Foods,Port Harcourt,0,30
+C0009,Halima Printing,Port Harcourt,0,14
+C0010,Zainab Printing,Lagos,0,14
+C0011,Kelechi Logistics,Ibadan,1,14
+C0012,Uche Printing,Abuja,0,30
+C0013,Uche Electronics,Lagos,0,14
+C0014,Chinedu Logistics,Kano,0,30
+C0015,Dapo Electronics,Port Harcourt,0,30
+C0016,Kunle Salon,Kano,0,30
+C0017,Yusuf Pharmacy,Enugu,0,30
+C0018,Segun Pharmacy,Lagos,0,30
+C0019,Ngozi Foods,Kano,0,30
+C0020,Sade Electronics,Lagos,0,30
+C0021,Maryam Bakery,Port Harcourt,1,14
+C0022,Ngozi Stores,Lagos,0,30
+C0023,Kelechi Logistics,Lagos,0,14
+C0024,Ibrahim Bakery,Abuja,0,30
+C0025,Kunle Fashion,Port Harcourt,0,14
+C0026,Amaka Fashion,Port Harcourt,1,30
+C0027,Folake Foods,Lagos,0,30
+C0028,Babatunde Bakery,Lagos,0,14
+C0029,Uche Electronics,Port Harcourt,0,14
+C0030,Obinna Pharmacy,Abuja,1,30
+C0031,Amaka Printing,Port Harcourt,0,30
+C0032,Tunde Electronics,Kano,0,30
+C0033,Babatunde Fashion,Lagos,0,30
+C0034,Emeka Bakery,Kano,0,30
+C0035,Emeka Foods,Kano,0,30
+C0036,Kunle Logistics,Kano,0,30
+C0037,Musa Fashion,Lagos,0,30
+C0038,Aisha Pharmacy,Ibadan,0,30
+C0039,Kelechi Bakery,Port Harcourt,0,30
+C0040,Tunde Pharmacy,Enugu,0,30
+C0041,Musa Foods,Kano,0,14
+C0042,Obinna Pharmacy,Kano,0,30
+C0043,Bisi Stores,Lagos,0,14
+C0044,Emeka Bakery,Ibadan,0,30
+C0045,Zainab Salon,Enugu,0,30
+C0046,Ibrahim Printing,Lagos,0,30
+C0047,Kelechi Foods,Ibadan,0,30
+C0048,Hauwa Supplies,Lagos,0,14
+C0049,Adaeze Electronics,Lagos,0,30
+C0050,Tobi Pharmacy,Lagos,0,30
+C0051,Hauwa Bakery,Lagos,0,14
+C0052,Emeka Salon,Lagos,0,14
+C0053,Yusuf Fashion,Abuja,0,30
+C0054,Aisha Printing,Lagos,0,30
+C0055,Amaka Printing,Abuja,1,30
+C0056,Babatunde Pharmacy,Kano,0,30
+C0057,Babatunde Fashion,Ibadan,0,14
+C0058,Funmilayo Stores,Lagos,0,14
+C0059,Obinna Printing,Ibadan,0,14
+C0060,Temitope Logistics,Port Harcourt,0,30
+C0061,Aisha Printing,Lagos,0,14
+C0062,Chiamaka Supplies,Kano,0,14
+C0063,Chinedu Salon,Enugu,0,30
+C0064,Obinna Foods,Ibadan,0,14
+C0065,Funmilayo Salon,Ibadan,0,30
+C0066,Yusuf Logistics,Port Harcourt,0,30
+C0067,Chiamaka Foods,Kano,0,30
+C0068,Obinna Foods,Lagos,0,30
+C0069,Sade Supplies,Port Harcourt,0,14
+C0070,Folake Fashion,Port Harcourt,0,30
+C0071,Obinna Supplies,Port Harcourt,0,14
+C0072,Tobi Foods,Kano,0,30
+C0073,Funmilayo Bakery,Lagos,0,30
+C0074,Chiamaka Logistics,Kano,0,30
+C0075,Folake Stores,Ibadan,0,30
+C0076,Emeka Salon,Kano,0,30
+C0077,Segun Printing,Ibadan,0,30
+C0078,Chiamaka Printing,Kano,0,30
+C0079,Chiamaka Salon,Kano,1,14
+C0080,Halima Supplies,Port Harcourt,0,30
+C0081,Maryam Logistics,Enugu,0,30
+C0082,Kunle Supplies,Lagos,0,14
+C0083,Tobi Fashion,Enugu,0,14
+C0084,Dapo Electronics,Abuja,0,14
+C0085,Maryam Pharmacy,Enugu,0,30
+C0086,Hauwa Supplies,Port Harcourt,0,14
+C0087,Temitope Supplies,Port Harcourt,0,14
+C0088,Ifeoma Salon,Port Harcourt,0,30
+C0089,Bisi Fashion,Abuja,0,30
+C0090,Amaka Pharmacy,Abuja,0,14
+C0091,Obinna Supplies,Kano,0,14
+C0092,Tunde Supplies,Lagos,1,30
+C0093,Ibrahim Foods,Lagos,0,30
+C0094,Tobi Stores,Ibadan,0,14
+C0095,Uche Logistics,Lagos,0,30
+C0096,Babatunde Stores,Lagos,0,30
+C0097,Tunde Foods,Kano,1,30
+C0098,Nnamdi Fashion,Ibadan,0,30
+C0099,Kelechi Supplies,Abuja,0,14
+C0100,Tobi Supplies,Lagos,0,30
+C0101,Ibrahim Foods,Lagos,0,30
+C0102,Aisha Bakery,Lagos,0,30
+C0103,Folake Foods,Ibadan,0,30
+C0104,Uche Printing,Lagos,0,14
+C0105,Adaeze Logistics,Lagos,0,30
+C0106,Ibrahim Printing,Kano,0,14
+C0107,Aisha Electronics,Enugu,0,30
+C0108,Yusuf Salon,Lagos,0,30
+C0109,Babatunde Stores,Enugu,0,30
+C0110,Temitope Stores,Lagos,0,30
+C0111,Kelechi Stores,Port Harcourt,0,14
+C0112,Uche Bakery,Enugu,0,30
+C0113,Zainab Foods,Lagos,0,30
+C0114,Folake Foods,Enugu,0,30
+C0115,Yusuf Logistics,Kano,0,30
+C0116,Aisha Electronics,Enugu,0,30
+C0117,Sade Fashion,Port Harcourt,0,30
+C0118,Folake Supplies,Kano,0,14
+C0119,Halima Salon,Lagos,0,30
+C0120,Uche Supplies,Enugu,0,30
+C0121,Uche Foods,Kano,0,30
+C0122,Zainab Pharmacy,Lagos,0,14
+C0123,Babatunde Supplies,Kano,0,30
+C0124,Temitope Logistics,Kano,0,30
+C0125,Kelechi Stores,Lagos,0,30
+C0126,Obinna Fashion,Lagos,0,30
+C0127,Nnamdi Bakery,Port Harcourt,0,30
+C0128,Ngozi Stores,Abuja,0,30
+C0129,Halima Stores,Enugu,0,30
+C0130,Dapo Salon,Lagos,0,30
+C0131,Yusuf Supplies,Abuja,0,30
+C0132,Funmilayo Fashion,Ibadan,0,30
+C0133,Folake Electronics,Abuja,0,30
+C0134,Kelechi Supplies,Lagos,0,14
+C0135,Yusuf Salon,Abuja,0,30
+C0136,Bisi Stores,Abuja,0,14
+C0137,Chinedu Supplies,Lagos,0,14
+C0138,Folake Electronics,Lagos,0,30
+C0139,Zainab Supplies,Kano,0,30
+C0140,Ngozi Fashion,Kano,0,14
+C0141,Dapo Salon,Lagos,0,14
+C0142,Tunde Bakery,Port Harcourt,0,30
+C0143,Chiamaka Fashion,Ibadan,1,30
+C0144,Tunde Foods,Lagos,1,14
+C0145,Ifeoma Salon,Lagos,0,30
+C0146,Hauwa Supplies,Enugu,0,30
+C0147,Zainab Electronics,Enugu,0,30
+C0148,Adaeze Logistics,Lagos,0,30
+C0149,Ngozi Supplies,Ibadan,0,14
+C0150,Kunle Stores,Port Harcourt,1,30
+C0151,Amaka Fashion,Kano,0,14
+C0152,Maryam Printing,Lagos,1,14
+C0153,Funmilayo Stores,Abuja,0,30
+C0154,Nnamdi Printing,Enugu,0,14
+C0155,Musa Fashion,Abuja,0,14
+C0156,Tunde Pharmacy,Kano,0,30
+C0157,Funmilayo Pharmacy,Lagos,0,14
+C0158,Segun Fashion,Port Harcourt,0,30
+C0159,Uche Printing,Lagos,0,14
+C0160,Ibrahim Logistics,Enugu,0,14
+C0161,Nnamdi Salon,Enugu,0,14
+C0162,Bisi Salon,Lagos,1,30
+C0163,Aisha Logistics,Lagos,0,30
+C0164,Yusuf Bakery,Port Harcourt,0,14
+C0165,Ifeoma Supplies,Kano,0,30
+C0166,Halima Foods,Lagos,0,30
+C0167,Ifeoma Bakery,Abuja,0,14
+C0168,Aisha Stores,Enugu,0,30
+C0169,Sade Electronics,Lagos,0,14
+C0170,Ngozi Printing,Enugu,0,30
+C0171,Funmilayo Bakery,Abuja,0,30
+C0172,Segun Salon,Kano,0,30
+C0173,Zainab Electronics,Kano,1,30
+C0174,Tunde Bakery,Ibadan,0,30
+C0175,Obinna Printing,Abuja,0,30
+C0176,Chinedu Pharmacy,Kano,0,14
+C0177,Temitope Bakery,Enugu,0,14
+C0178,Hauwa Pharmacy,Lagos,0,30
+C0179,Aisha Foods,Ibadan,0,30
+C0180,Hauwa Pharmacy,Enugu,0,14
+C0181,Halima Foods,Abuja,0,14
+C0182,Ngozi Supplies,Ibadan,0,30
+C0183,Ifeoma Pharmacy,Port Harcourt,0,14
+C0184,Amaka Salon,Lagos,0,30
+C0185,Hauwa Bakery,Lagos,0,14
+C0186,Dapo Logistics,Ibadan,0,30
+C0187,Chinedu Salon,Lagos,0,30
+C0188,Ibrahim Electronics,Kano,0,14
+C0189,Hauwa Bakery,Port Harcourt,0,30
+C0190,Adaeze Supplies,Ibadan,0,30
+C0191,Babatunde Supplies,Ibadan,0,30
+C0192,Folake Supplies,Abuja,0,30
+C0193,Aisha Salon,Kano,1,30
+C0194,Maryam Pharmacy,Lagos,0,30
+C0195,Dapo Pharmacy,Abuja,0,30
+C0196,Chiamaka Electronics,Ibadan,0,30
+C0197,Segun Logistics,Lagos,0,14
+C0198,Sade Logistics,Enugu,1,30
+C0199,Adaeze Supplies,Port Harcourt,0,30
+C0200,Bisi Printing,Enugu,0,14
+C0201,Chinedu Logistics,Ibadan,0,14
+C0202,Nnamdi Foods,Lagos,0,30
+C0203,Yusuf Printing,Ibadan,0,14
+C0204,Babatunde Salon,Port Harcourt,0,30
+C0205,Obinna Fashion,Kano,0,14
+C0206,Emeka Salon,Lagos,1,30
+C0207,Ifeoma Electronics,Lagos,0,30
+C0208,Chiamaka Printing,Abuja,0,30
+C0209,Maryam Stores,Lagos,0,14
+C0210,Chinedu Stores,Lagos,0,30
+C0211,Bisi Supplies,Port Harcourt,0,30
+C0212,Yusuf Foods,Enugu,0,30
+C0213,Babatunde Foods,Kano,0,30
+C0214,Temitope Bakery,Kano,0,30
+C0215,Segun Foods,Lagos,0,30
+C0216,Sade Printing,Lagos,0,30
+C0217,Folake Printing,Abuja,1,30
+C0218,Kunle Foods,Lagos,0,30
+C0219,Temitope Electronics,Lagos,0,30
+C0220,Tobi Foods,Kano,0,30
+C0221,Segun Pharmacy,Abuja,0,30
+C0222,Kelechi Stores,Port Harcourt,0,14
+C0223,Segun Logistics,Lagos,0,30
+C0224,Babatunde Salon,Lagos,0,14
+C0225,Maryam Electronics,Lagos,0,14
+C0226,Chinedu Stores,Ibadan,0,30
+C0227,Dapo Pharmacy,Lagos,0,30
+C0228,Tunde Stores,Lagos,0,14
+C0229,Yusuf Fashion,Lagos,0,14
+C0230,Segun Pharmacy,Ibadan,0,30
+C0231,Emeka Bakery,Lagos,0,30
+C0232,Funmilayo Supplies,Kano,0,30
+C0233,Dapo Printing,Ibadan,0,30
+C0234,Adaeze Stores,Lagos,1,14
+C0235,Obinna Electronics,Lagos,1,30
+C0236,Kunle Fashion,Ibadan,1,30
+C0237,Kelechi Electronics,Kano,0,30
+C0238,Emeka Printing,Ibadan,0,30
+C0239,Tunde Supplies,Kano,0,14
+C0240,Folake Bakery,Ibadan,0,30
+C0241,Temitope Foods,Lagos,0,30
+C0242,Sade Bakery,Ibadan,0,30
+C0243,Obinna Printing,Ibadan,0,14
+C0244,Segun Supplies,Enugu,0,30
+C0245,Temitope Logistics,Kano,0,30
+C0246,Ngozi Electronics,Abuja,0,14
+C0247,Segun Foods,Kano,0,30
+C0248,Emeka Logistics,Lagos,1,30
+C0249,Obinna Supplies,Port Harcourt,0,14
+C0250,Ibrahim Stores,Lagos,0,30
+C0251,Aisha Foods,Ibadan,0,30
+C0252,Babatunde Printing,Enugu,0,30
+C0253,Musa Logistics,Lagos,0,30
+C0254,Obinna Electronics,Kano,0,14
+C0255,Babatunde Foods,Lagos,0,14
+C0256,Chinedu Pharmacy,Kano,0,30
+C0257,Obinna Supplies,Ibadan,0,30
+C0258,Temitope Supplies,Ibadan,0,14
+C0259,Maryam Stores,Lagos,0,14
+C0260,Ibrahim Electronics,Port Harcourt,0,30
+C0261,Sade Foods,Lagos,0,30
+C0262,Sade Foods,Abuja,0,14
+C0263,Ibrahim Stores,Kano,0,30
+C0264,Yusuf Pharmacy,Abuja,0,14
+C0265,Bisi Salon,Abuja,0,30
+C0266,Tunde Stores,Abuja,0,14
+C0267,Segun Logistics,Enugu,0,30
+C0268,Hauwa Logistics,Lagos,0,14
+C0269,Musa Printing,Lagos,0,30
+C0270,Babatunde Fashion,Lagos,0,30
+C0271,Musa Pharmacy,Abuja,1,30
+C0272,Chinedu Pharmacy,Enugu,0,30
+C0273,Musa Fashion,Lagos,0,30
+C0274,Emeka Supplies,Lagos,0,30
+C0275,Temitope Salon,Kano,0,30
+C0276,Emeka Salon,Port Harcourt,0,14
+C0277,Tobi Stores,Lagos,0,14
+C0278,Chiamaka Supplies,Port Harcourt,0,30
+C0279,Aisha Printing,Kano,0,30
+C0280,Temitope Electronics,Abuja,0,30
+C0281,Yusuf Bakery,Ibadan,0,30
+C0282,Nnamdi Fashion,Kano,0,14
+C0283,Nnamdi Foods,Ibadan,0,30
+C0284,Obinna Electronics,Lagos,0,30
+C0285,Ngozi Electronics,Lagos,0,30
+C0286,Bisi Salon,Enugu,0,14
+C0287,Babatunde Bakery,Port Harcourt,0,30
+C0288,Kelechi Salon,Port Harcourt,1,30
+C0289,Dapo Fashion,Lagos,0,30
+C0290,Yusuf Fashion,Ibadan,0,14
+C0291,Chiamaka Electronics,Kano,0,14
+C0292,Ifeoma Logistics,Lagos,0,30
+C0293,Babatunde Stores,Lagos,0,30
+C0294,Tobi Fashion,Lagos,0,30
+C0295,Chinedu Foods,Lagos,0,30
+C0296,Aisha Bakery,Port Harcourt,0,30
+C0297,Obinna Logistics,Lagos,0,30
+C0298,Maryam Electronics,Lagos,0,30
+C0299,Kunle Logistics,Lagos,1,30
+C0300,Tunde Pharmacy,Lagos,1,30

@@ -1,0 +1,2461 @@
+invoice_id,line_no,description,quantity,unit_price
+INV-100001,1,Delivery run,1,11774.30
+INV-100001,2,Repairs,1,23430.20
+INV-100002,1,"Printing, 500 flyers",10,19657.70
+INV-100002,2,"Bookkeeping, monthly",2,59166.10
+INV-100002,3,Consulting hour,2,12355.10
+INV-100003,1,"Printing, 500 flyers",1,22820.20
+INV-100003,2,Delivery run,1,11744.10
+INV-100004,1,Website maintenance,2,42422.10
+INV-100004,2,Cartons of stock,2,8653.60
+INV-100004,3,Repairs,1,23609.10
+INV-100005,1,Delivery run,1,5418.10
+INV-100005,2,"Printing, 500 flyers",2,24431.80
+INV-100005,3,"Printing, 500 flyers",1,20399.70
+INV-100006,1,"Printing, 500 flyers",1,19453.40
+INV-100006,2,"Bookkeeping, monthly",1,30299.00
+INV-100007,1,Delivery run,1,10665.00
+INV-100008,1,Consulting hour,2,24025.50
+INV-100008,2,Repairs,10,11708.60
+INV-100009,1,"Bookkeeping, monthly",2,46581.90
+INV-100010,1,Repairs,1,28308.00
+INV-100010,2,Consulting hour,5,24507.80
+INV-100010,3,Website maintenance,2,40144.70
+INV-100010,4,Cartons of stock,3,4727.80
+INV-100011,1,"Bookkeeping, monthly",1,54545.90
+INV-100011,2,Delivery run,1,5248.70
+INV-100011,3,Website maintenance,1,41833.90
+INV-100012,1,"Printing, 500 flyers",2,17946.00
+INV-100012,2,Training session,3,49625.10
+INV-100012,3,Delivery run,1,10068.60
+INV-100012,4,"Printing, 500 flyers",1,21085.80
+INV-100013,1,Website maintenance,5,64134.40
+INV-100013,2,Website maintenance,1,44110.90
+INV-100013,3,Consulting hour,5,12187.70
+INV-100014,1,Cartons of stock,1,5003.00
+INV-100014,2,"Bookkeeping, monthly",1,52449.20
+INV-100015,1,Cartons of stock,1,5415.30
+INV-100015,2,Delivery run,1,11878.00
+INV-100015,3,Delivery run,2,6675.70
+INV-100015,4,Delivery run,3,11370.60
+INV-100016,1,Repairs,1,15013.40
+INV-100016,2,"Printing, 500 flyers",1,16733.00
+INV-100017,1,Delivery run,1,3561.40
+INV-100017,2,Delivery run,1,4208.90
+INV-100018,1,Consulting hour,3,17904.10
+INV-100019,1,"Bookkeeping, monthly",5,26249.50
+INV-100019,2,Website maintenance,1,72840.20
+INV-100020,1,Delivery run,1,6917.50
+INV-100021,1,Training session,1,55790.50
+INV-100021,2,"Bookkeeping, monthly",5,51620.20
+INV-100021,3,Consulting hour,2,16626.70
+INV-100022,1,Training session,1,67741.90
+INV-100022,2,"Bookkeeping, monthly",5,28910.30
+INV-100022,3,Training session,1,59200.60
+INV-100022,4,Delivery run,1,10781.40
+INV-100023,1,"Bookkeeping, monthly",10,29643.50
+INV-100023,2,Cartons of stock,1,7922.50
+INV-100024,1,Website maintenance,1,70704.40
+INV-100024,2,"Bookkeeping, monthly",1,44243.60
+INV-100024,3,Training session,1,38136.00
+INV-100024,4,Consulting hour,1,13507.10
+INV-100025,1,Consulting hour,1,19266.60
+INV-100025,2,Cartons of stock,1,5122.60
+INV-100026,1,Training session,10,36936.30
+INV-100026,2,Consulting hour,10,17288.60
+INV-100027,1,Consulting hour,1,11208.00
+INV-100027,2,Training session,1,33002.60
+INV-100027,3,Training session,1,57019.50
+INV-100028,1,Cartons of stock,5,7102.90
+INV-100028,2,Delivery run,1,8789.10
+INV-100028,3,"Bookkeeping, monthly",1,51822.30
+INV-100029,1,Repairs,3,14092.30
+INV-100029,2,Repairs,1,8357.40
+INV-100030,1,Repairs,5,24774.20
+INV-100030,2,Cartons of stock,0,5612.60
+INV-100031,1,Repairs,2,29266.30
+INV-100031,2,"Bookkeeping, monthly",3,28518.20
+INV-100031,3,Website maintenance,1,47060.80
+INV-100032,1,Website maintenance,2,40479.00
+INV-100032,2,Repairs,1,10719.60
+INV-100033,1,Delivery run,1,3887.90
+INV-100033,2,Website maintenance,1,53064.50
+INV-100033,3,Cartons of stock,5,5929.70
+INV-100034,1,"Printing, 500 flyers",1,22440.60
+INV-100034,2,Consulting hour,1,15298.10
+INV-100035,1,Website maintenance,10,61181.20
+INV-100035,2,Consulting hour,1,22844.90
+INV-100035,3,Consulting hour,1,18482.40
+INV-100036,1,"Bookkeeping, monthly",3,44712.50
+INV-100036,2,Website maintenance,5,54170.10
+INV-100037,1,Cartons of stock,3,5227.60
+INV-100037,2,Training session,1,39999.90
+INV-100037,3,Repairs,2,8443.30
+INV-100037,4,"Bookkeeping, monthly",2,33870.70
+INV-100038,1,Training session,1,57481.50
+INV-100038,2,Cartons of stock,1,8547.20
+INV-100039,1,"Bookkeeping, monthly",1,44831.00
+INV-100039,2,"Bookkeeping, monthly",5,51002.70
+INV-100040,1,Repairs,1,15388.60
+INV-100040,2,Consulting hour,1,10464.60
+INV-100041,1,Repairs,1,19358.10
+INV-100041,2,Consulting hour,10,10431.10
+INV-100042,1,Cartons of stock,1,4707.00
+INV-100042,2,"Printing, 500 flyers",1,16893.60
+INV-100042,3,Cartons of stock,5,8417.20
+INV-100043,1,"Printing, 500 flyers",1,20946.20
+INV-100043,2,Consulting hour,1,20693.60
+INV-100043,3,Training session,1,46270.90
+INV-100043,4,"Printing, 500 flyers",2,21581.20
+INV-100044,1,Website maintenance,2,75571.80
+INV-100045,1,"Printing, 500 flyers",1,20964.90
+INV-100045,2,Cartons of stock,5,6695.60
+INV-100046,1,Consulting hour,2,16138.60
+INV-100046,2,Delivery run,2,4706.40
+INV-100047,1,Repairs,1,22168.10
+INV-100047,2,Cartons of stock,1,5300.90
+INV-100048,1,Training session,1,47252.80
+INV-100048,2,Delivery run,1,11213.80
+INV-100049,1,Website maintenance,1,48054.20
+INV-100049,2,Delivery run,1,10258.60
+INV-100050,1,Cartons of stock,2,5187.40
+INV-100050,2,Website maintenance,1,47522.40
+INV-100050,3,Repairs,2,11337.10
+INV-100050,4,Delivery run,10,7917.00
+INV-100051,1,Training session,2,64581.20
+INV-100052,1,"Bookkeeping, monthly",1,57233.20
+INV-100053,1,Website maintenance,1,34125.70
+INV-100053,2,Website maintenance,1,35124.60
+INV-100054,1,Delivery run,1,9787.50
+INV-100055,1,"Bookkeeping, monthly",10,38292.00
+INV-100056,1,"Bookkeeping, monthly",5,43706.60
+INV-100057,1,"Bookkeeping, monthly",3,41788.80
+INV-100057,2,"Bookkeeping, monthly",2,55120.60
+INV-100057,3,Website maintenance,1,55036.70
+INV-100058,1,Delivery run,1,10305.80
+INV-100059,1,Delivery run,1,3583.40
+INV-100059,2,Training session,1,43607.80
+INV-100059,3,Cartons of stock,5,5871.30
+INV-100060,1,"Bookkeeping, monthly",2,58739.80
+INV-100060,2,Repairs,1,13103.20
+INV-100061,1,Cartons of stock,1,7650.90
+INV-100062,1,Delivery run,2,7423.70
+INV-100063,1,Website maintenance,10,56012.10
+INV-100063,2,Repairs,2,7472.70
+INV-100063,3,"Bookkeeping, monthly",1,47534.40
+INV-100064,1,Delivery run,2,10583.10
+INV-100065,1,Delivery run,2,8785.20
+INV-100065,2,Cartons of stock,3,7996.40
+INV-100065,3,Delivery run,1,4336.60
+INV-100065,4,Consulting hour,1,24845.90
+INV-100066,1,"Bookkeeping, monthly",1,28250.80
+INV-100067,1,Website maintenance,2,74280.60
+INV-100067,2,Consulting hour,5,16399.70
+INV-100068,1,Training session,1,38049.40
+INV-100068,2,"Printing, 500 flyers",2,19054.80
+INV-100069,1,Consulting hour,1,23122.10
+INV-100069,2,Training session,1,58237.40
+INV-100069,3,Delivery run,3,8123.60
+INV-100069,4,Training session,2,45993.00
+INV-100070,1,"Bookkeeping, monthly",1,43119.10
+INV-100071,1,Website maintenance,1,26628.20
+INV-100071,2,"Printing, 500 flyers",1,24074.20
+INV-100072,1,"Printing, 500 flyers",3,22460.30
+INV-100072,2,"Printing, 500 flyers",1,21624.40
+INV-100072,3,Consulting hour,2,14087.30
+INV-100073,1,Training session,2,72544.20
+INV-100073,2,Repairs,2,8510.90
+INV-100074,1,Delivery run,2,9832.30
+INV-100075,1,Repairs,1,9639.50
+INV-100075,2,Cartons of stock,2,8831.30
+INV-100076,1,Cartons of stock,1,8435.00
+INV-100077,1,"Printing, 500 flyers",1,19184.30
+INV-100077,2,"Bookkeeping, monthly",3,41095.10
+INV-100077,3,Repairs,1,20360.50
+INV-100078,1,Delivery run,2,5288.30
+INV-100078,2,Cartons of stock,1,5072.60
+INV-100078,3,Delivery run,2,9582.10
+INV-100079,1,Delivery run,1,11503.40
+INV-100080,1,Delivery run,2,8627.90
+INV-100080,2,Delivery run,2,8432.80
+INV-100080,3,Website maintenance,1,23277.90
+INV-100080,4,Repairs,1,10954.10
+INV-100081,1,Cartons of stock,1,8927.10
+INV-100081,2,Delivery run,1,6022.00
+INV-100082,1,"Printing, 500 flyers",1,15107.40
+INV-100082,2,"Printing, 500 flyers",1,15184.20
+INV-100082,3,Training session,1,38150.60
+INV-100082,4,Consulting hour,1,24000.80
+INV-100083,1,Repairs,5,13956.10
+INV-100084,1,Delivery run,3,5787.20
+INV-100084,2,Repairs,1,21327.10
+INV-100085,1,"Bookkeeping, monthly",5,48887.50
+INV-100085,2,"Printing, 500 flyers",2,16662.40
+INV-100086,1,Consulting hour,1,24336.50
+INV-100086,2,"Printing, 500 flyers",1,15752.20
+INV-100087,1,Training session,1,38742.60
+INV-100088,1,"Printing, 500 flyers",10,24345.40
+INV-100088,2,Cartons of stock,1,4818.60
+INV-100089,1,Consulting hour,1,19112.20
+INV-100089,2,Consulting hour,3,18620.10
+INV-100089,3,Repairs,2,13421.40
+INV-100090,1,Cartons of stock,0,7107.40
+INV-100091,1,Repairs,1,29128.80
+INV-100091,2,Website maintenance,10,44626.90
+INV-100091,3,Consulting hour,1,23868.20
+INV-100091,4,"Bookkeeping, monthly",1,34471.50
+INV-100092,1,Repairs,1,24270.50
+INV-100093,1,"Printing, 500 flyers",1,21115.20
+INV-100094,1,Website maintenance,1,37651.00
+INV-100095,1,Cartons of stock,5,7442.20
+INV-100095,2,Cartons of stock,1,6743.90
+INV-100095,3,Consulting hour,1,20399.40
+INV-100096,1,Training session,5,33718.70
+INV-100096,2,"Printing, 500 flyers",1,22415.30
+INV-100096,3,"Printing, 500 flyers",1,16410.60
+INV-100096,4,Website maintenance,10,51138.30
+INV-100097,1,Cartons of stock,1,8103.40
+INV-100097,2,"Printing, 500 flyers",10,24537.40
+INV-100098,1,"Bookkeeping, monthly",1,29728.10
+INV-100099,1,Training session,3,48519.30
+INV-100100,1,Cartons of stock,1,4832.90
+INV-100101,1,"Bookkeeping, monthly",1,32459.50
+INV-100101,2,Delivery run,1,3877.40
+INV-100102,1,"Printing, 500 flyers",1,18642.10
+INV-100103,1,Cartons of stock,1,6376.30
+INV-100104,1,"Printing, 500 flyers",1,16218.70
+INV-100104,2,Training session,3,46856.40
+INV-100104,3,"Printing, 500 flyers",1,24471.30
+INV-100104,4,Training session,5,58483.00
+INV-100105,1,Training session,3,36650.00
+INV-100105,2,Repairs,1,7529.30
+INV-100106,1,Repairs,5,29476.20
+INV-100107,1,Website maintenance,1,78342.80
+INV-100107,2,Cartons of stock,1,6198.50
+INV-100107,3,Delivery run,1,10648.70
+INV-100108,1,Repairs,1,28973.80
+INV-100109,1,Repairs,1,12000.50
+INV-100109,2,Training session,3,38294.70
+INV-100110,1,Website maintenance,2,44032.60
+INV-100110,2,Delivery run,1,8578.20
+INV-100111,1,Training session,3,45883.60
+INV-100111,2,"Printing, 500 flyers",1,19355.00
+INV-100112,1,"Bookkeeping, monthly",10,49453.90
+INV-100112,2,Consulting hour,2,22213.70
+INV-100113,1,Delivery run,1,7581.40
+INV-100113,2,Delivery run,1,11965.90
+INV-100113,3,Cartons of stock,5,4831.00
+INV-100114,1,Consulting hour,1,23600.60
+INV-100115,1,Delivery run,1,10735.20
+INV-100115,2,Training session,1,43285.70
+INV-100115,3,Training session,2,34357.40
+INV-100116,1,Repairs,1,18884.00
+INV-100116,2,Repairs,1,11051.10
+INV-100117,1,Website maintenance,5,54053.70
+INV-100117,2,Website maintenance,1,57498.60
+INV-100118,1,Training session,5,48481.90
+INV-100119,1,Cartons of stock,2,8947.20
+INV-100119,2,Website maintenance,1,25178.50
+INV-100119,3,"Bookkeeping, monthly",1,32926.10
+INV-100120,1,Delivery run,1,5394.30
+INV-100121,1,Delivery run,2,10809.40
+INV-100122,1,"Bookkeeping, monthly",1,56632.40
+INV-100122,2,Delivery run,3,11847.40
+INV-100123,1,Repairs,2,28634.00
+INV-100123,2,Training session,1,51801.30
+INV-100124,1,Repairs,1,20290.60
+INV-100124,2,Consulting hour,1,24561.10
+INV-100125,1,Repairs,1,9655.80
+INV-100126,1,Consulting hour,2,17242.00
+INV-100127,1,Website maintenance,10,23077.30
+INV-100127,2,Delivery run,1,11897.00
+INV-100128,1,Website maintenance,1,64913.80
+INV-100129,1,"Printing, 500 flyers",1,21860.60
+INV-100130,1,Cartons of stock,5,5142.60
+INV-100131,1,"Bookkeeping, monthly",10,43819.00
+INV-100131,2,Training session,1,65944.80
+INV-100132,1,Delivery run,3,4150.40
+INV-100132,2,Training session,3,48612.20
+INV-100133,1,Consulting hour,3,15906.30
+INV-100133,2,Website maintenance,10,27541.40
+INV-100133,3,"Printing, 500 flyers",5,15181.40
+INV-100133,4,Consulting hour,1,23751.80
+INV-100134,1,Cartons of stock,1,7642.30
+INV-100134,2,Repairs,1,25926.60
+INV-100135,1,Training session,1,40701.40
+INV-100135,2,Website maintenance,1,30974.10
+INV-100135,3,"Bookkeeping, monthly",1,49779.80
+INV-100136,1,Cartons of stock,1,4926.90
+INV-100136,2,Cartons of stock,1,8265.00
+INV-100136,3,"Printing, 500 flyers",1,23036.10
+INV-100136,4,Website maintenance,1,46185.10
+INV-100137,1,Cartons of stock,5,7818.50
+INV-100138,1,Training session,10,55557.00
+INV-100139,1,Repairs,1,16038.60
+INV-100140,1,Cartons of stock,10,8037.40
+INV-100140,2,Repairs,1,27875.80
+INV-100141,1,Website maintenance,3,60139.00
+INV-100141,2,Consulting hour,1,20228.00
+INV-100141,3,"Printing, 500 flyers",2,21029.70
+INV-100142,1,"Bookkeeping, monthly",1,59686.80
+INV-100142,2,"Bookkeeping, monthly",1,55580.20
+INV-100142,3,Training session,1,50150.20
+INV-100142,4,Repairs,1,25395.50
+INV-100143,1,Consulting hour,1,22560.70
+INV-100143,2,Delivery run,1,9428.20
+INV-100143,3,Repairs,2,12055.00
+INV-100144,1,Delivery run,1,10865.80
+INV-100145,1,Website maintenance,1,72745.30
+INV-100145,2,Website maintenance,3,27403.80
+INV-100146,1,Cartons of stock,1,5983.80
+INV-100146,2,Consulting hour,1,22097.40
+INV-100147,1,Repairs,1,28727.50
+INV-100147,2,Delivery run,1,4054.20
+INV-100148,1,Repairs,1,18529.40
+INV-100148,2,Cartons of stock,3,5035.70
+INV-100148,3,Repairs,2,9735.00
+INV-100149,1,Delivery run,3,6233.70
+INV-100149,2,Training session,1,52849.50
+INV-100150,1,Repairs,1,26840.00
+INV-100151,1,Delivery run,2,11623.00
+INV-100151,2,Repairs,1,27451.90
+INV-100152,1,"Printing, 500 flyers",1,19862.70
+INV-100152,2,Consulting hour,2,13973.10
+INV-100153,1,"Printing, 500 flyers",5,18474.40
+INV-100153,2,Repairs,1,15927.60
+INV-100154,1,"Printing, 500 flyers",3,19692.30
+INV-100154,2,Cartons of stock,2,5766.00
+INV-100154,3,Delivery run,2,3622.90
+INV-100155,1,Delivery run,1,7321.60
+INV-100155,2,Website maintenance,1,54372.80
+INV-100156,1,Consulting hour,2,21639.70
+INV-100156,2,Website maintenance,1,60216.50
+INV-100156,3,Website maintenance,2,40911.90
+INV-100157,1,Delivery run,2,5743.30
+INV-100158,1,Training session,1,44304.80
+INV-100159,1,Training session,1,52363.70
+INV-100159,2,Training session,2,60354.50
+INV-100159,3,"Bookkeeping, monthly",5,42088.20
+INV-100160,1,Delivery run,3,7452.00
+INV-100160,2,Training session,1,62902.20
+INV-100161,1,Website maintenance,1,58213.00
+INV-100161,2,Website maintenance,2,54590.00
+INV-100161,3,Website maintenance,1,75354.00
+INV-100162,1,Consulting hour,1,14728.60
+INV-100162,2,Website maintenance,2,77714.30
+INV-100162,3,"Bookkeeping, monthly",5,33967.30
+INV-100163,1,"Printing, 500 flyers",1,21658.80
+INV-100164,1,"Bookkeeping, monthly",2,51118.40
+INV-100165,1,Delivery run,1,5531.70
+INV-100165,2,Repairs,1,13246.10
+INV-100166,1,Website maintenance,5,50297.40
+INV-100167,1,Delivery run,3,7999.00
+INV-100167,2,"Printing, 500 flyers",1,19675.00
+INV-100167,3,"Printing, 500 flyers",1,21374.60
+INV-100168,1,"Printing, 500 flyers",2,16916.80
+INV-100168,2,"Bookkeeping, monthly",1,32121.20
+INV-100168,3,Repairs,2,28486.20
+INV-100168,4,"Printing, 500 flyers",1,23424.40
+INV-100169,1,Repairs,2,19863.30
+INV-100170,1,Training session,1,40162.90
+INV-100170,2,"Printing, 500 flyers",3,16244.10
+INV-100170,3,Consulting hour,1,18809.80
+INV-100171,1,Training session,1,62363.00
+INV-100171,2,Delivery run,1,7268.60
+INV-100172,1,Website maintenance,1,30757.00
+INV-100172,2,Delivery run,5,7009.80
+INV-100173,1,Repairs,1,19799.10
+INV-100173,2,Website maintenance,1,75086.60
+INV-100174,1,Delivery run,1,11065.10
+INV-100174,2,Training session,5,55473.50
+INV-100174,3,Consulting hour,2,11958.30
+INV-100174,4,Delivery run,1,10187.70
+INV-100175,1,Website maintenance,1,22441.20
+INV-100175,2,"Bookkeeping, monthly",2,45643.60
+INV-100176,1,Consulting hour,2,16472.70
+INV-100176,2,"Printing, 500 flyers",10,24993.20
+INV-100176,3,Website maintenance,1,77754.20
+INV-100176,4,Delivery run,5,7930.00
+INV-100177,1,Training session,1,45865.30
+INV-100177,2,Website maintenance,5,54526.40
+INV-100178,1,"Bookkeeping, monthly",1,56755.20
+INV-100178,2,Consulting hour,1,19348.30
+INV-100178,3,"Printing, 500 flyers",10,21466.30
+INV-100179,1,Training session,2,31347.10
+INV-100180,1,"Bookkeeping, monthly",5,34175.70
+INV-100181,1,Consulting hour,5,20153.30
+INV-100181,2,"Bookkeeping, monthly",2,27078.70
+INV-100181,3,Training session,2,58845.80
+INV-100182,1,Repairs,1,18890.00
+INV-100182,2,Cartons of stock,2,5466.70
+INV-100182,3,Website maintenance,1,76820.40
+INV-100182,4,Consulting hour,2,21175.40
+INV-100183,1,"Printing, 500 flyers",1,17016.80
+INV-100183,2,Cartons of stock,5,5779.90
+INV-100183,3,Training session,1,62753.40
+INV-100184,1,Consulting hour,1,14290.00
+INV-100184,2,Delivery run,1,11202.00
+INV-100185,1,"Bookkeeping, monthly",1,55986.20
+INV-100185,2,Training session,1,42850.70
+INV-100186,1,Training session,5,67879.40
+INV-100186,2,Delivery run,5,6933.60
+INV-100186,3,Delivery run,2,5413.80
+INV-100187,1,Website maintenance,3,28367.80
+INV-100187,2,Consulting hour,5,24903.50
+INV-100187,3,Consulting hour,3,11672.00
+INV-100188,1,Cartons of stock,1,5605.50
+INV-100188,2,Website maintenance,1,69065.20
+INV-100188,3,Website maintenance,1,52506.80
+INV-100189,1,Consulting hour,5,10476.70
+INV-100190,1,Delivery run,3,8652.50
+INV-100191,1,Consulting hour,1,16575.40
+INV-100191,2,Repairs,2,26598.60
+INV-100191,3,Repairs,1,10554.00
+INV-100192,1,Delivery run,3,5961.10
+INV-100193,1,Cartons of stock,1,5506.20
+INV-100194,1,Cartons of stock,5,8565.50
+INV-100195,1,Delivery run,2,4076.40
+INV-100195,2,Repairs,1,11975.40
+INV-100195,3,Cartons of stock,3,8795.50
+INV-100196,1,"Bookkeeping, monthly",2,27067.60
+INV-100196,2,Cartons of stock,2,5328.20
+INV-100196,3,"Bookkeeping, monthly",1,27162.00
+INV-100197,1,"Bookkeeping, monthly",1,40436.10
+INV-100197,2,Delivery run,3,6860.30
+INV-100197,3,Repairs,1,19894.20
+INV-100198,1,"Printing, 500 flyers",5,24579.50
+INV-100198,2,"Printing, 500 flyers",1,17171.10
+INV-100199,1,Training session,1,58532.10
+INV-100200,1,"Bookkeeping, monthly",1,29478.20
+INV-100201,1,Consulting hour,1,22426.00
+INV-100201,2,Consulting hour,3,19524.00
+INV-100201,3,Consulting hour,3,15370.90
+INV-100201,4,Training session,2,67761.40
+INV-100202,1,Website maintenance,2,43478.40
+INV-100202,2,Training session,2,72929.70
+INV-100203,1,Website maintenance,1,72544.50
+INV-100203,2,"Printing, 500 flyers",1,23244.40
+INV-100203,3,Consulting hour,10,17569.00
+INV-100204,1,Training session,1,70268.80
+INV-100204,2,Website maintenance,1,46385.40
+INV-100204,3,Cartons of stock,3,8613.80
+INV-100204,4,Consulting hour,1,13434.20
+INV-100205,1,Consulting hour,1,23216.40
+INV-100205,2,"Printing, 500 flyers",3,18413.80
+INV-100206,1,"Printing, 500 flyers",1,23101.00
+INV-100206,2,Consulting hour,1,23732.20
+INV-100207,1,Cartons of stock,2,5626.20
+INV-100207,2,Consulting hour,2,15153.90
+INV-100208,1,Repairs,5,21374.20
+INV-100209,1,Repairs,1,11358.10
+INV-100209,2,Repairs,2,25255.00
+INV-100210,1,Cartons of stock,1,5870.60
+INV-100210,2,"Printing, 500 flyers",1,23741.10
+INV-100210,3,Delivery run,1,4235.00
+INV-100210,4,"Printing, 500 flyers",3,21641.60
+INV-100211,1,Cartons of stock,10,6023.10
+INV-100211,2,Training session,2,51125.50
+INV-100212,1,"Bookkeeping, monthly",1,58084.50
+INV-100212,2,Repairs,5,11249.10
+INV-100213,1,Cartons of stock,3,6669.80
+INV-100213,2,"Printing, 500 flyers",2,23749.80
+INV-100213,3,"Printing, 500 flyers",1,19898.10
+INV-100214,1,Training session,5,70163.60
+INV-100214,2,Repairs,3,11260.30
+INV-100214,3,Repairs,2,20447.60
+INV-100215,1,Consulting hour,5,18335.90
+INV-100215,2,Consulting hour,2,11343.40
+INV-100216,1,Website maintenance,1,33494.70
+INV-100217,1,Delivery run,2,5377.80
+INV-100217,2,Delivery run,1,8662.10
+INV-100218,1,Consulting hour,1,18197.20
+INV-100219,1,"Printing, 500 flyers",1,17858.00
+INV-100219,2,Consulting hour,2,24527.50
+INV-100220,1,Delivery run,5,10563.00
+INV-100221,1,Website maintenance,2,57921.20
+INV-100221,2,Training session,1,73966.30
+INV-100221,3,Consulting hour,1,10150.80
+INV-100222,1,Consulting hour,2,18718.60
+INV-100222,2,Training session,1,43524.10
+INV-100222,3,"Bookkeeping, monthly",1,42333.80
+INV-100223,1,Website maintenance,5,37632.90
+INV-100223,2,"Bookkeeping, monthly",5,25650.90
+INV-100223,3,Repairs,1,13387.20
+INV-100224,1,Cartons of stock,2,8163.70
+INV-100224,2,Training session,1,36642.10
+INV-100224,3,"Bookkeeping, monthly",1,56151.10
+INV-100224,4,Repairs,1,21073.50
+INV-100225,1,"Printing, 500 flyers",1,17896.30
+INV-100225,2,Cartons of stock,1,8570.20
+INV-100226,1,Website maintenance,1,50476.60
+INV-100226,2,Delivery run,5,9616.50
+INV-100226,3,Website maintenance,3,34123.40
+INV-100226,4,Training session,10,59234.70
+INV-100227,1,Delivery run,1,10991.60
+INV-100227,2,"Printing, 500 flyers",3,16417.40
+INV-100227,3,"Bookkeeping, monthly",2,47198.70
+INV-100227,4,Delivery run,1,8591.90
+INV-100228,1,"Bookkeeping, monthly",1,30944.90
+INV-100228,2,"Printing, 500 flyers",1,20013.50
+INV-100229,1,Delivery run,1,4433.80
+INV-100229,2,Cartons of stock,1,5365.00
+INV-100229,3,Delivery run,1,7748.60
+INV-100230,1,Website maintenance,1,34716.70
+INV-100230,2,"Printing, 500 flyers",1,24846.30
+INV-100230,3,Consulting hour,5,16853.80
+INV-100231,1,Delivery run,1,5425.70
+INV-100231,2,Website maintenance,1,69531.00
+INV-100232,1,Training session,10,45580.10
+INV-100232,2,Repairs,1,16363.90
+INV-100232,3,Repairs,5,23446.50
+INV-100233,1,Website maintenance,1,26961.40
+INV-100234,1,Website maintenance,3,34018.60
+INV-100235,1,Delivery run,2,7027.50
+INV-100235,2,Repairs,1,8696.00
+INV-100235,3,Repairs,1,15071.30
+INV-100236,1,Training session,1,57310.30
+INV-100237,1,"Bookkeeping, monthly",1,26513.00
+INV-100238,1,"Bookkeeping, monthly",1,31828.00
+INV-100238,2,"Printing, 500 flyers",3,23525.60
+INV-100239,1,Consulting hour,2,13444.60
+INV-100239,2,Website maintenance,3,67185.40
+INV-100240,1,Consulting hour,3,13155.50
+INV-100241,1,"Bookkeeping, monthly",10,43711.80
+INV-100241,2,"Printing, 500 flyers",2,23147.50
+INV-100242,1,Delivery run,5,5355.00
+INV-100242,2,"Bookkeeping, monthly",3,41394.60
+INV-100243,1,Cartons of stock,1,6883.70
+INV-100244,1,Delivery run,1,8461.00
+INV-100244,2,Repairs,2,7636.00
+INV-100244,3,"Bookkeeping, monthly",1,51362.80
+INV-100245,1,Repairs,2,26016.40
+INV-100245,2,Training session,1,53694.30
+INV-100246,1,"Bookkeeping, monthly",1,32209.60
+INV-100246,2,Repairs,1,22343.00
+INV-100247,1,Training session,2,59217.60
+INV-100248,1,"Printing, 500 flyers",2,24074.70
+INV-100248,2,Cartons of stock,5,5060.60
+INV-100249,1,Consulting hour,1,21647.30
+INV-100249,2,Training session,1,53764.80
+INV-100249,3,Cartons of stock,2,4738.60
+INV-100250,1,Delivery run,1,8831.60
+INV-100250,2,Repairs,1,14942.20
+INV-100251,1,"Bookkeeping, monthly",2,36546.50
+INV-100251,2,"Bookkeeping, monthly",1,53628.20
+INV-100251,3,"Printing, 500 flyers",2,22171.00
+INV-100252,1,"Bookkeeping, monthly",1,58162.00
+INV-100252,2,Consulting hour,1,16427.50
+INV-100253,1,Website maintenance,1,74606.40
+INV-100253,2,Consulting hour,2,14540.60
+INV-100253,3,Training session,1,36395.80
+INV-100254,1,Repairs,5,15212.20
+INV-100254,2,Repairs,1,24616.30
+INV-100254,3,Consulting hour,1,10804.90
+INV-100255,1,Website maintenance,2,28914.50
+INV-100255,2,"Bookkeeping, monthly",1,56280.80
+INV-100255,3,"Printing, 500 flyers",1,20892.10
+INV-100256,1,Consulting hour,1,17228.50
+INV-100256,2,"Bookkeeping, monthly",2,34466.80
+INV-100257,1,Consulting hour,5,16224.60
+INV-100257,2,"Printing, 500 flyers",1,15628.00
+INV-100257,3,Training session,1,46104.70
+INV-100257,4,Delivery run,0,9829.40
+INV-100258,1,"Bookkeeping, monthly",1,37968.40
+INV-100258,2,Repairs,1,20005.70
+INV-100259,1,Cartons of stock,1,4676.20
+INV-100260,1,"Bookkeeping, monthly",10,36015.00
+INV-100260,2,Repairs,2,19582.30
+INV-100260,3,"Bookkeeping, monthly",1,42409.70
+INV-100260,4,"Printing, 500 flyers",2,24714.40
+INV-100261,1,Training session,3,39149.70
+INV-100261,2,Website maintenance,1,70337.90
+INV-100262,1,"Printing, 500 flyers",1,22831.00
+INV-100262,2,"Printing, 500 flyers",2,16049.40
+INV-100263,1,Website maintenance,1,34618.20
+INV-100264,1,"Bookkeeping, monthly",2,36755.80
+INV-100264,2,Repairs,1,12788.00
+INV-100264,3,Delivery run,1,11121.40
+INV-100265,1,Delivery run,1,6746.30
+INV-100265,2,Repairs,1,25192.70
+INV-100265,3,"Printing, 500 flyers",2,18883.30
+INV-100266,1,Training session,1,67997.60
+INV-100267,1,Training session,2,58215.60
+INV-100267,2,"Bookkeeping, monthly",1,58611.30
+INV-100268,1,Consulting hour,5,11283.30
+INV-100268,2,Delivery run,5,11255.40
+INV-100269,1,Repairs,2,8804.40
+INV-100270,1,"Printing, 500 flyers",5,24529.40
+INV-100270,2,Consulting hour,10,18479.40
+INV-100270,3,Delivery run,2,3637.20
+INV-100270,4,Training session,1,39833.80
+INV-100271,1,Delivery run,1,9159.00
+INV-100271,2,"Bookkeeping, monthly",1,44460.20
+INV-100272,1,"Bookkeeping, monthly",3,41489.80
+INV-100272,2,Training session,1,36805.80
+INV-100273,1,"Bookkeeping, monthly",5,48649.40
+INV-100274,1,"Bookkeeping, monthly",5,28110.50
+INV-100274,2,Delivery run,1,10110.20
+INV-100274,3,"Printing, 500 flyers",1,19559.70
+INV-100274,4,Website maintenance,2,23393.20
+INV-100275,1,Repairs,3,6078.40
+INV-100275,2,Website maintenance,1,47414.20
+INV-100276,1,Delivery run,1,4581.60
+INV-100276,2,"Bookkeeping, monthly",1,57114.60
+INV-100276,3,Delivery run,1,7377.10
+INV-100276,4,Website maintenance,1,24315.70
+INV-100277,1,Repairs,2,18160.30
+INV-100278,1,Cartons of stock,2,5556.60
+INV-100278,2,Website maintenance,1,77398.50
+INV-100278,3,Delivery run,1,8047.90
+INV-100279,1,Consulting hour,5,22262.30
+INV-100279,2,Repairs,1,5167.00
+INV-100279,3,Cartons of stock,1,5701.60
+INV-100279,4,Repairs,3,5242.40
+INV-100280,1,Training session,1,34645.70
+INV-100280,2,Website maintenance,5,76962.80
+INV-100281,1,Cartons of stock,1,8645.70
+INV-100281,2,Website maintenance,1,24862.20
+INV-100281,3,Cartons of stock,2,8059.80
+INV-100281,4,Cartons of stock,2,7924.50
+INV-100282,1,Training session,2,42102.60
+INV-100283,1,"Printing, 500 flyers",1,20318.30
+INV-100283,2,"Bookkeeping, monthly",10,52777.80
+INV-100284,1,Delivery run,10,3865.30
+INV-100285,1,Website maintenance,5,45695.80
+INV-100285,2,"Printing, 500 flyers",2,22733.70
+INV-100286,1,Consulting hour,1,19145.80
+INV-100286,2,"Bookkeeping, monthly",1,56279.40
+INV-100286,3,Training session,2,74766.80
+INV-100287,1,Delivery run,1,7905.80
+INV-100288,1,Cartons of stock,1,6294.80
+INV-100289,1,Delivery run,1,10732.20
+INV-100289,2,Cartons of stock,1,6293.80
+INV-100289,3,Cartons of stock,1,8427.90
+INV-100290,1,Cartons of stock,1,7915.20
+INV-100290,2,Cartons of stock,1,4514.60
+INV-100290,3,Website maintenance,1,40306.60
+INV-100290,4,Consulting hour,2,22989.00
+INV-100291,1,Cartons of stock,1,5484.50
+INV-100292,1,Consulting hour,2,17205.60
+INV-100292,2,Website maintenance,2,76450.00
+INV-100293,1,"Bookkeeping, monthly",1,54764.20
+INV-100293,2,Delivery run,1,11798.90
+INV-100294,1,Consulting hour,1,12887.90
+INV-100294,2,Consulting hour,1,11798.30
+INV-100294,3,"Printing, 500 flyers",2,16555.80
+INV-100294,4,Cartons of stock,1,5925.00
+INV-100295,1,Delivery run,10,9654.10
+INV-100296,1,Repairs,1,28471.00
+INV-100296,2,"Printing, 500 flyers",2,15005.00
+INV-100296,3,"Bookkeeping, monthly",1,42962.60
+INV-100297,1,Delivery run,1,10030.40
+INV-100297,2,Training session,5,74966.10
+INV-100298,1,Website maintenance,1,79717.00
+INV-100299,1,Consulting hour,2,16470.80
+INV-100299,2,Cartons of stock,1,8361.20
+INV-100300,1,"Bookkeeping, monthly",5,45518.30
+INV-100301,1,Website maintenance,2,77941.40
+INV-100301,2,Cartons of stock,1,6186.30
+INV-100301,3,Training session,1,58821.70
+INV-100301,4,Delivery run,1,3847.60
+INV-100302,1,Website maintenance,1,46360.80
+INV-100302,2,Repairs,2,7161.70
+INV-100302,3,"Bookkeeping, monthly",1,26536.60
+INV-100303,1,"Bookkeeping, monthly",1,37372.40
+INV-100303,2,"Bookkeeping, monthly",5,25813.40
+INV-100303,3,Repairs,5,18547.00
+INV-100303,4,Website maintenance,1,40531.60
+INV-100304,1,Delivery run,2,8516.50
+INV-100304,2,Consulting hour,1,17758.10
+INV-100305,1,Consulting hour,1,17366.40
+INV-100306,1,"Bookkeeping, monthly",3,49059.90
+INV-100307,1,"Printing, 500 flyers",1,21361.60
+INV-100307,2,Repairs,1,20745.20
+INV-100307,3,Training session,2,43271.90
+INV-100307,4,Repairs,5,21004.60
+INV-100308,1,Consulting hour,3,12517.00
+INV-100308,2,"Bookkeeping, monthly",2,58899.70
+INV-100309,1,"Printing, 500 flyers",1,23091.50
+INV-100310,1,Cartons of stock,1,8046.20
+INV-100311,1,Consulting hour,2,11803.20
+INV-100312,1,Website maintenance,2,51523.40
+INV-100312,2,"Printing, 500 flyers",1,20646.20
+INV-100312,3,Training session,1,68987.90
+INV-100313,1,"Bookkeeping, monthly",1,34713.30
+INV-100314,1,Cartons of stock,2,5437.10
+INV-100315,1,Website maintenance,2,59303.20
+INV-100316,1,"Bookkeeping, monthly",2,53827.80
+INV-100316,2,Website maintenance,1,66646.70
+INV-100317,1,Delivery run,2,4231.20
+INV-100317,2,"Bookkeeping, monthly",1,46392.70
+INV-100317,3,Website maintenance,1,63971.50
+INV-100317,4,Repairs,1,20474.30
+INV-100318,1,Repairs,3,11780.40
+INV-100318,2,Delivery run,1,3860.50
+INV-100319,1,"Printing, 500 flyers",1,24860.00
+INV-100319,2,Training session,2,30505.10
+INV-100319,3,Repairs,2,22681.00
+INV-100320,1,Consulting hour,2,16957.60
+INV-100320,2,Cartons of stock,3,5306.80
+INV-100320,3,Consulting hour,1,13871.40
+INV-100321,1,Website maintenance,2,79595.10
+INV-100321,2,Training session,1,32274.60
+INV-100321,3,Training session,1,33053.50
+INV-100322,1,Delivery run,1,4922.70
+INV-100322,2,Website maintenance,1,79940.60
+INV-100322,3,Website maintenance,1,29680.30
+INV-100323,1,Delivery run,1,4259.30
+INV-100323,2,Delivery run,2,8257.60
+INV-100323,3,"Printing, 500 flyers",5,16889.00
+INV-100324,1,Cartons of stock,1,8662.60
+INV-100324,2,Website maintenance,2,72382.90
+INV-100325,1,Delivery run,2,11897.70
+INV-100325,2,Website maintenance,1,68019.10
+INV-100326,1,Delivery run,2,11140.70
+INV-100326,2,Repairs,2,5540.20
+INV-100327,1,Delivery run,1,5212.20
+INV-100327,2,Website maintenance,2,78076.90
+INV-100327,3,Website maintenance,10,21559.30
+INV-100328,1,"Bookkeeping, monthly",1,26000.50
+INV-100329,1,Website maintenance,10,76063.40
+INV-100330,1,Training session,2,70047.10
+INV-100331,1,"Printing, 500 flyers",2,19533.70
+INV-100332,1,"Bookkeeping, monthly",1,49688.70
+INV-100332,2,Delivery run,1,5054.40
+INV-100332,3,Repairs,1,11689.60
+INV-100333,1,Training session,10,65499.50
+INV-100334,1,Consulting hour,1,17610.90
+INV-100335,1,"Bookkeeping, monthly",2,54141.60
+INV-100335,2,Delivery run,3,3705.90
+INV-100335,3,"Printing, 500 flyers",2,16497.00
+INV-100336,1,Cartons of stock,1,7174.90
+INV-100336,2,"Bookkeeping, monthly",-1,34853.60
+INV-100336,3,Delivery run,1,5882.60
+INV-100336,4,"Printing, 500 flyers",1,22870.00
+INV-100337,1,"Printing, 500 flyers",1,15415.80
+INV-100337,2,"Printing, 500 flyers",2,21279.10
+INV-100338,1,Repairs,1,7113.70
+INV-100338,2,Website maintenance,2,64535.80
+INV-100339,1,Training session,1,36185.90
+INV-100340,1,Cartons of stock,10,6368.20
+INV-100340,2,Training session,1,54892.80
+INV-100341,1,Consulting hour,1,13492.30
+INV-100341,2,Training session,1,57018.60
+INV-100341,3,Cartons of stock,1,6320.20
+INV-100342,1,"Printing, 500 flyers",1,18278.60
+INV-100342,2,"Printing, 500 flyers",10,24688.00
+INV-100343,1,"Bookkeeping, monthly",5,29491.60
+INV-100343,2,Delivery run,1,6515.10
+INV-100344,1,"Printing, 500 flyers",1,15511.30
+INV-100345,1,Consulting hour,2,19302.60
+INV-100345,2,Cartons of stock,1,5806.30
+INV-100345,3,Cartons of stock,1,8682.80
+INV-100345,4,Training session,1,55513.90
+INV-100346,1,"Printing, 500 flyers",1,20666.70
+INV-100347,1,"Printing, 500 flyers",3,21812.40
+INV-100347,2,Training session,1,69021.40
+INV-100347,3,"Printing, 500 flyers",2,17121.10
+INV-100348,1,"Printing, 500 flyers",1,16633.30
+INV-100349,1,Website maintenance,1,46577.00
+INV-100350,1,Delivery run,1,8589.70
+INV-100351,1,Consulting hour,2,21366.70
+INV-100351,2,Training session,2,60027.70
+INV-100352,1,Repairs,1,26747.40
+INV-100352,2,"Printing, 500 flyers",2,24606.70
+INV-100352,3,Delivery run,1,7217.80
+INV-100352,4,Training session,1,74193.50
+INV-100353,1,Cartons of stock,1,6111.70
+INV-100353,2,Training session,1,44709.40
+INV-100354,1,"Printing, 500 flyers",1,22433.00
+INV-100355,1,Training session,5,55636.50
+INV-100355,2,Cartons of stock,1,8731.70
+INV-100355,3,"Bookkeeping, monthly",2,27243.20
+INV-100356,1,Delivery run,5,10621.90
+INV-100356,2,Cartons of stock,1,7563.60
+INV-100356,3,Training session,1,51776.20
+INV-100357,1,Repairs,1,26682.40
+INV-100357,2,Cartons of stock,2,4644.20
+INV-100357,3,Website maintenance,5,74827.70
+INV-100357,4,Cartons of stock,1,6092.20
+INV-100358,1,Training session,3,35640.60
+INV-100358,2,Consulting hour,1,11828.40
+INV-100359,1,Delivery run,3,6492.10
+INV-100359,2,Repairs,5,11661.00
+INV-100359,3,Repairs,2,27072.00
+INV-100360,1,Cartons of stock,2,7379.10
+INV-100361,1,Training session,1,63211.90
+INV-100362,1,"Bookkeeping, monthly",1,44511.80
+INV-100363,1,Training session,1,67790.70
+INV-100363,2,Consulting hour,2,15744.80
+INV-100364,1,Repairs,1,5801.60
+INV-100364,2,Cartons of stock,1,6385.60
+INV-100364,3,Repairs,1,21551.20
+INV-100365,1,Cartons of stock,1,6296.90
+INV-100366,1,Delivery run,1,7297.10
+INV-100366,2,Cartons of stock,1,8131.90
+INV-100367,1,Delivery run,1,9611.80
+INV-100368,1,Training session,2,51469.30
+INV-100369,1,Consulting hour,1,23809.60
+INV-100370,1,Cartons of stock,5,7070.80
+INV-100370,2,Website maintenance,3,62561.40
+INV-100371,1,Website maintenance,1,36208.00
+INV-100371,2,Website maintenance,1,58739.40
+INV-100372,1,Training session,1,67204.00
+INV-100372,2,Training session,1,51897.00
+INV-100373,1,Cartons of stock,5,6103.30
+INV-100373,2,Cartons of stock,5,7596.50
+INV-100373,3,Repairs,1,10479.30
+INV-100374,1,Delivery run,2,8912.40
+INV-100374,2,Delivery run,1,8897.10
+INV-100375,1,Repairs,1,6268.10
+INV-100375,2,Consulting hour,10,14066.00
+INV-100375,3,Website maintenance,1,65466.60
+INV-100376,1,"Printing, 500 flyers",1,21559.50
+INV-100377,1,Training session,1,50530.60
+INV-100377,2,Repairs,5,19734.20
+INV-100378,1,Consulting hour,2,18561.10
+INV-100379,1,Training session,3,54502.10
+INV-100380,1,Cartons of stock,2,5642.50
+INV-100381,1,Repairs,5,22647.60
+INV-100381,2,Website maintenance,1,44460.80
+INV-100382,1,Cartons of stock,1,5909.50
+INV-100383,1,Cartons of stock,3,5904.90
+INV-100384,1,Repairs,5,16370.30
+INV-100384,2,Consulting hour,1,24009.10
+INV-100384,3,Website maintenance,1,61575.50
+INV-100385,1,Website maintenance,1,48103.50
+INV-100385,2,Consulting hour,1,21412.70
+INV-100386,1,Cartons of stock,1,5431.10
+INV-100386,2,Cartons of stock,5,6159.50
+INV-100387,1,Repairs,2,27133.30
+INV-100387,2,Cartons of stock,3,7187.00
+INV-100388,1,Training session,1,57044.70
+INV-100389,1,Cartons of stock,1,8989.90
+INV-100389,2,Repairs,1,7717.40
+INV-100390,1,Training session,1,37927.60
+INV-100390,2,Delivery run,1,9394.90
+INV-100390,3,Delivery run,10,5882.10
+INV-100391,1,"Bookkeeping, monthly",2,27449.10
+INV-100391,2,Consulting hour,1,19537.20
+INV-100392,1,Consulting hour,1,14938.90
+INV-100393,1,Training session,5,34490.10
+INV-100394,1,"Bookkeeping, monthly",1,26813.60
+INV-100395,1,"Printing, 500 flyers",5,21826.50
+INV-100395,2,Cartons of stock,2,8013.20
+INV-100395,3,Consulting hour,1,21897.90
+INV-100396,1,Website maintenance,1,49164.60
+INV-100396,2,Delivery run,1,10136.50
+INV-100396,3,"Bookkeeping, monthly",1,47756.50
+INV-100397,1,Training session,2,56180.50
+INV-100397,2,Repairs,1,14146.30
+INV-100398,1,Training session,10,49675.50
+INV-100398,2,"Bookkeeping, monthly",1,59283.60
+INV-100399,1,Delivery run,2,9153.80
+INV-100399,2,Training session,1,40475.40
+INV-100399,3,Delivery run,3,11383.20
+INV-100399,4,Consulting hour,1,15101.40
+INV-100400,1,Website maintenance,1,42452.10
+INV-100401,1,Repairs,1,28464.70
+INV-100401,2,Delivery run,5,8511.50
+INV-100401,3,Training session,1,61985.20
+INV-100402,1,"Bookkeeping, monthly",1,26133.80
+INV-100403,1,"Printing, 500 flyers",3,22220.60
+INV-100404,1,Consulting hour,1,22983.10
+INV-100404,2,Cartons of stock,1,4806.60
+INV-100404,3,Website maintenance,1,24981.40
+INV-100405,1,"Printing, 500 flyers",1,18728.60
+INV-100406,1,"Bookkeeping, monthly",1,31042.80
+INV-100407,1,Cartons of stock,1,8510.70
+INV-100407,2,Consulting hour,2,13463.10
+INV-100408,1,Delivery run,2,10227.20
+INV-100408,2,Delivery run,5,6242.40
+INV-100408,3,Website maintenance,2,61369.40
+INV-100409,1,"Bookkeeping, monthly",1,59524.60
+INV-100410,1,Training session,2,41133.10
+INV-100411,1,Cartons of stock,5,7167.30
+INV-100411,2,Delivery run,3,3916.30
+INV-100411,3,Website maintenance,1,30577.70
+INV-100411,4,Delivery run,1,6729.30
+INV-100412,1,Training session,1,46172.80
+INV-100412,2,Training session,1,50475.50
+INV-100412,3,Cartons of stock,1,6000.50
+INV-100413,1,Repairs,1,17451.30
+INV-100414,1,Consulting hour,3,23303.40
+INV-100414,2,"Printing, 500 flyers",1,15355.20
+INV-100415,1,Repairs,1,7706.80
+INV-100416,1,Website maintenance,1,65293.50
+INV-100416,2,Cartons of stock,1,8776.50
+INV-100416,3,Consulting hour,3,20330.10
+INV-100417,1,Consulting hour,1,16169.30
+INV-100418,1,Website maintenance,1,63237.40
+INV-100419,1,Cartons of stock,1,5795.80
+INV-100420,1,Repairs,2,18410.10
+INV-100420,2,Website maintenance,1,46295.50
+INV-100421,1,"Bookkeeping, monthly",1,43643.90
+INV-100422,1,Cartons of stock,2,5177.80
+INV-100422,2,"Printing, 500 flyers",1,20972.90
+INV-100422,3,Consulting hour,1,20873.70
+INV-100422,4,Training session,3,45200.60
+INV-100423,1,Website maintenance,5,31405.40
+INV-100424,1,Website maintenance,10,43411.70
+INV-100425,1,Cartons of stock,2,8345.20
+INV-100425,2,Delivery run,2,7917.40
+INV-100425,3,Cartons of stock,1,8515.60
+INV-100426,1,Repairs,1,21873.10
+INV-100426,2,"Bookkeeping, monthly",2,54540.60
+INV-100426,3,Repairs,2,12768.80
+INV-100426,4,Website maintenance,1,64220.00
+INV-100427,1,Cartons of stock,1,6293.10
+INV-100427,2,Cartons of stock,1,6775.10
+INV-100427,3,Training session,1,68565.40
+INV-100428,1,Delivery run,2,4720.20
+INV-100429,1,Cartons of stock,1,6290.70
+INV-100429,2,Cartons of stock,2,8310.70
+INV-100430,1,Repairs,1,19211.70
+INV-100430,2,Training session,5,36299.10
+INV-100431,1,Training session,1,31184.20
+INV-100431,2,Training session,2,63445.70
+INV-100431,3,Training session,1,37749.70
+INV-100431,4,Consulting hour,1,22418.10
+INV-100432,1,"Bookkeeping, monthly",2,57454.60
+INV-100432,2,Repairs,-1,28480.00
+INV-100432,3,"Printing, 500 flyers",2,21603.70
+INV-100433,1,Delivery run,3,6430.20
+INV-100433,2,Website maintenance,1,21996.90
+INV-100433,3,Cartons of stock,1,7769.00
+INV-100434,1,Repairs,2,21300.50
+INV-100435,1,Delivery run,1,4680.40
+INV-100435,2,Training session,1,49209.40
+INV-100436,1,Repairs,2,16539.00
+INV-100436,2,Delivery run,1,10874.60
+INV-100437,1,Delivery run,1,6691.40
+INV-100437,2,Delivery run,1,5849.80
+INV-100437,3,Training session,1,63187.80
+INV-100438,1,Repairs,1,9089.70
+INV-100439,1,"Printing, 500 flyers",1,17771.00
+INV-100439,2,"Bookkeeping, monthly",3,28559.40
+INV-100439,3,Training session,1,65143.70
+INV-100440,1,Repairs,2,29719.60
+INV-100441,1,Consulting hour,2,22001.40
+INV-100441,2,Cartons of stock,1,5867.40
+INV-100442,1,Training session,10,56034.20
+INV-100443,1,"Printing, 500 flyers",2,20548.80
+INV-100444,1,Website maintenance,3,55149.70
+INV-100444,2,Delivery run,3,8304.30
+INV-100444,3,"Bookkeeping, monthly",1,48596.40
+INV-100445,1,"Bookkeeping, monthly",2,52925.60
+INV-100445,2,"Bookkeeping, monthly",2,41826.90
+INV-100446,1,Cartons of stock,1,8589.60
+INV-100447,1,Delivery run,5,4541.50
+INV-100448,1,Consulting hour,5,20679.10
+INV-100448,2,Website maintenance,1,77043.80
+INV-100449,1,Cartons of stock,10,6996.30
+INV-100450,1,Repairs,1,27590.00
+INV-100450,2,Consulting hour,1,13616.20
+INV-100451,1,Cartons of stock,1,7496.40
+INV-100451,2,Training session,1,70210.70
+INV-100451,3,"Printing, 500 flyers",1,18401.60
+INV-100451,4,Training session,10,54486.20
+INV-100452,1,Website maintenance,2,68522.10
+INV-100452,2,Training session,1,63922.70
+INV-100453,1,Repairs,5,5123.40
+INV-100454,1,Consulting hour,2,13164.70
+INV-100455,1,Training session,2,36338.00
+INV-100455,2,Consulting hour,1,21165.70
+INV-100456,1,Cartons of stock,1,8882.40
+INV-100456,2,"Bookkeeping, monthly",5,54219.40
+INV-100457,1,"Printing, 500 flyers",3,16774.70
+INV-100457,2,Website maintenance,1,45742.80
+INV-100457,3,"Printing, 500 flyers",2,18110.70
+INV-100458,1,Delivery run,2,7615.80
+INV-100458,2,Consulting hour,2,21304.10
+INV-100459,1,"Bookkeeping, monthly",1,53440.30
+INV-100459,2,Delivery run,1,10808.40
+INV-100460,1,Consulting hour,1,13447.00
+INV-100460,2,Repairs,1,25475.40
+INV-100461,1,Website maintenance,2,53787.60
+INV-100461,2,Delivery run,1,9964.50
+INV-100461,3,Repairs,2,23757.30
+INV-100462,1,"Bookkeeping, monthly",1,53021.50
+INV-100463,1,Cartons of stock,3,7270.70
+INV-100463,2,Delivery run,1,9328.10
+INV-100463,3,Cartons of stock,5,6525.60
+INV-100464,1,Cartons of stock,1,7560.60
+INV-100465,1,Website maintenance,1,20141.70
+INV-100465,2,"Printing, 500 flyers",2,15917.80
+INV-100465,3,Cartons of stock,2,8231.40
+INV-100466,1,Consulting hour,1,24885.40
+INV-100467,1,Repairs,10,10960.40
+INV-100467,2,"Printing, 500 flyers",1,22127.50
+INV-100468,1,Training session,5,49527.90
+INV-100468,2,Training session,2,58833.20
+INV-100468,3,"Printing, 500 flyers",1,18411.00
+INV-100469,1,"Printing, 500 flyers",1,24540.40
+INV-100469,2,"Printing, 500 flyers",1,24979.00
+INV-100470,1,Training session,1,47308.20
+INV-100471,1,Repairs,1,24162.80
+INV-100471,2,"Bookkeeping, monthly",1,51021.00
+INV-100472,1,Repairs,1,7121.90
+INV-100473,1,"Bookkeeping, monthly",1,59929.40
+INV-100473,2,Delivery run,5,4681.80
+INV-100473,3,"Bookkeeping, monthly",1,43477.70
+INV-100473,4,"Bookkeeping, monthly",1,57079.70
+INV-100474,1,Training session,1,35785.70
+INV-100474,2,Consulting hour,2,19873.30
+INV-100475,1,Cartons of stock,1,6975.30
+INV-100475,2,Consulting hour,5,20848.40
+INV-100476,1,Repairs,5,6837.90
+INV-100476,2,Website maintenance,1,73118.10
+INV-100477,1,Training session,3,42470.50
+INV-100477,2,Website maintenance,0,56667.00
+INV-100477,3,Repairs,2,5016.00
+INV-100478,1,Cartons of stock,1,8018.00
+INV-100478,2,Delivery run,2,7588.90
+INV-100478,3,"Printing, 500 flyers",1,21038.90
+INV-100478,4,Website maintenance,2,33081.00
+INV-100479,1,"Bookkeeping, monthly",3,47071.90
+INV-100479,2,Training session,1,49858.00
+INV-100480,1,Cartons of stock,1,8501.00
+INV-100480,2,Website maintenance,1,51019.80
+INV-100481,1,Repairs,1,10795.30
+INV-100481,2,"Bookkeeping, monthly",5,36200.60
+INV-100481,3,Repairs,1,13108.90
+INV-100482,1,"Printing, 500 flyers",1,24851.80
+INV-100482,2,Website maintenance,1,37417.60
+INV-100482,3,"Bookkeeping, monthly",2,47710.50
+INV-100483,1,Consulting hour,1,11312.30
+INV-100484,1,"Bookkeeping, monthly",1,28875.70
+INV-100485,1,Training session,1,62175.90
+INV-100486,1,"Printing, 500 flyers",1,21644.20
+INV-100487,1,"Bookkeeping, monthly",1,36312.70
+INV-100487,2,Website maintenance,1,60007.20
+INV-100488,1,Consulting hour,1,23470.80
+INV-100488,2,Repairs,5,13724.60
+INV-100489,1,Consulting hour,1,14980.50
+INV-100490,1,"Bookkeeping, monthly",1,41912.00
+INV-100490,2,"Bookkeeping, monthly",1,44516.60
+INV-100491,1,Consulting hour,1,19564.00
+INV-100491,2,"Bookkeeping, monthly",1,52690.00
+INV-100492,1,Delivery run,1,5607.50
+INV-100492,2,Consulting hour,1,16746.60
+INV-100493,1,Cartons of stock,1,6325.00
+INV-100493,2,Training session,1,56085.70
+INV-100493,3,Delivery run,1,9344.50
+INV-100494,1,"Bookkeeping, monthly",1,34341.60
+INV-100494,2,Repairs,1,19587.50
+INV-100495,1,Training session,1,40407.10
+INV-100495,2,Consulting hour,5,12437.50
+INV-100496,1,Cartons of stock,1,6660.90
+INV-100497,1,Website maintenance,1,22916.60
+INV-100497,2,"Bookkeeping, monthly",1,47660.80
+INV-100497,3,Delivery run,1,4825.50
+INV-100497,4,Delivery run,1,10432.60
+INV-100498,1,Cartons of stock,2,7831.20
+INV-100498,2,"Bookkeeping, monthly",1,51210.10
+INV-100498,3,Delivery run,1,6045.40
+INV-100498,4,Delivery run,1,9924.20
+INV-100499,1,Repairs,5,19245.70
+INV-100499,2,Website maintenance,1,68946.20
+INV-100499,3,Delivery run,1,8168.20
+INV-100499,4,Repairs,1,13397.10
+INV-100500,1,Consulting hour,10,14589.70
+INV-100500,2,"Bookkeeping, monthly",1,39207.80
+INV-100501,1,"Bookkeeping, monthly",1,29264.70
+INV-100501,2,Training session,3,67082.70
+INV-100502,1,Consulting hour,1,15574.70
+INV-100503,1,Website maintenance,1,74308.20
+INV-100503,2,Consulting hour,2,10456.50
+INV-100504,1,"Printing, 500 flyers",1,20527.80
+INV-100505,1,"Bookkeeping, monthly",1,29903.70
+INV-100506,1,"Bookkeeping, monthly",1,59837.00
+INV-100507,1,"Printing, 500 flyers",1,20050.20
+INV-100507,2,Repairs,1,21220.10
+INV-100507,3,Training session,1,39627.20
+INV-100508,1,"Printing, 500 flyers",1,22652.20
+INV-100509,1,Training session,1,65409.60
+INV-100510,1,"Printing, 500 flyers",1,21617.30
+INV-100511,1,Website maintenance,1,28045.10
+INV-100512,1,Consulting hour,1,13121.40
+INV-100512,2,"Bookkeeping, monthly",2,58789.40
+INV-100512,3,Repairs,2,10040.80
+INV-100513,1,Training session,2,46823.70
+INV-100513,2,Consulting hour,1,23170.60
+INV-100513,3,Cartons of stock,3,7302.90
+INV-100514,1,Website maintenance,1,42471.30
+INV-100515,1,Repairs,2,23075.00
+INV-100515,2,Cartons of stock,1,6554.80
+INV-100516,1,"Bookkeeping, monthly",2,53712.40
+INV-100516,2,Website maintenance,2,65747.60
+INV-100517,1,Website maintenance,3,39308.30
+INV-100517,2,Delivery run,1,7380.40
+INV-100518,1,Repairs,1,27691.70
+INV-100519,1,"Printing, 500 flyers",3,15153.10
+INV-100520,1,Delivery run,1,10857.40
+INV-100520,2,Repairs,1,25209.80
+INV-100520,3,Consulting hour,1,13054.60
+INV-100521,1,"Printing, 500 flyers",1,15427.00
+INV-100521,2,Delivery run,1,3590.90
+INV-100522,1,Cartons of stock,1,6962.40
+INV-100522,2,Website maintenance,2,70563.60
+INV-100523,1,Cartons of stock,1,8643.50
+INV-100524,1,Training session,1,63214.90
+INV-100524,2,"Printing, 500 flyers",10,23189.90
+INV-100524,3,Training session,1,35624.40
+INV-100525,1,Cartons of stock,1,6382.70
+INV-100526,1,Training session,1,73175.70
+INV-100527,1,Cartons of stock,2,6559.80
+INV-100528,1,"Printing, 500 flyers",3,17618.50
+INV-100528,2,Repairs,1,16286.10
+INV-100528,3,Training session,2,42851.60
+INV-100529,1,Website maintenance,1,39935.00
+INV-100530,1,"Bookkeeping, monthly",1,59515.90
+INV-100531,1,Cartons of stock,1,7906.00
+INV-100531,2,Repairs,1,9113.40
+INV-100532,1,"Printing, 500 flyers",1,15030.50
+INV-100532,2,Repairs,1,16336.00
+INV-100533,1,Cartons of stock,1,8381.90
+INV-100534,1,Cartons of stock,2,8272.20
+INV-100535,1,Training session,5,45694.60
+INV-100535,2,Consulting hour,10,16095.60
+INV-100535,3,"Printing, 500 flyers",3,15459.80
+INV-100536,1,Consulting hour,1,24175.40
+INV-100537,1,"Bookkeeping, monthly",1,56832.90
+INV-100538,1,Consulting hour,5,20868.30
+INV-100539,1,Cartons of stock,1,6200.50
+INV-100540,1,Website maintenance,1,48447.80
+INV-100541,1,Delivery run,10,6593.50
+INV-100541,2,Repairs,1,24271.50
+INV-100541,3,Website maintenance,1,66177.60
+INV-100542,1,Delivery run,2,8771.80
+INV-100542,2,Repairs,10,13904.50
+INV-100542,3,"Printing, 500 flyers",1,23793.80
+INV-100543,1,Cartons of stock,5,5993.90
+INV-100543,2,Delivery run,1,8301.20
+INV-100543,3,Training session,5,68184.40
+INV-100543,4,Consulting hour,1,20479.30
+INV-100544,1,Consulting hour,1,22900.60
+INV-100545,1,Training session,1,46108.70
+INV-100545,2,Delivery run,1,10207.80
+INV-100545,3,Website maintenance,1,57757.20
+INV-100546,1,"Bookkeeping, monthly",1,47698.90
+INV-100547,1,Delivery run,1,9339.00
+INV-100547,2,Consulting hour,10,13679.30
+INV-100548,1,Cartons of stock,1,5763.30
+INV-100548,2,Consulting hour,1,15089.10
+INV-100549,1,Consulting hour,1,20268.90
+INV-100550,1,Consulting hour,1,16485.90
+INV-100551,1,"Bookkeeping, monthly",2,27347.00
+INV-100551,2,"Bookkeeping, monthly",1,30224.00
+INV-100552,1,"Bookkeeping, monthly",1,56014.40
+INV-100552,2,Consulting hour,3,12897.80
+INV-100553,1,Delivery run,3,7242.40
+INV-100553,2,Repairs,2,27572.60
+INV-100554,1,Repairs,1,20568.60
+INV-100555,1,Consulting hour,1,23739.00
+INV-100555,2,Website maintenance,5,44413.00
+INV-100556,1,Consulting hour,1,20804.60
+INV-100556,2,Delivery run,5,11448.20
+INV-100556,3,Cartons of stock,1,5548.20
+INV-100556,4,Cartons of stock,1,6265.50
+INV-100557,1,Delivery run,1,4778.60
+INV-100557,2,Repairs,1,17707.30
+INV-100558,1,Website maintenance,5,60622.50
+INV-100558,2,Website maintenance,1,62729.80
+INV-100558,3,"Bookkeeping, monthly",1,30309.40
+INV-100558,4,"Printing, 500 flyers",2,16001.80
+INV-100559,1,"Bookkeeping, monthly",1,43040.60
+INV-100559,2,Cartons of stock,1,5647.40
+INV-100559,3,Consulting hour,1,21140.50
+INV-100560,1,"Printing, 500 flyers",10,21779.40
+INV-100561,1,Training session,1,53948.20
+INV-100562,1,"Printing, 500 flyers",2,22940.50
+INV-100563,1,Delivery run,2,4035.40
+INV-100564,1,Website maintenance,1,63370.70
+INV-100565,1,Consulting hour,1,22312.90
+INV-100566,1,Website maintenance,2,63451.80
+INV-100566,2,Cartons of stock,2,7431.30
+INV-100566,3,Cartons of stock,1,6672.40
+INV-100567,1,"Bookkeeping, monthly",10,48142.00
+INV-100567,2,Repairs,2,5626.70
+INV-100567,3,Training session,3,31273.70
+INV-100568,1,"Bookkeeping, monthly",1,31153.40
+INV-100569,1,Delivery run,1,8495.60
+INV-100570,1,Consulting hour,5,21831.60
+INV-100570,2,Website maintenance,3,27869.40
+INV-100571,1,Consulting hour,1,14572.20
+INV-100572,1,Delivery run,1,9311.00
+INV-100572,2,"Bookkeeping, monthly",1,48503.40
+INV-100573,1,Delivery run,1,7565.00
+INV-100573,2,Delivery run,3,8204.50
+INV-100574,1,Repairs,1,28625.10
+INV-100575,1,Consulting hour,1,17892.20
+INV-100575,2,Website maintenance,1,56195.60
+INV-100576,1,Repairs,1,5931.60
+INV-100576,2,Cartons of stock,1,8409.00
+INV-100577,1,Consulting hour,1,12149.20
+INV-100578,1,"Printing, 500 flyers",1,15720.40
+INV-100578,2,Consulting hour,1,22101.00
+INV-100578,3,Consulting hour,2,13413.10
+INV-100579,1,Cartons of stock,1,5545.90
+INV-100579,2,Cartons of stock,1,6442.70
+INV-100580,1,Website maintenance,1,71827.30
+INV-100581,1,"Printing, 500 flyers",1,16609.40
+INV-100581,2,Cartons of stock,1,6561.90
+INV-100582,1,Repairs,2,9350.20
+INV-100582,2,Consulting hour,2,15059.20
+INV-100582,3,Consulting hour,2,13901.40
+INV-100583,1,Training session,3,56376.10
+INV-100583,2,"Printing, 500 flyers",10,22052.80
+INV-100583,3,Repairs,2,28483.90
+INV-100584,1,Website maintenance,1,28758.10
+INV-100585,1,Training session,1,37685.90
+INV-100585,2,"Printing, 500 flyers",1,23571.80
+INV-100585,3,Website maintenance,1,71519.00
+INV-100586,1,Website maintenance,1,67024.50
+INV-100587,1,Website maintenance,2,40678.80
+INV-100587,2,Training session,3,40468.20
+INV-100588,1,Delivery run,2,11069.40
+INV-100588,2,Cartons of stock,1,5812.70
+INV-100588,3,Website maintenance,5,42790.80
+INV-100589,1,"Bookkeeping, monthly",2,31662.60
+INV-100590,1,Delivery run,2,10869.30
+INV-100590,2,Consulting hour,2,11923.20
+INV-100590,3,"Printing, 500 flyers",1,20068.70
+INV-100590,4,Repairs,1,18782.60
+INV-100591,1,"Bookkeeping, monthly",2,58559.30
+INV-100591,2,"Bookkeeping, monthly",5,52278.10
+INV-100591,3,Repairs,1,26879.80
+INV-100591,4,Website maintenance,1,60693.70
+INV-100592,1,Repairs,1,16442.90
+INV-100593,1,"Printing, 500 flyers",3,22759.40
+INV-100594,1,Cartons of stock,2,8327.00
+INV-100594,2,"Printing, 500 flyers",5,21389.00
+INV-100595,1,Cartons of stock,2,6867.80
+INV-100595,2,Repairs,1,5736.40
+INV-100595,3,Website maintenance,3,48402.90
+INV-100595,4,Cartons of stock,1,7399.20
+INV-100596,1,Website maintenance,1,26927.80
+INV-100596,2,Consulting hour,2,21336.90
+INV-100597,1,Repairs,2,17302.50
+INV-100597,2,Website maintenance,1,21373.50
+INV-100598,1,Repairs,1,23377.60
+INV-100598,2,Training session,1,43511.90
+INV-100599,1,Training session,2,62143.00
+INV-100600,1,Website maintenance,1,39656.20
+INV-100601,1,Cartons of stock,5,8660.30
+INV-100602,1,Cartons of stock,1,7494.90
+INV-100603,1,Website maintenance,5,39514.30
+INV-100604,1,Training session,2,39142.50
+INV-100605,1,Consulting hour,2,16775.80
+INV-100605,2,"Printing, 500 flyers",1,18151.80
+INV-100606,1,Repairs,10,13868.10
+INV-100607,1,"Bookkeeping, monthly",1,53456.20
+INV-100607,2,"Printing, 500 flyers",1,15788.00
+INV-100608,1,Repairs,5,29268.40
+INV-100609,1,Website maintenance,3,59317.80
+INV-100609,2,Cartons of stock,2,6428.20
+INV-100609,3,Delivery run,1,7773.40
+INV-100610,1,"Bookkeeping, monthly",1,40649.50
+INV-100610,2,"Bookkeeping, monthly",1,31049.30
+INV-100611,1,Training session,10,44573.30
+INV-100611,2,"Printing, 500 flyers",1,18660.30
+INV-100611,3,Cartons of stock,1,8722.30
+INV-100611,4,"Bookkeeping, monthly",1,39717.80
+INV-100612,1,Delivery run,2,11216.10
+INV-100613,1,Consulting hour,1,21435.20
+INV-100613,2,"Printing, 500 flyers",1,19852.60
+INV-100614,1,"Printing, 500 flyers",1,19894.30
+INV-100614,2,Consulting hour,3,24122.60
+INV-100614,3,"Bookkeeping, monthly",3,58429.80
+INV-100615,1,Website maintenance,3,60163.10
+INV-100615,2,Training session,1,73122.20
+INV-100615,3,"Bookkeeping, monthly",2,52647.30
+INV-100616,1,"Bookkeeping, monthly",1,59599.40
+INV-100617,1,"Bookkeeping, monthly",1,48607.80
+INV-100617,2,"Printing, 500 flyers",1,17585.80
+INV-100617,3,Cartons of stock,1,7007.80
+INV-100617,4,"Printing, 500 flyers",1,16959.50
+INV-100618,1,"Bookkeeping, monthly",3,43730.20
+INV-100619,1,Cartons of stock,2,7873.50
+INV-100620,1,"Printing, 500 flyers",3,17059.10
+INV-100620,2,Consulting hour,1,16364.00
+INV-100620,3,Training session,1,45367.90
+INV-100620,4,Cartons of stock,2,8487.40
+INV-100621,1,"Bookkeeping, monthly",1,57305.30
+INV-100621,2,Consulting hour,1,15315.80
+INV-100622,1,Training session,1,59920.00
+INV-100622,2,Website maintenance,5,26436.60
+INV-100622,3,"Bookkeeping, monthly",1,45907.20
+INV-100622,4,Cartons of stock,1,4759.50
+INV-100623,1,Delivery run,1,10396.70
+INV-100624,1,Delivery run,1,8421.40
+INV-100624,2,"Bookkeeping, monthly",1,42763.70
+INV-100624,3,Repairs,2,29433.20
+INV-100625,1,Repairs,1,14876.80
+INV-100625,2,Website maintenance,5,29692.50
+INV-100626,1,Repairs,5,27531.00
+INV-100627,1,Training session,1,49627.00
+INV-100628,1,Repairs,1,14269.10
+INV-100628,2,Consulting hour,2,15885.90
+INV-100628,3,Repairs,2,15933.10
+INV-100628,4,Cartons of stock,3,6112.30
+INV-100629,1,Training session,2,68124.50
+INV-100629,2,Repairs,1,10775.90
+INV-100629,3,Cartons of stock,2,5115.20
+INV-100630,1,Website maintenance,1,44111.00
+INV-100630,2,"Bookkeeping, monthly",3,36861.40
+INV-100630,3,Website maintenance,1,52934.50
+INV-100630,4,Delivery run,5,7995.60
+INV-100631,1,Website maintenance,10,33625.60
+INV-100632,1,Repairs,1,16348.20
+INV-100633,1,Repairs,1,8182.20
+INV-100634,1,Repairs,1,10403.10
+INV-100634,2,Website maintenance,1,67657.40
+INV-100635,1,Cartons of stock,1,8561.80
+INV-100635,2,"Bookkeeping, monthly",1,43170.20
+INV-100636,1,"Bookkeeping, monthly",1,47232.70
+INV-100636,2,Training session,1,52018.80
+INV-100637,1,Consulting hour,2,20606.60
+INV-100637,2,"Printing, 500 flyers",2,22011.70
+INV-100637,3,Delivery run,1,5998.20
+INV-100638,1,Website maintenance,2,22287.10
+INV-100638,2,Training session,2,66928.60
+INV-100639,1,Training session,1,62752.60
+INV-100640,1,Consulting hour,1,23074.10
+INV-100640,2,Cartons of stock,1,7629.30
+INV-100640,3,"Bookkeeping, monthly",-1,50785.10
+INV-100640,4,Website maintenance,2,52429.20
+INV-100641,1,Consulting hour,1,11209.10
+INV-100642,1,"Printing, 500 flyers",10,24463.80
+INV-100642,2,Website maintenance,2,40742.90
+INV-100642,3,Consulting hour,1,13840.10
+INV-100643,1,Cartons of stock,2,8802.80
+INV-100643,2,Training session,1,49176.20
+INV-100644,1,Consulting hour,5,16907.60
+INV-100644,2,Training session,3,68172.60
+INV-100644,3,Website maintenance,1,79852.20
+INV-100644,4,Consulting hour,1,23768.40
+INV-100645,1,Consulting hour,2,17339.40
+INV-100645,2,Cartons of stock,1,8559.50
+INV-100646,1,"Printing, 500 flyers",1,18013.90
+INV-100646,2,Training session,1,66875.50
+INV-100647,1,"Bookkeeping, monthly",2,53140.90
+INV-100648,1,Cartons of stock,5,7148.10
+INV-100649,1,Repairs,1,24372.00
+INV-100650,1,"Printing, 500 flyers",2,17183.50
+INV-100651,1,Repairs,1,23840.10
+INV-100651,2,Cartons of stock,5,6205.30
+INV-100652,1,"Bookkeeping, monthly",2,41355.20
+INV-100652,2,"Printing, 500 flyers",1,19960.80
+INV-100653,1,"Printing, 500 flyers",1,15841.40
+INV-100653,2,Consulting hour,2,24305.40
+INV-100653,3,"Printing, 500 flyers",5,19106.50
+INV-100654,1,"Printing, 500 flyers",3,19063.00
+INV-100654,2,Delivery run,1,8160.00
+INV-100655,1,"Printing, 500 flyers",3,24977.00
+INV-100655,2,Cartons of stock,2,7615.20
+INV-100655,3,"Printing, 500 flyers",5,17461.60
+INV-100656,1,Training session,1,45633.40
+INV-100656,2,Repairs,2,5856.80
+INV-100657,1,Cartons of stock,1,5024.30
+INV-100658,1,Training session,1,33093.60
+INV-100658,2,Cartons of stock,1,6149.40
+INV-100659,1,"Bookkeeping, monthly",1,30581.20
+INV-100659,2,Training session,1,48234.40
+INV-100660,1,"Bookkeeping, monthly",1,47565.80
+INV-100660,2,Repairs,3,21094.80
+INV-100661,1,Website maintenance,2,77294.10
+INV-100661,2,Repairs,1,8633.00
+INV-100661,3,Repairs,10,12580.60
+INV-100661,4,"Printing, 500 flyers",1,22193.60
+INV-100662,1,"Printing, 500 flyers",1,23595.80
+INV-100663,1,"Bookkeeping, monthly",2,47532.30
+INV-100664,1,Delivery run,1,5521.40
+INV-100664,2,Consulting hour,1,16346.30
+INV-100664,3,Website maintenance,2,51239.00
+INV-100664,4,Training session,1,35228.20
+INV-100665,1,Consulting hour,5,15303.90
+INV-100666,1,Website maintenance,1,50675.20
+INV-100667,1,Training session,1,48401.00
+INV-100668,1,Website maintenance,1,68477.40
+INV-100668,2,"Bookkeeping, monthly",10,30065.00
+INV-100668,3,Cartons of stock,1,4614.50
+INV-100668,4,Training session,1,55557.90
+INV-100669,1,Delivery run,5,5703.80
+INV-100669,2,"Printing, 500 flyers",3,18701.40
+INV-100670,1,Consulting hour,2,14953.10
+INV-100670,2,Repairs,1,19280.50
+INV-100670,3,"Printing, 500 flyers",3,23670.30
+INV-100671,1,Repairs,1,24770.20
+INV-100671,2,"Bookkeeping, monthly",2,27682.00
+INV-100671,3,"Bookkeeping, monthly",2,30336.10
+INV-100672,1,Delivery run,2,11830.90
+INV-100672,2,"Printing, 500 flyers",5,18111.70
+INV-100672,3,Consulting hour,5,12376.50
+INV-100673,1,Delivery run,1,6622.60
+INV-100673,2,Website maintenance,1,22358.40
+INV-100674,1,Website maintenance,1,51205.30
+INV-100674,2,Repairs,1,12597.00
+INV-100674,3,Training session,1,74617.40
+INV-100675,1,Cartons of stock,10,8663.90
+INV-100676,1,"Printing, 500 flyers",2,16636.30
+INV-100676,2,Training session,10,66444.50
+INV-100676,3,"Bookkeeping, monthly",1,34051.00
+INV-100677,1,Delivery run,2,8240.30
+INV-100677,2,"Printing, 500 flyers",1,23006.60
+INV-100678,1,"Printing, 500 flyers",1,18132.30
+INV-100678,2,"Bookkeeping, monthly",1,53712.70
+INV-100678,3,"Printing, 500 flyers",1,19319.00
+INV-100678,4,Repairs,5,27465.50
+INV-100679,1,Repairs,2,15978.50
+INV-100680,1,Training session,5,74871.80
+INV-100681,1,Consulting hour,2,10914.00
+INV-100681,2,Delivery run,2,7737.70
+INV-100681,3,Cartons of stock,1,7374.50
+INV-100682,1,Repairs,1,23131.00
+INV-100682,2,Training session,1,64571.40
+INV-100682,3,Repairs,3,19227.90
+INV-100683,1,"Printing, 500 flyers",2,22497.70
+INV-100683,2,Repairs,1,19069.90
+INV-100683,3,Training session,2,56443.70
+INV-100684,1,Website maintenance,1,30824.90
+INV-100684,2,Delivery run,1,10873.20
+INV-100685,1,Training session,2,72891.20
+INV-100686,1,"Bookkeeping, monthly",1,55898.40
+INV-100687,1,Consulting hour,10,11533.00
+INV-100687,2,"Bookkeeping, monthly",1,56161.60
+INV-100688,1,Repairs,1,13591.80
+INV-100688,2,"Bookkeeping, monthly",10,38410.60
+INV-100689,1,Cartons of stock,1,8222.80
+INV-100689,2,Repairs,5,15249.20
+INV-100690,1,Cartons of stock,2,6447.80
+INV-100690,2,Delivery run,1,11571.60
+INV-100691,1,Cartons of stock,1,6261.40
+INV-100691,2,Website maintenance,2,41720.80
+INV-100692,1,Training session,2,42691.80
+INV-100693,1,Delivery run,1,10035.40
+INV-100694,1,"Bookkeeping, monthly",3,38222.60
+INV-100695,1,Website maintenance,10,41477.90
+INV-100695,2,Training session,2,33496.60
+INV-100696,1,Delivery run,1,7623.10
+INV-100696,2,Training session,5,47361.40
+INV-100697,1,"Bookkeeping, monthly",2,30244.90
+INV-100698,1,Website maintenance,1,26844.70
+INV-100698,2,Cartons of stock,2,7972.30
+INV-100698,3,"Bookkeeping, monthly",5,45233.50
+INV-100698,4,Repairs,3,21659.30
+INV-100699,1,Repairs,5,6600.20
+INV-100699,2,Training session,2,59534.20
+INV-100700,1,"Bookkeeping, monthly",5,44385.30
+INV-100700,2,Delivery run,2,7023.00
+INV-100701,1,Delivery run,1,4345.10
+INV-100701,2,Website maintenance,1,78243.80
+INV-100701,3,Repairs,5,27077.80
+INV-100701,4,"Printing, 500 flyers",3,22313.80
+INV-100702,1,Website maintenance,3,57842.60
+INV-100702,2,Training session,1,73861.30
+INV-100703,1,Training session,1,42625.50
+INV-100703,2,Cartons of stock,1,8692.70
+INV-100704,1,Cartons of stock,1,8743.30
+INV-100705,1,Delivery run,5,7206.90
+INV-100706,1,Website maintenance,2,36111.50
+INV-100707,1,Delivery run,1,5542.00
+INV-100707,2,"Bookkeeping, monthly",2,58699.40
+INV-100708,1,Delivery run,2,9599.20
+INV-100709,1,"Bookkeeping, monthly",1,46917.30
+INV-100710,1,"Bookkeeping, monthly",1,53147.50
+INV-100711,1,"Bookkeeping, monthly",1,45062.50
+INV-100711,2,Website maintenance,2,38810.90
+INV-100712,1,Consulting hour,1,22292.40
+INV-100712,2,"Bookkeeping, monthly",3,34563.60
+INV-100713,1,Training session,1,68510.60
+INV-100713,2,Delivery run,2,9681.60
+INV-100713,3,"Printing, 500 flyers",1,15041.00
+INV-100713,4,Repairs,10,15087.00
+INV-100714,1,Repairs,1,23319.60
+INV-100714,2,"Bookkeeping, monthly",2,36506.60
+INV-100715,1,"Bookkeeping, monthly",1,59428.60
+INV-100716,1,"Printing, 500 flyers",3,17694.20
+INV-100716,2,"Bookkeeping, monthly",1,54935.00
+INV-100717,1,Training session,3,53042.10
+INV-100717,2,Cartons of stock,5,5591.30
+INV-100718,1,Consulting hour,1,12239.50
+INV-100718,2,Training session,1,51032.10
+INV-100718,3,Consulting hour,1,20522.60
+INV-100719,1,Consulting hour,1,20753.40
+INV-100719,2,Training session,5,44588.50
+INV-100719,3,Website maintenance,2,23643.80
+INV-100720,1,"Printing, 500 flyers",3,23573.10
+INV-100721,1,Repairs,2,15123.30
+INV-100722,1,Consulting hour,1,14660.20
+INV-100722,2,"Printing, 500 flyers",5,24272.00
+INV-100723,1,Consulting hour,1,13715.10
+INV-100723,2,Consulting hour,1,15141.80
+INV-100724,1,"Bookkeeping, monthly",1,36095.10
+INV-100724,2,Cartons of stock,1,5469.60
+INV-100725,1,Cartons of stock,10,8065.40
+INV-100726,1,"Bookkeeping, monthly",2,32783.90
+INV-100726,2,Cartons of stock,1,6802.50
+INV-100726,3,Consulting hour,2,19324.80
+INV-100727,1,"Printing, 500 flyers",2,20633.80
+INV-100727,2,Training session,3,64160.40
+INV-100727,3,Cartons of stock,1,6774.60
+INV-100728,1,Delivery run,1,11077.20
+INV-100728,2,Repairs,1,17790.10
+INV-100729,1,Delivery run,1,7299.30
+INV-100730,1,Training session,2,44788.70
+INV-100730,2,"Printing, 500 flyers",1,18158.40
+INV-100731,1,"Printing, 500 flyers",1,15634.40
+INV-100731,2,Delivery run,1,5239.60
+INV-100731,3,"Bookkeeping, monthly",1,46867.50
+INV-100731,4,"Bookkeeping, monthly",2,41704.10
+INV-100732,1,Consulting hour,2,22267.10
+INV-100733,1,Website maintenance,1,35824.50
+INV-100734,1,"Bookkeeping, monthly",5,32624.30
+INV-100734,2,Repairs,5,18693.90
+INV-100735,1,Repairs,5,13135.00
+INV-100735,2,Delivery run,5,10245.40
+INV-100736,1,"Printing, 500 flyers",1,15267.40
+INV-100736,2,Consulting hour,0,10370.30
+INV-100737,1,Repairs,2,18521.00
+INV-100738,1,"Printing, 500 flyers",1,16219.80
+INV-100738,2,"Printing, 500 flyers",1,23234.80
+INV-100739,1,"Printing, 500 flyers",2,17091.50
+INV-100740,1,Repairs,2,20236.90
+INV-100740,2,Delivery run,5,5885.90
+INV-100741,1,Consulting hour,1,13715.80
+INV-100741,2,Repairs,2,23939.30
+INV-100742,1,Training session,2,46991.10
+INV-100742,2,Cartons of stock,1,8930.10
+INV-100743,1,Consulting hour,5,14015.10
+INV-100744,1,Consulting hour,1,17844.00
+INV-100745,1,Training session,1,67972.20
+INV-100745,2,Consulting hour,1,14941.30
+INV-100746,1,Website maintenance,2,60395.30
+INV-100746,2,Cartons of stock,2,6160.60
+INV-100747,1,Delivery run,2,9053.80
+INV-100747,2,"Printing, 500 flyers",1,24810.20
+INV-100748,1,Repairs,10,6419.40
+INV-100748,2,Training session,3,66845.10
+INV-100749,1,Delivery run,5,5056.20
+INV-100750,1,Training session,5,62388.90
+INV-100751,1,"Bookkeeping, monthly",3,38325.10
+INV-100751,2,"Printing, 500 flyers",3,19776.50
+INV-100752,1,"Printing, 500 flyers",2,21070.10
+INV-100752,2,Cartons of stock,1,5411.00
+INV-100753,1,Training session,-1,45019.20
+INV-100754,1,Repairs,3,9078.10
+INV-100754,2,Training session,1,70641.00
+INV-100755,1,Cartons of stock,1,7299.80
+INV-100755,2,"Printing, 500 flyers",1,24954.20
+INV-100756,1,"Bookkeeping, monthly",1,46206.70
+INV-100756,2,Repairs,2,26388.90
+INV-100756,3,Cartons of stock,2,6290.50
+INV-100757,1,Consulting hour,3,22648.90
+INV-100757,2,"Bookkeeping, monthly",2,34769.00
+INV-100758,1,Training session,1,47055.20
+INV-100758,2,Consulting hour,10,24437.30
+INV-100759,1,Repairs,1,25173.80
+INV-100760,1,Repairs,2,28220.90
+INV-100760,2,"Bookkeeping, monthly",1,38828.80
+INV-100760,3,Website maintenance,1,24539.00
+INV-100761,1,Repairs,1,23857.40
+INV-100761,2,Cartons of stock,1,7783.80
+INV-100762,1,Consulting hour,1,11195.50
+INV-100762,2,Consulting hour,1,18694.90
+INV-100763,1,Delivery run,1,6615.90
+INV-100763,2,"Bookkeeping, monthly",1,32933.40
+INV-100764,1,Website maintenance,1,27502.60
+INV-100764,2,Cartons of stock,1,8429.30
+INV-100765,1,Consulting hour,1,10505.40
+INV-100765,2,Cartons of stock,2,8332.30
+INV-100766,1,Training session,1,65230.90
+INV-100766,2,Delivery run,5,6053.00
+INV-100767,1,"Bookkeeping, monthly",1,28871.40
+INV-100767,2,"Bookkeeping, monthly",1,52070.20
+INV-100768,1,"Bookkeeping, monthly",2,55937.40
+INV-100769,1,Repairs,1,13854.60
+INV-100769,2,Delivery run,1,10660.20
+INV-100770,1,Cartons of stock,1,5588.70
+INV-100770,2,Consulting hour,1,10970.00
+INV-100771,1,Delivery run,1,3784.00
+INV-100771,2,Website maintenance,2,43102.90
+INV-100771,3,Consulting hour,1,12132.50
+INV-100772,1,Delivery run,2,5144.30
+INV-100772,2,Consulting hour,10,24418.50
+INV-100772,3,Website maintenance,5,70829.00
+INV-100772,4,Delivery run,2,7448.00
+INV-100773,1,Cartons of stock,1,7692.20
+INV-100774,1,Cartons of stock,1,8513.40
+INV-100774,2,"Bookkeeping, monthly",1,27233.40
+INV-100774,3,"Printing, 500 flyers",2,24370.60
+INV-100775,1,Delivery run,1,5666.50
+INV-100776,1,Cartons of stock,1,5583.20
+INV-100777,1,"Bookkeeping, monthly",1,26899.00
+INV-100777,2,Website maintenance,1,59757.40
+INV-100778,1,"Printing, 500 flyers",1,20815.80
+INV-100778,2,Repairs,1,27169.00
+INV-100778,3,"Bookkeeping, monthly",1,42376.20
+INV-100778,4,Cartons of stock,2,6021.60
+INV-100779,1,Delivery run,1,8108.30
+INV-100780,1,Consulting hour,1,11567.60
+INV-100781,1,Training session,2,40608.00
+INV-100781,2,Training session,2,52113.60
+INV-100782,1,"Bookkeeping, monthly",2,25684.40
+INV-100782,2,"Bookkeeping, monthly",1,42745.00
+INV-100783,1,"Printing, 500 flyers",3,18670.40
+INV-100783,2,Cartons of stock,1,7027.40
+INV-100783,3,Cartons of stock,1,5173.70
+INV-100784,1,Website maintenance,2,59949.20
+INV-100785,1,Training session,3,61347.30
+INV-100786,1,"Bookkeeping, monthly",5,31160.60
+INV-100786,2,Cartons of stock,3,5529.40
+INV-100787,1,Website maintenance,1,23979.90
+INV-100788,1,"Printing, 500 flyers",1,21575.20
+INV-100789,1,Delivery run,3,4167.20
+INV-100789,2,Website maintenance,2,66030.40
+INV-100790,1,Delivery run,2,8265.40
+INV-100790,2,Training session,1,33181.40
+INV-100790,3,Cartons of stock,3,5088.30
+INV-100791,1,Repairs,1,11841.10
+INV-100791,2,Delivery run,10,10390.30
+INV-100792,1,Training session,1,60036.50
+INV-100792,2,"Printing, 500 flyers",5,23394.30
+INV-100793,1,Delivery run,2,7949.50
+INV-100793,2,Training session,2,58402.20
+INV-100794,1,Consulting hour,1,21969.80
+INV-100795,1,Website maintenance,1,33418.20
+INV-100796,1,Repairs,1,18809.20
+INV-100796,2,Consulting hour,1,23503.90
+INV-100796,3,Consulting hour,1,16245.40
+INV-100796,4,"Bookkeeping, monthly",1,27702.70
+INV-100797,1,Training session,2,37359.00
+INV-100798,1,Consulting hour,2,20370.80
+INV-100799,1,Website maintenance,3,36442.90
+INV-100800,1,Delivery run,1,4733.50
+INV-100800,2,Delivery run,2,8164.00
+INV-100800,3,Consulting hour,1,16597.40
+INV-100801,1,Website maintenance,5,35184.60
+INV-100801,2,"Bookkeeping, monthly",1,48284.40
+INV-100802,1,"Bookkeeping, monthly",1,49561.70
+INV-100802,2,"Printing, 500 flyers",10,22083.10
+INV-100803,1,Cartons of stock,1,5513.80
+INV-100803,2,Repairs,5,16007.40
+INV-100803,3,Consulting hour,5,24521.00
+INV-100803,4,"Printing, 500 flyers",1,21325.70
+INV-100804,1,Delivery run,1,6143.10
+INV-100804,2,Repairs,1,10514.90
+INV-100805,1,Consulting hour,5,11036.20
+INV-100805,2,Repairs,2,24932.40
+INV-100806,1,Training session,1,37151.40
+INV-100807,1,Training session,1,55828.40
+INV-100807,2,"Printing, 500 flyers",1,16443.40
+INV-100808,1,Delivery run,5,3739.10
+INV-100808,2,Training session,1,31734.80
+INV-100809,1,Cartons of stock,1,4856.00
+INV-100809,2,"Bookkeeping, monthly",1,33555.10
+INV-100810,1,"Printing, 500 flyers",2,24023.70
+INV-100811,1,Training session,10,46433.70
+INV-100811,2,Cartons of stock,1,7207.30
+INV-100811,3,Repairs,2,18859.50
+INV-100812,1,"Bookkeeping, monthly",1,48643.80
+INV-100812,2,Delivery run,1,9008.60
+INV-100812,3,Delivery run,5,4622.30
+INV-100812,4,Repairs,1,8459.50
+INV-100813,1,Consulting hour,1,10716.70
+INV-100814,1,Cartons of stock,3,7639.30
+INV-100815,1,Cartons of stock,1,5895.80
+INV-100815,2,Delivery run,5,9575.50
+INV-100815,3,Delivery run,1,7750.10
+INV-100816,1,Website maintenance,1,65567.10
+INV-100817,1,Repairs,1,10118.90
+INV-100817,2,Delivery run,1,8493.90
+INV-100818,1,Repairs,2,11510.20
+INV-100819,1,Delivery run,10,6922.70
+INV-100820,1,Consulting hour,2,10268.40
+INV-100821,1,Cartons of stock,2,4595.70
+INV-100822,1,Delivery run,3,10442.00
+INV-100822,2,Delivery run,2,11286.50
+INV-100822,3,Consulting hour,1,16040.10
+INV-100823,1,Consulting hour,1,18424.60
+INV-100824,1,Training session,1,68437.90
+INV-100824,2,"Printing, 500 flyers",2,19211.00
+INV-100825,1,"Printing, 500 flyers",5,24158.00
+INV-100825,2,Training session,1,52607.20
+INV-100826,1,"Printing, 500 flyers",2,16901.30
+INV-100827,1,Delivery run,5,3858.80
+INV-100827,2,Website maintenance,1,48607.40
+INV-100828,1,"Bookkeeping, monthly",2,29463.40
+INV-100829,1,Training session,1,58680.70
+INV-100830,1,"Printing, 500 flyers",5,21043.10
+INV-100830,2,Training session,5,59842.80
+INV-100830,3,Website maintenance,10,47870.20
+INV-100830,4,Delivery run,2,10970.60
+INV-100831,1,Cartons of stock,2,6041.00
+INV-100831,2,"Bookkeeping, monthly",1,41616.20
+INV-100831,3,"Bookkeeping, monthly",5,28207.70
+INV-100832,1,"Bookkeeping, monthly",1,48933.30
+INV-100832,2,Training session,1,37561.70
+INV-100833,1,Consulting hour,3,12015.40
+INV-100834,1,Training session,5,41863.30
+INV-100834,2,"Bookkeeping, monthly",1,40235.40
+INV-100834,3,"Bookkeeping, monthly",1,51970.50
+INV-100834,4,"Bookkeeping, monthly",2,38596.40
+INV-100835,1,Cartons of stock,1,5393.90
+INV-100836,1,Consulting hour,10,19279.20
+INV-100837,1,Website maintenance,3,36621.50
+INV-100837,2,Website maintenance,1,53468.80
+INV-100838,1,Website maintenance,3,42888.30
+INV-100838,2,Website maintenance,1,57608.80
+INV-100839,1,Delivery run,1,5368.80
+INV-100840,1,Website maintenance,10,74020.60
+INV-100840,2,Delivery run,2,10913.70
+INV-100841,1,Consulting hour,1,17512.70
+INV-100841,2,Website maintenance,3,29289.50
+INV-100842,1,"Printing, 500 flyers",1,20003.90
+INV-100842,2,Consulting hour,2,22112.80
+INV-100843,1,Consulting hour,1,14236.60
+INV-100843,2,Website maintenance,1,45354.60
+INV-100843,3,"Bookkeeping, monthly",5,35880.90
+INV-100844,1,Website maintenance,1,48217.40
+INV-100844,2,Consulting hour,1,12971.00
+INV-100845,1,Training session,1,73579.80
+INV-100845,2,Delivery run,1,3991.80
+INV-100846,1,Website maintenance,5,28385.80
+INV-100847,1,Delivery run,5,8583.80
+INV-100847,2,Cartons of stock,2,5653.30
+INV-100847,3,Consulting hour,1,24398.60
+INV-100848,1,"Printing, 500 flyers",0,23484.00
+INV-100848,2,Website maintenance,1,74170.70
+INV-100848,3,Website maintenance,2,50204.50
+INV-100849,1,Website maintenance,10,31304.90
+INV-100849,2,Repairs,1,24383.80
+INV-100850,1,"Bookkeeping, monthly",2,30179.40
+INV-100850,2,"Printing, 500 flyers",1,18836.60
+INV-100851,1,Consulting hour,1,18973.00
+INV-100852,1,Cartons of stock,1,7412.70
+INV-100852,2,"Bookkeeping, monthly",1,50988.80
+INV-100852,3,Repairs,1,6237.50
+INV-100853,1,Repairs,5,9681.70
+INV-100854,1,"Bookkeeping, monthly",10,26296.70
+INV-100855,1,"Bookkeeping, monthly",0,44725.00
+INV-100855,2,Cartons of stock,2,5042.20
+INV-100856,1,"Bookkeeping, monthly",3,54841.60
+INV-100856,2,Cartons of stock,5,5652.40
+INV-100857,1,"Printing, 500 flyers",10,24644.90
+INV-100857,2,Cartons of stock,1,7757.00
+INV-100857,3,Training session,1,42933.60
+INV-100857,4,"Bookkeeping, monthly",10,45198.20
+INV-100858,1,Website maintenance,1,49644.40
+INV-100858,2,Cartons of stock,2,5514.60
+INV-100859,1,Consulting hour,2,12297.80
+INV-100859,2,Cartons of stock,1,5938.40
+INV-100860,1,Consulting hour,2,21906.00
+INV-100860,2,Consulting hour,1,10904.80
+INV-100860,3,Repairs,1,10238.10
+INV-100860,4,Website maintenance,1,52848.40
+INV-100861,1,Repairs,5,20078.20
+INV-100862,1,Cartons of stock,1,5654.30
+INV-100863,1,Cartons of stock,2,4736.60
+INV-100864,1,Repairs,3,23303.80
+INV-100865,1,Consulting hour,3,13122.20
+INV-100865,2,Website maintenance,2,63567.40
+INV-100866,1,Website maintenance,1,39001.10
+INV-100867,1,Delivery run,1,4590.40
+INV-100867,2,Repairs,1,23972.20
+INV-100867,3,"Printing, 500 flyers",1,20834.60
+INV-100867,4,Website maintenance,1,44539.00
+INV-100868,1,Repairs,1,12585.30
+INV-100868,2,Website maintenance,3,35791.80
+INV-100868,3,Website maintenance,1,56495.80
+INV-100869,1,Delivery run,3,5022.40
+INV-100869,2,Training session,1,74561.00
+INV-100870,1,"Bookkeeping, monthly",1,52470.20
+INV-100870,2,Cartons of stock,1,5054.20
+INV-100870,3,"Printing, 500 flyers",1,17569.60
+INV-100871,1,"Printing, 500 flyers",2,18941.60
+INV-100871,2,"Printing, 500 flyers",2,23650.10
+INV-100872,1,Consulting hour,2,12285.10
+INV-100872,2,Consulting hour,1,11627.50
+INV-100873,1,Repairs,1,29873.80
+INV-100874,1,Training session,3,63525.90
+INV-100874,2,Website maintenance,1,28914.80
+INV-100875,1,Website maintenance,1,62106.70
+INV-100876,1,Delivery run,3,10693.80
+INV-100876,2,Website maintenance,1,75493.30
+INV-100876,3,"Printing, 500 flyers",1,19354.40
+INV-100877,1,Consulting hour,1,23673.00
+INV-100877,2,Delivery run,1,5521.00
+INV-100878,1,"Bookkeeping, monthly",2,59163.70
+INV-100879,1,Delivery run,10,4057.20
+INV-100879,2,Website maintenance,1,34973.70
+INV-100879,3,Website maintenance,1,76460.80
+INV-100879,4,Website maintenance,1,42148.60
+INV-100880,1,"Bookkeeping, monthly",1,31937.00
+INV-100880,2,Consulting hour,3,21775.10
+INV-100881,1,Delivery run,10,8271.80
+INV-100881,2,Cartons of stock,2,7967.70
+INV-100882,1,"Bookkeeping, monthly",2,52213.30
+INV-100882,2,Repairs,1,10359.80
+INV-100883,1,Consulting hour,2,15242.70
+INV-100883,2,Cartons of stock,1,8568.10
+INV-100883,3,"Printing, 500 flyers",1,20485.80
+INV-100884,1,Consulting hour,1,12069.50
+INV-100885,1,Training session,1,40608.40
+INV-100885,2,Cartons of stock,1,5393.00
+INV-100885,3,Consulting hour,3,10049.80
+INV-100885,4,Cartons of stock,1,7583.30
+INV-100886,1,"Printing, 500 flyers",3,24013.50
+INV-100886,2,Cartons of stock,1,5934.90
+INV-100886,3,"Bookkeeping, monthly",1,45633.20
+INV-100887,1,"Printing, 500 flyers",3,18640.90
+INV-100888,1,Training session,5,41950.00
+INV-100889,1,"Printing, 500 flyers",1,21138.50
+INV-100889,2,Delivery run,1,4043.60
+INV-100890,1,Website maintenance,1,20698.00
+INV-100890,2,"Bookkeeping, monthly",1,45839.70
+INV-100890,3,Training session,1,48178.70
+INV-100890,4,Delivery run,1,10402.40
+INV-100891,1,Cartons of stock,5,7185.10
+INV-100891,2,Website maintenance,1,44761.10
+INV-100892,1,Consulting hour,1,14659.50
+INV-100892,2,Consulting hour,1,10356.70
+INV-100893,1,Consulting hour,1,22888.50
+INV-100893,2,"Bookkeeping, monthly",1,48580.30
+INV-100893,3,Delivery run,1,4863.20
+INV-100893,4,"Printing, 500 flyers",1,16481.00
+INV-100894,1,Website maintenance,1,40535.90
+INV-100894,2,Training session,1,65012.60
+INV-100894,3,"Printing, 500 flyers",2,24747.40
+INV-100895,1,Training session,10,30871.40
+INV-100896,1,Repairs,1,6951.80
+INV-100897,1,Consulting hour,1,16509.90
+INV-100898,1,Cartons of stock,1,6609.50
+INV-100898,2,Training session,1,74693.40
+INV-100898,3,Training session,2,37779.80
+INV-100899,1,Consulting hour,1,11215.00
+INV-100899,2,"Printing, 500 flyers",3,20880.30
+INV-100899,3,Repairs,1,21685.90
+INV-100899,4,Training session,1,40610.00
+INV-100900,1,Website maintenance,1,34618.80
+INV-100901,1,Training session,1,63486.60
+INV-100901,2,Training session,1,43313.50
+INV-100902,1,Website maintenance,1,76848.80
+INV-100903,1,"Bookkeeping, monthly",2,27062.60
+INV-100904,1,Cartons of stock,2,4979.20
+INV-100905,1,"Printing, 500 flyers",2,23760.90
+INV-100905,2,Consulting hour,1,24111.80
+INV-100906,1,Training session,1,53961.50
+INV-100906,2,Consulting hour,3,15382.30
+INV-100906,3,Cartons of stock,1,7152.80
+INV-100907,1,Repairs,3,8264.10
+INV-100908,1,Delivery run,1,4431.50
+INV-100909,1,"Printing, 500 flyers",1,24218.20
+INV-100909,2,"Bookkeeping, monthly",10,31220.00
+INV-100910,1,Delivery run,3,7234.60
+INV-100910,2,"Bookkeeping, monthly",1,27616.70
+INV-100910,3,Training session,1,58315.60
+INV-100910,4,Repairs,3,20016.00
+INV-100911,1,Repairs,1,10870.70
+INV-100912,1,Training session,2,74731.60
+INV-100912,2,Training session,1,36329.10
+INV-100913,1,Delivery run,1,8328.70
+INV-100913,2,"Printing, 500 flyers",1,21787.50
+INV-100913,3,Training session,1,43834.10
+INV-100913,4,Website maintenance,5,39532.30
+INV-100914,1,Training session,1,57133.40
+INV-100914,2,"Bookkeeping, monthly",3,29481.80
+INV-100915,1,Consulting hour,1,19667.90
+INV-100915,2,"Printing, 500 flyers",5,22041.00
+INV-100915,3,Cartons of stock,1,6982.60
+INV-100916,1,"Printing, 500 flyers",2,22107.80
+INV-100916,2,"Printing, 500 flyers",1,24598.90
+INV-100916,3,Consulting hour,10,14892.20
+INV-100917,1,Cartons of stock,1,7157.80
+INV-100917,2,Consulting hour,1,21718.90
+INV-100918,1,Cartons of stock,5,8346.90
+INV-100918,2,Repairs,1,11609.60
+INV-100919,1,Cartons of stock,1,7968.30
+INV-100919,2,Delivery run,10,3756.40
+INV-100920,1,"Bookkeeping, monthly",1,38457.00
+INV-100921,1,Repairs,5,18346.60
+INV-100922,1,Training session,1,35954.90
+INV-100923,1,Consulting hour,1,10404.60
+INV-100923,2,Cartons of stock,1,8610.60
+INV-100923,3,Repairs,2,29870.80
+INV-100924,1,Website maintenance,1,39518.40
+INV-100924,2,Training session,2,63266.30
+INV-100924,3,Repairs,1,10729.40
+INV-100925,1,Delivery run,2,10314.20
+INV-100925,2,Website maintenance,2,54849.10
+INV-100925,3,Cartons of stock,1,6391.70
+INV-100925,4,"Bookkeeping, monthly",2,57199.10
+INV-100926,1,Website maintenance,1,37428.40
+INV-100927,1,"Printing, 500 flyers",1,22014.60
+INV-100928,1,"Printing, 500 flyers",1,15580.40
+INV-100928,2,Consulting hour,5,22516.40
+INV-100928,3,Training session,1,40391.10
+INV-100929,1,Training session,2,67655.20
+INV-100929,2,Website maintenance,1,62273.70
+INV-100929,3,Website maintenance,1,65804.20
+INV-100929,4,Website maintenance,1,67022.80
+INV-100930,1,Repairs,2,29644.60
+INV-100930,2,Repairs,3,29869.00
+INV-100931,1,Delivery run,1,9356.80
+INV-100931,2,Consulting hour,1,11597.10
+INV-100932,1,Website maintenance,1,22177.00
+INV-100933,1,"Printing, 500 flyers",10,16282.90
+INV-100934,1,Training session,5,32544.60
+INV-100935,1,"Printing, 500 flyers",5,15597.20
+INV-100936,1,Website maintenance,1,21192.20
+INV-100936,2,Website maintenance,2,62375.80
+INV-100937,1,Delivery run,2,4633.70
+INV-100938,1,Consulting hour,1,20753.40
+INV-100938,2,Consulting hour,1,19615.90
+INV-100939,1,Website maintenance,1,51629.10
+INV-100939,2,Repairs,1,28290.70
+INV-100940,1,Website maintenance,1,72972.60
+INV-100940,2,"Printing, 500 flyers",1,21614.40
+INV-100940,3,Repairs,1,28225.30
+INV-100940,4,"Printing, 500 flyers",1,23682.20
+INV-100941,1,"Printing, 500 flyers",5,16770.80
+INV-100941,2,Training session,3,73243.90
+INV-100941,3,"Bookkeeping, monthly",5,34663.30
+INV-100942,1,Website maintenance,2,70284.00
+INV-100942,2,Cartons of stock,1,5113.40
+INV-100942,3,Consulting hour,1,22364.80
+INV-100942,4,Website maintenance,1,62646.20
+INV-100943,1,"Bookkeeping, monthly",2,59580.50
+INV-100944,1,Training session,10,48546.20
+INV-100945,1,Website maintenance,1,56039.80
+INV-100945,2,Website maintenance,5,47386.70
+INV-100946,1,Cartons of stock,2,4918.40
+INV-100946,2,"Printing, 500 flyers",1,21132.00
+INV-100946,3,Cartons of stock,1,5225.60
+INV-100947,1,Training session,1,51900.00
+INV-100947,2,Repairs,2,21558.60
+INV-100947,3,"Bookkeeping, monthly",2,36314.10
+INV-100948,1,"Printing, 500 flyers",1,15499.80
+INV-100949,1,Repairs,3,23655.80
+INV-100949,2,"Bookkeeping, monthly",2,56362.60
+INV-100949,3,Repairs,2,27733.00
+INV-100949,4,Delivery run,3,7427.00
+INV-100950,1,Training session,1,38161.60
+INV-100950,2,Cartons of stock,1,8169.90
+INV-100951,1,Training session,3,44915.50
+INV-100952,1,"Bookkeeping, monthly",1,37052.00
+INV-100953,1,Delivery run,1,7783.70
+INV-100953,2,"Printing, 500 flyers",5,24382.90
+INV-100954,1,Website maintenance,5,27590.90
+INV-100954,2,Training session,1,34663.20
+INV-100955,1,Consulting hour,1,22003.80
+INV-100955,2,Training session,2,65468.70
+INV-100956,1,Repairs,2,13279.00
+INV-100956,2,Training session,1,43674.10
+INV-100956,3,Consulting hour,2,20369.40
+INV-100957,1,Training session,2,51964.80
+INV-100957,2,"Bookkeeping, monthly",1,39486.40
+INV-100958,1,Website maintenance,1,22362.90
+INV-100959,1,"Printing, 500 flyers",1,19556.50
+INV-100959,2,Website maintenance,5,58043.00
+INV-100960,1,"Bookkeeping, monthly",5,27499.70
+INV-100961,1,Repairs,1,20460.80
+INV-100961,2,Website maintenance,1,56444.10
+INV-100962,1,Repairs,1,13403.20
+INV-100963,1,"Bookkeeping, monthly",2,59315.60
+INV-100963,2,Consulting hour,2,13834.20
+INV-100964,1,Training session,1,42843.90
+INV-100965,1,Repairs,1,28040.70
+INV-100965,2,Training session,5,58325.50
+INV-100966,1,Cartons of stock,1,6959.90
+INV-100966,2,"Bookkeeping, monthly",5,29770.00
+INV-100967,1,Cartons of stock,1,5394.50
+INV-100968,1,"Bookkeeping, monthly",1,57203.00
+INV-100968,2,Training session,1,31974.70
+INV-100968,3,Training session,1,32075.60
+INV-100969,1,Repairs,1,9719.80
+INV-100969,2,Delivery run,1,6797.40
+INV-100969,3,Training session,1,35953.20
+INV-100970,1,Delivery run,2,3720.10
+INV-100971,1,Cartons of stock,2,8865.70
+INV-100971,2,Website maintenance,2,47950.20
+INV-100972,1,"Bookkeeping, monthly",10,44965.60
+INV-100972,2,"Printing, 500 flyers",1,15505.30
+INV-100972,3,Cartons of stock,1,7504.90
+INV-100972,4,Training session,2,41972.30
+INV-100973,1,Delivery run,1,5984.50
+INV-100973,2,"Bookkeeping, monthly",1,52457.90
+INV-100973,3,Delivery run,1,7804.70
+INV-100974,1,"Bookkeeping, monthly",1,34822.20
+INV-100974,2,Consulting hour,2,20688.30
+INV-100974,3,Delivery run,1,10531.80
+INV-100975,1,Delivery run,1,10836.60
+INV-100975,2,Training session,3,40440.90
+INV-100976,1,"Bookkeeping, monthly",3,58595.70
+INV-100976,2,Cartons of stock,1,6127.60
+INV-100977,1,Website maintenance,1,70371.30
+INV-100977,2,Repairs,1,29107.60
+INV-100977,3,Website maintenance,1,28052.60
+INV-100978,1,Cartons of stock,0,7937.70
+INV-100979,1,Delivery run,3,9048.40
+INV-100979,2,Delivery run,1,9410.90
+INV-100979,3,Training session,1,50332.10
+INV-100980,1,Consulting hour,1,22194.00
+INV-100981,1,Delivery run,1,8509.50
+INV-100981,2,"Bookkeeping, monthly",5,52607.70
+INV-100982,1,Website maintenance,1,54955.20
+INV-100983,1,Repairs,5,27268.60
+INV-100983,2,"Printing, 500 flyers",1,21657.70
+INV-100984,1,"Printing, 500 flyers",3,23085.00
+INV-100984,2,Cartons of stock,2,6619.20
+INV-100985,1,"Bookkeeping, monthly",2,42266.70
+INV-100986,1,Delivery run,1,9341.70
+INV-100986,2,"Printing, 500 flyers",10,15211.80
+INV-100986,3,Website maintenance,1,73657.90
+INV-100987,1,Website maintenance,2,73554.20
+INV-100987,2,Repairs,3,11502.80
+INV-100988,1,Delivery run,1,11230.00
+INV-100989,1,Training session,3,41237.00
+INV-100989,2,Repairs,1,10265.90
+INV-100989,3,Website maintenance,1,29438.00
+INV-100989,4,Cartons of stock,1,8142.60
+INV-100990,1,Website maintenance,1,33308.40
+INV-100990,2,Consulting hour,5,10051.00
+INV-100990,3,"Bookkeeping, monthly",1,38427.00
+INV-100991,1,"Bookkeeping, monthly",1,37533.40
+INV-100991,2,"Bookkeeping, monthly",3,50382.20
+INV-100991,3,Cartons of stock,1,5211.80
+INV-100992,1,Training session,2,49367.00
+INV-100992,2,Delivery run,1,3881.40
+INV-100993,1,Repairs,2,16314.90
+INV-100993,2,Repairs,1,19389.80
+INV-100994,1,Repairs,2,17275.10
+INV-100995,1,Training session,1,30364.00
+INV-100995,2,Website maintenance,1,20355.40
+INV-100996,1,Repairs,2,17057.30
+INV-100996,2,Delivery run,1,11791.40
+INV-100996,3,Website maintenance,2,51724.90
+INV-100997,1,"Bookkeeping, monthly",10,26157.00
+INV-100997,2,Training session,5,71411.60
+INV-100997,3,Consulting hour,2,16200.80
+INV-100998,1,Consulting hour,10,21201.50
+INV-100998,2,Cartons of stock,3,4889.40
+INV-100998,3,Website maintenance,2,30944.20
+INV-100999,1,Training session,3,63523.30
+INV-100999,2,Cartons of stock,1,8259.80
+INV-100999,3,Repairs,2,6455.40
+INV-101000,1,Delivery run,1,4316.50
+INV-101000,2,"Printing, 500 flyers",2,20608.00
+INV-101001,1,Consulting hour,2,15175.40
+INV-101001,2,Delivery run,1,4276.10
+INV-101001,3,Cartons of stock,3,5344.90
+INV-101001,4,Cartons of stock,3,5540.90
+INV-101002,1,Cartons of stock,5,4685.40
+INV-101003,1,Training session,10,53759.50
+INV-101003,2,"Bookkeeping, monthly",1,35277.60
+INV-101004,1,Consulting hour,1,13785.70
+INV-101005,1,Delivery run,1,11945.60
+INV-101006,1,"Printing, 500 flyers",5,21860.60
+INV-101006,2,Website maintenance,1,32601.40
+INV-101006,3,Training session,10,74272.50
+INV-101007,1,Consulting hour,10,10185.50
+INV-101008,1,"Bookkeeping, monthly",1,33428.70
+INV-101008,2,"Printing, 500 flyers",1,22863.90
+INV-101008,3,Training session,2,74856.10
+INV-101009,1,"Bookkeeping, monthly",1,37633.60
+INV-101010,1,"Printing, 500 flyers",5,22528.90
+INV-101010,2,"Printing, 500 flyers",5,20408.70
+INV-101011,1,Website maintenance,1,24733.60
+INV-101012,1,Cartons of stock,1,8414.70
+INV-101012,2,Website maintenance,5,25300.00
+INV-101012,3,Training session,3,54192.90
+INV-101013,1,Cartons of stock,1,7468.60
+INV-101013,2,"Bookkeeping, monthly",1,35272.30
+INV-101014,1,Consulting hour,1,15759.80
+INV-101014,2,Delivery run,1,9304.20
+INV-101015,1,Consulting hour,1,23765.00
+INV-101015,2,Consulting hour,3,10636.30
+INV-101015,3,Repairs,2,7563.20
+INV-101016,1,Delivery run,10,10150.20
+INV-101016,2,Cartons of stock,5,7669.80
+INV-101016,3,"Printing, 500 flyers",1,21036.20
+INV-101017,1,Consulting hour,5,17545.00
+INV-101017,2,Repairs,1,6008.60
+INV-101018,1,Consulting hour,1,24376.30
+INV-101018,2,"Printing, 500 flyers",1,18537.80
+INV-101018,3,Website maintenance,1,39558.50
+INV-101019,1,Repairs,2,8797.80
+INV-101019,2,"Bookkeeping, monthly",2,52780.40
+INV-101019,3,"Bookkeeping, monthly",1,43229.30
+INV-101019,4,Consulting hour,1,13078.40
+INV-101020,1,Cartons of stock,1,6481.80
+INV-101021,1,"Bookkeeping, monthly",1,40783.70
+INV-101021,2,"Bookkeeping, monthly",1,27688.80
+INV-101022,1,Delivery run,1,11557.70
+INV-101022,2,"Printing, 500 flyers",1,22969.80
+INV-101023,1,"Printing, 500 flyers",1,22216.00
+INV-101023,2,Cartons of stock,1,8796.90
+INV-101023,3,"Printing, 500 flyers",1,20596.70
+INV-101024,1,"Bookkeeping, monthly",10,43817.00
+INV-101024,2,"Printing, 500 flyers",3,23479.60
+INV-101025,1,Training session,1,55712.60
+INV-101026,1,Delivery run,1,4790.50
+INV-101026,2,Cartons of stock,1,5140.20
+INV-101027,1,Training session,3,45484.00
+INV-101027,2,Repairs,1,28846.30
+INV-101028,1,"Printing, 500 flyers",2,24262.40
+INV-101028,2,Website maintenance,1,78668.80
+INV-101029,1,Website maintenance,1,37711.40
+INV-101029,2,Delivery run,3,4716.50
+INV-101030,1,Website maintenance,1,66943.40
+INV-101031,1,Repairs,3,16663.80
+INV-101031,2,Repairs,2,28297.60
+INV-101031,3,Consulting hour,2,19525.00
+INV-101032,1,Consulting hour,1,15364.10
+INV-101033,1,Cartons of stock,1,6782.50
+INV-101033,2,Website maintenance,1,39065.60
+INV-101033,3,"Printing, 500 flyers",1,19346.30
+INV-101033,4,Repairs,1,29304.50
+INV-101034,1,Cartons of stock,2,8572.30
+INV-101034,2,Website maintenance,1,60913.50
+INV-101034,3,"Printing, 500 flyers",2,20147.00
+INV-101035,1,Training session,3,60527.00
+INV-101035,2,Website maintenance,10,49987.80
+INV-101036,1,Repairs,1,7090.90
+INV-101037,1,Repairs,1,5549.40
+INV-101037,2,Repairs,1,7584.70
+INV-101038,1,Repairs,1,17712.60
+INV-101038,2,Website maintenance,5,53449.90
+INV-101038,3,"Bookkeeping, monthly",1,25567.40
+INV-101039,1,"Printing, 500 flyers",1,17834.30
+INV-101040,1,Consulting hour,1,11455.40
+INV-101041,1,Cartons of stock,1,7514.00
+INV-101041,2,"Bookkeeping, monthly",1,32654.80
+INV-101041,3,Website maintenance,1,31068.20
+INV-101041,4,Cartons of stock,2,7595.20
+INV-101042,1,Website maintenance,1,61970.40
+INV-101042,2,"Printing, 500 flyers",1,21015.40
+INV-101042,3,Training session,1,35091.80
+INV-101043,1,"Bookkeeping, monthly",1,28888.30
+INV-101043,2,Training session,2,72479.00
+INV-101044,1,"Printing, 500 flyers",3,16839.90
+INV-101044,2,Website maintenance,2,32742.90
+INV-101045,1,Training session,1,61973.90
+INV-101045,2,Consulting hour,2,22202.50
+INV-101046,1,Website maintenance,1,79913.80
+INV-101046,2,"Printing, 500 flyers",1,20791.60
+INV-101046,3,Delivery run,2,8673.50
+INV-101047,1,Repairs,3,20912.70
+INV-101047,2,Cartons of stock,1,4606.00
+INV-101048,1,"Printing, 500 flyers",1,18769.30
+INV-101048,2,"Bookkeeping, monthly",5,35123.00
+INV-101049,1,Repairs,10,11028.80
+INV-101049,2,Delivery run,2,8640.60
+INV-101050,1,"Bookkeeping, monthly",1,58233.10
+INV-101050,2,Delivery run,1,3594.70
+INV-101050,3,Delivery run,1,9724.70
+INV-101051,1,Consulting hour,1,21733.00
+INV-101051,2,Training session,1,44381.40
+INV-101052,1,"Bookkeeping, monthly",1,36264.80
+INV-101052,2,Repairs,3,15862.00
+INV-101052,3,Website maintenance,3,65429.80
+INV-101052,4,Repairs,2,16675.90
+INV-101053,1,Consulting hour,1,16511.20
+INV-101053,2,Consulting hour,1,22733.80
+INV-101053,3,Website maintenance,1,52927.60
+INV-101054,1,Repairs,3,15251.40
+INV-101054,2,Training session,3,51901.10
+INV-101055,1,Delivery run,1,11146.80
+INV-101055,2,"Bookkeeping, monthly",5,54718.90
+INV-101056,1,Cartons of stock,1,8855.40
+INV-101056,2,Delivery run,3,11331.30
+INV-101057,1,Delivery run,2,7471.10
+INV-101058,1,"Printing, 500 flyers",1,18342.40
+INV-101058,2,Repairs,2,23612.20
+INV-101059,1,Delivery run,1,11115.40
+INV-101059,2,"Bookkeeping, monthly",1,57207.80
+INV-101059,3,Consulting hour,2,16885.80
+INV-101060,1,"Bookkeeping, monthly",1,46197.40
+INV-101061,1,"Bookkeeping, monthly",1,57731.90
+INV-101061,2,Delivery run,3,11758.30
+INV-101061,3,Consulting hour,2,14622.40
+INV-101062,1,Delivery run,2,4649.00
+INV-101062,2,Website maintenance,1,25403.80
+INV-101063,1,Consulting hour,1,21722.80
+INV-101063,2,"Printing, 500 flyers",1,15382.00
+INV-101064,1,"Printing, 500 flyers",5,19412.30
+INV-101064,2,Training session,1,61208.00
+INV-101065,1,Consulting hour,1,21469.40
+INV-101065,2,Website maintenance,1,60813.60
+INV-101066,1,"Printing, 500 flyers",2,24811.30
+INV-101067,1,Website maintenance,2,57841.80
+INV-101067,2,"Bookkeeping, monthly",2,39055.10
+INV-101067,3,Consulting hour,1,17331.90
+INV-101067,4,Cartons of stock,1,5714.00
+INV-101068,1,Training session,1,52600.20
+INV-101068,2,Delivery run,1,10678.50
+INV-101068,3,Cartons of stock,1,8897.00
+INV-101069,1,"Printing, 500 flyers",1,22059.80
+INV-101070,1,Website maintenance,2,75542.20
+INV-101070,2,"Printing, 500 flyers",1,19331.10
+INV-101071,1,Cartons of stock,1,5465.40
+INV-101071,2,Consulting hour,10,17405.20
+INV-101072,1,Repairs,1,5713.40
+INV-101073,1,Consulting hour,2,15575.60
+INV-101074,1,Cartons of stock,2,8311.20
+INV-101075,1,Consulting hour,1,20759.40
+INV-101075,2,Website maintenance,1,50906.30
+INV-101076,1,Consulting hour,2,15434.60
+INV-101077,1,Website maintenance,3,57488.90
+INV-101077,2,Website maintenance,2,36479.40
+INV-101078,1,Cartons of stock,2,7880.70
+INV-101078,2,"Printing, 500 flyers",1,18376.20
+INV-101078,3,Repairs,1,8831.30
+INV-101079,1,Cartons of stock,1,8847.00
+INV-101079,2,"Printing, 500 flyers",5,23929.00
+INV-101080,1,Cartons of stock,1,7947.40
+INV-101080,2,Consulting hour,1,15952.60
+INV-101080,3,Delivery run,2,3657.40
+INV-101081,1,Website maintenance,3,58856.10
+INV-101081,2,Repairs,1,6167.70
+INV-101082,1,Delivery run,5,8316.20
+INV-101082,2,"Bookkeeping, monthly",2,56063.60
+INV-101082,3,"Bookkeeping, monthly",1,44969.50
+INV-101083,1,"Printing, 500 flyers",1,22528.60
+INV-101084,1,"Bookkeeping, monthly",3,36054.00
+INV-101084,2,Training session,1,74463.40
+INV-101085,1,Consulting hour,1,12654.60
+INV-101085,2,Repairs,1,27961.00
+INV-101086,1,Website maintenance,1,49625.40
+INV-101086,2,"Bookkeeping, monthly",3,48285.30
+INV-101087,1,Consulting hour,1,10922.30
+INV-101087,2,"Bookkeeping, monthly",1,35912.70
+INV-101087,3,Consulting hour,1,14204.70
+INV-101088,1,Training session,1,67325.60
+INV-101089,1,Consulting hour,1,22622.00
+INV-101089,2,Cartons of stock,1,5640.20
+INV-101090,1,"Printing, 500 flyers",1,22254.40
+INV-101091,1,Repairs,1,13060.00
+INV-101091,2,Delivery run,1,10261.20
+INV-101092,1,Repairs,3,28176.10
+INV-101092,2,Delivery run,3,5882.60
+INV-101093,1,"Bookkeeping, monthly",1,55654.10
+INV-101093,2,"Bookkeeping, monthly",1,43852.00
+INV-101094,1,"Printing, 500 flyers",3,22135.30
+INV-101095,1,Cartons of stock,1,5554.60
+INV-101095,2,Training session,10,54692.20
+INV-101096,1,Website maintenance,1,38192.60
+INV-101096,2,Website maintenance,1,24116.60
+INV-101096,3,Cartons of stock,2,6393.00
+INV-101096,4,Consulting hour,1,16501.70
+INV-101097,1,Consulting hour,5,22951.40
+INV-101097,2,Delivery run,2,9283.00
+INV-101098,1,Cartons of stock,1,8966.20
+INV-101099,1,Consulting hour,1,20284.10
+INV-101100,1,Repairs,1,9226.80
+INV-101100,2,Delivery run,1,9558.70
+INV-101101,1,Consulting hour,5,12073.30
+INV-101101,2,Website maintenance,3,77371.40
+INV-101102,1,Repairs,2,7258.00
+INV-101102,2,Website maintenance,1,56300.80
+INV-101103,1,Website maintenance,1,30517.10
+INV-101104,1,Website maintenance,1,79179.10
+INV-101105,1,Cartons of stock,3,8233.20
+INV-101106,1,Training session,2,70937.70
+INV-101106,2,Repairs,5,7275.50
+INV-101107,1,Website maintenance,2,35166.30
+INV-101107,2,"Printing, 500 flyers",1,16102.90
+INV-101107,3,Website maintenance,1,73177.30
+INV-101107,4,Website maintenance,1,63992.20
+INV-101108,1,Website maintenance,1,57683.50
+INV-101108,2,Repairs,1,5760.20
+INV-101108,3,Repairs,1,7300.20
+INV-101109,1,Cartons of stock,1,6295.80
+INV-101109,2,"Bookkeeping, monthly",1,31996.60
+INV-101110,1,Website maintenance,1,34715.00
+INV-101110,2,"Bookkeeping, monthly",5,27987.00
+INV-101111,1,Consulting hour,2,19680.00
+INV-101111,2,Consulting hour,1,15815.00
+INV-101112,1,"Printing, 500 flyers",1,24045.70
+INV-101112,2,Cartons of stock,1,6259.00
+INV-101113,1,"Printing, 500 flyers",1,20939.20
+INV-101113,2,Cartons of stock,5,7807.80
+INV-101113,3,Repairs,10,28746.60
+INV-101113,4,Training session,1,46876.10
+INV-101114,1,"Printing, 500 flyers",1,21463.00
+INV-101114,2,"Bookkeeping, monthly",5,45115.30
+INV-101115,1,"Printing, 500 flyers",2,16008.40
+INV-101115,2,Cartons of stock,1,6956.40
+INV-101116,1,"Printing, 500 flyers",1,17121.80
+INV-101117,1,"Printing, 500 flyers",2,24497.80
+INV-101117,2,"Printing, 500 flyers",1,16294.50
+INV-101117,3,Repairs,1,9919.40
+INV-101118,1,"Printing, 500 flyers",1,15156.00
+INV-101118,2,"Printing, 500 flyers",1,15318.60
+INV-101118,3,Training session,1,49999.00
+INV-101119,1,Repairs,3,11875.40
+INV-101120,1,Delivery run,1,8821.20
+INV-101120,2,Training session,1,62607.40
+INV-101121,1,Website maintenance,1,39146.70
+INV-101122,1,Repairs,10,24805.20
+INV-101122,2,Repairs,1,21178.30
+INV-101123,1,Repairs,1,11253.30
+INV-101123,2,Consulting hour,2,20147.50
+INV-101124,1,Training session,1,50401.40
+INV-101125,1,Consulting hour,2,10034.30
+INV-101125,2,Repairs,1,26132.70
+INV-101126,1,Delivery run,1,6373.20
+INV-101126,2,"Bookkeeping, monthly",1,29816.10
+INV-101126,3,Delivery run,1,10715.40
+INV-101127,1,Website maintenance,3,30937.20
+INV-101128,1,"Bookkeeping, monthly",1,55136.80
+INV-101129,1,"Bookkeeping, monthly",1,43509.60
+INV-101129,2,"Bookkeeping, monthly",2,38023.00
+INV-101129,3,"Printing, 500 flyers",1,19278.70
+INV-101130,1,Consulting hour,1,10804.80
+INV-101131,1,"Bookkeeping, monthly",1,40932.00
+INV-101132,1,Website maintenance,2,57623.00
+INV-101133,1,Cartons of stock,3,7095.30
+INV-101133,2,"Printing, 500 flyers",1,23243.90
+INV-101134,1,Website maintenance,1,69163.00
+INV-101134,2,Delivery run,10,8379.40
+INV-101135,1,Website maintenance,3,59437.30
+INV-101135,2,"Printing, 500 flyers",5,20550.00
+INV-101136,1,Consulting hour,1,21835.40
+INV-101136,2,Cartons of stock,2,6353.40
+INV-101137,1,"Printing, 500 flyers",1,16693.20
+INV-101138,1,Consulting hour,1,22431.50
+INV-101138,2,"Bookkeeping, monthly",2,39463.60
+INV-101138,3,"Printing, 500 flyers",1,23974.60
+INV-101139,1,Cartons of stock,1,7778.20
+INV-101140,1,"Bookkeeping, monthly",1,59929.10
+INV-101140,2,Repairs,2,16810.50
+INV-101141,1,Delivery run,1,10686.30
+INV-101142,1,Website maintenance,1,25055.60
+INV-101143,1,Website maintenance,2,57403.60
+INV-101144,1,Training session,1,71795.70
+INV-101144,2,Cartons of stock,1,6567.00
+INV-101145,1,Cartons of stock,2,5676.30
+INV-101145,2,Delivery run,1,9715.00
+INV-101145,3,Cartons of stock,10,5532.20
+INV-101146,1,Repairs,1,17458.90
+INV-101147,1,"Printing, 500 flyers",1,22767.40
+INV-101148,1,Cartons of stock,1,8194.20
+INV-101149,1,Cartons of stock,1,8908.80
+INV-101149,2,Cartons of stock,1,7559.90
+INV-101150,1,"Printing, 500 flyers",1,17817.60
+INV-101150,2,Training session,3,54788.40
+INV-101151,1,"Printing, 500 flyers",3,24002.90
+INV-101151,2,Training session,2,56989.80
+INV-101151,3,"Bookkeeping, monthly",3,58649.90
+INV-101152,1,Consulting hour,3,20188.80
+INV-101153,1,Website maintenance,5,28157.40
+INV-101154,1,Training session,3,34341.00
+INV-101154,2,Delivery run,2,6417.60
+INV-101155,1,Consulting hour,2,21150.80
+INV-101155,2,Consulting hour,1,22188.20
+INV-101156,1,Delivery run,1,7278.90
+INV-101156,2,Delivery run,1,10489.20
+INV-101157,1,Website maintenance,5,67697.20
+INV-101158,1,Consulting hour,1,14965.20
+INV-101159,1,Cartons of stock,2,6078.80
+INV-101159,2,Delivery run,2,4819.90
+INV-101160,1,Website maintenance,5,30449.60
+INV-101160,2,Cartons of stock,2,8919.70
+INV-101161,1,Delivery run,1,10149.70
+INV-101161,2,"Printing, 500 flyers",1,16636.20
+INV-101162,1,Repairs,2,21922.40
+INV-101163,1,"Printing, 500 flyers",1,24185.50
+INV-101163,2,Consulting hour,5,17170.10
+INV-101163,3,Website maintenance,1,45652.20
+INV-101163,4,"Bookkeeping, monthly",2,50752.30
+INV-101164,1,Cartons of stock,10,7977.80
+INV-101165,1,Training session,1,32316.40
+INV-101165,2,"Bookkeeping, monthly",2,58088.60
+INV-101166,1,Repairs,3,23518.60
+INV-101166,2,Training session,10,54422.30
+INV-101167,1,Website maintenance,5,22450.60
+INV-101167,2,"Printing, 500 flyers",10,17390.30
+INV-101167,3,Consulting hour,1,12843.00
+INV-101167,4,Consulting hour,3,21239.40
+INV-101168,1,"Printing, 500 flyers",1,19748.30
+INV-101168,2,Delivery run,5,8876.90
+INV-101169,1,Cartons of stock,1,7297.20
+INV-101169,2,Cartons of stock,2,8088.20
+INV-101169,3,Delivery run,1,5816.40
+INV-101169,4,"Printing, 500 flyers",1,20700.80
+INV-101170,1,Delivery run,5,9779.30
+INV-101170,2,Training session,1,44619.30
+INV-101170,3,"Printing, 500 flyers",1,24351.00
+INV-101171,1,Consulting hour,2,24885.40
+INV-101171,2,Delivery run,1,3676.60
+INV-101172,1,Cartons of stock,5,8797.60
+INV-101172,2,Consulting hour,10,10194.40
+INV-101172,3,Delivery run,1,9115.80
+INV-101173,1,"Bookkeeping, monthly",3,50463.30
+INV-101173,2,Cartons of stock,3,5956.20
+INV-101173,3,Website maintenance,3,40881.30
+INV-101174,1,Cartons of stock,1,8584.00
+INV-101174,2,"Bookkeeping, monthly",1,59763.20
+INV-101175,1,Consulting hour,2,15991.50
+INV-101176,1,"Bookkeeping, monthly",2,35230.10
+INV-101176,2,Cartons of stock,3,6745.40
+INV-101176,3,Delivery run,2,5633.60
+INV-101177,1,Cartons of stock,10,7668.40
+INV-101177,2,Consulting hour,2,20149.30
+INV-101178,1,Repairs,2,6870.60
+INV-101178,2,Training session,1,63753.50
+INV-101179,1,"Bookkeeping, monthly",1,30272.10
+INV-101179,2,"Printing, 500 flyers",5,24593.70
+INV-101179,3,Consulting hour,2,21691.50
+INV-101180,1,Cartons of stock,1,7413.20
+INV-101180,2,Cartons of stock,1,6103.00
+INV-101181,1,"Printing, 500 flyers",5,18954.60
+INV-101181,2,Delivery run,2,10364.20
+INV-101182,1,Consulting hour,1,14446.70
+INV-101182,2,Website maintenance,1,51574.30
+INV-101182,3,Repairs,1,24723.90
+INV-101183,1,Training session,1,48243.80
+INV-101183,2,Website maintenance,3,37296.10
+INV-101184,1,"Printing, 500 flyers",1,18459.00
+INV-101184,2,Repairs,1,21846.00
+INV-101184,3,"Printing, 500 flyers",1,20745.90
+INV-101185,1,Website maintenance,1,42087.40
+INV-101186,1,Consulting hour,5,14892.20
+INV-101186,2,"Printing, 500 flyers",1,15333.60
+INV-101186,3,"Bookkeeping, monthly",1,26949.80
+INV-101187,1,Repairs,3,7170.20
+INV-101188,1,Website maintenance,1,74333.30
+INV-101188,2,Repairs,1,18191.10
+INV-101188,3,Training session,3,65034.30
+INV-101188,4,Consulting hour,5,15555.60
+INV-101189,1,Consulting hour,1,14604.70
+INV-101190,1,"Bookkeeping, monthly",1,49517.20
+INV-101190,2,"Printing, 500 flyers",1,22415.40
+INV-101191,1,Delivery run,1,7134.90
+INV-101191,2,Consulting hour,2,24197.60
+INV-101191,3,"Bookkeeping, monthly",2,48654.70
+INV-101192,1,"Printing, 500 flyers",1,15128.90
+INV-101192,2,Repairs,5,15143.70
+INV-101193,1,Consulting hour,2,18823.80
+INV-101194,1,Website maintenance,10,50591.20
+INV-101194,2,Repairs,1,21607.40
+INV-101194,3,Repairs,5,11449.40
+INV-101194,4,Training session,3,59309.60
+INV-101195,1,Delivery run,1,4487.90
+INV-101195,2,Consulting hour,5,22731.70
+INV-101195,3,Website maintenance,1,60592.00
+INV-101196,1,Consulting hour,1,14471.30
+INV-101196,2,Consulting hour,1,23623.50
+INV-101196,3,Repairs,3,27288.40
+INV-101197,1,"Bookkeeping, monthly",1,38168.60
+INV-101197,2,Training session,1,40657.00
+INV-101197,3,"Printing, 500 flyers",1,18318.30
+INV-101197,4,Delivery run,1,9829.40
+INV-101198,1,Repairs,2,26144.10
+INV-101198,2,Consulting hour,3,15748.80
+INV-101198,3,"Bookkeeping, monthly",2,40443.70
+INV-101199,1,"Printing, 500 flyers",3,18702.30
+INV-101200,1,Training session,1,66421.20
+INV-101200,2,Delivery run,2,10490.40
+INV-101200,3,Delivery run,1,6441.80

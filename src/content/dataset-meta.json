@@ -3332,6 +3332,277 @@
    }
   }
  },
+ "invoicing": {
+  "zipBytes": 41037,
+  "files": {
+   "customers": {
+    "rows": 300,
+    "bytes": 9983,
+    "columns": [
+     {
+      "name": "customer_id",
+      "type": "text",
+      "missing": 0,
+      "distinct": 300
+     },
+     {
+      "name": "business_name",
+      "type": "text",
+      "missing": 0,
+      "distinct": 184
+     },
+     {
+      "name": "city",
+      "type": "text",
+      "missing": 0,
+      "distinct": 6
+     },
+     {
+      "name": "vat_exempt",
+      "type": "number",
+      "missing": 0,
+      "distinct": 2,
+      "min": 0,
+      "max": 1
+     },
+     {
+      "name": "payment_terms_days",
+      "type": "number",
+      "missing": 0,
+      "distinct": 2,
+      "min": 14,
+      "max": 30
+     }
+    ],
+    "preview": [
+     [
+      "C0001",
+      "Zainab Foods",
+      "Lagos",
+      "0",
+      "30"
+     ],
+     [
+      "C0002",
+      "Bisi Stores",
+      "Ibadan",
+      "0",
+      "30"
+     ],
+     [
+      "C0003",
+      "Sade Bakery",
+      "Enugu",
+      "0",
+      "14"
+     ],
+     [
+      "C0004",
+      "Sade Electronics",
+      "Abuja",
+      "0",
+      "14"
+     ],
+     [
+      "C0005",
+      "Tunde Foods",
+      "Lagos",
+      "0",
+      "30"
+     ],
+     [
+      "C0006",
+      "Chinedu Supplies",
+      "Kano",
+      "0",
+      "30"
+     ]
+    ]
+   },
+   "invoice_lines": {
+    "rows": 2460,
+    "bytes": 100736,
+    "columns": [
+     {
+      "name": "invoice_id",
+      "type": "text",
+      "missing": 0,
+      "distinct": 1200
+     },
+     {
+      "name": "line_no",
+      "type": "number",
+      "missing": 0,
+      "distinct": 4,
+      "min": 1,
+      "max": 4
+     },
+     {
+      "name": "description",
+      "type": "text",
+      "missing": 0,
+      "distinct": 8
+     },
+     {
+      "name": "quantity",
+      "type": "number",
+      "missing": 0,
+      "distinct": 7,
+      "min": -1,
+      "max": 10
+     },
+     {
+      "name": "unit_price",
+      "type": "number",
+      "missing": 0,
+      "distinct": 2453,
+      "min": 3561.4,
+      "max": 79940.6
+     }
+    ],
+    "preview": [
+     [
+      "INV-100001",
+      "1",
+      "Delivery run",
+      "1",
+      "11774.30"
+     ],
+     [
+      "INV-100001",
+      "2",
+      "Repairs",
+      "1",
+      "23430.20"
+     ],
+     [
+      "INV-100002",
+      "1",
+      "Printing, 500 flyers",
+      "10",
+      "19657.70"
+     ],
+     [
+      "INV-100002",
+      "2",
+      "Bookkeeping, monthly",
+      "2",
+      "59166.10"
+     ],
+     [
+      "INV-100002",
+      "3",
+      "Consulting hour",
+      "2",
+      "12355.10"
+     ],
+     [
+      "INV-100003",
+      "1",
+      "Printing, 500 flyers",
+      "1",
+      "22820.20"
+     ]
+    ]
+   },
+   "invoices_raw": {
+    "rows": 1205,
+    "bytes": 60087,
+    "columns": [
+     {
+      "name": "invoice_id",
+      "type": "text",
+      "missing": 0,
+      "distinct": 1200
+     },
+     {
+      "name": "customer_id",
+      "type": "text",
+      "missing": 7,
+      "distinct": 298
+     },
+     {
+      "name": "issue_date",
+      "type": "text",
+      "missing": 0,
+      "distinct": 121
+     },
+     {
+      "name": "due_date",
+      "type": "date",
+      "missing": 0,
+      "distinct": 109,
+      "min": "2026-05-30",
+      "max": "2026-09-30"
+     },
+     {
+      "name": "discount_pct",
+      "type": "number",
+      "missing": 0,
+      "distinct": 8,
+      "min": 0,
+      "max": 50
+     },
+     {
+      "name": "amount_paid",
+      "type": "text",
+      "missing": 0,
+      "distinct": 957
+     }
+    ],
+    "preview": [
+     [
+      "INV-100001",
+      "C0100",
+      "2026-07-05",
+      "2026-08-04",
+      "0",
+      "0.00"
+     ],
+     [
+      "INV-100002",
+      "C0148",
+      "29/07/2026",
+      "2026-08-28",
+      "0",
+      "365090.86"
+     ],
+     [
+      "INV-100003",
+      "C0142",
+      "2026-08-20",
+      "2026-09-19",
+      "15",
+      "31583.12"
+     ],
+     [
+      "INV-100004",
+      "C0027",
+      "2026-07-11",
+      "2026-08-10",
+      "5",
+      "0.00"
+     ],
+     [
+      "INV-100005",
+      "C0186",
+      "2026-06-16",
+      "2026-07-16",
+      "20",
+      "64226.00"
+     ],
+     [
+      "INV-100006",
+      "C0018",
+      "2026-07-07",
+      "2026-08-06",
+      "5",
+      "25404.82"
+     ]
+    ]
+   }
+  }
+ },
  "legal": {
   "zipBytes": 12870,
   "files": {

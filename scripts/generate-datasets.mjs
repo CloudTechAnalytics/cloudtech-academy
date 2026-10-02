@@ -2630,6 +2630,126 @@ function observability() {
   return { csvs: { metrics, db_pool: pool, daily_sli: daily, spans, alerts: alertRows, toil }, text: { "app_logs.jsonl": logText } };
 }
 
+/* ------------------------------------------------------------------ invoicing (software development course) */
+// Tallybook's invoicing data for the software development course: customers, a raw invoice
+// export with the kinds of problems real exports have (formatted amounts, two date formats,
+// duplicates, out-of-range discounts, unknown customers), invoice lines, and an old billing
+// module to review. All of it is fictional. Generated last, from its own seed.
+function invoicing() {
+  seed = 20271101;
+  const customers = [];
+  const SHOPS = ["Stores", "Pharmacy", "Logistics", "Foods", "Fashion", "Electronics", "Bakery", "Printing", "Salon", "Supplies"];
+  for (let i = 1; i <= 300; i++) {
+    customers.push({
+      customer_id: `C${String(i).padStart(4, "0")}`,
+      business_name: `${pick(FIRST)} ${pick(SHOPS)}`,
+      city: pick(["Lagos", "Lagos", "Lagos", "Abuja", "Ibadan", "Port Harcourt", "Kano", "Enugu"]),
+      vat_exempt: rand() < 0.1 ? 1 : 0,
+      payment_terms_days: pick([14, 30, 30]),
+    });
+  }
+  const ITEMS = [["Bookkeeping, monthly", 2500000, 6000000], ["Delivery run", 350000, 1200000], ["Printing, 500 flyers", 1500000, 2500000], ["Consulting hour", 1000000, 2500000], ["Website maintenance", 2000000, 8000000], ["Cartons of stock", 450000, 900000], ["Repairs", 500000, 3000000], ["Training session", 3000000, 7500000]];
+  const invoices = [];
+  const lines = [];
+  const naira = (kobo) => (kobo / 100).toFixed(2);
+  const fmtDate = (t, uk) => { const x = new Date(t); return uk ? `${String(x.getUTCDate()).padStart(2, "0")}/${String(x.getUTCMonth() + 1).padStart(2, "0")}/${x.getUTCFullYear()}` : iso(t); };
+  for (let k = 1; k <= 1200; k++) {
+    const cust = pick(customers);
+    const issue = d("2026-06-01") + int(0, 91) * day;
+    const id = `INV-${String(100000 + k)}`;
+    const nLines = weighted([1, 2, 3, 4], [35, 35, 20, 10]);
+    for (let n = 1; n <= nLines; n++) {
+      const [desc, lo, hi] = pick(ITEMS);
+      let price = Math.round(int(lo, hi) / 10) * 10;
+      // A share of prices end in 20 kobo after scaling, which makes some VAT amounts land exactly on half a kobo.
+      if (rand() < 0.15) price = Math.floor(price / 40) * 40 + 20;
+      let qty = weighted([1, 2, 3, 5, 10], [55, 20, 10, 10, 5]);
+      if (rand() < 0.005) qty = pick([0, -1]);
+      lines.push({ invoice_id: id, line_no: n, description: desc, quantity: qty, unit_price: naira(price) });
+    }
+    let discount = weighted([0, 5, 10, 15, 20], [60, 15, 15, 5, 5]);
+    if (rand() < 0.006) discount = pick([25, 30, 50]);
+    let custId = cust.customer_id;
+    if (rand() < 0.005) custId = "";
+    else if (rand() < 0.004) custId = `C${int(5000, 5999)}`;
+    let due = issue + cust.payment_terms_days * day;
+    if (rand() < 0.004) due = issue - int(1, 10) * day;
+    const paidShare = weighted([1, 0, 0.5], [70, 20, 10]);
+    invoices.push({
+      invoice_id: id,
+      customer_id: custId,
+      issue_date: fmtDate(issue, rand() < 0.03),
+      due_date: fmtDate(due, false),
+      discount_pct: discount,
+      amount_paid: "",
+      _paidShare: paidShare,
+    });
+  }
+  // amount_paid is filled once totals are known (computed here the same way the course does).
+  const byInv = {};
+  for (const l of lines) (byInv[l.invoice_id] ??= []).push(l);
+  const custById = Object.fromEntries(customers.map((c) => [c.customer_id, c]));
+  for (const inv of invoices) {
+    const sub = byInv[inv.invoice_id].reduce((s, l) => s + Math.max(0, l.quantity) * Math.round(Number(l.unit_price) * 100), 0);
+    const afterDiscount = sub - Math.floor((sub * Math.min(inv.discount_pct, 20)) / 100 + 0.5);
+    const exempt = custById[inv.customer_id]?.vat_exempt;
+    const total = afterDiscount + (exempt ? 0 : Math.floor((afterDiscount * 75) / 1000 + 0.5));
+    const paid = Math.round(total * inv._paidShare);
+    inv.amount_paid = rand() < 0.025 && paid > 0 ? `₦${Number(naira(paid)).toLocaleString("en-US", { minimumFractionDigits: 2 })}` : naira(paid);
+    delete inv._paidShare;
+  }
+  // Five invoices were exported twice.
+  for (let k = 0; k < 5; k++) invoices.splice(int(10, invoices.length - 1), 0, { ...invoices[int(0, 1199)] });
+
+  const legacy = `# billing.py - Tallybook's original billing code (2024). Still used by the month-end job.
+import csv
+
+totals = {}
+VAT = 0.075
+
+
+def calc(lines, d, ex, fee_days=0, log=[]):
+    t = 0
+    for l in lines:
+        t = t + l["quantity"] * l["unit_price"]
+    if d > 0:
+        t = t - t * d / 100
+    if ex == False:
+        t = t + t * 0.075
+    if fee_days > 30:
+        t = t * 1.02
+    if fee_days > 60:
+        t = t * 1.02
+    if fee_days > 90:
+        t = t * 1.02
+    log.append(t)
+    return round(t, 2)
+
+
+def load(path):
+    rows = []
+    try:
+        f = open(path)
+        for r in csv.DictReader(f):
+            rows.append(r)
+    except:
+        print("could not load")
+    return rows
+
+
+def run(path, invoices):
+    data = load(path)
+    for inv in invoices:
+        ls = [r for r in data if r["invoice_id"] == inv["invoice_id"]]
+        for l in ls:
+            l["quantity"] = int(l["quantity"])
+            l["unit_price"] = float(l["unit_price"])
+        totals[inv["invoice_id"]] = calc(ls, int(inv["discount_pct"]), inv["vat_exempt"] == "1")
+        print(inv["invoice_id"], totals[inv["invoice_id"]])
+`;
+  return { csvs: { customers, invoices_raw: invoices, invoice_lines: lines }, text: { "billing.py": legacy } };
+}
+
 /* ------------------------------------------------------------------ write */
 const SQL = await initSqlJs();
 const L = logistics();
@@ -2687,6 +2807,11 @@ for (const [name, obj] of Object.entries(terraformFiles(CLOUD.resources))) write
   const { csvs, text } = observability();
   for (const [table, rows] of Object.entries(csvs)) writeCsv("observability", table, rows);
   for (const [name, body] of Object.entries(text)) writeText("observability", name, body);
+}
+{
+  const { csvs, text } = invoicing();
+  for (const [table, rows] of Object.entries(csvs)) writeCsv("invoicing", table, rows);
+  for (const [name, body] of Object.entries(text)) writeText("invoicing", name, body);
 }
 
 // Summary for the build log

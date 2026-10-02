@@ -341,6 +341,60 @@ export const TRACKS: Track[] = [
     ],
   },
   {
+    id: "software-developer",
+    slug: "software-developer",
+    title: "Become a Software Developer",
+    outcome: "Write software that's correct, tested and safe to change",
+    summary:
+      "The route to junior developer roles. Start with Python and Git, then learn what turns code into software: tests, debugging, validation, version control, code review and APIs, by rebuilding a real company's invoicing code. Then go further into the web, databases and delivery. Employers hire developers who can show tested, well-reviewed code, and that's what this track builds.",
+    badge: "CloudTech Software Developer",
+    badgeCode: "SOFTWAREDEV",
+    skills: [
+      "Python functions, modules and packages",
+      "Automated testing with pytest",
+      "Debugging and input validation",
+      "Git workflow and code review",
+      "Building and testing web APIs",
+      "Shipping code through CI/CD",
+    ],
+    stages: [
+      {
+        title: "Foundation",
+        summary: "The language and the tools every developer uses.",
+        items: [
+          { kind: "course", courseId: "python-for-beginners", why: "Python from the first line: variables, lists, loops and functions." },
+          { kind: "course", courseId: "git-and-github-for-beginners", why: "Version control and GitHub, so your work is saved, shared and visible." },
+          { kind: "course", courseId: "linux-networking-basics", why: "The command line, files, processes and HTTP that every server runs on.", required: false },
+        ],
+      },
+      {
+        title: "Core",
+        summary: "From code that works once to software a team can trust.",
+        items: [
+          { kind: "course", courseId: "software-engineering-with-python", why: "Tests, debugging, validation, Git, code review and an API, on a company's invoicing code." },
+          { kind: "course", courseId: "sql-for-data-analysis", why: "Query the databases your applications store data in.", required: false },
+        ],
+      },
+      {
+        title: "Specialist",
+        summary: "Build for the web and ship safely.",
+        items: [
+          { kind: "upcoming", title: "Web Development with JavaScript", why: "HTML, CSS and JavaScript for the pages people use, with tests and accessibility.", level: 2 },
+          { kind: "upcoming", title: "Databases and APIs for Developers", why: "Design schemas, write migrations and build APIs on a real database.", level: 3 },
+          { kind: "course", courseId: "cicd-and-containers", why: "Containers, pipelines and safe releases for the code you write.", required: false },
+        ],
+      },
+      {
+        title: "Career",
+        summary: "Turn your skills into applications that get interviews.",
+        items: [
+          { kind: "course", courseId: "career-essentials", why: "An ATS-friendly CV and a LinkedIn profile recruiters can find." },
+          { kind: "course", courseId: "build-your-student-portfolio", why: "One link that shows your repositories, tests and projects.", required: false },
+        ],
+      },
+    ],
+  },
+  {
     id: "career-study-skills",
     slug: "career-study-skills",
     title: "Career & Study Skills",

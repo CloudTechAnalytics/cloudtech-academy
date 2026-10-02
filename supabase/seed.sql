@@ -48390,9 +48390,1719 @@ $md$, true, true, 10, array['obs-10-p1', 'obs-10-t1']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 
+-- Course: Software Engineering with Python
+insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
+values ('software-engineering-with-python', 'full', null, 'software-engineering-with-python', 'SWE', 'Software Engineering with Python', 'Turn scripts into software: functions and modules, exact money arithmetic, automated tests with pytest, boundary testing, debugging, input validation, Git, code review and a tested Flask API, by rebuilding a company''s invoicing code.', 'Code that works once isn''t software yet. In this course you rebuild Tallybook''s invoicing code the way professional teams work. You''ll turn a script into functions and modules, discover why floating-point numbers and Python''s round() put 164 of 1,171 real invoices a kobo out, and fix it with whole kobo and Decimal. You''ll write tests with pytest and run them in Colab, find an off-by-one bug in late fees with boundary tests, debug a crashing import by finding every bad row rather than one, and validate a messy export so every row is accounted for. Then you''ll track changes with Git branches and commits, review the original billing module for both style problems and wrong business rules, and expose the rules as a Flask API that rejects bad requests clearly. Every command and test in the lessons is run and checked.', 'python', 'intermediate', 2, 'Beginner to intermediate', 7, true, 'available', true, array['Functions, modules and a single source of truth', 'Exact money arithmetic with Decimal', 'Automated testing with pytest', 'Boundary and regression tests', 'Reading tracebacks and debugging', 'Validating input', 'Git: commits, branches, diffs and merges', 'Code review', 'Building and testing a Flask API']::text[], array['Python for Beginners, or comfort with Python basics (variables, lists, loops, functions)']::text[], 'Tallybook''s invoicing service', true, true, true, true, false, 60, 37)
+on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level = excluded.level, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('swe-m01', 'software-engineering-with-python', 'From Script to Functions', 1, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('software-engineering-with-python:from-script-to-functions', 'software-engineering-with-python', 'swe-m01', 'from-script-to-functions', 'From script to functions', 'Why code that works once isn''t yet software, how to turn a copy-and-paste script into small functions with clear inputs and outputs, and the first signs that the numbers it produces are wrong.', 15, $md$
+## The problem
+
+Tallybook started as a script. Every month, someone ran a file that read the invoices, worked out totals with VAT and discounts, and printed them. It worked, mostly. Then it was copied into the month-end job, the customer portal and the API, each copy slightly changed. Customers started noticing that the same invoice could show totals a kobo or two apart in different places.
+
+This course is about the difference between code that works once and **software**: code that's correct, tested, readable, safely changed by a team, and trusted with money. You'll rebuild Tallybook's invoice calculations properly.
+
+## The concept
+
+**Functions**
+
+A function gives a piece of logic a name, clear **inputs** (parameters) and a clear **output** (the return value):
+
+```python norun
+def invoice_total(lines, discount_pct, vat_exempt):
+    ...
+    return total
+```
+
+Good functions:
+
+- do **one** job, named for what it does;
+- take everything they need as parameters, rather than reading global variables;
+- **return** a result rather than printing it, so other code (and tests) can use it;
+- are short enough to read in one go.
+
+**Single source of truth**
+
+Each business rule (VAT rate, discount limit, rounding) should live in **one** place. If three copies of the code each apply VAT, they will eventually disagree.
+
+**Tallybook's rules**
+
+| Rule | |
+| :-- | :-- |
+| Line amount | quantity × unit price |
+| Discount | a percentage of the subtotal, at most 20% |
+| VAT | 7.5% of the amount after discount, unless the customer is VAT-exempt |
+| Rounding | to the nearest kobo, with halves rounded up |
+
+## Example
+
+The original script, more or less as it was:
+
+```python
+VAT = 0.075
+lines = [{"quantity": 2, "unit_price": 1250.10}, {"quantity": 1, "unit_price": 899.95}]
+discount = 10
+exempt = False
+
+total = 0
+for l in lines:
+    total = total + l["quantity"] * l["unit_price"]
+total = total - total * discount / 100
+if exempt == False:
+    total = total + total * VAT
+print("Invoice total:", round(total, 2))
+```
+
+```text
+Invoice total: 3289.65
+```
+
+It works for one invoice, typed into the file. Now the same logic as a function, with the rules named and everything passed in:
+
+```python
+VAT_RATE = 0.075
+MAX_DISCOUNT_PCT = 20
+
+def invoice_total(lines, discount_pct=0, vat_exempt=False):
+    """Total for an invoice, in naira: lines are (quantity, unit price) pairs."""
+    subtotal = sum(quantity * unit_price for quantity, unit_price in lines)
+    after_discount = subtotal - subtotal * discount_pct / 100
+    vat = 0 if vat_exempt else after_discount * VAT_RATE
+    return round(after_discount + vat, 2)
+
+print(invoice_total([(2, 1250.10), (1, 899.95)], discount_pct=10))
+print(invoice_total([(2, 1250.10), (1, 899.95)], discount_pct=10, vat_exempt=True))
+```
+
+```text
+3289.65
+3060.13
+```
+
+Now it can be called from anywhere with any invoice, and it gives the same answer as the script. But the function still uses floating-point numbers for money, and still rounds with Python's `round`. Lesson 2 shows why both are wrong for money, using Tallybook's real invoices.
+
+## Walkthrough
+
+1. Run the cells. Call `invoice_total` for an invoice of your own with three lines.
+2. What does the script do if someone sets `discount = 50`? What should happen? (Lesson 3 adds the check.)
+3. List three things the script does that a function shouldn't (hint: printing, globals, hard-coded data).
+4. Load the invoice lines (below) and compute the first invoice's total with the function.
+
+## Practice
+
+```dataset
+{"dataset": "invoicing", "files": ["customers", "invoices_raw", "invoice_lines"]}
+```
+
+```answer
+{
+  "id": "swe-01-p1",
+  "prompt": "What does `invoice_total([(2, 1250.10), (1, 899.95)], discount_pct=10)` return?",
+  "answer": 3289.65,
+  "format": "number",
+  "pyVerify": "invoice_total([(2, 1250.10), (1, 899.95)], discount_pct=10)",
+  "hint": "The first line of the second output.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why should a function return its result rather than print it?",
+    "options": ["Printing is slow", "So other code and tests can use the result", "Python requires it", "To save memory"],
+    "answer": 1,
+    "explanation": "Printed values can't be checked or reused."
+  },
+  {
+    "prompt": "Three copies of the VAT calculation exist in different services. What's the risk?",
+    "options": ["None", "They drift apart and give different totals for the same invoice", "They run slower", "They use more memory"],
+    "answer": 1,
+    "explanation": "One rule, one place."
+  },
+  {
+    "prompt": "What makes a function easy to test?",
+    "options": ["Reading global variables", "Taking inputs as parameters and returning a result", "Printing its output", "Being very long"],
+    "answer": 1,
+    "explanation": "Same inputs, same output, checkable."
+  }
+]
+```
+$md$, true, true, 1, array['swe-01-p1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('swe-m02', 'software-engineering-with-python', 'Money and Rounding', 2, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('software-engineering-with-python:money-and-rounding', 'software-engineering-with-python', 'swe-m02', 'money-and-rounding', 'Money and rounding', 'Why floating-point numbers and Python''s round() are wrong for money, how to calculate in whole kobo with Decimal and round half up, and how many of Tallybook''s real invoices the old way got wrong.', 15, $md$
+## The problem
+
+Customers complained that totals were sometimes a kobo out. Engineers assumed it was a display issue. It wasn't: the calculation itself was wrong, in two separate ways, and both are among the most common bugs in financial software.
+
+## The concept
+
+**Floating-point numbers can't store most decimals exactly**
+
+Computers store `float` values in binary, and most decimal fractions (like 0.1) have no exact binary form. Small errors appear, and rounding can then go the wrong way:
+
+```python
+print(0.1 + 0.2)
+print(round(2.675, 2))
+```
+
+```text
+0.30000000000000004
+2.67
+```
+
+2.675 is actually stored as slightly less than 2.675, so it rounds down.
+
+**Python's round() rounds halves to even**
+
+`round()` uses "banker's rounding": a value exactly halfway goes to the nearest **even** number. Tallybook's rule (and most invoices') is to round halves **up**:
+
+```python
+print(round(16.5), round(17.5), round(0.5))
+```
+
+```text
+16 18 0
+```
+
+**The fix**
+
+- Store money as **whole kobo** in integers. Integers are exact.
+- When a calculation produces fractions (VAT, discounts), use `Decimal` and round explicitly with `ROUND_HALF_UP`.
+- Convert to naira only for display.
+
+## Example
+
+Tallybook's rules done properly:
+
+```python
+from decimal import Decimal, ROUND_HALF_UP
+
+VAT_RATE = Decimal("0.075")
+MAX_DISCOUNT_PCT = 20
+
+def round_kobo(amount):
+    """Round a Decimal amount of kobo to a whole kobo, halves up."""
+    return int(amount.quantize(Decimal("1"), rounding=ROUND_HALF_UP))
+
+def invoice_total(lines, discount_pct=0, vat_exempt=False):
+    """Total in kobo. Lines are (quantity, unit price in kobo) pairs."""
+    subtotal = sum(quantity * unit_price for quantity, unit_price in lines)
+    after_discount = subtotal - round_kobo(Decimal(subtotal) * discount_pct / 100)
+    vat = 0 if vat_exempt else round_kobo(after_discount * VAT_RATE)
+    return after_discount + vat
+
+print(invoice_total([(1, 220)]))     # 220 kobo; VAT is 16.5 kobo, which rounds up to 17
+```
+
+```text
+237
+```
+
+Now compare it with the old float calculation on every real invoice. Load the lines and customers, and compute both:
+
+```python
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/invoicing/"
+lines = pd.read_csv(base + "invoice_lines.csv", dtype={"unit_price": str})
+invoices = pd.read_csv(base + "invoices_raw.csv").drop_duplicates("invoice_id")
+customers = pd.read_csv(base + "customers.csv")
+invoices = invoices.merge(customers[["customer_id", "vat_exempt"]], on="customer_id", how="left")
+bad_quantity = set(lines.loc[lines["quantity"] <= 0, "invoice_id"])
+invoices = invoices[(invoices["discount_pct"] <= MAX_DISCOUNT_PCT) & invoices["vat_exempt"].notna() & ~invoices["invoice_id"].isin(bad_quantity)]
+
+def to_kobo(naira):
+    return round_kobo(Decimal(naira) * 100)
+
+def old_total(rows, discount_pct, vat_exempt):
+    total = sum(q * float(p) for q, p in rows)
+    total = total - total * discount_pct / 100
+    if not vat_exempt:
+        total = total + total * 0.075
+    return round(total, 2)
+
+by_invoice = {k: list(zip(g["quantity"], g["unit_price"])) for k, g in lines.groupby("invoice_id")}
+results = []
+for inv in invoices.itertuples():
+    rows = by_invoice[inv.invoice_id]
+    new = invoice_total([(q, to_kobo(p)) for q, p in rows], inv.discount_pct, bool(inv.vat_exempt))
+    old = round(old_total(rows, inv.discount_pct, bool(inv.vat_exempt)) * 100)
+    results.append({"invoice_id": inv.invoice_id, "new_kobo": new, "old_kobo": old})
+results = pd.DataFrame(results)
+results["difference"] = results["old_kobo"] - results["new_kobo"]
+print(len(results), "invoices checked")
+results["difference"].value_counts().sort_index()
+```
+
+```text
+1171 invoices checked
+difference
+-1     108
+ 0    1007
+ 1      56
+Name: count, dtype: int64
+```
+
+Most invoices agree, but not all. Every disagreement is one kobo, in either direction: exactly the complaints customers made. A kobo is small; an invoicing system that can't be trusted to the kobo is not.
+
+## Walkthrough
+
+1. Run the cells. Pick one invoice with a difference and work through it by hand. Which step went wrong?
+2. Why does `Decimal("0.1")` behave differently from `Decimal(0.1)`? Try both.
+3. Where else in an app might float money cause trouble (sums, comparisons, payments matching)?
+4. Write `to_naira(kobo)` that formats 1250050 as "₦12,500.50".
+
+## Practice
+
+```answer
+{
+  "id": "swe-02-p1",
+  "prompt": "How many invoices does the old float calculation get **wrong** (any difference from the new one)?",
+  "answer": 164,
+  "format": "number",
+  "dataset": "invoicing",
+  "files": ["invoice_lines", "invoices_raw", "customers"],
+  "pyVerify": "int((results['difference'] != 0).sum())",
+  "hint": "Add up the counts for every difference except 0.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why store money as whole kobo in integers?",
+    "options": ["It saves space", "Integers are exact; most decimal fractions can't be stored exactly as floats", "Banks require it", "It's faster to type"],
+    "answer": 1,
+    "explanation": "Exact arithmetic for money."
+  },
+  {
+    "prompt": "What does `round(16.5)` return in Python?",
+    "options": ["17", "16", "16.5", "An error"],
+    "answer": 1,
+    "explanation": "Halves round to the nearest even number."
+  },
+  {
+    "prompt": "How do you round a Decimal half up?",
+    "options": ["round()", "quantize with ROUND_HALF_UP", "int()", "math.floor"],
+    "answer": 1,
+    "explanation": "Say the rounding rule explicitly."
+  }
+]
+```
+$md$, true, true, 2, array['swe-02-p1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('swe-m03', 'software-engineering-with-python', 'Modules and Tests', 3, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('software-engineering-with-python:modules-and-tests', 'software-engineering-with-python', 'swe-m03', 'modules-and-tests', 'Modules and tests', 'Move the invoice rules into a module, write automated tests for them with pytest, and run the tests in Colab, so every change is checked in seconds instead of by hand.', 15, $md$
+## The problem
+
+Every time someone touched the invoice code, someone else checked a few invoices by hand. That's slow, it's skipped when people are busy, and it only checks the cases people remember. The kobo bug from lesson 2 survived for two years that way.
+
+**Automated tests** are code that checks code. They run in seconds, every time, and they check exactly the cases you wrote down, including the awkward ones.
+
+## The concept
+
+**Modules**
+
+A `.py` file is a **module**. Put the invoice rules in `invoicing.py`, and any other code can `import` them. One file, one source of truth.
+
+**pytest**
+
+pytest finds files named `test_*.py`, runs every function named `test_*` in them, and reports which passed and which failed. A test is a function with an `assert`:
+
+```python norun
+def test_vat_exempt_customer_pays_no_vat():
+    assert invoice_total([(2, 100_000)], vat_exempt=True) == 200_000
+```
+
+`pytest.raises` checks that something **fails** the way it should.
+
+**What makes a good test**
+
+- One behaviour per test, named after that behaviour.
+- Small, readable inputs, with the expected answer worked out by hand (and a comment showing how).
+- Include the cases that went wrong before (half-kobo rounding) and the rules that must hold (no discount above 20%).
+
+**Running it in Colab**
+
+The cells in this course start with `%%bash` and use `cat > file <<'EOF'` to write files, then run `python -m pytest`. A `pytest.ini` file keeps the output compact.
+
+## Example
+
+Write the module. It's the code from lesson 2, plus input checks and conversion from naira:
+
+```bash
+%%bash
+cat > invoicing.py <<'EOF'
+"""Invoice calculations for Tallybook. Money is in whole kobo (integers)."""
+from decimal import Decimal, ROUND_HALF_UP
+
+VAT_RATE = Decimal("0.075")
+MAX_DISCOUNT_PCT = 20
+
+
+def round_kobo(amount):
+    """Round a Decimal amount of kobo to a whole kobo, halves up."""
+    return int(amount.quantize(Decimal("1"), rounding=ROUND_HALF_UP))
+
+
+def to_kobo(naira):
+    """Convert '12500.50' or '₦12,500.50' to kobo."""
+    cleaned = naira.replace("₦", "").replace(",", "").strip()
+    return round_kobo(Decimal(cleaned) * 100)
+
+
+def invoice_total(lines, discount_pct=0, vat_exempt=False):
+    """Total in kobo. Lines are (quantity, unit price in kobo) pairs."""
+    if not 0 <= discount_pct <= MAX_DISCOUNT_PCT:
+        raise ValueError(f"discount_pct must be between 0 and {MAX_DISCOUNT_PCT}, got {discount_pct}")
+    subtotal = sum(quantity * unit_price for quantity, unit_price in lines)
+    after_discount = subtotal - round_kobo(Decimal(subtotal) * discount_pct / 100)
+    vat = 0 if vat_exempt else round_kobo(after_discount * VAT_RATE)
+    return after_discount + vat
+EOF
+python -c "from invoicing import invoice_total; print(invoice_total([(2, 100_000)], discount_pct=10))"
+```
+
+```text
+193500
+```
+
+Now the tests, each with its expected answer worked out in a comment:
+
+```bash
+%%bash
+cat > pytest.ini <<'EOF'
+[pytest]
+addopts = -q -p no:cacheprovider --tb=short
+console_output_style = classic
+EOF
+cat > test_invoicing.py <<'EOF'
+import pytest
+
+from invoicing import invoice_total, to_kobo
+
+
+def test_single_line_with_vat():
+    # 2 x N1,000.00 = N2,000.00, plus 7.5% VAT = N2,150.00
+    assert invoice_total([(2, 100_000)]) == 215_000
+
+
+def test_vat_exempt_customer_pays_no_vat():
+    assert invoice_total([(2, 100_000)], vat_exempt=True) == 200_000
+
+
+def test_discount_applies_before_vat():
+    # N2,000 less 10% = N1,800, plus VAT of N135 = N1,935
+    assert invoice_total([(2, 100_000)], discount_pct=10) == 193_500
+
+
+def test_vat_rounds_half_up():
+    # 220 kobo: VAT is 16.5 kobo, which rounds up to 17
+    assert invoice_total([(1, 220)]) == 237
+
+
+def test_discount_above_limit_is_rejected():
+    with pytest.raises(ValueError):
+        invoice_total([(1, 100_000)], discount_pct=25)
+
+
+def test_to_kobo_handles_formatted_amounts():
+    assert to_kobo("₦12,500.50") == 1_250_050
+EOF
+python -m pytest
+```
+
+```text
+......
+6 passed in 0.01s
+```
+
+Six dots, six passing tests. From now on, any change to `invoicing.py` is checked against all six rules in a fraction of a second.
+
+## Walkthrough
+
+1. Run the cells in a Colab notebook. Change `VAT_RATE` to `Decimal("0.07")` and run the tests again. Which fail?
+2. Change `ROUND_HALF_UP` to `ROUND_HALF_EVEN`. Which test catches it?
+3. Add a test for an invoice with three lines and a 15% discount (the task below).
+4. Why does each test have a comment working out the answer?
+
+## Practice
+
+```task
+{
+  "id": "swe-03-t1",
+  "prompt": "Write a **pytest test** for an invoice with **three lines** and a **15% discount**, for a customer who **pays VAT**. Work out the expected total in kobo in a **comment**, and name the test after what it checks.",
+  "minutes": 8,
+  "rows": 10,
+  "placeholder": "def test_...():\n    # ...\n    assert invoice_total(...) == ...",
+  "rules": [
+    { "label": "A test function", "pattern": "def\\s+test_\\w+\\s*\\(\\s*\\)\\s*:" },
+    { "label": "Three lines in the call", "pattern": "invoice_total\\(\\s*\\[\\s*\\(\\s*\\d[^)]*\\)\\s*,\\s*\\(\\s*\\d[^)]*\\)\\s*,\\s*\\(\\s*\\d[^)]*\\)\\s*\\]" },
+    { "label": "discount_pct=15", "pattern": "discount_pct\\s*=\\s*15" },
+    { "label": "An assert comparing with a number", "pattern": "assert\\s+invoice_total[\\s\\S]*==\\s*[\\d_]+" },
+    { "label": "A comment working out the answer", "pattern": "#[^\\n]*\\d" }
+  ],
+  "sample": "def test_three_lines_with_fifteen_percent_discount():\n    # 1 x 10,000 + 2 x 5,000 + 4 x 2,500 = 30,000 kobo\n    # less 15% (4,500) = 25,500; VAT 7.5% = 1,912.5, rounds up to 1,913\n    # total 27,413 kobo\n    assert invoice_total([(1, 10_000), (2, 5_000), (4, 2_500)], discount_pct=15) == 27_413",
+  "note": "The worked comment is what lets a reviewer trust the expected value: it shows the half-kobo VAT rounding up.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "How does pytest find tests?",
+    "options": ["You list them", "Files named test_*.py and functions named test_*", "Any function", "Only classes"],
+    "answer": 1,
+    "explanation": "Naming conventions."
+  },
+  {
+    "prompt": "How do you test that a function rejects bad input?",
+    "options": ["Print the error", "with pytest.raises(ValueError):", "Wrap it in try/except and ignore it", "You can't"],
+    "answer": 1,
+    "explanation": "Failing correctly is behaviour worth testing."
+  },
+  {
+    "prompt": "Why add a test for the half-kobo rounding case?",
+    "options": ["It's random", "It's a case that went wrong before, so it must never go wrong again unnoticed", "It's the easiest", "pytest requires it"],
+    "answer": 1,
+    "explanation": "Every fixed bug deserves a test."
+  }
+]
+```
+$md$, true, true, 3, array['swe-03-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('swe-m04', 'software-engineering-with-python', 'Edge Cases and Boundaries', 4, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('software-engineering-with-python:edge-cases-and-boundaries', 'software-engineering-with-python', 'swe-m04', 'edge-cases-and-boundaries', 'Edge cases and boundaries', 'Design tests around boundaries, where most bugs live, use pytest''s parametrize to check many cases at once, and find and fix an off-by-one bug in Tallybook''s late fees.', 15, $md$
+## The problem
+
+Tallybook charges a late fee on overdue invoices: **2% of what's outstanding for each full 30 days late, for at most 3 periods**. A customer who paid exactly 30 days late was charged nothing. Another, 120 days late, was charged 6%, as expected. Support couldn't tell whether the first case was a bug or a misreading of the rule.
+
+Bugs cluster at **boundaries**: the exact point where a rule changes. Tests that only check comfortable middle values miss them.
+
+## The concept
+
+**Boundary value testing**
+
+For every rule with a threshold, test **just below**, **exactly at**, and **just above** each boundary, plus the extremes:
+
+| Days late | Expected periods | Why |
+| :-- | :-- | :-- |
+| 0 | 0 | on time |
+| 29 | 0 | just under one full period |
+| 30 | 1 | exactly one full period |
+| 31 | 1 | just over |
+| 60 | 2 | exactly two |
+| 90 | 3 | exactly three |
+| 120 | 3 | capped at three |
+
+**Parametrize**
+
+`@pytest.mark.parametrize` runs one test with many inputs, so a table like this becomes one short test, and each row is reported separately.
+
+**Fix with a failing test first**
+
+When you find a bug: first write a test that fails because of it, then fix the code, then watch the test pass. The test proves the bug existed and stays fixed.
+
+## Example
+
+The late fee function as it was written, with boundary tests:
+
+```bash
+%%bash
+cat > pytest.ini <<'EOF'
+[pytest]
+addopts = -q -p no:cacheprovider --tb=no -rf
+console_output_style = classic
+EOF
+cat > fees.py <<'EOF'
+from decimal import Decimal, ROUND_HALF_UP
+
+LATE_FEE_RATE = Decimal("0.02")
+PERIOD_DAYS = 30
+MAX_PERIODS = 3
+
+
+def late_fee(outstanding, days_late):
+    """Late fee in kobo: 2% of outstanding per full 30 days late, at most 3 periods."""
+    periods = min((days_late - 1) // PERIOD_DAYS, MAX_PERIODS)
+    periods = max(periods, 0)
+    fee = Decimal(outstanding) * LATE_FEE_RATE * periods
+    return int(fee.quantize(Decimal("1"), rounding=ROUND_HALF_UP))
+EOF
+cat > test_fees.py <<'EOF'
+import pytest
+
+from fees import late_fee
+
+
+@pytest.mark.parametrize("days_late, periods", [
+    (0, 0), (29, 0), (30, 1), (31, 1), (60, 2), (90, 3), (120, 3),
+])
+def test_late_fee_periods(days_late, periods):
+    # 2% of N10,000 (1,000,000 kobo) is 20,000 kobo per period
+    assert late_fee(1_000_000, days_late) == 20_000 * periods
+EOF
+python -m pytest
+```
+
+```text
+..F.FF.
+=========================== short test summary info ===========================
+FAILED test_fees.py::test_late_fee_periods[30-1] - assert 0 == (20000 * 1)
+FAILED test_fees.py::test_late_fee_periods[60-2] - assert 20000 == (20000 * 2)
+FAILED test_fees.py::test_late_fee_periods[90-3] - assert 40000 == (20000 * 3)
+3 failed, 4 passed in 0.01s
+```
+
+Three boundaries fail: exactly 30, 60 and 90 days. The cause is `days_late - 1`: someone "fixed" an earlier problem by subtracting one, which shifted every boundary by a day. The rule says a **full** 30 days, so 30 days late is one period. Fix it and rerun:
+
+```bash
+%%bash
+cat > pytest.ini <<'EOF'
+[pytest]
+addopts = -q -p no:cacheprovider --tb=no -rf
+console_output_style = classic
+EOF
+cat > fees.py <<'EOF'
+from decimal import Decimal, ROUND_HALF_UP
+
+LATE_FEE_RATE = Decimal("0.02")
+PERIOD_DAYS = 30
+MAX_PERIODS = 3
+
+
+def late_fee(outstanding, days_late):
+    """Late fee in kobo: 2% of outstanding per full 30 days late, at most 3 periods."""
+    if days_late < 0:
+        raise ValueError("days_late can't be negative")
+    periods = min(days_late // PERIOD_DAYS, MAX_PERIODS)
+    fee = Decimal(outstanding) * LATE_FEE_RATE * periods
+    return int(fee.quantize(Decimal("1"), rounding=ROUND_HALF_UP))
+EOF
+cat > test_fees.py <<'EOF'
+import pytest
+
+from fees import late_fee
+
+
+@pytest.mark.parametrize("days_late, periods", [
+    (0, 0), (29, 0), (30, 1), (31, 1), (60, 2), (90, 3), (120, 3),
+])
+def test_late_fee_periods(days_late, periods):
+    # 2% of N10,000 (1,000,000 kobo) is 20,000 kobo per period
+    assert late_fee(1_000_000, days_late) == 20_000 * periods
+
+
+def test_negative_days_is_rejected():
+    with pytest.raises(ValueError):
+        late_fee(1_000_000, -1)
+EOF
+python -m pytest
+```
+
+```text
+........
+8 passed in 0.01s
+```
+
+All eight pass, and the negative-days case, which the old code quietly treated as zero, is now an explicit error.
+
+## Walkthrough
+
+1. Run the cells. In the fixed version, what fee does a ₦10,000 balance get at 89 days? At 91?
+2. Add boundary cases for the discount limit in `invoice_total`: 0, 20 and 21 per cent.
+3. Why does each parametrized case appear as a separate result?
+4. Write boundary tests for a new rule (the task below).
+
+## Practice
+
+```task
+{
+  "id": "swe-04-t1",
+  "prompt": "Tallybook adds a rule: **invoices of ₦500,000 or more need a manager's approval**. Write a **parametrized** pytest test for a function `needs_approval(total_kobo)` with cases **just below**, **exactly at**, and **just above** the boundary, plus **zero**.",
+  "minutes": 8,
+  "rows": 10,
+  "placeholder": "@pytest.mark.parametrize(...)\ndef test_...",
+  "rules": [
+    { "label": "Uses pytest.mark.parametrize", "pattern": "@pytest\\.mark\\.parametrize" },
+    { "label": "A test function using needs_approval", "pattern": "def\\s+test_\\w+[\\s\\S]*needs_approval\\(" },
+    { "label": "The exact boundary in kobo (50,000,000)", "pattern": "50_?000_?000\\b" },
+    { "label": "Just below the boundary (49,999,999)", "pattern": "49_?999_?999\\b" },
+    { "label": "Just above the boundary (50,000,001)", "pattern": "50_?000_?001\\b" },
+    { "label": "Zero", "pattern": "\\(\\s*0\\s*," }
+  ],
+  "sample": "import pytest\n\nfrom approvals import needs_approval\n\n\n@pytest.mark.parametrize(\"total_kobo, expected\", [\n    (0, False),\n    (49_999_999, False),   # N499,999.99\n    (50_000_000, True),    # exactly N500,000.00\n    (50_000_001, True),\n])\ndef test_needs_approval_at_five_hundred_thousand(total_kobo, expected):\n    assert needs_approval(total_kobo) is expected",
+  "note": "Testing in kobo makes 'just below' exact: one kobo under the limit.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "A rule applies 'from 30 days'. Which values should you test?",
+    "options": ["Only 45", "29, 30 and 31, plus the extremes", "Only 30", "Random values"],
+    "answer": 1,
+    "explanation": "Below, at and above each boundary."
+  },
+  {
+    "prompt": "What does @pytest.mark.parametrize do?",
+    "options": ["Speeds tests up", "Runs one test function with many sets of inputs", "Skips tests", "Writes tests for you"],
+    "answer": 1,
+    "explanation": "One test, many cases."
+  },
+  {
+    "prompt": "You find a bug. What's the first step?",
+    "options": ["Fix the code", "Write a test that fails because of the bug", "Delete the old tests", "Tell the customer"],
+    "answer": 1,
+    "explanation": "The failing test proves the bug and guards the fix."
+  }
+]
+```
+$md$, true, true, 4, array['swe-04-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('swe-m05', 'software-engineering-with-python', 'Debugging', 5, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('software-engineering-with-python:debugging', 'software-engineering-with-python', 'swe-m05', 'debugging', 'Debugging', 'Read a traceback from the bottom up, narrow a failure down to the exact input that causes it, and use the data to find every row with the same problem, instead of fixing them one crash at a time.', 15, $md$
+## The problem
+
+The month-end job loads the invoice export and adds up what customers paid. It crashed. The engineer on duty found the bad row, edited it by hand, and re-ran the job. It crashed again on a different row. After the third time, they asked for help.
+
+Debugging is a method, not luck: read the error properly, reproduce it with the smallest input, find **all** the inputs like it, then fix the cause.
+
+## The concept
+
+**Reading a traceback**
+
+A traceback lists the calls that led to an error, most recent **last**. Read it from the bottom:
+
+1. The last line: the **type** of error and its message (`ValueError: could not convert string to float: '₦12,500.00'`).
+2. The lines above: **where** it happened, innermost call last.
+
+**A debugging method**
+
+| Step | Question |
+| :-- | :-- |
+| Read | what failed, and on what value? |
+| Reproduce | can I make it fail with one small input? |
+| Find all | how many inputs share the problem, and what kinds? |
+| Fix the cause | handle every kind properly, not just the first one found |
+| Test | add a test with the input that failed |
+
+**Look at the data, not just the code**
+
+When code crashes on data, the fastest route is often to ask the data directly: which values in this column don't look like the rest?
+
+## Example
+
+The job's loading step, simplified. Instead of letting it crash, catch the error so you can read it:
+
+```python
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/invoicing/"
+raw = pd.read_csv(base + "invoices_raw.csv", dtype=str, keep_default_na=False)
+
+total_paid = 0.0
+try:
+    for i, row in raw.iterrows():
+        total_paid += float(row["amount_paid"])
+except ValueError as error:
+    print(f"Row {i} ({row['invoice_id']}): {type(error).__name__}: {error}")
+```
+
+```text
+Row 98 (INV-100099): ValueError: could not convert string to float: '₦125,179.79'
+```
+
+That's one bad value. Instead of fixing it and waiting for the next crash, find every value that isn't a plain number:
+
+```python
+plain_number = raw["amount_paid"].str.fullmatch(r"\d+(\.\d{1,2})?")
+odd = raw.loc[~plain_number, "amount_paid"]
+print(len(odd), "amounts aren't plain numbers")
+print(odd.head(5).to_string())
+print("Kinds:", odd.str.replace(r"\d", "9", regex=True).value_counts().to_dict())
+```
+
+```text
+27 amounts aren't plain numbers
+98     ₦125,179.79
+131    ₦460,653.17
+184     ₦13,701.95
+227    ₦157,928.02
+233     ₦26,961.40
+Kinds: {'₦999,999.99': 13, '₦99,999.99': 12, '₦9,999.99': 2}
+```
+
+They're all the same kind: amounts formatted with the naira sign and thousands commas, the way a spreadsheet shows them. The `to_kobo` function from lesson 3 already handles exactly that. Use it for every row:
+
+```python
+from decimal import Decimal, ROUND_HALF_UP
+
+def to_kobo(naira):
+    cleaned = naira.replace("₦", "").replace(",", "").strip()
+    return int((Decimal(cleaned) * 100).quantize(Decimal("1"), rounding=ROUND_HALF_UP))
+
+raw["paid_kobo"] = raw["amount_paid"].map(to_kobo)
+print(f"Total paid: ₦{raw['paid_kobo'].sum() / 100:,.2f} across {len(raw)} rows")
+```
+
+```text
+Total paid: ₦111,025,044.57 across 1205 rows
+```
+
+One fix for the whole class of problem, instead of one edit per crash. (There are other problems in this export too, such as duplicate invoices, which would make this total wrong. Lesson 6 deals with them.)
+
+## Walkthrough
+
+1. Run the cells. Write a pytest test for `to_kobo` using one of the odd values.
+2. Run `float("₦12,500.00")` in a cell and read the full traceback from the bottom up.
+3. Check the `issue_date` column the same way: which values don't look like `2026-08-31`?
+4. Why was editing the bad rows by hand the wrong fix?
+
+## Practice
+
+```answer
+{
+  "id": "swe-05-p1",
+  "prompt": "How many `amount_paid` values aren't plain numbers?",
+  "answer": 27,
+  "format": "number",
+  "dataset": "invoicing",
+  "files": ["invoices_raw"],
+  "pyVerify": "int((~plain_number).sum())",
+  "hint": "The first line of the second output.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Where do you start reading a Python traceback?",
+    "options": ["The first line", "The last line: the error type and message", "The middle", "It doesn't matter"],
+    "answer": 1,
+    "explanation": "Most recent call last."
+  },
+  {
+    "prompt": "The job crashes on one bad row. What's the best next step?",
+    "options": ["Edit that row and rerun", "Find every row with the same kind of problem and handle them all", "Catch and ignore all errors", "Delete the row"],
+    "answer": 1,
+    "explanation": "Fix the class of problem, not one instance."
+  },
+  {
+    "prompt": "Why catch the exception while debugging?",
+    "options": ["To hide it", "To see exactly which input caused it, then look for others like it", "To speed up the code", "It's required"],
+    "answer": 1,
+    "explanation": "Then decide how to handle it properly."
+  }
+]
+```
+$md$, true, true, 5, array['swe-05-p1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('swe-m06', 'software-engineering-with-python', 'Validating Input', 6, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('software-engineering-with-python:validating-input', 'software-engineering-with-python', 'swe-m06', 'validating-input', 'Validating input', 'Check every record before using it, collect every problem with a clear reason instead of crashing on the first, and decide what happens to bad records so they''re fixed rather than silently dropped.', 25, $md$
+## The problem
+
+Lesson 5 fixed one problem in the invoice export. There are several more: invoices exported twice, discounts above the 20% limit, dates in two formats, invoices for customers who don't exist, due dates before issue dates, and lines with zero or negative quantities. Any of them can produce a wrong total without any error at all, which is worse than a crash.
+
+## The concept
+
+**Validate at the boundary**
+
+Check data where it enters your system (an import, an API request, a form), before any calculation uses it.
+
+**Collect problems, don't stop at the first**
+
+A validator returns a **list of problems** for each record. An empty list means valid. Then you can report every problem at once, with counts.
+
+**Decide what happens to invalid records**
+
+| Option | When |
+| :-- | :-- |
+| Reject with a clear message | input from a person or another system that can fix it |
+| Quarantine for review | bulk imports, so good records still go through |
+| Fix automatically | only when the fix is certain (a formatted amount) |
+
+Never silently drop bad records: totals become wrong and nobody knows.
+
+**Raise errors with useful messages**
+
+When a function can't continue, `raise ValueError(...)` with a message that says what was wrong and what was expected, as `invoice_total` does for discounts.
+
+## Example
+
+A validator for invoice rows:
+
+```python
+import re
+from datetime import date
+
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/invoicing/"
+raw = pd.read_csv(base + "invoices_raw.csv", dtype=str, keep_default_na=False)
+customers = set(pd.read_csv(base + "customers.csv", dtype=str)["customer_id"])
+lines = pd.read_csv(base + "invoice_lines.csv")
+bad_quantity = set(lines.loc[lines["quantity"] <= 0, "invoice_id"])
+
+ISO_DATE = re.compile(r"\d{4}-\d{2}-\d{2}")
+
+def validate(row):
+    problems = []
+    if not row["customer_id"]:
+        problems.append("missing customer")
+    elif row["customer_id"] not in customers:
+        problems.append("unknown customer")
+    if not ISO_DATE.fullmatch(row["issue_date"]):
+        problems.append("issue date not YYYY-MM-DD")
+    elif date.fromisoformat(row["due_date"]) < date.fromisoformat(row["issue_date"]):
+        problems.append("due before issued")
+    if not 0 <= int(row["discount_pct"]) <= 20:
+        problems.append("discount above 20%")
+    if row["invoice_id"] in bad_quantity:
+        problems.append("line with zero or negative quantity")
+    return problems
+
+raw["duplicate"] = raw.duplicated(keep="first")
+raw["problems"] = raw.apply(validate, axis=1)
+print("Rows:", len(raw), " valid:", int((raw["problems"].str.len() == 0).sum() - raw["duplicate"].sum()))
+raw.explode("problems")["problems"].value_counts()
+```
+
+```text
+Rows: 1205  valid: 1133
+problems
+issue date not YYYY-MM-DD              34
+line with zero or negative quantity    12
+missing customer                        7
+discount above 20%                      7
+unknown customer                        5
+due before issued                       5
+Name: count, dtype: int64
+```
+
+Plus the duplicates, flagged separately:
+
+```python
+print("Exact duplicate rows:", int(raw["duplicate"].sum()))
+print(raw.loc[raw["invoice_id"].isin(raw.loc[raw["duplicate"], "invoice_id"]), ["invoice_id", "customer_id", "issue_date", "amount_paid"]].sort_values("invoice_id").head(4).to_string(index=False))
+```
+
+```text
+Exact duplicate rows: 5
+invoice_id customer_id issue_date amount_paid
+INV-100357       C0145 2026-07-04   425045.78
+INV-100357       C0145 2026-07-04   425045.78
+INV-100416       C0211 2026-08-25   116151.86
+INV-100416       C0211 2026-08-25   116151.86
+```
+
+Each kind of problem has its own owner and fix. Formatted dates can be converted with certainty, so they can be fixed automatically, like formatted amounts. Duplicates should be dropped, keeping one copy. Unknown customers, discounts above the limit and bad quantities go to the finance team for review: the code can't know the right answer.
+
+## Walkthrough
+
+1. Run the cells. Write a function that converts `31/08/2026` to `2026-08-31`, and a test for it.
+2. How many invoices have more than one problem?
+3. Why does the validator check `due_date` only when `issue_date` is valid?
+4. Write the import rules (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "swe-06-p1",
+  "prompt": "How many rows have a **discount above 20%**?",
+  "answer": 7,
+  "format": "number",
+  "dataset": "invoicing",
+  "files": ["invoices_raw"],
+  "pyVerify": "int(raw['problems'].map(lambda p: 'discount above 20%' in p).sum())",
+  "hint": "The discount above 20% count.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "swe-06-t1",
+  "prompt": "Write the **import rules** for the invoice export, one per line starting with the problem and a colon: at least **five** problems, each saying whether it's **fixed automatically**, **quarantined for review** (and by whom), or **rejected**, and why.",
+  "minutes": 6,
+  "rows": 7,
+  "placeholder": "Formatted amounts: ...",
+  "rules": [
+    { "label": "At least five problem lines", "pattern": "^[^:\\n]{4,40}:\\s*\\S", "min": 5 },
+    { "label": "Something fixed automatically", "pattern": "automatic|convert|fix(ed)? (in|by) code" },
+    { "label": "Something quarantined or reviewed by a named team", "pattern": "(quarantin|review)[^\\n]*(finance|team|support|owner)" },
+    { "label": "Duplicates handled", "pattern": "duplicat" },
+    { "label": "Discount limit handled", "pattern": "discount" },
+    { "label": "No silent dropping", "pattern": "silently (drop|ignore|skip)", "absent": true }
+  ],
+  "sample": "Formatted amounts: fixed automatically by to_kobo, since removing the naira sign and commas is certain.\nUK-style dates: converted automatically from DD/MM/YYYY, since the export only uses these two formats.\nDuplicates: the second copy is dropped and logged with its invoice ID.\nDiscount above 20%: quarantined for review by the finance team; the code can't know the intended discount.\nUnknown or missing customer: quarantined for review by the finance team, who match it to the right customer.\nZero or negative quantities: quarantined for review by the invoice's author.\nDue date before issue date: quarantined for review by the finance team.",
+  "note": "Every row ends up somewhere visible: fixed, dropped with a log, or in a review queue.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why collect all problems for a record instead of stopping at the first?",
+    "options": ["It's faster", "So everything wrong can be reported and fixed in one go", "Python requires it", "To use less memory"],
+    "answer": 1,
+    "explanation": "One round of fixes, not many."
+  },
+  {
+    "prompt": "When is it safe to fix bad data automatically?",
+    "options": ["Always", "Only when the correct value is certain, like removing currency symbols", "Never", "When it's quicker"],
+    "answer": 1,
+    "explanation": "Otherwise send it for review."
+  },
+  {
+    "prompt": "What's wrong with silently dropping invalid rows?",
+    "options": ["Nothing", "Totals become wrong and nobody knows why", "It's slow", "It uses memory"],
+    "answer": 1,
+    "explanation": "Make every decision visible."
+  }
+]
+```
+$md$, true, true, 6, array['swe-06-p1', 'swe-06-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('swe-m07', 'software-engineering-with-python', 'Version Control with Git', 7, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('software-engineering-with-python:version-control-with-git', 'software-engineering-with-python', 'swe-m07', 'version-control-with-git', 'Version control with Git', 'Track every change to code with Git, make small commits with clear messages, work on a branch, read a diff, and merge, all with real commands in Colab.', 15, $md$
+## The problem
+
+Before Git, Tallybook's code lived on one engineer's laptop and a shared folder, with files like `billing_final_v3_REAL.py`. Nobody could say what changed between versions, who changed it, or why. When the kobo bug was finally found, nobody could tell how long it had been there.
+
+**Version control** records every change: what, who, when and why. **Git** is the standard tool, and GitHub (as in this course's Git course and the CI/CD course) is where teams share Git repositories.
+
+## The concept
+
+**The basic cycle**
+
+| Command | Does |
+| :-- | :-- |
+| `git init` | start tracking a folder |
+| `git status` | what's changed since the last commit |
+| `git add file` | choose changes for the next commit (stage them) |
+| `git commit -m "message"` | record the staged changes, with a message |
+| `git log` | the history of commits |
+| `git diff` | what changed, line by line |
+
+**Branches**
+
+A branch is a separate line of work. Make a branch for each change, commit to it, and **merge** it into `main` when it's reviewed and tested. `main` always works.
+
+**Good commits**
+
+- **Small**: one change per commit, so each can be understood, reviewed and undone.
+- **Clear messages**: say what and why, in the imperative ("Round VAT half up"), not "fixed stuff".
+- Commit the tests with the code they test.
+
+## Example
+
+Create a repository with the invoice module from lesson 3, and make the first commit. (The `config` lines tell Git who you are; use your own name.)
+
+```bash
+%%bash
+rm -rf billing && mkdir billing && cd billing
+git init -q -b main
+git config user.name "Ada Okafor"
+git config user.email "ada@tallybook.example"
+
+cat > invoicing.py <<'EOF'
+VAT_RATE = 0.075
+
+
+def invoice_total(lines, discount_pct=0, vat_exempt=False):
+    subtotal = sum(quantity * unit_price for quantity, unit_price in lines)
+    after_discount = subtotal - subtotal * discount_pct / 100
+    vat = 0 if vat_exempt else after_discount * VAT_RATE
+    return round(after_discount + vat, 2)
+EOF
+git status --short
+git add invoicing.py
+git commit -q -m "Add invoice total calculation"
+git log --format="%s"
+```
+
+```text
+?? invoicing.py
+Add invoice total calculation
+```
+
+Now fix the money bug on a branch. `git diff` shows exactly what changed before you commit:
+
+```bash
+%%bash
+cd billing
+git switch -q -c fix-money-rounding
+cat > invoicing.py <<'EOF'
+from decimal import Decimal, ROUND_HALF_UP
+
+VAT_RATE = Decimal("0.075")
+
+
+def round_kobo(amount):
+    return int(amount.quantize(Decimal("1"), rounding=ROUND_HALF_UP))
+
+
+def invoice_total(lines, discount_pct=0, vat_exempt=False):
+    """Total in kobo. Lines are (quantity, unit price in kobo) pairs."""
+    subtotal = sum(quantity * unit_price for quantity, unit_price in lines)
+    after_discount = subtotal - round_kobo(Decimal(subtotal) * discount_pct / 100)
+    vat = 0 if vat_exempt else round_kobo(after_discount * VAT_RATE)
+    return after_discount + vat
+EOF
+git diff --stat
+git add invoicing.py
+git commit -q -m "Calculate in kobo and round VAT half up" -m "Float maths and banker's rounding left some totals a kobo out."
+git log --format="%s" main..fix-money-rounding
+```
+
+```text
+invoicing.py | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
+Calculate in kobo and round VAT half up
+```
+
+After review, merge the branch into `main`:
+
+```bash
+%%bash
+cd billing
+git switch -q main
+git merge -q --no-ff fix-money-rounding -m "Merge fix-money-rounding"
+git log --format="%s" --graph
+```
+
+```text
+*   Merge fix-money-rounding
+|\
+| * Calculate in kobo and round VAT half up
+|/
+* Add invoice total calculation
+```
+
+The history now shows the original code, the fix on its own branch with a message explaining why, and the merge. A year from now, anyone can see when and why the rounding changed.
+
+## Walkthrough
+
+1. Run the cells in Colab. Run `git log` (without `--format`) to see the authors and dates.
+2. Run `git diff main~1 main` to see the whole change the merge brought in.
+3. Add the test file from lesson 3 in a new commit on a new branch, and merge it.
+4. Write three commit messages (the task below).
+
+## Practice
+
+```task
+{
+  "id": "swe-07-t1",
+  "prompt": "Write **commit messages** for three changes, one per line: (1) adding the late fee boundary tests from lesson 4, (2) fixing the off-by-one bug, (3) adding the import validator from lesson 6. Use the **imperative** mood and keep each **under 60 characters**.",
+  "minutes": 4,
+  "rows": 4,
+  "placeholder": "Add ...",
+  "rules": [
+    { "label": "Three lines", "pattern": "^\\s*(\\d[.)]\\s*)?[A-Z]\\w+ [^\\n]+$", "min": 3 },
+    { "label": "Imperative verbs (Add, Fix, Validate, Test...)", "pattern": "^\\s*(\\d[.)]\\s*)?(Add|Fix|Validate|Test|Count|Check|Correct|Reject|Handle|Use)\\b", "min": 3 },
+    { "label": "No vague messages", "pattern": "fixed stuff|update|changes|misc|wip", "absent": true },
+    { "label": "No line over 60 characters", "pattern": "^[^\\n]{61,}$", "absent": true }
+  ],
+  "sample": "Add boundary tests for late fee periods\nFix late fee at exact 30-day boundaries\nValidate invoice rows before import",
+  "note": "Each message finishes the sentence 'If applied, this commit will...'.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "What does `git add` do?",
+    "options": ["Commits changes", "Stages changes to include in the next commit", "Creates a branch", "Uploads to GitHub"],
+    "answer": 1,
+    "explanation": "Choose what goes into the commit."
+  },
+  {
+    "prompt": "Why work on a branch?",
+    "options": ["Branches are faster", "So main always works while a change is made, reviewed and tested separately", "Git requires it", "To hide changes"],
+    "answer": 1,
+    "explanation": "Merge only when it's ready."
+  },
+  {
+    "prompt": "Which is the best commit message?",
+    "options": ["fixed stuff", "Round VAT half up to the nearest kobo", "changes", "update billing.py"],
+    "answer": 1,
+    "explanation": "Say what and why."
+  }
+]
+```
+$md$, true, true, 7, array['swe-07-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('swe-m08', 'software-engineering-with-python', 'Code Review', 8, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('software-engineering-with-python:code-review', 'software-engineering-with-python', 'swe-m08', 'code-review', 'Code review', 'Review code for correctness, clarity and risk, use simple automated checks to find common problems, and write review comments that are specific, kind and actionable, on Tallybook''s original billing module.', 25, $md$
+## The problem
+
+Tallybook's original billing module, `billing.py`, is still used by the month-end job. It was never reviewed. Most of the bugs in this course came from it: float money, Python's rounding, a late fee rule that compounds instead of adding up. Before it's replaced, the team wants a proper review, both to list what must change and to agree what good code looks like from now on.
+
+## The concept
+
+**What reviewers look for, in order**
+
+1. **Correctness**: does it do what the rules say, including edge cases?
+2. **Risk**: errors swallowed, data changed in place, shared state, security.
+3. **Tests**: is the change tested, and would the tests catch a mistake?
+4. **Clarity**: names, function size, comments that explain why.
+5. **Style**: formatting and conventions (leave this to automatic tools).
+
+**Common problems a tool can flag**
+
+| Pattern | Why it's a problem |
+| :-- | :-- |
+| bare `except:` | hides every error, including bugs |
+| mutable default argument (`log=[]`) | the same list is shared between calls |
+| `== False` | `not x` is clearer, and `== False` can surprise |
+| magic numbers | `1.02` and `0.075` scattered in code instead of named rules |
+| global state | functions that change a module-level dictionary are hard to test |
+| `print` instead of returning or logging | results can't be used or tested |
+
+**Writing review comments**
+
+Be specific (line and problem), explain why, suggest a fix, and separate must-fix from nice-to-have. Review the code, not the person.
+
+## Example
+
+Load the module and look at it:
+
+```python
+from urllib.request import urlopen
+
+with urlopen("https://academy.cloudtechanalytics.com/datasets/invoicing/billing.py") as f:
+    source = f.read().decode("utf-8")
+for number, line in enumerate(source.splitlines(), start=1):
+    print(f"{number:3}  {line}")
+```
+
+```text
+1  # billing.py - Tallybook's original billing code (2024). Still used by the month-end job.
+  2  import csv
+  3
+  4  totals = {}
+  5  VAT = 0.075
+  6
+  7
+  8  def calc(lines, d, ex, fee_days=0, log=[]):
+  9      t = 0
+ 10      for l in lines:
+ 11          t = t + l["quantity"] * l["unit_price"]
+ 12      if d > 0:
+ 13          t = t - t * d / 100
+ 14      if ex == False:
+ 15          t = t + t * 0.075
+ 16      if fee_days > 30:
+ 17          t = t * 1.02
+ 18      if fee_days > 60:
+ 19          t = t * 1.02
+ 20      if fee_days > 90:
+ 21          t = t * 1.02
+ 22      log.append(t)
+ 23      return round(t, 2)
+ 24
+ 25
+ 26  def load(path):
+ 27      rows = []
+ 28      try:
+ 29          f = open(path)
+ 30          for r in csv.DictReader(f):
+ 31              rows.append(r)
+ 32      except:
+ 33          print("could not load")
+ 34      return rows
+ 35
+ 36
+ 37  def run(path, invoices):
+ 38      data = load(path)
+ 39      for inv in invoices:
+ 40          ls = [r for r in data if r["invoice_id"] == inv["invoice_id"]]
+ 41          for l in ls:
+ 42              l["quantity"] = int(l["quantity"])
+ 43              l["unit_price"] = float(l["unit_price"])
+ 44          totals[inv["invoice_id"]] = calc(ls, int(inv["discount_pct"]), inv["vat_exempt"] == "1")
+ 45          print(inv["invoice_id"], totals[inv["invoice_id"]])
+```
+
+Python can read its own code as a tree (`ast`), which is how linters work. A few checks of our own:
+
+```python
+import ast
+
+tree = ast.parse(source)
+findings = []
+for node in ast.walk(tree):
+    if isinstance(node, ast.ExceptHandler) and node.type is None:
+        findings.append((node.lineno, "bare except: hides every error"))
+    if isinstance(node, ast.FunctionDef):
+        for default in node.args.defaults:
+            if isinstance(default, (ast.List, ast.Dict, ast.Set)):
+                findings.append((node.lineno, f"{node.name}: mutable default argument"))
+        if len(node.args.args) > 4:
+            findings.append((node.lineno, f"{node.name}: {len(node.args.args)} parameters"))
+    if isinstance(node, ast.Compare) and any(isinstance(c, ast.Constant) and c.value is False for c in node.comparators):
+        findings.append((node.lineno, "comparison with False"))
+    if isinstance(node, ast.Constant) and isinstance(node.value, float) and node.value not in (0.0, 1.0):
+        findings.append((node.lineno, f"magic number {node.value}"))
+    if isinstance(node, ast.Call) and getattr(node.func, "id", "") == "print":
+        findings.append((node.lineno, "print instead of returning or logging"))
+
+for line, message in sorted(findings):
+    print(f"line {line}: {message}")
+```
+
+```text
+line 5: magic number 0.075
+line 8: calc: 5 parameters
+line 8: calc: mutable default argument
+line 14: comparison with False
+line 15: magic number 0.075
+line 17: magic number 1.02
+line 19: magic number 1.02
+line 21: magic number 1.02
+line 32: bare except: hides every error
+line 33: print instead of returning or logging
+line 45: print instead of returning or logging
+```
+
+The tool finds the patterns; a person finds the rules that are wrong. Read lines 16 to 21 against Tallybook's late fee rule: the code **multiplies** by 1.02 up to three times (compounding), uses `> 30` (so exactly 30 days charges nothing, the bug from lesson 4), and applies the fee to the whole total rather than what's outstanding. No linter can know that.
+
+## Walkthrough
+
+1. Run the cells. What's wrong with `log=[]` on line 8? Call a function with a mutable default twice and see.
+2. `VAT = 0.075` is defined on line 5. Why is `0.075` still flagged on line 15?
+3. What happens to `run()` if the file doesn't exist? Follow the code from `load()`.
+4. Write your review comments (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "swe-08-p1",
+  "prompt": "How many findings does the checker report?",
+  "answer": 11,
+  "format": "number",
+  "pyVerify": "len(findings)",
+  "hint": "Count the lines printed by the second cell.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "swe-08-t1",
+  "prompt": "Write **review comments** on `billing.py`, one per line starting with **MUST:** or **SHOULD:** and a **line number**: at least **five** comments, each saying the **problem**, **why** it matters and the **fix**. Include at least one rule that's wrong, not just a style issue.",
+  "minutes": 10,
+  "rows": 8,
+  "placeholder": "MUST: line 26 ...",
+  "rules": [
+    { "label": "At least five MUST or SHOULD lines", "pattern": "^\\s*(MUST|SHOULD)\\s*:", "min": 5 },
+    { "label": "Line numbers on each", "pattern": "^\\s*(MUST|SHOULD)\\s*:[^\\n]*line \\d+", "min": 5 },
+    { "label": "At least two MUST comments", "pattern": "^\\s*MUST\\s*:", "min": 2 },
+    { "label": "A wrong business rule (late fee, compounding, 30 days, rounding, float money)", "pattern": "compound|1\\.02|30 days|late fee|round|float" },
+    { "label": "The bare except", "pattern": "except" },
+    { "label": "Suggests fixes", "pattern": "use|replace|move|raise|return|test", "min": 3 }
+  ],
+  "sample": "MUST: line 16-21: the late fee compounds 2% up to three times, charges nothing at exactly 30 days and applies to the whole total; use the late_fee function from lesson 4 on the outstanding amount.\nMUST: line 9-15 and 23: money is calculated in floats and rounded with round(); use kobo integers and ROUND_HALF_UP as in invoicing.py.\nMUST: line 32: the bare except hides every error, so a missing file silently produces no totals; catch FileNotFoundError and raise a clear error.\nSHOULD: line 8: the mutable default log=[] is shared between calls and grows forever; remove it or default to None.\nSHOULD: line 4: the global totals dictionary makes run() hard to test; return the totals instead.\nSHOULD: line 45: print the results from the caller, not inside run(), so the function can be tested.",
+  "note": "The two MUSTs about rules matter more than all the style points together: they change what customers pay.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "What should a reviewer check first?",
+    "options": ["Formatting", "Correctness against the rules, including edge cases", "Variable name length", "Comment spelling"],
+    "answer": 1,
+    "explanation": "Style can be automated; correctness needs a person."
+  },
+  {
+    "prompt": "Why is `except:` with no exception type risky?",
+    "options": ["It's slow", "It catches every error, including bugs, and hides them", "It's deprecated", "It only catches some errors"],
+    "answer": 1,
+    "explanation": "Catch the specific errors you can handle."
+  },
+  {
+    "prompt": "Which review comment is most useful?",
+    "options": ["This is bad", "Line 32: the bare except hides a missing file; catch FileNotFoundError and raise a clear error", "Rewrite this", "Why?"],
+    "answer": 1,
+    "explanation": "Specific, explained, with a fix."
+  }
+]
+```
+$md$, true, true, 8, array['swe-08-p1', 'swe-08-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('swe-m09', 'software-engineering-with-python', 'Building an API', 9, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('software-engineering-with-python:building-an-api', 'software-engineering-with-python', 'swe-m09', 'building-an-api', 'Building an API', 'Expose the invoice rules as a small web API with Flask, validate requests and return clear errors with the right status codes, and test the API without running a server.', 15, $md$
+## The problem
+
+Tallybook's mobile app, website and month-end job each had their own copy of the invoice calculation, which is how totals came to disagree. The fix is one service that every client asks: an **API**. The invoice rules from this course live behind it, once, tested.
+
+## The concept
+
+**A web API**
+
+Clients send HTTP requests (lesson 8 of the Linux course) with JSON bodies; the API returns JSON responses with a status code.
+
+| Status | Meaning |
+| :-- | :-- |
+| 200 | OK |
+| 400 | the request was invalid (and the body says why) |
+| 404 | no such resource |
+| 500 | the server failed (should never be caused by bad input) |
+
+**Flask**
+
+A small Python web framework: decorate a function with a route, read the request, return a response.
+
+**Validate, then calculate**
+
+The API checks every request (lesson 6) and returns **400 with a clear message** for bad input. A traceback or a 500 for bad input is a bug.
+
+**Test without a server**
+
+Flask's **test client** sends requests to the app directly, so API tests run as fast as any other test.
+
+## Example
+
+The API, using the invoice rules from lesson 3:
+
+```python
+from decimal import Decimal, ROUND_HALF_UP
+
+from flask import Flask, jsonify, request
+
+VAT_RATE = Decimal("0.075")
+MAX_DISCOUNT_PCT = 20
+
+def round_kobo(amount):
+    return int(amount.quantize(Decimal("1"), rounding=ROUND_HALF_UP))
+
+def invoice_total(lines, discount_pct=0, vat_exempt=False):
+    if not 0 <= discount_pct <= MAX_DISCOUNT_PCT:
+        raise ValueError(f"discount_pct must be between 0 and {MAX_DISCOUNT_PCT}, got {discount_pct}")
+    subtotal = sum(quantity * unit_price for quantity, unit_price in lines)
+    after_discount = subtotal - round_kobo(Decimal(subtotal) * discount_pct / 100)
+    vat = 0 if vat_exempt else round_kobo(after_discount * VAT_RATE)
+    return after_discount + vat
+
+app = Flask(__name__)
+
+@app.post("/invoices/total")
+def total():
+    body = request.get_json(silent=True)
+    if not isinstance(body, dict) or not isinstance(body.get("lines"), list) or not body["lines"]:
+        return jsonify(error="Send JSON with a non-empty 'lines' list"), 400
+    try:
+        lines = [(int(line["quantity"]), int(line["unit_price_kobo"])) for line in body["lines"]]
+    except (KeyError, TypeError, ValueError):
+        return jsonify(error="Each line needs whole-number 'quantity' and 'unit_price_kobo'"), 400
+    if any(quantity <= 0 or price < 0 for quantity, price in lines):
+        return jsonify(error="Quantities must be positive and prices can't be negative"), 400
+    try:
+        kobo = invoice_total(lines, int(body.get("discount_pct", 0)), bool(body.get("vat_exempt", False)))
+    except ValueError as error:
+        return jsonify(error=str(error)), 400
+    return jsonify(total_kobo=kobo, total_naira=f"{kobo / 100:,.2f}")
+
+client = app.test_client()
+response = client.post("/invoices/total", json={"lines": [{"quantity": 2, "unit_price_kobo": 100_000}], "discount_pct": 10})
+print(response.status_code, response.get_json())
+```
+
+```text
+200 {'total_kobo': 193500, 'total_naira': '1,935.00'}
+```
+
+The same answer as the tests in lesson 3. Now the requests that should be refused, each with the status and message a client would get:
+
+```python
+bad_requests = {
+    "no body": None,
+    "empty lines": {"lines": []},
+    "missing price": {"lines": [{"quantity": 1}]},
+    "negative quantity": {"lines": [{"quantity": -2, "unit_price_kobo": 500}]},
+    "discount too high": {"lines": [{"quantity": 1, "unit_price_kobo": 500}], "discount_pct": 25},
+}
+for name, body in bad_requests.items():
+    r = client.post("/invoices/total", json=body) if body is not None else client.post("/invoices/total", data="not json")
+    print(f"{name:18} {r.status_code}  {r.get_json()['error']}")
+```
+
+```text
+no body            400  Send JSON with a non-empty 'lines' list
+empty lines        400  Send JSON with a non-empty 'lines' list
+missing price      400  Each line needs whole-number 'quantity' and 'unit_price_kobo'
+negative quantity  400  Quantities must be positive and prices can't be negative
+discount too high  400  discount_pct must be between 0 and 20, got 25
+```
+
+Every bad request gets a 400 and a message the client can act on. None reaches the calculation with bad data, and none causes a 500.
+
+## Walkthrough
+
+1. Run the cells. Send a request with `"quantity": "two"`. What comes back?
+2. Write the same checks as pytest tests, one per bad request.
+3. Add a `GET /health` route that returns `{"status": "ok"}`, and test it.
+4. Run the app for real in Colab with `app.run(port=5000)` in a background thread, and call it with `requests` (optional).
+
+## Practice
+
+```answer
+{
+  "id": "swe-09-p1",
+  "prompt": "What `total_kobo` does the API return for **3 × 250,000 kobo** with a **5% discount**, VAT payable?",
+  "answer": 765938,
+  "format": "number",
+  "pyVerify": "client.post('/invoices/total', json={'lines': [{'quantity': 3, 'unit_price_kobo': 250_000}], 'discount_pct': 5}).get_json()['total_kobo']",
+  "hint": "Call the API with those values, or work it out: 750,000 less 5%, plus 7.5%.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "A client sends a negative quantity. What should the API return?",
+    "options": ["500", "400 with a message saying quantities must be positive", "200 with a total", "Nothing"],
+    "answer": 1,
+    "explanation": "Bad input is the client's to fix; say how."
+  },
+  {
+    "prompt": "Why put the invoice rules behind one API?",
+    "options": ["APIs are faster", "So every client uses the same tested calculation and totals can't disagree", "To use Flask", "To hide the code"],
+    "answer": 1,
+    "explanation": "One source of truth."
+  },
+  {
+    "prompt": "What does Flask's test client let you do?",
+    "options": ["Deploy the app", "Send requests to the app in tests without running a server", "Write HTML", "Encrypt data"],
+    "answer": 1,
+    "explanation": "Fast, reliable API tests."
+  }
+]
+```
+$md$, true, true, 9, array['swe-09-p1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('swe-m10', 'software-engineering-with-python', 'Final Project', 10, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('software-engineering-with-python:final-project', 'software-engineering-with-python', 'swe-m10', 'final-project', '"Final project: Tallybook''s invoicing service"', 'Plan your final project, a tested, version-controlled invoicing package and API that replaces the old billing module, with every rule tested at its boundaries and every row of the export accounted for.', 20, $md$
+## The problem
+
+Tallybook wants to retire `billing.py`. Your final project is its replacement: a small, tested invoicing package with an API, in a Git repository, and a short report showing that it's correct, how it handles the messy export, and what it changes for customers.
+
+## The concept
+
+**What the project contains**
+
+| Part | Built in |
+| :-- | :-- |
+| `invoicing.py`: totals, VAT, discount, rounding, late fees | lessons 2 to 4 |
+| `test_invoicing.py`: boundary and regression tests | lessons 3 and 4 |
+| `importer.py`: validation and conversion of the export | lessons 5 and 6 |
+| A Git history of small commits on branches | lesson 7 |
+| A review of `billing.py` and your own code | lesson 8 |
+| `api.py` with tests using the test client | lesson 9 |
+
+**Prove it**
+
+A test run with every test passing, a reconciliation of the export (every row valid, fixed, dropped as a duplicate, or quarantined, with counts that add up), and the totals the new code gives compared with the old, invoice by invoice.
+
+## Example
+
+A reconciliation of the export: every row accounted for, with counts that add up to the total.
+
+```python
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/invoicing/"
+raw = pd.read_csv(base + "invoices_raw.csv", dtype=str, keep_default_na=False)
+customers = set(pd.read_csv(base + "customers.csv", dtype=str)["customer_id"])
+lines = pd.read_csv(base + "invoice_lines.csv")
+bad_quantity = set(lines.loc[lines["quantity"] <= 0, "invoice_id"])
+
+def outcome(row, is_duplicate):
+    if is_duplicate:
+        return "dropped: duplicate"
+    if row["customer_id"] not in customers or int(row["discount_pct"]) > 20 or row["invoice_id"] in bad_quantity:
+        return "quarantined for review"
+    if row["due_date"] < row["issue_date"] and "/" not in row["issue_date"]:
+        return "quarantined for review"
+    if "/" in row["issue_date"] or not row["amount_paid"].replace(".", "").isdigit():
+        return "fixed automatically"
+    return "valid"
+
+duplicates = raw.duplicated(keep="first")
+raw["outcome"] = [outcome(row, dup) for (_, row), dup in zip(raw.iterrows(), duplicates)]
+reconciliation = raw["outcome"].value_counts()
+print(reconciliation)
+print("Total:", reconciliation.sum(), "of", len(raw), "rows")
+```
+
+```text
+outcome
+valid                     1107
+fixed automatically         59
+quarantined for review      34
+dropped: duplicate           5
+Name: count, dtype: int64
+Total: 1205 of 1205 rows
+```
+
+Every row has exactly one outcome, and they add up. That table, with your test run and the before-and-after totals, is the evidence the finance team needs to switch.
+
+## Walkthrough
+
+1. Build the package and tests, and get every test passing.
+2. Build the importer and reconcile the export.
+3. Compare old and new totals for every valid invoice, and explain the differences.
+4. Open the project brief on the course page and plan the write-up.
+
+## Practice
+
+```answer
+{
+  "id": "swe-10-p1",
+  "prompt": "How many rows are **quarantined for review**?",
+  "answer": 34,
+  "format": "number",
+  "dataset": "invoicing",
+  "files": ["invoices_raw", "customers", "invoice_lines"],
+  "pyVerify": "int(reconciliation['quarantined for review'])",
+  "hint": "The quarantined line of the output.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "swe-10-t1",
+  "prompt": "Write the **summary** for the finance team (80 to 180 words): what the new service **changes** for customers' totals, how it's **tested**, how the **export** is handled (with counts), and what they need to **do** before the switch.",
+  "minutes": 8,
+  "rows": 8,
+  "placeholder": "The new invoicing service ...",
+  "rules": [
+    { "label": "Totals change (kobo, rounding)", "pattern": "kobo|round" },
+    { "label": "Testing (tests, boundary, passing)", "pattern": "test" },
+    { "label": "Export handling with numbers", "pattern": "(quarantin|duplicat|fixed)[\\s\\S]*\\d|\\d[\\s\\S]*(quarantin|duplicat|fixed)" },
+    { "label": "An action for the finance team", "pattern": "review|check|approve|confirm|sign" },
+    { "label": "Between 80 and 180 words", "minWords": 80, "maxWords": 180 }
+  ],
+  "sample": "The new invoicing service calculates every invoice in whole kobo and rounds VAT and discounts half up, as our invoices state. Compared with the old billing code, some totals change by exactly one kobo, always to the correct amount; we can list each one. Late fees now follow the written rule: 2% of the outstanding amount per full 30 days, at most three periods, instead of compounding. Every rule is covered by automated tests, including the exact boundaries where the old code went wrong, and the tests run on every change. In the latest export, most rows are valid, a small number had formatted amounts or UK dates that were converted automatically, 5 duplicates were dropped, and the rest are quarantined because of unknown customers, discounts above 20% or impossible quantities and dates. Before we switch, please review the quarantined invoices and confirm the corrected late fee rule.",
+  "note": "Telling finance exactly which totals change, and by how much, is what makes them comfortable approving the switch.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "What proves the importer handles every row?",
+    "options": ["It doesn't crash", "A reconciliation where every row has one outcome and the counts add up to the total", "A fast run time", "Logging"],
+    "answer": 1,
+    "explanation": "Account for everything."
+  },
+  {
+    "prompt": "Why compare old and new totals invoice by invoice?",
+    "options": ["Curiosity", "So every difference is known and explained before customers see it", "To slow the switch", "It's required by Python"],
+    "answer": 1,
+    "explanation": "No surprises for customers or finance."
+  },
+  {
+    "prompt": "Which is the strongest evidence the new code is correct?",
+    "options": ["The engineer says so", "Passing tests for every rule, including boundaries and past bugs", "It's shorter", "It uses Decimal"],
+    "answer": 1,
+    "explanation": "Tests are executable evidence."
+  }
+]
+```
+$md$, true, true, 10, array['swe-10-p1', 'swe-10-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+
 -- Course: Data Analyst Capstone: End-to-End BI Project
 insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
-values ('data-analyst-capstone', 'full', null, 'data-analyst-capstone', 'CAP', 'Data Analyst Capstone: End-to-End BI Project', 'Take a retail chain''s raw till export all the way to a reviewed dashboard and a board-ready executive summary, using the tools of your choice.', 'The capstone of the Data Analyst track. Voltline Electronics, a chain of eight stores, sends you 18 months of raw till data and one question from its chief executive: what''s really driving our 37% growth? You''ll plan the analysis, profile and clean a genuinely messy export (a duplicated upload, mixed date formats, inconsistent store names and test transactions), build a model that looks up costs by date and compares sales with monthly targets, decompose the growth, find what''s going wrong where, and put a value on missed sales. Then you''ll build a dashboard, write an executive summary, prepare for the board''s questions and publish the project for your portfolio. Use Excel, Power BI, SQL or Python: the work is assessed on the answers, not the tool.', 'data-analytics', 'intermediate', 4, 'Career project', 14, true, 'available', true, array['Turning a business brief into an analysis plan', 'Profiling and cleaning raw data with a quality log', 'Modelling data at the right grain', 'Decomposing growth into price, new stores and volume', 'Judging targets fairly', 'Estimating lost sales with stated assumptions', 'Finding-led dashboards and executive summaries', 'Presenting and publishing a portfolio project']::text[], array['The core Data Analyst courses: Excel, SQL and Power BI (or Python)', 'Comfort cleaning data and building a dashboard in at least one tool']::text[], 'Voltline Electronics: commercial review', true, true, true, true, false, 60, 37)
+values ('data-analyst-capstone', 'full', null, 'data-analyst-capstone', 'CAP', 'Data Analyst Capstone: End-to-End BI Project', 'Take a retail chain''s raw till export all the way to a reviewed dashboard and a board-ready executive summary, using the tools of your choice.', 'The capstone of the Data Analyst track. Voltline Electronics, a chain of eight stores, sends you 18 months of raw till data and one question from its chief executive: what''s really driving our 37% growth? You''ll plan the analysis, profile and clean a genuinely messy export (a duplicated upload, mixed date formats, inconsistent store names and test transactions), build a model that looks up costs by date and compares sales with monthly targets, decompose the growth, find what''s going wrong where, and put a value on missed sales. Then you''ll build a dashboard, write an executive summary, prepare for the board''s questions and publish the project for your portfolio. Use Excel, Power BI, SQL or Python: the work is assessed on the answers, not the tool.', 'data-analytics', 'intermediate', 4, 'Career project', 14, true, 'available', true, array['Turning a business brief into an analysis plan', 'Profiling and cleaning raw data with a quality log', 'Modelling data at the right grain', 'Decomposing growth into price, new stores and volume', 'Judging targets fairly', 'Estimating lost sales with stated assumptions', 'Finding-led dashboards and executive summaries', 'Presenting and publishing a portfolio project']::text[], array['The core Data Analyst courses: Excel, SQL and Power BI (or Python)', 'Comfort cleaning data and building a dashboard in at least one tool']::text[], 'Voltline Electronics: commercial review', true, true, true, true, false, 60, 38)
 on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level = excluded.level, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
@@ -52303,6 +54013,108 @@ values ('sreq12', 1, 'Manual, repetitive, automatable.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 
+-- Assessment: Software Engineering with Python: final assessment
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('software-engineering-with-python-final', 'software-engineering-with-python', 'final', null, 'Software Engineering with Python: final assessment', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('sweq01', 'software-engineering-with-python-final', 1, 'Three services each calculate VAT with their own copy of the code. What''s the main risk?', '["They''re slow","The copies drift apart and give different totals for the same invoice","They use more memory","None"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('sweq01', 1, 'One rule, one place.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('sweq02', 'software-engineering-with-python-final', 2, 'Why is `0.1 + 0.2` not exactly `0.3` in Python?', '["A Python bug","Floats are binary and can''t store most decimal fractions exactly","Rounding is off by default","It is exactly 0.3"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('sweq02', 1, 'Use integers or Decimal for money.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('sweq03', 'software-engineering-with-python-final', 3, 'An invoice rule says halves round up. What does Python''s `round(16.5)` give?', '["17","16","16.5","An error"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('sweq03', 1, 'round() rounds halves to even; use Decimal with ROUND_HALF_UP.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('sweq04', 'software-engineering-with-python-final', 4, 'Which is the best test name?', '["test1","test_vat_exempt_customer_pays_no_vat","test_stuff","check"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('sweq04', 1, 'Name the behaviour being checked.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('sweq05', 'software-engineering-with-python-final', 5, 'A fee applies ''for each full 30 days late''. Which test inputs matter most?', '["15 and 45","29, 30 and 31 (and the other boundaries)","Only 30","Random numbers"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('sweq05', 1, 'Bugs live at boundaries.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('sweq06', 'software-engineering-with-python-final', 6, 'You''ve found a bug. What do you do first?', '["Fix it","Write a test that fails because of it","Delete the tests","Ignore it"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('sweq06', 1, 'Then fix it and watch the test pass.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('sweq07', 'software-engineering-with-python-final', 7, 'A job crashes on one malformed row. What''s the best response?', '["Edit the row by hand","Find every row with the same kind of problem and handle them all in code","Catch and ignore all errors","Delete the file"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('sweq07', 1, 'Fix the class of problem.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('sweq08', 'software-engineering-with-python-final', 8, 'What should happen to invoice rows with a discount above the allowed limit?', '["Silently drop them","Quarantine them for review by someone who can decide the right value","Change the discount to 20%","Crash the import"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('sweq08', 1, 'Fix automatically only what''s certain.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('sweq09', 'software-engineering-with-python-final', 9, 'What does `git add` do?', '["Creates a commit","Stages changes for the next commit","Uploads to GitHub","Deletes files"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('sweq09', 1, 'Then commit them with a message.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('sweq10', 'software-engineering-with-python-final', 10, 'Why is `def calc(lines, log=[]):` a problem?', '["It''s too short","The same list is shared between every call and keeps growing","Lists can''t be parameters","It isn''t"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('sweq10', 1, 'Use None as the default instead.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('sweq11', 'software-engineering-with-python-final', 11, 'A client sends an API request with a negative quantity. What should the API return?', '["500","400 with a message saying quantities must be positive","200","404"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('sweq11', 1, 'Bad input is the client''s to fix; say how.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('sweq12', 'software-engineering-with-python-final', 12, 'Why use Flask''s test client in tests?', '["It deploys the app","It sends requests to the app without running a server, so tests are fast and reliable","It writes tests","It''s required"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('sweq12', 1, 'Test APIs like any other code.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
 -- Assessment: Prompting Essentials: module check
 insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
 values ('aipf-m01-check', 'ai-productivity-fundamentals', 'module', 'aipf-m01', 'Prompting Essentials: module check', 60, true)
@@ -55664,6 +57476,14 @@ Work in Google Colab with the observability dataset (https://academy.cloudtechan
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
 
 
+-- Project: Tallybook's invoicing service
+insert into public.projects (id, course_id, title, summary, brief_md, tasks, datasets, rubric, required)
+values ('swe-tallybook-invoicing-service', 'software-engineering-with-python', 'Tallybook''s invoicing service', 'A tested, version-controlled invoicing package and API that replaces an old billing module, with every rule tested at its boundaries, the messy export reconciled row by row, and old and new totals compared.', $md$Tallybook wants to retire its old billing module, billing.py. Build its replacement and the evidence that it's right.
+
+Work in Google Colab (or on your own computer) with the invoicing dataset (https://academy.cloudtechanalytics.com/datasets/invoicing/: customers.csv, invoices_raw.csv, invoice_lines.csv and billing.py). Put your code in a Git repository on GitHub. Submit the repository link, and paste your **test run output**, your **reconciliation table** and your **summary for the finance team** below, followed by a short note on where each part is in the repository.$md$, array['invoicing.py: totals in kobo with discount, VAT, half-up rounding and late fees, each rule in one named place.', 'Tests: pytest tests for every rule, including boundaries, rejected inputs and the bugs found in the course.', 'importer.py: validation and conversion of the raw export, with every row reconciled to one outcome.', 'A comparison of old and new totals for every valid invoice, with the differences explained.', 'api.py: a Flask API for invoice totals that rejects bad requests with clear 400 errors, tested with the test client.', 'A Git history of small, well-described commits on branches, merged into main.', 'A review of billing.py and a summary for the finance team.']::text[], array['invoicing']::text[], array['Money is calculated exactly, in kobo, with the stated rounding rule.', 'Every rule is tested, including boundaries and past bugs, and all tests pass.', 'Bad input is validated and reported clearly, never silently dropped.', 'Every row of the export is accounted for, and the counts add up.', 'The API returns correct results and clear errors with the right status codes.', 'The Git history shows small commits with clear messages.', 'The summary tells the finance team exactly what changes and what they need to do.']::text[], true)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
+
+
 -- Track: Become a Data Analyst
 insert into public.tracks (id, slug, title, summary, badge_name, badge_code, skills, position, published)
 values ('data-analyst', 'data-analyst', 'Become a Data Analyst', 'The route we recommend from no experience to a junior data analyst role. Learn how analysis works, then the tools teams use every day (Excel, SQL, Power BI and Python) on realistic company data. Build portfolio projects that answer real business questions, and finish with your CV, LinkedIn and interview preparation.', 'CloudTech Data Analyst', 'DATAANALYST', array['Spreadsheet analysis in Excel', 'Statistics: averages, spread, confidence intervals and tests', 'Querying databases with SQL, from first SELECT to cohorts and window functions', 'Data modelling and star schemas', 'Dashboards in Power BI, with DAX measures you can trust', 'Analysis in Python and pandas', 'Turning data into findings a manager can act on']::text[], 1, true)
@@ -55912,9 +57732,49 @@ values ('cloud-devops-engineer', 'build-your-student-portfolio', 'Career', false
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 
+-- Track: Become a Software Developer
+insert into public.tracks (id, slug, title, summary, badge_name, badge_code, skills, position, published)
+values ('software-developer', 'software-developer', 'Become a Software Developer', 'The route to junior developer roles. Start with Python and Git, then learn what turns code into software: tests, debugging, validation, version control, code review and APIs, by rebuilding a real company''s invoicing code. Then go further into the web, databases and delivery. Employers hire developers who can show tested, well-reviewed code, and that''s what this track builds.', 'CloudTech Software Developer', 'SOFTWAREDEV', array['Python functions, modules and packages', 'Automated testing with pytest', 'Debugging and input validation', 'Git workflow and code review', 'Building and testing web APIs', 'Shipping code through CI/CD']::text[], 6, true)
+on conflict (id) do update set slug = excluded.slug, title = excluded.title, summary = excluded.summary, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, position = excluded.position, published = excluded.published;
+
+delete from public.track_courses where track_id = 'software-developer';
+
+insert into public.track_courses (track_id, course_id, stage, required, position)
+values ('software-developer', 'python-for-beginners', 'Foundation', true, 1)
+on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
+
+insert into public.track_courses (track_id, course_id, stage, required, position)
+values ('software-developer', 'git-and-github-for-beginners', 'Foundation', true, 2)
+on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
+
+insert into public.track_courses (track_id, course_id, stage, required, position)
+values ('software-developer', 'linux-networking-basics', 'Foundation', false, 3)
+on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
+
+insert into public.track_courses (track_id, course_id, stage, required, position)
+values ('software-developer', 'software-engineering-with-python', 'Core', true, 4)
+on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
+
+insert into public.track_courses (track_id, course_id, stage, required, position)
+values ('software-developer', 'sql-for-data-analysis', 'Core', false, 5)
+on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
+
+insert into public.track_courses (track_id, course_id, stage, required, position)
+values ('software-developer', 'cicd-and-containers', 'Specialist', false, 6)
+on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
+
+insert into public.track_courses (track_id, course_id, stage, required, position)
+values ('software-developer', 'career-essentials', 'Career', true, 7)
+on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
+
+insert into public.track_courses (track_id, course_id, stage, required, position)
+values ('software-developer', 'build-your-student-portfolio', 'Career', false, 8)
+on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
+
+
 -- Track: Career & Study Skills
 insert into public.tracks (id, slug, title, summary, badge_name, badge_code, skills, position, published)
-values ('career-study-skills', 'career-study-skills', 'Career & Study Skills', 'The practical skills that sit under every career: using AI honestly and well, researching and citing properly, everyday digital tools, and a CV, LinkedIn profile and portfolio that get you noticed. Short courses you can finish alongside school or work.', 'CloudTech Career Ready', 'CAREERREADY', array['Using AI assistants well and honestly', 'Research and referencing', 'Professional email and digital tools', 'CV, LinkedIn and portfolio']::text[], 6, true)
+values ('career-study-skills', 'career-study-skills', 'Career & Study Skills', 'The practical skills that sit under every career: using AI honestly and well, researching and citing properly, everyday digital tools, and a CV, LinkedIn profile and portfolio that get you noticed. Short courses you can finish alongside school or work.', 'CloudTech Career Ready', 'CAREERREADY', array['Using AI assistants well and honestly', 'Research and referencing', 'Professional email and digital tools', 'CV, LinkedIn and portfolio']::text[], 7, true)
 on conflict (id) do update set slug = excluded.slug, title = excluded.title, summary = excluded.summary, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, position = excluded.position, published = excluded.published;
 
 delete from public.track_courses where track_id = 'career-study-skills';
