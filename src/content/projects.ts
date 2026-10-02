@@ -44,6 +44,12 @@ export const DATASETS: DatasetInfo[] = [
     files: ["sales_raw", "stores", "products", "cost_prices", "targets", "stockouts"],
   },
   {
+    id: "claims",
+    name: "Shieldline Insurance (motor claims, process log and business case)",
+    description: "A motor insurer's claims from July 2025 to June 2026 with the claims system's event log, complaints, policy renewals, stakeholder interviews, the options for change with their costs, and acceptance test results for a Lagos pilot that started in April 2026. Used in the Business Analyst Capstone.",
+    files: ["claims", "events", "complaints", "renewals", "interviews", "options", "uat"],
+  },
+  {
     id: "agile",
     name: "Kolanut kiosk app (agile delivery)",
     description:
@@ -1063,6 +1069,87 @@ export const DATA_DICTIONARY: Record<string, Record<string, { about: string; col
         goal: "The sprint goal.",
         committed_points: "Story points the team committed to at sprint planning. Blank for sprints not yet planned.",
         status: "Closed, Planned or Future.",
+      },
+    },
+  },
+  claims: {
+    claims: {
+      about: "One row per motor claim submitted from July 2025 to June 2026. Lagos claims from 1 April 2026 went through the pilot process.",
+      columns: {
+        claim_id: "Claim ID. Links to events and complaints.",
+        policy_id: "The policy claimed on.",
+        submitted_at: "When the claim was submitted (date and time).",
+        region: "Lagos, Abuja, Port Harcourt, Ibadan or Kano.",
+        channel: "How the claim came in: Branch, Agent, Phone or Web.",
+        claim_type: "Windscreen, Accident damage, Third party or Theft.",
+        claim_amount_ngn: "Amount claimed, in naira.",
+        outcome: "Paid, Rejected, or Withdrawn (closed after the customer didn't respond for 30 days).",
+        paid_amount_ngn: "Amount paid, for paid claims.",
+        closed_at: "When the claim was paid, rejected or closed.",
+      },
+    },
+    events: {
+      about: "The claims system's event log: one row per step of every claim.",
+      columns: {
+        claim_id: "The claim.",
+        activity: "The step, such as Documents requested, Inspection or Manager approval.",
+        timestamp: "When the step happened.",
+        team: "Who did it: Customer, Agent, Claims desk, Assessors, Claims managers, Head office or Finance.",
+      },
+    },
+    complaints: {
+      about: "Complaints about claims.",
+      columns: {
+        complaint_id: "Complaint ID.",
+        claim_id: "The claim complained about.",
+        received_date: "Date received.",
+        channel: "Phone, Email, Social media or Branch.",
+        reason: "Delay, No update on my claim, Settlement amount or Staff attitude.",
+      },
+    },
+    renewals: {
+      about: "Policies due for renewal: those with a claim submitted before April 2026, and a sample with no claim.",
+      columns: {
+        policy_id: "Policy ID.",
+        region: "The policy's region.",
+        annual_premium_ngn: "Annual premium, in naira.",
+        claim_id: "The claim on this policy. Blank if none.",
+        renewed: "1 if the policy was renewed.",
+      },
+    },
+    interviews: {
+      about: "Notes from ten stakeholder interviews.",
+      columns: {
+        interview_id: "Interview ID.",
+        role: "The stakeholder's role.",
+        team: "Their part of the business.",
+        influence: "Their influence over the decision: High, Medium or Low.",
+        interest: "Their interest in claims: High, Medium or Low.",
+        main_concern: "Their main concern, in a few words.",
+        quote: "What they said.",
+      },
+    },
+    options: {
+      about: "The options on the table, with costs.",
+      columns: {
+        option_id: "Option ID.",
+        option: "The option.",
+        description: "What it involves.",
+        one_off_cost_ngn: "Up-front cost, in naira.",
+        annual_running_cost_ngn: "Running cost per year, in naira.",
+        months_to_deliver: "Months until it's in place.",
+        supplier_estimate_days_saved: "The supplier's own estimate of days saved per claim, where given.",
+      },
+    },
+    uat: {
+      about: "User acceptance test results for the Lagos changes.",
+      columns: {
+        test_id: "Test ID.",
+        story_id: "The user story tested (US-01 to US-05).",
+        scenario: "What was tested.",
+        result: "Pass or Fail.",
+        severity: "For failures: Critical, Major or Minor.",
+        status: "For failures: Fixed or Open.",
       },
     },
   },

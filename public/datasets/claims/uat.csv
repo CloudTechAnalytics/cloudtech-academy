@@ -1,0 +1,25 @@
+test_id,story_id,scenario,result,severity,status
+UAT-01,US-01,Agent submits an accident claim with all documents,Pass,,
+UAT-02,US-01,Agent tries to submit without a police report for theft,Pass,,
+UAT-03,US-01,Agent submits with a blurred photo of the vehicle,Fail,Minor,Fixed
+UAT-04,US-01,Checklist shows the right documents for third-party claims,Pass,,
+UAT-05,US-01,Agent app works offline and syncs later,Fail,Major,Fixed
+UAT-06,US-01,Phone staff use the same checklist,Pass,,
+UAT-07,US-02,Customer uploads windscreen photos by link,Pass,,
+UAT-08,US-02,Assessor completes a photo assessment,Pass,,
+UAT-09,US-02,Photo assessment blocked for accident damage,Pass,,
+UAT-10,US-02,Large photo upload on a slow connection,Fail,Minor,Open
+UAT-11,US-03,"Assessor approves a ₦600,000 accident claim",Pass,,
+UAT-12,US-03,Assessor tries to approve a ₦1.4m claim,Pass,,
+UAT-13,US-03,Assessor tries to approve a theft claim,Pass,,
+UAT-14,US-03,Claim amount edited upwards after assessor approval,Fail,Critical,Open
+UAT-15,US-03,Assessor approves their own inspection,Fail,Major,Fixed
+UAT-16,US-03,Weekly report of assessor approvals for finance,Pass,,
+UAT-17,US-04,"SMS sent when documents are missing, naming them",Pass,,
+UAT-18,US-04,SMS sent when the assessor is assigned,Pass,,
+UAT-19,US-04,SMS sent on payment with the amount,Pass,,
+UAT-20,US-04,SMS not sent to a customer who opted out,Fail,Major,Open
+UAT-21,US-04,SMS in Hausa and Yoruba,Fail,Minor,Open
+UAT-22,US-05,Dashboard shows days to settle by region,Pass,,
+UAT-23,US-05,Dashboard figures match the claims system,Pass,,
+UAT-24,US-05,Dashboard refreshes daily,Pass,,

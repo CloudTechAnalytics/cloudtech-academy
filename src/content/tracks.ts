@@ -159,6 +159,7 @@ export const TRACKS: Track[] = [
         items: [
           { kind: "project", projectId: "law-firm-operations", why: "Measure a law firm's workload, court delays and unpaid bills." },
           { kind: "project", projectId: "logistics-operations", why: "Find the late routes and the customers who owe money." },
+          { kind: "course", courseId: "business-analyst-capstone", why: "From a vague complaint about slow claims to a board-ready decision paper, with every step evidenced." },
         ],
       },
       {

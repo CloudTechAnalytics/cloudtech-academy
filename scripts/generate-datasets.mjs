@@ -2953,6 +2953,219 @@ function productData() {
   return { users, activity, feedback, interviews, backlog, rollout };
 }
 
+/* ------------------------------------------------------------------ claims (BA capstone) */
+// Shieldline Insurance: a year of motor claims with the claims process event log, complaints,
+// renewals, stakeholder interviews, the options for change and the pilot's UAT results.
+// Claims are slow because of incomplete documents (worst for agent and phone claims), a
+// physical inspection for every claim, and managers who approve once a week, on Fridays.
+// Lagos pilots a fix from 1 April 2026, when a rainy-season rise in accidents slows
+// inspections everywhere. Generated last, from its own seed.
+function claimsData() {
+  seed = 20280201;
+  const hrs = (h) => h * 3600000;
+  const stamp = (t) => new Date(t).toISOString().slice(0, 16).replace("T", " ");
+  // Teams work 08:00 to 17:00, Monday to Saturday.
+  const work = (x) => {
+    const h = new Date(x).getUTCHours();
+    if (h < 8) x = x - (x % day) + hrs(8) + hrs(rand());
+    else if (h >= 17) x = x - (x % day) + day + hrs(8) + hrs(rand());
+    if (new Date(x).getUTCDay() === 0) x += day;
+    return x;
+  };
+  const days = (n) => n * day;
+  const REGIONS = ["Lagos", "Abuja", "Port Harcourt", "Ibadan", "Kano"];
+  const CHANNELS = ["Branch", "Agent", "Phone", "Web"];
+  const INCOMPLETE = { Branch: 0.28, Agent: 0.58, Phone: 0.5, Web: 0.22 };
+  const TYPES = ["Windscreen", "Accident damage", "Third party", "Theft"];
+  const PILOT = d("2026-04-01");
+  const RAINY = d("2026-04-01");
+  const claims = [];
+  const events = [];
+  const complaints = [];
+  const renewals = [];
+  let n = 0;
+  let c = 0;
+  for (let t = d("2025-07-01"); t <= d("2026-06-30"); t += day) {
+    const rainy = t >= RAINY;
+    const count = int(7, 11) + (rainy ? 2 : 0) - (new Date(t).getUTCDay() === 0 ? 5 : 0);
+    for (let k = 0; k < count; k++) {
+      n++;
+      const id = `CLM-${String(n).padStart(5, "0")}`;
+      const region = weighted(REGIONS, [36, 20, 17, 15, 12]);
+      const channel = weighted(CHANNELS, [28, 37, 17, 18]);
+      const type = weighted(TYPES, [30, 45, 15, 10]);
+      const amount =
+        type === "Windscreen" ? round(120000 + rand() * 330000, 5000)
+        : type === "Accident damage" ? Math.min(6000000, round(Math.exp(Math.log(650000) + normal() * 0.6), 5000))
+        : type === "Third party" ? round(Math.exp(Math.log(1100000) + normal() * 0.5), 5000)
+        : round(Math.exp(Math.log(5500000) + normal() * 0.35), 5000);
+      const pilot = region === "Lagos" && t >= PILOT;
+      const ev = [];
+      const add = (activity, time, team) => ev.push({ claim_id: id, activity, timestamp: stamp(time), team });
+
+      const submitted = t + hrs(int(7, 20)) + hrs(rand());
+      add("Claim submitted", submitted, channel === "Agent" ? "Agent" : "Customer");
+      // Agents post paper forms in batches; in the pilot they use the checklist app.
+      const reg =
+        channel === "Web" ? submitted + hrs(0.1)
+        : channel === "Agent" && !pilot ? work(submitted + days(int(1, 4)))
+        : work(submitted + hrs(int(1, channel === "Branch" ? 3 : 20)));
+      add("Claim registered", reg, "Claims desk");
+      let cur = work(reg + hrs(int(20, 60)));
+      add("Documents checked", cur, "Claims desk");
+      let incomplete = rand() < INCOMPLETE[channel] * (type === "Theft" ? 1.3 : 1) * (pilot ? 0.35 : 1);
+      let requests = 0;
+      let outcome = null;
+      let closed = null;
+      while (incomplete) {
+        requests++;
+        const req = work(cur + hrs(int(1, 4)));
+        add("Documents requested", req, "Claims desk");
+        if (rand() < 0.03 + 0.06 * requests) {
+          closed = work(req + days(30));
+          add("Claim closed: no response", closed, "Claims desk");
+          outcome = "Withdrawn";
+          break;
+        }
+        const received = req + days(Math.max(1, Math.round(Math.exp(Math.log(5) + normal() * 0.5)))) + hrs(int(0, 8));
+        add("Documents received", received, "Customer");
+        cur = work(received + hrs(int(20, 60)));
+        add("Documents checked", cur, "Claims desk");
+        incomplete = rand() < (pilot ? 0.15 : 0.3);
+      }
+      if (!outcome) {
+        const assigned = work(cur + hrs(int(4, 30)));
+        add("Assessor assigned", assigned, "Assessors");
+        let assessed;
+        if (pilot && type === "Windscreen") {
+          assessed = work(assigned + hrs(int(2, 10)));
+          add("Photo assessment", assessed, "Assessors");
+        } else {
+          const wait = int(3, 8) + (region === "Port Harcourt" ? int(1, 4) : 0) + (rainy ? int(1, 2) : 0);
+          const insp = work(assigned + days(wait) + hrs(int(0, 6)));
+          add("Inspection", insp, "Assessors");
+          assessed = work(insp + hrs(int(20, 70)));
+        }
+        add("Assessment completed", assessed, "Assessors");
+        const rejected = rand() < (type === "Theft" ? 0.16 : 0.07);
+        const assessorLimit = pilot && amount < 1000000 && (type === "Windscreen" || type === "Accident damage");
+        let decided;
+        if (assessorLimit) {
+          decided = work(assessed + hrs(int(1, 5)));
+          add(rejected ? "Claim rejected" : "Assessor approval", decided, "Assessors");
+        } else {
+          // Managers sign off claims in a batch on Friday afternoons.
+          let f = assessed - (assessed % day);
+          while (new Date(f).getUTCDay() !== 5 || f + hrs(12) < assessed) f += day;
+          decided = f + hrs(15) + hrs(rand() * 2);
+          add(rejected ? "Claim rejected" : "Manager approval", decided, "Claims managers");
+        }
+        if (rejected) {
+          outcome = "Rejected";
+          closed = decided;
+        } else {
+          if (amount > 5000000) {
+            decided = work(decided + days(int(4, 12)));
+            add("Head office approval", decided, "Head office");
+          }
+          const payApproved = work(decided + hrs(int(20, 90)));
+          add("Payment approved", payApproved, "Finance");
+          closed = work(payApproved + hrs(int(20, 50)));
+          add("Claim paid", closed, "Finance");
+          outcome = "Paid";
+        }
+      }
+      events.push(...ev);
+      const policy = `POL-${String(100000 + n * 3 + int(0, 2))}`;
+      claims.push({
+        claim_id: id,
+        policy_id: policy,
+        submitted_at: stamp(submitted),
+        region,
+        channel,
+        claim_type: type,
+        claim_amount_ngn: amount,
+        outcome,
+        paid_amount_ngn: outcome === "Paid" ? round(amount * (0.82 + rand() * 0.18), 1000) : "",
+        closed_at: stamp(closed),
+      });
+
+      const dur = (closed - submitted) / day;
+      if (rand() < Math.min(0.6, 0.03 + 0.012 * Math.max(0, dur - 14) + 0.05 * requests)) {
+        c++;
+        let reason = weighted(["Delay", "No update on my claim", "Settlement amount", "Staff attitude"], [50, 28, 14, 8]);
+        if (reason === "Settlement amount" && outcome !== "Paid") reason = "Delay";
+        complaints.push({
+          complaint_id: `CMP-${String(c).padStart(4, "0")}`,
+          claim_id: id,
+          received_date: iso(submitted + rand() * (closed - submitted)),
+          channel: weighted(["Phone", "Email", "Social media", "Branch"], [40, 25, 20, 15]),
+          reason,
+        });
+      }
+      // Renewal is known only for claims submitted before the pilot.
+      if (t < PILOT) {
+        const p = outcome === "Paid" ? Math.max(0.42, 0.88 - 0.009 * Math.max(0, dur - 10)) : outcome === "Rejected" ? 0.48 : 0.4;
+        renewals.push({ policy_id: policy, region, annual_premium_ngn: round(Math.exp(Math.log(400000) + normal() * 0.4), 1000), claim_id: id, renewed: +(rand() < p) });
+      }
+    }
+  }
+  for (let k = 0; k < 9000; k++)
+    renewals.push({ policy_id: `POL-${String(200000 + k * 7 + int(0, 6))}`, region: weighted(REGIONS, [36, 20, 17, 15, 12]), annual_premium_ngn: round(Math.exp(Math.log(360000) + normal() * 0.4), 1000), claim_id: "", renewed: +(rand() < 0.8) });
+  for (let i = renewals.length - 1; i > 0; i--) {
+    const j = Math.floor(rand() * (i + 1));
+    [renewals[i], renewals[j]] = [renewals[j], renewals[i]];
+  }
+
+  const interviews = [
+    ["Managing director", "Executive", "High", "High", "Lost renewals", "Our claims experience is losing us customers we spent a fortune to win. I want it fixed, not studied."],
+    ["Head of claims", "Claims", "High", "High", "Incomplete documents", "Half my team's day is chasing documents that should have come with the claim in the first place."],
+    ["Claims manager, Lagos", "Claims", "Medium", "High", "Weekly approvals", "I sign off every claim, even a ₦150,000 windscreen. I do them on Fridays because the week is full of meetings."],
+    ["Claims officer", "Claims", "Low", "High", "No update", "Customers call three or four times a week asking where their claim is. We don't know either without opening five screens."],
+    ["Senior assessor", "Assessors", "Medium", "High", "Inspection backlog", "We drive across Lagos to look at a cracked windscreen. A photo would do. Port Harcourt has only two assessors."],
+    ["Agency manager", "Sales", "High", "Medium", "Agent paperwork", "Agents send forms by bus to the branch. Half are missing the police report or the photos. Agents are paid on sales, not claims."],
+    ["Finance controller", "Finance", "High", "Medium", "Fraud risk", "If assessors can approve payments, who checks them? Any change has to keep a second pair of eyes on the money."],
+    ["Head of IT", "IT", "High", "Medium", "System capacity", "The claims system is fifteen years old. I'd rather replace it than patch it, but that's a year's work."],
+    ["Compliance officer", "Risk", "High", "Low", "Regulatory deadlines", "The regulator expects claims settled promptly and complaints answered. Our complaint numbers are starting to be noticed."],
+    ["Customer (accident damage)", "Customer", "Low", "High", "No update", "I sent my documents twice. Nobody told me what was missing until I called. It took seven weeks."],
+  ].map(([role, team, influence, interest, main_concern, quote], i) => ({ interview_id: `INT-${String(i + 1).padStart(2, "0")}`, role, team, influence, interest, main_concern, quote }));
+
+  const options = [
+    { option_id: "O1", option: "Do nothing", description: "Keep the current process and system.", one_off_cost_ngn: 0, annual_running_cost_ngn: 0, months_to_deliver: 0, supplier_estimate_days_saved: "" },
+    { option_id: "O2", option: "Fix the process", description: "Document checklist app for agents and phone staff, photo assessment for windscreens, assessor approval up to ₦1m for windscreen and accident claims, and SMS status updates.", one_off_cost_ngn: 42000000, annual_running_cost_ngn: 12000000, months_to_deliver: 4, supplier_estimate_days_saved: "" },
+    { option_id: "O3", option: "New claims system", description: "Replace the claims system with a vendor package including a customer portal, workflow and the O2 changes.", one_off_cost_ngn: 280000000, annual_running_cost_ngn: 60000000, months_to_deliver: 14, supplier_estimate_days_saved: 18 },
+  ];
+
+  const uat = [
+    ["UAT-01", "US-01", "Agent submits an accident claim with all documents", "Pass", "", ""],
+    ["UAT-02", "US-01", "Agent tries to submit without a police report for theft", "Pass", "", ""],
+    ["UAT-03", "US-01", "Agent submits with a blurred photo of the vehicle", "Fail", "Minor", "Fixed"],
+    ["UAT-04", "US-01", "Checklist shows the right documents for third-party claims", "Pass", "", ""],
+    ["UAT-05", "US-01", "Agent app works offline and syncs later", "Fail", "Major", "Fixed"],
+    ["UAT-06", "US-01", "Phone staff use the same checklist", "Pass", "", ""],
+    ["UAT-07", "US-02", "Customer uploads windscreen photos by link", "Pass", "", ""],
+    ["UAT-08", "US-02", "Assessor completes a photo assessment", "Pass", "", ""],
+    ["UAT-09", "US-02", "Photo assessment blocked for accident damage", "Pass", "", ""],
+    ["UAT-10", "US-02", "Large photo upload on a slow connection", "Fail", "Minor", "Open"],
+    ["UAT-11", "US-03", "Assessor approves a ₦600,000 accident claim", "Pass", "", ""],
+    ["UAT-12", "US-03", "Assessor tries to approve a ₦1.4m claim", "Pass", "", ""],
+    ["UAT-13", "US-03", "Assessor tries to approve a theft claim", "Pass", "", ""],
+    ["UAT-14", "US-03", "Claim amount edited upwards after assessor approval", "Fail", "Critical", "Open"],
+    ["UAT-15", "US-03", "Assessor approves their own inspection", "Fail", "Major", "Fixed"],
+    ["UAT-16", "US-03", "Weekly report of assessor approvals for finance", "Pass", "", ""],
+    ["UAT-17", "US-04", "SMS sent when documents are missing, naming them", "Pass", "", ""],
+    ["UAT-18", "US-04", "SMS sent when the assessor is assigned", "Pass", "", ""],
+    ["UAT-19", "US-04", "SMS sent on payment with the amount", "Pass", "", ""],
+    ["UAT-20", "US-04", "SMS not sent to a customer who opted out", "Fail", "Major", "Open"],
+    ["UAT-21", "US-04", "SMS in Hausa and Yoruba", "Fail", "Minor", "Open"],
+    ["UAT-22", "US-05", "Dashboard shows days to settle by region", "Pass", "", ""],
+    ["UAT-23", "US-05", "Dashboard figures match the claims system", "Pass", "", ""],
+    ["UAT-24", "US-05", "Dashboard refreshes daily", "Pass", "", ""],
+  ].map(([test_id, story_id, scenario, result, severity, status]) => ({ test_id, story_id, scenario, result, severity, status }));
+
+  return { claims, events, complaints, renewals, interviews, options, uat };
+}
+
 /* ------------------------------------------------------------------ write */
 const SQL = await initSqlJs();
 const L = logistics();
@@ -3018,6 +3231,7 @@ for (const [name, obj] of Object.entries(terraformFiles(CLOUD.resources))) write
 }
 for (const [table, rows] of Object.entries(projectData())) writeCsv("project", table, rows);
 for (const [table, rows] of Object.entries(productData())) writeCsv("product", table, rows);
+for (const [table, rows] of Object.entries(claimsData())) writeCsv("claims", table, rows);
 
 // Summary for the build log
 const counts = db.exec("SELECT (SELECT COUNT(*) FROM customers), (SELECT COUNT(*) FROM shipments), (SELECT COUNT(*) FROM payments), (SELECT COUNT(*) FROM routes), (SELECT COUNT(*) FROM employees)")[0].values[0];

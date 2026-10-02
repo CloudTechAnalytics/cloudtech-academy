@@ -1396,6 +1396,670 @@
    }
   }
  },
+ "claims": {
+  "zipBytes": 384385,
+  "files": {
+   "claims": {
+    "rows": 3166,
+    "bytes": 318245,
+    "columns": [
+     {
+      "name": "claim_id",
+      "type": "text",
+      "missing": 0,
+      "distinct": 3166
+     },
+     {
+      "name": "policy_id",
+      "type": "text",
+      "missing": 0,
+      "distinct": 3166
+     },
+     {
+      "name": "submitted_at",
+      "type": "text",
+      "missing": 0,
+      "distinct": 3157
+     },
+     {
+      "name": "region",
+      "type": "text",
+      "missing": 0,
+      "distinct": 5
+     },
+     {
+      "name": "channel",
+      "type": "text",
+      "missing": 0,
+      "distinct": 4
+     },
+     {
+      "name": "claim_type",
+      "type": "text",
+      "missing": 0,
+      "distinct": 4
+     },
+     {
+      "name": "claim_amount_ngn",
+      "type": "number",
+      "missing": 0,
+      "distinct": 717,
+      "min": 70000,
+      "max": 15295000
+     },
+     {
+      "name": "outcome",
+      "type": "text",
+      "missing": 0,
+      "distinct": 3
+     },
+     {
+      "name": "paid_amount_ngn",
+      "type": "number",
+      "missing": 459,
+      "distinct": 1383,
+      "min": 64000,
+      "max": 14975000
+     },
+     {
+      "name": "closed_at",
+      "type": "text",
+      "missing": 0,
+      "distinct": 2999
+     }
+    ],
+    "preview": [
+     [
+      "CLM-00001",
+      "POL-100003",
+      "2025-07-01 08:44",
+      "Lagos",
+      "Web",
+      "Accident damage",
+      "550000",
+      "Paid",
+      "528000",
+      "2025-07-17 08:31"
+     ],
+     [
+      "CLM-00002",
+      "POL-100008",
+      "2025-07-01 08:10",
+      "Lagos",
+      "Agent",
+      "Windscreen",
+      "310000",
+      "Paid",
+      "262000",
+      "2025-08-13 08:01"
+     ],
+     [
+      "CLM-00003",
+      "POL-100011",
+      "2025-07-01 14:52",
+      "Kano",
+      "Agent",
+      "Windscreen",
+      "235000",
+      "Paid",
+      "195000",
+      "2025-07-23 08:21"
+     ],
+     [
+      "CLM-00004",
+      "POL-100013",
+      "2025-07-01 16:38",
+      "Abuja",
+      "Phone",
+      "Accident damage",
+      "1115000",
+      "Paid",
+      "970000",
+      "2025-07-29 13:34"
+     ],
+     [
+      "CLM-00005",
+      "POL-100015",
+      "2025-07-01 08:27",
+      "Port Harcourt",
+      "Agent",
+      "Windscreen",
+      "160000",
+      "Paid",
+      "136000",
+      "2025-07-23 08:01"
+     ],
+     [
+      "CLM-00006",
+      "POL-100020",
+      "2025-07-01 14:21",
+      "Abuja",
+      "Agent",
+      "Windscreen",
+      "150000",
+      "Paid",
+      "131000",
+      "2025-07-29 14:05"
+     ]
+    ]
+   },
+   "complaints": {
+    "rows": 601,
+    "bytes": 30379,
+    "columns": [
+     {
+      "name": "complaint_id",
+      "type": "text",
+      "missing": 0,
+      "distinct": 601
+     },
+     {
+      "name": "claim_id",
+      "type": "text",
+      "missing": 0,
+      "distinct": 601
+     },
+     {
+      "name": "received_date",
+      "type": "date",
+      "missing": 0,
+      "distinct": 293,
+      "min": "2025-07-01",
+      "max": "2026-07-23"
+     },
+     {
+      "name": "channel",
+      "type": "text",
+      "missing": 0,
+      "distinct": 4
+     },
+     {
+      "name": "reason",
+      "type": "text",
+      "missing": 0,
+      "distinct": 4
+     }
+    ],
+    "preview": [
+     [
+      "CMP-0001",
+      "CLM-00002",
+      "2025-08-13",
+      "Phone",
+      "Delay"
+     ],
+     [
+      "CMP-0002",
+      "CLM-00004",
+      "2025-07-01",
+      "Social media",
+      "Delay"
+     ],
+     [
+      "CMP-0003",
+      "CLM-00024",
+      "2025-07-08",
+      "Social media",
+      "No update on my claim"
+     ],
+     [
+      "CMP-0004",
+      "CLM-00026",
+      "2025-07-22",
+      "Email",
+      "Delay"
+     ],
+     [
+      "CMP-0005",
+      "CLM-00027",
+      "2025-07-11",
+      "Social media",
+      "No update on my claim"
+     ],
+     [
+      "CMP-0006",
+      "CLM-00041",
+      "2025-08-18",
+      "Phone",
+      "Delay"
+     ]
+    ]
+   },
+   "events": {
+    "rows": 31948,
+    "bytes": 1735969,
+    "columns": [
+     {
+      "name": "claim_id",
+      "type": "text",
+      "missing": 0,
+      "distinct": 3166
+     },
+     {
+      "name": "activity",
+      "type": "text",
+      "missing": 0,
+      "distinct": 16
+     },
+     {
+      "name": "timestamp",
+      "type": "text",
+      "missing": 0,
+      "distinct": 26846
+     },
+     {
+      "name": "team",
+      "type": "text",
+      "missing": 0,
+      "distinct": 7
+     }
+    ],
+    "preview": [
+     [
+      "CLM-00001",
+      "Claim submitted",
+      "2025-07-01 08:44",
+      "Customer"
+     ],
+     [
+      "CLM-00001",
+      "Claim registered",
+      "2025-07-01 08:50",
+      "Claims desk"
+     ],
+     [
+      "CLM-00001",
+      "Documents checked",
+      "2025-07-03 08:45",
+      "Claims desk"
+     ],
+     [
+      "CLM-00001",
+      "Assessor assigned",
+      "2025-07-04 08:23",
+      "Assessors"
+     ],
+     [
+      "CLM-00001",
+      "Inspection",
+      "2025-07-08 14:23",
+      "Assessors"
+     ],
+     [
+      "CLM-00001",
+      "Assessment completed",
+      "2025-07-09 13:23",
+      "Assessors"
+     ]
+    ]
+   },
+   "interviews": {
+    "rows": 10,
+    "bytes": 1758,
+    "columns": [
+     {
+      "name": "interview_id",
+      "type": "text",
+      "missing": 0,
+      "distinct": 10
+     },
+     {
+      "name": "role",
+      "type": "text",
+      "missing": 0,
+      "distinct": 10
+     },
+     {
+      "name": "team",
+      "type": "text",
+      "missing": 0,
+      "distinct": 8
+     },
+     {
+      "name": "influence",
+      "type": "text",
+      "missing": 0,
+      "distinct": 3
+     },
+     {
+      "name": "interest",
+      "type": "text",
+      "missing": 0,
+      "distinct": 3
+     },
+     {
+      "name": "main_concern",
+      "type": "text",
+      "missing": 0,
+      "distinct": 9
+     },
+     {
+      "name": "quote",
+      "type": "text",
+      "missing": 0,
+      "distinct": 10
+     }
+    ],
+    "preview": [
+     [
+      "INT-01",
+      "Managing director",
+      "Executive",
+      "High",
+      "High",
+      "Lost renewals",
+      "Our claims experience is losing us customers we spent a fortune to win. I want it fixed, not studied."
+     ],
+     [
+      "INT-02",
+      "Head of claims",
+      "Claims",
+      "High",
+      "High",
+      "Incomplete documents",
+      "Half my team's day is chasing documents that should have come with the claim in the first place."
+     ],
+     [
+      "INT-03",
+      "Claims manager, Lagos",
+      "Claims",
+      "Medium",
+      "High",
+      "Weekly approvals",
+      "I sign off every claim, even a ₦150,000 windscreen. I do them on Fridays because the week is full of meetings."
+     ],
+     [
+      "INT-04",
+      "Claims officer",
+      "Claims",
+      "Low",
+      "High",
+      "No update",
+      "Customers call three or four times a week asking where their claim is. We don't know either without opening five screens."
+     ],
+     [
+      "INT-05",
+      "Senior assessor",
+      "Assessors",
+      "Medium",
+      "High",
+      "Inspection backlog",
+      "We drive across Lagos to look at a cracked windscreen. A photo would do. Port Harcourt has only two assessors."
+     ],
+     [
+      "INT-06",
+      "Agency manager",
+      "Sales",
+      "High",
+      "Medium",
+      "Agent paperwork",
+      "Agents send forms by bus to the branch. Half are missing the police report or the photos. Agents are paid on sales, not claims."
+     ]
+    ]
+   },
+   "options": {
+    "rows": 3,
+    "bytes": 546,
+    "columns": [
+     {
+      "name": "option_id",
+      "type": "text",
+      "missing": 0,
+      "distinct": 3
+     },
+     {
+      "name": "option",
+      "type": "text",
+      "missing": 0,
+      "distinct": 3
+     },
+     {
+      "name": "description",
+      "type": "text",
+      "missing": 0,
+      "distinct": 3
+     },
+     {
+      "name": "one_off_cost_ngn",
+      "type": "number",
+      "missing": 0,
+      "distinct": 3,
+      "min": 0,
+      "max": 280000000
+     },
+     {
+      "name": "annual_running_cost_ngn",
+      "type": "number",
+      "missing": 0,
+      "distinct": 3,
+      "min": 0,
+      "max": 60000000
+     },
+     {
+      "name": "months_to_deliver",
+      "type": "number",
+      "missing": 0,
+      "distinct": 3,
+      "min": 0,
+      "max": 14
+     },
+     {
+      "name": "supplier_estimate_days_saved",
+      "type": "number",
+      "missing": 2,
+      "distinct": 1,
+      "min": 18,
+      "max": 18
+     }
+    ],
+    "preview": [
+     [
+      "O1",
+      "Do nothing",
+      "Keep the current process and system.",
+      "0",
+      "0",
+      "0",
+      ""
+     ],
+     [
+      "O2",
+      "Fix the process",
+      "Document checklist app for agents and phone staff, photo assessment for windscreens, assessor approval up to ₦1m for windscreen and accident claims, and SMS status updates.",
+      "42000000",
+      "12000000",
+      "4",
+      ""
+     ],
+     [
+      "O3",
+      "New claims system",
+      "Replace the claims system with a vendor package including a customer portal, workflow and the O2 changes.",
+      "280000000",
+      "60000000",
+      "14",
+      "18"
+     ]
+    ]
+   },
+   "renewals": {
+    "rows": 11239,
+    "bytes": 339360,
+    "columns": [
+     {
+      "name": "policy_id",
+      "type": "text",
+      "missing": 0,
+      "distinct": 11239
+     },
+     {
+      "name": "region",
+      "type": "text",
+      "missing": 0,
+      "distinct": 5
+     },
+     {
+      "name": "annual_premium_ngn",
+      "type": "number",
+      "missing": 0,
+      "distinct": 876,
+      "min": 77000,
+      "max": 1757000
+     },
+     {
+      "name": "claim_id",
+      "type": "text",
+      "missing": 9000,
+      "distinct": 2239
+     },
+     {
+      "name": "renewed",
+      "type": "number",
+      "missing": 0,
+      "distinct": 2,
+      "min": 0,
+      "max": 1
+     }
+    ],
+    "preview": [
+     [
+      "POL-207476",
+      "Lagos",
+      "351000",
+      "",
+      "1"
+     ],
+     [
+      "POL-250854",
+      "Lagos",
+      "238000",
+      "",
+      "1"
+     ],
+     [
+      "POL-207815",
+      "Kano",
+      "340000",
+      "",
+      "0"
+     ],
+     [
+      "POL-228478",
+      "Port Harcourt",
+      "471000",
+      "",
+      "1"
+     ],
+     [
+      "POL-208038",
+      "Abuja",
+      "581000",
+      "",
+      "0"
+     ],
+     [
+      "POL-102126",
+      "Kano",
+      "380000",
+      "CLM-00708",
+      "1"
+     ]
+    ]
+   },
+   "uat": {
+    "rows": 24,
+    "bytes": 1624,
+    "columns": [
+     {
+      "name": "test_id",
+      "type": "text",
+      "missing": 0,
+      "distinct": 24
+     },
+     {
+      "name": "story_id",
+      "type": "text",
+      "missing": 0,
+      "distinct": 5
+     },
+     {
+      "name": "scenario",
+      "type": "text",
+      "missing": 0,
+      "distinct": 24
+     },
+     {
+      "name": "result",
+      "type": "text",
+      "missing": 0,
+      "distinct": 2
+     },
+     {
+      "name": "severity",
+      "type": "text",
+      "missing": 17,
+      "distinct": 3
+     },
+     {
+      "name": "status",
+      "type": "text",
+      "missing": 17,
+      "distinct": 2
+     }
+    ],
+    "preview": [
+     [
+      "UAT-01",
+      "US-01",
+      "Agent submits an accident claim with all documents",
+      "Pass",
+      "",
+      ""
+     ],
+     [
+      "UAT-02",
+      "US-01",
+      "Agent tries to submit without a police report for theft",
+      "Pass",
+      "",
+      ""
+     ],
+     [
+      "UAT-03",
+      "US-01",
+      "Agent submits with a blurred photo of the vehicle",
+      "Fail",
+      "Minor",
+      "Fixed"
+     ],
+     [
+      "UAT-04",
+      "US-01",
+      "Checklist shows the right documents for third-party claims",
+      "Pass",
+      "",
+      ""
+     ],
+     [
+      "UAT-05",
+      "US-01",
+      "Agent app works offline and syncs later",
+      "Fail",
+      "Major",
+      "Fixed"
+     ],
+     [
+      "UAT-06",
+      "US-01",
+      "Phone staff use the same checklist",
+      "Pass",
+      "",
+      ""
+     ]
+    ]
+   }
+  }
+ },
  "cleaning": {
   "zipBytes": 3027,
   "files": {

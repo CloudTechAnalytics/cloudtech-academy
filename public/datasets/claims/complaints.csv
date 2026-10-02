@@ -1,0 +1,602 @@
+complaint_id,claim_id,received_date,channel,reason
+CMP-0001,CLM-00002,2025-08-13,Phone,Delay
+CMP-0002,CLM-00004,2025-07-01,Social media,Delay
+CMP-0003,CLM-00024,2025-07-08,Social media,No update on my claim
+CMP-0004,CLM-00026,2025-07-22,Email,Delay
+CMP-0005,CLM-00027,2025-07-11,Social media,No update on my claim
+CMP-0006,CLM-00041,2025-08-18,Phone,Delay
+CMP-0007,CLM-00047,2025-07-24,Branch,Delay
+CMP-0008,CLM-00050,2025-07-30,Social media,Delay
+CMP-0009,CLM-00051,2025-07-10,Branch,No update on my claim
+CMP-0010,CLM-00057,2025-07-10,Email,Delay
+CMP-0011,CLM-00065,2025-07-28,Branch,Delay
+CMP-0012,CLM-00079,2025-07-25,Email,Settlement amount
+CMP-0013,CLM-00081,2025-08-12,Email,Settlement amount
+CMP-0014,CLM-00090,2025-07-29,Phone,No update on my claim
+CMP-0015,CLM-00102,2025-08-13,Phone,No update on my claim
+CMP-0016,CLM-00110,2025-08-19,Social media,Delay
+CMP-0017,CLM-00113,2025-08-13,Phone,Settlement amount
+CMP-0018,CLM-00129,2025-08-17,Phone,No update on my claim
+CMP-0019,CLM-00130,2025-07-23,Phone,Settlement amount
+CMP-0020,CLM-00131,2025-08-03,Phone,Settlement amount
+CMP-0021,CLM-00132,2025-07-19,Phone,Delay
+CMP-0022,CLM-00133,2025-08-11,Phone,No update on my claim
+CMP-0023,CLM-00138,2025-07-25,Social media,Settlement amount
+CMP-0024,CLM-00147,2025-07-28,Email,Staff attitude
+CMP-0025,CLM-00155,2025-07-27,Social media,Staff attitude
+CMP-0026,CLM-00167,2025-08-19,Branch,Delay
+CMP-0027,CLM-00169,2025-07-26,Social media,Delay
+CMP-0028,CLM-00173,2025-08-01,Email,No update on my claim
+CMP-0029,CLM-00178,2025-08-07,Phone,Delay
+CMP-0030,CLM-00181,2025-08-10,Branch,Delay
+CMP-0031,CLM-00188,2025-08-09,Phone,Delay
+CMP-0032,CLM-00190,2025-07-26,Email,Delay
+CMP-0033,CLM-00202,2025-08-10,Email,No update on my claim
+CMP-0034,CLM-00204,2025-08-13,Phone,No update on my claim
+CMP-0035,CLM-00209,2025-08-16,Email,Delay
+CMP-0036,CLM-00215,2025-08-15,Phone,Settlement amount
+CMP-0037,CLM-00217,2025-07-29,Phone,Staff attitude
+CMP-0038,CLM-00226,2025-08-13,Phone,Delay
+CMP-0039,CLM-00227,2025-08-16,Phone,Delay
+CMP-0040,CLM-00240,2025-07-31,Email,Settlement amount
+CMP-0041,CLM-00252,2025-08-14,Social media,Delay
+CMP-0042,CLM-00259,2025-08-17,Social media,Staff attitude
+CMP-0043,CLM-00264,2025-09-08,Phone,Delay
+CMP-0044,CLM-00269,2025-09-02,Branch,No update on my claim
+CMP-0045,CLM-00273,2025-08-25,Branch,Delay
+CMP-0046,CLM-00275,2025-08-13,Phone,Delay
+CMP-0047,CLM-00283,2025-08-18,Email,No update on my claim
+CMP-0048,CLM-00284,2025-08-07,Phone,Delay
+CMP-0049,CLM-00286,2025-08-16,Email,Delay
+CMP-0050,CLM-00300,2025-08-27,Phone,Staff attitude
+CMP-0051,CLM-00323,2025-08-17,Social media,Settlement amount
+CMP-0052,CLM-00333,2025-08-28,Phone,No update on my claim
+CMP-0053,CLM-00334,2025-08-31,Branch,No update on my claim
+CMP-0054,CLM-00335,2025-08-14,Email,Delay
+CMP-0055,CLM-00347,2025-09-15,Phone,Delay
+CMP-0056,CLM-00351,2025-09-18,Email,Staff attitude
+CMP-0057,CLM-00355,2025-08-19,Branch,Delay
+CMP-0058,CLM-00361,2025-09-01,Social media,No update on my claim
+CMP-0059,CLM-00365,2025-09-12,Email,Delay
+CMP-0060,CLM-00368,2025-09-04,Branch,No update on my claim
+CMP-0061,CLM-00384,2025-08-19,Phone,Delay
+CMP-0062,CLM-00406,2025-09-09,Email,Delay
+CMP-0063,CLM-00407,2025-09-11,Social media,Staff attitude
+CMP-0064,CLM-00416,2025-09-09,Phone,Delay
+CMP-0065,CLM-00423,2025-09-17,Branch,Delay
+CMP-0066,CLM-00427,2025-08-29,Email,Delay
+CMP-0067,CLM-00437,2025-09-01,Phone,Delay
+CMP-0068,CLM-00441,2025-08-31,Phone,Staff attitude
+CMP-0069,CLM-00444,2025-09-02,Phone,No update on my claim
+CMP-0070,CLM-00446,2025-09-12,Phone,Delay
+CMP-0071,CLM-00455,2025-08-30,Email,Delay
+CMP-0072,CLM-00456,2025-09-01,Branch,Delay
+CMP-0073,CLM-00457,2025-09-16,Branch,Delay
+CMP-0074,CLM-00461,2025-09-01,Phone,Settlement amount
+CMP-0075,CLM-00467,2025-09-04,Phone,Staff attitude
+CMP-0076,CLM-00473,2025-08-27,Phone,Delay
+CMP-0077,CLM-00474,2025-09-03,Phone,Delay
+CMP-0078,CLM-00482,2025-09-02,Branch,Delay
+CMP-0079,CLM-00487,2025-09-08,Branch,No update on my claim
+CMP-0080,CLM-00488,2025-09-27,Social media,Delay
+CMP-0081,CLM-00489,2025-09-04,Phone,No update on my claim
+CMP-0082,CLM-00490,2025-09-15,Phone,Delay
+CMP-0083,CLM-00499,2025-09-05,Phone,No update on my claim
+CMP-0084,CLM-00505,2025-10-06,Phone,No update on my claim
+CMP-0085,CLM-00507,2025-09-12,Branch,No update on my claim
+CMP-0086,CLM-00513,2025-09-29,Phone,Delay
+CMP-0087,CLM-00520,2025-09-26,Email,Delay
+CMP-0088,CLM-00524,2025-09-03,Phone,No update on my claim
+CMP-0089,CLM-00527,2025-09-17,Branch,No update on my claim
+CMP-0090,CLM-00532,2025-09-11,Email,Delay
+CMP-0091,CLM-00538,2025-10-15,Social media,Delay
+CMP-0092,CLM-00540,2025-09-22,Email,No update on my claim
+CMP-0093,CLM-00543,2025-09-06,Branch,No update on my claim
+CMP-0094,CLM-00548,2025-09-17,Social media,Settlement amount
+CMP-0095,CLM-00549,2025-09-26,Branch,Delay
+CMP-0096,CLM-00551,2025-09-25,Branch,Delay
+CMP-0097,CLM-00553,2025-10-31,Email,Settlement amount
+CMP-0098,CLM-00555,2025-09-19,Phone,Delay
+CMP-0099,CLM-00560,2025-09-10,Phone,Settlement amount
+CMP-0100,CLM-00562,2025-09-22,Social media,No update on my claim
+CMP-0101,CLM-00566,2025-09-15,Phone,Delay
+CMP-0102,CLM-00572,2025-10-24,Phone,No update on my claim
+CMP-0103,CLM-00577,2025-09-15,Email,Delay
+CMP-0104,CLM-00582,2025-09-21,Email,No update on my claim
+CMP-0105,CLM-00585,2025-10-01,Social media,Settlement amount
+CMP-0106,CLM-00590,2025-10-01,Branch,No update on my claim
+CMP-0107,CLM-00591,2025-09-19,Phone,Staff attitude
+CMP-0108,CLM-00595,2025-09-29,Phone,Settlement amount
+CMP-0109,CLM-00598,2025-10-14,Branch,No update on my claim
+CMP-0110,CLM-00601,2025-10-04,Email,Delay
+CMP-0111,CLM-00603,2025-09-25,Phone,Delay
+CMP-0112,CLM-00604,2025-09-21,Email,Delay
+CMP-0113,CLM-00608,2025-09-27,Phone,Delay
+CMP-0114,CLM-00610,2025-10-12,Branch,Delay
+CMP-0115,CLM-00611,2025-09-16,Phone,Delay
+CMP-0116,CLM-00620,2025-09-15,Branch,Delay
+CMP-0117,CLM-00662,2025-09-20,Email,Delay
+CMP-0118,CLM-00663,2025-11-01,Email,Delay
+CMP-0119,CLM-00664,2025-10-24,Phone,Staff attitude
+CMP-0120,CLM-00675,2025-09-26,Social media,Delay
+CMP-0121,CLM-00678,2025-10-20,Phone,Delay
+CMP-0122,CLM-00681,2025-11-04,Email,Delay
+CMP-0123,CLM-00686,2025-10-19,Branch,No update on my claim
+CMP-0124,CLM-00700,2025-10-04,Phone,Staff attitude
+CMP-0125,CLM-00704,2025-10-01,Branch,Delay
+CMP-0126,CLM-00705,2025-09-28,Phone,Delay
+CMP-0127,CLM-00707,2025-10-05,Phone,No update on my claim
+CMP-0128,CLM-00715,2025-09-30,Phone,Delay
+CMP-0129,CLM-00720,2025-10-01,Branch,Settlement amount
+CMP-0130,CLM-00730,2025-10-18,Social media,Delay
+CMP-0131,CLM-00734,2025-10-20,Phone,Delay
+CMP-0132,CLM-00736,2025-10-05,Branch,Delay
+CMP-0133,CLM-00737,2025-10-10,Phone,Settlement amount
+CMP-0134,CLM-00741,2025-10-14,Email,Delay
+CMP-0135,CLM-00749,2025-10-04,Phone,Delay
+CMP-0136,CLM-00752,2025-10-09,Phone,Delay
+CMP-0137,CLM-00753,2025-10-15,Phone,Staff attitude
+CMP-0138,CLM-00757,2025-10-02,Social media,Delay
+CMP-0139,CLM-00768,2025-10-16,Phone,No update on my claim
+CMP-0140,CLM-00772,2025-10-09,Phone,Delay
+CMP-0141,CLM-00778,2025-11-19,Branch,No update on my claim
+CMP-0142,CLM-00788,2025-11-12,Phone,Delay
+CMP-0143,CLM-00792,2025-10-24,Phone,Delay
+CMP-0144,CLM-00795,2025-10-12,Branch,Delay
+CMP-0145,CLM-00798,2025-11-08,Email,Delay
+CMP-0146,CLM-00802,2025-10-19,Email,Delay
+CMP-0147,CLM-00809,2025-10-17,Phone,No update on my claim
+CMP-0148,CLM-00810,2025-10-18,Social media,No update on my claim
+CMP-0149,CLM-00831,2025-10-16,Email,Delay
+CMP-0150,CLM-00833,2025-10-25,Email,No update on my claim
+CMP-0151,CLM-00835,2025-10-27,Branch,No update on my claim
+CMP-0152,CLM-00849,2025-10-17,Phone,No update on my claim
+CMP-0153,CLM-00852,2025-11-07,Email,No update on my claim
+CMP-0154,CLM-00854,2025-11-05,Branch,Settlement amount
+CMP-0155,CLM-00855,2025-11-01,Phone,No update on my claim
+CMP-0156,CLM-00858,2025-11-04,Email,Delay
+CMP-0157,CLM-00860,2025-10-27,Branch,No update on my claim
+CMP-0158,CLM-00863,2025-11-07,Phone,Delay
+CMP-0159,CLM-00872,2025-10-29,Email,No update on my claim
+CMP-0160,CLM-00879,2025-10-26,Email,Delay
+CMP-0161,CLM-00884,2025-11-02,Branch,Settlement amount
+CMP-0162,CLM-00890,2025-11-13,Phone,Delay
+CMP-0163,CLM-00891,2025-11-02,Email,No update on my claim
+CMP-0164,CLM-00893,2025-11-04,Email,Delay
+CMP-0165,CLM-00901,2025-11-20,Phone,Delay
+CMP-0166,CLM-00903,2025-11-04,Phone,No update on my claim
+CMP-0167,CLM-00906,2025-11-12,Phone,No update on my claim
+CMP-0168,CLM-00915,2025-10-24,Social media,No update on my claim
+CMP-0169,CLM-00929,2025-11-15,Social media,Delay
+CMP-0170,CLM-00940,2025-11-08,Email,No update on my claim
+CMP-0171,CLM-00950,2025-11-02,Email,Settlement amount
+CMP-0172,CLM-00955,2025-10-31,Phone,Delay
+CMP-0173,CLM-00957,2025-11-20,Email,Delay
+CMP-0174,CLM-00969,2025-11-02,Phone,Delay
+CMP-0175,CLM-00971,2025-11-12,Social media,No update on my claim
+CMP-0176,CLM-00973,2025-11-27,Phone,No update on my claim
+CMP-0177,CLM-00974,2025-11-24,Phone,No update on my claim
+CMP-0178,CLM-00978,2025-11-14,Branch,Delay
+CMP-0179,CLM-00979,2025-11-12,Phone,Delay
+CMP-0180,CLM-00983,2025-11-21,Phone,Delay
+CMP-0181,CLM-00988,2025-11-18,Email,Delay
+CMP-0182,CLM-00994,2025-11-18,Phone,Delay
+CMP-0183,CLM-00997,2025-11-18,Email,Settlement amount
+CMP-0184,CLM-01015,2025-12-02,Phone,No update on my claim
+CMP-0185,CLM-01023,2025-11-18,Social media,Delay
+CMP-0186,CLM-01030,2025-12-06,Branch,No update on my claim
+CMP-0187,CLM-01034,2025-11-29,Social media,No update on my claim
+CMP-0188,CLM-01044,2025-11-30,Social media,Delay
+CMP-0189,CLM-01056,2025-11-26,Phone,Delay
+CMP-0190,CLM-01057,2025-12-21,Email,Delay
+CMP-0191,CLM-01059,2025-11-27,Social media,Delay
+CMP-0192,CLM-01060,2025-11-29,Email,Delay
+CMP-0193,CLM-01062,2025-11-27,Branch,No update on my claim
+CMP-0194,CLM-01071,2025-11-12,Email,Delay
+CMP-0195,CLM-01077,2025-11-30,Social media,Delay
+CMP-0196,CLM-01088,2025-12-02,Social media,No update on my claim
+CMP-0197,CLM-01094,2025-11-18,Phone,Delay
+CMP-0198,CLM-01095,2025-12-10,Email,No update on my claim
+CMP-0199,CLM-01099,2025-11-21,Phone,Settlement amount
+CMP-0200,CLM-01101,2025-12-14,Phone,No update on my claim
+CMP-0201,CLM-01107,2025-11-29,Phone,Staff attitude
+CMP-0202,CLM-01108,2025-12-09,Social media,No update on my claim
+CMP-0203,CLM-01112,2025-12-10,Email,Delay
+CMP-0204,CLM-01114,2025-11-30,Branch,No update on my claim
+CMP-0205,CLM-01120,2025-12-11,Email,Delay
+CMP-0206,CLM-01124,2025-11-24,Phone,Delay
+CMP-0207,CLM-01142,2025-11-21,Social media,Delay
+CMP-0208,CLM-01145,2025-12-20,Branch,Settlement amount
+CMP-0209,CLM-01149,2025-11-26,Email,No update on my claim
+CMP-0210,CLM-01154,2025-12-06,Phone,No update on my claim
+CMP-0211,CLM-01158,2025-11-22,Branch,Delay
+CMP-0212,CLM-01170,2025-11-27,Branch,Delay
+CMP-0213,CLM-01174,2025-12-12,Email,Delay
+CMP-0214,CLM-01184,2025-11-29,Phone,No update on my claim
+CMP-0215,CLM-01186,2025-12-27,Branch,Delay
+CMP-0216,CLM-01188,2025-12-09,Phone,Delay
+CMP-0217,CLM-01190,2025-12-12,Social media,No update on my claim
+CMP-0218,CLM-01191,2025-12-26,Phone,No update on my claim
+CMP-0219,CLM-01192,2025-12-25,Phone,Settlement amount
+CMP-0220,CLM-01197,2025-12-04,Social media,Delay
+CMP-0221,CLM-01198,2025-12-11,Social media,Settlement amount
+CMP-0222,CLM-01201,2026-01-01,Phone,Delay
+CMP-0223,CLM-01203,2025-12-10,Phone,No update on my claim
+CMP-0224,CLM-01204,2025-12-20,Social media,Delay
+CMP-0225,CLM-01208,2026-01-06,Email,Delay
+CMP-0226,CLM-01214,2025-12-23,Social media,Delay
+CMP-0227,CLM-01217,2025-12-17,Social media,No update on my claim
+CMP-0228,CLM-01218,2025-11-30,Email,No update on my claim
+CMP-0229,CLM-01219,2025-12-09,Phone,Delay
+CMP-0230,CLM-01221,2026-01-12,Phone,Settlement amount
+CMP-0231,CLM-01222,2025-12-13,Email,No update on my claim
+CMP-0232,CLM-01229,2025-12-16,Email,Staff attitude
+CMP-0233,CLM-01234,2025-12-04,Phone,Delay
+CMP-0234,CLM-01237,2025-12-26,Social media,No update on my claim
+CMP-0235,CLM-01239,2025-12-27,Phone,Delay
+CMP-0236,CLM-01240,2026-01-02,Social media,Delay
+CMP-0237,CLM-01242,2025-12-23,Branch,Delay
+CMP-0238,CLM-01246,2025-12-22,Email,Delay
+CMP-0239,CLM-01249,2025-12-18,Phone,Staff attitude
+CMP-0240,CLM-01252,2025-12-09,Branch,Delay
+CMP-0241,CLM-01256,2025-12-15,Phone,No update on my claim
+CMP-0242,CLM-01257,2025-12-05,Social media,Delay
+CMP-0243,CLM-01260,2025-12-16,Social media,No update on my claim
+CMP-0244,CLM-01261,2025-12-21,Email,Delay
+CMP-0245,CLM-01267,2025-12-27,Social media,No update on my claim
+CMP-0246,CLM-01270,2025-12-09,Email,No update on my claim
+CMP-0247,CLM-01271,2025-12-22,Branch,Settlement amount
+CMP-0248,CLM-01277,2025-12-14,Email,No update on my claim
+CMP-0249,CLM-01299,2025-12-28,Phone,Delay
+CMP-0250,CLM-01306,2025-12-14,Phone,Settlement amount
+CMP-0251,CLM-01308,2025-12-18,Email,Delay
+CMP-0252,CLM-01318,2025-12-19,Branch,No update on my claim
+CMP-0253,CLM-01322,2025-12-17,Phone,Delay
+CMP-0254,CLM-01327,2026-01-01,Social media,Settlement amount
+CMP-0255,CLM-01330,2025-12-28,Phone,Delay
+CMP-0256,CLM-01337,2026-01-20,Email,Delay
+CMP-0257,CLM-01338,2026-01-06,Email,Settlement amount
+CMP-0258,CLM-01345,2025-12-16,Social media,Delay
+CMP-0259,CLM-01360,2026-01-30,Email,No update on my claim
+CMP-0260,CLM-01362,2025-12-18,Phone,Settlement amount
+CMP-0261,CLM-01368,2025-12-21,Phone,Delay
+CMP-0262,CLM-01376,2025-12-22,Phone,No update on my claim
+CMP-0263,CLM-01384,2026-01-17,Phone,Delay
+CMP-0264,CLM-01388,2025-12-21,Branch,Delay
+CMP-0265,CLM-01395,2025-12-25,Phone,No update on my claim
+CMP-0266,CLM-01400,2026-01-05,Phone,Delay
+CMP-0267,CLM-01401,2026-01-25,Phone,Settlement amount
+CMP-0268,CLM-01403,2025-12-24,Phone,Staff attitude
+CMP-0269,CLM-01407,2026-01-13,Phone,No update on my claim
+CMP-0270,CLM-01413,2026-01-16,Social media,No update on my claim
+CMP-0271,CLM-01416,2025-12-25,Phone,Delay
+CMP-0272,CLM-01428,2026-02-03,Branch,No update on my claim
+CMP-0273,CLM-01432,2026-01-14,Social media,No update on my claim
+CMP-0274,CLM-01433,2025-12-30,Phone,Delay
+CMP-0275,CLM-01439,2026-02-01,Email,Settlement amount
+CMP-0276,CLM-01447,2026-01-11,Phone,No update on my claim
+CMP-0277,CLM-01450,2026-01-01,Email,Settlement amount
+CMP-0278,CLM-01451,2026-01-17,Email,Delay
+CMP-0279,CLM-01453,2026-01-01,Email,No update on my claim
+CMP-0280,CLM-01454,2026-01-17,Branch,Delay
+CMP-0281,CLM-01455,2026-01-13,Email,Settlement amount
+CMP-0282,CLM-01461,2026-01-09,Branch,No update on my claim
+CMP-0283,CLM-01463,2026-01-25,Branch,Delay
+CMP-0284,CLM-01467,2026-01-16,Branch,Staff attitude
+CMP-0285,CLM-01474,2026-01-21,Phone,No update on my claim
+CMP-0286,CLM-01483,2026-02-05,Phone,Delay
+CMP-0287,CLM-01488,2026-01-03,Branch,Settlement amount
+CMP-0288,CLM-01495,2026-01-17,Phone,Delay
+CMP-0289,CLM-01496,2026-01-07,Phone,No update on my claim
+CMP-0290,CLM-01498,2026-01-07,Social media,Staff attitude
+CMP-0291,CLM-01508,2026-01-11,Email,Delay
+CMP-0292,CLM-01510,2026-01-13,Phone,Delay
+CMP-0293,CLM-01512,2026-02-02,Social media,Delay
+CMP-0294,CLM-01514,2026-02-01,Phone,No update on my claim
+CMP-0295,CLM-01525,2026-01-16,Phone,Staff attitude
+CMP-0296,CLM-01530,2026-01-19,Social media,Delay
+CMP-0297,CLM-01534,2026-01-09,Email,No update on my claim
+CMP-0298,CLM-01535,2026-01-14,Email,Staff attitude
+CMP-0299,CLM-01536,2026-02-09,Email,No update on my claim
+CMP-0300,CLM-01549,2026-01-16,Social media,No update on my claim
+CMP-0301,CLM-01554,2026-01-27,Phone,No update on my claim
+CMP-0302,CLM-01559,2026-01-27,Social media,Delay
+CMP-0303,CLM-01572,2026-01-28,Phone,No update on my claim
+CMP-0304,CLM-01576,2026-02-12,Phone,Delay
+CMP-0305,CLM-01577,2026-01-24,Phone,No update on my claim
+CMP-0306,CLM-01584,2026-01-14,Email,Delay
+CMP-0307,CLM-01585,2026-01-29,Email,Settlement amount
+CMP-0308,CLM-01592,2026-01-25,Phone,Staff attitude
+CMP-0309,CLM-01597,2026-01-30,Email,No update on my claim
+CMP-0310,CLM-01612,2026-02-02,Phone,No update on my claim
+CMP-0311,CLM-01618,2026-02-18,Phone,Delay
+CMP-0312,CLM-01635,2026-02-14,Email,Settlement amount
+CMP-0313,CLM-01638,2026-02-07,Social media,No update on my claim
+CMP-0314,CLM-01640,2026-02-02,Branch,Delay
+CMP-0315,CLM-01649,2026-02-18,Phone,Delay
+CMP-0316,CLM-01654,2026-01-26,Phone,Delay
+CMP-0317,CLM-01657,2026-01-27,Social media,Settlement amount
+CMP-0318,CLM-01659,2026-02-09,Social media,No update on my claim
+CMP-0319,CLM-01661,2026-02-06,Branch,Delay
+CMP-0320,CLM-01669,2026-02-12,Phone,Settlement amount
+CMP-0321,CLM-01676,2026-01-26,Branch,No update on my claim
+CMP-0322,CLM-01680,2026-02-12,Phone,Staff attitude
+CMP-0323,CLM-01682,2026-01-27,Phone,Delay
+CMP-0324,CLM-01684,2026-03-06,Social media,No update on my claim
+CMP-0325,CLM-01686,2026-01-26,Phone,No update on my claim
+CMP-0326,CLM-01693,2026-01-26,Branch,Delay
+CMP-0327,CLM-01694,2026-02-28,Phone,Delay
+CMP-0328,CLM-01703,2026-02-05,Social media,Delay
+CMP-0329,CLM-01707,2026-02-11,Branch,Delay
+CMP-0330,CLM-01711,2026-02-09,Phone,Settlement amount
+CMP-0331,CLM-01712,2026-02-04,Phone,Settlement amount
+CMP-0332,CLM-01718,2026-02-12,Social media,No update on my claim
+CMP-0333,CLM-01719,2026-02-04,Phone,Staff attitude
+CMP-0334,CLM-01720,2026-03-09,Branch,No update on my claim
+CMP-0335,CLM-01722,2026-02-08,Email,Delay
+CMP-0336,CLM-01728,2026-02-24,Branch,Settlement amount
+CMP-0337,CLM-01734,2026-02-10,Email,Delay
+CMP-0338,CLM-01738,2026-03-06,Branch,Settlement amount
+CMP-0339,CLM-01739,2026-02-05,Social media,Delay
+CMP-0340,CLM-01760,2026-02-19,Branch,Delay
+CMP-0341,CLM-01769,2026-02-07,Social media,Delay
+CMP-0342,CLM-01773,2026-02-06,Phone,Delay
+CMP-0343,CLM-01776,2026-02-21,Email,Delay
+CMP-0344,CLM-01777,2026-02-20,Phone,Delay
+CMP-0345,CLM-01785,2026-02-08,Social media,Delay
+CMP-0346,CLM-01788,2026-02-18,Email,No update on my claim
+CMP-0347,CLM-01791,2026-02-09,Branch,No update on my claim
+CMP-0348,CLM-01794,2026-02-24,Phone,Delay
+CMP-0349,CLM-01795,2026-03-03,Email,Settlement amount
+CMP-0350,CLM-01796,2026-02-15,Phone,Delay
+CMP-0351,CLM-01801,2026-02-12,Branch,Delay
+CMP-0352,CLM-01810,2026-02-18,Phone,Settlement amount
+CMP-0353,CLM-01812,2026-02-13,Email,No update on my claim
+CMP-0354,CLM-01814,2026-03-12,Phone,No update on my claim
+CMP-0355,CLM-01819,2026-03-06,Email,No update on my claim
+CMP-0356,CLM-01826,2026-03-07,Social media,Staff attitude
+CMP-0357,CLM-01831,2026-02-22,Phone,Delay
+CMP-0358,CLM-01836,2026-02-21,Branch,Delay
+CMP-0359,CLM-01838,2026-03-11,Social media,Delay
+CMP-0360,CLM-01843,2026-03-02,Branch,Staff attitude
+CMP-0361,CLM-01844,2026-02-26,Branch,Settlement amount
+CMP-0362,CLM-01847,2026-02-27,Phone,Delay
+CMP-0363,CLM-01848,2026-03-16,Phone,Delay
+CMP-0364,CLM-01857,2026-02-28,Phone,No update on my claim
+CMP-0365,CLM-01869,2026-03-20,Social media,No update on my claim
+CMP-0366,CLM-01889,2026-03-19,Email,Delay
+CMP-0367,CLM-01895,2026-03-04,Phone,Delay
+CMP-0368,CLM-01896,2026-02-25,Social media,Settlement amount
+CMP-0369,CLM-01899,2026-03-20,Branch,Delay
+CMP-0370,CLM-01903,2026-03-08,Phone,Delay
+CMP-0371,CLM-01908,2026-03-09,Branch,No update on my claim
+CMP-0372,CLM-01915,2026-03-01,Phone,No update on my claim
+CMP-0373,CLM-01916,2026-02-26,Social media,Delay
+CMP-0374,CLM-01920,2026-03-16,Branch,No update on my claim
+CMP-0375,CLM-01922,2026-03-03,Social media,No update on my claim
+CMP-0376,CLM-01932,2026-03-01,Branch,No update on my claim
+CMP-0377,CLM-01940,2026-02-26,Branch,Delay
+CMP-0378,CLM-01947,2026-02-26,Social media,Delay
+CMP-0379,CLM-01950,2026-02-27,Social media,Delay
+CMP-0380,CLM-01954,2026-03-12,Email,Delay
+CMP-0381,CLM-01959,2026-03-01,Phone,Staff attitude
+CMP-0382,CLM-01960,2026-03-02,Email,Delay
+CMP-0383,CLM-01972,2026-03-29,Phone,No update on my claim
+CMP-0384,CLM-01973,2026-03-29,Branch,Delay
+CMP-0385,CLM-01980,2026-03-16,Email,Delay
+CMP-0386,CLM-01982,2026-03-17,Phone,No update on my claim
+CMP-0387,CLM-01987,2026-03-10,Phone,No update on my claim
+CMP-0388,CLM-01990,2026-03-13,Social media,Settlement amount
+CMP-0389,CLM-01993,2026-03-16,Social media,Delay
+CMP-0390,CLM-02003,2026-04-07,Branch,No update on my claim
+CMP-0391,CLM-02021,2026-04-19,Branch,Delay
+CMP-0392,CLM-02024,2026-03-18,Email,No update on my claim
+CMP-0393,CLM-02029,2026-03-06,Email,No update on my claim
+CMP-0394,CLM-02031,2026-03-21,Branch,Delay
+CMP-0395,CLM-02038,2026-03-26,Phone,Settlement amount
+CMP-0396,CLM-02043,2026-03-24,Email,Delay
+CMP-0397,CLM-02049,2026-03-23,Phone,Delay
+CMP-0398,CLM-02051,2026-03-23,Social media,Delay
+CMP-0399,CLM-02052,2026-03-24,Branch,Delay
+CMP-0400,CLM-02055,2026-03-22,Phone,Delay
+CMP-0401,CLM-02056,2026-03-26,Phone,Settlement amount
+CMP-0402,CLM-02059,2026-03-28,Social media,No update on my claim
+CMP-0403,CLM-02062,2026-03-28,Email,No update on my claim
+CMP-0404,CLM-02063,2026-04-14,Email,No update on my claim
+CMP-0405,CLM-02077,2026-04-04,Phone,Settlement amount
+CMP-0406,CLM-02091,2026-04-03,Email,Delay
+CMP-0407,CLM-02099,2026-03-17,Social media,Delay
+CMP-0408,CLM-02101,2026-04-04,Branch,Settlement amount
+CMP-0409,CLM-02106,2026-04-07,Phone,Delay
+CMP-0410,CLM-02116,2026-03-25,Phone,Delay
+CMP-0411,CLM-02118,2026-04-11,Email,Delay
+CMP-0412,CLM-02131,2026-04-20,Social media,Settlement amount
+CMP-0413,CLM-02138,2026-03-24,Social media,No update on my claim
+CMP-0414,CLM-02145,2026-04-25,Phone,Delay
+CMP-0415,CLM-02147,2026-04-17,Branch,Staff attitude
+CMP-0416,CLM-02148,2026-04-02,Email,No update on my claim
+CMP-0417,CLM-02149,2026-04-28,Social media,Delay
+CMP-0418,CLM-02170,2026-04-05,Email,Delay
+CMP-0419,CLM-02171,2026-04-13,Email,Delay
+CMP-0420,CLM-02172,2026-04-19,Email,Settlement amount
+CMP-0421,CLM-02195,2026-04-12,Branch,Staff attitude
+CMP-0422,CLM-02196,2026-04-12,Social media,Settlement amount
+CMP-0423,CLM-02197,2026-03-28,Email,No update on my claim
+CMP-0424,CLM-02198,2026-04-06,Phone,Delay
+CMP-0425,CLM-02201,2026-03-29,Email,Delay
+CMP-0426,CLM-02203,2026-04-01,Social media,Delay
+CMP-0427,CLM-02205,2026-04-24,Phone,Delay
+CMP-0428,CLM-02215,2026-04-04,Email,Delay
+CMP-0429,CLM-02216,2026-03-30,Email,Settlement amount
+CMP-0430,CLM-02217,2026-04-09,Email,No update on my claim
+CMP-0431,CLM-02218,2026-04-27,Phone,Settlement amount
+CMP-0432,CLM-02223,2026-04-26,Social media,Delay
+CMP-0433,CLM-02229,2026-05-02,Phone,Delay
+CMP-0434,CLM-02236,2026-04-09,Phone,Delay
+CMP-0435,CLM-02238,2026-04-20,Social media,Delay
+CMP-0436,CLM-02239,2026-04-01,Social media,Delay
+CMP-0437,CLM-02242,2026-04-23,Social media,Delay
+CMP-0438,CLM-02247,2026-04-03,Phone,Delay
+CMP-0439,CLM-02256,2026-04-10,Branch,Delay
+CMP-0440,CLM-02268,2026-04-17,Phone,Delay
+CMP-0441,CLM-02273,2026-04-08,Social media,Staff attitude
+CMP-0442,CLM-02277,2026-04-11,Branch,Settlement amount
+CMP-0443,CLM-02280,2026-04-18,Social media,No update on my claim
+CMP-0444,CLM-02305,2026-04-23,Phone,Delay
+CMP-0445,CLM-02306,2026-04-26,Branch,Delay
+CMP-0446,CLM-02308,2026-04-19,Phone,Delay
+CMP-0447,CLM-02310,2026-04-28,Email,Delay
+CMP-0448,CLM-02311,2026-04-26,Branch,Delay
+CMP-0449,CLM-02312,2026-05-05,Phone,Settlement amount
+CMP-0450,CLM-02316,2026-04-09,Branch,No update on my claim
+CMP-0451,CLM-02322,2026-04-11,Email,Delay
+CMP-0452,CLM-02323,2026-04-14,Branch,Delay
+CMP-0453,CLM-02328,2026-04-25,Email,Settlement amount
+CMP-0454,CLM-02329,2026-05-04,Email,Delay
+CMP-0455,CLM-02333,2026-04-11,Email,Delay
+CMP-0456,CLM-02336,2026-04-11,Phone,Delay
+CMP-0457,CLM-02342,2026-04-15,Phone,Delay
+CMP-0458,CLM-02346,2026-05-01,Branch,No update on my claim
+CMP-0459,CLM-02348,2026-04-13,Social media,Delay
+CMP-0460,CLM-02349,2026-04-13,Email,Delay
+CMP-0461,CLM-02351,2026-04-16,Social media,Delay
+CMP-0462,CLM-02356,2026-04-18,Phone,Delay
+CMP-0463,CLM-02374,2026-04-23,Phone,No update on my claim
+CMP-0464,CLM-02382,2026-04-29,Email,Delay
+CMP-0465,CLM-02384,2026-04-17,Phone,No update on my claim
+CMP-0466,CLM-02388,2026-05-08,Branch,Settlement amount
+CMP-0467,CLM-02396,2026-05-02,Social media,Settlement amount
+CMP-0468,CLM-02399,2026-05-03,Social media,No update on my claim
+CMP-0469,CLM-02411,2026-05-05,Social media,No update on my claim
+CMP-0470,CLM-02413,2026-04-27,Branch,No update on my claim
+CMP-0471,CLM-02417,2026-05-15,Social media,No update on my claim
+CMP-0472,CLM-02433,2026-05-15,Phone,No update on my claim
+CMP-0473,CLM-02444,2026-06-15,Email,Delay
+CMP-0474,CLM-02451,2026-05-11,Email,No update on my claim
+CMP-0475,CLM-02456,2026-05-21,Phone,Delay
+CMP-0476,CLM-02461,2026-05-16,Phone,Delay
+CMP-0477,CLM-02467,2026-05-01,Branch,Delay
+CMP-0478,CLM-02474,2026-05-05,Phone,Staff attitude
+CMP-0479,CLM-02484,2026-05-05,Phone,Staff attitude
+CMP-0480,CLM-02488,2026-04-29,Phone,No update on my claim
+CMP-0481,CLM-02490,2026-05-16,Social media,Settlement amount
+CMP-0482,CLM-02491,2026-05-08,Email,No update on my claim
+CMP-0483,CLM-02502,2026-05-03,Phone,Delay
+CMP-0484,CLM-02504,2026-05-25,Phone,Delay
+CMP-0485,CLM-02506,2026-05-19,Branch,Delay
+CMP-0486,CLM-02511,2026-05-13,Branch,No update on my claim
+CMP-0487,CLM-02520,2026-05-19,Social media,No update on my claim
+CMP-0488,CLM-02523,2026-05-16,Phone,Delay
+CMP-0489,CLM-02525,2026-05-23,Email,Delay
+CMP-0490,CLM-02526,2026-05-18,Social media,Staff attitude
+CMP-0491,CLM-02539,2026-05-13,Phone,No update on my claim
+CMP-0492,CLM-02544,2026-05-05,Social media,Delay
+CMP-0493,CLM-02548,2026-05-07,Branch,No update on my claim
+CMP-0494,CLM-02553,2026-06-20,Social media,Delay
+CMP-0495,CLM-02554,2026-05-20,Email,Delay
+CMP-0496,CLM-02559,2026-05-16,Phone,No update on my claim
+CMP-0497,CLM-02560,2026-05-18,Branch,Delay
+CMP-0498,CLM-02573,2026-05-23,Phone,Delay
+CMP-0499,CLM-02574,2026-05-05,Phone,Delay
+CMP-0500,CLM-02584,2026-05-09,Phone,Delay
+CMP-0501,CLM-02608,2026-05-08,Social media,Settlement amount
+CMP-0502,CLM-02609,2026-06-05,Email,No update on my claim
+CMP-0503,CLM-02612,2026-05-28,Branch,No update on my claim
+CMP-0504,CLM-02613,2026-05-16,Phone,Delay
+CMP-0505,CLM-02620,2026-05-26,Phone,No update on my claim
+CMP-0506,CLM-02639,2026-05-21,Phone,No update on my claim
+CMP-0507,CLM-02645,2026-05-18,Email,No update on my claim
+CMP-0508,CLM-02648,2026-05-20,Social media,No update on my claim
+CMP-0509,CLM-02655,2026-06-07,Social media,Delay
+CMP-0510,CLM-02664,2026-05-14,Branch,No update on my claim
+CMP-0511,CLM-02665,2026-05-23,Social media,Delay
+CMP-0512,CLM-02668,2026-06-02,Phone,Staff attitude
+CMP-0513,CLM-02670,2026-06-18,Email,Settlement amount
+CMP-0514,CLM-02679,2026-06-11,Social media,Delay
+CMP-0515,CLM-02682,2026-05-25,Branch,Settlement amount
+CMP-0516,CLM-02686,2026-05-24,Phone,Delay
+CMP-0517,CLM-02691,2026-06-22,Social media,Delay
+CMP-0518,CLM-02692,2026-06-09,Email,Delay
+CMP-0519,CLM-02698,2026-06-01,Phone,Delay
+CMP-0520,CLM-02701,2026-05-30,Social media,Delay
+CMP-0521,CLM-02709,2026-06-03,Phone,Settlement amount
+CMP-0522,CLM-02710,2026-05-22,Email,Delay
+CMP-0523,CLM-02731,2026-06-01,Email,Delay
+CMP-0524,CLM-02733,2026-06-14,Phone,No update on my claim
+CMP-0525,CLM-02738,2026-06-05,Branch,Delay
+CMP-0526,CLM-02744,2026-06-06,Email,Delay
+CMP-0527,CLM-02745,2026-05-30,Social media,No update on my claim
+CMP-0528,CLM-02750,2026-06-17,Social media,Delay
+CMP-0529,CLM-02758,2026-05-24,Branch,Delay
+CMP-0530,CLM-02759,2026-06-21,Phone,Delay
+CMP-0531,CLM-02763,2026-06-12,Social media,Delay
+CMP-0532,CLM-02778,2026-06-01,Phone,Delay
+CMP-0533,CLM-02783,2026-06-06,Branch,No update on my claim
+CMP-0534,CLM-02794,2026-05-30,Email,Delay
+CMP-0535,CLM-02795,2026-05-27,Email,Settlement amount
+CMP-0536,CLM-02800,2026-06-08,Phone,Delay
+CMP-0537,CLM-02809,2026-06-18,Phone,Delay
+CMP-0538,CLM-02816,2026-06-06,Phone,Delay
+CMP-0539,CLM-02819,2026-06-13,Phone,Delay
+CMP-0540,CLM-02828,2026-06-10,Social media,Settlement amount
+CMP-0541,CLM-02850,2026-06-05,Social media,Delay
+CMP-0542,CLM-02858,2026-06-25,Phone,Delay
+CMP-0543,CLM-02859,2026-06-17,Phone,No update on my claim
+CMP-0544,CLM-02861,2026-06-08,Phone,Delay
+CMP-0545,CLM-02863,2026-06-19,Email,Settlement amount
+CMP-0546,CLM-02878,2026-06-15,Email,Settlement amount
+CMP-0547,CLM-02889,2026-06-17,Phone,Delay
+CMP-0548,CLM-02891,2026-07-05,Social media,Settlement amount
+CMP-0549,CLM-02892,2026-06-26,Social media,Staff attitude
+CMP-0550,CLM-02893,2026-07-01,Email,Delay
+CMP-0551,CLM-02905,2026-06-06,Phone,No update on my claim
+CMP-0552,CLM-02920,2026-07-05,Email,Staff attitude
+CMP-0553,CLM-02922,2026-07-01,Phone,No update on my claim
+CMP-0554,CLM-02929,2026-06-24,Phone,Settlement amount
+CMP-0555,CLM-02935,2026-07-15,Social media,No update on my claim
+CMP-0556,CLM-02938,2026-07-15,Email,Staff attitude
+CMP-0557,CLM-02940,2026-07-15,Phone,Settlement amount
+CMP-0558,CLM-02943,2026-06-22,Email,No update on my claim
+CMP-0559,CLM-02948,2026-06-13,Phone,Delay
+CMP-0560,CLM-02950,2026-06-24,Phone,Settlement amount
+CMP-0561,CLM-02954,2026-06-14,Email,Staff attitude
+CMP-0562,CLM-02955,2026-06-12,Phone,Delay
+CMP-0563,CLM-02956,2026-06-17,Branch,Delay
+CMP-0564,CLM-02959,2026-07-08,Phone,No update on my claim
+CMP-0565,CLM-02965,2026-06-22,Phone,Delay
+CMP-0566,CLM-02967,2026-07-04,Branch,Delay
+CMP-0567,CLM-02968,2026-06-30,Social media,Delay
+CMP-0568,CLM-02976,2026-06-25,Phone,Delay
+CMP-0569,CLM-02983,2026-06-17,Social media,Staff attitude
+CMP-0570,CLM-02985,2026-07-04,Branch,No update on my claim
+CMP-0571,CLM-02988,2026-06-30,Social media,No update on my claim
+CMP-0572,CLM-02989,2026-06-21,Phone,Delay
+CMP-0573,CLM-02991,2026-06-29,Phone,Delay
+CMP-0574,CLM-02994,2026-06-23,Phone,Delay
+CMP-0575,CLM-02997,2026-07-21,Branch,Delay
+CMP-0576,CLM-03000,2026-06-16,Phone,No update on my claim
+CMP-0577,CLM-03002,2026-06-22,Phone,Delay
+CMP-0578,CLM-03004,2026-06-28,Social media,Delay
+CMP-0579,CLM-03009,2026-06-28,Branch,Delay
+CMP-0580,CLM-03014,2026-06-26,Phone,Delay
+CMP-0581,CLM-03024,2026-06-29,Phone,Settlement amount
+CMP-0582,CLM-03042,2026-06-30,Phone,No update on my claim
+CMP-0583,CLM-03044,2026-06-20,Email,Delay
+CMP-0584,CLM-03053,2026-06-24,Social media,Delay
+CMP-0585,CLM-03058,2026-07-12,Phone,No update on my claim
+CMP-0586,CLM-03076,2026-06-26,Phone,Delay
+CMP-0587,CLM-03077,2026-07-08,Email,Delay
+CMP-0588,CLM-03079,2026-07-12,Social media,Delay
+CMP-0589,CLM-03083,2026-07-03,Social media,No update on my claim
+CMP-0590,CLM-03084,2026-06-25,Social media,Staff attitude
+CMP-0591,CLM-03088,2026-07-07,Branch,No update on my claim
+CMP-0592,CLM-03092,2026-07-01,Phone,No update on my claim
+CMP-0593,CLM-03093,2026-07-01,Branch,No update on my claim
+CMP-0594,CLM-03107,2026-07-03,Social media,Staff attitude
+CMP-0595,CLM-03115,2026-07-13,Email,No update on my claim
+CMP-0596,CLM-03133,2026-07-05,Phone,Delay
+CMP-0597,CLM-03135,2026-07-03,Branch,Settlement amount
+CMP-0598,CLM-03136,2026-07-16,Phone,No update on my claim
+CMP-0599,CLM-03152,2026-07-23,Phone,No update on my claim
+CMP-0600,CLM-03161,2026-07-21,Branch,Delay
+CMP-0601,CLM-03166,2026-07-02,Email,Staff attitude

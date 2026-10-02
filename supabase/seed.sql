@@ -57568,6 +57568,1541 @@ $md$, true, true, 7, array['cap-07-t1', 'cap-07-t2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 
+-- Course: Business Analyst Capstone: From Problem to Board Decision
+insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
+values ('business-analyst-capstone', 'full', null, 'business-analyst-capstone', 'BAC', 'Business Analyst Capstone: From Problem to Board Decision', 'Take a motor insurer''s slow claims from a vague complaint to a board-ready decision: measure the problem, map the real process from its event log, find root causes, evaluate a pilot fairly, build a business case, write requirements with controls and make the go/no-go call.', 'The capstone of the Business Analyst track. Shieldline Insurance''s managing director says motor claims take too long, customers are leaving, the regulator is asking questions, Lagos has tried some changes, and IT wants a ₦280 million claims system. You''ll frame the problem and map the stakeholders, measure the current state, rebuild the real process from 32,000 events, and trace the delay to four root causes: incomplete documents from agents, a physical inspection for every claim, managers who approve only on Fridays, and too few assessors in Port Harcourt. Then you''ll judge the Lagos pilot against the other regions, put a value on slow claims through lost renewals, compare the options by NPV, write user stories with the controls finance needs, read the acceptance test results honestly, and write the decision paper for the board. Use SQL, Excel or Power BI: every answer is checked against the data.', 'business-analysis', 'intermediate', 4, 'Career project', 12, true, 'available', true, array['Problem statements, scope and stakeholder maps', 'Measuring the current state', 'Process mapping from an event log', 'Root cause analysis with evidence', 'Evaluating a pilot against a comparison group', 'Business cases with NPV and payback', 'User stories, business rules and acceptance criteria', 'UAT and go/no-go decisions', 'Decision papers for a board']::text[], array['The core Business Analyst courses: Business Analysis Fundamentals, Excel and SQL', 'Process Improvement with BPMN and Lean is helpful for lessons 3 and 4']::text[], 'Shieldline Insurance: fixing slow motor claims', true, true, true, true, false, 60, 43)
+on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level = excluded.level, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('bac-m01', 'business-analyst-capstone', 'The Brief and the Plan', 1, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('business-analyst-capstone:the-brief-and-the-plan', 'business-analyst-capstone', 'bac-m01', 'the-brief-and-the-plan', 'The brief and the plan', 'Meet Shieldline Insurance, turn a managing director''s frustration into a problem statement, scope and plan, agree the definitions, and map the stakeholders you''ll need on side.', 25, $md$
+## The problem
+
+This is the capstone of the Business Analyst track. There's nothing new to learn here. Instead you'll do the whole job a junior business analyst is hired for, from a vague request to a recommendation the board can approve.
+
+The company is **Shieldline Insurance**, a motor insurer with branches in Lagos, Abuja, Port Harcourt, Ibadan and Kano. Its managing director has sent you this:
+
+> "Our motor claims take far too long. Customers are leaving us, complaints are piling up and the regulator has started asking questions. In April, Lagos tried some changes to the claims process. IT wants us to buy a new claims system for ₦280 million instead. I need to know what's really wrong, whether the Lagos changes worked, and what we should do. The board meets in six weeks."
+
+Notice what the brief contains: a symptom ("too long"), two consequences (customers leaving, complaints), one experiment (Lagos) and one solution already on the table (a new system). A BA's first job is to slow down and frame the problem before anyone buys anything.
+
+## The concept
+
+**The arc of a BA project**
+
+| Stage | Output | Lesson |
+| :-- | :-- | :-- |
+| 1. Brief and plan | Problem statement, scope, definitions, stakeholders | 1 |
+| 2. Current state | The problem in numbers | 2 |
+| 3. Process | The real process, mapped from the event log | 3 |
+| 4. Root causes | Why claims are slow, with evidence | 4 |
+| 5. The pilot | Whether the Lagos changes worked | 5 |
+| 6. Options and business case | Costs, benefits and a recommendation | 6 |
+| 7. Requirements and readiness | User stories, acceptance criteria, test results and a go/no-go | 7 |
+| 8. Present | A decision paper the board can approve | 8 |
+
+Use the tools you know: SQL, Excel or Power BI. The lessons show SQL, which answers every question here; the same steps work as pivot tables or DAX measures.
+
+**A problem statement, not a solution**
+
+A good problem statement says **who** is affected, **what** happens, **how much** (with a number), and **why it matters** to the business. It doesn't name a solution: "We need a new claims system" is a solution, and it closes off the options before you know the cause.
+
+**Scope**
+
+Say what's in and what's out. In: motor claims from submission to payment, the five regions, July 2025 to June 2026. Out: underwriting and pricing, non-motor products, and choosing a system vendor.
+
+**Definitions before numbers**
+
+| Term | Definition |
+| :-- | :-- |
+| Days to settle | `closed_at − submitted_at` in days, for **paid** claims |
+| Baseline | Claims submitted from 1 July 2025 to 31 March 2026 |
+| Pilot | Lagos claims submitted from 1 April 2026 |
+| Comparison group | Other regions' claims submitted from 1 April 2026 |
+
+Write these down before you calculate anything. Without them, two analysts get two different "average days" from the same data and the board stops trusting both.
+
+**Stakeholders**
+
+Plot each stakeholder by **influence** and **interest**. Manage closely those high on both, keep satisfied those with high influence but less interest, and keep informed those with high interest but little influence.
+
+## Example
+
+The data has seven files:
+
+| File | What it is |
+| :-- | :-- |
+| `claims.csv` | One row per motor claim: region, channel, type, amount, outcome, dates |
+| `events.csv` | The claims system's event log: every step of every claim, with a timestamp and team |
+| `complaints.csv` | Complaints linked to claims, with a reason |
+| `renewals.csv` | Policies due for renewal, whether they renewed, and the claim if there was one |
+| `interviews.csv` | Notes from ten stakeholder interviews |
+| `options.csv` | The options on the table, with costs |
+| `uat.csv` | User acceptance test results for the Lagos changes |
+
+A first look at the baseline:
+
+```sql
+SELECT COUNT(*) AS claims,
+       SUM(outcome = 'Paid') AS paid,
+       ROUND(AVG(CASE WHEN outcome = 'Paid' THEN julianday(closed_at) - julianday(submitted_at) END), 1) AS avg_days_to_settle,
+       ROUND(100.0 * SUM(outcome = 'Paid' AND julianday(closed_at) - julianday(submitted_at) > 30) / SUM(outcome = 'Paid'), 1) AS pct_paid_over_30_days
+FROM claims
+WHERE submitted_at < '2026-04-01';
+```
+
+```text
+claims  paid  avg_days_to_settle  pct_paid_over_30_days
+  2239  1904                25.2                   22.9
+```
+
+And the stakeholders, by influence and interest:
+
+```sql
+SELECT influence, interest, GROUP_CONCAT(role, '; ') AS stakeholders
+FROM interviews
+GROUP BY influence, interest
+ORDER BY influence, interest;
+```
+
+```text
+influence  interest  stakeholders
+High       High      Managing director; Head of claims
+High       Low       Compliance officer
+High       Medium    Agency manager; Finance controller; Head of IT
+Low        High      Claims officer; Customer (accident damage)
+Medium     High      Claims manager, Lagos; Senior assessor
+```
+
+The high-influence, high-interest people are the managing director and the head of claims: manage them closely. The finance controller, head of IT, agency manager and compliance officer have high influence but less day-to-day interest: keep them satisfied, and expect objections. The finance controller's fraud worry and the head of IT's preference for a new system will both matter later.
+
+## Walkthrough
+
+1. Download the dataset below and load it into your tool.
+2. Run the two queries above, or build the same in Excel or Power BI.
+3. Read all ten interviews. For each, write one line: what they care about, and what they'd need to support a change.
+4. Write your scope (in and out) and your definitions.
+5. Write the problem statement (the task below).
+
+## Practice
+
+```dataset
+{"dataset": "claims", "files": ["claims", "events", "complaints", "renewals", "interviews", "options", "uat"]}
+```
+
+```answer
+{
+  "id": "bac-01-p1",
+  "prompt": "In the **baseline**, what percentage of **paid** claims took **more than 30 days** to settle? One decimal place.",
+  "answer": 22.9,
+  "format": "percent",
+  "dataset": "claims",
+  "files": ["claims"],
+  "verify": "SELECT ROUND(100.0 * SUM(julianday(closed_at) - julianday(submitted_at) > 30) / COUNT(*), 1) FROM claims WHERE outcome = 'Paid' AND submitted_at < '2026-04-01'",
+  "hint": "Paid claims submitted before 1 April 2026; the share with closed_at − submitted_at over 30 days.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "bac-01-t1",
+  "prompt": "Write Shieldline's **problem statement** (40 to 100 words): **who** is affected, **what** happens, **how much** (with numbers), and **why it matters**. Don't name a solution.",
+  "minutes": 6,
+  "rows": 5,
+  "placeholder": "Motor claimants ...",
+  "rules": [
+    { "label": "Names who is affected (customers, claimants, policyholders)", "pattern": "customer|claimant|policyholder" },
+    { "label": "Uses at least two numbers", "pattern": "\\d+(\\.\\d+)?", "min": 2 },
+    { "label": "Says why it matters (renewals, complaints, regulator, cost)", "pattern": "renew|complain|regulat|cost|leav|lose|lost" },
+    { "label": "Doesn't jump to a solution", "pattern": "new (claims )?system|we (need|should)|buy|implement", "absent": true },
+    { "label": "Between 40 and 100 words", "minWords": 40, "maxWords": 100 }
+  ],
+  "sample": "Shieldline's motor claimants wait an average of 25 days for a paid claim to be settled, and almost a quarter (22.9%) wait more than 30 days. Slow claims generate complaints, which have started to concern the regulator, and customers whose claims are slow appear less likely to renew their policies. The problem affects every region and every channel, and it costs Shieldline customers it has already paid to win.",
+  "note": "\"Appear less likely to renew\" is careful wording: at this stage you haven't measured it yet. A problem statement can be confident about what you know and cautious about what you suspect.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "The brief says IT wants a new claims system. What should the BA do first?",
+    "options": ["Write requirements for the system", "Frame the problem and find its causes before choosing a solution", "Get quotes from vendors", "Reject the idea"],
+    "answer": 1,
+    "explanation": "A solution chosen before the cause is known often fixes the wrong thing."
+  },
+  {
+    "prompt": "Why agree definitions such as \"days to settle\" before analysing?",
+    "options": ["It's a formality", "So every number is calculated the same way and can be trusted", "To make the report longer", "Because the board asks"],
+    "answer": 1,
+    "explanation": "Different definitions give different answers from the same data."
+  },
+  {
+    "prompt": "A stakeholder has high influence but little day-to-day interest. How should you manage them?",
+    "options": ["Ignore them", "Keep them satisfied, and find out early what would make them object", "Manage them closely every day", "Just keep them informed"],
+    "answer": 1,
+    "explanation": "They can stop a change, so learn their concerns early."
+  }
+]
+```
+$md$, true, true, 1, array['bac-01-p1', 'bac-01-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('bac-m02', 'business-analyst-capstone', 'The Current State in Numbers', 2, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('business-analyst-capstone:the-current-state-in-numbers', 'business-analyst-capstone', 'bac-m02', 'the-current-state-in-numbers', 'The current state in numbers', 'Measure the problem before explaining it. Find out how slow claims are by channel, region and type, what happens to claims that aren''t paid, and what customers complain about.', 25, $md$
+## The problem
+
+Everyone at Shieldline has a theory. The agency manager blames the claims desk; the claims desk blames agents; IT blames the old system. Before you test any theory, measure the problem itself. Where is it worst, and for whom? A number that varies a lot between groups is a clue. A number that's the same everywhere points to something shared, such as the process itself.
+
+## The concept
+
+**Cut the headline by every dimension you have**
+
+Average days to settle is 25.2. Break it down by **channel** (how the claim came in), **region** and **claim type**. Look for the groups that stand out and the ones that don't.
+
+**Look at every outcome, not just the happy one**
+
+Paid claims are only part of the story. Claims that are **withdrawn** (closed because the customer stopped responding) are a failure the average hides.
+
+**Customers' own words**
+
+Complaints tell you what customers experience, which isn't always what the business measures. A claim "in progress" in the system can feel like silence to the customer.
+
+## Example
+
+Days to settle by channel:
+
+```sql
+SELECT channel,
+       COUNT(*) AS paid_claims,
+       ROUND(AVG(julianday(closed_at) - julianday(submitted_at)), 1) AS avg_days,
+       ROUND(100.0 * AVG(julianday(closed_at) - julianday(submitted_at) > 30), 1) AS pct_over_30
+FROM claims
+WHERE outcome = 'Paid' AND submitted_at < '2026-04-01'
+GROUP BY channel
+ORDER BY avg_days DESC;
+```
+
+```text
+channel  paid_claims  avg_days  pct_over_30
+Agent            688      28.7         37.2
+Phone            304      25.4         20.1
+Branch           551      22.8         13.8
+Web              361      22.3         11.9
+```
+
+Agent claims are the slowest, by about six days compared with the web. By region and claim type:
+
+```sql
+SELECT region,
+       ROUND(AVG(julianday(closed_at) - julianday(submitted_at)), 1) AS avg_days
+FROM claims
+WHERE outcome = 'Paid' AND submitted_at < '2026-04-01'
+GROUP BY region
+ORDER BY avg_days DESC;
+```
+
+```text
+region         avg_days
+Port Harcourt      27.7
+Lagos              24.9
+Kano               24.9
+Ibadan             24.5
+Abuja              24.5
+```
+
+```sql
+SELECT claim_type,
+       COUNT(*) AS paid_claims,
+       ROUND(AVG(claim_amount_ngn)) AS avg_amount,
+       ROUND(AVG(julianday(closed_at) - julianday(submitted_at)), 1) AS avg_days
+FROM claims
+WHERE outcome = 'Paid' AND submitted_at < '2026-04-01'
+GROUP BY claim_type
+ORDER BY avg_days DESC;
+```
+
+```text
+claim_type       paid_claims  avg_amount  avg_days
+Theft                    177     6044661      31.1
+Third party              303     1256865      24.8
+Windscreen               578      282673      24.6
+Accident damage          846      803901      24.6
+```
+
+Port Harcourt is about three days slower than everywhere else. Theft claims are slower, which is reasonable: they're large and need checks. But look at windscreens. A ₦280,000 windscreen claim takes as long as a ₦800,000 accident claim. Something in the process treats every claim the same, whatever its size.
+
+What customers complain about:
+
+```sql
+SELECT reason,
+       COUNT(*) AS complaints,
+       ROUND(100.0 * COUNT(*) / (SELECT COUNT(*) FROM complaints), 1) AS pct
+FROM complaints
+GROUP BY reason
+ORDER BY complaints DESC;
+```
+
+```text
+reason                 complaints   pct
+Delay                         305  50.7
+No update on my claim         176  29.3
+Settlement amount              78    13
+Staff attitude                 42     7
+```
+
+Half the complaints are about delay. Another 29% are about **not knowing** what's happening, which is a separate problem with a separate fix: even a slow claim feels better when the customer is kept informed.
+
+## Walkthrough
+
+1. Run the queries, or build the same in a pivot table or Power BI.
+2. Break down the outcomes (paid, rejected, withdrawn) by channel. Which channel has the most withdrawals?
+3. Calculate the share of baseline claims that received at least one complaint.
+4. Plot average days to settle by month of submission. Is the problem getting better or worse?
+5. Write the current state summary (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "bac-02-p1",
+  "prompt": "In the baseline, what is the average number of days to settle a paid claim that came in through an **agent**? One decimal place.",
+  "answer": 28.7,
+  "format": "number",
+  "dataset": "claims",
+  "files": ["claims"],
+  "verify": "SELECT ROUND(AVG(julianday(closed_at) - julianday(submitted_at)), 1) FROM claims WHERE outcome = 'Paid' AND channel = 'Agent' AND submitted_at < '2026-04-01'",
+  "hint": "The first query, Agent row.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "bac-02-p2",
+  "prompt": "What percentage of all complaints are about **delay** or **no update on my claim**? One decimal place.",
+  "answer": 80.0,
+  "format": "percent",
+  "dataset": "claims",
+  "files": ["complaints"],
+  "verify": "SELECT ROUND(100.0 * AVG(reason IN ('Delay', 'No update on my claim')), 1) FROM complaints",
+  "hint": "Add the two reasons' shares.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "bac-02-t1",
+  "prompt": "Write the **current state** in three or four bullets (50 to 130 words), each with a **number**: how slow claims are, **where** it's worst, what **customers** complain about, and one thing that **surprised** you.",
+  "minutes": 7,
+  "rows": 6,
+  "placeholder": "- Paid claims take ...",
+  "rules": [
+    { "label": "Three or more bullets", "pattern": "^\\s*[-*•]\\s", "min": 3 },
+    { "label": "Numbers in the bullets", "pattern": "\\d+(\\.\\d+)?", "min": 3 },
+    { "label": "Names where it's worst (agent, channel, region or Port Harcourt)", "pattern": "agent|channel|region|port harcourt" },
+    { "label": "Mentions complaints or customers' experience", "pattern": "complain|update|inform" },
+    { "label": "Between 50 and 130 words", "minWords": 50, "maxWords": 130 }
+  ],
+  "sample": "- Paid claims take 25.2 days on average to settle, and 22.9% take more than 30 days.\n- Agent claims are slowest (28.7 days, against 22.3 on the web), and Port Harcourt is about three days slower than other regions.\n- 80% of complaints are about delay (51%) or hearing nothing about the claim (29%).\n- Surprise: a ₦280,000 windscreen claim takes as long as an ₦800,000 accident claim (24.6 days each), so the process treats small claims like big ones.",
+  "note": "The surprise is often the most useful bullet: it points to the root cause.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Windscreen and accident claims take the same time to settle, although windscreen claims are much smaller. What does that suggest?",
+    "options": ["Windscreens are complicated", "The process treats every claim the same, whatever its size or risk", "The data is wrong", "Accident claims are fast"],
+    "answer": 1,
+    "explanation": "One route for everything means small claims wait behind big-claim controls."
+  },
+  {
+    "prompt": "29% of complaints are about having no update. What does that tell you?",
+    "options": ["Nothing new", "Keeping customers informed is a separate problem from speed, with its own fix", "Customers are impatient", "Complaints should be ignored"],
+    "answer": 1,
+    "explanation": "Status updates can reduce complaints even before the process gets faster."
+  },
+  {
+    "prompt": "Why look at withdrawn claims, not just paid ones?",
+    "options": ["They're more numerous", "Averages over paid claims hide customers who gave up", "They're cheaper", "The regulator requires it"],
+    "answer": 1,
+    "explanation": "A customer who gives up is a failure that never appears in days to settle."
+  }
+]
+```
+$md$, true, true, 2, array['bac-02-p1', 'bac-02-p2', 'bac-02-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('bac-m03', 'business-analyst-capstone', 'The Process from the Event Log', 3, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('business-analyst-capstone:the-process-from-the-event-log', 'business-analyst-capstone', 'bac-m03', 'the-process-from-the-event-log', 'The process from the event log', 'Map how claims really flow from the claims system''s event log, not from the procedure manual. Find the common paths, the rework loops and the waits between steps.', 25, $md$
+## The problem
+
+Shieldline's procedure manual shows a neat claims process: register, check, inspect, approve, pay. In workshops, staff describe that process too. But the claims system has recorded every step of every claim, with a timestamp, in `events.csv`. That log shows how claims **actually** flow, including the loops and waits nobody draws on a whiteboard.
+
+## The concept
+
+**An event log**
+
+Each row is one step: a **case** (the claim), an **activity**, a **timestamp** and who did it (the **team**). Order the rows by case and time and you have each claim's path.
+
+**Variants**
+
+A variant is one distinct path through the process. The most common variant is the "happy path". How many claims follow it, and what the other variants have in common, tells you where the process breaks.
+
+**Rework**
+
+A loop back to an earlier step, here *Documents requested → Documents received → Documents checked*, repeated. Every loop adds days and work.
+
+**Waiting time versus working time**
+
+The gap between two steps is mostly **waiting**: the claim sits in a queue. Most of a slow process is waiting, not work. Find the longest gaps.
+
+## Example
+
+The most common paths through the process, for baseline claims:
+
+```sql
+WITH paths AS (
+  SELECT claim_id, GROUP_CONCAT(activity, ' > ') AS path
+  FROM (SELECT * FROM events ORDER BY claim_id, timestamp)
+  GROUP BY claim_id
+)
+SELECT COUNT(*) AS claims,
+       ROUND(100.0 * COUNT(*) / (SELECT COUNT(*) FROM claims WHERE submitted_at < '2026-04-01'), 1) AS pct,
+       path
+FROM paths JOIN claims USING (claim_id)
+WHERE submitted_at < '2026-04-01'
+GROUP BY path
+ORDER BY claims DESC
+LIMIT 5;
+```
+
+```text
+claims   pct  path
+  1072  47.9  Claim submitted > Claim registered > Documents checked > Assessor assigned > Inspection > Assessment completed > Manager approval > Payment approved > Claim paid
+   562  25.1  Claim submitted > Claim registered > Documents checked > Documents requested > Documents received > Documents checked > Assessor assigned > Inspection > Assessment completed > Manager approval > Payment approved > Claim paid
+   120   5.4  Claim submitted > Claim registered > Documents checked > Documents requested > Documents received > Documents checked > Documents requested > Documents received > Documents checked > Assessor assigned > Inspection > Assessment completed > Manager approval > Payment approved > Claim paid
+   102   4.6  Claim submitted > Claim registered > Documents checked > Documents requested > Claim closed: no response
+    90     4  Claim submitted > Claim registered > Documents checked > Assessor assigned > Inspection > Assessment completed > Claim rejected
+```
+
+Under half of claims follow the happy path. The next two variants are the same path with one or two document loops, and the fourth is a claim closed because the customer stopped responding after documents were requested. Documents are clearly a problem. Notice too that **every** claim, even a windscreen, goes through *Inspection* and *Manager approval*.
+
+Now the waits. For each step, the time since the previous step, averaged over paid baseline claims:
+
+```sql
+WITH steps AS (
+  SELECT e.claim_id, e.activity,
+         LAG(e.activity) OVER (PARTITION BY e.claim_id ORDER BY e.timestamp) AS previous,
+         julianday(e.timestamp) - julianday(LAG(e.timestamp) OVER (PARTITION BY e.claim_id ORDER BY e.timestamp)) AS gap_days
+  FROM events e JOIN claims c USING (claim_id)
+  WHERE c.outcome = 'Paid' AND c.submitted_at < '2026-04-01'
+)
+SELECT previous || ' → ' || activity AS step,
+       COUNT(*) AS times,
+       ROUND(AVG(gap_days), 1) AS avg_days,
+       ROUND(SUM(gap_days) / (SELECT COUNT(*) FROM claims WHERE outcome = 'Paid' AND submitted_at < '2026-04-01'), 1) AS days_per_claim
+FROM steps
+WHERE previous IS NOT NULL
+GROUP BY step
+ORDER BY days_per_claim DESC;
+```
+
+```text
+step                                      times  avg_days  days_per_claim
+Assessor assigned → Inspection             1904       6.3             6.3
+Documents requested → Documents received   1018       5.9             3.1
+Assessment completed → Manager approval    1904       3.1             3.1
+Manager approval → Payment approved        1798       2.9             2.7
+Inspection → Assessment completed          1904       2.2             2.2
+Claim registered → Documents checked       1904         2               2
+Payment approved → Claim paid              1904       1.7             1.7
+Claim submitted → Claim registered         1904       1.3             1.3
+Documents received → Documents checked     1018         2             1.1
+Documents checked → Assessor assigned      1904         1               1
+Manager approval → Head office approval     106       8.1             0.5
+Head office approval → Payment approved     106       2.7             0.2
+Documents checked → Documents requested    1018       0.2             0.1
+```
+
+`days_per_claim` spreads each step's total wait over all paid claims, so the column adds up to the average days to settle. The longest single wait is between an assessor being assigned and the inspection: over six days. Then come waiting for the customer's documents, and waiting for the manager's approval.
+
+## Walkthrough
+
+1. Run both queries. Check that `days_per_claim` adds up to about 25.2.
+2. Draw the current process as a BPMN diagram with swimlanes for Customer or Agent, Claims desk, Assessors, Claims managers, Head office and Finance. Use the log, not the manual: include the document loop and the no-response exit.
+3. Mark each step with its average wait.
+4. Count how many document requests a claim can receive. What's the most?
+5. Describe the process in writing (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "bac-03-p1",
+  "prompt": "What percentage of baseline claims had **documents requested** at least once? One decimal place.",
+  "answer": 45.6,
+  "format": "percent",
+  "dataset": "claims",
+  "files": ["claims", "events"],
+  "verify": "WITH r AS (SELECT claim_id, MAX(activity = 'Documents requested') AS requested FROM events GROUP BY claim_id) SELECT ROUND(100.0 * AVG(requested), 1) FROM r JOIN claims USING (claim_id) WHERE submitted_at < '2026-04-01'",
+  "hint": "For each claim, whether any event is 'Documents requested'; then the average over baseline claims.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "bac-03-p2",
+  "prompt": "For paid baseline claims, what's the average wait in days between **Assessor assigned** and **Inspection**? One decimal place.",
+  "answer": 6.3,
+  "format": "number",
+  "dataset": "claims",
+  "files": ["claims", "events"],
+  "verify": "SELECT ROUND(AVG(julianday(i.timestamp) - julianday(a.timestamp)), 1) FROM events a JOIN events i ON i.claim_id = a.claim_id AND i.activity = 'Inspection' JOIN claims c ON c.claim_id = a.claim_id WHERE a.activity = 'Assessor assigned' AND c.outcome = 'Paid' AND c.submitted_at < '2026-04-01'",
+  "hint": "The top row of the waits query.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "bac-03-t1",
+  "prompt": "Describe the **current process** as numbered steps (60 to 150 words): **who** does each step, the **rework loop**, and the **three longest waits** with their numbers.",
+  "minutes": 8,
+  "rows": 8,
+  "placeholder": "1. The customer or an agent submits the claim ...",
+  "rules": [
+    { "label": "Numbered steps", "pattern": "^\\s*\\d+[.)]\\s", "min": 4 },
+    { "label": "Names the teams (claims desk, assessor, manager, finance)", "pattern": "claims desk|assessor|manager|finance", "min": 3 },
+    { "label": "Describes the document loop", "pattern": "document" },
+    { "label": "Mentions the inspection", "pattern": "inspect" },
+    { "label": "Gives waits in days", "pattern": "\\d+(\\.\\d+)?\\s*days?", "min": 3 },
+    { "label": "Between 60 and 150 words", "minWords": 60, "maxWords": 150 }
+  ],
+  "sample": "1. The customer or an agent submits the claim; the claims desk registers it (1.3 days later on average).\n2. The claims desk checks the documents (2.0 days later). If any are missing, it requests them and waits for the customer (5.9 days per request), then checks again. This loop can repeat; some customers give up.\n3. An assessor is assigned, then inspects the vehicle (6.3 days later: the longest wait), and completes the assessment.\n4. A claims manager approves every claim (3.1 days later); claims over ₦5m also need head office.\n5. Finance approves the payment and pays (about 4.5 days in total).\nThe three longest waits are the inspection (6.3 days), the customer's documents (5.9 days each time) and manager approval (3.1 days).",
+  "note": "Every number comes from the log. The manual says none of this.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why map the process from the event log rather than the procedure manual?",
+    "options": ["The manual is too long", "The log records what actually happens, including loops and waits", "Logs are prettier", "Managers prefer it"],
+    "answer": 1,
+    "explanation": "The real process is the one in the data."
+  },
+  {
+    "prompt": "What does a variant with a repeated \"Documents requested\" step show?",
+    "options": ["A faster claim", "Rework: the claim looped back for missing documents more than once", "A data error", "A rejected claim"],
+    "answer": 1,
+    "explanation": "Each loop adds days and work."
+  },
+  {
+    "prompt": "Most of the 25 days to settle a claim is what?",
+    "options": ["Staff working on it", "Waiting in queues between steps", "System downtime", "Payment processing"],
+    "answer": 1,
+    "explanation": "The gaps between steps are mostly waiting."
+  }
+]
+```
+$md$, true, true, 3, array['bac-03-p1', 'bac-03-p2', 'bac-03-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('bac-m04', 'business-analyst-capstone', 'Root Causes', 4, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('business-analyst-capstone:root-causes', 'business-analyst-capstone', 'bac-m04', 'root-causes', 'Root causes', 'Find out why claims are slow. Split the delay by stage, then test each theory against the data. Look at documents by channel, the day managers approve claims, which claims really need an inspection, and assessor capacity.', 25, $md$
+## The problem
+
+You now know where the time goes. Next is **why**. Each stakeholder has a theory, and some are right. The BA's job is to test each theory with evidence, and to reach causes that someone can actually change. "The old system is slow" is a theory. "Managers approve every claim, once a week" is a cause you can fix.
+
+## The concept
+
+**A Pareto view of the delay**
+
+Group the waits into stages and rank them. Fixing the biggest stage first gives the most benefit.
+
+**Five whys**
+
+Keep asking why until you reach something the business controls. For documents, for example:
+
+1. Why are claims slow? Many wait for missing documents.
+2. Why are documents missing? Claims arrive incomplete.
+3. Why do they arrive incomplete? Mostly from agents and phone staff.
+4. Why from agents? Agents fill paper forms with no checklist, and post them to the branch.
+5. Why no checklist? Agents are paid on sales, and nobody owns claims quality in the agency channel.
+
+**Evidence for every cause**
+
+Each cause needs a number from the data, and ideally a quote from an interview that explains it. Numbers show **that** something happens; people explain **why**.
+
+## Example
+
+The delay by stage, as a share of all waiting, for paid baseline claims:
+
+```sql
+WITH steps AS (
+  SELECT e.activity,
+         LAG(e.activity) OVER (PARTITION BY e.claim_id ORDER BY e.timestamp) AS previous,
+         julianday(e.timestamp) - julianday(LAG(e.timestamp) OVER (PARTITION BY e.claim_id ORDER BY e.timestamp)) AS gap_days
+  FROM events e JOIN claims c USING (claim_id)
+  WHERE c.outcome = 'Paid' AND c.submitted_at < '2026-04-01'
+),
+staged AS (
+  SELECT CASE
+           WHEN activity = 'Claim registered' THEN 'Registration'
+           WHEN activity = 'Documents checked' AND previous = 'Claim registered' THEN 'First document check'
+           WHEN activity IN ('Documents requested', 'Documents received', 'Documents checked') THEN 'Chasing documents'
+           WHEN activity IN ('Assessor assigned', 'Inspection', 'Assessment completed') THEN 'Assessment'
+           WHEN activity IN ('Manager approval', 'Head office approval') THEN 'Approval'
+           ELSE 'Payment'
+         END AS stage,
+         gap_days
+  FROM steps WHERE previous IS NOT NULL
+)
+SELECT stage, ROUND(100.0 * SUM(gap_days) / (SELECT SUM(gap_days) FROM staged), 1) AS pct_of_delay
+FROM staged
+GROUP BY stage
+ORDER BY pct_of_delay DESC;
+```
+
+```text
+stage                 pct_of_delay
+Assessment                    37.8
+Payment                       17.9
+Chasing documents             17.1
+Approval                      14.1
+First document check             8
+Registration                   5.1
+```
+
+Assessment is the biggest stage by far. Payment comes second, at 18%: finance takes about four and a half days to approve and pay. Nobody mentioned it in the interviews, so note it as a question for the finance controller. Chasing documents and approval follow close behind.
+
+Now test the theories one by one. **Documents**, by channel:
+
+```sql
+WITH r AS (SELECT claim_id, MAX(activity = 'Documents requested') AS requested FROM events GROUP BY claim_id)
+SELECT channel, COUNT(*) AS claims, ROUND(100.0 * AVG(requested), 1) AS pct_documents_requested
+FROM r JOIN claims USING (claim_id)
+WHERE submitted_at < '2026-04-01'
+GROUP BY channel
+ORDER BY pct_documents_requested DESC;
+```
+
+```text
+channel  claims  pct_documents_requested
+Agent       838                     61.8
+Phone       359                     56.8
+Branch      623                     30.3
+Web         419                     26.5
+```
+
+Agent and phone claims arrive incomplete about twice as often as branch and web claims. The difference is the channel, not the customer.
+
+**Approval**. The Lagos claims manager said they approve on Fridays. The log agrees:
+
+```sql
+SELECT CASE strftime('%w', timestamp) WHEN '1' THEN 'Monday' WHEN '2' THEN 'Tuesday' WHEN '3' THEN 'Wednesday'
+         WHEN '4' THEN 'Thursday' WHEN '5' THEN 'Friday' WHEN '6' THEN 'Saturday' ELSE 'Sunday' END AS weekday,
+       COUNT(*) AS manager_approvals
+FROM events JOIN claims USING (claim_id)
+WHERE activity = 'Manager approval' AND submitted_at < '2026-04-01'
+GROUP BY weekday;
+```
+
+```text
+weekday  manager_approvals
+Friday                1904
+```
+
+Every manager approval happens on a Friday. A claim assessed on a Saturday waits almost a week for a signature. And which claims need a manager?
+
+```sql
+SELECT ROUND(100.0 * AVG(claim_amount_ngn < 1000000 AND claim_type IN ('Windscreen', 'Accident damage')), 1) AS pct_small_windscreen_or_accident
+FROM claims
+WHERE submitted_at < '2026-04-01';
+```
+
+```text
+pct_small_windscreen_or_accident
+                            62.3
+```
+
+Almost two-thirds of claims are windscreen or accident claims under ₦1m, yet each gets the same physical inspection and manager sign-off as a ₦6m theft. The controls are sized for the riskiest claims and applied to all of them.
+
+**Assessor capacity**, the longest wait:
+
+```sql
+SELECT region, ROUND(AVG(julianday(i.timestamp) - julianday(a.timestamp)), 1) AS days_to_inspection
+FROM events a
+JOIN events i ON i.claim_id = a.claim_id AND i.activity = 'Inspection'
+JOIN claims c ON c.claim_id = a.claim_id
+WHERE a.activity = 'Assessor assigned' AND c.submitted_at < '2026-04-01'
+GROUP BY region
+ORDER BY days_to_inspection DESC;
+```
+
+```text
+region         days_to_inspection
+Port Harcourt                 8.4
+Kano                            6
+Lagos                         5.9
+Ibadan                        5.9
+Abuja                         5.8
+```
+
+Port Harcourt waits over two days longer for an inspection, which matches the senior assessor's comment that it has only two assessors. That's a capacity problem, separate from the process.
+
+## Walkthrough
+
+1. Run the queries.
+2. Write five whys for each of the four causes: documents, inspections, approvals and Port Harcourt's capacity.
+3. Match each cause with a quote from `interviews.csv`.
+4. Check one theory that turns out to be **wrong**. Does the old claims system cause the delay? Which steps would a new system actually speed up? (Look at what causes the long gaps.)
+5. Write the root cause table (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "bac-04-p1",
+  "prompt": "In the baseline, what percentage of claims that came in through an **agent** had documents requested at least once? One decimal place.",
+  "answer": 61.8,
+  "format": "percent",
+  "dataset": "claims",
+  "files": ["claims", "events"],
+  "verify": "WITH r AS (SELECT claim_id, MAX(activity = 'Documents requested') AS requested FROM events GROUP BY claim_id) SELECT ROUND(100.0 * AVG(requested), 1) FROM r JOIN claims USING (claim_id) WHERE submitted_at < '2026-04-01' AND channel = 'Agent'",
+  "hint": "The documents-by-channel query, Agent row.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "bac-04-p2",
+  "prompt": "What percentage of baseline claims are **windscreen or accident damage** claims **under ₦1m**? One decimal place.",
+  "answer": 62.3,
+  "format": "percent",
+  "dataset": "claims",
+  "files": ["claims"],
+  "verify": "SELECT ROUND(100.0 * AVG(claim_amount_ngn < 1000000 AND claim_type IN ('Windscreen', 'Accident damage')), 1) FROM claims WHERE submitted_at < '2026-04-01'",
+  "hint": "Count claims with the right type and amount, as a share of all baseline claims.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "bac-04-t1",
+  "prompt": "Write a **root cause table** or list (60 to 160 words) with at least **three causes**. For each, give the **evidence** (a number), the **reason** behind it, and **who owns** fixing it.",
+  "minutes": 8,
+  "rows": 8,
+  "placeholder": "| Cause | Evidence | Why | Owner |",
+  "rules": [
+    { "label": "Covers documents", "pattern": "document" },
+    { "label": "Covers approvals (Friday, weekly, manager)", "pattern": "friday|weekly|once a week|manager" },
+    { "label": "Covers inspections or assessors", "pattern": "inspect|assessor" },
+    { "label": "Evidence with numbers", "pattern": "\\d+(\\.\\d+)?", "min": 3 },
+    { "label": "Names owners", "pattern": "owner|head of|manager|agency|claims", "min": 2 },
+    { "label": "Between 60 and 160 words", "minWords": 60, "maxWords": 160 }
+  ],
+  "sample": "| Cause | Evidence | Why | Owner |\n| :-- | :-- | :-- | :-- |\n| Incomplete documents | 61.8% of agent claims need documents chased, against 26.5% on the web | Agents use paper forms with no checklist and are paid on sales only | Agency manager |\n| Every claim inspected in person | 62.3% of claims are windscreen or accident claims under ₦1m; the inspection wait averages 6.3 days | One route for every claim, whatever its size | Head of claims |\n| Weekly approvals | Every manager approval is on a Friday; 3.1 days' average wait | Managers batch sign-offs because the week is full of meetings | Head of claims |\n| Too few assessors in Port Harcourt | 8.4 days to inspection, against about 6 elsewhere | Two assessors for the region | Head of claims |",
+  "note": "Owners matter: a cause without an owner doesn't get fixed.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Every manager approval in the log happens on a Friday. What is the root cause?",
+    "options": ["The system only works on Fridays", "Managers sign off claims in a weekly batch", "Customers submit on Fridays", "Finance is slow"],
+    "answer": 1,
+    "explanation": "A working habit, which is cheap to change."
+  },
+  {
+    "prompt": "Which is a root cause someone can act on?",
+    "options": ["Claims are slow", "The system is old", "Agents have no checklist, so 62% of their claims arrive incomplete", "Customers are disorganised"],
+    "answer": 2,
+    "explanation": "Specific, evidenced and ownable."
+  },
+  {
+    "prompt": "Would a new claims system fix the longest wait, the 6.3 days before an inspection?",
+    "options": ["Yes, always", "Not by itself: that wait comes from assessor capacity and inspecting every claim, not software", "Only in Lagos", "It would make it longer"],
+    "answer": 1,
+    "explanation": "Match the fix to the cause."
+  }
+]
+```
+$md$, true, true, 4, array['bac-04-p1', 'bac-04-p2', 'bac-04-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('bac-m05', 'business-analyst-capstone', 'Did the Pilot Work?', 5, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('business-analyst-capstone:did-the-pilot-work', 'business-analyst-capstone', 'bac-m05', 'did-the-pilot-work', 'Did the pilot work?', 'Evaluate the Lagos pilot honestly. Compare it with the other regions over the same months, so the season isn''t mistaken for the change. Then check every measure the pilot was meant to move, and the ones it mustn''t harm.', 25, $md$
+## The problem
+
+From 1 April 2026, Lagos tried four changes:
+
+1. A **document checklist app** for agents and phone staff, so claims can't be sent without the right documents.
+2. **Photo assessment** for windscreen claims, instead of a physical inspection.
+3. **Assessors approve** windscreen and accident claims under ₦1m, instead of waiting for the manager's Friday sign-off.
+4. **SMS updates** telling customers what's happening and what's missing.
+
+The Lagos claims manager says claims are "much faster". The head of IT says April to June is always different and the pilot proves nothing. They could both be partly right. Your job is to measure it fairly.
+
+## The concept
+
+**Before and after isn't enough**
+
+Comparing Lagos in April to June with Lagos before mixes the pilot's effect with anything else that changed at the same time. April brings the rainy season, more accidents and busier assessors **everywhere**.
+
+**A comparison group**
+
+The other four regions didn't get the changes but did get the season. Their change over the same period shows what would probably have happened in Lagos without the pilot.
+
+**Difference in differences**
+
+(Lagos after − Lagos before) − (others after − others before). The second bracket removes whatever affected everyone. It assumes Lagos and the other regions would otherwise have moved together, so check that they were similar before.
+
+**Check what it mustn't harm**
+
+A faster process that rejects good claims or approves bad ones isn't a success. Look at rejection rates and the controls.
+
+## Example
+
+Days to settle, before and during the pilot, for Lagos and the others:
+
+```sql
+SELECT CASE WHEN region = 'Lagos' THEN 'Lagos' ELSE 'Other regions' END AS grp,
+       CASE WHEN submitted_at < '2026-04-01' THEN '1 Before' ELSE '2 Pilot period' END AS period,
+       COUNT(*) AS paid_claims,
+       ROUND(AVG(julianday(closed_at) - julianday(submitted_at)), 1) AS avg_days
+FROM claims
+WHERE outcome = 'Paid'
+GROUP BY grp, period
+ORDER BY grp, period;
+```
+
+```text
+grp            period          paid_claims  avg_days
+Lagos          1 Before                676      24.9
+Lagos          2 Pilot period          296      17.6
+Other regions  1 Before               1228      25.4
+Other regions  2 Pilot period          507      26.4
+```
+
+Before the pilot, Lagos and the other regions were almost identical, which makes the others a good comparison. During the pilot, the other regions got about a day **slower** (the season), while Lagos got more than seven days faster. The difference in differences:
+
+```sql
+WITH g AS (
+  SELECT region = 'Lagos' AS lagos, submitted_at >= '2026-04-01' AS pilot,
+         AVG(julianday(closed_at) - julianday(submitted_at)) AS days
+  FROM claims WHERE outcome = 'Paid' GROUP BY lagos, pilot
+)
+SELECT ROUND((SELECT days FROM g WHERE lagos = 1 AND pilot = 1) - (SELECT days FROM g WHERE lagos = 1 AND pilot = 0)
+           - ((SELECT days FROM g WHERE lagos = 0 AND pilot = 1) - (SELECT days FROM g WHERE lagos = 0 AND pilot = 0)), 1) AS did_days;
+```
+
+```text
+did_days
+    -8.4
+```
+
+A naive before-and-after would say 7.4 days. Allowing for the season, the pilot saved about 8.4 days per paid claim. Now the other measures:
+
+```sql
+WITH r AS (SELECT claim_id, MAX(activity = 'Documents requested') AS requested FROM events GROUP BY claim_id),
+x AS (
+  SELECT c.*, r.requested, (SELECT COUNT(*) FROM complaints m WHERE m.claim_id = c.claim_id) AS complaints
+  FROM claims c JOIN r USING (claim_id)
+)
+SELECT CASE WHEN region = 'Lagos' THEN 'Lagos' ELSE 'Other regions' END AS grp,
+       CASE WHEN submitted_at < '2026-04-01' THEN '1 Before' ELSE '2 Pilot period' END AS period,
+       COUNT(*) AS claims,
+       ROUND(100.0 * AVG(requested), 1) AS pct_docs_requested,
+       ROUND(100.0 * AVG(outcome = 'Paid' AND julianday(closed_at) - julianday(submitted_at) > 30), 1) AS pct_paid_over_30,
+       ROUND(100.0 * AVG(outcome = 'Withdrawn'), 1) AS pct_withdrawn,
+       ROUND(100.0 * AVG(outcome = 'Rejected'), 1) AS pct_rejected,
+       ROUND(100.0 * SUM(complaints) / COUNT(*), 1) AS complaints_per_100
+FROM x
+GROUP BY grp, period
+ORDER BY grp, period;
+```
+
+```text
+grp            period          claims  pct_docs_requested  pct_paid_over_30  pct_withdrawn  pct_rejected  complaints_per_100
+Lagos          1 Before           793                47.3              18.7            7.4           7.3                19.4
+Lagos          2 Pilot period     337                  16               3.9            2.1          10.1                 9.8
+Other regions  1 Before          1446                44.7              19.9            7.2           7.9                19.5
+Other regions  2 Pilot period     590                  41              21.9            6.4           7.6                22.4
+```
+
+The checklist did what it was meant to: claims needing documents chased fell from 47% to 16% in Lagos, while the other regions barely changed. Withdrawals and complaints fell too, and slow claims (over 30 days) almost disappeared.
+
+One number needs watching: Lagos rejected 10.1% of claims during the pilot, against 7.3% before. That's 34 claims out of 337, a small sample, and a rise in rejections doesn't suggest assessors are approving too freely. But it's worth a sample audit before rollout, and the finance controller will ask.
+
+## Walkthrough
+
+1. Run the queries and reproduce the difference in differences.
+2. Check that Lagos and the other regions moved together **before** the pilot. Plot monthly days to settle for both, from July 2025.
+3. Split the Lagos pilot claims by type. How much faster were windscreen claims, which no longer had an inspection?
+4. List what the pilot **can't** tell you: for example, whether it would work in Port Harcourt with only two assessors.
+5. Write the pilot result (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "bac-05-p1",
+  "prompt": "What's the **difference in differences** in average days to settle a paid claim: Lagos's change minus the other regions' change? One decimal place (it's negative).",
+  "answer": -8.4,
+  "format": "number",
+  "dataset": "claims",
+  "files": ["claims"],
+  "verify": "WITH g AS (SELECT region = 'Lagos' AS lagos, submitted_at >= '2026-04-01' AS pilot, AVG(julianday(closed_at) - julianday(submitted_at)) AS days FROM claims WHERE outcome = 'Paid' GROUP BY lagos, pilot) SELECT ROUND((SELECT days FROM g WHERE lagos = 1 AND pilot = 1) - (SELECT days FROM g WHERE lagos = 1 AND pilot = 0) - ((SELECT days FROM g WHERE lagos = 0 AND pilot = 1) - (SELECT days FROM g WHERE lagos = 0 AND pilot = 0)), 1)",
+  "hint": "(Lagos pilot − Lagos before) − (others pilot − others before), using unrounded averages.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "bac-05-p2",
+  "prompt": "During the pilot, what percentage of **Lagos** claims had documents requested at least once? One decimal place.",
+  "answer": 16.0,
+  "format": "percent",
+  "dataset": "claims",
+  "files": ["claims", "events"],
+  "verify": "WITH r AS (SELECT claim_id, MAX(activity = 'Documents requested') AS requested FROM events GROUP BY claim_id) SELECT ROUND(100.0 * AVG(requested), 1) FROM r JOIN claims USING (claim_id) WHERE region = 'Lagos' AND submitted_at >= '2026-04-01'",
+  "hint": "Lagos claims submitted from 1 April 2026.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "bac-05-t1",
+  "prompt": "Write the **pilot result** for the board (50 to 130 words): the effect on days to settle **compared with the other regions**, two other measures that moved, one thing to **watch**, and one thing the pilot **can't tell you**.",
+  "minutes": 7,
+  "rows": 6,
+  "placeholder": "Compared with the other regions, ...",
+  "rules": [
+    { "label": "Uses the comparison with other regions", "pattern": "other regions|comparison|difference in differences|compared with" },
+    { "label": "Gives the days saved", "pattern": "8(\\.\\d)?\\s*days" },
+    { "label": "Numbers for other measures", "pattern": "\\d+(\\.\\d+)?\\s*%", "min": 2 },
+    { "label": "Something to watch (rejections, controls, audit)", "pattern": "reject|audit|control|watch" },
+    { "label": "A limit of the pilot (one region, Port Harcourt, capacity, three months)", "pattern": "port harcourt|one region|only lagos|capacity|three months|short" },
+    { "label": "Between 50 and 130 words", "minWords": 50, "maxWords": 130 }
+  ],
+  "sample": "Compared with the other regions over the same months, the Lagos pilot cut the average time to settle a paid claim by about 8.4 days (from 24.9 to 17.6, while other regions slowed slightly in the rainy season). Claims needing documents chased fell from 47% to 16%, and withdrawals from 7.4% to 2.1%. To watch: rejections rose from 7.3% to 10.1%, on a small sample; we'll audit pilot decisions before rollout. The pilot ran for three months in one region, so it can't tell us whether it works in Port Harcourt, where the bottleneck is assessor capacity.",
+  "note": "Honest and useful: the effect is clear, and so are its limits.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why compare Lagos with the other regions instead of just before and after?",
+    "options": ["The board prefers it", "To remove changes that affected everyone at the same time, such as the season", "Lagos is bigger", "It gives a bigger number"],
+    "answer": 1,
+    "explanation": "The comparison group shows what would have happened anyway."
+  },
+  {
+    "prompt": "What does difference in differences assume?",
+    "options": ["Nothing", "Without the pilot, Lagos would have moved like the other regions", "Lagos is unique", "The pilot was random"],
+    "answer": 1,
+    "explanation": "Check it by looking at the trends before the pilot."
+  },
+  {
+    "prompt": "Rejections rose slightly in the pilot, on a small sample. What's the right response?",
+    "options": ["Stop the pilot", "Ignore it", "Note it, and audit a sample of decisions before rolling out", "Hide it"],
+    "answer": 2,
+    "explanation": "Proportionate checking, reported openly."
+  }
+]
+```
+$md$, true, true, 5, array['bac-05-p1', 'bac-05-p2', 'bac-05-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('bac-m06', 'business-analyst-capstone', 'Options and the Business Case', 6, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('business-analyst-capstone:options-and-the-business-case', 'business-analyst-capstone', 'bac-m06', 'options-and-the-business-case', 'Options and the business case', 'Put a value on slow claims through lost renewals, cost the benefits of rolling out the Lagos changes from the pilot''s evidence, and compare the options by net present value and payback, with every assumption stated.', 30, $md$
+## The problem
+
+Three options are on the table, in `options.csv`. The head of IT is pushing the new claims system. The managing director wants to know which option is worth the money. A business case answers that, but only if its benefits are built from evidence rather than from a supplier's brochure.
+
+## The concept
+
+**Options always include doing nothing**
+
+"Do nothing" is the baseline the others are measured against. It isn't free: slow claims keep costing renewals.
+
+**Benefits you can trace**
+
+Each benefit should follow a chain: a change in the process → a change in what customers or staff do → money. Here:
+
+- **Renewals.** Customers whose claims are slow or abandoned renew less. Fewer slow claims means more renewals.
+- **Inspections avoided.** Windscreen claims no longer need a physical inspection.
+- **Document chasing avoided.** Fewer requests means less staff time.
+
+**Count contribution, not premium**
+
+A renewed policy brings in premium, but much of that premium pays future claims and costs. Use the **contribution** (what's left), which Shieldline's finance team puts at 35% of premium.
+
+**NPV and payback**
+
+Net present value discounts future net benefits to today's money: NPV = −cost today + Σ net benefit ÷ (1 + rate)^year. Shieldline uses 15% and a three-year horizon. Payback is the time until the cumulative net benefit covers the up-front cost.
+
+**Correlation isn't proof**
+
+Customers with slow claims renew less. Some of that gap could be about the claims themselves (bigger, more stressful accidents take longer). Say so, and use the pilot's measured changes rather than the most optimistic figure.
+
+## Example
+
+The options:
+
+```sql
+SELECT option_id, option, one_off_cost_ngn, annual_running_cost_ngn, months_to_deliver, supplier_estimate_days_saved
+FROM options;
+```
+
+```text
+option_id  option             one_off_cost_ngn  annual_running_cost_ngn  months_to_deliver  supplier_estimate_days_saved
+O1         Do nothing                        0                        0                  0
+O2         Fix the process            42000000                 12000000                  4
+O3         New claims system         280000000                 60000000                 14                            18
+```
+
+Renewal rates by the customer's claim experience, for policies with a baseline claim and policies with none:
+
+```sql
+SELECT CASE WHEN c.claim_id IS NULL THEN '1 No claim'
+            WHEN c.outcome = 'Paid' AND julianday(c.closed_at) - julianday(c.submitted_at) <= 30 THEN '2 Paid within 30 days'
+            WHEN c.outcome = 'Paid' THEN '3 Paid after 30 days'
+            ELSE '4 ' || c.outcome END AS experience,
+       COUNT(*) AS policies,
+       ROUND(100.0 * AVG(r.renewed), 1) AS pct_renewed,
+       ROUND(AVG(r.annual_premium_ngn)) AS avg_premium
+FROM renewals r LEFT JOIN claims c USING (claim_id)
+GROUP BY experience
+ORDER BY experience;
+```
+
+```text
+experience             policies  pct_renewed  avg_premium
+1 No claim                 9000         80.4       391577
+2 Paid within 30 days      1468         78.5       430427
+3 Paid after 30 days        436         63.8       430408
+4 Rejected                  172         46.5       415308
+4 Withdrawn                 163         41.1       418761
+```
+
+A claim paid within 30 days barely dents loyalty. A slow claim costs about 15 points of renewal, and a customer who gives up (withdrawn) renews at only 41%. The yearly volumes, and the pilot's effect on document requests per claim:
+
+```sql
+SELECT ROUND(COUNT(*) * 12.0 / 9) AS claims_per_year,
+       ROUND(SUM(claim_type = 'Windscreen') * 12.0 / 9) AS windscreens_per_year
+FROM claims WHERE submitted_at < '2026-04-01';
+```
+
+```text
+claims_per_year  windscreens_per_year
+           2985                   892
+```
+
+```sql
+WITH r AS (SELECT claim_id, SUM(activity = 'Documents requested') AS requests FROM events GROUP BY claim_id)
+SELECT CASE WHEN region = 'Lagos' THEN 'Lagos' ELSE 'Other regions' END AS grp,
+       CASE WHEN submitted_at < '2026-04-01' THEN '1 Before' ELSE '2 Pilot period' END AS period,
+       ROUND(AVG(requests), 3) AS requests_per_claim
+FROM r JOIN claims USING (claim_id)
+GROUP BY grp, period
+ORDER BY grp, period;
+```
+
+```text
+grp            period          requests_per_claim
+Lagos          1 Before                     0.648
+Lagos          2 Pilot period               0.187
+Other regions  1 Before                     0.589
+Other regions  2 Pilot period               0.559
+```
+
+The difference in differences is (0.187 − 0.648) − (0.559 − 0.589) = **−0.431** requests per claim. From lesson 5, the pilot also cut paid claims over 30 days by (3.9 − 18.7) − (21.9 − 19.9) = **16.8 points**, and withdrawals by (2.1 − 7.4) − (6.4 − 7.2) = **4.5 points**.
+
+The yearly benefit of rolling out option O2, using finance's figures of 35% contribution, ₦15,000 per physical inspection and ₦6,000 of staff time per document request:
+
+| Benefit | Calculation | Per year |
+| :-- | :-- | --: |
+| Fewer slow claims | 2,985 × 16.8% × (78.5% − 63.8%) = 73.7 renewals | |
+| Fewer withdrawals | 2,985 × 4.5% × (78.5% − 41.1%) = 50.2 renewals | |
+| Renewals, as contribution | 124.0 renewals × ₦430,000 (the average premium with a paid claim) × 35% | ₦18.66m |
+| Inspections avoided | 892 windscreens × ₦15,000 | ₦13.38m |
+| Document requests avoided | 2,985 × 0.431 × ₦6,000 | ₦7.72m |
+| **Total** | | **₦39.76m** |
+
+Then the options over three years at 15%. The discount factors for years 1 to 3 add up to 0.870 + 0.756 + 0.658 = 2.283:
+
+| Option | Up-front | Net benefit per year | NPV | Payback |
+| :-- | --: | --: | --: | --: |
+| O1 Do nothing | 0 | 0 | 0 | |
+| O2 Fix the process | ₦42m | ₦39.76m − ₦12m = ₦27.76m | −42 + 27.76 × 2.283 = **₦21.4m** | 1.5 years |
+| O3 New claims system | ₦280m | even at double O2's benefit: ₦79.52m − ₦60m = ₦19.52m | **−₦235.4m** | over 14 years |
+
+O2 pays back in about a year and a half. O3 doesn't come close, even if its benefits were twice the pilot's and it were delivered immediately rather than in 14 months. Its supplier's estimate of 18 days saved is a claim; the pilot's 8.4 days is evidence. And a new system wouldn't, by itself, change the Friday approvals or add assessors in Port Harcourt.
+
+## Walkthrough
+
+1. Run the queries and rebuild the benefits table in a spreadsheet, with every input in its own cell.
+2. Do a **sensitivity check**: what if the renewal effect is only half as big? What if contribution is 25%? Does O2 still pay back within three years?
+3. Cost one extra assessor for Port Harcourt (say ₦9m a year). What would it need to achieve to pay for itself?
+4. Write down every assumption, with its source.
+5. Write the recommendation (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "bac-06-p1",
+  "prompt": "How many percentage points higher is the renewal rate for customers whose claim was **paid within 30 days** than for those **paid after 30 days**? One decimal place.",
+  "answer": 14.8,
+  "tolerance": 0.1,
+  "format": "number",
+  "dataset": "claims",
+  "files": ["claims", "renewals"],
+  "verify": "SELECT ROUND(100.0 * (AVG(CASE WHEN julianday(c.closed_at) - julianday(c.submitted_at) <= 30 THEN r.renewed END) - AVG(CASE WHEN julianday(c.closed_at) - julianday(c.submitted_at) > 30 THEN r.renewed END)), 1) FROM renewals r JOIN claims c USING (claim_id) WHERE c.outcome = 'Paid'",
+  "hint": "Join renewals to claims, keep paid claims, and compare the two groups' renewal rates.",
+  "explanation": "14.8 from the unrounded rates; 78.5 − 63.8 = 14.7 from the rounded ones in the table, which is also accepted.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "bac-06-p2",
+  "prompt": "Using the lesson's figures, what's the three-year **NPV** of option O2 at 15%, in ₦ millions? One decimal place.",
+  "answer": 21.4,
+  "format": "number",
+  "hint": "−42 + 27.76 × (1/1.15 + 1/1.15² + 1/1.15³).",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "bac-06-t1",
+  "prompt": "Write the **recommendation** (60 to 150 words): which **option**, its **NPV and payback**, why **not** the others, the **key assumptions**, and what would change your mind.",
+  "minutes": 8,
+  "rows": 7,
+  "placeholder": "We recommend ...",
+  "rules": [
+    { "label": "Recommends an option", "pattern": "recommend" },
+    { "label": "Gives NPV or payback with numbers", "pattern": "(npv|payback)[^.]*\\d" },
+    { "label": "Explains why not the new system", "pattern": "new (claims )?system|O3" },
+    { "label": "States assumptions", "pattern": "assum|contribution|35%" },
+    { "label": "Says what would change the decision", "pattern": "change (my|our) mind|if [^.]*(were|was|turns out|proves)|would reconsider|unless" },
+    { "label": "Between 60 and 150 words", "minWords": 60, "maxWords": 150 }
+  ],
+  "sample": "We recommend option O2: roll out the Lagos changes to every region. It costs ₦42m up front and ₦12m a year, returns about ₦39.8m a year, and has a three-year NPV of ₦21.4m with payback in about 18 months. We don't recommend a new claims system (O3) now: at ₦280m it loses money even at double the pilot's benefits, and it wouldn't fix approvals or assessor capacity by itself. Key assumptions: the pilot's effects hold in other regions, contribution is 35% of premium, and slow claims cause part of the lower renewals. If the renewal effect were only half as big, O2 would still break even over three years. We'd reconsider O3 if the current system reaches the end of its support life.",
+  "note": "The recommendation is stronger because it shows its assumptions and the conditions under which it would be wrong.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why use contribution rather than the full premium of a renewed policy?",
+    "options": ["It's bigger", "Much of the premium pays future claims and costs; only the contribution is benefit", "The regulator says so", "Premium is unknown"],
+    "answer": 1,
+    "explanation": "Count what the business actually keeps."
+  },
+  {
+    "prompt": "A supplier says its system saves 18 days; a pilot measured 8.4. Which should the business case use?",
+    "options": ["The supplier's figure", "The measured figure, treating the supplier's as an unproven claim", "The average", "Neither"],
+    "answer": 1,
+    "explanation": "Evidence beats promises."
+  },
+  {
+    "prompt": "Why include \"do nothing\" as an option?",
+    "options": ["It's always best", "It's the baseline the others are compared with, and it has costs of its own", "To fill the table", "Boards require three options"],
+    "answer": 1,
+    "explanation": "Doing nothing keeps losing renewals."
+  }
+]
+```
+$md$, true, true, 6, array['bac-06-p1', 'bac-06-p2', 'bac-06-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('bac-m07', 'business-analyst-capstone', 'Requirements and Readiness', 7, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('business-analyst-capstone:requirements-and-readiness', 'business-analyst-capstone', 'bac-m07', 'requirements-and-readiness', 'Requirements and readiness', 'Turn the root causes into requirements, business rules and user stories with acceptance criteria. Define the measures that will prove the change worked, then read the acceptance test results and make an honest go or no-go call.', 25, $md$
+## The problem
+
+The Lagos pilot was run with workarounds: a checklist app built quickly, and assessors approving claims under an informal rule. To roll it out to five regions, it needs proper requirements, controls the finance controller will accept, and tested software. User acceptance testing (UAT) has just finished, and the results are in `uat.csv`. The managing director wants to know: **can we roll out next month?**
+
+## The concept
+
+**From cause to requirement**
+
+Every requirement should trace back to a root cause, so nobody builds something that doesn't solve a real problem:
+
+| Root cause | Requirement |
+| :-- | :-- |
+| Incomplete documents from agents and phone staff | A checklist that blocks submission until the documents for that claim type are attached |
+| Physical inspection for every claim | Photo assessment for windscreen claims |
+| Weekly manager approval | Assessors approve windscreen and accident claims under ₦1m |
+| Customers not knowing what's happening | SMS updates at each stage, naming anything missing |
+| No way to see if it's working | A daily dashboard of days to settle by region |
+
+**Business rules and controls**
+
+The finance controller's worry is fair: if assessors can approve payments, who checks them? Write the controls as rules:
+
+- An assessor may approve only **windscreen or accident damage** claims **under ₦1m**. Theft and third-party claims always go to a manager.
+- The approving assessor must be **different** from the one who assessed the claim.
+- If a claim's amount changes **after** approval, the approval is cancelled and the claim goes back for approval.
+- Finance receives a weekly report of every assessor approval, and audits a sample.
+
+**User stories and acceptance criteria**
+
+*As a [role], I want [capability], so that [benefit].* Then acceptance criteria in *Given / When / Then* form, including the cases that **must fail**, which is where the controls live.
+
+**Measures**
+
+Define the KPIs before rollout, exactly: days to settle (paid claims, `closed_at − submitted_at`), % of claims with documents requested, % paid within 30 days, withdrawals, complaints per 100 claims, and assessor approvals audited. Each needs a baseline and a target.
+
+**Go or no-go**
+
+Agree the exit criteria before testing: for example, **no open critical or major defects**, and minor ones only with a workaround and a fix date.
+
+## Example
+
+Test results by user story:
+
+```sql
+SELECT story_id,
+       COUNT(*) AS tests,
+       SUM(result = 'Pass') AS passed,
+       SUM(result = 'Fail') AS failed,
+       SUM(status IS 'Open') AS still_open
+FROM uat
+GROUP BY story_id
+ORDER BY story_id;
+```
+
+```text
+story_id  tests  passed  failed  still_open
+US-01         6       4       2           0
+US-02         4       3       1           1
+US-03         6       4       2           1
+US-04         5       3       2           2
+US-05         3       3       0           0
+```
+
+The defects still open, worst first:
+
+```sql
+SELECT test_id, story_id, severity, scenario
+FROM uat
+WHERE status = 'Open'
+ORDER BY CASE severity WHEN 'Critical' THEN 1 WHEN 'Major' THEN 2 ELSE 3 END, test_id;
+```
+
+```text
+test_id  story_id  severity  scenario
+UAT-14   US-03     Critical  Claim amount edited upwards after assessor approval
+UAT-20   US-04     Major     SMS not sent to a customer who opted out
+UAT-10   US-02     Minor     Large photo upload on a slow connection
+UAT-21   US-04     Minor     SMS in Hausa and Yoruba
+```
+
+The answer to "can we roll out next month?" is **not yet**. UAT-14 is critical: if a claim's amount can be raised after an assessor approves it, the ₦1m limit can be bypassed, which is exactly the fraud risk the finance controller raised. UAT-20 is major: sending SMS to customers who opted out breaks their data protection choices. Both must be fixed and retested. The two minor defects can follow, with workarounds (staff can send the Hausa and Yoruba messages manually for now).
+
+## Walkthrough
+
+1. Write user stories US-01 to US-05 from the requirements table, each with at least three acceptance criteria.
+2. Write the business rules for assessor approval as a decision table: claim type × amount × who assessed it.
+3. Write the KPI definitions with baselines from lessons 2 and 5, and a target for each.
+4. Run the UAT queries and write the go/no-go note, with what must happen before rollout.
+5. Write US-03 in full (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "bac-07-p1",
+  "prompt": "How many **critical or major** defects are still **open**?",
+  "answer": 2,
+  "format": "number",
+  "dataset": "claims",
+  "files": ["uat"],
+  "verify": "SELECT COUNT(*) FROM uat WHERE status = 'Open' AND severity IN ('Critical', 'Major')",
+  "hint": "Filter on status and severity.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "bac-07-p2",
+  "prompt": "What percentage of UAT tests **passed**? One decimal place.",
+  "answer": 70.8,
+  "format": "percent",
+  "dataset": "claims",
+  "files": ["uat"],
+  "verify": "SELECT ROUND(100.0 * AVG(result = 'Pass'), 1) FROM uat",
+  "hint": "Passed tests ÷ all tests.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "bac-07-t1",
+  "prompt": "Write user story **US-03** (assessor approval) with at least **four acceptance criteria** in Given/When/Then form, including the **limit**, the **claim types**, the **different assessor** rule and what happens if the **amount changes** after approval.",
+  "minutes": 10,
+  "rows": 10,
+  "placeholder": "As an assessor, I want ...",
+  "rules": [
+    { "label": "In user story form (As a ..., I want ..., so that ...)", "pattern": "as an? [^,]+,? i want[\\s\\S]{0,300}so that" },
+    { "label": "Given/When/Then criteria", "pattern": "\\bgiven\\b[\\s\\S]{0,300}?\\bwhen\\b[\\s\\S]{0,300}?\\bthen\\b", "min": 4 },
+    { "label": "The ₦1m limit", "pattern": "1m|1,000,000|1 million|one million" },
+    { "label": "Theft or third-party claims go to a manager", "pattern": "theft|third.party" },
+    { "label": "A different assessor approves", "pattern": "different|same assessor|another assessor|own (inspection|assessment)" },
+    { "label": "Amount changed after approval", "pattern": "(amount|value)[^.]{0,80}(change|edit|increase|raise)" }
+  ],
+  "sample": "US-03: As an assessor, I want to approve windscreen and accident damage claims under ₦1m that another assessor has assessed, so that small claims don't wait for the weekly manager sign-off.\n\nAcceptance criteria:\n1. Given an accident damage claim of ₦600,000 assessed by another assessor, when I approve it, then it goes straight to finance for payment.\n2. Given a claim of ₦1m or more, when I try to approve it, then the system blocks me and sends it to a claims manager.\n3. Given a theft or third-party claim of any amount, when I try to approve it, then it is sent to a claims manager.\n4. Given a claim I assessed myself, when I try to approve it, then the system blocks me.\n5. Given a claim I approved, when its amount is changed, then my approval is cancelled and the claim needs approval again.\n6. Given any assessor approval, when the week ends, then it appears on finance's weekly approvals report.",
+  "note": "Criteria 2 to 5 are the controls. They're what makes the change acceptable to finance, and UAT-14 shows why criterion 5 had to be written down.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why trace every requirement back to a root cause?",
+    "options": ["For neatness", "So every feature solves a real, evidenced problem, and nothing unneeded gets built", "Developers ask for it", "It shortens the document"],
+    "answer": 1,
+    "explanation": "Traceability keeps scope honest."
+  },
+  {
+    "prompt": "UAT finds that a claim's amount can be raised after assessor approval. What severity is it, and why?",
+    "options": ["Minor: it's rare", "Critical: it bypasses the approval limit, a financial control", "Cosmetic", "Not a defect"],
+    "answer": 1,
+    "explanation": "Control failures on money are critical."
+  },
+  {
+    "prompt": "When should go/no-go criteria be agreed?",
+    "options": ["After testing, once you see the results", "Before testing, so the decision isn't bent to fit a deadline", "Never", "At rollout"],
+    "answer": 1,
+    "explanation": "Criteria set in advance keep the call honest."
+  }
+]
+```
+$md$, true, true, 7, array['bac-07-p1', 'bac-07-p2', 'bac-07-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('bac-m08', 'business-analyst-capstone', 'The Decision Paper', 8, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('business-analyst-capstone:the-decision-paper', 'business-analyst-capstone', 'bac-m08', 'the-decision-paper', '"The decision paper"', 'Bring the analysis together into a decision paper the board can approve. Lead with the recommendation, back it with evidence, state the conditions and risks, prepare for the hard questions, and plan your final project.', 25, $md$
+## The problem
+
+The board meets in a week. Its members won't read 40 slides. They need one short paper that tells them what to decide, why, what it costs, what could go wrong and how they'll know it worked. Everything you've done in this capstone feeds that paper. This lesson shapes it, and your final project delivers it.
+
+## The concept
+
+**Answer first**
+
+Start with the decision you're asking for, in one sentence, then the reasons. The board can stop reading at any point and still know what you recommend.
+
+**The shape of a decision paper**
+
+| Section | Content | From |
+| :-- | :-- | :-- |
+| The decision | What you're asking the board to approve | lesson 6 |
+| The problem | Days to settle, slow claims, complaints, lost renewals | lessons 1 and 2 |
+| Why claims are slow | The four root causes, with evidence | lessons 3 and 4 |
+| The evidence it works | The pilot, compared with the other regions | lesson 5 |
+| Options | Costs, benefits, NPV and payback, and why not the others | lesson 6 |
+| Conditions and risks | UAT fixes, controls, the audit, Port Harcourt's capacity | lesson 7 |
+| Measures | KPIs, baselines and targets, and when you'll report | lesson 7 |
+
+**One chart that carries the argument**
+
+Choose the chart that makes the case on its own. Here it's monthly days to settle for Lagos against the other regions: the lines run together for nine months, then Lagos drops when the pilot starts.
+
+**Prepare for the hard questions**
+
+Every stakeholder from lesson 1 will read the paper through their own concern. The head of IT will ask why not the new system, the finance controller about fraud, and the agency manager about agents' workload. Write each likely question with a short, evidenced answer.
+
+## Example
+
+The data behind the chart:
+
+```sql
+SELECT substr(submitted_at, 1, 7) AS month,
+       ROUND(AVG(CASE WHEN region = 'Lagos' THEN julianday(closed_at) - julianday(submitted_at) END), 1) AS lagos,
+       ROUND(AVG(CASE WHEN region <> 'Lagos' THEN julianday(closed_at) - julianday(submitted_at) END), 1) AS other_regions
+FROM claims
+WHERE outcome = 'Paid'
+GROUP BY month
+ORDER BY month;
+```
+
+```text
+month    lagos  other_regions
+2025-07   24.4           24.7
+2025-08   23.5           24.9
+2025-09   23.6           26.5
+2025-10   24.9           25.3
+2025-11   24.8           25.4
+2025-12   26.8           25.7
+2026-01   24.5           24.4
+2026-02   25.5           27.1
+2026-03   26.5           25.2
+2026-04   16.7           26.9
+2026-05   17.9           26.6
+2026-06   18.3           25.8
+```
+
+The two lines move together until March, then separate. That's the strongest single piece of evidence you have. Notice too that the Lagos figure creeps up from April to June. It could be noise, or the early enthusiasm wearing off. Say you'll watch it.
+
+Answers to the hard questions:
+
+| Question | Answer |
+| :-- | :-- |
+| Head of IT: "Why not the new system?" | It costs ₦280m and loses money over three years even at twice the pilot's benefit. The pilot fixed the main causes without it. We'd revisit it when the current system reaches the end of its support life. |
+| Finance controller: "Who checks the assessors?" | A ₦1m limit, no theft or third-party claims, a different assessor from the one who assessed, cancellation if the amount changes, and a weekly audit report. Rollout waits for UAT-14 to be fixed. |
+| Agency manager: "Won't the checklist slow agents down?" | It takes minutes at submission and saves days later; agent claims needed documents chased 62% of the time. |
+| Compliance: "Does the SMS meet data protection rules?" | Not yet: UAT-20 must be fixed so that opted-out customers get no messages. |
+
+## Walkthrough
+
+1. Build the chart, with a title that states the finding.
+2. Write the decision paper on two pages at most, in the order above.
+3. Write the hard questions and answers for every stakeholder in `interviews.csv`.
+4. Read it as the managing director would. Can you find the decision, the cost and the risk in 30 seconds?
+5. Open the project brief on the course page and plan your submission.
+
+## Practice
+
+```dataset
+{"dataset": "claims", "files": ["claims", "events", "complaints", "renewals", "interviews", "options", "uat"]}
+```
+
+```answer
+{
+  "id": "bac-08-p1",
+  "prompt": "What was the average days to settle for **Lagos** paid claims submitted in **June 2026**? One decimal place.",
+  "answer": 18.3,
+  "format": "number",
+  "dataset": "claims",
+  "files": ["claims"],
+  "verify": "SELECT ROUND(AVG(julianday(closed_at) - julianday(submitted_at)), 1) FROM claims WHERE outcome = 'Paid' AND region = 'Lagos' AND submitted_at LIKE '2026-06%'",
+  "hint": "The last row of the chart's data.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "bac-08-t1",
+  "prompt": "Write the **executive summary** of the decision paper (120 to 220 words): the **decision** you're asking for first, the **problem** in numbers, the **causes**, the **pilot evidence** compared with other regions, the **financial case**, and the **conditions** before rollout.",
+  "minutes": 12,
+  "rows": 10,
+  "placeholder": "We ask the board to approve ...",
+  "rules": [
+    { "label": "Opens with the decision (approve, recommend, ask)", "pattern": "^[^.]{0,200}(approve|recommend|ask)" },
+    { "label": "Uses numbers", "pattern": "\\d+(\\.\\d+)?", "min": 6 },
+    { "label": "Names causes (documents, inspection, approval)", "pattern": "document|inspect|approv", "min": 2 },
+    { "label": "Pilot compared with other regions", "pattern": "other regions|compared with|comparison" },
+    { "label": "The financial case (NPV, payback, cost)", "pattern": "npv|payback|₦\\s*\\d" },
+    { "label": "Conditions before rollout (UAT, defect, fix, control)", "pattern": "uat|defect|fix|control|condition" },
+    { "label": "Between 120 and 220 words", "minWords": 120, "maxWords": 220 }
+  ],
+  "sample": "We ask the board to approve rolling out the Lagos claims changes to all five regions, at a cost of ₦42m plus ₦12m a year, once two test defects are fixed.\n\nMotor claims take 25.2 days on average to pay, and 22.9% take more than 30 days. Customers whose claims are slow renew at 63.8%, against 78.5% when claims are paid within 30 days, and 80% of complaints are about delay or hearing nothing. The causes are in the process, not the system: incomplete documents (62% of agent claims), a physical inspection for every claim, and managers approving only on Fridays.\n\nIn Lagos, a checklist, photo assessment for windscreens, assessor approval under ₦1m and SMS updates cut days to settle by 8.4 compared with the other regions over the same months, and halved complaints. Rolled out, we estimate ₦39.8m a year in retained renewals and saved work: a three-year NPV of ₦21.4m, with payback in 18 months. A new claims system (₦280m) doesn't pay back in three years.\n\nConditions: fix the approval control (UAT-14) and SMS opt-outs (UAT-20) before rollout, audit assessor approvals weekly, and add assessor capacity in Port Harcourt. We'll report days to settle monthly against the 25.2-day baseline.",
+  "note": "The first sentence is the decision; everything after it is the reason to agree.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "What should the first sentence of a decision paper be?",
+    "options": ["The background", "The decision you're asking the board to make", "The method", "A thank-you"],
+    "answer": 1,
+    "explanation": "Answer first."
+  },
+  {
+    "prompt": "Why prepare answers to each stakeholder's likely questions?",
+    "options": ["To fill the appendix", "Because each reads the paper through their own concern, and an unanswered objection can stop the decision", "It's required", "To avoid the meeting"],
+    "answer": 1,
+    "explanation": "Anticipate objections with evidence."
+  },
+  {
+    "prompt": "The pilot effect seems to fade slightly month by month. What should the paper do?",
+    "options": ["Leave it out", "Mention it and say how it will be monitored", "Stop the rollout", "Average it away"],
+    "answer": 1,
+    "explanation": "Honest papers earn trust for the next decision."
+  }
+]
+```
+$md$, true, true, 8, array['bac-08-p1', 'bac-08-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+
 -- Assessment: SQL for Data Analysis: final assessment
 insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
 values ('sql-for-data-analysis-final', 'sql-for-data-analysis', 'final', null, 'SQL for Data Analysis: final assessment', 60, true)
@@ -58801,6 +60336,108 @@ on conflict (id) do update set assessment_id = excluded.assessment_id, position 
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
 values ('capq12', 1, 'Readable in a minute, with the detail one click away.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Business Analyst Capstone: final assessment
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('business-analyst-capstone-final', 'business-analyst-capstone', 'final', null, 'Business Analyst Capstone: final assessment', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bacq01', 'business-analyst-capstone-final', 1, 'A director asks you to "write requirements for a new claims system". What should you do first?', '["Write the requirements","Understand the problem and its causes before accepting the solution","Ask IT for a vendor","Refuse"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bacq01', 1, 'Frame the problem before the solution.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bacq02', 'business-analyst-capstone-final', 2, 'Which is the best problem statement?', '["We need a faster system","Claims are bad","Paid motor claims take 25 days on average and 23% take over 30, and slow-claim customers renew less","Staff should work harder"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bacq02', 2, 'Who, what, how much and why it matters, without a solution.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bacq03', 'business-analyst-capstone-final', 3, 'Windscreen claims take as long as accident claims three times their size. What does that suggest?', '["Windscreens are complex","One process route for all claims, whatever their size or risk","Bad data","Too many windscreens"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bacq03', 1, 'Controls sized for big claims slow small ones.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bacq04', 'business-analyst-capstone-final', 4, 'Why use the event log to map the process?', '["It''s quicker to read","It shows what really happens, including loops and waits","Staff can''t explain the process","It''s required by BPMN"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bacq04', 1, 'Data beats the manual.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bacq05', 'business-analyst-capstone-final', 5, 'Every manager approval in the log is on a Friday. What kind of cause is that?', '["A system fault","A working practice that can be changed cheaply","Customer behaviour","A data error"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bacq05', 1, 'Batching creates waiting.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bacq06', 'business-analyst-capstone-final', 6, 'Lagos got 7.4 days faster during a pilot while other regions got 1 day slower. What''s the best estimate of the pilot''s effect?', '["7.4 days","About 8.4 days","1 day","It can''t be estimated"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bacq06', 1, 'Difference in differences: −7.4 − (+1.0).')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bacq07', 'business-analyst-capstone-final', 7, 'What must you check before trusting a difference-in-differences result?', '["That the groups moved together before the change","That the groups are the same size","That the effect is large","Nothing"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bacq07', 0, 'Parallel trends before the change.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bacq08', 'business-analyst-capstone-final', 8, 'A renewed policy brings ₦430,000 premium and contribution is 35%. What''s the benefit of one extra renewal?', '["₦430,000","About ₦150,500","₦35,000","₦279,500"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bacq08', 1, '430,000 × 35%.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bacq09', 'business-analyst-capstone-final', 9, 'An option costs ₦42m and returns ₦27.76m a year net. Roughly when does it pay back?', '["6 months","About 1.5 years","3 years","Never"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bacq09', 1, '42 ÷ 27.76.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bacq10', 'business-analyst-capstone-final', 10, 'Which acceptance criterion protects a financial control?', '["The screen is blue","If the amount changes after approval, the approval is cancelled","The assessor can log in","The SMS is short"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bacq10', 1, 'Controls are acceptance criteria too.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bacq11', 'business-analyst-capstone-final', 11, 'UAT ends with one critical defect open and a launch date next week. The agreed criteria say no open critical defects. What do you recommend?', '["Launch anyway","No-go until it''s fixed and retested","Lower its severity","Launch in secret"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bacq11', 1, 'Follow the criteria agreed in advance.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bacq12', 'business-analyst-capstone-final', 12, 'How should a decision paper begin?', '["With the background","With the decision you''re asking for","With the method","With a chart"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bacq12', 1, 'Answer first.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 
@@ -64293,6 +65930,16 @@ Work in Google Colab with the product dataset (https://academy.cloudtechanalytic
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
 
 
+-- Project: Shieldline Insurance: fixing slow motor claims
+insert into public.projects (id, course_id, title, summary, brief_md, tasks, datasets, rubric, required)
+values ('bac-shieldline-claims', 'business-analyst-capstone', 'Shieldline Insurance: fixing slow motor claims', 'An end-to-end business analysis of a motor insurer''s slow claims: the problem in numbers, the real process from the event log, root causes, a fair evaluation of a pilot, a business case, requirements with controls, a go/no-go call and a decision paper for the board.', $md$Shieldline Insurance's board must decide what to do about slow motor claims: roll out the Lagos pilot, buy a new claims system, or do nothing. Give them the analysis and a recommendation, in the tools of your choice (SQL, Excel or Power BI).
+
+Submit one link to your work: a folder or repository (Google Drive, OneDrive or GitHub) containing your queries or workbook, your process map, your business case spreadsheet, your user stories and your decision paper.
+
+In the text box, paste your **decision paper's executive summary**, then a short note for each task below saying where to find it and the key number.$md$, array['Plan: problem statement, scope, definitions and a stakeholder map with each stakeholder''s concern.', 'Current state: days to settle by channel, region and type, outcomes, and complaints by reason.', 'Process: a BPMN map of the real process from the event log, with variants, the document loop and the waits.', 'Root causes: at least four causes, each with evidence, five whys and an owner.', 'Pilot: a difference-in-differences evaluation of the Lagos pilot, the other measures that moved, what to watch and the pilot''s limits.', 'Business case: renewals by claim experience, benefits with stated assumptions, NPV and payback for each option, and a sensitivity check.', 'Requirements and readiness: user stories with acceptance criteria, approval rules, KPI definitions with baselines and targets, and a go/no-go note from the UAT results.', 'Decision paper: two pages at most, answer first, with one chart that carries the argument and answers to each stakeholder''s hard questions.']::text[], array['claims']::text[], array['The problem is framed before any solution, with clear definitions and scope.', 'The current state and process come from the data, including the rework loop and waits.', 'Root causes are specific, evidenced and owned, and the new-system theory is tested rather than assumed.', 'The pilot is evaluated against a comparison group, with its limits stated.', 'The business case traces each benefit to evidence, counts contribution rather than premium, and tests its assumptions.', 'Requirements trace to causes and include the controls finance needs; the go/no-go call follows the agreed criteria.', 'The decision paper leads with the decision, is honest about risks, and anticipates stakeholders'' objections.']::text[], true)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
+
+
 -- Track: Become a Data Analyst
 insert into public.tracks (id, slug, title, summary, badge_name, badge_code, skills, position, published)
 values ('data-analyst', 'data-analyst', 'Become a Data Analyst', 'The route we recommend from no experience to a junior data analyst role. Learn how analysis works, then the tools teams use every day (Excel, SQL, Power BI and Python) on realistic company data. Build portfolio projects that answer real business questions, and finish with your CV, LinkedIn and interview preparation.', 'CloudTech Data Analyst', 'DATAANALYST', array['Spreadsheet analysis in Excel', 'Statistics: averages, spread, confidence intervals and tests', 'Querying databases with SQL, from first SELECT to cohorts and window functions', 'Data modelling and star schemas', 'Dashboards in Power BI, with DAX measures you can trust', 'Analysis in Python and pandas', 'Turning data into findings a manager can act on']::text[], 1, true)
@@ -64393,15 +66040,19 @@ values ('business-analyst', 'process-improvement-bpmn-lean', 'Specialist', true,
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 insert into public.track_courses (track_id, course_id, stage, required, position)
-values ('business-analyst', 'career-essentials', 'Career', true, 9)
+values ('business-analyst', 'business-analyst-capstone', 'Projects', true, 9)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 insert into public.track_courses (track_id, course_id, stage, required, position)
-values ('business-analyst', 'build-your-student-portfolio', 'Career', false, 10)
+values ('business-analyst', 'career-essentials', 'Career', true, 10)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 insert into public.track_courses (track_id, course_id, stage, required, position)
-values ('business-analyst', 'get-your-first-internship', 'Career', false, 11)
+values ('business-analyst', 'build-your-student-portfolio', 'Career', false, 11)
+on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
+
+insert into public.track_courses (track_id, course_id, stage, required, position)
+values ('business-analyst', 'get-your-first-internship', 'Career', false, 12)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 
