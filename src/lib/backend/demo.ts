@@ -9,6 +9,9 @@ import type { AssessmentDef, Course } from "@/content/types";
 import { requiredExerciseIds } from "../lesson-format";
 import { certificateNumber, eligibility, newCredentialId } from "../certificates";
 import { PROFILE_SLUG_RE, SLUG_HELP } from "../profile";
+import { PRACTICE_PROJECTS } from "@/content/projects";
+import { PROJECT_ANSWERS } from "@/content/project-answers";
+import { SUMMARY_MAX, SUMMARY_MIN, gradeCheck, gradingKey, isWorkUrl } from "../project-grading";
 import {
   BackendError,
   type AttemptResult,
@@ -17,6 +20,8 @@ import {
   type CertificateOrder,
   type CertificatePrice,
   type Credential,
+  type PracticeSubmission,
+  type PublicCredential,
   type Enrollment,
   type ProjectSubmission,
   type User,
@@ -39,6 +44,7 @@ type Store = {
   courses: Course[] | null; // admin edits (null = bundled content)
   assessments: AssessmentDef[] | null;
   activity: Record<string, string>; // userId -> last active
+  practice: PracticeSubmission[];
 };
 
 // v2: credentials, orders and paid certificates replaced the v1 certificates.
@@ -65,6 +71,7 @@ const empty = (): Store => ({
   courses: null,
   assessments: null,
   activity: {},
+  practice: [],
 });
 
 function load(): Store {
@@ -105,7 +112,7 @@ function recipientName(u: User) {
 function newCredential(
   s: Store,
   u: User,
-  f: Pick<Credential, "kind" | "courseId" | "moduleId" | "badgeName" | "courseTitle" | "moduleTitle" | "skills"> & { code: string },
+  f: Pick<Credential, "kind" | "courseId" | "moduleId" | "badgeName" | "courseTitle" | "moduleTitle" | "skills" | "projectId"> & { code: string },
 ): Credential {
   let credentialId = newCredentialId(f.code);
   while (s.credentials.some((c) => c.credentialId === credentialId)) credentialId = newCredentialId(f.code);
@@ -115,6 +122,19 @@ function newCredential(
   s.credentials.push(cred);
   s.activity[u.id] = now();
   return cred;
+}
+
+/** A project badge also shows the learner's work and whether it was reviewed. */
+function withWork(s: Store, c: Credential): Credential {
+  if (c.kind !== "project_badge") return c;
+  const sub = s.practice.find((p) => p.userId === c.userId && p.projectId === c.projectId);
+  return { ...c, workUrl: sub?.workUrl ?? null, reviewed: !!sub?.reviewedAt };
+}
+
+function publicCredential(s: Store, c: Credential): PublicCredential {
+  const { credentialId, kind, badgeName, courseId, courseTitle, moduleTitle, recipientName, skills, issuedAt, status } = c;
+  const w = withWork(s, c);
+  return { credentialId, kind, badgeName, courseId, courseTitle, moduleTitle, recipientName, skills, issuedAt, status, projectId: c.projectId ?? null, workUrl: w.workUrl ?? null, reviewed: !!w.reviewed };
 }
 
 /** Issues the certificate for a paid or granted order (the caller saves). */
@@ -264,31 +284,7 @@ export function createDemoBackend(): Backend {
         credentials: s.credentials
           .filter((c) => c.userId === me.id && c.status === "valid")
           .sort(byNewest)
-          .map(
-            ({
-              credentialId,
-              kind,
-              badgeName,
-              courseId,
-              courseTitle,
-              moduleTitle,
-              recipientName,
-              skills,
-              issuedAt,
-              status,
-            }) => ({
-              credentialId,
-              kind,
-              badgeName,
-              courseId,
-              courseTitle,
-              moduleTitle,
-              recipientName,
-              skills,
-              issuedAt,
-              status,
-            }),
-          ),
+          .map((c) => publicCredential(s, c)),
         certificates: s.certificates
           .filter((c) => c.userId === me.id && c.status === "valid")
           .sort(byNewest)
@@ -466,13 +462,75 @@ export function createDemoBackend(): Backend {
     },
     async listMyCredentials() {
       const u = current();
-      return u ? load().credentials.filter((c) => c.userId === u.id) : [];
+      if (!u) return [];
+      const s = load();
+      return s.credentials.filter((c) => c.userId === u.id).map((c) => withWork(s, c));
     },
     async verifyCredential(credentialId) {
-      const c = load().credentials.find((x) => x.credentialId === credentialId.trim().toUpperCase());
-      if (!c) return null;
-      const { credentialId: id, kind, badgeName, courseId, courseTitle, moduleTitle, recipientName, skills, issuedAt, status } = c;
-      return { credentialId: id, kind, badgeName, courseId, courseTitle, moduleTitle, recipientName, skills, issuedAt, status };
+      const s = load();
+      const c = s.credentials.find((x) => x.credentialId === credentialId.trim().toUpperCase());
+      return c ? publicCredential(s, c) : null;
+    },
+
+    async getPracticeSubmission(projectId) {
+      const u = current();
+      return (u && load().practice.find((p) => p.userId === u.id && p.projectId === projectId)) || null;
+    },
+    async listMyPracticeSubmissions() {
+      const u = current();
+      return u ? load().practice.filter((p) => p.userId === u.id).sort((a, b) => b.updatedAt.localeCompare(a.updatedAt)) : [];
+    },
+    // Mirrors submit_practice_project() in supabase/migrations/0003_project_badges.sql.
+    async submitPracticeProject({ projectId, workUrl, summary, answers }) {
+      const u = requireUser();
+      const project = PRACTICE_PROJECTS.find((p) => p.id === projectId);
+      if (!project) throw new BackendError("Project not found.");
+      const url = workUrl.trim();
+      const text = summary.trim();
+      if (!isWorkUrl(url)) throw new BackendError("Add a link to your work that starts with https://");
+      if (text.length < SUMMARY_MIN) throw new BackendError(`Write a few sentences (at least ${SUMMARY_MIN} characters) about what you found.`);
+      if (text.length > SUMMARY_MAX) throw new BackendError("Keep your summary under 3,000 characters.");
+      const results: Record<string, boolean> = {};
+      for (const c of project.checks) results[c.id] = gradeCheck(gradingKey(c, PROJECT_ANSWERS[c.id]), answers[c.id]);
+      const correct = Object.values(results).filter(Boolean).length;
+      const total = project.checks.length;
+      const s = load();
+      let sub = s.practice.find((p) => p.userId === u.id && p.projectId === projectId);
+      const t = now();
+      if (sub) {
+        const sameWork = sub.workUrl === url;
+        Object.assign(sub, {
+          workUrl: url,
+          summary: text,
+          answers,
+          correct,
+          total,
+          passed: sub.passed || correct === total,
+          attempts: sub.attempts + 1,
+          updatedAt: t,
+          reviewedAt: sameWork ? sub.reviewedAt : null,
+          reviewNote: sameWork ? sub.reviewNote : null,
+        });
+      } else {
+        sub = { id: uid(), userId: u.id, projectId, workUrl: url, summary: text, answers, correct, total, passed: correct === total, attempts: 1, submittedAt: t, updatedAt: t, reviewedAt: null, reviewNote: null };
+        s.practice.push(sub);
+      }
+      let cred = s.credentials.find((c) => c.userId === u.id && c.kind === "project_badge" && c.projectId === projectId && c.status === "valid");
+      if (sub.passed && !cred)
+        cred = newCredential(s, u, {
+          kind: "project_badge",
+          code: project.badge.code,
+          courseId: null,
+          moduleId: null,
+          projectId,
+          badgeName: project.badge.name,
+          courseTitle: project.title,
+          moduleTitle: null,
+          skills: project.badge.skills,
+        });
+      s.activity[u.id] = t;
+      save(s);
+      return { passed: sub.passed, correct, total, results, credentialId: cred?.credentialId ?? null };
     },
 
     paymentsEnabled: true,
@@ -673,6 +731,31 @@ export function createDemoBackend(): Backend {
             };
           })
           .sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+      },
+      async listPracticeSubmissions() {
+        requireAdmin();
+        const s = load();
+        return [...s.practice]
+          .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt))
+          .map((p) => {
+            const who = s.users.find((x) => x.id === p.userId);
+            return {
+              ...p,
+              learnerName: who?.fullName || "Unknown",
+              learnerEmail: who?.email ?? "",
+              projectTitle: PRACTICE_PROJECTS.find((x) => x.id === p.projectId)?.title ?? p.projectId,
+              credentialId: s.credentials.find((c) => c.userId === p.userId && c.kind === "project_badge" && c.projectId === p.projectId && c.status === "valid")?.credentialId ?? null,
+            };
+          });
+      },
+      async reviewPracticeSubmission(id, reviewed, note) {
+        requireAdmin();
+        const s = load();
+        const p = s.practice.find((x) => x.id === id);
+        if (!p) throw new BackendError("Submission not found.");
+        p.reviewedAt = reviewed ? now() : null;
+        p.reviewNote = note.trim() || null;
+        save(s);
       },
       async grantCertificate(orderId, note) {
         requireAdmin();

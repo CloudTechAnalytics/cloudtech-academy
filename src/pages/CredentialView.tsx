@@ -1,12 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router";
-import { BadgeCheck, CheckCircle2, ShieldAlert } from "lucide-react";
+import { BadgeCheck, CheckCircle2, ExternalLink, ShieldAlert, ShieldCheck } from "lucide-react";
 import { useSeo } from "@/lib/seo";
 import { useAuth } from "@/lib/auth";
 import { getBackend, IS_LIVE, type PublicCredential } from "@/lib/backend";
 import { credentialBadge } from "@/lib/badges";
 import { formatDate } from "@/lib/format";
 import { BUNDLED_COURSES } from "@/content";
+import { findProject } from "@/content/projects";
 import { BadgeArtwork } from "@/components/BadgeArtwork";
 import { ShareMenu } from "@/components/ShareMenu";
 import { ButtonLink } from "@/components/Button";
@@ -55,6 +56,7 @@ export default function CredentialView() {
     );
 
   const course = BUNDLED_COURSES.find((c) => c.id === cred.courseId) ?? null;
+  const project = cred.kind === "project_badge" ? (findProject(cred.projectId ?? undefined) ?? null) : null;
   const valid = cred.status === "valid";
   const mine = auth.status === "signed-in" && auth.user.fullName.trim() === cred.recipientName;
 
@@ -73,7 +75,14 @@ export default function CredentialView() {
             </p>
           )}
           <h1 className="mt-4 font-serif text-[2.4rem] leading-[1.08]">{cred.badgeName}</h1>
-          <p className="mt-2 text-muted">{cred.kind === "course_completion" ? "Course completion" : `Module badge · ${cred.courseTitle}`}</p>
+          <p className="mt-2 text-muted">
+            {cred.kind === "course_completion" ? "Course completion" : cred.kind === "project_badge" ? "Practice project badge" : `Module badge · ${cred.courseTitle}`}
+          </p>
+          {cred.kind === "project_badge" && cred.reviewed && (
+            <p className="mt-3 inline-flex items-center gap-1.5 text-[0.9375rem] font-semibold text-success">
+              <ShieldCheck aria-hidden className="h-4 w-4" /> Work reviewed by CloudTech
+            </p>
+          )}
 
           <dl className="mt-6 grid gap-4 border-y border-line py-5 sm:grid-cols-2">
             <div>
@@ -85,9 +94,16 @@ export default function CredentialView() {
               <dd>{formatDate(cred.issuedAt)}</dd>
             </div>
             <div>
-              <dt className="text-[0.8125rem] text-muted">Course</dt>
+              <dt className="text-[0.8125rem] text-muted">{project ? "Project" : "Course"}</dt>
               <dd>
-                {course ? (
+                {project ? (
+                  <>
+                    <Link to={`/projects/${project.id}`} className="hover:text-brass-dark">
+                      {project.title}
+                    </Link>
+                    <span className="block text-[0.875rem] text-muted">{project.company}</span>
+                  </>
+                ) : course ? (
                   <Link to={`/courses/${course.slug}`} className="hover:text-brass-dark">
                     {cred.courseTitle}
                   </Link>
@@ -103,6 +119,17 @@ export default function CredentialView() {
             </div>
           </dl>
 
+          {cred.workUrl && (
+            <a
+              href={cred.workUrl}
+              target="_blank"
+              rel="noopener noreferrer nofollow ugc"
+              className="mt-5 inline-flex items-center gap-2 rounded-lg border border-line-strong px-4 py-2 text-[0.9375rem] font-semibold hover:border-ink/50"
+            >
+              View the work <ExternalLink aria-hidden className="h-4 w-4" />
+            </a>
+          )}
+
           {cred.skills.length > 0 && (
             <div className="mt-5">
               <p className="text-[0.875rem] font-semibold">Skills covered</p>
@@ -117,13 +144,24 @@ export default function CredentialView() {
           )}
 
           <p className="mt-6 text-[0.875rem] text-muted">
-            Issued by <strong className="font-semibold text-ink">CloudTech Academy</strong>, part of CloudTech Analytics. Credentials are issued only when the
-            learner passes the required assessments.
+            Issued by <strong className="font-semibold text-ink">CloudTech Academy</strong>, part of CloudTech Analytics.{" "}
+            {project
+              ? "Project badges are issued when the learner submits their work and gets every key result from the data right."
+              : "Credentials are issued only when the learner passes the required assessments."}
           </p>
 
           {valid && (
             <div className="mt-6 border-t border-line pt-6">
               <ShareMenu credential={cred} art={art} />
+            </div>
+          )}
+          {!mine && project && (
+            <div className="mt-8 rounded-xl border border-line bg-paper p-5">
+              <p className="font-semibold">Try this project yourself</p>
+              <p className="mt-1 text-[0.9375rem] text-muted">Free data, a real business brief and starter code.</p>
+              <ButtonLink to={`/projects/${project.id}`} className="mt-3">
+                Open the project
+              </ButtonLink>
             </div>
           )}
           {!mine && course && (

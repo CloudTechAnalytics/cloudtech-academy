@@ -4,6 +4,9 @@ import { badgeIcon } from "@/components/BadgeIcon";
 import type { Credential, PublicCredential } from "./backend/types";
 import { credentialUrl } from "./certificates";
 import { SITE } from "./site";
+import { PRACTICE_PROJECTS } from "@/content/projects";
+
+const projectBadgeCode = (id: string | null | undefined) => PRACTICE_PROJECTS.find((p) => p.id === id)?.badge.code;
 
 /** Everything needed to draw an earned credential as a badge. */
 export function credentialBadge(c: PublicCredential | Credential, course?: Course | null): BadgeData {
@@ -12,15 +15,17 @@ export function credentialBadge(c: PublicCredential | Credential, course?: Cours
     kind: c.kind,
     badgeName: c.badgeName,
     courseTitle: c.courseTitle,
-    icon: badgeIcon({ code: mod?.badgeCode, categoryId: course?.categoryId, completion: c.kind === "course_completion" }),
+    icon: badgeIcon({ code: c.kind === "project_badge" ? projectBadgeCode(c.projectId) : mod?.badgeCode, categoryId: course?.categoryId, completion: c.kind === "course_completion", project: c.kind === "project_badge" }),
     recipientName: c.recipientName,
     issuedAt: c.issuedAt,
     credentialId: c.credentialId,
+    reviewed: c.reviewed,
   };
 }
 
 /** The text people share with a credential. */
 export function shareText(c: Pick<PublicCredential, "kind" | "badgeName" | "courseTitle">) {
+  if (c.kind === "project_badge") return `I've completed the "${c.badgeName}" practice project on CloudTech Academy and earned the project badge.`;
   return c.kind === "course_completion"
     ? `I've completed ${c.courseTitle} on CloudTech Academy and earned my course completion badge.`
     : `I've earned the "${c.badgeName}" badge from CloudTech Academy, part of ${c.courseTitle}.`;

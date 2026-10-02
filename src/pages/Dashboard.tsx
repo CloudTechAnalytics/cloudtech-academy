@@ -1,10 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router";
-import { Award, BookOpen, CheckCircle2, ExternalLink, GraduationCap, Trophy } from "lucide-react";
+import { Award, BookOpen, CheckCircle2, ExternalLink, GraduationCap, ShieldCheck, Trophy } from "lucide-react";
 import { useSeo } from "@/lib/seo";
 import { useAuth, PageLoading, RequireAuth } from "@/lib/auth";
 import { useCourses } from "@/lib/data";
-import { getBackend, type AttemptResult, type Certificate, type Credential, type Enrollment, type Progress } from "@/lib/backend";
+import { getBackend, type AttemptResult, type Certificate, type Credential, type Enrollment, type PracticeSubmission, type Progress } from "@/lib/backend";
+import { findProject } from "@/content/projects";
+import { ProjectCover } from "@/components/ProjectCover";
 import { eligibility } from "@/lib/certificates";
 import { credentialBadge } from "@/lib/badges";
 import { formatDate } from "@/lib/format";
@@ -23,13 +25,14 @@ function DashboardInner() {
   const [rows, setRows] = useState<Row[] | null>(null);
   const [credentials, setCredentials] = useState<Credential[]>([]);
   const [certs, setCerts] = useState<Certificate[]>([]);
+  const [practice, setPractice] = useState<PracticeSubmission[]>([]);
   const [open, setOpen] = useState<string | null>(null);
   const art = useRef<SVGSVGElement>(null);
 
   useEffect(() => {
     void (async () => {
       const b = await getBackend();
-      const [enrollments, creds, certificates] = await Promise.all([b.listEnrollments(), b.listMyCredentials(), b.listMyCertificates()]);
+      const [enrollments, creds, certificates, subs] = await Promise.all([b.listEnrollments(), b.listMyCredentials(), b.listMyCertificates(), b.listMyPracticeSubmissions()]);
       const [progress, attempts] = await Promise.all([
         Promise.all(enrollments.map((e) => b.getProgress(e.courseId))),
         Promise.all(
@@ -42,6 +45,7 @@ function DashboardInner() {
       setRows(enrollments.map((enrollment, i) => ({ enrollment, progress: progress[i], attempts: attempts[i] })));
       setCredentials(creds);
       setCerts(certificates);
+      setPractice(subs);
     })().catch(() => setRows([]));
   }, []);
 
@@ -195,6 +199,54 @@ function DashboardInner() {
         )}
       </section>
 
+      <section className="mt-14" aria-labelledby="my-projects">
+        <h2 id="my-projects" className="font-serif text-[1.7rem]">
+          My Projects
+        </h2>
+        <p className="mt-1 text-muted">
+          {practice.length
+            ? "Practice projects you've submitted. Get every key number right to earn the project badge."
+            : "Work a practice project on real business data, submit it, and earn a project badge with your work linked."}
+        </p>
+        {practice.length > 0 ? (
+          <ul className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {practice.map((p) => {
+              const project = findProject(p.projectId);
+              return (
+                <li key={p.id}>
+                  <Link to={`/projects/${p.projectId}#submit`} className="group flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-paper hover:border-line-strong">
+                    {project && <ProjectCover cover={project.cover} className="h-16 w-full" />}
+                    <span className="flex flex-1 flex-col p-4">
+                      <span className="font-semibold group-hover:text-brass-dark">{project?.title ?? p.projectId}</span>
+                      <span className="mt-1 text-[0.8125rem] text-muted">Updated {formatDate(p.updatedAt)}</span>
+                      <span className="mt-3 text-[0.875rem] font-semibold">
+                        {p.reviewedAt ? (
+                          <span className="inline-flex items-center gap-1 text-success">
+                            <ShieldCheck aria-hidden className="h-4 w-4" /> Badge earned · Reviewed
+                          </span>
+                        ) : p.passed ? (
+                          <span className="inline-flex items-center gap-1 text-success">
+                            <Trophy aria-hidden className="h-4 w-4" /> Badge earned
+                          </span>
+                        ) : (
+                          <span className="text-brass-dark">
+                            {p.correct} of {p.total} right · keep going
+                          </span>
+                        )}
+                      </span>
+                    </span>
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        ) : (
+          <ButtonLink to="/projects" variant="secondary" className="mt-5">
+            Browse practice projects
+          </ButtonLink>
+        )}
+      </section>
+
       <section className="mt-14" aria-labelledby="my-certs">
         <h2 id="my-certs" className="font-serif text-[1.7rem]">
           My Certificates
@@ -250,7 +302,7 @@ function DashboardInner() {
                   ...credentials.map((c) => ({
                     key: c.id,
                     name: c.badgeName,
-                    type: c.kind === "course_completion" ? "Course completion" : "Module badge",
+                    type: c.kind === "course_completion" ? "Course completion" : c.kind === "project_badge" ? "Project badge" : "Module badge",
                     date: c.issuedAt,
                     id: c.credentialId,
                     href: `/credentials/${c.credentialId}`,

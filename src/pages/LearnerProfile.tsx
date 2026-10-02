@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
-import { Award, BadgeCheck, Check, FileBadge, Link2, UserRound } from "lucide-react";
+import { Award, BadgeCheck, Check, ExternalLink, FileBadge, FolderKanban, Link2, ShieldCheck, UserRound } from "lucide-react";
 import { useSeo } from "@/lib/seo";
 import { useAuth } from "@/lib/auth";
 import { getBackend, IS_LIVE, type PublicCredential, type PublicProfile } from "@/lib/backend";
@@ -8,6 +8,8 @@ import { formatDate, plural } from "@/lib/format";
 import { SITE } from "@/lib/site";
 import { profilePath } from "@/lib/profile";
 import { BUNDLED_COURSES } from "@/content";
+import { findProject } from "@/content/projects";
+import { ProjectCover } from "@/components/ProjectCover";
 import { badgeIcon } from "@/components/BadgeIcon";
 import { ButtonLink } from "@/components/Button";
 
@@ -22,6 +24,7 @@ type CourseGroup = {
 function byCourse(credentials: PublicCredential[]): CourseGroup[] {
   const groups = new Map<string, CourseGroup>();
   for (const c of credentials) {
+    if (!c.courseId) continue;
     const g = groups.get(c.courseId) ?? {
       courseId: c.courseId,
       courseTitle: c.courseTitle,
@@ -61,6 +64,39 @@ function BadgeTile({ cred }: { cred: PublicCredential }) {
           <span className="mt-1 block font-mono text-[0.75rem] text-subtle">{cred.credentialId}</span>
         </span>
       </Link>
+    </li>
+  );
+}
+
+/** A project badge, with the learner's work: the part of the profile employers care about most. */
+function ProjectTile({ cred }: { cred: PublicCredential }) {
+  const project = findProject(cred.projectId ?? undefined);
+  return (
+    <li className="flex flex-col overflow-hidden rounded-xl border border-line bg-paper">
+      {project && <ProjectCover cover={project.cover} className="h-16 w-full" />}
+      <div className="flex flex-1 flex-col p-4">
+        <p className="flex flex-wrap items-center gap-2">
+          <span className="font-semibold leading-snug">{cred.badgeName}</span>
+          {cred.reviewed && (
+            <span className="inline-flex items-center gap-1 rounded-full border border-success/40 bg-success-bg px-2 py-0.5 text-[0.75rem] font-semibold text-success">
+              <ShieldCheck aria-hidden className="h-3.5 w-3.5" /> Reviewed by CloudTech
+            </span>
+          )}
+        </p>
+        <p className="mt-0.5 text-[0.8125rem] text-muted">
+          {project ? `${project.company} · ` : ""}Project badge · {formatDate(cred.issuedAt)}
+        </p>
+        <div className="mt-auto flex flex-wrap items-center gap-x-4 gap-y-1 pt-3 text-[0.875rem]">
+          {cred.workUrl && (
+            <a href={cred.workUrl} target="_blank" rel="noopener noreferrer nofollow ugc" className="inline-flex items-center gap-1 font-semibold text-brass-dark hover:text-ink">
+              View the work <ExternalLink aria-hidden className="h-3.5 w-3.5" />
+            </a>
+          )}
+          <Link to={`/credentials/${encodeURIComponent(cred.credentialId)}`} className="font-mono text-[0.75rem] text-subtle hover:text-ink">
+            {cred.credentialId}
+          </Link>
+        </div>
+      </div>
     </li>
   );
 }
@@ -125,7 +161,8 @@ export default function LearnerProfile() {
 
   const groups = byCourse(profile.credentials);
   const badges = profile.credentials.filter((c) => c.kind === "module_badge").length;
-  const completions = profile.credentials.length - badges;
+  const completions = profile.credentials.filter((c) => c.kind === "course_completion").length;
+  const projects = profile.credentials.filter((c) => c.kind === "project_badge");
   const url = `${SITE.url}${profilePath(profile.slug)}`;
   const initials = profile.name
     .split(/\s+/)
@@ -166,9 +203,10 @@ export default function LearnerProfile() {
             </div>
           </div>
 
-          <div className="mt-8 grid grid-cols-3 gap-3 sm:max-w-xl">
+          <div className="mt-8 grid grid-cols-2 gap-3 sm:max-w-2xl sm:grid-cols-4">
             {[
               { label: "Badges", value: badges, Icon: BadgeCheck },
+              { label: "Projects", value: projects.length, Icon: FolderKanban },
               { label: "Courses completed", value: completions, Icon: Award },
               { label: "Certificates", value: profile.certificates.length, Icon: FileBadge },
             ].map(({ label, value, Icon }) => (
@@ -199,7 +237,7 @@ export default function LearnerProfile() {
       </section>
 
       <section className="container-page max-w-5xl py-12">
-        {groups.length === 0 && profile.certificates.length === 0 ? (
+        {groups.length === 0 && projects.length === 0 && profile.certificates.length === 0 ? (
           <div className="rounded-2xl border border-line bg-paper p-8 text-center">
             <p className="font-serif text-[1.4rem]">No badges yet</p>
             <p className="mt-2 text-muted">
@@ -215,6 +253,18 @@ export default function LearnerProfile() {
           </div>
         ) : (
           <div className="space-y-10">
+            {projects.length > 0 && (
+              <div>
+                <h2 className="font-serif text-[1.5rem]">Projects</h2>
+                <p className="mt-1 text-[0.9375rem] text-muted">Real analysis on business data, with the work attached.</p>
+                <ul className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                  {projects.map((c) => (
+                    <ProjectTile key={c.credentialId} cred={c} />
+                  ))}
+                </ul>
+              </div>
+            )}
+
             {profile.certificates.length > 0 && (
               <div>
                 <h2 className="font-serif text-[1.5rem]">Official certificates</h2>

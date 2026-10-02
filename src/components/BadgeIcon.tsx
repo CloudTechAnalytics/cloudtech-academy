@@ -13,6 +13,7 @@ import {
   Eraser,
   FileCode,
   FileUser,
+  FolderKanban,
   FolderOpen,
   GitBranch,
   GitCommitHorizontal,
@@ -37,6 +38,7 @@ import {
   Quote,
   Repeat,
   Rocket,
+  Scale,
   Search,
   Send,
   Sheet,
@@ -47,6 +49,8 @@ import {
   Tags,
   Target,
   Terminal,
+  TrendingUp,
+  Truck,
   Users,
   WandSparkles,
   type LucideIcon,
@@ -100,6 +104,12 @@ const BY_CODE: Record<string, LucideIcon> = {
   CLIENTS: Handshake,
   PITCH: BadgeDollarSign,
   DELIVER: PackageCheck,
+  LOGOPS: Truck,
+  SALESPRF: BarChart3,
+  PRICING: TrendingUp,
+  DATACLN: Eraser,
+  LEGALOPS: Scale,
+  PEOPLE: Users,
 };
 
 /** Fallback icon by course category. */
@@ -115,7 +125,8 @@ const BY_CATEGORY: Record<string, LucideIcon> = {
   python: Terminal,
 };
 
-export function badgeIcon(opts: { code?: string | null; categoryId?: string; completion?: boolean }): LucideIcon {
+export function badgeIcon(opts: { code?: string | null; categoryId?: string; completion?: boolean; project?: boolean }): LucideIcon {
   if (opts.completion) return Award;
+  if (opts.project) return (opts.code && BY_CODE[opts.code]) || FolderKanban;
   return (opts.code && BY_CODE[opts.code]) || (opts.categoryId && BY_CATEGORY[opts.categoryId]) || Table2;
 }

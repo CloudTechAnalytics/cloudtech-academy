@@ -40,6 +40,7 @@ const AdminStudent = lazy(() => import("@/pages/admin/AdminStudents").then((m) =
 const AdminCertificates = lazy(() => import("@/pages/admin/AdminCertificates"));
 const AdminCredentials = lazy(() => import("@/pages/admin/AdminCredentials"));
 const AdminSubmissions = lazy(() => import("@/pages/admin/AdminSubmissions"));
+const AdminPracticeProjects = lazy(() => import("@/pages/admin/AdminPracticeProjects"));
 
 /** Route tree shared by the browser (BrowserRouter) and the prerenderer (StaticRouter). */
 export function AppRoutes() {
@@ -82,6 +83,7 @@ export function AppRoutes() {
             <Route path="students" element={<AdminStudents />} />
             <Route path="students/:userId" element={<AdminStudent />} />
             <Route path="submissions" element={<AdminSubmissions />} />
+            <Route path="practice" element={<AdminPracticeProjects />} />
             <Route path="credentials" element={<AdminCredentials />} />
             <Route path="certificates" element={<AdminCertificates />} />
           </Route>

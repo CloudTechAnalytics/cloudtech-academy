@@ -13,6 +13,8 @@ import {
   type CertificateOrder,
   type CertificatePrice,
   type Credential,
+  type PracticeResult,
+  type PracticeSubmission,
   type ProjectSubmission,
   type PublicProfile,
   type Role,
@@ -104,6 +106,7 @@ const toCredential = (r: Row): Credential => ({
   kind: r.kind,
   courseId: r.course_id,
   moduleId: r.module_id ?? null,
+  projectId: r.project_id ?? null,
   badgeName: r.badge_name,
   courseTitle: r.course_title,
   moduleTitle: r.module_title ?? null,
@@ -112,6 +115,23 @@ const toCredential = (r: Row): Credential => ({
   issuedAt: r.issued_at,
   status: r.status,
   revokedReason: r.revoked_reason ?? null,
+});
+
+const toPracticeSubmission = (r: Row): PracticeSubmission => ({
+  id: r.id,
+  userId: r.user_id,
+  projectId: r.project_id,
+  workUrl: r.work_url,
+  summary: r.summary,
+  answers: r.answers ?? {},
+  correct: r.correct,
+  total: r.total,
+  passed: r.passed,
+  attempts: r.attempts,
+  submittedAt: r.submitted_at,
+  updatedAt: r.updated_at,
+  reviewedAt: r.reviewed_at ?? null,
+  reviewNote: r.review_note ?? null,
 });
 
 const toCertificate = (r: Row): Certificate => ({
@@ -369,9 +389,16 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
     async listMyCredentials() {
       const { data } = await sb.auth.getSession();
       if (!data.session) return [];
-      return (check(await sb.from("credentials").select("*").eq("user_id", data.session.user.id).order("issued_at", { ascending: false })) as Row[]).map(
+      const creds = (check(await sb.from("credentials").select("*").eq("user_id", data.session.user.id).order("issued_at", { ascending: false })) as Row[]).map(
         toCredential,
       );
+      // Project badges show the learner's work and whether it was reviewed.
+      if (!creds.some((c) => c.kind === "project_badge")) return creds;
+      const subs = await backend.listMyPracticeSubmissions();
+      return creds.map((c) => {
+        const s = c.kind === "project_badge" ? subs.find((x) => x.projectId === c.projectId) : undefined;
+        return s ? { ...c, workUrl: s.workUrl, reviewed: !!s.reviewedAt } : c;
+      });
     },
     async verifyCredential(credentialId) {
       const r = (check(await sb.rpc("verify_credential", { p_credential_id: credentialId })) as Row[])?.[0];
@@ -387,8 +414,29 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
             skills: r.skills ?? [],
             issuedAt: r.issued_at,
             status: r.status,
+            projectId: r.project_id ?? null,
+            workUrl: r.work_url ?? null,
+            reviewed: !!r.reviewed,
           }
         : null;
+    },
+
+    async getPracticeSubmission(projectId) {
+      const { data } = await sb.auth.getSession();
+      if (!data.session) return null;
+      const r = check(await sb.from("practice_submissions").select("*").eq("user_id", data.session.user.id).eq("project_id", projectId).maybeSingle()) as Row | null;
+      return r ? toPracticeSubmission(r) : null;
+    },
+    async listMyPracticeSubmissions() {
+      const { data } = await sb.auth.getSession();
+      if (!data.session) return [];
+      return (check(await sb.from("practice_submissions").select("*").eq("user_id", data.session.user.id).order("updated_at", { ascending: false })) as Row[]).map(
+        toPracticeSubmission,
+      );
+    },
+    async submitPracticeProject({ projectId, workUrl, summary, answers }) {
+      const r = check(await sb.rpc("submit_practice_project", { p_project_id: projectId, p_work_url: workUrl, p_summary: summary, p_answers: answers })) as Row;
+      return { passed: r.passed, correct: r.correct, total: r.total, results: r.results ?? {}, credentialId: r.credentialId ?? null } satisfies PracticeResult;
     },
 
     // Card payment through Paystack, via the certificate-checkout and certificate-verify Edge Functions.
@@ -615,6 +663,27 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
           courseTitle: titles.get(r.course_id) ?? r.course_id,
           certificateId: issued.find((c) => c.user_id === r.user_id && c.course_id === r.course_id)?.certificate_id ?? null,
         }));
+      },
+      async listPracticeSubmissions() {
+        const [subs, profiles, projects, creds] = await Promise.all([
+          sb.from("practice_submissions").select("*").order("updated_at", { ascending: false }).limit(500),
+          sb.from("profiles").select("id, full_name, email"),
+          sb.from("practice_projects").select("id, title"),
+          sb.from("credentials").select("user_id, project_id, credential_id").eq("kind", "project_badge").eq("status", "valid"),
+        ]);
+        const people = new Map((check(profiles) as Row[]).map((p) => [p.id, p]));
+        const titles = new Map((check(projects) as Row[]).map((p) => [p.id, p.title]));
+        const badges = check(creds) as Row[];
+        return (check(subs) as Row[]).map((r) => ({
+          ...toPracticeSubmission(r),
+          learnerName: people.get(r.user_id)?.full_name || "Unknown",
+          learnerEmail: people.get(r.user_id)?.email ?? "",
+          projectTitle: titles.get(r.project_id) ?? r.project_id,
+          credentialId: badges.find((b) => b.user_id === r.user_id && b.project_id === r.project_id)?.credential_id ?? null,
+        }));
+      },
+      async reviewPracticeSubmission(id, reviewed, note) {
+        check(await sb.rpc("admin_review_practice_submission", { p_id: id, p_reviewed: reviewed, p_note: note }));
       },
       async grantCertificate(orderId, note) {
         return toCertificate(check(await sb.rpc("admin_grant_certificate", { p_order_id: orderId, p_note: note })) as Row);

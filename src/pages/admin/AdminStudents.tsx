@@ -297,7 +297,7 @@ export function AdminStudent() {
               <span>
                 <span className="font-medium">{c.badgeName}</span>
                 <span className="block text-[0.8125rem] text-muted">
-                  {c.kind === "course_completion" ? "Course completion" : `Module badge · ${c.courseTitle}`}
+                  {c.kind === "course_completion" ? "Course completion" : c.kind === "project_badge" ? `Project badge · ${c.courseTitle}` : `Module badge · ${c.courseTitle}`}
                 </span>
               </span>
               <span className="text-[0.8125rem] text-muted">

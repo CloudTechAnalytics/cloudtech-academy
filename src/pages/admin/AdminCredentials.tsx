@@ -33,7 +33,7 @@ export default function AdminCredentials() {
       <AdminHeading title="Badges & credentials" />
       {data && (
         <p className="-mt-4 mb-6 text-[0.9375rem] text-muted">
-          {valid.filter((c) => c.kind === "module_badge").length} module badges and {valid.filter((c) => c.kind === "course_completion").length} course
+          {valid.filter((c) => c.kind === "module_badge").length} module badges, {valid.filter((c) => c.kind === "project_badge").length} project badges and {valid.filter((c) => c.kind === "course_completion").length} course
           completions{search ? " match" : " issued"}.
         </p>
       )}
@@ -88,7 +88,7 @@ export default function AdminCredentials() {
                     {c.badgeName}
                     <span className="block text-[0.75rem] text-muted">{c.courseTitle}</span>
                   </td>
-                  <td className="whitespace-nowrap">{c.kind === "course_completion" ? "Course completion" : "Module badge"}</td>
+                  <td className="whitespace-nowrap">{c.kind === "course_completion" ? "Course completion" : c.kind === "project_badge" ? "Project badge" : "Module badge"}</td>
                   <td>{c.recipientName}</td>
                   <td className="whitespace-nowrap">{formatDate(c.issuedAt)}</td>
                   <td>

@@ -48,6 +48,7 @@ Each full course has a 15-question final assessment. Every assessment has a pass
 | Module badges and course completion badges with public credential pages and sharing (LinkedIn, WhatsApp, Facebook, X, copy link, image) | ✓ |
 | Optional official certificate: order, payment (simulated in demo mode; bank transfer + admin grant until a provider is connected), PDF with QR code, `/verify/:id` | ✓ |
 | Practice projects (`/projects`, one page each at `/projects/:id`): brief, questions, data dictionary with column types and previews, starter code, ZIP downloads; five datasets (logistics, sales, messy customer export, HR, legal) | ✓ |
+| Project badges: learners submit a link to their work, a summary and 4–5 key numbers, graded on the server; all right earns a project badge with the work linked on their credential page and profile. Admins can mark work "Reviewed by CloudTech" (`/admin/practice`) | ✓ |
 | Admin (`/admin`): courses, modules and module badges, lessons, module checks and final assessments, students, submissions, credentials (search, revoke), certificate purchases (grant, email, CSV), pricing per currency | ✓ |
 | Public skills profile (`/learners/:slug`): off by default; the learner picks the address and a headline in their profile, and the page lists their valid badges and certificates, never their email | ✓ |
 | SEO: every public page prerendered, sitemap, structured data | ✓ |
@@ -69,7 +70,7 @@ Without Supabase keys the Academy runs in **demo mode**:
 ## Connecting Supabase
 
 1. Create a project at [supabase.com](https://supabase.com).
-2. In **SQL Editor**, run [`supabase/migrations/0001_academy.sql`](supabase/migrations/0001_academy.sql), then [`0002_public_profiles.sql`](supabase/migrations/0002_public_profiles.sql).
+2. In **SQL Editor**, run [`supabase/migrations/0001_academy.sql`](supabase/migrations/0001_academy.sql), then [`0002_public_profiles.sql`](supabase/migrations/0002_public_profiles.sql) and [`0003_project_badges.sql`](supabase/migrations/0003_project_badges.sql).
 3. Then run [`supabase/seed.sql`](supabase/seed.sql). It loads the courses, lessons, assessment and project.
 4. In **Authentication → URL Configuration**:
    - Set the Site URL to the Academy's address.
@@ -130,7 +131,7 @@ The practice datasets are fictional and are generated with fixed seeds by `npm r
 
 Projects live in [`src/content/projects.ts`](src/content/projects.ts). Each entry in `PRACTICE_PROJECTS` becomes a page at `/projects/<id>` with its own cover pattern and colours.
 
-- **New project on an existing dataset:** add an entry with the business context, brief, questions, deliverables, approach and starter code. SQL starters are run by `npm run test:content` against the CSV files, so they must work.
+- **New project on an existing dataset:** add an entry with the business context, brief, questions, deliverables, approach, starter code, a `badge` and 3–5 `checks` (questions with one right answer). Put each check's answer and a `verify` SQL query in [`src/content/project-answers.ts`](src/content/project-answers.ts); the pages never import that file, and the database grades submissions. `npm run test:content` runs every SQL starter and every `verify` query against the CSV files, so wrong answers can't ship. Then `npm run seed` and run `supabase/seed.sql` so the database has the new answer key.
 - **New dataset:** put its CSV files in `public/datasets/<id>/`, add it to `DATASETS`, describe every file and column in `DATA_DICTIONARY`, then run `npm run datasets:meta`. That writes the rows, column types, missing values and previews to `src/content/dataset-meta.json` and builds `public/datasets/<id>.zip`. `npm run test:content` fails if a column isn't described or the metadata is out of date.
 
 ### Payments (Paystack)

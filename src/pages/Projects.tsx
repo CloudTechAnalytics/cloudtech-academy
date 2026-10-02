@@ -1,6 +1,8 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router";
-import { Clock, Database, Download, FileSpreadsheet, Search } from "lucide-react";
+import { Clock, Database, Download, FileSpreadsheet, Search, Trophy } from "lucide-react";
+import { useAuth } from "@/lib/auth";
+import { getBackend, type PracticeSubmission } from "@/lib/backend";
 import { useSeo } from "@/lib/seo";
 import { breadcrumbs } from "@/lib/schema";
 import { DATASETS, PRACTICE_PROJECTS, TOOLS, datasetTotals, datasetZipUrl, formatBytes, type PracticeProject, type Tool } from "@/content/projects";
@@ -8,14 +10,27 @@ import { ProjectCover } from "@/components/ProjectCover";
 
 type Filter = "all" | Tool | "Beginner";
 
-function ProjectCard({ project }: { project: PracticeProject }) {
+function ProjectCard({ project, mine }: { project: PracticeProject; mine?: PracticeSubmission }) {
   const t = datasetTotals(project.dataset);
   return (
     <Link
       to={`/projects/${project.id}`}
       className="group flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-paper transition-[border-color,box-shadow] hover:border-line-strong hover:shadow-[0_24px_48px_-32px_rgba(23,23,23,0.45)]"
     >
-      <ProjectCover cover={project.cover} className="h-28 w-full" />
+      <span className="relative block">
+        <ProjectCover cover={project.cover} className="h-28 w-full" />
+        {mine && (
+          <span className="absolute top-3 right-3 inline-flex items-center gap-1 rounded-full bg-paper/95 px-2.5 py-1 text-[0.75rem] font-semibold text-ink shadow-sm">
+            {mine.passed ? (
+              <>
+                <Trophy aria-hidden className="h-3.5 w-3.5 text-success" /> Badge earned
+              </>
+            ) : (
+              `Submitted · ${mine.correct}/${mine.total}`
+            )}
+          </span>
+        )}
+      </span>
       <div className="flex flex-1 flex-col p-5">
         <h3 className="font-serif text-[1.25rem] leading-snug text-ink group-hover:text-brass-dark">{project.title}</h3>
         <p className="mt-1 text-[0.8125rem] text-muted">
@@ -49,6 +64,15 @@ export default function Projects() {
   });
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<Filter>("all");
+  const auth = useAuth();
+  const [mine, setMine] = useState<PracticeSubmission[]>([]);
+  useEffect(() => {
+    if (auth.status !== "signed-in") return;
+    void getBackend()
+      .then((b) => b.listMyPracticeSubmissions())
+      .then(setMine)
+      .catch(() => {});
+  }, [auth.status]);
 
   const shown = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -72,7 +96,7 @@ export default function Projects() {
               <h1 className="mt-4 font-serif text-[2.6rem] leading-[1.05] tracking-[-0.015em] sm:text-[3.4rem]">Practise on business-shaped data.</h1>
               <p className="mt-5 max-w-2xl text-[1.0625rem] leading-relaxed text-muted sm:text-[1.125rem]">
                 Real-world briefs from fictional businesses, each with its own dataset, the questions a manager would ask, and starter code. Download the data,
-                work it in SQL, Excel, Power BI or Python, and add the result to your portfolio.
+                work it in SQL, Excel, Power BI or Python, then submit your work to earn a project badge.
               </p>
             </div>
             <dl className="grid grid-cols-3 gap-3">
@@ -131,7 +155,7 @@ export default function Projects() {
           <ul className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {shown.map((p) => (
               <li key={p.id}>
-                <ProjectCard project={p} />
+                <ProjectCard project={p} mine={mine.find((m) => m.projectId === p.id)} />
               </li>
             ))}
           </ul>

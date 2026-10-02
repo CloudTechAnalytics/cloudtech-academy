@@ -15,7 +15,7 @@ export function readNumber(input: string): { value: number; percent: boolean } |
   return { value: Number(m[1]) * mult, percent };
 }
 
-const normText = (s: string) =>
+export const normText = (s: string) =>
   s
     .trim()
     .toLowerCase()

@@ -17,7 +17,7 @@ await build({
   logLevel: "warn",
   build: { ssr: "scripts/seed-entry.ts", outDir, emptyOutDir: true, copyPublicDir: false },
 });
-const { BUNDLED_COURSES, BUNDLED_ASSESSMENTS, BUNDLED_PROJECTS, CATEGORIES } = await import(pathToFileURL(path.join(outDir, "seed-entry.js")).href);
+const { BUNDLED_COURSES, BUNDLED_ASSESSMENTS, BUNDLED_PROJECTS, CATEGORIES, PRACTICE_PROJECTS, PROJECT_ANSWERS, gradingKey } = await import(pathToFileURL(path.join(outDir, "seed-entry.js")).href);
 
 const str = (s) => (s === null || s === undefined ? "null" : `'${String(s).replace(/'/g, "''")}'`);
 /** Dollar quoting for long Markdown, with a tag that can't appear in the text. */
@@ -140,7 +140,26 @@ for (const p of BUNDLED_PROJECTS) {
   );
 }
 
+// Practice projects (the /projects pages), with the answer key their badges are graded against.
+// Needs supabase/migrations/0003_project_badges.sql.
+for (const p of PRACTICE_PROJECTS) {
+  out.push(`
+-- Practice project: ${p.title}`);
+  const checks = p.checks.map((c) => gradingKey(c, PROJECT_ANSWERS[c.id]));
+  out.push(
+    upsert("practice_projects", {
+      id: str(p.id),
+      title: str(p.title),
+      badge_name: str(p.badge.name),
+      badge_code: str(p.badge.code),
+      skills: arr(p.badge.skills),
+      checks: `${str(JSON.stringify(checks))}::jsonb`,
+      published: "true",
+    }),
+  );
+}
+
 out.push("", "commit;", "");
 fs.writeFileSync(path.join(root, "supabase", "seed.sql"), out.join("\n"));
 fs.rmSync(outDir, { recursive: true, force: true });
-console.log(`supabase/seed.sql written: ${BUNDLED_COURSES.length} courses, ${BUNDLED_COURSES.flatMap((c) => c.modules.flatMap((m) => m.lessons)).length} lessons, ${BUNDLED_ASSESSMENTS.length} assessment(s), ${BUNDLED_PROJECTS.length} project(s).`);
+console.log(`supabase/seed.sql written: ${BUNDLED_COURSES.length} courses, ${BUNDLED_COURSES.flatMap((c) => c.modules.flatMap((m) => m.lessons)).length} lessons, ${BUNDLED_ASSESSMENTS.length} assessment(s), ${BUNDLED_PROJECTS.length} project(s), ${PRACTICE_PROJECTS.length} practice project(s).`);

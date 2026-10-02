@@ -224,6 +224,12 @@ const projectsJs = path.join(os.tmpdir(), `cta-projects-${process.pid}.mjs`);
 fs.writeFileSync(projectsJs, stripTypeScriptTypes(fs.readFileSync("src/content/projects.ts", "utf8").replace(/^import META from .*$/m, "const META = {};")));
 const { DATASETS, DATA_DICTIONARY, PRACTICE_PROJECTS } = await import(pathToFileURL(projectsJs).href);
 fs.rmSync(projectsJs);
+const answersJs = path.join(os.tmpdir(), `cta-project-answers-${process.pid}.mjs`);
+fs.writeFileSync(answersJs, stripTypeScriptTypes(fs.readFileSync("src/content/project-answers.ts", "utf8")));
+const { PROJECT_ANSWERS } = await import(pathToFileURL(answersJs).href);
+fs.rmSync(answersJs);
+const catalogCodes = new Set([...catalog.matchAll(/(?:badgeCode|code): "([A-Z0-9]+)"/g)].map((m) => m[1]));
+const checkIds = new Set();
 const META = JSON.parse(fs.readFileSync("src/content/dataset-meta.json", "utf8"));
 for (const d of DATASETS) {
   for (const file of datasetFiles(d.id)) {
@@ -244,6 +250,27 @@ for (const p of PRACTICE_PROJECTS) {
   if (!DATASETS.some((d) => d.id === p.dataset)) fail(`${p.id}: unknown dataset ${p.dataset}`);
   for (const slug of p.courseSlugs) if (!catalog.includes(`slug: "${slug}"`)) fail(`${p.id}: unknown course ${slug}`);
   for (const key of ["context", "questions", "deliverables", "approach", "starters"]) if (!p[key]?.length) fail(`${p.id}: no ${key}`);
+  if (!p.badge?.name || !/^[A-Z0-9]{2,8}$/.test(p.badge?.code ?? "")) fail(`${p.id}: badge needs a name and a 2-8 character code`);
+  if (catalogCodes.has(p.badge?.code)) fail(`${p.id}: badge code ${p.badge.code} is already used`);
+  catalogCodes.add(p.badge?.code);
+  if ((p.checks ?? []).length < 3) fail(`${p.id}: needs at least 3 checks`);
+  for (const c of p.checks ?? []) {
+    if (checkIds.has(c.id)) fail(`duplicate check id ${c.id}`);
+    checkIds.add(c.id);
+    const a = PROJECT_ANSWERS[c.id];
+    if (!a) {
+      fail(`${p.id}: check ${c.id} has no answer in project-answers.ts`);
+      continue;
+    }
+    if ((c.format === "text") !== (typeof a.answer === "string")) fail(`${c.id}: format ${c.format} doesn't match the answer type`);
+    try {
+      const got = query(await dataset(p.dataset), a.verify).rows[0]?.[0];
+      const ok = typeof a.answer === "number" ? Math.abs(Number(got) - a.answer) <= (a.tolerance ?? (Number.isInteger(a.answer) ? 0.5 : 0.051)) : got === a.answer;
+      if (!ok) fail(`${c.id}: verify query gives ${got}, answer says ${a.answer}`);
+    } catch (e) {
+      fail(`${c.id} verify: ${e.message}`);
+    }
+  }
   for (const st of p.starters.filter((x) => x.language === "sql")) {
     try {
       if (!query(await dataset(p.dataset), st.code).rows.length) fail(`${p.id} starter "${st.title}": returns no rows`);
@@ -252,7 +279,8 @@ for (const p of PRACTICE_PROJECTS) {
     }
   }
 }
-console.log(`\nProjects: ${PRACTICE_PROJECTS.length} projects on ${DATASETS.length} datasets, every column described`);
+for (const id of Object.keys(PROJECT_ANSWERS)) if (!checkIds.has(id)) fail(`project-answers.ts: ${id} isn't a check in any project`);
+console.log(`\nProjects: ${PRACTICE_PROJECTS.length} projects on ${DATASETS.length} datasets, every column described, ${checkIds.size} answer checks verified`);
 
 console.log(failures ? `\n${failures} problem(s)` : `\nAll ${lessonCount} lessons OK, ${ids.size} practice tasks, ${checkCount} module checks, ${badgeModules.length} module badges`);
 process.exit(failures ? 1 : 0);

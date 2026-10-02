@@ -144,7 +144,7 @@ export const DATA_DICTIONARY: Record<string, Record<string, { about: string; col
   },
   cleaning: {
     customer_list_raw: {
-      about: "Kolanut's customer list exported from an old system, errors and all. The clean version is sales/customers.csv.",
+      about: "Kolanut's customer list exported from an old system, errors and all. The same business as the sales dataset, before anyone tidied it up.",
       columns: {
         "Customer Name": "Business name. Watch for extra spaces, different capitals and duplicates.",
         Region: "Sales region, written many ways: LAGOS, lagos, SW, South-West and so on.",
@@ -249,6 +249,9 @@ export const DATASET_META = META as unknown as Record<string, DatasetMeta>;
 export type Tool = "SQL" | "Excel" | "Power BI" | "Python";
 export const TOOLS: Tool[] = ["SQL", "Excel", "Power BI", "Python"];
 
+/** A question with one right answer, checked on the server when the learner submits. Answers live in project-answers.ts. */
+export type ProjectCheck = { id: string; prompt: string; format: "number" | "naira" | "percent" | "text"; hint?: string };
+
 export type Starter = { tool: Tool; title: string; language?: "sql" | "python"; code?: string; steps?: string[] };
 
 export type CoverPattern = "chevron" | "bars" | "waves" | "grid" | "diagonal" | "dots";
@@ -279,6 +282,9 @@ export type PracticeProject = {
   courseSlugs: string[];
   /** Kept for the course pages: the course whose lessons and final project use this dataset. */
   courseSlug?: string;
+  /** The badge earned by submitting the work with every check correct. */
+  badge: { name: string; code: string; skills: string[] };
+  checks: ProjectCheck[];
   updated: string;
 };
 
@@ -363,6 +369,13 @@ delivered.groupby(["origin", "destination"])["late"].mean().sort_values(ascendin
     ],
     courseSlugs: ["sql-for-data-analysis", "power-bi-fundamentals", "python-for-data-analysis"],
     courseSlug: "sql-for-data-analysis",
+    badge: { name: "Logistics Operations Analysis", code: "LOGOPS", skills: ["Join shipments, customers, routes and payments", "Measure on-time delivery against targets", "Find unpaid revenue", "Summarise operations for a manager"] },
+    checks: [
+      { id: "lo-top-customer", prompt: "Which customer booked the most shipments? Leave out cancelled shipments.", format: "text", hint: "Type the company name." },
+      { id: "lo-delivered", prompt: "How many shipments have the status Delivered?", format: "number" },
+      { id: "lo-late-rate", prompt: "What percentage of delivered shipments arrived late (delivery date minus ship date is more than the route's target transit days)?", format: "percent", hint: "Round to one decimal place." },
+      { id: "lo-unpaid", prompt: "How much is still unpaid on delivered shipments? That's the freight charge minus everything paid against each one, added up.", format: "naira" },
+    ],
     updated: "2026-09-30",
   },
   {
@@ -435,6 +448,14 @@ ORDER BY revenue DESC;`,
     ],
     courseSlugs: ["excel-for-data-analysis", "power-bi-fundamentals", "python-for-data-analysis"],
     courseSlug: "excel-for-data-analysis",
+    badge: { name: "Sales Performance Analysis", code: "SALESPRF", skills: ["Calculate revenue after discounts", "Compare categories, regions and channels", "Measure the cost of discounts", "Spot trends in monthly sales"] },
+    checks: [
+      { id: "sp-revenue", prompt: "What is total revenue after discounts, for the whole dataset?", format: "naira" },
+      { id: "sp-top-category", prompt: "Which product category brings in the most revenue?", format: "text" },
+      { id: "sp-top-channel", prompt: "Which customer channel brings in the most revenue?", format: "text" },
+      { id: "sp-discounts", prompt: "How much revenue was given away in discounts in total?", format: "naira", hint: "The discount on a line is quantity × unit_price × discount_pct / 100." },
+      { id: "sp-best-month", prompt: "Which month had the highest revenue?", format: "text", hint: "For example: March 2026." },
+    ],
     updated: "2026-09-30",
   },
   {
@@ -500,6 +521,13 @@ GROUP BY year;`,
       },
     ],
     courseSlugs: ["python-for-data-analysis", "excel-for-data-analysis"],
+    badge: { name: "Price Rise Impact", code: "PRICING", skills: ["Compare like-for-like periods", "Calculate a weighted average price", "Separate price and volume effects", "Write a clear recommendation for a board"] },
+    checks: [
+      { id: "pr-cartons-2026", prompt: "How many cartons were sold from January to June 2026?", format: "number" },
+      { id: "pr-price-change", prompt: "By what percentage did the average price per carton change from January–June 2025 to January–June 2026? Use revenue before discount ÷ cartons.", format: "percent", hint: "Round to two decimal places." },
+      { id: "pr-revenue-change", prompt: "By what percentage did revenue after discounts change over the same periods?", format: "percent", hint: "Round to two decimal places." },
+      { id: "pr-fewer-cartons", prompt: "Which customer channel bought fewer cartons in January–June 2026 than in January–June 2025?", format: "text" },
+    ],
     updated: "2026-09-30",
   },
   {
@@ -527,7 +555,6 @@ GROUP BY year;`,
     deliverables: [
       "A clean file with one row per customer and these columns: name, region, city, phone, date joined, credit limit, channel.",
       "A cleaning log: each problem you found, how many rows it affected, and what you did.",
-      "Optional: compare your result with sales/customers.csv, the answer key.",
     ],
     approach: [
       "Never edit the raw file. Work on a copy or in Power Query, so every step can be repeated.",
@@ -566,6 +593,14 @@ print(len(raw), "rows before,", len(df), "after")`,
       },
     ],
     courseSlugs: ["excel-for-data-analysis", "python-for-data-analysis"],
+    badge: { name: "Customer Data Clean-up", code: "DATACLN", skills: ["Profile a messy dataset", "Remove duplicates reliably", "Standardise text, dates and numbers", "Keep a cleaning log"] },
+    checks: [
+      { id: "cd-customers", prompt: "How many real customers are there once duplicates are removed?", format: "number", hint: "Two rows are the same customer if their names match after trimming spaces and ignoring capitals." },
+      { id: "cd-duplicates", prompt: "How many rows are duplicates you would remove?", format: "number" },
+      { id: "cd-region-spellings", prompt: "How many different ways is Region written in the raw file, exactly as it comes?", format: "number" },
+      { id: "cd-blank-credit", prompt: "How many rows have a blank credit limit?", format: "number" },
+      { id: "cd-day-first", prompt: "How many rows have Date Joined written day first with slashes, like 22/10/2023?", format: "number" },
+    ],
     updated: "2026-09-30",
   },
   {
@@ -628,6 +663,14 @@ ORDER BY adjourned_pct DESC;`,
     ],
     courseSlugs: ["power-bi-fundamentals", "sql-for-data-analysis", "data-modelling"],
     courseSlug: "power-bi-fundamentals",
+    badge: { name: "Law Firm Operations Analysis", code: "LEGALOPS", skills: ["Measure workload by practice area", "Calculate an adjournment rate", "Find overdue and outstanding invoices", "Report to partners"] },
+    checks: [
+      { id: "lf-open", prompt: "How many matters are Open?", format: "number" },
+      { id: "lf-adjourned", prompt: "What percentage of hearings that have taken place ended in an adjournment? Leave out Scheduled hearings.", format: "percent", hint: "Round to one decimal place." },
+      { id: "lf-busiest-area", prompt: "Which practice area has the most open matters?", format: "text" },
+      { id: "lf-overdue", prompt: "What is the total value of Overdue invoices?", format: "naira" },
+      { id: "lf-top-debtor", prompt: "Which client owes the most in Outstanding and Overdue invoices together?", format: "text" },
+    ],
     updated: "2026-09-30",
   },
   {
@@ -690,6 +733,14 @@ rate.round(1).sort_values(ascending=False)`,
     ],
     courseSlugs: ["data-analytics-foundations", "excel-for-data-analysis", "sql-for-data-analysis"],
     courseSlug: "data-analytics-foundations",
+    badge: { name: "Employee Analytics", code: "PEOPLE", skills: ["Calculate lateness and absence rates", "Measure staff turnover", "Summarise leave", "Compare pay across levels"] },
+    checks: [
+      { id: "ea-late-dept", prompt: "Which department has the highest lateness rate in June 2026?", format: "text" },
+      { id: "ea-resignation", prompt: "What percentage of everyone in the employee list has resigned?", format: "percent", hint: "Round to one decimal place." },
+      { id: "ea-leave-days", prompt: "How many days of approved leave were taken in total?", format: "number" },
+      { id: "ea-manager-pay", prompt: "What is the average monthly salary of active Managers?", format: "naira" },
+      { id: "ea-resign-dept", prompt: "Which department has the highest resignation rate?", format: "text" },
+    ],
     updated: "2026-09-30",
   },
 ];

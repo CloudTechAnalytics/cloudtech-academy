@@ -1,6 +1,6 @@
 import { useState, type ReactNode } from "react";
 import { Link, useParams } from "react-router";
-import { ArrowLeft, BookOpen, CalendarDays, Clock, Download, FileSpreadsheet, Gauge, Rows3, Scale, Wrench } from "lucide-react";
+import { ArrowLeft, BookOpen, CalendarDays, Clock, Download, FileSpreadsheet, Gauge, Rows3, Scale, Trophy, Wrench } from "lucide-react";
 import { useSeo } from "@/lib/seo";
 import { breadcrumbs } from "@/lib/schema";
 import {
@@ -22,6 +22,7 @@ import { findCourseDef } from "@/content/catalog";
 import { formatDate } from "@/lib/format";
 import { ProjectCover } from "@/components/ProjectCover";
 import { CopyButton } from "@/components/sql/SqlParts";
+import { ProjectSubmit } from "@/components/ProjectSubmit";
 import NotFound from "./NotFound";
 
 const TYPE_LABEL: Record<ColumnMeta["type"], string> = { number: "Number", date: "Date", text: "Text" };
@@ -220,6 +221,7 @@ export default function ProjectDetail() {
     ["overview", "Overview"],
     ["data", "Data"],
     ["start", "Get started"],
+    ["submit", "Submit & earn a badge"],
   ];
 
   return (
@@ -344,7 +346,7 @@ export default function ProjectDetail() {
             <div className="mt-8 rounded-xl border border-line bg-sand/50 p-5">
               <h3 className="font-semibold">When you've finished</h3>
               <p className="mt-1.5 text-[0.9375rem] leading-relaxed text-muted">
-                Put your work on GitHub with a short README, add it to your portfolio, and share what you found. The{" "}
+                Put your work on GitHub with a short README, or share it from Google Drive, then submit it below for your badge. The{" "}
                 <Link to="/courses/git-and-github-for-beginners" className="font-medium text-brass-dark hover:text-ink">
                   Git & GitHub
                 </Link>{" "}
@@ -355,6 +357,10 @@ export default function ProjectDetail() {
                 courses show you how.
               </p>
             </div>
+          </Section>
+
+          <Section id="submit" title="Submit your work and earn a badge">
+            <ProjectSubmit project={project} />
           </Section>
         </div>
 
@@ -371,6 +377,17 @@ export default function ProjectDetail() {
               <Facts project={project} />
             </div>
           </div>
+
+          <a href="#submit" className="group block rounded-2xl border border-line bg-paper p-5 hover:border-brass">
+            <p className="flex items-center gap-2 text-[0.9375rem] font-semibold">
+              <Trophy aria-hidden className="h-4 w-4 text-brass-dark" /> Project badge
+            </p>
+            <p className="mt-1.5 text-[0.875rem] leading-relaxed text-muted">
+              Submit your work and {project.checks.length} key numbers. All right, and you earn the <span className="font-medium text-ink">{project.badge.name}</span>{" "}
+              badge, with your work linked on your profile.
+            </p>
+            <p className="mt-2 text-[0.875rem] font-semibold text-brass-dark group-hover:text-ink">Submit your work →</p>
+          </a>
 
           {courses.length > 0 && (
             <div className="rounded-2xl border border-line bg-paper p-5">

@@ -45,7 +45,7 @@ export type ProjectSubmission = {
 
 export type CertificateStatus = "valid" | "revoked";
 
-export type CredentialKind = "module_badge" | "course_completion";
+export type CredentialKind = "module_badge" | "course_completion" | "project_badge";
 
 /** A free credential: a module badge or a course completion badge. */
 export type Credential = {
@@ -53,8 +53,14 @@ export type Credential = {
   credentialId: string;
   userId: string;
   kind: CredentialKind;
-  courseId: string;
+  /** Null for project badges. */
+  courseId: string | null;
   moduleId: string | null;
+  /** The practice project, for project badges. */
+  projectId?: string | null;
+  /** Project badges: the learner's work, and whether an admin has reviewed it. */
+  workUrl?: string | null;
+  reviewed?: boolean;
   badgeName: string;
   courseTitle: string;
   moduleTitle: string | null;
@@ -68,8 +74,33 @@ export type Credential = {
 /** What anyone can see on a public credential page. No email or account details. */
 export type PublicCredential = Pick<
   Credential,
-  "credentialId" | "kind" | "badgeName" | "courseId" | "courseTitle" | "moduleTitle" | "recipientName" | "skills" | "issuedAt" | "status"
+  "credentialId" | "kind" | "badgeName" | "courseId" | "courseTitle" | "moduleTitle" | "recipientName" | "skills" | "issuedAt" | "status" | "projectId" | "workUrl" | "reviewed"
 >;
+
+/** A learner's submission for a practice project (/projects/:id). */
+export type PracticeSubmission = {
+  id: string;
+  userId: string;
+  projectId: string;
+  workUrl: string;
+  summary: string;
+  /** What was sent for each check: a number, normalised text, or null. */
+  answers: Record<string, number | string | null>;
+  correct: number;
+  total: number;
+  /** Stays true once every answer has been right. */
+  passed: boolean;
+  attempts: number;
+  submittedAt: string;
+  updatedAt: string;
+  reviewedAt: string | null;
+  reviewNote: string | null;
+};
+
+/** The result of submitting: which checks were right (never the answers), and the badge if earned. */
+export type PracticeResult = { passed: boolean; correct: number; total: number; results: Record<string, boolean>; credentialId: string | null };
+
+export type AdminPracticeSubmission = PracticeSubmission & { learnerName: string; learnerEmail: string; projectTitle: string; credentialId: string | null };
 
 /** The optional, paid official certificate for a completed course. */
 export type Certificate = {
@@ -193,6 +224,12 @@ export interface Backend {
   listMyCredentials(): Promise<Credential[]>;
   verifyCredential(credentialId: string): Promise<PublicCredential | null>;
 
+  /* ---------- practice projects ---------- */
+  getPracticeSubmission(projectId: string): Promise<PracticeSubmission | null>;
+  listMyPracticeSubmissions(): Promise<PracticeSubmission[]>;
+  /** Saves the work, grades the checks on the server, and issues the project badge when every answer is right. */
+  submitPracticeProject(input: { projectId: string; workUrl: string; summary: string; answers: Record<string, number | string | null> }): Promise<PracticeResult>;
+
   /* ---------- official certificate (optional, paid) ---------- */
   listCertificatePrices(): Promise<CertificatePrice[]>;
   /** Starts (or reuses) an order. The course must be complete. */
@@ -227,6 +264,9 @@ export interface Backend {
     listCertificates(search?: string): Promise<Certificate[]>;
     revokeCertificate(id: string, reason: string): Promise<void>;
     listOrders(): Promise<AdminOrder[]>;
+    listPracticeSubmissions(): Promise<AdminPracticeSubmission[]>;
+    /** Marks the work "Reviewed by CloudTech" (or removes the mark), with an optional note to the learner. */
+    reviewPracticeSubmission(id: string, reviewed: boolean, note: string): Promise<void>;
     grantCertificate(orderId: string, note: string): Promise<Certificate>;
     /** Every price, including ones switched off. */
     listPrices(): Promise<CertificatePrice[]>;

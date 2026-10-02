@@ -6,7 +6,7 @@ import { SITE } from "@/lib/site";
 const HOST = SITE.url.replace(/^https?:\/\//, "");
 
 export type BadgeData = {
-  kind: "module_badge" | "course_completion";
+  kind: "module_badge" | "course_completion" | "project_badge";
   badgeName: string;
   courseTitle: string;
   icon: LucideIcon;
@@ -14,7 +14,15 @@ export type BadgeData = {
   recipientName?: string;
   issuedAt?: string;
   credentialId?: string;
+  /** Project badges only: an admin has reviewed the work. */
+  reviewed?: boolean;
 };
+
+const MEDAL = {
+  module_badge: ["#D2AE66", "#8C6A2C"],
+  course_completion: ["#DDBB74", "#7A5C24"],
+  project_badge: ["#6B7F95", "#2B3A4C"],
+} as const;
 
 const S = 1200; // square, the shape LinkedIn shows best in a post
 
@@ -36,9 +44,10 @@ export const BadgeArtwork = forwardRef<SVGSVGElement, { data: BadgeData; classNa
   const mono = "'Cascadia Code', Consolas, 'Courier New', monospace";
   const Icon = data.icon;
   const completion = data.kind === "course_completion";
+  const project = data.kind === "project_badge";
   const cx = S / 2;
   const cy = 430;
-  const gid = `medal-${completion ? "c" : "m"}`;
+  const gid = `medal-${data.kind}`;
   const earned = !!data.recipientName;
   return (
     <svg
@@ -51,8 +60,8 @@ export const BadgeArtwork = forwardRef<SVGSVGElement, { data: BadgeData; classNa
     >
       <defs>
         <radialGradient id={gid} cx="38%" cy="32%" r="75%">
-          <stop offset="0%" stopColor={completion ? "#DDBB74" : "#D2AE66"} />
-          <stop offset="100%" stopColor={completion ? "#7A5C24" : "#8C6A2C"} />
+          <stop offset="0%" stopColor={MEDAL[data.kind][0]} />
+          <stop offset="100%" stopColor={MEDAL[data.kind][1]} />
         </radialGradient>
       </defs>
       <rect width={S} height={S} fill="#FBF8F2" />
@@ -80,7 +89,7 @@ export const BadgeArtwork = forwardRef<SVGSVGElement, { data: BadgeData; classNa
       <circle cx={cx} cy={cy} r="180" fill="none" stroke="#FFFFFF" strokeOpacity="0.35" strokeWidth="3" />
       <Icon x={cx - 84} y={cy - 104} width={168} height={168} color="#FFFFFF" strokeWidth={1.6} />
       <text x={cx} y={cy + 122} textAnchor="middle" fontFamily={sans} fontSize="20" fontWeight="700" letterSpacing="6" fill="#FFFFFF" fillOpacity="0.9">
-        {completion ? "COURSE COMPLETION" : "MODULE BADGE"}
+        {completion ? "COURSE COMPLETION" : project ? "PROJECT BADGE" : "MODULE BADGE"}
       </text>
 
       {/* Ribbon with the badge name */}
@@ -90,7 +99,15 @@ export const BadgeArtwork = forwardRef<SVGSVGElement, { data: BadgeData; classNa
       </text>
 
       <text x={cx} y="772" textAnchor="middle" fontFamily={serif} fontSize={titleSize(data.courseTitle)} fontWeight="600" fill="#171717">
-        {completion ? (data.badgeName === data.courseTitle ? "Course completion credential" : data.courseTitle) : `Module of ${data.courseTitle}`}
+        {project
+          ? data.reviewed
+            ? "Practice project · Reviewed by CloudTech"
+            : "Practice project"
+          : completion
+            ? data.badgeName === data.courseTitle
+              ? "Course completion credential"
+              : data.courseTitle
+            : `Module of ${data.courseTitle}`}
       </text>
 
       {earned ? (

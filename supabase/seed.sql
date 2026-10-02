@@ -15063,4 +15063,40 @@ In the text box, answer each task below. Put your diagrams in a shared folder (G
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, required = excluded.required;
 
 
+-- Practice project: Logistics Operations Analysis
+insert into public.practice_projects (id, title, badge_name, badge_code, skills, checks, published)
+values ('logistics-operations', 'Logistics Operations Analysis', 'Logistics Operations Analysis', 'LOGOPS', array['Join shipments, customers, routes and payments', 'Measure on-time delivery against targets', 'Find unpaid revenue', 'Summarise operations for a manager']::text[], '[{"id":"lo-top-customer","kind":"text","answer":"Oakridge Packaging Limited","tol":0,"percent":false,"accept":["oakridge packaging limited","oakridge packaging","oakridge","oakridge packaging ltd"]},{"id":"lo-delivered","kind":"number","answer":2411,"tol":0.5,"percent":false,"accept":[]},{"id":"lo-late-rate","kind":"number","answer":23.4,"tol":0.5,"percent":true,"accept":[]},{"id":"lo-unpaid","kind":"number","answer":1411777000,"tol":7058885,"percent":false,"accept":[]}]'::jsonb, true)
+on conflict (id) do update set title = excluded.title, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, checks = excluded.checks, published = excluded.published;
+
+
+-- Practice project: Sales Performance Analysis
+insert into public.practice_projects (id, title, badge_name, badge_code, skills, checks, published)
+values ('sales-performance', 'Sales Performance Analysis', 'Sales Performance Analysis', 'SALESPRF', array['Calculate revenue after discounts', 'Compare categories, regions and channels', 'Measure the cost of discounts', 'Spot trends in monthly sales']::text[], '[{"id":"sp-revenue","kind":"number","answer":830541245,"tol":4152706.225,"percent":false,"accept":[]},{"id":"sp-top-category","kind":"text","answer":"Household","tol":0,"percent":false,"accept":["household"]},{"id":"sp-top-channel","kind":"text","answer":"Wholesale","tol":0,"percent":false,"accept":["wholesale"]},{"id":"sp-discounts","kind":"number","answer":29087055,"tol":145435.275,"percent":false,"accept":[]},{"id":"sp-best-month","kind":"text","answer":"December 2025","tol":0,"percent":false,"accept":["december 2025","dec 2025","2025-12","12/2025","12-2025","dec-2025","dec-25","december, 2025"]}]'::jsonb, true)
+on conflict (id) do update set title = excluded.title, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, checks = excluded.checks, published = excluded.published;
+
+
+-- Practice project: Price Rise Impact
+insert into public.practice_projects (id, title, badge_name, badge_code, skills, checks, published)
+values ('price-rise-impact', 'Price Rise Impact', 'Price Rise Impact', 'PRICING', array['Compare like-for-like periods', 'Calculate a weighted average price', 'Separate price and volume effects', 'Write a clear recommendation for a board']::text[], '[{"id":"pr-cartons-2026","kind":"number","answer":19630,"tol":0.5,"percent":false,"accept":[]},{"id":"pr-price-change","kind":"number","answer":8.65,"tol":0.5,"percent":true,"accept":[]},{"id":"pr-revenue-change","kind":"number","answer":19.07,"tol":0.5,"percent":true,"accept":[]},{"id":"pr-fewer-cartons","kind":"text","answer":"Kiosk","tol":0,"percent":false,"accept":["kiosk","kiosks"]}]'::jsonb, true)
+on conflict (id) do update set title = excluded.title, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, checks = excluded.checks, published = excluded.published;
+
+
+-- Practice project: Customer Data Clean-up
+insert into public.practice_projects (id, title, badge_name, badge_code, skills, checks, published)
+values ('customer-data-cleanup', 'Customer Data Clean-up', 'Customer Data Clean-up', 'DATACLN', array['Profile a messy dataset', 'Remove duplicates reliably', 'Standardise text, dates and numbers', 'Keep a cleaning log']::text[], '[{"id":"cd-customers","kind":"number","answer":90,"tol":0.5,"percent":false,"accept":[]},{"id":"cd-duplicates","kind":"number","answer":12,"tol":0.5,"percent":false,"accept":[]},{"id":"cd-region-spellings","kind":"number","answer":23,"tol":1,"percent":false,"accept":[]},{"id":"cd-blank-credit","kind":"number","answer":5,"tol":0.5,"percent":false,"accept":[]},{"id":"cd-day-first","kind":"number","answer":30,"tol":0.5,"percent":false,"accept":[]}]'::jsonb, true)
+on conflict (id) do update set title = excluded.title, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, checks = excluded.checks, published = excluded.published;
+
+
+-- Practice project: Law Firm Operations Analysis
+insert into public.practice_projects (id, title, badge_name, badge_code, skills, checks, published)
+values ('law-firm-operations', 'Law Firm Operations Analysis', 'Law Firm Operations Analysis', 'LEGALOPS', array['Measure workload by practice area', 'Calculate an adjournment rate', 'Find overdue and outstanding invoices', 'Report to partners']::text[], '[{"id":"lf-open","kind":"number","answer":34,"tol":0.5,"percent":false,"accept":[]},{"id":"lf-adjourned","kind":"number","answer":52.4,"tol":0.5,"percent":true,"accept":[]},{"id":"lf-busiest-area","kind":"text","answer":"Commercial litigation","tol":0,"percent":false,"accept":["commercial litigation","commercial"]},{"id":"lf-overdue","kind":"number","answer":188070000,"tol":940350,"percent":false,"accept":[]},{"id":"lf-top-debtor","kind":"text","answer":"Chinedu Nwosu","tol":0,"percent":false,"accept":["chinedu nwosu"]}]'::jsonb, true)
+on conflict (id) do update set title = excluded.title, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, checks = excluded.checks, published = excluded.published;
+
+
+-- Practice project: Employee Analytics
+insert into public.practice_projects (id, title, badge_name, badge_code, skills, checks, published)
+values ('employee-analytics', 'Employee Analytics', 'Employee Analytics', 'PEOPLE', array['Calculate lateness and absence rates', 'Measure staff turnover', 'Summarise leave', 'Compare pay across levels']::text[], '[{"id":"ea-late-dept","kind":"text","answer":"Operations","tol":0,"percent":false,"accept":["operations"]},{"id":"ea-resignation","kind":"number","answer":13.8,"tol":0.5,"percent":true,"accept":[]},{"id":"ea-leave-days","kind":"number","answer":570,"tol":0.5,"percent":false,"accept":[]},{"id":"ea-manager-pay","kind":"number","answer":1403000,"tol":7015,"percent":false,"accept":[]},{"id":"ea-resign-dept","kind":"text","answer":"Customer Service","tol":0,"percent":false,"accept":["customer service"]}]'::jsonb, true)
+on conflict (id) do update set title = excluded.title, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, checks = excluded.checks, published = excluded.published;
+
+
 commit;
