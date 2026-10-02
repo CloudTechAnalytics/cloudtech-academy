@@ -2834,6 +2834,125 @@ function projectData() {
   return { tasks, weekly_status: weekly, risks, changes };
 }
 
+/* ------------------------------------------------------------------ product (a wallet's product data) */
+// Paystream's product data for the product management course: eight weeks of signups with
+// their onboarding steps and weekly activity, user feedback from four sources, coded
+// interviews, the feature backlog, and the savings goals launch with randomised early access.
+// All of it is fictional. Generated last, from its own seed.
+function productData() {
+  seed = 20280101;
+  const SEGMENTS = ["Market trader", "Salary earner", "Student", "Small business"];
+  const CHANNELS = ["Agent sign-up", "Referral", "Instagram ad", "Play Store search"];
+  const BVN_RATE = { "Market trader": 0.48, "Salary earner": 0.8, Student: 0.62, "Small business": 0.75 };
+  const CHANNEL_BVN = { "Agent sign-up": 0.22, Referral: 0.05, "Instagram ad": -0.12, "Play Store search": 0 };
+  const RETAIN = { "Market trader": 0.62, "Salary earner": 0.5, Student: 0.3, "Small business": 0.55 };
+  const users = [];
+  const activity = [];
+  for (let k = 1; k <= 8000; k++) {
+    const segment = weighted(SEGMENTS, [35, 30, 20, 15]);
+    const channel = segment === "Market trader" ? weighted(CHANNELS, [45, 20, 10, 25]) : weighted(CHANNELS, [10, 30, 35, 25]);
+    const week = int(1, 8);
+    const phone = rand() < 0.92;
+    const bvn = phone && rand() < Math.min(0.95, BVN_RATE[segment] + CHANNEL_BVN[channel]);
+    const deposit = bvn && rand() < 0.8;
+    const transfer = deposit && rand() < 0.85;
+    const u = { user_id: `U${String(k).padStart(5, "0")}`, signup_week: week, segment, channel, phone_verified: +phone, bvn_verified: +bvn, first_deposit: +deposit, first_transfer: +transfer };
+    users.push(u);
+    if (!deposit) continue;
+    // Weekly activity after signup, up to the end of week 8 of the data plus four weeks.
+    let p = transfer ? RETAIN[segment] + 0.25 : RETAIN[segment] - 0.15;
+    for (let w = 1; w <= 12 - week + 1 && w <= 8; w++) {
+      if (rand() < Math.max(0.03, p)) activity.push({ user_id: u.user_id, week_since_signup: w });
+      p *= 0.93;
+    }
+  }
+
+  const THEMES = {
+    "BVN verification problems": ["BVN verification keeps failing", "My name doesn't match my BVN so I can't verify", "Stuck on verification for days", "abeg help me verify my BVN"],
+    "Transfer fees": ["Fees too high for small transfers", "Why do I pay ₦10 to send ₦1,000?", "Charges on every transfer are too much"],
+    "No USSD or offline access": ["I need to send money without data", "Please add USSD like the banks", "No network at the market, can't use the app"],
+    "Savings goals": ["Let me save towards a target", "I want to lock money for school fees", "Add a savings goal for rent"],
+    "Split bills": ["Let me split bills with friends", "Need a way to collect money from my group", "Add split payment for hangouts"],
+    "Bulk payroll payments": ["We need to pay all our staff at once", "Bulk transfers for salaries please", "Payroll feature needed for our company"],
+    "Card delivery delays": ["My card hasn't arrived after 3 weeks", "Card delivery is too slow", "Still waiting for my physical card"],
+    "App crashes": ["App crashes on my phone", "Keeps closing when I open transfers", "Crashes on Android 9"],
+  };
+  const THEME_WEIGHTS = {
+    "Market trader": [30, 15, 25, 3, 2, 2, 5, 18],
+    "Salary earner": [8, 22, 3, 25, 10, 3, 14, 15],
+    Student: [12, 18, 4, 18, 30, 1, 7, 10],
+    "Small business": [10, 15, 5, 5, 3, 45, 7, 10],
+  };
+  const themes = Object.keys(THEMES);
+  const feedback = [];
+  for (let k = 1; k <= 1500; k++) {
+    const source = weighted(["App review", "Support ticket", "Sales team", "Survey"], [45, 35, 10, 10]);
+    // Sales mostly hears from small businesses, and passes on the same few big requests.
+    const segment = source === "Sales team" ? weighted(SEGMENTS, [5, 10, 5, 80]) : weighted(SEGMENTS, [38, 30, 22, 10]);
+    const theme = source === "Sales team" && rand() < 0.6 ? "Bulk payroll payments" : weighted(themes, THEME_WEIGHTS[segment]);
+    feedback.push({
+      feedback_id: `F${String(k).padStart(4, "0")}`,
+      date: iso(d("2026-07-06") + int(0, 55) * day),
+      source,
+      segment,
+      theme,
+      text: pick(THEMES[theme]),
+      rating: source === "App review" ? weighted([1, 2, 3, 4, 5], theme === "App crashes" || theme === "BVN verification problems" ? [55, 25, 10, 5, 5] : [15, 15, 25, 25, 20]) : "",
+    });
+  }
+
+  const interviews = [];
+  const JOBS = {
+    "Market trader": ["Collect payment from customers quickly at the stall", "Send money to suppliers in other cities", "Keep the day's takings safe"],
+    "Salary earner": ["Pay bills and family on payday", "Save for rent and school fees", "Track where the money goes"],
+    Student: ["Receive allowance from family", "Split costs with friends", "Make small payments without fees"],
+    "Small business": ["Pay staff and suppliers", "Separate business and personal money", "Get paid by customers in other states"],
+  };
+  const PAIN_BY_SEGMENT = { "Market trader": ["BVN verification problems", "No USSD or offline access", "App crashes"], "Salary earner": ["Savings goals", "Transfer fees", "Card delivery delays"], Student: ["Split bills", "Transfer fees", "Savings goals"], "Small business": ["Bulk payroll payments", "Transfer fees", "BVN verification problems"] };
+  const QUOTES = {
+    "BVN verification problems": "I tried three times. My BVN has my old name. In the end I went back to the bank.",
+    "No USSD or offline access": "When network is bad at the market, I can't collect payment. Customers walk away.",
+    "App crashes": "My phone is old. The app closes when I open it, so I use it only at home.",
+    "Savings goals": "If I don't put rent money aside, it disappears. I want to lock it.",
+    "Transfer fees": "Ten naira here, twenty-five there. For small amounts it adds up.",
+    "Card delivery delays": "I paid for the card. Three weeks, nothing.",
+    "Split bills": "Every weekend one person pays and then we chase each other for days.",
+    "Bulk payroll payments": "Every month-end I do 15 transfers one by one. It takes an hour.",
+  };
+  for (let k = 1; k <= 24; k++) {
+    const segment = SEGMENTS[(k - 1) % 4];
+    const pain = PAIN_BY_SEGMENT[segment][Math.floor((k - 1) / 4) % 3];
+    interviews.push({ interview_id: `I${String(k).padStart(2, "0")}`, segment, job_to_be_done: pick(JOBS[segment]), biggest_pain: pain, quote: QUOTES[pain] });
+  }
+
+  const backlog = [
+    ["B01", "Help with BVN verification at agents", "BVN verification problems", 2400, 2, 0.8, 4],
+    ["B02", "USSD transfers for feature phones", "No USSD or offline access", 1800, 2, 0.5, 10],
+    ["B03", "Automatic payday saving", "Savings goals", 3000, 1, 0.8, 5],
+    ["B04", "Split bills with friends", "Split bills", 1200, 0.5, 0.8, 3],
+    ["B05", "Bulk payroll payments", "Bulk payroll payments", 150, 3, 0.8, 8],
+    ["B06", "Free transfers under ₦5,000", "Transfer fees", 5000, 0.5, 0.5, 2],
+    ["B07", "Faster card delivery partner", "Card delivery delays", 800, 1, 1, 2],
+    ["B08", "Dark mode", "", 2000, 0.25, 1, 1],
+    ["B09", "Spending insights", "", 2500, 0.5, 0.5, 4],
+    ["B10", "Fix crashes on older Android phones", "App crashes", 1500, 2, 1, 3],
+  ].map(([item_id, feature, theme, reach_per_quarter, impact, confidence, effort_person_weeks]) => ({ item_id, feature, theme, reach_per_quarter, impact, confidence, effort_person_weeks }));
+
+  // Savings goals launch: existing active users randomly given early access or held out.
+  const rollout = [];
+  for (let k = 1; k <= 6000; k++) {
+    const segment = weighted(SEGMENTS, [35, 30, 20, 15]);
+    const engagement = rand();                      // how engaged the user already was
+    const early = rand() < 0.5;
+    const adopted = early && rand() < 0.15 + 0.5 * engagement + (segment === "Salary earner" ? 0.1 : 0);
+    const base = 0.35 + 0.45 * engagement;
+    const retained = rand() < base + (adopted ? 0.08 : 0);
+    const tickets = rand() < 0.04 + (adopted ? 0.01 : 0) ? 1 : 0;
+    rollout.push({ user_id: `R${String(k).padStart(5, "0")}`, segment, group: early ? "early access" : "holdout", adopted_savings_goals: +adopted, active_week_8: +retained, support_ticket: tickets });
+  }
+  return { users, activity, feedback, interviews, backlog, rollout };
+}
+
 /* ------------------------------------------------------------------ write */
 const SQL = await initSqlJs();
 const L = logistics();
@@ -2898,6 +3017,7 @@ for (const [name, obj] of Object.entries(terraformFiles(CLOUD.resources))) write
   for (const [name, body] of Object.entries(text)) writeText("invoicing", name, body);
 }
 for (const [table, rows] of Object.entries(projectData())) writeCsv("project", table, rows);
+for (const [table, rows] of Object.entries(productData())) writeCsv("product", table, rows);
 
 // Summary for the build log
 const counts = db.exec("SELECT (SELECT COUNT(*) FROM customers), (SELECT COUNT(*) FROM shipments), (SELECT COUNT(*) FROM payments), (SELECT COUNT(*) FROM routes), (SELECT COUNT(*) FROM employees)")[0].values[0];

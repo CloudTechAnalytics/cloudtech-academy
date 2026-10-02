@@ -88,6 +88,12 @@ export const DATASETS: DatasetInfo[] = [
     files: ["daily_sales", "holidays"],
   },
   {
+    id: "product",
+    name: "Paystream product data (signups, feedback, interviews, backlog and a launch)",
+    description: "Eight weeks of a mobile wallet's signups with onboarding steps and weekly activity, 1,500 pieces of user feedback, 24 coded interviews, the feature backlog with RICE inputs, and a feature launch with a randomised holdout. Used in Product Management Fundamentals.",
+    files: ["users", "activity", "feedback", "interviews", "backlog", "rollout"],
+  },
+  {
     id: "project",
     name: "Kolanut Abuja depot launch (tasks, progress, risks and changes)",
     description: "A depot launch project: 23 tasks with three-point estimates, dependencies and daily costs, weekly progress and spending for the first ten weeks, the risk register and five pending change requests. Used in Project Management Fundamentals.",
@@ -333,6 +339,73 @@ export const DATA_DICTIONARY: Record<string, Record<string, { about: string; col
         amount_ngn: "Invoice amount in naira.",
         status: "Paid, Outstanding or Overdue.",
         paid_date: "Date it was paid. Blank if unpaid.",
+      },
+    },
+  },
+  product: {
+    users: {
+      about: "One row per new user who signed up over eight weeks.",
+      columns: {
+        user_id: "User ID.",
+        signup_week: "Week of signup, 1 to 8.",
+        segment: "Market trader, Salary earner, Student or Small business.",
+        channel: "How they signed up: Agent sign-up, Referral, Instagram ad or Play Store search.",
+        phone_verified: "1 if they verified their phone number.",
+        bvn_verified: "1 if they passed BVN verification.",
+        first_deposit: "1 if they deposited money.",
+        first_transfer: "1 if they made a first transfer.",
+      },
+    },
+    activity: {
+      about: "One row for each week a depositing user was active, counted from their signup.",
+      columns: {
+        user_id: "User.",
+        week_since_signup: "Week after signup, 1 to 8.",
+      },
+    },
+    feedback: {
+      about: "User feedback from four sources, tagged by theme.",
+      columns: {
+        feedback_id: "Feedback ID.",
+        date: "Date received.",
+        source: "App review, Support ticket, Sales team or Survey.",
+        segment: "The user's segment.",
+        theme: "The problem the feedback is about.",
+        text: "What the user said.",
+        rating: "App store stars, for app reviews only.",
+      },
+    },
+    interviews: {
+      about: "Coded notes from 24 user interviews.",
+      columns: {
+        interview_id: "Interview ID.",
+        segment: "The interviewee's segment.",
+        job_to_be_done: "What they were trying to get done.",
+        biggest_pain: "Their biggest problem, coded to a theme.",
+        quote: "A representative quote.",
+      },
+    },
+    backlog: {
+      about: "Candidate features with RICE inputs.",
+      columns: {
+        item_id: "Backlog item ID.",
+        feature: "The feature.",
+        theme: "Feedback theme it addresses. Blank if none.",
+        reach_per_quarter: "Users it would affect per quarter.",
+        impact: "Impact per user: 3, 2, 1, 0.5 or 0.25.",
+        confidence: "Confidence in the estimates: 1, 0.8 or 0.5.",
+        effort_person_weeks: "Estimated effort in person-weeks.",
+      },
+    },
+    rollout: {
+      about: "The savings goals launch: existing users randomly given early access or held out.",
+      columns: {
+        user_id: "User ID.",
+        segment: "The user's segment.",
+        group: "early access or holdout.",
+        adopted_savings_goals: "1 if they set up a savings goal (early access only).",
+        active_week_8: "1 if they were active 8 weeks after the launch.",
+        support_ticket: "1 if they raised a support ticket during the period.",
       },
     },
   },

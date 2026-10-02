@@ -1,0 +1,11 @@
+item_id,feature,theme,reach_per_quarter,impact,confidence,effort_person_weeks
+B01,Help with BVN verification at agents,BVN verification problems,2400,2,0.8,4
+B02,USSD transfers for feature phones,No USSD or offline access,1800,2,0.5,10
+B03,Automatic payday saving,Savings goals,3000,1,0.8,5
+B04,Split bills with friends,Split bills,1200,0.5,0.8,3
+B05,Bulk payroll payments,Bulk payroll payments,150,3,0.8,8
+B06,"Free transfers under ₦5,000",Transfer fees,5000,0.5,0.5,2
+B07,Faster card delivery partner,Card delivery delays,800,1,1,2
+B08,Dark mode,,2000,0.25,1,1
+B09,Spending insights,,2500,0.5,0.5,4
+B10,Fix crashes on older Android phones,App crashes,1500,2,1,3

@@ -6399,6 +6399,581 @@
    }
   }
  },
+ "product": {
+  "zipBytes": 118648,
+  "files": {
+   "activity": {
+    "rows": 16214,
+    "bytes": 145952,
+    "columns": [
+     {
+      "name": "user_id",
+      "type": "text",
+      "missing": 0,
+      "distinct": 3942
+     },
+     {
+      "name": "week_since_signup",
+      "type": "number",
+      "missing": 0,
+      "distinct": 8,
+      "min": 1,
+      "max": 8
+     }
+    ],
+    "preview": [
+     [
+      "U00002",
+      "1"
+     ],
+     [
+      "U00002",
+      "2"
+     ],
+     [
+      "U00002",
+      "3"
+     ],
+     [
+      "U00002",
+      "4"
+     ],
+     [
+      "U00002",
+      "6"
+     ],
+     [
+      "U00002",
+      "7"
+     ]
+    ]
+   },
+   "backlog": {
+    "rows": 10,
+    "bytes": 666,
+    "columns": [
+     {
+      "name": "item_id",
+      "type": "text",
+      "missing": 0,
+      "distinct": 10
+     },
+     {
+      "name": "feature",
+      "type": "text",
+      "missing": 0,
+      "distinct": 10
+     },
+     {
+      "name": "theme",
+      "type": "text",
+      "missing": 2,
+      "distinct": 8
+     },
+     {
+      "name": "reach_per_quarter",
+      "type": "number",
+      "missing": 0,
+      "distinct": 10,
+      "min": 150,
+      "max": 5000
+     },
+     {
+      "name": "impact",
+      "type": "number",
+      "missing": 0,
+      "distinct": 5,
+      "min": 0.25,
+      "max": 3
+     },
+     {
+      "name": "confidence",
+      "type": "number",
+      "missing": 0,
+      "distinct": 3,
+      "min": 0.5,
+      "max": 1
+     },
+     {
+      "name": "effort_person_weeks",
+      "type": "number",
+      "missing": 0,
+      "distinct": 7,
+      "min": 1,
+      "max": 10
+     }
+    ],
+    "preview": [
+     [
+      "B01",
+      "Help with BVN verification at agents",
+      "BVN verification problems",
+      "2400",
+      "2",
+      "0.8",
+      "4"
+     ],
+     [
+      "B02",
+      "USSD transfers for feature phones",
+      "No USSD or offline access",
+      "1800",
+      "2",
+      "0.5",
+      "10"
+     ],
+     [
+      "B03",
+      "Automatic payday saving",
+      "Savings goals",
+      "3000",
+      "1",
+      "0.8",
+      "5"
+     ],
+     [
+      "B04",
+      "Split bills with friends",
+      "Split bills",
+      "1200",
+      "0.5",
+      "0.8",
+      "3"
+     ],
+     [
+      "B05",
+      "Bulk payroll payments",
+      "Bulk payroll payments",
+      "150",
+      "3",
+      "0.8",
+      "8"
+     ],
+     [
+      "B06",
+      "Free transfers under ₦5,000",
+      "Transfer fees",
+      "5000",
+      "0.5",
+      "0.5",
+      "2"
+     ]
+    ]
+   },
+   "feedback": {
+    "rows": 1500,
+    "bytes": 143234,
+    "columns": [
+     {
+      "name": "feedback_id",
+      "type": "text",
+      "missing": 0,
+      "distinct": 1500
+     },
+     {
+      "name": "date",
+      "type": "date",
+      "missing": 0,
+      "distinct": 56,
+      "min": "2026-07-06",
+      "max": "2026-08-30"
+     },
+     {
+      "name": "source",
+      "type": "text",
+      "missing": 0,
+      "distinct": 4
+     },
+     {
+      "name": "segment",
+      "type": "text",
+      "missing": 0,
+      "distinct": 4
+     },
+     {
+      "name": "theme",
+      "type": "text",
+      "missing": 0,
+      "distinct": 8
+     },
+     {
+      "name": "text",
+      "type": "text",
+      "missing": 0,
+      "distinct": 25
+     },
+     {
+      "name": "rating",
+      "type": "number",
+      "missing": 814,
+      "distinct": 5,
+      "min": 1,
+      "max": 5
+     }
+    ],
+    "preview": [
+     [
+      "F0001",
+      "2026-07-11",
+      "App review",
+      "Small business",
+      "Bulk payroll payments",
+      "Payroll feature needed for our company",
+      "3"
+     ],
+     [
+      "F0002",
+      "2026-08-04",
+      "App review",
+      "Small business",
+      "Bulk payroll payments",
+      "Payroll feature needed for our company",
+      "4"
+     ],
+     [
+      "F0003",
+      "2026-08-18",
+      "App review",
+      "Market trader",
+      "App crashes",
+      "Keeps closing when I open transfers",
+      "1"
+     ],
+     [
+      "F0004",
+      "2026-08-29",
+      "Support ticket",
+      "Student",
+      "Split bills",
+      "Let me split bills with friends",
+      ""
+     ],
+     [
+      "F0005",
+      "2026-07-13",
+      "Support ticket",
+      "Market trader",
+      "No USSD or offline access",
+      "Please add USSD like the banks",
+      ""
+     ],
+     [
+      "F0006",
+      "2026-08-21",
+      "Support ticket",
+      "Salary earner",
+      "Split bills",
+      "Let me split bills with friends",
+      ""
+     ]
+    ]
+   },
+   "interviews": {
+    "rows": 24,
+    "bytes": 3361,
+    "columns": [
+     {
+      "name": "interview_id",
+      "type": "text",
+      "missing": 0,
+      "distinct": 24
+     },
+     {
+      "name": "segment",
+      "type": "text",
+      "missing": 0,
+      "distinct": 4
+     },
+     {
+      "name": "job_to_be_done",
+      "type": "text",
+      "missing": 0,
+      "distinct": 11
+     },
+     {
+      "name": "biggest_pain",
+      "type": "text",
+      "missing": 0,
+      "distinct": 8
+     },
+     {
+      "name": "quote",
+      "type": "text",
+      "missing": 0,
+      "distinct": 8
+     }
+    ],
+    "preview": [
+     [
+      "I01",
+      "Market trader",
+      "Keep the day's takings safe",
+      "BVN verification problems",
+      "I tried three times. My BVN has my old name. In the end I went back to the bank."
+     ],
+     [
+      "I02",
+      "Salary earner",
+      "Track where the money goes",
+      "Savings goals",
+      "If I don't put rent money aside, it disappears. I want to lock it."
+     ],
+     [
+      "I03",
+      "Student",
+      "Make small payments without fees",
+      "Split bills",
+      "Every weekend one person pays and then we chase each other for days."
+     ],
+     [
+      "I04",
+      "Small business",
+      "Get paid by customers in other states",
+      "Bulk payroll payments",
+      "Every month-end I do 15 transfers one by one. It takes an hour."
+     ],
+     [
+      "I05",
+      "Market trader",
+      "Collect payment from customers quickly at the stall",
+      "No USSD or offline access",
+      "When network is bad at the market, I can't collect payment. Customers walk away."
+     ],
+     [
+      "I06",
+      "Salary earner",
+      "Track where the money goes",
+      "Transfer fees",
+      "Ten naira here, twenty-five there. For small amounts it adds up."
+     ]
+    ]
+   },
+   "rollout": {
+    "rows": 6000,
+    "bytes": 219068,
+    "columns": [
+     {
+      "name": "user_id",
+      "type": "text",
+      "missing": 0,
+      "distinct": 6000
+     },
+     {
+      "name": "segment",
+      "type": "text",
+      "missing": 0,
+      "distinct": 4
+     },
+     {
+      "name": "group",
+      "type": "text",
+      "missing": 0,
+      "distinct": 2
+     },
+     {
+      "name": "adopted_savings_goals",
+      "type": "number",
+      "missing": 0,
+      "distinct": 2,
+      "min": 0,
+      "max": 1
+     },
+     {
+      "name": "active_week_8",
+      "type": "number",
+      "missing": 0,
+      "distinct": 2,
+      "min": 0,
+      "max": 1
+     },
+     {
+      "name": "support_ticket",
+      "type": "number",
+      "missing": 0,
+      "distinct": 2,
+      "min": 0,
+      "max": 1
+     }
+    ],
+    "preview": [
+     [
+      "R00001",
+      "Small business",
+      "early access",
+      "0",
+      "0",
+      "0"
+     ],
+     [
+      "R00002",
+      "Market trader",
+      "early access",
+      "0",
+      "1",
+      "0"
+     ],
+     [
+      "R00003",
+      "Student",
+      "holdout",
+      "0",
+      "1",
+      "0"
+     ],
+     [
+      "R00004",
+      "Salary earner",
+      "early access",
+      "1",
+      "1",
+      "1"
+     ],
+     [
+      "R00005",
+      "Market trader",
+      "early access",
+      "1",
+      "1",
+      "0"
+     ],
+     [
+      "R00006",
+      "Market trader",
+      "holdout",
+      "0",
+      "1",
+      "0"
+     ]
+    ]
+   },
+   "users": {
+    "rows": 8000,
+    "bytes": 346714,
+    "columns": [
+     {
+      "name": "user_id",
+      "type": "text",
+      "missing": 0,
+      "distinct": 8000
+     },
+     {
+      "name": "signup_week",
+      "type": "number",
+      "missing": 0,
+      "distinct": 8,
+      "min": 1,
+      "max": 8
+     },
+     {
+      "name": "segment",
+      "type": "text",
+      "missing": 0,
+      "distinct": 4
+     },
+     {
+      "name": "channel",
+      "type": "text",
+      "missing": 0,
+      "distinct": 4
+     },
+     {
+      "name": "phone_verified",
+      "type": "number",
+      "missing": 0,
+      "distinct": 2,
+      "min": 0,
+      "max": 1
+     },
+     {
+      "name": "bvn_verified",
+      "type": "number",
+      "missing": 0,
+      "distinct": 2,
+      "min": 0,
+      "max": 1
+     },
+     {
+      "name": "first_deposit",
+      "type": "number",
+      "missing": 0,
+      "distinct": 2,
+      "min": 0,
+      "max": 1
+     },
+     {
+      "name": "first_transfer",
+      "type": "number",
+      "missing": 0,
+      "distinct": 2,
+      "min": 0,
+      "max": 1
+     }
+    ],
+    "preview": [
+     [
+      "U00001",
+      "3",
+      "Student",
+      "Instagram ad",
+      "1",
+      "0",
+      "0",
+      "0"
+     ],
+     [
+      "U00002",
+      "6",
+      "Market trader",
+      "Referral",
+      "1",
+      "1",
+      "1",
+      "1"
+     ],
+     [
+      "U00003",
+      "8",
+      "Salary earner",
+      "Play Store search",
+      "1",
+      "1",
+      "1",
+      "1"
+     ],
+     [
+      "U00004",
+      "2",
+      "Market trader",
+      "Agent sign-up",
+      "1",
+      "1",
+      "0",
+      "0"
+     ],
+     [
+      "U00005",
+      "8",
+      "Salary earner",
+      "Play Store search",
+      "1",
+      "1",
+      "1",
+      "1"
+     ],
+     [
+      "U00006",
+      "6",
+      "Market trader",
+      "Instagram ad",
+      "1",
+      "0",
+      "0",
+      "0"
+     ]
+    ]
+   }
+  }
+ },
  "project": {
   "zipBytes": 2752,
   "files": {

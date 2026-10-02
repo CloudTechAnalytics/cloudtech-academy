@@ -55006,9 +55006,1472 @@ $md$, true, true, 10, array['pmf-10-p1', 'pmf-10-t1']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 
+-- Course: Product Management Fundamentals
+insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
+values ('product-management-fundamentals', 'full', null, 'product-management-fundamentals', 'PDM', 'Product Management Fundamentals', 'Decide what to build and prove whether it worked: outcomes and north star metrics, user interviews, feedback analysis, funnels, cohort retention, RICE prioritisation, outcome-based roadmaps, honest launch measurement and product specs, on a mobile wallet''s real-looking data.', 'Product managers decide what to build next and why, then check whether it worked. In this course you do that job for Paystream, a mobile wallet with 8,000 new signups, a busy backlog and a sales team asking loudly for one feature. You''ll turn goals into measurable outcomes, learn what users are trying to get done from coded interviews, analyse 1,500 pieces of feedback without letting one loud channel distort the picture, find the funnel step where market traders fall away, and use cohort retention to see who stays. Then you''ll score the backlog with RICE and test its assumptions, fit a roadmap to the team''s real capacity, and review a launch honestly: the savings goals feature looked like it lifted retention by 18 points, but a randomised holdout shows about 2, and not conclusively. The course ends with a product spec and a quarter plan. Every number comes from running the code.', 'project-management', 'beginner', 2, 'Beginner to intermediate', 7, true, 'available', true, array['Outcomes and north star metrics', 'User interviews and jobs to be done', 'Feedback analysis', 'Funnels and activation', 'Cohort retention', 'RICE prioritisation', 'Outcome-based roadmaps', 'Measuring launches with holdouts', 'Product specs and success metrics']::text[], array['Python for Data Analytics, or comfort with pandas', 'Experimentation and A/B Testing is helpful for lesson 8']::text[], 'Paystream''s next quarter', true, true, true, true, false, 60, 41)
+on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level = excluded.level, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('pdm-m01', 'product-management-fundamentals', 'What Product Managers Do', 1, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('product-management-fundamentals:what-product-managers-do', 'product-management-fundamentals', 'pdm-m01', 'what-product-managers-do', 'What product managers do', 'What a product manager is responsible for (outcomes, not just features), how product work differs from project work, how to pick a north star metric, and a first look at Paystream''s new users.', 20, $md$
+## The problem
+
+Paystream, the mobile wallet from the AI courses, has a backlog of ten feature ideas, a sales team asking loudly for one of them, and a CEO who wants "more users". Eight thousand people signed up in the last eight weeks. Fewer than half of them ever sent money.
+
+A product manager's job is to decide **what to build next and why**, using evidence about users, and then to check whether it worked. This course teaches that job with Paystream's real signup, feedback, interview and launch data.
+
+## The concept
+
+**Outcomes, not outputs**
+
+An **output** is something shipped: "savings goals launched". An **outcome** is a change in what users do: "more salary earners keep money in Paystream for a month". Product managers are measured on outcomes; shipping is only the means.
+
+**Product and project**
+
+| | Project manager | Product manager |
+| :-- | :-- | :-- |
+| Question | are we delivering what was agreed, on time and budget? | are we building the right thing, and did it work? |
+| Timescale | a project's life | the product's life |
+| Success | delivered as planned | users' behaviour and the business improve |
+
+Most teams need both, and the Project Manager track teaches both.
+
+**A north star metric**
+
+One number that captures the value users get, which the whole team can move. For a wallet: **weekly active users who make at least one transaction**, not downloads or signups.
+
+## Example
+
+Paystream's signups over eight weeks, and how far each new user got:
+
+```python
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/product/"
+users = pd.read_csv(base + "users.csv")
+print(len(users), "signups;", users["signup_week"].value_counts().sort_index().tolist(), "per week")
+steps = ["phone_verified", "bvn_verified", "first_deposit", "first_transfer"]
+print((users[steps].mean() * 100).round(1).to_string())
+```
+
+```text
+8000 signups; [1023, 960, 1008, 1018, 1010, 1001, 970, 1010] per week
+phone_verified    91.9
+bvn_verified      62.8
+first_deposit     50.5
+first_transfer    42.8
+```
+
+More than nine in ten new users verify their phone, but only about four in ten ever send money, which is the moment Paystream becomes useful to them. Celebrating signups would hide that. Now the users who matter most for the north star:
+
+```python
+activity = pd.read_csv(base + "activity.csv")
+week_two = activity[activity["week_since_signup"] == 2]["user_id"].nunique()
+print("Signups:", len(users))
+print("Made a first transfer:", int(users["first_transfer"].sum()))
+print("Active in their second week:", week_two)
+```
+
+```text
+Signups: 8000
+Made a first transfer: 3422
+Active in their second week: 2596
+```
+
+Each step loses people. Lessons 4 and 5 find out where, and for whom.
+
+## Walkthrough
+
+1. Run the cells. Which step loses the most new users?
+2. Propose an alternative north star metric for Paystream, and say what it would miss.
+3. Rewrite "launch split bills" as an outcome.
+4. Write three outcomes for Paystream's next quarter (the task below).
+
+## Practice
+
+```dataset
+{"dataset": "product", "files": ["users", "activity", "feedback", "interviews", "backlog", "rollout"]}
+```
+
+```answer
+{
+  "id": "pdm-01-p1",
+  "prompt": "What share of signups made a **first transfer**? As a percentage, one decimal place.",
+  "answer": 42.8,
+  "format": "percent",
+  "dataset": "product",
+  "files": ["users"],
+  "pyVerify": "round(users['first_transfer'].mean() * 100, 1)",
+  "hint": "The first_transfer line.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "pdm-01-t1",
+  "prompt": "Write **three outcomes** for Paystream's next quarter, one per line starting with a dash. Each must name a **user group**, a **behaviour** that should change, and a **measure with a number**. None may be a feature.",
+  "minutes": 5,
+  "rows": 5,
+  "placeholder": "- More market traders ...",
+  "rules": [
+    { "label": "Three lines starting with -", "pattern": "^\\s*-\\s+\\S", "min": 3 },
+    { "label": "User groups named", "pattern": "trader|salary|student|small business|new users|signups", "min": 3 },
+    { "label": "A measure with a number on each", "pattern": "^\\s*-[^\\n]*\\d", "min": 3 },
+    { "label": "No feature outputs (launch, build, ship, add)", "pattern": "^\\s*-\\s*(launch|build|ship|add|release)\\b", "absent": true }
+  ],
+  "sample": "- More new market traders get verified: BVN verification for traders rises from about 52% to 65% of signups.\n- More new users start transacting: the share of signups making a first transfer rises from about 43% to 50%.\n- More salary earners keep money with us: the share active in week 8 after signup rises by 5 percentage points.",
+  "note": "Each outcome leaves the 'how' open: the team can test several features against it.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Which is an outcome rather than an output?",
+    "options": ["Ship split bills", "More students settle shared costs through Paystream each week", "Redesign the home screen", "Launch on iOS"],
+    "answer": 1,
+    "explanation": "Outcomes describe changed behaviour."
+  },
+  {
+    "prompt": "Why is 'downloads' a poor north star for a wallet?",
+    "options": ["It's hard to count", "Downloads don't show whether users get value; transactions do", "It's too high", "Investors dislike it"],
+    "answer": 1,
+    "explanation": "Measure the value users get."
+  },
+  {
+    "prompt": "What's a product manager mainly accountable for?",
+    "options": ["Delivering on schedule", "Building the right things and whether they change user behaviour and results", "Writing code", "Running support"],
+    "answer": 1,
+    "explanation": "Outcomes over outputs."
+  }
+]
+```
+$md$, true, true, 1, array['pdm-01-p1', 'pdm-01-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('pdm-m02', 'product-management-fundamentals', 'Understanding Users', 2, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('product-management-fundamentals:understanding-users', 'product-management-fundamentals', 'pdm-m02', 'understanding-users', 'Understanding users', 'Learn what users are trying to get done with jobs-to-be-done interviews, ask questions that don''t lead, code interview notes into patterns, and see why each segment needs something different.', 20, $md$
+## The problem
+
+Paystream's team describes its users as "Nigerians who want to send money". But a market trader collecting payments at a stall, a salary earner paying bills on payday and a student splitting the cost of a night out want very different things. Building for an average user builds for nobody.
+
+The researcher interviewed 24 users, six from each segment. The interviews are coded: each one records the user's main job and their biggest pain.
+
+## The concept
+
+**Jobs to be done**
+
+People don't want a wallet; they want to get something done. "Collect payment quickly at my stall" is a job. Features are judged by how well they help with a job.
+
+**Interviewing well**
+
+| Instead of | Ask |
+| :-- | :-- |
+| "Would you use savings goals?" (leading, hypothetical) | "Tell me about the last time you saved for something." |
+| "Do you like the app?" | "Walk me through the last payment you made. What happened?" |
+| "What features do you want?" | "What did you do when that didn't work?" |
+
+Ask about **past behaviour**, not opinions about the future. People are poor at predicting what they'll do.
+
+**Coding notes**
+
+Tag each interview with the job, the pain and anything surprising, then count across interviews. Six interviews per segment won't give percentages you can trust, but they show patterns worth measuring.
+
+## Example
+
+```python
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/product/"
+interviews = pd.read_csv(base + "interviews.csv")
+pd.crosstab(interviews["biggest_pain"], interviews["segment"])
+```
+
+```text
+segment                    Market trader  Salary earner  Small business  Student
+biggest_pain
+App crashes                            2              0               0        0
+BVN verification problems              2              0               2        0
+Bulk payroll payments                  0              0               2        0
+Card delivery delays                   0              2               0        0
+No USSD or offline access              2              0               0        0
+Savings goals                          0              2               0        2
+Split bills                            0              0               0        2
+Transfer fees                          0              2               2        2
+```
+
+Each segment's pains are different. Traders talk about verification, offline access and crashes; small businesses about payroll, fees and verification. Read a quote for each of the most common pains:
+
+```python
+for pain in interviews["biggest_pain"].value_counts().index[:4]:
+    row = interviews[interviews["biggest_pain"] == pain].iloc[0]
+    print(f"{pain} ({row['segment']}): \"{row['quote']}\"")
+```
+
+```text
+Transfer fees (Salary earner): "Ten naira here, twenty-five there. For small amounts it adds up."
+BVN verification problems (Market trader): "I tried three times. My BVN has my old name. In the end I went back to the bank."
+Savings goals (Salary earner): "If I don't put rent money aside, it disappears. I want to lock it."
+Split bills (Student): "Every weekend one person pays and then we chase each other for days."
+```
+
+Quotes make pains real for the team, but they're anecdotes. Lesson 3 checks whether the patterns show up across 1,500 pieces of feedback, and lesson 4 whether they show up in what new users actually do.
+
+## Walkthrough
+
+1. Run the cells. Which jobs appear for market traders?
+2. Rewrite three leading questions as questions about past behaviour (the task below).
+3. Which pains appear in more than one segment?
+4. What would you want to measure next to check the traders' verification problem?
+
+## Practice
+
+```answer
+{
+  "id": "pdm-02-p1",
+  "prompt": "How many interviews were with **market traders**?",
+  "answer": 6,
+  "format": "number",
+  "dataset": "product",
+  "files": ["interviews"],
+  "pyVerify": "int((interviews['segment'] == 'Market trader').sum())",
+  "hint": "Add up the Market trader column.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "pdm-02-t1",
+  "prompt": "Rewrite these three leading questions as questions about **past behaviour**, one per numbered line: (1) \"Would you use a USSD option?\" (2) \"Are our fees too high?\" (3) \"Would you split bills in the app?\"",
+  "minutes": 5,
+  "rows": 4,
+  "placeholder": "1. Tell me about the last time ...",
+  "rules": [
+    { "label": "Three numbered questions", "pattern": "^\\s*\\d[.)]\\s+\\S", "min": 3 },
+    { "label": "About past events (last time, tell me about, walk me through, what happened)", "pattern": "last time|tell me about|walk me through|what happened|when did you", "min": 3 },
+    { "label": "No 'would you'", "pattern": "would you", "absent": true },
+    { "label": "No yes/no 'are our' or 'do you like'", "pattern": "are our|do you like", "absent": true }
+  ],
+  "sample": "1. Tell me about the last time you needed to send money but had no data or network. What did you do?\n2. Walk me through the last few transfers you made. How did you decide which app or bank to use?\n3. Tell me about the last time you and your friends shared a cost. How did everyone pay their part?",
+  "note": "Each question asks what happened, so the answer is evidence, not a guess about the future.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Which is a job to be done?",
+    "options": ["A savings feature", "Put rent money aside so it isn't spent", "A mobile app", "A 5-star rating"],
+    "answer": 1,
+    "explanation": "Jobs are what people are trying to achieve."
+  },
+  {
+    "prompt": "Why ask about past behaviour rather than future intentions?",
+    "options": ["It's quicker", "People are poor at predicting what they'll do; what they did is evidence", "It's polite", "Future questions are illegal"],
+    "answer": 1,
+    "explanation": "Behaviour beats opinion."
+  },
+  {
+    "prompt": "Six interviews per segment show a pattern. What next?",
+    "options": ["Build it immediately", "Check whether the pattern holds in larger data, such as feedback and usage", "Ignore it", "Interview the same people again"],
+    "answer": 1,
+    "explanation": "Interviews suggest; data confirms."
+  }
+]
+```
+$md$, true, true, 2, array['pdm-02-p1', 'pdm-02-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('pdm-m03', 'product-management-fundamentals', 'Analysing Feedback', 3, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('product-management-fundamentals:analysing-feedback', 'product-management-fundamentals', 'pdm-m03', 'analysing-feedback', 'Analysing feedback', 'Turn 1,500 pieces of feedback from four sources into evidence, count themes properly, spot when one channel''s loudness distorts the picture, and weigh feedback against who your users actually are.', 25, $md$
+## The problem
+
+Paystream's sales team brings up bulk payroll at every meeting: "every business customer is asking for it". The support lead says verification problems are drowning her team. App reviews complain about fees and crashes. Everyone has a list, and each list is honest. They can't all be the top priority.
+
+Feedback is evidence, but only if you count it carefully and know where it came from.
+
+## The concept
+
+**Count by theme and source**
+
+Tag every item with a theme (the dataset is already tagged), then count by theme **and** by source. A theme that dominates one source but not the others is a sign of that channel's audience, not of all users.
+
+**Weigh against your users**
+
+Compare who gives feedback with who your users are. If one segment is 15% of users but gives most of the feedback on a theme, that theme matters to them, not necessarily to everyone.
+
+**Severity**
+
+App store ratings show how much an issue hurts. One-star reviews about crashes cost downloads.
+
+**Requests are not solutions**
+
+"Add USSD" is one user's idea of a solution; the problem is "I can't pay when the network is bad". Keep problems and requested solutions apart.
+
+## Example
+
+Themes by source:
+
+```python
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/product/"
+feedback = pd.read_csv(base + "feedback.csv")
+users = pd.read_csv(base + "users.csv")
+
+by_source = pd.crosstab(feedback["theme"], feedback["source"], margins=True).sort_values("All", ascending=False)
+by_source
+```
+
+```text
+source                     App review  Sales team  Support ticket  Survey   All
+theme
+All                               686         150             530     134  1500
+Transfer fees                     116          10             102      21   249
+BVN verification problems         131           9              91      18   249
+Bulk payroll payments              46         111              38      10   205
+App crashes                        98           6              77      19   200
+Savings goals                      97           1              75      19   192
+Split bills                        74           9              52      19   154
+No USSD or offline access          69           1              53      19   142
+Card delivery delays               55           3              42       9   109
+```
+
+Most of bulk payroll's feedback comes from one source: the sales team. Who is it coming from, compared with Paystream's users?
+
+```python
+payroll = feedback[feedback["theme"] == "Bulk payroll payments"]
+print("Bulk payroll feedback by segment:", (payroll["segment"].value_counts(normalize=True) * 100).round(0).to_dict())
+print("New users by segment:", (users["segment"].value_counts(normalize=True) * 100).round(0).to_dict())
+print("Sales team items that are about payroll:", f"{(feedback[feedback['source'] == 'Sales team']['theme'] == 'Bulk payroll payments').mean():.0%}")
+```
+
+```text
+Bulk payroll feedback by segment: {'Small business': 77.0, 'Salary earner': 13.0, 'Market trader': 6.0, 'Student': 4.0}
+New users by segment: {'Market trader': 35.0, 'Salary earner': 30.0, 'Student': 20.0, 'Small business': 15.0}
+Sales team items that are about payroll: 74%
+```
+
+Payroll is a real need for small businesses, about one in seven new users, and the sales team hears about it constantly because small businesses are who they talk to. That doesn't make it the biggest problem for Paystream's users overall. Now severity, from app store ratings:
+
+```python
+reviews = feedback[feedback["source"] == "App review"]
+reviews.groupby("theme")["rating"].agg(reviews="size", average_rating="mean").round(2).sort_values("average_rating")
+```
+
+```text
+reviews  average_rating
+theme
+App crashes                     98            1.72
+BVN verification problems      131            1.86
+Card delivery delays            55            2.84
+Transfer fees                  116            2.84
+Bulk payroll payments           46            3.22
+No USSD or offline access       69            3.25
+Savings goals                   97            3.25
+Split bills                     74            3.34
+```
+
+Crashes and verification problems get the lowest ratings, and they're also the themes users can't work around: if verification fails, they can't use Paystream at all.
+
+## Walkthrough
+
+1. Run the cells. Excluding the sales team, what are the top three themes?
+2. Which segment gives most of the feedback about USSD and offline access?
+3. Split one theme into the problem and the requested solution.
+4. Write a reply to the sales team (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "pdm-03-p1",
+  "prompt": "What share of the **sales team's** feedback is about **bulk payroll**? As a percentage, whole number.",
+  "answer": 74,
+  "format": "percent",
+  "dataset": "product",
+  "files": ["feedback"],
+  "pyVerify": "round((feedback[feedback['source'] == 'Sales team']['theme'] == 'Bulk payroll payments').mean() * 100)",
+  "hint": "The last line printed.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "pdm-03-t1",
+  "prompt": "Reply to the sales team's \"every business customer is asking for payroll\" in 50 to 120 words: acknowledge the **need**, show what the **wider feedback** says (with **numbers**), and explain **how** payroll will be considered.",
+  "minutes": 5,
+  "rows": 6,
+  "placeholder": "Thank you for ...",
+  "rules": [
+    { "label": "Acknowledges the need", "pattern": "real|need|important|hear|understand" },
+    { "label": "Uses numbers", "pattern": "\\d", "min": 2 },
+    { "label": "Mentions other themes (verification, fees, crashes)", "pattern": "verification|bvn|fees|crash" },
+    { "label": "Explains the process (prioritis, RICE, compare, evidence)", "pattern": "prioriti|rice|compare|evidence|score|weigh" },
+    { "label": "Between 50 and 120 words", "minWords": 50, "maxWords": 120 }
+  ],
+  "sample": "Thank you: payroll is a real need, and you hear it from almost every small business you visit. Across all 1,500 pieces of feedback, it's one of the most common themes, but most of it comes from your team's conversations, and small businesses are about one in seven of our new users. Verification problems and fees come up more often across app reviews, support and surveys, and verification failures stop people using Paystream at all. We'll score payroll alongside the other ideas using reach, impact, confidence and effort, and share the result with you before the roadmap is set.",
+  "note": "The reply respects the request and explains the decision process, so sales can see payroll was weighed, not ignored.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "One theme dominates feedback from one source but is rare elsewhere. What does that suggest?",
+    "options": ["It's the top priority", "It reflects that source's audience; weigh it against all users", "It's fake", "Ignore the source"],
+    "answer": 1,
+    "explanation": "Know where feedback comes from."
+  },
+  {
+    "prompt": "A user writes 'Add USSD'. What's the underlying problem?",
+    "options": ["They like USSD", "They can't pay when network or data is unavailable", "They dislike the app", "Nothing"],
+    "answer": 1,
+    "explanation": "Separate problems from requested solutions."
+  },
+  {
+    "prompt": "Why look at app store ratings by theme?",
+    "options": ["To find happy users", "To see which problems hurt most", "Ratings are random", "To count downloads"],
+    "answer": 1,
+    "explanation": "Severity, not just volume."
+  }
+]
+```
+$md$, true, true, 3, array['pdm-03-p1', 'pdm-03-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('pdm-m04', 'product-management-fundamentals', 'Funnels and Activation', 4, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('product-management-fundamentals:funnels-and-activation', 'product-management-fundamentals', 'pdm-m04', 'funnels-and-activation', 'Funnels and activation', 'Measure where new users drop out with a funnel, compare steps and segments, find the activation moment that predicts staying, and size the opportunity of fixing the worst step.', 15, $md$
+## The problem
+
+Interviews and feedback both pointed at verification. But how much does it really cost Paystream? Is it a problem for everyone, or for a few? And if it were fixed, how many more people would become active users? A funnel answers all three with what users actually did, not what they said.
+
+## The concept
+
+**A funnel**
+
+The steps a new user takes to get value, in order, with the share who reach each one. Paystream's onboarding funnel: phone verified → BVN verified → first deposit → first transfer.
+
+**Step conversion**
+
+The share of users at one step who reach the next. The step with the lowest conversion (and the most users lost) is where to look first.
+
+**Activation**
+
+The moment a new user first gets the product's value. For a wallet, the **first transfer**: users who make one are far more likely to keep using the app (lesson 5).
+
+**Segments and channels**
+
+Break every funnel down. An average can hide a step that works for most users and fails badly for one segment.
+
+## Example
+
+The overall funnel:
+
+```python
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/product/"
+users = pd.read_csv(base + "users.csv")
+steps = ["phone_verified", "bvn_verified", "first_deposit", "first_transfer"]
+
+reached = users[steps].sum()
+funnel = pd.DataFrame({"users": [len(users)] + reached.tolist()}, index=["signed up"] + steps)
+funnel["share_of_signups"] = (funnel["users"] / len(users) * 100).round(1)
+funnel["step_conversion"] = (funnel["users"] / funnel["users"].shift(1) * 100).round(1)
+funnel["lost_at_step"] = funnel["users"].shift(1) - funnel["users"]
+funnel
+```
+
+```text
+users  share_of_signups  step_conversion  lost_at_step
+signed up        8000             100.0              NaN           NaN
+phone_verified   7353              91.9             91.9         647.0
+bvn_verified     5021              62.8             68.3        2332.0
+first_deposit    4039              50.5             80.4         982.0
+first_transfer   3422              42.8             84.7         617.0
+```
+
+BVN verification loses the most users by far. Now by segment and by sign-up channel:
+
+```python
+verified_phone = users[users["phone_verified"] == 1]
+print((verified_phone.groupby("segment")["bvn_verified"].mean() * 100).round(1).sort_values().to_string())
+print()
+print((verified_phone.groupby("channel")["bvn_verified"].mean() * 100).round(1).sort_values().to_string())
+```
+
+```text
+segment
+Market trader     57.3
+Student           62.6
+Small business    76.4
+Salary earner     80.4
+
+channel
+Instagram ad         59.8
+Play Store search    64.4
+Referral             73.1
+Agent sign-up        76.1
+```
+
+Market traders fail verification far more often than other segments, and users who signed up with an agent's help pass far more often than those from Instagram ads. That's evidence for backlog item B01, verification help at agents. How big is the prize if traders verified as often as salary earners, and the rest of their funnel stayed the same?
+
+```python
+traders = verified_phone[verified_phone["segment"] == "Market trader"]
+salary_rate = verified_phone[verified_phone["segment"] == "Salary earner"]["bvn_verified"].mean()
+extra_verified = len(traders) * (salary_rate - traders["bvn_verified"].mean())
+transfer_given_bvn = traders.loc[traders["bvn_verified"] == 1, "first_transfer"].mean()
+print(f"Extra traders verified over 8 weeks: {extra_verified:.0f}")
+print(f"Extra traders making a first transfer: {extra_verified * transfer_given_bvn:.0f}")
+```
+
+```text
+Extra traders verified over 8 weeks: 592
+Extra traders making a first transfer: 410
+```
+
+Hundreds of extra active traders in eight weeks, from fixing one step for one segment. That's the kind of number a prioritisation needs (lesson 6).
+
+## Walkthrough
+
+1. Run the cells. Which segment converts worst from first deposit to first transfer?
+2. Compare the funnel for signup weeks 1 to 4 with weeks 5 to 8. Is anything changing?
+3. Why might agent sign-ups verify more often? Name two possible reasons.
+4. Calculate the prize of raising Instagram sign-ups to the referral verification rate.
+
+## Practice
+
+```answer
+{
+  "id": "pdm-04-p1",
+  "prompt": "What share of **market traders** who verified their phone also verified their **BVN**? As a percentage, one decimal place.",
+  "answer": 57.3,
+  "format": "percent",
+  "dataset": "product",
+  "files": ["users"],
+  "pyVerify": "round(verified_phone[verified_phone['segment'] == 'Market trader']['bvn_verified'].mean() * 100, 1)",
+  "hint": "The Market trader line of the segment breakdown.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "What is activation?",
+    "options": ["Installing the app", "The moment a new user first gets the product's value, such as a first transfer", "Signing up", "Opening an email"],
+    "answer": 1,
+    "explanation": "The step that predicts staying."
+  },
+  {
+    "prompt": "Why break a funnel down by segment?",
+    "options": ["It looks thorough", "An average can hide a step that fails badly for one group", "To make charts", "Funnels require it"],
+    "answer": 1,
+    "explanation": "Find who the step fails."
+  },
+  {
+    "prompt": "Which step should usually be investigated first?",
+    "options": ["The first", "The one that loses the most users", "The last", "The cheapest"],
+    "answer": 1,
+    "explanation": "Biggest loss, biggest opportunity."
+  }
+]
+```
+$md$, true, true, 4, array['pdm-04-p1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('pdm-m05', 'product-management-fundamentals', 'Retention and Cohorts', 5, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('product-management-fundamentals:retention-and-cohorts', 'product-management-fundamentals', 'pdm-m05', 'retention-and-cohorts', 'Retention and cohorts', 'Measure whether users keep coming back with cohort retention tables, compare segments and activation, and recognise the difference between a product people try and one they keep using.', 15, $md$
+## The problem
+
+Getting users to a first transfer is only half the job. A wallet that people use once and abandon is a leaky bucket: every naira spent on ads drains away. The CEO's "more users" only matters if users stay.
+
+## The concept
+
+**Cohorts**
+
+Group users by when they started (their **cohort**), then track what share are active in each week after they started. Comparing cohorts shows whether the product is improving over time; comparing segments shows who it works for.
+
+**Reading a retention curve**
+
+- A curve that keeps falling towards zero: people try it and leave.
+- A curve that **flattens**: a core of users has made it a habit. That flat level matters more than the first week.
+
+**Right-censoring**
+
+Recent cohorts haven't had time to reach week 8. Only compare weeks every cohort has reached.
+
+## Example
+
+Weekly activity for users who made a deposit, by signup week:
+
+```python
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/product/"
+users = pd.read_csv(base + "users.csv")
+activity = pd.read_csv(base + "activity.csv")
+
+depositors = users[users["first_deposit"] == 1]
+active = activity.merge(depositors[["user_id", "signup_week"]], on="user_id")
+cohort_sizes = depositors.groupby("signup_week").size()
+counts = active.pivot_table(index="signup_week", columns="week_since_signup", values="user_id", aggfunc="count")
+retention = (counts.div(cohort_sizes, axis=0) * 100).round(0)
+retention
+```
+
+```text
+week_since_signup     1     2     3     4     5     6     7     8
+signup_week
+1                  68.0  64.0  64.0  56.0  52.0  50.0  46.0  38.0
+2                  70.0  63.0  60.0  55.0  53.0  43.0  45.0  41.0
+3                  68.0  64.0  60.0  52.0  53.0  46.0  39.0  41.0
+4                  73.0  65.0  64.0  58.0  51.0  47.0  45.0  46.0
+5                  71.0  64.0  62.0  55.0  52.0  45.0  41.0  44.0
+6                  68.0  65.0  59.0  56.0  52.0  48.0  44.0   NaN
+7                  71.0  65.0  59.0  56.0  56.0  47.0   NaN   NaN
+8                  67.0  65.0  58.0  52.0  51.0   NaN   NaN   NaN
+```
+
+Each row is a cohort; each column a week since signup. The missing values bottom right are cohorts that haven't had time to reach that week yet. The rows look alike, so the product isn't getting better or worse for new users week by week. Now compare who stays:
+
+```python
+first_transfer = depositors.set_index("user_id")["first_transfer"]
+week4 = set(activity.loc[activity["week_since_signup"] == 4, "user_id"])
+eligible = depositors[depositors["signup_week"] <= 8]
+eligible = eligible.assign(active_week_4=eligible["user_id"].isin(week4))
+summary = eligible.groupby(["segment", "first_transfer"])["active_week_4"].mean().unstack() * 100
+summary.columns = ["no first transfer", "made a first transfer"]
+summary.round(1)
+```
+
+```text
+no first transfer  made a first transfer
+segment
+Market trader                40.8                   68.5
+Salary earner                32.4                   59.8
+Small business               22.2                   61.0
+Student                      13.3                   43.2
+```
+
+In every segment, users who made a first transfer are far more likely to be active in week 4: that's why it's the activation moment. Market traders who get that far are the most loyal of all; students drift away even when they activate. So fixing traders' verification (lesson 4) would bring in users who stay.
+
+## Walkthrough
+
+1. Run the cells. Plot the average retention curve. Does it flatten?
+2. Which cohorts can you fairly compare at week 6?
+3. Why might students drift away even after activating? What would you ask them?
+4. Compute week-4 retention by channel. Do agent sign-ups stay longer?
+
+## Practice
+
+```answer
+{
+  "id": "pdm-05-p1",
+  "prompt": "For **market traders** who **made a first transfer**, what share were active in **week 4**? As a percentage, one decimal place.",
+  "answer": 68.5,
+  "format": "percent",
+  "dataset": "product",
+  "files": ["users", "activity"],
+  "pyVerify": "round(summary.loc['Market trader', 'made a first transfer'], 1)",
+  "hint": "The Market trader row, made a first transfer column.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "What is a cohort?",
+    "options": ["A segment", "A group of users who started in the same period", "A feature", "A survey"],
+    "answer": 1,
+    "explanation": "Cohorts let you compare like with like over time."
+  },
+  {
+    "prompt": "Why is a flattening retention curve good news?",
+    "options": ["It isn't", "It shows a core of users has made the product a habit", "It means growth", "It means fewer complaints"],
+    "answer": 1,
+    "explanation": "Products with no flat level leak everyone eventually."
+  },
+  {
+    "prompt": "Why can't you compare the newest cohort's week 8 with older cohorts?",
+    "options": ["It's too small", "It hasn't reached week 8 yet", "It's biased upwards", "You can"],
+    "answer": 1,
+    "explanation": "Right-censoring."
+  }
+]
+```
+$md$, true, true, 5, array['pdm-05-p1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('pdm-m06', 'product-management-fundamentals', 'Prioritising with RICE', 6, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('product-management-fundamentals:prioritising-with-rice', 'product-management-fundamentals', 'pdm-m06', 'prioritising-with-rice', 'Prioritising with RICE', 'Score a backlog with RICE (reach, impact, confidence and effort), compare it with prioritising by whoever asks loudest, test how sensitive the ranking is to uncertain inputs, and explain the result.', 25, $md$
+## The problem
+
+Ten ideas, one team, one quarter. Ranked by how often they come up in feedback, the top of the list is fees, verification and payroll. Ranked by who shouts loudest, payroll wins. Ranked by the CEO's favourite, it's spending insights. Each ranking leaves out something important: how many users an idea would reach, how much it would change things for them, how sure the team is, and how much it costs to build.
+
+## The concept
+
+**RICE**
+
+> score = Reach × Impact × Confidence ÷ Effort
+
+| Input | Meaning | Paystream's scale |
+| :-- | :-- | :-- |
+| **Reach** | users affected per quarter | a number of users |
+| **Impact** | how much it changes things for each of them | 3 massive, 2 high, 1 medium, 0.5 low, 0.25 minimal |
+| **Confidence** | how sure we are of the reach and impact | 1 high, 0.8 medium, 0.5 low |
+| **Effort** | how much work | person-weeks |
+
+**Scores are for discussion, not autopilot**
+
+RICE makes assumptions visible so people can challenge them. Check how sensitive the ranking is to the uncertain inputs, and record why you overrode it when you do.
+
+**Where the inputs come from**
+
+Reach from funnels and feedback (lessons 3 to 5), impact from interviews and past launches, confidence from the strength of that evidence, effort from the engineers.
+
+## Example
+
+The backlog, scored:
+
+```python
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/product/"
+backlog = pd.read_csv(base + "backlog.csv").fillna({"theme": ""})
+feedback = pd.read_csv(base + "feedback.csv")
+
+backlog["rice"] = backlog["reach_per_quarter"] * backlog["impact"] * backlog["confidence"] / backlog["effort_person_weeks"]
+backlog["feedback_items"] = backlog["theme"].map(feedback["theme"].value_counts()).fillna(0).astype(int)
+backlog["rice_rank"] = backlog["rice"].rank(ascending=False).astype(int)
+backlog["feedback_rank"] = backlog["feedback_items"].rank(ascending=False, method="min").astype(int)
+backlog.sort_values("rice", ascending=False)[["item_id", "feature", "reach_per_quarter", "impact", "confidence", "effort_person_weeks", "rice", "rice_rank", "feedback_rank"]].round({"rice": 0})
+```
+
+```text
+item_id                               feature  reach_per_quarter  impact  confidence  effort_person_weeks    rice  rice_rank  feedback_rank
+9     B10   Fix crashes on older Android phones               1500    2.00         1.0                    3  1000.0          1              4
+0     B01  Help with BVN verification at agents               2400    2.00         0.8                    4   960.0          2              1
+5     B06           Free transfers under ₦5,000               5000    0.50         0.5                    2   625.0          3              1
+7     B08                             Dark mode               2000    0.25         1.0                    1   500.0          4              9
+2     B03               Automatic payday saving               3000    1.00         0.8                    5   480.0          5              5
+6     B07          Faster card delivery partner                800    1.00         1.0                    2   400.0          6              8
+1     B02     USSD transfers for feature phones               1800    2.00         0.5                   10   180.0          7              7
+3     B04              Split bills with friends               1200    0.50         0.8                    3   160.0          8              6
+8     B09                     Spending insights               2500    0.50         0.5                    4   156.0          9              9
+4     B05                 Bulk payroll payments                150    3.00         0.8                    8    45.0         10              3
+```
+
+The two rankings agree at the top and disagree in instructive places. Free small transfers score well on RICE (huge reach, little effort), and fees are also tied for the most common theme in feedback. Dark mode scores surprisingly high: tiny effort and wide reach make up for minimal impact. Bulk payroll, high in feedback, falls to the bottom: it would change a lot for each business, but only about 150 businesses a quarter, and it's a lot of work. The crash fix and verification help are near the top on both. Now test the most uncertain input: USSD's confidence is low (0.5) because nobody has measured how many traders lack data at the moment of payment.
+
+```python
+for confidence in [0.5, 0.8, 1.0]:
+    scores = backlog.set_index("item_id")["rice"].copy()
+    ussd = backlog.set_index("item_id").loc["B02"]
+    scores["B02"] = ussd["reach_per_quarter"] * ussd["impact"] * confidence / ussd["effort_person_weeks"]
+    print(f"USSD confidence {confidence}: rank {int(scores.rank(ascending=False)['B02'])} of {len(scores)}")
+```
+
+```text
+USSD confidence 0.5: rank 7 of 10
+USSD confidence 0.8: rank 7 of 10
+USSD confidence 1.0: rank 7 of 10
+```
+
+Even if the team were certain about USSD, its large effort keeps it out of the top few. So the right next step for USSD isn't building it: it's a cheap experiment to learn more (for example, measuring failed payments at markets), which could raise both confidence and impact.
+
+## Walkthrough
+
+1. Run the cells. Which item has the highest reach? Why isn't it first?
+2. Engineers re-estimate verification help (B01) at 8 person-weeks. Where does it rank now?
+3. Should "dark mode" ever be built? Argue with its score.
+4. Explain the ranking to the CEO (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "pdm-06-p1",
+  "prompt": "Which **item ID** has the highest RICE score?",
+  "answer": "B10",
+  "dataset": "product",
+  "files": ["backlog"],
+  "pyVerify": "backlog.sort_values('rice', ascending=False)['item_id'].iloc[0]",
+  "hint": "The first row of the sorted table.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "pdm-06-t1",
+  "prompt": "Explain the backlog ranking to the CEO in 60 to 140 words: the **top three** items and **why**, why **bulk payroll** ranks low despite being requested often, and one item where you'd **gather more evidence** before deciding.",
+  "minutes": 6,
+  "rows": 6,
+  "placeholder": "Our top three for next quarter are ...",
+  "rules": [
+    { "label": "Names a top three", "pattern": "top three|first|top" },
+    { "label": "Uses RICE terms (reach, impact, confidence, effort)", "pattern": "reach|impact|confidence|effort", "min": 2 },
+    { "label": "Explains payroll's rank", "pattern": "payroll[^.]*(reach|few|150|effort|businesses)" },
+    { "label": "Gathering evidence (experiment, test, measure, research)", "pattern": "experiment|test|measure|research|evidence|learn" },
+    { "label": "Between 60 and 140 words", "minWords": 60, "maxWords": 140 }
+  ],
+  "sample": "Our top three are free transfers under ₦5,000, fixing crashes on older Android phones and helping traders verify their BVN at agents. Each reaches thousands of users a quarter for a small amount of work, and the crash fix and verification help remove problems that stop people using Paystream at all. Bulk payroll is a real need and comes up often, mostly through our sales team, but it would reach about 150 businesses a quarter for 8 person-weeks of work, so its score is the lowest. USSD needs more evidence: before building it, we'll measure how often traders' payments fail for lack of data, which could raise its confidence and impact.",
+  "note": "The reply shows the CEO the reasoning, not just the list, so a disagreement can be about inputs rather than opinions.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Reach 2,000, impact 1, confidence 0.8, effort 4. What's the RICE score?",
+    "options": ["8,000", "400", "1,600", "500"],
+    "answer": 1,
+    "explanation": "2,000 × 1 × 0.8 ÷ 4."
+  },
+  {
+    "prompt": "A feature is requested often but by a small group and takes a lot of work. How does RICE treat it?",
+    "options": ["It ranks first", "It ranks lower: small reach and high effort", "It's excluded", "RICE ignores requests"],
+    "answer": 1,
+    "explanation": "Frequency of requests isn't reach."
+  },
+  {
+    "prompt": "An item's confidence is low. What's often the best next step?",
+    "options": ["Build it anyway", "Run a cheap test or research to raise confidence before committing", "Delete it", "Raise its impact"],
+    "answer": 1,
+    "explanation": "Buy evidence before building."
+  }
+]
+```
+$md$, true, true, 6, array['pdm-06-p1', 'pdm-06-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('pdm-m07', 'product-management-fundamentals', 'Roadmaps', 7, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('product-management-fundamentals:roadmaps', 'product-management-fundamentals', 'pdm-m07', 'roadmaps', 'Roadmaps', 'Turn priorities into a roadmap the team can deliver (fitting the quarter''s capacity, grouping work into now, next and later, and stating each item as the outcome it serves) and explain what''s not on it.', 20, $md$
+## The problem
+
+Paystream's last roadmap was a list of features with dates, promised to everyone. Half slipped, two were built and nobody checked whether they helped, and the team spent the quarter explaining delays. A roadmap should say what problems the team will work on, in what order, and how it will know they're solved. And it has to fit the team.
+
+## The concept
+
+**Capacity**
+
+A team has a fixed number of person-weeks in a quarter, minus holidays, support and the unexpected (keep about 20% free). The roadmap can't hold more than that.
+
+**Now, next, later**
+
+| Column | Meaning | Detail |
+| :-- | :-- | :-- |
+| **Now** | being built this quarter | committed, specific |
+| **Next** | likely next quarter | shaped, may change |
+| **Later** | ideas worth keeping | rough |
+
+No exact dates beyond "now": the further out, the less anyone can know.
+
+**Outcome-based items**
+
+Each item names the outcome and how it's measured: "Help traders get verified at agents, so trader BVN verification rises from 57% to 70%", not just "Agent BVN feature".
+
+**Saying no**
+
+A roadmap is as much about what's left out. Record why, so the decision can be revisited when evidence changes.
+
+## Example
+
+Fill the quarter's capacity in RICE order, then fill a second quarter the same way for "Next"; anything left is "Later". The team has 2 engineers for 12 weeks; keep 20% for support and surprises:
+
+```python
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/product/"
+backlog = pd.read_csv(base + "backlog.csv").fillna({"theme": ""})
+backlog["rice"] = backlog["reach_per_quarter"] * backlog["impact"] * backlog["confidence"] / backlog["effort_person_weeks"]
+
+capacity = 2 * 12 * 0.8
+used = {"Now": 0, "Next": 0}
+column = {}
+for item in backlog.sort_values("rice", ascending=False).itertuples():
+    for quarter in ["Now", "Next"]:
+        if used[quarter] + item.effort_person_weeks <= capacity:
+            column[item.item_id] = quarter
+            used[quarter] += item.effort_person_weeks
+            break
+    else:
+        column[item.item_id] = "Later"
+backlog["column"] = backlog["item_id"].map(column)
+print(f"Capacity {capacity:.1f} person-weeks a quarter; planned now {used['Now']}, next {used['Next']}")
+for name in ["Now", "Next", "Later"]:
+    items = backlog[backlog["column"] == name].sort_values("rice", ascending=False)
+    print(f"{name}: " + "; ".join(items["feature"]))
+```
+
+```text
+Capacity 19.2 person-weeks a quarter; planned now 17, next 17
+Now: Fix crashes on older Android phones; Help with BVN verification at agents; Free transfers under ₦5,000; Dark mode; Automatic payday saving; Faster card delivery partner
+Next: USSD transfers for feature phones; Split bills with friends; Spending insights
+Later: Bulk payroll payments
+```
+
+The fill goes down the list while items fit, so small items slip in easily. Dark mode makes "Now" because it's tiny and reaches many users, but its impact is minimal: worth a human look at whether that week is better kept as buffer. Bulk payroll doesn't fit in either quarter after the higher-scoring work, so it's "Later". Now write the "Now" items as outcomes, with baselines from the data:
+
+```python
+users = pd.read_csv(base + "users.csv")
+traders = users[(users["segment"] == "Market trader") & (users["phone_verified"] == 1)]
+baselines = {
+    "B01": f"trader BVN verification from {traders['bvn_verified'].mean():.0%} to 70%",
+    "B06": f"first transfers from {users['first_transfer'].mean():.0%} of signups to 47%",
+    "B10": "crash-related 1- and 2-star reviews halved",
+    "B03": "salary earners active in week 8 up 5 points",
+    "B07": "card delivery complaints halved",
+}
+for item in backlog[backlog["column"] == "Now"].itertuples():
+    print(f"{item.feature}: {baselines.get(item.item_id, 'outcome to be defined')}")
+```
+
+```text
+Help with BVN verification at agents: trader BVN verification from 57% to 70%
+Automatic payday saving: salary earners active in week 8 up 5 points
+Free transfers under ₦5,000: first transfers from 43% of signups to 47%
+Faster card delivery partner: card delivery complaints halved
+Dark mode: outcome to be defined
+Fix crashes on older Android phones: crash-related 1- and 2-star reviews halved
+```
+
+Every "Now" item now says what success looks like, using a number the team can measure today.
+
+## Walkthrough
+
+1. Run the cells. Change capacity to 2 engineers. What drops out?
+2. Should split bills be in "Now"? Decide with the RICE scores, not the greedy fill.
+3. Write the outcome for any "Now" item that lacks one.
+4. Write the "not now" list (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "pdm-07-p1",
+  "prompt": "How many person-weeks are planned for **Now**?",
+  "answer": 17,
+  "format": "number",
+  "dataset": "product",
+  "files": ["backlog"],
+  "pyVerify": "used['Now']",
+  "hint": "The first line printed.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "pdm-07-t1",
+  "prompt": "Write the roadmap's **\"Not this quarter\"** list: at least **three** items, one per line starting with a dash, each with the **reason** and what **evidence** would bring it back.",
+  "minutes": 5,
+  "rows": 5,
+  "placeholder": "- Bulk payroll: ...",
+  "rules": [
+    { "label": "At least three lines starting with -", "pattern": "^\\s*-\\s+\\S", "min": 3 },
+    { "label": "Reasons (reach, effort, confidence, capacity)", "pattern": "reach|effort|confidence|capacity|score", "min": 2 },
+    { "label": "What would bring it back (if, when, evidence, unless)", "pattern": "\\bif\\b|when|evidence|unless|once", "min": 3 },
+    { "label": "Mentions payroll or USSD", "pattern": "payroll|ussd" }
+  ],
+  "sample": "- Bulk payroll: reaches about 150 businesses a quarter for 8 person-weeks; we'd reconsider if small businesses grow past a quarter of new users or a partner funds it.\n- USSD transfers: confidence is low and effort high; we'll revisit once we've measured how often traders' payments fail for lack of data.\n- Spending insights: low confidence that it changes behaviour; we'd reconsider if survey or interview evidence shows users would act on it.\n- Dark mode: minimal impact; we'll add it when the design system work makes it nearly free.",
+  "note": "Each 'not now' has a condition, which turns 'no' into 'not yet, unless...'.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why leave about 20% of capacity unplanned?",
+    "options": ["Laziness", "Support work and surprises always happen; a full plan always slips", "Engineers prefer it", "To finish early"],
+    "answer": 1,
+    "explanation": "Plan for reality."
+  },
+  {
+    "prompt": "Why avoid exact dates for 'Next' and 'Later'?",
+    "options": ["Dates are boring", "The further out, the less anyone can know; dates become broken promises", "Tools can't show them", "Sponsors dislike dates"],
+    "answer": 1,
+    "explanation": "Commit near, stay flexible far."
+  },
+  {
+    "prompt": "What makes a roadmap item outcome-based?",
+    "options": ["A feature name", "It states the user outcome and how success will be measured", "A deadline", "A budget"],
+    "answer": 1,
+    "explanation": "Outcomes over outputs."
+  }
+]
+```
+$md$, true, true, 7, array['pdm-07-p1', 'pdm-07-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('pdm-m08', 'product-management-fundamentals', 'Measuring a Launch', 8, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('product-management-fundamentals:measuring-a-launch', 'product-management-fundamentals', 'pdm-m08', 'measuring-a-launch', 'Measuring a launch', 'Check whether a launched feature actually worked, avoid the self-selection trap of comparing adopters with everyone else, use a randomised holdout, watch guardrails, and report an honest result.', 25, $md$
+## The problem
+
+Paystream launched savings goals last quarter. The team's launch slide says: "Users who use savings goals are 18 points more likely to still be active after 8 weeks!" Leadership is delighted and wants to promote savings goals everywhere.
+
+But users who choose to set up a savings goal are already the most engaged users. They would have stayed anyway. Comparing them with everyone else measures **who** adopts, not what the feature **did**.
+
+## The concept
+
+**Self-selection**
+
+When users choose whether to use a feature, adopters differ from non-adopters before the feature exists. Any comparison between them mixes the feature's effect with those differences.
+
+**A randomised holdout**
+
+Paystream did something wise: it gave early access to a **random** half of users and held the other half back. Because the groups were chosen by chance, they're alike except for access. Comparing **all** early-access users (adopters or not) with the holdout measures the effect of offering the feature. This is the experimentation course's A/B test, applied to a launch.
+
+**Effect per adopter**
+
+The holdout comparison is diluted by early-access users who never adopted. Dividing the difference by the adoption rate gives a rough effect per adopter.
+
+**Guardrails**
+
+Metrics that must not get worse, such as support tickets or failed transactions, checked the same way.
+
+## Example
+
+The naive comparison, then the honest one:
+
+```python
+import numpy as np
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/product/"
+rollout = pd.read_csv(base + "rollout.csv")
+early = rollout[rollout["group"] == "early access"]
+
+naive = early.groupby("adopted_savings_goals")["active_week_8"].mean()
+print(f"Naive: adopters {naive[1]:.1%} active vs non-adopters {naive[0]:.1%}: a gap of {(naive[1] - naive[0]) * 100:.1f} points")
+
+rates = rollout.groupby("group")["active_week_8"].agg(["mean", "size"])
+diff = rates.loc["early access", "mean"] - rates.loc["holdout", "mean"]
+se = np.sqrt(sum(r["mean"] * (1 - r["mean"]) / r["size"] for _, r in rates.iterrows()))
+adoption = early["adopted_savings_goals"].mean()
+print(f"Randomised: early access {rates.loc['early access', 'mean']:.1%} vs holdout {rates.loc['holdout', 'mean']:.1%}")
+print(f"Difference {diff * 100:.1f} points, 95% interval {(diff - 1.96 * se) * 100:.1f} to {(diff + 1.96 * se) * 100:.1f}")
+print(f"Adoption among early access: {adoption:.0%}; rough effect per adopter: {diff / adoption * 100:.1f} points")
+```
+
+```text
+Naive: adopters 70.4% active vs non-adopters 52.7%: a gap of 17.8 points
+Randomised: early access 60.3% vs holdout 58.4%
+Difference 1.9 points, 95% interval -0.6 to 4.4
+Adoption among early access: 43%; rough effect per adopter: 4.4 points
+```
+
+The naive gap is large. The randomised difference is small, and its 95% interval includes zero: the data is consistent with savings goals helping a little, or not at all. Most of the 18 points was self-selection. Now the guardrail:
+
+```python
+tickets = rollout.groupby("group")["support_ticket"].mean() * 1000
+print(f"Support tickets per 1,000 users: early access {tickets['early access']:.0f}, holdout {tickets['holdout']:.0f}")
+```
+
+```text
+Support tickets per 1,000 users: early access 49, holdout 41
+```
+
+Early-access users raised slightly more support tickets. The difference is about the size of the noise, so it isn't proof of a problem, but it's worth reading those tickets. An honest summary: savings goals are popular with engaged users, may have added a few support requests, and there's no clear evidence yet that they keep users who would otherwise leave. That's a reason for a longer test, or a better version, not for a company-wide campaign built on the 18-point slide.
+
+## Walkthrough
+
+1. Run the cells. Compare adopters' and non-adopters' segments. How different were they?
+2. How many users per group would you need to detect a 2-point difference reliably? (Use the experimentation course's sample size method.)
+3. Check the randomised difference for salary earners only. Is it clearer?
+4. Rewrite the launch slide (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "pdm-08-p1",
+  "prompt": "What's the **naive** gap between adopters and non-adopters, in percentage points? One decimal place.",
+  "answer": 17.8,
+  "format": "number",
+  "dataset": "product",
+  "files": ["rollout"],
+  "pyVerify": "round((naive[1] - naive[0]) * 100, 1)",
+  "hint": "The first line printed.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "pdm-08-t1",
+  "prompt": "Rewrite the launch slide's headline and three bullets (40 to 110 words) so they're **honest**: the **randomised** result with its **uncertainty**, why the 18-point figure **misleads**, the **guardrail**, and the **next step**.",
+  "minutes": 6,
+  "rows": 6,
+  "placeholder": "Savings goals: ...",
+  "rules": [
+    { "label": "Mentions the randomised or holdout comparison", "pattern": "random|holdout|early access" },
+    { "label": "States uncertainty (interval, includes zero, not clear)", "pattern": "interval|zero|not (yet )?clear|uncertain|no clear" },
+    { "label": "Explains self-selection (engaged, choose, would have stayed)", "pattern": "engaged|select|choose|would have stayed|already" },
+    { "label": "Mentions the guardrail (support tickets)", "pattern": "ticket|support|guardrail" },
+    { "label": "A next step", "pattern": "next|longer|test|improve|rerun" },
+    { "label": "Between 40 and 110 words", "minWords": 40, "maxWords": 110 }
+  ],
+  "sample": "Savings goals: popular, effect on retention not yet clear\n- In a randomised holdout, early-access users were about 2 points more likely to be active in week 8, but the 95% interval includes zero.\n- The 18-point gap compares adopters with non-adopters; adopters were already our most engaged users and would mostly have stayed anyway.\n- Support tickets rose slightly (49 vs 41 per 1,000), about the size of the noise; we're reading them.\nNext: a longer test focused on salary earners, and a version with automatic payday saving, before any company-wide campaign.",
+  "note": "The headline still credits what's true (popular, safe) while refusing to claim what isn't proven.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why is comparing feature adopters with non-adopters misleading?",
+    "options": ["Samples are small", "Adopters choose themselves and were already different, often more engaged", "It always understates effects", "It isn't"],
+    "answer": 1,
+    "explanation": "Self-selection."
+  },
+  {
+    "prompt": "What does a randomised holdout make possible?",
+    "options": ["Faster launches", "Comparing groups that differ only in access, so the difference is the feature's effect", "More adopters", "No guardrails"],
+    "answer": 1,
+    "explanation": "Chance makes the groups alike."
+  },
+  {
+    "prompt": "The 95% interval for the effect runs from −0.5 to +4 points. What should you say?",
+    "options": ["It works", "The data is consistent with a small benefit or none; it's not proven", "It hurts", "The test failed"],
+    "answer": 1,
+    "explanation": "Report uncertainty honestly."
+  }
+]
+```
+$md$, true, true, 8, array['pdm-08-p1', 'pdm-08-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('pdm-m09', 'product-management-fundamentals', 'Product Specs and Success Metrics', 9, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('product-management-fundamentals:product-specs-and-success-metrics', 'product-management-fundamentals', 'pdm-m09', 'product-specs-and-success-metrics', 'Product specs and success metrics', 'Write a product spec that engineers, designers and the business can work from (problem, users, evidence, scope, non-goals, success metrics with baselines, guardrails and the launch plan) for Paystream''s top priority.', 20, $md$
+## The problem
+
+Verification help at agents is at the top of the roadmap. The engineers ask: what exactly are we building? The designer asks: for whom, and what's the flow? Compliance asks: what are we changing about identity checks? The CEO asks: how will we know it worked?
+
+A **product spec** (often called a PRD, product requirements document) answers all of them in one place, before work starts, so that everyone builds the same thing for the same reason.
+
+## The concept
+
+**What a good spec contains**
+
+| Section | Answers |
+| :-- | :-- |
+| Problem | what's wrong, for whom, with evidence |
+| Users | the segment and their job to be done |
+| Goal and success metrics | the outcome, measured, with a **baseline** and a **target** |
+| Guardrails | what must not get worse |
+| Scope | what's in the first version |
+| Non-goals | what's deliberately out |
+| Launch and measurement plan | how it's rolled out and evaluated (a holdout, lesson 8) |
+| Open questions | what isn't known yet |
+
+**Baselines from data**
+
+A target without a baseline is a guess. Measure the current value first, then set a realistic target.
+
+## Example
+
+Baselines for verification help, from the signup data:
+
+```python
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/product/"
+users = pd.read_csv(base + "users.csv")
+feedback = pd.read_csv(base + "feedback.csv")
+
+traders = users[(users["segment"] == "Market trader") & (users["phone_verified"] == 1)]
+print(f"Traders who verified their phone: {len(traders)} in 8 weeks")
+print(f"Their BVN verification rate: {traders['bvn_verified'].mean():.1%}")
+print((traders.groupby("channel")["bvn_verified"].mean() * 100).round(1).to_string())
+bvn = feedback[feedback["theme"] == "BVN verification problems"]
+print(f"Verification feedback items: {len(bvn)}, of which app reviews average {bvn['rating'].mean():.2f} stars")
+```
+
+```text
+Traders who verified their phone: 2555 in 8 weeks
+Their BVN verification rate: 57.3%
+channel
+Agent sign-up        69.1
+Instagram ad         35.8
+Play Store search    47.7
+Referral             53.3
+Verification feedback items: 249, of which app reviews average 1.86 stars
+```
+
+Traders who signed up with an agent already verify far more often than those who signed up alone. That's evidence that helping at the agent works, and it suggests a realistic target: bring other traders closer to the agent-assisted rate. A spec that only said "improve verification" would give the team nothing to aim at.
+
+## Walkthrough
+
+1. Run the cell. Set a target for trader BVN verification and justify it with the channel numbers.
+2. What guardrail matters most for an identity feature? (Think about fraud and compliance.)
+3. Decide the launch plan: which traders get it first, and what's the holdout?
+4. Write the spec (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "pdm-09-p1",
+  "prompt": "What's the BVN verification rate for traders who signed up through an **agent**? As a percentage, one decimal place.",
+  "answer": 69.1,
+  "format": "percent",
+  "dataset": "product",
+  "files": ["users"],
+  "pyVerify": "round(traders[traders['channel'] == 'Agent sign-up']['bvn_verified'].mean() * 100, 1)",
+  "hint": "The Agent sign-up line.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "pdm-09-t1",
+  "prompt": "Write the **spec** for verification help at agents, with lines starting **Problem:**, **Users:**, **Success metric:** (with a **baseline and target**), **Guardrail:**, **Scope:**, **Non-goals:** and **Launch:** (including a **holdout**).",
+  "minutes": 10,
+  "rows": 10,
+  "placeholder": "Problem: ...",
+  "rules": [
+    { "label": "A Problem line with evidence (a number)", "pattern": "^\\s*problem\\s*:[^\\n]*\\d" },
+    { "label": "A Users line", "pattern": "^\\s*users\\s*:" },
+    { "label": "A Success metric line with baseline and target", "pattern": "^\\s*success metric\\s*:[^\\n]*\\d[^\\n]*\\d" },
+    { "label": "A Guardrail line", "pattern": "^\\s*guardrails?\\s*:" },
+    { "label": "Scope and Non-goals lines", "pattern": "^\\s*(scope|non-goals)\\s*:", "min": 2 },
+    { "label": "A Launch line with a holdout", "pattern": "^\\s*launch\\s*:[^\\n]*(holdout|hold out|control|random)" }
+  ],
+  "sample": "Problem: only about 57% of market traders who verify their phone get through BVN verification, against about 80% of salary earners; it's the biggest drop in our funnel, and verification reviews average under 2 stars.\nUsers: market traders signing up, especially those not helped by an agent; their job is to start collecting payments at the stall.\nSuccess metric: trader BVN verification rises from 57% to 70% within the quarter.\nGuardrail: verification fraud flags and compliance exceptions must not rise; support tickets about verification should fall.\nScope: agents can start a guided verification with the trader in the app, fix name mismatches with an ID photo, and see the result immediately.\nNon-goals: changing our identity rules, verifying without BVN, or a USSD flow.\nLaunch: random half of agents in Lagos markets first, the other half as a holdout for six weeks, then compare trader verification rates.",
+  "note": "The non-goals line protects compliance and keeps the first version small.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why include a baseline with every success metric?",
+    "options": ["Tradition", "A target is meaningless unless you know where you start", "It's required by law", "To fill space"],
+    "answer": 1,
+    "explanation": "Measure first, then aim."
+  },
+  {
+    "prompt": "What's a non-goal?",
+    "options": ["A failed goal", "Something deliberately out of scope for this version", "A metric", "A bug"],
+    "answer": 1,
+    "explanation": "It keeps the first version focused."
+  },
+  {
+    "prompt": "Which guardrail matters most for an identity verification feature?",
+    "options": ["App size", "Fraud and compliance exceptions", "Dark mode usage", "Page colour"],
+    "answer": 1,
+    "explanation": "Easier verification must not mean easier fraud."
+  }
+]
+```
+$md$, true, true, 9, array['pdm-09-p1', 'pdm-09-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('pdm-m10', 'product-management-fundamentals', 'Final Project', 10, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('product-management-fundamentals:final-project', 'product-management-fundamentals', 'pdm-m10', 'final-project', '"Final project: Paystream''s next quarter"', 'Plan your final project, a product review and quarter plan for Paystream, from user evidence and funnels to a prioritised, outcome-based roadmap, an honest launch review and a spec for the top priority.', 20, $md$
+## The problem
+
+Paystream's leadership meets to agree next quarter's product plan. They want to know what users struggle with most, what the team will build and why, what last quarter's launch really achieved, and how they'll know the next one worked. Your final project is that product review.
+
+## The concept
+
+**The parts of the review**
+
+| Part | Built in |
+| :-- | :-- |
+| Outcomes and the north star | lesson 1 |
+| User evidence: interviews and feedback | lessons 2 and 3 |
+| The funnel and retention | lessons 4 and 5 |
+| Prioritisation and the roadmap | lessons 6 and 7 |
+| The savings goals launch review | lesson 8 |
+| The spec for the top priority | lesson 9 |
+
+**Evidence chain**
+
+Every roadmap item should trace back: a user problem (interviews, feedback), its size (funnel, retention), its score (RICE), and the outcome measure (spec).
+
+## Example
+
+The evidence chain for the top items in one table:
+
+```python
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/product/"
+backlog = pd.read_csv(base + "backlog.csv").fillna({"theme": ""})
+feedback = pd.read_csv(base + "feedback.csv")
+interviews = pd.read_csv(base + "interviews.csv")
+
+backlog["rice"] = (backlog["reach_per_quarter"] * backlog["impact"] * backlog["confidence"] / backlog["effort_person_weeks"]).round(0)
+backlog["feedback_items"] = backlog["theme"].map(feedback["theme"].value_counts()).fillna(0).astype(int)
+backlog["interviews"] = backlog["theme"].map(interviews["biggest_pain"].value_counts()).fillna(0).astype(int)
+reviews = feedback[feedback["source"] == "App review"].groupby("theme")["rating"].mean()
+backlog["review_stars"] = backlog["theme"].map(reviews).round(2)
+backlog.sort_values("rice", ascending=False)[["feature", "rice", "feedback_items", "interviews", "review_stars"]].head(5)
+```
+
+```text
+feature    rice  feedback_items  interviews  review_stars
+9   Fix crashes on older Android phones  1000.0             200           2          1.72
+0  Help with BVN verification at agents   960.0             249           4          1.86
+5           Free transfers under ₦5,000   625.0             249           6          2.84
+7                             Dark mode   500.0               0           0           NaN
+2               Automatic payday saving   480.0             192           4          3.25
+```
+
+The items with the strongest case are supported on several fronts at once: score, volume of feedback, interviews and low ratings. Where one column is weak, say so in the review.
+
+## Walkthrough
+
+1. Build every part of the review from the lessons.
+2. Write the roadmap with outcomes and baselines.
+3. Write the honest launch review of savings goals.
+4. Open the project brief on the course page and plan the write-up.
+
+## Practice
+
+```dataset
+{"dataset": "product", "files": ["users", "activity", "feedback", "interviews", "backlog", "rollout"]}
+```
+
+```answer
+{
+  "id": "pdm-10-p1",
+  "prompt": "How many feedback items are about **app crashes**?",
+  "answer": 200,
+  "format": "number",
+  "dataset": "product",
+  "files": ["feedback"],
+  "pyVerify": "int((feedback['theme'] == 'App crashes').sum())",
+  "hint": "Count feedback where theme is App crashes.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "pdm-10-t1",
+  "prompt": "Write the **summary** for leadership (100 to 200 words): the **biggest user problem** with evidence, the **quarter's priorities** and **why**, what **savings goals** really achieved, and how you'll **measure** this quarter's work.",
+  "minutes": 10,
+  "rows": 9,
+  "placeholder": "Our biggest problem is ...",
+  "rules": [
+    { "label": "Names verification as a major problem", "pattern": "verif|bvn" },
+    { "label": "Uses numbers", "pattern": "\\d+(\\.\\d+)?\\s*%|\\b\\d{2,}\\b", "min": 3 },
+    { "label": "Priorities with reasons (reach, effort, RICE, score)", "pattern": "rice|reach|effort|score" },
+    { "label": "An honest savings goals result (holdout, not clear, interval)", "pattern": "holdout|random|not (yet )?clear|interval|self-select" },
+    { "label": "How success is measured (baseline, target, holdout, metric)", "pattern": "baseline|target|measure|metric" },
+    { "label": "Between 100 and 200 words", "minWords": 100, "maxWords": 200 }
+  ],
+  "sample": "Our biggest problem is that new users stall before they can use Paystream. Only 43% of signups make a first transfer, and the largest drop is BVN verification: just 57% of market traders get through it, against 69% of traders who sign up with an agent's help. Verification and crashes also draw the lowest app ratings, under 2 stars. This quarter we'll fix crashes on older Android phones, help traders verify at agents and make small transfers free: each reaches thousands of users for little effort, so they top our RICE scores. Bulk payroll matters to small businesses but reaches few users for a lot of work, so it waits. Last quarter's savings goals are popular, but in a randomised holdout the effect on retention was about 2 points with an interval that includes zero; the 18-point figure came from engaged users choosing it. We'll measure each new feature against a baseline, with a holdout: trader verification from 57% to 70%, first transfers from 43% to 47%.",
+  "note": "Each claim points to a lesson's analysis, and the savings goals paragraph shows leadership the team won't overclaim.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "What makes a roadmap item well supported?",
+    "options": ["The CEO likes it", "Several kinds of evidence agree: user problems, size, score and a measurable outcome", "It's quick to build", "Sales asked for it"],
+    "answer": 1,
+    "explanation": "An evidence chain."
+  },
+  {
+    "prompt": "Why include an honest launch review in a planning document?",
+    "options": ["It's required", "Plans built on overclaimed results repeat mistakes; honesty builds trust in the next claims", "To criticise the team", "To fill space"],
+    "answer": 1,
+    "explanation": "Learning needs true results."
+  },
+  {
+    "prompt": "How should this quarter's features be measured?",
+    "options": ["By whether they shipped", "Against baselines, with holdouts where possible", "By user compliments", "By downloads"],
+    "answer": 1,
+    "explanation": "Outcomes, measured honestly."
+  }
+]
+```
+$md$, true, true, 10, array['pdm-10-p1', 'pdm-10-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+
 -- Course: Data Analyst Capstone: End-to-End BI Project
 insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
-values ('data-analyst-capstone', 'full', null, 'data-analyst-capstone', 'CAP', 'Data Analyst Capstone: End-to-End BI Project', 'Take a retail chain''s raw till export all the way to a reviewed dashboard and a board-ready executive summary, using the tools of your choice.', 'The capstone of the Data Analyst track. Voltline Electronics, a chain of eight stores, sends you 18 months of raw till data and one question from its chief executive: what''s really driving our 37% growth? You''ll plan the analysis, profile and clean a genuinely messy export (a duplicated upload, mixed date formats, inconsistent store names and test transactions), build a model that looks up costs by date and compares sales with monthly targets, decompose the growth, find what''s going wrong where, and put a value on missed sales. Then you''ll build a dashboard, write an executive summary, prepare for the board''s questions and publish the project for your portfolio. Use Excel, Power BI, SQL or Python: the work is assessed on the answers, not the tool.', 'data-analytics', 'intermediate', 4, 'Career project', 14, true, 'available', true, array['Turning a business brief into an analysis plan', 'Profiling and cleaning raw data with a quality log', 'Modelling data at the right grain', 'Decomposing growth into price, new stores and volume', 'Judging targets fairly', 'Estimating lost sales with stated assumptions', 'Finding-led dashboards and executive summaries', 'Presenting and publishing a portfolio project']::text[], array['The core Data Analyst courses: Excel, SQL and Power BI (or Python)', 'Comfort cleaning data and building a dashboard in at least one tool']::text[], 'Voltline Electronics: commercial review', true, true, true, true, false, 60, 41)
+values ('data-analyst-capstone', 'full', null, 'data-analyst-capstone', 'CAP', 'Data Analyst Capstone: End-to-End BI Project', 'Take a retail chain''s raw till export all the way to a reviewed dashboard and a board-ready executive summary, using the tools of your choice.', 'The capstone of the Data Analyst track. Voltline Electronics, a chain of eight stores, sends you 18 months of raw till data and one question from its chief executive: what''s really driving our 37% growth? You''ll plan the analysis, profile and clean a genuinely messy export (a duplicated upload, mixed date formats, inconsistent store names and test transactions), build a model that looks up costs by date and compares sales with monthly targets, decompose the growth, find what''s going wrong where, and put a value on missed sales. Then you''ll build a dashboard, write an executive summary, prepare for the board''s questions and publish the project for your portfolio. Use Excel, Power BI, SQL or Python: the work is assessed on the answers, not the tool.', 'data-analytics', 'intermediate', 4, 'Career project', 14, true, 'available', true, array['Turning a business brief into an analysis plan', 'Profiling and cleaning raw data with a quality log', 'Modelling data at the right grain', 'Decomposing growth into price, new stores and volume', 'Judging targets fairly', 'Estimating lost sales with stated assumptions', 'Finding-led dashboards and executive summaries', 'Presenting and publishing a portfolio project']::text[], array['The core Data Analyst courses: Excel, SQL and Power BI (or Python)', 'Comfort cleaning data and building a dashboard in at least one tool']::text[], 'Voltline Electronics: commercial review', true, true, true, true, false, 60, 42)
 on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level = excluded.level, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
@@ -59327,6 +60790,108 @@ values ('pmfq12', 1, 'Assess changes against the current forecast, not the origi
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 
+-- Assessment: Product Management Fundamentals: final assessment
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('product-management-fundamentals-final', 'product-management-fundamentals', 'final', null, 'Product Management Fundamentals: final assessment', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pdmq01', 'product-management-fundamentals-final', 1, 'Which is an outcome?', '["Launch split bills","More students settle shared costs through the app each week","Redesign onboarding","Hire two engineers"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pdmq01', 1, 'Outcomes are changes in what users do.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pdmq02', 'product-management-fundamentals-final', 2, 'Which interview question gives the best evidence?', '["Would you use a savings feature?","Tell me about the last time you saved for something","Do you like our app?","What features do you want?"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pdmq02', 1, 'Ask about past behaviour.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pdmq03', 'product-management-fundamentals-final', 3, '74% of the sales team''s feedback is about one feature. What should you check?', '["Nothing: build it","Whether it''s common across other sources and who it affects","Whether sales are honest","The feature''s price"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pdmq03', 1, 'Know where feedback comes from.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pdmq04', 'product-management-fundamentals-final', 4, 'In a funnel, which step should you investigate first?', '["The first one","The one that loses the most users","The cheapest to change","The last one"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pdmq04', 1, 'Biggest loss, biggest opportunity.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pdmq05', 'product-management-fundamentals-final', 5, 'Users who make a first transfer are much more likely to be active in week 4. What is the first transfer?', '["A guardrail","The activation moment","A cohort","A non-goal"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pdmq05', 1, 'The moment users first get value.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pdmq06', 'product-management-fundamentals-final', 6, 'A retention curve flattens at 40% after week 6. What does that suggest?', '["The product is failing","A core of users has made it a habit","Data is missing","Users are leaving faster"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pdmq06', 1, 'The flat level is what lasts.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pdmq07', 'product-management-fundamentals-final', 7, 'Reach 3,000, impact 1, confidence 0.8, effort 5. What''s the RICE score?', '["480","2,400","600","12,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pdmq07', 0, '3,000 × 1 × 0.8 ÷ 5.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pdmq08', 'product-management-fundamentals-final', 8, 'A feature''s RICE confidence is low and its effort high. What''s often the best next step?', '["Build it to find out","A cheap test or research to raise confidence","Delete it forever","Double its impact"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pdmq08', 1, 'Buy evidence before building.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pdmq09', 'product-management-fundamentals-final', 9, 'Why leave unplanned capacity on a roadmap?', '["Engineers prefer it","Support work and surprises always happen","To look modest","It''s required"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pdmq09', 1, 'Full plans always slip.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pdmq10', 'product-management-fundamentals-final', 10, 'Feature adopters are 18 points more retained than non-adopters. Why isn''t that the feature''s effect?', '["The sample is small","Adopters chose themselves and were already more engaged","Retention is measured wrongly","It is the effect"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pdmq10', 1, 'Use a randomised holdout.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pdmq11', 'product-management-fundamentals-final', 11, 'A holdout comparison shows +1.9 points with an interval of −0.6 to +4.4. What should you report?', '["It works","A possible small benefit, not yet proven","It harms retention","The test failed"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pdmq11', 1, 'Report uncertainty honestly.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pdmq12', 'product-management-fundamentals-final', 12, 'What must a success metric in a spec include?', '["A feature name","A baseline and a target","An engineer''s name","A launch date"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pdmq12', 1, 'Measure first, then aim.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
 -- Assessment: Prompting Essentials: module check
 insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
 values ('aipf-m01-check', 'ai-productivity-fundamentals', 'module', 'aipf-m01', 'Prompting Essentials: module check', 60, true)
@@ -62720,6 +64285,14 @@ Work in Google Colab with the project dataset (https://academy.cloudtechanalytic
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
 
 
+-- Project: Paystream's next quarter
+insert into public.projects (id, course_id, title, summary, brief_md, tasks, datasets, rubric, required)
+values ('pdm-paystream-next-quarter', 'product-management-fundamentals', 'Paystream''s next quarter', 'A product review and quarter plan for a mobile wallet: user evidence, the onboarding funnel and retention, a RICE-scored backlog, an outcome-based roadmap, an honest launch review and a spec for the top priority.', $md$Paystream's leadership is agreeing next quarter's product plan. Give them the evidence and the plan.
+
+Work in Google Colab with the product dataset (https://academy.cloudtechanalytics.com/datasets/product/: users.csv, activity.csv, feedback.csv, interviews.csv, backlog.csv and rollout.csv). Submit a link to your notebook (shared so anyone with the link can view it), and paste your **roadmap**, your **launch review** and your **summary for leadership** below, followed by a short note on where each part of the analysis is.$md$, array['Outcomes: a north star metric and three measurable outcomes for the quarter.', 'Users: patterns from the interviews and from feedback by theme, source and segment, with the sales team''s requests in context.', 'Funnel: conversion at each onboarding step by segment and channel, with the size of the biggest opportunity.', 'Retention: cohort retention, and how activation and segment affect week 4 activity.', 'Prioritisation: RICE scores, a comparison with the feedback ranking, and a sensitivity check.', 'Roadmap: now, next and later within capacity, each item with an outcome and baseline, and a ''not this quarter'' list.', 'Launch review and spec: an honest savings goals review using the holdout, and a spec for the top priority with metrics, guardrails and a launch plan.']::text[], array['product']::text[], array['Outcomes describe changed user behaviour, with numbers.', 'Feedback is weighed by source and segment, not just counted.', 'Funnel and retention analysis finds where and for whom the product fails.', 'Prioritisation is transparent, with inputs that can be challenged and tested.', 'The roadmap fits capacity and states outcomes with baselines.', 'The launch review avoids self-selection and reports uncertainty honestly.', 'The spec gives the team a clear problem, scope, non-goals, metrics and a holdout.']::text[], true)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
+
+
 -- Track: Become a Data Analyst
 insert into public.tracks (id, slug, title, summary, badge_name, badge_code, skills, position, published)
 values ('data-analyst', 'data-analyst', 'Become a Data Analyst', 'The route we recommend from no experience to a junior data analyst role. Learn how analysis works, then the tools teams use every day (Excel, SQL, Power BI and Python) on realistic company data. Build portfolio projects that answer real business questions, and finish with your CV, LinkedIn and interview preparation.', 'CloudTech Data Analyst', 'DATAANALYST', array['Spreadsheet analysis in Excel', 'Statistics: averages, spread, confidence intervals and tests', 'Querying databases with SQL, from first SELECT to cohorts and window functions', 'Data modelling and star schemas', 'Dashboards in Power BI, with DAX measures you can trust', 'Analysis in Python and pandas', 'Turning data into findings a manager can act on']::text[], 1, true)
@@ -63052,11 +64625,15 @@ values ('project-manager', 'process-improvement-bpmn-lean', 'Specialist', false,
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 insert into public.track_courses (track_id, course_id, stage, required, position)
-values ('project-manager', 'career-essentials', 'Career', true, 7)
+values ('project-manager', 'product-management-fundamentals', 'Specialist', true, 7)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 insert into public.track_courses (track_id, course_id, stage, required, position)
-values ('project-manager', 'build-your-student-portfolio', 'Career', false, 8)
+values ('project-manager', 'career-essentials', 'Career', true, 8)
+on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
+
+insert into public.track_courses (track_id, course_id, stage, required, position)
+values ('project-manager', 'build-your-student-portfolio', 'Career', false, 9)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 

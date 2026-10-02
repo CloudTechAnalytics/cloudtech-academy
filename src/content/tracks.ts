@@ -435,7 +435,7 @@ export const TRACKS: Track[] = [
         summary: "Go further into delivery and products.",
         items: [
           { kind: "course", courseId: "process-improvement-bpmn-lean", why: "Map and improve the processes projects change.", required: false },
-          { kind: "upcoming", title: "Product Management Fundamentals", why: "Discovery, prioritisation, roadmaps and measuring outcomes for products.", level: 2 },
+          { kind: "course", courseId: "product-management-fundamentals", why: "Outcomes, user evidence, funnels, RICE, roadmaps and honest launch measurement for a mobile wallet." },
         ],
       },
       {
