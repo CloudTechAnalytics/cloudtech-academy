@@ -2129,6 +2129,140 @@ function writeText(dataset, name, text) {
   fs.writeFileSync(path.join(dir, name), text);
 }
 
+/* ------------------------------------------------------------------ terraform (state, plans and variables) */
+// Tallybook's Terraform files for the infrastructure-as-code course, in the formats Terraform
+// 1.9 writes: the production and staging state (matching the cloud dataset's inventory, with
+// some resources never brought under Terraform and one changed by hand), six pull requests'
+// plans as `terraform show -json` produces them, and per-environment variable files.
+// All of it is fictional.
+function terraformFiles(cloudResources) {
+  const files = {};
+  const TYPE = { small: "t3.small", medium: "t3.medium", large: "m5.xlarge", xlarge: "m5.2xlarge" };
+  const AMI = "ami-0a1b2c3d4e5f60718";
+  const byName = Object.fromEntries(cloudResources.map((r) => [r.name, r]));
+  const tags = (r) => ({ Name: r.name, environment: r.environment, team: r.team });
+  const instance = (r, i, typeOverride) => ({
+    index_key: i,
+    schema_version: 1,
+    attributes: {
+      id: r.resource_id,
+      ami: AMI,
+      instance_type: typeOverride ?? TYPE[r.size],
+      availability_zone: i % 2 ? "af-south-1b" : "af-south-1a",
+      private_ip: `10.0.${r.environment === "production" ? 1 : 4}.${20 + i}`,
+      tags: tags(r),
+      root_block_device: [{ volume_size: 100, encrypted: true }],
+    },
+  });
+  const group = (type, name, rs, opts = {}) => ({
+    mode: "managed",
+    type,
+    name,
+    provider: 'provider["registry.terraform.io/hashicorp/aws"]',
+    instances: rs.map((r, i) => (type === "aws_instance" ? instance(r, i, opts.override?.[i]) : { index_key: rs.length > 1 ? i : undefined, schema_version: 0, attributes: r })),
+  });
+  const vms = (prefix) => cloudResources.filter((r) => r.type === "vm" && r.name.startsWith(prefix)).sort((a, b) => a.name.localeCompare(b.name));
+  const DB_PASSWORD = "Tallyb00k-Prod-2025!";
+  const resources = [
+    group("aws_instance", "web", vms("prod-web-")),
+    group("aws_instance", "api", vms("prod-api-")),
+    // worker-03 was resized to m5.xlarge in the console during a busy week; state still says m5.large.
+    group("aws_instance", "worker", vms("prod-worker-"), { override: { 2: "m5.large" } }),
+    group("aws_instance", "staging", vms("staging-")),
+    group("aws_db_instance", "prod", [{
+      id: byName["prod-db"].resource_id, identifier: "tallybook-prod", engine: "postgres", engine_version: "15.4", instance_class: "db.m5.2xlarge",
+      allocated_storage: 500, multi_az: false, publicly_accessible: true, storage_encrypted: false, username: "tallybook_admin", password: DB_PASSWORD,
+      backup_retention_period: 7, deletion_protection: false, tags: tags(byName["prod-db"]),
+    }]),
+    group("aws_db_instance", "staging", [{
+      id: byName["staging-db"].resource_id, identifier: "tallybook-staging", engine: "postgres", engine_version: "15.4", instance_class: "db.m5.xlarge",
+      allocated_storage: 200, multi_az: false, publicly_accessible: false, storage_encrypted: true, username: "tallybook_admin", password: "staging-pass-123",
+      backup_retention_period: 1, deletion_protection: false, tags: tags(byName["staging-db"]),
+    }]),
+    group("aws_lb", "prod", [{ id: byName["prod-lb"].resource_id, name: "prod-lb", internal: false, load_balancer_type: "application", tags: tags(byName["prod-lb"]) }]),
+    group("aws_lb", "staging", [{ id: byName["staging-lb"].resource_id, name: "staging-lb", internal: false, load_balancer_type: "application", tags: tags(byName["staging-lb"]) }]),
+    ...["invoices-prod", "db-backups", "website-assets", "app-logs"].map((b) =>
+      group("aws_s3_bucket", b.replace(/-/g, "_"), [{ id: byName[b].resource_id, bucket: `tallybook-${b}`, tags: tags(byName[b]) }])),
+    group("aws_security_group_rule", "rules", [
+      ["R01", "web-servers", 443, 443, "0.0.0.0/0", "HTTPS from anywhere"],
+      ["R02", "web-servers", 80, 80, "0.0.0.0/0", "HTTP from anywhere (redirects to HTTPS)"],
+      ["R04", "web-servers", 22, 22, "102.89.34.0/28", "SSH from the office"],
+      ["R05", "web-servers", 22, 22, "10.0.2.0/24", "SSH from the deployment network"],
+      ["R06", "web-servers", 3000, 3001, "10.0.1.0/24", "App ports from the load balancer"],
+      ["R07", "web-servers", 9100, 9100, "10.0.3.0/24", "Monitoring"],
+      ["R09", "database", 5432, 5432, "10.0.0.0/16", "Postgres from inside the network"],
+      ["R11", "database", 22, 22, "102.89.34.0/28", "SSH from the office"],
+      ["R12", "web-servers", 0, 65535, "0.0.0.0/0", "All outbound traffic"],
+      ["R13", "cache", 6379, 6379, "10.0.0.0/16", "Redis from inside the network"],
+    ].map(([id, sg, from, to, cidr, description]) => ({ id: `sgr-${id.toLowerCase()}`, security_group: sg, type: id === "R12" ? "egress" : "ingress", protocol: id === "R12" ? "-1" : "tcp", from_port: from, to_port: to, cidr_blocks: [cidr], description }))),
+  ];
+  for (const r of resources) for (const inst of r.instances) if (inst.index_key === undefined) delete inst.index_key;
+  files["terraform.tfstate"] = {
+    version: 4,
+    terraform_version: "1.9.5",
+    serial: 412,
+    lineage: "5f0c2a7e-91d4-4c3b-8a6e-2b7d9e10c4aa",
+    outputs: {
+      db_endpoint: { value: "tallybook-prod.c9x2.af-south-1.rds.example:5432", type: "string" },
+      db_password: { value: DB_PASSWORD, type: "string", sensitive: true },
+    },
+    resources,
+    check_results: null,
+  };
+
+  // Plans for six pull requests.
+  const AWS = "registry.terraform.io/hashicorp/aws";
+  const change = (address, type, name, actions, before, after, extra = {}) => {
+    const rc = { address, mode: "managed", type, name, provider_name: AWS, change: { actions, before, after, after_unknown: extra.unknown ?? {}, before_sensitive: {}, after_sensitive: {} } };
+    if (extra.index !== undefined) rc.index = extra.index;
+    if (extra.replace_paths) rc.change.replace_paths = extra.replace_paths;
+    if (extra.reason) rc.action_reason = extra.reason;
+    return rc;
+  };
+  const plan = (changes) => ({ format_version: "1.2", terraform_version: "1.9.5", resource_changes: changes, timestamp: "2026-09-08T10:00:00Z", applyable: true, complete: true, errored: false });
+  const st = (type, name) => resources.find((r) => r.type === type && r.name === name);
+  const inst = (name, i) => st("aws_instance", name).instances[i].attributes;
+  const db = st("aws_db_instance", "prod").instances[0].attributes;
+  const ptags = { environment: "production", team: "platform" };
+
+  files["plan-pr-101-web-autoscaling.json"] = plan([
+    change("aws_launch_template.web", "aws_launch_template", "web", ["create"], null, { name_prefix: "web-", image_id: AMI, instance_type: "m5.xlarge", tags: { Name: "web", ...ptags } }, { unknown: { id: true, latest_version: true } }),
+    change("aws_autoscaling_group.web", "aws_autoscaling_group", "web", ["create"], null, { name: "web", min_size: 2, max_size: 16, desired_capacity: 6, availability_zones: ["af-south-1a", "af-south-1b"], tags: { Name: "web", ...ptags } }, { unknown: { id: true, arn: true } }),
+    change("aws_autoscaling_policy.web_cpu", "aws_autoscaling_policy", "web_cpu", ["create"], null, { name: "web-cpu-60", policy_type: "TargetTrackingScaling", target_value: 60 }, { unknown: { id: true } }),
+    change("aws_autoscaling_schedule.month_end", "aws_autoscaling_schedule", "month_end", ["create"], null, { scheduled_action_name: "month-end", recurrence: "0 6 28-31 * *", min_size: 10 }, { unknown: { id: true } }),
+    ...[0, 1, 2, 3, 4, 5].map((i) => change(`aws_instance.web[${i}]`, "aws_instance", "web", ["delete"], inst("web", i), null, { index: i, reason: "delete_because_no_resource_config" })),
+  ]);
+  files["plan-pr-102-rename-database.json"] = plan([
+    change("aws_db_instance.prod", "aws_db_instance", "prod", ["delete"], db, null, { reason: "delete_because_no_resource_config" }),
+    change("aws_db_instance.main", "aws_db_instance", "main", ["create"], null, { ...db, id: undefined, password: db.password }, { unknown: { id: true, endpoint: true, arn: true } }),
+  ]);
+  files["plan-pr-103-reporting-access.json"] = plan([
+    change("aws_security_group_rule.db_reporting", "aws_security_group_rule", "db_reporting", ["create"], null, { security_group: "database", type: "ingress", protocol: "tcp", from_port: 5432, to_port: 5432, cidr_blocks: ["0.0.0.0/0"], description: "Postgres for the reporting tool" }, { unknown: { id: true } }),
+  ]);
+  const tagChanges = [];
+  for (const name of ["web", "api", "worker", "staging"]) {
+    st("aws_instance", name).instances.forEach((x, i) => {
+      const before = x.attributes;
+      tagChanges.push(change(`aws_instance.${name}[${i}]`, "aws_instance", name, ["update"], before, { ...before, tags: { ...before.tags, cost_centre: before.tags.environment === "production" ? "cc-100" : "cc-200" } }, { index: i }));
+    });
+  }
+  files["plan-pr-104-cost-tags.json"] = plan(tagChanges);
+  files["plan-pr-105-rightsize-api.json"] = plan([0, 1, 2, 3].map((i) =>
+    change(`aws_instance.api[${i}]`, "aws_instance", "api", ["update"], inst("api", i), { ...inst("api", i), instance_type: "m5.xlarge" }, { index: i })));
+  files["plan-pr-106-multi-az-database.json"] = plan([
+    change("aws_db_instance.prod", "aws_db_instance", "prod", ["update"], db, { ...db, multi_az: true, engine_version: "16.3", allow_major_version_upgrade: true, apply_immediately: true }),
+  ]);
+  for (const p of Object.keys(files).filter((k) => k.startsWith("plan-"))) {
+    for (const rc of files[p].resource_changes) {
+      for (const side of ["before", "after"]) if (rc.change[side]?.password) rc.change[`${side}_sensitive`] = { password: true };
+    }
+  }
+
+  files["production.tfvars.json"] = { environment: "production", web_min_size: 2, web_max_size: 16, api_count: 4, api_instance_type: "m5.2xlarge", worker_count: 3, worker_instance_type: "m5.xlarge", db_instance_class: "db.m5.2xlarge", db_multi_az: false, db_backup_retention_days: 7 };
+  files["staging.tfvars.json"] = { environment: "staging", web_min_size: 1, web_max_size: 2, api_count: 2, api_instance_type: "t3.medium", worker_count: 1, worker_instance_type: "t3.medium", db_instance_class: "db.m5.xlarge", db_multi_az: false, db_backup_retention_days: 1 };
+  return files;
+}
+
 /* ------------------------------------------------------------------ write */
 const SQL = await initSqlJs();
 const L = logistics();
@@ -2169,12 +2303,14 @@ for (const [table, rows] of Object.entries(demand())) writeCsv("demand", table, 
 for (const [table, rows] of Object.entries(genai())) writeCsv("genai", table, rows);
 for (const [table, rows] of Object.entries(agents())) writeCsv("agents", table, rows);
 for (const [table, rows] of Object.entries(llmops())) writeCsv("llmops", table, rows);
-for (const [table, rows] of Object.entries(cloud())) writeCsv("cloud", table, rows);
+const CLOUD = cloud();
+for (const [table, rows] of Object.entries(CLOUD)) writeCsv("cloud", table, rows);
 {
   const { files, firewall } = linuxFiles();
   for (const [name, text] of Object.entries(files)) writeText("linux", name, text);
   writeCsv("linux", "firewall", firewall);
 }
+for (const [name, obj] of Object.entries(terraformFiles(CLOUD.resources))) writeText("terraform", name, JSON.stringify(obj, null, 2) + "\n");
 
 // Summary for the build log
 const counts = db.exec("SELECT (SELECT COUNT(*) FROM customers), (SELECT COUNT(*) FROM shipments), (SELECT COUNT(*) FROM payments), (SELECT COUNT(*) FROM routes), (SELECT COUNT(*) FROM employees)")[0].values[0];

@@ -46,6 +46,21 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CONTENT = os.path.join(ROOT, "src", "content")
 DATASETS = os.path.join(ROOT, "public", "datasets").replace("\\", "/") + "/"
 URL = "https://academy.cloudtechanalytics.com/datasets/"
+# Lessons that load JSON use urllib's urlopen(url); with the URL pointed at a local copy,
+# open the file instead.
+import urllib.request  # noqa: E402
+
+_urlopen = urllib.request.urlopen
+
+
+def _local_urlopen(url, *args, **kwargs):
+    if isinstance(url, str) and url.startswith(DATASETS):
+        return open(url, "rb")
+    return _urlopen(url, *args, **kwargs)
+
+
+urllib.request.urlopen = _local_urlopen
+
 BLOCK = re.compile(r"```python([^\n]*)\n(.*?)\n```(?:\s*\n```text([^\n]*)\n(.*?)\n```)?", re.S)
 ANSWER = re.compile(r"```answer\s*\n(.*?)\n```", re.S)
 

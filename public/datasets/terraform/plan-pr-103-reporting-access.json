@@ -1,0 +1,39 @@
+{
+  "format_version": "1.2",
+  "terraform_version": "1.9.5",
+  "resource_changes": [
+    {
+      "address": "aws_security_group_rule.db_reporting",
+      "mode": "managed",
+      "type": "aws_security_group_rule",
+      "name": "db_reporting",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "security_group": "database",
+          "type": "ingress",
+          "protocol": "tcp",
+          "from_port": 5432,
+          "to_port": 5432,
+          "cidr_blocks": [
+            "0.0.0.0/0"
+          ],
+          "description": "Postgres for the reporting tool"
+        },
+        "after_unknown": {
+          "id": true
+        },
+        "before_sensitive": {},
+        "after_sensitive": {}
+      }
+    }
+  ],
+  "timestamp": "2026-09-08T10:00:00Z",
+  "applyable": true,
+  "complete": true,
+  "errored": false
+}

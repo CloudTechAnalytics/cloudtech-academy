@@ -1,0 +1,335 @@
+{
+  "format_version": "1.2",
+  "terraform_version": "1.9.5",
+  "resource_changes": [
+    {
+      "address": "aws_launch_template.web",
+      "mode": "managed",
+      "type": "aws_launch_template",
+      "name": "web",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "name_prefix": "web-",
+          "image_id": "ami-0a1b2c3d4e5f60718",
+          "instance_type": "m5.xlarge",
+          "tags": {
+            "Name": "web",
+            "environment": "production",
+            "team": "platform"
+          }
+        },
+        "after_unknown": {
+          "id": true,
+          "latest_version": true
+        },
+        "before_sensitive": {},
+        "after_sensitive": {}
+      }
+    },
+    {
+      "address": "aws_autoscaling_group.web",
+      "mode": "managed",
+      "type": "aws_autoscaling_group",
+      "name": "web",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "name": "web",
+          "min_size": 2,
+          "max_size": 16,
+          "desired_capacity": 6,
+          "availability_zones": [
+            "af-south-1a",
+            "af-south-1b"
+          ],
+          "tags": {
+            "Name": "web",
+            "environment": "production",
+            "team": "platform"
+          }
+        },
+        "after_unknown": {
+          "id": true,
+          "arn": true
+        },
+        "before_sensitive": {},
+        "after_sensitive": {}
+      }
+    },
+    {
+      "address": "aws_autoscaling_policy.web_cpu",
+      "mode": "managed",
+      "type": "aws_autoscaling_policy",
+      "name": "web_cpu",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "name": "web-cpu-60",
+          "policy_type": "TargetTrackingScaling",
+          "target_value": 60
+        },
+        "after_unknown": {
+          "id": true
+        },
+        "before_sensitive": {},
+        "after_sensitive": {}
+      }
+    },
+    {
+      "address": "aws_autoscaling_schedule.month_end",
+      "mode": "managed",
+      "type": "aws_autoscaling_schedule",
+      "name": "month_end",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "scheduled_action_name": "month-end",
+          "recurrence": "0 6 28-31 * *",
+          "min_size": 10
+        },
+        "after_unknown": {
+          "id": true
+        },
+        "before_sensitive": {},
+        "after_sensitive": {}
+      }
+    },
+    {
+      "address": "aws_instance.web[0]",
+      "mode": "managed",
+      "type": "aws_instance",
+      "name": "web",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "delete"
+        ],
+        "before": {
+          "id": "r-0001",
+          "ami": "ami-0a1b2c3d4e5f60718",
+          "instance_type": "m5.xlarge",
+          "availability_zone": "af-south-1a",
+          "private_ip": "10.0.1.20",
+          "tags": {
+            "Name": "prod-web-01",
+            "environment": "production",
+            "team": "platform"
+          },
+          "root_block_device": [
+            {
+              "volume_size": 100,
+              "encrypted": true
+            }
+          ]
+        },
+        "after": null,
+        "after_unknown": {},
+        "before_sensitive": {},
+        "after_sensitive": {}
+      },
+      "index": 0,
+      "action_reason": "delete_because_no_resource_config"
+    },
+    {
+      "address": "aws_instance.web[1]",
+      "mode": "managed",
+      "type": "aws_instance",
+      "name": "web",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "delete"
+        ],
+        "before": {
+          "id": "r-0003",
+          "ami": "ami-0a1b2c3d4e5f60718",
+          "instance_type": "m5.xlarge",
+          "availability_zone": "af-south-1b",
+          "private_ip": "10.0.1.21",
+          "tags": {
+            "Name": "prod-web-02",
+            "environment": "production",
+            "team": "platform"
+          },
+          "root_block_device": [
+            {
+              "volume_size": 100,
+              "encrypted": true
+            }
+          ]
+        },
+        "after": null,
+        "after_unknown": {},
+        "before_sensitive": {},
+        "after_sensitive": {}
+      },
+      "index": 1,
+      "action_reason": "delete_because_no_resource_config"
+    },
+    {
+      "address": "aws_instance.web[2]",
+      "mode": "managed",
+      "type": "aws_instance",
+      "name": "web",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "delete"
+        ],
+        "before": {
+          "id": "r-0005",
+          "ami": "ami-0a1b2c3d4e5f60718",
+          "instance_type": "m5.xlarge",
+          "availability_zone": "af-south-1a",
+          "private_ip": "10.0.1.22",
+          "tags": {
+            "Name": "prod-web-03",
+            "environment": "production",
+            "team": "platform"
+          },
+          "root_block_device": [
+            {
+              "volume_size": 100,
+              "encrypted": true
+            }
+          ]
+        },
+        "after": null,
+        "after_unknown": {},
+        "before_sensitive": {},
+        "after_sensitive": {}
+      },
+      "index": 2,
+      "action_reason": "delete_because_no_resource_config"
+    },
+    {
+      "address": "aws_instance.web[3]",
+      "mode": "managed",
+      "type": "aws_instance",
+      "name": "web",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "delete"
+        ],
+        "before": {
+          "id": "r-0007",
+          "ami": "ami-0a1b2c3d4e5f60718",
+          "instance_type": "m5.xlarge",
+          "availability_zone": "af-south-1b",
+          "private_ip": "10.0.1.23",
+          "tags": {
+            "Name": "prod-web-04",
+            "environment": "production",
+            "team": "platform"
+          },
+          "root_block_device": [
+            {
+              "volume_size": 100,
+              "encrypted": true
+            }
+          ]
+        },
+        "after": null,
+        "after_unknown": {},
+        "before_sensitive": {},
+        "after_sensitive": {}
+      },
+      "index": 3,
+      "action_reason": "delete_because_no_resource_config"
+    },
+    {
+      "address": "aws_instance.web[4]",
+      "mode": "managed",
+      "type": "aws_instance",
+      "name": "web",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "delete"
+        ],
+        "before": {
+          "id": "r-0009",
+          "ami": "ami-0a1b2c3d4e5f60718",
+          "instance_type": "m5.xlarge",
+          "availability_zone": "af-south-1a",
+          "private_ip": "10.0.1.24",
+          "tags": {
+            "Name": "prod-web-05",
+            "environment": "production",
+            "team": "platform"
+          },
+          "root_block_device": [
+            {
+              "volume_size": 100,
+              "encrypted": true
+            }
+          ]
+        },
+        "after": null,
+        "after_unknown": {},
+        "before_sensitive": {},
+        "after_sensitive": {}
+      },
+      "index": 4,
+      "action_reason": "delete_because_no_resource_config"
+    },
+    {
+      "address": "aws_instance.web[5]",
+      "mode": "managed",
+      "type": "aws_instance",
+      "name": "web",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "delete"
+        ],
+        "before": {
+          "id": "r-0011",
+          "ami": "ami-0a1b2c3d4e5f60718",
+          "instance_type": "m5.xlarge",
+          "availability_zone": "af-south-1b",
+          "private_ip": "10.0.1.25",
+          "tags": {
+            "Name": "prod-web-06",
+            "environment": "production",
+            "team": "platform"
+          },
+          "root_block_device": [
+            {
+              "volume_size": 100,
+              "encrypted": true
+            }
+          ]
+        },
+        "after": null,
+        "after_unknown": {},
+        "before_sensitive": {},
+        "after_sensitive": {}
+      },
+      "index": 5,
+      "action_reason": "delete_because_no_resource_config"
+    }
+  ],
+  "timestamp": "2026-09-08T10:00:00Z",
+  "applyable": true,
+  "complete": true,
+  "errored": false
+}

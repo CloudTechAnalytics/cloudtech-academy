@@ -43706,9 +43706,1694 @@ $md$, true, true, 10, array['lnx-10-p1', 'lnx-10-t1']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 
+-- Course: Infrastructure as Code with Terraform
+insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
+values ('terraform-infrastructure-as-code', 'full', null, 'terraform-infrastructure-as-code', 'IAC', 'Infrastructure as Code with Terraform', 'Write and review infrastructure as code: HCL, variables and environments, state and its secrets, reading plans, catching dangerous changes, policy as code, drift and imports, modules and the pull request pipeline, on a company''s real Terraform state and six pending pull requests.', 'Infrastructure as code is how serious teams change their cloud: written in files, reviewed in pull requests, applied by a pipeline. In this course you take over Tallybook''s Terraform estate. You''ll learn HCL and the init, plan and apply workflow by running real Terraform in Colab with providers that need no cloud account. Then, working from Tallybook''s state file, variable files and the plans of six pull requests in the exact JSON format Terraform produces, you''ll find the half of its servers Terraform doesn''t manage, the database passwords sitting in plain text in state, a ''rename'' that would destroy the production database, a firewall change opening the database to the internet and a major upgrade hidden in an innocent-looking PR. You''ll write policy checks that block the dangerous plans automatically, detect drift against the real cloud inventory, and design the modules and pipeline that make Terraform the only way infrastructure changes.', 'cloud', 'intermediate', 3, 'Intermediate', 7, true, 'available', true, array['HCL: providers, resources and references', 'The init, plan and apply workflow', 'Variables, environments and outputs', 'State, remote backends and secrets', 'Reading plans and plan JSON', 'moved blocks, lifecycle rules and safe sequencing', 'Policy as code on plans', 'Drift detection and imports', 'Modules and the pull request pipeline']::text[], array['Cloud Fundamentals: Cost, Scaling and Reliability, or experience with a cloud console', 'Python for Data Analytics, or comfort with Python']::text[], 'Tallybook''s infrastructure review', true, true, true, true, false, 60, 34)
+on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level = excluded.level, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('iac-m01', 'terraform-infrastructure-as-code', 'Why Infrastructure as Code', 1, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('terraform-infrastructure-as-code:why-infrastructure-as-code', 'terraform-infrastructure-as-code', 'iac-m01', 'why-infrastructure-as-code', 'Why infrastructure as code', 'What infrastructure as code is and the problems it solves, how Terraform records what it manages, and how much of Tallybook''s cloud was created by hand and forgotten.', 15, $md$
+## The problem
+
+In the cloud course, Tallybook found idle servers, disks attached to nothing and firewall rules nobody could explain. In the Linux course, one of those rules (SSH open to the whole internet, "temporary, for the 2025 migration") let attackers in. Every one of these was created by someone clicking in the cloud console. There was no record of who made it, why, or whether it was still needed.
+
+Part of Tallybook's infrastructure is managed differently: written as code with **Terraform**, reviewed in pull requests, and applied by a pipeline. This course teaches you to work that way, and to review infrastructure changes safely, using Tallybook's real Terraform files.
+
+## The concept
+
+**ClickOps and its problems**
+
+Changing infrastructure by hand in a console ("ClickOps") is quick once, and costly forever:
+
+- no record of who changed what, or why;
+- no review before a change;
+- environments drift apart (staging stops matching production);
+- rebuilding after a disaster depends on memory.
+
+**Infrastructure as code (IaC)**
+
+Infrastructure is described in text files, kept in git, changed through reviewed pull requests, and applied by a tool. **Terraform** is the most widely used. You write what you want, for example "four API servers of this size", and Terraform works out what to create, change or delete to get there.
+
+**State**
+
+Terraform keeps a **state file** recording every resource it manages and its last known settings. Anything that isn't in the state is invisible to Terraform: it won't change it, review it, or delete it.
+
+## Example
+
+Tallybook's state file is JSON. Load it, and list what Terraform manages:
+
+```python
+import json
+from urllib.request import urlopen
+
+import pandas as pd
+
+def load(url):
+    with urlopen(url) as f:
+        return json.load(f)
+
+state = load("https://academy.cloudtechanalytics.com/datasets/terraform/terraform.tfstate")
+managed = pd.DataFrame([
+    {"address": f"{r['type']}.{r['name']}", "type": r["type"], "id": inst["attributes"]["id"]}
+    for r in state["resources"] for inst in r["instances"]
+])
+print("Terraform manages", len(managed), "resources")
+managed["type"].value_counts()
+```
+
+```text
+Terraform manages 37 resources
+type
+aws_instance               19
+aws_security_group_rule    10
+aws_s3_bucket               4
+aws_lb                      2
+aws_db_instance             2
+Name: count, dtype: int64
+```
+
+Now compare with everything that's really in the cloud account, from the cloud course's inventory. Resource IDs link the two:
+
+```python
+inventory = pd.read_csv("https://academy.cloudtechanalytics.com/datasets/cloud/resources.csv")
+main_types = inventory[inventory["type"].isin(["vm", "database", "load_balancer", "bucket"])].copy()
+main_types["in_terraform"] = main_types["resource_id"].isin(managed["id"])
+print(pd.crosstab(main_types["type"], main_types["in_terraform"]))
+
+unmanaged = main_types[~main_types["in_terraform"]]
+print("Monthly cost of running servers Terraform doesn't know about: $",
+      round(unmanaged.loc[unmanaged["status"] == "running", "hourly_usd"].sum() * 730, 2))
+```
+
+```text
+in_terraform   False  True
+type
+bucket             2      4
+database           0      2
+load_balancer      0      2
+vm                19     19
+Monthly cost of running servers Terraform doesn't know about: $ 876.0
+```
+
+Every database and load balancer is in Terraform. But half the servers aren't, and among them are the development machines, the idle "test" servers and the stopped ones from the cloud course. The public bucket of customer files isn't either. The resources nobody manages as code are exactly the ones that were forgotten.
+
+## Walkthrough
+
+1. Run the cells. List the names of the unmanaged servers and buckets. Which teams made them?
+2. Find the ID of `prod-db` in the inventory and check it's in the state.
+3. Open the state file in a text editor (download it from the URL). What else is in it besides resources?
+4. Write down three changes from the cloud and Linux courses that would have been caught by a pull request review.
+
+## Practice
+
+```answer
+{
+  "id": "iac-01-p1",
+  "prompt": "How many resources does Terraform manage (resource instances in the state)?",
+  "answer": 37,
+  "format": "number",
+  "pyVerify": "len(managed)",
+  "hint": "The first line printed.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "iac-01-p2",
+  "prompt": "How many **servers (VMs)** in the cloud account are **not** in Terraform?",
+  "answer": 19,
+  "format": "number",
+  "pyVerify": "int(((main_types['type'] == 'vm') & ~main_types['in_terraform']).sum())",
+  "hint": "The vm row, False column.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "What does Terraform's state file record?",
+    "options": ["Every resource in the cloud account", "The resources Terraform manages and their last known settings", "Only passwords", "The bill"],
+    "answer": 1,
+    "explanation": "Anything outside the state is invisible to Terraform."
+  },
+  {
+    "prompt": "A server created by hand in the console. What does Terraform do with it?",
+    "options": ["Deletes it", "Nothing: it doesn't know it exists", "Adds it automatically", "Resizes it"],
+    "answer": 1,
+    "explanation": "Unmanaged resources are outside Terraform's view."
+  },
+  {
+    "prompt": "What's the main benefit of changing infrastructure through reviewed pull requests?",
+    "options": ["It's faster", "Every change is recorded, reviewed and repeatable", "It's free", "No one needs access"],
+    "answer": 1,
+    "explanation": "Review and history are what ClickOps lacks."
+  }
+]
+```
+$md$, true, true, 1, array['iac-01-p1', 'iac-01-p2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('iac-m02', 'terraform-infrastructure-as-code', 'Providers, Resources and the Workflow', 2, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('terraform-infrastructure-as-code:providers-resources-and-the-workflow', 'terraform-infrastructure-as-code', 'iac-m02', 'providers-resources-and-the-workflow', 'Providers, resources and the workflow', 'Read and write Terraform''s language (HCL) - providers, resources, arguments and references - and learn the init, plan and apply workflow by running real Terraform in Colab with providers that need no cloud account.', 25, $md$
+## The problem
+
+To review a Terraform change, you need to read the code it changes. And the best way to understand what `plan` and `apply` do is to run them yourself, safely. Terraform has providers that work entirely on your own machine, so you can practise the whole workflow in Colab without a cloud account or a bill.
+
+## The concept
+
+**HCL**
+
+Terraform files (`.tf`) use HashiCorp Configuration Language. The main building block is a **resource**: a type, a name, and arguments.
+
+```hcl
+provider "aws" {
+  region = "af-south-1"
+}
+
+resource "aws_instance" "api" {
+  count         = 4
+  ami           = "ami-0a1b2c3d4e5f60718"
+  instance_type = "m5.2xlarge"
+
+  tags = {
+    Name        = "prod-api-0${count.index + 1}"
+    environment = "production"
+    team        = "platform"
+  }
+}
+
+resource "aws_lb_target_group_attachment" "api" {
+  count            = 4
+  target_group_arn = aws_lb_target_group.api.arn
+  target_id        = aws_instance.api[count.index].id
+}
+```
+
+- A **provider** is a plugin that talks to a platform's API (AWS, Azure, Google Cloud, GitHub and many more).
+- `aws_instance.api` is the resource's **address**; with `count = 4`, its instances are `aws_instance.api[0]` to `[3]`.
+- `aws_instance.api[count.index].id` is a **reference**: Terraform works out the order (create the servers before attaching them).
+
+**The workflow**
+
+| Command | Does |
+| :-- | :-- |
+| `terraform init` | download the providers the code uses |
+| `terraform fmt` | format files consistently |
+| `terraform validate` | check the code is valid |
+| `terraform plan` | compare code with state and reality, and show what would change |
+| `terraform apply` | make the changes (after showing the plan again) |
+
+Nothing changes until `apply`. In a team, `plan` runs automatically on every pull request, and `apply` runs from the pipeline after review.
+
+## Example
+
+Try the workflow in Colab. This installs Terraform and uses two providers that run locally: `random` (generates values) and `local` (writes files). It needs the internet, so it isn't run as part of this lesson's checks; the output shown is from a real run.
+
+```bash norun
+%%bash
+wget -q https://releases.hashicorp.com/terraform/1.9.5/terraform_1.9.5_linux_amd64.zip
+unzip -o -q terraform_1.9.5_linux_amd64.zip
+mkdir -p demo && cd demo
+cat > main.tf <<'EOF'
+resource "random_password" "db" {
+  length = 20
+}
+
+resource "local_file" "config" {
+  filename = "config.txt"
+  content  = "environment=staging"
+}
+EOF
+../terraform init -no-color > /dev/null
+../terraform apply -auto-approve -no-color | tail -n 1
+```
+
+```text nocheck
+Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
+```
+
+Now change the file's content and plan again:
+
+```bash norun
+%%bash
+cd demo
+sed -i 's/environment=staging/environment=production/' main.tf
+../terraform plan -no-color | grep -E "^  #|^-/\+|^Plan"
+```
+
+```text nocheck
+-/+ destroy and then create replacement
+  # local_file.config must be replaced
+-/+ resource "local_file" "config" {
+Plan: 1 to add, 0 to change, 1 to destroy.
+```
+
+Changing `content` **replaces** the file: Terraform will delete it and create a new one, because that argument can't be changed in place. For a text file, harmless. For a database, a disaster, as lesson 6 shows.
+
+Back to Tallybook. Count the instances of each resource in its state, by address:
+
+```python
+import json
+from urllib.request import urlopen
+
+import pandas as pd
+
+with urlopen("https://academy.cloudtechanalytics.com/datasets/terraform/terraform.tfstate") as f:
+    state = json.load(f)
+
+pd.DataFrame([{"address": f"{r['type']}.{r['name']}", "instances": len(r["instances"])} for r in state["resources"]])
+```
+
+```text
+address  instances
+0                aws_instance.web          6
+1                aws_instance.api          4
+2             aws_instance.worker          3
+3            aws_instance.staging          6
+4            aws_db_instance.prod          1
+5         aws_db_instance.staging          1
+6                     aws_lb.prod          1
+7                  aws_lb.staging          1
+8     aws_s3_bucket.invoices_prod          1
+9        aws_s3_bucket.db_backups          1
+10   aws_s3_bucket.website_assets          1
+11         aws_s3_bucket.app_logs          1
+12  aws_security_group_rule.rules         10
+```
+
+## Walkthrough
+
+1. If you can, run the Colab cells, then `../terraform state list` in the demo folder. What does it show?
+2. Write the HCL for Tallybook's three worker servers (`m5.xlarge`, team `invoicing`), following the API example.
+3. Which addresses in Tallybook's state use `count` (more than one instance)?
+4. In the API example, what would break if `count` changed to 3 in one resource but not the other?
+
+## Practice
+
+```answer
+{
+  "id": "iac-02-p1",
+  "prompt": "How many **resource blocks** (addresses, not instances) are in Tallybook's state?",
+  "answer": 13,
+  "format": "number",
+  "pyVerify": "len(state['resources'])",
+  "hint": "The number of rows in the table.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "iac-02-t1",
+  "prompt": "Write the **HCL** for Tallybook's three invoice worker servers: an `aws_instance` named `worker`, with `count`, the AMI from the example, instance type `m5.xlarge`, and tags for `Name`, `environment` and `team` (`invoicing`).",
+  "minutes": 6,
+  "rows": 12,
+  "placeholder": "resource \"aws_instance\" \"worker\" {\n  ...",
+  "rules": [
+    { "label": "An aws_instance resource named worker", "pattern": "resource\\s+\"aws_instance\"\\s+\"worker\"\\s*\\{" },
+    { "label": "count = 3", "pattern": "count\\s*=\\s*3" },
+    { "label": "instance_type = \"m5.xlarge\"", "pattern": "instance_type\\s*=\\s*\"m5\\.xlarge\"" },
+    { "label": "An ami argument", "pattern": "ami\\s*=\\s*\"ami-" },
+    { "label": "Tags with Name, environment and team", "pattern": "tags\\s*=\\s*\\{[\\s\\S]*Name[\\s\\S]*environment[\\s\\S]*team|tags\\s*=\\s*\\{[\\s\\S]*team[\\s\\S]*environment" },
+    { "label": "team is invoicing", "pattern": "team\\s*=\\s*\"invoicing\"" }
+  ],
+  "sample": "resource \"aws_instance\" \"worker\" {\n  count         = 3\n  ami           = \"ami-0a1b2c3d4e5f60718\"\n  instance_type = \"m5.xlarge\"\n\n  tags = {\n    Name        = \"prod-worker-0${count.index + 1}\"\n    environment = \"production\"\n    team        = \"invoicing\"\n  }\n}",
+  "note": "Using count.index in the Name tag gives each server its own name from one block.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "What does `terraform plan` do?",
+    "options": ["Makes the changes", "Shows what would change, without changing anything", "Downloads providers", "Deletes the state"],
+    "answer": 1,
+    "explanation": "Only apply changes infrastructure."
+  },
+  {
+    "prompt": "With `count = 4`, how are the instances addressed?",
+    "options": ["api1 to api4", "aws_instance.api[0] to aws_instance.api[3]", "api-a to api-d", "They can't be"],
+    "answer": 1,
+    "explanation": "count instances are indexed from 0."
+  },
+  {
+    "prompt": "What is a provider?",
+    "options": ["A cloud bill", "A plugin that lets Terraform manage a platform through its API", "A server", "A variable"],
+    "answer": 1,
+    "explanation": "Providers exist for AWS, Azure, GCP, GitHub and many more."
+  }
+]
+```
+$md$, true, true, 2, array['iac-02-p1', 'iac-02-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('iac-m03', 'terraform-infrastructure-as-code', 'Variables and Environments', 3, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('terraform-infrastructure-as-code:variables-and-environments', 'terraform-infrastructure-as-code', 'iac-m03', 'variables-and-environments', 'Variables and environments', 'Use variables, variable files, locals and outputs so one set of code builds both staging and production, and compare the two environments to see where they differ and what each costs.', 25, $md$
+## The problem
+
+Tallybook's staging environment is meant to be a smaller copy of production, so releases can be tested safely before customers see them. But when the two are built by hand, they drift apart, and a release that worked in staging fails in production for reasons nobody can see.
+
+With Terraform, the same code builds both environments. Only the **variables** differ: how many servers, what size, how long backups are kept. Those differences are written down in two small files that anyone can compare.
+
+## The concept
+
+**Variables**
+
+```hcl
+variable "api_count" {
+  type        = number
+  description = "Number of API servers"
+}
+
+variable "api_instance_type" {
+  type    = string
+  default = "t3.medium"
+}
+
+resource "aws_instance" "api" {
+  count         = var.api_count
+  instance_type = var.api_instance_type
+  # ...
+}
+```
+
+Values come from a **variable file** per environment, such as `production.tfvars.json`, passed with `terraform plan -var-file=production.tfvars.json`.
+
+**Locals and outputs**
+
+```hcl
+locals {
+  common_tags = {
+    environment = var.environment
+    managed_by  = "terraform"
+  }
+}
+
+output "db_endpoint" {
+  value = aws_db_instance.main.endpoint
+}
+```
+
+`locals` name values used in several places; `output` publishes values for people or other code (like the database's address).
+
+**What should differ between environments**
+
+Size and count (staging can be smaller), and things that only matter for real customers (multi-zone databases, long backup retention). What should **not** differ: software versions, security rules and the shape of the system, or staging stops being a useful test.
+
+## Example
+
+Compare the two variable files side by side:
+
+```python
+import json
+from urllib.request import urlopen
+
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/terraform/"
+def load(name):
+    with urlopen(base + name) as f:
+        return json.load(f)
+
+envs = pd.DataFrame({"staging": load("staging.tfvars.json"), "production": load("production.tfvars.json")})
+envs["same"] = envs["staging"] == envs["production"]
+envs
+```
+
+```text
+staging     production   same
+environment                    staging     production  False
+web_min_size                         1              2  False
+web_max_size                         2             16  False
+api_count                            2              4  False
+api_instance_type            t3.medium     m5.2xlarge  False
+worker_count                         1              3  False
+worker_instance_type         t3.medium      m5.xlarge  False
+db_instance_class         db.m5.xlarge  db.m5.2xlarge  False
+db_multi_az                      False          False   True
+db_backup_retention_days             1              7  False
+```
+
+Staging is smaller everywhere, as it should be. One value stands out: production's database has `db_multi_az` false. The cloud course showed the single-zone database caused the two longest outages. Now estimate each environment's monthly server cost from these variables, with illustrative prices per hour:
+
+```python
+PRICE = {"t3.medium": 0.05, "m5.xlarge": 0.10, "m5.2xlarge": 0.20, "db.m5.xlarge": 0.23, "db.m5.2xlarge": 0.45}   # illustrative, $ per hour
+HOURS = 730
+
+def monthly_cost(v, web_type="m5.xlarge"):
+    servers = (v["web_min_size"] * PRICE[web_type]
+               + v["api_count"] * PRICE[v["api_instance_type"]]
+               + v["worker_count"] * PRICE[v["worker_instance_type"]])
+    database = PRICE[v["db_instance_class"]] * (2 if v["db_multi_az"] else 1)
+    return round((servers + database) * HOURS, 2)
+
+for env in ["staging", "production"]:
+    print(env, "$", monthly_cost(load(f"{env}.tfvars.json")), "a month at minimum web size")
+
+prod_multi_az = {**load("production.tfvars.json"), "db_multi_az": True}
+print("production with a multi-zone database: $", monthly_cost(prod_multi_az))
+```
+
+```text
+staging $ 350.4 a month at minimum web size
+production $ 1277.5 a month at minimum web size
+production with a multi-zone database: $ 1606.0
+```
+
+Turning on multi-zone doubles the database's cost (the standby copy runs all the time). That's the price of fixing the biggest cause of downtime, and it's a single changed value in one reviewed file.
+
+## Walkthrough
+
+1. Run the cells. Which values would you change in staging to make it a better test of production?
+2. Write a `variable` block for `db_multi_az` with a type, a description and a safe default.
+3. Use `monthly_cost` to price production with the API servers rightsized to `m5.xlarge`.
+4. Write the `locals` block for common tags (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "iac-03-p1",
+  "prompt": "What is production's estimated monthly cost (minimum web size, single-zone database), in dollars? Two decimal places.",
+  "answer": 1277.5,
+  "tolerance": 0.01,
+  "format": "number",
+  "pyVerify": "monthly_cost(load('production.tfvars.json'))",
+  "hint": "The production line.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "iac-03-t1",
+  "prompt": "Write a **variable** block for `db_multi_az` (type, description, default) and a **locals** block named `common_tags` with `environment` (from a variable), `team` and `managed_by = \"terraform\"`.",
+  "minutes": 6,
+  "rows": 14,
+  "placeholder": "variable \"db_multi_az\" {\n  ...",
+  "rules": [
+    { "label": "A variable block for db_multi_az", "pattern": "variable\\s+\"db_multi_az\"\\s*\\{" },
+    { "label": "type = bool", "pattern": "type\\s*=\\s*bool" },
+    { "label": "A description", "pattern": "description\\s*=\\s*\"[^\"]{10,}\"" },
+    { "label": "A default", "pattern": "default\\s*=\\s*(true|false)" },
+    { "label": "A locals block with common_tags", "pattern": "locals\\s*\\{[\\s\\S]*common_tags\\s*=\\s*\\{" },
+    { "label": "environment from a variable", "pattern": "environment\\s*=\\s*var\\.environment" },
+    { "label": "managed_by = \"terraform\"", "pattern": "managed_by\\s*=\\s*\"terraform\"" }
+  ],
+  "sample": "variable \"db_multi_az\" {\n  type        = bool\n  description = \"Run a standby copy of the database in a second zone\"\n  default     = true\n}\n\nlocals {\n  common_tags = {\n    environment = var.environment\n    team        = \"platform\"\n    managed_by  = \"terraform\"\n  }\n}",
+  "note": "A default of true means a new environment is resilient unless someone deliberately turns it off, which is the safer way round.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "How do staging and production differ when built with the same Terraform code?",
+    "options": ["They use different code", "Only in their variable values", "They can't be built with the same code", "In their providers"],
+    "answer": 1,
+    "explanation": "Same code, different variables."
+  },
+  {
+    "prompt": "Which should be the same in staging and production?",
+    "options": ["Number of servers", "Software versions and security rules", "Backup retention", "Database size"],
+    "answer": 1,
+    "explanation": "Otherwise staging stops testing what production runs."
+  },
+  {
+    "prompt": "What is an output for?",
+    "options": ["Logging errors", "Publishing a value, such as a database address, for people or other code", "Deleting resources", "Setting prices"],
+    "answer": 1,
+    "explanation": "Outputs expose values after apply."
+  }
+]
+```
+$md$, true, true, 3, array['iac-03-p1', 'iac-03-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('iac-m04', 'terraform-infrastructure-as-code', 'State and Secrets', 4, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('terraform-infrastructure-as-code:state-and-secrets', 'terraform-infrastructure-as-code', 'iac-m04', 'state-and-secrets', 'State and secrets', 'Understand what Terraform''s state file contains, why it must be stored remotely with locking and encryption, and find the secrets sitting in plain text inside Tallybook''s state.', 25, $md$
+## The problem
+
+A Tallybook engineer once emailed the state file to a contractor "so they could see what we have". It seemed harmless: it's just a list of resources. But state records **every attribute** of every resource Terraform manages, and some attributes are secrets.
+
+Terraform hides sensitive values when it prints them. It doesn't hide them in the file.
+
+## The concept
+
+**What state is for**
+
+Terraform compares three things on every plan: your code (what you want), the state (what it created last time), and the real infrastructure (what exists now). State is how it knows that `aws_instance.api[2]` is the server with ID `r-0017`.
+
+**Where state should live**
+
+| Practice | Why |
+| :-- | :-- |
+| **Remote backend** (for example an encrypted storage bucket) | everyone and the pipeline use the same state; it isn't lost with a laptop |
+| **Locking** | two people running `apply` at once can corrupt state |
+| **Encryption and tight access** | state contains secrets |
+| **Never in git, never emailed** | anyone who has it has the secrets |
+
+**Secrets in state**
+
+Database passwords, generated keys and some API tokens end up in state. Mark variables and outputs `sensitive = true` so they're hidden in output, but treat the state file itself as a secret. Better still, let the database generate and keep its own password in a secrets manager, so it never passes through Terraform.
+
+## Example
+
+Terraform itself hides the output. Here's what `terraform output` shows for Tallybook's state (from a real run of Terraform 1.9.5 on this file):
+
+```text nocheck
+db_endpoint = "tallybook-prod.c9x2.af-south-1.rds.example:5432"
+db_password = <sensitive>
+```
+
+Now read the file directly:
+
+```python
+import json
+from urllib.request import urlopen
+
+with urlopen("https://academy.cloudtechanalytics.com/datasets/terraform/terraform.tfstate") as f:
+    state = json.load(f)
+
+print("Output marked sensitive:", state["outputs"]["db_password"]["sensitive"])
+print("Its value in the file:", state["outputs"]["db_password"]["value"])
+```
+
+```text
+Output marked sensitive: True
+Its value in the file: Tallyb00k-Prod-2025!
+```
+
+"Sensitive" only means "don't print it". Search the whole state for attributes that look secret:
+
+```python
+SECRET_WORDS = ("password", "secret", "token", "private_key")
+
+def find_secrets(state):
+    found = []
+    for r in state["resources"]:
+        for inst in r["instances"]:
+            for key, value in inst["attributes"].items():
+                if any(w in key for w in SECRET_WORDS) and value:
+                    found.append((f"{r['type']}.{r['name']}", key, value[:4] + "..."))
+    return found
+
+for item in find_secrets(state):
+    print(item)
+```
+
+```text
+('aws_db_instance.prod', 'password', 'Tall...')
+('aws_db_instance.staging', 'password', 'stag...')
+```
+
+Both database passwords are in the file, in full (shortened here). The production one is the password for a database that, per its own attributes, is publicly accessible. Anyone who received that email could have connected to Tallybook's production database.
+
+## Walkthrough
+
+1. Run the cells. Find the production database's `publicly_accessible` and `storage_encrypted` attributes. What do they mean together with the password finding?
+2. List everyone who might have a copy of this state file (laptops, email, chat, CI logs).
+3. Write the steps to secure the state and rotate the password (the task below).
+4. Look up how your cloud provider's secrets manager could generate the database password instead.
+
+## Practice
+
+```answer
+{
+  "id": "iac-04-p1",
+  "prompt": "How many secret-looking attributes does `find_secrets` find in the state's resources?",
+  "answer": 2,
+  "format": "number",
+  "pyVerify": "len(find_secrets(state))",
+  "hint": "Count the lines printed by the last cell.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "iac-04-t1",
+  "prompt": "Write the steps to **secure Tallybook's state and secrets**, one numbered step per line: at least **five**, covering **rotating** the exposed password, a **remote backend** with **locking** and **encryption**, **access** to the state, keeping it out of **git**, and getting passwords out of state.",
+  "minutes": 8,
+  "rows": 7,
+  "placeholder": "1. Rotate the production database password ...",
+  "rules": [
+    { "label": "At least five numbered steps", "pattern": "^\\s*\\d+[.)]\\s+\\S", "min": 5 },
+    { "label": "Rotate the password", "pattern": "rotat|change the (db |database )?password|new password" },
+    { "label": "A remote backend", "pattern": "remote|backend|bucket" },
+    { "label": "Locking", "pattern": "lock" },
+    { "label": "Encryption", "pattern": "encrypt" },
+    { "label": "Restricted access", "pattern": "access|permission|only the pipeline|least privilege" },
+    { "label": "Out of git", "pattern": "git|\\.gitignore" },
+    { "label": "Passwords out of state (secrets manager, generated, managed)", "pattern": "secrets? manager|vault|manage[ds]? (its own )?password|ssm|parameter store" }
+  ],
+  "sample": "1. Rotate the production and staging database passwords today, since the state file was shared by email.\n2. Move state to a remote backend: an encrypted storage bucket with versioning, plus a lock table so only one apply runs at a time.\n3. Restrict access to the state bucket to the deployment pipeline and two platform engineers; log every read.\n4. Add *.tfstate and *.tfstate.backup to .gitignore and check git history for old copies.\n5. Let the database's password be generated and kept in the secrets manager, with Terraform referencing it, so it no longer appears in state.\n6. Ask the contractor to delete their copy, and treat any future state sharing as a security incident.",
+  "note": "Step 1 comes first because the exposure has already happened; everything else stops it happening again.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "An output is marked `sensitive = true`. Where is its value hidden?",
+    "options": ["Everywhere", "In Terraform's printed output, but not in the state file", "Only in the state file", "Nowhere"],
+    "answer": 1,
+    "explanation": "Treat the state file itself as a secret."
+  },
+  {
+    "prompt": "Why use state locking?",
+    "options": ["To hide secrets", "So two applies can't run at once and corrupt the state", "To speed up plans", "For billing"],
+    "answer": 1,
+    "explanation": "Concurrent writes break state."
+  },
+  {
+    "prompt": "Where should a team's state file live?",
+    "options": ["In git", "In a remote, encrypted, access-controlled backend with locking", "On one engineer's laptop", "In email"],
+    "answer": 1,
+    "explanation": "Shared, safe and locked."
+  }
+]
+```
+$md$, true, true, 4, array['iac-04-p1', 'iac-04-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('iac-m05', 'terraform-infrastructure-as-code', 'Reading a Plan', 5, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('terraform-infrastructure-as-code:reading-a-plan', 'terraform-infrastructure-as-code', 'iac-m05', 'reading-a-plan', 'Reading a plan', 'Read a Terraform plan, both as people see it and as the JSON that tools read, summarise what each change will create, update, replace or destroy, and do it for six real pull requests.', 25, $md$
+## The problem
+
+Six pull requests are waiting for review in Tallybook's infrastructure repository. Each has a title and a description written by its author, and a **plan** produced automatically by the pipeline: the list of everything that will happen if it's merged and applied.
+
+The title is what the author **meant** to do. The plan is what **will** happen. Reviewing infrastructure means reading the plan, not the title.
+
+## The concept
+
+**Plan symbols**
+
+| Symbol | Action in JSON | Meaning |
+| :-- | :-- | :-- |
+| `+` | `["create"]` | create a new resource |
+| `~` | `["update"]` | change it in place |
+| `-` | `["delete"]` | destroy it |
+| `-/+` | `["delete", "create"]` | **replace**: destroy, then create a new one |
+| `+/-` | `["create", "delete"]` | replace, creating the new one first |
+
+The summary line counts a replacement as one add **and** one destroy: `Plan: 1 to add, 0 to change, 1 to destroy.`
+
+**Plan JSON**
+
+`terraform show -json plan.out` gives every change as data: the resource's address, the actions, and its attributes `before` and `after`. Review tools and policy checks (lesson 7) read this.
+
+## Example
+
+Load all six plans and summarise each the way Terraform's summary line does:
+
+```python
+import json
+from urllib.request import urlopen
+
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/terraform/"
+PRS = ["101-web-autoscaling", "102-rename-database", "103-reporting-access", "104-cost-tags", "105-rightsize-api", "106-multi-az-database"]
+
+def load(name):
+    with urlopen(base + name) as f:
+        return json.load(f)
+
+plans = {pr: load(f"plan-pr-{pr}.json") for pr in PRS}
+
+def summarise(plan):
+    add = change = destroy = 0
+    for rc in plan["resource_changes"]:
+        actions = rc["change"]["actions"]
+        add += "create" in actions
+        destroy += "delete" in actions
+        change += actions == ["update"]
+    return {"add": add, "change": change, "destroy": destroy}
+
+pd.DataFrame({pr: summarise(p) for pr, p in plans.items()}).T
+```
+
+```text
+add  change  destroy
+101-web-autoscaling      4       0        6
+102-rename-database      1       0        1
+103-reporting-access     1       0        0
+104-cost-tags            0      19        0
+105-rightsize-api        0       4        0
+106-multi-az-database    0       1        0
+```
+
+Read across the table before reading any titles. PR 104 changes many resources but adds and destroys nothing: probably low risk. PR 101 destroys six resources. PR 102, "rename database", adds one and destroys one. Look at what exactly:
+
+```python
+for pr in ["101-web-autoscaling", "102-rename-database"]:
+    print(f"PR {pr}:")
+    for rc in plans[pr]["resource_changes"]:
+        print("  ", "/".join(rc["change"]["actions"]).ljust(14), rc["address"])
+```
+
+```text
+PR 101-web-autoscaling:
+   create         aws_launch_template.web
+   create         aws_autoscaling_group.web
+   create         aws_autoscaling_policy.web_cpu
+   create         aws_autoscaling_schedule.month_end
+   delete         aws_instance.web[0]
+   delete         aws_instance.web[1]
+   delete         aws_instance.web[2]
+   delete         aws_instance.web[3]
+   delete         aws_instance.web[4]
+   delete         aws_instance.web[5]
+PR 102-rename-database:
+   delete         aws_db_instance.prod
+   create         aws_db_instance.main
+```
+
+PR 101 creates an autoscaling group (the cloud course's recommendation) and deletes the six fixed web servers, which is intended, but all at once. PR 102 deletes `aws_db_instance.prod` and creates `aws_db_instance.main`. A rename in code is, to Terraform, a deletion of one resource and the creation of another. Applied, it would **destroy the production database**. Lesson 6 is about catching and fixing exactly this.
+
+## Walkthrough
+
+1. Run the cells. List PR 104's changes. Which attribute changes on each resource?
+2. List PR 106's single change. Is anything changing besides what the title says?
+3. For each PR, write one sentence on what it does, based only on its plan.
+4. Rank the six PRs from riskiest to safest (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "iac-05-p1",
+  "prompt": "How many resources does PR 104 (cost tags) **change** in place?",
+  "answer": 19,
+  "format": "number",
+  "pyVerify": "summarise(plans['104-cost-tags'])['change']",
+  "hint": "The change column for 104.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "iac-05-t1",
+  "prompt": "Rank the **six PRs from riskiest to safest**, one per numbered line starting with the PR number, each with the **reason from its plan** (what it creates, changes or destroys).",
+  "minutes": 8,
+  "rows": 8,
+  "placeholder": "1. PR 102: ...",
+  "rules": [
+    { "label": "Six numbered lines", "pattern": "^\\s*\\d+[.)]\\s+\\S", "min": 6 },
+    { "label": "PR 102 ranked first", "pattern": "^\\s*1[.)][^\\n]*102" },
+    { "label": "Mentions destroying the database", "pattern": "destroy[^\\n]*database|delet[^\\n]*database|database[^\\n]*(destroy|delet)" },
+    { "label": "PR 104 in the last two", "pattern": "^\\s*[56][.)][^\\n]*104" },
+    { "label": "Mentions the six web servers being deleted", "pattern": "(six|6)[^\\n]*(web|server|instance)" },
+    { "label": "Mentions 0.0.0.0/0 or open to the internet", "pattern": "0\\.0\\.0\\.0/0|internet|anywhere|public" }
+  ],
+  "sample": "1. PR 102: destroys the production database and creates a new, empty one, because the resource was renamed.\n2. PR 103: opens the database port 5432 to 0.0.0.0/0, the whole internet.\n3. PR 101: deletes all six web servers in the same apply that creates the autoscaling group, so there may be a gap with no servers.\n4. PR 106: updates the database in place; the plan also changes the engine version, which the title doesn't mention.\n5. PR 105: changes the instance type of four API servers in place, which restarts each one.\n6. PR 104: adds a cost_centre tag to 19 servers; no creates or destroys.",
+  "note": "PR 106 ranks above PR 105 here only because its plan contains a change its title doesn't mention; lesson 6 looks at it closely.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "What does `-/+` mean in a plan?",
+    "options": ["Update in place", "Replace: destroy the resource, then create a new one", "Create only", "No change"],
+    "answer": 1,
+    "explanation": "For stateful resources, replacement means data loss."
+  },
+  {
+    "prompt": "A PR titled 'rename database' plans one create and one delete. What's happening?",
+    "options": ["A rename", "Terraform will destroy the old database and create a new, empty one", "Nothing", "A backup"],
+    "answer": 1,
+    "explanation": "Renaming an address is delete plus create, unless you tell Terraform it moved."
+  },
+  {
+    "prompt": "What should a reviewer read first?",
+    "options": ["The PR title", "The plan: what will actually happen", "The author's name", "The commit date"],
+    "answer": 1,
+    "explanation": "Titles say what was meant; plans say what will happen."
+  }
+]
+```
+$md$, true, true, 5, array['iac-05-p1', 'iac-05-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('iac-m06', 'terraform-infrastructure-as-code', 'Dangerous Changes', 6, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('terraform-infrastructure-as-code:dangerous-changes', 'terraform-infrastructure-as-code', 'iac-m06', 'dangerous-changes', 'Dangerous changes', 'Recognise the plans that destroy data or cause downtime (replacements of stateful resources, renames, mass deletions and hidden attribute changes) and fix them with moved blocks, lifecycle rules and safer sequencing.', 25, $md$
+## The problem
+
+Three of Tallybook's six pull requests could cause serious damage if applied as they are, and none of their titles says so:
+
+- PR 102, "rename database", destroys the production database.
+- PR 101, "web autoscaling", deletes all six web servers in the same step that creates their replacement.
+- PR 106, "multi-AZ database", also upgrades the database to a new major version, immediately.
+
+Each has a standard fix. Knowing them is a core skill for anyone who approves infrastructure changes.
+
+## The concept
+
+**Renames: `moved` blocks**
+
+Tell Terraform the resource moved, and the rename becomes a no-op:
+
+```hcl
+moved {
+  from = aws_db_instance.prod
+  to   = aws_db_instance.main
+}
+```
+
+**Protect what can't be recreated**
+
+```hcl
+resource "aws_db_instance" "main" {
+  # ...
+  deletion_protection = true
+
+  lifecycle {
+    prevent_destroy = true
+  }
+}
+```
+
+`prevent_destroy` makes Terraform refuse any plan that would destroy the resource. `deletion_protection` makes the cloud provider refuse it too, even from the console.
+
+**Sequence risky changes**
+
+- Create the new thing in one PR; switch traffic and delete the old thing in another, after checking.
+- `create_before_destroy` in a `lifecycle` block makes replacements create first.
+
+**Check every changed attribute**
+
+An update can hide changes the title doesn't mention. Compare `before` and `after` for every attribute, not just the one you expected.
+
+## Example
+
+Find the changed attributes in every update, across all plans:
+
+```python
+import json
+from urllib.request import urlopen
+
+base = "https://academy.cloudtechanalytics.com/datasets/terraform/"
+PRS = ["101-web-autoscaling", "102-rename-database", "103-reporting-access", "104-cost-tags", "105-rightsize-api", "106-multi-az-database"]
+
+def load(name):
+    with urlopen(base + name) as f:
+        return json.load(f)
+
+plans = {pr: load(f"plan-pr-{pr}.json") for pr in PRS}
+
+def changed_attributes(rc):
+    before, after = rc["change"]["before"] or {}, rc["change"]["after"] or {}
+    return sorted(k for k in set(before) | set(after) if before.get(k) != after.get(k))
+
+for pr, plan in plans.items():
+    updates = [rc for rc in plan["resource_changes"] if rc["change"]["actions"] == ["update"]]
+    if updates:
+        attrs = sorted({a for rc in updates for a in changed_attributes(rc)})
+        print(f"PR {pr}: {len(updates)} updates, changing {attrs}")
+```
+
+```text
+PR 104-cost-tags: 19 updates, changing ['tags']
+PR 105-rightsize-api: 4 updates, changing ['instance_type']
+PR 106-multi-az-database: 1 updates, changing ['allow_major_version_upgrade', 'apply_immediately', 'engine_version', 'multi_az']
+```
+
+PR 104 changes only tags, and PR 105 only instance types. PR 106 changes four attributes: `multi_az` as intended, plus `engine_version` (15.4 to 16.3, a major upgrade), `allow_major_version_upgrade`, and `apply_immediately`, which means "do it now, during business hours, not in the maintenance window". Now the deletions of stateful resources:
+
+```python
+STATEFUL = {"aws_db_instance", "aws_s3_bucket", "aws_ebs_volume", "aws_efs_file_system"}
+
+for pr, plan in plans.items():
+    for rc in plan["resource_changes"]:
+        if "delete" in rc["change"]["actions"] and rc["type"] in STATEFUL:
+            before = rc["change"]["before"]
+            print(f"PR {pr}: deletes {rc['address']} ({before['identifier']}, {before['allocated_storage']} GB), deletion_protection={before['deletion_protection']}")
+```
+
+```text
+PR 102-rename-database: deletes aws_db_instance.prod (tallybook-prod, 500 GB), deletion_protection=False
+```
+
+The production database has `deletion_protection` switched off, so nothing outside Terraform would stop this either. Two fixes, both needed: a `moved` block in PR 102, and `prevent_destroy` plus `deletion_protection` on the database in a separate PR.
+
+## Walkthrough
+
+1. Run the cells. Write the `moved` block that makes PR 102 safe.
+2. Split PR 101 into two PRs. What does each contain, and what do you check in between?
+3. Split PR 106: which attributes go in the first PR, and when should the version upgrade happen?
+4. Write your review comments (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "iac-06-p1",
+  "prompt": "How many attributes does PR 106's update change?",
+  "answer": 4,
+  "format": "number",
+  "pyVerify": "len(changed_attributes(plans['106-multi-az-database']['resource_changes'][0]))",
+  "hint": "Count the attributes listed for PR 106.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "iac-06-t1",
+  "prompt": "Write **review comments** for PRs **102**, **101** and **106**, one paragraph each starting with the PR number and a colon: what the plan really does, why it's dangerous, and the **specific fix** (a `moved` block, splitting the PR, `prevent_destroy`, removing `apply_immediately`, and so on).",
+  "minutes": 10,
+  "rows": 9,
+  "placeholder": "102: ...",
+  "rules": [
+    { "label": "A paragraph for each of 102, 101 and 106", "pattern": "^\\s*(PR )?(102|101|106)\\s*:", "min": 3 },
+    { "label": "102: a moved block", "pattern": "moved" },
+    { "label": "Protection for the database (prevent_destroy or deletion_protection)", "pattern": "prevent_destroy|deletion_protection" },
+    { "label": "101: split or sequence the change", "pattern": "split|two (PRs|pull requests|steps)|first[^\\n]*then|after[^\\n]*healthy|create_before_destroy" },
+    { "label": "106: the major version upgrade", "pattern": "engine_version|major (version )?upgrade|16\\.3|version upgrade" },
+    { "label": "106: apply_immediately or the maintenance window", "pattern": "apply_immediately|maintenance window" }
+  ],
+  "sample": "102: This plan destroys aws_db_instance.prod (500 GB, with deletion protection off) and creates an empty aws_db_instance.main. Add a moved block from aws_db_instance.prod to aws_db_instance.main so Terraform renames it in state instead, and in a separate PR add lifecycle { prevent_destroy = true } and deletion_protection = true.\n101: The autoscaling group is the right change, but this plan deletes all six web servers in the same apply. Split it: first create the autoscaling group and attach it to the load balancer; once its servers are healthy and serving traffic, remove the old instances in a second PR.\n106: The title says multi-AZ, but the plan also upgrades Postgres from 15.4 to 16.3 with apply_immediately, during business hours. Keep only multi_az here, without apply_immediately, so it happens in the maintenance window; do the major version upgrade separately, after testing it on staging.",
+  "note": "Each comment names the exact fix, so the author knows what to change without another round of questions.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "What does a `moved` block do?",
+    "options": ["Moves a server to another region", "Tells Terraform a resource's address changed, so it renames it in state instead of destroying it", "Copies data", "Deletes the old resource"],
+    "answer": 1,
+    "explanation": "Renames without destruction."
+  },
+  {
+    "prompt": "What does `prevent_destroy = true` do?",
+    "options": ["Makes the resource faster", "Makes Terraform refuse any plan that would destroy the resource", "Backs it up", "Hides it from the plan"],
+    "answer": 1,
+    "explanation": "A guard against accidental deletion."
+  },
+  {
+    "prompt": "An update's title mentions one setting, but the plan changes four attributes. What should a reviewer do?",
+    "options": ["Approve: it's an update, not a delete", "Ask why each extra change is there, and split out anything unrelated", "Reject all updates", "Ignore the extras"],
+    "answer": 1,
+    "explanation": "Every changed attribute needs a reason."
+  }
+]
+```
+$md$, true, true, 6, array['iac-06-p1', 'iac-06-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('iac-m07', 'terraform-infrastructure-as-code', 'Policy as Code', 7, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('terraform-infrastructure-as-code:policy-as-code', 'terraform-infrastructure-as-code', 'iac-m07', 'policy-as-code', 'Policy as code', 'Turn review rules into automatic checks that run on every plan (no destroying stateful resources, no sensitive ports open to the internet, required tags, flagged major upgrades) and see which of Tallybook''s pull requests they block.', 25, $md$
+## The problem
+
+Lessons 5 and 6 found serious problems by reading plans carefully. Careful reading doesn't scale: a busy reviewer on a Friday afternoon approves the "rename" PR. The rules that matter most should be checked by a program, on every plan, before a person even looks.
+
+This is **policy as code**. Tools such as Open Policy Agent, Sentinel and Checkov do it at scale; underneath, every policy is a function that reads the plan JSON and returns violations. You'll write those functions in Python.
+
+## The concept
+
+**A policy is a function**: plan in, list of violations out. Each violation names the resource and the rule broken.
+
+**Good first policies**
+
+| Policy | Catches |
+| :-- | :-- |
+| No deletion of stateful resources | PR 102 |
+| No ingress from 0.0.0.0/0 except ports 80 and 443 | PR 103 |
+| Created taggable resources must have `environment` and `team` tags | untagged spend (cloud course) |
+| Database major version changes need sign-off | PR 106 |
+| No more than N deletions in one plan | PR 101 |
+
+**Block or warn**
+
+Some violations should **block** the merge (destroying a database); others should **warn** and require a named senior reviewer (a major upgrade). Every block can still be overridden, with a recorded reason.
+
+## Example
+
+Write the policies, then run every policy on every plan:
+
+```python
+import json
+from urllib.request import urlopen
+
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/terraform/"
+PRS = ["101-web-autoscaling", "102-rename-database", "103-reporting-access", "104-cost-tags", "105-rightsize-api", "106-multi-az-database"]
+
+def load(name):
+    with urlopen(base + name) as f:
+        return json.load(f)
+
+plans = {pr: load(f"plan-pr-{pr}.json") for pr in PRS}
+
+STATEFUL = {"aws_db_instance", "aws_s3_bucket", "aws_ebs_volume"}
+TAGGABLE = {"aws_instance", "aws_launch_template", "aws_autoscaling_group", "aws_db_instance", "aws_s3_bucket", "aws_lb"}
+
+def no_stateful_deletes(plan):
+    return [rc["address"] for rc in plan["resource_changes"] if "delete" in rc["change"]["actions"] and rc["type"] in STATEFUL]
+
+def no_open_sensitive_ports(plan):
+    bad = []
+    for rc in plan["resource_changes"]:
+        after = rc["change"]["after"] or {}
+        if rc["type"] == "aws_security_group_rule" and after.get("type") == "ingress" and "0.0.0.0/0" in after.get("cidr_blocks", []):
+            if not {after["from_port"], after["to_port"]} <= {80, 443}:
+                bad.append(f"{rc['address']} port {after['from_port']}")
+    return bad
+
+def required_tags(plan):
+    bad = []
+    for rc in plan["resource_changes"]:
+        if rc["change"]["actions"] == ["create"] and rc["type"] in TAGGABLE:
+            tags = (rc["change"]["after"] or {}).get("tags") or {}
+            if not {"environment", "team"} <= set(tags):
+                bad.append(rc["address"])
+    return bad
+
+def major_db_upgrades(plan):
+    bad = []
+    for rc in plan["resource_changes"]:
+        before, after = rc["change"]["before"] or {}, rc["change"]["after"] or {}
+        if rc["type"] == "aws_db_instance" and before and after:
+            if before["engine_version"].split(".")[0] != after["engine_version"].split(".")[0]:
+                bad.append(f"{rc['address']} {before['engine_version']} -> {after['engine_version']}")
+    return bad
+
+def too_many_deletes(plan, limit=3):
+    deletes = [rc["address"] for rc in plan["resource_changes"] if "delete" in rc["change"]["actions"]]
+    return deletes if len(deletes) > limit else []
+
+POLICIES = {"no_stateful_deletes": ("block", no_stateful_deletes), "no_open_sensitive_ports": ("block", no_open_sensitive_ports),
+            "required_tags": ("block", required_tags), "major_db_upgrades": ("warn", major_db_upgrades), "too_many_deletes": ("warn", too_many_deletes)}
+
+results = pd.DataFrame({pr: {name: len(check(plan)) for name, (_, check) in POLICIES.items()} for pr, plan in plans.items()}).T
+results
+```
+
+```text
+no_stateful_deletes  no_open_sensitive_ports  required_tags  major_db_upgrades  too_many_deletes
+101-web-autoscaling                      0                        0              0                  0                 6
+102-rename-database                      1                        0              0                  0                 0
+103-reporting-access                     0                        1              0                  0                 0
+104-cost-tags                            0                        0              0                  0                 0
+105-rightsize-api                        0                        0              0                  0                 0
+106-multi-az-database                    0                        0              0                  1                 0
+```
+
+Each number is the count of violations. Now the decision for each PR:
+
+```python
+def decision(pr):
+    plan = plans[pr]
+    levels = {POLICIES[name][0] for name, (_, check) in POLICIES.items() if check(plan)}
+    return "BLOCKED" if "block" in levels else "needs senior review" if "warn" in levels else "ready for normal review"
+
+for pr in PRS:
+    print(pr.ljust(24), decision(pr))
+```
+
+```text
+101-web-autoscaling      needs senior review
+102-rename-database      BLOCKED
+103-reporting-access     BLOCKED
+104-cost-tags            ready for normal review
+105-rightsize-api        ready for normal review
+106-multi-az-database    needs senior review
+```
+
+The two most dangerous PRs are blocked automatically, two more are flagged for a senior reviewer, and the two routine ones go through normal review. That's the right split, and nobody had to read 1,000 lines of JSON to get it.
+
+## Walkthrough
+
+1. Run the cells. Print the actual violations for each blocked PR, not just the counts.
+2. Add a policy: production servers may only use instance types from an approved list.
+3. Would `required_tags` catch a resource created with `team = ""`? Fix it if not.
+4. Write the policy document (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "iac-07-p1",
+  "prompt": "How many of the six PRs are **BLOCKED**?",
+  "answer": 2,
+  "format": "number",
+  "pyVerify": "sum(decision(pr) == 'BLOCKED' for pr in PRS)",
+  "hint": "Count BLOCKED in the last output.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "iac-07-t1",
+  "prompt": "Write Tallybook's **infrastructure policy list**, one policy per line starting with **BLOCK:** or **WARN:**, at least **five** policies, each saying what it checks. End with a line starting **Override:** saying who can override a block and how it's recorded.",
+  "minutes": 6,
+  "rows": 8,
+  "placeholder": "BLOCK: ...",
+  "rules": [
+    { "label": "At least five BLOCK or WARN lines", "pattern": "^\\s*(BLOCK|WARN)\\s*:", "min": 5 },
+    { "label": "At least two BLOCK lines", "pattern": "^\\s*BLOCK\\s*:", "min": 2 },
+    { "label": "A rule about deleting stateful resources", "pattern": "delet[^\\n]*(database|bucket|stateful|volume)|destroy[^\\n]*(database|bucket|stateful)" },
+    { "label": "A rule about 0.0.0.0/0 or the internet", "pattern": "0\\.0\\.0\\.0/0|internet|public" },
+    { "label": "A rule about tags", "pattern": "tag" },
+    { "label": "An Override line with who and a record", "pattern": "^\\s*override\\s*:[^\\n]*(lead|cto|head|engineer)[^\\n]*(record|log|written|reason)" }
+  ],
+  "sample": "BLOCK: deleting or replacing a database, storage bucket or volume.\nBLOCK: ingress from 0.0.0.0/0 on any port except 80 and 443.\nBLOCK: creating a taggable resource without non-empty environment and team tags.\nBLOCK: setting publicly_accessible = true on a database.\nWARN: a major version change to a database engine (needs the platform lead's approval).\nWARN: more than 3 deletions in one plan (needs a senior reviewer).\nOverride: the platform lead and CTO together may override a block, with a written reason recorded in the pull request and the change log.",
+  "note": "The override rule matters as much as the policies: a block that anyone can quietly skip isn't a control.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "What is policy as code?",
+    "options": ["Writing policies in Word", "Automatic checks that read every plan and flag or block rule violations", "A legal contract", "A type of provider"],
+    "answer": 1,
+    "explanation": "Rules a program applies on every change."
+  },
+  {
+    "prompt": "Which violation should block a merge rather than just warn?",
+    "options": ["A missing description", "Destroying the production database", "A long plan", "A new tag"],
+    "answer": 1,
+    "explanation": "Irreversible damage gets a hard stop."
+  },
+  {
+    "prompt": "Why run policies before a person reviews?",
+    "options": ["To replace reviewers", "So the most important rules are always checked, however busy the reviewer is", "To slow merges", "Because people can't read JSON"],
+    "answer": 1,
+    "explanation": "Automation guarantees the basics; people judge the rest."
+  }
+]
+```
+$md$, true, true, 7, array['iac-07-p1', 'iac-07-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('iac-m08', 'terraform-infrastructure-as-code', 'Drift and Imports', 8, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('terraform-infrastructure-as-code:drift-and-imports', 'terraform-infrastructure-as-code', 'iac-m08', 'drift-and-imports', 'Drift and imports', 'Find drift (real infrastructure that no longer matches Terraform''s state) and resources Terraform doesn''t manage, then decide for each whether to import it, change it back or delete it.', 25, $md$
+## The problem
+
+Terraform only works well if it's the **only** way infrastructure changes. At Tallybook, it isn't. During a busy week someone resized a worker server in the console. During a 2025 migration someone added firewall rules by hand. Developers create their own servers.
+
+Every manual change creates **drift**: the real world no longer matches what Terraform believes. The next `apply` might undo someone's urgent fix, or fail, or, worse, everyone stops trusting the plan.
+
+## The concept
+
+**Two kinds of mismatch**
+
+| Kind | Example | Found by |
+| :-- | :-- | :-- |
+| **Attribute drift** | a managed server resized in the console | `terraform plan` shows a change nobody wrote |
+| **Unmanaged resources** | a server or rule created by hand | comparing the cloud's inventory with state |
+
+**Decide for each**
+
+- **Keep it, and bring it under Terraform**: write the code and **import** it.
+- **Change it back**: let Terraform's next apply restore the coded value.
+- **Accept the change**: update the code to match reality.
+- **Delete it**: if nobody needs it.
+
+**Importing**
+
+```hcl
+import {
+  to = aws_security_group_rule.office_admin
+  id = "sgr-r08"
+}
+```
+
+With an `import` block (Terraform 1.5 and later) and matching resource code, the next plan shows the resource being imported rather than created.
+
+## Example
+
+Attribute drift: compare each managed server's instance type in state with the cloud inventory. The inventory uses size names; map them to instance types first:
+
+```python
+import json
+from urllib.request import urlopen
+
+import pandas as pd
+
+with urlopen("https://academy.cloudtechanalytics.com/datasets/terraform/terraform.tfstate") as f:
+    state = json.load(f)
+inventory = pd.read_csv("https://academy.cloudtechanalytics.com/datasets/cloud/resources.csv")
+
+SIZE_TO_TYPE = {"small": "t3.small", "medium": "t3.medium", "large": "m5.xlarge", "xlarge": "m5.2xlarge"}
+in_state = pd.DataFrame([
+    {"address": f"{r['type']}.{r['name']}[{i['index_key']}]", "resource_id": i["attributes"]["id"], "state_type": i["attributes"]["instance_type"]}
+    for r in state["resources"] if r["type"] == "aws_instance" for i in r["instances"]
+])
+compare = in_state.merge(inventory[["resource_id", "name", "size"]], on="resource_id")
+compare["real_type"] = compare["size"].map(SIZE_TO_TYPE)
+compare[compare["state_type"] != compare["real_type"]]
+```
+
+```text
+address resource_id state_type            name   size  real_type
+12  aws_instance.worker[2]      r-0025   m5.large  prod-worker-03  large  m5.xlarge
+```
+
+One server drifted: worker-03 is really an `m5.xlarge`, but Terraform still believes it's an `m5.large`. Its next plan for this server would **shrink it back**, quietly undoing the fix someone made during a busy week. Now unmanaged firewall rules: the Linux course's rule list against the rules in state.
+
+```python
+rules = pd.read_csv("https://academy.cloudtechanalytics.com/datasets/linux/firewall.csv")
+managed_rule_ids = {i["attributes"]["id"] for r in state["resources"] if r["type"] == "aws_security_group_rule" for i in r["instances"]}
+rules["in_terraform"] = ("sgr-" + rules["rule_id"].str.lower()).isin(managed_rule_ids)
+rules.loc[~rules["in_terraform"], ["rule_id", "port_from", "source", "description"]]
+```
+
+```text
+rule_id  port_from     source                              description
+2     R03         22  0.0.0.0/0  SSH - temporary, for the 2025 migration
+7     R08       8080  0.0.0.0/0                              Admin panel
+9     R10       5432  0.0.0.0/0        Postgres - for the reporting tool
+```
+
+The three rules that aren't in Terraform are exactly the three open to the whole internet that the Linux course found: SSH, the admin panel and the database. They were never reviewed because they never went through code. Two should be deleted and one restricted, then all firewall changes should go through Terraform.
+
+## Walkthrough
+
+1. Run the cells. For worker-03, decide: change it back, or update the code? What would you check first?
+2. Write the resource code and `import` block for a restricted version of R08 (admin panel from the office only).
+3. List every unmanaged server from lesson 1 and decide import or delete for each group.
+4. Write the drift policy (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "iac-08-p1",
+  "prompt": "How many firewall rules in firewall.csv are **not** managed by Terraform?",
+  "answer": 3,
+  "format": "number",
+  "pyVerify": "int((~rules['in_terraform']).sum())",
+  "hint": "Count the rows of the last output.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "iac-08-t1",
+  "prompt": "Write Tallybook's **drift policy**, one rule per line starting with a dash: at least **four** rules covering how drift is **detected** (and how often), what happens to **manual changes**, **emergency** changes, and **unmanaged** resources.",
+  "minutes": 6,
+  "rows": 6,
+  "placeholder": "- Detection: ...",
+  "rules": [
+    { "label": "At least four rules, each starting with -", "pattern": "^\\s*-\\s+\\S", "min": 4 },
+    { "label": "Scheduled detection (daily, nightly, scheduled plan)", "pattern": "daily|nightly|(every|each) (day|night|hour)|scheduled|cron" },
+    { "label": "Manual changes (console, by hand, not allowed)", "pattern": "console|by hand|manual" },
+    { "label": "Emergencies (emergency, incident, break-glass)", "pattern": "emergenc|incident|break[- ]glass|urgent" },
+    { "label": "Unmanaged resources (import or delete)", "pattern": "import" }
+  ],
+  "sample": "- Detection: the pipeline runs terraform plan for every environment each night and posts any unexpected change to the platform channel.\n- Manual changes: nobody changes managed infrastructure in the console; console access is read-only for everyone except two break-glass accounts.\n- Emergencies: an urgent fix may be made by hand during an incident, but a pull request bringing the code into line must be merged within one working day.\n- Unmanaged resources: every resource found outside Terraform is either imported with an import block or deleted within two weeks, decided by its team lead.\n- Ownership: the platform lead reviews the drift report weekly and chases anything older than a week.",
+  "note": "The emergency rule is what makes the policy realistic: people will change things by hand during an incident, so the policy says how to reconcile afterwards.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "A server was resized in the console. What will Terraform's next apply do?",
+    "options": ["Nothing", "Change it back to the size in the code", "Delete it", "Update the code"],
+    "answer": 1,
+    "explanation": "Terraform makes reality match the code."
+  },
+  {
+    "prompt": "What does an `import` block do?",
+    "options": ["Copies data", "Brings an existing resource under Terraform's management without recreating it", "Deletes a resource", "Downloads a provider"],
+    "answer": 1,
+    "explanation": "Import adopts what already exists."
+  },
+  {
+    "prompt": "How should drift be detected?",
+    "options": ["When something breaks", "By running plan on a schedule and alerting on unexpected changes", "By asking engineers", "It can't be"],
+    "answer": 1,
+    "explanation": "Scheduled plans are drift detectors."
+  }
+]
+```
+$md$, true, true, 8, array['iac-08-p1', 'iac-08-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('iac-m09', 'terraform-infrastructure-as-code', 'Modules and the Pipeline', 9, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('terraform-infrastructure-as-code:modules-and-the-pipeline', 'terraform-infrastructure-as-code', 'iac-m09', 'modules-and-the-pipeline', 'Modules and the pipeline', 'Package repeated infrastructure as modules with pinned versions, and design the pull request pipeline (format, validate, plan, policy checks, review and apply) that turns everything in this course into the everyday way of working.', 20, $md$
+## The problem
+
+Tallybook's web, API and worker servers are three copies of nearly the same code. When the team added encrypted disks, they changed two of the three and forgot the third. And until now, anyone with credentials could run `terraform apply` from their own laptop, with whatever version of the code they happened to have.
+
+Two practices fix this: **modules**, so shared patterns are written once, and a **pipeline**, so every change follows the same safe path.
+
+## The concept
+
+**Modules**
+
+A module is a folder of Terraform code with inputs (variables) and outputs, used like a function:
+
+```hcl
+module "api" {
+  source = "./modules/server-group"
+
+  name          = "api"
+  instance_type = var.api_instance_type
+  server_count  = var.api_count
+  tags          = local.common_tags
+}
+
+module "vpc" {
+  source  = "terraform-aws-modules/vpc/aws"
+  version = "5.13.0"
+  # ...
+}
+```
+
+**Pin versions** of external modules and providers, so the same code gives the same result next month.
+
+**The pipeline**
+
+| Stage | Runs | Fails the PR when |
+| :-- | :-- | :-- |
+| `terraform fmt -check` | every push | files aren't formatted |
+| `terraform validate` | every push | code is invalid |
+| `terraform plan` | every push | plan errors; the plan is posted on the PR |
+| Policy checks (lesson 7) | every plan | a BLOCK policy is violated |
+| Review | people | a reviewer requests changes |
+| `terraform apply` | after merge, from the pipeline only | apply errors |
+
+Only the pipeline has permission to apply. People review; the pipeline acts.
+
+## Example
+
+How much repetition is in Tallybook's servers? Compare the attribute names and the settings that vary across the four server groups in state:
+
+```python
+import json
+from urllib.request import urlopen
+
+import pandas as pd
+
+with urlopen("https://academy.cloudtechanalytics.com/datasets/terraform/terraform.tfstate") as f:
+    state = json.load(f)
+
+rows = []
+for r in state["resources"]:
+    if r["type"] == "aws_instance":
+        a = r["instances"][0]["attributes"]
+        rows.append({"group": r["name"], "servers": len(r["instances"]), "instance_type": a["instance_type"],
+                     "ami": a["ami"], "encrypted_disk": a["root_block_device"][0]["encrypted"], "attributes": len(a)})
+pd.DataFrame(rows)
+```
+
+```text
+group  servers instance_type                    ami  encrypted_disk  attributes
+0      web        6     m5.xlarge  ami-0a1b2c3d4e5f60718            True           7
+1      api        4    m5.2xlarge  ami-0a1b2c3d4e5f60718            True           7
+2   worker        3     m5.xlarge  ami-0a1b2c3d4e5f60718            True           7
+3  staging        6     t3.medium  ami-0a1b2c3d4e5f60718            True           7
+```
+
+Same AMI, same attributes, same disk settings: four groups differing only in name, count, size and tags. That's exactly what a `server-group` module's inputs would be, and a fix such as disk encryption would then be made once.
+
+## Walkthrough
+
+1. Run the cell. List the module's inputs and outputs you'd need for these four groups.
+2. Which stage of the pipeline would have caught each of the six PRs' problems?
+3. Who at Tallybook should be able to approve infrastructure PRs, and who should be able to apply?
+4. Write the pipeline definition in plain language (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "iac-09-p1",
+  "prompt": "How many servers are in the four `aws_instance` groups together?",
+  "answer": 19,
+  "format": "number",
+  "pyVerify": "sum(len(r['instances']) for r in state['resources'] if r['type'] == 'aws_instance')",
+  "hint": "Add up the servers column.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "iac-09-t1",
+  "prompt": "Describe Tallybook's **infrastructure pipeline**, one numbered stage per line, from opening a pull request to the change being live: at least **six** stages, including **fmt/validate**, **plan**, **policy checks**, **review** (who), **apply** (by what) and what happens if apply **fails**.",
+  "minutes": 6,
+  "rows": 8,
+  "placeholder": "1. On every push, ...",
+  "rules": [
+    { "label": "At least six numbered stages", "pattern": "^\\s*\\d+[.)]\\s+\\S", "min": 6 },
+    { "label": "fmt or validate", "pattern": "fmt|validate" },
+    { "label": "plan posted to the PR", "pattern": "plan" },
+    { "label": "policy checks", "pattern": "polic" },
+    { "label": "review by named roles", "pattern": "review[^\\n]*(lead|engineer|platform|senior|owner)" },
+    { "label": "apply by the pipeline only", "pattern": "apply[^\\n]*(pipeline|ci|automat)|(pipeline|ci)[^\\n]*apply" },
+    { "label": "a failed apply", "pattern": "fail" }
+  ],
+  "sample": "1. On every push to a pull request, the pipeline runs terraform fmt -check and terraform validate.\n2. It runs terraform plan for each affected environment and posts the plan summary and full plan on the pull request.\n3. It runs the policy checks on the plan JSON; any BLOCK violation fails the PR, and WARN violations request a senior reviewer.\n4. A platform engineer reviews the plan; changes to production databases or networking also need the platform lead.\n5. After merge, the pipeline applies the saved plan to staging, runs smoke tests, then applies to production; only the pipeline has apply permissions.\n6. If an apply fails, the pipeline stops, alerts the platform channel, and the on-call engineer fixes it with a new pull request rather than by hand.",
+  "note": "Applying the saved plan, not a fresh one, guarantees that what was reviewed is what runs.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why pin a module's version?",
+    "options": ["It's faster", "So the same code produces the same infrastructure later, even if the module changes", "To save money", "Pinning is required"],
+    "answer": 1,
+    "explanation": "Unpinned modules can change under you."
+  },
+  {
+    "prompt": "Who should run terraform apply in production?",
+    "options": ["Any engineer from their laptop", "Only the pipeline, after review", "The CTO only", "Nobody"],
+    "answer": 1,
+    "explanation": "People review; the pipeline acts."
+  },
+  {
+    "prompt": "What problem do modules solve?",
+    "options": ["Slow plans", "Repeated code drifting apart, by writing a shared pattern once", "State locking", "Secrets"],
+    "answer": 1,
+    "explanation": "Fix it once, everywhere."
+  }
+]
+```
+$md$, true, true, 9, array['iac-09-p1', 'iac-09-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('iac-m10', 'terraform-infrastructure-as-code', 'Final Project', 10, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('terraform-infrastructure-as-code:final-project', 'terraform-infrastructure-as-code', 'iac-m10', 'final-project', '"Final project: Tallybook''s infrastructure review"', 'Plan your final project, a review of Tallybook''s Terraform estate and six pending pull requests, with policy checks, drift and secrets findings, and the plan to make Terraform the only way infrastructure changes.', 20, $md$
+## The problem
+
+Tallybook's CTO wants to adopt infrastructure as code properly, and wants one document to do it: what's wrong today, what to do with the six pull requests waiting, and the rules and pipeline from now on. Your final project is that review, built from the state, plans and variable files in this course.
+
+## The concept
+
+**The parts of the review**
+
+| Part | Built in |
+| :-- | :-- |
+| Coverage: what Terraform manages and what it doesn't | lesson 1 |
+| Environments compared, with costs | lesson 3 |
+| State and secrets | lesson 4 |
+| The six PRs: summaries, dangers, fixes | lessons 5 and 6 |
+| Policies and their results | lesson 7 |
+| Drift and unmanaged resources | lesson 8 |
+| Modules and the pipeline | lesson 9 |
+
+**One scorecard per PR**
+
+For each PR: its plan summary, policy results, decision, and your review comment. That table is what the CTO will read first.
+
+## Example
+
+The start of the scorecard, combining the plan summary with a few of the checks:
+
+```python
+import json
+from urllib.request import urlopen
+
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/terraform/"
+PRS = ["101-web-autoscaling", "102-rename-database", "103-reporting-access", "104-cost-tags", "105-rightsize-api", "106-multi-az-database"]
+
+def load(name):
+    with urlopen(base + name) as f:
+        return json.load(f)
+
+def scorecard(pr):
+    changes = load(f"plan-pr-{pr}.json")["resource_changes"]
+    actions = [rc["change"]["actions"] for rc in changes]
+    return {
+        "add": sum("create" in a for a in actions),
+        "change": sum(a == ["update"] for a in actions),
+        "destroy": sum("delete" in a for a in actions),
+        "touches_database": any(rc["type"] == "aws_db_instance" for rc in changes),
+        "touches_firewall": any(rc["type"] == "aws_security_group_rule" for rc in changes),
+    }
+
+pd.DataFrame({pr: scorecard(pr) for pr in PRS}).T
+```
+
+```text
+add change destroy touches_database touches_firewall
+101-web-autoscaling     4      0       6            False            False
+102-rename-database     1      0       1             True            False
+103-reporting-access    1      0       0            False             True
+104-cost-tags           0     19       0            False            False
+105-rightsize-api       0      4       0            False            False
+106-multi-az-database   0      1       0             True            False
+```
+
+Add the policy decisions from lesson 7 and your review comments, and the table becomes the first page of the review.
+
+## Walkthrough
+
+1. Complete the scorecard with policy results and your decision for each PR.
+2. Write the coverage, drift and secrets findings with their evidence.
+3. Write the target rules: policies, drift policy and pipeline.
+4. Open the project brief on the course page and plan the write-up.
+
+## Practice
+
+```answer
+{
+  "id": "iac-10-p1",
+  "prompt": "How many of the six PRs touch a **database** resource?",
+  "answer": 2,
+  "format": "number",
+  "pyVerify": "sum(scorecard(pr)['touches_database'] for pr in PRS)",
+  "hint": "Count True in the touches_database column.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "iac-10-t1",
+  "prompt": "Write the **executive summary** of your review (100 to 200 words): **coverage** (what's not in Terraform), the **secrets** finding, what happens to the **six PRs**, the **drift** found, and the **rules** from now on (policies and pipeline), ending with the first three actions.",
+  "minutes": 10,
+  "rows": 9,
+  "placeholder": "Only about half of Tallybook's servers are managed by Terraform ...",
+  "rules": [
+    { "label": "Coverage (unmanaged, not in Terraform, by hand)", "pattern": "unmanaged|not (in|managed by) terraform|by hand|console" },
+    { "label": "Secrets in state", "pattern": "password|secret" },
+    { "label": "Mentions PR 102 or the database deletion", "pattern": "102|destroy[^.]*database|database[^.]*destroy" },
+    { "label": "Drift", "pattern": "drift|worker-03|resized" },
+    { "label": "Policies and pipeline", "pattern": "polic[\\s\\S]*pipeline|pipeline[\\s\\S]*polic" },
+    { "label": "First actions", "pattern": "first|1\\.|immediately|this week|today" },
+    { "label": "Between 100 and 200 words", "minWords": 100, "maxWords": 200 }
+  ],
+  "sample": "Only about half of Tallybook's servers, and none of its riskiest firewall rules, are managed by Terraform; the rest were made by hand, which is why they were forgotten or left open. The state file, once emailed to a contractor, contains both database passwords in plain text. Of the six pull requests waiting, two are blocked by the new policy checks: PR 102 would destroy the production database and PR 103 would open it to the internet. Two more need senior review: PR 101 must be split so web servers aren't deleted before their replacements work, and PR 106 hides a major database upgrade. PRs 104 and 105 can proceed. We also found drift: worker-03 was resized by hand, and Terraform would shrink it back. From now on, every change goes through a pull request pipeline with formatting, plans, policy checks and review, and only the pipeline can apply. First actions: rotate the database passwords and move state to an encrypted, locked backend; delete or restrict the three hand-made firewall rules; and turn on deletion protection for the production database.",
+  "note": "Leading with coverage explains every other finding: problems lived where Terraform didn't.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Which finding should be acted on first?",
+    "options": ["Missing cost tags", "A production database password exposed in a shared state file", "Unformatted code", "A pinned module version"],
+    "answer": 1,
+    "explanation": "Exposed secrets are an active risk."
+  },
+  {
+    "prompt": "What makes Terraform trustworthy as the record of infrastructure?",
+    "options": ["Using the latest version", "Making it the only way changes are made, with drift detected and reconciled", "Having many modules", "Writing long plans"],
+    "answer": 1,
+    "explanation": "Manual changes erode trust in every plan."
+  },
+  {
+    "prompt": "A reviewer's scorecard should start with what?",
+    "options": ["Code style", "What each change creates, changes and destroys, and whether it breaks a policy", "Author names", "Line counts"],
+    "answer": 1,
+    "explanation": "Impact and risk first."
+  }
+]
+```
+$md$, true, true, 10, array['iac-10-p1', 'iac-10-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+
 -- Course: Data Analyst Capstone: End-to-End BI Project
 insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
-values ('data-analyst-capstone', 'full', null, 'data-analyst-capstone', 'CAP', 'Data Analyst Capstone: End-to-End BI Project', 'Take a retail chain''s raw till export all the way to a reviewed dashboard and a board-ready executive summary, using the tools of your choice.', 'The capstone of the Data Analyst track. Voltline Electronics, a chain of eight stores, sends you 18 months of raw till data and one question from its chief executive: what''s really driving our 37% growth? You''ll plan the analysis, profile and clean a genuinely messy export (a duplicated upload, mixed date formats, inconsistent store names and test transactions), build a model that looks up costs by date and compares sales with monthly targets, decompose the growth, find what''s going wrong where, and put a value on missed sales. Then you''ll build a dashboard, write an executive summary, prepare for the board''s questions and publish the project for your portfolio. Use Excel, Power BI, SQL or Python: the work is assessed on the answers, not the tool.', 'data-analytics', 'intermediate', 4, 'Career project', 14, true, 'available', true, array['Turning a business brief into an analysis plan', 'Profiling and cleaning raw data with a quality log', 'Modelling data at the right grain', 'Decomposing growth into price, new stores and volume', 'Judging targets fairly', 'Estimating lost sales with stated assumptions', 'Finding-led dashboards and executive summaries', 'Presenting and publishing a portfolio project']::text[], array['The core Data Analyst courses: Excel, SQL and Power BI (or Python)', 'Comfort cleaning data and building a dashboard in at least one tool']::text[], 'Voltline Electronics: commercial review', true, true, true, true, false, 60, 34)
+values ('data-analyst-capstone', 'full', null, 'data-analyst-capstone', 'CAP', 'Data Analyst Capstone: End-to-End BI Project', 'Take a retail chain''s raw till export all the way to a reviewed dashboard and a board-ready executive summary, using the tools of your choice.', 'The capstone of the Data Analyst track. Voltline Electronics, a chain of eight stores, sends you 18 months of raw till data and one question from its chief executive: what''s really driving our 37% growth? You''ll plan the analysis, profile and clean a genuinely messy export (a duplicated upload, mixed date formats, inconsistent store names and test transactions), build a model that looks up costs by date and compares sales with monthly targets, decompose the growth, find what''s going wrong where, and put a value on missed sales. Then you''ll build a dashboard, write an executive summary, prepare for the board''s questions and publish the project for your portfolio. Use Excel, Power BI, SQL or Python: the work is assessed on the answers, not the tool.', 'data-analytics', 'intermediate', 4, 'Career project', 14, true, 'available', true, array['Turning a business brief into an analysis plan', 'Profiling and cleaning raw data with a quality log', 'Modelling data at the right grain', 'Decomposing growth into price, new stores and volume', 'Judging targets fairly', 'Estimating lost sales with stated assumptions', 'Finding-led dashboards and executive summaries', 'Presenting and publishing a portfolio project']::text[], array['The core Data Analyst courses: Excel, SQL and Power BI (or Python)', 'Comfort cleaning data and building a dashboard in at least one tool']::text[], 'Voltline Electronics: commercial review', true, true, true, true, false, 60, 35)
 on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level = excluded.level, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
@@ -47313,6 +48998,108 @@ values ('lnxq12', 1, 'Exit codes report success or failure.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 
+-- Assessment: Infrastructure as Code with Terraform: final assessment
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('terraform-infrastructure-as-code-final', 'terraform-infrastructure-as-code', 'final', null, 'Infrastructure as Code with Terraform: final assessment', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iacq01', 'terraform-infrastructure-as-code-final', 1, 'A server was created by hand in the console. What does Terraform know about it?', '["Everything","Nothing: it isn''t in the state","Only its cost","Only its name"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iacq01', 1, 'Terraform only sees what''s in its state.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iacq02', 'terraform-infrastructure-as-code-final', 2, 'What happens when you run `terraform plan`?', '["Infrastructure changes","Terraform shows what it would change, without changing anything","State is deleted","Providers are removed"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iacq02', 1, 'Only apply changes things.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iacq03', 'terraform-infrastructure-as-code-final', 3, 'Staging and production use the same Terraform code. Where do their differences live?', '["In separate code copies","In each environment''s variable values","In the state only","In the provider"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iacq03', 1, 'Same code, different variables.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iacq04', 'terraform-infrastructure-as-code-final', 4, 'An output is marked sensitive. Is the value safe in the state file?', '["Yes","No: sensitive hides it in printed output, but the file stores it in plain text","Only if encrypted by Terraform","It isn''t stored"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iacq04', 1, 'Treat state as a secret.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iacq05', 'terraform-infrastructure-as-code-final', 5, 'Why use a remote backend with locking?', '["To make plans faster","So everyone shares one safe copy of state and two applies can''t run at once","To avoid providers","It''s required for modules"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iacq05', 1, 'Shared, locked and protected state.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iacq06', 'terraform-infrastructure-as-code-final', 6, 'A plan shows `-/+` for the production database. What will happen?', '["An in-place update","The database will be destroyed and a new, empty one created","A backup","Nothing"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iacq06', 1, 'Replacement of a stateful resource means data loss.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iacq07', 'terraform-infrastructure-as-code-final', 7, 'A PR renames `aws_db_instance.prod` to `aws_db_instance.main`. How do you avoid destroying it?', '["Run apply twice","Add a moved block from the old address to the new one","Delete the state","Use count"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iacq07', 1, 'moved renames in state.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iacq08', 'terraform-infrastructure-as-code-final', 8, 'What does `lifecycle { prevent_destroy = true }` do?', '["Backs up the resource","Makes Terraform refuse any plan that would destroy it","Hides it","Encrypts it"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iacq08', 1, 'A guard against accidental deletion.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iacq09', 'terraform-infrastructure-as-code-final', 9, 'A PR titled ''enable multi-AZ'' also changes engine_version from 15.4 to 16.3. What should the reviewer do?', '["Approve: it''s an update","Ask for the upgrade to be split out and scheduled separately","Reject all updates","Ignore it"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iacq09', 1, 'Every changed attribute needs a reason.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iacq10', 'terraform-infrastructure-as-code-final', 10, 'Which should a policy check block automatically?', '["Adding a tag","Ingress from 0.0.0.0/0 on port 5432","Changing an instance type","A long plan"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iacq10', 1, 'Opening a database to the internet is never routine.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iacq11', 'terraform-infrastructure-as-code-final', 11, 'Terraform''s state says m5.large, but the server is really m5.xlarge. What is this, and what will the next apply do?', '["A bug; nothing","Drift; it will change the server back to m5.large unless the code is updated","An import; nothing","A module; delete it"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iacq11', 1, 'Reconcile drift deliberately.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iacq12', 'terraform-infrastructure-as-code-final', 12, 'Who should run terraform apply in production?', '["Any engineer","Only the pipeline, after review and policy checks","The newest team member","Customers"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iacq12', 1, 'People review; the pipeline acts.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
 -- Assessment: Prompting Essentials: module check
 insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
 values ('aipf-m01-check', 'ai-productivity-fundamentals', 'module', 'aipf-m01', 'Prompting Essentials: module check', 60, true)
@@ -50650,6 +52437,14 @@ Submit a link to your notebook (shared so anyone with the link can view it), and
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
 
 
+-- Project: Tallybook's infrastructure review
+insert into public.projects (id, course_id, title, summary, brief_md, tasks, datasets, rubric, required)
+values ('iac-tallybook-review', 'terraform-infrastructure-as-code', 'Tallybook''s infrastructure review', 'A review of a company''s Terraform estate and six pending pull requests: coverage, secrets in state, plan risks, policy checks, drift, and the pipeline that makes Terraform the only way infrastructure changes.', $md$Tallybook's CTO wants to adopt infrastructure as code properly. Review its Terraform state, its two environments and the six pull requests waiting, and set the rules from now on.
+
+Work in Google Colab. The files are at https://academy.cloudtechanalytics.com/datasets/terraform/ (terraform.tfstate, staging.tfvars.json, production.tfvars.json and plan-pr-101 to plan-pr-106), with the cloud inventory at https://academy.cloudtechanalytics.com/datasets/cloud/resources.csv and the firewall rules at https://academy.cloudtechanalytics.com/datasets/linux/firewall.csv. Submit a link to your notebook (shared so anyone with the link can view it), and paste your **PR scorecard**, your **policy list** and your **executive summary** below, followed by a short note on where each task is answered.$md$, array['Coverage: what Terraform manages compared with the cloud inventory, and what the unmanaged resources cost.', 'Environments: staging and production compared, with costs and the differences that matter.', 'State: the secrets in the state file, and the steps to secure it.', 'Pull requests: a summary of every plan, the dangerous changes, and a review comment with a specific fix for each risky PR.', 'Policies: policy functions run on every plan, with a decision for each PR.', 'Drift: attribute drift and unmanaged firewall rules, with a decision for each.', 'The way of working: modules, the pipeline and the drift policy, ending with an executive summary and first actions.']::text[], '{}'::text[], array['Every finding is backed by code run on the state, plans or inventory.', 'Plans are read for what they do, not what their titles say, including hidden attribute changes.', 'Fixes are specific and correct (moved blocks, lifecycle rules, split PRs, restricted sources).', 'Policies are implemented as working checks with sensible block and warn levels.', 'Secrets and state handling are treated as a security risk, with rotation first.', 'Drift is detected and each case gets a clear decision.', 'The summary leads with decisions and is clear to a non-specialist.']::text[], true)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
+
+
 -- Track: Become a Data Analyst
 insert into public.tracks (id, slug, title, summary, badge_name, badge_code, skills, position, published)
 values ('data-analyst', 'data-analyst', 'Become a Data Analyst', 'The route we recommend from no experience to a junior data analyst role. Learn how analysis works, then the tools teams use every day (Excel, SQL, Power BI and Python) on realistic company data. Build portfolio projects that answer real business questions, and finish with your CV, LinkedIn and interview preparation.', 'CloudTech Data Analyst', 'DATAANALYST', array['Spreadsheet analysis in Excel', 'Statistics: averages, spread, confidence intervals and tests', 'Querying databases with SQL, from first SELECT to cohorts and window functions', 'Data modelling and star schemas', 'Dashboards in Power BI, with DAX measures you can trust', 'Analysis in Python and pandas', 'Turning data into findings a manager can act on']::text[], 1, true)
@@ -50874,15 +52669,19 @@ values ('cloud-devops-engineer', 'cloud-fundamentals-cost-reliability', 'Core', 
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 insert into public.track_courses (track_id, course_id, stage, required, position)
-values ('cloud-devops-engineer', 'llm-evaluation-safety-production', 'Specialist', false, 4)
+values ('cloud-devops-engineer', 'terraform-infrastructure-as-code', 'Core', true, 4)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 insert into public.track_courses (track_id, course_id, stage, required, position)
-values ('cloud-devops-engineer', 'career-essentials', 'Career', true, 5)
+values ('cloud-devops-engineer', 'llm-evaluation-safety-production', 'Specialist', false, 5)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 insert into public.track_courses (track_id, course_id, stage, required, position)
-values ('cloud-devops-engineer', 'build-your-student-portfolio', 'Career', false, 6)
+values ('cloud-devops-engineer', 'career-essentials', 'Career', true, 6)
+on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
+
+insert into public.track_courses (track_id, course_id, stage, required, position)
+values ('cloud-devops-engineer', 'build-your-student-portfolio', 'Career', false, 7)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 

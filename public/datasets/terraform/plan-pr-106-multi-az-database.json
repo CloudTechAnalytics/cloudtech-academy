@@ -1,0 +1,71 @@
+{
+  "format_version": "1.2",
+  "terraform_version": "1.9.5",
+  "resource_changes": [
+    {
+      "address": "aws_db_instance.prod",
+      "mode": "managed",
+      "type": "aws_db_instance",
+      "name": "prod",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "update"
+        ],
+        "before": {
+          "id": "r-0127",
+          "identifier": "tallybook-prod",
+          "engine": "postgres",
+          "engine_version": "15.4",
+          "instance_class": "db.m5.2xlarge",
+          "allocated_storage": 500,
+          "multi_az": false,
+          "publicly_accessible": true,
+          "storage_encrypted": false,
+          "username": "tallybook_admin",
+          "password": "Tallyb00k-Prod-2025!",
+          "backup_retention_period": 7,
+          "deletion_protection": false,
+          "tags": {
+            "Name": "prod-db",
+            "environment": "production",
+            "team": "platform"
+          }
+        },
+        "after": {
+          "id": "r-0127",
+          "identifier": "tallybook-prod",
+          "engine": "postgres",
+          "engine_version": "16.3",
+          "instance_class": "db.m5.2xlarge",
+          "allocated_storage": 500,
+          "multi_az": true,
+          "publicly_accessible": true,
+          "storage_encrypted": false,
+          "username": "tallybook_admin",
+          "password": "Tallyb00k-Prod-2025!",
+          "backup_retention_period": 7,
+          "deletion_protection": false,
+          "tags": {
+            "Name": "prod-db",
+            "environment": "production",
+            "team": "platform"
+          },
+          "allow_major_version_upgrade": true,
+          "apply_immediately": true
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "password": true
+        },
+        "after_sensitive": {
+          "password": true
+        }
+      }
+    }
+  ],
+  "timestamp": "2026-09-08T10:00:00Z",
+  "applyable": true,
+  "complete": true,
+  "errored": false
+}
