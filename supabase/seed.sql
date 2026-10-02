@@ -63893,6 +63893,1688 @@ $md$, true, true, 8, array['cdc-08-p1', 'cdc-08-p2', 'cdc-08-t1']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 
+-- Course: Software Developer Capstone: Fix It Properly
+insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
+values ('software-developer-capstone', 'full', null, 'software-developer-capstone', 'SDC', 'Software Developer Capstone: Fix It Properly', 'Join a team, inherit a real codebase and six bug reports, and fix them properly: reproduce each with a failing test, make money exact, close a SQL injection, stop double refunds with idempotency keys and transactions, harden the API, review a risky pull request and ship through CI.', 'The capstone of the Software Developer track. You join the team that owns Kasuwa''s refunds service, a small Python codebase with a Flask API and SQLite, whose tests all pass while customers, finance, the mobile team and a security review have reported six bugs between them. You''ll triage them by harm, turn each report into a failing test, fix a kobo lost to floating point and an off-by-one return window, exploit and then close a SQL injection that leaks every customer''s email, and stop double refunds and over-refunds with an idempotency key, a unique index and a transaction. Then you''ll make the API return the right status code for every bad request, review a teammate''s pull request with a hard-coded secret and a silent except, and ship the fixes through Git, CI and release notes. Every command runs in Colab, and every output in the lessons comes from running it.', 'coding', 'intermediate', 4, 'Career project', 12, true, 'available', true, array['Working in an existing codebase', 'Triage and reproduction with failing tests', 'Exact money with Decimal', 'Fixing SQL injection', 'Idempotency keys, constraints and transactions', 'API validation and status codes', 'Code review', 'Branches, CI and release notes']::text[], array['Software Engineering with Python', 'Databases and APIs for Developers is helpful for lessons 4 to 6']::text[], 'Kasuwa''s refunds service, fixed and shipped', true, true, true, true, false, 60, 47)
+on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level = excluded.level, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('sdc-m01', 'software-developer-capstone', 'The Codebase and the Bug List', 1, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('software-developer-capstone:the-codebase-and-the-bug-list', 'software-developer-capstone', 'sdc-m01', 'the-codebase-and-the-bug-list', 'The codebase and the bug list', 'Join Kasuwa''s refunds team, get the service running, read its code and its (passing) tests, and triage six bug reports by the harm each one does.', 25, $md$
+## The problem
+
+This is the capstone of the Software Developer track. Instead of writing code from a blank page, you'll do what most developers spend most of their time doing: working on someone else's code, with real bugs reported by real people.
+
+You've joined **Kasuwa**, the online shop from the other capstones, on the team that owns the **refunds service**. When a delivery fails or a customer returns something, this service works out the refund and records it. Its tests all pass, yet in the last week support, finance, the mobile team and a security review have between them reported six problems. Your lead says: "Sort these out properly. Tests first, no guessing, and nothing that makes it worse."
+
+Every lesson starts from the original code in a **new Colab notebook**, so each one stands on its own. In the final project, you'll combine all the fixes in one repository.
+
+## The concept
+
+**Read before you change**
+
+Find the entry points (the API in `app.py`), the rules (`refunds.py`) and the data access (`db.py`, `schema.sql`). Run the tests. Passing tests only prove what they test.
+
+**Triage by harm**
+
+| Priority | Kind of bug | Why |
+| :-- | :-- | :-- |
+| 1 | Security: data exposed or changed by the wrong person | Harms every customer, and the harm can't be undone |
+| 2 | Money: paying out too much or too little | Real losses, and customers' trust |
+| 3 | Customers wrongly refused or confused | Unfair, and generates complaints |
+| 4 | Errors with no lasting harm | Fix, but after the above |
+
+**Every bug gets a test**
+
+For each bug: reproduce it with a failing test, fix it, and keep the test so it can't come back.
+
+## Example
+
+Get the code and the sample data:
+
+```bash
+%%bash
+base=https://academy.cloudtechanalytics.com/datasets/refunds
+for f in refunds.py db.py app.py schema.sql customers.csv orders.csv order_items.csv issues.csv test_refunds.py pytest.ini pr-42.diff; do
+  curl -sO "$base/$f"
+done
+ls
+```
+
+```text
+app.py
+customers.csv
+db.py
+issues.csv
+order_items.csv
+orders.csv
+pr-42.diff
+pytest.ini
+refunds.py
+schema.sql
+test_refunds.py
+```
+
+Run the existing tests:
+
+```bash
+%%bash
+python -m pytest
+```
+
+```text
+...
+3 passed in 0.01s
+```
+
+All three pass. Now the bug reports:
+
+```bash
+%%bash
+python - <<'EOF'
+import csv
+for issue in csv.DictReader(open("issues.csv", encoding="utf-8")):
+    print(f"{issue['issue_id']}  {issue['reported_by']:17} {issue['title']}")
+EOF
+```
+
+```text
+ISSUE-101  Customer support  Refund is a kobo short
+ISSUE-102  Finance           Customer refunded twice
+ISSUE-103  Customer support  Return on day 14 rejected
+ISSUE-104  Security review   Order search shows other customers' orders
+ISSUE-105  Finance           Refunds add up to more than the order
+ISSUE-106  Mobile team       Server error for a missing order
+```
+
+And a look at the rules everyone depends on:
+
+```bash
+%%bash
+sed -n '9,26p' refunds.py
+```
+
+```text
+def item_refund(quantity, unit_price_kobo, reason):
+    """Refund for one order line, in kobo."""
+    naira = quantity * (unit_price_kobo / 100)
+    if reason == "changed_mind":
+        naira = naira * (1 - RESTOCKING_FEE)
+    return int(naira * 100)
+
+
+def within_window(delivered_on, today):
+    """True if a return is still allowed: within 14 days of delivery."""
+    return (today - delivered_on).days < RETURN_WINDOW_DAYS
+
+
+def refund_amount(items, reason, delivery_fee_kobo):
+    """Total refund in kobo. items is a list of (quantity, unit_price_kobo) pairs."""
+    total = sum(item_refund(quantity, price, reason) for quantity, price in items)
+    if reason in ("failed_delivery", "damaged", "wrong_item"):
+        total += delivery_fee_kobo
+```
+
+Three things stand out before you even run anything: money passes through **floats** in naira, the window check uses `<` against 14 days, and `int()` **cuts off** fractions rather than rounding. The tests never exercise any of them.
+
+## Walkthrough
+
+1. Run the cells in a new Colab notebook.
+2. Read `db.py` and `app.py`. Which line looks unsafe to you, before reading any bug report?
+3. Read every issue's full description (`issues.csv`). For each, guess which file the bug is in.
+4. Start the service in a Python cell with the Flask test client and post one refund, to see it working.
+5. Write the triage (the task below).
+
+## Practice
+
+```dataset
+{"dataset": "refunds", "files": ["issues", "orders", "order_items", "customers"]}
+```
+
+```answer
+{
+  "id": "sdc-01-p1",
+  "prompt": "How many tests does the service have, and pass, before you change anything?",
+  "answer": 3,
+  "format": "number",
+  "hint": "The pytest output.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "sdc-01-t1",
+  "prompt": "Write the **triage**: all **six** issues in the order you'll fix them, each with a one-line **reason** (its kind of harm).",
+  "minutes": 8,
+  "rows": 8,
+  "placeholder": "1. ISSUE-104 ...",
+  "rules": [
+    { "label": "Lists all six issues", "pattern": "ISSUE-10[1-6]", "min": 6 },
+    { "label": "Security first (ISSUE-104 in first place)", "pattern": "^\\W*1\\W[^\\n]*104" },
+    { "label": "Gives reasons (security, money, customers)", "pattern": "security|money|data|overpa|refund|customer", "min": 3 },
+    { "label": "The 500 error comes last (ISSUE-106)", "pattern": "106[^\\n]*$(?![\\s\\S]*ISSUE-10[1-5])" }
+  ],
+  "sample": "1. ISSUE-104: security. Any support user can see every customer's orders, and the same hole could change data.\n2. ISSUE-105: money. Partial returns pay the delivery fee back twice, so refunds exceed what was paid.\n3. ISSUE-102: money. Double taps create two refunds for one return.\n4. ISSUE-101: money. Refunds lose a kobo because of floats; small, but it affects every refund and finance can't reconcile.\n5. ISSUE-103: customers wrongly refused returns on day 14.\n6. ISSUE-106: a 500 error for a missing order. Confusing, but no money moves and no data leaks.",
+  "note": "Reasonable people order 101 to 103 differently. What matters is that the reasons are about harm.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "All the tests pass, yet six bugs have been reported. What does that tell you?",
+    "options": ["The bug reports are wrong", "The tests don't cover the behaviour that's broken", "Tests are useless", "The code is fine"],
+    "answer": 1,
+    "explanation": "Tests prove only what they test."
+  },
+  {
+    "prompt": "Why fix the security bug before the money bugs?",
+    "options": ["It's easier", "Exposed data harms every customer and can't be undone", "Security bugs are always one line", "Finance can wait"],
+    "answer": 1,
+    "explanation": "Triage by harm."
+  },
+  {
+    "prompt": "What should happen first for each bug?",
+    "options": ["Fix it", "Reproduce it with a failing test", "Close it", "Ask the reporter again"],
+    "answer": 1,
+    "explanation": "A failing test proves the bug, then proves the fix."
+  }
+]
+```
+$md$, true, true, 1, array['sdc-01-p1', 'sdc-01-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('sdc-m02', 'software-developer-capstone', 'Reproduce Before You Fix', 2, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('software-developer-capstone:reproduce-before-you-fix', 'software-developer-capstone', 'sdc-m02', 'reproduce-before-you-fix', 'Reproduce before you fix', 'Turn bug reports into failing tests that state the right behaviour exactly, using the reporters'' own examples, so you know the bug is real and will know when it''s fixed.', 25, $md$
+## The problem
+
+A bug report is a story: "the customer expected ₦3,999.99". Before you touch the code, turn each story into a **test** that fails today. If you can't make it fail, you don't understand the bug yet. And once it fails, the same test tells you when the fix works, and stops the bug coming back.
+
+## The concept
+
+**A good reproduction test**
+
+- Uses the **reporter's own example**: the order, the amounts, the dates.
+- States the **right** answer, worked out by hand in a comment, not copied from the code.
+- Tests **one** thing, and is named after the rule ("a return on day 14 is allowed").
+
+**Add the boundary next to the bug**
+
+For an off-by-one bug, test both sides: day 14 (allowed) and day 15 (refused). For a rounding bug, test an amount that rounds up and one that rounds down.
+
+**Running only the failures**
+
+`python -m pytest --tb=no -rf` hides the tracebacks and lists each failure in one line, which is handy when you have several.
+
+## Example
+
+Get the code:
+
+```bash
+%%bash
+base=https://academy.cloudtechanalytics.com/datasets/refunds
+for f in refunds.py db.py app.py schema.sql customers.csv orders.csv order_items.csv test_refunds.py pytest.ini; do
+  curl -sO "$base/$f"
+done
+```
+
+Tests for ISSUE-101 (money), ISSUE-103 (the window) and ISSUE-104 (the search), from the reports:
+
+```bash
+%%bash
+cat > test_issues.py <<'EOF'
+from datetime import date
+
+import db
+from refunds import item_refund, refund_amount, within_window
+
+
+# ISSUE-101: one T-shirt pack at N2,499.99 (249,999 kobo), damaged, delivery fee 150,000 kobo
+def test_damaged_refund_is_exact_to_the_kobo():
+    # 249,999 + 150,000 = 399,999 kobo
+    assert refund_amount([(1, 249_999)], "damaged", 150_000) == 399_999
+
+
+def test_restocking_fee_rounds_half_up():
+    # 249,999 x 0.9 = 224,999.1 kobo, which rounds to 224,999
+    assert item_refund(1, 249_999, "changed_mind") == 224_999
+    # 333,333 x 0.9 = 299,999.7 kobo, which rounds to 300,000
+    assert item_refund(1, 333_333, "changed_mind") == 300_000
+
+
+# ISSUE-103: delivered 1 September; the policy allows returns within 14 days
+def test_return_on_day_14_is_allowed():
+    assert within_window(date(2026, 9, 1), date(2026, 9, 15))
+
+
+def test_return_on_day_15_is_refused():
+    assert not within_window(date(2026, 9, 1), date(2026, 9, 16))
+
+
+# ISSUE-104: a search must only ever return the matching customer's orders
+def test_email_search_cannot_be_tricked():
+    conn = db.connect()
+    db.init(conn)
+    assert db.find_orders_by_email(conn, "' OR '1'='1") == []
+EOF
+python -m pytest --tb=no -rf
+```
+
+```text
+FFF.F...
+=========================== short test summary info ===========================
+FAILED test_issues.py::test_damaged_refund_is_exact_to_the_kobo - AssertionEr...
+FAILED test_issues.py::test_restocking_fee_rounds_half_up - AssertionError: a...
+FAILED test_issues.py::test_return_on_day_14_is_allowed - assert False
+FAILED test_issues.py::test_email_search_cannot_be_tricked - assert [<sqlite3...
+4 failed, 4 passed in 0.01s
+```
+
+Four new tests fail, each for the reason in its report. The day-15 test passes already: the code refuses day 15 correctly, and wrongly refuses day 14 too. That's the signature of an off-by-one. The original three tests still pass, which is why nobody noticed.
+
+ISSUE-102 and ISSUE-105 happen across **two** requests, so they need a database and the API. Reproduce one through the Flask test client:
+
+```bash
+%%bash
+python - <<'EOF'
+from datetime import date
+
+import db
+from app import create_app
+
+conn = db.connect()
+db.init(conn)
+client = create_app(conn, today=date(2026, 9, 20)).test_client()
+for part in [{"sku": "POT-SET", "quantity": 2}, {"sku": "BLN-X1", "quantity": 1}]:
+    r = client.post("/orders/K-1005/refunds", json={"reason": "damaged", "items": [part]})
+    print(r.status_code, r.get_json()["amount_kobo"])
+paid = sum(i["quantity"] * i["unit_price_kobo"] for i in db.order_items(conn, "K-1005")) + db.get_order(conn, "K-1005")["delivery_fee_kobo"]
+refunded = sum(r["amount_kobo"] for r in db.refunds_for(conn, "K-1005"))
+print(f"paid {paid}, refunded {refunded}, over by {refunded - paid}")
+EOF
+```
+
+```text
+201 5800000
+201 4800000
+paid 10300000, refunded 10600000, over by 300000
+```
+
+Refunded more than was paid, by exactly one delivery fee. Lesson 5 turns this into a test and fixes it.
+
+## Walkthrough
+
+1. Run the cells.
+2. Reproduce ISSUE-102 the same way: post the same refund for K-1002 twice. What comes back?
+3. Reproduce ISSUE-106: post a refund for order K-9999. What status code do you get?
+4. For each reproduction, write down the **right** behaviour in one sentence. That's the rule your fix must meet.
+5. Write a test for ISSUE-106 (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "sdc-02-p1",
+  "prompt": "How many tests **fail** when you run the suite with `test_issues.py` added?",
+  "answer": 4,
+  "format": "number",
+  "hint": "Count the FAILED lines.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "sdc-02-p2",
+  "prompt": "By how many kobo do K-1005's two refunds exceed what the customer paid?",
+  "answer": 300000,
+  "format": "number",
+  "hint": "The last line of the second cell.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "sdc-02-t1",
+  "prompt": "Write a **pytest test** that reproduces **ISSUE-106**: a refund request for an order that doesn't exist must return **404** with an error message, not a 500. Use the Flask test client.",
+  "minutes": 8,
+  "rows": 12,
+  "placeholder": "def test_unknown_order_returns_404():\n    ...",
+  "rules": [
+    { "label": "A test function", "pattern": "def test_\\w+\\(" },
+    { "label": "Sets up the database", "pattern": "db\\.(connect|init)" },
+    { "label": "Uses the test client", "pattern": "test_client\\(\\)" },
+    { "label": "Posts to a missing order", "pattern": "post\\([^)]*K-9999|post\\([^)]*missing|post\\([^)]*nope" },
+    { "label": "Asserts 404", "pattern": "assert[^\\n]*404" },
+    { "label": "Checks the error message", "pattern": "assert[^\\n]*(error|message)" }
+  ],
+  "sample": "from datetime import date\n\nimport db\nfrom app import create_app\n\n\ndef test_unknown_order_returns_404():\n    conn = db.connect()\n    db.init(conn)\n    client = create_app(conn, today=date(2026, 9, 20)).test_client()\n    r = client.post(\"/orders/K-9999/refunds\", json={\"reason\": \"damaged\", \"items\": []})\n    assert r.status_code == 404\n    assert \"error\" in r.get_json()",
+  "note": "Today this test fails with a 500. In lesson 6 it passes.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why use the reporter's own example in the test?",
+    "options": ["It's quicker", "It proves you've reproduced the bug they actually saw", "Reporters insist", "It's always the edge case"],
+    "answer": 1,
+    "explanation": "Reproduce the real failure first."
+  },
+  {
+    "prompt": "The day-15 test passes but the day-14 test fails. What kind of bug is that?",
+    "options": ["A rounding bug", "An off-by-one at the boundary", "A security bug", "A race condition"],
+    "answer": 1,
+    "explanation": "Test both sides of every boundary."
+  },
+  {
+    "prompt": "Where should the expected answer in a test come from?",
+    "options": ["Running the current code", "Working it out by hand from the rules", "The bug reporter's guess", "A random number"],
+    "answer": 1,
+    "explanation": "Copying the code's answer would test the bug, not the rule."
+  }
+]
+```
+$md$, true, true, 2, array['sdc-02-p1', 'sdc-02-p2', 'sdc-02-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('sdc-m03', 'software-developer-capstone', 'Fix the Money and the Window', 3, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('software-developer-capstone:fix-the-money-and-the-window', 'software-developer-capstone', 'sdc-m03', 'fix-the-money-and-the-window', 'Fix the money and the window', 'Fix ISSUE-101 and ISSUE-103 at their root by keeping money in whole kobo with Decimal and explicit rounding, and by writing the window rule the way the policy states it. Then prove the fix with the tests from lesson 2.', 25, $md$
+## The problem
+
+You have failing tests for the kobo that goes missing and for customers refused on day 14. Now fix the code, without breaking anything that works. The tempting fix for the money bug is `round()` instead of `int()`. It makes the test pass, but it leaves floats in charge of money, and the next bug is waiting.
+
+## The concept
+
+**Money in whole kobo**
+
+Keep amounts as integers in the smallest unit (kobo) from end to end. When a calculation creates fractions, such as a 10% fee, use `Decimal` and round **once**, explicitly, with the rule the business uses: here, halves round up (`ROUND_HALF_UP`).
+
+**Why floats fail**
+
+`2499.99 * 100` is `249998.99999999997` in floating point, and `int()` cuts it to 249,998. Floats can't represent most decimal fractions exactly.
+
+**Write rules as the policy states them**
+
+The website says returns are allowed **within 14 days** of delivery, which includes day 14. Write `<= 14`, name the constant, and say it in the docstring.
+
+**Small, focused changes**
+
+Change only what the bugs need. A diff that's easy to review is easier to trust.
+
+## Example
+
+Get the code, keep a copy of the original, and write the fix:
+
+```bash
+%%bash
+base=https://academy.cloudtechanalytics.com/datasets/refunds
+for f in refunds.py db.py app.py schema.sql customers.csv orders.csv order_items.csv test_refunds.py pytest.ini; do
+  curl -sO "$base/$f"
+done
+cp refunds.py refunds_original.py
+cat > refunds.py <<'EOF'
+"""Refund rules for Kasuwa. Money is in whole kobo (integers)."""
+from decimal import ROUND_HALF_UP, Decimal
+
+RETURN_WINDOW_DAYS = 14
+RESTOCKING_FEE = Decimal("0.10")  # charged on 'changed_mind' returns
+REASONS = {"failed_delivery", "damaged", "wrong_item", "changed_mind"}
+
+
+def round_kobo(amount):
+    """Round a Decimal amount of kobo to a whole kobo, halves up."""
+    return int(amount.quantize(Decimal("1"), rounding=ROUND_HALF_UP))
+
+
+def item_refund(quantity, unit_price_kobo, reason):
+    """Refund for one order line, in kobo."""
+    amount = Decimal(quantity * unit_price_kobo)
+    if reason == "changed_mind":
+        amount *= 1 - RESTOCKING_FEE
+    return round_kobo(amount)
+
+
+def within_window(delivered_on, today):
+    """True if a return is allowed: on or before day 14 after delivery."""
+    return (today - delivered_on).days <= RETURN_WINDOW_DAYS
+
+
+def refund_amount(items, reason, delivery_fee_kobo):
+    """Total refund in kobo. items is a list of (quantity, unit_price_kobo) pairs."""
+    total = sum(item_refund(quantity, price, reason) for quantity, price in items)
+    if reason in ("failed_delivery", "damaged", "wrong_item"):
+        total += delivery_fee_kobo
+    return total
+EOF
+diff -u refunds_original.py refunds.py | tail -n +3
+```
+
+```text
+@@ -1,22 +1,27 @@
+-"""Refund rules for Kasuwa."""
+-from datetime import date
++"""Refund rules for Kasuwa. Money is in whole kobo (integers)."""
++from decimal import ROUND_HALF_UP, Decimal
+
+ RETURN_WINDOW_DAYS = 14
+-RESTOCKING_FEE = 0.10  # charged on 'changed_mind' returns
++RESTOCKING_FEE = Decimal("0.10")  # charged on 'changed_mind' returns
+ REASONS = {"failed_delivery", "damaged", "wrong_item", "changed_mind"}
+
+
++def round_kobo(amount):
++    """Round a Decimal amount of kobo to a whole kobo, halves up."""
++    return int(amount.quantize(Decimal("1"), rounding=ROUND_HALF_UP))
++
++
+ def item_refund(quantity, unit_price_kobo, reason):
+     """Refund for one order line, in kobo."""
+-    naira = quantity * (unit_price_kobo / 100)
++    amount = Decimal(quantity * unit_price_kobo)
+     if reason == "changed_mind":
+-        naira = naira * (1 - RESTOCKING_FEE)
+-    return int(naira * 100)
++        amount *= 1 - RESTOCKING_FEE
++    return round_kobo(amount)
+
+
+ def within_window(delivered_on, today):
+-    """True if a return is still allowed: within 14 days of delivery."""
+-    return (today - delivered_on).days < RETURN_WINDOW_DAYS
++    """True if a return is allowed: on or before day 14 after delivery."""
++    return (today - delivered_on).days <= RETURN_WINDOW_DAYS
+
+
+ def refund_amount(items, reason, delivery_fee_kobo):
+```
+
+The diff is small. Apart from removing an import the old code never used, every changed line is about one of the two bugs. Now the tests from lesson 2 for these issues, plus the originals:
+
+```bash
+%%bash
+cat > test_issues.py <<'EOF'
+from datetime import date
+
+from refunds import item_refund, refund_amount, within_window
+
+
+def test_damaged_refund_is_exact_to_the_kobo():
+    # ISSUE-101: 249,999 + 150,000 = 399,999 kobo
+    assert refund_amount([(1, 249_999)], "damaged", 150_000) == 399_999
+
+
+def test_restocking_fee_rounds_half_up():
+    # 249,999 x 0.9 = 224,999.1 -> 224,999;  333,333 x 0.9 = 299,999.7 -> 300,000
+    assert item_refund(1, 249_999, "changed_mind") == 224_999
+    assert item_refund(1, 333_333, "changed_mind") == 300_000
+
+
+def test_return_on_day_14_is_allowed():
+    # ISSUE-103: delivered 1 September, returned 15 September
+    assert within_window(date(2026, 9, 1), date(2026, 9, 15))
+
+
+def test_return_on_day_15_is_refused():
+    assert not within_window(date(2026, 9, 1), date(2026, 9, 16))
+EOF
+python -m pytest
+python -c "from refunds import refund_amount; print('K-1001 refund:', refund_amount([(1, 249_999)], 'damaged', 150_000), 'kobo')"
+```
+
+```text
+.......
+7 passed in 0.01s
+K-1001 refund: 399999 kobo
+```
+
+All seven pass, the originals included. K-1001's customer is owed one more kobo, and finance's reconciliation now balances.
+
+## Walkthrough
+
+1. Run the cells.
+2. Try the "quick fix": put the original code back and change `int(naira * 100)` to `round(naira * 100)`. Do the tests pass? Find an amount where `round()` on a float still gives the wrong answer (hint: Python's `round` rounds halves to even).
+3. Should the refund for K-1001 be corrected for the customer? Write the note to finance.
+4. Check every order line in `order_items.csv` with the old and new code. How many would have been refunded wrongly?
+5. Write the commit message (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "sdc-03-p1",
+  "prompt": "After the fix, what's K-1001's refund in kobo?",
+  "answer": 399999,
+  "format": "number",
+  "hint": "The last line printed.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "sdc-03-t1",
+  "prompt": "Write the **commit message** for this fix: a short **summary line** (under 72 characters), a blank line, then a body that says **what** was wrong, **why**, and how it's **tested**, and names both **issues**.",
+  "minutes": 6,
+  "rows": 8,
+  "placeholder": "Fix refund rounding and the 14-day return window\n\n...",
+  "rules": [
+    { "label": "A summary line under 72 characters", "pattern": "^.{10,71}$" },
+    { "label": "A blank line after the summary", "pattern": "^.+\\n\\s*\\n" },
+    { "label": "Names both issues", "pattern": "ISSUE-10[13]", "min": 2 },
+    { "label": "Explains the money cause (float, kobo, Decimal)", "pattern": "float|decimal|kobo" },
+    { "label": "Explains the window (14, boundary, <=)", "pattern": "14|boundary|<=|inclusive" },
+    { "label": "Mentions tests", "pattern": "test" }
+  ],
+  "sample": "Fix refund rounding and the 14-day return window\n\nRefunds were calculated in naira as floats and cut off with int(),\nso some amounts lost a kobo (ISSUE-101: 2,499.99 became 249,998\nkobo). Money now stays in whole kobo, and the restocking fee uses\nDecimal with ROUND_HALF_UP, as finance specifies.\n\nThe return window used < 14, refusing returns on day 14, which the\npolicy allows (ISSUE-103). It now uses <= RETURN_WINDOW_DAYS.\n\nTests: exact refund for the K-1001 example, half-up rounding of the\nrestocking fee, and both sides of the day-14 boundary.",
+  "note": "A good commit message is for the developer who reads it in a year, wondering why this line changed.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why is changing int() to round() not a real fix?",
+    "options": ["round() is slower", "Floats still carry the money, so other amounts can still come out wrong", "round() doesn't exist", "It changes the tests"],
+    "answer": 1,
+    "explanation": "Fix the cause: keep money exact."
+  },
+  {
+    "prompt": "The policy says \"within 14 days\". Which comparison is right?",
+    "options": ["days < 14", "days <= 14", "days > 14", "days == 14"],
+    "answer": 1,
+    "explanation": "Within 14 days includes day 14."
+  },
+  {
+    "prompt": "Why keep the original tests passing after the fix?",
+    "options": ["Habit", "They prove the fix didn't break behaviour that already worked", "They're required by Git", "To increase coverage numbers"],
+    "answer": 1,
+    "explanation": "A fix that breaks something else isn't a fix."
+  }
+]
+```
+$md$, true, true, 3, array['sdc-03-p1', 'sdc-03-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('sdc-m04', 'software-developer-capstone', 'Close the Security Hole', 4, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('software-developer-capstone:close-the-security-hole', 'software-developer-capstone', 'sdc-m04', 'close-the-security-hole', 'Close the security hole', 'Show exactly what the SQL injection in the order search can do, fix it with a parameterised query, prove the fix with tests that attack it, and see why input checks are a second layer, not the fix.', 25, $md$
+## The problem
+
+ISSUE-104: typing `' OR '1'='1` into the support tool's email search returns every order in the system. It sounds like a curiosity. It isn't. The same hole lets anyone who can reach the search read **any** data the database user can read, such as every customer's email address, and on many databases, change or delete it.
+
+## The concept
+
+**SQL injection**
+
+The query is built by pasting the user's text into SQL:
+
+```python norun
+sql = f"SELECT o.* FROM orders o JOIN customers c USING (customer_id) WHERE c.email = '{email}'"
+```
+
+If the text contains a quote, it ends the string early, and whatever follows becomes **SQL**. `' OR '1'='1` turns the condition into one that is always true.
+
+**The fix: parameters**
+
+Pass values separately from the SQL, with placeholders (`?` in SQLite). The database treats a parameter as a value, never as SQL, whatever it contains. This is the only reliable fix.
+
+**Defence in depth**
+
+Checking that an email looks like an email, giving the service a database user with only the permissions it needs, and logging odd searches are all useful **extra** layers. None of them replaces parameters.
+
+## Example
+
+Get the code, then show what the search does with normal and hostile input:
+
+```bash
+%%bash
+base=https://academy.cloudtechanalytics.com/datasets/refunds
+for f in refunds.py db.py app.py schema.sql customers.csv orders.csv order_items.csv test_refunds.py pytest.ini; do
+  curl -sO "$base/$f"
+done
+python - <<'EOF'
+import db
+
+conn = db.connect()
+db.init(conn)
+print("Normal search:", len(db.find_orders_by_email(conn, "aisha.lawal@example.com")), "orders")
+print("Always-true search:", len(db.find_orders_by_email(conn, "' OR '1'='1")), "orders")
+leak = db.find_orders_by_email(conn, "x' UNION SELECT customer_id, email, name, '', 0 FROM customers --")
+print("UNION search:", len(leak), "rows, for example:", tuple(leak[0]))
+EOF
+```
+
+```text
+Normal search: 3 orders
+Always-true search: 150 orders
+UNION search: 60 rows, for example: ('C001', 'aisha.lawal@example.com', 'Aisha Lawal', '', 0)
+```
+
+The last search returns every customer's email address and name, through a box meant to find one customer's orders. Now the fix, and tests that attack it:
+
+```bash
+%%bash
+python - <<'EOF'
+import re
+
+source = open("db.py").read()
+old = '''    sql = f"SELECT o.* FROM orders o JOIN customers c USING (customer_id) WHERE c.email = '{email}'"
+    return conn.execute(sql).fetchall()'''
+new = '''    sql = "SELECT o.* FROM orders o JOIN customers c USING (customer_id) WHERE c.email = ?"
+    return conn.execute(sql, (email,)).fetchall()'''
+assert old in source
+open("db.py", "w").write(source.replace(old, new))
+EOF
+cat > test_security.py <<'EOF'
+import pytest
+
+import db
+
+
+@pytest.fixture
+def conn():
+    conn = db.connect()
+    db.init(conn)
+    return conn
+
+
+def test_search_finds_the_customers_orders(conn):
+    orders = db.find_orders_by_email(conn, "aisha.lawal@example.com")
+    assert orders and all(o["customer_id"] == "C001" for o in orders)
+
+
+@pytest.mark.parametrize("attack", [
+    "' OR '1'='1",
+    "x' UNION SELECT customer_id, email, name, '', 0 FROM customers --",
+    "aisha.lawal@example.com' --",
+])
+def test_search_treats_attacks_as_plain_text(conn, attack):
+    assert db.find_orders_by_email(conn, attack) == []
+EOF
+python -m pytest
+grep -n "f\"SELECT\|f'SELECT\|format(" db.py || echo "No SELECT queries built from strings left in db.py"
+```
+
+```text
+.......
+7 passed in 0.01s
+No SELECT queries built from strings left in db.py
+```
+
+The attacks now find nothing, the normal search still works, and the last check confirms no other SELECT in `db.py` is built from strings. (`init` does build its INSERT statements from **table and column names in the code**, not from user input, which is safe; values still go in as parameters.)
+
+## Walkthrough
+
+1. Run the cells.
+2. Before the fix, try an attack that changes data: what would `x'; DELETE FROM refunds; --` do? (SQLite's `execute` refuses to run two statements, which is luck, not design.)
+3. Add an email format check in `app.py` for when the search is exposed through the API. Why is it still not enough on its own?
+4. Search the rest of the code for any other place where user input reaches SQL, a shell command or a file path.
+5. Write the security note (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "sdc-04-p1",
+  "prompt": "Before the fix, how many orders did the always-true search return?",
+  "answer": 150,
+  "format": "number",
+  "hint": "The second line printed.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "sdc-04-t1",
+  "prompt": "Write the **security note** for the incident log (50 to 130 words): what the **flaw** was, what an attacker **could** have done, the **fix**, how it's **tested**, and one **extra layer** you'd add.",
+  "minutes": 7,
+  "rows": 6,
+  "placeholder": "The order search built SQL ...",
+  "rules": [
+    { "label": "Names the flaw (SQL injection)", "pattern": "sql injection|injection" },
+    { "label": "Says what an attacker could do (read, every customer, email)", "pattern": "every|all|read|email|leak" },
+    { "label": "The fix (parameter, placeholder)", "pattern": "parameter|placeholder" },
+    { "label": "Tests", "pattern": "test" },
+    { "label": "An extra layer (validation, permissions, logging)", "pattern": "validat|permission|privilege|log|monitor" },
+    { "label": "Between 50 and 130 words", "minWords": 50, "maxWords": 130 }
+  ],
+  "sample": "The support tool's order search built its SQL by pasting the typed email into the query, a SQL injection flaw (ISSUE-104). Anyone using the search could read every order and, with a UNION query, every customer's name and email address. We've replaced it with a parameterised query, so input is always treated as a value. Tests now run three attack strings against the search and check they return nothing, alongside a normal search. As an extra layer, we'll give the service a database user that can only read and write the tables it needs, and log searches that contain quotes.",
+  "note": "Say plainly what was exposed. Incident notes that minimise lose trust when the details come out.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "What is the reliable fix for SQL injection?",
+    "options": ["Escaping quotes by hand", "Parameterised queries", "Checking the email format", "Hiding the search box"],
+    "answer": 1,
+    "explanation": "Parameters are never treated as SQL."
+  },
+  {
+    "prompt": "Why isn't input validation enough on its own?",
+    "options": ["It's slow", "Valid-looking input can still contain SQL, and every new input path needs its own check", "It's illegal", "It breaks tests"],
+    "answer": 1,
+    "explanation": "Validation is a layer, not the fix."
+  },
+  {
+    "prompt": "What's the value of a test that sends attack strings?",
+    "options": ["None", "It fails if anyone reintroduces string-built SQL in future", "It speeds up the search", "It replaces code review"],
+    "answer": 1,
+    "explanation": "Security fixes need regression tests too."
+  }
+]
+```
+$md$, true, true, 4, array['sdc-04-p1', 'sdc-04-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('sdc-m05', 'software-developer-capstone', 'No Double Refunds', 5, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('software-developer-capstone:no-double-refunds', 'software-developer-capstone', 'sdc-m05', 'no-double-refunds', 'No double refunds', 'Fix ISSUE-102 and ISSUE-105 where they belong, in the database layer. Add an idempotency key with a unique index, refund the delivery fee once, cap refunds at what was paid, and do the check and the write in one transaction.', 30, $md$
+## The problem
+
+Two money bugs remain, and both happen **between** requests:
+
+- **ISSUE-102**: the app froze, the customer tapped Submit again, and two refunds were created for one return.
+- **ISSUE-105**: a partial return, then another, and each one refunded the delivery fee, so the refunds came to more than the order cost.
+
+Neither can be fixed inside `refund_amount`, which only ever sees one request. The fix needs the database: what's already been refunded, and a guarantee that the same request can't be recorded twice.
+
+## The concept
+
+**Idempotency keys**
+
+The app sends a unique `request_id` with each refund request and reuses it when it retries. The service stores it, and a **unique index** makes a second insert with the same key impossible. A repeated request gets the **original** answer back, not a new refund. This is how payment APIs handle retries.
+
+**Rules that span requests**
+
+- The delivery fee is refunded **once** per order.
+- The total refunded can never exceed what the customer **paid**.
+
+**Check and write in one transaction**
+
+Reading "how much has been refunded" and then writing a new refund must happen as one unit. Otherwise two requests can both read the old total, both pass the check, and both write. `BEGIN IMMEDIATE` takes SQLite's write lock before the check.
+
+**A migration, not an edit**
+
+The live database already has a `refunds` table. Add the new columns and index with a migration script that can run on it, rather than editing `schema.sql` and starting again.
+
+## Example
+
+Get the code, and write the migration and the service layer:
+
+```bash
+%%bash
+base=https://academy.cloudtechanalytics.com/datasets/refunds
+for f in refunds.py db.py app.py schema.sql customers.csv orders.csv order_items.csv test_refunds.py pytest.ini; do
+  curl -sO "$base/$f"
+done
+cat > service.py <<'EOF'
+"""Refund requests: the refund rules, applied safely to the database."""
+import sqlite3
+
+import refunds
+
+FEE_REASONS = {"failed_delivery", "damaged", "wrong_item"}
+
+
+class RefundError(Exception):
+    """A refund that the rules don't allow."""
+
+
+def migrate(conn):
+    """Add idempotency keys and fee tracking to an existing refunds table."""
+    conn.executescript("""
+        ALTER TABLE refunds ADD COLUMN request_id TEXT;
+        ALTER TABLE refunds ADD COLUMN delivery_fee_kobo INTEGER NOT NULL DEFAULT 0;
+        CREATE UNIQUE INDEX refunds_request_id ON refunds (request_id);
+    """)
+
+
+def _existing(conn, request_id):
+    row = conn.execute("SELECT * FROM refunds WHERE request_id = ?", (request_id,)).fetchone()
+    return dict(row) if row else None
+
+
+def request_refund(conn, order_id, request_id, reason, lines):
+    """Record a refund once. Returns (refund, created). lines: list of (sku, quantity)."""
+    earlier = _existing(conn, request_id)
+    if earlier:
+        return earlier, False
+    conn.execute("BEGIN IMMEDIATE")
+    try:
+        order = conn.execute("SELECT * FROM orders WHERE order_id = ?", (order_id,)).fetchone()
+        prices = {r["sku"]: r["unit_price_kobo"] for r in conn.execute("SELECT * FROM order_items WHERE order_id = ?", (order_id,))}
+        paid = sum(r["quantity"] * r["unit_price_kobo"] for r in conn.execute("SELECT * FROM order_items WHERE order_id = ?", (order_id,)))
+        paid += order["delivery_fee_kobo"]
+        so_far = conn.execute(
+            "SELECT COALESCE(SUM(amount_kobo), 0) AS amount, COALESCE(SUM(delivery_fee_kobo), 0) AS fee FROM refunds WHERE order_id = ?",
+            (order_id,),
+        ).fetchone()
+        goods = sum(refunds.item_refund(quantity, prices[sku], reason) for sku, quantity in lines)
+        fee = order["delivery_fee_kobo"] if reason in FEE_REASONS and so_far["fee"] == 0 else 0
+        if so_far["amount"] + goods + fee > paid:
+            raise RefundError(f"refunds would total {so_far['amount'] + goods + fee} kobo, more than the {paid} paid")
+        conn.execute(
+            "INSERT INTO refunds (order_id, request_id, reason, amount_kobo, delivery_fee_kobo, created_at) "
+            "VALUES (?, ?, ?, ?, ?, datetime('now'))",
+            (order_id, request_id, reason, goods + fee, fee),
+        )
+        conn.commit()
+    except sqlite3.IntegrityError:
+        conn.rollback()  # another request with the same key got there first
+        return _existing(conn, request_id), False
+    except Exception:
+        conn.rollback()
+        raise
+    return _existing(conn, request_id), True
+EOF
+echo "service.py written"
+```
+
+```text
+service.py written
+```
+
+Now tests built from the two reports:
+
+```bash
+%%bash
+cat > test_service.py <<'EOF'
+import pytest
+
+import db
+import service
+
+
+@pytest.fixture
+def conn():
+    conn = db.connect()
+    db.init(conn)
+    service.migrate(conn)
+    return conn
+
+
+def test_retried_request_creates_one_refund(conn):
+    # ISSUE-102: the same request twice
+    first, created = service.request_refund(conn, "K-1002", "req-abc", "damaged", [("SHO-RN", 1)])
+    again, created_again = service.request_refund(conn, "K-1002", "req-abc", "damaged", [("SHO-RN", 1)])
+    assert created and not created_again
+    assert again["refund_id"] == first["refund_id"]
+    assert len(db.refunds_for(conn, "K-1002")) == 1
+
+
+def test_partial_returns_refund_the_delivery_fee_once(conn):
+    # ISSUE-105: K-1005 paid 2 x 2,750,000 + 4,500,000 + 300,000 fee = 10,300,000 kobo
+    first, _ = service.request_refund(conn, "K-1005", "req-1", "damaged", [("POT-SET", 2)])
+    second, _ = service.request_refund(conn, "K-1005", "req-2", "damaged", [("BLN-X1", 1)])
+    assert first["amount_kobo"] == 5_800_000   # 5,500,000 + the fee
+    assert second["amount_kobo"] == 4_500_000  # no fee the second time
+    assert first["amount_kobo"] + second["amount_kobo"] == 10_300_000
+
+
+def test_refunds_can_never_exceed_what_was_paid(conn):
+    service.request_refund(conn, "K-1005", "req-1", "damaged", [("POT-SET", 2), ("BLN-X1", 1)])
+    with pytest.raises(service.RefundError):
+        service.request_refund(conn, "K-1005", "req-2", "damaged", [("BLN-X1", 1)])
+    assert len(db.refunds_for(conn, "K-1005")) == 1
+
+
+def test_database_refuses_a_duplicate_key_even_without_the_check(conn):
+    conn.execute("INSERT INTO refunds (order_id, request_id, reason, amount_kobo, created_at) VALUES ('K-1002', 'req-x', 'damaged', 1, 'now')")
+    with pytest.raises(Exception):
+        conn.execute("INSERT INTO refunds (order_id, request_id, reason, amount_kobo, created_at) VALUES ('K-1002', 'req-x', 'damaged', 1, 'now')")
+EOF
+python -m pytest
+```
+
+```text
+.......
+7 passed in 0.01s
+```
+
+The last test checks the database itself: even if a future change skipped the service's check, the unique index still refuses a second refund with the same key. Rules that protect money belong as close to the data as possible.
+
+## Walkthrough
+
+1. Run the cells.
+2. Add a rule that a customer can't return more units of a product than they ordered, across all their refunds, with a test.
+3. Simulate two requests with the same key arriving together (two connections to one database file). Which one wins, and what does the other get back?
+4. Write the migration's rollback plan: what would you do if the unique index failed to create on the live database because duplicates already exist?
+5. Write the design note (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "sdc-05-p1",
+  "prompt": "With the fix, how many kobo is K-1005's **second** partial refund (the blender)?",
+  "answer": 4500000,
+  "format": "number",
+  "hint": "Its price, with no delivery fee the second time.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "sdc-05-t1",
+  "prompt": "Write the **design note** for this change (60 to 150 words): what an **idempotency key** is and how the app must use it, the two **rules** across requests, why the check and write share a **transaction**, and what the **unique index** adds.",
+  "minutes": 8,
+  "rows": 7,
+  "placeholder": "Every refund request now carries ...",
+  "rules": [
+    { "label": "Explains the idempotency key and retries", "pattern": "idempoten|request_id|retr" },
+    { "label": "Delivery fee once", "pattern": "fee[^.]*once|once[^.]*fee" },
+    { "label": "Cap at what was paid", "pattern": "paid|exceed" },
+    { "label": "Transaction", "pattern": "transaction|BEGIN|lock" },
+    { "label": "Unique index or constraint", "pattern": "unique" },
+    { "label": "Between 60 and 150 words", "minWords": 60, "maxWords": 150 }
+  ],
+  "sample": "Every refund request now carries a request_id that the app generates once and reuses on every retry of the same request. If the service has already recorded that request_id, it returns the original refund instead of creating a new one, so double taps and network retries are safe (ISSUE-102). Across requests, the delivery fee is refunded once per order, and the total refunded can never exceed what the customer paid (ISSUE-105). The check and the insert run in one transaction, started with BEGIN IMMEDIATE, so two requests can't both read the old total and both pass. The unique index on request_id is the last line of defence: the database itself refuses a duplicate, even if a future code path skips the check.",
+  "note": "The app team needs the first sentence most: without a stable request_id on retries, none of this works.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "What should happen when the same request_id arrives twice?",
+    "options": ["Create a second refund", "Return the original refund, creating nothing new", "Return an error and lose the first", "Delete both"],
+    "answer": 1,
+    "explanation": "Retries must be safe."
+  },
+  {
+    "prompt": "Why put the check and the insert in one transaction?",
+    "options": ["It's faster", "So two concurrent requests can't both pass the check before either writes", "SQLite requires it", "To log the refund"],
+    "answer": 1,
+    "explanation": "Check-then-write must be atomic."
+  },
+  {
+    "prompt": "Why add a unique index when the code already checks for an existing request_id?",
+    "options": ["Indexes are free", "The database enforces it even if code changes or races slip through", "For speed only", "To sort refunds"],
+    "answer": 1,
+    "explanation": "Defence in depth for money."
+  }
+]
+```
+$md$, true, true, 5, array['sdc-05-p1', 'sdc-05-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('sdc-m06', 'software-developer-capstone', 'A Stricter API', 6, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('software-developer-capstone:a-stricter-api', 'software-developer-capstone', 'sdc-m06', 'a-stricter-api', 'A stricter API', 'Fix ISSUE-106 and the API''s other blind spots. Return the right status code with a clear message for every kind of bad request, validate every field before using it, and test each case through the Flask test client.', 30, $md$
+## The problem
+
+The mobile team's report (ISSUE-106) is about one case: a missing order gives a 500 error. But the API trusts **everything** it's sent. It accepts an unknown reason, a negative quantity, more items than were ordered, or a product that isn't in the order. Some of these crash, and some quietly create wrong refunds. An API is a front door: check everything that comes through it.
+
+## The concept
+
+**Status codes that mean something**
+
+| Code | When |
+| :-- | :-- |
+| 201 Created | The refund was recorded |
+| 400 Bad Request | The request itself is malformed: missing fields, wrong types, values out of range |
+| 404 Not Found | The order doesn't exist |
+| 422 Unprocessable | The request is well formed, but the rules refuse it, such as outside the return window |
+| 500 | Only for bugs. A client should never be able to cause one |
+
+**Validate before you use**
+
+Check each field's presence, type and range, and that it makes sense for **this** order, before doing any work. Return the first problem with a message the app can show or log.
+
+**Booleans are integers in Python**
+
+`isinstance(True, int)` is `True`. A quantity check that only tests for `int` accepts `true`. Exclude `bool` explicitly.
+
+**Test every path**
+
+One test per status code, and a parametrised test for the different ways a request can be bad.
+
+## Example
+
+Get the code, then rewrite the refund endpoint:
+
+```bash
+%%bash
+base=https://academy.cloudtechanalytics.com/datasets/refunds
+for f in refunds.py db.py app.py schema.sql customers.csv orders.csv order_items.csv test_refunds.py pytest.ini; do
+  curl -sO "$base/$f"
+done
+cat > app.py <<'EOF'
+"""The refunds API."""
+from datetime import date
+
+from flask import Flask, jsonify, request
+
+import db
+import refunds
+
+
+def create_app(conn, today=None):
+    app = Flask(__name__)
+
+    def error(status, message):
+        return jsonify(error=message), status
+
+    @app.post("/orders/<order_id>/refunds")
+    def create_refund(order_id):
+        order = db.get_order(conn, order_id)
+        if order is None:
+            return error(404, f"order {order_id} not found")
+        body = request.get_json(silent=True)
+        if not isinstance(body, dict):
+            return error(400, "send a JSON object")
+        reason = body.get("reason")
+        if reason not in refunds.REASONS:
+            return error(400, f"reason must be one of {', '.join(sorted(refunds.REASONS))}")
+        items = body.get("items")
+        if not isinstance(items, list) or not items:
+            return error(400, "items must be a non-empty list")
+        ordered = {item["sku"]: item for item in db.order_items(conn, order_id)}
+        lines = []
+        for line in items:
+            sku = line.get("sku") if isinstance(line, dict) else None
+            quantity = line.get("quantity") if isinstance(line, dict) else None
+            if sku not in ordered:
+                return error(400, f"{sku!r} is not in order {order_id}")
+            most = ordered[sku]["quantity"]
+            if isinstance(quantity, bool) or not isinstance(quantity, int) or not 1 <= quantity <= most:
+                return error(400, f"quantity for {sku} must be a whole number from 1 to {most}")
+            lines.append((quantity, ordered[sku]["unit_price_kobo"]))
+        if reason != "failed_delivery":
+            if not order["delivered_on"]:
+                return error(422, "this order was never delivered")
+            if not refunds.within_window(date.fromisoformat(order["delivered_on"]), today or date.today()):
+                return error(422, "outside the return window")
+        amount = refunds.refund_amount(lines, reason, order["delivery_fee_kobo"])
+        refund_id = db.record_refund(conn, order_id, reason, amount)
+        return jsonify(refund_id=refund_id, order_id=order_id, amount_kobo=amount), 201
+
+    @app.get("/orders/<order_id>/refunds")
+    def list_refunds(order_id):
+        if db.get_order(conn, order_id) is None:
+            return error(404, f"order {order_id} not found")
+        return jsonify([dict(r) for r in db.refunds_for(conn, order_id)])
+
+    return app
+EOF
+echo "app.py rewritten"
+```
+
+```text
+app.py rewritten
+```
+
+The tests, one per kind of answer:
+
+```bash
+%%bash
+cat > test_api.py <<'EOF'
+from datetime import date
+
+import pytest
+
+import db
+from app import create_app
+
+
+@pytest.fixture
+def client():
+    conn = db.connect()
+    db.init(conn)
+    return create_app(conn, today=date(2026, 9, 20)).test_client()
+
+
+def post(client, order_id, body):
+    return client.post(f"/orders/{order_id}/refunds", json=body)
+
+
+def test_valid_refund_is_created(client):
+    r = post(client, "K-1002", {"reason": "damaged", "items": [{"sku": "SHO-RN", "quantity": 1}]})
+    assert r.status_code == 201
+    assert r.get_json()["amount_kobo"] == 3_450_000
+
+
+def test_unknown_order_is_404(client):
+    # ISSUE-106
+    r = post(client, "K-9999", {"reason": "damaged", "items": [{"sku": "SHO-RN", "quantity": 1}]})
+    assert r.status_code == 404
+    assert "not found" in r.get_json()["error"]
+
+
+@pytest.mark.parametrize("body", [
+    None,
+    {"items": [{"sku": "SHO-RN", "quantity": 1}]},
+    {"reason": "bored", "items": [{"sku": "SHO-RN", "quantity": 1}]},
+    {"reason": "damaged", "items": []},
+    {"reason": "damaged", "items": [{"sku": "PHN-Z5", "quantity": 1}]},
+    {"reason": "damaged", "items": [{"sku": "SHO-RN", "quantity": 2}]},
+    {"reason": "damaged", "items": [{"sku": "SHO-RN", "quantity": -1}]},
+    {"reason": "damaged", "items": [{"sku": "SHO-RN", "quantity": True}]},
+    {"reason": "damaged", "items": ["SHO-RN"]},
+])
+def test_bad_requests_are_400(client, body):
+    r = post(client, "K-1002", body)
+    assert r.status_code == 400
+    assert r.get_json()["error"]
+
+
+def test_outside_the_window_is_422(client):
+    # K-1003 was delivered on 1 September; today is 20 September
+    r = post(client, "K-1003", {"reason": "changed_mind", "items": [{"sku": "DRS-AK", "quantity": 1}]})
+    assert r.status_code == 422
+EOF
+python -m pytest
+```
+
+```text
+...............
+15 passed in 0.01s
+```
+
+Every bad request now gets a 400 with a message, a missing order gets a 404, and the rule refusal is a 422. The client can no longer cause a 500.
+
+## Walkthrough
+
+1. Run the cells.
+2. Send a request with no body at all, and one with `Content-Type: text/plain`. What do you get?
+3. A **failed delivery** refund for an order whose status is "Delivered" should be refused. Add the check and a test.
+4. Combine this with lesson 5: the endpoint should take a `request_id` and call `service.request_refund`, returning 200 with the original refund for a retry. Sketch the change.
+5. Write the API documentation for the endpoint (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "sdc-06-p1",
+  "prompt": "How many tests pass in total, counting each parametrised case?",
+  "answer": 15,
+  "format": "number",
+  "hint": "The pytest summary line.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "sdc-06-t1",
+  "prompt": "Write the **API documentation** for `POST /orders/{order_id}/refunds`: the **request body** with each field, an **example**, and every **response code** with when it's returned.",
+  "minutes": 8,
+  "rows": 12,
+  "placeholder": "POST /orders/{order_id}/refunds\n\nRequest body: ...",
+  "rules": [
+    { "label": "Documents reason and its values", "pattern": "reason[\\s\\S]{0,200}(damaged|failed_delivery|changed_mind)" },
+    { "label": "Documents items with sku and quantity", "pattern": "sku[\\s\\S]{0,200}quantity|quantity[\\s\\S]{0,200}sku" },
+    { "label": "An example body", "pattern": "\\{[^}]*\"reason\"" },
+    { "label": "201", "pattern": "201" },
+    { "label": "400", "pattern": "400" },
+    { "label": "404", "pattern": "404" },
+    { "label": "422", "pattern": "422" }
+  ],
+  "sample": "POST /orders/{order_id}/refunds\n\nRequest body (JSON):\n- reason: one of failed_delivery, damaged, wrong_item, changed_mind\n- items: list of {sku, quantity}; each sku must be in the order, quantity a whole number from 1 to the quantity ordered\n\nExample:\n{\"reason\": \"damaged\", \"items\": [{\"sku\": \"SHO-RN\", \"quantity\": 1}]}\n\nResponses:\n- 201: refund recorded; body has refund_id, order_id and amount_kobo\n- 400: the body is malformed or a field is invalid; body has error\n- 404: the order doesn't exist\n- 422: valid request refused by the rules (outside the 14-day window, or never delivered)\n\nAmounts are in kobo. changed_mind returns carry a 10% restocking fee; the delivery fee is refunded for failed_delivery, damaged and wrong_item.",
+  "note": "Good documentation answers the questions the mobile team would otherwise ask you.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "A request names a product that isn't in the order. Which status code?",
+    "options": ["201", "400", "404", "500"],
+    "answer": 1,
+    "explanation": "The request is invalid for this order."
+  },
+  {
+    "prompt": "A valid request arrives 19 days after delivery. Which code?",
+    "options": ["400", "404", "422", "500"],
+    "answer": 2,
+    "explanation": "Well formed, but refused by a rule."
+  },
+  {
+    "prompt": "Why exclude bool when checking that quantity is an int?",
+    "options": ["Style", "In Python, True and False are ints, so true would pass as 1", "JSON has no booleans", "Speed"],
+    "answer": 1,
+    "explanation": "isinstance(True, int) is True."
+  }
+]
+```
+$md$, true, true, 6, array['sdc-06-p1', 'sdc-06-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('sdc-m07', 'software-developer-capstone', 'Reviewing a Pull Request', 7, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('software-developer-capstone:reviewing-a-pull-request', 'software-developer-capstone', 'sdc-m07', 'reviewing-a-pull-request', 'Reviewing a pull request', 'Review a teammate''s pull request that adds "express refunds". Run a small automated scan of the added lines, then read for what no scanner catches, and write a review that''s specific, kind and blocks what must be blocked.', 25, $md$
+## The problem
+
+While you were fixing bugs, a teammate opened **PR 42**: an "express refund" endpoint so support staff can refund a customer straight away. Support has wanted this for months, and the teammate is keen to merge. You're the reviewer.
+
+A review is the last point where a problem is cheap to fix. It's also a conversation with a colleague, so it needs to be both firm and kind.
+
+## The concept
+
+**Two passes**
+
+1. **Automated**: patterns a script can spot in the added lines, such as secrets in code, bare `except`, floats for money, and changes with no tests.
+2. **Reading**: what the change does and whether it should, including the rules it skips, how it fails, and who can use it.
+
+**What a good review comment says**
+
+- **Where**: the line.
+- **What's wrong**, and **why it matters**, in terms of harm.
+- **A suggestion**: what to do instead.
+- **How serious**: must fix before merging, or a suggestion.
+
+**Review the change, not the person**
+
+"This swallows every error, so a failed refund reports success" is useful. "Did you even test this?" isn't.
+
+## Example
+
+Get the pull request and read it:
+
+```bash
+%%bash
+curl -sO https://academy.cloudtechanalytics.com/datasets/refunds/pr-42.diff
+grep -c "^+[^+]" pr-42.diff | xargs echo "Lines added:"
+grep "^+[^+]" pr-42.diff
+```
+
+```text
+Lines added: 13
++ADMIN_TOKEN = "kasuwa-admin-2026"
++    # Express refunds: support staff can refund any amount straight away
++    @app.post("/admin/express-refund")
++    def express_refund():
++        if request.headers.get("X-Token") != ADMIN_TOKEN:
++            return "forbidden", 403
++        try:
++            body = request.get_json()
++            amount = float(body["amount_naira"])
++            db.record_refund(conn, body["order_id"], "express", int(amount * 100))
++        except:
++            pass
++        return "ok", 200
+```
+
+A small automated scan of the added lines:
+
+```bash
+%%bash
+python - <<'EOF'
+import re
+
+CHECKS = [
+    (r"(TOKEN|SECRET|PASSWORD|API_KEY)\s*=\s*[\"']", "secret written in the code"),
+    (r"except\s*:", "bare except catches every error, including bugs"),
+    (r"^\s*pass\s*$", "error silently ignored"),
+    (r"float\(", "float used for money"),
+    (r"int\([^)]*\*\s*100\)", "int() cuts off kobo instead of rounding"),
+]
+added, files = [], set()
+for line in open("pr-42.diff", encoding="utf-8"):
+    if line.startswith("+++ "):
+        files.add(line[6:].strip())
+    elif line.startswith("+"):
+        added.append(line[1:].rstrip("\n"))
+findings = [(n, text.strip(), problem) for n, text in enumerate(added, 1) for pattern, problem in CHECKS if re.search(pattern, text)]
+for n, text, problem in findings:
+    print(f"added line {n:2}: {problem:45} | {text}")
+if not any(f.split("/")[-1].startswith("test_") for f in files):
+    findings.append((None, "", "no tests changed"))
+    print("whole PR:      no tests added or changed")
+print(f"\n{len(findings)} automated findings")
+EOF
+```
+
+```text
+added line  1: secret written in the code                    | ADMIN_TOKEN = "kasuwa-admin-2026"
+added line 10: float used for money                          | amount = float(body["amount_naira"])
+added line 11: int() cuts off kobo instead of rounding       | db.record_refund(conn, body["order_id"], "express", int(amount * 100))
+added line 12: bare except catches every error, including bugs | except:
+added line 13: error silently ignored                        | pass
+whole PR:      no tests added or changed
+
+6 automated findings
+```
+
+The scan finds the mechanical problems. Reading finds the bigger ones:
+
+- **It bypasses every rule** you've just fixed: no check against what was paid, no return window, no idempotency key, and a reason (`express`) that isn't one of the allowed reasons.
+- **It reports success when it fails**: the bare `except` returns `"ok"` even if the order doesn't exist or the database refuses the row.
+- **One shared token** gives anyone who has it the power to refund any amount, with no record of **who** did it. And it's compared with `!=`, which leaks timing information; use `hmac.compare_digest`.
+- **Plain-text responses** (`"ok"`, `"forbidden"`) unlike the rest of the API's JSON.
+
+The verdict: **request changes**. The goal is good, and the review should say so. But this would let anyone with one leaked string pay out unlimited money, silently.
+
+## Walkthrough
+
+1. Run the cells.
+2. Add a check to the scanner of your own: for example, `print(` in application code, or a TODO.
+3. Sketch the safer design: express refunds as a normal refund request with a `requested_by` staff ID, the same rules, a per-staff limit, and an audit record.
+4. Decide what you'd accept in a first version, so the teammate can ship something useful soon.
+5. Write the review (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "sdc-07-p1",
+  "prompt": "How many **automated findings** does the scan report, including the whole-PR check?",
+  "answer": 6,
+  "format": "number",
+  "hint": "The last line printed.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "sdc-07-t1",
+  "prompt": "Write the **review** of PR 42 (100 to 220 words): a **verdict**, something **positive**, and at least **four** specific comments, each saying what's wrong, why it **matters**, and what to do **instead**.",
+  "minutes": 12,
+  "rows": 12,
+  "placeholder": "Request changes. ...",
+  "rules": [
+    { "label": "A verdict (request changes, approve, block)", "pattern": "request changes|block|approve|not ready" },
+    { "label": "Something positive", "pattern": "thanks|thank you|good|great|useful|like|nice|appreciate" },
+    { "label": "The hard-coded token", "pattern": "token|secret" },
+    { "label": "The bare except / swallowed errors", "pattern": "except|swallow|silent|ok even" },
+    { "label": "Money handling (float, kobo, rounding)", "pattern": "float|kobo|round" },
+    { "label": "The skipped rules (paid, limit, window, idempotency)", "pattern": "paid|limit|window|idempoten|rule" },
+    { "label": "Tests", "pattern": "test" },
+    { "label": "Suggestions (instead, use, could, suggest)", "pattern": "instead|use |could|suggest|how about|let's", "min": 2 },
+    { "label": "Between 100 and 220 words", "minWords": 100, "maxWords": 220 }
+  ],
+  "sample": "Request changes. Thanks for picking this up; support has needed fast refunds for a while, and the endpoint is easy to follow.\n\n1. ADMIN_TOKEN is written in the code, so it's in Git history for anyone with repo access. Please load it from an environment variable, and compare with hmac.compare_digest.\n2. The bare except with pass returns \"ok\" even when the refund fails, so support will think a customer was paid when they weren't. Let errors return a JSON error with a proper status code.\n3. float(amount_naira) and int(amount * 100) bring back the kobo bug from ISSUE-101. Could it take amount_kobo as an integer instead?\n4. It skips every refund rule: no cap at what was paid, no idempotency key, and \"express\" isn't an allowed reason. How about calling service.request_refund, with a requested_by staff ID and a per-staff limit, so we keep an audit trail?\n5. There are no tests. Please add tests for success, a bad token, an over-limit amount and a missing order.\n\nHappy to pair on the service integration if that helps.",
+  "note": "Firm on the blockers, specific about fixes, and generous to the person.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why is a bare except with pass dangerous here?",
+    "options": ["It's slow", "Failures are hidden and reported as success, so support believes a refund happened", "It's a style issue only", "It breaks Flask"],
+    "answer": 1,
+    "explanation": "Silent failure is worse than a visible error."
+  },
+  {
+    "prompt": "What should replace the hard-coded token?",
+    "options": ["A longer token in the code", "A secret loaded from the environment or a secrets manager, compared safely, ideally per staff member", "No authentication", "A token in the URL"],
+    "answer": 1,
+    "explanation": "Secrets don't belong in source code."
+  },
+  {
+    "prompt": "What makes a review comment useful?",
+    "options": ["It's short", "It names the line, the harm and a concrete alternative", "It's critical of the author", "It uses many emoji"],
+    "answer": 1,
+    "explanation": "Specific, reasoned and actionable."
+  }
+]
+```
+$md$, true, true, 7, array['sdc-07-p1', 'sdc-07-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('sdc-m08', 'software-developer-capstone', 'Ship It', 8, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('software-developer-capstone:ship-it', 'software-developer-capstone', 'sdc-m08', 'ship-it', 'Ship it', 'Ship a fix the way a team does, with a branch, small commits, a pull request that CI must pass, a version tag and release notes. Then plan your final project, which brings every fix together in one repository.', 25, $md$
+## The problem
+
+Fixes on your laptop help nobody. To reach customers, each fix goes through the team's process: a branch, a pull request, automated tests in CI that must pass, a review, a merge, a version number and release notes. That process is what lets six people change the same code safely, and what tells finance and support exactly what changed.
+
+## The concept
+
+**Branch, commit, merge**
+
+Work on a branch named after the change (`fix/return-window`). Commit in small steps, each with a message saying why. Merge into `main` when CI and review pass.
+
+**CI runs the tests on every push**
+
+A workflow file in `.github/workflows/` tells GitHub Actions to install the dependencies and run `pytest` on every push and pull request. Make the tests a **required check**, so nothing merges red.
+
+**Versions and release notes**
+
+Tag each release (`v1.1.0`). With semantic versioning, fixes bump the last number, new features the middle one, and breaking changes the first. Release notes are for people outside the team: what changed for them, in their words.
+
+## Example
+
+A repository with the starter code, then one fix on a branch:
+
+```bash
+%%bash
+base=https://academy.cloudtechanalytics.com/datasets/refunds
+for f in refunds.py db.py app.py schema.sql customers.csv orders.csv order_items.csv test_refunds.py pytest.ini; do
+  curl -sO "$base/$f"
+done
+printf "__pycache__/\n*.db\n" > .gitignore
+git init -q
+git config user.name "Ada Developer"
+git config user.email "ada@example.com"
+git add .
+git commit -q -m "Import the refunds service"
+git tag v1.0.0
+
+git switch -q -c fix/return-window
+sed -i 's/days < RETURN_WINDOW_DAYS/days <= RETURN_WINDOW_DAYS/' refunds.py
+cat >> test_refunds.py <<'EOF'
+
+
+def test_return_on_day_14_is_allowed():
+    # ISSUE-103: delivered 1 September, returned 15 September
+    assert within_window(date(2026, 9, 1), date(2026, 9, 15))
+EOF
+python -m pytest
+git commit -q -am "Allow returns on day 14 (ISSUE-103)"
+git switch -q main
+git merge -q --no-ff fix/return-window -m "Merge fix/return-window"
+git tag v1.0.1
+git log --format="%s" --graph
+git tag
+```
+
+```text
+....
+4 passed in 0.01s
+*   Merge fix/return-window
+|\
+| * Allow returns on day 14 (ISSUE-103)
+|/
+* Import the refunds service
+v1.0.0
+v1.0.1
+```
+
+The CI workflow that would run those tests on every push:
+
+```bash
+%%bash
+mkdir -p .github/workflows
+cat > .github/workflows/test.yml <<'EOF'
+name: tests
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pytest flask
+      - run: python -m pytest
+EOF
+grep -c "run:" .github/workflows/test.yml | xargs echo "Steps that run commands:"
+```
+
+```text
+Steps that run commands: 2
+```
+
+The workflow uses only read permission, a timeout, pinned major versions of the actions, and a fixed Python version, the habits from the CI/CD course. And the release notes for finance and support, once all six fixes are in:
+
+```bash
+%%bash
+cat > CHANGELOG.md <<'EOF'
+# Changelog
+
+## v1.1.0 (2026-09-25)
+
+### Fixed
+- Refunds are now exact to the kobo (ISSUE-101).
+- A refund request sent twice, such as after a double tap, creates one refund (ISSUE-102).
+- Returns on day 14 after delivery are accepted, as the policy says (ISSUE-103).
+- The support tool's email search only returns the matching customer's orders (ISSUE-104).
+- Partial returns refund the delivery fee once, and refunds never exceed what was paid (ISSUE-105).
+- A refund request for an order that doesn't exist returns a clear 404 error (ISSUE-106).
+
+### Changed
+- The refunds API returns a 400 error with a message for invalid requests.
+- The mobile app must send a request_id with each refund request, and reuse it on retries.
+EOF
+grep -c "ISSUE-" CHANGELOG.md | xargs echo "Issues in the release notes:"
+```
+
+```text
+Issues in the release notes: 6
+```
+
+The second "Changed" line matters most to another team. Without it, the mobile app wouldn't send the key that makes retries safe.
+
+## Walkthrough
+
+1. Run the cells.
+2. Create a repository on GitHub, push this one, and add the workflow. Open a pull request with a deliberately failing test, and watch CI block it.
+3. Turn on branch protection for `main`, so the tests are a required check.
+4. Is the combined release `v1.1.0` or `v2.0.0`? The API now rejects requests it used to accept, and needs a new field. Argue it either way.
+5. Open the project brief on the course page and plan your submission.
+
+## Practice
+
+```dataset
+{"dataset": "refunds", "files": ["issues", "orders", "order_items", "customers"]}
+```
+
+```answer
+{
+  "id": "sdc-08-p1",
+  "prompt": "How many tests pass on the fix branch, before the merge?",
+  "answer": 4,
+  "format": "number",
+  "hint": "The pytest line in the first cell.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "sdc-08-t1",
+  "prompt": "Write the **pull request description** for the combined fixes (80 to 200 words): a **summary**, the **issues** fixed, **how it was tested**, anything **other teams** must do, and the **risks** for reviewers to look at.",
+  "minutes": 10,
+  "rows": 10,
+  "placeholder": "## Summary\n...",
+  "rules": [
+    { "label": "A summary", "pattern": "summary|this pr|this change" },
+    { "label": "Names the issues", "pattern": "ISSUE-10[1-6]", "min": 3 },
+    { "label": "How it was tested", "pattern": "test" },
+    { "label": "What other teams must do (mobile, request_id, migration)", "pattern": "mobile|request_id|migrat|app team" },
+    { "label": "Risks for reviewers", "pattern": "risk|review|careful|watch|attention" },
+    { "label": "Between 80 and 200 words", "minWords": 80, "maxWords": 200 }
+  ],
+  "sample": "## Summary\nFixes the six refund bugs reported last week: money is exact to the kobo, retries and partial returns can't over-refund, the email search can't be injected, and the API validates requests.\n\n## Issues\nISSUE-101, ISSUE-102, ISSUE-103, ISSUE-104, ISSUE-105, ISSUE-106.\n\n## Testing\nEach issue has a test that failed before the fix and passes now, using the reporter's example. The API has a test for every response code, and the search is tested with three attack strings. 27 tests in total, all passing in CI.\n\n## Other teams\nThe mobile app must send a request_id with each refund and reuse it on retries. The database migration adds two columns and a unique index; check for existing duplicate refunds before running it.\n\n## Risks\nPlease look closely at service.request_refund: the transaction and the over-refund cap are where a mistake would cost money.",
+  "note": "A PR description is for the reviewer and for whoever investigates this change a year from now.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why make the test job a required check on main?",
+    "options": ["For the badge", "So no change can merge while tests fail", "To slow merges down", "GitHub requires it"],
+    "answer": 1,
+    "explanation": "CI only protects you if it can block."
+  },
+  {
+    "prompt": "With semantic versioning, which number does a bug-fix release change?",
+    "options": ["The first", "The middle", "The last", "None"],
+    "answer": 2,
+    "explanation": "v1.0.0 to v1.0.1."
+  },
+  {
+    "prompt": "Who are release notes for?",
+    "options": ["Only developers", "People outside the team, who need to know what changed for them", "The CI system", "Nobody"],
+    "answer": 1,
+    "explanation": "Write them in your users' words."
+  }
+]
+```
+$md$, true, true, 8, array['sdc-08-p1', 'sdc-08-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+
 -- Assessment: SQL for Data Analysis: final assessment
 insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
 values ('sql-for-data-analysis-final', 'sql-for-data-analysis', 'final', null, 'SQL for Data Analysis: final assessment', 60, true)
@@ -65534,6 +67216,108 @@ on conflict (id) do update set assessment_id = excluded.assessment_id, position 
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
 values ('cdcq12', 1, 'Open risks need owners, dates and re-tests.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Software Developer Capstone: final assessment
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('software-developer-capstone-final', 'software-developer-capstone', 'final', null, 'Software Developer Capstone: final assessment', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('sdcq01', 'software-developer-capstone-final', 1, 'Six bugs are reported: one exposes customer data, one gives a 500 error for a missing order. Which do you fix first?', '["The 500 error","The data exposure","Whichever is quickest","Neither until all are understood"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('sdcq01', 1, 'Triage by harm.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('sdcq02', 'software-developer-capstone-final', 2, 'What should you do before fixing a reported bug?', '["Rewrite the module","Write a failing test that reproduces it","Close the ticket","Deploy"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('sdcq02', 1, 'Reproduce, then fix, then keep the test.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('sdcq03', 'software-developer-capstone-final', 3, 'int(2499.99 * 100) gives 249998. Why?', '["A bug in Python","Floats can''t represent 2499.99 exactly, and int() cuts off the fraction","The price is wrong","Rounding to even"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('sdcq03', 1, 'Keep money in whole kobo; round explicitly with Decimal.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('sdcq04', 'software-developer-capstone-final', 4, 'The policy says returns are allowed "within 14 days". Which tests should you write?', '["Day 7 only","Day 14 (allowed) and day 15 (refused)","Day 0 only","None: it''s obvious"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('sdcq04', 1, 'Test both sides of every boundary.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('sdcq05', 'software-developer-capstone-final', 5, 'What reliably fixes SQL injection?', '["Escaping quotes","Parameterised queries","Checking email formats","A firewall"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('sdcq05', 1, 'Parameters are never treated as SQL.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('sdcq06', 'software-developer-capstone-final', 6, 'A customer double-taps Submit. What prevents two refunds?', '["A sleep","An idempotency key stored with a unique index, returning the original refund on a repeat","A pop-up","A daily report"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('sdcq06', 1, 'Retries must be safe.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('sdcq07', 'software-developer-capstone-final', 7, 'Why must "check total refunded" and "insert refund" be in one transaction?', '["Speed","So concurrent requests can''t both pass the check before either writes","SQLite requires it","For logging"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('sdcq07', 1, 'Check-then-write must be atomic.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('sdcq08', 'software-developer-capstone-final', 8, 'A refund request names a product that isn''t in the order. Which status code?', '["201","400","404","500"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('sdcq08', 1, 'The request is invalid.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('sdcq09', 'software-developer-capstone-final', 9, 'A well-formed refund request arrives 19 days after delivery. Which status code?', '["400","404","422","500"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('sdcq09', 2, 'Valid request, refused by a rule.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('sdcq10', 'software-developer-capstone-final', 10, 'A pull request has `except: pass` around a refund write and returns "ok". What''s the main harm?', '["Style","Failures are hidden and reported as success","It''s slower","It uses more memory"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('sdcq10', 1, 'Silent failure misleads everyone.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('sdcq11', 'software-developer-capstone-final', 11, 'Where should an admin token for a new endpoint live?', '["In the code","In an environment variable or secrets manager, compared with hmac.compare_digest","In the URL","In the README"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('sdcq11', 1, 'Secrets never belong in source code.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('sdcq12', 'software-developer-capstone-final', 12, 'Why make the CI test job a required check on main?', '["For the badge","So nothing can merge while tests fail","To make merges slower","It''s free"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('sdcq12', 1, 'CI only protects you if it can block.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 
@@ -71060,6 +72844,14 @@ Work in Google Colab with the platform dataset (https://academy.cloudtechanalyti
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
 
 
+-- Project: Kasuwa's refunds service, fixed and shipped
+insert into public.projects (id, course_id, title, summary, brief_md, tasks, datasets, rubric, required)
+values ('sdc-kasuwa-refunds-service', 'software-developer-capstone', 'Kasuwa''s refunds service, fixed and shipped', 'Take a real (small) codebase with six reported bugs to a tested, secure release: reproductions, fixes for money, security and integrity bugs, a stricter API, a code review and a CI-checked release.', $md$Kasuwa's refunds service has six open bug reports and a pull request waiting for review. Fix the bugs properly, review the pull request, and ship a release your team could trust.
+
+Start from the starter code (https://academy.cloudtechanalytics.com/datasets/refunds/) in a GitHub repository. Submit a link to the repository: it should contain all your fixes, the tests, the GitHub Actions workflow (passing), a CHANGELOG and your review of PR 42 (as REVIEW.md). In the text box, paste your **pull request description** for the combined fixes, followed by a short note on where each task is.$md$, array['Triage: the six issues in order of harm, with reasons.', 'Reproductions: a failing test for each issue, from the reporter''s example.', 'Money and boundaries: whole kobo with Decimal and half-up rounding, and the 14-day window as the policy states it.', 'Security: parameterised queries everywhere, with tests that attack the search.', 'Integrity: an idempotency key with a unique index, the delivery fee refunded once, refunds capped at what was paid, in one transaction, with a migration.', 'API: validation with 400, 404 and 422 responses, a request_id for retries, tests for every path, and API documentation.', 'Review and release: your review of PR 42, a CI workflow that blocks failing tests, a version tag and release notes.']::text[], array['refunds']::text[], array['Every fix is preceded by a failing test that uses the reported example, and every test still passes at the end.', 'Money stays exact: whole kobo, Decimal, one explicit rounding rule.', 'No SQL is built from user input; the security tests attack the fix.', 'Rules that protect money are enforced in a transaction and backed by a database constraint.', 'The API returns the right status code with a clear message for every bad request, and can''t be made to return a 500.', 'The code review is specific, kind and blocks what must be blocked.', 'The release is shipped through CI with clear commits, a tag and release notes other teams can act on.']::text[], true)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
+
+
 -- Track: Become a Data Analyst
 insert into public.tracks (id, slug, title, summary, badge_name, badge_code, skills, position, published)
 values ('data-analyst', 'data-analyst', 'Become a Data Analyst', 'The route we recommend from no experience to a junior data analyst role. Learn how analysis works, then the tools teams use every day (Excel, SQL, Power BI and Python) on realistic company data. Build portfolio projects that answer real business questions, and finish with your CV, LinkedIn and interview preparation.', 'CloudTech Data Analyst', 'DATAANALYST', array['Spreadsheet analysis in Excel', 'Statistics: averages, spread, confidence intervals and tests', 'Querying databases with SQL, from first SELECT to cohorts and window functions', 'Data modelling and star schemas', 'Dashboards in Power BI, with DAX measures you can trust', 'Analysis in Python and pandas', 'Turning data into findings a manager can act on']::text[], 1, true)
@@ -71368,11 +73160,15 @@ values ('software-developer', 'cicd-and-containers', 'Specialist', false, 9)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 insert into public.track_courses (track_id, course_id, stage, required, position)
-values ('software-developer', 'career-essentials', 'Career', true, 10)
+values ('software-developer', 'software-developer-capstone', 'Capstone', true, 10)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 insert into public.track_courses (track_id, course_id, stage, required, position)
-values ('software-developer', 'build-your-student-portfolio', 'Career', false, 11)
+values ('software-developer', 'career-essentials', 'Career', true, 11)
+on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
+
+insert into public.track_courses (track_id, course_id, stage, required, position)
+values ('software-developer', 'build-your-student-portfolio', 'Career', false, 12)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 

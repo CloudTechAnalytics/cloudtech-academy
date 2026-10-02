@@ -44,6 +44,12 @@ export const DATASETS: DatasetInfo[] = [
     files: ["sales_raw", "stores", "products", "cost_prices", "targets", "stockouts"],
   },
   {
+    id: "refunds",
+    name: "Kasuwa refunds service (starter code and bug reports)",
+    description: "A small Python refunds service (rules, SQLite access and a Flask API) with planted bugs, its tests, sample customers, orders and order items, six bug reports, and a pull request to review. Used in the Software Developer Capstone.",
+    files: ["issues", "orders", "order_items", "customers"],
+  },
+  {
     id: "platform",
     name: "Kasuwa platform (sale readiness)",
     description: "An online shop's cloud inventory, per-minute metrics and sampled error logs from its 2025 sale-day outage, the Terraform plan for the readiness changes, six months of deployments, a load test, three months of alerts and a game day's results. Used in the Cloud & DevOps Engineer Capstone.",
@@ -1088,6 +1094,42 @@ export const DATA_DICTIONARY: Record<string, Record<string, { about: string; col
         committed_points: "Story points the team committed to at sprint planning. Blank for sprints not yet planned.",
         status: "Closed, Planned or Future.",
       },
+    },
+  },
+  refunds: {
+    issues: {
+      about: "Bug reports for the refunds service. The folder also has the code (refunds.py, db.py, app.py, schema.sql), its tests, pytest.ini and pr-42.diff.",
+      columns: {
+        issue_id: "Issue ID.",
+        opened_on: "Date reported.",
+        reported_by: "Who reported it.",
+        title: "Short title.",
+        description: "What happened, with the reporter's example.",
+        order_id: "The order involved, if any.",
+      },
+    },
+    orders: {
+      about: "Sample orders loaded into the service's database.",
+      columns: {
+        order_id: "Order ID.",
+        customer_id: "Customer.",
+        status: "Delivered or Failed delivery.",
+        delivered_on: "Delivery date. Blank if never delivered.",
+        delivery_fee_kobo: "Delivery fee, in kobo.",
+      },
+    },
+    order_items: {
+      about: "The products in each order.",
+      columns: {
+        order_id: "Order.",
+        sku: "Product code.",
+        quantity: "Units ordered.",
+        unit_price_kobo: "Price per unit, in kobo.",
+      },
+    },
+    customers: {
+      about: "Sample customers (invented).",
+      columns: { customer_id: "Customer ID.", email: "Email address.", name: "Name." },
     },
   },
   platform: {

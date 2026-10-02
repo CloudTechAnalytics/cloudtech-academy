@@ -402,6 +402,13 @@ export const TRACKS: Track[] = [
         ],
       },
       {
+        title: "Capstone",
+        summary: "Real bugs in a real codebase, fixed properly and shipped, as a portfolio piece.",
+        items: [
+          { kind: "course", courseId: "software-developer-capstone", why: "Six bug reports, a risky pull request and a release, on a Flask and SQLite refunds service." },
+        ],
+      },
+      {
         title: "Career",
         summary: "Turn your skills into applications that get interviews.",
         items: [

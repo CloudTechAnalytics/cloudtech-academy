@@ -3701,6 +3701,64 @@ function platformData() {
   return { csvs: { resources: R, sale_metrics: metrics, deployments, loadtest, alerts, gameday }, text: { "sale_logs.jsonl": logs.map((l) => JSON.stringify(l)).join("\n") + "\n", "plan-sale-readiness.json": JSON.stringify(plan, null, 2) + "\n" } };
 }
 
+/* ------------------------------------------------------------------ refunds (Software Developer capstone) */
+// Kasuwa's refunds service: the starter code (copied from scripts/data/refunds, with planted
+// bugs), sample customers, orders and items, and the bug reports learners work through.
+// Generated last, from its own seed.
+function refundsData() {
+  seed = 20280601;
+  const customers = [];
+  const used = new Set();
+  for (let k = 1; k <= 60; k++) {
+    let name;
+    do name = person();
+    while (used.has(name));
+    used.add(name);
+    customers.push({ customer_id: `C${String(k).padStart(3, "0")}`, email: name.toLowerCase().replace(" ", ".") + "@example.com", name });
+  }
+  const orders = [];
+  const items = [];
+  const SKUS = [["PHN-Z5", 18500000], ["EAR-B2", 2499900], ["SHO-RN", 3250000], ["DRS-AK", 1899900], ["BLN-X1", 4500000], ["POT-SET", 2750000], ["CRM-SH", 650000], ["TEE-3PK", 249999], ["BAG-TT", 1250000], ["RCE-50", 7200000]];
+  const fixed = [
+    ["K-1001", "C001", "Delivered", "2026-09-10", 150000, [["TEE-3PK", 1, 249999]]],
+    ["K-1002", "C002", "Delivered", "2026-09-12", 200000, [["SHO-RN", 1, 3250000]]],
+    ["K-1003", "C003", "Delivered", "2026-09-01", 150000, [["DRS-AK", 1, 1899900]]],
+    ["K-1004", "C004", "Delivered", "2026-09-08", 250000, [["EAR-B2", 1, 2499900], ["CRM-SH", 2, 650000]]],
+    ["K-1005", "C005", "Delivered", "2026-09-14", 300000, [["POT-SET", 2, 2750000], ["BLN-X1", 1, 4500000]]],
+  ];
+  for (const [order_id, customer_id, status, delivered_on, fee, lines] of fixed) {
+    orders.push({ order_id, customer_id, status, delivered_on, delivery_fee_kobo: fee });
+    for (const [sku, quantity, price] of lines) items.push({ order_id, sku, quantity, unit_price_kobo: price });
+  }
+  for (let k = 6; k <= 150; k++) {
+    const order_id = `K-${1000 + k}`;
+    const failed = rand() < 0.15;
+    orders.push({
+      order_id,
+      customer_id: pick(customers).customer_id,
+      status: failed ? "Failed delivery" : "Delivered",
+      delivered_on: failed ? "" : iso(d("2026-08-20") + int(0, 40) * day),
+      delivery_fee_kobo: pick([150000, 200000, 250000, 300000, 350000]),
+    });
+    const n = weighted([1, 2, 3], [55, 30, 15]);
+    const chosen = new Set();
+    while (chosen.size < n) chosen.add(int(0, SKUS.length - 1));
+    for (const s of chosen) items.push({ order_id, sku: SKUS[s][0], quantity: weighted([1, 2, 3], [70, 22, 8]), unit_price_kobo: SKUS[s][1] });
+  }
+  const issues = [
+    ["ISSUE-101", "2026-09-15", "Customer support", "Refund is a kobo short", "Order K-1001: one T-shirt pack at ₦2,499.99, returned damaged. The customer was refunded ₦3,999.98 but expected ₦3,999.99 (₦2,499.99 plus the ₦1,500 delivery fee).", "K-1001"],
+    ["ISSUE-102", "2026-09-16", "Finance", "Customer refunded twice", "Order K-1002 was refunded twice for the same shoes. The customer says the app froze and they tapped Submit again.", "K-1002"],
+    ["ISSUE-103", "2026-09-16", "Customer support", "Return on day 14 rejected", "Order K-1003 was delivered on 1 September. The customer asked to return it on 15 September, within the 14 days on our website, and was told it was outside the return window.", "K-1003"],
+    ["ISSUE-104", "2026-09-17", "Security review", "Order search shows other customers' orders", "Typing ' OR '1'='1 into the support tool's email search returns every order in the system.", ""],
+    ["ISSUE-105", "2026-09-18", "Finance", "Refunds add up to more than the order", "Order K-1005 was returned in two parts, both damaged. Each refund included the ₦3,000 delivery fee, so the customer got the fee back twice.", "K-1005"],
+    ["ISSUE-106", "2026-09-18", "Mobile team", "Server error for a missing order", "Requesting a refund for an order that doesn't exist returns a 500 error instead of a clear message.", ""],
+  ].map(([issue_id, opened_on, reported_by, title, description, order_id]) => ({ issue_id, opened_on, reported_by, title, description, order_id }));
+  const code = {};
+  const src = path.resolve("scripts/data/refunds");
+  for (const f of fs.readdirSync(src)) code[f] = fs.readFileSync(path.join(src, f), "utf8").replace(/\r\n/g, "\n");
+  return { csvs: { customers, orders, order_items: items, issues }, text: code };
+}
+
 /* ------------------------------------------------------------------ write */
 const SQL = await initSqlJs();
 const L = logistics();
@@ -3773,6 +3831,11 @@ for (const [table, rows] of Object.entries(assistantData())) writeCsv("assistant
   const { csvs, text } = platformData();
   for (const [table, rows] of Object.entries(csvs)) writeCsv("platform", table, rows);
   for (const [name, body] of Object.entries(text)) writeText("platform", name, body);
+}
+{
+  const { csvs, text } = refundsData();
+  for (const [table, rows] of Object.entries(csvs)) writeCsv("refunds", table, rows);
+  for (const [name, body] of Object.entries(text)) writeText("refunds", name, body);
 }
 
 // Summary for the build log
