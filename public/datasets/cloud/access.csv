@@ -1,0 +1,29 @@
+principal,kind,mfa_enabled,admin,days_since_last_use,oldest_access_key_days
+ada@tallybook.example,person,1,1,14,
+tunde@tallybook.example,person,1,1,11,
+ngozi@tallybook.example,person,1,0,14,266
+musa@tallybook.example,person,0,0,17,
+kemi@tallybook.example,person,1,0,18,
+obi@tallybook.example,person,1,1,4,
+sade@tallybook.example,person,1,0,10,
+uche@tallybook.example,person,0,0,4,534
+zainab@tallybook.example,person,1,0,4,
+femi@tallybook.example,person,1,0,1,
+ifeoma@tallybook.example,person,1,0,15,
+dapo@tallybook.example,person,0,0,7,
+bisi@tallybook.example,person,1,1,11,491
+kunle@tallybook.example,person,1,1,8,
+halima@tallybook.example,person,1,0,9,
+chinedu@tallybook.example,person,0,0,11,
+amaka@tallybook.example,person,1,0,18,
+yusuf@tallybook.example,person,1,1,250,692
+tobi@tallybook.example,person,0,0,134,
+sola@tallybook.example,person,0,0,231,
+ci-deploy,service account,,1,0,540
+invoice-worker,service account,,0,0,120
+backup-job,service account,,0,1,400
+reporting-export,service account,,0,2,60
+old-zapier,service account,,1,210,900
+monitoring,service account,,0,0,30
+legacy-ftp-sync,service account,,0,300,820
+terraform,service account,,1,3,75

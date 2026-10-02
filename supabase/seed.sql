@@ -55,7 +55,7 @@ values ('business-analysis', 'Business Analysis', 'Requirements, processes and d
 on conflict (id) do update set name = excluded.name, description = excluded.description, is_future = excluded.is_future, position = excluded.position;
 
 insert into public.course_categories (id, name, description, is_future, position)
-values ('cloud', 'Cloud & Technology', 'Cloud platforms and core technology skills.', true, 14)
+values ('cloud', 'Cloud & Technology', 'Cloud platforms, cost, reliability and security.', false, 14)
 on conflict (id) do update set name = excluded.name, description = excluded.description, is_future = excluded.is_future, position = excluded.position;
 
 
@@ -40358,9 +40358,1694 @@ $md$, true, true, 10, array['ops-10-p1', 'ops-10-t1']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 
+-- Course: Cloud Fundamentals: Cost, Scaling and Reliability
+insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
+values ('cloud-fundamentals-cost-reliability', 'full', null, 'cloud-fundamentals-cost-reliability', 'CLD', 'Cloud Fundamentals: Cost, Scaling and Reliability', 'Understand the cloud by running a real review of one: read the bill, find waste, rightsize from utilisation, choose schedules and pricing models, autoscale for month-end, measure availability against an SLO, audit access, and set up cost governance, on a Lagos SaaS company''s cloud estate.', 'Most cloud courses teach you to click through a console. This one teaches you to understand what a cloud estate costs, why, and how reliable and secure it is, which is what employers need. You''ll review the cloud account of Tallybook, a Lagos invoicing app, from its inventory, three months of billing, a month of hourly utilisation and traffic, its outages and its user accounts. You''ll learn the service models, regions and shared responsibility; explain the bill by service, environment and team, in dollars and naira; rightsize servers on peak use; find idle and forgotten resources; compare schedules, commitments and spot pricing; design autoscaling that fixes month-end overloads; calculate availability for components in series and parallel against an SLO; rank access and storage security findings; and set budgets and unit costs. Every number comes from running the code on the account''s data.', 'cloud', 'beginner', 2, 'Beginner to intermediate', 7, true, 'available', true, array['Service models, regions and shared responsibility', 'Reading and allocating a cloud bill', 'Rightsizing from utilisation', 'Finding idle and forgotten resources', 'Schedules, commitments and spot pricing', 'Autoscaling design', 'Availability, SLOs and error budgets', 'Access and storage security reviews', 'Cost governance and unit costs']::text[], array['Python for Data Analytics, or comfort with pandas']::text[], 'Tallybook''s cloud review', true, true, true, true, false, 60, 32)
+on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level = excluded.level, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('cld-m01', 'cloud-fundamentals-cost-reliability', 'What the Cloud Is', 1, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('cloud-fundamentals-cost-reliability:what-the-cloud-is', 'cloud-fundamentals-cost-reliability', 'cld-m01', 'what-the-cloud-is', 'What the cloud is', 'What cloud computing actually is (renting computers, storage and services by the hour), the service models and regions, who is responsible for what, and a first look at a real company''s cloud estate.', 15, $md$
+## The problem
+
+Tallybook is a Lagos start-up whose app lets small businesses send invoices and get paid. It has no server room. Everything runs on a public cloud provider: the servers, the database, the file storage, the network.
+
+The finance director has two worries. The cloud bill, paid in dollars, has grown every month, and nobody can explain exactly why. And at the end of August, on the busiest invoicing days of the month, the app slowed to a crawl for nearly an hour, twice. This course is the review Tallybook needs: what it's running, what it's paying for, what it's wasting, and what it would take to make it reliable.
+
+## The concept
+
+**Cloud computing** means renting computing resources from a provider, paying for what you use, usually by the hour or second, instead of buying hardware.
+
+**Service models**
+
+| Model | You rent | You manage | Example at Tallybook |
+| :-- | :-- | :-- | :-- |
+| **IaaS** (infrastructure) | virtual machines, disks, networks | operating system, software, data | the web and API servers |
+| **PaaS** (platform) | a managed service | your data and settings | the managed database |
+| **SaaS** (software) | finished software | your users and data | email, accounting software |
+
+**Regions and zones**
+
+A **region** is a geographic area (Tallybook uses Cape Town, the closest to Lagos). Each region has several **availability zones**: separate data centres with their own power and networking. Spreading across zones protects against one failing (lesson 7).
+
+**Shared responsibility**
+
+The provider secures the buildings, hardware and its own services. **You** are responsible for what you put on them: who has access, which data is public, software updates on your servers, and your settings. Most cloud breaches are customer misconfigurations, not provider failures.
+
+**Elasticity**
+
+The big promise: resources can grow and shrink with demand, and you stop paying when you stop using them. That only helps if you actually use it (lessons 4 to 6).
+
+## Example
+
+Tallybook's inventory of cloud resources:
+
+```python
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/cloud/"
+resources = pd.read_csv(base + "resources.csv")
+
+print(len(resources), "resources")
+pd.crosstab(resources["type"], resources["status"], margins=True)
+```
+
+```text
+133 resources
+status         attached  available  running  stopped  unattached  All
+type
+bucket                0          6        0        0           0    6
+database              0          0        2        0           0    2
+disk                 38          0        0        0           8   46
+load_balancer         0          0        2        0           0    2
+public_ip             0          0        0        0           3    3
+snapshot              0         36        0        0           0   36
+vm                    0          0       34        4           0   38
+All                  38         42       38        4          11  133
+```
+
+Virtual machines (VMs) are servers; each has a disk attached. Snapshots are point-in-time copies of disks; buckets are file storage. Notice the statuses: some VMs are stopped, and some disks and public IP addresses are attached to nothing. Now look at the VMs by environment and size:
+
+```python
+vms = resources[resources["type"] == "vm"]
+vms.pivot_table(index="environment", columns="size", values="resource_id", aggfunc="count", fill_value=0)
+```
+
+```text
+size         large  medium  xlarge
+environment
+development      5      12       1
+production       9       0       4
+staging          0       6       0
+```
+
+Production is what customers use. Staging is a copy for testing releases; development machines are for engineers. Some VMs have no environment at all, which means nobody recorded what they're for.
+
+## Walkthrough
+
+1. Run the cells. List the VMs with no environment or no team. What do their names suggest?
+2. For each resource type, decide which service model it belongs to.
+3. Find the region of every resource. Why might Tallybook not use a region in Europe?
+4. Read the shared responsibility table and list three things Tallybook is responsible for.
+
+## Practice
+
+```dataset
+{"dataset": "cloud", "files": ["resources", "billing", "utilisation", "web_traffic", "outages", "access"]}
+```
+
+```answer
+{
+  "id": "cld-01-p1",
+  "prompt": "How many VMs are **running**?",
+  "answer": 34,
+  "format": "number",
+  "dataset": "cloud",
+  "files": ["resources"],
+  "pyVerify": "int(((resources['type'] == 'vm') & (resources['status'] == 'running')).sum())",
+  "hint": "The vm row, running column.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "A customer data bucket is accidentally made public. Under shared responsibility, whose problem is it?",
+    "options": ["The provider's", "The customer's: settings and access are the customer's responsibility", "Nobody's", "The internet's"],
+    "answer": 1,
+    "explanation": "The provider secures the platform; you secure what you configure on it."
+  },
+  {
+    "prompt": "Tallybook's managed database is which service model?",
+    "options": ["IaaS", "PaaS: the provider runs the database software; Tallybook manages data and settings", "SaaS", "On-premises"],
+    "answer": 1,
+    "explanation": "Managed services are platform services."
+  },
+  {
+    "prompt": "What is an availability zone?",
+    "options": ["A country", "A separate data centre within a region, with its own power and networking", "A price plan", "A type of disk"],
+    "answer": 1,
+    "explanation": "Using several zones protects against one failing."
+  }
+]
+```
+$md$, true, true, 1, array['cld-01-p1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('cld-m02', 'cloud-fundamentals-cost-reliability', 'Reading the Cloud Bill', 2, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('cloud-fundamentals-cost-reliability:reading-the-cloud-bill', 'cloud-fundamentals-cost-reliability', 'cld-m02', 'reading-the-cloud-bill', 'Reading the cloud bill', 'Break a cloud bill down by service, environment and team, find the spend nobody owns, see what it costs in naira, and explain why it grew.', 25, $md$
+## The problem
+
+Tallybook's cloud bill arrives as one dollar total each month. The finance director wants answers in plain language: what are we paying for, which team is spending it, and why is it going up?
+
+Cloud providers give you far more than a total. Every resource's cost, every day, can be downloaded as a detailed billing export. It's only useful if the resources are **tagged** with who owns them.
+
+## The concept
+
+**The billing export**
+
+One row per resource per day (or hour), with the service, the cost, and any **tags** (labels such as `environment=production` and `team=invoicing`) attached to the resource.
+
+**Allocate the cost**
+
+Group by service (what), environment (why) and team (who). Spend with no team tag is **unallocated**: nobody is accountable for it, and it's often where waste hides.
+
+**Watch the currency**
+
+Cloud is billed in dollars. For a Nigerian company earning in naira, the naira cost can rise even when usage doesn't, so budgets should state the exchange rate they assume.
+
+**Explain growth**
+
+Break the change between two months into its parts: which services, environments and teams grew, and whether it came from new resources or from more usage of existing ones.
+
+## Example
+
+```python
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/cloud/"
+billing = pd.read_csv(base + "billing.csv", parse_dates=["date"])
+billing["month"] = billing["date"].dt.strftime("%Y-%m")
+
+USD_TO_NGN = 1_550   # an assumed exchange rate, for illustration
+monthly = billing.groupby("month")["cost_usd"].sum()
+print(pd.DataFrame({"usd": monthly.round(0), "naira": (monthly * USD_TO_NGN).round(-3)}))
+
+aug = billing[billing["month"] == "2026-08"]
+aug.groupby("service")["cost_usd"].sum().sort_values(ascending=False).round(0)
+```
+
+```text
+usd      naira
+month
+2026-06  4908.0  7608000.0
+2026-07  5462.0  8465000.0
+2026-08  5647.0  8752000.0
+service
+Compute             2381.0
+Data transfer       1334.0
+Block storage        831.0
+Managed database     506.0
+Snapshots            329.0
+Object storage       218.0
+Load balancing        37.0
+Public IPs            11.0
+Name: cost_usd, dtype: float64
+```
+
+Compute is the biggest item, but data transfer (traffic leaving the cloud to users' phones and browsers) is second, ahead of the database. Now who owns the August spend:
+
+```python
+by_team = aug.groupby(aug["team"].fillna("(no team tag)"))["cost_usd"].sum().sort_values(ascending=False)
+print((by_team / by_team.sum()).round(3))
+pd.crosstab(aug["environment"].fillna("(none)"), aug["service"], values=aug["cost_usd"], aggfunc="sum").round(0).fillna(0)
+```
+
+```text
+team
+platform         0.660
+(no team tag)    0.160
+invoicing        0.119
+payments         0.062
+marketing        0.000
+Name: cost_usd, dtype: float64
+service      Block storage  Compute  Data transfer  Load balancing  Managed database  Object storage  Public IPs  Snapshots
+environment
+(none)               204.0     74.0            0.0             0.0               0.0             0.0        11.0        0.0
+development          326.0    818.0            0.0             0.0               0.0            14.0         0.0      125.0
+production           153.0   1265.0         1334.0            19.0             335.0           204.0         0.0      181.0
+staging              148.0    223.0            0.0            19.0             171.0             0.0         0.0       23.0
+```
+
+About a sixth of August's spend has no team tag: no one would notice if it doubled. Finally, why the bill grew from June to August:
+
+```python
+growth = billing[billing["month"].isin(["2026-06", "2026-08"])].pivot_table(index="service", columns="month", values="cost_usd", aggfunc="sum").fillna(0)
+growth["change"] = growth["2026-08"] - growth["2026-06"]
+growth.sort_values("change", ascending=False).round(0)
+```
+
+```text
+month             2026-06  2026-08  change
+service
+Data transfer      1020.0   1334.0   314.0
+Compute            2088.0   2381.0   293.0
+Block storage       774.0    831.0    56.0
+Snapshots           279.0    329.0    50.0
+Managed database    490.0    506.0    16.0
+Object storage      211.0    218.0     7.0
+Load balancing       36.0     37.0     1.0
+Public IPs           11.0     11.0     0.0
+```
+
+Some growth is just calendar: August has 31 days to June's 30. The rest comes mostly from compute (new development machines in July) and data transfer (more traffic, especially at month-end).
+
+## Walkthrough
+
+1. Run the cells. Find the development VMs created in July. What do they add to the monthly bill?
+2. Work out the cost per day for each month, to remove the effect of month length.
+3. Recalculate the naira cost with an exchange rate 15% higher. What does that do to the annual budget?
+4. Write the bill summary for the finance director (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "cld-02-p1",
+  "prompt": "What was the **August** cloud bill, in dollars? Round to the nearest dollar.",
+  "answer": 5647,
+  "tolerance": 1,
+  "format": "number",
+  "dataset": "cloud",
+  "files": ["billing"],
+  "pyVerify": "round(monthly['2026-08'])",
+  "hint": "The 2026-08 row of the first table.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "cld-02-p2",
+  "prompt": "What share of August's spend has **no team tag**? As a percentage, one decimal place.",
+  "answer": 16.0,
+  "format": "percent",
+  "dataset": "cloud",
+  "files": ["billing"],
+  "pyVerify": "round(by_team['(no team tag)'] / by_team.sum() * 100, 1)",
+  "hint": "The (no team tag) share.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "cld-02-t1",
+  "prompt": "Write the **bill summary** for the finance director (50 to 120 words): the August total in dollars **and naira** (with the exchange rate you assumed), the **two biggest services**, the **untagged** share, and **why** the bill grew since June.",
+  "minutes": 6,
+  "rows": 6,
+  "placeholder": "In August, Tallybook's cloud bill was ...",
+  "rules": [
+    { "label": "A dollar figure", "pattern": "\\$\\s?[\\d,]+" },
+    { "label": "A naira figure", "pattern": "₦\\s?[\\d,.]+|naira" },
+    { "label": "States the exchange rate assumed", "pattern": "exchange rate|₦\\s?[\\d,]+\\s*(to|per|/)\\s*(the |a )?(\\$|dollar)" },
+    { "label": "Names compute and data transfer", "pattern": "compute[\\s\\S]*data transfer|data transfer[\\s\\S]*compute" },
+    { "label": "Mentions untagged spend", "pattern": "untagged|no team|not tagged|unallocated" },
+    { "label": "Between 50 and 120 words", "minWords": 50, "maxWords": 120 }
+  ],
+  "sample": "In August, Tallybook's cloud bill was about $5,650, or about ₦8.8 million at an assumed exchange rate of ₦1,550 to the dollar. The two biggest items were compute (servers), at about $2,400, and data transfer to users, at about $1,300. About 16% of the spend has no team tag, so no one is accountable for it. The bill grew by about $740 since June: partly because August is a day longer, but mostly from four development servers added in July and from more traffic, especially at month-end.",
+  "note": "Stating the exchange rate makes the naira figure checkable, and shows how much of a future rise could come from the currency rather than usage.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "What makes cloud spend allocatable to teams?",
+    "options": ["The provider's invoice total", "Tags on each resource, such as team and environment", "The region", "The exchange rate"],
+    "answer": 1,
+    "explanation": "Untagged resources can't be allocated, so no one owns their cost."
+  },
+  {
+    "prompt": "The naira cost rose 12% but dollar usage was flat. What happened?",
+    "options": ["More servers", "The exchange rate moved", "A billing error", "More customers"],
+    "answer": 1,
+    "explanation": "Dollar-billed costs carry currency risk."
+  },
+  {
+    "prompt": "Why compare cost per day rather than cost per month?",
+    "options": ["Days are simpler", "Months have different lengths, which changes totals with no change in usage", "Providers bill daily", "It's always smaller"],
+    "answer": 1,
+    "explanation": "Remove calendar effects before explaining growth."
+  }
+]
+```
+$md$, true, true, 2, array['cld-02-p1', 'cld-02-p2', 'cld-02-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('cld-m03', 'cloud-fundamentals-cost-reliability', 'Rightsizing from Utilisation', 3, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('cloud-fundamentals-cost-reliability:rightsizing-from-utilisation', 'cloud-fundamentals-cost-reliability', 'cld-m03', 'rightsizing-from-utilisation', 'Rightsizing from utilisation', 'Use hourly CPU and memory data to find servers that are far bigger than they need to be, choose a safe smaller size with a rule based on peak use, and work out the saving.', 25, $md$
+## The problem
+
+When Tallybook built its API, an engineer chose the "xlarge" server size: 8 processors and 32 GB of memory each, four of them. Nobody has looked since. Servers that are bigger than their work needs cost money every hour, and in the cloud, changing size takes minutes.
+
+But shrinking servers carelessly is how outages happen. The decision needs data: how busy each server really is, including at its busiest.
+
+## The concept
+
+**Utilisation**
+
+The share of a server's CPU and memory in use, measured every few minutes by the provider's monitoring. Tallybook has hourly averages for every running VM in August.
+
+**Use peaks, not averages**
+
+A server at 15% average CPU might hit 90% for an hour every day. Size for the **95th percentile** (p95): the level it stays under 95% of the time. For critical systems, check the true maximum too.
+
+**A rightsizing rule**
+
+For example: if p95 CPU is under 30% **and** p95 memory is under 40%, move down one size (which halves CPU and memory). After the change, p95 CPU would be roughly double, still under 60%, leaving headroom.
+
+**Size isn't the only fix**
+
+Servers that are busy only in office hours are better **scheduled** (lesson 5) than shrunk; servers doing nothing at all should be **removed** (lesson 4).
+
+## Example
+
+```python
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/cloud/"
+resources = pd.read_csv(base + "resources.csv")
+util = pd.read_csv(base + "utilisation.csv")
+
+stats = util.groupby("resource_id").agg(
+    cpu_avg=("cpu_pct", "mean"),
+    cpu_p95=("cpu_pct", lambda x: x.quantile(0.95)),
+    mem_p95=("memory_pct", lambda x: x.quantile(0.95)),
+).round(1)
+vms = resources[resources["type"] == "vm"].merge(stats, on="resource_id")
+print(vms[["name", "environment", "size", "hourly_usd", "cpu_avg", "cpu_p95", "mem_p95"]].sort_values("cpu_p95").to_string(index=False))
+```
+
+```text
+name environment   size  hourly_usd  cpu_avg  cpu_p95  mem_p95
+ test-old-migration development xlarge        0.20      0.6      0.9      7.9
+      tmp-load-test         NaN  large        0.10      0.6      0.9      7.9
+        poc-reports development  large        0.10      0.6      0.9      7.9
+     staging-api-03     staging medium        0.05      5.0      6.8     21.8
+  staging-worker-05     staging medium        0.05      5.0      6.8     21.8
+staging-db-tools-06     staging medium        0.05      5.0      6.8     21.8
+     staging-web-02     staging medium        0.05      5.0      6.8     21.8
+     staging-web-01     staging medium        0.05      5.0      6.8     21.8
+     staging-api-04     staging medium        0.05      5.0      6.8     21.8
+        prod-api-02  production xlarge        0.20     15.9     28.6     34.8
+        prod-api-03  production xlarge        0.20     16.0     28.6     34.8
+        prod-api-01  production xlarge        0.20     16.1     28.8     34.8
+        prod-api-04  production xlarge        0.20     15.9     29.0     34.8
+          dev-tunde development medium        0.05      9.2     31.9     46.8
+           dev-kemi development medium        0.05      8.8     32.2     46.5
+           dev-femi development medium        0.05      8.9     32.5     47.5
+            dev-obi development  large        0.10      8.9     32.6     46.0
+         dev-zainab development  large        0.10      8.8     32.6     47.6
+          dev-ngozi development  large        0.10      9.0     32.7     46.9
+           dev-dapo development  large        0.10      8.9     32.8     46.2
+           dev-musa development medium        0.05      9.1     32.9     46.6
+         dev-ifeoma development medium        0.05      8.9     33.2     46.0
+           dev-sade development medium        0.05      9.1     33.2     46.4
+            dev-ada development medium        0.05      9.1     33.6     46.3
+           dev-uche development medium        0.05      9.2     33.6     45.8
+        prod-web-03  production  large        0.10     23.4     50.9     57.7
+        prod-web-02  production  large        0.10     23.3     51.4     57.7
+        prod-web-06  production  large        0.10     23.5     51.5     57.7
+        prod-web-01  production  large        0.10     23.4     51.6     57.3
+        prod-web-04  production  large        0.10     23.3     52.1     57.7
+        prod-web-05  production  large        0.10     23.4     52.4     57.6
+     prod-worker-03  production  large        0.10     33.7     56.1     61.2
+     prod-worker-02  production  large        0.10     34.0     56.2     61.4
+     prod-worker-01  production  large        0.10     33.9     56.6     61.7
+```
+
+Look at the groups: the web and worker servers are well used at their peaks; the API servers peak below 30% CPU; staging servers barely work at all; three servers are almost completely idle (lesson 4). Now apply the rule, leaving out idle servers:
+
+```python
+DOWN = {"xlarge": "large", "large": "medium", "medium": "small"}
+PRICE = {"small": 0.025, "medium": 0.05, "large": 0.10, "xlarge": 0.20}   # illustrative, $ per hour
+HOURS_PER_MONTH = 730
+
+candidates = vms[(vms["cpu_p95"] < 30) & (vms["mem_p95"] < 40) & (vms["cpu_p95"] >= 2)].copy()
+candidates["new_size"] = candidates["size"].map(DOWN)
+candidates["monthly_saving_usd"] = (candidates["hourly_usd"] - candidates["new_size"].map(PRICE)) * HOURS_PER_MONTH
+print(candidates[["name", "size", "new_size", "cpu_p95", "mem_p95", "monthly_saving_usd"]].to_string(index=False))
+print("Total monthly saving: $", round(candidates["monthly_saving_usd"].sum(), 2))
+```
+
+```text
+name   size new_size  cpu_p95  mem_p95  monthly_saving_usd
+        prod-api-01 xlarge    large     28.8     34.8               73.00
+        prod-api-02 xlarge    large     28.6     34.8               73.00
+        prod-api-03 xlarge    large     28.6     34.8               73.00
+        prod-api-04 xlarge    large     29.0     34.8               73.00
+     staging-web-01 medium    small      6.8     21.8               18.25
+     staging-web-02 medium    small      6.8     21.8               18.25
+     staging-api-03 medium    small      6.8     21.8               18.25
+     staging-api-04 medium    small      6.8     21.8               18.25
+  staging-worker-05 medium    small      6.8     21.8               18.25
+staging-db-tools-06 medium    small      6.8     21.8               18.25
+Total monthly saving: $ 401.5
+```
+
+Halving the API servers saves the most, because they're the largest. The development servers don't qualify: they're busy in office hours, and their problem is the nights and weekends.
+
+## Walkthrough
+
+1. Run the cells. Check the API servers' **maximum** CPU, not just p95. Is the new size still safe?
+2. Plot one API server's CPU over a week. When is it busiest?
+3. Why does the rule check memory as well as CPU? Find a case where only memory would prevent a downsizing.
+4. Write the change plan (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "cld-03-p1",
+  "prompt": "What is the **total monthly saving** from the rightsizing rule, in dollars? Two decimal places.",
+  "answer": 401.5,
+  "tolerance": 0.01,
+  "format": "number",
+  "dataset": "cloud",
+  "files": ["resources", "utilisation"],
+  "pyVerify": "round(candidates['monthly_saving_usd'].sum(), 2)",
+  "hint": "The last line printed.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "cld-03-t1",
+  "prompt": "Write the **change plan** for downsizing the API servers, one step per numbered line: at least **five** steps covering **when** (time of day), doing it **gradually**, what to **monitor**, the **rollback** trigger, and when to **review**.",
+  "minutes": 6,
+  "rows": 7,
+  "placeholder": "1. Change one API server first ...",
+  "rules": [
+    { "label": "At least five numbered steps", "pattern": "^\\s*\\d+[.)]\\s+\\S", "min": 5 },
+    { "label": "When (night, quiet, off-peak, weekend)", "pattern": "night|quiet|off[- ]peak|weekend|low(est)? traffic|traffic is lowest|early morning|\\b[1-5] ?am\\b" },
+    { "label": "Gradually (one server, one at a time)", "pattern": "one (server|at a time)|first server|gradual|one by one" },
+    { "label": "What to monitor (CPU, latency, errors)", "pattern": "cpu|latency|error|response time" },
+    { "label": "A rollback trigger", "pattern": "roll ?back|revert|change back|size back" },
+    { "label": "A review", "pattern": "review|check again|after (a|one) (week|month)" }
+  ],
+  "sample": "1. Change one API server from xlarge to large at 2am on a weekday, when traffic is lowest.\n2. Watch its CPU, memory, API latency and error rate for 48 hours, comparing it with the three unchanged servers.\n3. If its p95 CPU goes above 70% or latency rises by more than 20%, roll back to xlarge straight away.\n4. If it's healthy, change the other three servers one at a time, a day apart.\n5. Review the API servers' utilisation after the next month-end, the busiest days, and again in three months.",
+  "note": "Changing one server first means a mistake affects a quarter of the API, briefly, at the quietest hour.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why size servers on p95 CPU rather than average CPU?",
+    "options": ["p95 is cheaper", "Averages hide daily peaks; p95 shows how busy the server gets at its busiest times", "Providers require it", "Averages are always higher"],
+    "answer": 1,
+    "explanation": "Size for the peak you actually reach."
+  },
+  {
+    "prompt": "Development servers are busy 9 to 5 and idle at night. What's the best fix?",
+    "options": ["Make them smaller", "Schedule them to stop outside working hours", "Make them bigger", "Delete them"],
+    "answer": 1,
+    "explanation": "The waste is the idle hours, not the size."
+  },
+  {
+    "prompt": "Moving down one size usually does what to CPU and memory?",
+    "options": ["Nothing", "Halves them, so utilisation roughly doubles", "Doubles them", "Removes memory"],
+    "answer": 1,
+    "explanation": "Check the doubled peak still leaves headroom."
+  }
+]
+```
+$md$, true, true, 3, array['cld-03-p1', 'cld-03-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('cld-m04', 'cloud-fundamentals-cost-reliability', 'Idle and Forgotten Resources', 4, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('cloud-fundamentals-cost-reliability:idle-and-forgotten-resources', 'cloud-fundamentals-cost-reliability', 'cld-m04', 'idle-and-forgotten-resources', 'Idle and forgotten resources', 'Find the resources that cost money while doing nothing (idle servers, unattached disks, unused IP addresses, old snapshots and the disks of stopped servers) and plan their removal safely.', 25, $md$
+## The problem
+
+In the cloud, nothing is ever thrown away by accident. A server created for a load test in 2025 keeps running until someone deletes it. When a server is deleted, its disk can stay behind, still billed every hour. Backups (snapshots) pile up for years.
+
+Nobody at Tallybook did anything wrong on any single day. Forgotten resources are what happens when creating things is easy and nobody's job is to clean up. They're also the easiest savings in any cloud bill, because removing them changes nothing that anyone uses.
+
+## The concept
+
+**Common kinds of waste**
+
+| Waste | How to spot it |
+| :-- | :-- |
+| **Idle servers** | running, but CPU near zero for weeks |
+| **Unattached disks** | status "unattached": their server is gone |
+| **Stopped servers** | no compute charge, but their disks are still billed |
+| **Unused IP addresses** | reserved public IPs attached to nothing are charged |
+| **Old snapshots** | backups kept far longer than any policy requires |
+
+**Remove safely**
+
+1. Find an owner (tags, names, creation history), and ask.
+2. If nobody claims it: **snapshot then delete** for disks; **stop, wait, then delete** for servers.
+3. Set a **retention policy** (for example, keep snapshots 90 days), and apply it automatically.
+
+## Example
+
+```python
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/cloud/"
+resources = pd.read_csv(base + "resources.csv", parse_dates=["created_date"])
+util = pd.read_csv(base + "utilisation.csv")
+TODAY = pd.Timestamp("2026-09-01")
+HOURS_PER_MONTH = 730
+
+cpu_max = util.groupby("resource_id")["cpu_pct"].max()
+resources["cpu_max"] = resources["resource_id"].map(cpu_max)
+stopped_ids = resources.loc[(resources["type"] == "vm") & (resources["status"] == "stopped"), "resource_id"]
+
+waste = pd.concat([
+    resources[(resources["type"] == "vm") & (resources["cpu_max"] < 5)].assign(reason="idle server"),
+    resources[(resources["type"] == "disk") & (resources["status"] == "unattached")].assign(reason="unattached disk"),
+    resources[(resources["type"] == "disk") & resources["attached_to"].isin(stopped_ids)].assign(reason="disk of a stopped server"),
+    resources[(resources["type"] == "public_ip") & (resources["status"] == "unattached")].assign(reason="unused IP address"),
+    resources[(resources["type"] == "snapshot") & (resources["created_date"] < TODAY - pd.Timedelta(days=365))].assign(reason="snapshot over a year old"),
+])
+waste["monthly_usd"] = waste["hourly_usd"] * HOURS_PER_MONTH
+summary = waste.groupby("reason").agg(items=("resource_id", "size"), monthly_usd=("monthly_usd", "sum")).round(2)
+print(summary)
+print("Total: $", round(waste["monthly_usd"].sum(), 2), "a month")
+```
+
+```text
+items  monthly_usd
+reason
+disk of a stopped server      4        35.00
+idle server                   3       292.00
+snapshot over a year old     20       212.50
+unattached disk               8       380.01
+unused IP address             3        10.95
+Total: $ 930.47 a month
+```
+
+The unattached disks cost the most in total, but the idle servers are the most expensive individual resources. Here they are, with what's known about them:
+
+```python
+waste.loc[waste["reason"] == "idle server", ["name", "size", "environment", "team", "created_date", "cpu_max", "monthly_usd"]].round(2)
+```
+
+```text
+name    size  environment team created_date  cpu_max  monthly_usd
+62  test-old-migration  xlarge  development  NaN   2025-03-10      0.9        146.0
+64       tmp-load-test   large          NaN  NaN   2025-06-02      0.9         73.0
+66         poc-reports   large  development  NaN   2025-08-19      0.9         73.0
+```
+
+None has a team, and their names suggest one-off projects from 2025. Their CPU never reached 1% in August. They're the clearest candidates for "stop, wait two weeks, delete".
+
+## Walkthrough
+
+1. Run the cells. How many of the wasteful resources have a team tag?
+2. Change the snapshot rule to 90 days. How much more would a 90-day retention policy save?
+3. Work out the annual saving from removing everything in the summary.
+4. Write the clean-up plan (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "cld-04-p1",
+  "prompt": "What is the **total** monthly cost of the waste found, in dollars? Two decimal places.",
+  "answer": 930.47,
+  "tolerance": 0.01,
+  "format": "number",
+  "dataset": "cloud",
+  "files": ["resources", "utilisation"],
+  "pyVerify": "round(waste['monthly_usd'].sum(), 2)",
+  "hint": "The Total line.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "cld-04-p2",
+  "prompt": "How many **unattached disks** are there?",
+  "answer": 8,
+  "format": "number",
+  "dataset": "cloud",
+  "files": ["resources"],
+  "pyVerify": "int(summary.loc['unattached disk', 'items'])",
+  "hint": "The items column for unattached disk.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "cld-04-t1",
+  "prompt": "Write the **clean-up plan**, one line per kind of waste starting with a dash: at least **four** lines, each saying how you'll **find the owner** or check it's unused, the **safe removal** step, and at least one **policy** that stops the waste coming back.",
+  "minutes": 8,
+  "rows": 7,
+  "placeholder": "- Idle servers: ...",
+  "rules": [
+    { "label": "At least four lines, each starting with -", "pattern": "^\\s*-\\s+\\S", "min": 4 },
+    { "label": "Covers servers, disks and snapshots", "pattern": "server|vm[\\s\\S]*disk[\\s\\S]*snapshot|snapshot", "min": 1 },
+    { "label": "Finds owners (ask, owner, tag, team)", "pattern": "ask|owner|tag|team|announce" },
+    { "label": "Safe removal (snapshot first, stop then delete, wait)", "pattern": "snapshot (first|before)|stop[^\\n]*(then|wait|before) delet|wait|two weeks|14 days" },
+    { "label": "A policy (retention, required tags, automatic)", "pattern": "retention|policy|automatic|required tag|every (week|month)" }
+  ],
+  "sample": "- Idle servers: post the list in the engineering channel and ask owners to claim them within a week; stop unclaimed servers, wait two weeks, then delete them.\n- Unattached disks: check no server used them in the last 30 days, take a final snapshot, then delete the disk.\n- Disks of stopped servers: ask the team named in the tag whether the server is still needed; if not, snapshot the disk and delete both.\n- Unused IP addresses: release them the same day; they can't be holding anything.\n- Old snapshots: set a 90-day retention policy that deletes snapshots automatically, except monthly database backups kept for a year.\n- Prevention: require team and environment tags on every new resource, and send a monthly report of untagged and idle resources to each team lead.",
+  "note": "The last line is what makes the clean-up permanent: without required tags and a monthly report, the waste grows back.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "A server was stopped six months ago. Is it still costing money?",
+    "options": ["No", "Yes: its disk is still billed even though the server isn't", "Only its IP", "Only in production"],
+    "answer": 1,
+    "explanation": "Stopping a server stops compute charges, not storage charges."
+  },
+  {
+    "prompt": "What's the safe way to remove an unclaimed disk?",
+    "options": ["Delete it immediately", "Take a final snapshot, then delete the disk", "Leave it forever", "Make it public"],
+    "answer": 1,
+    "explanation": "A cheap snapshot keeps an undo option."
+  },
+  {
+    "prompt": "What stops forgotten resources coming back?",
+    "options": ["A one-off clean-up", "Required ownership tags, retention policies and regular reports", "Bigger servers", "A new region"],
+    "answer": 1,
+    "explanation": "Prevention is a process, not an event."
+  }
+]
+```
+$md$, true, true, 4, array['cld-04-p1', 'cld-04-p2', 'cld-04-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('cld-m05', 'cloud-fundamentals-cost-reliability', 'Schedules and Pricing Models', 5, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('cloud-fundamentals-cost-reliability:schedules-and-pricing-models', 'cloud-fundamentals-cost-reliability', 'cld-m05', 'schedules-and-pricing-models', 'Schedules and pricing models', 'Stop paying for servers outside the hours they''re used, and compare on-demand, committed and spot pricing for the servers that remain, with the risks of each.', 25, $md$
+## The problem
+
+Tallybook's twelve development servers run 24 hours a day, 7 days a week. The engineers use them roughly from 7am to 6pm on weekdays: about a third of the hours in a week. The rest is paid for and wasted.
+
+Meanwhile, the production servers that genuinely run all the time are paid at the full **on-demand** price. Cloud providers offer large discounts to customers who commit to a year of use, and even bigger ones for spare capacity that can be taken back at short notice. Tallybook uses neither.
+
+## The concept
+
+**Schedules**
+
+Stop non-production servers outside working hours and start them again in the morning, automatically. Their disks are kept, so nothing is lost. Engineers who need a server out of hours can start it themselves.
+
+**Pricing models**
+
+| Model | Discount (illustrative) | Commitment | Good for |
+| :-- | :-- | :-- | :-- |
+| **On-demand** | none | none | unpredictable or short-lived use |
+| **Committed use** (reservations, savings plans) | around 30 to 40% | pay for 1 or 3 years whether used or not | the steady baseline that always runs |
+| **Spot** | around 60 to 70% | none, but the provider can reclaim the server at short notice | work that can be interrupted and retried |
+
+**Commit only to the baseline**
+
+Commit to what runs every hour of the year (after rightsizing and clean-up), never to peaks. Over-commitment is paying for servers you no longer use.
+
+## Example
+
+The saving from scheduling the development servers to run 7am to 6pm on weekdays (August 2026 had 21 weekdays):
+
+```python
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/cloud/"
+resources = pd.read_csv(base + "resources.csv")
+util = pd.read_csv(base + "utilisation.csv", parse_dates=["hour"])
+
+dev = resources[(resources["type"] == "vm") & resources["name"].str.startswith("dev-")]
+HOURS_IN_AUGUST = 744
+SCHEDULED_HOURS = 11 * 21          # 7am to 6pm, 21 weekdays
+
+dev = dev.assign(current_usd=dev["hourly_usd"] * HOURS_IN_AUGUST, scheduled_usd=dev["hourly_usd"] * SCHEDULED_HOURS)
+print("Development servers:", len(dev))
+print("August cost now: $", round(dev["current_usd"].sum(), 2), "  with a schedule: $", round(dev["scheduled_usd"].sum(), 2))
+
+u = util[util["resource_id"].isin(dev["resource_id"])]
+in_hours = (u["hour"].dt.weekday < 5) & u["hour"].dt.hour.between(7, 17)
+print("Average CPU in scheduled hours:", round(u.loc[in_hours, "cpu_pct"].mean(), 1), "  outside them:", round(u.loc[~in_hours, "cpu_pct"].mean(), 1))
+```
+
+```text
+Development servers: 12
+August cost now: $ 595.2   with a schedule: $ 184.8
+Average CPU in scheduled hours: 24.5   outside them: 2.0
+```
+
+The usage data confirms the servers do almost nothing outside the schedule. Now the production baseline and pricing models, with illustrative discounts:
+
+```python
+prod = resources[(resources["type"] == "vm") & (resources["environment"] == "production")].copy()
+prod["role"] = prod["name"].str.extract(r"prod-(\w+)-")[0]
+monthly = prod.groupby("role")["hourly_usd"].sum() * 730
+
+COMMITTED, SPOT = 0.35, 0.65     # illustrative discounts
+options = pd.DataFrame({
+    "on_demand": monthly,
+    "committed_1yr": monthly * (1 - COMMITTED),
+    "spot": monthly * (1 - SPOT),
+}).round(2)
+options
+```
+
+```text
+on_demand  committed_1yr    spot
+role
+api         584.0         379.60  204.40
+web         438.0         284.70  153.30
+worker      219.0         142.35   76.65
+```
+
+Web and API servers must always be available, so they suit a commitment (after rightsizing the API servers, as in lesson 3, so you don't commit to the old size). The invoice workers process jobs from a queue: if a spot server is reclaimed, its job goes back on the queue and another server picks it up. That makes them good spot candidates, with one on-demand server kept as a floor.
+
+## Walkthrough
+
+1. Run the cells. How much would a schedule save over a full year?
+2. Redo the commitment calculation using the rightsized API size from lesson 3.
+3. Explain why committing for the web servers' month-end peak would be a mistake.
+4. Write the recommendation (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "cld-05-p1",
+  "prompt": "How much would the schedule have saved on the development servers in **August**, in dollars? Two decimal places.",
+  "answer": 410.4,
+  "tolerance": 0.01,
+  "format": "number",
+  "dataset": "cloud",
+  "files": ["resources"],
+  "pyVerify": "round(dev['current_usd'].sum() - dev['scheduled_usd'].sum(), 2)",
+  "hint": "Current cost minus scheduled cost.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "cld-05-t1",
+  "prompt": "Recommend a **pricing model for each group** of servers (web, API, invoice workers, development, staging), one line each starting with the group and a colon, with the **reason** and any **risk**.",
+  "minutes": 6,
+  "rows": 6,
+  "placeholder": "Web: ...",
+  "rules": [
+    { "label": "A line for each of the five groups", "pattern": "^\\s*[-*]?\\s*(web|api|invoice workers|workers|development|dev|staging)\\s*:", "min": 5 },
+    { "label": "Uses committed pricing somewhere", "pattern": "commit|reserv|savings plan" },
+    { "label": "Uses spot somewhere", "pattern": "spot" },
+    { "label": "Uses a schedule somewhere", "pattern": "schedul|stop (at|outside|overnight)|working hours" },
+    { "label": "Names a risk (interrupt, reclaim, over-commit, lock-in)", "pattern": "interrupt|reclaim|over-?commit|lock|taken back|unused" }
+  ],
+  "sample": "Web: commit for 1 year to the 2 servers needed at all hours, and pay on-demand for anything above that, so the month-end peak isn't committed to.\nAPI: rightsize to large first, then commit for 1 year; the risk is committing before the new size has proved itself, so wait a month.\nInvoice workers: run on spot, with one on-demand server as a floor; if a spot server is reclaimed, its job returns to the queue.\nDevelopment: on-demand with a schedule, 7am to 6pm on weekdays; engineers can start a server out of hours.\nStaging: on-demand with a schedule, and rightsized to small, since it's only used when testing releases.",
+  "note": "Commitments come last, after rightsizing and schedules, so you never commit to waste.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "What should you commit to on a 1-year plan?",
+    "options": ["Your peak usage", "The steady baseline that runs every hour, after rightsizing and clean-up", "Development servers", "Everything"],
+    "answer": 1,
+    "explanation": "Commit to what you'll certainly use."
+  },
+  {
+    "prompt": "Which work suits spot servers?",
+    "options": ["The production database", "Queued jobs that can be retried if a server is taken back", "The load balancer", "The website"],
+    "answer": 1,
+    "explanation": "Spot capacity can be reclaimed at short notice."
+  },
+  {
+    "prompt": "A schedule stops development servers at night. What happens to their data?",
+    "options": ["It's deleted", "It's kept on their disks, and they start again in the morning", "It moves to another region", "It's emailed to the engineer"],
+    "answer": 1,
+    "explanation": "Stopping keeps the disk; only compute stops."
+  }
+]
+```
+$md$, true, true, 5, array['cld-05-p1', 'cld-05-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('cld-m06', 'cloud-fundamentals-cost-reliability', 'Scaling with Demand', 6, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('cloud-fundamentals-cost-reliability:scaling-with-demand', 'cloud-fundamentals-cost-reliability', 'cld-m06', 'scaling-with-demand', 'Scaling with demand', 'Use hourly traffic to see why a fixed number of servers is both too many most of the time and too few at month-end, and design autoscaling rules that fix both.', 25, $md$
+## The problem
+
+Tallybook runs exactly six web servers, all day, every day. At 3am on a Sunday, they're almost idle. On 28 and 31 August, when businesses rushed to send their month-end invoices, traffic nearly doubled, six servers weren't enough, and the app slowed until pages took several seconds to load. Customers couldn't send invoices on the most important days of their month.
+
+The same fixed fleet is wasteful and too small. **Autoscaling** adjusts the number of servers to the traffic.
+
+## The concept
+
+**Capacity**
+
+Each web server can handle about 9,000 requests an hour at full load. Running servers at 100% makes responses slow, so you aim for a **target utilisation**, such as 60%, leaving headroom for sudden rises.
+
+**Servers needed** = requests per hour ÷ (9,000 × target utilisation), rounded up, never below a **minimum** (for resilience, at least 2, in different zones).
+
+**Autoscaling rules**
+
+- **Target tracking**: keep average CPU near a target by adding or removing servers.
+- **Scheduled scaling**: add capacity before known peaks (month-end mornings), because new servers take a few minutes to start.
+- **Limits**: a minimum for resilience, a maximum to cap cost if something goes wrong.
+
+**Latency and load**
+
+Response time rises slowly as utilisation grows, then sharply as servers approach full load. Watching p95 latency against utilisation shows where the danger zone starts.
+
+## Example
+
+```python
+import numpy as np
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/cloud/"
+traffic = pd.read_csv(base + "web_traffic.csv", parse_dates=["hour"])
+CAPACITY = 9_000
+
+traffic["utilisation"] = traffic["requests"] / (traffic["web_servers"] * CAPACITY)
+bands = pd.cut(traffic["utilisation"], [0, 0.25, 0.5, 0.75, 0.9, 2])
+print(traffic.groupby(bands, observed=True)["p95_latency_ms"].agg(["count", "median", "max"]).round(0))
+
+slow = traffic[traffic["p95_latency_ms"] > 1000]
+print("Hours with p95 above 1 second:", len(slow), "on", sorted(slow["hour"].dt.strftime("%d %b").unique()))
+```
+
+```text
+count  median   max
+utilisation
+(0.0, 0.25]    464   197.0   246
+(0.25, 0.5]    132   262.0   334
+(0.5, 0.75]    130   346.0   531
+(0.75, 0.9]      3  1042.0  1187
+(0.9, 2.0]      15  3361.0  3377
+Hours with p95 above 1 second: 17 on ['28 Aug', '31 Aug']
+```
+
+Below about 75% utilisation, latency stays low. Above it, responses slow sharply, and every slow hour was on the two month-end days. Now simulate autoscaling with a 60% target and a minimum of 2 servers:
+
+```python
+TARGET, MINIMUM = 0.6, 2
+traffic["servers_needed"] = np.maximum(MINIMUM, np.ceil(traffic["requests"] / (CAPACITY * TARGET))).astype(int)
+
+fixed_hours = traffic["web_servers"].sum()
+auto_hours = traffic["servers_needed"].sum()
+print("Server-hours in August: fixed", fixed_hours, " autoscaled", auto_hours)
+print("Most servers needed in one hour:", traffic["servers_needed"].max())
+print("Monthly web compute at $0.10 an hour: fixed $", round(fixed_hours * 0.10, 2), " autoscaled $", round(auto_hours * 0.10, 2))
+```
+
+```text
+Server-hours in August: fixed 4464  autoscaled 2529
+Most servers needed in one hour: 12
+Monthly web compute at $0.10 an hour: fixed $ 446.4  autoscaled $ 252.9
+```
+
+Autoscaling uses far fewer server-hours over the month, and at month-end it runs about twice the fixed fleet, keeping utilisation near the target when it matters most. It's cheaper and more reliable at the same time.
+
+## Walkthrough
+
+1. Run the cells. Plot requests and servers needed for the last week of August.
+2. Change the target to 75%. How many server-hours does it save, and what does it risk?
+3. New servers take about 5 minutes to start. Which hours would need scheduled scaling ahead of time?
+4. Write the autoscaling rules (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "cld-06-p1",
+  "prompt": "How many **web server-hours** would autoscaling have used in August?",
+  "answer": 2529,
+  "format": "number",
+  "dataset": "cloud",
+  "files": ["web_traffic"],
+  "pyVerify": "int(traffic['servers_needed'].sum())",
+  "hint": "The autoscaled figure on the first line.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "cld-06-p2",
+  "prompt": "What is the **most** web servers needed in any hour?",
+  "answer": 12,
+  "format": "number",
+  "dataset": "cloud",
+  "files": ["web_traffic"],
+  "pyVerify": "int(traffic['servers_needed'].max())",
+  "hint": "The second line.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "cld-06-t1",
+  "prompt": "Write Tallybook's **autoscaling rules** for the web servers, one per line starting with a dash: a **target** utilisation, a **minimum** (and why), a **maximum**, a **scheduled** rule for month-end, and an **alert**.",
+  "minutes": 6,
+  "rows": 6,
+  "placeholder": "- Target: ...",
+  "rules": [
+    { "label": "At least five rules, each starting with -", "pattern": "^\\s*-\\s+\\S", "min": 5 },
+    { "label": "A target utilisation as a percentage", "pattern": "target[^\\n]*\\d+\\s*%" },
+    { "label": "A minimum with a reason (zones, resilience)", "pattern": "minimum[^\\n]*(zone|resilien|fail|redundan)" },
+    { "label": "A maximum", "pattern": "maximum|max\\b|cap" },
+    { "label": "A scheduled month-end rule", "pattern": "schedul[^\\n]*(month[- ]end|end of the month|last)|month[- ]end[^\\n]*schedul" },
+    { "label": "An alert", "pattern": "alert|notify|page" }
+  ],
+  "sample": "- Target: keep average CPU across web servers near 60%, adding servers above it and removing them below it.\n- Minimum: 2 servers at all times, in different zones, so one zone failing doesn't take the app down.\n- Maximum: 16 servers, so a bug or an attack can't run up an unlimited bill.\n- Scheduled: from 7am on the last two working days of each month, start with at least 10 servers, before traffic arrives.\n- Alert: notify the on-call engineer if the fleet stays at the maximum for 15 minutes or p95 latency passes 1 second.",
+  "note": "The scheduled rule matters because scaling reacts after traffic arrives, and new servers take minutes to start.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why aim for 60% utilisation rather than 100%?",
+    "options": ["To waste money", "Response times rise sharply near full load, and headroom absorbs sudden rises", "Providers require it", "Servers break at 100%"],
+    "answer": 1,
+    "explanation": "Headroom keeps the app fast."
+  },
+  {
+    "prompt": "Why keep a minimum of 2 servers in different zones?",
+    "options": ["It's cheaper", "So one server or zone failing doesn't take the app down", "Autoscaling needs an even number", "For backups"],
+    "answer": 1,
+    "explanation": "Minimums are about resilience."
+  },
+  {
+    "prompt": "Why add scheduled scaling before month-end?",
+    "options": ["It's free", "New servers take minutes to start, so capacity should be ready before the known peak", "Autoscaling doesn't work at month-end", "To test the servers"],
+    "answer": 1,
+    "explanation": "React to the unknown; schedule for the known."
+  }
+]
+```
+$md$, true, true, 6, array['cld-06-p1', 'cld-06-p2', 'cld-06-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('cld-m07', 'cloud-fundamentals-cost-reliability', 'Availability and SLOs', 7, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('cloud-fundamentals-cost-reliability:availability-and-slos', 'cloud-fundamentals-cost-reliability', 'cld-m07', 'availability-and-slos', 'Availability and SLOs', 'Measure availability against a target, calculate how components in series and in parallel combine, and find which single change would remove most of the downtime.', 25, $md$
+## The problem
+
+Tallybook promises customers that the app is available "99.9% of the time". Over June, July and August, there were six outages. Nobody had added them up against the promise, and nobody could say which change would prevent the most downtime: more web servers, a better deployment process, or a different database setup.
+
+## The concept
+
+**SLOs and error budgets**
+
+A **service level objective** (SLO) is an availability target, such as 99.9% a month. The allowed downtime is the **error budget**: 0.1% of a 30-day month is 43.2 minutes. When the budget is spent, reliability work takes priority over new features.
+
+**Components in series**
+
+If the app needs the load balancer **and** the web tier **and** the API **and** the database, its availability is the **product** of theirs. Every component in the chain lowers the total.
+
+**Components in parallel**
+
+If any one of several redundant copies is enough, the chance they're all down at once is the **product of their unavailabilities**. Two copies at 99.5% each give 1 − 0.005² = 99.9975%.
+
+**Single points of failure**
+
+A component with no redundancy (one database in one zone) often dominates downtime, no matter how many web servers you add.
+
+## Example
+
+Downtime by month against a 99.9% SLO:
+
+```python
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/cloud/"
+outages = pd.read_csv(base + "outages.csv", parse_dates=["start"])
+outages["month"] = outages["start"].dt.strftime("%Y-%m")
+
+minutes_in_month = {"2026-06": 30 * 1440, "2026-07": 31 * 1440, "2026-08": 31 * 1440}
+monthly = outages.groupby("month")["minutes"].sum().to_frame("downtime_min")
+monthly["budget_min"] = [round(minutes_in_month[m] * 0.001, 1) for m in monthly.index]
+monthly["availability_pct"] = [round(100 * (1 - d / minutes_in_month[m]), 3) for m, d in zip(monthly.index, monthly["downtime_min"])]
+print(monthly)
+outages.groupby("component")["minutes"].sum().sort_values(ascending=False)
+```
+
+```text
+downtime_min  budget_min  availability_pct
+month
+2026-06            69        43.2            99.840
+2026-07            86        44.6            99.807
+2026-08           102        44.6            99.772
+component
+Database         102
+Web              102
+Load balancer     31
+API               22
+Name: minutes, dtype: int64
+```
+
+Tallybook missed its target every month. The database and the web tier at month-end account for most of the downtime. Now the design arithmetic, with illustrative availabilities for each component:
+
+```python
+def series(*parts):
+    total = 1.0
+    for p in parts:
+        total *= p
+    return total
+
+def parallel(p, copies):
+    return 1 - (1 - p) ** copies
+
+LB, SERVER, DB_SINGLE_ZONE, DB_MULTI_ZONE = 0.9999, 0.995, 0.995, 0.9995   # illustrative
+
+designs = {
+    "now: 6 web, 4 API, single-zone DB": series(LB, parallel(SERVER, 6), parallel(SERVER, 4), DB_SINGLE_ZONE),
+    "multi-zone DB": series(LB, parallel(SERVER, 6), parallel(SERVER, 4), DB_MULTI_ZONE),
+    "multi-zone DB, 2 web, 2 API": series(LB, parallel(SERVER, 2), parallel(SERVER, 2), DB_MULTI_ZONE),
+}
+for name, a in designs.items():
+    print(f"{name}: {a:.5%}  (about {(1 - a) * 30 * 1440:.0f} minutes down in a 30-day month)")
+```
+
+```text
+now: 6 web, 4 API, single-zone DB: 99.49005%  (about 220 minutes down in a 30-day month)
+multi-zone DB: 99.94000%  (about 26 minutes down in a 30-day month)
+multi-zone DB, 2 web, 2 API: 99.93501%  (about 28 minutes down in a 30-day month)
+```
+
+With a single-zone database, the design can't reach 99.9% however many servers it has: the database alone allows more downtime than the whole budget. A multi-zone database (a standby copy in a second zone that takes over automatically) moves the design comfortably past the target. Notice too that the month-end outages weren't a design-availability problem at all: every server was up, there just weren't enough of them (lesson 6).
+
+## Walkthrough
+
+1. Run the cells. Which outages would a multi-zone database have prevented?
+2. Which outage would a gradual deployment (one server at a time) have prevented? Which would certificate expiry alerts have prevented?
+3. Calculate the availability with 3 API servers instead of 4. Does it matter?
+4. Write the reliability plan (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "cld-07-p1",
+  "prompt": "How many minutes of downtime did Tallybook have in **August**?",
+  "answer": 102,
+  "format": "number",
+  "dataset": "cloud",
+  "files": ["outages"],
+  "pyVerify": "int(monthly.loc['2026-08', 'downtime_min'])",
+  "hint": "The 2026-08 row.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "cld-07-p2",
+  "prompt": "What is the error budget for a **30-day** month at 99.9%, in minutes? One decimal place.",
+  "answer": 43.2,
+  "tolerance": 0.05,
+  "format": "number",
+  "dataset": "cloud",
+  "files": ["outages"],
+  "pyVerify": "round(30 * 1440 * 0.001, 1)",
+  "hint": "0.1% of 30 × 1,440 minutes.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "cld-07-t1",
+  "prompt": "Write the **reliability plan**: one line per outage cause starting with a dash, each naming the **change** that prevents it and how much **downtime** it would have saved over the three months.",
+  "minutes": 8,
+  "rows": 6,
+  "placeholder": "- Database: ...",
+  "rules": [
+    { "label": "At least four lines, each starting with -", "pattern": "^\\s*-\\s+\\S", "min": 4 },
+    { "label": "Multi-zone database", "pattern": "multi[- ]zone|second zone|standby" },
+    { "label": "Autoscaling or capacity for month-end", "pattern": "autoscal|scheduled scaling|capacity" },
+    { "label": "Safer deployment (gradual, one server, canary, rollback)", "pattern": "gradual|one (server )?at a time|canary|roll ?back|staged" },
+    { "label": "Certificate renewal or expiry alert", "pattern": "certificate|tls|ssl" },
+    { "label": "Minutes saved", "pattern": "\\d+\\s*min", "min": 3 }
+  ],
+  "sample": "- Database: move to a multi-zone database with automatic failover; prevents both database outages, 102 minutes.\n- Month-end overload: autoscaling with scheduled scaling before month-end (lesson 6); prevents 102 minutes.\n- Faulty release: deploy to one API server at a time with automatic rollback on errors; prevents 22 minutes.\n- Expired certificate: use automatically renewed certificates and alert 30 days before any expiry; prevents 31 minutes.\nTogether these remove all 257 minutes of downtime from the three months.",
+  "note": "Ordering by minutes saved shows where the money and effort should go first.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Four components each 99.9% available, all needed (in series). Roughly what's the total?",
+    "options": ["99.9%", "About 99.6%", "99.99%", "100%"],
+    "answer": 1,
+    "explanation": "Multiply: 0.999⁴ ≈ 0.996."
+  },
+  {
+    "prompt": "Two redundant servers, each 99.5% available. What's the chance both are down?",
+    "options": ["0.5%", "0.0025%", "1%", "99%"],
+    "answer": 1,
+    "explanation": "0.005 × 0.005 = 0.000025."
+  },
+  {
+    "prompt": "What happens when the error budget is spent?",
+    "options": ["Nothing", "Reliability work takes priority over new features until it recovers", "The SLO is raised", "Customers are refunded automatically"],
+    "answer": 1,
+    "explanation": "The budget turns reliability into a planning rule."
+  }
+]
+```
+$md$, true, true, 7, array['cld-07-p1', 'cld-07-p2', 'cld-07-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('cld-m08', 'cloud-fundamentals-cost-reliability', 'Security and Access', 8, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('cloud-fundamentals-cost-reliability:security-and-access', 'cloud-fundamentals-cost-reliability', 'cld-m08', 'security-and-access', 'Security and access', 'Audit who can do what in a cloud account (multi-factor authentication, administrators, people who have left, old access keys, unused service accounts and public storage) and fix the riskiest findings first.', 25, $md$
+## The problem
+
+Cloud breaches rarely involve clever attacks on the provider. They usually come through the customer's own doors: a password without multi-factor authentication, an access key copied into a script years ago, an account belonging to someone who left, or a storage bucket that was made public "for a moment".
+
+Tallybook's account has 20 people and 8 service accounts (logins used by software, such as the deployment pipeline). Nobody has reviewed them since the company was founded. A customer has asked, as part of their own security checks, whether Tallybook follows basic cloud security practice.
+
+## The concept
+
+**Identity and access management (IAM)**
+
+Every person and program that can act in the account is a **principal** with permissions.
+
+| Check | Why it matters |
+| :-- | :-- |
+| **MFA on every person** | a stolen password alone isn't enough to get in |
+| **Few administrators** | each admin account is a full-power target |
+| **Remove people who've left** | their access should end on their last day |
+| **Rotate access keys** | old keys are more likely to have leaked; rotate every 90 days |
+| **Remove unused service accounts** | software that no longer runs shouldn't hold keys |
+| **No unintended public storage** | public buckets are readable by anyone on the internet |
+
+**Least privilege**
+
+Give each principal only the permissions its job needs. Developers rarely need admin; a backup job needs to write backups, not delete databases.
+
+**Fix by risk**
+
+An administrator without MFA, or an admin access key that's two years old, comes before a non-admin's stale key.
+
+## Example
+
+```python
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/cloud/"
+access = pd.read_csv(base + "access.csv")
+resources = pd.read_csv(base + "resources.csv")
+
+people = access[access["kind"] == "person"]
+services = access[access["kind"] == "service account"]
+
+findings = pd.concat([
+    people[people["mfa_enabled"] == 0].assign(finding="person without MFA"),
+    people[people["days_since_last_use"] > 90].assign(finding="person inactive over 90 days"),
+    access[access["oldest_access_key_days"] > 90].assign(finding="access key over 90 days old"),
+    services[services["days_since_last_use"] > 90].assign(finding="service account unused over 90 days"),
+])
+findings["risk"] = findings["admin"].map({1: "high", 0: "medium"})
+print(findings.groupby(["finding", "risk"]).size().unstack(fill_value=0))
+print("Administrators:", int(access["admin"].sum()), "of", len(access))
+```
+
+```text
+risk                                 high  medium
+finding
+access key over 90 days old             4       5
+person inactive over 90 days            1       2
+person without MFA                      0       6
+service account unused over 90 days     1       1
+Administrators: 9 of 28
+```
+
+The high-risk column is where to start: administrator accounts with a weakness. Here they are:
+
+```python
+print(findings[findings["risk"] == "high"][["principal", "kind", "finding", "days_since_last_use", "oldest_access_key_days"]].sort_values("principal").to_string(index=False))
+```
+
+```text
+principal            kind                             finding  days_since_last_use  oldest_access_key_days
+ bisi@tallybook.example          person         access key over 90 days old                   11                   491.0
+              ci-deploy service account         access key over 90 days old                    0                   540.0
+             old-zapier service account         access key over 90 days old                  210                   900.0
+             old-zapier service account service account unused over 90 days                  210                   900.0
+yusuf@tallybook.example          person        person inactive over 90 days                  250                   692.0
+yusuf@tallybook.example          person         access key over 90 days old                  250                   692.0
+```
+
+Now storage open to the internet:
+
+```python
+resources[(resources["type"] == "bucket") & (resources["public_access"] == "yes")][["name", "environment", "team", "storage_gb"]]
+```
+
+```text
+name environment       team  storage_gb
+122         website-assets  production  marketing        40.0
+123  customer-uploads-2024  production        NaN       350.0
+```
+
+`website-assets` is meant to be public: it holds images for the marketing site. `customer-uploads-2024` has no owning team and holds customers' files. It must be made private today, and someone must check whether it has already been accessed.
+
+## Walkthrough
+
+1. Run the cells. Which principals appear in more than one finding?
+2. For each high-risk finding, write the fix and who should do it.
+3. List which of the 20 people actually need admin, based on their roles (assume only the platform lead and CTO do).
+4. Write the security review summary (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "cld-08-p1",
+  "prompt": "How many **people** don't have MFA enabled?",
+  "answer": 6,
+  "format": "number",
+  "dataset": "cloud",
+  "files": ["access"],
+  "pyVerify": "int((people['mfa_enabled'] == 0).sum())",
+  "hint": "The 'person without MFA' row, both risk columns.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "cld-08-p2",
+  "prompt": "How many **high-risk** findings are there in total?",
+  "answer": 6,
+  "format": "number",
+  "dataset": "cloud",
+  "files": ["access"],
+  "pyVerify": "int((findings['risk'] == 'high').sum())",
+  "hint": "Sum the high column.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "cld-08-t1",
+  "prompt": "Write the **security fixes in priority order**, one per numbered line: at least **five**, covering the **public bucket**, **MFA**, **people who have left**, **old keys**, and **too many admins**, each with **when** it will be done.",
+  "minutes": 8,
+  "rows": 7,
+  "placeholder": "1. Today: make customer-uploads-2024 private ...",
+  "rules": [
+    { "label": "At least five numbered fixes", "pattern": "^\\s*\\d+[.)]\\s+\\S", "min": 5 },
+    { "label": "The public bucket first", "pattern": "^\\s*1[.)][^\\n]*(bucket|customer-uploads|public)" },
+    { "label": "MFA", "pattern": "mfa|multi-factor" },
+    { "label": "People who have left", "pattern": "left|leaver|former|inactive|disable" },
+    { "label": "Old keys (rotate)", "pattern": "rotat|old key|replace[^\\n]*key" },
+    { "label": "Fewer admins (least privilege)", "pattern": "admin" },
+    { "label": "Timing (today, this week, by a date)", "pattern": "today|this week|within|by \\w+|days?", "min": 3 }
+  ],
+  "sample": "1. Today: make customer-uploads-2024 private, check its access logs for downloads, and tell the data protection officer.\n2. Today: disable the accounts of the three people who have left, and the unused service accounts old-zapier and legacy-ftp-sync.\n3. Within 2 days: require MFA for the six people without it; block sign-in without it from next week.\n4. This week: rotate every access key older than 90 days, starting with the admin keys used by ci-deploy and old-zapier, and move scripts to short-lived credentials where possible.\n5. Within 2 weeks: reduce administrators to the platform lead and CTO, giving everyone else only the permissions their work needs.\n6. Every quarter: repeat this review and report the findings to the CTO.",
+  "note": "The order follows the damage each finding could do today: exposed customer data first, then doors anyone could walk through.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "An engineer left 6 months ago and their account still works. What's the risk?",
+    "options": ["None", "Anyone with their old password or keys can still act in the account", "It costs money", "It slows the account"],
+    "answer": 1,
+    "explanation": "Access should end on the last day."
+  },
+  {
+    "prompt": "Why rotate access keys?",
+    "options": ["Keys expire anyway", "Old keys are more likely to have been copied or leaked over time", "It's faster", "Providers charge for old keys"],
+    "answer": 1,
+    "explanation": "Rotation limits how long a leaked key works."
+  },
+  {
+    "prompt": "What does least privilege mean?",
+    "options": ["Give everyone admin to avoid delays", "Give each person or program only the permissions its job needs", "Use the cheapest servers", "Remove all permissions"],
+    "answer": 1,
+    "explanation": "Fewer permissions mean less damage when something goes wrong."
+  }
+]
+```
+$md$, true, true, 8, array['cld-08-p1', 'cld-08-p2', 'cld-08-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('cld-m09', 'cloud-fundamentals-cost-reliability', 'Cost Governance and Unit Costs', 9, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('cloud-fundamentals-cost-reliability:cost-governance-and-unit-costs', 'cloud-fundamentals-cost-reliability', 'cld-m09', 'cost-governance-and-unit-costs', 'Cost governance and unit costs', 'Keep cloud costs under control after the clean-up, with ownership, budgets and alerts, and measure cost per unit of business (here, per thousand requests) so growth and waste can be told apart.', 20, $md$
+## The problem
+
+A one-off clean-up saves money once. Six months later, without a process, the waste is back: new test servers, new snapshots, new untagged resources. And a rising bill on its own says nothing about whether Tallybook is wasting money or simply growing.
+
+**FinOps** (cloud financial operations) is the practice of making cloud spending visible, owned and tied to business value, continuously.
+
+## The concept
+
+**Ownership and showback**
+
+Every resource has a team tag, and each team sees its own monthly cost (**showback**). Untagged resources are reported until they're claimed.
+
+**Budgets and alerts**
+
+A monthly budget per team and environment, with alerts at, for example, 80% and 100%, and an alert on unusual daily spikes (the same control-limit idea as monitoring).
+
+**Unit costs**
+
+Divide cost by a measure of business activity: cost per thousand requests, per invoice sent, per active customer. If the bill grows but unit cost stays flat or falls, the growth is the business growing. If unit cost rises, look for waste or a design problem.
+
+**The review cycle**
+
+Monthly: review showback, unit costs and the waste report. Quarterly: review commitments, rightsizing and the architecture.
+
+## Example
+
+Unit cost of the production web service: production cost per thousand web requests, by day, for August:
+
+```python
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/cloud/"
+billing = pd.read_csv(base + "billing.csv", parse_dates=["date"])
+traffic = pd.read_csv(base + "web_traffic.csv", parse_dates=["hour"])
+
+prod = billing[(billing["environment"] == "production") & (billing["date"].dt.month == 8)].groupby("date")["cost_usd"].sum()
+requests = traffic.groupby(traffic["hour"].dt.normalize())["requests"].sum()
+unit = pd.DataFrame({"prod_cost_usd": prod, "requests": requests})
+unit["usd_per_1000_requests"] = unit["prod_cost_usd"] / unit["requests"] * 1000
+print("August average: $", round(unit["prod_cost_usd"].sum() / unit["requests"].sum() * 1000, 4), "per 1,000 requests")
+unit["weekday"] = unit.index.day_name()
+unit.groupby("weekday")["usd_per_1000_requests"].mean().round(4).sort_values()
+```
+
+```text
+August average: $ 0.3586 per 1,000 requests
+weekday
+Friday       0.2804
+Monday       0.2905
+Tuesday      0.3033
+Wednesday    0.3134
+Thursday     0.3145
+Saturday     0.6761
+Sunday       0.7038
+Name: usd_per_1000_requests, dtype: float64
+```
+
+Weekends cost far more per request: the fixed fleet runs at full price for half the traffic. That's the autoscaling saving from lesson 6, seen from the business side. Now showback by team for August, including the untagged spend:
+
+```python
+aug = billing[billing["date"].dt.month == 8]
+showback = aug.groupby(aug["team"].fillna("UNTAGGED"))["cost_usd"].sum().round(2).sort_values(ascending=False)
+showback
+```
+
+```text
+team
+platform     3725.31
+UNTAGGED      901.79
+invoicing     670.02
+payments      348.56
+marketing       0.94
+Name: cost_usd, dtype: float64
+```
+
+## Walkthrough
+
+1. Run the cells. Which day in August had the lowest cost per thousand requests, and why?
+2. Set a monthly budget for each team, 10% above its August spend, and an alert at 80%.
+3. Choose a better unit for Tallybook's business than requests (invoices sent? paying customers?) and say what data you'd need.
+4. Write the governance policy (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "cld-09-p1",
+  "prompt": "What was the August average production cost per **1,000 requests**, in dollars? Four decimal places.",
+  "answer": 0.3586,
+  "tolerance": 0.00006,
+  "format": "number",
+  "dataset": "cloud",
+  "files": ["billing", "web_traffic"],
+  "pyVerify": "round(unit['prod_cost_usd'].sum() / unit['requests'].sum() * 1000, 4)",
+  "hint": "The first line printed.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "cld-09-t1",
+  "prompt": "Write Tallybook's **cloud cost governance policy**, one rule per line starting with a dash: at least **five** rules covering **tags**, **budgets and alerts**, a **unit cost**, the **monthly review**, and **who owns** what.",
+  "minutes": 6,
+  "rows": 7,
+  "placeholder": "- Tags: ...",
+  "rules": [
+    { "label": "At least five rules, each starting with -", "pattern": "^\\s*-\\s+\\S", "min": 5 },
+    { "label": "Required tags", "pattern": "tag" },
+    { "label": "Budgets with alert thresholds", "pattern": "budget[^\\n]*\\d+\\s*%|alert[^\\n]*\\d+\\s*%" },
+    { "label": "A unit cost", "pattern": "per (1,?000|thousand|invoice|customer|request)|unit cost" },
+    { "label": "A monthly review", "pattern": "month" },
+    { "label": "Ownership (team lead, owner, finance)", "pattern": "owner|team lead|finance|cto|responsible" }
+  ],
+  "sample": "- Tags: every resource must have team and environment tags; untagged resources are listed weekly and stopped after 14 days if unclaimed.\n- Budgets: each team has a monthly budget, with alerts to the team lead at 80% and 100%, and a daily spike alert above the 28-day mean + 3 SD.\n- Unit cost: we track production cost per 1,000 requests and per invoice sent, and investigate any month it rises by more than 10%.\n- Monthly review: the CTO, finance and team leads review showback, unit costs and the waste report in the first week of each month.\n- Ownership: each team lead owns their team's spend; the platform lead owns shared costs, commitments and the quarterly rightsizing review.",
+  "note": "Rules with numbers and names are enforceable. 'Keep costs down' isn't.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "The bill rose 20% while cost per 1,000 requests fell 5%. What does that suggest?",
+    "options": ["Waste is growing", "The business grew faster than costs, and efficiency improved", "A billing error", "Nothing"],
+    "answer": 1,
+    "explanation": "Unit costs separate growth from waste."
+  },
+  {
+    "prompt": "What is showback?",
+    "options": ["Refunds from the provider", "Showing each team its own cloud costs, so spending has owners", "A type of server", "A backup"],
+    "answer": 1,
+    "explanation": "Visibility creates accountability."
+  },
+  {
+    "prompt": "Why do weekend requests cost more each at Tallybook?",
+    "options": ["Weekend prices are higher", "The fixed fleet costs the same while traffic halves", "Data transfer is dearer", "Engineers work weekends"],
+    "answer": 1,
+    "explanation": "Fixed capacity with variable demand raises unit cost in quiet periods."
+  }
+]
+```
+$md$, true, true, 9, array['cld-09-p1', 'cld-09-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('cld-m10', 'cloud-fundamentals-cost-reliability', 'Final Project', 10, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('cloud-fundamentals-cost-reliability:final-project', 'cloud-fundamentals-cost-reliability', 'cld-m10', 'final-project', '"Final project: Tallybook''s cloud review"', 'Plan your final project, a cost, reliability and security review of a real-looking cloud estate, with every saving and risk measured and a 90-day plan the leadership can approve.', 20, $md$
+## The problem
+
+Tallybook's CTO and finance director want one document: what the company should change in its cloud, in what order, what it will save, and what it will fix. They'll share it with investors, who have asked how Tallybook will keep cloud costs under control as it grows, and whether the month-end outages will happen again.
+
+Your final project is that review, built from the data in this course.
+
+## The concept
+
+**The parts of the review**
+
+| Part | Built in |
+| :-- | :-- |
+| The bill explained: services, environments, teams, untagged spend, growth | lesson 2 |
+| Savings: clean-up, rightsizing, schedules, pricing models | lessons 3 to 5 |
+| Scaling for month-end | lesson 6 |
+| Reliability: SLO, error budget, design changes | lesson 7 |
+| Security findings and fixes | lesson 8 |
+| Governance and unit costs | lesson 9 |
+
+**Don't double-count savings.** Apply them in order: remove waste first, then rightsize what's left, then schedule, then commit to what remains. Each step's saving is calculated on what the previous step left.
+
+## Example
+
+A savings summary that applies the steps in order (monthly, in dollars, illustrative prices):
+
+```python
+import numpy as np
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/cloud/"
+resources = pd.read_csv(base + "resources.csv", parse_dates=["created_date"])
+util = pd.read_csv(base + "utilisation.csv")
+traffic = pd.read_csv(base + "web_traffic.csv")
+H = 730
+
+vms = resources[(resources["type"] == "vm") & (resources["status"] == "running")].copy()
+cpu = util.groupby("resource_id")["cpu_pct"].agg(p95=lambda x: x.quantile(0.95), peak="max")
+vms = vms.join(cpu, on="resource_id")
+
+idle = vms["peak"] < 5
+steps = {"1. remove idle servers": (vms.loc[idle, "hourly_usd"] * H).sum()}
+vms = vms[~idle]
+api = vms["name"].str.startswith("prod-api")
+steps["2. rightsize API servers (xlarge to large)"] = (api.sum() * (0.20 - 0.10)) * H
+vms.loc[api, "hourly_usd"] = 0.10
+dev = vms["name"].str.startswith("dev-")
+steps["3. schedule development servers"] = (vms.loc[dev, "hourly_usd"] * (H - 11 * 21)).sum()
+web_auto = np.maximum(2, np.ceil(traffic["requests"] / 5_400)).sum()
+steps["4. autoscale web servers"] = (6 * 744 - web_auto) * 0.10 * H / 744
+steps["5. commit 1 year: API servers and 2 web servers (35%)"] = (vms.loc[api, "hourly_usd"].sum() + 2 * 0.10) * H * 0.35
+
+savings = pd.Series(steps).round(2)
+print(savings)
+print("Total monthly saving: $", round(savings.sum(), 2))
+```
+
+```text
+1. remove idle servers                                   292.00
+2. rightsize API servers (xlarge to large)               292.00
+3. schedule development servers                          399.20
+4. autoscale web servers                                 189.86
+5. commit 1 year: API servers and 2 web servers (35%)    153.30
+dtype: float64
+Total monthly saving: $ 1326.36
+```
+
+Add the clean-up of disks, IP addresses and snapshots from lesson 4 to complete the picture, and compare the total with the August bill.
+
+## Walkthrough
+
+1. Complete the savings table with storage clean-up, and express it as a share of the August bill and in naira (with your assumed rate).
+2. Add the reliability changes and their costs: a multi-zone database costs roughly twice a single-zone one.
+3. Rank the security fixes by risk.
+4. Open the project brief on the course page and plan the write-up.
+
+## Practice
+
+```dataset
+{"dataset": "cloud", "files": ["resources", "billing", "utilisation", "web_traffic", "outages", "access"]}
+```
+
+```answer
+{
+  "id": "cld-10-p1",
+  "prompt": "What is the **total monthly saving** from the five steps, in dollars? Two decimal places.",
+  "answer": 1326.36,
+  "tolerance": 0.01,
+  "format": "number",
+  "dataset": "cloud",
+  "files": ["resources", "utilisation", "web_traffic"],
+  "pyVerify": "round(savings.sum(), 2)",
+  "hint": "The last line printed.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "cld-10-t1",
+  "prompt": "Write the **executive summary** of your cloud review (100 to 200 words): the **monthly saving** and its share of the bill, the **reliability** changes and the SLO, the **security** priorities, and the **governance** that keeps it working, ending with a **90-day** plan.",
+  "minutes": 10,
+  "rows": 9,
+  "placeholder": "Tallybook can cut its cloud bill by ...",
+  "rules": [
+    { "label": "A dollar saving", "pattern": "\\$\\s?[\\d,]+" },
+    { "label": "A share of the bill", "pattern": "\\d+(\\.\\d+)?\\s*%" },
+    { "label": "Reliability (SLO, availability, multi-zone, autoscaling)", "pattern": "slo|availab|multi[- ]zone|autoscal|99\\.9" },
+    { "label": "Security (MFA, public, keys, access)", "pattern": "mfa|public|key|access|admin" },
+    { "label": "Governance (tags, budgets, unit cost, review)", "pattern": "tag|budget|unit cost|review|showback" },
+    { "label": "A 90-day plan", "pattern": "90[- ]day|90 days|three months|first month" },
+    { "label": "Between 100 and 200 words", "minWords": 100, "maxWords": 200 }
+  ],
+  "sample": "Tallybook can cut its cloud bill by about $1,300 a month, nearly a quarter of August's $5,650, plus about $640 more by removing forgotten storage, without removing anything customers use: delete idle servers and forgotten storage, halve the oversized API servers, stop development servers at night and weekends, autoscale the web servers and commit for a year to the steady baseline. The same autoscaling fixes the month-end overloads, and moving the database to multiple zones removes the biggest cause of downtime, which together would have kept Tallybook within its 99.9% availability target in all three months. The most urgent security fixes are a public bucket of customer files, accounts of people who have left, six people without MFA and access keys over two years old. To keep costs under control as Tallybook grows, every resource will carry an owner tag, each team gets a budget with alerts, and we will track cost per thousand requests monthly. 90-day plan: security fixes and clean-up in the first two weeks; rightsizing, schedules and autoscaling in the first month; the multi-zone database in month two; commitments and the first quarterly review in month three.",
+  "note": "The order of the 90-day plan follows risk first, then quick savings, then the changes that need testing.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why apply savings steps in order (waste, rightsizing, schedules, commitments)?",
+    "options": ["It looks tidy", "Each step changes what the next applies to, so adding them independently double-counts", "Providers require it", "To delay savings"],
+    "answer": 1,
+    "explanation": "Never commit to, or rightsize, what you're about to delete."
+  },
+  {
+    "prompt": "Which fix comes first in a 90-day plan?",
+    "options": ["Signing a 3-year commitment", "Closing the public bucket of customer files and disabling leavers' access", "Changing the region", "Buying bigger servers"],
+    "answer": 1,
+    "explanation": "Active risks before savings."
+  },
+  {
+    "prompt": "What makes a cloud review credible to investors?",
+    "options": ["Long lists of services", "Every saving and risk measured from the account's own data, with a dated plan", "Promises", "Vendor brochures"],
+    "answer": 1,
+    "explanation": "Measured evidence and a plan."
+  }
+]
+```
+$md$, true, true, 10, array['cld-10-p1', 'cld-10-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+
 -- Course: Data Analyst Capstone: End-to-End BI Project
 insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
-values ('data-analyst-capstone', 'full', null, 'data-analyst-capstone', 'CAP', 'Data Analyst Capstone: End-to-End BI Project', 'Take a retail chain''s raw till export all the way to a reviewed dashboard and a board-ready executive summary, using the tools of your choice.', 'The capstone of the Data Analyst track. Voltline Electronics, a chain of eight stores, sends you 18 months of raw till data and one question from its chief executive: what''s really driving our 37% growth? You''ll plan the analysis, profile and clean a genuinely messy export (a duplicated upload, mixed date formats, inconsistent store names and test transactions), build a model that looks up costs by date and compares sales with monthly targets, decompose the growth, find what''s going wrong where, and put a value on missed sales. Then you''ll build a dashboard, write an executive summary, prepare for the board''s questions and publish the project for your portfolio. Use Excel, Power BI, SQL or Python: the work is assessed on the answers, not the tool.', 'data-analytics', 'intermediate', 4, 'Career project', 14, true, 'available', true, array['Turning a business brief into an analysis plan', 'Profiling and cleaning raw data with a quality log', 'Modelling data at the right grain', 'Decomposing growth into price, new stores and volume', 'Judging targets fairly', 'Estimating lost sales with stated assumptions', 'Finding-led dashboards and executive summaries', 'Presenting and publishing a portfolio project']::text[], array['The core Data Analyst courses: Excel, SQL and Power BI (or Python)', 'Comfort cleaning data and building a dashboard in at least one tool']::text[], 'Voltline Electronics: commercial review', true, true, true, true, false, 60, 32)
+values ('data-analyst-capstone', 'full', null, 'data-analyst-capstone', 'CAP', 'Data Analyst Capstone: End-to-End BI Project', 'Take a retail chain''s raw till export all the way to a reviewed dashboard and a board-ready executive summary, using the tools of your choice.', 'The capstone of the Data Analyst track. Voltline Electronics, a chain of eight stores, sends you 18 months of raw till data and one question from its chief executive: what''s really driving our 37% growth? You''ll plan the analysis, profile and clean a genuinely messy export (a duplicated upload, mixed date formats, inconsistent store names and test transactions), build a model that looks up costs by date and compares sales with monthly targets, decompose the growth, find what''s going wrong where, and put a value on missed sales. Then you''ll build a dashboard, write an executive summary, prepare for the board''s questions and publish the project for your portfolio. Use Excel, Power BI, SQL or Python: the work is assessed on the answers, not the tool.', 'data-analytics', 'intermediate', 4, 'Career project', 14, true, 'available', true, array['Turning a business brief into an analysis plan', 'Profiling and cleaning raw data with a quality log', 'Modelling data at the right grain', 'Decomposing growth into price, new stores and volume', 'Judging targets fairly', 'Estimating lost sales with stated assumptions', 'Finding-led dashboards and executive summaries', 'Presenting and publishing a portfolio project']::text[], array['The core Data Analyst courses: Excel, SQL and Power BI (or Python)', 'Comfort cleaning data and building a dashboard in at least one tool']::text[], 'Voltline Electronics: commercial review', true, true, true, true, false, 60, 33)
 on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level = excluded.level, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
@@ -43761,6 +45446,108 @@ values ('opsq12', 1, 'Fix systems, not people.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 
+-- Assessment: Cloud Fundamentals: final assessment
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('cloud-fundamentals-cost-reliability-final', 'cloud-fundamentals-cost-reliability', 'final', null, 'Cloud Fundamentals: final assessment', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cldq01', 'cloud-fundamentals-cost-reliability-final', 1, 'A storage bucket of customer files is left public. Under the shared responsibility model, who is responsible?', '["The cloud provider","The customer, who configured the bucket","Nobody","The customer''s bank"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cldq01', 1, 'You secure what you configure.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cldq02', 'cloud-fundamentals-cost-reliability-final', 2, 'Why must every resource carry a team tag?', '["Providers charge less for tagged resources","So costs can be allocated to an owner who is accountable for them","Tags make servers faster","For backups"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cldq02', 1, 'Untagged spend has no owner.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cldq03', 'cloud-fundamentals-cost-reliability-final', 3, 'A server averages 12% CPU but reaches 85% every afternoon. Should it be halved in size?', '["Yes, the average is low","No: size on peaks such as p95, and its afternoon peak would overload a smaller server","Yes, peaks don''t matter","Delete it"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cldq03', 1, 'Averages hide peaks.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cldq04', 'cloud-fundamentals-cost-reliability-final', 4, 'A VM was stopped months ago. What is still billed?', '["Nothing","Its disk storage","Its CPU","Its region"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cldq04', 1, 'Stopping ends compute charges, not storage.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cldq05', 'cloud-fundamentals-cost-reliability-final', 5, 'Development servers are used 7am to 6pm on weekdays. What''s the biggest saving?', '["A 3-year commitment","A schedule that stops them outside those hours","Bigger servers","Spot pricing for production"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cldq05', 1, 'They''re idle about two-thirds of the week.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cldq06', 'cloud-fundamentals-cost-reliability-final', 6, 'What should a 1-year commitment cover?', '["Peak month-end capacity","The steady baseline that runs every hour, after rightsizing","Development servers","All servers"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cldq06', 1, 'Never commit to what you might remove.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cldq07', 'cloud-fundamentals-cost-reliability-final', 7, 'Which work suits spot servers?', '["The only database","Queued jobs that can be retried if a server is reclaimed","The load balancer","Login service"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cldq07', 1, 'Spot capacity can be taken back at short notice.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cldq08', 'cloud-fundamentals-cost-reliability-final', 8, 'Traffic doubles on the last working days of each month. Which scaling setup fits?', '["A fixed fleet sized for the average","Autoscaling with a target utilisation, plus scheduled scaling before month-end","A fixed fleet sized for the peak all month","No servers on weekends"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cldq08', 1, 'React to the unknown; schedule for the known.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cldq09', 'cloud-fundamentals-cost-reliability-final', 9, 'An SLO of 99.9% in a 30-day month allows about how much downtime?', '["4 minutes","43 minutes","7 hours","1 day"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cldq09', 1, '0.1% of 43,200 minutes is 43.2.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cldq10', 'cloud-fundamentals-cost-reliability-final', 10, 'The app needs a load balancer, web servers and a single-zone database at 99.5%. Adding web servers won''t reach 99.9%. Why?', '["Web servers are unreliable","Components in series multiply, and the single database alone allows more downtime than the budget","Load balancers fail often","It will, with enough servers"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cldq10', 1, 'Fix the single point of failure.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cldq11', 'cloud-fundamentals-cost-reliability-final', 11, 'Which access finding should be fixed first?', '["A non-admin key 100 days old","An administrator account of someone who left the company, still active","A service account used daily","A person with MFA"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cldq11', 1, 'Full power plus nobody watching.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cldq12', 'cloud-fundamentals-cost-reliability-final', 12, 'The bill rose 25% while cost per 1,000 requests fell. What does this suggest?', '["Waste is growing","The business grew and efficiency improved","A billing error","Prices rose"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cldq12', 1, 'Unit costs separate growth from waste.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
 -- Assessment: Prompting Essentials: module check
 insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
 values ('aipf-m01-check', 'ai-productivity-fundamentals', 'module', 'aipf-m01', 'Prompting Essentials: module check', 60, true)
@@ -47073,6 +48860,14 @@ Work in Google Colab with the llmops dataset. Submit a link to your notebook (sh
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
 
 
+-- Project: Tallybook's cloud review
+insert into public.projects (id, course_id, title, summary, brief_md, tasks, datasets, rubric, required)
+values ('cld-tallybook-review', 'cloud-fundamentals-cost-reliability', 'Tallybook''s cloud review', 'A cost, reliability and security review of a SaaS company''s cloud estate, with measured savings applied in order, a reliability plan against its SLO, prioritised security fixes and a 90-day plan.', $md$Tallybook's CTO and finance director want to know what to change in their cloud, in what order, what it will save and what it will fix, in a form they can share with investors.
+
+Work in Google Colab with the cloud dataset. Submit a link to your notebook (shared so anyone with the link can view it), and paste your **savings table**, your **reliability plan** and your **executive summary** below, followed by a short note on where each task is answered.$md$, array['The bill: spend by service, environment and team, the untagged share, the naira cost at a stated exchange rate, and why it grew.', 'Savings: idle and forgotten resources, rightsizing, schedules, autoscaling and commitments, applied in order without double-counting.', 'Scaling: autoscaling rules for the web servers, tested on August''s traffic, including month-end.', 'Reliability: availability against the 99.9% SLO for each month, the design arithmetic, and the changes that remove the most downtime.', 'Security: access and storage findings ranked by risk, with fixes and dates.', 'Governance: tags, budgets, alerts, unit costs and a review cycle, with owners.', 'An executive summary with a 90-day plan.']::text[], array['cloud']::text[], array['The bill is explained in business terms, with ownership and currency made explicit.', 'Every saving is calculated from the account''s own data, in a sensible order, with risks stated.', 'Scaling and rightsizing decisions use peaks, not averages, and keep headroom.', 'Reliability is measured against the SLO, and design changes are justified by the arithmetic and the outage log.', 'Security findings are prioritised by the damage they could do now.', 'Governance rules are specific, measurable and owned.', 'The summary leads with decisions and a dated plan.']::text[], true)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
+
+
 -- Track: Become a Data Analyst
 insert into public.tracks (id, slug, title, summary, badge_name, badge_code, skills, position, published)
 values ('data-analyst', 'data-analyst', 'Become a Data Analyst', 'The route we recommend from no experience to a junior data analyst role. Learn how analysis works, then the tools teams use every day (Excel, SQL, Power BI and Python) on realistic company data. Build portfolio projects that answer real business questions, and finish with your CV, LinkedIn and interview preparation.', 'CloudTech Data Analyst', 'DATAANALYST', array['Spreadsheet analysis in Excel', 'Statistics: averages, spread, confidence intervals and tests', 'Querying databases with SQL, from first SELECT to cohorts and window functions', 'Data modelling and star schemas', 'Dashboards in Power BI, with DAX measures you can trust', 'Analysis in Python and pandas', 'Turning data into findings a manager can act on']::text[], 1, true)
@@ -47277,9 +49072,37 @@ values ('ai-engineer', 'build-your-student-portfolio', 'Career', false, 9)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 
+-- Track: Become a Cloud & DevOps Engineer
+insert into public.tracks (id, slug, title, summary, badge_name, badge_code, skills, position, published)
+values ('cloud-devops-engineer', 'cloud-devops-engineer', 'Become a Cloud & DevOps Engineer', 'The route to cloud and DevOps roles. Start by understanding what a cloud estate costs, how reliable it is and who can access it, using a real company''s account data, then learn to build and ship infrastructure as code, automate testing and deployment, and keep systems running. Employers hire cloud engineers who can explain a bill and prevent an outage, not just launch servers.', 'CloudTech Cloud & DevOps Engineer', 'CLOUDDEVOPS', array['Cloud services, regions and shared responsibility', 'Cost analysis, rightsizing and pricing models', 'Autoscaling and availability design', 'Access management and security reviews', 'Infrastructure as code and CI/CD', 'Monitoring, alerts and incident response']::text[], 5, true)
+on conflict (id) do update set slug = excluded.slug, title = excluded.title, summary = excluded.summary, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, position = excluded.position, published = excluded.published;
+
+delete from public.track_courses where track_id = 'cloud-devops-engineer';
+
+insert into public.track_courses (track_id, course_id, stage, required, position)
+values ('cloud-devops-engineer', 'python-for-data-analytics', 'Foundation', true, 1)
+on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
+
+insert into public.track_courses (track_id, course_id, stage, required, position)
+values ('cloud-devops-engineer', 'cloud-fundamentals-cost-reliability', 'Core', true, 2)
+on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
+
+insert into public.track_courses (track_id, course_id, stage, required, position)
+values ('cloud-devops-engineer', 'llm-evaluation-safety-production', 'Specialist', false, 3)
+on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
+
+insert into public.track_courses (track_id, course_id, stage, required, position)
+values ('cloud-devops-engineer', 'career-essentials', 'Career', true, 4)
+on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
+
+insert into public.track_courses (track_id, course_id, stage, required, position)
+values ('cloud-devops-engineer', 'build-your-student-portfolio', 'Career', false, 5)
+on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
+
+
 -- Track: Career & Study Skills
 insert into public.tracks (id, slug, title, summary, badge_name, badge_code, skills, position, published)
-values ('career-study-skills', 'career-study-skills', 'Career & Study Skills', 'The practical skills that sit under every career: using AI honestly and well, researching and citing properly, everyday digital tools, and a CV, LinkedIn profile and portfolio that get you noticed. Short courses you can finish alongside school or work.', 'CloudTech Career Ready', 'CAREERREADY', array['Using AI assistants well and honestly', 'Research and referencing', 'Professional email and digital tools', 'CV, LinkedIn and portfolio']::text[], 5, true)
+values ('career-study-skills', 'career-study-skills', 'Career & Study Skills', 'The practical skills that sit under every career: using AI honestly and well, researching and citing properly, everyday digital tools, and a CV, LinkedIn profile and portfolio that get you noticed. Short courses you can finish alongside school or work.', 'CloudTech Career Ready', 'CAREERREADY', array['Using AI assistants well and honestly', 'Research and referencing', 'Professional email and digital tools', 'CV, LinkedIn and portfolio']::text[], 6, true)
 on conflict (id) do update set slug = excluded.slug, title = excluded.title, summary = excluded.summary, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, position = excluded.position, published = excluded.published;
 
 delete from public.track_courses where track_id = 'career-study-skills';

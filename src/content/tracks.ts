@@ -288,6 +288,59 @@ export const TRACKS: Track[] = [
     ],
   },
   {
+    id: "cloud-devops-engineer",
+    slug: "cloud-devops-engineer",
+    title: "Become a Cloud & DevOps Engineer",
+    outcome: "Run cloud systems that are affordable, reliable and secure",
+    summary:
+      "The route to cloud and DevOps roles. Start by understanding what a cloud estate costs, how reliable it is and who can access it, using a real company's account data, then learn to build and ship infrastructure as code, automate testing and deployment, and keep systems running. Employers hire cloud engineers who can explain a bill and prevent an outage, not just launch servers.",
+    badge: "CloudTech Cloud & DevOps Engineer",
+    badgeCode: "CLOUDDEVOPS",
+    skills: [
+      "Cloud services, regions and shared responsibility",
+      "Cost analysis, rightsizing and pricing models",
+      "Autoscaling and availability design",
+      "Access management and security reviews",
+      "Infrastructure as code and CI/CD",
+      "Monitoring, alerts and incident response",
+    ],
+    stages: [
+      {
+        title: "Foundation",
+        summary: "The cloud itself, and enough code to analyse it.",
+        items: [
+          { kind: "course", courseId: "python-for-data-analytics", why: "pandas for analysing bills, utilisation and logs." },
+          { kind: "upcoming", title: "Linux and Networking Basics", why: "The command line, processes, DNS, ports and HTTP: what every server runs on.", level: 1 },
+        ],
+      },
+      {
+        title: "Core",
+        summary: "Understand, build and ship cloud systems.",
+        items: [
+          { kind: "course", courseId: "cloud-fundamentals-cost-reliability", why: "Cost, rightsizing, scaling, availability and access, on a real-looking company's cloud account." },
+          { kind: "upcoming", title: "Infrastructure as Code with Terraform", why: "Define servers, networks and permissions in reviewed, versioned code.", level: 3 },
+          { kind: "upcoming", title: "CI/CD and Containers", why: "Build, test and deploy automatically with Docker and pipelines, one safe step at a time.", level: 3 },
+        ],
+      },
+      {
+        title: "Specialist",
+        summary: "Keep systems running in production.",
+        items: [
+          { kind: "course", courseId: "llm-evaluation-safety-production", why: "Release gates, control-limit alerts and blameless postmortems, applied to a live service.", required: false },
+          { kind: "upcoming", title: "Observability and Site Reliability", why: "Logs, metrics, traces, SLOs and on-call practice for real systems.", level: 4 },
+        ],
+      },
+      {
+        title: "Career",
+        summary: "Turn your skills into applications that get interviews.",
+        items: [
+          { kind: "course", courseId: "career-essentials", why: "An ATS-friendly CV and a LinkedIn profile recruiters can find." },
+          { kind: "course", courseId: "build-your-student-portfolio", why: "One link that shows your cloud reviews and infrastructure code.", required: false },
+        ],
+      },
+    ],
+  },
+  {
     id: "career-study-skills",
     slug: "career-study-skills",
     title: "Career & Study Skills",

@@ -14,7 +14,7 @@
     "datasets:meta": "node scripts/dataset-meta.mjs",
     "seed": "node scripts/build-seed.mjs",
     "test:content": "node scripts/test-content.mjs",
-    "test:python": "py scripts/test-python.py --fresh python-analytics statistics ml features experiments forecasting genai agents llmops && py scripts/test-python.py python python-data",
+    "test:python": "py scripts/test-python.py --fresh python-analytics statistics ml features experiments forecasting genai agents llmops cloud && py scripts/test-python.py python python-data",
     "brand:assets": "node scripts/generate-brand-assets.mjs",
     "images": "node scripts/image-sizes.mjs"
   },

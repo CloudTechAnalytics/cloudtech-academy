@@ -1787,6 +1787,140 @@ function llmops() {
   return { eval_cases, eval_results, redteam_attacks, redteam_results, guardrail_reviews, daily_metrics, incidents };
 }
 
+/* ------------------------------------------------------------------ cloud (a SaaS company's cloud estate) */
+// Tallybook, a Lagos invoicing app for small businesses, runs on a public cloud: its resource
+// inventory, three months of daily billing, a month of hourly utilisation and web traffic,
+// outages, and user and access-key records. Prices are illustrative. All of it is fictional.
+// Generated last, from its own seed.
+function cloud() {
+  seed = 20270601;
+  const SIZES = { small: [1, 2, 0.025], medium: [2, 4, 0.05], large: [4, 16, 0.1], xlarge: [8, 32, 0.2] };
+  const BLANK = { resource_id: "", type: "", name: "", environment: "", team: "", region: "af-south-1", size: "", vcpus: "", memory_gb: "", storage_gb: "", hourly_usd: 0, status: "running", created_date: "2025-11-01", attached_to: "", public_access: "" };
+  const resources = [];
+  let rn = 0;
+  const add = (o) => {
+    const r = { ...BLANK, ...o, resource_id: `r-${String(++rn).padStart(4, "0")}` };
+    r.hourly_usd = +r.hourly_usd.toFixed(5);
+    resources.push(r);
+    return r;
+  };
+  const disk = (vm, gb) => add({ type: "disk", name: `${vm.name}-disk`, environment: vm.environment, team: vm.team, storage_gb: gb, hourly_usd: (gb * 0.1) / 730, status: "attached", created_date: vm.created_date, attached_to: vm.resource_id });
+  const vm = (name, size, env, team, profile, opts = {}) => {
+    const v = add({ type: "vm", name, environment: env, team, size, vcpus: SIZES[size][0], memory_gb: SIZES[size][1], hourly_usd: SIZES[size][2], ...opts });
+    v._profile = profile;
+    disk(v, opts._disk ?? pick([50, 100, 100, 200]));
+    return v;
+  };
+  for (let i = 1; i <= 6; i++) vm(`prod-web-0${i}`, "large", "production", "platform", "web");
+  for (let i = 1; i <= 4; i++) vm(`prod-api-0${i}`, "xlarge", "production", "platform", "api");
+  for (let i = 1; i <= 3; i++) vm(`prod-worker-0${i}`, "large", "production", "invoicing", "worker");
+  for (let i = 1; i <= 6; i++) vm(`staging-${["web", "web", "api", "api", "worker", "db-tools"][i - 1]}-0${i}`, "medium", "staging", "platform", "staging");
+  for (let i = 1; i <= 12; i++) vm(`dev-${["ada", "tunde", "ngozi", "musa", "kemi", "obi", "sade", "uche", "zainab", "femi", "ifeoma", "dapo"][i - 1]}`, i % 3 ? "medium" : "large", "development", i <= 6 ? "invoicing" : "payments", "dev", { created_date: i > 8 ? "2026-07-06" : "2026-01-15" });
+  vm("test-old-migration", "xlarge", "development", "", "idle", { created_date: "2025-03-10", _disk: 500 });
+  vm("tmp-load-test", "large", "", "", "idle", { created_date: "2025-06-02" });
+  vm("poc-reports", "large", "development", "", "idle", { created_date: "2025-08-19" });
+  for (const n of ["old-ftp", "legacy-cron", "demo-2025", "vpn-test"]) vm(n, "medium", "development", pick(["platform", ""]), "stopped", { status: "stopped", created_date: "2025-0" + int(2, 9) + "-01" });
+  // Disks left behind when their VMs were deleted.
+  for (let k = 1; k <= 8; k++) add({ type: "disk", name: `vol-${int(1000, 9999)}`, environment: pick(["development", "staging", ""]), team: pick(["", "", "platform"]), storage_gb: pick([100, 200, 500, 1000]), hourly_usd: 0, status: "unattached", created_date: iso(d("2025-01-01") + int(0, 400) * day) });
+  for (const r of resources) if (r.type === "disk" && r.status === "unattached") r.hourly_usd = +((r.storage_gb * 0.1) / 730).toFixed(5);
+  for (let k = 1; k <= 36; k++) {
+    const gb = pick([50, 100, 200, 500]);
+    add({ type: "snapshot", name: `snap-${k}`, environment: pick(["production", "production", "development", "staging"]), team: pick(["platform", "platform", ""]), storage_gb: gb, hourly_usd: (gb * 0.05) / 730, status: "available", created_date: iso(d("2024-06-01") + int(0, 800) * day) });
+  }
+  const buckets = [["invoices-prod", 1800, "production", "invoicing", "no"], ["db-backups", 4000, "production", "platform", "no"], ["website-assets", 40, "production", "marketing", "yes"], ["customer-uploads-2024", 350, "production", "", "yes"], ["app-logs", 2500, "production", "platform", "no"], ["dev-scratch", 600, "development", "", "no"]];
+  for (const [name, gb, env, team, pub] of buckets) add({ type: "bucket", name, environment: env, team, storage_gb: gb, hourly_usd: (gb * 0.023) / 730, status: "available", public_access: pub });
+  add({ type: "database", name: "prod-db", environment: "production", team: "platform", size: "xlarge", vcpus: 8, memory_gb: 32, storage_gb: 500, hourly_usd: 0.45 });
+  add({ type: "database", name: "staging-db", environment: "staging", team: "platform", size: "large", vcpus: 4, memory_gb: 16, storage_gb: 200, hourly_usd: 0.23 });
+  add({ type: "load_balancer", name: "prod-lb", environment: "production", team: "platform", hourly_usd: 0.025 });
+  add({ type: "load_balancer", name: "staging-lb", environment: "staging", team: "platform", hourly_usd: 0.025 });
+  for (let k = 1; k <= 3; k++) add({ type: "public_ip", name: `ip-unused-${k}`, environment: "", team: "", hourly_usd: 0.005, status: "unattached", created_date: "2025-0" + (k + 3) + "-15" });
+
+  // Hourly web traffic for August 2026. Each web server handles about 9,000 requests an hour at
+  // full load. Month-end invoicing nearly doubles traffic on the last working days.
+  const HOURS = [];
+  for (let t = Date.parse("2026-08-01T00:00:00Z"); t < Date.parse("2026-09-01T00:00:00Z"); t += 3600000) HOURS.push(t);
+  const SHAPE = [0.03, 0.02, 0.02, 0.02, 0.03, 0.08, 0.25, 0.55, 0.85, 1, 1, 0.95, 0.9, 0.95, 1, 0.95, 0.85, 0.7, 0.5, 0.35, 0.25, 0.15, 0.08, 0.05];
+  const web_traffic = [];
+  const loadAt = {};
+  for (const t of HOURS) {
+    const dt = new Date(t);
+    const h = dt.getUTCHours();
+    const dow = dt.getUTCDay();
+    const date = iso(t);
+    let req = 30000 * SHAPE[h] * (dow === 0 || dow === 6 ? 0.45 : 1) * (0.9 + rand() * 0.2) + 400;
+    if (date === "2026-08-28" || date === "2026-08-31") req *= 1.9;
+    req = Math.round(req);
+    const util = req / (6 * 9000);
+    const p95 = Math.round(170 * Math.pow(1 / (1 - Math.min(util, 0.97)), 0.85) + rand() * 30);
+    web_traffic.push({ hour: new Date(t).toISOString().slice(0, 13).replace("T", " ") + ":00", requests: req, web_servers: 6, p95_latency_ms: p95 });
+    loadAt[t] = util;
+  }
+  const utilisation = [];
+  for (const r of resources.filter((x) => x.type === "vm" && x.status === "running")) {
+    for (const t of HOURS) {
+      const dt = new Date(t);
+      const h = dt.getUTCHours();
+      const weekday = dt.getUTCDay() % 6 !== 0;
+      const busy = SHAPE[h] * (weekday ? 1 : 0.45);
+      let cpu, mem;
+      switch (r._profile) {
+        case "web": cpu = 4 + 80 * loadAt[t] + (rand() - 0.5) * 6; mem = 45 + 15 * loadAt[t] + rand() * 5; break;
+        case "api": cpu = 8 + 20 * busy + (rand() - 0.5) * 6; mem = 24 + 8 * busy + rand() * 4; break;
+        case "worker": cpu = 20 + 35 * busy + (rand() - 0.5) * 10; mem = 48 + 10 * busy + rand() * 5; break;
+        case "staging": cpu = 3 + rand() * 4; mem = 18 + rand() * 4; break;
+        case "dev": cpu = weekday && h >= 7 && h < 18 ? 12 + rand() * 25 : 1 + rand() * 2; mem = weekday && h >= 7 && h < 18 ? 30 + rand() * 20 : 12 + rand() * 3; break;
+        default: cpu = 0.3 + rand() * 0.6; mem = 6 + rand() * 2;
+      }
+      utilisation.push({ resource_id: r.resource_id, hour: new Date(t).toISOString().slice(0, 13).replace("T", " ") + ":00", cpu_pct: +clampPct(cpu).toFixed(1), memory_pct: +clampPct(mem).toFixed(1) });
+    }
+  }
+
+  // Daily billing, June to August 2026.
+  const SERVICE = { vm: "Compute", disk: "Block storage", snapshot: "Snapshots", bucket: "Object storage", database: "Managed database", load_balancer: "Load balancing", public_ip: "Public IPs" };
+  const billing = [];
+  for (let t = d("2026-06-01"); t <= d("2026-08-31"); t += day) {
+    const date = iso(t);
+    for (const r of resources) {
+      if (r.created_date > date) continue;
+      if (r.type === "vm" && r.status !== "running") continue;
+      billing.push({ date, resource_id: r.resource_id, service: SERVICE[r.type], environment: r.environment, team: r.team, cost_usd: +(r.hourly_usd * 24).toFixed(4) });
+    }
+    const gbOut = 300 + (t - d("2026-06-01")) / day * 1.5 + rand() * 80 + (date.endsWith("-28") || date.endsWith("-31") || date.endsWith("-30") ? 250 : 0);
+    billing.push({ date, resource_id: "", service: "Data transfer", environment: "production", team: "platform", cost_usd: +(gbOut * 0.09).toFixed(4) });
+  }
+
+  const outages = [
+    { outage_id: "OUT-01", start: "2026-06-09 02:14", minutes: 38, component: "Database", cause: "Single-zone database restarted for provider maintenance" },
+    { outage_id: "OUT-02", start: "2026-06-23 09:05", minutes: 31, component: "Load balancer", cause: "TLS certificate expired" },
+    { outage_id: "OUT-03", start: "2026-07-02 16:40", minutes: 22, component: "API", cause: "Faulty release deployed to all API servers at once" },
+    { outage_id: "OUT-04", start: "2026-07-21 11:02", minutes: 64, component: "Database", cause: "Power failure in the zone hosting the single-zone database" },
+    { outage_id: "OUT-05", start: "2026-08-28 10:15", minutes: 47, component: "Web", cause: "Month-end traffic exceeded the fixed web fleet" },
+    { outage_id: "OUT-06", start: "2026-08-31 09:40", minutes: 55, component: "Web", cause: "Month-end traffic exceeded the fixed web fleet" },
+  ];
+
+  const people = ["ada", "tunde", "ngozi", "musa", "kemi", "obi", "sade", "uche", "zainab", "femi", "ifeoma", "dapo", "bisi", "kunle", "halima", "chinedu", "amaka", "yusuf", "tobi", "sola"];
+  const access = [];
+  people.forEach((p, i) => {
+    const left = i >= 17; // three people who have left the company
+    access.push({
+      principal: `${p}@tallybook.example`,
+      kind: "person",
+      mfa_enabled: i % 4 === 3 || i === 18 ? 0 : 1,
+      admin: [0, 1, 5, 12, 17, 13].includes(i) ? 1 : 0,
+      days_since_last_use: left ? int(120, 260) : int(0, 20),
+      oldest_access_key_days: i % 5 === 2 ? int(200, 700) : "",
+    });
+  });
+  for (const [n, adm, age, last] of [["ci-deploy", 1, 540, 0], ["invoice-worker", 0, 120, 0], ["backup-job", 0, 400, 1], ["reporting-export", 0, 60, 2], ["old-zapier", 1, 900, 210], ["monitoring", 0, 30, 0], ["legacy-ftp-sync", 0, 820, 300], ["terraform", 1, 75, 3]]) {
+    access.push({ principal: n, kind: "service account", mfa_enabled: "", admin: adm, days_since_last_use: last, oldest_access_key_days: age });
+  }
+  const strip = (o) => Object.fromEntries(Object.entries(o).filter(([k]) => !k.startsWith("_")));
+  return { resources: resources.map(strip), billing, utilisation, web_traffic, outages, access };
+}
+function clampPct(x) {
+  return Math.max(0, Math.min(100, x));
+}
+
 /* ------------------------------------------------------------------ write */
 const SQL = await initSqlJs();
 const L = logistics();
@@ -1827,6 +1961,7 @@ for (const [table, rows] of Object.entries(demand())) writeCsv("demand", table, 
 for (const [table, rows] of Object.entries(genai())) writeCsv("genai", table, rows);
 for (const [table, rows] of Object.entries(agents())) writeCsv("agents", table, rows);
 for (const [table, rows] of Object.entries(llmops())) writeCsv("llmops", table, rows);
+for (const [table, rows] of Object.entries(cloud())) writeCsv("cloud", table, rows);
 
 // Summary for the build log
 const counts = db.exec("SELECT (SELECT COUNT(*) FROM customers), (SELECT COUNT(*) FROM shipments), (SELECT COUNT(*) FROM payments), (SELECT COUNT(*) FROM routes), (SELECT COUNT(*) FROM employees)")[0].values[0];

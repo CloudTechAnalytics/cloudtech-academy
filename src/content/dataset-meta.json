@@ -936,6 +936,645 @@
    }
   }
  },
+ "cloud": {
+  "zipBytes": 194219,
+  "files": {
+   "access": {
+    "rows": 28,
+    "bytes": 1158,
+    "columns": [
+     {
+      "name": "principal",
+      "type": "text",
+      "missing": 0,
+      "distinct": 28
+     },
+     {
+      "name": "kind",
+      "type": "text",
+      "missing": 0,
+      "distinct": 2
+     },
+     {
+      "name": "mfa_enabled",
+      "type": "number",
+      "missing": 8,
+      "distinct": 2,
+      "min": 0,
+      "max": 1
+     },
+     {
+      "name": "admin",
+      "type": "number",
+      "missing": 0,
+      "distinct": 2,
+      "min": 0,
+      "max": 1
+     },
+     {
+      "name": "days_since_last_use",
+      "type": "number",
+      "missing": 0,
+      "distinct": 19,
+      "min": 0,
+      "max": 300
+     },
+     {
+      "name": "oldest_access_key_days",
+      "type": "number",
+      "missing": 16,
+      "distinct": 12,
+      "min": 30,
+      "max": 900
+     }
+    ],
+    "preview": [
+     [
+      "ada@tallybook.example",
+      "person",
+      "1",
+      "1",
+      "14",
+      ""
+     ],
+     [
+      "tunde@tallybook.example",
+      "person",
+      "1",
+      "1",
+      "11",
+      ""
+     ],
+     [
+      "ngozi@tallybook.example",
+      "person",
+      "1",
+      "0",
+      "14",
+      "266"
+     ],
+     [
+      "musa@tallybook.example",
+      "person",
+      "0",
+      "0",
+      "17",
+      ""
+     ],
+     [
+      "kemi@tallybook.example",
+      "person",
+      "1",
+      "0",
+      "18",
+      ""
+     ],
+     [
+      "obi@tallybook.example",
+      "person",
+      "1",
+      "1",
+      "4",
+      ""
+     ]
+    ]
+   },
+   "billing": {
+    "rows": 11522,
+    "bytes": 605957,
+    "columns": [
+     {
+      "name": "date",
+      "type": "date",
+      "missing": 0,
+      "distinct": 92,
+      "min": "2026-06-01",
+      "max": "2026-08-31"
+     },
+     {
+      "name": "resource_id",
+      "type": "text",
+      "missing": 92,
+      "distinct": 129
+     },
+     {
+      "name": "service",
+      "type": "text",
+      "missing": 0,
+      "distinct": 8
+     },
+     {
+      "name": "environment",
+      "type": "text",
+      "missing": 828,
+      "distinct": 3
+     },
+     {
+      "name": "team",
+      "type": "text",
+      "missing": 2969,
+      "distinct": 4
+     },
+     {
+      "name": "cost_usd",
+      "type": "number",
+      "missing": 0,
+      "distinct": 112,
+      "min": 0.0302,
+      "max": 64.8654
+     }
+    ],
+    "preview": [
+     [
+      "2026-06-01",
+      "r-0001",
+      "Compute",
+      "production",
+      "platform",
+      "2.4"
+     ],
+     [
+      "2026-06-01",
+      "r-0002",
+      "Block storage",
+      "production",
+      "platform",
+      "0.3288"
+     ],
+     [
+      "2026-06-01",
+      "r-0003",
+      "Compute",
+      "production",
+      "platform",
+      "2.4"
+     ],
+     [
+      "2026-06-01",
+      "r-0004",
+      "Block storage",
+      "production",
+      "platform",
+      "0.3288"
+     ],
+     [
+      "2026-06-01",
+      "r-0005",
+      "Compute",
+      "production",
+      "platform",
+      "2.4"
+     ],
+     [
+      "2026-06-01",
+      "r-0006",
+      "Block storage",
+      "production",
+      "platform",
+      "0.3288"
+     ]
+    ]
+   },
+   "outages": {
+    "rows": 6,
+    "bytes": 530,
+    "columns": [
+     {
+      "name": "outage_id",
+      "type": "text",
+      "missing": 0,
+      "distinct": 6
+     },
+     {
+      "name": "start",
+      "type": "text",
+      "missing": 0,
+      "distinct": 6
+     },
+     {
+      "name": "minutes",
+      "type": "number",
+      "missing": 0,
+      "distinct": 6,
+      "min": 22,
+      "max": 64
+     },
+     {
+      "name": "component",
+      "type": "text",
+      "missing": 0,
+      "distinct": 4
+     },
+     {
+      "name": "cause",
+      "type": "text",
+      "missing": 0,
+      "distinct": 5
+     }
+    ],
+    "preview": [
+     [
+      "OUT-01",
+      "2026-06-09 02:14",
+      "38",
+      "Database",
+      "Single-zone database restarted for provider maintenance"
+     ],
+     [
+      "OUT-02",
+      "2026-06-23 09:05",
+      "31",
+      "Load balancer",
+      "TLS certificate expired"
+     ],
+     [
+      "OUT-03",
+      "2026-07-02 16:40",
+      "22",
+      "API",
+      "Faulty release deployed to all API servers at once"
+     ],
+     [
+      "OUT-04",
+      "2026-07-21 11:02",
+      "64",
+      "Database",
+      "Power failure in the zone hosting the single-zone database"
+     ],
+     [
+      "OUT-05",
+      "2026-08-28 10:15",
+      "47",
+      "Web",
+      "Month-end traffic exceeded the fixed web fleet"
+     ],
+     [
+      "OUT-06",
+      "2026-08-31 09:40",
+      "55",
+      "Web",
+      "Month-end traffic exceeded the fixed web fleet"
+     ]
+    ]
+   },
+   "resources": {
+    "rows": 133,
+    "bytes": 12393,
+    "columns": [
+     {
+      "name": "resource_id",
+      "type": "text",
+      "missing": 0,
+      "distinct": 133
+     },
+     {
+      "name": "type",
+      "type": "text",
+      "missing": 0,
+      "distinct": 7
+     },
+     {
+      "name": "name",
+      "type": "text",
+      "missing": 0,
+      "distinct": 133
+     },
+     {
+      "name": "environment",
+      "type": "text",
+      "missing": 9,
+      "distinct": 3
+     },
+     {
+      "name": "team",
+      "type": "text",
+      "missing": 36,
+      "distinct": 4
+     },
+     {
+      "name": "region",
+      "type": "text",
+      "missing": 0,
+      "distinct": 1
+     },
+     {
+      "name": "size",
+      "type": "text",
+      "missing": 93,
+      "distinct": 3
+     },
+     {
+      "name": "vcpus",
+      "type": "number",
+      "missing": 93,
+      "distinct": 3,
+      "min": 2,
+      "max": 8
+     },
+     {
+      "name": "memory_gb",
+      "type": "number",
+      "missing": 93,
+      "distinct": 3,
+      "min": 4,
+      "max": 32
+     },
+     {
+      "name": "storage_gb",
+      "type": "number",
+      "missing": 43,
+      "distinct": 11,
+      "min": 40,
+      "max": 4000
+     },
+     {
+      "name": "hourly_usd",
+      "type": "number",
+      "missing": 0,
+      "distinct": 20,
+      "min": 0.00126,
+      "max": 0.45
+     },
+     {
+      "name": "status",
+      "type": "text",
+      "missing": 0,
+      "distinct": 5
+     },
+     {
+      "name": "created_date",
+      "type": "date",
+      "missing": 0,
+      "distinct": 56,
+      "min": "2024-06-01",
+      "max": "2026-07-21"
+     },
+     {
+      "name": "attached_to",
+      "type": "text",
+      "missing": 95,
+      "distinct": 38
+     },
+     {
+      "name": "public_access",
+      "type": "text",
+      "missing": 127,
+      "distinct": 2
+     }
+    ],
+    "preview": [
+     [
+      "r-0001",
+      "vm",
+      "prod-web-01",
+      "production",
+      "platform",
+      "af-south-1",
+      "large",
+      "4",
+      "16",
+      "",
+      "0.1",
+      "running",
+      "2025-11-01",
+      "",
+      ""
+     ],
+     [
+      "r-0002",
+      "disk",
+      "prod-web-01-disk",
+      "production",
+      "platform",
+      "af-south-1",
+      "",
+      "",
+      "",
+      "100",
+      "0.0137",
+      "attached",
+      "2025-11-01",
+      "r-0001",
+      ""
+     ],
+     [
+      "r-0003",
+      "vm",
+      "prod-web-02",
+      "production",
+      "platform",
+      "af-south-1",
+      "large",
+      "4",
+      "16",
+      "",
+      "0.1",
+      "running",
+      "2025-11-01",
+      "",
+      ""
+     ],
+     [
+      "r-0004",
+      "disk",
+      "prod-web-02-disk",
+      "production",
+      "platform",
+      "af-south-1",
+      "",
+      "",
+      "",
+      "100",
+      "0.0137",
+      "attached",
+      "2025-11-01",
+      "r-0003",
+      ""
+     ],
+     [
+      "r-0005",
+      "vm",
+      "prod-web-03",
+      "production",
+      "platform",
+      "af-south-1",
+      "large",
+      "4",
+      "16",
+      "",
+      "0.1",
+      "running",
+      "2025-11-01",
+      "",
+      ""
+     ],
+     [
+      "r-0006",
+      "disk",
+      "prod-web-03-disk",
+      "production",
+      "platform",
+      "af-south-1",
+      "",
+      "",
+      "",
+      "100",
+      "0.0137",
+      "attached",
+      "2025-11-01",
+      "r-0005",
+      ""
+     ]
+    ]
+   },
+   "utilisation": {
+    "rows": 25296,
+    "bytes": 832826,
+    "columns": [
+     {
+      "name": "resource_id",
+      "type": "text",
+      "missing": 0,
+      "distinct": 34
+     },
+     {
+      "name": "hour",
+      "type": "text",
+      "missing": 0,
+      "distinct": 744
+     },
+     {
+      "name": "cpu_pct",
+      "type": "number",
+      "missing": 0,
+      "distinct": 685,
+      "min": 0.3,
+      "max": 99
+     },
+     {
+      "name": "memory_pct",
+      "type": "number",
+      "missing": 0,
+      "distinct": 508,
+      "min": 6,
+      "max": 66.1
+     }
+    ],
+    "preview": [
+     [
+      "r-0001",
+      "2026-08-01 00:00",
+      "8.2",
+      "49.6"
+     ],
+     [
+      "r-0001",
+      "2026-08-01 01:00",
+      "7.8",
+      "46.2"
+     ],
+     [
+      "r-0001",
+      "2026-08-01 02:00",
+      "7",
+      "45.7"
+     ],
+     [
+      "r-0001",
+      "2026-08-01 03:00",
+      "2.1",
+      "47.4"
+     ],
+     [
+      "r-0001",
+      "2026-08-01 04:00",
+      "3.2",
+      "47.7"
+     ],
+     [
+      "r-0001",
+      "2026-08-01 05:00",
+      "8.1",
+      "45.5"
+     ]
+    ]
+   },
+   "web_traffic": {
+    "rows": 744,
+    "bytes": 21179,
+    "columns": [
+     {
+      "name": "hour",
+      "type": "text",
+      "missing": 0,
+      "distinct": 744
+     },
+     {
+      "name": "requests",
+      "type": "number",
+      "missing": 0,
+      "distinct": 710,
+      "min": 643,
+      "max": 62139
+     },
+     {
+      "name": "web_servers",
+      "type": "number",
+      "missing": 0,
+      "distinct": 1,
+      "min": 6,
+      "max": 6
+     },
+     {
+      "name": "p95_latency_ms",
+      "type": "number",
+      "missing": 0,
+      "distinct": 206,
+      "min": 172,
+      "max": 3377
+     }
+    ],
+    "preview": [
+     [
+      "2026-08-01 00:00",
+      "831",
+      "6",
+      "176"
+     ],
+     [
+      "2026-08-01 01:00",
+      "644",
+      "6",
+      "201"
+     ],
+     [
+      "2026-08-01 02:00",
+      "691",
+      "6",
+      "197"
+     ],
+     [
+      "2026-08-01 03:00",
+      "643",
+      "6",
+      "187"
+     ],
+     [
+      "2026-08-01 04:00",
+      "790",
+      "6",
+      "172"
+     ],
+     [
+      "2026-08-01 05:00",
+      "1479",
+      "6",
+      "176"
+     ]
+    ]
+   }
+  }
+ },
  "demand": {
   "zipBytes": 47759,
   "files": {
