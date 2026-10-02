@@ -2462,6 +2462,174 @@ jobs:
   return { text, csvs };
 }
 
+/* ------------------------------------------------------------------ observability (metrics, logs, traces, SLOs) */
+// Tallybook's observability data for the site reliability course: per-minute metrics and
+// database pool figures for month-end Monday 31 August 2026 (when a bulk invoice-sending job
+// exhausted the database connection pool from 09:40 to 10:34), structured logs and traces
+// around the incident, August's daily SLI totals, August's alert history and a toil list.
+// All of it is fictional. Generated last, from its own seed.
+function observability() {
+  seed = 20270901;
+  const SHAPE = [0.03, 0.02, 0.02, 0.02, 0.03, 0.08, 0.25, 0.55, 0.85, 1, 1, 0.95, 0.9, 0.95, 1, 0.95, 0.85, 0.7, 0.5, 0.35, 0.25, 0.15, 0.08, 0.05];
+  const pad = (n) => String(n).padStart(2, "0");
+  const hm = (m) => `${pad(Math.floor(m / 60))}:${pad(m % 60)}`;
+  const JOB_START = 9 * 60 + 40;
+  const FIX = 10 * 60 + 34;
+  const metrics = [];
+  const pool = [];
+  const day31 = { requests: 0, errors: 0, slow: 0 };
+  // One day's minutes. With `incident`, the bulk job runs and the pool stays at 40 until the fix.
+  const simulateDay = (dateStr, loadFactor, incident, keep, jobStart = JOB_START, fix = FIX) => {
+    const totals = { requests: 0, errors: 0, slow: 0 };
+    for (let m = 0; m < 1440; m++) {
+      const h = Math.floor(m / 60);
+      const next = SHAPE[(h + 1) % 24];
+      const load = (SHAPE[h] + (next - SHAPE[h]) * ((m % 60) / 60)) * loadFactor;
+      const web = Math.round(6000 * load * (0.95 + rand() * 0.1)) + 100;
+      const api = Math.round(web * 0.7);
+      const jobOn = incident && m >= jobStart && m < fix;
+      const dbTime = 120 + 60 * load + (jobOn ? 150 : 0) + (rand() - 0.5) * 10;
+      const size = incident && m >= fix ? 80 : 40;
+      const demand = (api / 60) * (dbTime / 1000);
+      const inUse = Math.min(size, demand);
+      const over = Math.max(0, demand - size) / Math.max(demand, 1e-9);
+      const wait = over > 0 ? Math.round(3000 + over * 40000 + rand() * 2000) : Math.round(2 + rand() * 6);
+      const apiErrRate = over > 0 ? Math.min(0.6, over * 1.3 + 0.05) : 0.0003 + rand() * 0.0004;
+      const apiErr = Math.round(api * apiErrRate);
+      const webErr = apiErr + Math.round(web * (0.0002 + rand() * 0.0002));
+      const apiP50 = Math.round(dbTime + 40 + (over > 0 ? wait * 0.4 : 0));
+      const apiP95 = Math.round(dbTime * 2 + 110 + (over > 0 ? Math.min(wait, 30000) : 0));
+      const apiP99 = Math.round(apiP95 * (over > 0 ? 1.05 : 1.6) + (over > 0 ? 0 : 100));
+      const slowShare = over > 0 ? Math.min(0.9, 0.3 + over) : 0.002 + 0.004 * load;
+      totals.requests += web;
+      totals.errors += webErr;
+      totals.slow += Math.round(web * slowShare);
+      if (keep) {
+        const minute = `${dateStr} ${hm(m)}`;
+        metrics.push({ minute, service: "web", requests: web, errors: webErr, p50_ms: Math.min(apiP50 + 25, 30000), p95_ms: Math.min(apiP95 + 40, 30000), p99_ms: Math.min(apiP99 + 60, 30000), saturation_pct: +Math.min(99, 12 + 28 * load + (rand() - 0.5) * 4).toFixed(1) });
+        metrics.push({ minute, service: "api", requests: api, errors: apiErr, p50_ms: Math.min(apiP50, 30000), p95_ms: Math.min(apiP95, 30000), p99_ms: Math.min(apiP99, 30000), saturation_pct: +Math.min(100, 12 + 30 * load + (over > 0 ? 55 : 0) + (rand() - 0.5) * 4).toFixed(1) });
+        metrics.push({ minute, service: "db", requests: api * 3, errors: 0, p50_ms: Math.round(dbTime / 3), p95_ms: Math.round(dbTime / 3 * 2.2), p99_ms: Math.round(dbTime / 3 * 3.5), saturation_pct: +((inUse / size) * 100).toFixed(1) });
+        pool.push({ minute, api_requests: api, db_ms_per_request: Math.round(dbTime), pool_size: size, connections_in_use: Math.round(inUse), wait_p95_ms: wait });
+      }
+    }
+    return totals;
+  };
+
+  // August daily SLI totals. 28 August (10:15 to 11:02) and 31 August (09:40 to 10:34) had the bulk job incident.
+  const daily = [];
+  for (let t = d("2026-08-01"); t <= d("2026-08-31"); t += day) {
+    const date = iso(t);
+    const dow = new Date(t).getUTCDay();
+    const factor = (dow === 0 || dow === 6 ? 0.45 : 1) * (date === "2026-08-28" || date === "2026-08-31" ? 1.9 : 1) * (0.95 + rand() * 0.1);
+    const tot = date === "2026-08-28" ? simulateDay(date, factor, true, false, 10 * 60 + 15, 11 * 60 + 2) : simulateDay(date, factor, date === "2026-08-31", date === "2026-08-31");
+    daily.push({ date, requests: tot.requests, errors_5xx: tot.errors, slow_requests: tot.slow });
+  }
+
+  // Structured logs, 09:30 to 10:45 on 31 August.
+  const logs = [];
+  const tid = () => Array.from({ length: 16 }, () => "0123456789abcdef"[int(0, 15)]).join("");
+  const ROUTES = ["GET /api/invoices", "POST /api/invoices", "POST /api/invoices/send", "GET /api/dashboard", "GET /api/customers"];
+  for (let m = 9 * 60 + 30; m < 10 * 60 + 45; m++) {
+    const p = pool.find((x) => x.minute.endsWith(hm(m)));
+    const over = p.connections_in_use >= p.pool_size && p.wait_p95_ms > 1000;
+    for (let k = 0; k < 14; k++) {
+      const s = int(0, 59);
+      const ts = `2026-08-31T${hm(m)}:${pad(s)}.${String(int(0, 999)).padStart(3, "0")}Z`;
+      const route = pick(ROUTES);
+      const trace = tid();
+      if (over && rand() < 0.45) {
+        if (rand() < 0.6) logs.push({ ts, level: "error", service: "api", message: "db pool exhausted: no connection within 5000 ms", route, trace_id: trace, pool_in_use: p.connections_in_use, pool_size: p.pool_size });
+        else logs.push({ ts, level: "error", service: "web", message: "upstream timed out after 30000 ms", route, trace_id: trace, upstream: "api" });
+      } else if (over && rand() < 0.3) {
+        logs.push({ ts, level: "warn", service: "api", message: "slow db connection acquire", route, trace_id: trace, wait_ms: int(1500, 4900) });
+      } else {
+        logs.push({ ts, level: "info", service: "api", message: "request completed", route, trace_id: trace, status: route.startsWith("POST") ? 201 : 200, duration_ms: int(150, 600) });
+      }
+    }
+    if (m >= JOB_START && m < FIX && m % 2 === 0) logs.push({ ts: `2026-08-31T${hm(m)}:30.000Z`, level: "info", service: "worker", message: "bulk send batch sent", job: "month-end-bulk-send", batch: (m - JOB_START) / 2 + 1, invoices: 500, concurrency: 24 });
+  }
+  logs.push({ ts: "2026-08-31T09:40:02.114Z", level: "info", service: "worker", message: "bulk send job started", job: "month-end-bulk-send", invoices_queued: 41250, concurrency: 24 });
+  logs.push({ ts: "2026-08-31T10:33:40.502Z", level: "info", service: "api", message: "config reloaded: db pool size 40 -> 80", changed_by: "ada" });
+  logs.push({ ts: "2026-08-31T10:34:05.871Z", level: "info", service: "worker", message: "bulk send job throttled", job: "month-end-bulk-send", concurrency: 4, changed_by: "ada" });
+  logs.sort((a, b) => (a.ts < b.ts ? -1 : 1));
+  const logText = logs.map((l) => JSON.stringify(l)).join("\n") + "\n";
+
+  // Traces: 100 sampled requests at 08:30 (normal) and 100 at 09:55 (during the incident).
+  const spans = [];
+  let sn = 0;
+  for (const [window, base] of [["normal", "08:30"], ["incident", "09:55"]]) {
+    for (let k = 0; k < 100; k++) {
+      const trace = tid();
+      const send = rand() < 0.35;
+      const route = send ? "POST /api/invoices/send" : pick(["GET /api/invoices", "GET /api/dashboard", "POST /api/invoices"]);
+      const span = (parent, service, operation, start, dur, status = "ok") => {
+        const id = `s${String(++sn).padStart(5, "0")}`;
+        spans.push({ trace_id: trace, span_id: id, parent_span_id: parent, window, captured_at: `2026-08-31 ${base}`, service, operation, start_ms: start, duration_ms: dur, status });
+        return id;
+      };
+      const wait = window === "incident" ? (rand() < 0.4 ? 5000 : int(800, 4900)) : int(1, 8);
+      const timedOut = window === "incident" && wait >= 5000;
+      const query = int(30, 90) + (window === "incident" ? int(20, 60) : 0);
+      let t = 2;
+      const apiStart = t;
+      const children = [];
+      children.push(["db", "acquire connection", t + 3, wait, timedOut ? "error" : "ok"]);
+      if (!timedOut) {
+        children.push(["db", send ? "SELECT invoice, lines, customer" : "SELECT invoices", t + 3 + wait, query, "ok"]);
+        if (send) {
+          children.push(["api", "render invoice pdf", t + 3 + wait + query, int(90, 160), "ok"]);
+          children.push(["email-provider", "POST /v3/mail/send", t + 3 + wait + query + 170, int(120, 260), "ok"]);
+        }
+      }
+      const apiEnd = Math.max(...children.map((c) => c[2] + c[3])) + 4;
+      const root = span("", "web", route, 0, apiEnd + 6, timedOut ? "error" : "ok");
+      const apiSpan = span(root, "api", route.replace("/api", ""), apiStart, apiEnd - apiStart, timedOut ? "error" : "ok");
+      for (const [svc, op, st, dur, status] of children) span(apiSpan, svc, op, st, dur, status);
+    }
+  }
+
+  const alertRows = [];
+  let an = 0;
+  const addAlert = (alert, severity, t, minutes, ack, actionable) => alertRows.push({ alert_id: `A${String(++an).padStart(4, "0")}`, alert, severity, fired_at: new Date(t).toISOString().slice(0, 16).replace("T", " "), resolved_at: new Date(t + minutes * 60000).toISOString().slice(0, 16).replace("T", " "), minutes_to_acknowledge: ack, actionable });
+  for (let t = d("2026-08-01"); t <= d("2026-08-31"); t += day) {
+    const date = iso(t);
+    const dow = new Date(t).getUTCDay();
+    const weekday = dow !== 0 && dow !== 6;
+    const incidentDay = date === "2026-08-28" || date === "2026-08-31";
+    if (weekday) for (const h of [9, 14]) addAlert("WebHighCPU", "page", t + h * 3600000 + int(5, 25) * 60000, int(20, 70), int(2, 25), incidentDay ? 1 : 0);
+    if (date >= "2026-08-12") addAlert("DiskUsageVarAbove85", "ticket", t + 6 * 3600000, 1440, int(60, 600), 1);
+    if (rand() < 0.6) addAlert("HostDown prod-web-04", "page", t + int(0, 5) * 3600000 + int(0, 59) * 60000, int(1, 3), int(3, 15), 0);
+    if (rand() < 0.4) addAlert("WorkerQueueDepthHigh", "page", t + int(1, 4) * 3600000 + int(0, 59) * 60000, int(5, 25), int(5, 30), 0);
+    if (incidentDay) {
+      const start = date === "2026-08-31" ? JOB_START : 10 * 60 + 15;
+      addAlert("API5xxRateAbove1pct", "page", t + (start + 4) * 60000, 50, int(3, 8), 1);
+      addAlert("LatencyP95Above2s", "page", t + (start + 2) * 60000, 52, int(3, 8), 1);
+    } else if (weekday && rand() < 0.15) {
+      addAlert(pick(["API5xxRateAbove1pct", "LatencyP95Above2s"]), "page", t + int(9, 16) * 3600000 + int(0, 59) * 60000, int(1, 4), int(4, 20), 0);
+    }
+  }
+  addAlert("CertificateExpiresIn30Days", "ticket", d("2026-08-20") + 8 * 3600000, 10080, 180, 1);
+  alertRows.sort((a, b) => (a.fired_at < b.fired_at ? -1 : 1));
+  alertRows.forEach((a, i) => (a.alert_id = `A${String(i + 1).padStart(4, "0")}`));
+
+  const toil = [
+    ["Restart a stuck worker by hand", 15, 22, "yes", "recovery"],
+    ["Clear old logs when /var fills", 30, 6, "yes", "maintenance"],
+    ["Acknowledge and dismiss WebHighCPU pages", 5, 44, "yes", "alert noise"],
+    ["Check HostDown pages for prod-web-04", 10, 18, "yes", "alert noise"],
+    ["Rotate access keys", 45, 2, "yes", "security"],
+    ["Create accounts for new staff", 20, 4, "partly", "access"],
+    ["Answer 'is the app down?' messages from support", 10, 30, "partly", "communication"],
+    ["Resize servers before month-end", 40, 1, "yes", "capacity"],
+    ["Renew TLS certificates", 30, 1, "yes", "maintenance"],
+    ["Review pull requests for infrastructure", 25, 20, "no", "engineering"],
+    ["Write postmortems", 120, 2, "no", "engineering"],
+    ["Improve monitoring dashboards", 90, 3, "no", "engineering"],
+  ].map(([task, minutes_each, times_per_month, automatable, category]) => ({ task, minutes_each, times_per_month, automatable, category }));
+
+  return { csvs: { metrics, db_pool: pool, daily_sli: daily, spans, alerts: alertRows, toil }, text: { "app_logs.jsonl": logText } };
+}
+
 /* ------------------------------------------------------------------ write */
 const SQL = await initSqlJs();
 const L = logistics();
@@ -2514,6 +2682,11 @@ for (const [name, obj] of Object.entries(terraformFiles(CLOUD.resources))) write
   const { text, csvs } = cicdFiles();
   for (const [name, body] of Object.entries(text)) writeText("cicd", name, body);
   for (const [table, rows] of Object.entries(csvs)) writeCsv("cicd", table, rows);
+}
+{
+  const { csvs, text } = observability();
+  for (const [table, rows] of Object.entries(csvs)) writeCsv("observability", table, rows);
+  for (const [name, body] of Object.entries(text)) writeText("observability", name, body);
 }
 
 // Summary for the build log

@@ -1,0 +1,13 @@
+task,minutes_each,times_per_month,automatable,category
+Restart a stuck worker by hand,15,22,yes,recovery
+Clear old logs when /var fills,30,6,yes,maintenance
+Acknowledge and dismiss WebHighCPU pages,5,44,yes,alert noise
+Check HostDown pages for prod-web-04,10,18,yes,alert noise
+Rotate access keys,45,2,yes,security
+Create accounts for new staff,20,4,partly,access
+Answer 'is the app down?' messages from support,10,30,partly,communication
+Resize servers before month-end,40,1,yes,capacity
+Renew TLS certificates,30,1,yes,maintenance
+Review pull requests for infrastructure,25,20,no,engineering
+Write postmortems,120,2,no,engineering
+Improve monitoring dashboards,90,3,no,engineering

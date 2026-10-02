@@ -327,7 +327,7 @@ export const TRACKS: Track[] = [
         summary: "Keep systems running in production.",
         items: [
           { kind: "course", courseId: "llm-evaluation-safety-production", why: "Release gates, control-limit alerts and blameless postmortems, applied to a live service.", required: false },
-          { kind: "upcoming", title: "Observability and Site Reliability", why: "Logs, metrics, traces, SLOs and on-call practice for real systems.", level: 4 },
+          { kind: "course", courseId: "observability-site-reliability", why: "Metrics, logs and traces to find a real cause; SLOs, burn-rate alerts, capacity and toil to prevent the next outage." },
         ],
       },
       {

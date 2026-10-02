@@ -46922,9 +46922,1477 @@ $md$, true, true, 10, array['cicd-10-p1', 'cicd-10-t1']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 
+-- Course: Observability and Site Reliability
+insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
+values ('observability-site-reliability', 'full', null, 'observability-site-reliability', 'SRE', 'Observability and Site Reliability', 'Find the real cause of an outage with metrics, logs and traces, then build what prevents the next one: SLOs and error budgets, burn-rate alerts, alert clean-up, capacity planning with Little''s law, and toil reduction, on a company''s month-end incident.', 'Across this track, Tallybook''s month-end outage has been blamed on too few web servers and on a cryptominer. In this course you find the real cause. With a day of per-minute metrics you''ll read the four golden signals and see that the database connection pool, not the web tier, ran out; with structured logs you''ll find the bulk invoice-sending job that started at 09:40:02; with distributed traces you''ll see requests spending seconds waiting for a connection while their queries barely slowed. Then you''ll build the reliability practice that prevents a repeat: SLIs and SLOs with error budgets (two mornings used about two and a half months'' worth), multi-window burn-rate alerts, a clean-up of pages that were nine-tenths noise, connection pool sizing with Little''s law and job isolation, and an error budget policy with toil measured and cut. Every number comes from running the code on the incident''s data.', 'cloud', 'intermediate', 3, 'Intermediate to advanced', 7, true, 'available', true, array['Metrics, logs and traces', 'The four golden signals', 'Latency percentiles', 'Structured logging', 'Reading distributed traces', 'SLIs, SLOs and error budgets', 'Multi-window burn-rate alerts', 'Alert quality and on-call', 'Capacity planning with Little''s law']::text[], array['Cloud Fundamentals or Linux and Networking Basics', 'Python for Data Analytics, or comfort with pandas']::text[], 'Tallybook''s reliability review', true, true, true, true, false, 60, 36)
+on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level = excluded.level, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('sre-m01', 'observability-site-reliability', 'What Observability Is', 1, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('observability-site-reliability:what-observability-is', 'observability-site-reliability', 'sre-m01', 'what-observability-is', 'What observability is', 'What observability means, the three kinds of telemetry (metrics, logs and traces), the four golden signals, and a first look at the minute-by-minute record of Tallybook''s month-end outage.', 15, $md$
+## The problem
+
+Across this track, the outage on the morning of 31 August has had several explanations. The cloud review blamed a fixed number of web servers. The Linux investigation found a cryptominer eating CPU on one server. Both were real problems. Neither was the cause.
+
+Finding the real cause of a problem in a running system, quickly, is what **observability** is for. Tallybook had been collecting the data all along: metrics every minute, structured logs and request traces. In this course you'll use them to find out what actually happened, then build the SLOs, alerts and practices that would catch it sooner.
+
+## The concept
+
+**Monitoring and observability**
+
+**Monitoring** answers questions you thought of in advance ("is CPU above 80%?"). **Observability** is being able to answer questions you didn't think of, from the data a system already produces ("why are only invoice-sending requests slow, and only since 09:40?").
+
+**Three kinds of telemetry**
+
+| Signal | What it is | Good for |
+| :-- | :-- | :-- |
+| **Metrics** | numbers over time (requests per minute, p95 latency) | seeing that something changed, and when; alerting |
+| **Logs** | timestamped records of events, ideally structured (JSON) | details of what happened to specific requests |
+| **Traces** | the path of one request through every service, with timings | seeing where time is spent, across services |
+
+**The four golden signals**
+
+For any service: **latency** (how long requests take), **traffic** (how many), **errors** (how many fail), and **saturation** (how full the most constrained resource is).
+
+## Example
+
+The minute-by-minute metrics for 31 August, for the web tier, the API and the database:
+
+```python
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/observability/"
+metrics = pd.read_csv(base + "metrics.csv", parse_dates=["minute"])
+print(metrics["service"].value_counts())
+
+web = metrics[metrics["service"] == "web"].set_index("minute")
+web["error_rate"] = web["errors"] / web["requests"]
+bad = web[web["error_rate"] > 0.05]
+print("Minutes with more than 5% errors:", len(bad), "from", bad.index.min().strftime("%H:%M"), "to", bad.index.max().strftime("%H:%M"))
+```
+
+```text
+service
+web    1440
+api    1440
+db     1440
+Name: count, dtype: int64
+Minutes with more than 5% errors: 54 from 09:40 to 10:33
+```
+
+The metrics pin the outage to the minute. Now the four golden signals for each service, at 09:30 (before) and 10:00 (during):
+
+```python
+cols = ["requests", "errors", "p95_ms", "saturation_pct"]
+snapshot = metrics[metrics["minute"].isin(pd.to_datetime(["2026-08-31 09:30", "2026-08-31 10:00"]))]
+snapshot.set_index(["service", "minute"])[cols].sort_index()
+```
+
+```text
+requests  errors  p95_ms  saturation_pct
+service minute
+api     2026-08-31 09:30:00      8206       4     594            71.7
+        2026-08-31 10:00:00      8541    3594   16578           100.0
+db      2026-08-31 09:30:00     24618       0     177            82.8
+        2026-08-31 10:00:00     25623       0     288           100.0
+web     2026-08-31 09:30:00     11723       7     634            67.7
+        2026-08-31 10:00:00     12202    3598   16618            68.7
+```
+
+Traffic barely changed between 09:30 and 10:00. But errors and latency exploded, and look at saturation: the web tier is about as busy as before, while the database's connection pool went to 100%. The web servers weren't the bottleneck; something in the database was. The next lessons find out what.
+
+## Walkthrough
+
+1. Run the cells. Plot web error rate and database saturation over the whole day on one chart.
+2. When does database saturation reach 100%, and when does it fall back?
+3. What was the busiest minute of the day for traffic? Did it have errors?
+4. For each golden signal, name the metric in this dataset that measures it for the API.
+
+## Practice
+
+```dataset
+{"dataset": "observability", "files": ["metrics", "db_pool", "daily_sli", "spans", "alerts", "toil"]}
+```
+
+```answer
+{
+  "id": "obs-01-p1",
+  "prompt": "How many minutes on 31 August had a web **error rate above 5%**?",
+  "answer": 54,
+  "format": "number",
+  "dataset": "observability",
+  "files": ["metrics"],
+  "pyVerify": "len(bad)",
+  "hint": "The second line printed.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Which telemetry shows where time goes inside one request across several services?",
+    "options": ["Metrics", "Traces", "Logs only", "Dashboards"],
+    "answer": 1,
+    "explanation": "Traces follow a request through every service."
+  },
+  {
+    "prompt": "Which is NOT one of the four golden signals?",
+    "options": ["Latency", "Saturation", "Number of engineers", "Errors"],
+    "answer": 2,
+    "explanation": "Latency, traffic, errors and saturation."
+  },
+  {
+    "prompt": "Traffic is flat but errors jump and the database is 100% saturated. What's the likely bottleneck?",
+    "options": ["Too many users", "The database, not the web servers", "The network", "DNS"],
+    "answer": 1,
+    "explanation": "Saturation shows which resource ran out."
+  }
+]
+```
+$md$, true, true, 1, array['obs-01-p1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('sre-m02', 'observability-site-reliability', 'Metrics and Percentiles', 2, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('observability-site-reliability:metrics-and-percentiles', 'observability-site-reliability', 'sre-m02', 'metrics-and-percentiles', 'Metrics and percentiles', 'Why averages hide what users experience, how percentiles (p50, p95, p99) show it, how to read latency over a day, and which metrics to put on a service''s first dashboard.', 25, $md$
+## The problem
+
+Tallybook's old dashboard showed one latency number: the average. On a normal day it said about 200 milliseconds, and everyone relaxed. But users don't experience averages. One in twenty requests can be several times slower than the average, and the people making those requests are the ones who complain, refresh, and retry, adding more load.
+
+## The concept
+
+**Percentiles**
+
+The **p95** is the time that 95% of requests are faster than; 5% are slower. p50 is the median; p99 is the slowest 1%.
+
+| Measure | Tells you |
+| :-- | :-- |
+| p50 | the typical experience |
+| p95 | what a meaningful minority experiences; good for SLOs |
+| p99 | the tail: often a different problem (cold caches, lock waits, retries) |
+| Average | dragged by outliers, matches nobody's experience |
+
+**Percentiles don't average**
+
+You can't average p95s across minutes or servers and get the p95 of the whole. Compute percentiles from the raw data, or use histogram metrics that can be combined.
+
+**A first dashboard**
+
+For each service: requests per minute, error rate, p50 and p95 (or p99) latency, and saturation of its tightest resource, on the same time axis.
+
+## Example
+
+The API's latency percentiles before the incident, by hour:
+
+```python
+import pandas as pd
+
+metrics = pd.read_csv("https://academy.cloudtechanalytics.com/datasets/observability/metrics.csv", parse_dates=["minute"])
+api = metrics[metrics["service"] == "api"].set_index("minute")
+normal = api.loc["2026-08-31 06:00":"2026-08-31 09:39"]
+normal.groupby(normal.index.hour)[["requests", "p50_ms", "p95_ms", "p99_ms"]].mean().round(0)
+```
+
+```text
+requests  p50_ms  p95_ms  p99_ms
+minute
+6         3372.0   207.0   445.0   812.0
+7         5856.0   243.0   515.0   925.0
+8         7717.0   269.0   567.0  1008.0
+9         8339.0   278.0   586.0  1037.0
+```
+
+Even on a good morning, the slowest 1% of API requests take several times as long as the median, and latency rises with traffic. Now the same measures during the incident:
+
+```python
+during = api.loc["2026-08-31 09:40":"2026-08-31 10:33"]
+pd.DataFrame({"before (06:00-09:39)": normal[["p50_ms", "p95_ms", "p99_ms"]].median(),
+              "during (09:40-10:33)": during[["p50_ms", "p95_ms", "p99_ms"]].median()}).round(0)
+```
+
+```text
+before (06:00-09:39)  during (09:40-10:33)
+p50_ms                 254.0                6058.0
+p95_ms                 539.0               14960.0
+p99_ms                 962.0               15708.0
+```
+
+During the incident even the median request took about six seconds, and p95 and p99 were around 15 seconds. A dashboard showing only the average would have shown "slow"; the percentiles show that nearly every request was badly delayed, and the error rate (lesson 1) shows more than a third of API requests failing outright.
+
+## Walkthrough
+
+1. Run the cells. Compute the ratio of p99 to p50 for each hour before the incident. Is it stable?
+2. Plot p50, p95 and p99 for the API across the day on a logarithmic axis.
+3. Why is averaging the three services' p95s meaningless?
+4. Sketch the four panels of the API's dashboard (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "obs-02-p1",
+  "prompt": "What was the API's median **p95** latency **during** the incident, in milliseconds?",
+  "answer": 14960.5,
+  "format": "number",
+  "dataset": "observability",
+  "files": ["metrics"],
+  "pyVerify": "float(during['p95_ms'].median())",
+  "hint": "The p95_ms row, during column.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "obs-02-t1",
+  "prompt": "Design the **API's first dashboard**: one line per panel, starting with a dash, naming the **metric**, how it's **shown** and **why** it's there. Cover all **four golden signals**.",
+  "minutes": 6,
+  "rows": 6,
+  "placeholder": "- Traffic: ...",
+  "rules": [
+    { "label": "At least four panels, each starting with -", "pattern": "^\\s*-\\s+\\S", "min": 4 },
+    { "label": "Traffic (requests per minute)", "pattern": "request|traffic" },
+    { "label": "Errors (rate or percentage)", "pattern": "error" },
+    { "label": "Latency with percentiles", "pattern": "p9[59]|percentile" },
+    { "label": "Saturation (pool, CPU, connections)", "pattern": "saturat|pool|connection|cpu" },
+    { "label": "No averages for latency", "pattern": "average latency|mean latency", "absent": true }
+  ],
+  "sample": "- Traffic: API requests per minute, as a line, to see load and compare with the same time last week.\n- Errors: share of requests returning 5xx, as a line with the SLO threshold drawn on it.\n- Latency: p50 and p95 (and p99 on a second axis), never the average, because users experience the tail.\n- Saturation: database connections in use as a share of the pool, with 100% marked, since the pool is the API's tightest resource.",
+  "note": "Putting the pool on the API's dashboard, not only the database's, is the lesson from 31 August.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "A p95 latency of 400 ms means what?",
+    "options": ["The average is 400 ms", "95% of requests take 400 ms or less", "5% of requests take 400 ms", "The slowest request took 400 ms"],
+    "answer": 1,
+    "explanation": "And 5% take longer."
+  },
+  {
+    "prompt": "Why are averages poor latency measures?",
+    "options": ["They're hard to compute", "A few very slow requests distort them, and they match nobody's actual experience", "They're always too high", "They need percentiles"],
+    "answer": 1,
+    "explanation": "Use percentiles."
+  },
+  {
+    "prompt": "Can you average five servers' p95 values to get the p95 for all of them?",
+    "options": ["Yes", "No: compute percentiles from the combined data or mergeable histograms", "Only for the same hour", "Only for errors"],
+    "answer": 1,
+    "explanation": "Percentiles don't average."
+  }
+]
+```
+$md$, true, true, 2, array['obs-02-p1', 'obs-02-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('sre-m03', 'observability-site-reliability', 'Structured Logs', 3, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('observability-site-reliability:structured-logs', 'observability-site-reliability', 'sre-m03', 'structured-logs', 'Structured logs', 'Why logs should be structured (JSON) rather than free text, how to filter and count them like data, and how to use them to find the event that started an incident.', 25, $md$
+## The problem
+
+Metrics told you **when** the outage started and **which** resource ran out. They can't tell you **why** the database's connection pool suddenly filled at 09:40 on the dot. Something happened at 09:40. Logs record events, and one of them is the answer.
+
+Tallybook's services write **structured** logs: one JSON object per line, with named fields. That makes them data you can filter, count and join, rather than text to squint at.
+
+## The concept
+
+**Free text versus structured**
+
+```text nocheck
+2026-08-31 09:58:12 ERROR db pool exhausted for /api/invoices after 5000ms (40/40)
+{"ts": "2026-08-31T09:58:12.031Z", "level": "error", "service": "api", "message": "db pool exhausted: no connection within 5000 ms", "route": "GET /api/invoices", "pool_in_use": 40, "pool_size": 40, "trace_id": "4f1c..."}
+```
+
+The second can be filtered by `service`, grouped by `route`, and linked to a trace by `trace_id`, without fragile text matching.
+
+**Log levels**
+
+`debug` (detail for developers), `info` (normal events), `warn` (something odd, still working), `error` (a request failed). Alert on rates of errors, not individual lines.
+
+**Good logging habits**
+
+- Log events with context (IDs, durations, counts), not prose.
+- Include a **trace ID** so a log line leads to the full request.
+- Never log secrets or personal data (passwords, card numbers, full phone numbers).
+
+## Example
+
+Load the logs from 09:30 to 10:45 and count by level and service:
+
+```python
+import pandas as pd
+
+logs = pd.read_json("https://academy.cloudtechanalytics.com/datasets/observability/app_logs.jsonl", lines=True)
+logs["ts"] = pd.to_datetime(logs["ts"])
+print(len(logs), "log lines")
+pd.crosstab(logs["service"], logs["level"])
+```
+
+```text
+1080 log lines
+level    error  info  warn
+service
+api        189   604   118
+web        140     0     0
+worker       0    29     0
+```
+
+Errors per 10 minutes, by message:
+
+```python
+errors = logs[logs["level"] == "error"]
+errors.groupby([errors["ts"].dt.floor("10min").dt.strftime("%H:%M"), "message"]).size().unstack(fill_value=0)
+```
+
+```text
+message  db pool exhausted: no connection within 5000 ms  upstream timed out after 30000 ms
+ts
+09:40                                                 25                                 29
+09:50                                                 32                                 30
+10:00                                                 37                                 26
+10:10                                                 43                                 24
+10:20                                                 37                                 23
+10:30                                                 15                                  8
+```
+
+The errors start in the 09:40 window and stop by 10:40. Now the key question: what else happened at those moments? Look at every log line that isn't a routine request or error, from the worker and from configuration changes:
+
+```python
+events = logs[~logs["message"].isin(["request completed", "slow db connection acquire", "db pool exhausted: no connection within 5000 ms",
+                                    "upstream timed out after 30000 ms", "bulk send batch sent"])]
+print(events[["ts", "service", "message", "job", "invoices_queued", "concurrency", "changed_by"]].to_string(index=False))
+```
+
+```text
+ts service                                message                 job  invoices_queued  concurrency changed_by
+2026-08-31 09:40:02.114000+00:00  worker                  bulk send job started month-end-bulk-send          41250.0         24.0        NaN
+2026-08-31 10:33:40.502000+00:00     api config reloaded: db pool size 40 -> 80                 NaN              NaN          NaN        ada
+2026-08-31 10:34:05.871000+00:00  worker                bulk send job throttled month-end-bulk-send              NaN          4.0        ada
+```
+
+That's the story. At 09:40:02, the month-end bulk send job started, queueing tens of thousands of invoices to send with 24 at a time, each needing a database connection from the same pool the API uses. At 10:33 and 10:34, Ada doubled the pool and throttled the job. The errors stopped. The web servers had nothing to do with it.
+
+## Walkthrough
+
+1. Run the cells. How many "bulk send batch sent" lines are there, and how many invoices did they send?
+2. Which routes appear most in the error lines? Does any route escape?
+3. Pick one error line's trace ID. Lesson 4 shows what a trace ID leads to.
+4. Write three logging rules for Tallybook's developers (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "obs-03-p1",
+  "prompt": "How many **error**-level log lines are there in the file?",
+  "answer": 329,
+  "format": "number",
+  "pyVerify": "int((logs['level'] == 'error').sum())",
+  "hint": "Add the error column of the first table.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "obs-03-t1",
+  "prompt": "Write **logging rules** for Tallybook's developers, one per line starting with a dash: at least **four**, covering **structure**, **trace IDs**, what **never** to log, and **levels**.",
+  "minutes": 5,
+  "rows": 5,
+  "placeholder": "- Log as JSON ...",
+  "rules": [
+    { "label": "At least four rules, each starting with -", "pattern": "^\\s*-\\s+\\S", "min": 4 },
+    { "label": "Structured (JSON, fields)", "pattern": "json|structured|field" },
+    { "label": "Trace IDs", "pattern": "trace" },
+    { "label": "Never log secrets or personal data", "pattern": "never[^\\n]*(password|secret|token|card|personal|phone)|(password|secret|token|personal)[^\\n]*never" },
+    { "label": "Levels", "pattern": "level|error|warn" }
+  ],
+  "sample": "- Log one JSON object per line, with named fields (service, route, duration_ms), not sentences.\n- Include the trace_id on every line written while handling a request.\n- Never log passwords, tokens, card numbers or full phone numbers; log IDs instead.\n- Use error only when a request or job fails, warn for unusual but handled situations, info for key events such as jobs starting and config changes.\n- Log every configuration change and background job start with who or what triggered it.",
+  "note": "The last rule is the one that made 31 August's cause findable: the job's start and Ada's fixes were logged as events.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why log as JSON instead of free text?",
+    "options": ["It's shorter", "Fields can be filtered, grouped and joined reliably", "It's encrypted", "It's required by law"],
+    "answer": 1,
+    "explanation": "Structured logs are data."
+  },
+  {
+    "prompt": "What does a trace ID in a log line let you do?",
+    "options": ["Delete the log", "Find every other log line and span for the same request", "Encrypt it", "Count users"],
+    "answer": 1,
+    "explanation": "It links logs to the request's trace."
+  },
+  {
+    "prompt": "Metrics show errors started at 09:40. What do logs add?",
+    "options": ["Nothing", "The events around that time, such as a job starting, that explain why", "Faster servers", "Prices"],
+    "answer": 1,
+    "explanation": "Metrics say when; logs say what happened."
+  }
+]
+```
+$md$, true, true, 3, array['obs-03-p1', 'obs-03-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('sre-m04', 'observability-site-reliability', 'Distributed Traces', 4, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('observability-site-reliability:distributed-traces', 'observability-site-reliability', 'sre-m04', 'distributed-traces', 'Distributed traces', 'Read traces made of spans, rebuild a request''s path through the web tier, API, database and email provider, and compare where time goes in normal and incident traffic.', 15, $md$
+## The problem
+
+The logs pointed at the database connection pool. But a request at Tallybook passes through several services: the web tier, the API, the database, and for invoice-sending, a PDF renderer and an email provider. During an incident, everything looks slow. Which part is actually waiting, and on what?
+
+**Traces** answer that. Tallybook samples requests and records each one's full path, with the time spent in every step.
+
+## The concept
+
+**Spans and traces**
+
+A **trace** is one request's journey. It's made of **spans**: each span is one operation (an HTTP call, a database query), with a start time, a duration, a status, and a **parent** span. The spans form a tree.
+
+```text nocheck
+web   GET /api/invoices ─────────────────────────────────────┐ 5,015 ms
+  api   GET /invoices ──────────────────────────────────────┐
+    db    acquire connection ███████████████████████████████  4,900 ms
+    db    SELECT invoices     █ 98 ms
+```
+
+**Self time and the critical path**
+
+A parent span's duration includes its children. To find where time really goes, look at the **leaf** spans (the ones doing the work), or each span's **self time** (its duration minus its children's).
+
+**Sampling**
+
+Recording every request is expensive. Most systems sample (for example 1%), plus every request that errors or is very slow.
+
+## Example
+
+Load the spans, sampled at 08:30 (normal) and 09:55 (incident):
+
+```python
+import pandas as pd
+
+spans = pd.read_csv("https://academy.cloudtechanalytics.com/datasets/observability/spans.csv")
+print(spans.groupby("window")["trace_id"].nunique())
+
+one = spans[spans["trace_id"] == spans.loc[(spans["window"] == "incident") & (spans["operation"] == "acquire connection"), "trace_id"].iloc[0]]
+one[["span_id", "parent_span_id", "service", "operation", "start_ms", "duration_ms", "status"]]
+```
+
+```text
+window
+incident    100
+normal      100
+Name: trace_id, dtype: int64
+    span_id parent_span_id service                operation  start_ms  duration_ms status
+480  s00481            NaN     web  POST /api/invoices/send         0         5015  error
+481  s00482         s00481     api      POST /invoices/send         2         5007  error
+482  s00483         s00482      db       acquire connection         5         5000  error
+```
+
+The root span (web) has no parent; the API span's parent is the root; the database spans' parent is the API span. Nearly all of this request's time was spent waiting to **acquire** a connection, not running the query. Now across all traces: median time per leaf operation, normal against incident.
+
+```python
+parents = set(spans["parent_span_id"].dropna())
+leaves = spans[~spans["span_id"].isin(parents)]
+leaves.pivot_table(index="operation", columns="window", values="duration_ms", aggfunc="median").round(0)
+```
+
+```text
+window                           incident  normal
+operation
+POST /v3/mail/send                  184.0   197.0
+SELECT invoice, lines, customer      98.0    54.0
+SELECT invoices                     104.0    64.0
+acquire connection                 4756.0     4.0
+render invoice pdf                  128.0   131.0
+```
+
+The queries themselves took only a few dozen milliseconds longer. The PDF renderer and the email provider didn't change at all. The difference is almost entirely **waiting for a connection**: from a few milliseconds to several seconds. And how many incident traces gave up entirely?
+
+```python
+acquire = spans[spans["operation"] == "acquire connection"]
+acquire.groupby("window").agg(traces=("trace_id", "nunique"), failed=("status", lambda s: (s == "error").sum()),
+                              median_wait_ms=("duration_ms", "median"), max_wait_ms=("duration_ms", "max"))
+```
+
+```text
+traces  failed  median_wait_ms  max_wait_ms
+window
+incident     100      47          4756.5         5000
+normal       100       0             4.0            8
+```
+
+The 5,000 ms maximum is the pool's timeout: requests that waited that long were failed by the API, and the web tier turned them into errors for customers.
+
+## Walkthrough
+
+1. Run the cells. For one normal trace of `POST /api/invoices/send`, list every span in order and its self time.
+2. What share of incident traces' total time was connection waiting?
+3. Why would adding web servers have made this incident worse, not better? (Hint: more servers, more requests competing for the same pool.)
+4. Explain to a non-engineer, in three sentences, what the traces show.
+
+## Practice
+
+```answer
+{
+  "id": "obs-04-p1",
+  "prompt": "In how many **incident** traces did acquiring a database connection **fail**?",
+  "answer": 47,
+  "format": "number",
+  "dataset": "observability",
+  "files": ["spans"],
+  "pyVerify": "int(((acquire['window'] == 'incident') & (acquire['status'] == 'error')).sum())",
+  "hint": "The failed value in the incident row.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "What is a span?",
+    "options": ["A whole request", "One operation within a request, with timing, status and a parent", "A log level", "A metric"],
+    "answer": 1,
+    "explanation": "Spans form a trace's tree."
+  },
+  {
+    "prompt": "Why look at leaf spans or self time?",
+    "options": ["They're shorter", "Parent spans include their children's time, so leaves show where work actually happens", "Leaves are errors", "It's required"],
+    "answer": 1,
+    "explanation": "Avoid counting the same time twice."
+  },
+  {
+    "prompt": "Queries are slightly slower, but waiting for a connection takes seconds. What's the bottleneck?",
+    "options": ["Slow queries", "Too few connections for the work arriving: the pool", "The email provider", "DNS"],
+    "answer": 1,
+    "explanation": "Waiting, not working."
+  }
+]
+```
+$md$, true, true, 4, array['obs-04-p1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('sre-m05', 'observability-site-reliability', 'SLIs and SLOs', 5, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('observability-site-reliability:slis-and-slos', 'observability-site-reliability', 'sre-m05', 'slis-and-slos', 'SLIs and SLOs', 'Define service level indicators from what users experience, set objectives and error budgets, and measure Tallybook''s August against them, including how much of the month''s budget two mornings used.', 25, $md$
+## The problem
+
+"Is the app reliable enough?" can't be answered with a feeling. Tallybook's customers can't send invoices when requests fail or crawl, and Tallybook's engineers can't ship features while firefighting. An agreed, measured target settles arguments in both directions: when to slow down and fix reliability, and when reliability is good enough to keep building.
+
+## The concept
+
+**SLI, SLO, error budget**
+
+- A **service level indicator** (SLI) measures what users experience, as a ratio of good events to all events. For example: the share of requests that succeed, or that finish in under one second.
+- A **service level objective** (SLO) is the target for that ratio over a period: **99.9% of requests succeed, over 30 days**.
+- The **error budget** is what's left: 0.1% of requests may fail. Spending it on releases and experiments is fine; running out means reliability work comes first.
+
+**Choose SLIs users would recognise**
+
+| SLI | Good event |
+| :-- | :-- |
+| Availability | request didn't return a 5xx error |
+| Latency | request finished within 1 second |
+
+Measure them where users meet the service (the load balancer or web tier), not deep inside.
+
+**Pick realistic objectives**
+
+100% is the wrong target: it's impossible, and chasing it stops all change. Pick what users actually need, and what the system can achieve.
+
+## Example
+
+August's daily totals, measured at the web tier:
+
+```python
+import pandas as pd
+
+daily = pd.read_csv("https://academy.cloudtechanalytics.com/datasets/observability/daily_sli.csv", parse_dates=["date"])
+daily["availability"] = 1 - daily["errors_5xx"] / daily["requests"]
+daily["fast"] = 1 - daily["slow_requests"] / daily["requests"]
+
+month = daily[["requests", "errors_5xx", "slow_requests"]].sum()
+availability = 1 - month["errors_5xx"] / month["requests"]
+fast = 1 - month["slow_requests"] / month["requests"]
+print(f"August availability: {availability:.4%}   (SLO 99.9%)")
+print(f"August requests under 1 s: {fast:.4%}   (SLO 99%)")
+daily.sort_values("availability")[["date", "requests", "availability", "fast"]].head(4)
+```
+
+```text
+August availability: 99.6917%   (SLO 99.9%)
+August requests under 1 s: 98.9508%   (SLO 99%)
+         date  requests  availability      fast
+30 2026-08-31   8316694      0.979174  0.950193
+27 2026-08-28   8198501      0.984194  0.958629
+0  2026-08-01   1947225      0.999360  0.996685
+28 2026-08-29   1997031      0.999361  0.996642
+```
+
+Both SLOs were missed for August. How much of the error budget did each day use?
+
+```python
+SLO = 0.999
+budget = (1 - SLO) * month["requests"]          # failed requests allowed in August
+daily["budget_used"] = daily["errors_5xx"] / budget
+print(f"Error budget: {budget:,.0f} failed requests; used: {month['errors_5xx'] / budget:.0%}")
+print(daily.sort_values("budget_used", ascending=False)[["date", "errors_5xx", "budget_used"]].head(3).round(3).to_string(index=False))
+```
+
+```text
+Error budget: 118,739 failed requests; used: 308%
+      date  errors_5xx  budget_used
+2026-08-31      173205        1.459
+2026-08-28      129583        1.091
+2026-08-04        2802        0.024
+```
+
+The other 29 days together used about half the month's budget. Two month-end mornings used about two and a half budgets on their own. That makes the decision obvious: the month-end bulk job and the connection pool are the reliability work to do before anything else, and an error budget policy should say so in advance (lesson 9).
+
+## Walkthrough
+
+1. Run the cells. Recalculate August without the 28th and 31st. Would Tallybook have met both SLOs?
+2. Compute a 28-day rolling availability. On which day did it first fall below 99.9%?
+3. Why measure at the web tier rather than at the database?
+4. Write Tallybook's SLOs (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "obs-05-p1",
+  "prompt": "What was August's **availability**? As a percentage, two decimal places.",
+  "answer": 99.69,
+  "tolerance": 0.006,
+  "format": "number",
+  "dataset": "observability",
+  "files": ["daily_sli"],
+  "pyVerify": "round(availability * 100, 2)",
+  "hint": "The first line printed.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "obs-05-t1",
+  "prompt": "Write Tallybook's **SLOs**: for each of **availability** and **latency**, one line giving the **SLI** (what counts as good), **where** it's measured, the **target** and the **window**. Add a line saying what happens when the **error budget** runs out.",
+  "minutes": 6,
+  "rows": 5,
+  "placeholder": "Availability: ...",
+  "rules": [
+    { "label": "An availability line", "pattern": "availab" },
+    { "label": "A latency line with a time threshold", "pattern": "latenc[^\\n]*\\d+\\s*(ms|s\\b|second)|\\d+\\s*(ms|second)[^\\n]*latenc" },
+    { "label": "Targets as percentages", "pattern": "99(\\.\\d+)?\\s*%", "min": 2 },
+    { "label": "A window (30 days, 28 days, rolling, month)", "pattern": "\\d+[- ]day|rolling|month" },
+    { "label": "Where measured (web tier, load balancer)", "pattern": "web tier|load balancer|edge|where users" },
+    { "label": "Error budget consequence", "pattern": "budget[^\\n]*(freeze|stop|pause|priorit|reliability)" }
+  ],
+  "sample": "Availability: the share of requests to the web tier that don't return a 5xx error; target 99.9% over a rolling 30 days.\nLatency: the share of requests to the web tier that complete within 1 second; target 99% over a rolling 30 days.\nError budget: when either budget is used up, feature releases pause except for fixes, and the team's next work is the reliability problem that used it.",
+  "note": "Measuring at the web tier counts what customers actually saw, including failures the database never knew about.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "An SLO of 99.9% availability over 30 days with 10 million requests allows how many failures?",
+    "options": ["100", "10,000", "1,000", "100,000"],
+    "answer": 1,
+    "explanation": "0.1% of 10 million."
+  },
+  {
+    "prompt": "Why not set a 100% SLO?",
+    "options": ["It's too easy", "It's impossible, and chasing it stops all change", "Customers don't care", "It's illegal"],
+    "answer": 1,
+    "explanation": "Pick what users need."
+  },
+  {
+    "prompt": "What is an error budget for?",
+    "options": ["Paying for errors", "Deciding when to prioritise reliability over new features", "Hiring", "Logging"],
+    "answer": 1,
+    "explanation": "Spend it deliberately; when it's gone, fix reliability."
+  }
+]
+```
+$md$, true, true, 5, array['obs-05-p1', 'obs-05-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('sre-m06', 'observability-site-reliability', 'Burn-Rate Alerts', 6, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('observability-site-reliability:burn-rate-alerts', 'observability-site-reliability', 'sre-m06', 'burn-rate-alerts', 'Burn-rate alerts', 'Alert on how fast the error budget is being spent rather than on fixed thresholds, compute burn rates over short and long windows, and see when each alert would have fired on 31 August.', 25, $md$
+## The problem
+
+A fixed alert like "error rate above 1%" is either too sensitive (paging for a 2-minute blip at 3am) or too slow (missing a steady 0.5% that quietly eats the month's budget). The SLO already says how much failure is acceptable. Alerts should fire when the budget is being spent **too fast**.
+
+## The concept
+
+**Burn rate**
+
+Burn rate = observed error rate ÷ the error rate the SLO allows. With a 99.9% SLO, the allowed rate is 0.1%:
+
+| Error rate | Burn rate | A 30-day budget lasts |
+| :-- | :-- | :-- |
+| 0.1% | 1× | 30 days |
+| 1% | 10× | 3 days |
+| 1.44% | 14.4× | about 2 days: **2% of the budget in one hour** |
+
+**Multi-window alerts**
+
+Page when **both** a long and a short window are burning fast:
+
+- the **1-hour** burn rate is above 14.4 (a serious amount of budget is going), **and**
+- the **5-minute** burn rate is above 14.4 (it's still happening now, not a past blip).
+
+The long window prevents paging on blips; the short window lets the alert clear quickly once the problem stops. Slower burns (for example 6× over 6 hours) open a ticket rather than paging.
+
+## Example
+
+Per-minute burn rate on 31 August, then both windows:
+
+```python
+import pandas as pd
+
+metrics = pd.read_csv("https://academy.cloudtechanalytics.com/datasets/observability/metrics.csv", parse_dates=["minute"])
+web = metrics[metrics["service"] == "web"].set_index("minute")[["requests", "errors"]]
+
+ALLOWED = 0.001   # 99.9% SLO
+
+def burn(window_minutes):
+    rolled = web.rolling(window_minutes).sum()
+    return (rolled["errors"] / rolled["requests"]) / ALLOWED
+
+web["burn_1h"] = burn(60)
+web["burn_5m"] = burn(5)
+web["page"] = (web["burn_1h"] > 14.4) & (web["burn_5m"] > 14.4)
+
+fired = web.index[web["page"]]
+print("Burn-rate page fires at", fired.min().strftime("%H:%M"), "and clears after", fired.max().strftime("%H:%M"))
+web.loc["2026-08-31 09:38":"2026-08-31 09:46", ["burn_5m", "burn_1h", "page"]].round(1)
+```
+
+```text
+Burn-rate page fires at 09:42 and clears after 10:37
+                     burn_5m  burn_1h   page
+minute
+2026-08-31 09:38:00      0.7      0.6  False
+2026-08-31 09:39:00      0.7      0.6  False
+2026-08-31 09:40:00     60.7      5.6  False
+2026-08-31 09:41:00    113.2     10.0  False
+2026-08-31 09:42:00    176.0     15.3   True
+2026-08-31 09:43:00    228.6     19.8   True
+2026-08-31 09:44:00    277.1     23.8   True
+2026-08-31 09:45:00    272.5     28.3   True
+2026-08-31 09:46:00    270.8     32.4   True
+```
+
+The alert fires within a couple of minutes of the bulk job starting, and stops soon after the fix. Compare a naive alert that pages whenever a single minute's error rate is above 1%, over the quiet early morning:
+
+```python
+web["naive"] = (web["errors"] / web["requests"]) > 0.01
+print("Naive alert minutes:", int(web["naive"].sum()), " burn-rate alert minutes:", int(web["page"].sum()))
+print("Highest 1-hour burn rate before 09:00:", round(web.loc[:"2026-08-31 08:59", "burn_1h"].max(), 2))
+```
+
+```text
+Naive alert minutes: 54  burn-rate alert minutes: 56
+Highest 1-hour burn rate before 09:00: 0.71
+```
+
+On this day, both agree on the incident, but look at the morning: before 09:00 the budget burned at well under 1×. A burn-rate rule stays quiet when nothing threatens the SLO, however a single minute looks, and the same rule works for any traffic level.
+
+## Walkthrough
+
+1. Run the cells. Add a ticket-level alert: 6-hour burn rate above 6 and 30-minute above 6. Does it fire on 31 August?
+2. What error rate corresponds to a burn rate of 14.4 under a 99.5% SLO?
+3. Change the short window to 15 minutes. How much later does the page clear?
+4. Write the alert rules (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "obs-06-p1",
+  "prompt": "For how many minutes is the burn-rate page condition true on 31 August?",
+  "answer": 56,
+  "format": "number",
+  "dataset": "observability",
+  "files": ["metrics"],
+  "pyVerify": "int(web['page'].sum())",
+  "hint": "The burn-rate alert minutes in the second output.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "obs-06-t1",
+  "prompt": "Write Tallybook's **SLO alert rules**, one per line starting with **PAGE:** or **TICKET:**, at least **two** rules with **burn rates** and **two windows** each, plus a line starting **Route:** saying who receives each.",
+  "minutes": 6,
+  "rows": 5,
+  "placeholder": "PAGE: ...",
+  "rules": [
+    { "label": "A PAGE line", "pattern": "^\\s*PAGE\\s*:" },
+    { "label": "A TICKET line", "pattern": "^\\s*TICKET\\s*:" },
+    { "label": "Burn-rate numbers", "pattern": "\\d+(\\.\\d+)?\\s*(x|×|times)|burn rate (above|over|>)\\s*\\d", "min": 2 },
+    { "label": "Two windows per rule (h and m)", "pattern": "\\d+\\s*(h|hour)[^\\n]*\\d+\\s*(m\\b|min)|\\d+\\s*(m\\b|min)[^\\n]*\\d+\\s*(h|hour)", "min": 2 },
+    { "label": "A Route line", "pattern": "^\\s*route\\s*:" }
+  ],
+  "sample": "PAGE: availability burn rate above 14.4 over 1 hour and above 14.4 over 5 minutes.\nPAGE: latency (requests over 1 s) burn rate above 14.4 over 1 hour and over 5 minutes.\nTICKET: availability burn rate above 6 over 6 hours and above 6 over 30 minutes.\nRoute: pages go to the on-call engineer's phone at any hour; tickets go to the platform team's queue for the next working day.",
+  "note": "Two pages, both about what users experience; everything slower becomes a ticket. That's the core of a quiet, useful on-call.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "With a 99.9% SLO, an error rate of 1% is what burn rate?",
+    "options": ["1×", "10×", "0.1×", "100×"],
+    "answer": 1,
+    "explanation": "1% ÷ 0.1%."
+  },
+  {
+    "prompt": "Why combine a long and a short window?",
+    "options": ["To page twice", "The long window ignores blips; the short one lets the alert clear soon after the problem stops", "Tools require it", "To save money"],
+    "answer": 1,
+    "explanation": "Significant and current."
+  },
+  {
+    "prompt": "A slow burn would exhaust the budget in two weeks. Page or ticket?",
+    "options": ["Page immediately at night", "Ticket: important, but it can wait for working hours", "Ignore it", "Restart everything"],
+    "answer": 1,
+    "explanation": "Page only for what needs action now."
+  }
+]
+```
+$md$, true, true, 6, array['obs-06-p1', 'obs-06-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('sre-m07', 'observability-site-reliability', 'Alert Quality and On-Call', 7, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('observability-site-reliability:alert-quality-and-on-call', 'observability-site-reliability', 'sre-m07', 'alert-quality-and-on-call', 'Alert quality and on-call', 'Measure how useful each alert is (how often it needs action, when it wakes people, how fast it''s acknowledged), find the noisy ones, and design an on-call that people can sustain.', 25, $md$
+## The problem
+
+In August, Tallybook's on-call engineer was paged nearly 80 times. Most pages needed no action at all, and many came in the middle of the night. When the real incident started on 31 August, the page arrived alongside the usual morning "WebHighCPU" page that everyone had learned to dismiss.
+
+Alert fatigue is dangerous: people stop trusting alerts, acknowledge without looking, and burn out. The fix starts with measuring each alert's usefulness.
+
+## The concept
+
+**What makes a good page**
+
+Every page should be: **urgent** (needs action now), **actionable** (a person can do something), and **real** (rarely a false alarm). Anything else should be a ticket, a dashboard, or deleted.
+
+**Measure alerts**
+
+| Measure | Question |
+| :-- | :-- |
+| Volume | how often does it fire? |
+| Actionable rate | how often did someone need to do something? |
+| Night pages | how often does it wake people? |
+| Time to acknowledge | is it being taken seriously? |
+
+**Symptoms, not causes**
+
+Page on what users experience (SLO burn rate, lesson 6). High CPU, a busy queue, one host briefly unreachable: these are causes or noise; they belong on dashboards unless they directly threaten users.
+
+**Sustainable on-call**
+
+A small number of pages per shift, a rotation with enough people, handover notes, and time after a bad night to recover. Every page should be reviewed weekly: keep it, fix it, or delete it.
+
+## Example
+
+August's alerts, summarised by alert:
+
+```python
+import pandas as pd
+
+alerts = pd.read_csv("https://academy.cloudtechanalytics.com/datasets/observability/alerts.csv", parse_dates=["fired_at", "resolved_at"])
+alerts["night"] = (alerts["fired_at"].dt.hour < 7) | (alerts["fired_at"].dt.hour >= 22)
+
+summary = alerts.groupby(["alert", "severity"]).agg(
+    fired=("alert_id", "size"),
+    actionable_rate=("actionable", "mean"),
+    night=("night", "sum"),
+    median_ack_minutes=("minutes_to_acknowledge", "median"),
+).round(2).sort_values("fired", ascending=False)
+summary
+```
+
+```text
+fired  actionable_rate  night  median_ack_minutes
+alert                      severity
+WebHighCPU                 page         42              0.1      0                15.5
+HostDown prod-web-04       page         20              0.0     20                 7.5
+DiskUsageVarAbove85        ticket       20              1.0     20               297.5
+WorkerQueueDepthHigh       page          8              0.0      8                19.0
+API5xxRateAbove1pct        page          4              0.5      0                 7.5
+LatencyP95Above2s          page          4              0.5      0                 7.0
+CertificateExpiresIn30Days ticket        1              1.0      0               180.0
+```
+
+Now the on-call engineer's month, in numbers:
+
+```python
+pages = alerts[alerts["severity"] == "page"]
+print("Pages:", len(pages), " needing action:", int(pages["actionable"].sum()), f"({pages['actionable'].mean():.0%})")
+print("Pages at night:", int(pages["night"].sum()), " of which needed action:", int(pages.loc[pages["night"], "actionable"].sum()))
+```
+
+```text
+Pages: 78  needing action: 8 (10%)
+Pages at night: 28  of which needed action: 0
+```
+
+Almost nine in ten pages were noise, and not one night-time page needed action. WebHighCPU fired twice every weekday because the web servers simply get busy at peak, and needed action only on the two incident days, when the SLO alerts were already firing. Meanwhile the one alert that kept being right, DiskUsageVarAbove85, was a ticket nobody acted on, and `/var` reached 97% (the Linux course found it).
+
+## Walkthrough
+
+1. Run the cells. For each alert, decide: keep as a page, make a ticket, put on a dashboard only, or delete.
+2. If the noisy pages were removed, how many pages would August have had?
+3. HostDown prod-web-04 fires briefly most nights. What would you investigate?
+4. Write the alert review decisions (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "obs-07-p1",
+  "prompt": "How many **pages** fired in August?",
+  "answer": 78,
+  "format": "number",
+  "dataset": "observability",
+  "files": ["alerts"],
+  "pyVerify": "len(pages)",
+  "hint": "The first number printed.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "obs-07-t1",
+  "prompt": "Write your **alert review decisions**, one line per alert starting with the alert's name and a colon: **keep**, **ticket**, **dashboard** or **delete**, with the evidence from the summary. Cover at least **five** alerts.",
+  "minutes": 8,
+  "rows": 7,
+  "placeholder": "WebHighCPU: ...",
+  "rules": [
+    { "label": "At least five alert lines", "pattern": "^\\s*[-*]?\\s*(WebHighCPU|DiskUsageVarAbove85|HostDown|WorkerQueueDepthHigh|API5xxRateAbove1pct|LatencyP95Above2s|CertificateExpiresIn30Days)[^:\\n]*:", "min": 5 },
+  { "label": "A decision word on each line", "pattern": "^[^\\n]*:[^\\n]*\\b(keep|ticket|dashboard|delete|replace)", "min": 5 },
+    { "label": "WebHighCPU demoted or deleted", "pattern": "WebHighCPU[^\\n]*(dashboard|delete|remove|ticket)" },
+    { "label": "Uses evidence (a number or rate)", "pattern": "\\d", "min": 5 },
+    { "label": "Mentions replacing with SLO burn-rate alerts", "pattern": "burn|slo" }
+  ],
+  "sample": "WebHighCPU: dashboard only; it fired 42 times, needed action on 10% of them, and only when the SLO alerts were already firing.\nHostDown prod-web-04: delete as a page; 20 night-time pages, none needing action; investigate the flaky health check in a ticket.\nWorkerQueueDepthHigh: ticket; 8 pages, none actionable, all from the nightly batch.\nAPI5xxRateAbove1pct: replace with the SLO burn-rate page; it caught both incidents but also paged for blips.\nLatencyP95Above2s: replace with the latency SLO burn-rate page; 2 of its 4 pages were the real incidents.\nDiskUsageVarAbove85: keep as a ticket but give it an owner and a 2-day deadline; it was right 20 times and ignored until /var hit 97%.",
+  "note": "The disk alert shows that useful alerts can still fail if nobody owns the follow-up.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "What should a page always be?",
+    "options": ["Frequent", "Urgent, actionable and real", "About CPU", "Sent to everyone"],
+    "answer": 1,
+    "explanation": "Anything else is a ticket or a dashboard."
+  },
+  {
+    "prompt": "An alert fires daily and almost never needs action. What's the risk?",
+    "options": ["None", "People learn to dismiss it, and miss the day it matters", "It costs money", "It slows servers"],
+    "answer": 1,
+    "explanation": "Alert fatigue hides real incidents."
+  },
+  {
+    "prompt": "Why page on SLO burn rate rather than high CPU?",
+    "options": ["CPU is hard to measure", "Burn rate measures what users experience; busy CPU often doesn't hurt anyone", "It's cheaper", "CPU alerts are illegal"],
+    "answer": 1,
+    "explanation": "Page on symptoms, not causes."
+  }
+]
+```
+$md$, true, true, 7, array['obs-07-p1', 'obs-07-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('sre-m08', 'observability-site-reliability', 'Capacity and Saturation', 8, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('observability-site-reliability:capacity-and-saturation', 'observability-site-reliability', 'sre-m08', 'capacity-and-saturation', 'Capacity and saturation', 'Use Little''s law to work out how many database connections a workload needs, see exactly when Tallybook''s pool ran out, and size the pool and the bulk job so month-end can''t do it again.', 25, $md$
+## The problem
+
+Ada fixed the incident by doubling the database connection pool and slowing the bulk job. It worked, but was it the right fix, or a lucky guess? Next month-end, traffic will be higher. Before then, Tallybook needs to know how many connections the work really needs, and how much headroom is enough.
+
+## The concept
+
+**Little's law**
+
+For any system that work flows through:
+
+> average items in the system = arrival rate × average time each item spends there
+
+For a connection pool: **connections in use = requests per second × seconds each request holds a connection**. 133 API requests a second, each holding a connection for 0.3 seconds, need about 40 connections at once.
+
+**Saturation**
+
+When demand exceeds what a resource can serve, work queues. Waiting time doesn't grow gently: it grows without limit until something times out. That's why the incident went from fine to failing within a minute.
+
+**Headroom and isolation**
+
+- Size for the peak plus headroom (for example, peak demand at most 70% of capacity).
+- **Isolate** batch work from user traffic: give background jobs their own, smaller pool, so they can only slow themselves down.
+- Remember the other end: a bigger pool means more connections at the database, which has its own limit.
+
+## Example
+
+Demand for connections, minute by minute, from Little's law:
+
+```python
+import pandas as pd
+
+pool = pd.read_csv("https://academy.cloudtechanalytics.com/datasets/observability/db_pool.csv", parse_dates=["minute"]).set_index("minute")
+pool["demand"] = pool["api_requests"] / 60 * pool["db_ms_per_request"] / 1000
+pool["saturated"] = pool["demand"] > pool["pool_size"]
+
+print("Peak demand before 09:40:", round(pool.loc[:"2026-08-31 09:39", "demand"].max(), 1), "connections (pool 40)")
+print("Peak demand during the incident:", round(pool.loc["2026-08-31 09:40":"2026-08-31 10:33", "demand"].max(), 1))
+print("Minutes saturated:", int(pool["saturated"].sum()))
+pool.loc["2026-08-31 09:36":"2026-08-31 09:44", ["api_requests", "db_ms_per_request", "demand", "pool_size", "connections_in_use", "wait_p95_ms"]].round(1)
+```
+
+```text
+Peak demand before 09:40: 34.9 connections (pool 40)
+Peak demand during the incident: 56.9
+Minutes saturated: 54
+                     api_requests  db_ms_per_request  demand  pool_size  connections_in_use  wait_p95_ms
+minute
+2026-08-31 09:36:00          8490                243    34.4         40                  34            7
+2026-08-31 09:37:00          8305                240    33.2         40                  33            3
+2026-08-31 09:38:00          8090                235    31.7         40                  32            3
+2026-08-31 09:39:00          8053                234    31.4         40                  31            4
+2026-08-31 09:40:00          8514                393    55.8         40                  40        16112
+2026-08-31 09:41:00          8280                385    53.1         40                  40        14192
+2026-08-31 09:42:00          8752                390    56.9         40                  40        16646
+2026-08-31 09:43:00          8272                391    53.9         40                  40        15140
+2026-08-31 09:44:00          8032                392    52.5         40                  40        13572
+```
+
+Before the job started, peak demand was already close to 90% of the pool: running hot every month-end morning. The bulk job added about 150 ms to every request's database time (its own queries compete for the same database), and demand jumped past 40 in the very minute it started. Now size the pool for next month-end, assuming traffic grows 20% and keeping demand under 70% of the pool:
+
+```python
+GROWTH, MAX_USE = 1.2, 0.7
+without_job = pool.loc[:"2026-08-31 09:39", "demand"].max() * GROWTH
+with_job = pool.loc["2026-08-31 09:40":"2026-08-31 10:33", "demand"].max() * GROWTH
+print(f"Pool needed, bulk job isolated: {without_job / MAX_USE:.0f} connections")
+print(f"Pool needed, bulk job sharing the pool: {with_job / MAX_USE:.0f} connections")
+```
+
+```text
+Pool needed, bulk job isolated: 60 connections
+Pool needed, bulk job sharing the pool: 98 connections
+```
+
+Isolating the job keeps the API's pool moderate. Letting the job share the pool would need far more connections, and the database itself might not accept that many.
+
+## Walkthrough
+
+1. Run the cells. Use Little's law by hand for one minute at 10:00 and check it against the table.
+2. After the fix at 10:34, what's the pool's utilisation? Is 80 too many?
+3. How many invoices per minute could the bulk job send with 4 concurrent workers, if each send takes 0.6 seconds?
+4. Write the capacity plan (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "obs-08-p1",
+  "prompt": "What was the **peak connection demand during the incident**? One decimal place.",
+  "answer": 56.9,
+  "format": "number",
+  "dataset": "observability",
+  "files": ["db_pool"],
+  "pyVerify": "round(pool.loc['2026-08-31 09:40':'2026-08-31 10:33', 'demand'].max(), 1)",
+  "hint": "The second line printed.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "obs-08-t1",
+  "prompt": "Write the **month-end capacity plan**, one numbered step per line: at least **four** steps covering the **API pool size** (with a number and how you got it), **isolating** the bulk job, the job's **schedule or rate**, and a **saturation alert**.",
+  "minutes": 6,
+  "rows": 6,
+  "placeholder": "1. Set the API pool to ...",
+  "rules": [
+    { "label": "At least four numbered steps", "pattern": "^\\s*\\d+[.)]\\s+\\S", "min": 4 },
+    { "label": "A pool size number", "pattern": "pool[^\\n]*\\b\\d{2,3}\\b" },
+    { "label": "Explains the sizing (Little's law, demand, headroom, 70%)", "pattern": "little|demand|headroom|70\\s*%" },
+    { "label": "Isolates the bulk job (own pool, separate)", "pattern": "own pool|separate pool|isolat|dedicated" },
+    { "label": "Schedules or limits the job (night, rate, concurrency)", "pattern": "night|off-peak|overnight|rate|concurren|limit" },
+    { "label": "A saturation alert or dashboard", "pattern": "alert|ticket|dashboard" }
+  ],
+  "sample": "1. Set the API's pool to 60 connections: peak demand before the job was about 35, so with 20% growth (about 42) at no more than 70% use we need about 60.\n2. Give the bulk send job its own pool of 8 connections, so it can only ever slow itself down.\n3. Run the bulk job from 01:00 on month-end days with 4 concurrent sends, finishing before the morning rush.\n4. Add a ticket when pool utilisation passes 70% for 10 minutes, and show it on the API dashboard.\n5. Check the database's own connection limit can take both pools plus the admin connections.",
+  "note": "Step 2 is the real fix: isolation turns a shared failure into a slow batch job.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "200 requests per second, each holding a connection for 0.1 s. How many connections are in use on average?",
+    "options": ["2", "20", "200", "2,000"],
+    "answer": 1,
+    "explanation": "Little's law: 200 × 0.1."
+  },
+  {
+    "prompt": "What happens to waiting time when demand exceeds a pool's size?",
+    "options": ["It grows slowly", "It grows without limit until requests time out", "It stays the same", "It falls"],
+    "answer": 1,
+    "explanation": "Saturation turns into queues and timeouts."
+  },
+  {
+    "prompt": "Why give a background job its own connection pool?",
+    "options": ["It's faster", "So it can't starve user requests of connections", "Jobs need more", "To save money"],
+    "answer": 1,
+    "explanation": "Isolation contains the damage."
+  }
+]
+```
+$md$, true, true, 8, array['obs-08-p1', 'obs-08-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('sre-m09', 'observability-site-reliability', 'Toil and Reliability Work', 9, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('observability-site-reliability:toil-and-reliability-work', 'observability-site-reliability', 'sre-m09', 'toil-and-reliability-work', 'Toil and reliability work', 'Measure toil (repetitive manual operations work), decide what to automate first, and set the error budget policy and practices that keep reliability work from being crowded out.', 20, $md$
+## The problem
+
+Tallybook's platform team is two engineers. Each month, a large part of their time goes on the same manual jobs: restarting a stuck worker, clearing logs when `/var` fills, dismissing pages they know are noise, answering "is the app down?" messages. That time isn't spent on the fixes that would stop those jobs recurring, so they recur. Site reliability engineering calls this **toil**, and treats it as something to measure and reduce.
+
+## The concept
+
+**Toil** is work that is manual, repetitive, automatable, reactive, and grows with the service, without making it better. Reviewing pull requests or writing postmortems isn't toil: it's engineering.
+
+**Keep toil bounded**
+
+A common target: toil at most **half** of an operations team's time, the rest on engineering that removes future toil and improves reliability.
+
+**Automate by return**
+
+Rank toil by hours per month and how automatable it is. Some of the biggest items aren't automation at all: deleting a noisy alert removes a task entirely.
+
+**An error budget policy**
+
+Written in advance and agreed with the product side:
+
+- when the budget is exhausted, feature releases pause except for fixes;
+- every incident that uses more than a set share of the budget gets a postmortem and an action;
+- reliability work is planned in each cycle, not only after incidents.
+
+## Example
+
+August's operations work:
+
+```python
+import pandas as pd
+
+toil = pd.read_csv("https://academy.cloudtechanalytics.com/datasets/observability/toil.csv")
+toil["hours_per_month"] = toil["minutes_each"] * toil["times_per_month"] / 60
+toil["is_toil"] = toil["category"] != "engineering"
+
+total = toil["hours_per_month"].sum()
+toil_hours = toil.loc[toil["is_toil"], "hours_per_month"].sum()
+print(f"Operations work: {total:.1f} hours a month, of which toil {toil_hours:.1f} hours ({toil_hours / total:.0%})")
+toil.sort_values("hours_per_month", ascending=False)[["task", "category", "automatable", "hours_per_month"]].round(1)
+```
+
+```text
+Operations work: 41.0 hours a month, of which toil 24.2 hours (59%)
+                                               task       category automatable  hours_per_month
+9           Review pull requests for infrastructure    engineering          no              8.3
+0                    Restart a stuck worker by hand       recovery         yes              5.5
+6   Answer 'is the app down?' messages from support  communication      partly              5.0
+11                    Improve monitoring dashboards    engineering          no              4.5
+10                                Write postmortems    engineering          no              4.0
+2          Acknowledge and dismiss WebHighCPU pages    alert noise         yes              3.7
+3              Check HostDown pages for prod-web-04    alert noise         yes              3.0
+1                    Clear old logs when /var fills    maintenance         yes              3.0
+4                                Rotate access keys       security         yes              1.5
+5                     Create accounts for new staff         access      partly              1.3
+7                   Resize servers before month-end       capacity         yes              0.7
+8                            Renew TLS certificates    maintenance         yes              0.5
+```
+
+Toil is most of the operations work here, well above the 50% target. The biggest items connect to earlier lessons: answering "is the app down?" (a status page and good alerts fix that), dismissing WebHighCPU pages (delete the alert), restarting workers and clearing logs (automate, or fix log rotation). How much would the first fixes remove?
+
+```python
+QUICK_WINS = ["Acknowledge and dismiss WebHighCPU pages", "Check HostDown pages for prod-web-04", "Clear old logs when /var fills", "Restart a stuck worker by hand"]
+saved = toil.loc[toil["task"].isin(QUICK_WINS), "hours_per_month"].sum()
+remaining = toil_hours - saved
+print(f"Quick wins remove {saved:.1f} hours a month; toil falls to {remaining / (total - saved):.0%} of operations work")
+```
+
+```text
+Quick wins remove 15.2 hours a month; toil falls to 35% of operations work
+```
+
+## Walkthrough
+
+1. Run the cells. Which "partly" automatable task would you tackle next, and how?
+2. Is "Review pull requests for infrastructure" toil? Why not?
+3. Estimate the engineering time each quick win needs, and the months until it pays back.
+4. Write the error budget policy (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "obs-09-p1",
+  "prompt": "How many **hours of toil** (everything except engineering) did the team do in August? One decimal place.",
+  "answer": 24.2,
+  "format": "number",
+  "dataset": "observability",
+  "files": ["toil"],
+  "pyVerify": "round(toil_hours, 1)",
+  "hint": "The toil figure on the first line.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "obs-09-t1",
+  "prompt": "Write Tallybook's **error budget policy**, one rule per line starting with a dash: at least **four** rules covering what happens when the budget is **exhausted**, when a **postmortem** is required, how reliability work is **planned**, and who **agreed** the policy.",
+  "minutes": 6,
+  "rows": 6,
+  "placeholder": "- When the 30-day error budget is used up ...",
+  "rules": [
+    { "label": "At least four rules, each starting with -", "pattern": "^\\s*-\\s+\\S", "min": 4 },
+    { "label": "Exhausted budget pauses features", "pattern": "(exhaust|used up|run out|spent)[^\\n]*(pause|freeze|stop|halt)" },
+    { "label": "Postmortem threshold (a % of budget)", "pattern": "postmortem[^\\n]*\\d+\\s*%|\\d+\\s*%[^\\n]*postmortem" },
+    { "label": "Planned reliability work (each cycle, sprint, %)", "pattern": "sprint|cycle|every (week|month)|\\d+\\s*% of (time|capacity)" },
+    { "label": "Agreed by product or leadership", "pattern": "agree|sign|cto|product|head of" }
+  ],
+  "sample": "- When the 30-day availability or latency budget is used up, feature releases pause except for fixes and security updates until the budget recovers.\n- Any incident that uses more than 20% of a month's budget gets a blameless postmortem within five working days, with owned actions.\n- Every two-week cycle reserves at least 20% of the platform team's time for reliability and toil reduction.\n- Toil is measured monthly; if it passes 50% of operations time, the next cycle's top priority is reducing it.\n- This policy is agreed by the CTO and the head of product, and reviewed every quarter.",
+  "note": "The last rule makes the policy binding: product leaders agreed to the pause before they needed it.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Which is toil?",
+    "options": ["Writing a postmortem", "Manually clearing logs every time a disk fills", "Designing a new service", "Reviewing a pull request"],
+    "answer": 1,
+    "explanation": "Manual, repetitive and automatable."
+  },
+  {
+    "prompt": "What's often the fastest way to remove toil from noisy alerts?",
+    "options": ["Automate the acknowledgement", "Delete or demote the alert", "Hire more people", "Silence the phone"],
+    "answer": 1,
+    "explanation": "Removing the task beats automating it."
+  },
+  {
+    "prompt": "Why agree an error budget policy before you need it?",
+    "options": ["It's a formality", "So pausing features is a pre-agreed rule, not an argument during a crisis", "Auditors require it", "To slow the team"],
+    "answer": 1,
+    "explanation": "Decide calmly, apply consistently."
+  }
+]
+```
+$md$, true, true, 9, array['obs-09-p1', 'obs-09-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('sre-m10', 'observability-site-reliability', 'Final Project', 10, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('observability-site-reliability:final-project', 'observability-site-reliability', 'sre-m10', 'final-project', '"Final project: Tallybook''s reliability review"', 'Plan your final project, a reliability review that finds the real cause of the month-end outages with metrics, logs and traces, and sets the SLOs, alerts, capacity plan and practices that prevent them.', 20, $md$
+## The problem
+
+Tallybook's CTO has read three explanations of the month-end outages: too few web servers, a cryptominer, and now a database connection pool. The board wants one clear account and a plan. Your final project is the reliability review: what really happened, proved with telemetry, and what Tallybook will measure and change so it doesn't happen again.
+
+## The concept
+
+**The parts of the review**
+
+| Part | Built in |
+| :-- | :-- |
+| The cause, from metrics, logs and traces | lessons 1 to 4 |
+| SLOs and August's performance against them | lesson 5 |
+| Alerting: burn-rate rules and the alert clean-up | lessons 6 and 7 |
+| Capacity: pool sizing and job isolation | lesson 8 |
+| Toil and the error budget policy | lesson 9 |
+
+**Reconcile the explanations**
+
+Good reviews don't just give the right answer; they explain why the earlier ones were incomplete. The web fleet and the miner were real issues that made things worse, but the evidence shows the pool was the cause. Say so, with the data.
+
+## Example
+
+The headline evidence in one table: the four golden signals for the API and database, before and during the incident.
+
+```python
+import pandas as pd
+
+metrics = pd.read_csv("https://academy.cloudtechanalytics.com/datasets/observability/metrics.csv", parse_dates=["minute"]).set_index("minute")
+periods = {"before (08:40-09:39)": ("2026-08-31 08:40", "2026-08-31 09:39"), "during (09:40-10:33)": ("2026-08-31 09:40", "2026-08-31 10:33")}
+
+rows = []
+for label, (start, end) in periods.items():
+    for service in ["web", "api", "db"]:
+        m = metrics[metrics["service"] == service].loc[start:end]
+        rows.append({"period": label, "service": service, "requests_per_min": round(m["requests"].mean()),
+                     "error_rate_pct": round(m["errors"].sum() / m["requests"].sum() * 100, 2),
+                     "p95_ms": round(m["p95_ms"].median()), "saturation_pct": round(m["saturation_pct"].median(), 1)})
+pd.DataFrame(rows).set_index(["service", "period"]).sort_index()
+```
+
+```text
+requests_per_min  error_rate_pct  p95_ms  saturation_pct
+service period
+api     before (08:40-09:39)              8293            0.05     581            70.8
+        during (09:40-10:33)              8272           37.64   14960           100.0
+db      before (08:40-09:39)             24878            0.00     173            81.8
+        during (09:40-10:33)             24815            0.00     284           100.0
+web     before (08:40-09:39)             11847            0.06     621            66.8
+        during (09:40-10:33)             11817           26.38   15000            66.8
+```
+
+Traffic is almost unchanged; the database's saturation went to 100% and the API's errors and latency followed. The web tier's own saturation barely moved, which is why adding web servers wouldn't have helped.
+
+## Walkthrough
+
+1. Complete the evidence: the log events, the trace comparison and the Little's law calculation.
+2. Write the SLOs, August's results and the error budget used.
+3. Write the alerting changes and the capacity plan.
+4. Open the project brief on the course page and plan the write-up.
+
+## Practice
+
+```answer
+{
+  "id": "obs-10-p1",
+  "prompt": "What was the API's **error rate during** the incident, in per cent? Two decimal places.",
+  "answer": 37.64,
+  "tolerance": 0.006,
+  "format": "number",
+  "dataset": "observability",
+  "files": ["metrics"],
+  "pyVerify": "float(pd.DataFrame(rows).set_index(['service', 'period']).loc[('api', 'during (09:40-10:33)'), 'error_rate_pct'])",
+  "hint": "The api, during row.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "obs-10-t1",
+  "prompt": "Write the **executive summary** of your reliability review (100 to 200 words): the **real cause** with the evidence from **metrics, logs and traces**, why the **earlier explanations** were incomplete, the **SLO** result, and the **changes** (alerts, capacity, policy).",
+  "minutes": 10,
+  "rows": 9,
+  "placeholder": "The month-end outages were caused by ...",
+  "rules": [
+    { "label": "Names the cause (connection pool, bulk job)", "pattern": "pool[\\s\\S]*(bulk|job)|(bulk|job)[\\s\\S]*pool" },
+    { "label": "Cites metrics, logs and traces", "pattern": "metric[\\s\\S]*log[\\s\\S]*trace|trace[\\s\\S]*log[\\s\\S]*metric|log[\\s\\S]*trace[\\s\\S]*metric|metric[\\s\\S]*trace[\\s\\S]*log" },
+    { "label": "Addresses earlier explanations (web servers, miner)", "pattern": "web server|miner|earlier|previous" },
+    { "label": "An SLO result with a percentage", "pattern": "slo[\\s\\S]*\\d+(\\.\\d+)?\\s*%|\\d+(\\.\\d+)?\\s*%[\\s\\S]*slo" },
+    { "label": "Changes (alert, pool, isolate, policy)", "pattern": "alert|isolat|policy|pool size", "min": 2 },
+    { "label": "Between 100 and 200 words", "minWords": 100, "maxWords": 200 }
+  ],
+  "sample": "The month-end outages were caused by the bulk invoice-sending job sharing the API's database connection pool. On 31 August, metrics show traffic unchanged at 09:40 while database pool saturation hit 100% and API errors and latency soared; the logs show the bulk job starting at 09:40:02 and the errors stopping after the pool was doubled and the job throttled at 10:34; and traces show requests spending seconds waiting for a connection while queries themselves barely slowed. Earlier explanations were incomplete: the web servers were never saturated, and the cryptominer, though serious, affected one server. The two incidents used about three times August's error budget, leaving availability below the 99.9% SLO. We will isolate the bulk job in its own small pool and run it overnight, size the API pool for next month-end with 30% headroom, replace noisy CPU and host pages with SLO burn-rate alerts, and adopt an error budget policy agreed with product.",
+  "note": "One sentence per kind of evidence makes the cause hard to argue with.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why explain why earlier explanations were incomplete?",
+    "options": ["To blame people", "So readers trust the conclusion and the right fixes are funded", "It's tradition", "To lengthen the report"],
+    "answer": 1,
+    "explanation": "Reconciling evidence builds confidence."
+  },
+  {
+    "prompt": "Which evidence showed the web servers weren't the bottleneck?",
+    "options": ["Their names", "Their saturation barely changed while the database pool hit 100%", "Logs from the miner", "The bill"],
+    "answer": 1,
+    "explanation": "Saturation points at the constrained resource."
+  },
+  {
+    "prompt": "What turns a reliability review into lasting change?",
+    "options": ["A long report", "SLOs, alerts, capacity changes and a policy, each with an owner", "More dashboards", "Blame"],
+    "answer": 1,
+    "explanation": "Owned changes, measured against SLOs."
+  }
+]
+```
+$md$, true, true, 10, array['obs-10-p1', 'obs-10-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+
 -- Course: Data Analyst Capstone: End-to-End BI Project
 insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
-values ('data-analyst-capstone', 'full', null, 'data-analyst-capstone', 'CAP', 'Data Analyst Capstone: End-to-End BI Project', 'Take a retail chain''s raw till export all the way to a reviewed dashboard and a board-ready executive summary, using the tools of your choice.', 'The capstone of the Data Analyst track. Voltline Electronics, a chain of eight stores, sends you 18 months of raw till data and one question from its chief executive: what''s really driving our 37% growth? You''ll plan the analysis, profile and clean a genuinely messy export (a duplicated upload, mixed date formats, inconsistent store names and test transactions), build a model that looks up costs by date and compares sales with monthly targets, decompose the growth, find what''s going wrong where, and put a value on missed sales. Then you''ll build a dashboard, write an executive summary, prepare for the board''s questions and publish the project for your portfolio. Use Excel, Power BI, SQL or Python: the work is assessed on the answers, not the tool.', 'data-analytics', 'intermediate', 4, 'Career project', 14, true, 'available', true, array['Turning a business brief into an analysis plan', 'Profiling and cleaning raw data with a quality log', 'Modelling data at the right grain', 'Decomposing growth into price, new stores and volume', 'Judging targets fairly', 'Estimating lost sales with stated assumptions', 'Finding-led dashboards and executive summaries', 'Presenting and publishing a portfolio project']::text[], array['The core Data Analyst courses: Excel, SQL and Power BI (or Python)', 'Comfort cleaning data and building a dashboard in at least one tool']::text[], 'Voltline Electronics: commercial review', true, true, true, true, false, 60, 36)
+values ('data-analyst-capstone', 'full', null, 'data-analyst-capstone', 'CAP', 'Data Analyst Capstone: End-to-End BI Project', 'Take a retail chain''s raw till export all the way to a reviewed dashboard and a board-ready executive summary, using the tools of your choice.', 'The capstone of the Data Analyst track. Voltline Electronics, a chain of eight stores, sends you 18 months of raw till data and one question from its chief executive: what''s really driving our 37% growth? You''ll plan the analysis, profile and clean a genuinely messy export (a duplicated upload, mixed date formats, inconsistent store names and test transactions), build a model that looks up costs by date and compares sales with monthly targets, decompose the growth, find what''s going wrong where, and put a value on missed sales. Then you''ll build a dashboard, write an executive summary, prepare for the board''s questions and publish the project for your portfolio. Use Excel, Power BI, SQL or Python: the work is assessed on the answers, not the tool.', 'data-analytics', 'intermediate', 4, 'Career project', 14, true, 'available', true, array['Turning a business brief into an analysis plan', 'Profiling and cleaning raw data with a quality log', 'Modelling data at the right grain', 'Decomposing growth into price, new stores and volume', 'Judging targets fairly', 'Estimating lost sales with stated assumptions', 'Finding-led dashboards and executive summaries', 'Presenting and publishing a portfolio project']::text[], array['The core Data Analyst courses: Excel, SQL and Power BI (or Python)', 'Comfort cleaning data and building a dashboard in at least one tool']::text[], 'Voltline Electronics: commercial review', true, true, true, true, false, 60, 37)
 on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level = excluded.level, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
@@ -50733,6 +52201,108 @@ values ('cicdq12', 1, 'Expand first, contract later.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 
+-- Assessment: Observability and Site Reliability: final assessment
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('observability-site-reliability-final', 'observability-site-reliability', 'final', null, 'Observability and Site Reliability: final assessment', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('sreq01', 'observability-site-reliability-final', 1, 'Which telemetry tells you when something changed and by how much?', '["Traces","Metrics","Postmortems","Tickets"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('sreq01', 1, 'Metrics are numbers over time.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('sreq02', 'observability-site-reliability-final', 2, 'Traffic is unchanged, errors jump, and the database pool is 100% used while web CPU is normal. Where''s the bottleneck?', '["The web servers","The database connection pool","DNS","The users"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('sreq02', 1, 'Saturation points at the constrained resource.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('sreq03', 'observability-site-reliability-final', 3, 'Why report p95 latency rather than the average?', '["It''s smaller","It shows what a meaningful share of users actually experience; averages hide the tail","It''s required","Averages can''t be computed"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('sreq03', 1, 'Users experience percentiles.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('sreq04', 'observability-site-reliability-final', 4, 'Why include a trace ID in every log line?', '["Logs need IDs","To link the line to the request''s full trace and its other logs","To encrypt logs","To count users"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('sreq04', 1, 'Correlation across telemetry.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('sreq05', 'observability-site-reliability-final', 5, 'In a trace, a request spends 4.9 seconds in ''acquire connection'' and 90 ms in the query. What''s wrong?', '["The query is slow","Requests are waiting for a free connection: the pool is exhausted","The network","Nothing"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('sreq05', 1, 'Waiting, not working.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('sreq06', 'observability-site-reliability-final', 6, 'An SLO of 99.9% availability over 30 days means what?', '["The service never fails","At most 0.1% of requests may fail over any 30 days","99.9% of servers are up","Uptime is checked daily"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('sreq06', 1, 'The 0.1% is the error budget.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('sreq07', 'observability-site-reliability-final', 7, 'Under a 99.9% SLO, the error rate is 2%. What''s the burn rate?', '["2×","20×","0.2×","200×"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('sreq07', 1, '2% ÷ 0.1%.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('sreq08', 'observability-site-reliability-final', 8, 'Why require both a 1-hour and a 5-minute window to page?', '["To page twice","So pages are for significant, still-happening problems, and clear soon after recovery","Tools need it","To reduce costs"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('sreq08', 1, 'Significant and current.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('sreq09', 'observability-site-reliability-final', 9, 'An alert pages 40 times a month and needs action 10% of the time. What should happen?', '["Keep it","Demote it to a dashboard or ticket, or delete it, and page on SLO burn instead","Page more people","Raise its priority"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('sreq09', 1, 'Noisy pages cause fatigue.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('sreq10', 'observability-site-reliability-final', 10, '150 requests per second each hold a database connection for 0.4 s. How many connections are needed on average?', '["40","60","150","375"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('sreq10', 1, 'Little''s law: 150 × 0.4.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('sreq11', 'observability-site-reliability-final', 11, 'A batch job shares the API''s connection pool and starves it at month-end. What''s the most robust fix?', '["A bigger pool only","Give the job its own small pool and schedule it off-peak","Stop sending invoices","More web servers"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('sreq11', 1, 'Isolation contains the damage.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('sreq12', 'observability-site-reliability-final', 12, 'Which is toil?', '["Designing alerts","Restarting a stuck worker by hand several times a week","Writing a postmortem","Reviewing a pull request"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('sreq12', 1, 'Manual, repetitive, automatable.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
 -- Assessment: Prompting Essentials: module check
 insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
 values ('aipf-m01-check', 'ai-productivity-fundamentals', 'module', 'aipf-m01', 'Prompting Essentials: module check', 60, true)
@@ -54086,6 +55656,14 @@ Work in Google Colab with the cicd dataset (https://academy.cloudtechanalytics.c
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
 
 
+-- Project: Tallybook's reliability review
+insert into public.projects (id, course_id, title, summary, brief_md, tasks, datasets, rubric, required)
+values ('sre-tallybook-reliability-review', 'observability-site-reliability', 'Tallybook''s reliability review', 'A reliability review that proves the cause of a company''s month-end outages from metrics, logs and traces, and sets SLOs, burn-rate alerts, a capacity plan and an error budget policy.', $md$Tallybook's board has heard three explanations for the month-end outages. Give them one, proved with telemetry, and the plan that prevents a repeat.
+
+Work in Google Colab with the observability dataset (https://academy.cloudtechanalytics.com/datasets/observability/: metrics.csv, db_pool.csv, daily_sli.csv, spans.csv, alerts.csv, toil.csv and app_logs.jsonl). Submit a link to your notebook (shared so anyone with the link can view it), and paste your **evidence table**, your **SLOs and alert rules** and your **executive summary** below, followed by a short note on where each task is answered.$md$, array['Metrics: the outage''s start and end, and the golden signals for each service before and during it.', 'Logs: the events that started and ended the incident, with timestamps.', 'Traces: where time went in normal and incident requests, and how many failed.', 'SLOs: the SLIs and objectives, August''s results, and how much error budget each day used.', 'Alerting: burn-rate rules tested on 31 August, and keep, ticket, dashboard or delete decisions for every existing alert.', 'Capacity: connection demand from Little''s law, the pool size for next month-end, and how the bulk job is isolated.', 'Toil and policy: toil measured and the first reductions, an error budget policy, and an executive summary.']::text[], array['observability']::text[], array['The cause is proved with all three kinds of telemetry, and earlier explanations are reconciled.', 'Percentiles are used for latency, and saturation is identified correctly.', 'SLIs measure what users experience, and the error budget arithmetic is right.', 'Alerts page on symptoms with burn rates, and noisy alerts are removed with evidence.', 'Capacity is sized with Little''s law, headroom and isolation.', 'Toil is measured and the error budget policy is specific and agreed.', 'The summary is clear to a non-technical board.']::text[], true)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
+
+
 -- Track: Become a Data Analyst
 insert into public.tracks (id, slug, title, summary, badge_name, badge_code, skills, position, published)
 values ('data-analyst', 'data-analyst', 'Become a Data Analyst', 'The route we recommend from no experience to a junior data analyst role. Learn how analysis works, then the tools teams use every day (Excel, SQL, Power BI and Python) on realistic company data. Build portfolio projects that answer real business questions, and finish with your CV, LinkedIn and interview preparation.', 'CloudTech Data Analyst', 'DATAANALYST', array['Spreadsheet analysis in Excel', 'Statistics: averages, spread, confidence intervals and tests', 'Querying databases with SQL, from first SELECT to cohorts and window functions', 'Data modelling and star schemas', 'Dashboards in Power BI, with DAX measures you can trust', 'Analysis in Python and pandas', 'Turning data into findings a manager can act on']::text[], 1, true)
@@ -54322,11 +55900,15 @@ values ('cloud-devops-engineer', 'llm-evaluation-safety-production', 'Specialist
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 insert into public.track_courses (track_id, course_id, stage, required, position)
-values ('cloud-devops-engineer', 'career-essentials', 'Career', true, 7)
+values ('cloud-devops-engineer', 'observability-site-reliability', 'Specialist', true, 7)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 insert into public.track_courses (track_id, course_id, stage, required, position)
-values ('cloud-devops-engineer', 'build-your-student-portfolio', 'Career', false, 8)
+values ('cloud-devops-engineer', 'career-essentials', 'Career', true, 8)
+on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
+
+insert into public.track_courses (track_id, course_id, stage, required, position)
+values ('cloud-devops-engineer', 'build-your-student-portfolio', 'Career', false, 9)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 

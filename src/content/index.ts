@@ -66,6 +66,8 @@ import { IAC_ASSESSMENT } from "./terraform/assessment";
 import { IAC_PROJECT } from "./terraform/project";
 import { CICD_ASSESSMENT } from "./cicd/assessment";
 import { CICD_PROJECT } from "./cicd/project";
+import { SRE_ASSESSMENT } from "./observability/assessment";
+import { SRE_PROJECT } from "./observability/project";
 import { parseFrontmatter, requiredExerciseIds } from "@/lib/lesson-format";
 
 /** Lesson files live in one folder per course, named NN-slug.md. */
@@ -94,6 +96,7 @@ const COURSE_DIRS: Record<string, string> = {
   linux: "linux-networking-basics",
   terraform: "terraform-infrastructure-as-code",
   cicd: "cicd-and-containers",
+  observability: "observability-site-reliability",
   "ai-productivity": "ai-productivity-fundamentals",
   "design-content": "design-content-essentials",
   career: "career-essentials",
@@ -181,6 +184,7 @@ export const BUNDLED_ASSESSMENTS: AssessmentDef[] = [
   LNX_ASSESSMENT,
   IAC_ASSESSMENT,
   CICD_ASSESSMENT,
+  SRE_ASSESSMENT,
   ...AIPF_ASSESSMENTS,
   ...DCE_ASSESSMENTS,
   ...CAREER_ASSESSMENTS,
@@ -195,6 +199,6 @@ export const BUNDLED_ASSESSMENTS: AssessmentDef[] = [
   ...INTERN_ASSESSMENTS,
   ...FREEL_ASSESSMENTS,
 ].map((a) => ({ ...a, kind: a.kind ?? "final" }));
-export const BUNDLED_PROJECTS: ProjectDef[] = [SQL_PROJECT, DAF_PROJECT, XLS_PROJECT, PBI_PROJECT, DMO_PROJECT, PYAN_PROJECT, STAT_PROJECT, ASQL_PROJECT, DAX_PROJECT, CAP_PROJECT, BA_PROJECT, ABA_PROJECT, PIL_PROJECT, ML_PROJECT, FEM_PROJECT, ABT_PROJECT, TSF_PROJECT, GAI_PROJECT, AGT_PROJECT, OPS_PROJECT, CLD_PROJECT, LNX_PROJECT, IAC_PROJECT, CICD_PROJECT];
+export const BUNDLED_PROJECTS: ProjectDef[] = [SQL_PROJECT, DAF_PROJECT, XLS_PROJECT, PBI_PROJECT, DMO_PROJECT, PYAN_PROJECT, STAT_PROJECT, ASQL_PROJECT, DAX_PROJECT, CAP_PROJECT, BA_PROJECT, ABA_PROJECT, PIL_PROJECT, ML_PROJECT, FEM_PROJECT, ABT_PROJECT, TSF_PROJECT, GAI_PROJECT, AGT_PROJECT, OPS_PROJECT, CLD_PROJECT, LNX_PROJECT, IAC_PROJECT, CICD_PROJECT, SRE_PROJECT];
 
 export { CATEGORIES, categoryName } from "./catalog";

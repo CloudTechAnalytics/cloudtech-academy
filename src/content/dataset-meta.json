@@ -5252,6 +5252,653 @@
    }
   }
  },
+ "observability": {
+  "zipBytes": 100126,
+  "files": {
+   "alerts": {
+    "rows": 99,
+    "bytes": 6687,
+    "columns": [
+     {
+      "name": "alert_id",
+      "type": "text",
+      "missing": 0,
+      "distinct": 99
+     },
+     {
+      "name": "alert",
+      "type": "text",
+      "missing": 0,
+      "distinct": 7
+     },
+     {
+      "name": "severity",
+      "type": "text",
+      "missing": 0,
+      "distinct": 2
+     },
+     {
+      "name": "fired_at",
+      "type": "text",
+      "missing": 0,
+      "distinct": 99
+     },
+     {
+      "name": "resolved_at",
+      "type": "text",
+      "missing": 0,
+      "distinct": 96
+     },
+     {
+      "name": "minutes_to_acknowledge",
+      "type": "number",
+      "missing": 0,
+      "distinct": 46,
+      "min": 2,
+      "max": 563
+     },
+     {
+      "name": "actionable",
+      "type": "number",
+      "missing": 0,
+      "distinct": 2,
+      "min": 0,
+      "max": 1
+     }
+    ],
+    "preview": [
+     [
+      "A0001",
+      "HostDown prod-web-04",
+      "page",
+      "2026-08-02 04:45",
+      "2026-08-02 04:46",
+      "6",
+      "0"
+     ],
+     [
+      "A0002",
+      "HostDown prod-web-04",
+      "page",
+      "2026-08-03 02:09",
+      "2026-08-03 02:12",
+      "4",
+      "0"
+     ],
+     [
+      "A0003",
+      "WorkerQueueDepthHigh",
+      "page",
+      "2026-08-03 02:20",
+      "2026-08-03 02:39",
+      "12",
+      "0"
+     ],
+     [
+      "A0004",
+      "WebHighCPU",
+      "page",
+      "2026-08-03 09:13",
+      "2026-08-03 10:08",
+      "19",
+      "0"
+     ],
+     [
+      "A0005",
+      "WebHighCPU",
+      "page",
+      "2026-08-03 14:09",
+      "2026-08-03 15:17",
+      "19",
+      "0"
+     ],
+     [
+      "A0006",
+      "HostDown prod-web-04",
+      "page",
+      "2026-08-04 01:22",
+      "2026-08-04 01:24",
+      "9",
+      "0"
+     ]
+    ]
+   },
+   "daily_sli": {
+    "rows": 31,
+    "bytes": 965,
+    "columns": [
+     {
+      "name": "date",
+      "type": "date",
+      "missing": 0,
+      "distinct": 31,
+      "min": "2026-08-01",
+      "max": "2026-08-31"
+     },
+     {
+      "name": "requests",
+      "type": "number",
+      "missing": 0,
+      "distinct": 31,
+      "min": 1947225,
+      "max": 8316694
+     },
+     {
+      "name": "errors_5xx",
+      "type": "number",
+      "missing": 0,
+      "distinct": 30,
+      "min": 1240,
+      "max": 173205
+     },
+     {
+      "name": "slow_requests",
+      "type": "number",
+      "missing": 0,
+      "distinct": 30,
+      "min": 6455,
+      "max": 414232
+     }
+    ],
+    "preview": [
+     [
+      "2026-08-01",
+      "1947225",
+      "1247",
+      "6455"
+     ],
+     [
+      "2026-08-02",
+      "2023428",
+      "1266",
+      "6802"
+     ],
+     [
+      "2026-08-03",
+      "4096128",
+      "2544",
+      "20468"
+     ],
+     [
+      "2026-08-04",
+      "4493782",
+      "2802",
+      "23868"
+     ],
+     [
+      "2026-08-05",
+      "4331257",
+      "2653",
+      "22453"
+     ],
+     [
+      "2026-08-06",
+      "4101105",
+      "2515",
+      "20518"
+     ]
+    ]
+   },
+   "db_pool": {
+    "rows": 1440,
+    "bytes": 48086,
+    "columns": [
+     {
+      "name": "minute",
+      "type": "text",
+      "missing": 0,
+      "distinct": 1440
+     },
+     {
+      "name": "api_requests",
+      "type": "number",
+      "missing": 0,
+      "distinct": 1133,
+      "min": 227,
+      "max": 8752
+     },
+     {
+      "name": "db_ms_per_request",
+      "type": "number",
+      "missing": 0,
+      "distinct": 139,
+      "min": 117,
+      "max": 393
+     },
+     {
+      "name": "pool_size",
+      "type": "number",
+      "missing": 0,
+      "distinct": 2,
+      "min": 40,
+      "max": 80
+     },
+     {
+      "name": "connections_in_use",
+      "type": "number",
+      "missing": 0,
+      "distinct": 37,
+      "min": 0,
+      "max": 40
+     },
+     {
+      "name": "wait_p95_ms",
+      "type": "number",
+      "missing": 0,
+      "distinct": 61,
+      "min": 2,
+      "max": 16646
+     }
+    ],
+    "preview": [
+     [
+      "2026-08-31 00:00",
+      "310",
+      "122",
+      "40",
+      "1",
+      "2"
+     ],
+     [
+      "2026-08-31 00:01",
+      "307",
+      "124",
+      "40",
+      "1",
+      "7"
+     ],
+     [
+      "2026-08-31 00:02",
+      "306",
+      "127",
+      "40",
+      "1",
+      "7"
+     ],
+     [
+      "2026-08-31 00:03",
+      "310",
+      "120",
+      "40",
+      "1",
+      "3"
+     ],
+     [
+      "2026-08-31 00:04",
+      "320",
+      "127",
+      "40",
+      "1",
+      "3"
+     ],
+     [
+      "2026-08-31 00:05",
+      "319",
+      "125",
+      "40",
+      "1",
+      "4"
+     ]
+    ]
+   },
+   "metrics": {
+    "rows": 4320,
+    "bytes": 191413,
+    "columns": [
+     {
+      "name": "minute",
+      "type": "text",
+      "missing": 0,
+      "distinct": 1440
+     },
+     {
+      "name": "service",
+      "type": "text",
+      "missing": 0,
+      "distinct": 3
+     },
+     {
+      "name": "requests",
+      "type": "number",
+      "missing": 0,
+      "distinct": 3244,
+      "min": 227,
+      "max": 26256
+     },
+     {
+      "name": "errors",
+      "type": "number",
+      "missing": 0,
+      "distinct": 119,
+      "min": 0,
+      "max": 3822
+     },
+     {
+      "name": "p50_ms",
+      "type": "number",
+      "missing": 0,
+      "distinct": 305,
+      "min": 39,
+      "max": 7114
+     },
+     {
+      "name": "p95_ms",
+      "type": "number",
+      "missing": 0,
+      "distinct": 502,
+      "min": 86,
+      "max": 17576
+     },
+     {
+      "name": "p99_ms",
+      "type": "number",
+      "missing": 0,
+      "distinct": 674,
+      "min": 137,
+      "max": 18473
+     },
+     {
+      "name": "saturation_pct",
+      "type": "number",
+      "missing": 0,
+      "distinct": 754,
+      "min": 0.8,
+      "max": 100
+     }
+    ],
+    "preview": [
+     [
+      "2026-08-31 00:00",
+      "web",
+      "443",
+      "0",
+      "187",
+      "393",
+      "725",
+      "15.6"
+     ],
+     [
+      "2026-08-31 00:00",
+      "api",
+      "310",
+      "0",
+      "162",
+      "353",
+      "665",
+      "11.8"
+     ],
+     [
+      "2026-08-31 00:00",
+      "db",
+      "930",
+      "0",
+      "41",
+      "89",
+      "142",
+      "1.6"
+     ],
+     [
+      "2026-08-31 00:01",
+      "web",
+      "439",
+      "0",
+      "189",
+      "398",
+      "733",
+      "13"
+     ],
+     [
+      "2026-08-31 00:01",
+      "api",
+      "307",
+      "0",
+      "164",
+      "358",
+      "673",
+      "13.4"
+     ],
+     [
+      "2026-08-31 00:01",
+      "db",
+      "921",
+      "0",
+      "41",
+      "91",
+      "145",
+      "1.6"
+     ]
+    ]
+   },
+   "spans": {
+    "rows": 885,
+    "bytes": 78475,
+    "columns": [
+     {
+      "name": "trace_id",
+      "type": "text",
+      "missing": 0,
+      "distinct": 200
+     },
+     {
+      "name": "span_id",
+      "type": "text",
+      "missing": 0,
+      "distinct": 885
+     },
+     {
+      "name": "parent_span_id",
+      "type": "text",
+      "missing": 200,
+      "distinct": 400
+     },
+     {
+      "name": "window",
+      "type": "text",
+      "missing": 0,
+      "distinct": 2
+     },
+     {
+      "name": "captured_at",
+      "type": "text",
+      "missing": 0,
+      "distinct": 2
+     },
+     {
+      "name": "service",
+      "type": "text",
+      "missing": 0,
+      "distinct": 4
+     },
+     {
+      "name": "operation",
+      "type": "text",
+      "missing": 0,
+      "distinct": 13
+     },
+     {
+      "name": "start_ms",
+      "type": "number",
+      "missing": 0,
+      "distinct": 176,
+      "min": 0,
+      "max": 5096
+     },
+     {
+      "name": "duration_ms",
+      "type": "number",
+      "missing": 0,
+      "distinct": 382,
+      "min": 1,
+      "max": 5302
+     },
+     {
+      "name": "status",
+      "type": "text",
+      "missing": 0,
+      "distinct": 2
+     }
+    ],
+    "preview": [
+     [
+      "e3fff170c7c40f05",
+      "s00001",
+      "",
+      "normal",
+      "2026-08-31 08:30",
+      "web",
+      "GET /api/invoices",
+      "0",
+      "106",
+      "ok"
+     ],
+     [
+      "e3fff170c7c40f05",
+      "s00002",
+      "s00001",
+      "normal",
+      "2026-08-31 08:30",
+      "api",
+      "GET /invoices",
+      "2",
+      "98",
+      "ok"
+     ],
+     [
+      "e3fff170c7c40f05",
+      "s00003",
+      "s00002",
+      "normal",
+      "2026-08-31 08:30",
+      "db",
+      "acquire connection",
+      "5",
+      "7",
+      "ok"
+     ],
+     [
+      "e3fff170c7c40f05",
+      "s00004",
+      "s00002",
+      "normal",
+      "2026-08-31 08:30",
+      "db",
+      "SELECT invoices",
+      "12",
+      "84",
+      "ok"
+     ],
+     [
+      "85e49af5b4194cc4",
+      "s00005",
+      "",
+      "normal",
+      "2026-08-31 08:30",
+      "web",
+      "GET /api/dashboard",
+      "0",
+      "73",
+      "ok"
+     ],
+     [
+      "85e49af5b4194cc4",
+      "s00006",
+      "s00005",
+      "normal",
+      "2026-08-31 08:30",
+      "api",
+      "GET /dashboard",
+      "2",
+      "65",
+      "ok"
+     ]
+    ]
+   },
+   "toil": {
+    "rows": 12,
+    "bytes": 683,
+    "columns": [
+     {
+      "name": "task",
+      "type": "text",
+      "missing": 0,
+      "distinct": 12
+     },
+     {
+      "name": "minutes_each",
+      "type": "number",
+      "missing": 0,
+      "distinct": 10,
+      "min": 5,
+      "max": 120
+     },
+     {
+      "name": "times_per_month",
+      "type": "number",
+      "missing": 0,
+      "distinct": 10,
+      "min": 1,
+      "max": 44
+     },
+     {
+      "name": "automatable",
+      "type": "text",
+      "missing": 0,
+      "distinct": 3
+     },
+     {
+      "name": "category",
+      "type": "text",
+      "missing": 0,
+      "distinct": 8
+     }
+    ],
+    "preview": [
+     [
+      "Restart a stuck worker by hand",
+      "15",
+      "22",
+      "yes",
+      "recovery"
+     ],
+     [
+      "Clear old logs when /var fills",
+      "30",
+      "6",
+      "yes",
+      "maintenance"
+     ],
+     [
+      "Acknowledge and dismiss WebHighCPU pages",
+      "5",
+      "44",
+      "yes",
+      "alert noise"
+     ],
+     [
+      "Check HostDown pages for prod-web-04",
+      "10",
+      "18",
+      "yes",
+      "alert noise"
+     ],
+     [
+      "Rotate access keys",
+      "45",
+      "2",
+      "yes",
+      "security"
+     ],
+     [
+      "Create accounts for new staff",
+      "20",
+      "4",
+      "partly",
+      "access"
+     ]
+    ]
+   }
+  }
+ },
  "process": {
   "zipBytes": 35522,
   "files": {
