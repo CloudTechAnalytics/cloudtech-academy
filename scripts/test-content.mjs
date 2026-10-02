@@ -24,7 +24,7 @@ const SQL = await initSqlJs();
 const IMAGE_SIZES = JSON.parse(fs.readFileSync("src/content/image-sizes.json", "utf8"));
 const logistics = new SQL.Database(fs.readFileSync("public/datasets/logistics.sqlite"));
 const CONTENT = "src/content";
-const FULL = ["sql", "daf", "excel", "powerbi", "modelling", "python-analytics", "statistics", "advanced-sql", "dax", "capstone", "ba", "agile-ba", "process", "ml", "features", "experiments", "forecasting", "genai", "agents", "llmops", "cloud", "linux", "terraform"];
+const FULL = ["sql", "daf", "excel", "powerbi", "modelling", "python-analytics", "statistics", "advanced-sql", "dax", "capstone", "ba", "agile-ba", "process", "ml", "features", "experiments", "forecasting", "genai", "agents", "llmops", "cloud", "linux", "terraform", "cicd"];
 /** Short courses: one lesson per module, a module check each, and a final assessment. */
 const SHORT = [
   "ai-productivity",
@@ -59,7 +59,7 @@ const run = (sql) => query(logistics, sql).rows;
 
 const datasetDbs = {};
 const dataset = async (name) => (datasetDbs[name] ??= await openDataset(name));
-const datasetFiles = (name) => (fs.existsSync(`public/datasets/${name}`) ? fs.readdirSync(`public/datasets/${name}`).map((f) => f.replace(/\.csv$/, "")) : []);
+const datasetFiles = (name) => (fs.existsSync(`public/datasets/${name}`) ? fs.readdirSync(`public/datasets/${name}`).filter((f) => f.endsWith(".csv")).map((f) => f.replace(/\.csv$/, "")) : []);
 
 let lessonCount = 0;
 for (const course of COURSES) {

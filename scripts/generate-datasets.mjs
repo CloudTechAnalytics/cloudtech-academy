@@ -2263,6 +2263,205 @@ function terraformFiles(cloudResources) {
   return files;
 }
 
+/* ------------------------------------------------------------------ cicd (containers and delivery) */
+// Tallybook's delivery data for the CI/CD and containers course: the old Dockerfile and GitHub
+// Actions workflow, image builds and vulnerability scans (in Trivy's JSON layout, with
+// fictional EXAMPLE- IDs), six months of deployments before and after a new pipeline began on
+// 1 June 2026, the new pipeline's runs, and canary checks. All of it is fictional.
+// Generated last, from its own seed.
+function cicdFiles() {
+  seed = 20270801;
+  const text = {};
+  const csvs = {};
+  text["Dockerfile"] = `FROM node:latest
+WORKDIR /app
+COPY . .
+RUN npm install
+ENV NODE_ENV=production
+ENV DATABASE_URL=postgres://tallybook_admin:Tallyb00k-Prod-2025!@tallybook-prod.c9x2.af-south-1.rds.example:5432/tallybook
+EXPOSE 3000
+CMD npm start
+`;
+  text["deploy.yml"] = `name: deploy
+
+on:
+  push:
+    branches: ["**"]
+
+permissions: write-all
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install
+      - run: npm test
+
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: quickship-dev/ssh-deploy-action@main
+        with:
+          host: \${{ secrets.PROD_HOST }}
+          key: \${{ secrets.DEPLOY_KEY }}
+      - run: echo "Deploying \${{ github.ref_name }} with key \${{ secrets.DEPLOY_KEY }}"
+      - run: ssh deploy@\${{ secrets.PROD_HOST }} "cd /srv/tallybook && git pull && npm install && sudo systemctl restart tallybook-web"
+`;
+  csvs.images = [
+    { image: "tallybook-web:current", base_image: "node:latest", stages: 1, size_mb: 1184, layers: 13, build_seconds_cold: 312, build_seconds_code_change: 298, runs_as_root: 1 },
+    { image: "tallybook-web:slim", base_image: "node:20-slim", stages: 1, size_mb: 412, layers: 11, build_seconds_cold: 205, build_seconds_code_change: 41, runs_as_root: 0 },
+    { image: "tallybook-web:alpine", base_image: "node:20-alpine", stages: 1, size_mb: 236, layers: 11, build_seconds_cold: 188, build_seconds_code_change: 38, runs_as_root: 0 },
+    { image: "tallybook-web:distroless", base_image: "gcr.io/distroless/nodejs20-debian12", stages: 2, size_mb: 168, layers: 9, build_seconds_cold: 226, build_seconds_code_change: 44, runs_as_root: 0 },
+  ];
+
+  // Vulnerability scans, one per image. OS package findings depend on the base image; the
+  // app's own npm packages carry the same findings in every image.
+  const OS_PKGS = ["libssl3", "openssl", "libc6", "zlib1g", "libcurl4", "curl", "git", "perl-base", "libsqlite3-0", "imagemagick", "libxml2", "python3.11", "libkrb5-3", "tar", "gnupg", "libexpat1"];
+  const APP = [
+    ["jsonwebtoken", "8.5.1", "9.0.0", "CRITICAL", "Signature verification can be bypassed with a crafted token"],
+    ["express", "4.17.1", "4.19.2", "MEDIUM", "Open redirect in malformed URLs"],
+    ["axios", "0.21.1", "1.6.0", "HIGH", "Server-side request forgery through absolute URLs"],
+    ["lodash", "4.17.15", "4.17.21", "HIGH", "Command injection through template"],
+    ["semver", "5.7.1", "5.7.2", "MEDIUM", "Regular expression denial of service"],
+    ["multer", "1.4.2", "", "LOW", "Uncontrolled resource consumption on large uploads"],
+  ];
+  const OS_COUNTS = {
+    "tallybook-web:current": { CRITICAL: 5, HIGH: 38, MEDIUM: 112, LOW: 241 },
+    "tallybook-web:slim": { CRITICAL: 1, HIGH: 8, MEDIUM: 27, LOW: 58 },
+    "tallybook-web:alpine": { CRITICAL: 0, HIGH: 2, MEDIUM: 5, LOW: 3 },
+    "tallybook-web:distroless": { CRITICAL: 0, HIGH: 1, MEDIUM: 3, LOW: 2 },
+  };
+  const OS_NAME = { "tallybook-web:current": "debian 12.6", "tallybook-web:slim": "debian 12.6", "tallybook-web:alpine": "alpine 3.20.2", "tallybook-web:distroless": "debian 12.6" };
+  let vn = 0;
+  for (const img of csvs.images) {
+    const osVulns = [];
+    for (const [sev, n] of Object.entries(OS_COUNTS[img.image])) {
+      for (let k = 0; k < n; k++) {
+        const pkg = pick(OS_PKGS);
+        const fixable = rand() < (sev === "CRITICAL" || sev === "HIGH" ? 0.7 : 0.4);
+        osVulns.push({
+          VulnerabilityID: `EXAMPLE-2026-${String(++vn).padStart(4, "0")}`,
+          PkgName: pkg,
+          InstalledVersion: `${int(1, 9)}.${int(0, 20)}.${int(0, 30)}-${int(1, 4)}`,
+          FixedVersion: fixable ? `${int(1, 9)}.${int(0, 20)}.${int(31, 60)}-${int(1, 4)}` : "",
+          Severity: sev,
+          Title: `${pkg}: ${pick(["buffer overflow", "out-of-bounds read", "use after free", "denial of service", "integer overflow", "improper input validation"])}`,
+        });
+      }
+    }
+    const appVulns = APP.map(([pkg, installed, fixed, sev, title], i) => ({ VulnerabilityID: `EXAMPLE-2026-A${i + 1}`, PkgName: pkg, InstalledVersion: installed, FixedVersion: fixed, Severity: sev, Title: `${pkg}: ${title}` }));
+    text[`scan-${img.image.split(":")[1]}.json`] = JSON.stringify({
+      SchemaVersion: 2,
+      CreatedAt: "2026-09-01T08:00:00Z",
+      ArtifactName: img.image,
+      ArtifactType: "container_image",
+      Results: [
+        { Target: `${img.image} (${OS_NAME[img.image]})`, Class: "os-pkgs", Type: OS_NAME[img.image].split(" ")[0], Vulnerabilities: osVulns },
+        { Target: "Node.js", Class: "lang-pkgs", Type: "node-pkg", Vulnerabilities: appVulns },
+      ],
+    }, null, 2) + "\n";
+  }
+
+  // Deployments, March to August 2026. The new pipeline (tests required, images, canary
+  // releases) started on 1 June.
+  const deployments = [];
+  let dn = 0;
+  const SWITCH = d("2026-06-01");
+  const fmt = (t) => new Date(t).toISOString().slice(0, 16).replace("T", " ");
+  for (const service of ["web", "api", "worker"]) {
+    let t = d("2026-03-02") + int(9, 16) * 3600000;
+    while (t < d("2026-09-01")) {
+      const isNew = t >= SWITCH;
+      const dow = new Date(t).getUTCDay();
+      if (dow === 0 || dow === 6) { t += day; continue; }
+      const commits = isNew ? int(1, 5) : int(8, 40);
+      const leadHours = isNew ? 2 + rand() * 28 : 72 + rand() * 170;
+      const fail = rand() < (isNew ? 0.07 : 0.24);
+      let result = "success", incident = 0, restore = "";
+      if (fail) {
+        if (isNew) {
+          // The canary catches most bad releases before they reach everyone.
+          if (rand() < 0.7) { result = "rolled_back"; incident = 0; }
+          else { result = "rolled_back"; incident = 1; restore = int(6, 35); }
+        } else {
+          result = rand() < 0.5 ? "rolled_back" : "fixed_forward";
+          incident = 1;
+          restore = int(45, 320);
+        }
+      }
+      deployments.push({
+        deploy_id: `D${String(++dn).padStart(4, "0")}`,
+        service,
+        pipeline: isNew ? "new" : "old",
+        strategy: isNew ? "canary" : "all_at_once",
+        first_commit_at: fmt(t - leadHours * 3600000),
+        deployed_at: fmt(t),
+        commits,
+        result,
+        caused_incident: incident,
+        minutes_to_restore: restore,
+      });
+      t += isNew ? (rand() < 0.6 ? day : int(2, 3) * 3600000) + int(-2, 2) * 3600000 : int(4, 9) * day;
+      const h = new Date(t).getUTCHours();
+      if (h < 8 || h > 17) t = Math.floor(t / day) * day + day + int(9, 15) * 3600000;
+    }
+  }
+  deployments.sort((a, b) => (a.deployed_at < b.deployed_at ? -1 : 1));
+  deployments.forEach((x, i) => (x.deploy_id = `D${String(i + 1).padStart(4, "0")}`));
+  csvs.deployments = deployments;
+
+  // New pipeline runs. Dependency and image-layer caching were switched on from 1 July.
+  const runs = [];
+  let rn = 0;
+  for (const dep of deployments.filter((x) => x.pipeline === "new")) {
+    const cached = dep.deployed_at >= "2026-07-01";
+    runs.push({
+      run_id: `R${String(++rn).padStart(4, "0")}`,
+      deploy_id: dep.deploy_id,
+      started_at: dep.deployed_at,
+      caching: cached ? 1 : 0,
+      queue_s: int(3, 40) + (rand() < 0.05 ? int(120, 600) : 0),
+      checkout_s: int(4, 9),
+      install_s: cached ? int(14, 35) : int(150, 230),
+      test_s: int(140, 260),
+      build_image_s: cached ? int(40, 80) : int(200, 280),
+      scan_s: int(25, 45),
+      push_s: cached ? int(8, 20) : int(35, 70),
+      deploy_s: int(420, 540),
+    });
+  }
+  csvs.pipeline_runs = runs;
+
+  // Canary checks: 10% of traffic for 5 minutes on the new version, compared with the rest.
+  const canary = [];
+  for (const dep of deployments.filter((x) => x.pipeline === "new")) {
+    const bad = dep.result === "rolled_back";
+    const baseReq = int(9000, 30000);
+    const canReq = Math.round(baseReq / 9);
+    const baseRate = 0.002 + rand() * 0.004;
+    const caughtByCanary = bad && !dep.caused_incident;
+    const canRate = caughtByCanary ? baseRate * (3 + rand() * 12) : bad ? baseRate * (1 + rand() * 0.6) : baseRate * (0.6 + rand() * 0.9);
+    const baseP95 = int(180, 320);
+    canary.push({
+      deploy_id: dep.deploy_id,
+      baseline_requests: baseReq,
+      baseline_errors: Math.round(baseReq * baseRate),
+      canary_requests: canReq,
+      canary_errors: Math.round(canReq * canRate),
+      baseline_p95_ms: baseP95,
+      canary_p95_ms: Math.round(baseP95 * (caughtByCanary && rand() < 0.5 ? 1.8 + rand() : 0.9 + rand() * 0.25)),
+      decision: caughtByCanary ? "rolled_back" : "promoted",
+    });
+  }
+  csvs.canary_checks = canary;
+  return { text, csvs };
+}
+
 /* ------------------------------------------------------------------ write */
 const SQL = await initSqlJs();
 const L = logistics();
@@ -2311,6 +2510,11 @@ for (const [table, rows] of Object.entries(CLOUD)) writeCsv("cloud", table, rows
   writeCsv("linux", "firewall", firewall);
 }
 for (const [name, obj] of Object.entries(terraformFiles(CLOUD.resources))) writeText("terraform", name, JSON.stringify(obj, null, 2) + "\n");
+{
+  const { text, csvs } = cicdFiles();
+  for (const [name, body] of Object.entries(text)) writeText("cicd", name, body);
+  for (const [table, rows] of Object.entries(csvs)) writeCsv("cicd", table, rows);
+}
 
 // Summary for the build log
 const counts = db.exec("SELECT (SELECT COUNT(*) FROM customers), (SELECT COUNT(*) FROM shipments), (SELECT COUNT(*) FROM payments), (SELECT COUNT(*) FROM routes), (SELECT COUNT(*) FROM employees)")[0].values[0];

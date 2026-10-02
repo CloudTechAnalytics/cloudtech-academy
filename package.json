@@ -15,7 +15,7 @@
     "seed": "node scripts/build-seed.mjs",
     "test:content": "node scripts/test-content.mjs",
     "test:shell": "node scripts/test-shell.mjs",
-    "test:python": "py scripts/test-python.py --fresh python-analytics statistics ml features experiments forecasting genai agents llmops cloud linux terraform && py scripts/test-python.py python python-data",
+    "test:python": "py scripts/test-python.py --fresh python-analytics statistics ml features experiments forecasting genai agents llmops cloud linux terraform cicd && py scripts/test-python.py python python-data",
     "brand:assets": "node scripts/generate-brand-assets.mjs",
     "images": "node scripts/image-sizes.mjs"
   },

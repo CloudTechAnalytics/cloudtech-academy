@@ -1,0 +1,5 @@
+image,base_image,stages,size_mb,layers,build_seconds_cold,build_seconds_code_change,runs_as_root
+tallybook-web:current,node:latest,1,1184,13,312,298,1
+tallybook-web:slim,node:20-slim,1,412,11,205,41,0
+tallybook-web:alpine,node:20-alpine,1,236,11,188,38,0
+tallybook-web:distroless,gcr.io/distroless/nodejs20-debian12,2,168,9,226,44,0

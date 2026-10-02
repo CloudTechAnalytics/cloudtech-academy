@@ -45391,9 +45391,1540 @@ $md$, true, true, 10, array['iac-10-p1', 'iac-10-t1']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 
+-- Course: CI/CD and Containers
+insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
+values ('cicd-and-containers', 'full', null, 'cicd-and-containers', 'CICD', 'CI/CD and Containers', 'Build, secure and release software the way high-performing teams do: DORA measures, container images and Dockerfiles, vulnerability scanning, pipelines as code and their security, caching, canary releases and rollbacks, on six months of a company''s real-looking delivery data.', 'In June 2026, Tallybook replaced deployments by hand with a container pipeline. In this course you take that pipeline apart and measure what it changed. You''ll calculate the four DORA measures before and after, read Tallybook''s original Dockerfile and write a checker that finds its six problems (including the production database password baked into the image), compare base images by size, build time and vulnerability scans, and load the old GitHub Actions workflow as data to find the six gaps that let any branch deploy to production with a third-party action holding the deploy key. Then you''ll measure where pipeline time goes and what caching saved, test the canary rule against every release since June, and compare rolling back with fixing forward. Every number comes from running the code on the course''s data.', 'cloud', 'intermediate', 3, 'Intermediate', 7, true, 'available', true, array['CI/CD and the four DORA measures', 'Container images, layers and caching', 'Writing and checking Dockerfiles', 'Reading vulnerability scans', 'Pipelines as code in YAML', 'Securing CI/CD pipelines', 'Speeding up pipelines', 'Canary releases and deployment strategies', 'Rollbacks, feature flags and recovery']::text[], array['Linux and Networking Basics, or comfort with the command line', 'Python for Data Analytics, or comfort with Python']::text[], 'Tallybook''s delivery review', true, true, true, true, false, 60, 35)
+on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level = excluded.level, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('cicd-m01', 'cicd-and-containers', 'Why CI/CD', 1, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('cicd-and-containers:why-ci-cd', 'cicd-and-containers', 'cicd-m01', 'why-ci-cd', 'Why CI/CD', 'What continuous integration and continuous delivery are, the four DORA measures of software delivery, and how they changed when Tallybook replaced manual deployments with a pipeline.', 15, $md$
+## The problem
+
+Until May 2026, Tallybook deployed its app like this: an engineer pushed code, waited for the tests (if anyone looked), then the pipeline logged in to the servers and ran `git pull` and a restart on all of them at once. Releases were scary, so they happened about once a week per service and bundled weeks of work. When one broke, finding which of 20 changes was to blame took hours.
+
+On 1 June, the platform team switched to a new pipeline: every change tested, built into a container image, scanned, and released to a small share of traffic first. This course teaches how that pipeline works, piece by piece, and starts by measuring whether it was worth it.
+
+## The concept
+
+**Continuous integration (CI)**
+
+Every change is merged often (at least daily) and automatically built and tested, so problems are found while they're small and fresh.
+
+**Continuous delivery and deployment (CD)**
+
+Every change that passes the pipeline can be released at any time (delivery), or is released automatically (deployment), by a repeatable process, not by hand.
+
+**The four DORA measures**
+
+Years of research by the DORA team found four measures that separate high-performing software teams:
+
+| Measure | Question | Better is |
+| :-- | :-- | :-- |
+| **Deployment frequency** | How often do we release? | more often |
+| **Lead time for changes** | How long from first commit to production? | shorter |
+| **Change failure rate** | What share of releases cause a failure in production? | lower |
+| **Time to restore** | When one does, how long until service is restored? | shorter |
+
+Speed and stability aren't a trade-off: teams that release small changes often are usually **more** stable, because each change is easier to test, understand and undo.
+
+## Example
+
+Tallybook's deployments from March to August 2026, with the pipeline each used:
+
+```python
+import pandas as pd
+
+deploys = pd.read_csv("https://academy.cloudtechanalytics.com/datasets/cicd/deployments.csv",
+                      parse_dates=["first_commit_at", "deployed_at"])
+deploys["lead_time_hours"] = (deploys["deployed_at"] - deploys["first_commit_at"]).dt.total_seconds() / 3600
+
+WEEKS = 13   # each period (March to May, June to August) is about 13 weeks
+dora = deploys.groupby("pipeline").agg(
+    deployments=("deploy_id", "size"),
+    commits_per_deploy=("commits", "mean"),
+    median_lead_time_hours=("lead_time_hours", "median"),
+    change_failure_rate=("caused_incident", "mean"),
+    median_minutes_to_restore=("minutes_to_restore", "median"),
+)
+dora["deploys_per_week"] = dora["deployments"] / WEEKS
+dora.round(3)
+```
+
+```text
+deployments  commits_per_deploy  median_lead_time_hours  change_failure_rate  median_minutes_to_restore  deploys_per_week
+pipeline
+new               265               3.000                  16.350                0.008                       21.5            20.385
+old                40              21.675                 159.058                0.200                      205.0             3.077
+```
+
+Read across the rows. With the new pipeline, Tallybook releases several times as often, each release is a few commits instead of twenty, changes reach customers in hours instead of a week, a far smaller share of releases cause incidents, and those that do are fixed in minutes. Every measure improved together.
+
+Change failure rate depends on what you count. Here's every release that didn't simply succeed:
+
+```python
+pd.crosstab(deploys["pipeline"], deploys["result"])
+```
+
+```text
+result    fixed_forward  rolled_back  success
+pipeline
+new                   0           19      246
+old                   3            5       32
+```
+
+Under the new pipeline, most bad releases were rolled back automatically by the canary check (lesson 8) before most customers saw them, so they didn't count as incidents. Under the old process, every bad release reached every customer.
+
+## Walkthrough
+
+1. Run the cells. Compute the four measures separately for each service.
+2. Plot deployments per week across the six months. Can you see the switch on 1 June?
+3. Why might the old process's few, large releases have caused more incidents, even with the same engineers?
+4. Decide which measure the CEO should see each month, and why.
+
+## Practice
+
+```dataset
+{"dataset": "cicd", "files": ["deployments", "pipeline_runs", "canary_checks", "images"]}
+```
+
+```answer
+{
+  "id": "cicd-01-p1",
+  "prompt": "What was the **median lead time** under the **old** process, in hours? One decimal place.",
+  "answer": 159.1,
+  "format": "number",
+  "dataset": "cicd",
+  "files": ["deployments"],
+  "pyVerify": "round(dora.loc['old', 'median_lead_time_hours'], 1)",
+  "hint": "The old row, median_lead_time_hours.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "cicd-01-p2",
+  "prompt": "What was the **change failure rate** under the **old** process? As a percentage, one decimal place.",
+  "answer": 20.0,
+  "format": "percent",
+  "dataset": "cicd",
+  "files": ["deployments"],
+  "pyVerify": "round(dora.loc['old', 'change_failure_rate'] * 100, 1)",
+  "hint": "The old row, change_failure_rate.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Which is NOT one of the four DORA measures?",
+    "options": ["Deployment frequency", "Lines of code written", "Change failure rate", "Time to restore service"],
+    "answer": 1,
+    "explanation": "DORA measures delivery outcomes, not activity."
+  },
+  {
+    "prompt": "Why do small, frequent releases tend to be more stable?",
+    "options": ["They're tested less", "Each is easier to test, understand and roll back", "They're released at night", "They use better servers"],
+    "answer": 1,
+    "explanation": "Small batches reduce risk."
+  },
+  {
+    "prompt": "What does continuous integration mean?",
+    "options": ["Deploying once a month", "Merging changes often and building and testing each automatically", "Writing documentation", "Manual testing"],
+    "answer": 1,
+    "explanation": "Find problems while they're small."
+  }
+]
+```
+$md$, true, true, 1, array['cicd-01-p1', 'cicd-01-p2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('cicd-m02', 'cicd-and-containers', 'Containers and Images', 2, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('cicd-and-containers:containers-and-images', 'cicd-and-containers', 'cicd-m02', 'containers-and-images', 'Containers and images', 'What containers and images are and why pipelines build them, how a Dockerfile''s instructions become image layers, and what the choice of base image does to size and build time.', 15, $md$
+## The problem
+
+The old process ran `git pull` and `npm install` on each production server. So each server built its own copy of the app, at deploy time, from whatever versions of everything it happened to download that day. Two servers could end up running slightly different software, and a broken package release on the internet could break a deployment halfway through.
+
+Containers fix this. The pipeline builds the app **once** into an **image**, tests and scans that exact image, and runs the same image everywhere.
+
+## The concept
+
+**Images and containers**
+
+- An **image** is a packaged app with everything it needs to run: the code, its libraries, and a minimal operating system. It doesn't change once built.
+- A **container** is a running instance of an image, isolated from other containers on the same machine.
+- A **registry** stores images, each identified by a name and tag (`tallybook-web:2026-09-01.3`).
+
+Build once, run anywhere the same way: on a laptop, in testing, in production.
+
+**Dockerfiles**
+
+A Dockerfile is the recipe for an image:
+
+| Instruction | Does |
+| :-- | :-- |
+| `FROM` | start from a **base image** (for example Node.js on Debian) |
+| `WORKDIR` | set the working folder |
+| `COPY` | copy files from your project into the image |
+| `RUN` | run a command while building (install packages) |
+| `ENV` | set an environment variable |
+| `USER` | choose which user the app runs as |
+| `EXPOSE` | document the port the app listens on |
+| `CMD` | the command that starts the app |
+
+**Layers and caching**
+
+Each instruction creates a **layer**. When you rebuild, Docker reuses layers that haven't changed, **up to the first instruction whose input changed**; everything after it is rebuilt. Order matters: put what changes least (installing dependencies) before what changes most (your code).
+
+## Example
+
+Tallybook's original Dockerfile:
+
+```python
+from urllib.request import urlopen
+
+base = "https://academy.cloudtechanalytics.com/datasets/cicd/"
+
+def fetch(name):
+    with urlopen(base + name) as f:
+        return f.read().decode("utf-8")
+
+print(fetch("Dockerfile"))
+```
+
+```text
+FROM node:latest
+WORKDIR /app
+COPY . .
+RUN npm install
+ENV NODE_ENV=production
+ENV DATABASE_URL=postgres://tallybook_admin:Tallyb00k-Prod-2025!@tallybook-prod.c9x2.af-south-1.rds.example:5432/tallybook
+EXPOSE 3000
+CMD npm start
+```
+
+The platform team built the app four ways, from different base images, and recorded the results:
+
+```python
+import pandas as pd
+
+images = pd.read_csv(base + "images.csv")
+images
+```
+
+```text
+image                           base_image  stages  size_mb  layers  build_seconds_cold  build_seconds_code_change  runs_as_root
+0     tallybook-web:current                          node:latest       1     1184      13                 312                        298             1
+1        tallybook-web:slim                         node:20-slim       1      412      11                 205                         41             0
+2      tallybook-web:alpine                       node:20-alpine       1      236      11                 188                         38             0
+3  tallybook-web:distroless  gcr.io/distroless/nodejs20-debian12       2      168       9                 226                         44             0
+```
+
+Two things stand out. The current image is over a gigabyte: `node:latest` includes compilers and tools the app never uses at runtime, and every one of them must be downloaded on every deploy. And look at `build_seconds_code_change`: when only the app's code changes, the current image takes almost as long to rebuild as from scratch, while the others take well under a minute. The reason is the order of two lines in the Dockerfile, which lesson 3 fixes.
+
+## Walkthrough
+
+1. Run the cells. Label each line of the Dockerfile with the instruction table above.
+2. Which line's input changes every time a developer edits any file?
+3. How much smaller is the distroless image than the current one, in per cent?
+4. If 6 servers each pull the image on every deploy, how much data does each deploy move with the current image and with the alpine one?
+
+## Practice
+
+```answer
+{
+  "id": "cicd-02-p1",
+  "prompt": "How many seconds does the **current** image take to rebuild after a code change?",
+  "answer": 298,
+  "format": "number",
+  "dataset": "cicd",
+  "files": ["images"],
+  "pyVerify": "int(images.loc[images['image'] == 'tallybook-web:current', 'build_seconds_code_change'].iloc[0])",
+  "hint": "The current row, build_seconds_code_change.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "cicd-02-p2",
+  "prompt": "By what percentage is the **distroless** image smaller than the **current** image? Rounded to the nearest whole number.",
+  "answer": 86,
+  "format": "percent",
+  "dataset": "cicd",
+  "files": ["images"],
+  "pyVerify": "round((1 - images.set_index('image').loc['tallybook-web:distroless', 'size_mb'] / images.set_index('image').loc['tallybook-web:current', 'size_mb']) * 100)",
+  "hint": "1 − distroless size ÷ current size.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "What's the difference between an image and a container?",
+    "options": ["None", "An image is the packaged app; a container is a running instance of it", "A container is bigger", "An image runs; a container is stored"],
+    "answer": 1,
+    "explanation": "Build the image once, run many containers."
+  },
+  {
+    "prompt": "Why build once and run the same image everywhere?",
+    "options": ["It's required", "So what you tested is exactly what runs in production", "Images are free", "It's faster to type"],
+    "answer": 1,
+    "explanation": "No more servers building their own slightly different copies."
+  },
+  {
+    "prompt": "When does Docker rebuild a layer?",
+    "options": ["Always", "When that instruction's input changed, or any instruction before it did", "Never", "Once a day"],
+    "answer": 1,
+    "explanation": "Cache is reused up to the first change."
+  }
+]
+```
+$md$, true, true, 2, array['cicd-02-p1', 'cicd-02-p2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('cicd-m03', 'cicd-and-containers', 'Better Dockerfiles', 3, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('cicd-and-containers:better-dockerfiles', 'cicd-and-containers', 'cicd-m03', 'better-dockerfiles', 'Better Dockerfiles', 'Check a Dockerfile against the rules that matter (pinned base images, cache-friendly order, no secrets, a non-root user, small runtime images) with a small linter you write yourself, then rewrite Tallybook''s as a multi-stage build.', 25, $md$
+## The problem
+
+Tallybook's original Dockerfile has eight lines and at least six problems. One of them is serious: the production database password is written into the image, so anyone who can pull the image can read it, and it stays in the image's history even if a later line removes it.
+
+Tools such as **hadolint** check Dockerfiles automatically. You'll write a small checker of your own to understand what they look for, then fix the file.
+
+## The concept
+
+**Rules for a good Dockerfile**
+
+| Rule | Why | Fix |
+| :-- | :-- | :-- |
+| Pin the base image | `latest` changes without warning | `FROM node:20.17-slim` (or by digest) |
+| Install dependencies before copying code | keeps the slow install layer cached | `COPY package*.json ./` then `RUN npm ci`, then `COPY . .` |
+| Reproducible installs | `npm install` can pick new versions | `npm ci --omit=dev` uses the lock file exactly |
+| No secrets in the image | `ENV`, `ARG` and copied files are readable by anyone with the image | pass secrets at runtime from a secrets manager |
+| Don't run as root | a break-in gets root inside the container | `USER node` |
+| Exclude junk | `COPY . .` copies `.git`, `.env`, local `node_modules` | a `.dockerignore` file |
+| Exec-form CMD | the app receives stop signals properly | `CMD ["node", "server.js"]` |
+
+**Multi-stage builds**
+
+Build in one stage with all the tools, then copy only the result into a small runtime image:
+
+```dockerfile
+FROM node:20.17-slim AS build
+WORKDIR /app
+COPY package.json package-lock.json ./
+RUN npm ci
+COPY . .
+RUN npm run build && npm prune --omit=dev
+
+FROM gcr.io/distroless/nodejs20-debian12:nonroot
+WORKDIR /app
+COPY --from=build /app/node_modules ./node_modules
+COPY --from=build /app/dist ./dist
+USER nonroot
+EXPOSE 3000
+CMD ["dist/server.js"]
+```
+
+The runtime image has no shell, no package manager and no compilers: less to download, and less for an attacker to use.
+
+## Example
+
+A small Dockerfile checker. Each rule looks at the instructions and returns a message if it's broken:
+
+```python
+import re
+from urllib.request import urlopen
+
+with urlopen("https://academy.cloudtechanalytics.com/datasets/cicd/Dockerfile") as f:
+    dockerfile = f.read().decode("utf-8")
+
+lines = [l.strip() for l in dockerfile.splitlines() if l.strip() and not l.strip().startswith("#")]
+instructions = [(l.split()[0].upper(), l[len(l.split()[0]):].strip()) for l in lines]
+
+def check(instructions):
+    problems = []
+    names = [name for name, _ in instructions]
+    for name, args in instructions:
+        if name == "FROM" and (":" not in args or args.endswith(":latest")):
+            problems.append(f"FROM {args}: pin a specific version")
+        if name in ("ENV", "ARG") and re.search(r"(?i)password|secret|token|key|://[^:]+:[^@]+@", args):
+            problems.append(f"{name}: looks like a secret is baked into the image")
+        if name == "RUN" and re.search(r"\bnpm install\b", args):
+            problems.append("RUN npm install: use npm ci for reproducible installs")
+        if name == "CMD" and not args.startswith("["):
+            problems.append("CMD: use the exec form, e.g. CMD [\"node\", \"server.js\"]")
+    if "USER" not in names:
+        problems.append("No USER: the app runs as root")
+    copy_all = [i for i, (n, a) in enumerate(instructions) if n == "COPY" and a.startswith(". ")]
+    installs = [i for i, (n, a) in enumerate(instructions) if n == "RUN" and "npm" in a]
+    if copy_all and installs and copy_all[0] < installs[0]:
+        problems.append("COPY . . comes before installing dependencies: every code change re-runs the install")
+    return problems
+
+for p in check(instructions):
+    print("-", p)
+```
+
+```text
+- FROM node:latest: pin a specific version
+- RUN npm install: use npm ci for reproducible installs
+- ENV: looks like a secret is baked into the image
+- CMD: use the exec form, e.g. CMD ["node", "server.js"]
+- No USER: the app runs as root
+- COPY . . comes before installing dependencies: every code change re-runs the install
+```
+
+Six problems, and the checker is fifty lines. Real linters have hundreds of rules, but every one works like this. Now the most serious finding: what exactly would someone with the image learn?
+
+```python
+secret_line = next(args for name, args in instructions if name == "ENV" and "DATABASE_URL" in args)
+user_and_password = re.search(r"://([^:]+):([^@]+)@", secret_line)
+print("Database user:", user_and_password.group(1))
+print("Password visible to anyone with the image:", user_and_password.group(2)[:4] + "...")
+```
+
+```text
+Database user: tallybook_admin
+Password visible to anyone with the image: Tall...
+```
+
+It's the same production password the Terraform course found in the state file. It has now leaked through two channels, so it must be rotated, and the new one must reach the app at runtime from a secrets manager, never through the image.
+
+## Walkthrough
+
+1. Run the cells. Run `check` on the multi-stage Dockerfile from "The concept". Does it pass?
+2. Add a rule: warn if there's no `HEALTHCHECK` (or explain why your platform's health checks make it unnecessary).
+3. Write a `.dockerignore` for Tallybook's repository.
+4. Rewrite Tallybook's Dockerfile (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "cicd-03-p1",
+  "prompt": "How many problems does the checker find in Tallybook's Dockerfile?",
+  "answer": 6,
+  "format": "number",
+  "pyVerify": "len(check(instructions))",
+  "hint": "Count the lines printed.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "cicd-03-t1",
+  "prompt": "Rewrite **Tallybook's Dockerfile**: a pinned base image, dependencies installed with `npm ci` **before** copying the code, **no secrets**, a **non-root user**, and an **exec-form** CMD. A multi-stage build is a bonus.",
+  "minutes": 10,
+  "rows": 14,
+  "placeholder": "FROM node:20.17-slim\n...",
+  "rules": [
+    { "label": "A pinned FROM (not latest, has a version)", "pattern": "^FROM\\s+\\S+:(?!latest)\\d" },
+    { "label": "Copies package files before the code", "pattern": "COPY\\s+package[\\s\\S]*npm ci[\\s\\S]*COPY\\s+\\.\\s" },
+    { "label": "Uses npm ci", "pattern": "npm ci" },
+    { "label": "A USER instruction", "pattern": "^USER\\s+\\S+" },
+    { "label": "Exec-form CMD", "pattern": "^CMD\\s+\\[" },
+    { "label": "No password or connection string", "pattern": "password|DATABASE_URL\\s*=?\\s*\\S*://", "absent": true }
+  ],
+  "sample": "FROM node:20.17-slim\nWORKDIR /app\nENV NODE_ENV=production\nCOPY package.json package-lock.json ./\nRUN npm ci --omit=dev\nCOPY . .\nUSER node\nEXPOSE 3000\nCMD [\"node\", \"server.js\"]",
+  "note": "DATABASE_URL is now supplied when the container starts, from the secrets manager, so the image itself contains no secrets.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why put `COPY package*.json` and `RUN npm ci` before `COPY . .`?",
+    "options": ["It's alphabetical", "So code changes don't invalidate the cached dependency install", "npm requires it", "It makes the image smaller"],
+    "answer": 1,
+    "explanation": "Least-changing steps first."
+  },
+  {
+    "prompt": "A password is set with ENV and later unset. Is it gone from the image?",
+    "options": ["Yes", "No: it remains in the earlier layer and the image's history", "Only in production", "Only if the image is rebuilt"],
+    "answer": 1,
+    "explanation": "Never put secrets in images."
+  },
+  {
+    "prompt": "What does a multi-stage build achieve?",
+    "options": ["Two apps in one image", "Build with full tools, then ship only the result in a small runtime image", "Faster tests", "Automatic scanning"],
+    "answer": 1,
+    "explanation": "Smaller, safer runtime images."
+  }
+]
+```
+$md$, true, true, 3, array['cicd-03-p1', 'cicd-03-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('cicd-m04', 'cicd-and-containers', 'Image Vulnerabilities', 4, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('cicd-and-containers:image-vulnerabilities', 'cicd-and-containers', 'cicd-m04', 'image-vulnerabilities', 'Image vulnerabilities', 'Read container vulnerability scan reports, separate problems in the base image from problems in your own dependencies, and set a scanning rule the pipeline can enforce without blocking every release.', 25, $md$
+## The problem
+
+Every image contains hundreds of software packages, and some of them have known security flaws. Scanners such as **Trivy** compare an image's packages with databases of known vulnerabilities and list every match.
+
+The platform team scanned all four of Tallybook's candidate images. The current one has hundreds of findings. Nobody can fix hundreds of findings, and a pipeline that blocks on all of them would never release anything. The skill is knowing which findings matter and which choice removes most of them at once.
+
+## The concept
+
+**Reading a finding**
+
+| Field | Meaning |
+| :-- | :-- |
+| ID | the vulnerability's identifier (real scans show CVE numbers; this course's data uses fictional `EXAMPLE-` IDs) |
+| Package and installed version | where it is |
+| Fixed version | the version that fixes it; empty means no fix exists yet |
+| Severity | CRITICAL, HIGH, MEDIUM, LOW |
+
+**Two sources of findings**
+
+- **OS packages** come from the base image. You fix most of them by choosing a smaller, newer base image and rebuilding regularly.
+- **Language packages** (npm, pip) are your app's dependencies. You fix them by upgrading in your own code.
+
+**A practical rule**
+
+Block a release on **CRITICAL or HIGH findings that have a fix**, warn on the rest, and rebuild images regularly so fixes in the base image arrive without anyone asking.
+
+## Example
+
+Load each scan and count findings by severity and source:
+
+```python
+import json
+from urllib.request import urlopen
+
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/cicd/"
+
+def load(name):
+    with urlopen(base + name) as f:
+        return json.load(f)
+
+rows = []
+for variant in ["current", "slim", "alpine", "distroless"]:
+    scan = load(f"scan-{variant}.json")
+    for result in scan["Results"]:
+        for v in result["Vulnerabilities"]:
+            rows.append({"image": variant, "source": result["Class"], "severity": v["Severity"],
+                         "package": v["PkgName"], "fixable": v["FixedVersion"] != ""})
+findings = pd.DataFrame(rows)
+pd.crosstab([findings["image"], findings["source"]], findings["severity"])[["CRITICAL", "HIGH", "MEDIUM", "LOW"]]
+```
+
+```text
+severity              CRITICAL  HIGH  MEDIUM  LOW
+image      source
+alpine     lang-pkgs         1     2       2    1
+           os-pkgs           0     2       5    3
+current    lang-pkgs         1     2       2    1
+           os-pkgs           5    38     112  241
+distroless lang-pkgs         1     2       2    1
+           os-pkgs           0     1       3    2
+slim       lang-pkgs         1     2       2    1
+           os-pkgs           1     8      27   58
+```
+
+The base image accounts for almost all the findings in the current image; moving to a small base removes nearly all of them in one change. The app's own npm findings are identical in every image: no base image can fix them. Now the blocking rule:
+
+```python
+must_fix = findings[findings["severity"].isin(["CRITICAL", "HIGH"]) & findings["fixable"]]
+print(must_fix.groupby("image").size().rename("blocking findings"))
+print()
+print(must_fix[(must_fix["image"] == "distroless")][["source", "severity", "package"]].to_string(index=False))
+```
+
+```text
+image
+alpine         5
+current       30
+distroless     3
+slim           9
+Name: blocking findings, dtype: int64
+
+   source severity      package
+lang-pkgs CRITICAL jsonwebtoken
+lang-pkgs     HIGH        axios
+lang-pkgs     HIGH       lodash
+```
+
+Even the smallest image would be blocked, but only by three findings, all in the app's own dependencies: `jsonwebtoken` (critical: tokens can be forged), `axios` and `lodash`. Those are fixed by upgrading three packages in `package.json`, which is a normal pull request, not a crisis.
+
+## Walkthrough
+
+1. Run the cells. What share of the current image's findings have a fix available?
+2. Which OS packages appear most often in the current image's findings? Why might they be in a web app's image at all?
+3. Count the blocking findings for each image after the three npm upgrades.
+4. Write the scanning policy (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "cicd-04-p1",
+  "prompt": "How many findings (all severities, both sources) are in the **current** image's scan?",
+  "answer": 402,
+  "format": "number",
+  "pyVerify": "int((findings['image'] == 'current').sum())",
+  "hint": "Add up the current rows of the first table.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "cicd-04-p2",
+  "prompt": "How many **blocking** findings (CRITICAL or HIGH, with a fix) does the **distroless** image have?",
+  "answer": 3,
+  "format": "number",
+  "pyVerify": "int(((findings['image'] == 'distroless') & findings['severity'].isin(['CRITICAL', 'HIGH']) & findings['fixable']).sum())",
+  "hint": "The distroless count in the second output.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "cicd-04-t1",
+  "prompt": "Write Tallybook's **image scanning policy**, one rule per line starting with a dash: at least **four** rules covering what **blocks** a release, what only **warns**, how often images are **rebuilt**, and how **exceptions** are handled.",
+  "minutes": 6,
+  "rows": 6,
+  "placeholder": "- Block: ...",
+  "rules": [
+    { "label": "At least four rules, each starting with -", "pattern": "^\\s*-\\s+\\S", "min": 4 },
+    { "label": "Blocks on critical or high", "pattern": "block[^\\n]*(critical|high)|(critical|high)[^\\n]*block" },
+    { "label": "Mentions a fix being available", "pattern": "fix" },
+    { "label": "Warn level for the rest", "pattern": "warn" },
+    { "label": "Regular rebuilds", "pattern": "rebuil|weekly|every (week|month|night)|nightly" },
+    { "label": "Exceptions with an expiry or owner", "pattern": "exception[^\\n]*(expir|days|owner|approv|review)" }
+  ],
+  "sample": "- Block: any CRITICAL or HIGH finding that has a fixed version available, in OS or npm packages.\n- Warn: CRITICAL or HIGH findings with no fix yet, and all MEDIUM findings, listed on the pull request.\n- Rebuild: every image is rebuilt and rescanned weekly, even without code changes, so base image fixes arrive automatically.\n- Exceptions: a blocking finding may be accepted only with the platform lead's approval, a written reason, and an expiry of at most 30 days.\n- Base images: only the approved slim and distroless base images may be used in production.",
+  "note": "Blocking only on fixable findings keeps the rule enforceable: the team can always act on what blocks them.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Most of an image's findings are in OS packages. What's usually the most effective fix?",
+    "options": ["Fix each one by hand", "Use a smaller, newer base image and rebuild regularly", "Ignore them", "Disable the scanner"],
+    "answer": 1,
+    "explanation": "Fewer packages, fewer findings."
+  },
+  {
+    "prompt": "A finding is in your app's npm dependency. Which fixes it?",
+    "options": ["A different base image", "Upgrading the package in your own code", "Running as root", "Rebuilding without changes"],
+    "answer": 1,
+    "explanation": "Your dependencies are your responsibility."
+  },
+  {
+    "prompt": "Why block only on CRITICAL and HIGH findings that have a fix?",
+    "options": ["Others don't matter", "So the rule always asks for something the team can actually do, without blocking every release", "Scanners can't see others", "It's required by law"],
+    "answer": 1,
+    "explanation": "Enforceable rules get enforced."
+  }
+]
+```
+$md$, true, true, 4, array['cicd-04-p1', 'cicd-04-p2', 'cicd-04-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('cicd-m05', 'cicd-and-containers', 'Pipelines as Code', 5, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('cicd-and-containers:pipelines-as-code', 'cicd-and-containers', 'cicd-m05', 'pipelines-as-code', 'Pipelines as code', 'Read a CI/CD pipeline defined in YAML (triggers, jobs, steps, dependencies and secrets), load it as data, and map how Tallybook''s old GitHub Actions workflow actually ran.', 15, $md$
+## The problem
+
+Tallybook's old deployment process was defined in one file, `.github/workflows/deploy.yml`. Pipelines defined as code have the same advantages as infrastructure as code: they're versioned, reviewed, and can be read by people and programs. They also have the same risk: a few wrong lines can deploy untested code to production.
+
+Before you can review a pipeline, you need to read its YAML fluently, and know a couple of traps.
+
+## The concept
+
+**YAML**
+
+A text format of keys, values and nested blocks, where **indentation is structure**. Lists start with `-`.
+
+**A GitHub Actions workflow**
+
+| Key | Meaning |
+| :-- | :-- |
+| `on` | the **trigger**: which events start the workflow (a push, a pull request, a schedule) |
+| `permissions` | what the workflow's automatic token may do in the repository |
+| `jobs` | named jobs; each runs on a fresh machine (`runs-on`) |
+| `needs` | job dependencies: `deploy` with `needs: test` waits for `test` to pass |
+| `steps` | each step either `uses` a published action or `run`s a command |
+| `${{ secrets.NAME }}` | a secret stored in the repository settings |
+| `environment` | a deployment target that can require approval |
+
+Without `needs`, jobs run **in parallel**.
+
+**A YAML trap**
+
+In YAML 1.1, which many libraries (including Python's PyYAML) follow, the bare word `on` means **true**. So loading a workflow in Python gives a key `True`, not `"on"`. GitHub reads it correctly; your scripts must handle it.
+
+## Example
+
+The old workflow:
+
+```python
+from urllib.request import urlopen
+
+import yaml
+
+with urlopen("https://academy.cloudtechanalytics.com/datasets/cicd/deploy.yml") as f:
+    text = f.read().decode("utf-8")
+print(text)
+```
+
+```text
+name: deploy
+
+on:
+  push:
+    branches: ["**"]
+
+permissions: write-all
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install
+      - run: npm test
+
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: quickship-dev/ssh-deploy-action@main
+        with:
+          host: ${{ secrets.PROD_HOST }}
+          key: ${{ secrets.DEPLOY_KEY }}
+      - run: echo "Deploying ${{ github.ref_name }} with key ${{ secrets.DEPLOY_KEY }}"
+      - run: ssh deploy@${{ secrets.PROD_HOST }} "cd /srv/tallybook && git pull && npm install && sudo systemctl restart tallybook-web"
+```
+
+Load it as data. Notice the trigger key:
+
+```python
+workflow = yaml.safe_load(text)
+print("Top-level keys:", list(workflow))
+trigger = workflow.get("on", workflow.get(True))
+print("Trigger:", trigger)
+print("Permissions:", workflow["permissions"])
+```
+
+```text
+Top-level keys: ['name', True, 'permissions', 'jobs']
+Trigger: {'push': {'branches': ['**']}}
+Permissions: write-all
+```
+
+Now map the jobs: what each depends on, and what each step does.
+
+```python
+for name, job in workflow["jobs"].items():
+    print(f"job {name}: needs={job.get('needs', 'nothing')}, environment={job.get('environment', 'none')}")
+    for step in job["steps"]:
+        kind, value = ("uses", step["uses"]) if "uses" in step else ("run", step["run"])
+        print(f"    {kind}: {value[:75]}")
+```
+
+```text
+job test: needs=nothing, environment=none
+    uses: actions/checkout@v4
+    uses: actions/setup-node@v4
+    run: npm install
+    run: npm test
+job deploy: needs=nothing, environment=none
+    uses: actions/checkout@v4
+    uses: quickship-dev/ssh-deploy-action@main
+    run: echo "Deploying ${{ github.ref_name }} with key ${{ secrets.DEPLOY_KEY }}"
+    run: ssh deploy@${{ secrets.PROD_HOST }} "cd /srv/tallybook && git pull && npm i
+```
+
+The `deploy` job needs nothing, so it starts at the same time as `test`, not after it. Tests could fail and the deployment would still go ahead. Combined with the trigger (a push to **any** branch), any engineer's experimental branch was deployed straight to production. Lesson 6 reviews this file line by line.
+
+## Walkthrough
+
+1. Run the cells. Draw the order the jobs run in.
+2. What would `branches: [main]` change? What would `needs: test` change?
+3. Count how many times a secret is used in the workflow, and in which steps.
+4. Write the YAML for a `test` job that also runs a linter before the tests.
+
+## Practice
+
+```answer
+{
+  "id": "cicd-05-p1",
+  "prompt": "How many **steps** are in the `deploy` job?",
+  "answer": 4,
+  "format": "number",
+  "pyVerify": "len(workflow['jobs']['deploy']['steps'])",
+  "hint": "Count the steps listed under job deploy.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Two jobs have no `needs`. How do they run?",
+    "options": ["One after the other", "At the same time, in parallel", "Only if both pass", "Never"],
+    "answer": 1,
+    "explanation": "needs creates the order."
+  },
+  {
+    "prompt": "Why does PyYAML load a workflow's `on:` key as `True`?",
+    "options": ["A bug in GitHub", "YAML 1.1 treats the bare word on as a boolean", "It's encrypted", "The file is broken"],
+    "answer": 1,
+    "explanation": "A classic YAML trap; handle both keys."
+  },
+  {
+    "prompt": "What does `branches: [\"**\"]` under `push` mean?",
+    "options": ["Only main", "A push to any branch triggers the workflow", "No branches", "Only tags"],
+    "answer": 1,
+    "explanation": "** matches every branch name."
+  }
+]
+```
+$md$, true, true, 5, array['cicd-05-p1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('cicd-m06', 'cicd-and-containers', 'Securing the Pipeline', 6, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('cicd-and-containers:securing-the-pipeline', 'cicd-and-containers', 'cicd-m06', 'securing-the-pipeline', 'Securing the pipeline', 'Review a deployment pipeline for the mistakes that let untested or malicious code reach production (broad triggers, missing dependencies, excessive permissions, unpinned third-party actions and leaked secrets), and write the fixed workflow.', 25, $md$
+## The problem
+
+A deployment pipeline holds the keys to production: it has the deploy key, it can reach the servers, and whatever it runs, runs with that power. That makes it one of the most valuable targets in a company, and one of the least reviewed.
+
+Tallybook's old workflow has six security and safety problems in 28 lines. Each is common in real repositories.
+
+## The concept
+
+**What to check in every pipeline**
+
+| Check | Risk | Fix |
+| :-- | :-- | :-- |
+| Trigger | deploys from any branch | deploy only from `main` (and tags) |
+| Job order | deploy runs even if tests fail | `needs: test` |
+| Permissions | the automatic token can change anything in the repo | `permissions: contents: read`, widened per job only where needed |
+| Third-party actions | `@main` runs whatever its author pushes next, with your secrets | pin to a full commit SHA, and prefer well-known actions |
+| Secrets in logs | printing a secret exposes it to anyone who can read logs | never print secrets; GitHub masks them, but masking can miss multi-line values like SSH keys and any transformed copy |
+| Approvals | production changes with no human gate | an `environment: production` with required reviewers |
+
+**Deploy artifacts, not repositories**
+
+The old workflow ran `git pull` and `npm install` on the servers. The new one deploys the **image** that was built, tested and scanned in the pipeline.
+
+## Example
+
+A workflow checker, in the same spirit as the Dockerfile checker:
+
+```python
+import re
+from urllib.request import urlopen
+
+import yaml
+
+with urlopen("https://academy.cloudtechanalytics.com/datasets/cicd/deploy.yml") as f:
+    workflow = yaml.safe_load(f.read().decode("utf-8"))
+
+def review(wf):
+    problems = []
+    trigger = wf.get("on", wf.get(True)) or {}
+    branches = (trigger.get("push") or {}).get("branches", [])
+    if any(b in ("**", "*") for b in branches):
+        problems.append("trigger: a push to any branch runs the workflow")
+    if wf.get("permissions") == "write-all":
+        problems.append("permissions: write-all gives the token full write access")
+    for name, job in wf["jobs"].items():
+        steps = job.get("steps", [])
+        if name.startswith("deploy"):
+            if "needs" not in job:
+                problems.append(f"{name}: doesn't need the test job, so it runs even if tests fail")
+            if "environment" not in job:
+                problems.append(f"{name}: no environment, so no approval before production")
+        for step in steps:
+            uses = step.get("uses", "")
+            if uses and not uses.startswith("actions/") and not re.search(r"@[0-9a-f]{40}$", uses):
+                problems.append(f"{name}: third-party action {uses} isn't pinned to a commit SHA")
+            if "run" in step and "secrets." in step["run"] and re.search(r"\becho\b", step["run"]):
+                problems.append(f"{name}: a step prints a secret")
+    return problems
+
+for p in review(workflow):
+    print("-", p)
+```
+
+```text
+- trigger: a push to any branch runs the workflow
+- permissions: write-all gives the token full write access
+- deploy: doesn't need the test job, so it runs even if tests fail
+- deploy: no environment, so no approval before production
+- deploy: third-party action quickship-dev/ssh-deploy-action@main isn't pinned to a commit SHA
+- deploy: a step prints a secret
+```
+
+Six problems, as expected. The third-party action is the most dangerous kind: `quickship-dev/ssh-deploy-action@main` receives the production deploy key on every run, and its author (or anyone who takes over their account) can change what it does at any time. Pinning to a commit SHA means a change requires your own pull request.
+
+## Walkthrough
+
+1. Run the cells. Order the six problems from most to least dangerous.
+2. Find the commit SHA format: why does `@v4` count as unpinned for a third-party action?
+3. Run `review` on your fixed workflow (the task below). Does it pass?
+4. List who at Tallybook should be required reviewers for the production environment.
+
+## Practice
+
+```answer
+{
+  "id": "cicd-06-p1",
+  "prompt": "How many problems does `review` find in the old workflow?",
+  "answer": 6,
+  "format": "number",
+  "pyVerify": "len(review(workflow))",
+  "hint": "Count the lines printed.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "cicd-06-t1",
+  "prompt": "Write the **fixed workflow** in YAML: deploy only from **main**, read-only default **permissions**, a `deploy` job that **needs** `test`, uses a production **environment**, and deploys a built **image** (no `git pull` on servers). Don't print any secret.",
+  "minutes": 12,
+  "rows": 24,
+  "placeholder": "name: deploy\n\non:\n  push:\n    branches: [main]\n...",
+  "rules": [
+    { "label": "Triggers only on main", "pattern": "branches:\\s*\\[?\\s*\"?main\"?\\s*\\]?" },
+    { "label": "Read-only default permissions", "pattern": "permissions:\\s*\\n\\s+contents:\\s*read" },
+    { "label": "deploy needs test", "pattern": "needs:\\s*\\[?\\s*test" },
+    { "label": "A production environment", "pattern": "environment:\\s*production" },
+    { "label": "Builds or deploys an image (docker, image, registry)", "pattern": "docker|image|registry|ghcr" },
+    { "label": "No git pull on the servers", "pattern": "git pull", "absent": true },
+    { "label": "No echo of a secret", "pattern": "echo[^\\n]*secrets\\.", "absent": true }
+  ],
+  "sample": "name: deploy\n\non:\n  push:\n    branches: [main]\n\npermissions:\n  contents: read\n\njobs:\n  test:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v4\n      - uses: actions/setup-node@v4\n        with:\n          node-version: 20\n      - run: npm ci\n      - run: npm test\n\n  deploy:\n    needs: test\n    runs-on: ubuntu-latest\n    environment: production\n    permissions:\n      contents: read\n      packages: write\n    steps:\n      - uses: actions/checkout@v4\n      - run: docker build -t ghcr.io/tallybook/web:${{ github.sha }} .\n      - run: docker login ghcr.io -u ${{ github.actor }} --password-stdin <<< \"${{ secrets.GITHUB_TOKEN }}\"\n      - run: docker push ghcr.io/tallybook/web:${{ github.sha }}\n      - run: ./scripts/deploy-canary.sh ghcr.io/tallybook/web:${{ github.sha }}",
+  "note": "The login step passes the token on standard input, so it's never printed or placed on the command line, where it could appear in logs.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why pin a third-party action to a full commit SHA?",
+    "options": ["It's faster", "So the code that runs with your secrets can't change without your own review", "SHAs are shorter", "GitHub requires it"],
+    "answer": 1,
+    "explanation": "@main runs whatever is pushed next."
+  },
+  {
+    "prompt": "What does `permissions: contents: read` do?",
+    "options": ["Hides the code", "Limits the workflow's token to reading the repository", "Blocks the workflow", "Encrypts secrets"],
+    "answer": 1,
+    "explanation": "Least privilege for the pipeline."
+  },
+  {
+    "prompt": "GitHub masks secrets in logs. Is echoing a secret safe?",
+    "options": ["Yes", "No: masking can miss multi-line values and transformed copies; never print secrets", "Only on main", "Only for SSH keys"],
+    "answer": 1,
+    "explanation": "Don't rely on masking."
+  }
+]
+```
+$md$, true, true, 6, array['cicd-06-p1', 'cicd-06-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('cicd-m07', 'cicd-and-containers', 'Faster Pipelines', 7, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('cicd-and-containers:faster-pipelines', 'cicd-and-containers', 'cicd-m07', 'faster-pipelines', 'Faster pipelines', 'Measure where a pipeline''s time goes, step by step, see what dependency and image-layer caching saved, and find what to speed up next.', 15, $md$
+## The problem
+
+In June, a change took about 20 minutes to get through Tallybook's new pipeline. Developers started batching changes to avoid waiting, which is exactly the habit the pipeline was meant to break. On 1 July the team switched on caching. Did it work, and where is the time going now?
+
+## The concept
+
+**Measure by step**
+
+Total pipeline time is the sum of its steps (plus time queued waiting for a machine). Speed up the biggest step first.
+
+**Caching**
+
+- **Dependency cache**: save the downloaded packages between runs, keyed on the lock file, so `npm ci` only downloads when dependencies change.
+- **Image layer cache**: reuse unchanged layers from previous builds (lesson 2), which only helps if the Dockerfile is ordered well (lesson 3).
+
+**Other levers**
+
+Run independent steps in parallel, split slow test suites across machines, and avoid doing work twice (for example, building the image in one job and rebuilding it in another).
+
+## Example
+
+Median seconds per step, before and after caching:
+
+```python
+import pandas as pd
+
+runs = pd.read_csv("https://academy.cloudtechanalytics.com/datasets/cicd/pipeline_runs.csv")
+steps = [c for c in runs.columns if c.endswith("_s")]
+runs["total_s"] = runs[steps].sum(axis=1)
+
+by_caching = runs.groupby("caching")[steps + ["total_s"]].median().T
+by_caching.columns = ["before caching", "after caching"]
+by_caching["saved"] = by_caching["before caching"] - by_caching["after caching"]
+by_caching
+```
+
+```text
+before caching  after caching  saved
+queue_s                  25.0           24.5    0.5
+checkout_s                7.0            6.0    1.0
+install_s               186.0           24.0  162.0
+test_s                  197.0          201.5   -4.5
+build_image_s           235.0           60.0  175.0
+scan_s                   34.0           35.0   -1.0
+push_s                   55.0           14.0   41.0
+deploy_s                475.0          474.0    1.0
+total_s                1216.0          843.0  373.0
+```
+
+Caching cut the dependency install and the image build dramatically, saving several minutes per run. Look at what's biggest now:
+
+```python
+after = runs[runs["caching"] == 1]
+share = (after[steps].median() / after[steps].median().sum()).sort_values(ascending=False)
+print((share * 100).round(1).astype(str) + "%")
+print("90th percentile total, after caching:", round(after["total_s"].quantile(0.9) / 60, 1), "minutes")
+```
+
+```text
+deploy_s         56.5%
+test_s           24.0%
+build_image_s     7.2%
+scan_s            4.2%
+queue_s           2.9%
+install_s         2.9%
+push_s            1.7%
+checkout_s        0.7%
+dtype: object
+90th percentile total, after caching: 15.8 minutes
+```
+
+More than half of each run is now the deploy step, most of it the canary watching the new version before promoting it (lesson 8). That's deliberate safety time, not waste. The next real target is the test suite, which could be split across machines.
+
+## Walkthrough
+
+1. Run the cells. Find the runs where queueing took more than two minutes. What might cause that?
+2. If tests were split across 3 machines, roughly what would the median total become?
+3. Why should the deploy step's waiting time not be "optimised" away?
+4. Calculate developer hours saved per month by caching, assuming one developer waits for every run.
+
+## Practice
+
+```answer
+{
+  "id": "cicd-07-p1",
+  "prompt": "How many seconds did caching save on the **median total** run time?",
+  "answer": 373,
+  "format": "number",
+  "pyVerify": "float(by_caching.loc['total_s', 'saved'])",
+  "hint": "The saved value in the total_s row.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "What should a dependency cache be keyed on?",
+    "options": ["The date", "The lock file, so it's reused until dependencies change", "The branch name", "Nothing"],
+    "answer": 1,
+    "explanation": "Same lock file, same packages."
+  },
+  {
+    "prompt": "Why do slow pipelines hurt beyond wasted minutes?",
+    "options": ["They cost more electricity", "Developers batch changes to avoid waiting, making each release bigger and riskier", "They break tests", "They don't"],
+    "answer": 1,
+    "explanation": "Slow pipelines undo the small-batch habit."
+  },
+  {
+    "prompt": "Which step should you speed up first?",
+    "options": ["The smallest", "The one taking the most time that isn't deliberate safety time", "Checkout", "None"],
+    "answer": 1,
+    "explanation": "Measure, then target the biggest."
+  }
+]
+```
+$md$, true, true, 7, array['cicd-07-p1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('cicd-m08', 'cicd-and-containers', 'Canary Releases', 8, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('cicd-and-containers:canary-releases', 'cicd-and-containers', 'cicd-m08', 'canary-releases', 'Canary releases', 'Compare deployment strategies (all at once, rolling, blue-green and canary), analyse canary checks that compare a new version''s errors with the old one''s, and tune the rule that decides whether to promote or roll back.', 25, $md$
+## The problem
+
+Under the old process, every release went to every server at once. A bad release reached every customer immediately, and the team found out from complaints.
+
+The new pipeline releases each version as a **canary** first: 10% of traffic for 5 minutes, while the other 90% stays on the old version. If the canary looks worse than the old version, it's rolled back automatically. The question for this lesson: how good is the rule that decides?
+
+## The concept
+
+**Deployment strategies**
+
+| Strategy | How | Risk if the release is bad |
+| :-- | :-- | :-- |
+| **All at once** | replace every instance together | everyone affected, until a full rollback |
+| **Rolling** | replace instances a few at a time | grows as the rollout continues |
+| **Blue-green** | start a full new set, switch traffic, keep the old set to switch back | everyone affected, but switching back is instant |
+| **Canary** | send a small share of traffic to the new version, compare, then promote or roll back | limited to the canary's share, for a few minutes |
+
+**Canary analysis**
+
+Compare the canary with the **baseline** (the old version, serving at the same time): error rate, latency. A simple rule:
+
+> roll back if the canary's error rate is more than **2 times** the baseline's, or its p95 latency is more than 1.5 times.
+
+Too strict, and good releases get rolled back for noise. Too loose, and bad ones get through.
+
+## Example
+
+Every canary check since June, with what happened to each release:
+
+```python
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/cicd/"
+canary = pd.read_csv(base + "canary_checks.csv")
+deploys = pd.read_csv(base + "deployments.csv")
+
+canary["baseline_error_rate"] = canary["baseline_errors"] / canary["baseline_requests"]
+canary["canary_error_rate"] = canary["canary_errors"] / canary["canary_requests"]
+canary["error_ratio"] = canary["canary_error_rate"] / canary["baseline_error_rate"]
+canary["latency_ratio"] = canary["canary_p95_ms"] / canary["baseline_p95_ms"]
+checks = canary.merge(deploys[["deploy_id", "service", "result", "caused_incident"]], on="deploy_id")
+checks["bad_release"] = checks["result"] == "rolled_back"
+
+def rule(df, error_limit=2.0, latency_limit=1.5):
+    return (df["error_ratio"] > error_limit) | (df["latency_ratio"] > latency_limit)
+
+checks["flagged"] = rule(checks)
+pd.crosstab(checks["bad_release"], checks["flagged"], margins=True)
+```
+
+```text
+flagged      False  True  All
+bad_release
+False          246     0  246
+True             2    17   19
+All            248    17  265
+```
+
+The rule flags most bad releases and no good ones. The bad releases it missed went out to everyone and caused the two incidents under the new pipeline. Look at them:
+
+```python
+checks.loc[checks["bad_release"] & ~checks["flagged"], ["deploy_id", "service", "error_ratio", "latency_ratio", "canary_requests", "canary_errors"]].round(2)
+```
+
+```text
+deploy_id service  error_ratio  latency_ratio  canary_requests  canary_errors
+92      D0133     web         1.00           1.14             1425              6
+233     D0274     api         1.17           1.12             2426              9
+```
+
+Their canary error rates were only a little above the baseline: within the noise of a few thousand requests. Tightening the rule to catch them would also flag good releases. Try a range of limits:
+
+```python
+for limit in [1.25, 1.5, 2.0, 3.0]:
+    flagged = checks["error_ratio"] > limit
+    print(f"error limit {limit}: catches {int((flagged & checks['bad_release']).sum())} of {int(checks['bad_release'].sum())} bad releases, "
+          f"wrongly rolls back {int((flagged & ~checks['bad_release']).sum())} good ones")
+```
+
+```text
+error limit 1.25: catches 17 of 19 bad releases, wrongly rolls back 64 good ones
+error limit 1.5: catches 17 of 19 bad releases, wrongly rolls back 10 good ones
+error limit 2.0: catches 17 of 19 bad releases, wrongly rolls back 0 good ones
+error limit 3.0: catches 17 of 19 bad releases, wrongly rolls back 0 good ones
+```
+
+Lowering the limit doesn't catch the two missed releases at all, even at 1.25, but it rolls back dozens of good ones. Their error ratios (1.00 and 1.17) are indistinguishable from noise. The answer is more evidence, not a different limit: run the canary longer or on more traffic when the request counts are small, so the comparison is less noisy.
+
+## Walkthrough
+
+1. Run the cells. What were the canary request counts for the two missed releases, compared with the median?
+2. Add a rule: require at least 2,000 canary requests before deciding. What happens to quiet-hour releases?
+3. Which strategy would you use for a database schema change, where the old and new versions can't run side by side?
+4. Write the canary policy (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "cicd-08-p1",
+  "prompt": "How many **bad releases** does the default rule (error ratio over 2 or latency ratio over 1.5) **catch**?",
+  "answer": 17,
+  "format": "number",
+  "pyVerify": "int((checks['bad_release'] & checks['flagged']).sum())",
+  "hint": "The True, True cell of the table.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "cicd-08-t1",
+  "prompt": "Write Tallybook's **canary policy**, one rule per line starting with a dash: at least **four** rules covering the canary's **share and duration**, the **rollback rule** (with numbers), a **minimum** amount of evidence, and what happens **after** an automatic rollback.",
+  "minutes": 6,
+  "rows": 6,
+  "placeholder": "- Canary: ...",
+  "rules": [
+    { "label": "At least four rules, each starting with -", "pattern": "^\\s*-\\s+\\S", "min": 4 },
+    { "label": "Share and duration (a % and minutes)", "pattern": "\\d+\\s*%[^\\n]*\\d+\\s*min|\\d+\\s*min[^\\n]*\\d+\\s*%" },
+    { "label": "A rollback rule with a ratio or limit", "pattern": "roll[^\\n]*(\\d(\\.\\d+)?\\s*(x|times)|ratio|limit)" },
+    { "label": "Minimum evidence (requests)", "pattern": "minimum|at least[^\\n]*request|\\d[\\d,]* requests" },
+    { "label": "After a rollback (alert, investigate, owner)", "pattern": "after[^\\n]*(alert|investigat|owner|notif|ticket)|(alert|notif)[^\\n]*roll" }
+  ],
+  "sample": "- Canary: each release gets 10% of traffic for 5 minutes before promotion.\n- Rollback: roll back automatically if the canary's error rate is more than 2 times the baseline's or its p95 latency more than 1.5 times.\n- Evidence: no decision until the canary has served at least 2,000 requests; in quiet hours, the canary runs longer until it has.\n- After a rollback: the author is notified with the canary's figures, and the release can't be retried until the cause is found.\n- Database changes: schema changes are released separately, made backwards-compatible first, so canaries of the app can always run against them.",
+  "note": "The evidence rule targets the weakness behind the misses: small samples hide real differences, and one of the two missed canaries served fewer than 1,500 requests.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "What is a canary release?",
+    "options": ["Releasing at night", "Sending a small share of traffic to the new version, comparing it with the old, then promoting or rolling back", "Releasing to staging only", "A release with no tests"],
+    "answer": 1,
+    "explanation": "Limit the blast radius while you check."
+  },
+  {
+    "prompt": "You lower the rollback limit from 2 to 1.25. What's the main cost?",
+    "options": ["None", "More good releases are rolled back for noise, slowing everyone down", "The canary gets bigger", "Tests run slower"],
+    "answer": 1,
+    "explanation": "Every threshold trades misses against false alarms."
+  },
+  {
+    "prompt": "A canary served only 800 requests. Why is its comparison weak?",
+    "options": ["800 is too many", "With few requests, error rates are noisy, so real differences can hide", "Canaries need 10,000 users", "It isn't"],
+    "answer": 1,
+    "explanation": "More evidence beats a different threshold."
+  }
+]
+```
+$md$, true, true, 8, array['cicd-08-p1', 'cicd-08-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('cicd-m09', 'cicd-and-containers', 'Rollbacks and Recovery', 9, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('cicd-and-containers:rollbacks-and-recovery', 'cicd-and-containers', 'cicd-m09', 'rollbacks-and-recovery', 'Rollbacks and recovery', 'Compare rolling back with fixing forward, measure time to restore under the old and new processes, and design releases (feature flags, backwards-compatible changes) that make recovery fast.', 20, $md$
+## The problem
+
+Even with good tests and canaries, some bad releases reach customers. What matters then is how fast service is restored. Under the old process, Tallybook's engineers usually tried to fix the problem and push a new release ("fix forward"), which meant working out the cause first, under pressure. Under the new one, the first move is always to go back to the last good image.
+
+## The concept
+
+**Roll back or fix forward?**
+
+| | Roll back | Fix forward |
+| :-- | :-- | :-- |
+| How | redeploy the previous image | write, test and release a fix |
+| Speed | minutes, without understanding the cause | as long as diagnosis and the fix take |
+| When | the default | when rolling back isn't possible (for example, data was already changed) |
+
+Restore service first; understand the cause afterwards.
+
+**Making rollbacks possible**
+
+- Keep previous images in the registry, tagged by version.
+- Make **database changes backwards-compatible** (add a column first, start using it in a later release, remove the old one later still), so the previous app version still works.
+- Use **feature flags**: ship new code switched off, turn it on separately, and switch it off instantly if it misbehaves, with no deployment at all.
+
+## Example
+
+Incidents and their restore times under each process:
+
+```python
+import pandas as pd
+
+deploys = pd.read_csv("https://academy.cloudtechanalytics.com/datasets/cicd/deployments.csv")
+incidents = deploys[deploys["caused_incident"] == 1]
+print(incidents.groupby(["pipeline", "result"])["minutes_to_restore"].agg(["count", "median", "max"]))
+print()
+print("Total customer-facing minutes of failed releases:")
+print(incidents.groupby("pipeline")["minutes_to_restore"].sum())
+```
+
+```text
+count  median    max
+pipeline result
+new      rolled_back        2    21.5   25.0
+old      fixed_forward      3   216.0  278.0
+         rolled_back        5   194.0  306.0
+
+Total customer-facing minutes of failed releases:
+pipeline
+new      43.0
+old    1600.0
+Name: minutes_to_restore, dtype: float64
+```
+
+Under the old process, fixing forward took much longer than rolling back, and even the rollbacks took about three hours at the median, because rolling back meant reverting the code and re-running the whole manual process. Under the new pipeline, the two releases that slipped past the canary were rolled back in minutes.
+
+## Walkthrough
+
+1. Run the cells. How many hours of failed-release time did the old process cause in three months, and the new one?
+2. Design a backwards-compatible change for renaming a database column used by the app.
+3. Which kinds of Tallybook features would you put behind a feature flag?
+4. Write the recovery runbook (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "cicd-09-p1",
+  "prompt": "What was the **total** number of minutes to restore across **old-process** incidents?",
+  "answer": 1600,
+  "format": "number",
+  "pyVerify": "float(incidents.loc[incidents['pipeline'] == 'old', 'minutes_to_restore'].sum())",
+  "hint": "The old line of the second output.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "cicd-09-t1",
+  "prompt": "Write the **recovery runbook** for a bad release that got past the canary, one numbered step per line: at least **five** steps covering **detection**, the **rollback** (how, and who decides), **communication**, **finding the cause**, and **preventing** a repeat.",
+  "minutes": 6,
+  "rows": 7,
+  "placeholder": "1. An alert fires ...",
+  "rules": [
+    { "label": "At least five numbered steps", "pattern": "^\\s*\\d+[.)]\\s+\\S", "min": 5 },
+    { "label": "Detection (alert, monitor)", "pattern": "alert|monitor|detect" },
+    { "label": "Rollback to the previous image or version", "pattern": "roll(s|ed)? ?back[^\\n]*(previous|last good|image|version)" },
+    { "label": "Communication (status page, customers, channel)", "pattern": "status page|customer|channel|support|announce" },
+    { "label": "Finding the cause after restoring", "pattern": "cause|investigat|postmortem|post-mortem" },
+    { "label": "Prevention (test, canary rule, check)", "pattern": "test|canary|check|prevent" }
+  ],
+  "sample": "1. An alert fires on error rate or latency, or support reports a problem; the on-call engineer checks whether a release went out in the last hour.\n2. If one did, the on-call engineer rolls back to the previous image straight away, without waiting to find the cause.\n3. They post in the incident channel and update the status page; support is told what customers may have seen.\n4. Once service is restored, the release's author and the on-call engineer find the cause, using the canary figures and logs.\n5. The fix ships as a new release through the normal pipeline, with a test that would have caught the problem.\n6. A blameless postmortem asks why the canary didn't catch it, and changes the canary rule or tests if needed.",
+  "note": "Step 2 comes before understanding the cause: restoring service is the first priority.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "A release breaks checkout. What's usually the first move?",
+    "options": ["Find the bug and fix it", "Roll back to the last good version, then investigate", "Wait and watch", "Restart the servers"],
+    "answer": 1,
+    "explanation": "Restore first, understand second."
+  },
+  {
+    "prompt": "What makes rolling back impossible?",
+    "options": ["Using containers", "A release that changed the database in a way the old version can't handle", "Feature flags", "Canaries"],
+    "answer": 1,
+    "explanation": "Keep database changes backwards-compatible."
+  },
+  {
+    "prompt": "What does a feature flag allow?",
+    "options": ["Faster builds", "Turning a feature on or off without a deployment", "Skipping tests", "Bigger images"],
+    "answer": 1,
+    "explanation": "Release code separately from releasing features."
+  }
+]
+```
+$md$, true, true, 9, array['cicd-09-p1', 'cicd-09-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('cicd-m10', 'cicd-and-containers', 'Final Project', 10, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('cicd-and-containers:final-project', 'cicd-and-containers', 'cicd-m10', 'final-project', '"Final project: Tallybook''s delivery review"', 'Plan your final project, a review of how Tallybook builds, secures and releases software, with DORA measures, fixed Dockerfile and workflow, scanning and canary policies, and the next improvements.', 20, $md$
+## The problem
+
+Three months after switching to the new pipeline, Tallybook's CTO wants a review for the board: was it worth it, what's still risky, and what comes next? Your final project is that review, built from the files and data in this course, with fixed versions of the Dockerfile and workflow attached.
+
+## The concept
+
+**The parts of the review**
+
+| Part | Built in |
+| :-- | :-- |
+| DORA measures, before and after | lesson 1 |
+| The image: size, build time, Dockerfile fixes | lessons 2 and 3 |
+| Vulnerabilities and the scanning policy | lesson 4 |
+| The workflow: problems found and the fixed version | lessons 5 and 6 |
+| Pipeline speed and caching | lesson 7 |
+| Canary performance and policy | lesson 8 |
+| Recovery | lesson 9 |
+
+**Show the trade-offs**
+
+The board will ask whether faster releases mean more risk. The data answers it; make sure your review shows it plainly.
+
+## Example
+
+The headline table for the board:
+
+```python
+import pandas as pd
+
+deploys = pd.read_csv("https://academy.cloudtechanalytics.com/datasets/cicd/deployments.csv",
+                      parse_dates=["first_commit_at", "deployed_at"])
+deploys["lead_time_hours"] = (deploys["deployed_at"] - deploys["first_commit_at"]).dt.total_seconds() / 3600
+
+headline = deploys.groupby("pipeline").agg(
+    deploys_per_week=("deploy_id", lambda s: round(len(s) / 13, 1)),
+    median_lead_time_hours=("lead_time_hours", lambda s: round(s.median(), 1)),
+    change_failure_rate_pct=("caused_incident", lambda s: round(s.mean() * 100, 1)),
+    median_minutes_to_restore=("minutes_to_restore", "median"),
+).T[["old", "new"]]
+headline
+```
+
+```text
+pipeline                     old   new
+deploys_per_week             3.1  20.4
+median_lead_time_hours     159.1  16.4
+change_failure_rate_pct     20.0   0.8
+median_minutes_to_restore  205.0  21.5
+```
+
+## Walkthrough
+
+1. Complete the review with every part in the table above.
+2. Attach your fixed Dockerfile and workflow, with your checkers' output showing they pass.
+3. List the three biggest remaining risks, with evidence.
+4. Open the project brief on the course page and plan the write-up.
+
+## Practice
+
+```answer
+{
+  "id": "cicd-10-p1",
+  "prompt": "Under the **new** pipeline, how many deployments per week did Tallybook make? One decimal place.",
+  "answer": 20.4,
+  "format": "number",
+  "dataset": "cicd",
+  "files": ["deployments"],
+  "pyVerify": "float(headline.loc['deploys_per_week', 'new'])",
+  "hint": "The deploys_per_week row, new column.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "cicd-10-t1",
+  "prompt": "Write the **executive summary** for the board (100 to 200 words): the **DORA** results with numbers, what was **fixed** (Dockerfile, secrets, workflow), what's still **risky**, and the **next three** improvements.",
+  "minutes": 10,
+  "rows": 9,
+  "placeholder": "Since June, Tallybook releases ...",
+  "rules": [
+    { "label": "At least three numbers", "pattern": "\\d+(\\.\\d+)?", "min": 3 },
+    { "label": "Names DORA measures (frequency, lead time, failure, restore)", "pattern": "lead time|change failure|restor|(release|deploy)\\w*[^\\n]*(a week|per week|a day)|incident", "min": 2 },
+    { "label": "Mentions the secret in the image or workflow problems", "pattern": "secret|password|workflow|pipeline" },
+    { "label": "Remaining risks", "pattern": "risk|still|remain" },
+    { "label": "Next improvements", "pattern": "next|plan|will" },
+    { "label": "Between 100 and 200 words", "minWords": 100, "maxWords": 200 }
+  ],
+  "sample": "Since the new pipeline started in June, Tallybook releases about 20 times a week instead of 3, each change reaches customers in about 16 hours instead of nearly a week, and the share of releases causing incidents fell from 20% to under 1%. When something does go wrong, service is restored in minutes rather than hours. Faster releases have made Tallybook more stable, not less. Along the way we removed the production database password from the container image, cut the image from 1.2 GB to under 200 MB with far fewer known vulnerabilities, and closed six security gaps in the old deployment workflow, including deployments from any branch. Risks remain: the canary misses bad releases whose effect is small at low traffic, our own npm packages have three serious known vulnerabilities, and the test suite is now the biggest part of the pipeline we can speed up. Next, we will upgrade those three packages, require a minimum number of canary requests before promotion, and split tests across machines to keep releases under ten minutes.",
+  "note": "The fourth sentence answers the board's real question directly: speed didn't cost stability.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "The board asks whether faster releases increased risk. What answers it?",
+    "options": ["Opinions", "Change failure rate and time to restore, before and after", "The number of engineers", "Image size"],
+    "answer": 1,
+    "explanation": "The stability measures show it directly."
+  },
+  {
+    "prompt": "Which is a remaining risk worth reporting?",
+    "options": ["The pipeline uses YAML", "Known critical vulnerabilities in the app's own dependencies", "Images are tagged", "Tests exist"],
+    "answer": 1,
+    "explanation": "Report risks with evidence and a plan."
+  },
+  {
+    "prompt": "Why attach the fixed Dockerfile and workflow with checker output?",
+    "options": ["To look thorough", "So the fixes can be verified, not just claimed", "Boards like code", "It's required"],
+    "answer": 1,
+    "explanation": "Evidence, not promises."
+  }
+]
+```
+$md$, true, true, 10, array['cicd-10-p1', 'cicd-10-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+
 -- Course: Data Analyst Capstone: End-to-End BI Project
 insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
-values ('data-analyst-capstone', 'full', null, 'data-analyst-capstone', 'CAP', 'Data Analyst Capstone: End-to-End BI Project', 'Take a retail chain''s raw till export all the way to a reviewed dashboard and a board-ready executive summary, using the tools of your choice.', 'The capstone of the Data Analyst track. Voltline Electronics, a chain of eight stores, sends you 18 months of raw till data and one question from its chief executive: what''s really driving our 37% growth? You''ll plan the analysis, profile and clean a genuinely messy export (a duplicated upload, mixed date formats, inconsistent store names and test transactions), build a model that looks up costs by date and compares sales with monthly targets, decompose the growth, find what''s going wrong where, and put a value on missed sales. Then you''ll build a dashboard, write an executive summary, prepare for the board''s questions and publish the project for your portfolio. Use Excel, Power BI, SQL or Python: the work is assessed on the answers, not the tool.', 'data-analytics', 'intermediate', 4, 'Career project', 14, true, 'available', true, array['Turning a business brief into an analysis plan', 'Profiling and cleaning raw data with a quality log', 'Modelling data at the right grain', 'Decomposing growth into price, new stores and volume', 'Judging targets fairly', 'Estimating lost sales with stated assumptions', 'Finding-led dashboards and executive summaries', 'Presenting and publishing a portfolio project']::text[], array['The core Data Analyst courses: Excel, SQL and Power BI (or Python)', 'Comfort cleaning data and building a dashboard in at least one tool']::text[], 'Voltline Electronics: commercial review', true, true, true, true, false, 60, 35)
+values ('data-analyst-capstone', 'full', null, 'data-analyst-capstone', 'CAP', 'Data Analyst Capstone: End-to-End BI Project', 'Take a retail chain''s raw till export all the way to a reviewed dashboard and a board-ready executive summary, using the tools of your choice.', 'The capstone of the Data Analyst track. Voltline Electronics, a chain of eight stores, sends you 18 months of raw till data and one question from its chief executive: what''s really driving our 37% growth? You''ll plan the analysis, profile and clean a genuinely messy export (a duplicated upload, mixed date formats, inconsistent store names and test transactions), build a model that looks up costs by date and compares sales with monthly targets, decompose the growth, find what''s going wrong where, and put a value on missed sales. Then you''ll build a dashboard, write an executive summary, prepare for the board''s questions and publish the project for your portfolio. Use Excel, Power BI, SQL or Python: the work is assessed on the answers, not the tool.', 'data-analytics', 'intermediate', 4, 'Career project', 14, true, 'available', true, array['Turning a business brief into an analysis plan', 'Profiling and cleaning raw data with a quality log', 'Modelling data at the right grain', 'Decomposing growth into price, new stores and volume', 'Judging targets fairly', 'Estimating lost sales with stated assumptions', 'Finding-led dashboards and executive summaries', 'Presenting and publishing a portfolio project']::text[], array['The core Data Analyst courses: Excel, SQL and Power BI (or Python)', 'Comfort cleaning data and building a dashboard in at least one tool']::text[], 'Voltline Electronics: commercial review', true, true, true, true, false, 60, 36)
 on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level = excluded.level, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
@@ -49100,6 +50631,108 @@ values ('iacq12', 1, 'People review; the pipeline acts.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 
+-- Assessment: CI/CD and Containers: final assessment
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('cicd-and-containers-final', 'cicd-and-containers', 'final', null, 'CI/CD and Containers: final assessment', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cicdq01', 'cicd-and-containers-final', 1, 'A team releases monthly, with 40 changes per release. What usually happens when they move to small daily releases?', '["More incidents","Fewer and smaller incidents, fixed faster","No change","Releases stop"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cicdq01', 1, 'Small batches are easier to test and undo.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cicdq02', 'cicd-and-containers-final', 2, 'Which measures stability in the DORA framework?', '["Deployment frequency and lead time","Change failure rate and time to restore","Lines of code","Number of tests"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cicdq02', 1, 'The other two measure speed.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cicdq03', 'cicd-and-containers-final', 3, 'Every code change makes `npm install` run again during the image build. What''s the likely cause?', '["A slow network","COPY . . comes before installing dependencies","Too many layers","Running as root"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cicdq03', 1, 'Copy the package files and install first.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cicdq04', 'cicd-and-containers-final', 4, 'A Dockerfile sets ENV DATABASE_URL with a password. What''s the risk?', '["None","Anyone with the image can read the password, even if a later line removes it","Slower builds","The app can''t connect"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cicdq04', 1, 'Secrets belong at runtime, not in images.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cicdq05', 'cicd-and-containers-final', 5, 'A scan shows hundreds of findings, almost all in OS packages. What''s the most effective fix?', '["Fix each one","A smaller, newer base image, rebuilt regularly","Disable the scanner","Run as root"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cicdq05', 1, 'Fewer packages, fewer findings.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cicdq06', 'cicd-and-containers-final', 6, 'Which scanning rule is enforceable without blocking every release?', '["Block on any finding","Block on CRITICAL and HIGH findings that have a fix; warn on the rest","Never block","Block only on LOW"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cicdq06', 1, 'Block only on what the team can act on.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cicdq07', 'cicd-and-containers-final', 7, 'A deploy job has no `needs`. What happens when tests fail?', '["The deploy waits","The deploy runs anyway, in parallel with the tests","Nothing deploys","Tests rerun"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cicdq07', 1, 'needs: test enforces the order.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cicdq08', 'cicd-and-containers-final', 8, 'Why is `uses: some-dev/deploy-action@main` risky?', '["It''s slow","Its author can change the code that runs with your secrets at any time","main is deprecated","It isn''t"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cicdq08', 1, 'Pin third-party actions to a commit SHA.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cicdq09', 'cicd-and-containers-final', 9, 'After caching, the biggest pipeline step is the canary watching the new version. What should you do?', '["Remove the canary","Leave it: it''s deliberate safety time; speed up the tests instead","Shorten it to 10 seconds","Run it after release"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cicdq09', 1, 'Don''t optimise away safety.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cicdq10', 'cicd-and-containers-final', 10, 'A canary served only 1,400 requests and its error rate looks normal. What''s the concern?', '["None","Too few requests to detect a real difference, so a bad release can slip through","Too many requests","The baseline is wrong"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cicdq10', 1, 'Require enough evidence before promoting.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cicdq11', 'cicd-and-containers-final', 11, 'A release breaks payments. What''s the first move?', '["Find the bug","Roll back to the last good image, then investigate","Wait for more errors","Restart all servers"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cicdq11', 1, 'Restore first.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cicdq12', 'cicd-and-containers-final', 12, 'What keeps rollbacks possible after a database change?', '["Bigger databases","Backwards-compatible changes, so the previous version still works","Feature flags only","Skipping canaries"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cicdq12', 1, 'Expand first, contract later.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
 -- Assessment: Prompting Essentials: module check
 insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
 values ('aipf-m01-check', 'ai-productivity-fundamentals', 'module', 'aipf-m01', 'Prompting Essentials: module check', 60, true)
@@ -52445,6 +54078,14 @@ Work in Google Colab. The files are at https://academy.cloudtechanalytics.com/da
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
 
 
+-- Project: Tallybook's delivery review
+insert into public.projects (id, course_id, title, summary, brief_md, tasks, datasets, rubric, required)
+values ('cicd-tallybook-delivery-review', 'cicd-and-containers', 'Tallybook''s delivery review', 'A review of how a company builds, secures and releases software: DORA measures before and after a new pipeline, a fixed Dockerfile and workflow, scanning and canary policies, and the next improvements.', $md$Three months after switching to a new delivery pipeline, Tallybook's CTO wants a review for the board: was it worth it, what's still risky, and what comes next?
+
+Work in Google Colab with the cicd dataset (https://academy.cloudtechanalytics.com/datasets/cicd/: deployments.csv, pipeline_runs.csv, canary_checks.csv, images.csv, the scan JSON files, Dockerfile and deploy.yml). Submit a link to your notebook (shared so anyone with the link can view it), and paste your **headline table**, your **fixed Dockerfile and workflow** and your **executive summary** below, followed by a short note on where each task is answered.$md$, array['DORA: deployment frequency, lead time, change failure rate and time to restore, before and after the new pipeline, overall and by service.', 'Images: the base image choice, with size, build time and vulnerability evidence.', 'Dockerfile: the problems found by your checker, and a fixed Dockerfile that passes it.', 'Workflow: the problems found by your checker, and a fixed workflow that passes it.', 'Speed: where pipeline time goes, what caching saved, and the next speed-up.', 'Releases: how well the canary rule performs, the trade-off at other limits, and the canary policy.', 'An executive summary for the board, with remaining risks and the next three improvements.']::text[], array['cicd']::text[], array['The DORA measures are calculated correctly and compared fairly.', 'Dockerfile and workflow fixes are correct, and shown to pass automated checks.', 'Vulnerability findings are separated by source, with an enforceable policy.', 'Pipeline speed is analysed by step, with deliberate safety time distinguished from waste.', 'Canary analysis shows both caught and missed releases, and the policy addresses the misses.', 'Remaining risks are stated with evidence.', 'The summary answers whether speed cost stability, with numbers.']::text[], true)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
+
+
 -- Track: Become a Data Analyst
 insert into public.tracks (id, slug, title, summary, badge_name, badge_code, skills, position, published)
 values ('data-analyst', 'data-analyst', 'Become a Data Analyst', 'The route we recommend from no experience to a junior data analyst role. Learn how analysis works, then the tools teams use every day (Excel, SQL, Power BI and Python) on realistic company data. Build portfolio projects that answer real business questions, and finish with your CV, LinkedIn and interview preparation.', 'CloudTech Data Analyst', 'DATAANALYST', array['Spreadsheet analysis in Excel', 'Statistics: averages, spread, confidence intervals and tests', 'Querying databases with SQL, from first SELECT to cohorts and window functions', 'Data modelling and star schemas', 'Dashboards in Power BI, with DAX measures you can trust', 'Analysis in Python and pandas', 'Turning data into findings a manager can act on']::text[], 1, true)
@@ -52673,15 +54314,19 @@ values ('cloud-devops-engineer', 'terraform-infrastructure-as-code', 'Core', tru
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 insert into public.track_courses (track_id, course_id, stage, required, position)
-values ('cloud-devops-engineer', 'llm-evaluation-safety-production', 'Specialist', false, 5)
+values ('cloud-devops-engineer', 'cicd-and-containers', 'Core', true, 5)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 insert into public.track_courses (track_id, course_id, stage, required, position)
-values ('cloud-devops-engineer', 'career-essentials', 'Career', true, 6)
+values ('cloud-devops-engineer', 'llm-evaluation-safety-production', 'Specialist', false, 6)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 insert into public.track_courses (track_id, course_id, stage, required, position)
-values ('cloud-devops-engineer', 'build-your-student-portfolio', 'Career', false, 7)
+values ('cloud-devops-engineer', 'career-essentials', 'Career', true, 7)
+on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
+
+insert into public.track_courses (track_id, course_id, stage, required, position)
+values ('cloud-devops-engineer', 'build-your-student-portfolio', 'Career', false, 8)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 

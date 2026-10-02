@@ -827,6 +827,575 @@
    }
   }
  },
+ "cicd": {
+  "zipBytes": 27688,
+  "files": {
+   "canary_checks": {
+    "rows": 265,
+    "bytes": 10660,
+    "columns": [
+     {
+      "name": "deploy_id",
+      "type": "text",
+      "missing": 0,
+      "distinct": 265
+     },
+     {
+      "name": "baseline_requests",
+      "type": "number",
+      "missing": 0,
+      "distinct": 262,
+      "min": 9204,
+      "max": 29597
+     },
+     {
+      "name": "baseline_errors",
+      "type": "number",
+      "missing": 0,
+      "distinct": 108,
+      "min": 21,
+      "max": 159
+     },
+     {
+      "name": "canary_requests",
+      "type": "number",
+      "missing": 0,
+      "distinct": 246,
+      "min": 1023,
+      "max": 3289
+     },
+     {
+      "name": "canary_errors",
+      "type": "number",
+      "missing": 0,
+      "distinct": 37,
+      "min": 2,
+      "max": 187
+     },
+     {
+      "name": "baseline_p95_ms",
+      "type": "number",
+      "missing": 0,
+      "distinct": 118,
+      "min": 181,
+      "max": 319
+     },
+     {
+      "name": "canary_p95_ms",
+      "type": "number",
+      "missing": 0,
+      "distinct": 146,
+      "min": 169,
+      "max": 699
+     },
+     {
+      "name": "decision",
+      "type": "text",
+      "missing": 0,
+      "distinct": 2
+     }
+    ],
+    "preview": [
+     [
+      "D0041",
+      "23117",
+      "50",
+      "2569",
+      "7",
+      "240",
+      "234",
+      "promoted"
+     ],
+     [
+      "D0042",
+      "19359",
+      "109",
+      "2151",
+      "13",
+      "188",
+      "189",
+      "promoted"
+     ],
+     [
+      "D0043",
+      "27402",
+      "155",
+      "3045",
+      "16",
+      "314",
+      "294",
+      "promoted"
+     ],
+     [
+      "D0044",
+      "16364",
+      "74",
+      "1818",
+      "5",
+      "211",
+      "208",
+      "promoted"
+     ],
+     [
+      "D0045",
+      "18514",
+      "76",
+      "2057",
+      "10",
+      "297",
+      "338",
+      "promoted"
+     ],
+     [
+      "D0046",
+      "11860",
+      "69",
+      "1318",
+      "9",
+      "301",
+      "313",
+      "promoted"
+     ]
+    ]
+   },
+   "deployments": {
+    "rows": 305,
+    "bytes": 21527,
+    "columns": [
+     {
+      "name": "deploy_id",
+      "type": "text",
+      "missing": 0,
+      "distinct": 305
+     },
+     {
+      "name": "service",
+      "type": "text",
+      "missing": 0,
+      "distinct": 3
+     },
+     {
+      "name": "pipeline",
+      "type": "text",
+      "missing": 0,
+      "distinct": 2
+     },
+     {
+      "name": "strategy",
+      "type": "text",
+      "missing": 0,
+      "distinct": 2
+     },
+     {
+      "name": "first_commit_at",
+      "type": "text",
+      "missing": 0,
+      "distinct": 304
+     },
+     {
+      "name": "deployed_at",
+      "type": "text",
+      "missing": 0,
+      "distinct": 253
+     },
+     {
+      "name": "commits",
+      "type": "number",
+      "missing": 0,
+      "distinct": 26,
+      "min": 1,
+      "max": 40
+     },
+     {
+      "name": "result",
+      "type": "text",
+      "missing": 0,
+      "distinct": 3
+     },
+     {
+      "name": "caused_incident",
+      "type": "number",
+      "missing": 0,
+      "distinct": 2,
+      "min": 0,
+      "max": 1
+     },
+     {
+      "name": "minutes_to_restore",
+      "type": "number",
+      "missing": 295,
+      "distinct": 10,
+      "min": 18,
+      "max": 306
+     }
+    ],
+    "preview": [
+     [
+      "D0001",
+      "web",
+      "old",
+      "all_at_once",
+      "2026-02-27 00:27",
+      "2026-03-02 11:00",
+      "8",
+      "success",
+      "0",
+      ""
+     ],
+     [
+      "D0002",
+      "worker",
+      "old",
+      "all_at_once",
+      "2026-02-23 14:14",
+      "2026-03-02 13:00",
+      "28",
+      "success",
+      "0",
+      ""
+     ],
+     [
+      "D0003",
+      "api",
+      "old",
+      "all_at_once",
+      "2026-02-25 21:52",
+      "2026-03-02 16:00",
+      "10",
+      "success",
+      "0",
+      ""
+     ],
+     [
+      "D0004",
+      "worker",
+      "old",
+      "all_at_once",
+      "2026-02-26 11:02",
+      "2026-03-06 13:00",
+      "29",
+      "success",
+      "0",
+      ""
+     ],
+     [
+      "D0005",
+      "web",
+      "old",
+      "all_at_once",
+      "2026-03-02 03:57",
+      "2026-03-09 11:00",
+      "16",
+      "success",
+      "0",
+      ""
+     ],
+     [
+      "D0006",
+      "api",
+      "old",
+      "all_at_once",
+      "2026-03-03 06:18",
+      "2026-03-11 16:00",
+      "10",
+      "success",
+      "0",
+      ""
+     ]
+    ]
+   },
+   "images": {
+    "rows": 4,
+    "bytes": 333,
+    "columns": [
+     {
+      "name": "image",
+      "type": "text",
+      "missing": 0,
+      "distinct": 4
+     },
+     {
+      "name": "base_image",
+      "type": "text",
+      "missing": 0,
+      "distinct": 4
+     },
+     {
+      "name": "stages",
+      "type": "number",
+      "missing": 0,
+      "distinct": 2,
+      "min": 1,
+      "max": 2
+     },
+     {
+      "name": "size_mb",
+      "type": "number",
+      "missing": 0,
+      "distinct": 4,
+      "min": 168,
+      "max": 1184
+     },
+     {
+      "name": "layers",
+      "type": "number",
+      "missing": 0,
+      "distinct": 3,
+      "min": 9,
+      "max": 13
+     },
+     {
+      "name": "build_seconds_cold",
+      "type": "number",
+      "missing": 0,
+      "distinct": 4,
+      "min": 188,
+      "max": 312
+     },
+     {
+      "name": "build_seconds_code_change",
+      "type": "number",
+      "missing": 0,
+      "distinct": 4,
+      "min": 38,
+      "max": 298
+     },
+     {
+      "name": "runs_as_root",
+      "type": "number",
+      "missing": 0,
+      "distinct": 2,
+      "min": 0,
+      "max": 1
+     }
+    ],
+    "preview": [
+     [
+      "tallybook-web:current",
+      "node:latest",
+      "1",
+      "1184",
+      "13",
+      "312",
+      "298",
+      "1"
+     ],
+     [
+      "tallybook-web:slim",
+      "node:20-slim",
+      "1",
+      "412",
+      "11",
+      "205",
+      "41",
+      "0"
+     ],
+     [
+      "tallybook-web:alpine",
+      "node:20-alpine",
+      "1",
+      "236",
+      "11",
+      "188",
+      "38",
+      "0"
+     ],
+     [
+      "tallybook-web:distroless",
+      "gcr.io/distroless/nodejs20-debian12",
+      "2",
+      "168",
+      "9",
+      "226",
+      "44",
+      "0"
+     ]
+    ]
+   },
+   "pipeline_runs": {
+    "rows": 265,
+    "bytes": 15083,
+    "columns": [
+     {
+      "name": "run_id",
+      "type": "text",
+      "missing": 0,
+      "distinct": 265
+     },
+     {
+      "name": "deploy_id",
+      "type": "text",
+      "missing": 0,
+      "distinct": 265
+     },
+     {
+      "name": "started_at",
+      "type": "text",
+      "missing": 0,
+      "distinct": 213
+     },
+     {
+      "name": "caching",
+      "type": "number",
+      "missing": 0,
+      "distinct": 2,
+      "min": 0,
+      "max": 1
+     },
+     {
+      "name": "queue_s",
+      "type": "number",
+      "missing": 0,
+      "distinct": 60,
+      "min": 3,
+      "max": 606
+     },
+     {
+      "name": "checkout_s",
+      "type": "number",
+      "missing": 0,
+      "distinct": 6,
+      "min": 4,
+      "max": 9
+     },
+     {
+      "name": "install_s",
+      "type": "number",
+      "missing": 0,
+      "distinct": 78,
+      "min": 14,
+      "max": 229
+     },
+     {
+      "name": "test_s",
+      "type": "number",
+      "missing": 0,
+      "distinct": 107,
+      "min": 140,
+      "max": 260
+     },
+     {
+      "name": "build_image_s",
+      "type": "number",
+      "missing": 0,
+      "distinct": 92,
+      "min": 40,
+      "max": 279
+     },
+     {
+      "name": "scan_s",
+      "type": "number",
+      "missing": 0,
+      "distinct": 21,
+      "min": 25,
+      "max": 45
+     },
+     {
+      "name": "push_s",
+      "type": "number",
+      "missing": 0,
+      "distinct": 48,
+      "min": 8,
+      "max": 70
+     },
+     {
+      "name": "deploy_s",
+      "type": "number",
+      "missing": 0,
+      "distinct": 103,
+      "min": 420,
+      "max": 540
+     }
+    ],
+    "preview": [
+     [
+      "R0001",
+      "D0041",
+      "2026-06-01 13:00",
+      "0",
+      "16",
+      "4",
+      "207",
+      "149",
+      "268",
+      "38",
+      "67",
+      "445"
+     ],
+     [
+      "R0002",
+      "D0042",
+      "2026-06-01 16:00",
+      "0",
+      "26",
+      "6",
+      "192",
+      "156",
+      "230",
+      "25",
+      "63",
+      "500"
+     ],
+     [
+      "R0003",
+      "D0043",
+      "2026-06-02 11:00",
+      "0",
+      "31",
+      "5",
+      "198",
+      "229",
+      "230",
+      "42",
+      "37",
+      "538"
+     ],
+     [
+      "R0004",
+      "D0044",
+      "2026-06-02 13:00",
+      "0",
+      "12",
+      "7",
+      "156",
+      "198",
+      "204",
+      "43",
+      "41",
+      "475"
+     ],
+     [
+      "R0005",
+      "D0045",
+      "2026-06-02 16:00",
+      "0",
+      "315",
+      "7",
+      "172",
+      "183",
+      "224",
+      "25",
+      "40",
+      "491"
+     ],
+     [
+      "R0006",
+      "D0046",
+      "2026-06-03 13:00",
+      "0",
+      "29",
+      "5",
+      "196",
+      "211",
+      "267",
+      "26",
+      "58",
+      "503"
+     ]
+    ]
+   }
+  }
+ },
  "cleaning": {
   "zipBytes": 3027,
   "files": {

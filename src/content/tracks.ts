@@ -319,7 +319,7 @@ export const TRACKS: Track[] = [
         items: [
           { kind: "course", courseId: "cloud-fundamentals-cost-reliability", why: "Cost, rightsizing, scaling, availability and access, on a real-looking company's cloud account." },
           { kind: "course", courseId: "terraform-infrastructure-as-code", why: "Write and review infrastructure as code: plans, dangerous changes, policy checks, drift and the pipeline." },
-          { kind: "upcoming", title: "CI/CD and Containers", why: "Build, test and deploy automatically with Docker and pipelines, one safe step at a time.", level: 3 },
+          { kind: "course", courseId: "cicd-and-containers", why: "Dockerfiles, image scanning, secure pipelines, canary releases and the DORA measures, on six months of delivery data." },
         ],
       },
       {

@@ -1,0 +1,29 @@
+name: deploy
+
+on:
+  push:
+    branches: ["**"]
+
+permissions: write-all
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install
+      - run: npm test
+
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: quickship-dev/ssh-deploy-action@main
+        with:
+          host: ${{ secrets.PROD_HOST }}
+          key: ${{ secrets.DEPLOY_KEY }}
+      - run: echo "Deploying ${{ github.ref_name }} with key ${{ secrets.DEPLOY_KEY }}"
+      - run: ssh deploy@${{ secrets.PROD_HOST }} "cd /srv/tallybook && git pull && npm install && sudo systemctl restart tallybook-web"
