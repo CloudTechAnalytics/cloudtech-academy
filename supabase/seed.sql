@@ -55,7 +55,11 @@ values ('business-analysis', 'Business Analysis', 'Requirements, processes and d
 on conflict (id) do update set name = excluded.name, description = excluded.description, is_future = excluded.is_future, position = excluded.position;
 
 insert into public.course_categories (id, name, description, is_future, position)
-values ('cloud', 'Cloud & Technology', 'Cloud platforms, cost, reliability and security.', false, 14)
+values ('project-management', 'Product & Project Management', 'Planning, delivering and steering projects and products.', false, 14)
+on conflict (id) do update set name = excluded.name, description = excluded.description, is_future = excluded.is_future, position = excluded.position;
+
+insert into public.course_categories (id, name, description, is_future, position)
+values ('cloud', 'Cloud & Technology', 'Cloud platforms, cost, reliability and security.', false, 15)
 on conflict (id) do update set name = excluded.name, description = excluded.description, is_future = excluded.is_future, position = excluded.position;
 
 
@@ -53357,9 +53361,1654 @@ $md$, true, true, 10, array['web-10-p1', 'web-10-t1']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 
+-- Course: Project Management Fundamentals
+insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
+values ('project-management-fundamentals', 'full', null, 'project-management-fundamentals', 'PMF', 'Project Management Fundamentals', 'Plan and steer a real project: scope and the WBS, three-point estimates, the critical path, Monte Carlo schedule risk, earned value, forecasting from progress, risk registers with EMV, change control and status reporting, on a depot launch that''s running late and over budget.', 'Projects rarely fail for lack of effort; they fail because nobody sees the trouble early enough, or decides fast enough. In this course you manage the launch of Kolanut''s new Abuja depot, ten weeks in. You''ll write the charter and check the work breakdown, estimate with three points and see why plans built on ''most likely'' durations almost never finish on time, find the critical path, and simulate the project 10,000 times to give the sponsor a probability instead of a promise. Then you''ll measure the truth at week 10 with earned value (a CPI of 0.77, not the ''we''re under budget'' the finance director believed), re-forecast the opening from actual progress, price the risks with expected monetary value, and assess five change requests by their effect on the critical path. The course ends with the one-page report a steering committee can act on. Every number comes from running the code on the project''s data.', 'project-management', 'beginner', 2, 'Beginner to intermediate', 7, true, 'available', true, array['Project charters and scope', 'Work breakdown structures', 'Three-point and PERT estimates', 'Critical path scheduling', 'Monte Carlo schedule risk', 'Earned value management', 'Forecasting from progress and RAG status', 'Risk registers and EMV', 'Change control and status reporting']::text[], array['Python for Data Analytics, or comfort with pandas (the course explains each calculation)', 'Excel for Data Analysis is helpful']::text[], 'The depot''s week 10 review', true, true, true, true, false, 60, 40)
+on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level = excluded.level, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('pmf-m01', 'project-management-fundamentals', 'What a Project Is', 1, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('project-management-fundamentals:what-a-project-is', 'project-management-fundamentals', 'pmf-m01', 'what-a-project-is', 'What a project is', 'What makes work a project, the balance between scope, time and cost, the project lifecycle and the charter, and a first look at Kolanut''s Abuja depot launch.', 20, $md$
+## The problem
+
+Kolanut, the drinks and snacks distributor from the forecasting course, is opening a depot in Abuja. Sales want it open before the year-end rush. The finance director wants it within budget. Operations want it done properly: permits, racking, power, systems, trained staff, stock and delivery routes, all ready on the same day.
+
+Ten weeks in, the fit-out is behind, imported equipment cost more than planned, and Sales have just asked for a cold room. Is the opening date still realistic? What will it cost? Which requests should be approved? This course gives you the tools to answer, using the project's real plan and progress.
+
+## The concept
+
+**A project** is temporary work with a defined outcome: it has a start, an end, and something specific to deliver. Running the depot afterwards is operations; launching it is a project.
+
+**Scope, time and cost**
+
+Every project balances three things: **what** is delivered (scope), **when** (time) and **for how much** (cost), at an agreed quality. Change one and at least one other moves. Adding a cold room (scope) costs money and time; opening sooner (time) needs more money or less scope.
+
+**The lifecycle**
+
+| Phase | Key outputs |
+| :-- | :-- |
+| Initiation | the business case and **charter**: why, what, who, by when, for how much |
+| Planning | tasks, estimates, schedule, budget, risks |
+| Delivery | doing the work, tracking it, handling changes |
+| Closing | handing over, lessons learned |
+
+**The charter**
+
+One page that authorises the project: its objective, scope (in and out), deadline, budget, sponsor, project manager, and how success is measured. Without one, people disagree later about what was promised.
+
+## Example
+
+The depot project's tasks:
+
+```python
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/project/"
+tasks = pd.read_csv(base + "tasks.csv").fillna({"predecessors": ""})
+print(len(tasks), "tasks")
+tasks["budget_ngn"] = tasks["likely_days"] * tasks["daily_cost_ngn"]
+tasks.groupby("phase").agg(tasks=("task_id", "size"), budget_ngn=("budget_ngn", "sum")).sort_values("budget_ngn", ascending=False)
+```
+
+```text
+23 tasks
+            tasks  budget_ngn
+phase
+Facilities      6    45170000
+Systems         5    13400000
+Operations      3     7600000
+People          3     6520000
+Initiation      3     4990000
+Launch          3     3850000
+```
+
+Each task has three estimates of its length in **working days** (lesson 3), the tasks it depends on, and a daily cost. The budget here uses the most likely length of each task. The biggest spending is in facilities: fit-out, racking, power. Now look at the first few tasks and their dependencies:
+
+```python
+tasks[["task_id", "name", "owner", "likely_days", "predecessors"]].head(8)
+```
+
+```text
+task_id                                      name        owner  likely_days predecessors
+0      A1         Approve business case and charter      Finance            3
+1      A2                Select site and sign lease   Operations           10           A1
+2      A3       Obtain building and trading permits   Operations           15           A2
+3      B1                       Design depot layout   Facilities            7           A2
+4      B2  Fit-out works: floor, power and security   Contractor           25        A3;B1
+5      B3                             Order racking  Procurement            5           B1
+6      B4                  Import and clear racking  Procurement           20           B3
+7      B5                           Install racking   Contractor            6        B2;B4
+```
+
+Nothing can start until the charter is approved (A1); the fit-out (B2) needs both the permits (A3) and the layout design (B1). These dependencies, not the number of tasks, decide how long the project takes, as lesson 4 shows.
+
+## Walkthrough
+
+1. Run the cells. Which phase has the most tasks? Which costs the most?
+2. Find every task that depends on B2. What happens to them if the fit-out slips?
+3. Name one thing that is in scope and one that is out of scope for this project.
+4. Write the charter's key lines (the task below).
+
+## Practice
+
+```dataset
+{"dataset": "project", "files": ["tasks", "weekly_status", "risks", "changes"]}
+```
+
+```answer
+{
+  "id": "pmf-01-p1",
+  "prompt": "What is the project's total budget based on most likely durations, in naira?",
+  "answer": 81530000,
+  "format": "naira",
+  "dataset": "project",
+  "files": ["tasks"],
+  "pyVerify": "int(tasks['budget_ngn'].sum())",
+  "hint": "Add up the budget column.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "pmf-01-t1",
+  "prompt": "Write the key lines of the **project charter** for the Abuja depot, one per line starting with **Objective:**, **In scope:**, **Out of scope:**, **Deadline:**, **Budget:**, **Sponsor:** and **Success:**.",
+  "minutes": 6,
+  "rows": 8,
+  "placeholder": "Objective: ...",
+  "rules": [
+    { "label": "An Objective line", "pattern": "^\\s*objective\\s*:" },
+    { "label": "In scope and Out of scope lines", "pattern": "^\\s*(in scope|out of scope)\\s*:", "min": 2 },
+    { "label": "A Deadline line with a date", "pattern": "^\\s*deadline\\s*:[^\\n]*\\d" },
+    { "label": "A Budget line with an amount", "pattern": "^\\s*budget\\s*:[^\\n]*(₦|naira|\\d)" },
+    { "label": "A Sponsor line", "pattern": "^\\s*sponsor\\s*:" },
+    { "label": "A Success line that's measurable", "pattern": "^\\s*success\\s*:[^\\n]*\\d" }
+  ],
+  "sample": "Objective: open a working Kolanut depot in Abuja that serves our Abuja retailers from day one.\nIn scope: lease, permits, fit-out, racking, backup power, warehouse system, hiring and training staff, opening stock and delivery routes.\nOut of scope: new product lines, changes to the Lagos depot, a retail shop.\nDeadline: open for deliveries by Wednesday 30 September 2026, before the Q4 stock build-up.\nBudget: about ₦81.5 million at most likely costs, plus a contingency reserve agreed after the risk review.\nSponsor: the operations director, who approves changes to scope, deadline or budget.\nSuccess: open on time, within budget plus contingency, and deliver 95% of orders on time in the first month.",
+  "note": "The out-of-scope line prevents arguments later; the sponsor line says who decides when things change.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Which is a project rather than operations?",
+    "options": ["Running the depot every day", "Opening the new depot", "Paying monthly salaries", "Weekly deliveries"],
+    "answer": 1,
+    "explanation": "Temporary, with a defined outcome."
+  },
+  {
+    "prompt": "Sales want a cold room added. Under the scope, time and cost balance, what usually happens?",
+    "options": ["Nothing changes", "Time, cost or both increase", "The project gets cheaper", "Quality improves for free"],
+    "answer": 1,
+    "explanation": "More scope moves the other constraints."
+  },
+  {
+    "prompt": "Why write an 'out of scope' line in the charter?",
+    "options": ["To fill space", "So nobody later assumes the project includes things it doesn't", "It's legally required", "To reduce the budget"],
+    "answer": 1,
+    "explanation": "Clear boundaries prevent disputes."
+  }
+]
+```
+$md$, true, true, 1, array['pmf-01-p1', 'pmf-01-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('pmf-m02', 'project-management-fundamentals', 'Scope and the Work Breakdown Structure', 2, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('project-management-fundamentals:scope-and-the-wbs', 'project-management-fundamentals', 'pmf-m02', 'scope-and-the-wbs', 'Scope and the work breakdown structure', 'Break a project''s scope into deliverables and tasks with a work breakdown structure, check that every task has an owner and every deliverable is covered, and see how the WBS becomes the plan.', 20, $md$
+## The problem
+
+The first version of the depot plan was a list of 60 things people remembered in a meeting. Some were duplicates, some had no owner, and nobody had thought about the opening stock until a week before. A plan built from memory misses things.
+
+A **work breakdown structure** (WBS) starts from the outcome and breaks it down, level by level, until every piece is small enough to estimate, assign and track. Anything not in the WBS isn't in the project.
+
+## The concept
+
+**Breaking down**
+
+1. The project outcome: an open, working Abuja depot.
+2. Major **deliverables** (here, the phases): initiation, facilities, systems, people, operations, launch.
+3. **Work packages**: tasks small enough to estimate with confidence (here, 1 to 25 working days likely) and owned by one person or team.
+
+**Rules of thumb**
+
+- The **100% rule**: the pieces at each level add up to all of the work of the level above, no more, no less.
+- Name tasks by their outcome ("Install racking", not "Racking").
+- Every task has exactly **one** owner.
+- Split anything too big to estimate or track weekly.
+
+**From WBS to plan**
+
+The WBS says **what**. Estimates (lesson 3) say **how long**, dependencies and the schedule (lesson 4) say **when**, and daily costs say **how much**.
+
+## Example
+
+The depot's WBS, as an outline by phase:
+
+```python
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/project/"
+tasks = pd.read_csv(base + "tasks.csv").fillna({"predecessors": ""})
+
+for phase, group in tasks.groupby("phase", sort=False):
+    print(f"{phase}")
+    for t in group.itertuples():
+        print(f"    {t.task_id}  {t.name}  ({t.owner}, about {t.likely_days} days)")
+```
+
+```text
+Initiation
+    A1  Approve business case and charter  (Finance, about 3 days)
+    A2  Select site and sign lease  (Operations, about 10 days)
+    A3  Obtain building and trading permits  (Operations, about 15 days)
+Facilities
+    B1  Design depot layout  (Facilities, about 7 days)
+    B2  Fit-out works: floor, power and security  (Contractor, about 25 days)
+    B3  Order racking  (Procurement, about 5 days)
+    B4  Import and clear racking  (Procurement, about 20 days)
+    B5  Install racking  (Contractor, about 6 days)
+    B6  Install generator and solar backup  (Contractor, about 8 days)
+Systems
+    C1  Choose warehouse system  (IT, about 7 days)
+    C2  Buy laptops, scanners and printers  (IT, about 10 days)
+    C3  Install network and internet  (IT, about 5 days)
+    C4  Configure system and load data  (IT, about 10 days)
+    C5  Test the system end to end  (IT, about 5 days)
+People
+    D1  Hire depot manager  (HR, about 20 days)
+    D2  Hire 12 depot staff  (HR, about 20 days)
+    D3  Train staff  (Operations, about 6 days)
+Operations
+    E1  Agree supplier delivery schedules  (Procurement, about 8 days)
+    E2  Stock opening inventory  (Operations, about 5 days)
+    E3  Set up delivery routes and trucks  (Operations, about 10 days)
+Launch
+    F1  Safety inspection  (Facilities, about 3 days)
+    F2  Trial run  (Operations, about 5 days)
+    F3  Opening day  (Operations, about 1 days)
+```
+
+Now some checks a planner runs on any WBS: tasks that are too big, owners and their load, and tasks nothing depends on (which should only be the final one):
+
+```python
+print("Tasks over 20 likely days:", tasks.loc[tasks["likely_days"] > 20, "task_id"].tolist())
+print("Tasks per owner:", tasks["owner"].value_counts().to_dict())
+needed = {p for preds in tasks["predecessors"] for p in preds.split(";") if p}
+print("Tasks nothing depends on:", tasks.loc[~tasks["task_id"].isin(needed), "task_id"].tolist())
+```
+
+```text
+Tasks over 20 likely days: ['B2']
+Tasks per owner: {'Operations': 7, 'IT': 5, 'Contractor': 3, 'Procurement': 3, 'Facilities': 2, 'HR': 2, 'Finance': 1}
+Tasks nothing depends on: ['F3']
+```
+
+Only the opening (F3) has nothing after it, which means every other task feeds the launch: nothing is orphaned. The fit-out (B2) is the one task over 20 days; it's a contractor's package with its own detailed plan, so it can stay as one line here, tracked by percentage complete.
+
+## Walkthrough
+
+1. Run the cells. Is there a task you'd split? Why?
+2. Who owns the most tasks? Is that a risk?
+3. The plan has no task for marketing the opening to retailers. Where would it go, and what would it depend on?
+4. Break down a work package further (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "pmf-02-p1",
+  "prompt": "How many tasks does **Operations** own?",
+  "answer": 7,
+  "format": "number",
+  "dataset": "project",
+  "files": ["tasks"],
+  "pyVerify": "int((tasks['owner'] == 'Operations').sum())",
+  "hint": "The Operations count on the second line.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "pmf-02-t1",
+  "prompt": "Break **D3 Train staff** (6 days) into **four to six** smaller work packages, one per line starting with a dash, each with an **owner** in brackets and a **duration** in days.",
+  "minutes": 6,
+  "rows": 7,
+  "placeholder": "- Prepare training materials (Operations, 2 days)",
+  "rules": [
+    { "label": "Four to six lines starting with -", "pattern": "^\\s*-\\s+\\S", "min": 4 },
+    { "label": "Each with an owner in brackets", "pattern": "\\([A-Z][^)\\n]*,", "min": 4 },
+    { "label": "Each with a duration in days", "pattern": "\\d+(\\.\\d+)?\\s*days?\\)", "min": 4 },
+    { "label": "Covers the warehouse system", "pattern": "system|scanner|software" },
+    { "label": "Covers safety", "pattern": "safety|fire|forklift|first aid" }
+  ],
+  "sample": "- Prepare training materials and schedule (Operations, 1 day)\n- Safety and forklift training (Facilities, 1 day)\n- Warehouse system and scanner training (IT, 2 days)\n- Receiving, picking and loading practice (Operations, 1 day)\n- Assess staff and retrain gaps (Operations, 1 day)",
+  "note": "The pieces add up to the original 6 days: the 100% rule.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "What is the 100% rule in a WBS?",
+    "options": ["Every task is 100% done", "The pieces at each level add up to all the work of the level above, no more, no less", "Budgets must be 100% spent", "All tasks start together"],
+    "answer": 1,
+    "explanation": "Nothing missing, nothing extra."
+  },
+  {
+    "prompt": "How many owners should a work package have?",
+    "options": ["None", "Exactly one", "Everyone involved", "Two at least"],
+    "answer": 1,
+    "explanation": "Shared ownership means nobody owns it."
+  },
+  {
+    "prompt": "Why build the plan from a WBS rather than a brainstormed list?",
+    "options": ["It's quicker", "Breaking the outcome down systematically finds work a list misses", "Software requires it", "It's shorter"],
+    "answer": 1,
+    "explanation": "Start from the outcome."
+  }
+]
+```
+$md$, true, true, 2, array['pmf-02-p1', 'pmf-02-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('pmf-m03', 'project-management-fundamentals', 'Estimating', 3, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('project-management-fundamentals:estimating', 'project-management-fundamentals', 'pmf-m03', 'estimating', 'Estimating', 'Estimate with three points (optimistic, most likely, pessimistic) instead of one number, calculate PERT expected durations and their spread, and see why plans built on ''most likely'' estimates usually run late.', 25, $md$
+## The problem
+
+Ask someone how long the permits will take and they'll say "about 15 days": the most likely case. But permits can't take much less than 10 days, and they can easily take 30. The risks are lopsided. A plan made only from "most likely" numbers quietly assumes nothing will go wrong anywhere, which is the least likely outcome of all.
+
+## The concept
+
+**Three-point estimates**
+
+For each task, ask for three numbers:
+
+- **optimistic** (O): if everything goes well;
+- **most likely** (M): the usual case;
+- **pessimistic** (P): if things go wrong (but not a disaster).
+
+**PERT**
+
+A standard way to combine them:
+
+> expected duration = (O + 4M + P) ÷ 6
+> standard deviation ≈ (P − O) ÷ 6
+
+When P is much further from M than O is (as with permits and imports), the expected duration is **longer** than the most likely one.
+
+**Good estimating habits**
+
+- Ask the people who'll do the work, and record their reasoning.
+- Estimate effort in working days, then convert to dates with a calendar.
+- Re-estimate as you learn: estimates are forecasts, not promises.
+
+## Example
+
+PERT for every task:
+
+```python
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/project/"
+tasks = pd.read_csv(base + "tasks.csv").fillna({"predecessors": ""})
+tasks["expected_days"] = (tasks["optimistic_days"] + 4 * tasks["likely_days"] + tasks["pessimistic_days"]) / 6
+tasks["sd_days"] = (tasks["pessimistic_days"] - tasks["optimistic_days"]) / 6
+tasks["expected_minus_likely"] = tasks["expected_days"] - tasks["likely_days"]
+cols = ["task_id", "name", "optimistic_days", "likely_days", "pessimistic_days", "expected_days", "sd_days"]
+tasks.sort_values("expected_minus_likely", ascending=False)[cols].head(6).round(1)
+```
+
+```text
+task_id                                      name  optimistic_days  likely_days  pessimistic_days  expected_days  sd_days
+2       A3       Obtain building and trading permits               10           15                30           16.7      3.3
+6       B4                  Import and clear racking               15           20                35           21.7      3.3
+4       B2  Fit-out works: floor, power and security               20           25                40           26.7      3.3
+10      C2        Buy laptops, scanners and printers                5           10                20           10.8      2.5
+14      D1                        Hire depot manager               15           20                30           20.8      2.5
+1       A2                Select site and sign lease                8           10                15           10.5      1.2
+```
+
+The tasks with the longest tails are the ones that depend on outsiders: permits, importing racking, the fit-out contractor, hiring. Across the whole project:
+
+```python
+print("Sum of most likely durations:", tasks["likely_days"].sum(), "days")
+print("Sum of expected durations:   ", round(tasks["expected_days"].sum(), 1), "days")
+print("Tasks where expected > likely:", int((tasks["expected_minus_likely"] > 0).sum()), "of", len(tasks))
+```
+
+```text
+Sum of most likely durations: 214 days
+Sum of expected durations:    225.3 days
+Tasks where expected > likely: 22 of 23
+```
+
+Every task's expected duration is at least its most likely one, and all but one are longer, because almost every task can go wrong further than it can go right. (Only D2, hiring staff, has a symmetric range.) Lesson 4 turns these into a schedule, and lesson 5 shows what that does to the opening date.
+
+## Walkthrough
+
+1. Run the cells. Work out PERT for A3 (permits) by hand.
+2. Which task is the most uncertain (largest standard deviation)? Who owns it?
+3. Re-estimate a task (the task below).
+4. Why are dependencies on outsiders the usual source of long tails?
+
+## Practice
+
+```answer
+{
+  "id": "pmf-03-p1",
+  "prompt": "What is the PERT **expected duration** of **A3** (permits), in days? One decimal place.",
+  "answer": 16.7,
+  "format": "number",
+  "dataset": "project",
+  "files": ["tasks"],
+  "pyVerify": "round(tasks.loc[tasks['task_id'] == 'A3', 'expected_days'].iloc[0], 1)",
+  "hint": "(10 + 4 × 15 + 30) ÷ 6",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "pmf-03-t1",
+  "prompt": "You're re-estimating **B6 Install generator and solar backup** after talking to the contractor. Write the **three-point estimate** with a one-line **reason** for each number, then the **PERT expected** duration worked out.",
+  "minutes": 5,
+  "rows": 6,
+  "placeholder": "Optimistic: ... days, because ...",
+  "rules": [
+    { "label": "An optimistic estimate with a reason", "pattern": "optimistic[^\\n]*\\d+[^\\n]*(because|as|if|since)" },
+    { "label": "A most likely estimate with a reason", "pattern": "(most likely|likely)[^\\n]*\\d+[^\\n]*(because|as|if|since)" },
+    { "label": "A pessimistic estimate with a reason", "pattern": "pessimistic[^\\n]*\\d+[^\\n]*(because|as|if|since)" },
+    { "label": "The PERT calculation", "pattern": "\\(\\s*\\d+\\s*\\+\\s*4\\s*[x×*]\\s*\\d+\\s*\\+\\s*\\d+\\s*\\)\\s*[/÷]\\s*6" }
+  ],
+  "sample": "Optimistic: 6 days, if the generator arrives on the agreed date and the roof needs no reinforcing.\nMost likely: 8 days, because solar panel mounting usually needs a day or two of adjustment.\nPessimistic: 14 days, since the inverter is imported and customs can hold it for a week.\nPERT expected: (6 + 4 × 8 + 14) ÷ 6 = 8.7 days.",
+  "note": "Writing the reason next to each number lets the next person challenge or update it.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "O = 10, M = 15, P = 30. What's the PERT expected duration?",
+    "options": ["15", "About 16.7", "18.3", "20"],
+    "answer": 1,
+    "explanation": "(10 + 60 + 30) ÷ 6."
+  },
+  {
+    "prompt": "Why does a plan of 'most likely' durations usually run late?",
+    "options": ["People are slow", "Tasks can go wrong by more than they can go right, so expected durations are longer", "Calendars are wrong", "It doesn't"],
+    "answer": 1,
+    "explanation": "Lopsided risks add up."
+  },
+  {
+    "prompt": "Who should give the estimates?",
+    "options": ["The sponsor alone", "The people who will do the work, with reasons", "The newest team member", "A random guess"],
+    "answer": 1,
+    "explanation": "They know the work."
+  }
+]
+```
+$md$, true, true, 3, array['pmf-03-p1', 'pmf-03-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('pmf-m04', 'project-management-fundamentals', 'Scheduling and the Critical Path', 4, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('project-management-fundamentals:scheduling-and-the-critical-path', 'project-management-fundamentals', 'pmf-m04', 'scheduling-and-the-critical-path', 'Scheduling and the critical path', 'Turn tasks and dependencies into a schedule with the critical path method (forward and backward passes, float), find the tasks that decide the opening date, and convert working days into calendar dates.', 25, $md$
+## The problem
+
+Twenty-three tasks, each with an owner pushing to finish theirs. But they don't all matter equally for the opening date. Hiring staff can slip by weeks without delaying anything; one day lost on the permits delays the whole launch by a day. Knowing which is which tells the project manager where to spend attention.
+
+## The concept
+
+**The critical path method (CPM)**
+
+1. **Forward pass**: each task's **earliest start** is the latest finish of everything it depends on; earliest finish = earliest start + duration. The project's length is the last earliest finish.
+2. **Backward pass**: working back from the end, each task's **latest finish** is the earliest latest start of the tasks that depend on it.
+3. **Float** (slack) = latest start − earliest start: how long a task can slip without delaying the end.
+4. The **critical path** is the chain of tasks with zero float. Any delay on it delays the project.
+
+**Dates**
+
+Durations are working days. Convert with a working calendar (Monday to Friday here; real plans also remove public holidays).
+
+## Example
+
+A scheduling function you'll reuse in later lessons:
+
+```python
+import numpy as np
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/project/"
+tasks = pd.read_csv(base + "tasks.csv").fillna({"predecessors": ""})
+START = np.datetime64("2026-06-01")      # a Monday
+
+def schedule(tasks, durations):
+    preds = {t: [p for p in ps.split(";") if p] for t, ps in zip(tasks["task_id"], tasks["predecessors"])}
+    es, ef = {}, {}
+    for t in tasks["task_id"]:                       # tasks are listed after their predecessors
+        es[t] = max((ef[p] for p in preds[t]), default=0)
+        ef[t] = es[t] + durations[t]
+    end = max(ef.values())
+    ls, lf = {}, {}
+    for t in reversed(list(tasks["task_id"])):
+        successors = [s for s in tasks["task_id"] if t in preds[s]]
+        lf[t] = min((ls[s] for s in successors), default=end)
+        ls[t] = lf[t] - durations[t]
+    out = pd.DataFrame({"es": es, "ef": ef, "ls": ls, "lf": lf})
+    out["float"] = out["ls"] - out["es"]
+    return out, end
+
+def finish_date(days):
+    return np.busday_offset(START, int(np.ceil(days)) - 1, roll="forward")
+
+likely = dict(zip(tasks["task_id"], tasks["likely_days"]))
+plan, end = schedule(tasks, likely)
+print("Project length:", end, "working days, opening on", finish_date(end))
+print("Critical path:", " -> ".join(plan.index[plan["float"] == 0]))
+```
+
+```text
+Project length: 75 working days, opening on 2026-09-11
+Critical path: A1 -> A2 -> A3 -> B2 -> C3 -> C5 -> D3 -> F2 -> F3
+```
+
+Nine of the 23 tasks are critical. The path runs from the charter through the lease, permits and fit-out, then the network, system testing, training, the trial run and the opening. Now the tasks with the most float:
+
+```python
+plan.sort_values("float", ascending=False).head(5)
+```
+
+```text
+es  ef  ls  lf  float
+C4  10  20  48  58     38
+C1   3  10  41  48     38
+E3  21  31  59  69     38
+E1  13  21  51  59     38
+C2  10  20  48  58     38
+```
+
+Choosing and configuring the warehouse system, buying equipment, agreeing supplier deliveries and setting up routes can each slip by 38 working days without moving the opening. Meanwhile the permits, the fit-out and the network and system testing have none. The plan says the depot opens on 11 September, comfortably before the 30 September deadline. But this plan uses **most likely** durations everywhere. Redo it with the PERT expected durations:
+
+```python
+expected = dict(zip(tasks["task_id"], (tasks["optimistic_days"] + 4 * tasks["likely_days"] + tasks["pessimistic_days"]) / 6))
+plan_expected, end_expected = schedule(tasks, expected)
+print("With expected durations:", round(end_expected, 1), "working days, opening on", finish_date(end_expected))
+```
+
+```text
+With expected durations: 80.3 working days, opening on 2026-09-21
+```
+
+The opening moves later, and the deadline gets closer. Lesson 5 asks the better question: what's the **chance** of opening by 30 September?
+
+## Walkthrough
+
+1. Run the cells. Change the permits (A3) to 20 days. What happens to the opening date?
+2. Change hiring the manager (D1) to 30 days. Does the opening move? Why not?
+3. Draw the critical path as boxes and arrows.
+4. Explain float to the HR lead (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "pmf-04-p1",
+  "prompt": "How many working days of **float** does **E3** (delivery routes) have in the most likely plan?",
+  "answer": 38,
+  "format": "number",
+  "dataset": "project",
+  "files": ["tasks"],
+  "pyVerify": "int(plan.loc['E3', 'float'])",
+  "hint": "The float column, E3 row.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "pmf-04-t1",
+  "prompt": "The HR lead wants to know whether hiring can be done more slowly to save effort. Write a short reply (40 to 100 words) explaining **float** for **D1 and D2** with the **number of days**, what happens if hiring slips **beyond** that, and what you'd ask them to do.",
+  "minutes": 5,
+  "rows": 5,
+  "placeholder": "Hiring has ... days of float ...",
+  "rules": [
+    { "label": "Mentions float or slack", "pattern": "float|slack" },
+    { "label": "Gives a number of days", "pattern": "\\d+\\s*(working )?days" },
+    { "label": "Says what happens beyond the float (delay, opening, critical)", "pattern": "delay|opening|critical|later" },
+    { "label": "Makes a request", "pattern": "please|ask|could you|keep|tell me|let me know" },
+    { "label": "Between 40 and 100 words", "minWords": 40, "maxWords": 100 }
+  ],
+  "sample": "Hiring has float: in the current plan, the manager and staff hiring together can slip by about 20 working days without delaying the opening, because staff training also waits for the system to be tested. Beyond that, every extra day of hiring delays training, the trial run and the opening by a day. So please don't plan to use that time; keep it as a buffer for candidates declining offers, and tell me as soon as any hire looks like slipping.",
+  "note": "Float is a shared buffer, not a gift to one task: using it all makes the task critical.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "What is the critical path?",
+    "options": ["The most expensive tasks", "The chain of tasks with zero float, which decides the end date", "The tasks the sponsor cares about", "The first tasks"],
+    "answer": 1,
+    "explanation": "Delay any of them and the project is delayed."
+  },
+  {
+    "prompt": "A task has 10 days of float and slips by 4. What happens to the end date?",
+    "options": ["It moves 4 days", "Nothing, but the task now has 6 days of float", "It moves 10 days", "The project fails"],
+    "answer": 1,
+    "explanation": "Float absorbs the slip."
+  },
+  {
+    "prompt": "In the forward pass, a task's earliest start is...",
+    "options": ["Its latest finish", "The latest earliest finish among the tasks it depends on", "Day 0 always", "Its float"],
+    "answer": 1,
+    "explanation": "It waits for all its predecessors."
+  }
+]
+```
+$md$, true, true, 4, array['pmf-04-p1', 'pmf-04-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('pmf-m05', 'project-management-fundamentals', 'Schedule Risk and Simulation', 5, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('project-management-fundamentals:schedule-risk-and-simulation', 'project-management-fundamentals', 'pmf-m05', 'schedule-risk-and-simulation', 'Schedule risk and simulation', 'Replace a single opening date with a probability, by simulating the project thousands of times with each task''s three-point estimate, and use the result to set honest dates and buffers.', 25, $md$
+## The problem
+
+The sponsor asked: "Will we open by 30 September?" The plan says 11 September with most likely durations, and later with PERT. Both are single dates. Neither answers the real question, which is about **chance**: how likely is it that everything that matters goes well enough?
+
+## The concept
+
+**Monte Carlo simulation**
+
+1. For each task, draw a random duration from its range (here, a triangular distribution between optimistic and pessimistic, peaking at most likely).
+2. Schedule the project with those durations and record the end date.
+3. Repeat thousands of times.
+4. The results form a **distribution** of end dates: you can read off the probability of meeting any date.
+
+**Merge bias**
+
+When several paths join (training waits for hiring **and** system testing), the task starts when the **slowest** finishes. Each path alone might be on time, but the chance that all of them are is lower. That's why simulation usually shows later dates than adding up one path's estimates.
+
+**Using the results**
+
+- Quote dates with confidence: "P80" is the date you have an 80% chance of meeting.
+- A **schedule buffer** is the gap between the plan's date and the date you commit to.
+
+## Example
+
+Simulate the project 10,000 times. The random generator has a fixed seed so your numbers match these:
+
+```python
+import numpy as np
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/project/"
+tasks = pd.read_csv(base + "tasks.csv").fillna({"predecessors": ""})
+START = np.datetime64("2026-06-01")
+DEADLINE_DAYS = int(np.busday_count(START, np.datetime64("2026-09-30")) + 1)   # working days to 30 September
+
+rng = np.random.default_rng(42)
+N = 10_000
+durations = {t.task_id: rng.triangular(t.optimistic_days, t.likely_days, t.pessimistic_days, N) for t in tasks.itertuples()}
+
+finish = {}
+for t in tasks.itertuples():
+    preds = [p for p in t.predecessors.split(";") if p]
+    start = np.max([finish[p] for p in preds], axis=0) if preds else np.zeros(N)
+    finish[t.task_id] = start + durations[t.task_id]
+end = finish["F3"]
+
+print("Deadline is working day", DEADLINE_DAYS)
+print("Chance of opening by 30 September:", f"{(end <= DEADLINE_DAYS).mean():.0%}")
+print("Chance of opening by 11 September (the most likely plan):", f"{(end <= 75).mean():.0%}")
+for p in [50, 80, 90]:
+    day = int(np.ceil(np.percentile(end, p)))
+    print(f"P{p}: day {day}, {np.busday_offset(START, day - 1)}")
+```
+
+```text
+Deadline is working day 88
+Chance of opening by 30 September: 64%
+Chance of opening by 11 September (the most likely plan): 3%
+P50: day 86, 2026-09-28
+P80: day 92, 2026-10-06
+P90: day 95, 2026-10-09
+```
+
+The most likely plan's date had almost no chance of being met. The 30 September deadline is roughly a two-in-three chance before anything has even gone wrong. Which tasks drive the risk? Count how often each task was on the longest path:
+
+```python
+critical = pd.Series(0.0, index=tasks["task_id"])
+latest = {}
+for t in tasks.itertuples():
+    preds = [p for p in t.predecessors.split(";") if p]
+    if preds:
+        stacked = np.vstack([finish[p] for p in preds])
+        latest[t.task_id] = np.array(preds)[stacked.argmax(axis=0)]
+for i in range(N):
+    task = "F3"
+    while True:
+        critical[task] += 1
+        if task not in latest:
+            break
+        task = latest[task][i]
+print((critical / N).sort_values(ascending=False).head(10).round(2).to_string())
+```
+
+```text
+task_id
+A1    1.00
+A2    1.00
+F3    1.00
+F2    1.00
+A3    0.99
+B2    0.99
+C5    0.99
+C3    0.99
+D3    0.85
+E2    0.15
+```
+
+The planned critical path is the longest path in almost every run. The interesting split is at the end: staff training (D3) is on the longest path about 85% of the time, but in the other runs it's stocking the opening inventory (E2) that the trial run waits for. Racking and hiring almost never decide the date. So the project manager's attention belongs on permits, fit-out, network and system testing, and both training and stocking.
+
+## Walkthrough
+
+1. Run the cells. What's the P80 date? Would you tell the sponsor that, or 30 September?
+2. Make the permits certain (O = M = P = 15) and rerun. How much does the chance improve?
+3. What would cutting the fit-out's pessimistic estimate to 30 days do?
+4. Write the answer to the sponsor (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "pmf-05-p1",
+  "prompt": "In the simulation, what's the chance of opening by **30 September**? As a percentage, whole number.",
+  "answer": 64,
+  "format": "percent",
+  "dataset": "project",
+  "files": ["tasks"],
+  "pyVerify": "round((end <= DEADLINE_DAYS).mean() * 100)",
+  "hint": "The second line printed.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "pmf-05-t1",
+  "prompt": "Answer the sponsor's question \"Will we open by 30 September?\" in 50 to 120 words: give the **probability**, a date you're **80% confident** in, **why** the most likely plan's date is misleading, and **one action** that would improve the odds.",
+  "minutes": 5,
+  "rows": 6,
+  "placeholder": "Not with certainty. ...",
+  "rules": [
+    { "label": "A probability as a percentage", "pattern": "\\d+\\s*%" },
+    { "label": "An 80% or P80 date", "pattern": "80\\s*%|p80" },
+    { "label": "Explains why most likely is misleading", "pattern": "most likely|everything (goes|going) (well|right)|best case" },
+    { "label": "An action (permits, fit-out, buffer, contractor)", "pattern": "permit|fit-out|contractor|buffer|weekend|agent" },
+    { "label": "Between 50 and 120 words", "minWords": 50, "maxWords": 120 }
+  ],
+  "sample": "Not with certainty. Simulating the plan 10,000 times with each task's realistic range gives about a 64% chance of opening by 30 September; the date we can be 80% confident in is about 6 October. The 11 September date in the original plan assumed every task would take its most likely time, which almost never happens across 23 tasks. The permits and the fit-out drive most of the risk. Hiring a permit agent now and agreeing weekend working with the fit-out contractor would protect the 30 September date best.",
+  "note": "Leading with the probability answers the question asked; the action turns it into a decision.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "What does a P80 date mean?",
+    "options": ["80 days from now", "The date you have an 80% chance of meeting", "The average date", "The latest possible date"],
+    "answer": 1,
+    "explanation": "A date with a stated confidence."
+  },
+  {
+    "prompt": "Why does simulation often give later dates than adding up one path?",
+    "options": ["Random errors", "Where paths merge, the task waits for the slowest, so the chance all are on time is lower", "Computers are pessimistic", "It doesn't"],
+    "answer": 1,
+    "explanation": "Merge bias."
+  },
+  {
+    "prompt": "Why fix the random seed in the simulation?",
+    "options": ["It's more accurate", "So the results can be reproduced and checked", "It's required", "To make it faster"],
+    "answer": 1,
+    "explanation": "Reproducible analysis."
+  }
+]
+```
+$md$, true, true, 5, array['pmf-05-p1', 'pmf-05-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('pmf-m06', 'project-management-fundamentals', 'Earned Value', 6, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('project-management-fundamentals:earned-value', 'project-management-fundamentals', 'pmf-m06', 'earned-value', 'Earned value', 'Measure a project''s progress and spending honestly with earned value (planned value, earned value and actual cost), calculate schedule and cost performance, and forecast the final cost at week 10.', 25, $md$
+## The problem
+
+At the week 10 meeting, the finance director said: "We've spent about ₦58 million of an ₦81.5 million budget, so we're fine." The operations manager said: "Most tasks are finished, so we're ahead." Both were wrong, and for the same reason: neither compared what was spent with what was **achieved** for that money, and with what **should** have been achieved by now.
+
+**Earned value** does exactly that comparison, in naira.
+
+## The concept
+
+**Three numbers at the status date**
+
+| Measure | Question | How |
+| :-- | :-- | :-- |
+| **Planned value (PV)** | what work should be done by now, in budget terms? | budget of the work scheduled up to today |
+| **Earned value (EV)** | what work **is** done, in budget terms? | each task's budget × its % complete |
+| **Actual cost (AC)** | what have we spent? | from the accounts |
+
+**What they tell you**
+
+| Measure | Formula | Meaning |
+| :-- | :-- | :-- |
+| Schedule variance | EV − PV | negative: behind schedule |
+| Cost variance | EV − AC | negative: over budget |
+| SPI | EV ÷ PV | below 1: less done than planned |
+| CPI | EV ÷ AC | below 1: getting less than ₦1 of work per ₦1 spent |
+| Estimate at completion (EAC) | budget ÷ CPI | final cost if spending efficiency stays the same |
+
+The budget for all the work is the **budget at completion** (BAC).
+
+## Example
+
+Budgets from most likely durations, the baseline schedule from lesson 4, and the progress reported at the end of week 10 (working day 50):
+
+```python
+import numpy as np
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/project/"
+tasks = pd.read_csv(base + "tasks.csv").fillna({"predecessors": ""}).set_index("task_id")
+status = pd.read_csv(base + "weekly_status.csv")
+STATUS_DAY, WEEK = 50, 10
+
+# Baseline: earliest start of each task in the most likely plan.
+es, ef = {}, {}
+for t, row in tasks.iterrows():
+    preds = [p for p in row["predecessors"].split(";") if p]
+    es[t] = max((ef[p] for p in preds), default=0)
+    ef[t] = es[t] + row["likely_days"]
+tasks["budget"] = tasks["likely_days"] * tasks["daily_cost_ngn"]
+planned_fraction = ((STATUS_DAY - pd.Series(es)) / tasks["likely_days"]).clip(0, 1)
+
+now = status[status["week"] == WEEK].set_index("task_id")
+tasks["pv"] = tasks["budget"] * planned_fraction
+tasks["ev"] = tasks["budget"] * now["percent_complete"].reindex(tasks.index).fillna(0) / 100
+tasks["ac"] = now["actual_cost_ngn"].reindex(tasks.index).fillna(0)
+
+BAC, PV, EV, AC = tasks["budget"].sum(), tasks["pv"].sum(), tasks["ev"].sum(), tasks["ac"].sum()
+SPI, CPI = EV / PV, EV / AC
+print(f"BAC ₦{BAC:,.0f}   PV ₦{PV:,.0f}   EV ₦{EV:,.0f}   AC ₦{AC:,.0f}")
+print(f"Schedule variance ₦{EV - PV:,.0f}   SPI {SPI:.2f}")
+print(f"Cost variance     ₦{EV - AC:,.0f}   CPI {CPI:.2f}")
+print(f"Estimate at completion ₦{BAC / CPI:,.0f}   variance at completion ₦{BAC - BAC / CPI:,.0f}")
+```
+
+```text
+BAC ₦81,530,000   PV ₦55,610,000   EV ₦44,515,000   AC ₦57,648,000
+Schedule variance ₦-11,095,000   SPI 0.80
+Cost variance     ₦-13,133,000   CPI 0.77
+Estimate at completion ₦105,583,319   variance at completion ₦-24,053,319
+```
+
+Less work is done than planned (SPI 0.80), and the work that is done cost far more than budgeted (CPI 0.77). If spending efficiency stays as it has been, the project finishes about ₦24 million over budget. Even the kinder forecast, where everything left is done at budget (AC + BAC − EV), is about ₦94.7 million. Where is the overspend?
+
+```python
+tasks["cost_variance"] = tasks["ev"] - tasks["ac"]
+tasks.loc[tasks["ac"] > 0, ["name", "budget", "ev", "ac", "cost_variance"]].sort_values("cost_variance").head(5).round(0)
+```
+
+```text
+name    budget          ev          ac  cost_variance
+task_id
+B4                       Import and clear racking   8000000   6880000.0  13000000.0     -6120000.0
+B2       Fit-out works: floor, power and security  23750000  10925000.0  13338000.0     -2413000.0
+C2             Buy laptops, scanners and printers   6500000   6500000.0   8775000.0     -2275000.0
+A3            Obtain building and trading permits   2250000   2250000.0   3769000.0     -1519000.0
+D1                             Hire depot manager   1800000   1800000.0   2193000.0      -393000.0
+```
+
+The racking import is the biggest overrun: it took longer than planned and was priced in dollars, paid after the naira weakened. The fit-out and the permits come next, because running longer means paying the contractor and the team for more days. The laptops, scanners and printers were also priced in dollars. Most of this is risks R01 and R02 in the register (lesson 8) happening, not a team spending carelessly.
+
+## Walkthrough
+
+1. Run the cells. Compute SPI and CPI for the Facilities phase alone.
+2. Recompute EAC assuming the remaining work will be done at budget (EAC = AC + BAC − EV). Which forecast do you believe, and why?
+3. Why can't "most tasks are finished" tell you whether you're ahead?
+4. Explain the numbers to the finance director (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "pmf-06-p1",
+  "prompt": "What is the project's **CPI** at week 10? Two decimal places.",
+  "answer": 0.77,
+  "tolerance": 0.006,
+  "format": "number",
+  "dataset": "project",
+  "files": ["tasks", "weekly_status"],
+  "pyVerify": "round(CPI, 2)",
+  "hint": "The CPI on the third line.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "pmf-06-t1",
+  "prompt": "Reply to the finance director's \"we've spent less than the budget, so we're fine\" in 50 to 120 words, using **earned value**: what was **spent**, what was **earned**, the **CPI**, the **forecast final cost**, and the **main cause**.",
+  "minutes": 5,
+  "rows": 6,
+  "placeholder": "Spending less than the budget doesn't tell us ...",
+  "rules": [
+    { "label": "Mentions earned value or work done", "pattern": "earned|work (done|completed)|worth" },
+    { "label": "Gives the CPI", "pattern": "cpi|0\\.\\d{2}" },
+    { "label": "Gives a forecast final cost", "pattern": "(forecast|estimate|expect|final)[^.]*₦|₦[^.]*(forecast|at completion|final)" },
+    { "label": "Names the cause (naira, dollar, imported, racking, laptops)", "pattern": "naira|dollar|import|racking|laptop|exchange" },
+    { "label": "Between 50 and 120 words", "minWords": 50, "maxWords": 120 }
+  ],
+  "sample": "Spending less than the budget doesn't tell us we're fine, because we haven't done all the work yet. By week 10 we've spent about ₦58 million, but the work completed is worth only about ₦45 million at budgeted rates, a CPI of 0.77: we're getting about 77 kobo of work for every naira. If that continues, our forecast final cost is about ₦106 million against the ₦81.5 million budget; even if everything left goes to budget, about ₦95 million. The main causes are the delayed racking import and IT equipment priced in dollars after the naira weakened, and the permits and fit-out running longer than planned.",
+  "note": "The final sentence matters: it points to a known risk, not to careless spending, which changes what the sponsor should do.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "EV is ₦40m and AC is ₦50m. What's the CPI?",
+    "options": ["1.25", "0.8", "10", "0.5"],
+    "answer": 1,
+    "explanation": "EV ÷ AC: 80 kobo of work per naira spent."
+  },
+  {
+    "prompt": "SPI is 0.9. What does it mean?",
+    "options": ["10% over budget", "90% of the work planned by now has been done", "The project is 90% complete", "10% ahead"],
+    "answer": 1,
+    "explanation": "Behind schedule, in budget terms."
+  },
+  {
+    "prompt": "Why is 'we've spent less than budget' not evidence of being on track?",
+    "options": ["It is", "Spending must be compared with the work achieved and the work planned by now", "Budgets are always wrong", "Spending doesn't matter"],
+    "answer": 1,
+    "explanation": "That's what earned value adds."
+  }
+]
+```
+$md$, true, true, 6, array['pmf-06-p1', 'pmf-06-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('pmf-m07', 'project-management-fundamentals', 'Forecasting from Progress', 7, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('project-management-fundamentals:forecasting-from-progress', 'project-management-fundamentals', 'pmf-m07', 'forecasting-from-progress', 'Forecasting from progress', 'Re-forecast the opening date from what has actually happened (finished tasks, work in progress and what''s left), compare it with the deadline, and set an honest red, amber or green status.', 25, $md$
+## The problem
+
+The baseline schedule said the depot would open on 11 September. It's now the end of week 10. The permits took longer than planned, and the fit-out started late and is only 46% done. The sponsor doesn't want to hear about the baseline any more: they want to know when the depot will **actually** open, based on where the project **is**.
+
+## The concept
+
+**Re-forecasting**
+
+From the status date, schedule only what's left:
+
+- finished tasks take no more time;
+- tasks in progress need their **remaining** work;
+- tasks not started need their full estimate;
+- nothing can finish before the status date.
+
+**Which rate for remaining work?**
+
+| Assumption | Use when |
+| :-- | :-- |
+| Remaining work goes to plan | the cause of the delay is over (the permits are granted) |
+| Remaining work goes at the rate so far | the cause is still there (the contractor is slow) |
+| Re-estimate with the team | always worth doing for critical tasks |
+
+**Red, amber, green**
+
+A status colour is only useful with clear rules, for example:
+
+- **Green**: forecast meets the deadline with at least 5 days to spare, and CPI ≥ 0.95.
+- **Amber**: forecast meets the deadline with less than 5 days to spare, or CPI between 0.90 and 0.95.
+- **Red**: forecast misses the deadline, or CPI below 0.90.
+
+## Example
+
+Forecast from week 10, assuming the remaining work goes to plan:
+
+```python
+import numpy as np
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/project/"
+tasks = pd.read_csv(base + "tasks.csv").fillna({"predecessors": ""}).set_index("task_id")
+status = pd.read_csv(base + "weekly_status.csv")
+START, STATUS_DAY = np.datetime64("2026-06-01"), 50
+DEADLINE_DAYS = int(np.busday_count(START, np.datetime64("2026-09-30")) + 1)
+
+pct = status[status["week"] == 10].set_index("task_id")["percent_complete"].reindex(tasks.index).fillna(0)
+print("Finished:", list(pct.index[pct == 100]))
+print("In progress:", {t: int(p) for t, p in pct.items() if 0 < p < 100})
+
+def forecast_end(remaining):
+    finish = {}
+    for t, row in tasks.iterrows():
+        preds = [p for p in row["predecessors"].split(";") if p]
+        start = max([STATUS_DAY] + [finish[p] for p in preds])
+        finish[t] = start + remaining[t]
+    return finish
+
+to_plan = tasks["likely_days"] * (1 - pct / 100)
+finish = forecast_end(to_plan)
+end = finish["F3"]
+print(f"Forecast opening: working day {end:.1f}, {np.busday_offset(START, int(np.ceil(end)) - 1)}")
+print(f"Deadline: working day {DEADLINE_DAYS}, days to spare: {DEADLINE_DAYS - end:.1f}")
+```
+
+```text
+Finished: ['A1', 'A2', 'A3', 'B1', 'B3', 'C1', 'C2', 'C4', 'D1', 'D2', 'E1', 'E3']
+In progress: {'B2': 46, 'B4': 86}
+Forecast opening: working day 85.5, 2026-09-28
+Deadline: working day 88, days to spare: 2.5
+```
+
+Even if everything left goes exactly to plan, the opening has very little room. The fit-out is the problem. It's been going slower than planned; if it carries on at its current rate:
+
+```python
+first_week = status[status["task_id"] == "B2"]["week"].min()
+elapsed = STATUS_DAY - (first_week - 1) * 5
+rate_per_day = pct["B2"] / 100 / elapsed
+print(f"Fit-out: {pct['B2']:.0f}% done in about {elapsed} working days, so about {1 / rate_per_day:.0f} days in total at this rate")
+
+at_current_rate = to_plan.copy()
+at_current_rate["B2"] = (1 - pct["B2"] / 100) / rate_per_day
+end_rate = forecast_end(at_current_rate)["F3"]
+print(f"Forecast at the fit-out's current rate: working day {end_rate:.1f}, {np.busday_offset(START, int(np.ceil(end_rate)) - 1)}")
+```
+
+```text
+Fit-out: 46% done in about 15 working days, so about 33 days in total at this rate
+Forecast at the fit-out's current rate: working day 89.6, 2026-10-02
+```
+
+At the fit-out's current rate, the opening misses 30 September. Under the rules above, the forecast to plan (2.5 days to spare) would be amber, and the forecast at the current rate is **red**; with the fit-out still slow, red is the honest call. Cost is red too: lesson 6's CPI is 0.77. The question for the sponsor is no longer "are we on track?" but "what do we do about the fit-out?": the subject of lesson 9.
+
+## Walkthrough
+
+1. Run the cells. Using the rate-based forecast, which tasks are now critical?
+2. Re-forecast with PERT expected durations for the tasks not yet started. What changes?
+3. Apply the red, amber, green rules to both forecasts.
+4. Write the status line (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "pmf-07-p1",
+  "prompt": "Forecasting the fit-out at its **current rate**, on which working day does the depot open? One decimal place.",
+  "answer": 89.6,
+  "tolerance": 0.06,
+  "format": "number",
+  "dataset": "project",
+  "files": ["tasks", "weekly_status"],
+  "pyVerify": "round(end_rate, 1)",
+  "hint": "The last line printed.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "pmf-07-t1",
+  "prompt": "Write the week 10 **status line** for the steering committee: one line each starting **Status:** (red, amber or green, with the rule that set it), **Forecast:** (both forecasts with dates), **Cause:**, and **Decision needed:**.",
+  "minutes": 6,
+  "rows": 5,
+  "placeholder": "Status: Red, because ...",
+  "rules": [
+    { "label": "A Status line with a colour and a reason", "pattern": "^\\s*status\\s*:[^\\n]*(red|amber|green)[^\\n]*(because|as|since|forecast|cpi)" },
+    { "label": "A Forecast line with two dates", "pattern": "^\\s*forecast\\s*:[^\\n]*\\d[^\\n]*\\d" },
+    { "label": "A Cause line", "pattern": "^\\s*cause\\s*:[^\\n]*(fit-out|permit|contractor)" },
+    { "label": "A Decision needed line", "pattern": "^\\s*decision needed\\s*:" }
+  ],
+  "sample": "Status: Red, because at the fit-out's current rate the forecast misses the 30 September deadline (cost is red too, CPI 0.77).\nForecast: 28 September, with only 2.5 days to spare, if the remaining work goes to plan; 2 October if the fit-out continues at its current pace.\nCause: permits took 9 working days longer than planned, delaying the fit-out start, and the fit-out is running slower than estimated.\nDecision needed: approve weekend working on the fit-out (change request CR3) this week, and defer scope changes that add to the fit-out.",
+  "note": "A status line ends with the decision needed, so the meeting spends its time deciding, not reading.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why re-forecast from progress instead of reporting the baseline date?",
+    "options": ["The baseline is secret", "The baseline assumes things that didn't happen; the forecast uses where the project actually is", "It's quicker", "Sponsors prefer it"],
+    "answer": 1,
+    "explanation": "Forecast from reality."
+  },
+  {
+    "prompt": "When should remaining work be forecast at the rate so far?",
+    "options": ["Never", "When the cause of the slowness is still present", "Always", "Only for finished tasks"],
+    "answer": 1,
+    "explanation": "Past performance predicts future performance if nothing changes."
+  },
+  {
+    "prompt": "What makes a red, amber, green status useful?",
+    "options": ["Bright colours", "Clear rules agreed in advance, applied the same way every week", "The project manager's feeling", "Always reporting green"],
+    "answer": 1,
+    "explanation": "Rules make colours comparable."
+  }
+]
+```
+$md$, true, true, 7, array['pmf-07-p1', 'pmf-07-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('pmf-m08', 'project-management-fundamentals', 'Risk Management', 8, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('project-management-fundamentals:risk-management', 'project-management-fundamentals', 'pmf-m08', 'risk-management', 'Risk management', 'Keep a risk register that drives decisions, rank risks by expected monetary value and schedule impact, size a contingency reserve, and choose responses that change the odds or the impact.', 25, $md$
+## The problem
+
+The depot project's risk register was written in week 1 and never opened again. Two of its risks have already happened: the permits were delayed and the naira weakened. The register had suggested responses for both: hire a permit agent, buy dollars forward. Neither was done.
+
+A risk register isn't paperwork. Used weekly, it's how a project manager spends money **before** problems happen, when it's cheapest.
+
+## The concept
+
+**Risks and issues**
+
+A **risk** might happen; an **issue** has happened. When a risk happens it becomes an issue, and its response becomes urgent.
+
+**Expected monetary value (EMV)**
+
+> EMV = probability × impact
+
+A 40% chance of a ₦3 million cost has an EMV of ₦1.2 million. Ranking by EMV puts likely-and-costly risks first. Do the same for **days**: probability × delay.
+
+**Responses**
+
+| Response | Example |
+| :-- | :-- |
+| **Avoid** | change the plan so the risk can't happen |
+| **Reduce** | lower the probability or impact (a permit agent, a generator) |
+| **Transfer** | insurance, fixed-price contracts, forward currency purchase |
+| **Accept** | keep money and time in reserve |
+
+**Contingency**
+
+A reserve of money (and time) for **identified** risks, roughly their total EMV, held by the project manager and released only when a risk happens.
+
+## Example
+
+The register, ranked:
+
+```python
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/project/"
+risks = pd.read_csv(base + "risks.csv")
+risks["emv_ngn"] = risks["probability"] * risks["impact_ngn"]
+risks["expected_days"] = risks["probability"] * risks["impact_days"]
+print(f"Contingency for identified risks (total EMV): ₦{risks['emv_ngn'].sum():,.0f}")
+print(f"Expected delay from identified risks: {risks['expected_days'].sum():.1f} working days")
+risks.sort_values("emv_ngn", ascending=False)[["risk_id", "description", "probability", "impact_ngn", "emv_ngn", "expected_days"]].head(6)
+```
+
+```text
+Contingency for identified risks (total EMV): ₦11,250,000
+Expected delay from identified risks: 17.1 working days
+  risk_id                                        description  probability  impact_ngn    emv_ngn  expected_days
+1     R02  Naira weakens further, raising imported equipm...         0.50     6000000  3000000.0            0.0
+9     R10  Opening slips into the December peak, losing s...         0.25    12000000  3000000.0            0.0
+4     R05           Grid power too unreliable for the system         0.70     2000000  1400000.0            0.0
+0     R01  Permits are delayed further by the planning of...         0.40     3000000  1200000.0            6.0
+2     R03                         Racking damaged in transit         0.10     9000000   900000.0            2.0
+8     R09                 Theft from the site during fit-out         0.15     2500000   375000.0            0.0
+```
+
+The biggest cost risks are the weaker naira and missing the December peak; the biggest schedule risk is the permits (already partly happened). Now: was reducing them worth it? Compare a response's cost with how much it lowers the EMV:
+
+```python
+responses = pd.DataFrame([
+    {"risk_id": "R02", "response": "Buy dollars forward for remaining imports", "cost_ngn": 400_000, "new_probability": 0.1},
+    {"risk_id": "R01", "response": "Hire a permit agent", "cost_ngn": 600_000, "new_probability": 0.15},
+    {"risk_id": "R09", "response": "Security guards from day one of fit-out", "cost_ngn": 450_000, "new_probability": 0.05},
+]).merge(risks[["risk_id", "probability", "impact_ngn", "emv_ngn"]], on="risk_id")
+responses["new_emv_ngn"] = responses["new_probability"] * responses["impact_ngn"]
+responses["emv_saved_ngn"] = responses["emv_ngn"] - responses["new_emv_ngn"]
+responses["worth_it"] = responses["emv_saved_ngn"] > responses["cost_ngn"]
+responses[["risk_id", "response", "cost_ngn", "emv_saved_ngn", "worth_it"]]
+```
+
+```text
+risk_id                                   response  cost_ngn  emv_saved_ngn  worth_it
+0     R02  Buy dollars forward for remaining imports    400000      2400000.0      True
+1     R01                        Hire a permit agent    600000       750000.0      True
+2     R09    Security guards from day one of fit-out    450000       250000.0     False
+```
+
+Buying dollars forward would have saved far more than it cost; that's the response that wasn't done, and lesson 6 showed the price. The permit agent pays for itself too, before even counting the days it saves. Guards against theft don't pay on money alone, but might still be worth it for safety and for protecting the schedule.
+
+## Walkthrough
+
+1. Run the cells. Which risks are already issues? Update their probability to 1 and rerun.
+2. Add a risk you think is missing, with a probability, impact and response.
+3. Is a contingency of the total EMV enough? When would you hold more?
+4. Write the risk review notes (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "pmf-08-p1",
+  "prompt": "What is the total **EMV** of the risk register, in naira?",
+  "answer": 11250000,
+  "format": "naira",
+  "dataset": "project",
+  "files": ["risks"],
+  "pyVerify": "float(risks['emv_ngn'].sum())",
+  "hint": "The first line printed.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "pmf-08-t1",
+  "prompt": "Write the **week 10 risk review**, one line per risk starting with its ID: at least **four** risks, each with its **status** (open, happened, closed), the **response**, its **type** (avoid, reduce, transfer or accept) and an **owner**.",
+  "minutes": 8,
+  "rows": 6,
+  "placeholder": "R01: happened ...",
+  "rules": [
+    { "label": "At least four risk lines", "pattern": "^\\s*[-*]?\\s*R\\d{2}\\b", "min": 4 },
+    { "label": "Statuses (open, happened, closed)", "pattern": "open|happened|closed|issue", "min": 4 },
+    { "label": "Response types", "pattern": "avoid|reduce|transfer|accept", "min": 4 },
+    { "label": "Owners", "pattern": "owner|operations|finance|procurement|hr|it\\b|facilities", "min": 4 },
+    { "label": "R02 handled (naira, forward, dollars)", "pattern": "R02[^\\n]*(forward|dollar|naira|hedg)" }
+  ],
+  "sample": "R01: happened (permits took 9 extra days); reduce: permit agent hired for the trading permit renewal; owner Operations.\nR02: happened (racking and IT costs rose); transfer: buy dollars forward for the remaining imports this week; owner Finance.\nR05: open; reduce: generator and solar backup (B6) stays in scope; owner Facilities.\nR10: open and rising, because the forecast is near the deadline; reduce: approve weekend fit-out working; owner Operations.\nR03: closed for racking already delivered; accept the remaining 14%; owner Procurement.",
+  "note": "Updating statuses weekly is what turns the register from a document into a tool.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "A risk has a 25% chance of costing ₦8 million. What's its EMV?",
+    "options": ["₦8m", "₦2m", "₦0.25m", "₦32m"],
+    "answer": 1,
+    "explanation": "0.25 × ₦8m."
+  },
+  {
+    "prompt": "Buying dollars forward to protect against the naira weakening is which response?",
+    "options": ["Avoid", "Transfer", "Accept", "Ignore"],
+    "answer": 1,
+    "explanation": "The currency risk passes to the counterparty."
+  },
+  {
+    "prompt": "When is a risk response worth paying for, on money alone?",
+    "options": ["Always", "When it lowers the EMV by more than it costs", "Never", "When the sponsor likes it"],
+    "answer": 1,
+    "explanation": "Compare the cost with the expected saving."
+  }
+]
+```
+$md$, true, true, 8, array['pmf-08-p1', 'pmf-08-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('pmf-m09', 'project-management-fundamentals', 'Change Control', 9, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('project-management-fundamentals:change-control', 'project-management-fundamentals', 'pmf-m09', 'change-control', 'Change control', 'Assess change requests by their effect on the forecast finish, the budget and the deadline, use schedule compression where it pays, and recommend decisions the sponsor can make quickly.', 25, $md$
+## The problem
+
+Five change requests arrived in weeks 9 and 10: a cold room, four more staff, weekend working on the fit-out, a customer pick-up counter and better laptops. Each requester thinks theirs is small. Together, and on the critical path, they could move the opening into the December rush, which the risk register prices at ₦12 million of lost sales.
+
+Change control isn't saying no. It's showing the sponsor what each change really costs in days and naira, so they can decide.
+
+## The concept
+
+**Assess every change the same way**
+
+| Question | How |
+| :-- | :-- |
+| Which task does it affect? | from the request |
+| Is that task on the critical path, or does it have float? | from the current forecast (lesson 7) |
+| How much does it move the finish? | re-forecast with the change |
+| What does it cost? | the request, plus any delay cost |
+| Does it still meet the deadline and the budget plus contingency? | compare |
+
+**Schedule compression**
+
+Two ways to finish sooner: **crashing** (spend money to shorten a critical task: weekend working, more crews) and **fast-tracking** (overlap tasks that were planned in sequence). Both only help on the critical path.
+
+**Decide, don't drift**
+
+Every request gets a decision (approve, reject, defer to after opening) with a reason, recorded in a change log.
+
+## Example
+
+Start from the week 10 forecast at the fit-out's current rate (lesson 7), then apply each change on its own:
+
+```python
+import numpy as np
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/project/"
+tasks = pd.read_csv(base + "tasks.csv").fillna({"predecessors": ""}).set_index("task_id")
+status = pd.read_csv(base + "weekly_status.csv")
+changes = pd.read_csv(base + "changes.csv").fillna({"affects_task": ""})
+START, STATUS_DAY = np.datetime64("2026-06-01"), 50
+DEADLINE_DAYS = int(np.busday_count(START, np.datetime64("2026-09-30")) + 1)
+
+pct = status[status["week"] == 10].set_index("task_id")["percent_complete"].reindex(tasks.index).fillna(0)
+remaining = tasks["likely_days"] * (1 - pct / 100)
+first_week = status[status["task_id"] == "B2"]["week"].min()
+remaining["B2"] = (1 - pct["B2"] / 100) / (pct["B2"] / 100 / (STATUS_DAY - (first_week - 1) * 5))
+
+def forecast_end(remaining):
+    finish = {}
+    for t, row in tasks.iterrows():
+        preds = [p for p in row["predecessors"].split(";") if p]
+        finish[t] = max([STATUS_DAY] + [finish[p] for p in preds]) + remaining[t]
+    return finish["F3"]
+
+baseline_end = forecast_end(remaining)
+rows = []
+for c in changes.itertuples():
+    changed = remaining.copy()
+    if c.affects_task:
+        changed[c.affects_task] = max(0, changed[c.affects_task] + c.extra_days)
+    end = forecast_end(changed)
+    rows.append({"change": c.change_id, "description": c.description, "cost_ngn": c.extra_cost_ngn,
+                 "finish_moves_days": round(end - baseline_end, 1), "meets_deadline": end <= DEADLINE_DAYS})
+impact = pd.DataFrame(rows)
+print(f"Current forecast: working day {baseline_end:.1f} (deadline {DEADLINE_DAYS})")
+impact
+```
+
+```text
+Current forecast: working day 89.6 (deadline 88)
+  change                                        description  cost_ngn  finish_moves_days  meets_deadline
+0    CR1                 Add a cold room for chilled drinks  12000000               15.0           False
+1    CR2   Hire 4 more depot staff for longer opening hours   2400000                0.0           False
+2    CR3  Pay the contractor for weekend working on fit-out   2500000               -6.0            True
+3    CR4                     Add a customer pick-up counter   3000000                5.0           False
+4    CR5          Upgrade laptops to a higher specification   1800000                0.0           False
+```
+
+The changes that touch the fit-out move the opening day for day, because the fit-out is critical. The laptop upgrade adds 3 days to a task that's already finished, so it costs money but no time. Extra staff cost money but no time. Only weekend working moves the date the right way. Now the combinations the sponsor is really choosing between:
+
+```python
+def apply(change_ids):
+    changed = remaining.copy()
+    cost = 0
+    for c in changes[changes["change_id"].isin(change_ids)].itertuples():
+        if c.affects_task:
+            changed[c.affects_task] = max(0, changed[c.affects_task] + c.extra_days)
+        cost += c.extra_cost_ngn
+    end = forecast_end(changed)
+    return pd.Series({"finish_day": round(end, 1), "date": str(np.busday_offset(START, int(np.ceil(end)) - 1)),
+                      "meets_deadline": end <= DEADLINE_DAYS, "extra_cost_ngn": cost})
+
+options = {
+    "approve everything": ["CR1", "CR2", "CR3", "CR4", "CR5"],
+    "weekend working only": ["CR3"],
+    "weekend working + staff": ["CR3", "CR2"],
+    "weekend working + staff + counter": ["CR3", "CR2", "CR4"],
+}
+pd.DataFrame({name: apply(ids) for name, ids in options.items()}).T
+```
+
+```text
+finish_day        date meets_deadline extra_cost_ngn
+approve everything                     103.6  2026-10-22          False       21700000
+weekend working only                    83.6  2026-09-24           True        2500000
+weekend working + staff                 83.6  2026-09-24           True        4900000
+weekend working + staff + counter       88.6  2026-10-01          False        7900000
+```
+
+Approving everything sends the opening well past the deadline and into the December risk. Weekend working on its own brings the forecast back within the deadline, and adding the extra staff doesn't change the date. The cold room and the counter belong after opening, when they can be built without touching the critical path.
+
+## Walkthrough
+
+1. Run the cells. Why doesn't CR5 move the date, even though it adds 3 days?
+2. Price the delay: if each day past 30 September costs about ₦1 million in lost sales, what does "approve everything" really cost?
+3. Could the cold room be fast-tracked (built alongside the end of the fit-out)? What would you need to know?
+4. Write the change log entries (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "pmf-09-p1",
+  "prompt": "If **every** change is approved, on which working day does the forecast opening fall? One decimal place.",
+  "answer": 103.6,
+  "tolerance": 0.06,
+  "format": "number",
+  "dataset": "project",
+  "files": ["tasks", "weekly_status", "changes"],
+  "pyVerify": "float(apply(['CR1', 'CR2', 'CR3', 'CR4', 'CR5'])['finish_day'])",
+  "hint": "The approve everything row.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "pmf-09-t1",
+  "prompt": "Write the **change log** entries for CR1 to CR5, one line each starting with the ID: **decision** (approve, reject or defer), the **days** and **cost** impact, and the **reason**.",
+  "minutes": 8,
+  "rows": 6,
+  "placeholder": "CR1: defer ...",
+  "rules": [
+    { "label": "A line for each of CR1 to CR5", "pattern": "^\\s*[-*]?\\s*CR[1-5]\\s*:", "min": 5 },
+    { "label": "A decision on each", "pattern": "^\\s*[-*]?\\s*CR[1-5]\\s*:[^\\n]*(approve|reject|defer)", "min": 5 },
+    { "label": "CR3 approved", "pattern": "CR3\\s*:[^\\n]*approve" },
+    { "label": "CR1 deferred or rejected", "pattern": "CR1\\s*:[^\\n]*(defer|reject)" },
+    { "label": "Cost impacts in naira", "pattern": "₦|naira|\\d(\\.\\d)?\\s*m\\b", "min": 4 },
+    { "label": "Reasons (critical, deadline, float, after opening)", "pattern": "critical|deadline|float|after opening|no (effect|change) on", "min": 3 }
+  ],
+  "sample": "CR1: defer to after opening; +15 days on the critical fit-out and ₦12m; it would push the opening past the deadline into the December peak.\nCR2: approve; no schedule effect, ₦2.4m from contingency; longer opening hours support the December peak.\nCR3: approve; −6 days on the critical fit-out for ₦2.5m; it brings the forecast back within the deadline.\nCR4: defer to after opening; +5 days on the critical fit-out and ₦3m; it can be built once the depot is running.\nCR5: reject; no schedule effect because the laptops are already bought, but ₦1.8m for a benefit the requester couldn't quantify.",
+  "note": "Deferring isn't refusing: the cold room and counter still happen, just off the critical path.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "A change adds 5 days to a task with 12 days of float. What happens to the finish?",
+    "options": ["It moves 5 days", "Nothing, but the float falls to 7", "It moves 12 days", "The task becomes optional"],
+    "answer": 1,
+    "explanation": "Float absorbs it."
+  },
+  {
+    "prompt": "What is crashing a schedule?",
+    "options": ["Cancelling the project", "Spending money to shorten a critical task, such as weekend working", "Overlapping tasks", "Removing tasks"],
+    "answer": 1,
+    "explanation": "Fast-tracking is the overlap."
+  },
+  {
+    "prompt": "Why record every change decision with a reason?",
+    "options": ["Bureaucracy", "So everyone knows what was agreed and why, and scope doesn't creep unnoticed", "It's legally required", "To delay decisions"],
+    "answer": 1,
+    "explanation": "The change log is the scope's memory."
+  }
+]
+```
+$md$, true, true, 9, array['pmf-09-p1', 'pmf-09-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('pmf-m10', 'project-management-fundamentals', 'Final Project', 10, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('project-management-fundamentals:final-project', 'project-management-fundamentals', 'pmf-m10', 'final-project', '"Final project: the depot''s week 10 review"', 'Plan your final project, a complete project review for the steering committee, with the schedule, earned value, forecast, risks and change decisions brought together into a status report and recommendations.', 20, $md$
+## The problem
+
+The steering committee meets at the end of week 10. They want one report: where the depot project stands, whether it will open by 30 September, what it will cost, what could still go wrong, and what they need to decide today. Your final project is that report, with the analysis behind it.
+
+## The concept
+
+**The parts of the review**
+
+| Part | Built in |
+| :-- | :-- |
+| Scope and WBS check | lessons 1 and 2 |
+| Estimates and the baseline schedule with its critical path | lessons 3 and 4 |
+| The probability of meeting the deadline | lesson 5 |
+| Earned value and the cost forecast | lesson 6 |
+| The forecast from progress and the RAG status | lesson 7 |
+| Risks, responses and contingency | lesson 8 |
+| Change decisions | lesson 9 |
+
+**One page first**
+
+Busy sponsors read the first page. Put the status, the forecast date and cost, and the decisions needed at the top; put the analysis behind it.
+
+## Example
+
+The headline figures, recalculated in one place:
+
+```python
+import numpy as np
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/project/"
+tasks = pd.read_csv(base + "tasks.csv").fillna({"predecessors": ""}).set_index("task_id")
+status = pd.read_csv(base + "weekly_status.csv")
+risks = pd.read_csv(base + "risks.csv")
+now = status[status["week"] == 10].set_index("task_id")
+
+tasks["budget"] = tasks["likely_days"] * tasks["daily_cost_ngn"]
+es, ef = {}, {}
+for t, row in tasks.iterrows():
+    preds = [p for p in row["predecessors"].split(";") if p]
+    es[t] = max((ef[p] for p in preds), default=0)
+    ef[t] = es[t] + row["likely_days"]
+pv = (tasks["budget"] * ((50 - pd.Series(es)) / tasks["likely_days"]).clip(0, 1)).sum()
+ev = (tasks["budget"] * now["percent_complete"].reindex(tasks.index).fillna(0) / 100).sum()
+ac = now["actual_cost_ngn"].sum()
+bac = tasks["budget"].sum()
+contingency = (risks["probability"] * risks["impact_ngn"]).sum()
+
+summary = pd.Series({
+    "Tasks finished": f"{int((now['percent_complete'] == 100).sum())} of {len(tasks)}",
+    "SPI": f"{ev / pv:.2f}",
+    "CPI": f"{ev / ac:.2f}",
+    "Budget (BAC)": f"₦{bac:,.0f}",
+    "Forecast cost (EAC)": f"₦{bac / (ev / ac):,.0f}",
+    "Contingency (risk EMV)": f"₦{contingency:,.0f}",
+    "Budget plus contingency": f"₦{bac + contingency:,.0f}",
+})
+summary
+```
+
+```text
+Tasks finished                 12 of 23
+SPI                                0.80
+CPI                                0.77
+Budget (BAC)                ₦81,530,000
+Forecast cost (EAC)        ₦105,583,319
+Contingency (risk EMV)      ₦11,250,000
+Budget plus contingency     ₦92,780,000
+dtype: object
+```
+
+The forecast cost is above the budget and above budget plus contingency, even at the kinder estimate from lesson 6 (about ₦94.7 million). So the committee has two decisions, not one: how to protect the opening date (lesson 9), and whether to approve more money or find savings. The contingency was sized for risks that hadn't happened yet; two of them already have.
+
+## Walkthrough
+
+1. Build the full review: every part in the table above.
+2. Write the one-page summary first, then check every number in it against your analysis.
+3. List the decisions needed today, with your recommendation for each.
+4. Open the project brief on the course page and plan the write-up.
+
+## Practice
+
+```dataset
+{"dataset": "project", "files": ["tasks", "weekly_status", "risks", "changes"]}
+```
+
+```answer
+{
+  "id": "pmf-10-p1",
+  "prompt": "How many of the 23 tasks are finished at the end of week 10?",
+  "answer": 12,
+  "format": "number",
+  "dataset": "project",
+  "files": ["tasks", "weekly_status"],
+  "pyVerify": "int((now['percent_complete'] == 100).sum())",
+  "hint": "The first line of the summary.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "pmf-10-t1",
+  "prompt": "Write the **one-page summary** for the steering committee (100 to 200 words): **status** with RAG, the **forecast opening** (with a probability or both forecasts), the **forecast cost** against budget and contingency, the **top risks**, and the **decisions needed today** with your recommendations.",
+  "minutes": 10,
+  "rows": 9,
+  "placeholder": "Status: Red on schedule, amber on cost ...",
+  "rules": [
+    { "label": "A RAG status", "pattern": "red|amber|green" },
+    { "label": "A forecast date", "pattern": "(september|october|\\d{1,2} (sep|oct))" },
+    { "label": "Cost against budget and contingency", "pattern": "contingency" },
+    { "label": "Risks named", "pattern": "risk|naira|permit|december" },
+    { "label": "Decisions with recommendations", "pattern": "(decide|decision|approve|recommend)[\\s\\S]*(approve|defer|reject|recommend)" },
+    { "label": "Between 100 and 200 words", "minWords": 100, "maxWords": 200 }
+  ],
+  "sample": "Status: red on schedule and red on cost. Twelve of 23 tasks are finished, but the permits took nine extra days and the fit-out, which is on the critical path, is running slower than planned. If the remaining work goes to plan, we open on 28 September with only two days to spare; at the fit-out's current pace, on 2 October. Costs are running well over: the delays, and dollar-priced racking and IT equipment bought after the naira weakened, put the forecast at ₦95 to ₦106 million against an ₦81.5 million budget, beyond the ₦11.25 million contingency. The top risks now are missing the December peak and further currency moves. Decisions needed today: approve weekend working on the fit-out (CR3, ₦2.5 million, 6 days saved), which brings the forecast to 24 September; defer the cold room and pick-up counter until after opening; buy dollars forward for the remaining imports; and approve up to ₦13 million of extra funding, or agree savings, to cover the forecast.",
+  "note": "Every number in the summary can be traced to a lesson's analysis, which is what makes it trustworthy.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "What belongs on the first page of a steering committee report?",
+    "options": ["The full task list", "Status, forecast date and cost, and the decisions needed", "Team photos", "The methodology"],
+    "answer": 1,
+    "explanation": "Decision-makers read the first page."
+  },
+  {
+    "prompt": "The forecast cost is over budget but within budget plus contingency. What does that mean?",
+    "options": ["The project failed", "Known risks are using the reserve as intended; watch for further overruns", "No action ever needed", "Cut scope immediately"],
+    "answer": 1,
+    "explanation": "That's what contingency is for."
+  },
+  {
+    "prompt": "Why check every number in the summary against the analysis?",
+    "options": ["Habit", "A single wrong number undermines trust in the whole report", "It's required", "To make it longer"],
+    "answer": 1,
+    "explanation": "Credibility is everything in status reporting."
+  }
+]
+```
+$md$, true, true, 10, array['pmf-10-p1', 'pmf-10-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+
 -- Course: Data Analyst Capstone: End-to-End BI Project
 insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
-values ('data-analyst-capstone', 'full', null, 'data-analyst-capstone', 'CAP', 'Data Analyst Capstone: End-to-End BI Project', 'Take a retail chain''s raw till export all the way to a reviewed dashboard and a board-ready executive summary, using the tools of your choice.', 'The capstone of the Data Analyst track. Voltline Electronics, a chain of eight stores, sends you 18 months of raw till data and one question from its chief executive: what''s really driving our 37% growth? You''ll plan the analysis, profile and clean a genuinely messy export (a duplicated upload, mixed date formats, inconsistent store names and test transactions), build a model that looks up costs by date and compares sales with monthly targets, decompose the growth, find what''s going wrong where, and put a value on missed sales. Then you''ll build a dashboard, write an executive summary, prepare for the board''s questions and publish the project for your portfolio. Use Excel, Power BI, SQL or Python: the work is assessed on the answers, not the tool.', 'data-analytics', 'intermediate', 4, 'Career project', 14, true, 'available', true, array['Turning a business brief into an analysis plan', 'Profiling and cleaning raw data with a quality log', 'Modelling data at the right grain', 'Decomposing growth into price, new stores and volume', 'Judging targets fairly', 'Estimating lost sales with stated assumptions', 'Finding-led dashboards and executive summaries', 'Presenting and publishing a portfolio project']::text[], array['The core Data Analyst courses: Excel, SQL and Power BI (or Python)', 'Comfort cleaning data and building a dashboard in at least one tool']::text[], 'Voltline Electronics: commercial review', true, true, true, true, false, 60, 40)
+values ('data-analyst-capstone', 'full', null, 'data-analyst-capstone', 'CAP', 'Data Analyst Capstone: End-to-End BI Project', 'Take a retail chain''s raw till export all the way to a reviewed dashboard and a board-ready executive summary, using the tools of your choice.', 'The capstone of the Data Analyst track. Voltline Electronics, a chain of eight stores, sends you 18 months of raw till data and one question from its chief executive: what''s really driving our 37% growth? You''ll plan the analysis, profile and clean a genuinely messy export (a duplicated upload, mixed date formats, inconsistent store names and test transactions), build a model that looks up costs by date and compares sales with monthly targets, decompose the growth, find what''s going wrong where, and put a value on missed sales. Then you''ll build a dashboard, write an executive summary, prepare for the board''s questions and publish the project for your portfolio. Use Excel, Power BI, SQL or Python: the work is assessed on the answers, not the tool.', 'data-analytics', 'intermediate', 4, 'Career project', 14, true, 'available', true, array['Turning a business brief into an analysis plan', 'Profiling and cleaning raw data with a quality log', 'Modelling data at the right grain', 'Decomposing growth into price, new stores and volume', 'Judging targets fairly', 'Estimating lost sales with stated assumptions', 'Finding-led dashboards and executive summaries', 'Presenting and publishing a portfolio project']::text[], array['The core Data Analyst courses: Excel, SQL and Power BI (or Python)', 'Comfort cleaning data and building a dashboard in at least one tool']::text[], 'Voltline Electronics: commercial review', true, true, true, true, false, 60, 41)
 on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level = excluded.level, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
@@ -57576,6 +59225,108 @@ values ('wjsq12', 1, 'Testable logic, thin event handlers.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 
+-- Assessment: Project Management Fundamentals: final assessment
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('project-management-fundamentals-final', 'project-management-fundamentals', 'final', null, 'Project Management Fundamentals: final assessment', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmfq01', 'project-management-fundamentals-final', 1, 'The sponsor adds a cold room to the depot. Under the scope, time and cost balance, what usually happens?', '["Nothing","Time, cost or both increase","The project gets cheaper","Quality rises for free"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmfq01', 1, 'More scope moves the other constraints.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmfq02', 'project-management-fundamentals-final', 2, 'What does the 100% rule say about a work breakdown structure?', '["Every task is fully funded","The pieces at each level add up to all the work above, no more, no less","Tasks take 100 days","All tasks are critical"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmfq02', 1, 'Nothing missing, nothing extra.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmfq03', 'project-management-fundamentals-final', 3, 'A task''s estimates are O = 4, M = 6, P = 14 days. What''s the PERT expected duration?', '["6","7","8","14"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmfq03', 1, '(4 + 24 + 14) ÷ 6 = 7.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmfq04', 'project-management-fundamentals-final', 4, 'A task has zero float. What happens if it slips by 3 days?', '["Nothing","The project end moves 3 days","Another task speeds up","The budget falls"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmfq04', 1, 'It''s on the critical path.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmfq05', 'project-management-fundamentals-final', 5, 'A simulation gives a 64% chance of meeting the deadline. What''s the most honest statement to the sponsor?', '["We will definitely make it","About two in three; here''s the date we''re 80% confident in and what would improve the odds","We won''t make it","The plan says we will"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmfq05', 1, 'Dates with confidence levels.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmfq06', 'project-management-fundamentals-final', 6, 'EV is ₦45m and PV is ₦56m. What''s the SPI, and what does it mean?', '["1.24, ahead","About 0.80, behind schedule","0.80, under budget","1.0, on track"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmfq06', 1, 'SPI = EV ÷ PV.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmfq07', 'project-management-fundamentals-final', 7, 'EV is ₦45m and AC is ₦58m. What''s the CPI?', '["1.29","About 0.78","0.45","13"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmfq07', 1, 'CPI = EV ÷ AC: under 1 means overspending.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmfq08', 'project-management-fundamentals-final', 8, 'BAC is ₦80m and CPI is 0.8. What''s the estimate at completion if efficiency doesn''t change?', '["₦64m","₦100m","₦80m","₦96m"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmfq08', 1, 'BAC ÷ CPI.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmfq09', 'project-management-fundamentals-final', 9, 'A risk has a 30% chance of costing ₦5 million. What''s its EMV?', '["₦5m","₦1.5m","₦0.3m","₦15m"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmfq09', 1, 'Probability × impact.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmfq10', 'project-management-fundamentals-final', 10, 'A response costs ₦0.4m and cuts a risk''s EMV from ₦3m to ₦0.6m. Is it worth it on money alone?', '["No","Yes: it saves ₦2.4m of expected cost for ₦0.4m","Only if the risk happens","Can''t tell"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmfq10', 1, 'Compare cost with EMV saved.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmfq11', 'project-management-fundamentals-final', 11, 'Paying for weekend working to shorten a critical task is called...', '["Fast-tracking","Crashing","Descoping","Baselining"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmfq11', 1, 'Spending money to save time on the critical path.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmfq12', 'project-management-fundamentals-final', 12, 'A change request adds 3 days to a task that''s already finished. What''s its schedule impact?', '["3 days","None: the task is complete, but there''s still a cost","6 days","The project restarts"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmfq12', 1, 'Assess changes against the current forecast, not the original plan.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
 -- Assessment: Prompting Essentials: module check
 insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
 values ('aipf-m01-check', 'ai-productivity-fundamentals', 'module', 'aipf-m01', 'Prompting Essentials: module check', 60, true)
@@ -60961,6 +62712,14 @@ Build the page as an HTML file with its CSS and JavaScript (in one file or separ
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
 
 
+-- Project: The depot's week 10 review
+insert into public.projects (id, course_id, title, summary, brief_md, tasks, datasets, rubric, required)
+values ('pmf-depot-week-10-review', 'project-management-fundamentals', 'The depot''s week 10 review', 'A complete project review for a steering committee: scope, estimates, critical path, the probability of meeting the deadline, earned value, a forecast from progress, risks with responses, change decisions and a one-page summary.', $md$Kolanut's steering committee meets at the end of week 10 of the Abuja depot launch. Give them the review they need to decide.
+
+Work in Google Colab with the project dataset (https://academy.cloudtechanalytics.com/datasets/project/: tasks.csv, weekly_status.csv, risks.csv and changes.csv). Submit a link to your notebook (shared so anyone with the link can view it), and paste your **one-page summary**, your **change log** and your **risk review** below, followed by a short note on where each part of the analysis is.$md$, array['Charter and WBS: the project''s objective, scope boundaries and a checked work breakdown.', 'Estimates and schedule: PERT durations, the critical path, float, and the baseline opening date.', 'Schedule risk: a Monte Carlo simulation with the probability of opening by 30 September and P80 date.', 'Earned value at week 10: PV, EV, AC, SPI, CPI and two estimates at completion.', 'Forecast from progress: the opening date if the remaining work goes to plan, and at the fit-out''s current rate, with a RAG status.', 'Risks: EMV ranking, contingency, response decisions and a week 10 risk review.', 'Changes: the impact of each request, options compared, a change log, and the one-page summary with decisions needed.']::text[], array['project']::text[], array['Scope is clear, with in- and out-of-scope boundaries and one owner per task.', 'The schedule is built correctly, and the critical path and float are explained.', 'Dates are given with probabilities, not as single promises.', 'Earned value is calculated correctly and the causes of variance are explained.', 'The forecast starts from actual progress, and the RAG status follows stated rules.', 'Risk responses are justified by cost against EMV, and changes by their effect on the critical path.', 'The summary leads with status and decisions, and every number in it is traceable.']::text[], true)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
+
+
 -- Track: Become a Data Analyst
 insert into public.tracks (id, slug, title, summary, badge_name, badge_code, skills, position, published)
 values ('data-analyst', 'data-analyst', 'Become a Data Analyst', 'The route we recommend from no experience to a junior data analyst role. Learn how analysis works, then the tools teams use every day (Excel, SQL, Power BI and Python) on realistic company data. Build portfolio projects that answer real business questions, and finish with your CV, LinkedIn and interview preparation.', 'CloudTech Data Analyst', 'DATAANALYST', array['Spreadsheet analysis in Excel', 'Statistics: averages, spread, confidence intervals and tests', 'Querying databases with SQL, from first SELECT to cohorts and window functions', 'Data modelling and star schemas', 'Dashboards in Power BI, with DAX measures you can trust', 'Analysis in Python and pandas', 'Turning data into findings a manager can act on']::text[], 1, true)
@@ -61261,9 +63020,49 @@ values ('software-developer', 'build-your-student-portfolio', 'Career', false, 1
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 
+-- Track: Become a Project Manager
+insert into public.tracks (id, slug, title, summary, badge_name, badge_code, skills, position, published)
+values ('project-manager', 'project-manager', 'Become a Project Manager', 'The route to project coordinator and junior project manager roles. Learn to plan a project properly, give honest dates and budgets, measure progress with earned value, manage risks and changes, and report to sponsors so they can decide. Add business analysis and Agile delivery, and the data skills to back every status report with numbers.', 'CloudTech Project Manager', 'PROJECTMGR', array['Charters, scope and work breakdown', 'Estimating, scheduling and the critical path', 'Schedule risk and honest dates', 'Earned value and forecasting', 'Risk and change management', 'Status reporting to sponsors']::text[], 7, true)
+on conflict (id) do update set slug = excluded.slug, title = excluded.title, summary = excluded.summary, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, position = excluded.position, published = excluded.published;
+
+delete from public.track_courses where track_id = 'project-manager';
+
+insert into public.track_courses (track_id, course_id, stage, required, position)
+values ('project-manager', 'excel-for-data-analysis', 'Foundation', true, 1)
+on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
+
+insert into public.track_courses (track_id, course_id, stage, required, position)
+values ('project-manager', 'python-for-data-analytics', 'Foundation', false, 2)
+on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
+
+insert into public.track_courses (track_id, course_id, stage, required, position)
+values ('project-manager', 'project-management-fundamentals', 'Core', true, 3)
+on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
+
+insert into public.track_courses (track_id, course_id, stage, required, position)
+values ('project-manager', 'business-analysis-fundamentals', 'Core', true, 4)
+on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
+
+insert into public.track_courses (track_id, course_id, stage, required, position)
+values ('project-manager', 'agile-business-analysis', 'Core', true, 5)
+on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
+
+insert into public.track_courses (track_id, course_id, stage, required, position)
+values ('project-manager', 'process-improvement-bpmn-lean', 'Specialist', false, 6)
+on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
+
+insert into public.track_courses (track_id, course_id, stage, required, position)
+values ('project-manager', 'career-essentials', 'Career', true, 7)
+on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
+
+insert into public.track_courses (track_id, course_id, stage, required, position)
+values ('project-manager', 'build-your-student-portfolio', 'Career', false, 8)
+on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
+
+
 -- Track: Career & Study Skills
 insert into public.tracks (id, slug, title, summary, badge_name, badge_code, skills, position, published)
-values ('career-study-skills', 'career-study-skills', 'Career & Study Skills', 'The practical skills that sit under every career: using AI honestly and well, researching and citing properly, everyday digital tools, and a CV, LinkedIn profile and portfolio that get you noticed. Short courses you can finish alongside school or work.', 'CloudTech Career Ready', 'CAREERREADY', array['Using AI assistants well and honestly', 'Research and referencing', 'Professional email and digital tools', 'CV, LinkedIn and portfolio']::text[], 7, true)
+values ('career-study-skills', 'career-study-skills', 'Career & Study Skills', 'The practical skills that sit under every career: using AI honestly and well, researching and citing properly, everyday digital tools, and a CV, LinkedIn profile and portfolio that get you noticed. Short courses you can finish alongside school or work.', 'CloudTech Career Ready', 'CAREERREADY', array['Using AI assistants well and honestly', 'Research and referencing', 'Professional email and digital tools', 'CV, LinkedIn and portfolio']::text[], 8, true)
 on conflict (id) do update set slug = excluded.slug, title = excluded.title, summary = excluded.summary, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, position = excluded.position, published = excluded.published;
 
 delete from public.track_courses where track_id = 'career-study-skills';

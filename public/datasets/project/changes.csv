@@ -1,0 +1,6 @@
+change_id,requested_week,description,requested_by,affects_task,extra_days,extra_cost_ngn,decision
+CR1,9,Add a cold room for chilled drinks,Sales,B2,15,12000000,pending
+CR2,9,Hire 4 more depot staff for longer opening hours,Operations,,0,2400000,pending
+CR3,10,Pay the contractor for weekend working on fit-out,Project manager,B2,-6,2500000,pending
+CR4,10,Add a customer pick-up counter,Sales,B2,5,3000000,pending
+CR5,10,Upgrade laptops to a higher specification,IT,C2,3,1800000,pending

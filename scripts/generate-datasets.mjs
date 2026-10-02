@@ -2750,6 +2750,90 @@ def run(path, invoices):
   return { csvs: { customers, invoices_raw: invoices, invoice_lines: lines }, text: { "billing.py": legacy } };
 }
 
+/* ------------------------------------------------------------------ project (a depot launch project) */
+// Kolanut's Abuja depot launch for the project management course: tasks with three-point
+// estimates, dependencies and daily costs, weekly progress for the first ten weeks (status
+// date: end of week 10), the risk register and pending change requests. Days are working
+// days from the start on Monday 1 June 2026. All of it is fictional. Generated last, from its own seed.
+function projectData() {
+  seed = 20271201;
+  const T = [
+    ["A1", "Approve business case and charter", "Initiation", "Finance", 2, 3, 5, "", 180000],
+    ["A2", "Select site and sign lease", "Initiation", "Operations", 8, 10, 15, "A1", 220000],
+    ["A3", "Obtain building and trading permits", "Initiation", "Operations", 10, 15, 30, "A2", 150000],
+    ["B1", "Design depot layout", "Facilities", "Facilities", 5, 7, 10, "A2", 260000],
+    ["B2", "Fit-out works: floor, power and security", "Facilities", "Contractor", 20, 25, 40, "A3;B1", 950000],
+    ["B3", "Order racking", "Facilities", "Procurement", 3, 5, 8, "B1", 120000],
+    ["B4", "Import and clear racking", "Facilities", "Procurement", 15, 20, 35, "B3", 400000],
+    ["B5", "Install racking", "Facilities", "Contractor", 5, 6, 9, "B2;B4", 700000],
+    ["B6", "Install generator and solar backup", "Facilities", "Contractor", 6, 8, 12, "B2", 850000],
+    ["C1", "Choose warehouse system", "Systems", "IT", 5, 7, 10, "A1", 200000],
+    ["C2", "Buy laptops, scanners and printers", "Systems", "IT", 5, 10, 20, "C1", 650000],
+    ["C3", "Install network and internet", "Systems", "IT", 4, 5, 9, "B2", 300000],
+    ["C4", "Configure system and load data", "Systems", "IT", 8, 10, 15, "C1", 280000],
+    ["C5", "Test the system end to end", "Systems", "IT", 4, 5, 8, "C2;C3;C4", 240000],
+    ["D1", "Hire depot manager", "People", "HR", 15, 20, 30, "A1", 90000],
+    ["D2", "Hire 12 depot staff", "People", "HR", 15, 20, 25, "D1", 110000],
+    ["D3", "Train staff", "People", "Operations", 5, 6, 8, "D2;C5", 420000],
+    ["E1", "Agree supplier delivery schedules", "Operations", "Procurement", 5, 8, 12, "A2", 100000],
+    ["E2", "Stock opening inventory", "Operations", "Operations", 4, 5, 7, "B5;E1;C5", 600000],
+    ["E3", "Set up delivery routes and trucks", "Operations", "Operations", 8, 10, 14, "E1", 380000],
+    ["F1", "Safety inspection", "Launch", "Facilities", 2, 3, 6, "B5;B6", 150000],
+    ["F2", "Trial run", "Launch", "Operations", 4, 5, 7, "D3;E2;F1;E3", 520000],
+    ["F3", "Opening day", "Launch", "Operations", 1, 1, 2, "F2", 800000],
+  ];
+  const tasks = T.map(([task_id, name, phase, owner, o, m, p, preds, daily]) => ({ task_id, name, phase, owner, optimistic_days: o, likely_days: m, pessimistic_days: p, predecessors: preds, daily_cost_ngn: daily }));
+  // Actual performance: how much longer and dearer each task turns out than its likely estimate.
+  const DUR = { A3: 1.6, B4: 1.45, D1: 1.25, B2: 1.1 };
+  const COST = { B4: 1.3, C2: 1.35, B2: 1.08 };
+  const byId = Object.fromEntries(tasks.map((t) => [t.task_id, t]));
+  const actual = {};
+  for (const t of tasks) {
+    const preds = t.predecessors ? t.predecessors.split(";") : [];
+    const start = preds.length ? Math.max(...preds.map((p) => actual[p].finish)) : 0;
+    const dur = Math.round(t.likely_days * (DUR[t.task_id] ?? 0.95 + rand() * 0.15));
+    actual[t.task_id] = { start, finish: start + dur, dur, costFactor: COST[t.task_id] ?? 0.97 + rand() * 0.08 };
+  }
+  const weekly = [];
+  for (let week = 1; week <= 10; week++) {
+    const day = week * 5;
+    for (const t of tasks) {
+      const a = actual[t.task_id];
+      if (day <= a.start) continue;
+      const done = Math.min(1, (day - a.start) / a.dur);
+      const spentDays = Math.min(day, a.finish) - a.start;
+      weekly.push({
+        week,
+        task_id: t.task_id,
+        percent_complete: Math.round(done * 100),
+        actual_cost_ngn: Math.round((spentDays * byId[t.task_id].daily_cost_ngn * a.costFactor) / 1000) * 1000,
+      });
+    }
+  }
+  const risks = [
+    ["R01", "Permits are delayed further by the planning office", 0.4, 3000000, 15, "Operations", "Weekly follow-up; hire a permit agent"],
+    ["R02", "Naira weakens further, raising imported equipment costs", 0.5, 6000000, 0, "Finance", "Buy dollars forward for remaining imports"],
+    ["R03", "Racking damaged in transit", 0.1, 9000000, 20, "Procurement", "Insure shipment; inspect at port"],
+    ["R04", "Shortlisted staff decline offers", 0.3, 800000, 10, "HR", "Keep a reserve list of candidates"],
+    ["R05", "Grid power too unreliable for the system", 0.7, 2000000, 0, "Facilities", "Generator and solar backup (task B6)"],
+    ["R06", "Rainy season slows fit-out works", 0.2, 1500000, 10, "Contractor", "Schedule indoor work first"],
+    ["R07", "Warehouse system integration problems", 0.3, 1000000, 7, "IT", "Vendor support contract during testing"],
+    ["R08", "Suppliers insist on larger minimum orders", 0.2, 800000, 0, "Procurement", "Negotiate staged deliveries"],
+    ["R09", "Theft from the site during fit-out", 0.15, 2500000, 0, "Facilities", "Security guards from day one of fit-out"],
+    ["R10", "Opening slips into the December peak, losing sales", 0.25, 12000000, 0, "Operations", "Protect the critical path; decide changes quickly"],
+    ["R11", "Delivery trucks arrive late from the dealer", 0.25, 1200000, 5, "Operations", "Order trucks by week 12"],
+    ["R12", "Depot manager leaves during the project", 0.05, 1500000, 15, "HR", "Retention bonus at opening"],
+  ].map(([risk_id, description, probability, impact_ngn, impact_days, owner, response]) => ({ risk_id, description, probability, impact_ngn, impact_days, owner, response }));
+  const changes = [
+    ["CR1", 9, "Add a cold room for chilled drinks", "Sales", "B2", 15, 12000000],
+    ["CR2", 9, "Hire 4 more depot staff for longer opening hours", "Operations", "", 0, 2400000],
+    ["CR3", 10, "Pay the contractor for weekend working on fit-out", "Project manager", "B2", -6, 2500000],
+    ["CR4", 10, "Add a customer pick-up counter", "Sales", "B2", 5, 3000000],
+    ["CR5", 10, "Upgrade laptops to a higher specification", "IT", "C2", 3, 1800000],
+  ].map(([change_id, requested_week, description, requested_by, affects_task, extra_days, extra_cost_ngn]) => ({ change_id, requested_week, description, requested_by, affects_task, extra_days, extra_cost_ngn, decision: "pending" }));
+  return { tasks, weekly_status: weekly, risks, changes };
+}
+
 /* ------------------------------------------------------------------ write */
 const SQL = await initSqlJs();
 const L = logistics();
@@ -2813,6 +2897,7 @@ for (const [name, obj] of Object.entries(terraformFiles(CLOUD.resources))) write
   for (const [table, rows] of Object.entries(csvs)) writeCsv("invoicing", table, rows);
   for (const [name, body] of Object.entries(text)) writeText("invoicing", name, body);
 }
+for (const [table, rows] of Object.entries(projectData())) writeCsv("project", table, rows);
 
 // Summary for the build log
 const counts = db.exec("SELECT (SELECT COUNT(*) FROM customers), (SELECT COUNT(*) FROM shipments), (SELECT COUNT(*) FROM payments), (SELECT COUNT(*) FROM routes), (SELECT COUNT(*) FROM employees)")[0].values[0];

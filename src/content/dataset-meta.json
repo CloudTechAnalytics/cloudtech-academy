@@ -6399,6 +6399,443 @@
    }
   }
  },
+ "project": {
+  "zipBytes": 2752,
+  "files": {
+   "changes": {
+    "rows": 5,
+    "bytes": 486,
+    "columns": [
+     {
+      "name": "change_id",
+      "type": "text",
+      "missing": 0,
+      "distinct": 5
+     },
+     {
+      "name": "requested_week",
+      "type": "number",
+      "missing": 0,
+      "distinct": 2,
+      "min": 9,
+      "max": 10
+     },
+     {
+      "name": "description",
+      "type": "text",
+      "missing": 0,
+      "distinct": 5
+     },
+     {
+      "name": "requested_by",
+      "type": "text",
+      "missing": 0,
+      "distinct": 4
+     },
+     {
+      "name": "affects_task",
+      "type": "text",
+      "missing": 1,
+      "distinct": 2
+     },
+     {
+      "name": "extra_days",
+      "type": "number",
+      "missing": 0,
+      "distinct": 5,
+      "min": -6,
+      "max": 15
+     },
+     {
+      "name": "extra_cost_ngn",
+      "type": "number",
+      "missing": 0,
+      "distinct": 5,
+      "min": 1800000,
+      "max": 12000000
+     },
+     {
+      "name": "decision",
+      "type": "text",
+      "missing": 0,
+      "distinct": 1
+     }
+    ],
+    "preview": [
+     [
+      "CR1",
+      "9",
+      "Add a cold room for chilled drinks",
+      "Sales",
+      "B2",
+      "15",
+      "12000000",
+      "pending"
+     ],
+     [
+      "CR2",
+      "9",
+      "Hire 4 more depot staff for longer opening hours",
+      "Operations",
+      "",
+      "0",
+      "2400000",
+      "pending"
+     ],
+     [
+      "CR3",
+      "10",
+      "Pay the contractor for weekend working on fit-out",
+      "Project manager",
+      "B2",
+      "-6",
+      "2500000",
+      "pending"
+     ],
+     [
+      "CR4",
+      "10",
+      "Add a customer pick-up counter",
+      "Sales",
+      "B2",
+      "5",
+      "3000000",
+      "pending"
+     ],
+     [
+      "CR5",
+      "10",
+      "Upgrade laptops to a higher specification",
+      "IT",
+      "C2",
+      "3",
+      "1800000",
+      "pending"
+     ]
+    ]
+   },
+   "risks": {
+    "rows": 12,
+    "bytes": 1315,
+    "columns": [
+     {
+      "name": "risk_id",
+      "type": "text",
+      "missing": 0,
+      "distinct": 12
+     },
+     {
+      "name": "description",
+      "type": "text",
+      "missing": 0,
+      "distinct": 12
+     },
+     {
+      "name": "probability",
+      "type": "number",
+      "missing": 0,
+      "distinct": 9,
+      "min": 0.05,
+      "max": 0.7
+     },
+     {
+      "name": "impact_ngn",
+      "type": "number",
+      "missing": 0,
+      "distinct": 10,
+      "min": 800000,
+      "max": 12000000
+     },
+     {
+      "name": "impact_days",
+      "type": "number",
+      "missing": 0,
+      "distinct": 6,
+      "min": 0,
+      "max": 20
+     },
+     {
+      "name": "owner",
+      "type": "text",
+      "missing": 0,
+      "distinct": 7
+     },
+     {
+      "name": "response",
+      "type": "text",
+      "missing": 0,
+      "distinct": 12
+     }
+    ],
+    "preview": [
+     [
+      "R01",
+      "Permits are delayed further by the planning office",
+      "0.4",
+      "3000000",
+      "15",
+      "Operations",
+      "Weekly follow-up; hire a permit agent"
+     ],
+     [
+      "R02",
+      "Naira weakens further, raising imported equipment costs",
+      "0.5",
+      "6000000",
+      "0",
+      "Finance",
+      "Buy dollars forward for remaining imports"
+     ],
+     [
+      "R03",
+      "Racking damaged in transit",
+      "0.1",
+      "9000000",
+      "20",
+      "Procurement",
+      "Insure shipment; inspect at port"
+     ],
+     [
+      "R04",
+      "Shortlisted staff decline offers",
+      "0.3",
+      "800000",
+      "10",
+      "HR",
+      "Keep a reserve list of candidates"
+     ],
+     [
+      "R05",
+      "Grid power too unreliable for the system",
+      "0.7",
+      "2000000",
+      "0",
+      "Facilities",
+      "Generator and solar backup (task B6)"
+     ],
+     [
+      "R06",
+      "Rainy season slows fit-out works",
+      "0.2",
+      "1500000",
+      "10",
+      "Contractor",
+      "Schedule indoor work first"
+     ]
+    ]
+   },
+   "tasks": {
+    "rows": 23,
+    "bytes": 1584,
+    "columns": [
+     {
+      "name": "task_id",
+      "type": "text",
+      "missing": 0,
+      "distinct": 23
+     },
+     {
+      "name": "name",
+      "type": "text",
+      "missing": 0,
+      "distinct": 23
+     },
+     {
+      "name": "phase",
+      "type": "text",
+      "missing": 0,
+      "distinct": 6
+     },
+     {
+      "name": "owner",
+      "type": "text",
+      "missing": 0,
+      "distinct": 7
+     },
+     {
+      "name": "optimistic_days",
+      "type": "number",
+      "missing": 0,
+      "distinct": 10,
+      "min": 1,
+      "max": 20
+     },
+     {
+      "name": "likely_days",
+      "type": "number",
+      "missing": 0,
+      "distinct": 10,
+      "min": 1,
+      "max": 25
+     },
+     {
+      "name": "pessimistic_days",
+      "type": "number",
+      "missing": 0,
+      "distinct": 15,
+      "min": 2,
+      "max": 40
+     },
+     {
+      "name": "predecessors",
+      "type": "text",
+      "missing": 1,
+      "distinct": 16
+     },
+     {
+      "name": "daily_cost_ngn",
+      "type": "number",
+      "missing": 0,
+      "distinct": 22,
+      "min": 90000,
+      "max": 950000
+     }
+    ],
+    "preview": [
+     [
+      "A1",
+      "Approve business case and charter",
+      "Initiation",
+      "Finance",
+      "2",
+      "3",
+      "5",
+      "",
+      "180000"
+     ],
+     [
+      "A2",
+      "Select site and sign lease",
+      "Initiation",
+      "Operations",
+      "8",
+      "10",
+      "15",
+      "A1",
+      "220000"
+     ],
+     [
+      "A3",
+      "Obtain building and trading permits",
+      "Initiation",
+      "Operations",
+      "10",
+      "15",
+      "30",
+      "A2",
+      "150000"
+     ],
+     [
+      "B1",
+      "Design depot layout",
+      "Facilities",
+      "Facilities",
+      "5",
+      "7",
+      "10",
+      "A2",
+      "260000"
+     ],
+     [
+      "B2",
+      "Fit-out works: floor, power and security",
+      "Facilities",
+      "Contractor",
+      "20",
+      "25",
+      "40",
+      "A3;B1",
+      "950000"
+     ],
+     [
+      "B3",
+      "Order racking",
+      "Facilities",
+      "Procurement",
+      "3",
+      "5",
+      "8",
+      "B1",
+      "120000"
+     ]
+    ]
+   },
+   "weekly_status": {
+    "rows": 105,
+    "bytes": 1781,
+    "columns": [
+     {
+      "name": "week",
+      "type": "number",
+      "missing": 0,
+      "distinct": 10,
+      "min": 1,
+      "max": 10
+     },
+     {
+      "name": "task_id",
+      "type": "text",
+      "missing": 0,
+      "distinct": 14
+     },
+     {
+      "name": "percent_complete",
+      "type": "number",
+      "missing": 0,
+      "distinct": 28,
+      "min": 8,
+      "max": 100
+     },
+     {
+      "name": "actual_cost_ngn",
+      "type": "number",
+      "missing": 0,
+      "distinct": 45,
+      "min": 175000,
+      "max": 13338000
+     }
+    ],
+    "preview": [
+     [
+      "1",
+      "A1",
+      "100",
+      "543000"
+     ],
+     [
+      "1",
+      "A2",
+      "20",
+      "452000"
+     ],
+     [
+      "1",
+      "C1",
+      "29",
+      "411000"
+     ],
+     [
+      "1",
+      "D1",
+      "8",
+      "175000"
+     ],
+     [
+      "2",
+      "A1",
+      "100",
+      "543000"
+     ],
+     [
+      "2",
+      "A2",
+      "70",
+      "1583000"
+     ]
+    ]
+   }
+  }
+ },
  "rentals": {
   "zipBytes": 38252,
   "files": {

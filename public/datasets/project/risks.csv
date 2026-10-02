@@ -1,0 +1,13 @@
+risk_id,description,probability,impact_ngn,impact_days,owner,response
+R01,Permits are delayed further by the planning office,0.4,3000000,15,Operations,Weekly follow-up; hire a permit agent
+R02,"Naira weakens further, raising imported equipment costs",0.5,6000000,0,Finance,Buy dollars forward for remaining imports
+R03,Racking damaged in transit,0.1,9000000,20,Procurement,Insure shipment; inspect at port
+R04,Shortlisted staff decline offers,0.3,800000,10,HR,Keep a reserve list of candidates
+R05,Grid power too unreliable for the system,0.7,2000000,0,Facilities,Generator and solar backup (task B6)
+R06,Rainy season slows fit-out works,0.2,1500000,10,Contractor,Schedule indoor work first
+R07,Warehouse system integration problems,0.3,1000000,7,IT,Vendor support contract during testing
+R08,Suppliers insist on larger minimum orders,0.2,800000,0,Procurement,Negotiate staged deliveries
+R09,Theft from the site during fit-out,0.15,2500000,0,Facilities,Security guards from day one of fit-out
+R10,"Opening slips into the December peak, losing sales",0.25,12000000,0,Operations,Protect the critical path; decide changes quickly
+R11,Delivery trucks arrive late from the dealer,0.25,1200000,5,Operations,Order trucks by week 12
+R12,Depot manager leaves during the project,0.05,1500000,15,HR,Retention bonus at opening

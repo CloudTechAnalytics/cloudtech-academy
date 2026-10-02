@@ -396,6 +396,59 @@ export const TRACKS: Track[] = [
     ],
   },
   {
+    id: "project-manager",
+    slug: "project-manager",
+    title: "Become a Project Manager",
+    outcome: "Plan, deliver and steer projects with evidence, not hope",
+    summary:
+      "The route to project coordinator and junior project manager roles. Learn to plan a project properly, give honest dates and budgets, measure progress with earned value, manage risks and changes, and report to sponsors so they can decide. Add business analysis and Agile delivery, and the data skills to back every status report with numbers.",
+    badge: "CloudTech Project Manager",
+    badgeCode: "PROJECTMGR",
+    skills: [
+      "Charters, scope and work breakdown",
+      "Estimating, scheduling and the critical path",
+      "Schedule risk and honest dates",
+      "Earned value and forecasting",
+      "Risk and change management",
+      "Status reporting to sponsors",
+    ],
+    stages: [
+      {
+        title: "Foundation",
+        summary: "The tools every project manager uses daily.",
+        items: [
+          { kind: "course", courseId: "excel-for-data-analysis", why: "Budgets, trackers and status data in spreadsheets." },
+          { kind: "course", courseId: "python-for-data-analytics", why: "pandas for schedules, earned value and simulations at any size.", required: false },
+        ],
+      },
+      {
+        title: "Core",
+        summary: "Plan, deliver and steer a project.",
+        items: [
+          { kind: "course", courseId: "project-management-fundamentals", why: "Scope, estimates, the critical path, simulation, earned value, risk and change control on a depot launch." },
+          { kind: "course", courseId: "business-analysis-fundamentals", why: "Requirements and stakeholders: what the project must deliver and for whom." },
+          { kind: "course", courseId: "agile-business-analysis", why: "Backlogs, user stories and sprints for projects delivered iteratively." },
+        ],
+      },
+      {
+        title: "Specialist",
+        summary: "Go further into delivery and products.",
+        items: [
+          { kind: "course", courseId: "process-improvement-bpmn-lean", why: "Map and improve the processes projects change.", required: false },
+          { kind: "upcoming", title: "Product Management Fundamentals", why: "Discovery, prioritisation, roadmaps and measuring outcomes for products.", level: 2 },
+        ],
+      },
+      {
+        title: "Career",
+        summary: "Turn your skills into applications that get interviews.",
+        items: [
+          { kind: "course", courseId: "career-essentials", why: "An ATS-friendly CV and a LinkedIn profile recruiters can find." },
+          { kind: "course", courseId: "build-your-student-portfolio", why: "One link that shows your project reviews and plans.", required: false },
+        ],
+      },
+    ],
+  },
+  {
     id: "career-study-skills",
     slug: "career-study-skills",
     title: "Career & Study Skills",
