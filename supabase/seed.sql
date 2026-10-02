@@ -59103,6 +59103,1716 @@ $md$, true, true, 8, array['bac-08-p1', 'bac-08-t1']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 
+-- Course: Data Scientist Capstone: From Model to Decision
+insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
+values ('data-scientist-capstone', 'full', null, 'data-scientist-capstone', 'DSC', 'Data Scientist Capstone: From Model to Decision', 'Take an online shop''s failed pay-on-delivery orders from a vague request to a calling policy: leakage audit, point-in-time features, time-based validation, calibration, a randomised trial turned into a threshold in naira, fairness checks and a monitoring plan.', 'The capstone of the Data Scientist track. Kasuwa, an online shop, loses about ₦40m a year to pay-on-delivery orders that fail at the door, and its head of operations wants "a model that stops bad orders". You''ll frame it as a decision (whom to phone before dispatch), audit 67,000 orders for leaks, build customer history as it was known at checkout, and validate models over time, testing only on orders the trial didn''t touch. Then you''ll check calibration, use a randomised trial of confirmation calls to measure what a call actually prevents at each level of risk, and set the threshold where calls pay for themselves. Finally, you''ll check the model city by city (it badly misses Kaduna, a market it has never seen), decide whether it should use location at all, write the model card, and plan monitoring that would catch the problems a single drift number hides. Every number comes from running the code.', 'data-science', 'advanced', 4, 'Career project', 12, true, 'available', true, array['Framing a model as a decision with a naira metric', 'Leakage audits', 'Point-in-time features with merge_asof', 'Time-based validation', 'Calibration and capacity', 'Uplift from a randomised trial', 'Cost-based thresholds', 'Fairness checks by group', 'Model cards and monitoring plans']::text[], array['Machine Learning Fundamentals and Feature Engineering and Model Evaluation', 'Experimentation and A/B Testing is helpful for lesson 6']::text[], 'Kasuwa: who to call before dispatch', true, true, true, true, false, 60, 44)
+on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level = excluded.level, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('dsc-m01', 'data-scientist-capstone', 'The Problem and the Plan', 1, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('data-scientist-capstone:the-problem-and-the-plan', 'data-scientist-capstone', 'dsc-m01', 'the-problem-and-the-plan', 'The problem and the plan', 'Meet Kasuwa, an online shop losing money on pay-on-delivery orders that fail at the door. Turn "build a model to stop bad orders" into a decision, a target, a prediction moment and a metric in naira.', 25, $md$
+## The problem
+
+This is the capstone of the Data Scientist track. There's nothing new to learn here. Instead, you'll take a business problem from a vague request to a model that's been tested, costed, checked for fairness, and planned for monitoring.
+
+The company is **Kasuwa**, an online shop that launched in January 2025 and delivers across Nigeria. Most customers choose **pay on delivery**: they pay the rider when the parcel arrives. Too often, the rider arrives and the customer refuses the parcel or can't be reached. Each failed delivery costs Kasuwa about **₦6,500**: two rider trips, the return to the warehouse and restocking.
+
+The head of operations has sent this:
+
+> "Failed deliveries are eating our margin. I want a model that stops bad orders. In April we trialled phoning customers to confirm their order before dispatch, and it seemed to help, but calling everyone is expensive. Can data science tell us who to call?"
+
+"A model that stops bad orders" isn't a plan. Stopping orders loses sales, and "bad" isn't defined. Your first job is to frame the problem so that a model can actually help a decision.
+
+## The concept
+
+**Start from the decision**
+
+A model is only useful if it changes a decision. Here the decision is: **for each pay-on-delivery order, at checkout, should we phone the customer to confirm before dispatch?** A call costs about **₦250** of agent time. Blocking orders, or demanding a deposit, would be harsher decisions with more risk of losing good customers, so start with the gentlest one.
+
+**The target and the prediction moment**
+
+- **Unit**: one pay-on-delivery order that was dispatched (cancelled orders never reach a rider).
+- **Target**: `failed` = 1 if the delivery failed.
+- **Prediction moment**: checkout. Every feature must be something Kasuwa knew **at that moment**. This rule matters more than any choice of algorithm.
+
+**A metric in naira**
+
+AUC tells you how well the model ranks orders. The business cares about **net naira saved**: failures prevented × ₦6,500, minus calls × ₦250. You'll need both, and the second needs evidence of what a call actually prevents. That's what the April trial is for.
+
+**The arc of the project**
+
+| Stage | Lesson |
+| :-- | :-- |
+| Frame the problem | 1 |
+| Audit the data, and find what's known at checkout | 2 |
+| Build point-in-time features | 3 |
+| Validate models over time | 4 |
+| Calibrate and choose thresholds | 5 |
+| Use the trial to decide who to call | 6 |
+| Check fairness and explain the model | 7 |
+| Plan monitoring and present | 8 |
+
+## Example
+
+Load the orders and see how often each kind of order fails:
+
+```python
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/deliveries/"
+orders = pd.read_csv(base + "orders.csv", parse_dates=["order_time", "resolved_at"])
+print(orders.shape)
+orders.groupby("payment_method")["status"].value_counts(normalize=True).unstack().round(3)
+```
+
+```text
+(66884, 16)
+status           Cancelled  Delivered  Failed delivery
+payment_method
+Pay on delivery      0.030      0.790             0.18
+Prepaid              0.029      0.941             0.03
+```
+
+Prepaid orders rarely fail; pay-on-delivery orders fail far more often. Now the size of the problem over the last year:
+
+```python
+pod = orders[(orders["payment_method"] == "Pay on delivery") & (orders["status"] != "Cancelled")]
+last_year = pod[pod["order_time"] >= "2025-07-01"]
+failures = (last_year["status"] == "Failed delivery").sum()
+print(f"Dispatched pay-on-delivery orders, July 2025 to June 2026: {len(last_year):,}")
+print(f"Failed: {failures:,} ({failures / len(last_year):.1%})")
+print(f"Cost at ₦6,500 each: ₦{failures * 6500 / 1e6:,.1f}m a year")
+```
+
+```text
+Dispatched pay-on-delivery orders, July 2025 to June 2026: 33,835
+Failed: 6,193 (18.3%)
+Cost at ₦6,500 each: ₦40.3m a year
+```
+
+That's the prize, but a model can't win all of it. Some failures can't be prevented by any call. The realistic target is the share a call can prevent, at a cost lower than what it saves.
+
+## Walkthrough
+
+1. Download the dataset below and open it in Colab.
+2. Run the two cells.
+3. Read the column descriptions on the dataset page. For each column, ask: would Kasuwa know this at checkout?
+4. Write down what success looks like: a net saving per month, and a check that good customers aren't harmed.
+5. Write the project framing (the task below).
+
+## Practice
+
+```dataset
+{"dataset": "deliveries", "files": ["orders", "customers"]}
+```
+
+```answer
+{
+  "id": "dsc-01-p1",
+  "prompt": "Across the **whole dataset**, what percentage of dispatched **pay-on-delivery** orders failed? One decimal place.",
+  "answer": 18.6,
+  "format": "percent",
+  "dataset": "deliveries",
+  "files": ["orders"],
+  "pyVerify": "round(100 * (pod['status'] == 'Failed delivery').mean(), 1)",
+  "hint": "Use pod, not last_year.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "dsc-01-p2",
+  "prompt": "What did failed pay-on-delivery deliveries cost from **July 2025 to June 2026**, at ₦6,500 each, in ₦ millions? One decimal place.",
+  "answer": 40.3,
+  "format": "number",
+  "dataset": "deliveries",
+  "files": ["orders"],
+  "pyVerify": "round(failures * 6500 / 1e6, 1)",
+  "hint": "The last line printed.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "dsc-01-t1",
+  "prompt": "Write the **project framing** (60 to 140 words): the **decision** the model supports, the **target**, the **prediction moment**, the **metric** in naira, and one thing the model must **not** do.",
+  "minutes": 7,
+  "rows": 7,
+  "placeholder": "Decision: ...\nTarget: ...",
+  "rules": [
+    { "label": "Names the decision (call, confirm)", "pattern": "call|confirm" },
+    { "label": "Defines the target (failed delivery)", "pattern": "fail" },
+    { "label": "States the prediction moment (checkout, when the order is placed)", "pattern": "checkout|when the order is placed|at the time of (the )?order|order time" },
+    { "label": "A metric in naira (saving, cost, net)", "pattern": "₦|naira|net|saving|cost" },
+    { "label": "Something the model must not do", "pattern": "must not|mustn't|shouldn't|should not|never|avoid" },
+    { "label": "Between 60 and 140 words", "minWords": 60, "maxWords": 140 }
+  ],
+  "sample": "Decision: for each pay-on-delivery order, at checkout, should we phone the customer to confirm before dispatch?\nTarget: failed = 1 if a dispatched pay-on-delivery order fails at the door (refused or unreachable).\nPrediction moment: checkout. Only information known when the order is placed can be used.\nMetric: net saving per month = failures prevented × ₦6,500 − calls × ₦250, measured against the April trial. AUC is a check, not the goal.\nMust not: block or delay orders, or treat customers worse because of where they live; a call is a light-touch action, and anything harsher needs a separate review.",
+  "note": "The metric needs the trial: a model that ranks well is worthless if calls don't change outcomes.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why frame the project around the decision rather than \"predict failed deliveries\"?",
+    "options": ["It's shorter", "A prediction only creates value if it changes what the business does", "Models need decisions to train", "The board prefers it"],
+    "answer": 1,
+    "explanation": "Decision first, then the prediction that informs it."
+  },
+  {
+    "prompt": "What does \"prediction moment: checkout\" rule out?",
+    "options": ["Using the customer's city", "Using anything learned after checkout, such as delivery attempts", "Using past orders", "Using the basket value"],
+    "answer": 1,
+    "explanation": "Features must be known at the moment of the decision."
+  },
+  {
+    "prompt": "Why is AUC not enough as the success measure?",
+    "options": ["It's hard to compute", "It measures ranking, not whether acting on the ranking saves money", "It's always high", "The business can't read it"],
+    "answer": 1,
+    "explanation": "Value depends on what the action achieves and costs."
+  }
+]
+```
+$md$, true, true, 1, array['dsc-01-p1', 'dsc-01-p2', 'dsc-01-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('dsc-m02', 'data-scientist-capstone', 'Audit the Data', 2, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('data-scientist-capstone:audit-the-data', 'data-scientist-capstone', 'dsc-m02', 'audit-the-data', 'Audit the data', 'Sort every column into known at checkout or known later, find the leaks before they find you, and explore what''s linked to failed deliveries.', 25, $md$
+## The problem
+
+The data was exported for you by an engineer who didn't know what you'd use it for. Some columns describe the order at checkout. Others were filled in **after** delivery, and one file holds totals calculated on the day of the export. A model trained on those will look brilliant in a notebook and fail in production. Before any modelling, audit the data.
+
+## The concept
+
+**Known at checkout, or known later?**
+
+| Known at checkout | Known later |
+| :-- | :-- |
+| City, device, category, basket value, promo code, payment method, promised days, address | Status, failure reason, delivery attempts, resolved time |
+| The customer's signup details and **past** orders | The customer's **lifetime** totals as of June 2026 |
+
+The trial's `call_group` is a special case. It was assigned after checkout and it **changes** the outcome. Never use it as a feature; it matters for evaluation (lesson 4) and for the trial (lesson 6).
+
+**Leaks hide in plain sight**
+
+`delivery_attempts` is the classic leak. Failed orders always have two or three attempts, so it predicts failure almost perfectly, but you only know it once the delivery has happened. `lifetime_failed_deliveries` in `customers.csv` is subtler: it includes failures that happened **after** the order you're predicting.
+
+**Explore with a question**
+
+For each feature you'll use, look at the failure rate by its values. You're looking for strong patterns, odd values and anything that changes over time.
+
+## Example
+
+Check whether the obvious leak really is one:
+
+```python
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/deliveries/"
+orders = pd.read_csv(base + "orders.csv", parse_dates=["order_time", "resolved_at"])
+pod = orders[(orders["payment_method"] == "Pay on delivery") & (orders["status"] != "Cancelled")].copy()
+pod["failed"] = (pod["status"] == "Failed delivery").astype(int)
+pod.groupby("delivery_attempts")["failed"].agg(orders="size", failure_rate="mean").round(3)
+```
+
+```text
+orders  failure_rate
+delivery_attempts
+1                   26300         0.000
+2                   10327         0.364
+3                    3748         1.000
+```
+
+Three attempts means certain failure; one attempt means certain success. It's an outcome, not a predictor. Now the features known at checkout:
+
+```python
+for col in ["promised_days", "address_has_house_number", "promo_code_used", "city"]:
+    print(pod.groupby(col)["failed"].agg(orders="size", failure_rate="mean").round(3), "\n")
+```
+
+```text
+orders  failure_rate
+promised_days
+1                7886         0.121
+2               13214         0.149
+3                8415         0.192
+4                6407         0.234
+5                3258         0.312
+6                1051         0.365
+7                 144         0.424
+
+                          orders  failure_rate
+address_has_house_number
+0                           7204         0.246
+1                          33171         0.173
+
+                 orders  failure_rate
+promo_code_used
+0                 32685         0.177
+1                  7690         0.224
+
+               orders  failure_rate
+city
+Abuja            5855         0.190
+Benin City       3122         0.260
+Enugu            3300         0.228
+Ibadan           3981         0.165
+Kaduna            593         0.408
+Kano             3559         0.274
+Lagos           15817         0.135
+Port Harcourt    4148         0.197
+```
+
+Longer delivery promises fail much more often: customers have more time to change their mind or buy elsewhere. Addresses without a house number fail more, and so do promo orders. Kaduna stands out: it only launched in April 2026, its failure rate is very high, and it has few orders. Remember that when the model meets it for the first time.
+
+How the failure rate moves over time:
+
+```python
+pod.groupby(pod["order_time"].dt.to_period("Q"))["failed"].mean().round(3)
+```
+
+```text
+order_time
+2025Q1    0.227
+2025Q2    0.184
+2025Q3    0.185
+2025Q4    0.220
+2026Q1    0.184
+2026Q2    0.154
+Freq: Q-DEC, Name: failed, dtype: float64
+```
+
+The launch quarter was the worst, and October to December 2025 nearly as bad: that's the November and December sale, with more promo codes and impulse buys. The last quarter is the lowest, but half its orders got a confirmation call in the trial, which lowers the failure rate. Keep that in mind: the trial changes the data you'll test on.
+
+## Walkthrough
+
+1. Run the cells.
+2. Make a table of every column in both files: known at checkout (yes or no), and whether you'll use it.
+3. Plot the failure rate by month, split by `call_group` from April 2026. What does the gap show?
+4. Look at the failure rate by device, category and acquisition channel (from `customers.csv`).
+5. Write the leakage audit (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "dsc-02-p1",
+  "prompt": "What's the failure rate of dispatched pay-on-delivery orders whose address has **no house number**? One decimal place.",
+  "answer": 24.6,
+  "format": "percent",
+  "dataset": "deliveries",
+  "files": ["orders"],
+  "pyVerify": "round(100 * pod.loc[pod['address_has_house_number'] == 0, 'failed'].mean(), 1)",
+  "hint": "The address_has_house_number table, the row for 0.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "dsc-02-p2",
+  "prompt": "What's the failure rate for orders with a promised delivery of **5 days or more**? One decimal place.",
+  "answer": 32.8,
+  "format": "percent",
+  "dataset": "deliveries",
+  "files": ["orders"],
+  "pyVerify": "round(100 * pod.loc[pod['promised_days'] >= 5, 'failed'].mean(), 1)",
+  "hint": "Filter on promised_days >= 5, then take the mean of failed.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "dsc-02-t1",
+  "prompt": "Write the **leakage audit** (50 to 140 words): list at least **four** columns you **won't** use as features, and say **why** each one is unsafe.",
+  "minutes": 7,
+  "rows": 7,
+  "placeholder": "- delivery_attempts: ...",
+  "rules": [
+    { "label": "Covers delivery_attempts", "pattern": "delivery_attempts|attempts" },
+    { "label": "Covers the lifetime totals", "pattern": "lifetime" },
+    { "label": "Covers call_group", "pattern": "call_group|call group|trial" },
+    { "label": "Covers status, failure_reason or resolved_at", "pattern": "status|failure_reason|resolved" },
+    { "label": "Explains timing (after checkout, after delivery, future)", "pattern": "after|future|later|export", "min": 2 },
+    { "label": "Between 50 and 140 words", "minWords": 50, "maxWords": 140 }
+  ],
+  "sample": "- delivery_attempts: only known after the rider has tried; failed orders always have 2 or 3, so it would predict perfectly in the notebook and be useless at checkout.\n- status, failure_reason, resolved_at: these are the outcome itself, recorded after delivery.\n- lifetime_orders and lifetime_failed_deliveries: calculated at the export date, so they include orders and failures in the future of the order being predicted. I'll rebuild them point-in-time.\n- call_group: assigned after checkout by the trial, and it changes the outcome. It's for evaluation and the uplift analysis, not a feature.",
+  "note": "Each leak is about timing. Asking \"when would we know this?\" catches all of them.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "A feature predicts the target almost perfectly. What should you suspect first?",
+    "options": ["A great feature", "A leak: it's probably recorded after the outcome", "Overfitting", "A small sample"],
+    "answer": 1,
+    "explanation": "Too good to be true usually is."
+  },
+  {
+    "prompt": "Why is lifetime_failed_deliveries unsafe, even though it describes the customer?",
+    "options": ["It's often missing", "It counts failures after the order being predicted", "It's a text column", "Customers can change it"],
+    "answer": 1,
+    "explanation": "Totals as of the export date look into the future."
+  },
+  {
+    "prompt": "Why mustn't call_group be used as a feature?",
+    "options": ["It's random", "It was assigned after checkout and changes the outcome", "It's mostly blank", "It's a string"],
+    "answer": 1,
+    "explanation": "It's a treatment, not a description of the order."
+  }
+]
+```
+$md$, true, true, 2, array['dsc-02-p1', 'dsc-02-p2', 'dsc-02-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('dsc-m03', 'data-scientist-capstone', 'Point-in-Time Features', 3, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('data-scientist-capstone:point-in-time-features', 'data-scientist-capstone', 'dsc-m03', 'point-in-time-features', 'Point-in-time features', 'Build the customer''s history as it was at checkout, including only failures that had already happened. Prove the difference against the tempting shortcut and the leaky lifetime totals.', 30, $md$
+## The problem
+
+A customer's past is the best clue to their next order. Customers who refused parcels before are more likely to refuse again. But "the past" has to mean the past **as Kasuwa knew it at checkout**. A customer can place a second order before their first has even been delivered. Counting the first order's failure would use information nobody had yet.
+
+## The concept
+
+**Point in time**
+
+For each order, a history feature must use only events that happened **before** the order time. For failures, the event is when the delivery **failed** (`resolved_at`), not when the earlier order was placed.
+
+**The shortcut and why it's wrong**
+
+The usual pandas idiom, a cumulative sum of earlier orders' outcomes, counts the outcome of every earlier order, including ones still out for delivery. It's a small leak, but it's systematic: it's always in the direction that makes the model look better.
+
+**`merge_asof`**
+
+`pd.merge_asof` joins each order to the most recent row of another table **at or before** its time, per customer. With a running count of failures timed by `resolved_at`, it gives the number of failures known at checkout. `allow_exact_matches=False` makes it strictly before.
+
+**The features**
+
+| Feature | Meaning |
+| :-- | :-- |
+| `prior_orders` | Orders the customer had placed before this one |
+| `prior_failures` | Their failed deliveries known at checkout |
+| `first_order` | 1 for a customer's first order |
+| `late_night` | Ordered between midnight and 4 a.m. |
+| `log_basket` | Log of the basket value |
+| From the order | `promised_days`, `promo_code_used`, `address_has_house_number`, `city`, `device`, `category` |
+| From the customer | `acquisition_channel`, `phone_verified` (both known at signup) |
+
+## Example
+
+The history features, done properly and with the shortcut:
+
+```python
+import numpy as np
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/deliveries/"
+orders = pd.read_csv(base + "orders.csv", parse_dates=["order_time", "resolved_at"])
+customers = pd.read_csv(base + "customers.csv")
+orders = orders.sort_values(["order_time", "order_id"]).reset_index(drop=True)
+orders["failed"] = (orders["status"] == "Failed delivery").astype(int)
+
+# Orders the customer had placed before this one
+orders["prior_orders"] = orders.groupby("customer_id").cumcount()
+
+# Failed deliveries known by the time they placed this one
+fails = orders.loc[orders["failed"] == 1, ["customer_id", "resolved_at"]].rename(columns={"resolved_at": "failed_at"})
+fails = fails.sort_values("failed_at")
+fails["prior_failures"] = fails.groupby("customer_id").cumcount() + 1
+orders = pd.merge_asof(orders, fails, left_on="order_time", right_on="failed_at", by="customer_id", allow_exact_matches=False)
+orders["prior_failures"] = orders["prior_failures"].fillna(0).astype(int)
+
+# The tempting shortcut: count the failures of all earlier orders, delivered yet or not
+orders["prior_failures_naive"] = orders.groupby("customer_id")["failed"].cumsum() - orders["failed"]
+different = (orders["prior_failures_naive"] != orders["prior_failures"]).sum()
+print(f"Orders where the shortcut counts a failure nobody knew about yet: {different:,}")
+```
+
+```text
+Orders where the shortcut counts a failure nobody knew about yet: 740
+```
+
+Those orders would carry information from the future. Now, does history matter?
+
+```python
+pod = orders[(orders["payment_method"] == "Pay on delivery") & (orders["status"] != "Cancelled")]
+pod.groupby(pod["prior_failures"].clip(upper=2))["failed"].agg(orders="size", failure_rate="mean").round(3)
+```
+
+```text
+orders  failure_rate
+prior_failures
+0                29069         0.166
+1                 7358         0.202
+2                 3948         0.299
+```
+
+The row labelled 2 means two or more. Failures repeat: customers with two or more known failures fail much more often than those with none. Compare the honest feature with the leaky lifetime total from `customers.csv`, on orders from January to March 2026:
+
+```python
+from sklearn.metrics import roc_auc_score
+
+check = pod[(pod["order_time"] >= "2026-01-01") & (pod["order_time"] < "2026-04-01")]
+check = check.merge(customers[["customer_id", "lifetime_failed_deliveries"]], on="customer_id", how="left")
+print("AUC, prior failures (point in time):", round(roc_auc_score(check["failed"], check["prior_failures"]), 3))
+print("AUC, lifetime failures (leaky):     ", round(roc_auc_score(check["failed"], check["lifetime_failed_deliveries"]), 3))
+```
+
+```text
+AUC, prior failures (point in time): 0.587
+AUC, lifetime failures (leaky):      0.844
+```
+
+On its own, the leaky total ranks orders far better, because it includes the very failure you're trying to predict. A model built on it would look excellent in testing and disappoint the day it went live. Finally, the remaining features:
+
+```python
+orders = orders.merge(customers[["customer_id", "acquisition_channel", "phone_verified"]], on="customer_id", how="left")
+orders["first_order"] = (orders["prior_orders"] == 0).astype(int)
+orders["late_night"] = (orders["order_time"].dt.hour <= 3).astype(int)
+orders["log_basket"] = np.log(orders["basket_value_ngn"])
+pod = orders[(orders["payment_method"] == "Pay on delivery") & (orders["status"] != "Cancelled")]
+for col in ["first_order", "late_night", "acquisition_channel"]:
+    print(pod.groupby(col)["failed"].mean().round(3), "\n")
+```
+
+```text
+first_order
+0    0.163
+1    0.258
+Name: failed, dtype: float64
+
+late_night
+0    0.18
+1    0.25
+Name: failed, dtype: float64
+
+acquisition_channel
+Influencer    0.233
+Organic       0.163
+Referral      0.137
+Social ad     0.207
+Name: failed, dtype: float64
+```
+
+First orders, late-night orders and customers who came from influencers all fail more often.
+
+## Walkthrough
+
+1. Run the cells, and check a few customers by hand: pick one with several orders and compare `prior_failures` with `prior_failures_naive`.
+2. Add a point-in-time feature of your own, such as days since the customer's previous order, or their past failure **rate**.
+3. Check that none of your features uses `status`, `resolved_at` or the lifetime totals for the **current** order.
+4. Save the feature-building code as a function. You'll reuse it in every lesson that follows.
+5. Write the feature specification (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "dsc-03-p1",
+  "prompt": "What's the failure rate of pay-on-delivery orders from customers with **two or more** failed deliveries known at checkout? One decimal place.",
+  "answer": 29.9,
+  "format": "percent",
+  "dataset": "deliveries",
+  "files": ["orders"],
+  "pyVerify": "round(100 * pod.loc[pod['prior_failures'] >= 2, 'failed'].mean(), 1)",
+  "hint": "The row labelled 2 in the history table.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "dsc-03-p2",
+  "prompt": "In how many orders does the **shortcut** count a failure that wasn't yet known at checkout?",
+  "answer": 740,
+  "format": "number",
+  "dataset": "deliveries",
+  "files": ["orders"],
+  "pyVerify": "int(different)",
+  "hint": "The first line printed.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "dsc-03-t1",
+  "prompt": "Write a **feature specification** for `prior_failures` that an engineer could build in production (40 to 120 words): what it **counts**, the **time rule**, what happens for **new customers**, and **one test** that would catch a leak.",
+  "minutes": 7,
+  "rows": 6,
+  "placeholder": "prior_failures counts ...",
+  "rules": [
+    { "label": "Says what it counts (failed deliveries)", "pattern": "fail" },
+    { "label": "States the time rule (before checkout, resolved before)", "pattern": "before|earlier than|prior to" },
+    { "label": "Uses the failure time (resolved), not the order time", "pattern": "resolv|when (the )?deliver|failed_at|failure time|time of (the )?failure" },
+    { "label": "Covers new customers (zero)", "pattern": "new customer|first order|zero|\\b0\\b" },
+    { "label": "A test", "pattern": "test|check|assert" },
+    { "label": "Between 40 and 120 words", "minWords": 40, "maxWords": 120 }
+  ],
+  "sample": "prior_failures counts the customer's pay-on-delivery or prepaid deliveries that failed strictly before this order's checkout time, using the time each failure was recorded (resolved_at), not the time the earlier order was placed. Orders still out for delivery don't count. New customers, and customers with no failures yet, get 0. Test: for every order, recompute the count from the raw delivery log using only rows with resolved_at < order_time, and assert it matches; also assert it never exceeds prior_orders.",
+  "note": "Writing the time rule down is what keeps training and production consistent.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "A customer places order B while order A is still out for delivery. A later fails. What should prior_failures be for B?",
+    "options": ["1", "0, because the failure wasn't known at B's checkout", "It depends on B's outcome", "Missing"],
+    "answer": 1,
+    "explanation": "Only failures already recorded count."
+  },
+  {
+    "prompt": "What does merge_asof with allow_exact_matches=False do here?",
+    "options": ["Joins exact times only", "Joins each order to the latest failure count strictly before its time", "Removes duplicates", "Sorts the data"],
+    "answer": 1,
+    "explanation": "A backward-looking, strictly earlier join."
+  },
+  {
+    "prompt": "The leaky lifetime total gives a much higher AUC. What should you conclude?",
+    "options": ["Use it", "It's leaking future information and must not be used", "The honest feature is broken", "AUC is wrong"],
+    "answer": 1,
+    "explanation": "A bigger number from a leak is a warning, not a win."
+  }
+]
+```
+$md$, true, true, 3, array['dsc-03-p1', 'dsc-03-p2', 'dsc-03-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('dsc-m04', 'data-scientist-capstone', 'Validate over Time', 4, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('data-scientist-capstone:validate-over-time', 'data-scientist-capstone', 'dsc-m04', 'validate-over-time', 'Validate over time', 'Split by time, not at random, so the model is tested the way it will be used. Compare a simple rule, logistic regression and gradient boosting, and test on orders the trial didn''t touch.', 30, $md$
+## The problem
+
+The model will score next month's orders using what it learned from past months. So it should be **tested** that way too: trained on earlier orders and judged on later ones. A random split would mix next March into the training data and flatter every model.
+
+There's a second trap. From April 2026, half of pay-on-delivery orders got a confirmation call, which **changed** their outcome. If you test on those orders, you're judging the model against outcomes it was never meant to predict.
+
+## The concept
+
+**Train, validate, test by time**
+
+| Set | Orders | Used for |
+| :-- | :-- | :-- |
+| Train | January to December 2025 | Fitting models |
+| Validation | January to March 2026 | Choosing between models and settings |
+| Test | April to June 2026, **No call** group only | One final, honest check |
+
+Touch the test set once, at the end. If you keep checking it while you tune, it stops being a test.
+
+**Why only the No-call group?**
+
+The model predicts what happens **without** intervention. The No-call group was chosen at random, so it's a fair sample of all orders, untouched by calls. The Call group's outcomes were changed by the call, so they can't test the model. In lesson 6 they're exactly what you need, to measure the call's effect.
+
+**Start with a baseline**
+
+A simple rule, such as "longer delivery promises are riskier", shows how much the model really adds. Then compare logistic regression with gradient boosting. The more complex model has to earn its place.
+
+**Two ranking measures**
+
+- **AUC**: the chance that a random failed order is scored above a random delivered one.
+- **Average precision**: how well the top of the ranking is concentrated with failures, which suits a decision about whom to call.
+
+## Example
+
+The features from lesson 3, then the split:
+
+```python
+import numpy as np
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/deliveries/"
+orders = pd.read_csv(base + "orders.csv", parse_dates=["order_time", "resolved_at"])
+customers = pd.read_csv(base + "customers.csv")
+orders = orders.sort_values(["order_time", "order_id"]).reset_index(drop=True)
+orders["failed"] = (orders["status"] == "Failed delivery").astype(int)
+orders["prior_orders"] = orders.groupby("customer_id").cumcount()
+fails = orders.loc[orders["failed"] == 1, ["customer_id", "resolved_at"]].rename(columns={"resolved_at": "failed_at"}).sort_values("failed_at")
+fails["prior_failures"] = fails.groupby("customer_id").cumcount() + 1
+orders = pd.merge_asof(orders, fails, left_on="order_time", right_on="failed_at", by="customer_id", allow_exact_matches=False)
+orders["prior_failures"] = orders["prior_failures"].fillna(0).astype(int)
+orders = orders.merge(customers[["customer_id", "acquisition_channel", "phone_verified"]], on="customer_id", how="left")
+orders["first_order"] = (orders["prior_orders"] == 0).astype(int)
+orders["late_night"] = (orders["order_time"].dt.hour <= 3).astype(int)
+orders["log_basket"] = np.log(orders["basket_value_ngn"])
+
+pod = orders[(orders["payment_method"] == "Pay on delivery") & (orders["status"] != "Cancelled")]
+train = pod[pod["order_time"] < "2026-01-01"]
+valid = pod[(pod["order_time"] >= "2026-01-01") & (pod["order_time"] < "2026-04-01")]
+test = pod[(pod["order_time"] >= "2026-04-01") & (pod["call_group"] == "No call")]
+for name, part in [("train", train), ("valid", valid), ("test", test)]:
+    print(f"{name:5}  {len(part):6,} orders  failure rate {part['failed'].mean():.1%}")
+```
+
+```text
+train  20,329 orders  failure rate 20.3%
+valid   9,180 orders  failure rate 18.4%
+test    5,357 orders  failure rate 18.9%
+```
+
+Now the baseline and two models, judged on validation:
+
+```python
+from sklearn.compose import ColumnTransformer
+from sklearn.ensemble import HistGradientBoostingClassifier
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import average_precision_score, roc_auc_score
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import OneHotEncoder, StandardScaler
+
+numeric = ["prior_orders", "prior_failures", "first_order", "promised_days", "log_basket", "late_night",
+           "promo_code_used", "address_has_house_number", "phone_verified"]
+categorical = ["city", "device", "category", "acquisition_channel"]
+features = numeric + categorical
+
+def prep():
+    return ColumnTransformer([("num", StandardScaler(), numeric),
+                              ("cat", OneHotEncoder(handle_unknown="ignore", sparse_output=False), categorical)])
+
+logistic = make_pipeline(prep(), LogisticRegression(max_iter=1000)).fit(train[features], train["failed"])
+boosting = make_pipeline(prep(), HistGradientBoostingClassifier(max_iter=300, learning_rate=0.05, max_leaf_nodes=15,
+                                                                early_stopping=False, random_state=42)).fit(train[features], train["failed"])
+
+scores = {
+    "Rule: promised days": valid["promised_days"],
+    "Logistic regression": logistic.predict_proba(valid[features])[:, 1],
+    "Gradient boosting": boosting.predict_proba(valid[features])[:, 1],
+}
+for name, s in scores.items():
+    print(f"{name:20}  AUC {roc_auc_score(valid['failed'], s):.3f}   average precision {average_precision_score(valid['failed'], s):.3f}")
+```
+
+```text
+Rule: promised days   AUC 0.609   average precision 0.250
+Logistic regression   AUC 0.712   average precision 0.373
+Gradient boosting     AUC 0.703   average precision 0.361
+```
+
+Both models beat the rule clearly. Gradient boosting doesn't beat logistic regression: the patterns here are mostly additive, and the simpler model is easier to explain and to check. Choose logistic regression, and test it once:
+
+```python
+test_scores = logistic.predict_proba(test[features])[:, 1]
+print(f"Test (No call):  AUC {roc_auc_score(test['failed'], test_scores):.3f}   average precision {average_precision_score(test['failed'], test_scores):.3f}")
+called = pod[(pod["order_time"] >= "2026-04-01") & (pod["call_group"] == "Call")]
+called_scores = logistic.predict_proba(called[features])[:, 1]
+print(f"Call group:      AUC {roc_auc_score(called['failed'], called_scores):.3f}   failure rate {called['failed'].mean():.1%}, predicted {called_scores.mean():.1%}")
+```
+
+```text
+Test (No call):  AUC 0.733   average precision 0.415
+Call group:      AUC 0.701   failure rate 12.1%, predicted 19.9%
+```
+
+On the untouched test orders, the model holds up. On the Call group, it predicts more failures than happened, because calls prevented some of them. That gap is the call's effect showing through, and it's the subject of lesson 6.
+
+## Walkthrough
+
+1. Run the cells.
+2. Try a **random** 80/20 split of all 2025 and early 2026 orders instead. Is the validation AUC higher or lower than with the time split? Why might it differ?
+3. Tune gradient boosting a little (`max_leaf_nodes`, `learning_rate`) using **validation** only. Does it overtake logistic regression?
+4. Look at the logistic model's coefficients. Which features push risk up most?
+5. Write the model comparison (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "dsc-04-p1",
+  "prompt": "What is the logistic regression's **validation AUC**? Three decimal places.",
+  "answer": 0.712,
+  "format": "number",
+  "dataset": "deliveries",
+  "files": ["orders", "customers"],
+  "pyVerify": "round(roc_auc_score(valid['failed'], scores['Logistic regression']), 3)",
+  "hint": "The Logistic regression line.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "dsc-04-p2",
+  "prompt": "What is its **test AUC** on the No-call orders? Three decimal places.",
+  "answer": 0.733,
+  "format": "number",
+  "dataset": "deliveries",
+  "files": ["orders", "customers"],
+  "pyVerify": "round(roc_auc_score(test['failed'], test_scores), 3)",
+  "hint": "The first line of the last cell.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "dsc-04-t1",
+  "prompt": "Write the **model comparison** (50 to 140 words): the **validation** results for the rule and both models, the model you **choose** and **why**, its **test** result, and why the test uses only the **No-call** group.",
+  "minutes": 8,
+  "rows": 7,
+  "placeholder": "On January to March 2026 ...",
+  "rules": [
+    { "label": "Gives AUCs", "pattern": "0\\.\\d{2,3}", "min": 3 },
+    { "label": "Names the chosen model", "pattern": "choose|chose|pick|select|recommend" },
+    { "label": "A reason (simpler, explain, no better)", "pattern": "simpl|explain|no better|interpret|similar" },
+    { "label": "Mentions the test result", "pattern": "test" },
+    { "label": "Explains the No-call choice (calls changed outcomes)", "pattern": "no.call|untouched|call(s|ed)? (changed|prevented|affect)" },
+    { "label": "Between 50 and 140 words", "minWords": 50, "maxWords": 140 }
+  ],
+  "sample": "On January to March 2026, the promised-days rule scored an AUC of 0.609, logistic regression 0.712 and gradient boosting 0.703. I chose logistic regression: boosting is no better here, and the simpler model is easier to explain to operations and to check for problems. On the April to June test orders it scored 0.733 AUC. The test uses only the No-call group because calls changed the outcomes of the other half; those orders measure the call's effect, not the model's accuracy.",
+  "note": "\"No better, and simpler\" is a perfectly good reason to choose a model.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why split by time rather than at random?",
+    "options": ["It's faster", "The model will predict future orders, so it should be tested on orders after its training data", "Random splits are biased against boosting", "It gives more test data"],
+    "answer": 1,
+    "explanation": "Test the way you'll use it."
+  },
+  {
+    "prompt": "Why test only on the No-call group?",
+    "options": ["It's smaller", "Calls changed the Call group's outcomes, so they can't test predictions of what happens without a call", "The Call group has missing data", "It doesn't matter"],
+    "answer": 1,
+    "explanation": "The treatment changes the label."
+  },
+  {
+    "prompt": "Gradient boosting scores 0.703 and logistic regression 0.712 on validation. Which should you choose?",
+    "options": ["Boosting: it's more advanced", "Logistic regression: it's at least as good and simpler to explain and check", "Neither", "Average them"],
+    "answer": 1,
+    "explanation": "Complexity has to earn its place."
+  }
+]
+```
+$md$, true, true, 4, array['dsc-04-p1', 'dsc-04-p2', 'dsc-04-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('dsc-m05', 'data-scientist-capstone', 'Calibration and Capacity', 5, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('data-scientist-capstone:calibration-and-capacity', 'data-scientist-capstone', 'dsc-m05', 'calibration-and-capacity', 'Calibration and capacity', 'Check that a predicted 30% risk really means about 30%, see how many failures the riskiest orders contain, and find out why ranking alone can''t tell you whom to call.', 25, $md$
+## The problem
+
+Operations will use the model in two ways. They'll **rank** orders, to call the riskiest first. And they'll read the **numbers**, as in "this order has a 40% chance of failing", to decide whether a call is worth ₦250. Ranking needs a good AUC. Reading the numbers needs **calibration**: predicted risks that match what actually happens.
+
+## The concept
+
+**Calibration**
+
+Group orders by predicted risk and compare the average prediction with the actual failure rate in each group. If they match, the model is calibrated. Logistic regression is often well calibrated on data like its training data. It drifts when the world changes.
+
+**Brier score**
+
+The average squared gap between predicted probability and outcome (0 or 1). Lower is better. Compare it with the Brier score of predicting the overall failure rate for everyone.
+
+**Capacity: the top of the ranking**
+
+If the call centre can only make so many calls, the question is how many failures the riskiest orders contain. **Recall at the top 20%** is the share of all failures found by calling the riskiest fifth of orders.
+
+**The missing piece**
+
+If a call prevented **every** failure it reached, the break-even risk would be ₦250 ÷ ₦6,500 = **3.8%**, and you'd call almost everyone. But a call doesn't turn every doubtful customer into a happy one. To set a threshold, you need to know how much a call actually **reduces** the risk, and that needs the trial.
+
+## Example
+
+The setup from lessons 3 and 4, in one cell:
+
+```python
+import numpy as np
+import pandas as pd
+from sklearn.compose import ColumnTransformer
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import roc_auc_score
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import OneHotEncoder, StandardScaler
+
+# Point-in-time features (lesson 3)
+base = "https://academy.cloudtechanalytics.com/datasets/deliveries/"
+orders = pd.read_csv(base + "orders.csv", parse_dates=["order_time", "resolved_at"])
+customers = pd.read_csv(base + "customers.csv")
+orders = orders.sort_values(["order_time", "order_id"]).reset_index(drop=True)
+orders["failed"] = (orders["status"] == "Failed delivery").astype(int)
+orders["prior_orders"] = orders.groupby("customer_id").cumcount()
+fails = orders.loc[orders["failed"] == 1, ["customer_id", "resolved_at"]].rename(columns={"resolved_at": "failed_at"}).sort_values("failed_at")
+fails["prior_failures"] = fails.groupby("customer_id").cumcount() + 1
+orders = pd.merge_asof(orders, fails, left_on="order_time", right_on="failed_at", by="customer_id", allow_exact_matches=False)
+orders["prior_failures"] = orders["prior_failures"].fillna(0).astype(int)
+orders = orders.merge(customers[["customer_id", "acquisition_channel", "phone_verified"]], on="customer_id", how="left")
+orders["first_order"] = (orders["prior_orders"] == 0).astype(int)
+orders["late_night"] = (orders["order_time"].dt.hour <= 3).astype(int)
+orders["log_basket"] = np.log(orders["basket_value_ngn"])
+
+# Time split and the chosen model (lesson 4)
+pod = orders[(orders["payment_method"] == "Pay on delivery") & (orders["status"] != "Cancelled")].copy()
+train = pod[pod["order_time"] < "2026-01-01"]
+valid = pod[(pod["order_time"] >= "2026-01-01") & (pod["order_time"] < "2026-04-01")].copy()
+test = pod[(pod["order_time"] >= "2026-04-01") & (pod["call_group"] == "No call")].copy()
+numeric = ["prior_orders", "prior_failures", "first_order", "promised_days", "log_basket", "late_night",
+           "promo_code_used", "address_has_house_number", "phone_verified"]
+categorical = ["city", "device", "category", "acquisition_channel"]
+features = numeric + categorical
+model = make_pipeline(
+    ColumnTransformer([("num", StandardScaler(), numeric),
+                       ("cat", OneHotEncoder(handle_unknown="ignore", sparse_output=False), categorical)]),
+    LogisticRegression(max_iter=1000),
+).fit(train[features], train["failed"])
+pod["risk"] = model.predict_proba(pod[features])[:, 1]
+valid["risk"] = model.predict_proba(valid[features])[:, 1]
+test["risk"] = model.predict_proba(test[features])[:, 1]
+print(f"Validation orders scored: {len(valid):,}")
+```
+
+```text
+Validation orders scored: 9,180
+```
+
+Calibration on validation, by tenths of predicted risk:
+
+```python
+from sklearn.metrics import brier_score_loss
+
+valid["decile"] = pd.qcut(valid["risk"], 10, labels=range(1, 11))
+calibration = valid.groupby("decile", observed=True).agg(orders=("failed", "size"), predicted=("risk", "mean"), actual=("failed", "mean"))
+print(calibration.round(3))
+print(f"\nBrier score: model {brier_score_loss(valid['failed'], valid['risk']):.4f}, "
+      f"same rate for everyone {brier_score_loss(valid['failed'], np.full(len(valid), train['failed'].mean())):.4f}")
+```
+
+```text
+orders  predicted  actual
+decile
+1          918      0.050   0.047
+2          918      0.077   0.090
+3          918      0.098   0.094
+4          918      0.120   0.113
+5          918      0.144   0.125
+6          918      0.171   0.161
+7          918      0.204   0.196
+8          918      0.246   0.259
+9          918      0.310   0.303
+10         918      0.487   0.454
+
+Brier score: model 0.1361, same rate for everyone 0.1507
+```
+
+The predictions track the actual rates closely, from the safest tenth to the riskiest, though they run slightly high on average: the training year included the launch months and the November sale, which were worse than early 2026. Now capacity:
+
+```python
+ranked = valid.sort_values("risk", ascending=False)
+for share in [0.1, 0.2, 0.3, 0.5]:
+    top = ranked.head(int(len(ranked) * share))
+    print(f"Call the riskiest {share:.0%}: {len(top):5,} orders, "
+          f"{top['failed'].sum() / valid['failed'].sum():.0%} of failures, "
+          f"{top['failed'].mean():.0%} of those called would fail")
+```
+
+```text
+Call the riskiest 10%:   918 orders, 25% of failures, 45% of those called would fail
+Call the riskiest 20%: 1,836 orders, 41% of failures, 38% of those called would fail
+Call the riskiest 30%: 2,754 orders, 55% of failures, 34% of those called would fail
+Call the riskiest 50%: 4,590 orders, 75% of failures, 27% of those called would fail
+```
+
+Calling the riskiest fifth of orders reaches a large share of the failures, at a much higher hit rate than calling at random. But "reaches" isn't "prevents". Whether those calls pay for themselves depends on what a call achieves, and that's lesson 6.
+
+## Walkthrough
+
+1. Run the cells.
+2. Plot the calibration table: predicted against actual, with a diagonal line for perfect calibration.
+3. Check calibration on the **test** orders. Is the model still calibrated in April to June?
+4. Work out how many calls a day each option in the capacity table means.
+5. Write the note to operations (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "dsc-05-p1",
+  "prompt": "If Kasuwa called the riskiest **20%** of validation orders, what percentage of all validation failures would those orders include? Whole number.",
+  "answer": 41,
+  "format": "percent",
+  "dataset": "deliveries",
+  "files": ["orders", "customers"],
+  "pyVerify": "round(100 * ranked.head(int(len(ranked) * 0.2))['failed'].sum() / valid['failed'].sum())",
+  "hint": "The second line of the capacity output.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "dsc-05-p2",
+  "prompt": "In the **riskiest tenth** of validation orders, what was the **actual** failure rate? One decimal place.",
+  "answer": 45.4,
+  "format": "percent",
+  "dataset": "deliveries",
+  "files": ["orders", "customers"],
+  "pyVerify": "round(100 * calibration.loc[10, 'actual'], 1)",
+  "hint": "The last row of the calibration table, the actual column.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "dsc-05-t1",
+  "prompt": "Write a note to the head of operations (50 to 130 words): whether they can **trust the risk numbers** (calibration), what calling the **top 20%** would reach, and why that **isn't yet** a reason to start calling.",
+  "minutes": 7,
+  "rows": 6,
+  "placeholder": "The model's risk scores ...",
+  "rules": [
+    { "label": "Covers calibration", "pattern": "calibrat|predicted[^.]*actual|match" },
+    { "label": "Gives the top-20% result", "pattern": "20\\s*%" },
+    { "label": "Uses numbers", "pattern": "\\d+(\\.\\d+)?\\s*%", "min": 2 },
+    { "label": "Explains that reaching isn't preventing (the call's effect)", "pattern": "prevent|effect|trial|reduce" },
+    { "label": "Between 50 and 130 words", "minWords": 50, "maxWords": 130 }
+  ],
+  "sample": "The model's risk scores can be read as probabilities: on January to March orders, predicted and actual failure rates match closely in every tenth, though the model runs a little high overall. Calling the riskiest 20% of orders would reach about 41% of all failures, and about 38% of the customers called would otherwise fail, against 18% on average. That isn't yet a reason to start calling: we know whom to call, but not how many failures a call actually prevents. The April trial answers that, and the threshold should come from it.",
+  "note": "Separate the model's quality from the action's value.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "In a group of orders, the model predicts 30% risk on average and 30% fail. What does that show?",
+    "options": ["Good ranking", "Good calibration in that group", "Overfitting", "A leak"],
+    "answer": 1,
+    "explanation": "Predicted matches actual."
+  },
+  {
+    "prompt": "Why does the threshold depend on the call's effect, not just the risk?",
+    "options": ["It doesn't", "A call is worth making only if the failures it prevents are worth more than it costs", "Calls are free", "The model is uncalibrated"],
+    "answer": 1,
+    "explanation": "Value = failures prevented × cost of a failure − cost of the call."
+  },
+  {
+    "prompt": "If calls prevented every failure, what would the break-even risk be with a ₦250 call and a ₦6,500 failure?",
+    "options": ["About 3.8%", "25%", "50%", "6.5%"],
+    "answer": 0,
+    "explanation": "250 ÷ 6,500."
+  }
+]
+```
+$md$, true, true, 5, array['dsc-05-p1', 'dsc-05-p2', 'dsc-05-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('dsc-m06', 'data-scientist-capstone', 'The Trial and Who to Call', 6, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('data-scientist-capstone:the-trial-and-who-to-call', 'data-scientist-capstone', 'dsc-m06', 'the-trial-and-who-to-call', 'The trial and who to call', 'Use the randomised April trial to measure what a confirmation call achieves, find out how the effect grows with risk, and turn the model into a calling policy with a threshold set in naira.', 30, $md$
+## The problem
+
+From April to June 2026, Kasuwa phoned a random half of pay-on-delivery customers before dispatch. The head of operations saw fewer failures and wants to call everyone. That would cost ₦250 a call on every order, including the many that were never going to fail. The model can direct the calls. But only the trial can say what a call is **worth** for each kind of order.
+
+## The concept
+
+**A randomised trial measures the effect**
+
+Because calls were assigned at random, the Call and No-call groups are alike in everything except the call. The difference in their failure rates is the call's effect: **failures prevented per call**.
+
+**Effects differ by risk**
+
+A call can't prevent a failure that was never going to happen. So the effect should be bigger for riskier orders. Because the risk score uses only information from checkout, before the call, you can split the trial by risk band and compare Call with No call **within** each band. The randomisation still holds inside each band.
+
+**Value per call**
+
+Value per call = failures prevented per call × ₦6,500 − ₦250. Call the orders where that's positive. The **threshold** is the risk level above which calls pay for themselves.
+
+**Noise**
+
+Each band has a few thousand orders at most, so each estimate has an error of a few points. When several thresholds give similar values, don't chase the highest. Pick a sensible point on the plateau, and say it's an estimate.
+
+## Example
+
+The setup, then a check that the randomisation worked:
+
+```python
+import numpy as np
+import pandas as pd
+from sklearn.compose import ColumnTransformer
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import roc_auc_score
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import OneHotEncoder, StandardScaler
+
+# Point-in-time features (lesson 3)
+base = "https://academy.cloudtechanalytics.com/datasets/deliveries/"
+orders = pd.read_csv(base + "orders.csv", parse_dates=["order_time", "resolved_at"])
+customers = pd.read_csv(base + "customers.csv")
+orders = orders.sort_values(["order_time", "order_id"]).reset_index(drop=True)
+orders["failed"] = (orders["status"] == "Failed delivery").astype(int)
+orders["prior_orders"] = orders.groupby("customer_id").cumcount()
+fails = orders.loc[orders["failed"] == 1, ["customer_id", "resolved_at"]].rename(columns={"resolved_at": "failed_at"}).sort_values("failed_at")
+fails["prior_failures"] = fails.groupby("customer_id").cumcount() + 1
+orders = pd.merge_asof(orders, fails, left_on="order_time", right_on="failed_at", by="customer_id", allow_exact_matches=False)
+orders["prior_failures"] = orders["prior_failures"].fillna(0).astype(int)
+orders = orders.merge(customers[["customer_id", "acquisition_channel", "phone_verified"]], on="customer_id", how="left")
+orders["first_order"] = (orders["prior_orders"] == 0).astype(int)
+orders["late_night"] = (orders["order_time"].dt.hour <= 3).astype(int)
+orders["log_basket"] = np.log(orders["basket_value_ngn"])
+
+# Time split and the chosen model (lesson 4)
+pod = orders[(orders["payment_method"] == "Pay on delivery") & (orders["status"] != "Cancelled")].copy()
+train = pod[pod["order_time"] < "2026-01-01"]
+valid = pod[(pod["order_time"] >= "2026-01-01") & (pod["order_time"] < "2026-04-01")].copy()
+test = pod[(pod["order_time"] >= "2026-04-01") & (pod["call_group"] == "No call")].copy()
+numeric = ["prior_orders", "prior_failures", "first_order", "promised_days", "log_basket", "late_night",
+           "promo_code_used", "address_has_house_number", "phone_verified"]
+categorical = ["city", "device", "category", "acquisition_channel"]
+features = numeric + categorical
+model = make_pipeline(
+    ColumnTransformer([("num", StandardScaler(), numeric),
+                       ("cat", OneHotEncoder(handle_unknown="ignore", sparse_output=False), categorical)]),
+    LogisticRegression(max_iter=1000),
+).fit(train[features], train["failed"])
+pod["risk"] = model.predict_proba(pod[features])[:, 1]
+valid["risk"] = model.predict_proba(valid[features])[:, 1]
+test["risk"] = model.predict_proba(test[features])[:, 1]
+trial = pod[pod["call_group"].isin(["Call", "No call"])].copy()
+trial.groupby("call_group").agg(orders=("failed", "size"), mean_risk=("risk", "mean"),
+                                first_orders=("first_order", "mean"), failure_rate=("failed", "mean")).round(3)
+```
+
+```text
+orders  mean_risk  first_orders  failure_rate
+call_group
+Call          5509      0.199         0.140         0.121
+No call       5357      0.195         0.129         0.189
+```
+
+The two groups have the same average risk and the same share of first orders: the randomisation worked. Only the failure rate differs. The overall effect, with its uncertainty:
+
+```python
+rates = trial.groupby("call_group")["failed"].agg(["mean", "size"])
+diff = rates.loc["No call", "mean"] - rates.loc["Call", "mean"]
+se = np.sqrt(sum(r["mean"] * (1 - r["mean"]) / r["size"] for _, r in rates.iterrows()))
+print(f"Failures prevented per 100 calls: {diff * 100:.1f} (95% interval {(diff - 1.96 * se) * 100:.1f} to {(diff + 1.96 * se) * 100:.1f})")
+print(f"Value per call if we called everyone: ₦{diff * 6500 - 250:,.0f}")
+```
+
+```text
+Failures prevented per 100 calls: 6.8 (95% interval 5.4 to 8.1)
+Value per call if we called everyone: ₦190
+```
+
+Calls work, and on average they pay for themselves. But the average hides the important part. By risk band:
+
+```python
+trial["band"] = pd.cut(trial["risk"], [0, 0.1, 0.15, 0.2, 0.3, 1], labels=["under 10%", "10-15%", "15-20%", "20-30%", "30% and over"])
+uplift = trial.pivot_table(index="band", columns="call_group", values="failed", aggfunc="mean", observed=True)
+uplift["orders"] = trial.groupby("band", observed=True).size()
+uplift["prevented_per_call"] = uplift["No call"] - uplift["Call"]
+uplift["value_per_call"] = uplift["prevented_per_call"] * 6500 - 250
+uplift.round(3)
+```
+
+```text
+call_group     Call  No call  orders  prevented_per_call  value_per_call
+band
+under 10%     0.046    0.069    2961               0.023        -102.993
+10-15%        0.069    0.106    2267               0.037          -9.654
+15-20%        0.110    0.183    1696               0.073         223.822
+20-30%        0.173    0.239    1976               0.067         182.259
+30% and over  0.247    0.427    1966               0.180         919.397
+```
+
+The riskier the order, the more a call prevents. Below 15% risk, a call prevents only two to four failures per hundred, which doesn't cover its ₦250 cost. For the riskiest band, it prevents about 18 per hundred, worth over ₦900 a call. Now turn that into a policy: call every order at or above a threshold, and estimate the monthly result from the trial's three months:
+
+```python
+rows = []
+for threshold in [0, 0.1, 0.15, 0.2, 0.25, 0.3]:
+    chosen = trial[trial["risk"] >= threshold]
+    prevented = chosen.loc[chosen["call_group"] == "No call", "failed"].mean() - chosen.loc[chosen["call_group"] == "Call", "failed"].mean()
+    calls = len(chosen) / 3
+    rows.append({"threshold": threshold, "calls_per_month": round(calls), "prevented_per_call": round(prevented, 3),
+                 "net_per_month_ngn": round(calls * (prevented * 6500 - 250))})
+policy = pd.DataFrame(rows)
+policy
+```
+
+```text
+threshold  calls_per_month  prevented_per_call  net_per_month_ngn
+0       0.00             3622               0.068             687194
+1       0.10             2635               0.086             818287
+2       0.15             1879               0.109             855705
+3       0.20             1314               0.123             723060
+4       0.25              919               0.163             744176
+5       0.30              655               0.180             602512
+```
+
+Calling everyone spends ₦250 on thousands of safe orders, and it's worth less than any threshold from 10% to 25%. The estimates peak at 15%, but the thresholds from 10% to 25% are all within the trial's noise of each other. A threshold of **15%** is a sensible choice on that plateau: it has the highest estimate, it prevents more failures in total than the higher thresholds, and it calls about half of orders, which the call centre can manage.
+
+## Walkthrough
+
+1. Run the cells.
+2. Add a 95% interval to `prevented_per_call` in each band. Which bands are clearly above the ₦250 break-even (3.8 failures prevented per 100 calls)?
+3. Count failures prevented per month for each threshold, not just naira. Which threshold prevents most?
+4. What if a failed delivery costs ₦4,500, not ₦6,500? Recalculate the policy table.
+5. Write the policy recommendation (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "dsc-06-p1",
+  "prompt": "Across the whole trial, how many failures did calls prevent **per 100 calls**? One decimal place.",
+  "answer": 6.8,
+  "format": "number",
+  "dataset": "deliveries",
+  "files": ["orders", "customers"],
+  "pyVerify": "round(diff * 100, 1)",
+  "hint": "No-call failure rate minus Call failure rate, times 100.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "dsc-06-p2",
+  "prompt": "At a **15%** threshold, what's the estimated **net value per month** in naira? (A rounded figure is fine.)",
+  "answer": 855705,
+  "format": "naira",
+  "dataset": "deliveries",
+  "files": ["orders", "customers"],
+  "pyVerify": "int(policy.loc[policy['threshold'] == 0.15, 'net_per_month_ngn'].iloc[0])",
+  "tolerance": 5000,
+  "hint": "The 0.15 row of the policy table.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "dsc-06-t1",
+  "prompt": "Write the **calling policy** for the head of operations (60 to 150 words): **who** to call (the threshold), **how many** calls a month, the expected **net saving**, why **not** call everyone, and how **certain** the estimate is.",
+  "minutes": 8,
+  "rows": 7,
+  "placeholder": "Call every pay-on-delivery order with a predicted risk of ...",
+  "rules": [
+    { "label": "States the threshold", "pattern": "\\d+\\s*%[^.]*(risk|threshold)|(risk|threshold)[^.]*\\d+\\s*%" },
+    { "label": "Calls per month", "pattern": "\\d[\\d,]*\\s*calls" },
+    { "label": "A net saving in naira", "pattern": "₦\\s*\\d|naira" },
+    { "label": "Why not everyone", "pattern": "everyone|all orders|every order" },
+    { "label": "Uncertainty (estimate, interval, noise, trial)", "pattern": "estimat|interval|noise|uncertain|plateau|similar" },
+    { "label": "Between 60 and 150 words", "minWords": 60, "maxWords": 150 }
+  ],
+  "sample": "Call every pay-on-delivery order with a predicted risk of 15% or more: about 1,880 calls a month, roughly half of these orders. From the April trial, those calls prevent about 11 failures per 100, for an estimated net saving of about ₦0.86m a month after the cost of calls. Calling everyone would cost almost twice as much in calls and save less, because calls on low-risk orders rarely prevent anything. Thresholds from 10% to 25% give similar results within the trial's noise, so treat ₦0.86m as an estimate with a margin of a few hundred thousand naira, and re-measure it by keeping a small random group uncalled.",
+  "note": "The last sentence matters: keeping a holdout lets you keep measuring the effect after rollout.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why is it valid to compare Call and No call within each risk band?",
+    "options": ["The bands are large", "The risk score uses only information from before the call, and calls were random within every band", "The model is calibrated", "It isn't valid"],
+    "answer": 1,
+    "explanation": "A pre-treatment split keeps the randomisation intact."
+  },
+  {
+    "prompt": "Why does calling low-risk orders add little value?",
+    "options": ["Those customers don't answer", "Few of them would have failed anyway, so a call prevents few failures", "Calls cost more for them", "The model is wrong for them"],
+    "answer": 1,
+    "explanation": "You can't prevent a failure that wasn't going to happen."
+  },
+  {
+    "prompt": "Several thresholds give similar net values. What should you do?",
+    "options": ["Pick the single highest", "Pick a sensible point on the plateau, considering capacity and total failures prevented, and say it's an estimate", "Call everyone", "Run the model again"],
+    "answer": 1,
+    "explanation": "Don't chase noise."
+  }
+]
+```
+$md$, true, true, 6, array['dsc-06-p1', 'dsc-06-p2', 'dsc-06-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('dsc-m07', 'data-scientist-capstone', 'Fairness and Explanation', 7, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('data-scientist-capstone:fairness-and-explanation', 'data-scientist-capstone', 'dsc-m07', 'fairness-and-explanation', 'Fairness and explanation', 'Check how the model performs and who it selects in each city, find out what drives its predictions, test what happens without the city feature, and write the model card.', 30, $md$
+## The problem
+
+The model will decide which customers get a phone call. That's a light-touch action, and most customers won't mind. But the same model could later be used for something harsher, such as demanding a deposit. Before it goes live, the head of operations and Kasuwa's lawyer want to know three things. Does it work equally well everywhere? What drives its predictions? And does it treat customers differently because of **where they live**?
+
+## The concept
+
+**Check performance by group**
+
+For each city, compare the actual failure rate with the average prediction (calibration), the AUC (ranking within the city), and the share of orders the policy would call. A model can be accurate overall and wrong for one group.
+
+**Unseen groups**
+
+Kaduna launched in April 2026, after the training period. The model has never seen a Kaduna order. With `handle_unknown="ignore"`, it treats Kaduna as if it had no city effect at all, which may be badly wrong.
+
+**Permutation importance**
+
+Shuffle one feature at a time in the validation data and see how much the AUC drops. A large drop means the model relies on that feature. It's fairer than the importance built into tree models, and it works for any model.
+
+**Location as a proxy**
+
+City is a legitimate predictor, because delivery distances and promised days differ. But in Nigeria a city can also stand in for ethnicity or religion. For a call, using city is probably acceptable: the customer gets a helpful check, not a penalty. For a deposit or a refusal, it would need a much harder look. Test what the model loses without it.
+
+**A model card**
+
+A short document saying what the model is for, its data, its performance overall and by group, its limits, and when it must be reviewed.
+
+## Example
+
+Performance on the test orders, by city:
+
+```python
+import numpy as np
+import pandas as pd
+from sklearn.compose import ColumnTransformer
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import roc_auc_score
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import OneHotEncoder, StandardScaler
+
+# Point-in-time features (lesson 3)
+base = "https://academy.cloudtechanalytics.com/datasets/deliveries/"
+orders = pd.read_csv(base + "orders.csv", parse_dates=["order_time", "resolved_at"])
+customers = pd.read_csv(base + "customers.csv")
+orders = orders.sort_values(["order_time", "order_id"]).reset_index(drop=True)
+orders["failed"] = (orders["status"] == "Failed delivery").astype(int)
+orders["prior_orders"] = orders.groupby("customer_id").cumcount()
+fails = orders.loc[orders["failed"] == 1, ["customer_id", "resolved_at"]].rename(columns={"resolved_at": "failed_at"}).sort_values("failed_at")
+fails["prior_failures"] = fails.groupby("customer_id").cumcount() + 1
+orders = pd.merge_asof(orders, fails, left_on="order_time", right_on="failed_at", by="customer_id", allow_exact_matches=False)
+orders["prior_failures"] = orders["prior_failures"].fillna(0).astype(int)
+orders = orders.merge(customers[["customer_id", "acquisition_channel", "phone_verified"]], on="customer_id", how="left")
+orders["first_order"] = (orders["prior_orders"] == 0).astype(int)
+orders["late_night"] = (orders["order_time"].dt.hour <= 3).astype(int)
+orders["log_basket"] = np.log(orders["basket_value_ngn"])
+
+# Time split and the chosen model (lesson 4)
+pod = orders[(orders["payment_method"] == "Pay on delivery") & (orders["status"] != "Cancelled")].copy()
+train = pod[pod["order_time"] < "2026-01-01"]
+valid = pod[(pod["order_time"] >= "2026-01-01") & (pod["order_time"] < "2026-04-01")].copy()
+test = pod[(pod["order_time"] >= "2026-04-01") & (pod["call_group"] == "No call")].copy()
+numeric = ["prior_orders", "prior_failures", "first_order", "promised_days", "log_basket", "late_night",
+           "promo_code_used", "address_has_house_number", "phone_verified"]
+categorical = ["city", "device", "category", "acquisition_channel"]
+features = numeric + categorical
+model = make_pipeline(
+    ColumnTransformer([("num", StandardScaler(), numeric),
+                       ("cat", OneHotEncoder(handle_unknown="ignore", sparse_output=False), categorical)]),
+    LogisticRegression(max_iter=1000),
+).fit(train[features], train["failed"])
+pod["risk"] = model.predict_proba(pod[features])[:, 1]
+valid["risk"] = model.predict_proba(valid[features])[:, 1]
+test["risk"] = model.predict_proba(test[features])[:, 1]
+def by_group(df, col):
+    rows = []
+    for g, part in df.groupby(col):
+        rows.append({col: g, "orders": len(part), "actual": part["failed"].mean(), "predicted": part["risk"].mean(),
+                     "auc": roc_auc_score(part["failed"], part["risk"]), "share_called": (part["risk"] >= 0.15).mean()})
+    return pd.DataFrame(rows).set_index(col).round(3)
+
+by_group(test, "city")
+```
+
+```text
+orders  actual  predicted    auc  share_called
+city
+Abuja             762   0.188      0.191  0.691         0.530
+Benin City        420   0.238      0.277  0.703         0.771
+Enugu             415   0.205      0.226  0.643         0.663
+Ibadan            486   0.152      0.145  0.743         0.379
+Kaduna            278   0.536      0.414  0.642         0.996
+Kano              481   0.262      0.269  0.709         0.775
+Lagos            2013   0.128      0.136  0.695         0.304
+Port Harcourt     502   0.151      0.201  0.693         0.578
+```
+
+The model is calibrated within a few points in most cities. It over-predicts Port Harcourt by five points, and it badly under-predicts **Kaduna**, a city it has never seen, by twelve. It still calls almost every Kaduna order, so the calling policy happens to work there, but the risk numbers for Kaduna can't be trusted. Lagos customers are called least, because Lagos orders really do fail least: they have short delivery promises.
+
+What the model relies on:
+
+```python
+from sklearn.inspection import permutation_importance
+
+imp = permutation_importance(model, valid[features], valid["failed"], scoring="roc_auc", n_repeats=5, random_state=42)
+pd.Series(imp.importances_mean, index=features).sort_values(ascending=False).round(4)
+```
+
+```text
+prior_failures              0.0804
+promised_days               0.0488
+prior_orders                0.0243
+log_basket                  0.0160
+first_order                 0.0157
+acquisition_channel         0.0093
+category                    0.0091
+address_has_house_number    0.0075
+late_night                  0.0060
+phone_verified              0.0057
+device                      0.0038
+promo_code_used             0.0030
+city                       -0.0004
+dtype: float64
+```
+
+The customer's own history (`prior_failures`) and promised delivery days matter most. City adds nothing: shuffling it doesn't hurt the AUC at all, because promised days already carries the distance effect. What happens without it?
+
+```python
+categorical_no_city = ["device", "category", "acquisition_channel"]
+no_city = make_pipeline(
+    ColumnTransformer([("num", StandardScaler(), numeric),
+                       ("cat", OneHotEncoder(handle_unknown="ignore", sparse_output=False), categorical_no_city)]),
+    LogisticRegression(max_iter=1000),
+).fit(train[numeric + categorical_no_city], train["failed"])
+test["risk_no_city"] = no_city.predict_proba(test[numeric + categorical_no_city])[:, 1]
+print(f"Test AUC with city {roc_auc_score(test['failed'], test['risk']):.3f}, without city {roc_auc_score(test['failed'], test['risk_no_city']):.3f}")
+test.groupby("city")[["failed", "risk", "risk_no_city"]].mean().round(3)
+```
+
+```text
+Test AUC with city 0.733, without city 0.733
+               failed   risk  risk_no_city
+city
+Abuja           0.188  0.191         0.196
+Benin City      0.238  0.277         0.260
+Enugu           0.205  0.226         0.231
+Ibadan          0.152  0.145         0.154
+Kaduna          0.536  0.414         0.382
+Kano            0.262  0.269         0.278
+Lagos           0.128  0.136         0.135
+Port Harcourt   0.151  0.201         0.190
+```
+
+Without city, the test AUC is unchanged, and the predictions by city barely move. That makes the decision easy: **drop city**. The model performs the same and no longer uses where people live directly. Location still reaches the model through promised days, which is a genuine cause of failures, so keep checking outcomes by city. And notice that Kaduna is under-predicted even more without city: the fix for an unseen market is new data, not a feature.
+
+## Walkthrough
+
+1. Run the cells.
+2. Run `by_group` for `acquisition_channel` and `device`. Is the model fair across them?
+3. Look at the Kaduna orders. Which features make them risky, apart from the city?
+4. Decide what to do about Kaduna before the next retraining: for example, report its risk numbers as unreliable, or treat all its orders as high-risk until there's data.
+5. Write the model card (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "dsc-07-p1",
+  "prompt": "On the test orders, by how many **percentage points** does the model **under-predict** Kaduna's failure rate (actual minus predicted)? One decimal place.",
+  "answer": 12.2,
+  "format": "number",
+  "dataset": "deliveries",
+  "files": ["orders", "customers"],
+  "pyVerify": "round(100 * (test.loc[test['city'] == 'Kaduna', 'failed'].mean() - test.loc[test['city'] == 'Kaduna', 'risk'].mean()), 1)",
+  "hint": "Kaduna's actual minus predicted, times 100.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "dsc-07-p2",
+  "prompt": "Which feature has the **largest** permutation importance? Type the column name.",
+  "answer": "prior_failures",
+  "format": "text",
+  "dataset": "deliveries",
+  "files": ["orders", "customers"],
+  "pyVerify": "pd.Series(imp.importances_mean, index=features).idxmax()",
+  "hint": "The top row of the importance list.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "dsc-07-t1",
+  "prompt": "Write the **model card** (100 to 220 words) with these headings: **Purpose**, **Data**, **Performance** (with numbers), **By group** (including Kaduna), **Limits** and **Review**.",
+  "minutes": 12,
+  "rows": 12,
+  "placeholder": "Purpose: ...\nData: ...",
+  "rules": [
+    { "label": "Purpose", "pattern": "^\\W*purpose" },
+    { "label": "Data", "pattern": "^\\W*data" },
+    { "label": "Performance, with an AUC", "pattern": "auc[^\\n]*0\\.\\d" },
+    { "label": "By group, mentioning Kaduna", "pattern": "kaduna" },
+    { "label": "Limits", "pattern": "^\\W*limit" },
+    { "label": "Review (when it must be checked or retrained)", "pattern": "^\\W*review" },
+    { "label": "Between 100 and 220 words", "minWords": 100, "maxWords": 220 }
+  ],
+  "sample": "Purpose: score pay-on-delivery orders at checkout so the call centre can phone customers whose orders are most likely to fail. Only for choosing whom to call; not for refusing orders or demanding deposits without a separate review.\nData: Kasuwa orders from January to December 2025, with point-in-time customer history; validated on January to March 2026 and tested on the April to June No-call trial group.\nPerformance: logistic regression; test AUC 0.733; well calibrated overall; calling the riskiest 20% reaches about 41% of failures.\nBy group: calibrated within five points in most cities. Kaduna, launched after training, is under-predicted by about 12 points, though almost all its orders are still called. Removing the city feature leaves the AUC unchanged, so the production model drops it.\nLimits: no knowledge of new cities or new kinds of promotion; trained partly on the launch months and the November sale; the call's value comes from a three-month trial.\nReview: monthly calibration by city; retrain quarterly, or as soon as Kaduna has three months of data; review again before any harsher use.",
+  "note": "The card is what lets someone else use the model safely after you've moved on.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why does the model under-predict Kaduna?",
+    "options": ["Kaduna customers lie", "Kaduna wasn't in the training data, so the model ignores its city effect", "The AUC is low", "Calls changed the results"],
+    "answer": 1,
+    "explanation": "Unseen categories get no learned effect."
+  },
+  {
+    "prompt": "Why is permutation importance useful?",
+    "options": ["It's fast", "It shows how much the model's performance depends on each feature, for any model", "It removes bias", "It proves causation"],
+    "answer": 1,
+    "explanation": "Shuffle a feature and measure the damage."
+  },
+  {
+    "prompt": "Removing city leaves the AUC unchanged. What should you do?",
+    "options": ["Keep it: more features are better", "Drop it: same performance, less reliance on where people live, and keep checking outcomes by city", "Drop promised days too", "Nothing"],
+    "answer": 1,
+    "explanation": "A feature that adds nothing but risk should go."
+  }
+]
+```
+$md$, true, true, 7, array['dsc-07-p1', 'dsc-07-p2', 'dsc-07-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('dsc-m08', 'data-scientist-capstone', 'Monitoring and the Final Presentation', 8, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('data-scientist-capstone:monitoring-and-the-final-presentation', 'data-scientist-capstone', 'dsc-m08', 'monitoring-and-the-final-presentation', 'Monitoring and the final presentation', 'Plan how to tell when the model stops working: calibration by month, score drift and new markets. Then present the project to Kasuwa''s leadership as a decision, with its value, its limits and its safeguards.', 30, $md$
+## The problem
+
+A model is at its best on the day it's tested. After that, the world moves: new cities, new promotions, new kinds of customer. Kasuwa launched Kaduna in April, and a Christmas sale is coming. You need a plan to notice when the model drifts, and a short presentation that gets leadership to approve the calling policy with its safeguards.
+
+## The concept
+
+**What to monitor**
+
+| Check | How | Why |
+| :-- | :-- | :-- |
+| Calibration | Predicted against actual failure rate, monthly, on orders **not called** | Catches the model going wrong |
+| Score drift | Population stability index (PSI) of the risk scores against validation | Catches changes in who's ordering, before outcomes arrive |
+| New categories | Share of orders from cities, devices or channels unseen in training | Catches blind spots, like Kaduna |
+| The call's effect | Keep a small random group uncalled, and compare | Catches calls losing their effect |
+
+**Outcomes arrive late**
+
+A delivery's outcome is known days after checkout. Score drift can be checked the same day; calibration needs a lag.
+
+**PSI**
+
+Bin the validation scores into tenths. For new scores, PSI = Σ (new share − old share) × ln(new share ÷ old share) across the bins. As a rule of thumb, under 0.1 is stable, 0.1 to 0.25 is worth a look, and over 0.25 means a real shift.
+
+**The final presentation**
+
+Lead with the decision and its value, then the evidence (model, trial, policy), then the safeguards (fairness, monitoring, holdout), then the ask.
+
+## Example
+
+The setup, then calibration by month on orders that weren't called:
+
+```python
+import numpy as np
+import pandas as pd
+from sklearn.compose import ColumnTransformer
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import roc_auc_score
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import OneHotEncoder, StandardScaler
+
+# Point-in-time features (lesson 3)
+base = "https://academy.cloudtechanalytics.com/datasets/deliveries/"
+orders = pd.read_csv(base + "orders.csv", parse_dates=["order_time", "resolved_at"])
+customers = pd.read_csv(base + "customers.csv")
+orders = orders.sort_values(["order_time", "order_id"]).reset_index(drop=True)
+orders["failed"] = (orders["status"] == "Failed delivery").astype(int)
+orders["prior_orders"] = orders.groupby("customer_id").cumcount()
+fails = orders.loc[orders["failed"] == 1, ["customer_id", "resolved_at"]].rename(columns={"resolved_at": "failed_at"}).sort_values("failed_at")
+fails["prior_failures"] = fails.groupby("customer_id").cumcount() + 1
+orders = pd.merge_asof(orders, fails, left_on="order_time", right_on="failed_at", by="customer_id", allow_exact_matches=False)
+orders["prior_failures"] = orders["prior_failures"].fillna(0).astype(int)
+orders = orders.merge(customers[["customer_id", "acquisition_channel", "phone_verified"]], on="customer_id", how="left")
+orders["first_order"] = (orders["prior_orders"] == 0).astype(int)
+orders["late_night"] = (orders["order_time"].dt.hour <= 3).astype(int)
+orders["log_basket"] = np.log(orders["basket_value_ngn"])
+
+# Time split and the chosen model (lesson 4)
+pod = orders[(orders["payment_method"] == "Pay on delivery") & (orders["status"] != "Cancelled")].copy()
+train = pod[pod["order_time"] < "2026-01-01"]
+valid = pod[(pod["order_time"] >= "2026-01-01") & (pod["order_time"] < "2026-04-01")].copy()
+test = pod[(pod["order_time"] >= "2026-04-01") & (pod["call_group"] == "No call")].copy()
+numeric = ["prior_orders", "prior_failures", "first_order", "promised_days", "log_basket", "late_night",
+           "promo_code_used", "address_has_house_number", "phone_verified"]
+categorical = ["city", "device", "category", "acquisition_channel"]
+features = numeric + categorical
+model = make_pipeline(
+    ColumnTransformer([("num", StandardScaler(), numeric),
+                       ("cat", OneHotEncoder(handle_unknown="ignore", sparse_output=False), categorical)]),
+    LogisticRegression(max_iter=1000),
+).fit(train[features], train["failed"])
+pod["risk"] = model.predict_proba(pod[features])[:, 1]
+valid["risk"] = model.predict_proba(valid[features])[:, 1]
+test["risk"] = model.predict_proba(test[features])[:, 1]
+recent = pod[(pod["order_time"] >= "2026-01-01") & (pod["call_group"] != "Call")]
+monthly = recent.groupby(recent["order_time"].dt.to_period("M")).agg(orders=("failed", "size"), predicted=("risk", "mean"), actual=("failed", "mean"))
+monthly["gap"] = monthly["actual"] - monthly["predicted"]
+monthly.round(3)
+```
+
+```text
+orders  predicted  actual    gap
+order_time
+2026-01       2928      0.191   0.173 -0.018
+2026-02       2815      0.191   0.189 -0.002
+2026-03       3437      0.190   0.190 -0.000
+2026-04       1671      0.196   0.185 -0.011
+2026-05       1822      0.193   0.192 -0.002
+2026-06       1864      0.196   0.189 -0.007
+```
+
+Month by month, the model is well calibrated, running slightly high, even after April. That looks reassuring. Remember lesson 7, though: the model misses Kaduna by twelve points. Kaduna is only a few percent of orders, and other cities run slightly high, so the miss disappears into the total. Now score drift, which doesn't need outcomes:
+
+```python
+def psi(expected, actual, bins=10):
+    edges = np.quantile(expected, np.linspace(0, 1, bins + 1))
+    edges[0], edges[-1] = -np.inf, np.inf
+    e = np.histogram(expected, edges)[0] / len(expected)
+    a = np.histogram(actual, edges)[0] / len(actual)
+    return float(np.sum((a - e) * np.log(a / e)))
+
+later = pod[pod["order_time"] >= "2026-04-01"]
+for month, part in later.groupby(later["order_time"].dt.to_period("M")):
+    print(f"{month}: PSI {psi(valid['risk'], part['risk']):.3f}, Kaduna {(part['city'] == 'Kaduna').mean():.1%} of orders, "
+          f"{(part['risk'] >= 0.15).mean():.0%} above the 15% threshold")
+```
+
+```text
+2026-04: PSI 0.009, Kaduna 4.5% of orders, 52% above the 15% threshold
+2026-05: PSI 0.012, Kaduna 5.6% of orders, 52% above the 15% threshold
+2026-06: PSI 0.024, Kaduna 6.2% of orders, 51% above the 15% threshold
+```
+
+The PSI is small every month too: the overall mix of risk scores is stable. So both overall checks say all is well, while the model is badly wrong in its newest market, a small but growing share of orders. That's the lesson for monitoring: check calibration **by segment** as well as overall, track new markets separately, and retrain once Kaduna has enough history.
+
+## Walkthrough
+
+1. Run the cells.
+2. Calculate the monthly calibration for Kaduna alone, and for the other cities. What do the overall totals hide?
+3. Write the monitoring plan: each check, how often, the alert level and who acts.
+4. Plan the presentation: five slides at most.
+5. Open the project brief on the course page and plan your submission.
+
+## Practice
+
+```dataset
+{"dataset": "deliveries", "files": ["orders", "customers"]}
+```
+
+```answer
+{
+  "id": "dsc-08-p1",
+  "prompt": "In **June 2026**, what was the calibration gap (actual minus predicted failure rate, for orders not called), in percentage points? One decimal place (a negative number means the model predicted too high).",
+  "answer": -0.7,
+  "format": "number",
+  "dataset": "deliveries",
+  "files": ["orders", "customers"],
+  "pyVerify": "round(100 * monthly.loc[pd.Period('2026-06', 'M'), 'gap'], 1)",
+  "hint": "The 2026-06 row of the monthly table, the gap column, times 100.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "dsc-08-t1",
+  "prompt": "Write the **executive summary** for Kasuwa's leadership (120 to 230 words): the **decision** you're asking for, the **evidence** (model and trial), the expected **value**, the **safeguards** (fairness and monitoring), and the **limits**.",
+  "minutes": 12,
+  "rows": 11,
+  "placeholder": "We recommend ...",
+  "rules": [
+    { "label": "Opens with the decision (recommend, approve, ask)", "pattern": "^[^.]{0,200}(recommend|approve|ask)" },
+    { "label": "Uses numbers", "pattern": "\\d+(\\.\\d+)?", "min": 6 },
+    { "label": "Cites the trial", "pattern": "trial|random" },
+    { "label": "Gives a value in naira", "pattern": "₦\\s*\\d" },
+    { "label": "Mentions fairness or city", "pattern": "fair|city|cities|where (customers|people) live" },
+    { "label": "Mentions monitoring or retraining", "pattern": "monitor|retrain|calibrat|drift" },
+    { "label": "States a limit (Kaduna, estimate, new)", "pattern": "kaduna|estimate|limit|new (cities|markets)" },
+    { "label": "Between 120 and 230 words", "minWords": 120, "maxWords": 230 }
+  ],
+  "sample": "We recommend phoning every pay-on-delivery customer whose order has a predicted failure risk of 15% or more, before dispatch: about 1,900 calls a month.\n\nFailed deliveries cost Kasuwa about ₦40m last year at ₦6,500 each. Our model, built only on what's known at checkout, ranks orders well (test AUC 0.733) and its risk scores match actual failure rates. In the randomised April to June trial, calls prevented about 7 failures per 100 overall, and far more for risky orders: about 18 per 100 above 30% risk, against 2 per 100 below 10%. Calling above 15% saves an estimated ₦0.86m a month after call costs, more than calling everyone, at half the calls.\n\nSafeguards: the model doesn't use the customer's city, which added nothing to accuracy, and it is used only to offer a call, never to refuse an order. We'll monitor calibration and score drift monthly, keep 10% of orders uncalled to keep measuring the call's effect, and retrain quarterly.\n\nLimits: the saving is an estimate from three months; the model under-predicts Kaduna, which launched after training, so we'll retrain as soon as Kaduna has three months of data.",
+  "note": "Every number traces to a lesson, and the limits are stated before anyone has to ask.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why check calibration only on orders that weren't called?",
+    "options": ["They're cheaper", "Calls change outcomes, so called orders would make the model look wrong when it isn't", "There are more of them", "It doesn't matter"],
+    "answer": 1,
+    "explanation": "Measure the model on untreated orders."
+  },
+  {
+    "prompt": "PSI is small every month, but the model badly misses Kaduna. What does that show?",
+    "options": ["PSI is useless", "One overall drift number can hide a small group where the model fails; monitor new segments separately", "Kaduna doesn't matter", "The model is fine"],
+    "answer": 1,
+    "explanation": "Averages hide segments."
+  },
+  {
+    "prompt": "Why keep a small random group uncalled after rollout?",
+    "options": ["To save money", "To keep measuring whether calls still prevent failures", "For fairness", "Because the trial requires it"],
+    "answer": 1,
+    "explanation": "A holdout keeps the value measurable."
+  }
+]
+```
+$md$, true, true, 8, array['dsc-08-p1', 'dsc-08-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+
 -- Assessment: SQL for Data Analysis: final assessment
 insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
 values ('sql-for-data-analysis-final', 'sql-for-data-analysis', 'final', null, 'SQL for Data Analysis: final assessment', 60, true)
@@ -60438,6 +62148,108 @@ on conflict (id) do update set assessment_id = excluded.assessment_id, position 
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
 values ('bacq12', 1, 'Answer first.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Data Scientist Capstone: final assessment
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('data-scientist-capstone-final', 'data-scientist-capstone', 'final', null, 'Data Scientist Capstone: final assessment', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dscq01', 'data-scientist-capstone-final', 1, 'A manager asks for "a model to stop bad orders". What should you define first?', '["The algorithm","The decision the model supports, the target and when the prediction is made","The number of features","The cloud platform"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dscq01', 1, 'Frame the decision before building the model.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dscq02', 'data-scientist-capstone-final', 2, 'Which feature is a leak for predicting failed delivery at checkout?', '["Basket value","Number of delivery attempts","Promised delivery days","Device"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dscq02', 1, 'Delivery attempts are only known after the delivery.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dscq03', 'data-scientist-capstone-final', 3, 'A customer''s earlier order is still out for delivery when they place a new one. Should its eventual failure count in the new order''s prior failures?', '["Yes","No: it wasn''t known at checkout","Only if it failed","Only for prepaid orders"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dscq03', 1, 'Point in time means known at the moment of prediction.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dscq04', 'data-scientist-capstone-final', 4, 'A lifetime-failures column raises AUC from 0.59 to 0.84. What''s the right conclusion?', '["Use it","It leaks future outcomes and must not be used","The model was underfitting","AUC is unreliable"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dscq04', 1, 'A big jump from a total calculated at export time is a leak.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dscq05', 'data-scientist-capstone-final', 5, 'Why validate on later months rather than a random sample?', '["It''s faster","The model will predict the future, so test it on data after its training period","It gives more data","Random splits are illegal"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dscq05', 1, 'Test the way it will be used.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dscq06', 'data-scientist-capstone-final', 6, 'Half the test period''s orders received a confirmation call. Which orders should test the model?', '["All of them","Only the randomly chosen No-call orders","Only the Call orders","None"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dscq06', 1, 'Calls changed the outcomes of the Call group.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dscq07', 'data-scientist-capstone-final', 7, 'Orders the model scores at 30% risk fail about 30% of the time. What property is that?', '["High AUC","Calibration","Recall","Low variance"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dscq07', 1, 'Predicted matches actual.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dscq08', 'data-scientist-capstone-final', 8, 'A call costs ₦250 and a failure ₦6,500. In a risk band, calls prevent 3 failures per 100. Should you call that band?', '["Yes","No: 0.03 × ₦6,500 = ₦195, less than ₦250","Only on weekends","It depends on AUC"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dscq08', 1, 'Value per call must exceed its cost.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dscq09', 'data-scientist-capstone-final', 9, 'Why can you compare Call and No call within risk bands from the model?', '["The bands are equal in size","The score uses only pre-call information, and calls were random within each band","The model is calibrated","You can''t"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dscq09', 1, 'Splitting by a pre-treatment variable keeps randomisation intact.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dscq10', 'data-scientist-capstone-final', 10, 'The model badly under-predicts a city it never saw in training. Why?', '["The city''s data is wrong","Unseen categories get no learned effect","AUC is low","The trial"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dscq10', 1, 'New markets need new data.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dscq11', 'data-scientist-capstone-final', 11, 'Dropping the city feature leaves AUC unchanged. What should you do?', '["Keep it","Drop it, and keep checking outcomes by city","Add more location features","Retrain daily"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dscq11', 1, 'Same performance, less reliance on where people live.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dscq12', 'data-scientist-capstone-final', 12, 'Overall calibration and PSI look fine, but one new market is badly mispredicted. What does that teach about monitoring?', '["Monitoring is pointless","Check by segment and track new markets separately, not just overall numbers","Use only PSI","Ignore small markets"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dscq12', 1, 'Averages hide segments.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 
@@ -65940,6 +67752,14 @@ In the text box, paste your **decision paper's executive summary**, then a short
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
 
 
+-- Project: Kasuwa: who to call before dispatch
+insert into public.projects (id, course_id, title, summary, brief_md, tasks, datasets, rubric, required)
+values ('dsc-kasuwa-failed-deliveries', 'data-scientist-capstone', 'Kasuwa: who to call before dispatch', 'An end-to-end data science project on an online shop''s failed pay-on-delivery orders: framing, a leakage audit, point-in-time features, time-based validation, calibration, a randomised trial turned into a calling policy, fairness checks, a model card and a monitoring plan.', $md$Kasuwa's leadership wants to cut failed pay-on-delivery deliveries without wasting money on calls. Build the model, use the April trial to decide whom to call, check it's fair, and plan how to keep it working.
+
+Work in Google Colab with the deliveries dataset (https://academy.cloudtechanalytics.com/datasets/deliveries/: orders.csv and customers.csv). Submit a link to your notebook (shared so anyone with the link can view it), and paste your **executive summary** and **model card** below, followed by a short note on where each part of the analysis is.$md$, array['Framing: the decision, target, prediction moment and a metric in naira.', 'Leakage audit: every column classed as known at checkout or later, with the leaks you excluded and why.', 'Features: point-in-time customer history built with the failure time, with a check against the shortcut and the lifetime totals.', 'Models: a time-based split, a baseline rule, logistic regression and gradient boosting compared on validation, and one test on the No-call group.', 'Calibration and capacity: a calibration table and Brier score, and how many failures the riskiest orders contain.', 'The trial: the call''s overall effect with an interval, the effect by risk band, and a threshold chosen from net value per month.', 'Fairness and monitoring: performance by city, the Kaduna problem, a decision on the city feature, a model card, and a monitoring plan with alert levels.']::text[], array['deliveries']::text[], array['The problem is framed as a decision with a naira metric, not just a prediction.', 'No feature uses information from after checkout; leaks are found and explained.', 'Validation follows time, and the test set is untouched by the trial''s calls.', 'Model choice is justified by validation results, not complexity.', 'The threshold comes from the trial''s measured effect and costs, with its uncertainty stated.', 'Performance is checked by group, and the use of location is justified or removed.', 'Monitoring covers calibration by segment, score drift, new markets and a continuing holdout.']::text[], true)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
+
+
 -- Track: Become a Data Analyst
 insert into public.tracks (id, slug, title, summary, badge_name, badge_code, skills, position, published)
 values ('data-analyst', 'data-analyst', 'Become a Data Analyst', 'The route we recommend from no experience to a junior data analyst role. Learn how analysis works, then the tools teams use every day (Excel, SQL, Power BI and Python) on realistic company data. Build portfolio projects that answer real business questions, and finish with your CV, LinkedIn and interview preparation.', 'CloudTech Data Analyst', 'DATAANALYST', array['Spreadsheet analysis in Excel', 'Statistics: averages, spread, confidence intervals and tests', 'Querying databases with SQL, from first SELECT to cohorts and window functions', 'Data modelling and star schemas', 'Dashboards in Power BI, with DAX measures you can trust', 'Analysis in Python and pandas', 'Turning data into findings a manager can act on']::text[], 1, true)
@@ -66096,11 +67916,15 @@ values ('data-scientist', 'experimentation-ab-testing', 'Specialist', true, 8)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 insert into public.track_courses (track_id, course_id, stage, required, position)
-values ('data-scientist', 'career-essentials', 'Career', true, 9)
+values ('data-scientist', 'data-scientist-capstone', 'Projects', true, 9)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 insert into public.track_courses (track_id, course_id, stage, required, position)
-values ('data-scientist', 'build-your-student-portfolio', 'Career', false, 10)
+values ('data-scientist', 'career-essentials', 'Career', true, 10)
+on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
+
+insert into public.track_courses (track_id, course_id, stage, required, position)
+values ('data-scientist', 'build-your-student-portfolio', 'Career', false, 11)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 

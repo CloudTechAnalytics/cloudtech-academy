@@ -3166,6 +3166,106 @@ function claimsData() {
   return { claims, events, complaints, renewals, interviews, options, uat };
 }
 
+/* ------------------------------------------------------------------ deliveries (DS capstone) */
+// Kasuwa, an online shop launched in January 2025: customers and every order to June 2026.
+// Pay-on-delivery orders fail at the door when customers refuse them or can't be reached.
+// Failure depends on the order (first orders, long delivery promises, late-night impulse
+// buys, fashion, promos, missing house numbers) and on the customer (a hidden reliability
+// that makes failures repeat). From April 2026, half of pay-on-delivery orders were picked
+// at random for a confirmation call, which cuts the failure risk by 40%, and the shop
+// launched in Kaduna, where failure is higher. customers.csv holds lifetime totals as of
+// the export date, a leak. Generated last, from its own seed.
+function deliveriesData() {
+  seed = 20280301;
+  const hrs = (h) => h * 3600000;
+  const stamp = (t) => new Date(t).toISOString().slice(0, 16).replace("T", " ");
+  const START = d("2025-01-01");
+  const END = d("2026-06-30") + day - 1;
+  const TRIAL = d("2026-04-01");
+  const CITIES = ["Lagos", "Abuja", "Port Harcourt", "Ibadan", "Kano", "Enugu", "Benin City"];
+  const DAYS = { Lagos: [1, 2], Abuja: [2, 4], "Port Harcourt": [2, 4], Ibadan: [2, 3], Kano: [3, 6], Enugu: [3, 5], "Benin City": [3, 5], Kaduna: [4, 7] };
+  const CHANNEL_RISK = { Organic: 0, Referral: -0.2, "Social ad": 0.35, Influencer: 0.6 };
+  const CATS = [["Phones and tablets", 180000, 0], ["Electronics", 90000, 0], ["Fashion", 18000, 0.35], ["Home and kitchen", 30000, 0], ["Beauty", 12000, 0.1], ["Groceries", 15000, -0.2]];
+  const customers = [];
+  const orders = [];
+  let n = 0;
+  for (let k = 1; k <= 16000; k++) {
+    const signup = START + int(0, 540) * day + hrs(int(7, 23));
+    let city = weighted(CITIES, [40, 15, 10, 10, 9, 8, 8]);
+    if (signup >= TRIAL && rand() < 0.3) city = "Kaduna";
+    const channel = weighted(["Organic", "Referral", "Social ad", "Influencer"], [35, 20, 30, 15]);
+    const verified = rand() < 0.8;
+    const reliability = normal() * 1.2;
+    const rate = Math.exp(Math.log(0.25) + normal() * 0.8); // orders per 30 days
+    const podPref = Math.min(0.95, Math.max(0.2, (channel === "Social ad" || channel === "Influencer" ? 0.72 : 0.55) + normal() * 0.15));
+    const addressGood = rand() < 0.8 ? 0.95 : 0.3;
+    const id = `C${String(k).padStart(5, "0")}`;
+    let t = signup + hrs(int(0, 72));
+    let count = 0;
+    let fails = 0;
+    while (t <= END) {
+      n++;
+      count++;
+      const hour = weighted([0, 1, 2, 3, 8, 10, 12, 14, 16, 18, 20, 21, 22, 23], [2, 2, 2, 2, 7, 10, 11, 11, 10, 11, 12, 10, 6, 4]);
+      const time = t - (t % day) + hrs(hour) + hrs(rand());
+      const month = new Date(time).getUTCMonth();
+      const sale = month === 10 || month === 11;
+      const [category, typical, catRisk] = weighted(CATS, [12, 10, 28, 18, 16, 16]);
+      const value = round(Math.exp(Math.log(typical) + normal() * 0.5), 100);
+      const promo = rand() < (sale ? 0.45 : 0.15);
+      const pod = rand() < podPref;
+      const device = weighted(["Android app", "Mobile web", "iOS app", "Desktop"], [50, 25, 15, 10]);
+      const [lo, hi] = DAYS[city];
+      const promised = int(lo, hi);
+      const house = rand() < addressGood;
+      const callGroup = pod && time >= TRIAL ? (rand() < 0.5 ? "Call" : "No call") : "Not in trial";
+      const cancelled = rand() < 0.03;
+      let status = "Cancelled";
+      let reason = "";
+      let attempts = 0;
+      let resolved = null;
+      if (!cancelled) {
+        const logit =
+          -2.6 + (count === 1 ? 0.7 : 0) + 0.35 * (promised - 2) + CHANNEL_RISK[channel] + (device === "Mobile web" ? 0.3 : 0) + (hour <= 3 ? 0.6 : 0) +
+          (promo ? 0.35 : 0) + 0.3 * Math.log(value / 25000) + catRisk + (house ? 0 : 0.5) + (sale ? 0.35 : 0) + (city === "Kaduna" ? 0.7 : 0) - (verified ? 0.5 : 0) - reliability;
+        let p = pod ? 1 / (1 + Math.exp(-logit)) : 0.03;
+        if (callGroup === "Call") p *= 0.6;
+        const failed = rand() < p;
+        status = failed ? "Failed delivery" : "Delivered";
+        reason = failed ? (pod && rand() < 0.6 ? "Refused at door" : "Customer unreachable") : "";
+        attempts = failed ? int(2, 3) : rand() < 0.8 ? 1 : 2;
+        resolved = time + hrs(int(4, 30)) + days(promised) + hrs(int(-12, 12)) + (attempts - 1) * day;
+        if (failed) fails++;
+      }
+      orders.push({
+        order_id: `K${String(n).padStart(6, "0")}`,
+        customer_id: id,
+        order_time: stamp(time),
+        city,
+        device,
+        category,
+        basket_value_ngn: value,
+        promo_code_used: +promo,
+        payment_method: pod ? "Pay on delivery" : "Prepaid",
+        promised_days: promised,
+        address_has_house_number: +house,
+        call_group: callGroup,
+        status,
+        failure_reason: reason,
+        delivery_attempts: attempts,
+        resolved_at: resolved ? stamp(resolved) : "",
+      });
+      t += Math.max(day, -Math.log(1 - rand()) / rate * 30 * day);
+    }
+    customers.push({ customer_id: id, signup_date: iso(signup), city, acquisition_channel: channel, phone_verified: +verified, lifetime_orders: count, lifetime_failed_deliveries: fails });
+  }
+  orders.sort((a, b) => (a.order_time < b.order_time ? -1 : a.order_time > b.order_time ? 1 : 0));
+  return { customers, orders };
+  function days(x) {
+    return x * day;
+  }
+}
+
 /* ------------------------------------------------------------------ write */
 const SQL = await initSqlJs();
 const L = logistics();
@@ -3232,6 +3332,7 @@ for (const [name, obj] of Object.entries(terraformFiles(CLOUD.resources))) write
 for (const [table, rows] of Object.entries(projectData())) writeCsv("project", table, rows);
 for (const [table, rows] of Object.entries(productData())) writeCsv("product", table, rows);
 for (const [table, rows] of Object.entries(claimsData())) writeCsv("claims", table, rows);
+for (const [table, rows] of Object.entries(deliveriesData())) writeCsv("deliveries", table, rows);
 
 // Summary for the build log
 const counts = db.exec("SELECT (SELECT COUNT(*) FROM customers), (SELECT COUNT(*) FROM shipments), (SELECT COUNT(*) FROM payments), (SELECT COUNT(*) FROM routes), (SELECT COUNT(*) FROM employees)")[0].values[0];

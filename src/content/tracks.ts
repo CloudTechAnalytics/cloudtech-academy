@@ -223,6 +223,7 @@ export const TRACKS: Track[] = [
         items: [
           { kind: "project", projectId: "employee-analytics", why: "Who leaves, when, and why: a natural first prediction problem." },
           { kind: "project", projectId: "sales-performance", why: "Explore drivers of revenue before modelling them." },
+          { kind: "course", courseId: "data-scientist-capstone", why: "From a vague request to a trial-tested calling policy, with fairness checks and a monitoring plan." },
         ],
       },
       {

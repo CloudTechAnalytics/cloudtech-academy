@@ -2808,6 +2808,345 @@
    }
   }
  },
+ "deliveries": {
+  "zipBytes": 1665509,
+  "files": {
+   "customers": {
+    "rows": 16000,
+    "bytes": 648681,
+    "columns": [
+     {
+      "name": "customer_id",
+      "type": "text",
+      "missing": 0,
+      "distinct": 16000
+     },
+     {
+      "name": "signup_date",
+      "type": "date",
+      "missing": 0,
+      "distinct": 541,
+      "min": "2025-01-01",
+      "max": "2026-06-25"
+     },
+     {
+      "name": "city",
+      "type": "text",
+      "missing": 0,
+      "distinct": 8
+     },
+     {
+      "name": "acquisition_channel",
+      "type": "text",
+      "missing": 0,
+      "distinct": 4
+     },
+     {
+      "name": "phone_verified",
+      "type": "number",
+      "missing": 0,
+      "distinct": 2,
+      "min": 0,
+      "max": 1
+     },
+     {
+      "name": "lifetime_orders",
+      "type": "number",
+      "missing": 0,
+      "distinct": 50,
+      "min": 1,
+      "max": 72
+     },
+     {
+      "name": "lifetime_failed_deliveries",
+      "type": "number",
+      "missing": 0,
+      "distinct": 17,
+      "min": 0,
+      "max": 28
+     }
+    ],
+    "preview": [
+     [
+      "C00001",
+      "2025-09-17",
+      "Lagos",
+      "Organic",
+      "1",
+      "3",
+      "0"
+     ],
+     [
+      "C00002",
+      "2026-04-20",
+      "Enugu",
+      "Social ad",
+      "1",
+      "1",
+      "0"
+     ],
+     [
+      "C00003",
+      "2025-10-18",
+      "Ibadan",
+      "Social ad",
+      "1",
+      "1",
+      "0"
+     ],
+     [
+      "C00004",
+      "2025-11-27",
+      "Benin City",
+      "Organic",
+      "0",
+      "7",
+      "6"
+     ],
+     [
+      "C00005",
+      "2025-05-06",
+      "Abuja",
+      "Social ad",
+      "0",
+      "1",
+      "0"
+     ],
+     [
+      "C00006",
+      "2025-12-27",
+      "Port Harcourt",
+      "Social ad",
+      "1",
+      "1",
+      "0"
+     ]
+    ]
+   },
+   "orders": {
+    "rows": 66884,
+    "bytes": 8747573,
+    "columns": [
+     {
+      "name": "order_id",
+      "type": "text",
+      "missing": 0,
+      "distinct": 66884
+     },
+     {
+      "name": "customer_id",
+      "type": "text",
+      "missing": 0,
+      "distinct": 16000
+     },
+     {
+      "name": "order_time",
+      "type": "text",
+      "missing": 0,
+      "distinct": 60020
+     },
+     {
+      "name": "city",
+      "type": "text",
+      "missing": 0,
+      "distinct": 8
+     },
+     {
+      "name": "device",
+      "type": "text",
+      "missing": 0,
+      "distinct": 4
+     },
+     {
+      "name": "category",
+      "type": "text",
+      "missing": 0,
+      "distinct": 6
+     },
+     {
+      "name": "basket_value_ngn",
+      "type": "number",
+      "missing": 0,
+      "distinct": 3766,
+      "min": 1600,
+      "max": 1350000
+     },
+     {
+      "name": "promo_code_used",
+      "type": "number",
+      "missing": 0,
+      "distinct": 2,
+      "min": 0,
+      "max": 1
+     },
+     {
+      "name": "payment_method",
+      "type": "text",
+      "missing": 0,
+      "distinct": 2
+     },
+     {
+      "name": "promised_days",
+      "type": "number",
+      "missing": 0,
+      "distinct": 7,
+      "min": 1,
+      "max": 7
+     },
+     {
+      "name": "address_has_house_number",
+      "type": "number",
+      "missing": 0,
+      "distinct": 2,
+      "min": 0,
+      "max": 1
+     },
+     {
+      "name": "call_group",
+      "type": "text",
+      "missing": 0,
+      "distinct": 3
+     },
+     {
+      "name": "status",
+      "type": "text",
+      "missing": 0,
+      "distinct": 3
+     },
+     {
+      "name": "failure_reason",
+      "type": "text",
+      "missing": 58622,
+      "distinct": 2
+     },
+     {
+      "name": "delivery_attempts",
+      "type": "number",
+      "missing": 0,
+      "distinct": 4,
+      "min": 0,
+      "max": 3
+     },
+     {
+      "name": "resolved_at",
+      "type": "text",
+      "missing": 1974,
+      "distinct": 61836
+     }
+    ],
+    "preview": [
+     [
+      "K030493",
+      "C07202",
+      "2025-01-01 00:44",
+      "Port Harcourt",
+      "Mobile web",
+      "Fashion",
+      "58200",
+      "0",
+      "Prepaid",
+      "2",
+      "0",
+      "Not in trial",
+      "Delivered",
+      "",
+      "1",
+      "2025-01-03 13:44"
+     ],
+     [
+      "K033333",
+      "C07890",
+      "2025-01-01 10:56",
+      "Ibadan",
+      "Mobile web",
+      "Beauty",
+      "7800",
+      "0",
+      "Prepaid",
+      "2",
+      "1",
+      "Not in trial",
+      "Delivered",
+      "",
+      "1",
+      "2025-01-04 08:56"
+     ],
+     [
+      "K027774",
+      "C06592",
+      "2025-01-01 18:54",
+      "Lagos",
+      "Mobile web",
+      "Groceries",
+      "19600",
+      "0",
+      "Pay on delivery",
+      "2",
+      "1",
+      "Not in trial",
+      "Delivered",
+      "",
+      "1",
+      "2025-01-04 13:54"
+     ],
+     [
+      "K038478",
+      "C09087",
+      "2025-01-02 10:44",
+      "Benin City",
+      "Android app",
+      "Beauty",
+      "24800",
+      "0",
+      "Prepaid",
+      "4",
+      "0",
+      "Not in trial",
+      "Delivered",
+      "",
+      "1",
+      "2025-01-06 12:44"
+     ],
+     [
+      "K021247",
+      "C05089",
+      "2025-01-02 12:28",
+      "Lagos",
+      "Android app",
+      "Fashion",
+      "12300",
+      "0",
+      "Pay on delivery",
+      "1",
+      "1",
+      "Not in trial",
+      "Delivered",
+      "",
+      "1",
+      "2025-01-04 01:28"
+     ],
+     [
+      "K049969",
+      "C11827",
+      "2025-01-02 14:20",
+      "Lagos",
+      "Mobile web",
+      "Fashion",
+      "16600",
+      "0",
+      "Pay on delivery",
+      "2",
+      "0",
+      "Not in trial",
+      "Delivered",
+      "",
+      "2",
+      "2025-01-05 21:20"
+     ]
+    ]
+   }
+  }
+ },
  "demand": {
   "zipBytes": 47759,
   "files": {
