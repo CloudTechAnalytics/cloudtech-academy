@@ -3512,6 +3512,195 @@ function assistantData() {
   return { messages, policy, questions, redteam, daily };
 }
 
+/* ------------------------------------------------------------------ platform (Cloud & DevOps capstone) */
+// Kasuwa's platform before its November 2026 sale. The cloud inventory (half managed by
+// hand), per-minute metrics and sampled error logs from the 2025 sale, when autoscaling
+// opened more database connections than the database allowed, the Terraform plan for the
+// readiness work (with a hidden database replacement and two policy violations), six
+// months of deployments, a load test, three months of alerts and a game day's results.
+// Generated last, from its own seed.
+function platformData() {
+  seed = 20280501;
+  const stamp = (t) => new Date(t).toISOString().slice(0, 16).replace("T", " ");
+  const R = [];
+  const res = (name, type, environment, managed_by, monthly_cost_usd, avg_cpu_pct, publicly_accessible, encrypted, owner) =>
+    R.push({ resource_id: `r-${String(R.length + 1).padStart(3, "0")}`, name, type, environment, managed_by, monthly_cost_usd, avg_cpu_pct, publicly_accessible, encrypted, owner });
+  res("checkout-api", "autoscaling group", "production", "terraform", 830, 38, 0, 1, "payments-team");
+  res("catalog-api", "autoscaling group", "production", "terraform", 420, 31, 0, 1, "catalog-team");
+  res("web-frontend", "cdn distribution", "production", "terraform", 210, "", 1, 1, "web-team");
+  res("public-load-balancer", "load balancer", "production", "terraform", 60, "", 1, 1, "platform-team");
+  res("orders-db", "postgres database", "production", "terraform", 1150, 46, 0, 1, "payments-team");
+  res("orders-db-replica", "postgres database", "production", "manual", 1150, 12, 0, 1, "payments-team");
+  res("session-cache", "redis cache", "production", "terraform", 240, 22, 0, 1, "platform-team");
+  res("order-worker", "autoscaling group", "production", "manual", 310, 27, 0, 1, "payments-team");
+  res("product-images", "storage bucket", "production", "terraform", 180, "", 1, 1, "web-team");
+  res("db-backups", "storage bucket", "production", "manual", 95, "", 0, 0, "");
+  res("nat-gateway", "nat gateway", "production", "terraform", 140, "", 0, 1, "platform-team");
+  res("bastion", "virtual machine", "production", "manual", 45, 2, 1, 1, "");
+  res("checkout-api-staging", "autoscaling group", "staging", "manual", 830, 4, 0, 1, "payments-team");
+  res("catalog-api-staging", "autoscaling group", "staging", "manual", 420, 3, 0, 1, "catalog-team");
+  res("orders-db-staging", "postgres database", "staging", "manual", 1150, 3, 0, 1, "payments-team");
+  res("session-cache-staging", "redis cache", "staging", "terraform", 240, 1, 0, 1, "platform-team");
+  res("staging-load-balancer", "load balancer", "staging", "terraform", 60, "", 1, 1, "platform-team");
+  const devOwners = ["web-team", "catalog-team", "payments-team", "", ""];
+  for (let k = 1; k <= 14; k++) {
+    const idle = k > 8;
+    res(idle ? `temp-test-${k}` : `dev-box-${k}`, "virtual machine", "development", rand() < 0.7 ? "manual" : "terraform", pick([70, 140, 140, 280]), idle ? int(0, 2) : int(5, 25), +(rand() < 0.3), +(rand() < 0.8), idle ? "" : pick(devOwners));
+  }
+
+  // The 2025 sale day, 08:00 to 13:59, one row a minute. Pool size 20 per instance; the
+  // database allowed 200 connections. At 10:55 an engineer cut the pool to 10.
+  const metrics = [];
+  const logs = [];
+  const start = Date.parse("2025-11-28T08:00:00Z");
+  let instances = 6;
+  const history = [];
+  for (let t = 0; t < 360; t++) {
+    const ramp = 1 / (1 + Math.exp(-(t - 60) / 15));
+    const fade = t > 260 ? Math.max(0.55, 1 - (t - 260) / 200) : 1;
+    const rps = Math.max(5, (25 + 120 * ramp) * fade * (1 + normal() * 0.04));
+    history.push(rps);
+    const lagged = history[Math.max(0, t - 3)];
+    instances = Math.min(18, Math.max(6, Math.ceil(lagged / 12)));
+    const pool = t >= 175 ? 10 : 20;
+    const requested = instances * pool;
+    const over = requested > 200 ? (requested - 200) / requested : 0;
+    let errorRate = 0.003 + Math.abs(normal()) * 0.001 + (over > 0 ? Math.min(0.45, over * 0.95 + normal() * 0.02) : 0);
+    if (t >= 175 && t < 185) errorRate += 0.02 * (185 - t) / 10;
+    errorRate = Math.max(0.001, errorRate);
+    const util = rps / (instances * 20);
+    const p95 = over > 0 ? Math.round(4200 + normal() * 400) : Math.round(380 + 900 * Math.max(0, util - 0.5) + (t >= 175 ? 250 : 0) + normal() * 30);
+    const ts = start + t * 60000;
+    metrics.push({
+      minute: stamp(ts),
+      requests_per_s: Number(rps.toFixed(1)),
+      instances,
+      db_connections_requested: requested,
+      db_max_connections: 200,
+      error_rate: Number(errorRate.toFixed(4)),
+      p95_latency_ms: p95,
+      cpu_pct: Math.round(Math.min(95, 100 * util * 0.85 + normal() * 3)),
+    });
+    // Logs are sampled 1 in 50. Background errors run all day; pool errors only when connections run out.
+    const poolErrors = over > 0 ? Math.round((rps * 60 * Math.max(0, errorRate - 0.004)) / 50) : 0;
+    const background = Math.round((rps * 60 * 0.003) / 50 * (0.7 + rand() * 0.6));
+    for (let e = 0; e < poolErrors + background; e++) {
+      const poolErr = e < poolErrors;
+      const msg = poolErr ? "timeout acquiring database connection: pool exhausted after 5000ms" : weighted(["payment gateway timeout", "inventory lock wait exceeded", "upstream catalog-api 503"], [60, 25, 15]);
+      logs.push({
+        ts: new Date(ts + int(0, 59999)).toISOString(),
+        level: "error",
+        service: poolErr || msg.startsWith("payment") || msg.startsWith("inventory") ? "checkout-api" : "web-frontend",
+        instance: `checkout-${int(1, instances)}`,
+        route: poolErr ? pick(["POST /checkout", "POST /checkout", "GET /cart"]) : msg.startsWith("payment") ? "POST /checkout" : "GET /cart",
+        msg,
+        duration_ms: poolErr ? 5000 + int(0, 40) : int(800, 30000),
+      });
+    }
+  }
+  logs.sort((a, b) => (a.ts < b.ts ? -1 : 1));
+
+  const plan = {
+    format_version: "1.2",
+    terraform_version: "1.9.5",
+    pull_request: "PR 214: sale readiness",
+    resource_changes: [
+      { address: "aws_autoscaling_group.checkout_api", type: "aws_autoscaling_group", change: { actions: ["update"], before: { max_size: 18, min_size: 6, tags: { owner: "payments-team" } }, after: { max_size: 30, min_size: 8, tags: { owner: "payments-team" } } } },
+      { address: "aws_db_instance.orders", type: "aws_db_instance", action_reason: "replace_because_cannot_update", change: { actions: ["delete", "create"], before: { identifier: "orders-db", instance_class: "db.r6g.xlarge", deletion_protection: false, tags: { owner: "payments-team" } }, after: { identifier: "kasuwa-orders-db", instance_class: "db.r6g.2xlarge", deletion_protection: false, tags: { owner: "payments-team" } } } },
+      { address: "aws_instance.pgbouncer", type: "aws_instance", change: { actions: ["create"], before: null, after: { instance_type: "t3.medium", tags: { owner: "platform-team" } } } },
+      { address: "aws_security_group_rule.db_ingress", type: "aws_security_group_rule", change: { actions: ["create"], before: null, after: { from_port: 5432, to_port: 5432, cidr_blocks: ["0.0.0.0/0"] } } },
+      { address: "aws_s3_bucket_acl.sale_banners", type: "aws_s3_bucket_acl", change: { actions: ["create"], before: null, after: { acl: "public-read" } } },
+      { address: "aws_cloudwatch_metric_alarm.checkout_burn_rate", type: "aws_cloudwatch_metric_alarm", change: { actions: ["create"], before: null, after: { alarm_name: "checkout-slo-burn-1h", threshold: 14.4, tags: { owner: "platform-team" } } } },
+      { address: "aws_elasticache_cluster.session_cache", type: "aws_elasticache_cluster", change: { actions: ["update"], before: { node_type: "cache.r6g.large", tags: {} }, after: { node_type: "cache.r6g.xlarge", tags: {} } } },
+      { address: "aws_instance.temp_test_9", type: "aws_instance", change: { actions: ["delete"], before: { instance_type: "t3.large", tags: {} }, after: null } },
+    ],
+  };
+
+  const deployments = [];
+  const SERVICES = ["checkout-api", "catalog-api", "web-frontend", "order-worker"];
+  let dn = 0;
+  for (let t = d("2026-03-02"); t <= d("2026-08-28"); t += day) {
+    const dow = new Date(t).getUTCDay();
+    if (dow === 0 || dow === 6) continue;
+    const count = weighted([0, 1, 2, 3], [20, 40, 30, 10]);
+    for (let k = 0; k < count; k++) {
+      dn++;
+      const hour = int(9, 18);
+      const lines = Math.max(5, Math.round(Math.exp(Math.log(150) + normal() * 1.0)));
+      const tests = rand() < 0.7;
+      const fridayLate = dow === 5 && hour >= 15;
+      const logit = -2.6 + 0.6 * Math.log(lines / 150) + (tests ? 0 : 1.0) + (fridayLate ? 1.1 : 0);
+      const failed = rand() < 1 / (1 + Math.exp(-logit));
+      deployments.push({
+        deploy_id: `D-${String(dn).padStart(4, "0")}`,
+        service: weighted(SERVICES, [35, 25, 30, 10]),
+        deployed_at: stamp(t + hour * 3600000 + int(0, 59) * 60000),
+        lead_time_hours: Number(Math.exp(Math.log(30) + normal() * 0.8).toFixed(1)),
+        lines_changed: lines,
+        has_tests: +tests,
+        result: failed ? (rand() < 0.75 ? "Rolled back" : "Hotfixed") : "Success",
+        minutes_to_restore: failed ? Math.round(Math.exp(Math.log(40) + normal() * 0.7)) : "",
+      });
+    }
+  }
+
+  const loadtest = [];
+  for (const [pooler, dbClass, dbLimit] of [["no", "db.r6g.xlarge", 260], ["yes", "db.r6g.xlarge", 260], ["yes", "db.r6g.2xlarge", 470]])
+    for (let inst = 6; inst <= 30; inst += 3) {
+      const appLimit = inst * 12;
+      let capacity = Math.min(appLimit, dbLimit);
+      if (pooler === "no" && inst * 20 > 200) capacity = Math.min(capacity, 118);
+      loadtest.push({ pooler, db_class: dbClass, instances: inst, max_rps_within_slo: Math.round(capacity * (1 + normal() * 0.02)), limited_by: pooler === "no" && inst * 20 > 200 ? "database connections" : appLimit <= dbLimit ? "app instances" : "database CPU" });
+    }
+
+  const ALERTS = [
+    ["CPU above 70% on any instance", 5, 0.03],
+    ["Disk above 80% on bastion", 0.15, 0],
+    ["Heartbeat missed: order-worker", 1.2, 0.08],
+    ["Payment gateway error rate above 2%", 0.45, 0.4],
+    ["Checkout p95 latency above 2s", 0.15, 0.65],
+    ["Checkout 5xx above 5% for 5 minutes", 0.05, 0.95],
+    ["Database connections above 90%", 0.06, 0.85],
+  ];
+  const alerts = [];
+  let alertN = 0;
+  for (let t = d("2026-06-01"); t < d("2026-08-30"); t += day)
+    for (const [name, perDay, actionable] of ALERTS) {
+      let n = 0;
+      let p = perDay;
+      while (p > 0) {
+        if (rand() < Math.min(1, p)) n++;
+        p -= 1;
+      }
+      for (let k = 0; k < n; k++) {
+        alertN++;
+        const act = rand() < actionable;
+        alerts.push({ alert_id: `A-${String(alertN).padStart(4, "0")}`, alert_name: name, fired_at: stamp(t + int(0, 1439) * 60000), actionable: +act, minutes_to_acknowledge: Math.round(Math.exp(Math.log(act ? 6 : 25) + normal() * 0.7)) });
+      }
+    }
+  alerts.sort((a, b) => (a.fired_at < b.fired_at ? -1 : 1));
+
+  const gameday = [
+    ["Kill two checkout-api instances under load", "Service stays within SLO", 5, 3, "Autoscaling replaced both in 3 minutes; no errors seen by users."],
+    ["Fail over orders-db to the replica", "Writes resume", 5, 4, "Failover took 4 minutes; 31 checkouts failed during the switch."],
+    ["Restore orders-db from last night's backup", "Database restored and verified", 60, 155, "Backup bucket unencrypted and unlabelled; restore steps were not written down; took 2.5 hours."],
+    ["Roll back a bad checkout-api deploy", "Previous version serving", 10, 7, "One-click rollback in the pipeline worked."],
+    ["Payment gateway returns errors for 10 minutes", "Customers see a retry message, orders queued", 2, 18, "No fallback: checkout showed a blank error page until the gateway recovered."],
+    ["Burn-rate alert fires and reaches on-call", "On-call acknowledges", 5, 9, "Alert went to an email list; on-call saw it 9 minutes later."],
+    ["Traffic at 1.6x last year's peak in staging", "p95 under 800 ms, errors under 1%", 0, 0, "Passed with the pooler and the larger database: p95 610 ms, errors 0.2%."],
+  ].map(([scenario, success_criterion, target_minutes, actual_minutes, notes], i) => ({
+    drill_id: `G-${i + 1}`,
+    scenario,
+    success_criterion,
+    target_minutes: target_minutes || "",
+    actual_minutes: actual_minutes || "",
+    passed: +(target_minutes ? actual_minutes <= target_minutes : true),
+    notes,
+  }));
+
+  return { csvs: { resources: R, sale_metrics: metrics, deployments, loadtest, alerts, gameday }, text: { "sale_logs.jsonl": logs.map((l) => JSON.stringify(l)).join("\n") + "\n", "plan-sale-readiness.json": JSON.stringify(plan, null, 2) + "\n" } };
+}
+
 /* ------------------------------------------------------------------ write */
 const SQL = await initSqlJs();
 const L = logistics();
@@ -3580,6 +3769,11 @@ for (const [table, rows] of Object.entries(productData())) writeCsv("product", t
 for (const [table, rows] of Object.entries(claimsData())) writeCsv("claims", table, rows);
 for (const [table, rows] of Object.entries(deliveriesData())) writeCsv("deliveries", table, rows);
 for (const [table, rows] of Object.entries(assistantData())) writeCsv("assistant", table, rows);
+{
+  const { csvs, text } = platformData();
+  for (const [table, rows] of Object.entries(csvs)) writeCsv("platform", table, rows);
+  for (const [name, body] of Object.entries(text)) writeText("platform", name, body);
+}
 
 // Summary for the build log
 const counts = db.exec("SELECT (SELECT COUNT(*) FROM customers), (SELECT COUNT(*) FROM shipments), (SELECT COUNT(*) FROM payments), (SELECT COUNT(*) FROM routes), (SELECT COUNT(*) FROM employees)")[0].values[0];

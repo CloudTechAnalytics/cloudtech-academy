@@ -7956,6 +7956,691 @@
    }
   }
  },
+ "platform": {
+  "zipBytes": 48249,
+  "files": {
+   "alerts": {
+    "rows": 646,
+    "bytes": 38440,
+    "columns": [
+     {
+      "name": "alert_id",
+      "type": "text",
+      "missing": 0,
+      "distinct": 646
+     },
+     {
+      "name": "alert_name",
+      "type": "text",
+      "missing": 0,
+      "distinct": 7
+     },
+     {
+      "name": "fired_at",
+      "type": "text",
+      "missing": 0,
+      "distinct": 644
+     },
+     {
+      "name": "actionable",
+      "type": "number",
+      "missing": 0,
+      "distinct": 2,
+      "min": 0,
+      "max": 1
+     },
+     {
+      "name": "minutes_to_acknowledge",
+      "type": "number",
+      "missing": 0,
+      "distinct": 99,
+      "min": 1,
+      "max": 179
+     }
+    ],
+    "preview": [
+     [
+      "A-0006",
+      "Heartbeat missed: order-worker",
+      "2026-06-01 02:05",
+      "0",
+      "15"
+     ],
+     [
+      "A-0007",
+      "Payment gateway error rate above 2%",
+      "2026-06-01 08:26",
+      "0",
+      "9"
+     ],
+     [
+      "A-0001",
+      "CPU above 70% on any instance",
+      "2026-06-01 09:52",
+      "0",
+      "96"
+     ],
+     [
+      "A-0003",
+      "CPU above 70% on any instance",
+      "2026-06-01 10:16",
+      "0",
+      "41"
+     ],
+     [
+      "A-0005",
+      "CPU above 70% on any instance",
+      "2026-06-01 15:19",
+      "0",
+      "16"
+     ],
+     [
+      "A-0002",
+      "CPU above 70% on any instance",
+      "2026-06-01 15:28",
+      "0",
+      "14"
+     ]
+    ]
+   },
+   "deployments": {
+    "rows": 167,
+    "bytes": 9602,
+    "columns": [
+     {
+      "name": "deploy_id",
+      "type": "text",
+      "missing": 0,
+      "distinct": 167
+     },
+     {
+      "name": "service",
+      "type": "text",
+      "missing": 0,
+      "distinct": 4
+     },
+     {
+      "name": "deployed_at",
+      "type": "text",
+      "missing": 0,
+      "distinct": 166
+     },
+     {
+      "name": "lead_time_hours",
+      "type": "number",
+      "missing": 0,
+      "distinct": 157,
+      "min": 2.9,
+      "max": 241.4
+     },
+     {
+      "name": "lines_changed",
+      "type": "number",
+      "missing": 0,
+      "distinct": 137,
+      "min": 13,
+      "max": 1348
+     },
+     {
+      "name": "has_tests",
+      "type": "number",
+      "missing": 0,
+      "distinct": 2,
+      "min": 0,
+      "max": 1
+     },
+     {
+      "name": "result",
+      "type": "text",
+      "missing": 0,
+      "distinct": 3
+     },
+     {
+      "name": "minutes_to_restore",
+      "type": "number",
+      "missing": 143,
+      "distinct": 18,
+      "min": 9,
+      "max": 134
+     }
+    ],
+    "preview": [
+     [
+      "D-0001",
+      "catalog-api",
+      "2026-03-02 12:13",
+      "59.6",
+      "523",
+      "1",
+      "Success",
+      ""
+     ],
+     [
+      "D-0002",
+      "web-frontend",
+      "2026-03-02 13:46",
+      "12.8",
+      "307",
+      "0",
+      "Rolled back",
+      "81"
+     ],
+     [
+      "D-0003",
+      "order-worker",
+      "2026-03-03 18:51",
+      "26.6",
+      "100",
+      "1",
+      "Success",
+      ""
+     ],
+     [
+      "D-0004",
+      "checkout-api",
+      "2026-03-05 16:04",
+      "19.3",
+      "100",
+      "0",
+      "Success",
+      ""
+     ],
+     [
+      "D-0005",
+      "catalog-api",
+      "2026-03-05 10:09",
+      "21.2",
+      "365",
+      "0",
+      "Rolled back",
+      "9"
+     ],
+     [
+      "D-0006",
+      "web-frontend",
+      "2026-03-06 18:57",
+      "55.6",
+      "55",
+      "1",
+      "Success",
+      ""
+     ]
+    ]
+   },
+   "gameday": {
+    "rows": 7,
+    "bytes": 1120,
+    "columns": [
+     {
+      "name": "drill_id",
+      "type": "text",
+      "missing": 0,
+      "distinct": 7
+     },
+     {
+      "name": "scenario",
+      "type": "text",
+      "missing": 0,
+      "distinct": 7
+     },
+     {
+      "name": "success_criterion",
+      "type": "text",
+      "missing": 0,
+      "distinct": 7
+     },
+     {
+      "name": "target_minutes",
+      "type": "number",
+      "missing": 1,
+      "distinct": 4,
+      "min": 2,
+      "max": 60
+     },
+     {
+      "name": "actual_minutes",
+      "type": "number",
+      "missing": 1,
+      "distinct": 6,
+      "min": 3,
+      "max": 155
+     },
+     {
+      "name": "passed",
+      "type": "number",
+      "missing": 0,
+      "distinct": 2,
+      "min": 0,
+      "max": 1
+     },
+     {
+      "name": "notes",
+      "type": "text",
+      "missing": 0,
+      "distinct": 7
+     }
+    ],
+    "preview": [
+     [
+      "G-1",
+      "Kill two checkout-api instances under load",
+      "Service stays within SLO",
+      "5",
+      "3",
+      "1",
+      "Autoscaling replaced both in 3 minutes; no errors seen by users."
+     ],
+     [
+      "G-2",
+      "Fail over orders-db to the replica",
+      "Writes resume",
+      "5",
+      "4",
+      "1",
+      "Failover took 4 minutes; 31 checkouts failed during the switch."
+     ],
+     [
+      "G-3",
+      "Restore orders-db from last night's backup",
+      "Database restored and verified",
+      "60",
+      "155",
+      "0",
+      "Backup bucket unencrypted and unlabelled; restore steps were not written down; took 2.5 hours."
+     ],
+     [
+      "G-4",
+      "Roll back a bad checkout-api deploy",
+      "Previous version serving",
+      "10",
+      "7",
+      "1",
+      "One-click rollback in the pipeline worked."
+     ],
+     [
+      "G-5",
+      "Payment gateway returns errors for 10 minutes",
+      "Customers see a retry message, orders queued",
+      "2",
+      "18",
+      "0",
+      "No fallback: checkout showed a blank error page until the gateway recovered."
+     ],
+     [
+      "G-6",
+      "Burn-rate alert fires and reaches on-call",
+      "On-call acknowledges",
+      "5",
+      "9",
+      "0",
+      "Alert went to an email list; on-call saw it 9 minutes later."
+     ]
+    ]
+   },
+   "loadtest": {
+    "rows": 27,
+    "bytes": 1146,
+    "columns": [
+     {
+      "name": "pooler",
+      "type": "text",
+      "missing": 0,
+      "distinct": 2
+     },
+     {
+      "name": "db_class",
+      "type": "text",
+      "missing": 0,
+      "distinct": 2
+     },
+     {
+      "name": "instances",
+      "type": "number",
+      "missing": 0,
+      "distinct": 9,
+      "min": 6,
+      "max": 30
+     },
+     {
+      "name": "max_rps_within_slo",
+      "type": "number",
+      "missing": 0,
+      "distinct": 22,
+      "min": 69,
+      "max": 373
+     },
+     {
+      "name": "limited_by",
+      "type": "text",
+      "missing": 0,
+      "distinct": 3
+     }
+    ],
+    "preview": [
+     [
+      "no",
+      "db.r6g.xlarge",
+      "6",
+      "74",
+      "app instances"
+     ],
+     [
+      "no",
+      "db.r6g.xlarge",
+      "9",
+      "104",
+      "app instances"
+     ],
+     [
+      "no",
+      "db.r6g.xlarge",
+      "12",
+      "118",
+      "database connections"
+     ],
+     [
+      "no",
+      "db.r6g.xlarge",
+      "15",
+      "119",
+      "database connections"
+     ],
+     [
+      "no",
+      "db.r6g.xlarge",
+      "18",
+      "119",
+      "database connections"
+     ],
+     [
+      "no",
+      "db.r6g.xlarge",
+      "21",
+      "120",
+      "database connections"
+     ]
+    ]
+   },
+   "resources": {
+    "rows": 31,
+    "bytes": 2422,
+    "columns": [
+     {
+      "name": "resource_id",
+      "type": "text",
+      "missing": 0,
+      "distinct": 31
+     },
+     {
+      "name": "name",
+      "type": "text",
+      "missing": 0,
+      "distinct": 31
+     },
+     {
+      "name": "type",
+      "type": "text",
+      "missing": 0,
+      "distinct": 8
+     },
+     {
+      "name": "environment",
+      "type": "text",
+      "missing": 0,
+      "distinct": 3
+     },
+     {
+      "name": "managed_by",
+      "type": "text",
+      "missing": 0,
+      "distinct": 2
+     },
+     {
+      "name": "monthly_cost_usd",
+      "type": "number",
+      "missing": 0,
+      "distinct": 13,
+      "min": 45,
+      "max": 1150
+     },
+     {
+      "name": "avg_cpu_pct",
+      "type": "number",
+      "missing": 6,
+      "distinct": 15,
+      "min": 1,
+      "max": 46
+     },
+     {
+      "name": "publicly_accessible",
+      "type": "number",
+      "missing": 0,
+      "distinct": 2,
+      "min": 0,
+      "max": 1
+     },
+     {
+      "name": "encrypted",
+      "type": "number",
+      "missing": 0,
+      "distinct": 2,
+      "min": 0,
+      "max": 1
+     },
+     {
+      "name": "owner",
+      "type": "text",
+      "missing": 9,
+      "distinct": 4
+     }
+    ],
+    "preview": [
+     [
+      "r-001",
+      "checkout-api",
+      "autoscaling group",
+      "production",
+      "terraform",
+      "830",
+      "38",
+      "0",
+      "1",
+      "payments-team"
+     ],
+     [
+      "r-002",
+      "catalog-api",
+      "autoscaling group",
+      "production",
+      "terraform",
+      "420",
+      "31",
+      "0",
+      "1",
+      "catalog-team"
+     ],
+     [
+      "r-003",
+      "web-frontend",
+      "cdn distribution",
+      "production",
+      "terraform",
+      "210",
+      "",
+      "1",
+      "1",
+      "web-team"
+     ],
+     [
+      "r-004",
+      "public-load-balancer",
+      "load balancer",
+      "production",
+      "terraform",
+      "60",
+      "",
+      "1",
+      "1",
+      "platform-team"
+     ],
+     [
+      "r-005",
+      "orders-db",
+      "postgres database",
+      "production",
+      "terraform",
+      "1150",
+      "46",
+      "0",
+      "1",
+      "payments-team"
+     ],
+     [
+      "r-006",
+      "orders-db-replica",
+      "postgres database",
+      "production",
+      "manual",
+      "1150",
+      "12",
+      "0",
+      "1",
+      "payments-team"
+     ]
+    ]
+   },
+   "sale_metrics": {
+    "rows": 360,
+    "bytes": 17082,
+    "columns": [
+     {
+      "name": "minute",
+      "type": "text",
+      "missing": 0,
+      "distinct": 360
+     },
+     {
+      "name": "requests_per_s",
+      "type": "number",
+      "missing": 0,
+      "distinct": 292,
+      "min": 26.7,
+      "max": 160.3
+     },
+     {
+      "name": "instances",
+      "type": "number",
+      "missing": 0,
+      "distinct": 9,
+      "min": 6,
+      "max": 14
+     },
+     {
+      "name": "db_connections_requested",
+      "type": "number",
+      "missing": 0,
+      "distinct": 15,
+      "min": 70,
+      "max": 280
+     },
+     {
+      "name": "db_max_connections",
+      "type": "number",
+      "missing": 0,
+      "distinct": 1,
+      "min": 200,
+      "max": 200
+     },
+     {
+      "name": "error_rate",
+      "type": "number",
+      "missing": 0,
+      "distinct": 128,
+      "min": 0.003,
+      "max": 0.3037
+     },
+     {
+      "name": "p95_latency_ms",
+      "type": "number",
+      "missing": 0,
+      "distinct": 269,
+      "min": 318,
+      "max": 5403
+     },
+     {
+      "name": "cpu_pct",
+      "type": "number",
+      "missing": 0,
+      "distinct": 46,
+      "min": 15,
+      "max": 63
+     }
+    ],
+    "preview": [
+     [
+      "2025-11-28 08:00",
+      "27",
+      "6",
+      "120",
+      "200",
+      "0.003",
+      "392",
+      "21"
+     ],
+     [
+      "2025-11-28 08:01",
+      "27.6",
+      "6",
+      "120",
+      "200",
+      "0.004",
+      "382",
+      "15"
+     ],
+     [
+      "2025-11-28 08:02",
+      "27.7",
+      "6",
+      "120",
+      "200",
+      "0.0037",
+      "417",
+      "21"
+     ],
+     [
+      "2025-11-28 08:03",
+      "28",
+      "6",
+      "120",
+      "200",
+      "0.0049",
+      "401",
+      "22"
+     ],
+     [
+      "2025-11-28 08:04",
+      "26.7",
+      "6",
+      "120",
+      "200",
+      "0.0044",
+      "406",
+      "18"
+     ],
+     [
+      "2025-11-28 08:05",
+      "28.5",
+      "6",
+      "120",
+      "200",
+      "0.0034",
+      "389",
+      "15"
+     ]
+    ]
+   }
+  }
+ },
  "process": {
   "zipBytes": 35522,
   "files": {

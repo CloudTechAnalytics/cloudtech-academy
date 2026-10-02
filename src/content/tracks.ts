@@ -340,6 +340,13 @@ export const TRACKS: Track[] = [
         ],
       },
       {
+        title: "Capstone",
+        summary: "One platform, made ready for its biggest day, as a portfolio piece.",
+        items: [
+          { kind: "course", courseId: "cloud-devops-capstone", why: "Postmortem, plan review, capacity, alerts, cost and a game day, for an online shop's sale." },
+        ],
+      },
+      {
         title: "Career",
         summary: "Turn your skills into applications that get interviews.",
         items: [

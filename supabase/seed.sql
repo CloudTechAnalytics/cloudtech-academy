@@ -62381,6 +62381,1518 @@ $md$, true, true, 8, array['aic-08-p1', 'aic-08-p2', 'aic-08-t1']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 
+-- Course: Cloud & DevOps Engineer Capstone: Ready for the Sale
+insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
+values ('cloud-devops-capstone', 'full', null, 'cloud-devops-capstone', 'CDC', 'Cloud & DevOps Engineer Capstone: Ready for the Sale', 'Get an online shop''s platform ready for its biggest day: inventory and drift, an outage postmortem from metrics and logs, a Terraform plan review with policy checks, DORA measures, capacity from a load test, SLOs and burn-rate alerts, cost, and a game-day go/no-go.', 'The capstone of the Cloud & DevOps Engineer track. Kasuwa, the online shop from the Data Scientist Capstone, lost checkout for 94 minutes at the peak of last year''s sale, and nobody wrote the postmortem. With eight weeks to go, you''ll take stock of a cloud account where half the spend was built by hand, reconstruct the outage from per-minute metrics and logs (autoscaling made it worse), and review the readiness pull request, where your policy checks catch a rename that would have deleted the orders database. Then you''ll measure delivery with the DORA measures, size capacity from a load test and Little''s law, replay burn-rate alerts against last year to see when they''d have fired, cut the cloud bill while the platform gets stronger, and turn a game day''s failures into an honest go/no-go with conditions. Every number comes from running the code.', 'cloud', 'advanced', 4, 'Career project', 12, true, 'available', true, array['Cloud inventory and ownership', 'Postmortems from metrics and logs', 'Terraform plan review and policy as code', 'DORA delivery measures', 'Capacity planning and Little''s law', 'SLOs, error budgets and burn-rate alerts', 'Cloud cost without cutting resilience', 'Game days and go/no-go decisions']::text[], array['Cloud Fundamentals, Infrastructure as Code with Terraform, and CI/CD and Containers', 'Observability and Site Reliability is helpful for lessons 2 and 6']::text[], 'Kasuwa: sale readiness review', true, true, true, true, false, 60, 46)
+on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level = excluded.level, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('cdc-m01', 'cloud-devops-capstone', 'The Brief and the Inventory', 1, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('cloud-devops-capstone:the-brief-and-the-inventory', 'cloud-devops-capstone', 'cdc-m01', 'the-brief-and-the-inventory', 'The brief and the inventory', 'Meet Kasuwa''s platform eight weeks before its biggest sale, take stock of everything running in the cloud account, and find what isn''t managed, isn''t owned or isn''t safe.', 25, $md$
+## The problem
+
+This is the capstone of the Cloud & DevOps Engineer track. You'll take one platform through the whole job: inventory, an incident review, infrastructure as code, delivery, capacity, reliability, cost and a game day.
+
+The company is **Kasuwa**, the online shop from the Data Scientist Capstone. Its biggest day is the November sale. Last year's sale went badly. Checkout failed for over an hour at the peak, and customers found out before the engineers did. The head of engineering has sent this:
+
+> "The sale is in eight weeks. Last year we lost the most valuable hour of the year. Since then the cloud bill has crept up, half the infrastructure was built by hand during the incident, and every deploy feels like a gamble. Tell me what's wrong, fix what matters, and tell me honestly whether we're ready."
+
+## The concept
+
+**Start with an inventory**
+
+You can't secure, scale or cost what you don't know exists. List every resource, its environment, who owns it, how it's managed and what it costs.
+
+**Managed by Terraform, or by hand?**
+
+Resources created by hand (in the console or during an incident) aren't reviewed, aren't reproducible and drift silently. Anything that matters in production should be in Terraform.
+
+**Ownership and safety**
+
+Every resource needs an owner, a team that's answerable for it. And anything public or unencrypted needs a reason.
+
+**The plan for the eight weeks**
+
+| Area | Question | Lesson |
+| :-- | :-- | :-- |
+| Inventory | What's running, and what's risky? | 1 |
+| Incident | What really happened last year? | 2 |
+| Infrastructure as code | Is the readiness change safe? | 3 |
+| Delivery | How risky are deploys, and what should change before the sale? | 4 |
+| Capacity | How much do we need for this year's peak? | 5 |
+| Reliability | Will we know before customers do? | 6 |
+| Cost | What can we stop paying for? | 7 |
+| Game day | Are we ready? | 8 |
+
+## Example
+
+The inventory, by environment and by how it's managed:
+
+```python
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/platform/"
+resources = pd.read_csv(base + "resources.csv")
+print(f"{len(resources)} resources, ${resources['monthly_cost_usd'].sum():,} a month\n")
+resources.pivot_table(index="environment", columns="managed_by", values="monthly_cost_usd", aggfunc="sum", fill_value=0, margins=True)
+```
+
+```text
+31 resources, $9,840 a month
+
+managed_by   manual  terraform   All
+environment
+development    1190       1120  2310
+production     1600       3230  4830
+staging        2400        300  2700
+All            5190       4650  9840
+```
+
+Staging costs more than half as much as production, and much of the spend is managed by hand. What's risky in production:
+
+```python
+prod = resources[resources["environment"] == "production"]
+prod.loc[(prod["managed_by"] == "manual") | (prod["owner"].isna()) | (prod["encrypted"] == 0) | (prod["publicly_accessible"] == 1),
+         ["name", "type", "managed_by", "publicly_accessible", "encrypted", "owner"]]
+```
+
+```text
+name               type managed_by  publicly_accessible  encrypted          owner
+2           web-frontend   cdn distribution  terraform                    1          1       web-team
+3   public-load-balancer      load balancer  terraform                    1          1  platform-team
+5      orders-db-replica  postgres database     manual                    0          1  payments-team
+7           order-worker  autoscaling group     manual                    0          1  payments-team
+8         product-images     storage bucket  terraform                    1          1       web-team
+9             db-backups     storage bucket     manual                    0          0            NaN
+11               bastion    virtual machine     manual                    1          1            NaN
+```
+
+The database replica and the order worker were built by hand during last year's incident and never brought into Terraform. The backup bucket is **unencrypted** and has no owner, so the most sensitive copy of customer orders is the least protected thing in the account. The bastion is public, hand-built and unowned. The CDN, load balancer and product images are meant to be public.
+
+## Walkthrough
+
+1. Download the dataset below and run the cells.
+2. List every resource with no owner. Who should own each?
+3. Which manual production resources should be imported into Terraform first? Rank them by risk.
+4. Look at the development resources. Which look abandoned?
+5. Write the inventory findings (the task below).
+
+## Practice
+
+```dataset
+{"dataset": "platform", "files": ["resources", "sale_metrics", "deployments", "loadtest", "alerts", "gameday"]}
+```
+
+```answer
+{
+  "id": "cdc-01-p1",
+  "prompt": "What percentage of the monthly cloud cost is for resources managed **by hand**? Whole number.",
+  "answer": 53,
+  "format": "percent",
+  "dataset": "platform",
+  "files": ["resources"],
+  "verify": "SELECT ROUND(100.0 * SUM(CASE WHEN managed_by = 'manual' THEN monthly_cost_usd END) / SUM(monthly_cost_usd)) FROM resources",
+  "hint": "The manual column's total divided by the overall total.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "cdc-01-p2",
+  "prompt": "How many resources have **no owner**?",
+  "answer": 9,
+  "format": "number",
+  "dataset": "platform",
+  "files": ["resources"],
+  "verify": "SELECT COUNT(*) FROM resources WHERE owner IS NULL",
+  "hint": "Count rows where owner is empty.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "cdc-01-t1",
+  "prompt": "Write the **inventory findings** (60 to 150 words): the monthly cost and how much is **managed by hand**, the **riskiest** production resources and why, and what you'll do **first**.",
+  "minutes": 7,
+  "rows": 7,
+  "placeholder": "Kasuwa runs ...",
+  "rules": [
+    { "label": "Gives the cost", "pattern": "\\$\\s*[\\d,]+" },
+    { "label": "Covers manual or hand-built resources", "pattern": "manual|by hand|hand-built|terraform" },
+    { "label": "Names the backup bucket", "pattern": "backup" },
+    { "label": "Covers encryption or ownership", "pattern": "encrypt|owner" },
+    { "label": "Says what to do first", "pattern": "first|priority|import|start" },
+    { "label": "Between 60 and 150 words", "minWords": 60, "maxWords": 150 }
+  ],
+  "sample": "Kasuwa runs 31 resources costing $9,840 a month, and resources built by hand account for over half of that. In production, the riskiest is the db-backups bucket: it holds every order, yet it's unencrypted, has no owner and was created by hand. The orders-db replica and order-worker were built during last year's incident and never brought into Terraform, so nobody reviews changes to them. The bastion is public, hand-built and unowned. First: encrypt the backup bucket and give it an owner, then import the replica, worker, bucket and bastion into Terraform, and require an owner tag on every resource.",
+  "note": "Rank by risk to customers, not by cost.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why start a readiness review with an inventory?",
+    "options": ["It's quick", "You can't secure, scale or cost what you don't know exists", "Auditors require it", "To count servers"],
+    "answer": 1,
+    "explanation": "Know what you have first."
+  },
+  {
+    "prompt": "What's the main risk of resources built by hand during an incident?",
+    "options": ["They're slower", "Nobody reviews or reproduces them, and they drift silently", "They cost more by design", "They can't be deleted"],
+    "answer": 1,
+    "explanation": "Unmanaged infrastructure is invisible to review."
+  },
+  {
+    "prompt": "Which is the most urgent finding?",
+    "options": ["A public CDN", "An unencrypted, unowned bucket holding customer order backups", "A load balancer in staging", "A dev box with an owner"],
+    "answer": 1,
+    "explanation": "Sensitive data, unprotected and unowned."
+  }
+]
+```
+$md$, true, true, 1, array['cdc-01-p1', 'cdc-01-p2', 'cdc-01-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('cdc-m02', 'cloud-devops-capstone', 'Last Year''s Outage', 2, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('cloud-devops-capstone:last-years-outage', 'cloud-devops-capstone', 'cdc-m02', 'last-years-outage', 'Last year''s outage', 'Reconstruct the 2025 sale-day outage from per-minute metrics and error logs, measure its impact, find the real cause, and see why autoscaling made it worse.', 30, $md$
+## The problem
+
+Everyone at Kasuwa remembers the outage. Everyone remembers a different cause: "the database fell over", "we didn't have enough servers", "the payment gateway was down". The postmortem was never written. Before you change anything for this year, find out what actually happened, from the data.
+
+You have per-minute metrics for checkout from 08:00 to 14:00 on sale day (`sale_metrics.csv`) and the checkout service's error logs, sampled one line in fifty (`sale_logs.jsonl`).
+
+## The concept
+
+**Impact first**
+
+When did it start and end, and how many requests failed? Use a clear definition: here, a minute is **bad** if more than 5% of requests failed.
+
+**Look for what changed just before**
+
+Plot the metrics around the start. Something crosses a line: traffic, instances, connections, latency.
+
+**Read the errors**
+
+The logs say what failed. If one message dominates the bad minutes, it points at the cause.
+
+**Cause, not trigger**
+
+Traffic was the **trigger**: it was always going to rise. The **cause** is why the system couldn't handle it. Postmortems that stop at "traffic was high" lead to the wrong fix.
+
+## Example
+
+The impact:
+
+```python
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/platform/"
+metrics = pd.read_csv(base + "sale_metrics.csv", parse_dates=["minute"])
+metrics["requests"] = metrics["requests_per_s"] * 60
+metrics["failed"] = metrics["requests"] * metrics["error_rate"]
+bad = metrics[metrics["error_rate"] > 0.05]
+print(f"Bad minutes: {len(bad)}, from {bad['minute'].min():%H:%M} to {bad['minute'].max():%H:%M}")
+print(f"Failed requests that day: {metrics['failed'].sum():,.0f} of {metrics['requests'].sum():,.0f} ({metrics['failed'].sum() / metrics['requests'].sum():.1%})")
+print(f"Peak traffic: {metrics['requests_per_s'].max():.1f} requests a second")
+```
+
+```text
+Bad minutes: 94, from 09:19 to 10:54
+Failed requests that day: 151,697 of 2,488,542 (6.1%)
+Peak traffic: 160.3 requests a second
+```
+
+Now what was happening around the start, every five minutes from 09:00:
+
+```python
+cols = ["minute", "requests_per_s", "instances", "db_connections_requested", "db_max_connections", "error_rate", "p95_latency_ms"]
+window = metrics[(metrics["minute"] >= "2025-11-28 09:00") & (metrics["minute"] <= "2025-11-28 11:10")]
+print(window[cols].iloc[::5].to_string(index=False))
+```
+
+```text
+minute  requests_per_s  instances  db_connections_requested  db_max_connections  error_rate  p95_latency_ms
+2025-11-28 09:00:00            89.7          7                       140                 200      0.0051             547
+2025-11-28 09:05:00            90.1          8                       160                 200      0.0042             436
+2025-11-28 09:10:00           105.8          9                       180                 200      0.0043             483
+2025-11-28 09:15:00           114.5          9                       180                 200      0.0044             520
+2025-11-28 09:20:00           122.0         11                       220                 200      0.0959            3091
+2025-11-28 09:25:00           124.9         11                       220                 200      0.1142            4173
+2025-11-28 09:30:00           134.7         11                       220                 200      0.0978            3933
+2025-11-28 09:35:00           133.3         11                       220                 200      0.1020            3161
+2025-11-28 09:40:00           127.9         12                       240                 200      0.1701            4364
+2025-11-28 09:45:00           140.6         12                       240                 200      0.1799            4491
+2025-11-28 09:50:00           138.1         12                       240                 200      0.1789            4204
+2025-11-28 09:55:00           147.8         12                       240                 200      0.1784            4837
+2025-11-28 10:00:00           142.3         13                       260                 200      0.2040            4216
+2025-11-28 10:05:00           149.3         12                       240                 200      0.1590            4202
+2025-11-28 10:10:00           145.3         13                       260                 200      0.2197            3873
+2025-11-28 10:15:00           144.2         12                       240                 200      0.1759            4343
+2025-11-28 10:20:00           149.4         13                       260                 200      0.2763            4017
+2025-11-28 10:25:00           135.0         12                       240                 200      0.1770            4692
+2025-11-28 10:30:00           141.5         12                       240                 200      0.1622            4241
+2025-11-28 10:35:00           144.0         12                       240                 200      0.1948            3830
+2025-11-28 10:40:00           152.0         13                       260                 200      0.2644            3285
+2025-11-28 10:45:00           145.2         13                       260                 200      0.2608            4333
+2025-11-28 10:50:00           141.2         13                       260                 200      0.1781            3908
+2025-11-28 10:55:00           138.2         13                       130                 200      0.0236             735
+2025-11-28 11:00:00           150.4         13                       130                 200      0.0133             674
+2025-11-28 11:05:00           138.1         13                       130                 200      0.0033             683
+2025-11-28 11:10:00           153.2         12                       120                 200      0.0046             817
+```
+
+The errors start the moment the connections the app **wants** (instances × 20) exceed the 200 the database **allows**. Autoscaling did its job, adding instances as traffic rose, and each new instance opened 20 more connections the database couldn't accept. More servers made it worse. At 10:55 an engineer halved each instance's pool to 10 connections, and the errors stopped. The logs agree:
+
+```python
+logs = pd.read_json(base + "sale_logs.jsonl", lines=True)
+logs["ts"] = pd.to_datetime(logs["ts"]).dt.tz_localize(None)
+logs["during"] = logs["ts"].between(bad["minute"].min(), bad["minute"].max() + pd.Timedelta(minutes=1))
+logs.groupby("during")["msg"].value_counts().unstack(0).fillna(0).astype(int)
+```
+
+```text
+during                                              False  True
+msg
+inventory lock wait exceeded                           21     14
+payment gateway timeout                                38     31
+timeout acquiring database connection: pool exh...      0   2818
+upstream catalog-api 503                                8      5
+```
+
+During the outage, nearly every error is a timeout waiting for a database connection. The payment gateway timeouts were there all morning, a background problem but not the cause. The database itself never "fell over". It refused connections beyond its limit, exactly as configured.
+
+## Walkthrough
+
+1. Run the cells.
+2. Plot `db_connections_requested` against `db_max_connections`, with `error_rate` on a second axis.
+3. Work out when the outage could have been detected: the first minute the error rate passed 5%.
+4. Write the timeline: trigger, cause, detection, mitigation, recovery.
+5. Write the postmortem summary (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "cdc-02-p1",
+  "prompt": "How many **bad minutes** (error rate above 5%) were there on sale day?",
+  "answer": 94,
+  "format": "number",
+  "dataset": "platform",
+  "files": ["sale_metrics"],
+  "verify": "SELECT COUNT(*) FROM sale_metrics WHERE error_rate > 0.05",
+  "hint": "The first line printed.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "cdc-02-p2",
+  "prompt": "During the outage, how many **instances** would have used up all 200 database connections at 20 connections each?",
+  "answer": 10,
+  "format": "number",
+  "hint": "200 ÷ 20.",
+  "explanation": "From the 11th instance on, every new instance asked for connections the database refused.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "cdc-02-t1",
+  "prompt": "Write the **postmortem summary** (70 to 160 words): **impact** with numbers, the **trigger**, the **cause**, why **autoscaling** made it worse, how it was **mitigated**, and what was **not** the cause.",
+  "minutes": 8,
+  "rows": 8,
+  "placeholder": "On 28 November 2025 ...",
+  "rules": [
+    { "label": "Impact with numbers", "pattern": "\\d+\\s*(minutes|min)|[\\d,]{5,}" },
+    { "label": "The trigger (traffic)", "pattern": "traffic|load|requests" },
+    { "label": "The cause (connections)", "pattern": "connection" },
+    { "label": "Explains autoscaling's role", "pattern": "autoscal|instances|more servers" },
+    { "label": "The mitigation (pool size)", "pattern": "pool" },
+    { "label": "Rules something out (payment gateway, database didn't fail)", "pattern": "not the cause|wasn't the cause|was not|never|background" },
+    { "label": "Between 70 and 160 words", "minWords": 70, "maxWords": 160 }
+  ],
+  "sample": "On 28 November 2025, checkout errors exceeded 5% for 94 minutes, from 09:19 to 10:54, and about 152,000 requests failed that day (6.1% of all checkout traffic). The trigger was sale traffic rising to 160 requests a second. The cause was the database connection limit: each checkout instance opened a pool of 20 connections, and the database allowed 200. Autoscaling added instances as traffic rose, so from the 11th instance on, every new instance asked for connections the database refused, and requests timed out waiting. More servers made it worse. At 10:55 an engineer halved the pool size to 10 and errors stopped. The payment gateway timeouts were a background problem all morning, not the cause, and the database never failed: it enforced its limit.",
+  "note": "Ruling out the popular explanations is part of the job.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why is \"traffic was too high\" a poor root cause?",
+    "options": ["Traffic is never high", "Traffic was the trigger and was expected; the cause is why the system couldn't handle it", "It's too technical", "It blames customers"],
+    "answer": 1,
+    "explanation": "Fix causes, not triggers."
+  },
+  {
+    "prompt": "How did autoscaling make the outage worse?",
+    "options": ["It was too slow", "Each new instance opened more database connections than the database allowed", "It removed instances", "It cost too much"],
+    "answer": 1,
+    "explanation": "Scaling one tier overloaded the tier behind it."
+  },
+  {
+    "prompt": "Payment gateway timeouts appear in the logs all morning. Are they the cause?",
+    "options": ["Yes", "No: they're present before and after, while the outage's errors are database connection timeouts", "Only after 11:00", "Can't tell"],
+    "answer": 1,
+    "explanation": "Compare error types inside and outside the incident window."
+  }
+]
+```
+$md$, true, true, 2, array['cdc-02-p1', 'cdc-02-p2', 'cdc-02-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('cdc-m03', 'cloud-devops-capstone', 'Reviewing the Readiness Plan', 3, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('cloud-devops-capstone:reviewing-the-readiness-plan', 'cloud-devops-capstone', 'cdc-m03', 'reviewing-the-readiness-plan', 'Reviewing the readiness plan', 'Read the Terraform plan for the sale-readiness changes, write policy checks in Python, and catch the change that would have deleted the orders database, plus two security holes, before anyone applies it.', 25, $md$
+## The problem
+
+The platform team has opened **PR 214: sale readiness**. It raises the autoscaling limits, moves the orders database to a bigger instance, adds a connection pooler (PgBouncer) and a burn-rate alarm, and cleans up an old test machine. The plan output is long, and the team is keen to apply it today.
+
+A plan review is where infrastructure mistakes are cheapest to catch. Read what Terraform will **do**, not what the pull request says it does.
+
+## The concept
+
+**Actions in a plan**
+
+| Actions | Meaning |
+| :-- | :-- |
+| `create` | A new resource |
+| `update` | Changed in place |
+| `delete` | Destroyed |
+| `delete`, `create` | **Replaced**: destroyed, then created again. For a database, that means the data is gone unless restored |
+
+Some attribute changes can't be made in place, so Terraform replaces the resource. Renaming a database's `identifier` is one of them.
+
+**Policy as code**
+
+Write the rules once, in code, and run them on every plan:
+
+- No production database may be deleted or replaced, and every database needs `deletion_protection`.
+- No security group may open a database port to the internet (`0.0.0.0/0`).
+- No bucket may be made public.
+- Every resource created or updated needs an `owner` tag.
+
+## Example
+
+What the plan will do:
+
+```python
+import json
+import urllib.request
+
+base = "https://academy.cloudtechanalytics.com/datasets/platform/"
+plan = json.load(urllib.request.urlopen(base + "plan-sale-readiness.json"))
+print(plan["pull_request"], "\n")
+for rc in plan["resource_changes"]:
+    print(f"{' + '.join(rc['change']['actions']):15} {rc['address']}")
+```
+
+```text
+PR 214: sale readiness
+
+update          aws_autoscaling_group.checkout_api
+delete + create aws_db_instance.orders
+create          aws_instance.pgbouncer
+create          aws_security_group_rule.db_ingress
+create          aws_s3_bucket_acl.sale_banners
+create          aws_cloudwatch_metric_alarm.checkout_burn_rate
+update          aws_elasticache_cluster.session_cache
+delete          aws_instance.temp_test_9
+```
+
+One line says `delete + create` for the orders database. The policy checks:
+
+```python
+def check(plan):
+    findings = []
+    for rc in plan["resource_changes"]:
+        actions, after = rc["change"]["actions"], rc["change"]["after"] or {}
+        if rc["type"] == "aws_db_instance":
+            if "delete" in actions:
+                findings.append((rc["address"], "database would be DESTROYED (" + rc.get("action_reason", "delete") + ")"))
+            if after and not after.get("deletion_protection"):
+                findings.append((rc["address"], "deletion_protection is off"))
+        if rc["type"] == "aws_security_group_rule" and "0.0.0.0/0" in after.get("cidr_blocks", []) and after.get("from_port") == 5432:
+            findings.append((rc["address"], "database port open to the internet"))
+        if rc["type"] == "aws_s3_bucket_acl" and after.get("acl", "").startswith("public"):
+            findings.append((rc["address"], "bucket made public"))
+        if actions != ["delete"] and "tags" in after and not after["tags"].get("owner"):
+            findings.append((rc["address"], "no owner tag"))
+    return findings
+
+findings = check(plan)
+for address, problem in findings:
+    print(f"{address:45} {problem}")
+print(f"\n{len(findings)} findings")
+```
+
+```text
+aws_db_instance.orders                        database would be DESTROYED (replace_because_cannot_update)
+aws_db_instance.orders                        deletion_protection is off
+aws_security_group_rule.db_ingress            database port open to the internet
+aws_s3_bucket_acl.sale_banners                bucket made public
+aws_elasticache_cluster.session_cache         no owner tag
+
+5 findings
+```
+
+The headline: renaming the database from `orders-db` to `kasuwa-orders-db` forces Terraform to **destroy and recreate** it, eight weeks before the sale, with deletion protection off. Applying this plan would delete every order. The fix is to change only the instance class, which happens in place, turn on deletion protection, and add a lifecycle guard so Terraform refuses to destroy it:
+
+```hcl
+resource "aws_db_instance" "orders" {
+  identifier          = "orders-db"
+  instance_class      = "db.r6g.2xlarge"
+  deletion_protection = true
+
+  lifecycle {
+    prevent_destroy = true
+  }
+}
+```
+
+The security group rule would expose the database to the whole internet; it should allow only the PgBouncer instance's security group. The public bucket for sale banners should be served through the CDN instead.
+
+## Walkthrough
+
+1. Run the cells.
+2. Change the database entry in a copy of the plan to an in-place `update` with `deletion_protection` true, and rerun the checks.
+3. Add a rule of your own: for example, that `max_size` of an autoscaling group never more than doubles in one change without a note.
+4. Decide where these checks run: in the pull request pipeline, blocking the merge.
+5. Write the plan review (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "cdc-03-p1",
+  "prompt": "How many **findings** do the policy checks report on this plan?",
+  "answer": 5,
+  "format": "number",
+  "pyVerify": "len(findings)",
+  "hint": "The last line printed.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "cdc-03-p2",
+  "prompt": "Which resource address would be **destroyed and recreated**?",
+  "answer": "aws_db_instance.orders",
+  "format": "text",
+  "pyVerify": "[rc['address'] for rc in plan['resource_changes'] if rc['change']['actions'] == ['delete', 'create']][0]",
+  "hint": "The line with delete + create.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "cdc-03-t1",
+  "prompt": "Write the **plan review** comment for PR 214 (60 to 150 words): the **blocking** problems, **why** the database would be replaced, the **fix** for each, and what's **fine** to merge.",
+  "minutes": 8,
+  "rows": 7,
+  "placeholder": "Blocking: ...",
+  "rules": [
+    { "label": "Says it's blocked (request changes, don't apply)", "pattern": "block|request changes|do not (apply|merge)|don't (apply|merge)" },
+    { "label": "Explains the replacement (identifier, rename)", "pattern": "identifier|renam" },
+    { "label": "A fix for the database (in place, deletion protection, prevent_destroy)", "pattern": "in.place|deletion.protection|prevent_destroy" },
+    { "label": "Covers the open database port", "pattern": "0\\.0\\.0\\.0|internet|5432|security group" },
+    { "label": "Covers the public bucket", "pattern": "public|bucket|acl" },
+    { "label": "Says what's fine", "pattern": "fine|ok|good|approve|can (go|merge)" },
+    { "label": "Between 60 and 150 words", "minWords": 60, "maxWords": 150 }
+  ],
+  "sample": "Blocking, please don't apply. 1) aws_db_instance.orders will be destroyed and recreated because the identifier changes from orders-db to kasuwa-orders-db, and deletion protection is off: every order would be lost. Keep the identifier, change only instance_class (an in-place update), set deletion_protection = true and add prevent_destroy. 2) The new security group rule opens port 5432 to 0.0.0.0/0; allow only the PgBouncer security group. 3) The sale_banners bucket is made public-read; serve banners through the CDN instead. 4) session_cache has no owner tag. The autoscaling change, the PgBouncer instance, the burn-rate alarm and removing temp-test-9 are fine to merge once these are fixed.",
+  "note": "Say what's good too: a review is a decision, not a list of complaints.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "A plan shows delete and create for a database. What does that mean?",
+    "options": ["A minor update", "The database will be destroyed and created again, losing its data", "A backup", "A rename only"],
+    "answer": 1,
+    "explanation": "Replacement is destruction."
+  },
+  {
+    "prompt": "Why run policy checks in code on every plan?",
+    "options": ["They're faster to read", "Rules are applied the same way every time, before anything is applied, not left to a tired reviewer", "Terraform requires it", "To write less HCL"],
+    "answer": 1,
+    "explanation": "Automated guardrails catch what people miss."
+  },
+  {
+    "prompt": "What does lifecycle prevent_destroy do?",
+    "options": ["Speeds up applies", "Makes Terraform refuse any plan that would destroy the resource", "Encrypts the resource", "Hides it from state"],
+    "answer": 1,
+    "explanation": "A last line of defence for critical resources."
+  }
+]
+```
+$md$, true, true, 3, array['cdc-03-p1', 'cdc-03-p2', 'cdc-03-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('cdc-m04', 'cloud-devops-capstone', 'Delivery and the Change Freeze', 4, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('cloud-devops-capstone:delivery-and-the-change-freeze', 'cloud-devops-capstone', 'cdc-m04', 'delivery-and-the-change-freeze', 'Delivery and the change freeze', 'Measure Kasuwa''s delivery with the four DORA measures, find which deploys fail most often, and set evidence-based rules for deploying before and during the sale.', 25, $md$
+## The problem
+
+"Every deploy feels like a gamble," says the head of engineering, and the product team wants to ship new sale features up to the last minute. Some engineers want a total freeze for a month; others say freezes just pile up risk for afterwards. Six months of deployment records (`deployments.csv`) can settle it.
+
+## The concept
+
+**The four DORA measures**
+
+| Measure | Question |
+| :-- | :-- |
+| Deployment frequency | How often do we ship? |
+| Lead time for changes | How long from a change being ready to it being live? |
+| Change failure rate | What share of deploys cause a failure (rolled back or hotfixed)? |
+| Time to restore | When a deploy fails, how long until service is restored? |
+
+**What makes a deploy risky?**
+
+Compare failure rates by the deploy's features: whether the change had automated tests, how big it was, when it was deployed. Small groups give noisy rates, so count the deploys behind each one.
+
+**A freeze with evidence**
+
+A freeze is a trade-off. It removes deploy risk during the sale, but changes pile up and land together afterwards. A short freeze around the sale, with rules that cut risk in the weeks before, usually beats a long one.
+
+## Example
+
+The four measures:
+
+```python
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/platform/"
+deploys = pd.read_csv(base + "deployments.csv", parse_dates=["deployed_at"])
+deploys["failed"] = deploys["result"] != "Success"
+weeks = (deploys["deployed_at"].max() - deploys["deployed_at"].min()).days / 7
+print(f"Deploys: {len(deploys)} in {weeks:.0f} weeks ({len(deploys) / weeks:.1f} a week)")
+print(f"Median lead time: {deploys['lead_time_hours'].median():.0f} hours")
+print(f"Change failure rate: {deploys['failed'].mean():.1%}")
+print(f"Median time to restore: {deploys['minutes_to_restore'].median():.0f} minutes")
+```
+
+```text
+Deploys: 167 in 25 weeks (6.6 a week)
+Median lead time: 29 hours
+Change failure rate: 14.4%
+Median time to restore: 36 minutes
+```
+
+Kasuwa deploys often and restores quickly, but about one deploy in seven fails. Which ones?
+
+```python
+deploys["late_friday"] = (deploys["deployed_at"].dt.dayofweek == 4) & (deploys["deployed_at"].dt.hour >= 15)
+deploys["size"] = pd.cut(deploys["lines_changed"], [0, 100, 400, 100_000], labels=["under 100 lines", "100 to 400", "over 400"])
+for col in ["has_tests", "late_friday", "size"]:
+    print(deploys.groupby(col, observed=True)["failed"].agg(deploys="size", failure_rate="mean").round(3), "\n")
+```
+
+```text
+deploys  failure_rate
+has_tests
+0               48         0.208
+1              119         0.118
+
+             deploys  failure_rate
+late_friday
+False            150         0.120
+True              17         0.353
+
+                 deploys  failure_rate
+size
+under 100 lines       63         0.095
+100 to 400            84         0.179
+over 400              20         0.150
+```
+
+Deploys without automated tests fail far more often than those with them. Late-Friday deploys fail most of all, though there are few of them, so treat that rate as a warning rather than a precise figure. Small changes (under 100 lines) fail least, at under 10%. Larger ones fail at 15 to 18%, so keep sale-period changes small.
+
+The rules that follow from the evidence:
+
+1. **From now on**: every checkout change needs automated tests to deploy, changes should be small, and no deploys after 15:00 on Fridays.
+2. **Two weeks before the sale**: only changes with tests, with a named reviewer from the payments team.
+3. **Sale week**: freeze, except fixes approved by the incident lead, each with a tested rollback.
+4. **After the sale**: release the queued changes in small batches, not all at once.
+
+## Walkthrough
+
+1. Run the cells.
+2. Calculate the four measures for each service. Is checkout better or worse than the others?
+3. Estimate the change failure rate if every deploy had tests. How many failures would that have avoided in six months?
+4. Look at the deploys that took longest to restore. Were they rolled back or hotfixed?
+5. Write the deployment policy for the sale (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "cdc-04-p1",
+  "prompt": "What is the **change failure rate** over the six months? One decimal place.",
+  "answer": 14.4,
+  "format": "percent",
+  "dataset": "platform",
+  "files": ["deployments"],
+  "verify": "SELECT ROUND(100.0 * AVG(result <> 'Success'), 1) FROM deployments",
+  "hint": "Failed (rolled back or hotfixed) ÷ all deploys.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "cdc-04-p2",
+  "prompt": "What is the change failure rate for deploys **without** automated tests? One decimal place.",
+  "answer": 20.8,
+  "format": "percent",
+  "dataset": "platform",
+  "files": ["deployments"],
+  "verify": "SELECT ROUND(100.0 * AVG(result <> 'Success'), 1) FROM deployments WHERE has_tests = 0",
+  "hint": "The has_tests = 0 row.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "cdc-04-t1",
+  "prompt": "Write the **deployment policy** for the sale (60 to 150 words): the **DORA** figures today, the **evidence** behind each rule, the **freeze** window and its exceptions, and what happens **after** the sale.",
+  "minutes": 8,
+  "rows": 7,
+  "placeholder": "Today we deploy ...",
+  "rules": [
+    { "label": "Gives DORA figures", "pattern": "\\d+(\\.\\d+)?\\s*%|\\d+ (a|per) week|\\d+ minutes", "min": 2 },
+    { "label": "Covers tests", "pattern": "test" },
+    { "label": "Covers Friday deploys", "pattern": "friday" },
+    { "label": "Defines the freeze and exceptions", "pattern": "freeze" },
+    { "label": "Covers exceptions (fixes, incident lead, approved)", "pattern": "except|approv|fix" },
+    { "label": "Says what happens after (small batches)", "pattern": "after|batch" },
+    { "label": "Between 60 and 150 words", "minWords": 60, "maxWords": 150 }
+  ],
+  "sample": "Today we deploy about 6.6 times a week, restore in a median of 36 minutes, and 14.4% of deploys fail. Deploys without automated tests fail 20.8% of the time against 11.8% with them, and late-Friday deploys failed 35% of the time (on only 17 deploys). So, from now on, checkout changes need tests to deploy, and nothing ships after 15:00 on a Friday. In the two weeks before the sale, only tested changes with a payments-team reviewer go out. In sale week we freeze, except fixes approved by the incident lead, each with a tested rollback. After the sale, queued changes go out in small batches over several days, not all at once.",
+  "note": "Every rule points at a number, and the small sample is called out honestly.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "What does the change failure rate measure?",
+    "options": ["How often you deploy", "The share of deploys that cause a failure needing a rollback or fix", "Time to restore", "Lines of code changed"],
+    "answer": 1,
+    "explanation": "One of the four DORA measures."
+  },
+  {
+    "prompt": "Late-Friday deploys fail 35% of the time, from 17 deploys. How should you treat that figure?",
+    "options": ["As exact", "As a warning: the direction is clear but the sample is small", "Ignore it", "As proof that Fridays are cursed"],
+    "answer": 1,
+    "explanation": "Count what's behind a rate."
+  },
+  {
+    "prompt": "Why release queued changes in small batches after a freeze?",
+    "options": ["To keep busy", "So a failure can be traced to one change and rolled back quickly", "It's cheaper", "To avoid tests"],
+    "answer": 1,
+    "explanation": "Big batches multiply risk."
+  }
+]
+```
+$md$, true, true, 4, array['cdc-04-p1', 'cdc-04-p2', 'cdc-04-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('cdc-m05', 'cloud-devops-capstone', 'Capacity for This Year''s Peak', 5, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('cloud-devops-capstone:capacity-for-this-years-peak', 'cloud-devops-capstone', 'cdc-m05', 'capacity-for-this-years-peak', 'Capacity for this year''s peak', 'Turn last year''s peak and this year''s forecast into a capacity target, read a load test to find what limits each configuration, and use Little''s law to see why a connection pooler fixes last year''s problem.', 25, $md$
+## The problem
+
+Marketing expects this year's sale to bring **1.6 times** last year's peak traffic. The team ran a load test in staging (`loadtest.csv`): for each configuration, the highest request rate it handled while keeping p95 latency under 800 ms and errors under 1%. How much capacity does Kasuwa need, and which configuration delivers it?
+
+## The concept
+
+**A capacity target**
+
+Target = last year's peak × expected growth × **headroom**. Headroom (here 30%) covers forecast error, uneven traffic within a minute, and losing an instance or two at the worst moment.
+
+**Find the limiting resource**
+
+Each configuration hits a different wall: app instances, database connections or database CPU. Adding more of something that isn't the limit does nothing, as last year showed.
+
+**Little's law**
+
+Average number of things in a system = arrival rate × time each spends there. For a database: connections busy at once = queries per second × seconds per query. It tells you how many connections you actually need, and it's usually far fewer than 20 per instance.
+
+## Example
+
+The target:
+
+```python
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/platform/"
+metrics = pd.read_csv(base + "sale_metrics.csv")
+load = pd.read_csv(base + "loadtest.csv")
+peak_2025 = metrics["requests_per_s"].max()
+target = peak_2025 * 1.6 * 1.3
+print(f"2025 peak {peak_2025:.1f} req/s × 1.6 growth × 1.3 headroom = target {target:.0f} req/s")
+```
+
+```text
+2025 peak 160.3 req/s × 1.6 growth × 1.3 headroom = target 333 req/s
+```
+
+What each configuration can handle:
+
+```python
+table = load.pivot_table(index="instances", columns=["pooler", "db_class"], values="max_rps_within_slo")
+print(table, "\n")
+load.groupby(["pooler", "db_class"])["limited_by"].agg(lambda s: ", ".join(dict.fromkeys(s)))
+```
+
+```text
+pooler               no            yes
+db_class  db.r6g.xlarge db.r6g.2xlarge db.r6g.xlarge
+instances
+6                  74.0           73.0          69.0
+9                 104.0          106.0         106.0
+12                118.0          140.0         145.0
+15                119.0          180.0         178.0
+18                119.0          211.0         217.0
+21                120.0          251.0         249.0
+24                119.0          281.0         267.0
+27                120.0          339.0         262.0
+30                119.0          373.0         253.0
+
+pooler  db_class
+no      db.r6g.xlarge     app instances, database connections
+yes     db.r6g.2xlarge                          app instances
+        db.r6g.xlarge             app instances, database CPU
+Name: limited_by, dtype: object
+```
+
+Without a pooler, capacity stops at about 120 requests a second, however many instances you add: the database connections run out, exactly as on sale day. With the pooler, capacity grows with instances until the current database's CPU becomes the limit. Only the larger database lets capacity keep growing. The smallest configuration that meets the target:
+
+```python
+enough = load[load["max_rps_within_slo"] >= target].sort_values("instances")
+enough.head(3)
+```
+
+```text
+pooler        db_class  instances  max_rps_within_slo     limited_by
+25    yes  db.r6g.2xlarge         27                 339  app instances
+26    yes  db.r6g.2xlarge         30                 373  app instances
+```
+
+So the plan is: the pooler, the larger database, and autoscaling allowed up to **30** instances, since the smallest passing size leaves almost no room beyond the headroom. That matches the `max_size` in PR 214.
+
+Why does the pooler work? With Little's law, at the target rate, and assuming each request spends about 60 ms in the database:
+
+```python
+db_seconds_per_request = 0.060
+busy_connections = target * db_seconds_per_request
+print(f"Connections busy at once at {target:.0f} req/s: about {busy_connections:.0f}")
+print(f"Connections last year's setup would open at 30 instances: {30 * 20}")
+```
+
+```text
+Connections busy at once at 333 req/s: about 20
+Connections last year's setup would open at 30 instances: 600
+```
+
+The work needs about twenty connections at a time. Last year's design opened twenty **per instance**, whether busy or idle. A pooler lets many app instances share a small set of real database connections.
+
+## Walkthrough
+
+1. Run the cells.
+2. Recompute the target with growth of 1.4 and 2.0. Which configuration does each need?
+3. Plot capacity against instances for the three configurations, with a horizontal line at the target.
+4. List what the load test didn't cover: for example, the payment gateway's own limits.
+5. Write the capacity plan (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "cdc-05-p1",
+  "prompt": "What is the **capacity target** in requests per second? Whole number.",
+  "answer": 333,
+  "format": "number",
+  "dataset": "platform",
+  "files": ["sale_metrics"],
+  "pyVerify": "round(target)",
+  "hint": "Last year's peak × 1.6 × 1.3.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "cdc-05-p2",
+  "prompt": "What is the **smallest number of instances** in the load test that meets the target?",
+  "answer": 27,
+  "format": "number",
+  "dataset": "platform",
+  "files": ["loadtest", "sale_metrics"],
+  "pyVerify": "int(enough['instances'].iloc[0])",
+  "hint": "The first row of the last table.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "cdc-05-t1",
+  "prompt": "Write the **capacity plan** (60 to 140 words): the **target** and how you got it, the configuration you need and **why** the others fail, the role of the **pooler**, and one **limit** of the load test.",
+  "minutes": 7,
+  "rows": 6,
+  "placeholder": "Target: ...",
+  "rules": [
+    { "label": "Gives the target", "pattern": "\\d{3}\\s*(req|requests)" },
+    { "label": "Explains growth and headroom", "pattern": "headroom|1\\.6|1\\.3" },
+    { "label": "Names the configuration (pooler, database size, instances)", "pattern": "2xlarge|larger database|bigger database" },
+    { "label": "Explains why others fail (connections, CPU)", "pattern": "connection|cpu" },
+    { "label": "Covers the pooler", "pattern": "pooler|pgbouncer" },
+    { "label": "A limit of the test", "pattern": "didn't|did not|doesn't|does not|not cover|untested|payment gateway|staging" },
+    { "label": "Between 60 and 140 words", "minWords": 60, "maxWords": 140 }
+  ],
+  "sample": "Target: 333 requests a second, from last year's peak of 160 × 1.6 expected growth × 1.3 headroom. We need the PgBouncer pooler, the db.r6g.2xlarge database and up to 30 checkout instances: 27 is the smallest size that passes, with almost no margin. Without a pooler, capacity is stuck at about 120 requests a second because the database runs out of connections; with the current database, CPU caps it at about 260. The pooler works because the load needs only about 20 database connections at once (Little's law), while last year's design opened 20 per instance. The load test ran in staging and didn't include the payment gateway's limits, so we'll confirm those with the provider.",
+  "note": "A plan is only as good as its assumptions; name them.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Without a pooler, adding instances beyond 10 doesn't add capacity. Why?",
+    "options": ["The load balancer is full", "The database's connection limit is the bottleneck", "Instances are slow", "The test was wrong"],
+    "answer": 1,
+    "explanation": "Scale the bottleneck, not something else."
+  },
+  {
+    "prompt": "A system handles 300 queries a second, each taking 0.05 s. How many connections are busy on average?",
+    "options": ["15", "300", "6,000", "50"],
+    "answer": 0,
+    "explanation": "Little's law: 300 × 0.05."
+  },
+  {
+    "prompt": "Why add headroom to the forecast?",
+    "options": ["To spend budget", "To cover forecast error, bursts within a minute and losing instances at the peak", "It's a tradition", "For the load test"],
+    "answer": 1,
+    "explanation": "Forecasts are never exact."
+  }
+]
+```
+$md$, true, true, 5, array['cdc-05-p1', 'cdc-05-p2', 'cdc-05-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('cdc-m06', 'cloud-devops-capstone', 'SLOs and Alerts That Matter', 6, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('cloud-devops-capstone:slos-and-alerts-that-matter', 'cloud-devops-capstone', 'cdc-m06', 'slos-and-alerts-that-matter', 'SLOs and alerts that matter', 'Set a checkout SLO, measure how much error budget last year''s outage burned, replay burn-rate alerts against sale day to see when each would have fired, and clear out the alerts nobody acts on.', 30, $md$
+## The problem
+
+Last year, customers complained on social media at about 09:30, and the team only started looking after that. Meanwhile on-call gets about seven alerts a day, and almost none need action, so people have learned to ignore them. Kasuwa needs fewer alerts, and the ones it keeps must fire **before** customers notice.
+
+## The concept
+
+**An SLO and its error budget**
+
+The checkout SLO: **99.5% of checkout requests succeed over 30 days**. The error budget is the 0.5% allowed to fail. At normal traffic of about 25 requests a second, that's a fixed number of failed requests per month.
+
+**Burn rate**
+
+Burn rate = current error rate ÷ 0.5%. A burn rate of 1 uses the budget exactly over 30 days; 14.4 uses 2% of it in an hour.
+
+**Multi-window alerts**
+
+A common page fires when the burn rate is at least 14.4 over the last **hour** and over the last **5 minutes**. The long window avoids paging on blips; the short one makes the alert stop soon after recovery. But a long window also **delays** the alert at the start of an incident. Replay alerts against real incidents to see when they would have fired.
+
+**Alerts that matter**
+
+An alert should be actionable, urgent and real. Measure each alert's history: how often it fires, the share that needed action, and how long people took to respond. Remove or fix the rest.
+
+## Example
+
+The error budget, and last year's sale:
+
+```python
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/platform/"
+metrics = pd.read_csv(base + "sale_metrics.csv", parse_dates=["minute"])
+metrics["requests"] = metrics["requests_per_s"] * 60
+metrics["failed"] = metrics["requests"] * metrics["error_rate"]
+
+SLO = 0.995
+NORMAL_RPS = 25
+budget = NORMAL_RPS * 86400 * 30 * (1 - SLO)
+print(f"Monthly error budget: {budget:,.0f} failed requests")
+print(f"Sale day used: {metrics['failed'].sum():,.0f} ({metrics['failed'].sum() / budget:.1%} of the month's budget)")
+```
+
+```text
+Monthly error budget: 324,000 failed requests
+Sale day used: 151,697 (46.8% of the month's budget)
+```
+
+Almost half the month's budget went in one morning. Now replay three alert designs against sale day:
+
+```python
+for window in [60, 5]:
+    metrics[f"burn_{window}m"] = (metrics["failed"].rolling(window, min_periods=1).sum()
+                                  / metrics["requests"].rolling(window, min_periods=1).sum()) / (1 - SLO)
+start = metrics.loc[metrics["error_rate"] > 0.05, "minute"].min()
+designs = {
+    "burn ≥ 14.4 over 1 hour and 5 minutes": (metrics["burn_60m"] >= 14.4) & (metrics["burn_5m"] >= 14.4),
+    "burn ≥ 14.4 over 5 minutes only": metrics["burn_5m"] >= 14.4,
+    "existing: 5xx above 5% for 5 minutes": metrics["error_rate"].rolling(5).min() > 0.05,
+}
+print(f"Outage started {start:%H:%M}")
+for name, fired in designs.items():
+    first = metrics.loc[fired, "minute"].min()
+    print(f"{name:40} fires {first:%H:%M}, {(first - start).seconds // 60} minutes after the start")
+```
+
+```text
+Outage started 09:19
+burn ≥ 14.4 over 1 hour and 5 minutes    fires 09:45, 26 minutes after the start
+burn ≥ 14.4 over 5 minutes only          fires 09:26, 7 minutes after the start
+existing: 5xx above 5% for 5 minutes     fires 09:27, 8 minutes after the start
+```
+
+The standard one-hour design fires **after** customers had started complaining, because its long window takes time to fill. On a normal day that trade-off is fine. On sale day, when minutes cost the most and on-call is watching anyway, add a fast page as well. The five-minute burn alert and the existing 5xx alert behave almost identically here (7 and 8 minutes). Either works, as long as it actually pages someone and isn't lost among the noise below.
+
+Now the alerts on-call actually gets:
+
+```python
+alerts = pd.read_csv(base + "alerts.csv", parse_dates=["fired_at"])
+days = (alerts["fired_at"].max() - alerts["fired_at"].min()).days + 1
+review = alerts.groupby("alert_name").agg(fired=("alert_id", "size"), actionable=("actionable", "mean"),
+                                          median_minutes_to_ack=("minutes_to_acknowledge", "median"))
+review["per_day"] = review["fired"] / days
+review["decision"] = review["actionable"].map(lambda a: "keep" if a >= 0.5 else "fix or remove")
+print(f"{len(alerts)} alerts in {days} days ({len(alerts) / days:.1f} a day), {alerts['actionable'].mean():.0%} actionable\n")
+review.sort_values("fired", ascending=False).round(2)
+```
+
+```text
+646 alerts in 90 days (7.2 a day), 9% actionable
+
+                                     fired  actionable  median_minutes_to_ack  per_day       decision
+alert_name
+CPU above 70% on any instance          450        0.04                   25.0     5.00  fix or remove
+Heartbeat missed: order-worker         112        0.05                   21.5     1.24  fix or remove
+Payment gateway error rate above 2%     47        0.43                   14.0     0.52  fix or remove
+Disk above 80% on bastion               17        0.00                   22.0     0.19  fix or remove
+Checkout p95 latency above 2s           10        0.70                    6.5     0.11           keep
+Database connections above 90%           7        0.86                    6.0     0.08           keep
+Checkout 5xx above 5% for 5 minutes      3        1.00                    7.0     0.03           keep
+```
+
+Two alerts make up most of the noise. CPU above 70% fires every day and almost never needs action: high CPU is the point of autoscaling, not a problem. The worker heartbeat flaps. Remove the CPU alert, fix the heartbeat, and the alerts that matter stop getting lost. Notice too how much faster people acknowledge the actionable ones.
+
+## Walkthrough
+
+1. Run the cells.
+2. Try a burn rate of 6 over 30 minutes and 5 minutes. When would it have fired?
+3. Replay the fast alert over the rest of the day. Would it have paged falsely after recovery?
+4. Write the paging policy: which alerts page, which go to a ticket, and who's on call during the sale.
+5. Write the alerting plan (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "cdc-06-p1",
+  "prompt": "What percentage of the month's error budget did sale day use? One decimal place.",
+  "answer": 46.8,
+  "format": "percent",
+  "dataset": "platform",
+  "files": ["sale_metrics"],
+  "pyVerify": "round(100 * metrics['failed'].sum() / budget, 1)",
+  "hint": "Failed requests ÷ monthly budget.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "cdc-06-p2",
+  "prompt": "How many minutes after the outage started would the **1 hour and 5 minutes** burn-rate alert have fired?",
+  "answer": 26,
+  "format": "number",
+  "dataset": "platform",
+  "files": ["sale_metrics"],
+  "pyVerify": "(metrics.loc[(metrics['burn_60m'] >= 14.4) & (metrics['burn_5m'] >= 14.4), 'minute'].min() - start).seconds // 60",
+  "hint": "The first design's line.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "cdc-06-t1",
+  "prompt": "Write the **alerting plan** (60 to 150 words): the **SLO**, what last year **burned**, the **pages** you'll keep or add and **when** they'd have fired last year, and the alerts you'll **remove or fix**.",
+  "minutes": 8,
+  "rows": 7,
+  "placeholder": "SLO: ...",
+  "rules": [
+    { "label": "States the SLO", "pattern": "99\\.5" },
+    { "label": "Budget burned", "pattern": "budget" },
+    { "label": "Burn-rate pages", "pattern": "burn" },
+    { "label": "When they'd have fired (minutes)", "pattern": "\\d+\\s*minutes" },
+    { "label": "Removes or fixes noisy alerts (CPU, heartbeat)", "pattern": "cpu|heartbeat" },
+    { "label": "Between 60 and 150 words", "minWords": 60, "maxWords": 150 }
+  ],
+  "sample": "SLO: 99.5% of checkout requests succeed over 30 days, a budget of about 324,000 failed requests a month. Last year's sale used almost half of it in one morning. We'll page on a burn rate of 14.4 over both 1 hour and 5 minutes, which would have fired 26 minutes into last year's outage, after customers noticed; so for sale week we'll add a page on a burn rate of 14.4 over 5 minutes alone, which would have fired within 7 minutes. We'll remove the CPU-above-70% alert (450 alerts in 90 days, 4% actionable, and high CPU is what autoscaling is for) and fix the flapping worker heartbeat. That cuts on-call noise by most of the volume.",
+  "note": "Every alert you remove makes the important ones easier to hear.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "What does a burn rate of 14.4 mean for a 30-day SLO?",
+    "options": ["14.4% errors", "The error budget is being used 14.4 times faster than allowed: about 2% of it per hour", "14.4 minutes of downtime", "Nothing"],
+    "answer": 1,
+    "explanation": "Burn rate is relative to the budget."
+  },
+  {
+    "prompt": "Why did the one-hour alert fire late on sale day?",
+    "options": ["It was broken", "Its long window took time to fill with bad minutes", "Traffic was low", "The SLO was wrong"],
+    "answer": 1,
+    "explanation": "Long windows trade speed for stability."
+  },
+  {
+    "prompt": "An alert fires 5 times a day and is actionable 4% of the time. What should you do?",
+    "options": ["Keep it", "Remove or fix it: it trains people to ignore alerts", "Page more people", "Raise its priority"],
+    "answer": 1,
+    "explanation": "Noise hides signal."
+  }
+]
+```
+$md$, true, true, 6, array['cdc-06-p1', 'cdc-06-p2', 'cdc-06-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('cdc-m07', 'cloud-devops-capstone', 'Cost Before and During the Sale', 7, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('cloud-devops-capstone:cost-before-and-during-the-sale', 'cloud-devops-capstone', 'cdc-m07', 'cost-before-and-during-the-sale', 'Cost before and during the sale', 'Find the spend that buys nothing (idle machines and an always-on staging copy of production), price the readiness changes and the sale''s extra capacity, and keep the savings away from resilience.', 25, $md$
+## The problem
+
+The finance director has noticed the cloud bill creeping up and worries the sale preparations will push it higher. The readiness work does add cost: a bigger database and a pooler. But the inventory from lesson 1 showed spend that buys nothing. Find it, and price the sale honestly.
+
+## The concept
+
+**Waste first**
+
+- **Idle resources**: machines that do nearly nothing, especially with no owner. Confirm with the team, snapshot if in doubt, then delete.
+- **Always-on non-production**: staging used during working hours but paid for around the clock. Schedule it to run only when needed.
+
+**Don't cut resilience**
+
+A standby replica at 12% CPU isn't waste. It's there for the bad day. Low use isn't the same as no value.
+
+**Price the change, and the peak**
+
+Compare the monthly cost of the readiness changes with the savings. Price the sale's extra capacity per hour: autoscaling means you pay for 30 instances only while you need them.
+
+## Example
+
+Idle development resources:
+
+```python
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/platform/"
+resources = pd.read_csv(base + "resources.csv")
+idle = resources[(resources["environment"] == "development") & (resources["avg_cpu_pct"] <= 2)]
+print(idle[["name", "managed_by", "monthly_cost_usd", "avg_cpu_pct", "owner"]].to_string(index=False))
+print(f"\nIdle: {len(idle)} machines, ${idle['monthly_cost_usd'].sum():,} a month")
+```
+
+```text
+name managed_by  monthly_cost_usd  avg_cpu_pct owner
+ temp-test-9     manual               280          2.0   NaN
+temp-test-10     manual               280          2.0   NaN
+temp-test-11     manual                70          2.0   NaN
+temp-test-12  terraform               140          2.0   NaN
+temp-test-13     manual               140          1.0   NaN
+temp-test-14  terraform               280          2.0   NaN
+
+Idle: 6 machines, $1,190 a month
+```
+
+Staging runs around the clock. The team uses it about 12 hours a day on weekdays:
+
+```python
+HOURS_IN_MONTH = 730
+staging = resources[resources["environment"] == "staging"]
+hours_needed = 12 * 5 * 52 / 12  # 12 hours a day, 5 days a week, averaged per month
+schedule_saving = staging["monthly_cost_usd"].sum() * (1 - hours_needed / HOURS_IN_MONTH)
+print(f"Staging: ${staging['monthly_cost_usd'].sum():,} a month; needed {hours_needed:.0f} of {HOURS_IN_MONTH} hours")
+print(f"Scheduling it saves about ${schedule_saving:,.0f} a month")
+```
+
+```text
+Staging: $2,700 a month; needed 260 of 730 hours
+Scheduling it saves about $1,738 a month
+```
+
+Now the readiness changes and the sale itself:
+
+```python
+db_upgrade = 1150            # the 2xlarge costs about twice the current database
+pooler = 30                  # a small PgBouncer machine
+per_instance_hour = resources.loc[resources["name"] == "checkout-api", "monthly_cost_usd"].iloc[0] / 6 / HOURS_IN_MONTH
+sale_extra = (30 - 6) * 12 * per_instance_hour
+savings = idle["monthly_cost_usd"].sum() + schedule_saving
+print(f"Readiness changes: +${db_upgrade + pooler:,} a month")
+print(f"Savings: -${savings:,.0f} a month")
+net = db_upgrade + pooler - savings
+print(f"Net change: {'-' if net < 0 else '+'}${abs(net):,.0f} a month")
+print(f"Running 30 checkout instances instead of 6 for 12 hours on sale day: about ${sale_extra:,.0f}")
+```
+
+```text
+Readiness changes: +$1,180 a month
+Savings: -$2,928 a month
+Net change: -$1,748 a month
+Running 30 checkout instances instead of 6 for 12 hours on sale day: about $55
+```
+
+The savings more than pay for the readiness changes, so the bill goes **down**. The sale's extra capacity costs less than a few minutes of lost checkout. Notice what isn't on the list: the orders-db replica, at 12% CPU, stays. It's the failover target.
+
+## Walkthrough
+
+1. Run the cells.
+2. Check the idle machines with their teams. Which have no owner at all? What's your process before deleting (tag, warn, snapshot, delete)?
+3. Should staging be scaled down to a smaller copy rather than scheduled? What would a load test in staging then need?
+4. After the sale, should the database go back to the smaller size? What does lesson 5 say?
+5. Write the cost note (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "cdc-07-p1",
+  "prompt": "How much do the **idle** development machines cost a month, in dollars?",
+  "answer": 1190,
+  "format": "number",
+  "dataset": "platform",
+  "files": ["resources"],
+  "verify": "SELECT SUM(monthly_cost_usd) FROM resources WHERE environment = 'development' AND avg_cpu_pct <= 2",
+  "hint": "The last line of the first cell.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "cdc-07-p2",
+  "prompt": "What is the estimated **net** monthly change in the bill (readiness changes minus savings), in dollars? (It's negative; a rounded figure is fine.)",
+  "answer": -1748,
+  "format": "number",
+  "dataset": "platform",
+  "files": ["resources"],
+  "pyVerify": "round(net)",
+  "tolerance": 5,
+  "hint": "The Net change line.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "cdc-07-t1",
+  "prompt": "Write the **cost note** for the finance director (50 to 130 words): the **savings** and where they come from, the **cost** of the readiness changes, the **net** effect, the sale's extra **capacity** cost, and what you're **not** cutting and why.",
+  "minutes": 7,
+  "rows": 6,
+  "placeholder": "We'll save ...",
+  "rules": [
+    { "label": "Dollar figures", "pattern": "\\$\\s*[\\d,]+", "min": 3 },
+    { "label": "Idle machines", "pattern": "idle|unused|temp" },
+    { "label": "Staging schedule", "pattern": "staging" },
+    { "label": "Net effect", "pattern": "net|overall|goes down|lower" },
+    { "label": "Something not cut (replica, resilience)", "pattern": "replica|resilien|failover|not cut|keep" },
+    { "label": "Between 50 and 130 words", "minWords": 50, "maxWords": 130 }
+  ],
+  "sample": "We'll save about $2,930 a month: $1,190 by deleting six idle test machines (nobody owns them and they use 2% CPU or less), and about $1,740 by running staging only in working hours. The readiness changes add $1,180 a month, mainly the larger database, so the bill goes down by about $1,750 a month overall. On sale day, running 30 checkout instances instead of 6 for 12 hours costs about $55, far less than a few minutes of failed checkouts. We're not cutting the orders-db replica: it looks underused at 12% CPU, but it's our failover target.",
+  "note": "Lead with what finance asked about, and protect what keeps the sale up.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "A standby database replica runs at 12% CPU. Should you delete it to save money?",
+    "options": ["Yes", "No: it's there for failover, so low use is expected", "Only before the sale", "Only if it's manual"],
+    "answer": 1,
+    "explanation": "Resilience looks idle until it's needed."
+  },
+  {
+    "prompt": "Why schedule staging rather than run it all the time?",
+    "options": ["It breaks at night", "It's only used in working hours, so paying for the other hours buys nothing", "Security", "Terraform requires it"],
+    "answer": 1,
+    "explanation": "Pay for what you use."
+  },
+  {
+    "prompt": "Why is autoscaling to 30 instances on sale day cheap?",
+    "options": ["Instances are free on sale days", "You pay for the extra instances only for the hours they run", "The provider gives discounts", "It isn't"],
+    "answer": 1,
+    "explanation": "Elastic capacity is billed by the hour."
+  }
+]
+```
+$md$, true, true, 7, array['cdc-07-p1', 'cdc-07-p2', 'cdc-07-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('cdc-m08', 'cloud-devops-capstone', 'Game Day and the Go/No-Go', 8, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('cloud-devops-capstone:game-day-and-the-go-no-go', 'cloud-devops-capstone', 'cdc-m08', 'game-day-and-the-go-no-go', 'Game day and the go/no-go', 'Test the platform by breaking it on purpose, read the game-day results against their targets, turn the whole review into a readiness checklist, and give leadership an honest go/no-go for the sale.', 25, $md$
+## The problem
+
+Three weeks before the sale, the team ran a **game day**: a planned morning of breaking things in a controlled way, to see whether the system and the people respond as the plans say. Plans that have never been tested are hopes. Now the head of engineering wants the answer to the question in the brief: **are we ready?**
+
+## The concept
+
+**A game day**
+
+Each drill has a scenario, a success criterion and, where it matters, a target time, such as a **recovery time objective** (RTO) for restoring the database. Record what actually happened, including the surprises.
+
+**Pass, fail and what it teaches**
+
+A failed drill is a success for the game day: you found the problem before the sale did. Each failure becomes an action with an owner and a date, then a re-test.
+
+**Go, no-go, or go with conditions**
+
+A readiness decision lists what's done, what's open, and the conditions that must be met by a date. "Go if the backup restore passes a re-test by 20 November" is more useful than a vague "mostly ready".
+
+## Example
+
+The game-day results:
+
+```python
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/platform/"
+gameday = pd.read_csv(base + "gameday.csv")
+gameday["overrun_minutes"] = (gameday["actual_minutes"] - gameday["target_minutes"]).clip(lower=0)
+print(gameday[["drill_id", "scenario", "target_minutes", "actual_minutes", "passed"]].to_string(index=False))
+print(f"\nPassed {gameday['passed'].sum()} of {len(gameday)}")
+```
+
+```text
+drill_id                                      scenario  target_minutes  actual_minutes  passed
+     G-1    Kill two checkout-api instances under load             5.0             3.0       1
+     G-2            Fail over orders-db to the replica             5.0             4.0       1
+     G-3    Restore orders-db from last night's backup            60.0           155.0       0
+     G-4           Roll back a bad checkout-api deploy            10.0             7.0       1
+     G-5 Payment gateway returns errors for 10 minutes             2.0            18.0       0
+     G-6     Burn-rate alert fires and reaches on-call             5.0             9.0       0
+     G-7   Traffic at 1.6x last year's peak in staging             NaN             NaN       1
+
+Passed 4 of 7
+```
+
+The failures, with what happened:
+
+```python
+for _, d in gameday[gameday["passed"] == 0].iterrows():
+    print(f"{d['drill_id']} {d['scenario']} ({d['actual_minutes']:.0f} min against {d['target_minutes']:.0f}):\n   {d['notes']}\n")
+```
+
+```text
+G-3 Restore orders-db from last night's backup (155 min against 60):
+   Backup bucket unencrypted and unlabelled; restore steps were not written down; took 2.5 hours.
+
+G-5 Payment gateway returns errors for 10 minutes (18 min against 2):
+   No fallback: checkout showed a blank error page until the gateway recovered.
+
+G-6 Burn-rate alert fires and reaches on-call (9 min against 5):
+   Alert went to an email list; on-call saw it 9 minutes later.
+```
+
+The capacity work held: the platform took 1.6 times last year's peak, and losing instances or failing over the database caused little harm. But three things failed, and each is serious on sale day. Restoring the database took over two and a half hours against a one-hour target. The bucket was the unencrypted, unowned one from lesson 1, and nobody had written the steps down. A payment gateway outage showed customers a blank page. And the page went to an email list, so on-call saw it after nine minutes, against a five-minute target.
+
+The readiness checklist, from the whole review:
+
+```python
+checklist = pd.DataFrame([
+    ("Pooler, larger database, autoscaling to 30 (PR 214 fixed)", "Done", "Capacity drill passed at 1.6x"),
+    ("Policy checks block dangerous plans in the pipeline", "Done", "Caught the database replacement"),
+    ("Manual production resources imported into Terraform", "Open", "Replica, worker, backups bucket, bastion"),
+    ("Backups encrypted, owned, and restore runbook written", "Open", "Restore drill failed: 155 min against 60"),
+    ("Payment gateway fallback: retry message and queued orders", "Open", "Drill failed: blank page for 18 min"),
+    ("Fast burn-rate page routed to on-call phones", "Open", "Alert reached on-call after 9 min by email"),
+    ("Noisy alerts removed (CPU, heartbeat)", "Done", "On-call load cut by most of the volume"),
+    ("Deploy rules and sale-week freeze agreed", "Done", "Tests required; no late-Friday deploys"),
+    ("Idle machines deleted and staging scheduled", "Done", "Saves about $2,930 a month"),
+], columns=["item", "status", "evidence"])
+print(checklist.to_string(index=False))
+print(f"\n{(checklist['status'] == 'Done').sum()} done, {(checklist['status'] == 'Open').sum()} open")
+```
+
+```text
+item status                                   evidence
+Pooler, larger database, autoscaling to 30 (PR 214 fixed)   Done              Capacity drill passed at 1.6x
+      Policy checks block dangerous plans in the pipeline   Done            Caught the database replacement
+      Manual production resources imported into Terraform   Open   Replica, worker, backups bucket, bastion
+    Backups encrypted, owned, and restore runbook written   Open   Restore drill failed: 155 min against 60
+Payment gateway fallback: retry message and queued orders   Open        Drill failed: blank page for 18 min
+             Fast burn-rate page routed to on-call phones   Open Alert reached on-call after 9 min by email
+                    Noisy alerts removed (CPU, heartbeat)   Done     On-call load cut by most of the volume
+                 Deploy rules and sale-week freeze agreed   Done     Tests required; no late-Friday deploys
+              Idle machines deleted and staging scheduled   Done                 Saves about $2,930 a month
+
+5 done, 4 open
+```
+
+The honest answer is **go, with conditions**. The capacity problem that caused last year's outage is fixed and tested. But four items are open, and three of them failed a drill. Each needs an owner, a date before the freeze, and a re-test.
+
+## Walkthrough
+
+1. Run the cells.
+2. Give each open item an owner and a date, at least a week before the sale.
+3. Plan the re-tests: which drills run again, and when?
+4. Write the sale-day runbook's first page: who's on call, how to reach them, and the first three things to check.
+5. Write the executive summary (the task below), then open the project brief on the course page.
+
+## Practice
+
+```dataset
+{"dataset": "platform", "files": ["resources", "sale_metrics", "deployments", "loadtest", "alerts", "gameday"]}
+```
+
+```answer
+{
+  "id": "cdc-08-p1",
+  "prompt": "How many game-day drills **failed**?",
+  "answer": 3,
+  "format": "number",
+  "dataset": "platform",
+  "files": ["gameday"],
+  "verify": "SELECT COUNT(*) FROM gameday WHERE passed = 0",
+  "hint": "Total drills minus those passed.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "cdc-08-p2",
+  "prompt": "By how many minutes did the database **restore** overrun its target?",
+  "answer": 95,
+  "format": "number",
+  "dataset": "platform",
+  "files": ["gameday"],
+  "verify": "SELECT actual_minutes - target_minutes FROM gameday WHERE scenario LIKE 'Restore%'",
+  "hint": "Actual minus target for the restore drill.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "cdc-08-t1",
+  "prompt": "Write the **executive summary** for the head of engineering (120 to 230 words): **what went wrong** last year, what you've **fixed** and the **evidence** it works, what's still **open**, the **cost** effect, and your **go/no-go** with conditions and dates.",
+  "minutes": 12,
+  "rows": 11,
+  "placeholder": "Last year ...",
+  "rules": [
+    { "label": "Last year's cause (connections, pool)", "pattern": "connection|pool" },
+    { "label": "Uses numbers", "pattern": "\\d+(\\.\\d+)?", "min": 6 },
+    { "label": "Evidence (load test, drill, game day)", "pattern": "load test|drill|game day|tested" },
+    { "label": "Open items (restore, backup, payment, paging)", "pattern": "restore|backup|payment|pag" },
+    { "label": "Cost effect", "pattern": "\\$\\s*[\\d,]+" },
+    { "label": "A go/no-go decision", "pattern": "\\bgo\\b|no-go|ready" },
+    { "label": "Conditions with dates or deadlines", "pattern": "by \\d|before|deadline|date|\\d+ november" },
+    { "label": "Between 120 and 230 words", "minWords": 120, "maxWords": 230 }
+  ],
+  "sample": "Last year, checkout failed for 94 minutes at the sale's peak and about 152,000 requests failed, using almost half the month's error budget. The cause was database connections: each checkout instance opened 20, the database allowed 200, and autoscaling kept adding instances.\n\nFixed: a connection pooler, a larger database and autoscaling to 30 instances. The load test and game day handled 1.6 times last year's peak with 0.2% errors. Policy checks now block dangerous Terraform plans; one caught a change that would have deleted the orders database. We've removed the noisy alerts, added a fast burn-rate page that would have fired within 7 minutes last year, and agreed deploy rules and a sale-week freeze. The bill goes down by about $1,750 a month.\n\nOpen: database restore took 155 minutes against a 60-minute target; the payment gateway has no fallback; pages reach on-call by email; and four production resources are still managed by hand.\n\nRecommendation: go, with conditions. By 13 November, the backups must be encrypted with a written restore runbook that passes a re-test in under 60 minutes, the payment fallback must pass its drill, and pages must reach on-call phones. If the restore re-test fails, we'll tell you before the freeze.",
+  "note": "\"Go with conditions\" only works if the conditions have owners, dates and a re-test.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "What is a failed game-day drill?",
+    "options": ["A disaster", "A success for the game day: a problem found before the real event", "A reason to cancel the sale", "A testing error"],
+    "answer": 1,
+    "explanation": "Find failures on your schedule, not the customer's."
+  },
+  {
+    "prompt": "Why does an untested backup count as a risk even if backups run every night?",
+    "options": ["It doesn't", "Until you've restored one, you don't know how long it takes or whether it works", "Backups expire", "It's unencrypted"],
+    "answer": 1,
+    "explanation": "A backup is only as good as its restore."
+  },
+  {
+    "prompt": "What makes \"go with conditions\" a useful decision?",
+    "options": ["It sounds positive", "Each condition has an owner, a deadline and a re-test, so readiness is checked, not assumed", "It avoids a decision", "It's shorter"],
+    "answer": 1,
+    "explanation": "Conditions turn hope into a plan."
+  }
+]
+```
+$md$, true, true, 8, array['cdc-08-p1', 'cdc-08-p2', 'cdc-08-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+
 -- Assessment: SQL for Data Analysis: final assessment
 insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
 values ('sql-for-data-analysis-final', 'sql-for-data-analysis', 'final', null, 'SQL for Data Analysis: final assessment', 60, true)
@@ -63920,6 +65432,108 @@ on conflict (id) do update set assessment_id = excluded.assessment_id, position 
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
 values ('aicq12', 1, 'A gate covers only what it tests.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Cloud & DevOps Engineer Capstone: final assessment
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('cloud-devops-capstone-final', 'cloud-devops-capstone', 'final', null, 'Cloud & DevOps Engineer Capstone: final assessment', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cdcq01', 'cloud-devops-capstone-final', 1, 'A production database replica was created by hand during an incident. What should happen to it?', '["Delete it","Import it into Terraform so changes are reviewed and reproducible","Leave it","Rename it"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cdcq01', 1, 'Production belongs in code.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cdcq02', 'cloud-devops-capstone-final', 2, 'Errors start the moment instances × pool size exceeds the database''s connection limit. What''s the cause of the outage?', '["High traffic","The database connection limit, with each instance opening its own pool","The payment gateway","Slow servers"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cdcq02', 1, 'Traffic was the trigger; connections were the cause.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cdcq03', 'cloud-devops-capstone-final', 3, 'Why did autoscaling make last year''s outage worse?', '["It was too slow","Each new instance asked for more database connections than the database allowed","It removed instances","It cost too much"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cdcq03', 1, 'Scaling one tier overloaded the next.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cdcq04', 'cloud-devops-capstone-final', 4, 'A Terraform plan shows ["delete", "create"] for the orders database. What does that mean?', '["An in-place update","The database will be destroyed and recreated","A backup will be taken","Nothing"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cdcq04', 1, 'Replacement means data loss without a restore.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cdcq05', 'cloud-devops-capstone-final', 5, 'Which policy check would have caught the database replacement automatically?', '["Check for owner tags","Fail any plan that deletes or replaces a production database","Check instance sizes","Count resources"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cdcq05', 1, 'Encode the rule once; run it on every plan.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cdcq06', 'cloud-devops-capstone-final', 6, 'Deploys without tests fail 21% of the time; with tests, 12%. What rule follows?', '["Deploy less","Require automated tests for checkout changes","Ban deploys","Deploy only on Fridays"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cdcq06', 1, 'Rules should follow the evidence.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cdcq07', 'cloud-devops-capstone-final', 7, 'Last year''s peak was 160 requests a second; growth 1.6×; headroom 30%. What''s the target?', '["About 256","About 333","About 208","About 160"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cdcq07', 1, '160 × 1.6 × 1.3.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cdcq08', 'cloud-devops-capstone-final', 8, 'Each request uses the database for 60 ms. At 333 requests a second, about how many connections are busy?', '["About 20","About 333","About 600","About 6"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cdcq08', 0, 'Little''s law: 333 × 0.06.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cdcq09', 'cloud-devops-capstone-final', 9, 'A 1-hour/5-minute burn-rate alert would have fired 26 minutes into last year''s outage. What should you add for the sale?', '["Nothing","A fast page on a short window, routed to on-call phones","A CPU alert","A longer window"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cdcq09', 1, 'Replay alerts against real incidents and tune them.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cdcq10', 'cloud-devops-capstone-final', 10, 'An alert fired 450 times in 90 days and needed action 4% of the time. What do you do?', '["Keep it","Remove or fix it","Page more people","Raise its severity"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cdcq10', 1, 'Noise trains people to ignore alerts.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cdcq11', 'cloud-devops-capstone-final', 11, 'A standby replica runs at 12% CPU. Is it waste?', '["Yes, delete it","No: it''s the failover target, so low use is expected","Only on weekends","Only in staging"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cdcq11', 1, 'Don''t cut resilience to save cost.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cdcq12', 'cloud-devops-capstone-final', 12, 'The database restore drill took 155 minutes against a 60-minute target. What''s the right readiness call?', '["Go anyway","Go with conditions: fix, document and re-test the restore by a set date","Cancel the sale","Ignore it: backups run nightly"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cdcq12', 1, 'Open risks need owners, dates and re-tests.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 
@@ -69438,6 +71052,14 @@ Work in Google Colab with the assistant dataset (https://academy.cloudtechanalyt
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
 
 
+-- Project: Kasuwa: sale readiness review
+insert into public.projects (id, course_id, title, summary, brief_md, tasks, datasets, rubric, required)
+values ('cdc-kasuwa-sale-readiness', 'cloud-devops-capstone', 'Kasuwa: sale readiness review', 'A full readiness review of an online shop''s platform before its biggest sale: inventory, an outage postmortem, a Terraform plan review with policy checks, delivery measures, capacity planning, SLOs and alerts, cost, and a game-day-based go/no-go.', $md$Kasuwa's head of engineering wants to know whether the platform is ready for this year's sale, after last year's outage. Review it, fix what matters, and give an honest go/no-go.
+
+Work in Google Colab with the platform dataset (https://academy.cloudtechanalytics.com/datasets/platform/: resources.csv, sale_metrics.csv, sale_logs.jsonl, plan-sale-readiness.json, deployments.csv, loadtest.csv, alerts.csv and gameday.csv). Submit a link to your notebook (shared so anyone with the link can view it), and paste your **postmortem summary** and **executive summary** below, followed by a short note on where each part is.$md$, array['Inventory: cost by environment, what''s managed by hand, and the riskiest resources, with what to fix first.', 'Postmortem: impact, trigger, cause and mitigation of the 2025 outage from metrics and logs, and what wasn''t the cause.', 'Plan review: the actions in PR 214, policy checks in code, and a review comment with fixes.', 'Delivery: the four DORA measures, what makes deploys fail, and the deployment policy for the sale.', 'Capacity: a target with growth and headroom, the configuration that meets it, and why the pooler works.', 'Reliability: the SLO and error budget, burn-rate alerts replayed against last year, and the alert clean-up.', 'Cost and readiness: savings and costs, game-day results, the readiness checklist and a go/no-go with conditions and dates.']::text[], array['platform']::text[], array['The inventory ranks risks by impact on customers, not just cost.', 'The postmortem separates trigger from cause and rules out the popular explanations with evidence.', 'Dangerous infrastructure changes are caught by checks in code before they''re applied.', 'Delivery rules follow from the deployment data, with small samples treated honestly.', 'Capacity is planned on the real bottleneck, with headroom and stated assumptions.', 'Alerts are tested against a real incident and cleaned up by their history.', 'The go/no-go is honest, with open items owned, dated and re-tested.']::text[], true)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
+
+
 -- Track: Become a Data Analyst
 insert into public.tracks (id, slug, title, summary, badge_name, badge_code, skills, position, published)
 values ('data-analyst', 'data-analyst', 'Become a Data Analyst', 'The route we recommend from no experience to a junior data analyst role. Learn how analysis works, then the tools teams use every day (Excel, SQL, Power BI and Python) on realistic company data. Build portfolio projects that answer real business questions, and finish with your CV, LinkedIn and interview preparation.', 'CloudTech Data Analyst', 'DATAANALYST', array['Spreadsheet analysis in Excel', 'Statistics: averages, spread, confidence intervals and tests', 'Querying databases with SQL, from first SELECT to cohorts and window functions', 'Data modelling and star schemas', 'Dashboards in Power BI, with DAX measures you can trust', 'Analysis in Python and pandas', 'Turning data into findings a manager can act on']::text[], 1, true)
@@ -69690,11 +71312,15 @@ values ('cloud-devops-engineer', 'observability-site-reliability', 'Specialist',
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 insert into public.track_courses (track_id, course_id, stage, required, position)
-values ('cloud-devops-engineer', 'career-essentials', 'Career', true, 8)
+values ('cloud-devops-engineer', 'cloud-devops-capstone', 'Capstone', true, 8)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 insert into public.track_courses (track_id, course_id, stage, required, position)
-values ('cloud-devops-engineer', 'build-your-student-portfolio', 'Career', false, 9)
+values ('cloud-devops-engineer', 'career-essentials', 'Career', true, 9)
+on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
+
+insert into public.track_courses (track_id, course_id, stage, required, position)
+values ('cloud-devops-engineer', 'build-your-student-portfolio', 'Career', false, 10)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 
