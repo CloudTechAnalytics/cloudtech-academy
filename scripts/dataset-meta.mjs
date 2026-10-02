@@ -35,9 +35,11 @@ for (const id of fs.readdirSync(root).sort()) {
   if (!fs.statSync(dir).isDirectory()) continue;
   const files = {};
   const zip = {};
-  for (const name of fs.readdirSync(dir).filter((f) => f.endsWith(".csv")).sort()) {
+  // Every file goes in the ZIP (the Linux course has logs and text files); CSVs are also described.
+  for (const name of fs.readdirSync(dir).sort()) {
     const buf = fs.readFileSync(path.join(dir, name));
     zip[name] = [new Uint8Array(buf), { mtime: new Date("2026-01-01T00:00:00Z") }];
+    if (!name.endsWith(".csv")) continue;
     const [header, ...body] = parseCsv(buf.toString("utf8").replace(/^﻿/, ""));
     files[name.replace(/\.csv$/, "")] = {
       rows: body.length,

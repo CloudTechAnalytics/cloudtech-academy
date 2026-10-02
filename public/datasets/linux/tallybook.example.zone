@@ -1,0 +1,15 @@
+$TTL 3600
+@        IN SOA   ns1.dnshost.example. hostmaster.tallybook.example. (2026083101 3600 600 604800 300)
+@        IN NS    ns1.dnshost.example.
+@        IN NS    ns2.dnshost.example.
+@        IN A     196.43.12.10
+www      IN CNAME tallybook.example.
+app      IN A     196.43.12.10
+api      IN A     196.43.12.10
+pay      IN CNAME app.tallybook.example.
+status   IN CNAME tallybook.statuspage.example.
+staging  IN CNAME staging-lb-2025.cloudhost.example.
+@        IN MX    10 mx1.mailhost.example.
+@        IN MX    20 mx2.mailhost.example.
+@        IN TXT   "v=spf1 include:mailhost.example ~all"
+_dmarc   IN TXT   "v=DMARC1; p=none; rua=mailto:dmarc@tallybook.example"

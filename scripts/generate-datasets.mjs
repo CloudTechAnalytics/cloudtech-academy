@@ -2,6 +2,7 @@
 //
 // - public/datasets/logistics.sqlite  (used by the in-browser SQL sandbox)
 // - public/datasets/<dataset>/*.csv   (downloadable for Excel / Power BI / SQL practice)
+// - public/datasets/linux/*            (server logs and command output for the Linux course)
 //
 // All names and figures are invented. A fixed random seed keeps the output identical
 // between runs, so lesson answers never change.  Run: npm run datasets
@@ -1921,6 +1922,213 @@ function clampPct(x) {
   return Math.max(0, Math.min(100, x));
 }
 
+/* ------------------------------------------------------------------ linux (server logs and snapshots) */
+// Text files from Tallybook's web server prod-web-01 for the Linux and networking course: a 1%
+// sample of the nginx access log for month-end Monday 31 August 2026, a week of the SSH
+// authentication log (with a break-in), snapshots of ps, df, du and ls output, the DNS zone and
+// the firewall rules. All of it is fictional. Generated last, from its own seed.
+function linuxFiles() {
+  seed = 20270701;
+  const files = {};
+  const pad = (n, w = 2) => String(n).padStart(w, "0");
+  const SHAPE = [0.03, 0.02, 0.02, 0.02, 0.03, 0.08, 0.25, 0.55, 0.85, 1, 1, 0.95, 0.9, 0.95, 1, 0.95, 0.85, 0.7, 0.5, 0.35, 0.25, 0.15, 0.08, 0.05];
+  const PREFIXES = ["41.58", "102.89", "105.112", "197.210", "102.67", "41.184", "129.205", "105.113"];
+  const clients = Array.from({ length: 700 }, () => `${pick(PREFIXES)}.${int(1, 254)}.${int(1, 254)}`);
+  const heavy = clients.slice(0, 40);
+  const clientIp = () => (rand() < 0.3 ? pick(heavy) : pick(clients));
+  const UA = ["Tallybook/3.2 (Android 13)", "Tallybook/3.2 (Android 12)", "Tallybook/3.2 (iOS 17.5)", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/127.0", "Mozilla/5.0 (Macintosh; Intel Mac OS X 14_5) Safari/605.1.15", "Mozilla/5.0 (Linux; Android 13) Chrome/127.0 Mobile"];
+  const ROUTES = [
+    ["GET", "/api/invoices", 18, 200], ["POST", "/api/invoices", 12, 201], ["POST", "/api/invoices/send", 10, 202], ["GET", "/api/customers", 8, 200],
+    ["GET", "/api/dashboard", 10, 200], ["POST", "/api/login", 6, 200], ["GET", "/static/app.js", 8, 200], ["GET", "/static/styles.css", 6, 200],
+    ["GET", "/", 6, 200], ["GET", "/pay/", 8, 200], ["POST", "/api/payments/webhook", 8, 200],
+  ];
+  const events = [];
+  const T0 = Date.parse("2026-08-31T00:00:00Z");
+  for (let h = 0; h < 24; h++) {
+    const n = Math.round((30000 * SHAPE[h] * 1.9 + 400) * 0.01);
+    for (let k = 0; k < n; k++) events.push({ t: T0 + h * 3600000 + int(0, 3599) * 1000 + int(0, 999), kind: "user" });
+  }
+  for (let m = 0; m < 1440; m += 5) events.push({ t: T0 + m * 60000 + 2000, kind: "health" });
+  const SCAN = ["/wp-login.php", "/.env", "/phpmyadmin/", "/admin", "/.git/config", "/xmlrpc.php", "/config.php", "/backup.zip", "/server-status", "/api/v1/../../etc/passwd"];
+  const SCAN_COUNTS = [40, 31, 25, 20, 17, 14, 12, 10, 7, 4];
+  const scanPaths = SCAN.flatMap((p, i) => Array(SCAN_COUNTS[i]).fill(p));
+  for (let k = 0; k < scanPaths.length; k++) events.push({ t: T0 + (3 * 3600 + 600) * 1000 + k * 5000 + int(0, 900), kind: "scan", path: scanPaths[(k * 7) % scanPaths.length] });
+  events.sort((a, b) => a.t - b.t);
+  const OUT_START = T0 + (9 * 60 + 40) * 60000;
+  const OUT_END = T0 + (10 * 60 + 35) * 60000;
+  const lines = [];
+  for (const e of events) {
+    const dt = new Date(e.t);
+    const stamp = `[31/Aug/2026:${pad(dt.getUTCHours())}:${pad(dt.getUTCMinutes())}:${pad(dt.getUTCSeconds())} +0000]`;
+    let ip, method, path, status, bytes, ua, rt;
+    if (e.kind === "health") {
+      ip = "10.0.1.5"; method = "GET"; path = "/health"; status = 200; bytes = 15; ua = "ELB-HealthChecker/2.0"; rt = 0.002 + rand() * 0.003;
+      if (e.t >= OUT_START && e.t < OUT_END && rand() < 0.5) { status = 502; rt = 0.001; bytes = 157; }
+    } else if (e.kind === "scan") {
+      ip = "185.220.101.47"; method = "GET"; path = e.path; status = path === "/.env" || path === "/.git/config" ? 403 : 404; bytes = 153; ua = "Mozilla/5.0 zgrab/0.x"; rt = 0.001 + rand() * 0.002;
+    } else {
+      const r = weighted(ROUTES, ROUTES.map((x) => x[2]));
+      [method, path, , status] = r;
+      if (path === "/pay/") path = `/pay/INV-${int(100000, 999999)}`;
+      ip = path === "/api/payments/webhook" ? pick(["52.31.139.75", "52.49.173.169", "52.214.14.220"]) : clientIp();
+      ua = path === "/api/payments/webhook" ? "PaymentsGateway-Webhooks/1.0" : pick(UA);
+      const isStatic = path.startsWith("/static/");
+      if (isStatic && rand() < 0.4) status = 304;
+      if (path === "/api/login" && rand() < 0.12) status = 401;
+      bytes = isStatic ? (status === 304 ? 0 : path.endsWith(".js") ? 482113 : 38214) : int(180, 9000);
+      rt = isStatic ? 0.001 + rand() * 0.006 : 0.06 + rand() * 0.45;
+      if (e.t >= OUT_START && e.t < OUT_END && !isStatic) {
+        const u = rand();
+        if (u < 0.38) { status = 504; rt = 30 + rand() * 0.01; bytes = 167; }
+        else if (u < 0.52) { status = 502; rt = 0.001 + rand() * 0.004; bytes = 157; }
+        else rt = 2 + rand() * 7;
+      }
+    }
+    lines.push(`${ip} - - ${stamp} "${method} ${path} HTTP/1.1" ${status} ${bytes} "-" "${ua}" ${rt.toFixed(3)}`);
+  }
+  files["access.log"] = lines.join("\n") + "\n";
+
+  // SSH and system authentication log, 25 to 31 August.
+  const auth = [];
+  let pid = 21000;
+  const at = (day, h, m, s) => Date.parse(`2026-08-${day}T${pad(h)}:${pad(m)}:${pad(s)}Z`);
+  const add = (t, text) => auth.push({ t, text });
+  for (let day = 25; day <= 31; day++) {
+    for (let k = 0; k < int(2, 4); k++) {
+      const t = at(day, int(7, 18), int(0, 59), int(0, 59));
+      const p = ++pid;
+      add(t, `sshd[${p}]: Accepted publickey for deploy from 10.0.2.15 port ${int(30000, 60000)} ssh2: ED25519 SHA256:q3Vx8deployKeyFingerprint`);
+      add(t + 1000, `sshd[${p}]: pam_unix(sshd:session): session opened for user deploy(uid=1001) by (uid=0)`);
+      add(t + 40000, `sudo:   deploy : TTY=pts/0 ; PWD=/home/deploy ; USER=root ; COMMAND=/usr/bin/systemctl restart tallybook-web`);
+      add(t + int(120, 900) * 1000, `sshd[${p}]: pam_unix(sshd:session): session closed for user deploy`);
+    }
+    if (day % 2 === 0) {
+      const t = at(day, int(9, 16), int(0, 59), int(0, 59));
+      const p = ++pid;
+      add(t, `sshd[${p}]: Accepted publickey for ada from 102.89.34.5 port ${int(30000, 60000)} ssh2: ED25519 SHA256:k81AdaKeyFingerprint`);
+      add(t + 1000, `sshd[${p}]: pam_unix(sshd:session): session opened for user ada(uid=1002) by (uid=0)`);
+      add(t + int(300, 1800) * 1000, `sshd[${p}]: pam_unix(sshd:session): session closed for user ada`);
+    }
+  }
+  const USERS = ["root", "admin", "ubuntu", "test", "oracle", "postgres", "user", "git"];
+  const VALID = new Set(["root", "postgres"]);
+  const attack = (ip, start, count, spreadSec, users) => {
+    for (let k = 0; k < count; k++) {
+      const u = typeof users === "function" ? users(k) : pick(users);
+      const t = start + Math.round((k / count) * spreadSec * 1000) + int(0, 900);
+      const who = VALID.has(u) || u === "backup" ? u : `invalid user ${u}`;
+      add(t, `sshd[${++pid}]: Failed password for ${who} from ${ip} port ${int(30000, 65000)} ssh2`);
+    }
+  };
+  attack("45.155.205.233", at(26, 1, 0, 0), 900, 4200, USERS);
+  attack("218.92.0.112", at(27, 14, 0, 0), 600, 86400, ["root"]);
+  attack("194.26.29.120", at(29, 23, 30, 0), 352, 9800, (k) => (k < 40 ? pick(USERS.filter((u) => !VALID.has(u))) : "backup"));
+  attack("61.177.172.60", at(31, 4, 0, 0), 400, 7200, ["root", "admin", "ubuntu"]);
+  const breakIn = at(30, 2, 14, 51);
+  const bp = ++pid;
+  add(breakIn, `sshd[${bp}]: Accepted password for backup from 194.26.29.120 port 50211 ssh2`);
+  add(breakIn + 100, `sshd[${bp}]: pam_unix(sshd:session): session opened for user backup(uid=1003) by (uid=0)`);
+  add(at(30, 2, 16, 3), `sudo:   backup : user NOT in sudoers ; TTY=pts/0 ; PWD=/home/backup ; USER=root ; COMMAND=/bin/bash`);
+  add(at(30, 2, 21, 44), `sshd[${bp}]: pam_unix(sshd:session): session closed for user backup`);
+  for (let t = at(30, 2, 30, 1); t < at(31, 23, 59, 59); t += 600000) add(t, `CRON[${++pid}]: (backup) CMD (/tmp/.x/kdevtmpfsi >/dev/null 2>&1)`);
+  auth.sort((a, b) => a.t - b.t);
+  files["auth.log"] = auth.map(({ t, text }) => {
+    const dt = new Date(t);
+    return `Aug ${dt.getUTCDate()} ${pad(dt.getUTCHours())}:${pad(dt.getUTCMinutes())}:${pad(dt.getUTCSeconds())} prod-web-01 ${text}`;
+  }).join("\n") + "\n";
+
+  files["ps.txt"] = `USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+backup     48211 187.4  2.1 2459712 345120 ?     Ssl  Aug30 2981:07 /tmp/.x/kdevtmpfsi
+tallyb+     1187 61.3 14.2 11834512 2329600 ?    Ssl  Aug28 1873:22 node /srv/tallybook/server.js --port 3000
+tallyb+     1188 58.9 13.8 11790336 2263552 ?    Ssl  Aug28 1790:41 node /srv/tallybook/server.js --port 3001
+www-data     902  6.2  0.4 156804 68112 ?        S    Aug28 188:12 nginx: worker process
+www-data     903  5.8  0.4 156804 67904 ?        S    Aug28 176:55 nginx: worker process
+www-data     904  5.5  0.4 156804 67520 ?        S    Aug28 168:03 nginx: worker process
+www-data     905  5.1  0.4 156804 67288 ?        S    Aug28 155:47 nginx: worker process
+root         512  1.2  0.6 1324548 98304 ?       Ssl  Aug28  36:10 /usr/bin/node_exporter
+root         388  0.4  0.3 289116 52224 ?        Ss   Aug28  12:31 /lib/systemd/systemd-journald
+syslog       611  0.3  0.1 222400 18432 ?        Ssl  Aug28   9:02 /usr/sbin/rsyslogd -n
+root         901  0.0  0.1 156220 12288 ?        Ss   Aug28   0:00 nginx: master process /usr/sbin/nginx
+root         702  0.0  0.0  15436  9216 ?        Ss   Aug28   0:02 sshd: /usr/sbin/sshd -D
+root         655  0.0  0.0   9180  3072 ?        Ss   Aug28   0:01 /usr/sbin/cron -f
+root           1  0.0  0.1 167740 13312 ?        Ss   Aug28   0:41 /sbin/init
+root         640  0.0  0.1 241040 11264 ?        Ssl  Aug28   0:09 /usr/lib/policykit-1/polkitd --no-debug
+deploy     51022  0.0  0.0  10072  5120 pts/0    Ss   10:02   0:00 -bash
+deploy     51190  0.0  0.0  11532  4096 pts/0    R+   10:05   0:00 ps aux --sort=-%cpu
+`;
+  files["df.txt"] = `Filesystem      Size  Used Avail Use% Mounted on
+/dev/root        30G   18G   12G  61% /
+tmpfs           7.8G     0  7.8G   0% /dev/shm
+tmpfs           3.1G  1.2M  3.1G   1% /run
+/dev/nvme1n1     50G   48G  1.6G  97% /var
+/dev/nvme0n1p15 105M  6.1M   99M   6% /boot/efi
+`;
+  files["du.txt"] = `1.1G\t/var/log/tallybook
+36G\t/var/log/nginx
+2.9G\t/var/log/journal
+48K\t/var/log/apt
+212M\t/var/log/auth.log
+96M\t/var/log/syslog
+4.0K\t/var/log/btmp
+640M\t/var/log/node_exporter
+12K\t/var/log/cloud-init.log
+`;
+  files["ls.txt"] = `total 72
+drwxr-xr-x  7 tallybook tallybook  4096 Aug 31 09:12 .
+drwxr-xr-x  3 root      root       4096 Jan 15  2026 ..
+-rw-rw-rw-  1 tallybook tallybook   612 Jul  3 14:20 .env
+-rw-r--r--  1 tallybook tallybook   419 Jan 15  2026 deploy_key
+-rw-r--r--  1 tallybook tallybook   103 Jan 15  2026 deploy_key.pub
+-rw-r-----  1 tallybook tallybook  2210 Aug 12 11:05 config.json
+-rw-r--r--  1 tallybook tallybook  1893 Aug 28 16:40 package.json
+-rw-r--r--  1 tallybook tallybook 48211 Aug 28 16:40 server.js
+drwxr-xr-x 412 tallybook tallybook 16384 Aug 28 16:41 node_modules
+drwxr-xr-x  2 tallybook tallybook  4096 Aug 28 16:40 public
+drwxrwxrwx  9 tallybook tallybook  4096 Aug 31 08:55 uploads
+drwxr-xr-x  2 tallybook tallybook  4096 Aug 31 00:00 logs
+drwxr-xr-x  2 tallybook tallybook  4096 Mar  2  2026 scripts
+-rwxrwxrwx  1 tallybook tallybook   740 Mar  2  2026 backup.sh
+`;
+  files["tallybook.example.zone"] = `$TTL 3600
+@        IN SOA   ns1.dnshost.example. hostmaster.tallybook.example. (2026083101 3600 600 604800 300)
+@        IN NS    ns1.dnshost.example.
+@        IN NS    ns2.dnshost.example.
+@        IN A     196.43.12.10
+www      IN CNAME tallybook.example.
+app      IN A     196.43.12.10
+api      IN A     196.43.12.10
+pay      IN CNAME app.tallybook.example.
+status   IN CNAME tallybook.statuspage.example.
+staging  IN CNAME staging-lb-2025.cloudhost.example.
+@        IN MX    10 mx1.mailhost.example.
+@        IN MX    20 mx2.mailhost.example.
+@        IN TXT   "v=spf1 include:mailhost.example ~all"
+_dmarc   IN TXT   "v=DMARC1; p=none; rua=mailto:dmarc@tallybook.example"
+`;
+  const rules = [
+    ["R01", "web-servers", "inbound", "tcp", 443, 443, "0.0.0.0/0", "HTTPS from anywhere"],
+    ["R02", "web-servers", "inbound", "tcp", 80, 80, "0.0.0.0/0", "HTTP from anywhere (redirects to HTTPS)"],
+    ["R03", "web-servers", "inbound", "tcp", 22, 22, "0.0.0.0/0", "SSH - temporary, for the 2025 migration"],
+    ["R04", "web-servers", "inbound", "tcp", 22, 22, "102.89.34.0/28", "SSH from the office"],
+    ["R05", "web-servers", "inbound", "tcp", 22, 22, "10.0.2.0/24", "SSH from the deployment network"],
+    ["R06", "web-servers", "inbound", "tcp", 3000, 3001, "10.0.1.0/24", "App ports from the load balancer"],
+    ["R07", "web-servers", "inbound", "tcp", 9100, 9100, "10.0.3.0/24", "Monitoring"],
+    ["R08", "admin-panel", "inbound", "tcp", 8080, 8080, "0.0.0.0/0", "Admin panel"],
+    ["R09", "database", "inbound", "tcp", 5432, 5432, "10.0.0.0/16", "Postgres from inside the network"],
+    ["R10", "database", "inbound", "tcp", 5432, 5432, "0.0.0.0/0", "Postgres - for the reporting tool"],
+    ["R11", "database", "inbound", "tcp", 22, 22, "102.89.34.0/28", "SSH from the office"],
+    ["R12", "web-servers", "outbound", "all", 0, 65535, "0.0.0.0/0", "All outbound traffic"],
+    ["R13", "cache", "inbound", "tcp", 6379, 6379, "10.0.0.0/16", "Redis from inside the network"],
+  ];
+  const firewall = rules.map(([rule_id, group, direction, protocol, port_from, port_to, source, description]) => ({ rule_id, group, direction, protocol, port_from, port_to, source, description }));
+  return { files, firewall };
+}
+function writeText(dataset, name, text) {
+  const dir = path.join(OUT, dataset);
+  fs.mkdirSync(dir, { recursive: true });
+  fs.writeFileSync(path.join(dir, name), text);
+}
+
 /* ------------------------------------------------------------------ write */
 const SQL = await initSqlJs();
 const L = logistics();
@@ -1962,6 +2170,11 @@ for (const [table, rows] of Object.entries(genai())) writeCsv("genai", table, ro
 for (const [table, rows] of Object.entries(agents())) writeCsv("agents", table, rows);
 for (const [table, rows] of Object.entries(llmops())) writeCsv("llmops", table, rows);
 for (const [table, rows] of Object.entries(cloud())) writeCsv("cloud", table, rows);
+{
+  const { files, firewall } = linuxFiles();
+  for (const [name, text] of Object.entries(files)) writeText("linux", name, text);
+  writeCsv("linux", "firewall", firewall);
+}
 
 // Summary for the build log
 const counts = db.exec("SELECT (SELECT COUNT(*) FROM customers), (SELECT COUNT(*) FROM shipments), (SELECT COUNT(*) FROM payments), (SELECT COUNT(*) FROM routes), (SELECT COUNT(*) FROM employees)")[0].values[0];

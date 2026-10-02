@@ -310,7 +310,7 @@ export const TRACKS: Track[] = [
         summary: "The cloud itself, and enough code to analyse it.",
         items: [
           { kind: "course", courseId: "python-for-data-analytics", why: "pandas for analysing bills, utilisation and logs." },
-          { kind: "upcoming", title: "Linux and Networking Basics", why: "The command line, processes, DNS, ports and HTTP: what every server runs on.", level: 1 },
+          { kind: "course", courseId: "linux-networking-basics", why: "The command line, permissions, processes, SSH, ports, DNS and HTTP, learned by investigating a real-looking server." },
         ],
       },
       {

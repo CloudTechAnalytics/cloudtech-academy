@@ -20,7 +20,7 @@ To get changes made on GitHub (or by a teammate), click **Fetch origin**, then *
 
 You'll see these commands in tutorials. They do the same thing:
 
-```bash
+```bash norun
 git clone https://github.com/your-username/learning-log.git   # copy a repo to your computer
 git status                                                     # see what changed
 git add .                                                      # stage all changes

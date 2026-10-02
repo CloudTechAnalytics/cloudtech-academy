@@ -3152,6 +3152,131 @@
    }
   }
  },
+ "linux": {
+  "zipBytes": 152612,
+  "files": {
+   "firewall": {
+    "rows": 13,
+    "bytes": 1024,
+    "columns": [
+     {
+      "name": "rule_id",
+      "type": "text",
+      "missing": 0,
+      "distinct": 13
+     },
+     {
+      "name": "group",
+      "type": "text",
+      "missing": 0,
+      "distinct": 4
+     },
+     {
+      "name": "direction",
+      "type": "text",
+      "missing": 0,
+      "distinct": 2
+     },
+     {
+      "name": "protocol",
+      "type": "text",
+      "missing": 0,
+      "distinct": 2
+     },
+     {
+      "name": "port_from",
+      "type": "number",
+      "missing": 0,
+      "distinct": 9,
+      "min": 0,
+      "max": 9100
+     },
+     {
+      "name": "port_to",
+      "type": "number",
+      "missing": 0,
+      "distinct": 9,
+      "min": 22,
+      "max": 65535
+     },
+     {
+      "name": "source",
+      "type": "text",
+      "missing": 0,
+      "distinct": 6
+     },
+     {
+      "name": "description",
+      "type": "text",
+      "missing": 0,
+      "distinct": 12
+     }
+    ],
+    "preview": [
+     [
+      "R01",
+      "web-servers",
+      "inbound",
+      "tcp",
+      "443",
+      "443",
+      "0.0.0.0/0",
+      "HTTPS from anywhere"
+     ],
+     [
+      "R02",
+      "web-servers",
+      "inbound",
+      "tcp",
+      "80",
+      "80",
+      "0.0.0.0/0",
+      "HTTP from anywhere (redirects to HTTPS)"
+     ],
+     [
+      "R03",
+      "web-servers",
+      "inbound",
+      "tcp",
+      "22",
+      "22",
+      "0.0.0.0/0",
+      "SSH - temporary, for the 2025 migration"
+     ],
+     [
+      "R04",
+      "web-servers",
+      "inbound",
+      "tcp",
+      "22",
+      "22",
+      "102.89.34.0/28",
+      "SSH from the office"
+     ],
+     [
+      "R05",
+      "web-servers",
+      "inbound",
+      "tcp",
+      "22",
+      "22",
+      "10.0.2.0/24",
+      "SSH from the deployment network"
+     ],
+     [
+      "R06",
+      "web-servers",
+      "inbound",
+      "tcp",
+      "3000",
+      "3001",
+      "10.0.1.0/24",
+      "App ports from the load balancer"
+     ]
+    ]
+   }
+  }
+ },
  "llmops": {
   "zipBytes": 38165,
   "files": {

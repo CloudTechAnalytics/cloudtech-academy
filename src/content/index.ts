@@ -60,6 +60,8 @@ import { OPS_ASSESSMENT } from "./llmops/assessment";
 import { OPS_PROJECT } from "./llmops/project";
 import { CLD_ASSESSMENT } from "./cloud/assessment";
 import { CLD_PROJECT } from "./cloud/project";
+import { LNX_ASSESSMENT } from "./linux/assessment";
+import { LNX_PROJECT } from "./linux/project";
 import { parseFrontmatter, requiredExerciseIds } from "@/lib/lesson-format";
 
 /** Lesson files live in one folder per course, named NN-slug.md. */
@@ -85,6 +87,7 @@ const COURSE_DIRS: Record<string, string> = {
   agents: "ai-agents-tool-use",
   llmops: "llm-evaluation-safety-production",
   cloud: "cloud-fundamentals-cost-reliability",
+  linux: "linux-networking-basics",
   "ai-productivity": "ai-productivity-fundamentals",
   "design-content": "design-content-essentials",
   career: "career-essentials",
@@ -169,6 +172,7 @@ export const BUNDLED_ASSESSMENTS: AssessmentDef[] = [
   AGT_ASSESSMENT,
   OPS_ASSESSMENT,
   CLD_ASSESSMENT,
+  LNX_ASSESSMENT,
   ...AIPF_ASSESSMENTS,
   ...DCE_ASSESSMENTS,
   ...CAREER_ASSESSMENTS,
@@ -183,6 +187,6 @@ export const BUNDLED_ASSESSMENTS: AssessmentDef[] = [
   ...INTERN_ASSESSMENTS,
   ...FREEL_ASSESSMENTS,
 ].map((a) => ({ ...a, kind: a.kind ?? "final" }));
-export const BUNDLED_PROJECTS: ProjectDef[] = [SQL_PROJECT, DAF_PROJECT, XLS_PROJECT, PBI_PROJECT, DMO_PROJECT, PYAN_PROJECT, STAT_PROJECT, ASQL_PROJECT, DAX_PROJECT, CAP_PROJECT, BA_PROJECT, ABA_PROJECT, PIL_PROJECT, ML_PROJECT, FEM_PROJECT, ABT_PROJECT, TSF_PROJECT, GAI_PROJECT, AGT_PROJECT, OPS_PROJECT, CLD_PROJECT];
+export const BUNDLED_PROJECTS: ProjectDef[] = [SQL_PROJECT, DAF_PROJECT, XLS_PROJECT, PBI_PROJECT, DMO_PROJECT, PYAN_PROJECT, STAT_PROJECT, ASQL_PROJECT, DAX_PROJECT, CAP_PROJECT, BA_PROJECT, ABA_PROJECT, PIL_PROJECT, ML_PROJECT, FEM_PROJECT, ABT_PROJECT, TSF_PROJECT, GAI_PROJECT, AGT_PROJECT, OPS_PROJECT, CLD_PROJECT, LNX_PROJECT];
 
 export { CATEGORIES, categoryName } from "./catalog";

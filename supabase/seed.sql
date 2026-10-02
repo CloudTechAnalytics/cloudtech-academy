@@ -3456,7 +3456,7 @@ To get changes made on GitHub (or by a teammate), click **Fetch origin**, then *
 
 You'll see these commands in tutorials. They do the same thing:
 
-```bash
+```bash norun
 git clone https://github.com/your-username/learning-log.git   # copy a repo to your computer
 git status                                                     # see what changed
 git add .                                                      # stage all changes
@@ -42043,9 +42043,1672 @@ $md$, true, true, 10, array['cld-10-p1', 'cld-10-t1']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 
+-- Course: Linux and Networking Basics
+insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
+values ('linux-networking-basics', 'full', null, 'linux-networking-basics', 'LNX', 'Linux and Networking Basics', 'Learn the Linux command line, permissions, processes, SSH, IP addresses, ports, DNS and HTTP by investigating a real-looking web server: its access log, authentication log and system snapshots, with every command run in Google Colab.', 'Every cloud and DevOps job assumes you can work on a Linux server. In this course you learn by investigating one: Tallybook''s web server, prod-web-01, on the day its app slowed to a crawl. You''ll run real shell commands in Google Colab: read and search logs with grep, cut, sort and uniq; rebuild the outage''s timeline with awk; read file permissions and find secrets anyone could read; spot a process that shouldn''t be running and a disk about to fill; follow an SSH brute-force attack through the authentication log to a successful break-in; audit firewall rules with IP addresses, CIDR blocks and ports; read DNS records and HTTP status codes; and write shell scripts and cron jobs that would have caught every problem. No Linux experience is needed. Every command and output in the lessons is checked by running it.', 'cloud', 'beginner', 1, 'Beginner', 7, true, 'available', true, array['The bash command line', 'Searching logs with grep, cut, sort and uniq', 'Analysing columns with awk', 'File permissions and chmod', 'Processes, memory and disk', 'SSH, keys and the authentication log', 'IP addresses, CIDR blocks, ports and firewall rules', 'DNS records and HTTP status codes', 'Shell scripts, exit codes and cron']::text[], array['None: the course starts from the first command', 'A Google account, for Colab']::text[], 'What happened on prod-web-01', true, true, true, true, false, 60, 33)
+on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level = excluded.level, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('lnx-m01', 'linux-networking-basics', 'The Command Line', 1, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('linux-networking-basics:the-command-line', 'linux-networking-basics', 'lnx-m01', 'the-command-line', 'The command line', 'What the Linux shell is, how to run commands in Google Colab, and the first commands every engineer uses to look at files on a server: downloading, listing, counting and reading the start and end of files.', 10, $md$
+## The problem
+
+On the morning of 31 August 2026, Tallybook's app slowed to a crawl during month-end invoicing. Most of the internet runs on Linux servers, and when something goes wrong on one, there's no friendly dashboard on the server itself: there's a terminal, a shell prompt, and files. Logs, configuration and the state of the machine are all text, read and searched with commands.
+
+In this course you investigate what happened on Tallybook's web server, prod-web-01, using its real-looking logs and command output. Along the way you learn the commands, file permissions, processes, networking, DNS and SSH that every cloud and DevOps engineer relies on, and you'll find more than a slow morning.
+
+## The concept
+
+**The shell**
+
+A program that reads commands you type and runs them. On most Linux servers it's **bash**. A command is a program name followed by **arguments**:
+
+```bash norun
+wc -l access.log
+```
+
+`wc` is the program (word count), `-l` is an **option** (count lines), and `access.log` is the file.
+
+**Running commands in Google Colab**
+
+Colab notebooks run on a Linux machine. Start a cell with `%%bash` and the whole cell runs as shell commands. Files you download stay in the notebook's folder (`/content`) until the session ends. Every shell example in this course is written as a Colab cell, ready to paste.
+
+**First commands**
+
+| Command | What it does |
+| :-- | :-- |
+| `pwd` | print the folder you're in |
+| `ls -l` | list files, with sizes and permissions |
+| `curl -sO URL` | download a file, keeping its name (`-s` silent, `-O` save) |
+| `wc -l file` | count lines |
+| `head -n 5 file` | show the first 5 lines |
+| `tail -n 5 file` | show the last 5 lines |
+| `cat file` | print a whole (small) file |
+
+On a real server, `less file` lets you scroll through big files; `tail -f file` follows a log as new lines arrive.
+
+## Example
+
+Download the server's files into your Colab session:
+
+```bash
+%%bash
+for f in access.log auth.log ps.txt df.txt du.txt ls.txt firewall.csv tallybook.example.zone; do
+  curl -sO https://academy.cloudtechanalytics.com/datasets/linux/$f
+done
+ls
+```
+
+```text
+access.log
+auth.log
+df.txt
+du.txt
+firewall.csv
+ls.txt
+ps.txt
+tallybook.example.zone
+```
+
+How big is each log, in lines?
+
+```bash
+%%bash
+wc -l access.log auth.log
+```
+
+```text
+7141 access.log
+   2618 auth.log
+   9759 total
+```
+
+The access log records every web request the server answered on 31 August (a 1% sample, to keep it small). Each line is one request. Look at the first two:
+
+```bash
+%%bash
+head -n 2 access.log
+```
+
+```text
+10.0.1.5 - - [31/Aug/2026:00:00:02 +0000] "GET /health HTTP/1.1" 200 15 "-" "ELB-HealthChecker/2.0" 0.004
+102.67.233.152 - - [31/Aug/2026:00:02:44 +0000] "GET /api/invoices HTTP/1.1" 200 6118 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/127.0" 0.235
+```
+
+Read the first line from left to right: the client's IP address, the time, the request (`GET /health`), the status code (200 means OK), the size of the response in bytes, the client's software, and, at the end, how long the server took, in seconds. That first request is the load balancer checking the server is alive. Now the end of the authentication log:
+
+```bash
+%%bash
+tail -n 3 auth.log
+```
+
+```text
+Aug 31 23:30:01 prod-web-01 CRON[23547]: (backup) CMD (/tmp/.x/kdevtmpfsi >/dev/null 2>&1)
+Aug 31 23:40:01 prod-web-01 CRON[23548]: (backup) CMD (/tmp/.x/kdevtmpfsi >/dev/null 2>&1)
+Aug 31 23:50:01 prod-web-01 CRON[23549]: (backup) CMD (/tmp/.x/kdevtmpfsi >/dev/null 2>&1)
+```
+
+Those lines say the scheduler, cron, is running a program called `kdevtmpfsi` from a hidden folder in `/tmp`, as the user `backup`, every ten minutes. Hold that thought: lesson 6 finds out how it got there.
+
+## Walkthrough
+
+1. Open a new Colab notebook and run the download cell. Run `ls -l` to see the file sizes.
+2. Use `head` and `tail` on each `.txt` file. What does each one seem to contain?
+3. Run `cat df.txt`. What do you think `97%` next to `/var` means?
+4. Run `tail -n 20 access.log`. What time does the log end?
+
+## Practice
+
+```answer
+{
+  "id": "lnx-01-p1",
+  "prompt": "How many lines are there in **auth.log**?",
+  "answer": 2618,
+  "format": "number",
+  "pyVerify": "sum(1 for _ in open('https://academy.cloudtechanalytics.com/datasets/linux/auth.log', encoding='utf-8'))",
+  "hint": "wc -l auth.log",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "In the command `head -n 5 access.log`, what is `-n 5`?",
+    "options": ["The file name", "An option: show 5 lines", "The program", "A comment"],
+    "answer": 1,
+    "explanation": "Options change how a program behaves."
+  },
+  {
+    "prompt": "How do you run shell commands in a Colab cell?",
+    "options": ["Write them in a markdown cell", "Start the cell with %%bash", "Use Python print()", "You can't"],
+    "answer": 1,
+    "explanation": "%%bash runs the whole cell as shell commands."
+  },
+  {
+    "prompt": "Which command shows the newest lines of a log, where the latest events are?",
+    "options": ["head", "tail", "pwd", "ls"],
+    "answer": 1,
+    "explanation": "Logs grow at the end; tail shows the end."
+  }
+]
+```
+$md$, true, true, 1, array['lnx-01-p1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('lnx-m02', 'linux-networking-basics', 'Finding Things in Text', 2, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('linux-networking-basics:finding-things-in-text', 'linux-networking-basics', 'lnx-m02', 'finding-things-in-text', 'Finding things in text', 'Search logs with grep, combine commands with pipes, and count and rank with cut, sort, uniq and wc, to answer questions about a day of web traffic in one line each.', 15, $md$
+## The problem
+
+The access log has over 7,000 lines. Opening it and reading isn't an option, and on a real server the full log for one day has hundreds of thousands. The questions are simple, though: how many requests failed? Which pages were requested most? Was anyone doing something they shouldn't?
+
+Linux tools are built for exactly this. Each does one small job on text, and you join them together with **pipes**.
+
+## The concept
+
+**grep: find lines**
+
+| Command | Finds |
+| :-- | :-- |
+| `grep "504" access.log` | lines containing 504 |
+| `grep -c "504" access.log` | how many lines contain it |
+| `grep -v "/health" access.log` | lines **not** containing /health |
+| `grep -E "wp-login|phpmyadmin" access.log` | lines matching either (a regular expression) |
+| `grep -i "error" file` | ignoring upper and lower case |
+
+Be precise: `grep 504` also matches a response of 504 bytes. Searching for `" 504 "`, with the spaces, is safer.
+
+**Pipes**
+
+`command1 | command2` sends the output of the first into the second. Small tools chain into an answer.
+
+**Counting and ranking**
+
+| Command | Does |
+| :-- | :-- |
+| `cut -d' ' -f9` | take the 9th space-separated field |
+| `sort` | sort lines (`-n` numerically, `-r` reversed) |
+| `uniq -c` | count repeated adjacent lines (so `sort` first) |
+| `head -n 5` | keep the top 5 |
+| `wc -l` | count lines |
+
+The pattern `... | sort | uniq -c | sort -rn | head` ("count and rank") is one of the most useful lines in all of Linux.
+
+## Example
+
+How many requests got each status code? The status is the 9th field when the line is split on spaces:
+
+```bash
+%%bash
+curl -sO https://academy.cloudtechanalytics.com/datasets/linux/access.log
+cut -d' ' -f9 access.log | sort | uniq -c | sort -rn
+```
+
+```text
+4896 200
+    753 201
+    649 202
+    362 304
+    200 504
+    132 404
+     64 502
+     48 403
+     37 401
+```
+
+Mostly 200 (OK), 201 (created) and 202 (accepted), but also 504 and 502: errors from the server side. Count the 5xx errors exactly:
+
+```bash
+%%bash
+grep -cE '" 50[0-9] ' access.log
+```
+
+```text
+264
+```
+
+Which addresses sent the most requests?
+
+```bash
+%%bash
+cut -d' ' -f1 access.log | sort | uniq -c | sort -rn | head -n 5
+```
+
+```text
+288 10.0.1.5
+    201 52.31.139.75
+    180 185.220.101.47
+    179 52.214.14.220
+    162 52.49.173.169
+```
+
+10.0.1.5 is the load balancer's health check, and the three 52.x addresses are the payments provider sending notifications. 185.220.101.47 is different. Look at what it asked for:
+
+```bash
+%%bash
+grep "^185.220.101.47 " access.log | cut -d' ' -f7 | sort | uniq -c | sort -rn
+```
+
+```text
+40 /wp-login.php
+     31 /.env
+     25 /phpmyadmin/
+     20 /admin
+     17 /.git/config
+     14 /xmlrpc.php
+     12 /config.php
+     10 /backup.zip
+      7 /server-status
+      4 /api/v1/../../etc/passwd
+```
+
+WordPress login pages, the `.env` secrets file, git configuration, backups: none of these exist in Tallybook's app. This is an automated **scanner** trying common mistakes on every server it can find. It got only 403 and 404 responses, but the attempt for `.env` is a reminder of why secrets files must never be in a web folder.
+
+## Walkthrough
+
+1. Run the cells. Count how many requests were for `/health`.
+2. Find the 10 most requested paths, excluding `/health` and the scanner.
+3. Count the 401 responses. Which path returns them?
+4. Write a one-line command for "how many requests did the iOS app make?" (the user agent contains `iOS`).
+
+## Practice
+
+```answer
+{
+  "id": "lnx-02-p1",
+  "prompt": "How many requests got a **5xx** status code?",
+  "answer": 264,
+  "format": "number",
+  "pyVerify": "sum(1 for l in open('https://academy.cloudtechanalytics.com/datasets/linux/access.log', encoding='utf-8') if l.split()[8].startswith('5'))",
+  "hint": "grep -cE '\" 50[0-9] ' access.log",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "lnx-02-p2",
+  "prompt": "How many requests did the scanner (185.220.101.47) send?",
+  "answer": 180,
+  "format": "number",
+  "pyVerify": "sum(1 for l in open('https://academy.cloudtechanalytics.com/datasets/linux/access.log', encoding='utf-8') if l.startswith('185.220.101.47 '))",
+  "hint": "grep -c \"^185.220.101.47 \" access.log",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why does `sort` come before `uniq -c`?",
+    "options": ["It's faster", "uniq only counts identical lines that are next to each other", "uniq needs numbers", "It doesn't matter"],
+    "answer": 1,
+    "explanation": "Sorting puts identical lines together."
+  },
+  {
+    "prompt": "What does the `|` in `cut -f9 access.log | sort` do?",
+    "options": ["Deletes the file", "Sends the output of cut into sort", "Runs both at once on the file", "Saves to a file"],
+    "answer": 1,
+    "explanation": "Pipes join small tools into one answer."
+  },
+  {
+    "prompt": "Why search for `\" 504 \"` rather than `504`?",
+    "options": ["Quotes are required", "504 can also appear in sizes, times or paths; the spaces and quote anchor it to the status field", "It's case-sensitive", "No reason"],
+    "answer": 1,
+    "explanation": "Be precise about what you match."
+  }
+]
+```
+$md$, true, true, 2, array['lnx-02-p1', 'lnx-02-p2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('lnx-m03', 'linux-networking-basics', 'awk for Columns', 3, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('linux-networking-basics:awk-for-columns', 'linux-networking-basics', 'lnx-m03', 'awk-for-columns', 'awk for columns', 'Use awk to filter rows by a column''s value, add up and average columns, and count by time, and rebuild the timeline of the month-end outage from the access log.', 15, $md$
+## The problem
+
+Tallybook's status page said the app was down for 55 minutes on the morning of 31 August. The engineering lead wants to confirm it from the server's own log: when did errors start, when did they stop, how slow were requests during the outage compared with normal, and which parts of the app were hit?
+
+`grep` finds lines; it can't compare numbers or add them up. **awk** can.
+
+## The concept
+
+**awk** reads a file line by line, splits each line into fields (`$1`, `$2`, ... and `$NF` for the last), and runs a small program on each.
+
+| Program | Does |
+| :-- | :-- |
+| `awk '{print $1, $9}' file` | print fields 1 and 9 |
+| `awk '$9 >= 500' file` | print lines where field 9 is at least 500 |
+| `awk '{s += $NF} END {print s/NR}' file` | average of the last field (`NR` is the number of lines) |
+| `awk '$9 >= 500 {n++} END {print n}' file` | count matching lines |
+| `awk '{c[$9]++} END {for (k in c) print k, c[k]}' file` | count by value (pipe to `sort` for a stable order) |
+
+`substr(s, start, length)` takes part of a field. In the access log, `$4` looks like `[31/Aug/2026:09:41:07`, so `substr($4, 14, 5)` is the hour and minute, `09:41`.
+
+## Example
+
+When were the first and last server errors?
+
+```bash
+%%bash
+curl -sO https://academy.cloudtechanalytics.com/datasets/linux/access.log
+awk '$9 >= 500 {print substr($4, 14, 5)}' access.log | sort -u | sed -n '1p;$p'
+```
+
+```text
+09:40
+10:34
+```
+
+(`sort -u` sorts and removes duplicates; `sed -n '1p;$p'` prints the first and last lines.) Errors per 10 minutes through the morning, using the first four characters of the time (`09:4` covers 09:40 to 09:49):
+
+```bash
+%%bash
+awk '$9 >= 500 {print substr($4, 14, 4) "0"}' access.log | sort | uniq -c
+```
+
+```text
+39 09:40
+     58 09:50
+     38 10:00
+     54 10:10
+     45 10:20
+     30 10:30
+```
+
+The errors are confined to 09:40 to 10:34: the log confirms the status page. How slow were requests during that window, compared with the rest of the day? The last field is the response time in seconds:
+
+```bash
+%%bash
+awk '{t = substr($4, 14, 5)
+      if (t >= "09:40" && t < "10:35") {o += $NF; on++} else {n += $NF; nn++}}
+     END {printf "outage: %d requests, average %.2f s\nrest of day: %d requests, average %.2f s\n", on, o/on, nn, n/nn}' access.log
+```
+
+```text
+outage: 558 requests, average 12.90 s
+rest of day: 6583 requests, average 0.23 s
+```
+
+Averages hide a lot here: many requests during the outage waited the full 30 seconds before nginx gave up with a 504 (gateway timeout), while others failed instantly with a 502 (bad gateway). Finally, which parts of the app were hit?
+
+```bash
+%%bash
+awk '$9 >= 500 {print $7}' access.log | sed 's/INV-[0-9]*/INV-.../' | sort | uniq -c | sort -rn
+```
+
+```text
+68 /api/invoices
+     35 /api/invoices/send
+     33 /api/dashboard
+     28 /pay/INV-...
+     28 /api/login
+     27 /api/payments/webhook
+     25 /api/customers
+     17 /
+      3 /health
+```
+
+Every part of the API failed, and so did some of the load balancer's health checks, which is why it marked servers unhealthy. Static files (the JavaScript and stylesheet) don't appear: nginx serves them itself without asking the overloaded app.
+
+## Walkthrough
+
+1. Run the cells. Count 504s and 502s separately during the outage.
+2. Find the slowest 5 requests of the day: `sort -k` on the last field, or `awk '{print $NF, $7}' | sort -rn | head -5`.
+3. Count requests per hour for the whole day. When was traffic highest?
+4. Calculate the share of `POST /api/invoices/send` requests that failed during the outage.
+
+## Practice
+
+```answer
+{
+  "id": "lnx-03-p1",
+  "prompt": "How many requests got a **504** status in the whole log?",
+  "answer": 200,
+  "format": "number",
+  "pyVerify": "sum(1 for l in open('https://academy.cloudtechanalytics.com/datasets/linux/access.log', encoding='utf-8') if l.split()[8] == '504')",
+  "hint": "awk '$9 == 504' access.log | wc -l",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "lnx-03-p2",
+  "prompt": "What was the **average response time**, in seconds, for requests **outside** the outage window? Two decimal places.",
+  "answer": 0.23,
+  "tolerance": 0.006,
+  "format": "number",
+  "pyVerify": "(lambda rows: round(sum(rows) / len(rows), 2))([float(l.split()[-1]) for l in open('https://academy.cloudtechanalytics.com/datasets/linux/access.log', encoding='utf-8') if not ('09:40' <= l.split()[3][13:18] < '10:35')])",
+  "hint": "The rest of day line.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "In awk, what is `$NF`?",
+    "options": ["The first field", "The last field on the line", "The number of lines", "The file name"],
+    "answer": 1,
+    "explanation": "NF is the number of fields, so $NF is the last one."
+  },
+  {
+    "prompt": "What does `awk '$9 >= 500' access.log` print?",
+    "options": ["Lines 500 onwards", "Lines whose 9th field is at least 500", "The first 500 lines", "Field 500"],
+    "answer": 1,
+    "explanation": "A condition with no action prints matching lines."
+  },
+  {
+    "prompt": "Why didn't static files fail during the outage?",
+    "options": ["They're cached by customers", "nginx serves them directly, without the overloaded app", "They weren't requested", "They're on another server"],
+    "answer": 1,
+    "explanation": "Only requests passed to the app timed out or failed."
+  }
+]
+```
+$md$, true, true, 3, array['lnx-03-p1', 'lnx-03-p2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('lnx-m04', 'linux-networking-basics', 'Files and Permissions', 4, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('linux-networking-basics:files-and-permissions', 'linux-networking-basics', 'lnx-m04', 'files-and-permissions', 'Files and permissions', 'Read Linux file permissions (owner, group, others; read, write, execute), translate them to numbers like 644 and 600, and find the files on Tallybook''s server that anyone could read or change.', 25, $md$
+## The problem
+
+The scanner in lesson 2 asked for `.env`, the file where apps keep secrets such as database passwords and API keys. It didn't get it from the web. But anyone who gets **onto** the server (and lesson 6 shows someone did) can read any file the permissions allow.
+
+Here's the listing of Tallybook's app folder, `/srv/tallybook`, taken with `ls -la`. Several lines should worry you.
+
+## The concept
+
+**Reading a permission string**
+
+`-rw-r--r--` is ten characters:
+
+| Position | Meaning |
+| :-- | :-- |
+| 1 | type: `-` file, `d` directory |
+| 2 to 4 | the **owner's** permissions |
+| 5 to 7 | the **group's** permissions |
+| 8 to 10 | **others'**: everyone else on the machine |
+
+`r` read, `w` write, `x` execute (for a directory, `x` means you can enter it).
+
+**Numbers**
+
+Each set of three is a digit: r = 4, w = 2, x = 1, added. `rw-` = 6, `r--` = 4, `rwx` = 7. So `-rw-r--r--` is **644** and `-rw-------` is **600**.
+
+| Typical setting | Use |
+| :-- | :-- |
+| 600 | secrets and private keys: owner only |
+| 640 | config the app's group may read |
+| 644 | ordinary files anyone may read |
+| 755 | programs and folders anyone may run or enter |
+| 777 | **anyone can change it**: almost never right |
+
+**Changing them**
+
+`chmod 600 .env` sets permissions; `chown tallybook:tallybook file` sets the owner and group. On a real server you'd fix things with these; here you'll find what needs fixing.
+
+## Example
+
+```bash
+%%bash
+curl -sO https://academy.cloudtechanalytics.com/datasets/linux/ls.txt
+cat ls.txt
+```
+
+```text
+total 72
+drwxr-xr-x  7 tallybook tallybook  4096 Aug 31 09:12 .
+drwxr-xr-x  3 root      root       4096 Jan 15  2026 ..
+-rw-rw-rw-  1 tallybook tallybook   612 Jul  3 14:20 .env
+-rw-r--r--  1 tallybook tallybook   419 Jan 15  2026 deploy_key
+-rw-r--r--  1 tallybook tallybook   103 Jan 15  2026 deploy_key.pub
+-rw-r-----  1 tallybook tallybook  2210 Aug 12 11:05 config.json
+-rw-r--r--  1 tallybook tallybook  1893 Aug 28 16:40 package.json
+-rw-r--r--  1 tallybook tallybook 48211 Aug 28 16:40 server.js
+drwxr-xr-x 412 tallybook tallybook 16384 Aug 28 16:41 node_modules
+drwxr-xr-x  2 tallybook tallybook  4096 Aug 28 16:40 public
+drwxrwxrwx  9 tallybook tallybook  4096 Aug 31 08:55 uploads
+drwxr-xr-x  2 tallybook tallybook  4096 Aug 31 00:00 logs
+drwxr-xr-x  2 tallybook tallybook  4096 Mar  2  2026 scripts
+-rwxrwxrwx  1 tallybook tallybook   740 Mar  2  2026 backup.sh
+```
+
+Which entries can **others** write to? The 9th character of the permission string is others' `w`:
+
+```bash
+%%bash
+awk 'NR > 1 && substr($1, 9, 1) == "w" {print $1, $NF}' ls.txt
+```
+
+```text
+-rw-rw-rw- .env
+drwxrwxrwx uploads
+-rwxrwxrwx backup.sh
+```
+
+Any user or program on the server can change `.env` (and read it), add or replace files in `uploads`, and edit `backup.sh`, a script that probably runs as a scheduled job. An attacker who edits `backup.sh` gets their code run automatically. Now files that **others** can read, but shouldn't:
+
+```bash
+%%bash
+awk 'NR > 1 && substr($1, 8, 1) == "r" && ($NF == ".env" || $NF == "deploy_key")' ls.txt
+```
+
+```text
+-rw-rw-rw-  1 tallybook tallybook   612 Jul  3 14:20 .env
+-rw-r--r--  1 tallybook tallybook   419 Jan 15  2026 deploy_key
+```
+
+`deploy_key` is a **private** SSH key (the `.pub` file beside it is the public half, which is fine to share). Readable by everyone, it lets anyone on the server log in wherever that key is trusted. Private keys must be 600.
+
+## Walkthrough
+
+1. Run the cells. Write the number (like 644) for every entry in the listing.
+2. Write the `chmod` commands that fix each problem (the task below).
+3. `config.json` is `-rw-r-----` (640). Who can read it?
+4. Why might `uploads` have been made 777 in the first place, and what's a safer way to achieve the same?
+
+## Practice
+
+```answer
+{
+  "id": "lnx-04-p1",
+  "prompt": "What is the **number** for the permission string `-rw-r-----`?",
+  "answer": 640,
+  "format": "number",
+  "hint": "rw- is 6, r-- is 4, --- is 0.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "lnx-04-p2",
+  "prompt": "How many entries in ls.txt can **others** write to?",
+  "answer": 3,
+  "format": "number",
+  "pyVerify": "sum(1 for l in open('https://academy.cloudtechanalytics.com/datasets/linux/ls.txt', encoding='utf-8').read().splitlines()[1:] if l[8] == 'w')",
+  "hint": "The output of the first awk command.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "lnx-04-t1",
+  "prompt": "Write the **commands that fix** the permission problems in `/srv/tallybook`, one per line, with a short comment after `#` on each saying why. Cover `.env`, `deploy_key`, `uploads` and `backup.sh`.",
+  "minutes": 6,
+  "rows": 6,
+  "placeholder": "chmod 600 .env   # ...",
+  "rules": [
+    { "label": ".env set to 600 or 640", "pattern": "chmod\\s+6[04]0\\s+\\.env" },
+    { "label": "deploy_key set to 600", "pattern": "chmod\\s+600\\s+deploy_key\\b" },
+    { "label": "uploads no longer world-writable (750, 755 or 770)", "pattern": "chmod\\s+7[57][05]\\s+uploads" },
+    { "label": "backup.sh no longer world-writable (700, 750 or 755)", "pattern": "chmod\\s+7[05][05]\\s+backup\\.sh" },
+    { "label": "A reason on each line", "pattern": "#\\s*\\S", "min": 4 },
+    { "label": "No 777 or 666", "pattern": "chmod\\s+(777|666)", "absent": true }
+  ],
+  "sample": "chmod 600 .env          # secrets: only the app's user may read or change them\nchmod 600 deploy_key    # a private key must be readable by its owner only\nchmod 750 uploads       # the app writes uploads; its group may read; others get nothing\nchmod 750 backup.sh     # only the owner may edit the script that runs on a schedule",
+  "note": "After fixing permissions, rotate the secrets in .env and replace deploy_key: anyone on the server could have copied them already.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "What does `-rw-------` (600) allow?",
+    "options": ["Everyone to read", "Only the owner to read and write", "Only the group to read", "Nothing"],
+    "answer": 1,
+    "explanation": "The right setting for secrets and private keys."
+  },
+  {
+    "prompt": "Why is a world-writable script that runs on a schedule dangerous?",
+    "options": ["It wastes disk", "Anyone on the server can change it, and their code then runs automatically", "It runs slower", "It can't be backed up"],
+    "answer": 1,
+    "explanation": "Writable plus automatic execution is an open door."
+  },
+  {
+    "prompt": "A private key was readable by everyone for months. After chmod 600, what else must happen?",
+    "options": ["Nothing", "Replace the key, because it may already have been copied", "Rename it", "Make it 644"],
+    "answer": 1,
+    "explanation": "Fixing permissions doesn't undo past exposure."
+  }
+]
+```
+$md$, true, true, 4, array['lnx-04-p1', 'lnx-04-p2', 'lnx-04-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('lnx-m05', 'linux-networking-basics', 'Processes, Memory and Disk', 5, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('linux-networking-basics:processes-memory-and-disk', 'linux-networking-basics', 'lnx-m05', 'processes-memory-and-disk', 'Processes, memory and disk', 'Read process lists to see what a server is busy doing, check disk space with df and du, find what''s filling a disk, and know what to do about a process that shouldn''t be there.', 15, $md$
+## The problem
+
+During the outage, an engineer logged in to prod-web-01 and saved three snapshots: the running processes (`ps aux --sort=-%cpu`), disk space (`df -h`), and the size of each log folder (`du -sh /var/log/*`). Nobody read them carefully at the time; they were too busy restarting things.
+
+Read them now, and you'll find two problems that had nothing to do with month-end traffic.
+
+## The concept
+
+**Processes**
+
+Every running program is a **process** with an ID (PID), an owner, and a share of CPU and memory. `ps aux` lists them all; `top` (or `htop`) shows them live.
+
+| Column | Meaning |
+| :-- | :-- |
+| USER | who it runs as |
+| PID | process ID, used to stop it |
+| %CPU | share of **one** CPU core; on a 4-core server, up to 400% |
+| %MEM | share of memory |
+| COMMAND | the program and its arguments |
+
+`kill PID` asks a process to stop; `kill -9 PID` forces it. Services are usually managed with `systemctl` (`systemctl restart nginx`).
+
+**Disk**
+
+- `df -h` shows each filesystem's size, used and available space, in human units.
+- `du -sh folder/*` shows how big each item in a folder is. `sort -h` sorts human sizes (`48K` < `640M` < `2.9G`).
+
+When a disk fills up, programs can't write logs, databases stop, and uploads fail. Logs that are never **rotated** (compressed and deleted after a while, by `logrotate`) are the classic cause.
+
+## Example
+
+The busiest processes:
+
+```bash
+%%bash
+curl -sO https://academy.cloudtechanalytics.com/datasets/linux/ps.txt
+head -n 6 ps.txt
+```
+
+```text
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+backup     48211 187.4  2.1 2459712 345120 ?     Ssl  Aug30 2981:07 /tmp/.x/kdevtmpfsi
+tallyb+     1187 61.3 14.2 11834512 2329600 ?    Ssl  Aug28 1873:22 node /srv/tallybook/server.js --port 3000
+tallyb+     1188 58.9 13.8 11790336 2263552 ?    Ssl  Aug28 1790:41 node /srv/tallybook/server.js --port 3001
+www-data     902  6.2  0.4 156804 68112 ?        S    Aug28 188:12 nginx: worker process
+www-data     903  5.8  0.4 156804 67904 ?        S    Aug28 176:55 nginx: worker process
+```
+
+The two `node` processes are Tallybook's app, working hard during the outage, as expected. But the top line isn't Tallybook's: a program in a hidden folder in `/tmp`, run by the `backup` user, using 187% CPU, nearly two of the server's four cores, and it's been running since 30 August. `kdevtmpfsi` is the name of a well-known **cryptocurrency miner** that attackers install on servers they break into. On the day traffic doubled, it was taking nearly half the server's processing power.
+
+Total CPU by user:
+
+```bash
+%%bash
+awk 'NR > 1 {cpu[$1] += $3} END {for (u in cpu) printf "%-10s %6.1f\n", u, cpu[u]}' ps.txt | sort -k2 -rn
+```
+
+```text
+backup      187.4
+tallyb+     120.2
+www-data     22.6
+root          1.6
+syslog        0.3
+deploy        0.0
+```
+
+Now the disk:
+
+```bash
+%%bash
+curl -sO https://academy.cloudtechanalytics.com/datasets/linux/df.txt
+curl -sO https://academy.cloudtechanalytics.com/datasets/linux/du.txt
+cat df.txt
+sort -h -r du.txt | head -n 4
+```
+
+```text
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/root        30G   18G   12G  61% /
+tmpfs           7.8G     0  7.8G   0% /dev/shm
+tmpfs           3.1G  1.2M  3.1G   1% /run
+/dev/nvme1n1     50G   48G  1.6G  97% /var
+/dev/nvme0n1p15 105M  6.1M   99M   6% /boot/efi
+36G	/var/log/nginx
+2.9G	/var/log/journal
+1.1G	/var/log/tallybook
+640M	/var/log/node_exporter
+```
+
+`/var` is 97% full with 1.6 GB left, and 36 GB of it is nginx's logs. With traffic doubling at month-end, logs grow faster: a few more days and the disk would be full, nginx would fail to write its logs, and the app could stop. The fix is log rotation, which keeps, say, 14 days compressed and deletes the rest.
+
+## Walkthrough
+
+1. Run the cells. How much memory (`%MEM`) do the two node processes use together?
+2. Which processes run as `root`? Do any look unexpected?
+3. Write the commands you'd run on the real server to stop the miner (`kill`) and to find how it restarts (hint: lesson 1's last lines).
+4. Write a `logrotate` rule in words: what to keep, for how long, compressed or not.
+
+## Practice
+
+```answer
+{
+  "id": "lnx-05-p1",
+  "prompt": "What **%CPU** is the miner process using?",
+  "answer": 187.4,
+  "format": "number",
+  "pyVerify": "float([l.split()[2] for l in open('https://academy.cloudtechanalytics.com/datasets/linux/ps.txt', encoding='utf-8') if 'kdevtmpfsi' in l][0])",
+  "hint": "The first line after the header in ps.txt.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "lnx-05-p2",
+  "prompt": "What **Use%** is the `/var` filesystem at? Give the number.",
+  "answer": 97,
+  "format": "number",
+  "pyVerify": "int([l.split()[4].rstrip('%') for l in open('https://academy.cloudtechanalytics.com/datasets/linux/df.txt', encoding='utf-8') if l.rstrip().endswith('/var')][0])",
+  "hint": "The /var line in df.txt.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "On a 4-core server, a process shows 187% CPU. What does that mean?",
+    "options": ["An error", "It's using nearly two cores' worth of CPU", "It's using 187% of memory", "It's idle"],
+    "answer": 1,
+    "explanation": "%CPU is per core, so it can exceed 100%."
+  },
+  {
+    "prompt": "What usually fills a server's disk without anyone noticing?",
+    "options": ["The operating system", "Logs that are never rotated", "Processes", "DNS"],
+    "answer": 1,
+    "explanation": "Rotate and compress logs, and delete old ones."
+  },
+  {
+    "prompt": "You find a miner running. Is killing the process enough?",
+    "options": ["Yes", "No: find how it got there and how it restarts, remove that, and treat the server as compromised", "Yes, then reboot", "Only if it comes back"],
+    "answer": 1,
+    "explanation": "The process is a symptom; the break-in is the problem."
+  }
+]
+```
+$md$, true, true, 5, array['lnx-05-p1', 'lnx-05-p2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('lnx-m06', 'linux-networking-basics', 'SSH and the Auth Log', 6, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('linux-networking-basics:ssh-and-the-auth-log', 'linux-networking-basics', 'lnx-m06', 'ssh-and-the-auth-log', 'SSH and the auth log', 'How engineers log in to servers with SSH, why keys beat passwords, and how to read the authentication log to find brute-force attacks, a successful break-in and what the intruder did next.', 25, $md$
+## The problem
+
+Lesson 5 found a cryptocurrency miner running as the user `backup`. Nobody at Tallybook logs in as `backup`: it's an old account for a backup script. So how did someone get in as that user?
+
+Every login attempt to a Linux server is recorded in the **authentication log**. Tallybook's has a week of it.
+
+## The concept
+
+**SSH**
+
+Secure Shell: how engineers log in to remote servers (`ssh deploy@server`). Two ways to prove who you are:
+
+| Method | How | Risk |
+| :-- | :-- | :-- |
+| **Password** | type a secret | can be guessed by trying many passwords |
+| **Key pair** | a private key on your laptop matches a public key on the server | practically impossible to guess |
+
+**Brute-force attacks**
+
+Internet-wide bots try common usernames (`root`, `admin`, `ubuntu`) and passwords on every server with SSH open to the world, all day long. With password login allowed, any account with a weak password is eventually found.
+
+**Hardening SSH**
+
+- Allow keys only (`PasswordAuthentication no`).
+- Don't allow `root` to log in (`PermitRootLogin no`).
+- Only allow SSH from known networks (a firewall rule, lesson 7).
+- Use a tool like **fail2ban** to block addresses after repeated failures.
+- Remove accounts that aren't needed.
+
+**The auth log**
+
+Lines like `Failed password for root from 45.155.205.233`, `Accepted publickey for deploy from 10.0.2.15`, plus `sudo` (commands run as root) and `CRON` (scheduled jobs).
+
+## Example
+
+How many failed login attempts, and from where?
+
+```bash
+%%bash
+curl -sO https://academy.cloudtechanalytics.com/datasets/linux/auth.log
+grep -c "Failed password" auth.log
+grep "Failed password" auth.log | awk '{print $(NF-3)}' | sort | uniq -c | sort -rn
+```
+
+```text
+2252
+    900 45.155.205.233
+    600 218.92.0.112
+    400 61.177.172.60
+    352 194.26.29.120
+```
+
+(`$(NF-3)` is the fourth field from the end: the address, in lines ending `from IP port N ssh2`.) Four addresses, over two thousand attempts. Did any get in? List every successful login:
+
+```bash
+%%bash
+grep "Accepted" auth.log | awk '{print $7, "for", $9, "from", $11}' | sort | uniq -c
+```
+
+```text
+1 password for backup from 194.26.29.120
+      3 publickey for ada from 102.89.34.5
+     20 publickey for deploy from 10.0.2.15
+```
+
+The deploy system and Ada log in with keys from known addresses. One login is different: a **password** login for `backup`, from 194.26.29.120, one of the attacking addresses. Look at that address's history:
+
+```bash
+%%bash
+grep "194.26.29.120" auth.log | grep -oE "(Failed|Accepted) password for (invalid user )?[a-z]+" | sed 's/invalid user [a-z]*/an invalid user/' | sort | uniq -c | sort -rn
+grep -E "backup" auth.log | grep -v "Failed password" | head -n 5
+```
+
+```text
+312 Failed password for backup
+     40 Failed password for an invalid user
+      1 Accepted password for backup
+Aug 30 02:14:51 prod-web-01 sshd[23276]: Accepted password for backup from 194.26.29.120 port 50211 ssh2
+Aug 30 02:14:51 prod-web-01 sshd[23276]: pam_unix(sshd:session): session opened for user backup(uid=1003) by (uid=0)
+Aug 30 02:16:03 prod-web-01 sudo:   backup : user NOT in sudoers ; TTY=pts/0 ; PWD=/home/backup ; USER=root ; COMMAND=/bin/bash
+Aug 30 02:21:44 prod-web-01 sshd[23276]: pam_unix(sshd:session): session closed for user backup
+Aug 30 02:30:01 prod-web-01 CRON[23277]: (backup) CMD (/tmp/.x/kdevtmpfsi >/dev/null 2>&1)
+```
+
+The attacker tried common usernames, then focused on `backup` and kept guessing its password until, on 30 August at 02:14, it worked. They tried to become root with `sudo` and were refused (`backup` isn't allowed). So they settled for what `backup` could do: start a miner, and add a **cron job** that restarts it every ten minutes, which is what you saw at the end of the log in lesson 1.
+
+## Walkthrough
+
+1. Run the cells. On which day did the most failed attempts happen?
+2. Count the cron entries for the miner. Since when has it been running?
+3. Which accounts did attackers try that actually exist on the server (`Failed password for root` versus `for invalid user`)?
+4. Write the response plan (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "lnx-06-p1",
+  "prompt": "How many **failed password** attempts are in the log?",
+  "answer": 2252,
+  "format": "number",
+  "pyVerify": "sum(1 for l in open('https://academy.cloudtechanalytics.com/datasets/linux/auth.log', encoding='utf-8') if 'Failed password' in l)",
+  "hint": "The first number printed.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "lnx-06-p2",
+  "prompt": "How many times did the attacker at 194.26.29.120 fail before getting in?",
+  "answer": 352,
+  "format": "number",
+  "pyVerify": "sum(1 for l in open('https://academy.cloudtechanalytics.com/datasets/linux/auth.log', encoding='utf-8') if 'Failed password' in l and '194.26.29.120' in l)",
+  "hint": "The 194.26.29.120 line in the first output.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "lnx-06-t1",
+  "prompt": "Write the **response plan** for the break-in on prod-web-01, one numbered step per line: at least **six** steps covering **containing** it, **removing** the miner and its cron job, **closing** the way in, **checking** what else was touched, **rotating** secrets, and **preventing** it happening again.",
+  "minutes": 10,
+  "rows": 8,
+  "placeholder": "1. Take prod-web-01 out of the load balancer ...",
+  "rules": [
+    { "label": "At least six numbered steps", "pattern": "^\\s*\\d+[.)]\\s+\\S", "min": 6 },
+    { "label": "Containment (isolate, take out, block the IP)", "pattern": "isolat|take[^\\n]*out|load balancer|block[^\\n]*194\\.26|firewall" },
+    { "label": "Removes the miner and the cron job", "pattern": "cron" },
+    { "label": "Closes the way in (disable password login, lock backup)", "pattern": "passwordauthentication|password login|keys only|lock[^\\n]*backup|disable[^\\n]*backup|delete[^\\n]*backup" },
+    { "label": "Checks for other changes", "pattern": "check|review|look for|investigat|audit" },
+    { "label": "Rotates secrets or keys", "pattern": "rotat|replace[^\\n]*(key|secret|password)|new (key|secret|password)" },
+    { "label": "Prevention (SSH only from known networks, fail2ban, rebuild)", "pattern": "fail2ban|known (network|address)|office|rebuild|new server|image" }
+  ],
+  "sample": "1. Take prod-web-01 out of the load balancer and block 194.26.29.120 and the other attacking addresses in the firewall.\n2. Lock the backup account, kill the kdevtmpfsi process, delete /tmp/.x and remove backup's cron job.\n3. Turn off password login for SSH (PasswordAuthentication no) and allow SSH only from the office and deployment networks.\n4. Check for anything else the intruder changed: other cron jobs, new users, authorized_keys files, and files modified since 30 August 02:14.\n5. Rotate every secret the server could read (.env, the deploy key, database passwords), since backup could read the world-readable files.\n6. Rebuild prod-web-01 from a clean image rather than trusting the cleaned one, then put it back in service.\n7. Add fail2ban, an alert on any password login, and an alert on unknown processes using high CPU.",
+  "note": "Step 6 matters most: once someone has run code on a server, you can't be sure you've found everything they changed.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why are SSH keys safer than passwords?",
+    "options": ["They're shorter", "A private key is practically impossible to guess, while passwords can be brute-forced", "Keys never expire", "They're free"],
+    "answer": 1,
+    "explanation": "Brute force only works against guessable secrets."
+  },
+  {
+    "prompt": "The log shows `Accepted password for backup from` an address that failed hundreds of times. What does it mean?",
+    "options": ["A normal login", "A successful brute-force attack", "A failed attack", "A cron job"],
+    "answer": 1,
+    "explanation": "Hundreds of failures then a success is the signature of a guessed password."
+  },
+  {
+    "prompt": "Why rebuild a compromised server instead of cleaning it?",
+    "options": ["It's faster", "You can't be sure you've found every change the intruder made", "Cleaning is illegal", "Rebuilding is free"],
+    "answer": 1,
+    "explanation": "Treat compromised machines as untrustworthy."
+  }
+]
+```
+$md$, true, true, 6, array['lnx-06-p1', 'lnx-06-p2', 'lnx-06-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('lnx-m07', 'linux-networking-basics', 'IP Addresses and Ports', 7, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('linux-networking-basics:ip-addresses-and-ports', 'linux-networking-basics', 'lnx-m07', 'ip-addresses-and-ports', 'IP addresses and ports', 'Understand IP addresses, private and public ranges, CIDR blocks and ports, and audit a set of firewall rules to find which services are open to the whole internet.', 25, $md$
+## The problem
+
+How could bots from all over the world try thousands of passwords on prod-web-01? Because the firewall let them. Somebody opened SSH to "anywhere" during a 2025 migration, labelled it temporary, and nobody closed it.
+
+Firewall rules are short and easy to get wrong. Each one says: allow traffic of this protocol, to these ports, from these addresses. To audit them, you need to read addresses and ports fluently.
+
+## The concept
+
+**IP addresses**
+
+An IPv4 address is four numbers from 0 to 255: `196.43.12.10`. Some ranges are **private**, used only inside networks and not reachable from the internet:
+
+| Private range | CIDR |
+| :-- | :-- |
+| 10.0.0.0 to 10.255.255.255 | 10.0.0.0/8 |
+| 172.16.0.0 to 172.31.255.255 | 172.16.0.0/12 |
+| 192.168.0.0 to 192.168.255.255 | 192.168.0.0/16 |
+
+**CIDR blocks**
+
+`10.0.2.0/24` means "the first 24 bits are fixed": 10.0.2.0 to 10.0.2.255, 256 addresses. `/28` is 16 addresses; `/16` is 65,536. **`0.0.0.0/0` means every address on the internet.**
+
+**Ports and protocols**
+
+A server runs many services; a **port** number says which one. **TCP** is used for most connections; **UDP** for DNS lookups and streaming.
+
+| Port | Service |
+| :-- | :-- |
+| 22 | SSH |
+| 80, 443 | HTTP, HTTPS |
+| 5432 | PostgreSQL |
+| 6379 | Redis |
+| 3000, 8080 | common app and admin ports |
+| 53 | DNS |
+
+**The rule of thumb**
+
+Only the public website (80 and 443) should be open to `0.0.0.0/0`. Everything else should come from known networks: the office, the VPN, other servers.
+
+## Example
+
+The firewall rules, in a CSV. Python's `ipaddress` module understands CIDR blocks:
+
+```python
+import ipaddress
+import pandas as pd
+
+rules = pd.read_csv("https://academy.cloudtechanalytics.com/datasets/linux/firewall.csv")
+inbound = rules[rules["direction"] == "inbound"].copy()
+inbound["network"] = inbound["source"].map(ipaddress.ip_network)
+inbound["addresses"] = inbound["network"].map(lambda n: n.num_addresses)
+inbound["private"] = inbound["network"].map(lambda n: n.is_private)
+inbound[["rule_id", "group", "port_from", "port_to", "source", "addresses", "private", "description"]]
+```
+
+```text
+rule_id        group  port_from  port_to          source   addresses  private                              description
+0      R01  web-servers        443      443       0.0.0.0/0  4294967296    False                      HTTPS from anywhere
+1      R02  web-servers         80       80       0.0.0.0/0  4294967296    False  HTTP from anywhere (redirects to HTTPS)
+2      R03  web-servers         22       22       0.0.0.0/0  4294967296    False  SSH - temporary, for the 2025 migration
+3      R04  web-servers         22       22  102.89.34.0/28          16    False                      SSH from the office
+4      R05  web-servers         22       22     10.0.2.0/24         256     True          SSH from the deployment network
+5      R06  web-servers       3000     3001     10.0.1.0/24         256     True         App ports from the load balancer
+6      R07  web-servers       9100     9100     10.0.3.0/24         256     True                               Monitoring
+7      R08  admin-panel       8080     8080       0.0.0.0/0  4294967296    False                              Admin panel
+8      R09     database       5432     5432     10.0.0.0/16       65536     True         Postgres from inside the network
+9      R10     database       5432     5432       0.0.0.0/0  4294967296    False        Postgres - for the reporting tool
+10     R11     database         22       22  102.89.34.0/28          16    False                      SSH from the office
+12     R13        cache       6379     6379     10.0.0.0/16       65536     True            Redis from inside the network
+```
+
+Now the audit: inbound rules open to the whole internet on anything other than web ports.
+
+```python
+WEB_PORTS = {80, 443}
+open_to_all = inbound[(inbound["source"] == "0.0.0.0/0") & ~inbound["port_from"].isin(WEB_PORTS)]
+print(open_to_all[["rule_id", "group", "port_from", "description"]].to_string(index=False))
+```
+
+```text
+rule_id       group  port_from                             description
+    R03 web-servers         22 SSH - temporary, for the 2025 migration
+    R08 admin-panel       8080                             Admin panel
+    R10    database       5432       Postgres - for the reporting tool
+```
+
+Three problems:
+
+- **R03**, SSH from anywhere: how the brute-force attacks in lesson 6 reached the server. The office (R04) and deployment network (R05) rules already cover legitimate use.
+- **R08**, the admin panel open to the world: anyone can try to log in to it.
+- **R10**, the database open to the world "for the reporting tool": the database's login page is now facing every bot on the internet. The reporting tool should connect from a known address or through the private network.
+
+Is the office address really inside its rule? Check an address against a block:
+
+```python
+office = ipaddress.ip_network("102.89.34.0/28")
+for ip in ["102.89.34.5", "102.89.34.20", "194.26.29.120"]:
+    print(ip, ipaddress.ip_address(ip) in office)
+```
+
+```text
+102.89.34.5 True
+102.89.34.20 False
+194.26.29.120 False
+```
+
+## Walkthrough
+
+1. Run the cells. How many addresses does each private source block contain?
+2. Which rule allows the load balancer (10.0.1.5) to reach the app? Check with `ipaddress`.
+3. R12 allows all outbound traffic. How did that help the intruder? (Hint: a miner needs to send its results somewhere.)
+4. Write the corrected rules (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "lnx-07-p1",
+  "prompt": "How many **inbound** rules are open to `0.0.0.0/0` on ports **other than** 80 and 443?",
+  "answer": 3,
+  "format": "number",
+  "pyVerify": "len(open_to_all)",
+  "hint": "Count the rows of the second output.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "lnx-07-p2",
+  "prompt": "How many addresses does a **/28** block contain?",
+  "answer": 16,
+  "format": "number",
+  "pyVerify": "ipaddress.ip_network('102.89.34.0/28').num_addresses",
+  "hint": "2 to the power of (32 − 28).",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "lnx-07-t1",
+  "prompt": "Write the **firewall changes**, one per line starting with the rule ID: what to do with **R03**, **R08**, **R10** and **R12**, each with the new source (or removal) and why.",
+  "minutes": 6,
+  "rows": 6,
+  "placeholder": "R03: delete ...",
+  "rules": [
+    { "label": "Lines for R03, R08, R10 and R12", "pattern": "^\\s*[-*]?\\s*R(03|08|10|12)\\b", "min": 4 },
+    { "label": "R03 removed (SSH already allowed from the office and deployment network)", "pattern": "R03[^\\n]*(delete|remove)" },
+    { "label": "R08 restricted to a known network (office, VPN, a CIDR)", "pattern": "R08[^\\n]*(office|vpn|\\d+\\.\\d+\\.\\d+\\.\\d+/\\d+|delete|remove)" },
+    { "label": "R10 restricted (private network, a known address)", "pattern": "R10[^\\n]*(10\\.0\\.|private|\\d+\\.\\d+\\.\\d+\\.\\d+/32|delete|remove)" },
+    { "label": "R12 limited (only needed destinations or ports)", "pattern": "R12[^\\n]*(only|limit|restrict|443|53)" },
+    { "label": "No new 0.0.0.0/0 rule for SSH, admin or database", "pattern": "(22|8080|5432)[^\\n]*0\\.0\\.0\\.0/0", "absent": true }
+  ],
+  "sample": "R03: delete it; SSH is already allowed from the office (R04) and the deployment network (R05).\nR08: change the source to the office block 102.89.34.0/28, or put the admin panel behind the VPN.\nR10: delete it; give the reporting tool a fixed address and allow only that /32, or connect it through the private network.\nR12: allow outbound only to the ports the app needs (443 for APIs and updates, 53 for DNS), so malware can't freely connect out.",
+  "note": "Writing the reason next to each change matters: R03's 'temporary' description shows how a rule without an owner or end date outlives its purpose.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "What does `0.0.0.0/0` mean as a firewall source?",
+    "options": ["No addresses", "Every address on the internet", "The local machine", "A private network"],
+    "answer": 1,
+    "explanation": "Only public web ports should be open to it."
+  },
+  {
+    "prompt": "Which of these is a private address?",
+    "options": ["196.43.12.10", "10.0.2.15", "41.58.20.7", "185.220.101.47"],
+    "answer": 1,
+    "explanation": "10.0.0.0/8 is private."
+  },
+  {
+    "prompt": "Which port does PostgreSQL use by default?",
+    "options": ["22", "443", "5432", "53"],
+    "answer": 2,
+    "explanation": "And it should never be open to the internet."
+  }
+]
+```
+$md$, true, true, 7, array['lnx-07-p1', 'lnx-07-p2', 'lnx-07-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('lnx-m08', 'linux-networking-basics', 'DNS and HTTP', 8, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('linux-networking-basics:dns-and-http', 'linux-networking-basics', 'lnx-m08', 'dns-and-http', 'DNS and HTTP', 'How a name like app.tallybook.example becomes an address (DNS records, TTLs and common mistakes), and how HTTP requests, methods and status codes work, read from a real zone file and access log.', 25, $md$
+## The problem
+
+When a customer opens `app.tallybook.example`, two things happen before any Tallybook code runs: their phone asks **DNS** for the server's address, then sends an **HTTP** request to it. Both are configured in plain text files, and both are behind a large share of real outages: a wrong DNS record, a forgotten one, or a misunderstanding of what an HTTP status code means.
+
+Tallybook's DNS zone is in `tallybook.example.zone`. Reading it carefully turns up a risk nobody had noticed.
+
+## The concept
+
+**DNS records**
+
+| Type | Maps | Example |
+| :-- | :-- | :-- |
+| **A** | a name to an IPv4 address | `app` → 196.43.12.10 |
+| **CNAME** | a name to another name | `www` → tallybook.example. |
+| **MX** | the domain to its mail servers, with a priority | `10 mx1.mailhost.example.` |
+| **TXT** | text, used for email security (SPF, DMARC) and verification | `"v=spf1 ..."` |
+| **NS** | the servers that answer for the domain | `ns1.dnshost.example.` |
+
+**TTL** (time to live) says how long others may cache an answer, in seconds. Before moving a service, lower the TTL a day ahead so the change spreads quickly.
+
+**Dangling records**
+
+A CNAME pointing to a cloud resource that has been deleted is **dangling**. If an attacker can create a resource with that name on the same cloud service, they control your subdomain. Remove records when you remove what they point to.
+
+**HTTP**
+
+A request has a **method** (GET reads, POST creates or sends, PUT and PATCH update, DELETE removes), a path, and headers. The response has a **status code**:
+
+| Class | Meaning | Examples |
+| :-- | :-- | :-- |
+| 2xx | success | 200 OK, 201 Created, 202 Accepted |
+| 3xx | go elsewhere, or use your cached copy | 301 Moved, 304 Not Modified |
+| 4xx | **the client's** mistake | 401 not logged in, 403 forbidden, 404 not found |
+| 5xx | **the server's** failure | 502 bad gateway, 504 gateway timeout |
+
+## Example
+
+The zone file, without its first two lines (the default TTL and the SOA record):
+
+```bash
+%%bash
+curl -sO https://academy.cloudtechanalytics.com/datasets/linux/tallybook.example.zone
+tail -n +3 tallybook.example.zone
+```
+
+```text
+@        IN NS    ns1.dnshost.example.
+@        IN NS    ns2.dnshost.example.
+@        IN A     196.43.12.10
+www      IN CNAME tallybook.example.
+app      IN A     196.43.12.10
+api      IN A     196.43.12.10
+pay      IN CNAME app.tallybook.example.
+status   IN CNAME tallybook.statuspage.example.
+staging  IN CNAME staging-lb-2025.cloudhost.example.
+@        IN MX    10 mx1.mailhost.example.
+@        IN MX    20 mx2.mailhost.example.
+@        IN TXT   "v=spf1 include:mailhost.example ~all"
+_dmarc   IN TXT   "v=DMARC1; p=none; rua=mailto:dmarc@tallybook.example"
+```
+
+Count records by type:
+
+```bash
+%%bash
+awk 'NR > 1 {print $3}' tallybook.example.zone | sort | uniq -c | sort -rn
+```
+
+```text
+4 CNAME
+      3 A
+      2 TXT
+      2 NS
+      2 MX
+      1 SOA
+```
+
+Two findings. `staging` is a CNAME to `staging-lb-2025.cloudhost.example`, a load balancer name from 2025; Tallybook's current staging load balancer is `staging-lb` (lesson 1 of the cloud course lists it). If the old one was deleted, this is a dangling record. And the DMARC record says `p=none`: emails pretending to come from tallybook.example are reported but not rejected, which matters for a company whose emails ask customers to pay invoices.
+
+Now HTTP, from the access log: requests by status class and method.
+
+```bash
+%%bash
+curl -sO https://academy.cloudtechanalytics.com/datasets/linux/access.log
+awk '{print substr($9, 1, 1) "xx", substr($6, 2)}' access.log | sort | uniq -c | sort -k2,2 -k1,1nr
+```
+
+```text
+4026 2xx GET
+   2272 2xx POST
+    362 3xx GET
+    180 4xx GET
+     37 4xx POST
+    146 5xx GET
+    118 5xx POST
+```
+
+(`substr($6, 2)` drops the quote before the method.) The 4xx responses are the scanner and failed logins: the clients' problem. The 5xx responses are all from the outage: Tallybook's problem. A live check of any website's headers looks like this (it needs the internet, so it isn't run here):
+
+```bash norun
+%%bash
+curl -sI https://academy.cloudtechanalytics.com/
+```
+
+## Walkthrough
+
+1. Run the cells. Which names point to the same address as the bare domain?
+2. What would happen to `pay.tallybook.example` if the `app` record changed?
+3. If you have internet access in Colab, run the `curl -sI` cell and identify the status code and two headers.
+4. Write the DNS fixes (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "lnx-08-p1",
+  "prompt": "How many **CNAME** records are in the zone file?",
+  "answer": 4,
+  "format": "number",
+  "pyVerify": "sum(1 for l in open('https://academy.cloudtechanalytics.com/datasets/linux/tallybook.example.zone', encoding='utf-8') if len(l.split()) > 2 and l.split()[2] == 'CNAME')",
+  "hint": "The CNAME count in the second output.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "lnx-08-p2",
+  "prompt": "How many requests in the access log got a **4xx** status?",
+  "answer": 217,
+  "format": "number",
+  "pyVerify": "sum(1 for l in open('https://academy.cloudtechanalytics.com/datasets/linux/access.log', encoding='utf-8') if l.split()[8].startswith('4'))",
+  "hint": "Add up the 4xx lines in the last output.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "lnx-08-t1",
+  "prompt": "Write the **DNS fixes** for tallybook.example, one per line starting with a dash: the **staging** record, the **DMARC** policy, and a **process** that stops dangling records happening again.",
+  "minutes": 5,
+  "rows": 4,
+  "placeholder": "- staging: ...",
+  "rules": [
+    { "label": "At least three lines, each starting with -", "pattern": "^\\s*-\\s+\\S", "min": 3 },
+    { "label": "Fixes staging (point to the current load balancer, or remove)", "pattern": "staging[^\\n]*(staging-lb\\b|current|remove|delete)" },
+    { "label": "Strengthens DMARC (quarantine or reject)", "pattern": "quarantine|reject" },
+    { "label": "A process (when deleting, review, check)", "pattern": "when[^\\n]*(delet|remov)|review|audit|check" }
+  ],
+  "sample": "- staging: change the CNAME to the current staging load balancer, staging-lb, or remove it if staging shouldn't be public.\n- DMARC: after checking the reports show only legitimate senders, move to p=quarantine, then p=reject, so forged invoice emails are blocked.\n- Process: whenever a cloud resource is deleted, remove any DNS record that points to it in the same change, and review the zone file every quarter for records pointing to resources that no longer exist.",
+  "note": "Moving DMARC straight to reject can block your own legitimate emails; the reports tell you when it's safe.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "A 504 Gateway Timeout means what?",
+    "options": ["The client sent a bad request", "A server in the chain waited too long for the next one to answer", "The page moved", "The user isn't logged in"],
+    "answer": 1,
+    "explanation": "5xx codes are the server side's failures."
+  },
+  {
+    "prompt": "Why lower a DNS record's TTL before moving a service?",
+    "options": ["It's cheaper", "So caches expire quickly and the new address is picked up fast", "To hide the change", "TTL doesn't matter"],
+    "answer": 1,
+    "explanation": "High TTLs keep old answers cached for hours."
+  },
+  {
+    "prompt": "What is a dangling DNS record?",
+    "options": ["A record with a long TTL", "A record pointing to a resource that no longer exists, which someone else might claim", "An MX record", "A typo"],
+    "answer": 1,
+    "explanation": "Remove records when you remove what they point to."
+  }
+]
+```
+$md$, true, true, 8, array['lnx-08-p1', 'lnx-08-p2', 'lnx-08-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('lnx-m09', 'linux-networking-basics', 'Shell Scripts and Cron', 9, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('linux-networking-basics:shell-scripts-and-cron', 'linux-networking-basics', 'lnx-m09', 'shell-scripts-and-cron', 'Shell scripts and cron', 'Turn commands into a reusable script with variables, conditions and exit codes, run it on a schedule with cron, and build a small health check that would have raised the alarm on 31 August.', 25, $md$
+## The problem
+
+Every check in this course so far was typed by hand, after the fact. The month-end outage, the full disk and the miner all left clear traces that a few lines of shell could have spotted automatically, minutes after they started.
+
+Engineers automate checks like these with **shell scripts**, run on a schedule by **cron** (or by a monitoring system that calls the same kind of check). The attacker in lesson 6 used exactly the same tool to keep their miner running.
+
+## The concept
+
+**A script** is a file of commands. The first line, `#!/bin/bash`, says which program runs it. Make it executable with `chmod +x script.sh` and run it with `./script.sh`.
+
+**Building blocks**
+
+| Feature | Example |
+| :-- | :-- |
+| Variables | `LOG=access.log` then `"$LOG"` |
+| Arguments | `$1` is the first argument passed to the script |
+| Command output | `ERRORS=$(grep -c ' 504 ' "$LOG")` |
+| Conditions | `if [ "$ERRORS" -gt 10 ]; then ... fi` (`-gt` greater than, `-lt` less than) |
+| Exit codes | `exit 0` means OK, anything else means a problem; monitoring tools rely on them |
+
+**cron**
+
+A cron line has five time fields then the command:
+
+```text nocheck
+# minute hour day-of-month month day-of-week  command
+*/5 * * * *  /srv/scripts/health_check.sh /var/log/nginx/access.log
+0 3 * * *    /usr/sbin/logrotate /etc/logrotate.conf
+```
+
+The first runs every 5 minutes; the second at 03:00 every day. `crontab -l` lists a user's jobs, and reviewing them is part of every security check (lesson 6's intruder added one).
+
+## Example
+
+A health check: given a log and a time window, count server errors and slow requests, and exit with a warning code if either crosses a threshold. The `cat > ... <<'EOF'` line writes everything up to `EOF` into the file.
+
+```bash
+%%bash
+cat > health_check.sh <<'EOF'
+#!/bin/bash
+# Usage: health_check.sh LOGFILE FROM TO   (times as HH:MM)
+LOG="$1"; FROM="$2"; TO="$3"
+MAX_ERRORS=5
+MAX_SLOW=10
+
+read TOTAL ERRORS SLOW <<< "$(awk -v from="$FROM" -v to="$TO" '
+  { t = substr($4, 14, 5) }
+  t >= from && t < to { n++; if ($9 >= 500) e++; if ($NF > 2) s++ }
+  END { print n + 0, e + 0, s + 0 }' "$LOG")"
+
+echo "$FROM-$TO: $TOTAL requests, $ERRORS server errors, $SLOW slower than 2 s"
+if [ "$ERRORS" -gt "$MAX_ERRORS" ] || [ "$SLOW" -gt "$MAX_SLOW" ]; then
+  echo "ALERT: thresholds exceeded"
+  exit 1
+fi
+echo "OK"
+EOF
+chmod +x health_check.sh
+ls -l health_check.sh | cut -d' ' -f1
+```
+
+```text
+-rwxr-xr-x
+```
+
+Run it on three 5-minute windows: before the outage, the start of it, and after.
+
+```bash
+%%bash
+curl -sO https://academy.cloudtechanalytics.com/datasets/linux/access.log
+for window in "09:30 09:35" "09:40 09:45" "10:40 10:45"; do
+  ./health_check.sh access.log $window
+  echo "exit code: $?"
+done
+```
+
+```text
+09:30-09:35: 44 requests, 0 server errors, 0 slower than 2 s
+OK
+exit code: 0
+09:40-09:45: 37 requests, 17 server errors, 26 slower than 2 s
+ALERT: thresholds exceeded
+exit code: 1
+10:40-10:45: 47 requests, 0 server errors, 0 slower than 2 s
+OK
+exit code: 0
+```
+
+Run every five minutes by cron, this script would have alerted in the first window of the outage, at 09:45, and its exit code could page the on-call engineer automatically. Lesson 6's intruder used the same scheduler to restart their miner: listing all users' cron jobs is how you'd find theirs.
+
+## Walkthrough
+
+1. Run the cells. Change `MAX_ERRORS` to 20. Does the alert still fire at 09:40?
+2. Add a disk check to the script: read the `/var` line of `df.txt` and alert above 90%.
+3. Write the cron line that runs your script every 5 minutes, and one that runs it at 07:00 on the last day of each month only (hint: cron can't say "last day" directly; what could you do instead?).
+4. Write a second script that lists processes using more than 50% CPU from `ps.txt`, not run by `tallyb+`, `www-data` or `root`.
+
+## Practice
+
+```answer
+{
+  "id": "lnx-09-p1",
+  "prompt": "How many **server errors** does the script report for the window **09:40 to 09:45**?",
+  "answer": 17,
+  "format": "number",
+  "pyVerify": "sum(1 for l in open('https://academy.cloudtechanalytics.com/datasets/linux/access.log', encoding='utf-8') if '09:40' <= l.split()[3][13:18] < '09:45' and int(l.split()[8]) >= 500)",
+  "hint": "The middle line of output.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "lnx-09-t1",
+  "prompt": "Write a short script **check_miner.sh** that reads `ps.txt`, prints any process using **more than 50% CPU** whose user is **not** `tallyb+`, `www-data` or `root`, and **exits with 1** if it finds one (0 otherwise).",
+  "minutes": 8,
+  "rows": 10,
+  "placeholder": "#!/bin/bash\n...",
+  "rules": [
+    { "label": "Starts with #!/bin/bash", "pattern": "^#!/bin/(ba)?sh" },
+    { "label": "Reads ps.txt", "pattern": "ps\\.txt" },
+    { "label": "Compares CPU with 50", "pattern": "\\$3\\s*>\\s*50|-gt 50" },
+    { "label": "Excludes the expected users", "pattern": "tallyb\\+?[\\s\\S]*www-data|www-data[\\s\\S]*tallyb" },
+    { "label": "Exits with 1 when found and 0 otherwise", "pattern": "exit 1[\\s\\S]*exit 0|exit 0[\\s\\S]*exit 1" }
+  ],
+  "sample": "#!/bin/bash\n# Prints unexpected processes using more than 50% CPU.\nFOUND=$(awk 'NR > 1 && $3 > 50 && $1 != \"tallyb+\" && $1 != \"www-data\" && $1 != \"root\"' ps.txt)\nif [ -n \"$FOUND\" ]; then\n  echo \"Unexpected busy processes:\"\n  echo \"$FOUND\"\n  exit 1\nfi\nexit 0",
+  "note": "On a real server, the script would run `ps aux` instead of reading a saved file, and cron would run it every few minutes.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "What does `*/5 * * * *` mean in a crontab?",
+    "options": ["Every 5 hours", "Every 5 minutes", "At 5am", "On the 5th of the month"],
+    "answer": 1,
+    "explanation": "The first field is minutes."
+  },
+  {
+    "prompt": "Why should a check script exit with a non-zero code when something is wrong?",
+    "options": ["It's faster", "Schedulers and monitoring tools use the exit code to decide whether to alert", "It deletes the log", "Bash requires it"],
+    "answer": 1,
+    "explanation": "Exit codes are how scripts report success or failure."
+  },
+  {
+    "prompt": "Why review every user's cron jobs during a security check?",
+    "options": ["They use disk", "Attackers often add cron jobs to keep their programs running", "Cron is insecure", "To save CPU"],
+    "answer": 1,
+    "explanation": "Persistence through cron is common, as in lesson 6."
+  }
+]
+```
+$md$, true, true, 9, array['lnx-09-p1', 'lnx-09-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('lnx-m10', 'linux-networking-basics', 'Final Project', 10, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('linux-networking-basics:final-project', 'linux-networking-basics', 'lnx-m10', 'final-project', '"Final project: what happened on prod-web-01"', 'Plan your final project, a full investigation of Tallybook''s web server from its logs and command output, with a timeline, findings, fixes and the scripts that would have caught each problem.', 20, $md$
+## The problem
+
+Tallybook's CTO has asked for a written investigation of prod-web-01, the server you've been examining. Investors and an enterprise customer will read the summary. It must say what happened, when, how you know, how serious it is, and what has been and will be done, with every claim backed by a command and its output.
+
+## The concept
+
+**An investigation report**
+
+| Section | Contents | From |
+| :-- | :-- | :-- |
+| **Timeline** | every event with its time, from the first attack to the outage's end | auth.log, access.log |
+| **Findings** | the outage, the break-in, the miner, the disk, permissions, firewall, DNS | lessons 3 to 8 |
+| **Evidence** | the command and output behind each finding | every lesson |
+| **Severity** | how serious each finding is, and why | your judgement |
+| **Fixes** | done now, and to do, with owners | lessons 4 to 8 |
+| **Detection** | the check that would have caught each problem | lesson 9 |
+
+**Separate facts from conclusions**
+
+"The log shows a password login for `backup` from 194.26.29.120 at 02:14:51 on 30 August" is a fact. "The attacker installed the miner" is a conclusion, supported by the facts that the miner runs as `backup` and started after that login. Good reports make the difference clear.
+
+## Example
+
+The start of the timeline, built with one command from both logs. Each `awk` prints a sortable timestamp and a short description:
+
+```bash
+%%bash
+curl -sO https://academy.cloudtechanalytics.com/datasets/linux/auth.log
+curl -sO https://academy.cloudtechanalytics.com/datasets/linux/access.log
+{
+  grep "Failed password" auth.log | awk '!seen[$(NF-3)]++ {print "08-" $2, substr($3, 1, 5), "first ssh failure from", $(NF-3)}'
+  grep -E "Accepted password|NOT in sudoers" auth.log | awk '{print "08-" $2, substr($3, 1, 5), $6, $7, $8, $9, $10, $11}'
+  grep "kdevtmpfsi" auth.log | head -n 1 | awk '{print "08-" $2, substr($3, 1, 5), "first cron run of the miner"}'
+  awk '$9 >= 500 {print "08-31", substr($4, 14, 5), "first server error of the outage"; exit}' access.log
+} | sort
+```
+
+```text
+08-26 01:00 first ssh failure from 45.155.205.233
+08-27 14:00 first ssh failure from 218.92.0.112
+08-29 23:30 first ssh failure from 194.26.29.120
+08-30 02:14 Accepted password for backup from 194.26.29.120
+08-30 02:16 backup : user NOT in sudoers
+08-30 02:30 first cron run of the miner
+08-31 04:00 first ssh failure from 61.177.172.60
+08-31 09:40 first server error of the outage
+```
+
+Each line is a fact with a time. Add the outage's end, the snapshot times and your conclusions, and the timeline tells the whole story.
+
+## Walkthrough
+
+1. Complete the timeline with the outage's last error and the ps and df snapshots.
+2. Write each finding with its evidence (command and output) and severity.
+3. Write the list of fixes with owners, and the detection script for each problem.
+4. Open the project brief on the course page and plan the write-up.
+
+## Practice
+
+```answer
+{
+  "id": "lnx-10-p1",
+  "prompt": "How many **minutes** passed between the successful break-in (02:14 on 30 August) and the first cron run of the miner (02:30)?",
+  "answer": 16,
+  "format": "number",
+  "pyVerify": "(lambda lines: (lambda a, c: (int(c[:2]) * 60 + int(c[3:5])) - (int(a[:2]) * 60 + int(a[3:5])))([l.split()[2] for l in lines if 'Accepted password' in l][0], [l.split()[2] for l in lines if 'kdevtmpfsi' in l][0]))(open('https://academy.cloudtechanalytics.com/datasets/linux/auth.log', encoding='utf-8').read().splitlines())",
+  "hint": "Compare the two times in the timeline.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "lnx-10-t1",
+  "prompt": "Write the **executive summary** of your investigation (100 to 200 words): **what happened** (the outage and the break-in), **when**, **how serious** it is, what has been **fixed**, what is **still to do**, and how such problems will be **detected** in future. Keep facts and conclusions distinct.",
+  "minutes": 10,
+  "rows": 9,
+  "placeholder": "On 31 August 2026, ...",
+  "rules": [
+    { "label": "Mentions the outage with times", "pattern": "09:40|10:3[45]|outage" },
+    { "label": "Mentions the break-in and the miner", "pattern": "(break-in|broke in|intru|compromis|attacker)[\\s\\S]*(miner|mining|kdevtmpfsi)|(miner|mining|kdevtmpfsi)[\\s\\S]*(break-in|broke in|intru|compromis|attacker)" },
+    { "label": "Gives dates", "pattern": "30 august|31 august|august 30|august 31|30 aug|31 aug" },
+    { "label": "Severity", "pattern": "serious|severity|high|critical" },
+    { "label": "Fixed and still to do", "pattern": "(fixed|done|have|completed)[\\s\\S]*(still|next|will|remaining|to do)" },
+    { "label": "Detection in future", "pattern": "detect|alert|monitor|check" },
+    { "label": "Between 100 and 200 words", "minWords": 100, "maxWords": 200 }
+  ],
+  "sample": "On 31 August 2026, Tallybook's app returned errors from 09:40 to 10:34 as month-end traffic overloaded the web servers. Investigating prod-web-01, we found a second, more serious problem. Its log shows over 2,000 failed SSH password attempts from four internet addresses that week, then, at 02:14 on 30 August, a successful password login for an old account called backup. We conclude that an attacker guessed that password: from 02:30 a scheduled job ran a cryptocurrency miner as backup, using nearly half the server's CPU during the outage. We found no evidence they gained administrator access; their attempt was refused. We rate this high severity because the server's secrets were readable by any user. We have isolated the server, removed the account and miner, closed SSH to the internet and rotated every secret; the server will be rebuilt from a clean image this week, and log rotation will be added before /var fills. From now on, automated checks will alert on password logins, unknown busy processes, server errors and disk space within five minutes.",
+  "note": "'We conclude' and 'we found no evidence' mark where the summary moves from what the logs show to what you infer.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Which is a fact rather than a conclusion?",
+    "options": ["The attacker wanted money", "auth.log shows a password login for backup from 194.26.29.120 at 02:14:51 on 30 August", "The attacker was a professional", "The miner caused the outage"],
+    "answer": 1,
+    "explanation": "Facts come straight from the evidence."
+  },
+  {
+    "prompt": "Why include the command behind each finding?",
+    "options": ["To fill space", "So anyone can rerun it and check the finding", "Commands are required by law", "To show off"],
+    "answer": 1,
+    "explanation": "Reproducible evidence is trustworthy evidence."
+  },
+  {
+    "prompt": "What should a good investigation end with?",
+    "options": ["Blame", "Fixes with owners, and checks that would detect the same problems sooner", "A list of tools", "Nothing"],
+    "answer": 1,
+    "explanation": "Turn the incident into lasting improvements."
+  }
+]
+```
+$md$, true, true, 10, array['lnx-10-p1', 'lnx-10-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+
 -- Course: Data Analyst Capstone: End-to-End BI Project
 insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
-values ('data-analyst-capstone', 'full', null, 'data-analyst-capstone', 'CAP', 'Data Analyst Capstone: End-to-End BI Project', 'Take a retail chain''s raw till export all the way to a reviewed dashboard and a board-ready executive summary, using the tools of your choice.', 'The capstone of the Data Analyst track. Voltline Electronics, a chain of eight stores, sends you 18 months of raw till data and one question from its chief executive: what''s really driving our 37% growth? You''ll plan the analysis, profile and clean a genuinely messy export (a duplicated upload, mixed date formats, inconsistent store names and test transactions), build a model that looks up costs by date and compares sales with monthly targets, decompose the growth, find what''s going wrong where, and put a value on missed sales. Then you''ll build a dashboard, write an executive summary, prepare for the board''s questions and publish the project for your portfolio. Use Excel, Power BI, SQL or Python: the work is assessed on the answers, not the tool.', 'data-analytics', 'intermediate', 4, 'Career project', 14, true, 'available', true, array['Turning a business brief into an analysis plan', 'Profiling and cleaning raw data with a quality log', 'Modelling data at the right grain', 'Decomposing growth into price, new stores and volume', 'Judging targets fairly', 'Estimating lost sales with stated assumptions', 'Finding-led dashboards and executive summaries', 'Presenting and publishing a portfolio project']::text[], array['The core Data Analyst courses: Excel, SQL and Power BI (or Python)', 'Comfort cleaning data and building a dashboard in at least one tool']::text[], 'Voltline Electronics: commercial review', true, true, true, true, false, 60, 33)
+values ('data-analyst-capstone', 'full', null, 'data-analyst-capstone', 'CAP', 'Data Analyst Capstone: End-to-End BI Project', 'Take a retail chain''s raw till export all the way to a reviewed dashboard and a board-ready executive summary, using the tools of your choice.', 'The capstone of the Data Analyst track. Voltline Electronics, a chain of eight stores, sends you 18 months of raw till data and one question from its chief executive: what''s really driving our 37% growth? You''ll plan the analysis, profile and clean a genuinely messy export (a duplicated upload, mixed date formats, inconsistent store names and test transactions), build a model that looks up costs by date and compares sales with monthly targets, decompose the growth, find what''s going wrong where, and put a value on missed sales. Then you''ll build a dashboard, write an executive summary, prepare for the board''s questions and publish the project for your portfolio. Use Excel, Power BI, SQL or Python: the work is assessed on the answers, not the tool.', 'data-analytics', 'intermediate', 4, 'Career project', 14, true, 'available', true, array['Turning a business brief into an analysis plan', 'Profiling and cleaning raw data with a quality log', 'Modelling data at the right grain', 'Decomposing growth into price, new stores and volume', 'Judging targets fairly', 'Estimating lost sales with stated assumptions', 'Finding-led dashboards and executive summaries', 'Presenting and publishing a portfolio project']::text[], array['The core Data Analyst courses: Excel, SQL and Power BI (or Python)', 'Comfort cleaning data and building a dashboard in at least one tool']::text[], 'Voltline Electronics: commercial review', true, true, true, true, false, 60, 34)
 on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level = excluded.level, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
@@ -45548,6 +47211,108 @@ values ('cldq12', 1, 'Unit costs separate growth from waste.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 
+-- Assessment: Linux and Networking Basics: final assessment
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('linux-networking-basics-final', 'linux-networking-basics', 'final', null, 'Linux and Networking Basics: final assessment', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lnxq01', 'linux-networking-basics-final', 1, 'Which command shows the last 20 lines of a log?', '["head -n 20 app.log","tail -n 20 app.log","wc -l app.log","ls -l app.log"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lnxq01', 1, 'Logs grow at the end.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lnxq02', 'linux-networking-basics-final', 2, 'What does `cut -d'' '' -f1 access.log | sort | uniq -c | sort -rn | head -n 5` show?', '["The first 5 lines","The 5 most frequent values of the first field, with counts","5 random addresses","The file size"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lnxq02', 1, 'Count and rank: one of the most useful pipelines.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lnxq03', 'linux-networking-basics-final', 3, 'Which awk command prints only lines whose 9th field is 500 or more?', '["awk ''{print $9}'' file","awk ''$9 >= 500'' file","awk ''NR >= 500'' file","awk ''$500'' file"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lnxq03', 1, 'A condition with no action prints matching lines.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lnxq04', 'linux-networking-basics-final', 4, 'A private SSH key has permissions -rw-r--r--. What should they be?', '["644","600","777","755"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lnxq04', 1, 'Owner read and write only.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lnxq05', 'linux-networking-basics-final', 5, 'A script run by cron every night is -rwxrwxrwx. What''s the risk?', '["None","Anyone on the server can change it, and their code then runs automatically","It runs too often","It can''t be read"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lnxq05', 1, 'Writable plus automatic execution is an open door.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lnxq06', 'linux-networking-basics-final', 6, '/var is at 97% and most of it is nginx logs. What''s the lasting fix?', '["Delete all logs now","Configure log rotation to compress and delete old logs","Buy a bigger disk every month","Stop nginx"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lnxq06', 1, 'Rotation keeps logs bounded.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lnxq07', 'linux-networking-basics-final', 7, 'auth.log shows 312 failed passwords for ''backup'' from one address, then ''Accepted password for backup'' from it. What happened?', '["A normal login","A successful brute-force attack","A failed attack","A cron job"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lnxq07', 1, 'Many failures then a success is a guessed password.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lnxq08', 'linux-networking-basics-final', 8, 'Which SSH setting prevents password-guessing attacks?', '["PermitRootLogin yes","PasswordAuthentication no, so only keys are accepted","Port 22","UseDNS yes"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lnxq08', 1, 'Keys can''t be brute-forced.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lnxq09', 'linux-networking-basics-final', 9, 'A firewall rule allows port 5432 from 0.0.0.0/0. What does that mean?', '["The database is closed","The database port is reachable from every address on the internet","Only the office can connect","It blocks the database"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lnxq09', 1, 'Only web ports should face the whole internet.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lnxq10', 'linux-networking-basics-final', 10, 'How many addresses are in 10.0.2.0/24?', '["24","256","65,536","16"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lnxq10', 1, '2^(32−24) = 256.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lnxq11', 'linux-networking-basics-final', 11, 'A CNAME points to a cloud load balancer that was deleted. What''s the risk?', '["None","Someone could create a resource with that name and take over the subdomain","Email stops","The TTL expires"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lnxq11', 1, 'Remove records when you remove what they point to.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lnxq12', 'linux-networking-basics-final', 12, 'A check script finds a problem. Why should it `exit 1`?', '["To delete the log","So cron or a monitoring tool can see the failure and alert","Bash requires it","To save memory"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lnxq12', 1, 'Exit codes report success or failure.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
 -- Assessment: Prompting Essentials: module check
 insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
 values ('aipf-m01-check', 'ai-productivity-fundamentals', 'module', 'aipf-m01', 'Prompting Essentials: module check', 60, true)
@@ -48868,6 +50633,23 @@ Work in Google Colab with the cloud dataset. Submit a link to your notebook (sha
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
 
 
+-- Project: What happened on prod-web-01
+insert into public.projects (id, course_id, title, summary, brief_md, tasks, datasets, rubric, required)
+values ('lnx-prod-web-01-investigation', 'linux-networking-basics', 'What happened on prod-web-01', 'A full investigation of a web server from its logs and command output: a timeline of the outage and the break-in, findings with evidence and severity, fixes with owners, and scripts that would have caught each problem.', $md$Tallybook's CTO wants a written investigation of prod-web-01, to share with investors and an enterprise customer. Every claim must be backed by a command and its output.
+
+Work in a Google Colab notebook, using %%bash cells. Download the server's files with:
+
+```bash
+%%bash
+for f in access.log auth.log ps.txt df.txt du.txt ls.txt firewall.csv tallybook.example.zone; do
+  curl -sO https://academy.cloudtechanalytics.com/datasets/linux/$f
+done
+```
+
+Submit a link to your notebook (shared so anyone with the link can view it), and paste your **timeline**, your **findings table** and your **executive summary** below, followed by a short note on where each task is answered.$md$, array['Timeline: every significant event with its time, from the first attack to the end of the outage, built with commands from both logs.', 'The outage: when it started and ended, errors by type and path, and response times during and outside it.', 'The break-in: failed attempts by address, the successful login, what the intruder tried and how the miner keeps running.', 'The server''s state: the miner''s CPU use, disk space and what''s filling it, and the files with unsafe permissions.', 'The network: firewall rules open to the internet, the DNS records that need fixing, and the changes for each.', 'Detection: a script for each problem (errors, password logins, unknown busy processes, disk space) and the cron lines that run them.', 'An executive summary that keeps facts and conclusions distinct, with fixes done and still to do.']::text[], '{}'::text[], array['Every finding is supported by a command and its output that anyone can rerun.', 'The timeline is complete, ordered and drawn from both logs.', 'Facts and conclusions are clearly distinguished.', 'Severity is judged sensibly, with the break-in treated as a compromise of the whole server.', 'Fixes are specific (exact permissions, firewall sources, SSH settings) and have owners.', 'Detection scripts work on the files and exit with a meaningful code.', 'The summary is clear to a non-technical reader.']::text[], true)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
+
+
 -- Track: Become a Data Analyst
 insert into public.tracks (id, slug, title, summary, badge_name, badge_code, skills, position, published)
 values ('data-analyst', 'data-analyst', 'Become a Data Analyst', 'The route we recommend from no experience to a junior data analyst role. Learn how analysis works, then the tools teams use every day (Excel, SQL, Power BI and Python) on realistic company data. Build portfolio projects that answer real business questions, and finish with your CV, LinkedIn and interview preparation.', 'CloudTech Data Analyst', 'DATAANALYST', array['Spreadsheet analysis in Excel', 'Statistics: averages, spread, confidence intervals and tests', 'Querying databases with SQL, from first SELECT to cohorts and window functions', 'Data modelling and star schemas', 'Dashboards in Power BI, with DAX measures you can trust', 'Analysis in Python and pandas', 'Turning data into findings a manager can act on']::text[], 1, true)
@@ -49084,19 +50866,23 @@ values ('cloud-devops-engineer', 'python-for-data-analytics', 'Foundation', true
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 insert into public.track_courses (track_id, course_id, stage, required, position)
-values ('cloud-devops-engineer', 'cloud-fundamentals-cost-reliability', 'Core', true, 2)
+values ('cloud-devops-engineer', 'linux-networking-basics', 'Foundation', true, 2)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 insert into public.track_courses (track_id, course_id, stage, required, position)
-values ('cloud-devops-engineer', 'llm-evaluation-safety-production', 'Specialist', false, 3)
+values ('cloud-devops-engineer', 'cloud-fundamentals-cost-reliability', 'Core', true, 3)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 insert into public.track_courses (track_id, course_id, stage, required, position)
-values ('cloud-devops-engineer', 'career-essentials', 'Career', true, 4)
+values ('cloud-devops-engineer', 'llm-evaluation-safety-production', 'Specialist', false, 4)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 insert into public.track_courses (track_id, course_id, stage, required, position)
-values ('cloud-devops-engineer', 'build-your-student-portfolio', 'Career', false, 5)
+values ('cloud-devops-engineer', 'career-essentials', 'Career', true, 5)
+on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
+
+insert into public.track_courses (track_id, course_id, stage, required, position)
+values ('cloud-devops-engineer', 'build-your-student-portfolio', 'Career', false, 6)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 
