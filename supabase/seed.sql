@@ -50062,7 +50062,7 @@ Every row has exactly one outcome, and they add up. That table, with your test r
   "rules": [
     { "label": "Totals change (kobo, rounding)", "pattern": "kobo|round" },
     { "label": "Testing (tests, boundary, passing)", "pattern": "test" },
-    { "label": "Export handling with numbers", "pattern": "(quarantin|duplicat|fixed)[\\s\\S]*\\d|\\d[\\s\\S]*(quarantin|duplicat|fixed)" },
+    { "label": "Export handling with numbers", "pattern": "\\d[^.\\n]{0,120}(quarantin|duplicat|fixed)|(quarantin|duplicat|fixed)[^.\\n]{0,120}\\d" },
     { "label": "An action for the finance team", "pattern": "review|check|approve|confirm|sign" },
     { "label": "Between 80 and 180 words", "minWords": 80, "maxWords": 180 }
   ],
@@ -50100,9 +50100,1810 @@ $md$, true, true, 10, array['swe-10-p1', 'swe-10-t1']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 
+-- Course: Databases and APIs for Developers
+insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
+values ('databases-and-apis-for-developers', 'full', null, 'databases-and-apis-for-developers', 'DBA', 'Databases and APIs for Developers', 'Build the database and API behind an application: schema design, constraints, parameterised queries, transactions, indexes and query plans, migrations, REST design and API tests with fixtures, on a company''s invoicing data with SQLite and Flask.', 'Applications keep their data in databases and expose it through APIs. In this course you build both for Tallybook''s invoicing, in Python with SQLite and Flask, all runnable in Colab. You''ll design a schema that stores each fact once, add named constraints and watch the database refuse every invoice-level problem in the raw export on its own, query safely with parameters (and see an f-string query break on a customer called Chi''s Bakery), import bank payments in transactions so a bad row can''t leave half a batch saved, read query plans and add the index that turns a scan into a search, change the schema with numbered migrations, design REST routes with meaningful status codes and pagination, and test the API with pytest fixtures that give every test a fresh database. Every query, plan and test in the lessons is run and checked.', 'databases', 'intermediate', 3, 'Intermediate', 7, true, 'available', true, array['Schema design with keys', 'Constraints and data integrity', 'Parameterised queries', 'Transactions and idempotent imports', 'Indexes and query plans', 'Schema migrations', 'REST API design', 'Status codes and pagination', 'Testing APIs with pytest fixtures']::text[], array['Software Engineering with Python, or comfort with Python functions and pytest', 'SQL for Data Analysis is helpful']::text[], 'Tallybook''s invoicing database and API', true, true, true, true, false, 60, 38)
+on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level = excluded.level, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('dba-m01', 'databases-and-apis-for-developers', 'Why Applications Need Databases', 1, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('databases-and-apis-for-developers:why-applications-need-databases', 'databases-and-apis-for-developers', 'dba-m01', 'why-applications-need-databases', 'Why applications need databases', 'Why an application''s data belongs in a database rather than files, what a relational database gives you (structure, rules, safe concurrent changes and fast lookups), and your first SQLite database from Python.', 15, $md$
+## The problem
+
+Tallybook's invoicing service from the Software Engineering course still reads CSV exports. That works for a month-end report. It doesn't work for an app: two staff recording payments at the same moment can overwrite each other's changes, nothing stops a duplicate invoice or a discount of 50%, and finding one customer's invoices means reading every row in the file.
+
+Applications keep their data in a **database**. In this course you'll design Tallybook's database, protect it with rules, change it safely, and put a real API in front of it, with every query and test run in Colab.
+
+## The concept
+
+**What a relational database provides**
+
+| Need | How the database helps |
+| :-- | :-- |
+| Structure | **tables** with named, typed columns |
+| Relationships | **keys** link rows: each invoice belongs to a customer |
+| Rules | **constraints** reject bad data at the door |
+| Safe changes | **transactions** make a group of changes all happen or none |
+| Speed | **indexes** find rows without reading the whole table |
+| One question language | **SQL** |
+
+**SQLite**
+
+A complete relational database in a single file (or in memory), built into Python as `sqlite3`. Production systems often use PostgreSQL or MySQL; the ideas and almost all the SQL in this course carry over directly.
+
+**From Python**
+
+```python norun
+import sqlite3
+conn = sqlite3.connect("tallybook.db")     # or ":memory:" for a throwaway database
+conn.execute("SELECT ...", (value,))
+conn.commit()
+```
+
+## Example
+
+Create an in-memory database and load Tallybook's customers into a proper table:
+
+```python
+import sqlite3
+
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/invoicing/"
+customers = pd.read_csv(base + "customers.csv")
+
+conn = sqlite3.connect(":memory:")
+conn.execute("""
+    CREATE TABLE customers (
+        customer_id        TEXT PRIMARY KEY,
+        business_name      TEXT NOT NULL,
+        city               TEXT NOT NULL,
+        vat_exempt         INTEGER NOT NULL,
+        payment_terms_days INTEGER NOT NULL
+    )
+""")
+conn.executemany("INSERT INTO customers VALUES (?, ?, ?, ?, ?)", customers.itertuples(index=False))
+conn.commit()
+
+print(conn.execute("SELECT COUNT(*) FROM customers").fetchone()[0], "customers")
+for row in conn.execute("SELECT city, COUNT(*) AS n FROM customers GROUP BY city ORDER BY n DESC LIMIT 3"):
+    print(row)
+```
+
+```text
+300 customers
+('Lagos', 105)
+('Kano', 52)
+('Ibadan', 40)
+```
+
+Now try to add a customer whose ID already exists. A CSV file would accept it silently; the database refuses:
+
+```python
+try:
+    conn.execute("INSERT INTO customers VALUES ('C0001', 'Duplicate Stores', 'Lagos', 0, 30)")
+except sqlite3.IntegrityError as error:
+    print("Refused:", error)
+```
+
+```text
+Refused: UNIQUE constraint failed: customers.customer_id
+```
+
+That refusal is the database doing a job your application code would otherwise have to remember to do, everywhere, forever.
+
+## Walkthrough
+
+1. Run the cells in Colab. Query the number of VAT-exempt customers.
+2. Change `":memory:"` to `"tallybook.db"`, run again, and look for the file in Colab's file panel.
+3. Why is `customer_id` the primary key rather than `business_name`?
+4. List three things Tallybook's app needs that a CSV file can't provide safely.
+
+## Practice
+
+```dataset
+{"dataset": "invoicing", "files": ["customers", "invoices_raw", "invoice_lines"]}
+```
+
+```answer
+{
+  "id": "dba-01-p1",
+  "prompt": "How many customers are in **Lagos**?",
+  "answer": 105,
+  "format": "number",
+  "dataset": "invoicing",
+  "files": ["customers"],
+  "pyVerify": "conn.execute(\"SELECT COUNT(*) FROM customers WHERE city = 'Lagos'\").fetchone()[0]",
+  "hint": "SELECT COUNT(*) FROM customers WHERE city = 'Lagos'",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "What does a primary key guarantee?",
+    "options": ["Fast inserts", "Each row has a unique identifier; duplicates are refused", "Sorted output", "Encryption"],
+    "answer": 1,
+    "explanation": "One row per key."
+  },
+  {
+    "prompt": "Two people record payments at the same time on a shared CSV file. What can go wrong?",
+    "options": ["Nothing", "One person's change can overwrite the other's", "The file gets faster", "Payments double automatically"],
+    "answer": 1,
+    "explanation": "Databases manage concurrent changes safely."
+  },
+  {
+    "prompt": "What is SQLite?",
+    "options": ["A cloud service", "A complete relational database in a single file, built into Python", "A spreadsheet", "A web framework"],
+    "answer": 1,
+    "explanation": "Great for learning, testing and small apps."
+  }
+]
+```
+$md$, true, true, 1, array['dba-01-p1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('dba-m02', 'databases-and-apis-for-developers', 'Designing a Schema', 2, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('databases-and-apis-for-developers:designing-a-schema', 'databases-and-apis-for-developers', 'dba-m02', 'designing-a-schema', 'Designing a schema', 'Design tables for an application (one table per kind of thing, keys that link them, no repeated facts), write the schema for Tallybook''s customers, invoices, lines and payments, and load the clean data into it.', 25, $md$
+## The problem
+
+The invoice export has the customer's ID on every invoice, but the customer's name and VAT status live in another file. Some systems "simplify" this by copying the customer's details onto every invoice. Then a customer changes their business name, and half their invoices show the old one.
+
+A good **schema**, the design of a database's tables, stores each fact once, links related rows with keys, and makes impossible states impossible to store.
+
+## The concept
+
+**One table per kind of thing**
+
+Customers, invoices, invoice lines and payments are different things with different lifetimes, so each gets a table.
+
+**Keys**
+
+- A **primary key** identifies each row (`customer_id`).
+- A **foreign key** points to a row in another table (`invoices.customer_id` → `customers.customer_id`).
+- A **composite key** uses more than one column: an invoice line is identified by its invoice **and** its line number.
+
+**Don't repeat facts**
+
+Store the customer's name once, in `customers`. Store totals? Usually **not**: they can be calculated from the lines, and a stored total can disagree with them. (If you store one for speed, you must keep it in step.)
+
+**Money and dates**
+
+Money as **integer kobo** (Software Engineering, lesson 2). Dates in SQLite as `YYYY-MM-DD` text, which sorts and compares correctly.
+
+## Example
+
+Tallybook's schema. The `CHECK` constraints are named, so error messages say which rule was broken; lesson 3 puts them to work.
+
+```python
+import sqlite3
+from decimal import Decimal, ROUND_HALF_UP
+
+import pandas as pd
+
+SCHEMA = """
+CREATE TABLE customers (
+    customer_id        TEXT PRIMARY KEY,
+    business_name      TEXT NOT NULL,
+    city               TEXT NOT NULL,
+    vat_exempt         INTEGER NOT NULL CONSTRAINT vat_flag CHECK (vat_exempt IN (0, 1)),
+    payment_terms_days INTEGER NOT NULL CONSTRAINT positive_terms CHECK (payment_terms_days > 0)
+);
+CREATE TABLE invoices (
+    invoice_id   TEXT PRIMARY KEY,
+    customer_id  TEXT NOT NULL REFERENCES customers (customer_id),
+    issue_date   TEXT NOT NULL CONSTRAINT iso_issue_date CHECK (issue_date GLOB '[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]'),
+    due_date     TEXT NOT NULL,
+    discount_pct INTEGER NOT NULL CONSTRAINT discount_limit CHECK (discount_pct BETWEEN 0 AND 20),
+    CONSTRAINT due_after_issue CHECK (due_date >= issue_date)
+);
+CREATE TABLE invoice_lines (
+    invoice_id      TEXT NOT NULL REFERENCES invoices (invoice_id),
+    line_no         INTEGER NOT NULL,
+    description     TEXT NOT NULL,
+    quantity        INTEGER NOT NULL CONSTRAINT positive_quantity CHECK (quantity > 0),
+    unit_price_kobo INTEGER NOT NULL CONSTRAINT price_not_negative CHECK (unit_price_kobo >= 0),
+    PRIMARY KEY (invoice_id, line_no)
+);
+CREATE TABLE payments (
+    payment_id  INTEGER PRIMARY KEY,
+    invoice_id  TEXT NOT NULL REFERENCES invoices (invoice_id),
+    paid_on     TEXT NOT NULL,
+    amount_kobo INTEGER NOT NULL CONSTRAINT positive_payment CHECK (amount_kobo > 0)
+);
+"""
+
+conn = sqlite3.connect(":memory:")
+conn.execute("PRAGMA foreign_keys = ON")
+conn.executescript(SCHEMA)
+for name, sql in conn.execute("SELECT name, sql FROM sqlite_master WHERE type = 'table'"):
+    print(name, "-", sql.count("REFERENCES"), "foreign key(s),", sql.count("CHECK"), "check(s)")
+```
+
+```text
+customers - 0 foreign key(s), 2 check(s)
+invoices - 1 foreign key(s), 3 check(s)
+invoice_lines - 1 foreign key(s), 2 check(s)
+payments - 1 foreign key(s), 1 check(s)
+```
+
+Now load the data that passed validation in the Software Engineering course: customers, the invoices without problems, and their lines in kobo.
+
+```python
+base = "https://academy.cloudtechanalytics.com/datasets/invoicing/"
+customers = pd.read_csv(base + "customers.csv")
+raw = pd.read_csv(base + "invoices_raw.csv", dtype=str, keep_default_na=False).drop_duplicates()
+lines = pd.read_csv(base + "invoice_lines.csv", dtype={"unit_price": str})
+
+def to_kobo(naira):
+    return int((Decimal(naira) * 100).quantize(Decimal("1"), rounding=ROUND_HALF_UP))
+
+known = set(customers["customer_id"])
+bad_lines = set(lines.loc[lines["quantity"] <= 0, "invoice_id"])
+clean = raw[raw["customer_id"].isin(known) & raw["issue_date"].str.match(r"^\d{4}-\d{2}-\d{2}$")
+            & (raw["discount_pct"].astype(int) <= 20) & (raw["due_date"] >= raw["issue_date"]) & ~raw["invoice_id"].isin(bad_lines)]
+
+with conn:
+    conn.executemany("INSERT INTO customers VALUES (?, ?, ?, ?, ?)", customers.itertuples(index=False))
+    conn.executemany("INSERT INTO invoices VALUES (?, ?, ?, ?, ?)",
+                     clean[["invoice_id", "customer_id", "issue_date", "due_date", "discount_pct"]].itertuples(index=False))
+    kept = lines[lines["invoice_id"].isin(clean["invoice_id"])]
+    conn.executemany("INSERT INTO invoice_lines VALUES (?, ?, ?, ?, ?)",
+                     [(r.invoice_id, r.line_no, r.description, r.quantity, to_kobo(r.unit_price)) for r in kept.itertuples()])
+
+for table in ["customers", "invoices", "invoice_lines"]:
+    print(table, conn.execute(f"SELECT COUNT(*) FROM {table}").fetchone()[0])
+```
+
+```text
+customers 300
+invoices 1133
+invoice_lines 2321
+```
+
+The schema now holds each fact once. A customer's name changes in one row, and every invoice shows the new name, because invoices don't store it at all: they store the key.
+
+## Walkthrough
+
+1. Run the cells. Write a query joining invoices to customers to list five invoices with the customer's business name.
+2. Why is the primary key of `invoice_lines` two columns?
+3. Should `invoices` have a `total_kobo` column? Argue both sides.
+4. Draw the four tables and their keys (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "dba-02-p1",
+  "prompt": "How many invoices are loaded into the `invoices` table?",
+  "answer": 1133,
+  "format": "number",
+  "dataset": "invoicing",
+  "files": ["customers", "invoices_raw", "invoice_lines"],
+  "pyVerify": "conn.execute('SELECT COUNT(*) FROM invoices').fetchone()[0]",
+  "hint": "The invoices line of the second output.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "dba-02-t1",
+  "prompt": "Tallybook wants **credit notes**: a credit note reduces what a customer owes on one invoice, with a reason and a date. Write the **CREATE TABLE** for `credit_notes`, with a primary key, a **foreign key** to invoices, money in **kobo**, and at least one **named CHECK** constraint.",
+  "minutes": 8,
+  "rows": 10,
+  "placeholder": "CREATE TABLE credit_notes (\n    ...",
+  "rules": [
+    { "label": "CREATE TABLE credit_notes", "pattern": "create\\s+table\\s+credit_notes" },
+    { "label": "A primary key", "pattern": "primary\\s+key" },
+    { "label": "A foreign key to invoices", "pattern": "references\\s+invoices" },
+    { "label": "An amount in kobo as an integer", "pattern": "\\w*kobo\\w*\\s+integer" },
+    { "label": "A named CHECK constraint", "pattern": "constraint\\s+\\w+\\s+check\\s*\\(" },
+    { "label": "A reason and a date", "pattern": "reason[\\s\\S]*(date|issued_on|_on\\b)|(date|issued_on)[\\s\\S]*reason" }
+  ],
+  "sample": "CREATE TABLE credit_notes (\n    credit_note_id INTEGER PRIMARY KEY,\n    invoice_id     TEXT NOT NULL REFERENCES invoices (invoice_id),\n    issued_on      TEXT NOT NULL,\n    amount_kobo    INTEGER NOT NULL CONSTRAINT positive_credit CHECK (amount_kobo > 0),\n    reason         TEXT NOT NULL CONSTRAINT reason_given CHECK (length(trim(reason)) > 0)\n);",
+  "note": "A credit note is its own table, not a negative payment: it has a different meaning, a reason, and different people who may issue it.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why not copy the customer's name onto every invoice?",
+    "options": ["It uses more disk", "When the name changes, copies disagree; store it once and link by key", "SQL forbids it", "It's slower"],
+    "answer": 1,
+    "explanation": "One fact, one place."
+  },
+  {
+    "prompt": "What does a foreign key do?",
+    "options": ["Encrypts a column", "Links a row to a row in another table, and can refuse links to rows that don't exist", "Sorts the table", "Speeds up inserts"],
+    "answer": 1,
+    "explanation": "Relationships the database enforces."
+  },
+  {
+    "prompt": "Why store money as integer kobo in the database?",
+    "options": ["It's shorter", "Integers are exact; floating-point amounts drift", "Databases can't store decimals", "It's required by SQLite"],
+    "answer": 1,
+    "explanation": "The same rule as in code."
+  }
+]
+```
+$md$, true, true, 2, array['dba-02-p1', 'dba-02-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('dba-m03', 'databases-and-apis-for-developers', 'Constraints and Integrity', 3, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('databases-and-apis-for-developers:constraints-and-integrity', 'databases-and-apis-for-developers', 'dba-m03', 'constraints-and-integrity', 'Constraints and integrity', 'Let the database enforce the rules (primary keys, foreign keys, NOT NULL and CHECK constraints), see it refuse every kind of bad row in Tallybook''s raw export, and handle the refusals in code.', 15, $md$
+## The problem
+
+In the Software Engineering course, the importer checked each invoice in Python. That's good, but it only protects data that comes through the importer. The API, an admin script, or a hurried fix in a database console can still write a 50% discount or an invoice for a customer who doesn't exist.
+
+Rules that must **always** hold belong in the database itself, as **constraints**. Then no code path can break them.
+
+## The concept
+
+| Constraint | Refuses |
+| :-- | :-- |
+| `PRIMARY KEY` / `UNIQUE` | a second row with the same key |
+| `NOT NULL` | a missing value |
+| `REFERENCES` (foreign key) | a link to a row that doesn't exist |
+| `CHECK (...)` | any row where the condition is false |
+
+**Two SQLite details**
+
+- Foreign keys are only enforced after `PRAGMA foreign_keys = ON`, on every connection. (PostgreSQL always enforces them.)
+- An empty string `''` is **not** NULL. `NOT NULL` won't catch a blank customer ID; the foreign key will, because no customer has the ID `''`.
+
+**Database rules and code rules**
+
+Keep both: validate in code to give users friendly messages, and constrain in the database so the rule holds everywhere. In code, catch `sqlite3.IntegrityError` and turn it into a clear response.
+
+## Example
+
+Build the schema from lesson 2, load the customers, then insert **every** raw invoice, including the bad ones, and record what the database says:
+
+```python
+import sqlite3
+
+import pandas as pd
+
+SCHEMA = """
+CREATE TABLE customers (
+    customer_id TEXT PRIMARY KEY, business_name TEXT NOT NULL, city TEXT NOT NULL,
+    vat_exempt INTEGER NOT NULL, payment_terms_days INTEGER NOT NULL
+);
+CREATE TABLE invoices (
+    invoice_id   TEXT PRIMARY KEY,
+    customer_id  TEXT NOT NULL REFERENCES customers (customer_id),
+    issue_date   TEXT NOT NULL CONSTRAINT iso_issue_date CHECK (issue_date GLOB '[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]'),
+    due_date     TEXT NOT NULL,
+    discount_pct INTEGER NOT NULL CONSTRAINT discount_limit CHECK (discount_pct BETWEEN 0 AND 20),
+    CONSTRAINT due_after_issue CHECK (due_date >= issue_date)
+);
+"""
+base = "https://academy.cloudtechanalytics.com/datasets/invoicing/"
+conn = sqlite3.connect(":memory:")
+conn.execute("PRAGMA foreign_keys = ON")
+conn.executescript(SCHEMA)
+customers = pd.read_csv(base + "customers.csv")
+conn.executemany("INSERT INTO customers VALUES (?, ?, ?, ?, ?)", customers.itertuples(index=False))
+
+raw = pd.read_csv(base + "invoices_raw.csv", dtype=str, keep_default_na=False)
+outcomes = []
+for row in raw.itertuples():
+    try:
+        conn.execute("INSERT INTO invoices VALUES (?, ?, ?, ?, ?)",
+                     (row.invoice_id, row.customer_id, row.issue_date, row.due_date, int(row.discount_pct)))
+        outcomes.append("inserted")
+    except sqlite3.IntegrityError as error:
+        outcomes.append(str(error))
+conn.commit()
+pd.Series(outcomes).value_counts()
+```
+
+```text
+inserted                                         1143
+CHECK constraint failed: iso_issue_date            34
+FOREIGN KEY constraint failed                      11
+CHECK constraint failed: discount_limit             7
+CHECK constraint failed: due_after_issue            5
+UNIQUE constraint failed: invoices.invoice_id       5
+Name: count, dtype: int64
+```
+
+Every invoice-level problem the importer found by hand, the database refused on its own: duplicates by the primary key, unknown and blank customers by the foreign key, and the rest by the named checks. (Bad quantities are a property of lines, so the `invoice_lines` table's own check catches those: walkthrough step 4.) Now see what a friendly API response could look like:
+
+```python
+FRIENDLY = {
+    "UNIQUE constraint failed: invoices.invoice_id": "This invoice already exists.",
+    "FOREIGN KEY constraint failed": "The customer doesn't exist.",
+    "CHECK constraint failed: discount_limit": "Discounts must be between 0% and 20%.",
+    "CHECK constraint failed: iso_issue_date": "Dates must be written as YYYY-MM-DD.",
+    "CHECK constraint failed: due_after_issue": "The due date can't be before the issue date.",
+}
+
+def add_invoice(invoice):
+    try:
+        with conn:
+            conn.execute("INSERT INTO invoices VALUES (?, ?, ?, ?, ?)", invoice)
+        return "created"
+    except sqlite3.IntegrityError as error:
+        return FRIENDLY.get(str(error), "The invoice breaks a data rule.")
+
+print(add_invoice(("INV-999001", "C0001", "2026-09-01", "2026-09-30", 25)))
+print(add_invoice(("INV-999002", "C9999", "2026-09-01", "2026-09-30", 10)))
+print(add_invoice(("INV-999003", "C0001", "2026-09-01", "2026-09-30", 10)))
+```
+
+```text
+Discounts must be between 0% and 20%.
+The customer doesn't exist.
+created
+```
+
+## Walkthrough
+
+1. Run the cells. Turn foreign keys off (`PRAGMA foreign_keys = OFF`) on a new connection and reload. What gets in that shouldn't?
+2. Add a CHECK that `customer_id` isn't blank. Which rows does it catch first?
+3. Why keep validation in Python as well as constraints in the database?
+4. Insert a line with quantity 0 using lesson 2's `invoice_lines` table. What's the message?
+
+## Practice
+
+```answer
+{
+  "id": "dba-03-p1",
+  "prompt": "How many raw invoice rows does the database **refuse** in total?",
+  "answer": 62,
+  "format": "number",
+  "dataset": "invoicing",
+  "files": ["customers", "invoices_raw"],
+  "pyVerify": "sum(o != 'inserted' for o in outcomes)",
+  "hint": "Add every count except inserted.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why put rules in the database as well as in application code?",
+    "options": ["It's faster", "So the rule holds for every program and person that writes to the database", "SQL is easier", "To skip testing"],
+    "answer": 1,
+    "explanation": "No code path can bypass a constraint."
+  },
+  {
+    "prompt": "A customer_id is an empty string. Does NOT NULL refuse it?",
+    "options": ["Yes", "No: an empty string isn't NULL; a foreign key or CHECK must catch it", "Only in SQLite", "Only in PostgreSQL"],
+    "answer": 1,
+    "explanation": "'' and NULL are different."
+  },
+  {
+    "prompt": "What must you run for SQLite to enforce foreign keys?",
+    "options": ["Nothing", "PRAGMA foreign_keys = ON on each connection", "VACUUM", "CREATE INDEX"],
+    "answer": 1,
+    "explanation": "It's off by default in SQLite."
+  }
+]
+```
+$md$, true, true, 3, array['dba-03-p1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('dba-m04', 'databases-and-apis-for-developers', 'Queries from Code', 4, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('databases-and-apis-for-developers:queries-from-code', 'databases-and-apis-for-developers', 'dba-m04', 'queries-from-code', 'Queries from code', 'Run SQL from Python safely with parameters instead of building query strings, turn query results into useful structures, and calculate invoice totals and balances with joins and aggregation.', 25, $md$
+## The problem
+
+A Tallybook developer wrote a search box for customers by building the SQL with an f-string. It worked in testing. Then a real customer, "Chi's Bakery", searched for their own name, and the app crashed. Building SQL from text that users type is also the classic way attackers get into databases (SQL injection).
+
+The fix is simple and universal: **never put values into SQL text; pass them as parameters**.
+
+## The concept
+
+**Parameters**
+
+```python norun
+# Never:
+conn.execute(f"SELECT * FROM customers WHERE business_name = '{name}'")
+# Always:
+conn.execute("SELECT * FROM customers WHERE business_name = ?", (name,))
+```
+
+With `?` placeholders, the database receives the SQL and the values separately. A value can contain any characters (apostrophes, quotes, SQL keywords) and is always treated as data.
+
+**Results**
+
+`fetchone()` gets one row, `fetchall()` all of them. Setting `conn.row_factory = sqlite3.Row` lets you use column names: `row["business_name"]`.
+
+**Let the database do the work**
+
+Joins and `GROUP BY` in SQL are usually faster and clearer than loading whole tables into Python and looping.
+
+## Example
+
+A fresh database with a customer whose name has an apostrophe:
+
+```python
+import sqlite3
+
+conn = sqlite3.connect(":memory:")
+conn.row_factory = sqlite3.Row
+conn.executescript("""
+CREATE TABLE customers (customer_id TEXT PRIMARY KEY, business_name TEXT NOT NULL, city TEXT NOT NULL);
+INSERT INTO customers VALUES ('C0001', 'Ada Stores', 'Lagos'), ('C0002', 'Chi''s Bakery', 'Enugu');
+""")
+
+name = "Chi's Bakery"
+try:
+    conn.execute(f"SELECT * FROM customers WHERE business_name = '{name}'").fetchall()
+except sqlite3.OperationalError as error:
+    print("f-string query failed:", error)
+
+row = conn.execute("SELECT * FROM customers WHERE business_name = ?", (name,)).fetchone()
+print("Parameter query found:", row["customer_id"], row["city"])
+```
+
+```text
+f-string query failed: near "s": syntax error
+Parameter query found: C0002 Enugu
+```
+
+The apostrophe ended the SQL string early. With a parameter, the name is just data. Now, on Tallybook's full data, calculate each invoice's subtotal, and each customer's invoiced and paid amounts, with joins:
+
+```python
+from decimal import Decimal, ROUND_HALF_UP
+
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/invoicing/"
+customers = pd.read_csv(base + "customers.csv")
+raw = pd.read_csv(base + "invoices_raw.csv", dtype=str, keep_default_na=False).drop_duplicates()
+lines = pd.read_csv(base + "invoice_lines.csv", dtype={"unit_price": str})
+
+def to_kobo(naira):
+    return int((Decimal(naira.replace("₦", "").replace(",", "")) * 100).quantize(Decimal("1"), rounding=ROUND_HALF_UP))
+
+known = set(customers["customer_id"])
+bad = set(lines.loc[lines["quantity"] <= 0, "invoice_id"])
+clean = raw[raw["customer_id"].isin(known) & raw["issue_date"].str.match(r"^\d{4}-\d{2}-\d{2}$")
+            & (raw["discount_pct"].astype(int) <= 20) & (raw["due_date"] >= raw["issue_date"]) & ~raw["invoice_id"].isin(bad)]
+
+db = sqlite3.connect(":memory:")
+db.executescript("""
+CREATE TABLE customers (customer_id TEXT PRIMARY KEY, business_name TEXT, city TEXT, vat_exempt INTEGER, payment_terms_days INTEGER);
+CREATE TABLE invoices (invoice_id TEXT PRIMARY KEY, customer_id TEXT, issue_date TEXT, due_date TEXT, discount_pct INTEGER, paid_kobo INTEGER);
+CREATE TABLE invoice_lines (invoice_id TEXT, line_no INTEGER, quantity INTEGER, unit_price_kobo INTEGER);
+""")
+db.executemany("INSERT INTO customers VALUES (?, ?, ?, ?, ?)", customers.itertuples(index=False))
+db.executemany("INSERT INTO invoices VALUES (?, ?, ?, ?, ?, ?)",
+               [(r.invoice_id, r.customer_id, r.issue_date, r.due_date, int(r.discount_pct), to_kobo(r.amount_paid)) for r in clean.itertuples()])
+db.executemany("INSERT INTO invoice_lines VALUES (?, ?, ?, ?)",
+               [(r.invoice_id, r.line_no, r.quantity, to_kobo(r.unit_price)) for r in lines[lines["invoice_id"].isin(clean["invoice_id"])].itertuples()])
+
+top = db.execute("""
+    SELECT c.business_name,
+           COUNT(DISTINCT i.invoice_id)            AS invoices,
+           SUM(l.quantity * l.unit_price_kobo)     AS subtotal_kobo
+    FROM customers c
+    JOIN invoices i      ON i.customer_id = c.customer_id
+    JOIN invoice_lines l ON l.invoice_id = i.invoice_id
+    WHERE c.city = ?
+    GROUP BY c.customer_id
+    ORDER BY subtotal_kobo DESC
+    LIMIT 3
+""", ("Lagos",)).fetchall()
+for business_name, invoices, subtotal in top:
+    print(f"{business_name:22} {invoices:3} invoices  ₦{subtotal / 100:,.2f} before discount and VAT")
+```
+
+```text
+Chinedu Stores           6 invoices  ₦1,614,343.00 before discount and VAT
+Babatunde Foods          5 invoices  ₦1,531,167.80 before discount and VAT
+Sade Electronics         6 invoices  ₦1,527,568.10 before discount and VAT
+```
+
+The city is a parameter, too: the same query works for any city a user picks, safely.
+
+## Walkthrough
+
+1. Run the cells. Change the city parameter to `"Abuja"`.
+2. Write a query for invoices with nothing paid (`paid_kobo = 0`) that are past their due date on 2026-09-01.
+3. Explain to a colleague why `f"... '{name}'"` is dangerous even when names look harmless.
+4. Rewrite an unsafe query (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "dba-04-p1",
+  "prompt": "How many invoices have **nothing paid**?",
+  "answer": 225,
+  "format": "number",
+  "dataset": "invoicing",
+  "files": ["customers", "invoices_raw", "invoice_lines"],
+  "pyVerify": "db.execute('SELECT COUNT(*) FROM invoices WHERE paid_kobo = 0').fetchone()[0]",
+  "hint": "SELECT COUNT(*) FROM invoices WHERE paid_kobo = 0",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "dba-04-t1",
+  "prompt": "This code is unsafe: `conn.execute(f\"SELECT * FROM invoices WHERE customer_id = '{customer_id}' AND issue_date >= '{since}'\")`. Rewrite it with **parameters**, and add a comment saying **why**.",
+  "minutes": 4,
+  "rows": 5,
+  "placeholder": "rows = conn.execute(...)",
+  "rules": [
+    { "label": "Uses ? placeholders", "pattern": "\\?[\\s\\S]*\\?" },
+    { "label": "Passes values as a tuple or list", "pattern": "\\(\\s*customer_id\\s*,\\s*since\\s*\\)|\\[\\s*customer_id\\s*,\\s*since\\s*\\]" },
+    { "label": "No f-string or format in the SQL", "pattern": "f\"|f'|\\.format\\(|%\\s*\\(", "absent": true },
+    { "label": "A comment saying why", "pattern": "#[^\\n]*(inject|data|apostrophe|quote|safe|parameter)" }
+  ],
+  "sample": "# Values are passed separately from the SQL, so quotes or SQL in them are treated as data, never as code.\nrows = conn.execute(\n    \"SELECT * FROM invoices WHERE customer_id = ? AND issue_date >= ?\",\n    (customer_id, since),\n).fetchall()",
+  "note": "Parameters also let the database reuse the query plan, so they're the right habit for speed as well as safety.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why use `?` parameters instead of putting values into the SQL text?",
+    "options": ["They're shorter", "Values are always treated as data, so quotes and SQL inside them can't change the query", "SQLite requires it", "They sort results"],
+    "answer": 1,
+    "explanation": "It prevents crashes and SQL injection."
+  },
+  {
+    "prompt": "What does `conn.row_factory = sqlite3.Row` give you?",
+    "options": ["Faster queries", "Rows you can read by column name", "Encrypted rows", "Sorted rows"],
+    "answer": 1,
+    "explanation": "row['business_name'] instead of row[1]."
+  },
+  {
+    "prompt": "Where should totals per customer be calculated?",
+    "options": ["Load every row into Python and loop", "In SQL with JOIN and GROUP BY, letting the database do the work", "In the browser", "By hand"],
+    "answer": 1,
+    "explanation": "Databases are built for this."
+  }
+]
+```
+$md$, true, true, 4, array['dba-04-p1', 'dba-04-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('dba-m05', 'databases-and-apis-for-developers', 'Transactions', 5, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('databases-and-apis-for-developers:transactions', 'databases-and-apis-for-developers', 'dba-m05', 'transactions', 'Transactions', 'Group changes that must happen together into a transaction, so a failure halfway leaves nothing half-done, and see the difference on a batch of bank payments with one bad row.', 25, $md$
+## The problem
+
+Every evening, Tallybook imports the day's payments from its bank. One evening, the 4th payment in a batch of 6 referred to an invoice that didn't exist. The import crashed. The first 3 payments had already been saved; the last 2 hadn't. Re-running the import saved the first 3 again. Three customers now showed as having paid twice.
+
+Changes that belong together must happen **all or not at all**. That's what a **transaction** guarantees.
+
+## The concept
+
+**ACID**
+
+| Property | Meaning |
+| :-- | :-- |
+| **Atomic** | all the changes in a transaction happen, or none do |
+| **Consistent** | constraints hold before and after |
+| **Isolated** | other users don't see half-finished changes |
+| **Durable** | once committed, changes survive a crash |
+
+**In Python's sqlite3**
+
+```python norun
+with conn:            # starts a transaction
+    conn.execute(...)
+    conn.execute(...)
+# commits if the block finishes; rolls back everything if an exception escapes
+```
+
+**Idempotency**
+
+Imports get re-run. Give each payment the bank's unique reference, make it `UNIQUE`, and a re-run can't insert it twice.
+
+## Example
+
+Set up invoices and a payments table, and the batch with one bad row:
+
+```python
+import sqlite3
+
+def fresh_db():
+    conn = sqlite3.connect(":memory:")
+    conn.execute("PRAGMA foreign_keys = ON")
+    conn.executescript("""
+    CREATE TABLE invoices (invoice_id TEXT PRIMARY KEY, total_kobo INTEGER NOT NULL);
+    CREATE TABLE payments (
+        bank_reference TEXT PRIMARY KEY,
+        invoice_id     TEXT NOT NULL REFERENCES invoices (invoice_id),
+        amount_kobo    INTEGER NOT NULL CHECK (amount_kobo > 0)
+    );
+    INSERT INTO invoices VALUES ('INV-100001', 215000), ('INV-100002', 193500), ('INV-100003', 50000),
+                                ('INV-100005', 80000), ('INV-100006', 120000);
+    """)
+    return conn
+
+batch = [
+    ("BNK-7001", "INV-100001", 215000),
+    ("BNK-7002", "INV-100002", 100000),
+    ("BNK-7003", "INV-100003", 50000),
+    ("BNK-7004", "INV-100004", 75000),    # no such invoice
+    ("BNK-7005", "INV-100005", 80000),
+    ("BNK-7006", "INV-100006", 120000),
+]
+
+def import_without_transaction(conn, batch):
+    conn.isolation_level = None          # autocommit: each insert is saved immediately
+    for payment in batch:
+        conn.execute("INSERT INTO payments VALUES (?, ?, ?)", payment)
+
+def import_in_transaction(conn, batch):
+    with conn:
+        conn.executemany("INSERT INTO payments VALUES (?, ?, ?)", batch)
+
+saved_counts = {}
+for name, importer in [("without a transaction", import_without_transaction), ("in a transaction", import_in_transaction)]:
+    conn = fresh_db()
+    try:
+        importer(conn, batch)
+    except sqlite3.IntegrityError as error:
+        print(f"Import {name} failed: {error}")
+    saved = conn.execute("SELECT COUNT(*), COALESCE(SUM(amount_kobo), 0) FROM payments").fetchone()
+    saved_counts[name] = saved[0]
+    print(f"  payments saved: {saved[0]}, total ₦{saved[1] / 100:,.2f}")
+```
+
+```text
+Import without a transaction failed: FOREIGN KEY constraint failed
+  payments saved: 3, total ₦3,650.00
+Import in a transaction failed: FOREIGN KEY constraint failed
+  payments saved: 0, total ₦0.00
+```
+
+Without a transaction, half the batch is saved and the database is in a state nobody intended. In a transaction, nothing is saved: the batch can be fixed and re-run cleanly. Now the re-run itself. With the bank reference as the primary key, importing the same good payments twice can't double them:
+
+```python
+conn = fresh_db()
+good = [p for p in batch if p[1] != "INV-100004"]
+import_in_transaction(conn, good)
+try:
+    import_in_transaction(conn, good)
+except sqlite3.IntegrityError as error:
+    print("Second run refused:", error)
+print("Payments:", conn.execute("SELECT COUNT(*) FROM payments").fetchone()[0])
+
+with conn:
+    conn.executemany("INSERT OR IGNORE INTO payments VALUES (?, ?, ?)", good)
+print("After INSERT OR IGNORE re-run:", conn.execute("SELECT COUNT(*) FROM payments").fetchone()[0])
+```
+
+```text
+Second run refused: UNIQUE constraint failed: payments.bank_reference
+Payments: 5
+After INSERT OR IGNORE re-run: 5
+```
+
+`INSERT OR IGNORE` makes the re-run a harmless no-op. Atomic batches plus unique bank references mean the evening import can fail, be fixed and be re-run without anyone counting payments by hand.
+
+## Walkthrough
+
+1. Run the cells. In the transaction version, print the invoices that were paid before the error. Were any saved?
+2. Change the bad payment's amount to 0 instead. Which constraint fails?
+3. When would you want a batch to save the good rows and report the bad ones instead? How would you do that safely?
+4. Write the import rules (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "dba-05-p1",
+  "prompt": "Without a transaction, how many payments were saved before the import failed?",
+  "answer": 3,
+  "format": "number",
+  "pyVerify": "saved_counts['without a transaction']",
+  "hint": "The first 'payments saved' line.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "dba-05-t1",
+  "prompt": "Write the **rules for the nightly payment import**, one per line starting with a dash: at least **four**, covering the **transaction**, what makes re-runs **safe**, what happens to a **bad row**, and how the result is **reported**.",
+  "minutes": 5,
+  "rows": 6,
+  "placeholder": "- The whole batch is imported in one transaction ...",
+  "rules": [
+    { "label": "At least four rules, each starting with -", "pattern": "^\\s*-\\s+\\S", "min": 4 },
+    { "label": "One transaction (all or nothing)", "pattern": "transaction|all or nothing|roll(s|ed)? ?back" },
+    { "label": "Safe re-runs (unique reference, idempotent, insert or ignore)", "pattern": "unique|idempot|or ignore|bank reference" },
+    { "label": "Bad rows (reported, quarantined, rejected)", "pattern": "bad row|invalid|unknown invoice|quarantin|reject" },
+    { "label": "Reporting (counts, email, alert, log)", "pattern": "report|log|alert|email|count" }
+  ],
+  "sample": "- The whole batch is imported in one transaction: if any row fails, nothing is saved.\n- Each payment is stored with the bank's unique reference as its key, and re-runs use INSERT OR IGNORE, so running a batch twice can't double any payment.\n- A row for an unknown invoice or with a zero amount stops the batch; the finance team gets the row and the reason, fixes or removes it, and re-runs.\n- Every run logs the batch file, rows imported, rows already present and the outcome, and alerts finance if a batch fails.",
+  "note": "The first two rules together are what make 'just re-run it' a safe instruction.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "What does 'atomic' mean for a transaction?",
+    "options": ["It's fast", "All of its changes happen, or none do", "It's encrypted", "It runs at night"],
+    "answer": 1,
+    "explanation": "No half-finished states."
+  },
+  {
+    "prompt": "In Python's sqlite3, what does `with conn:` do if an error occurs inside the block?",
+    "options": ["Commits what it can", "Rolls back every change made in the block", "Ignores the error", "Closes the database"],
+    "answer": 1,
+    "explanation": "And commits if the block finishes."
+  },
+  {
+    "prompt": "How do you make a re-run of the same payment import safe?",
+    "options": ["Hope nobody re-runs it", "Key payments on the bank's unique reference and ignore ones already present", "Delete all payments first", "Run it twice"],
+    "answer": 1,
+    "explanation": "Idempotent imports."
+  }
+]
+```
+$md$, true, true, 5, array['dba-05-p1', 'dba-05-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('dba-m06', 'databases-and-apis-for-developers', 'Indexes and Query Plans', 6, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('databases-and-apis-for-developers:indexes-and-query-plans', 'databases-and-apis-for-developers', 'dba-m06', 'indexes-and-query-plans', 'Indexes and query plans', 'See how the database finds rows by reading its query plan, add an index so a lookup searches instead of scanning, and know what indexes cost.', 15, $md$
+## The problem
+
+The customer portal's "your invoices" page got slower every month. With a few thousand invoices it was fine; with a few hundred thousand it took seconds, because to find one customer's invoices the database read **every** invoice. Nobody had told it there was a faster way.
+
+## The concept
+
+**Scan or search**
+
+Without help, a database answers `WHERE customer_id = ?` by reading every row: a **scan**. An **index** is a sorted structure (like a book's index) that lets it jump straight to the matching rows: a **search**.
+
+**Query plans**
+
+`EXPLAIN QUERY PLAN` shows how SQLite will run a query, without running it. `SCAN invoices` means every row is read; `SEARCH invoices USING INDEX ...` means it jumps to the rows it needs. PostgreSQL's equivalent is `EXPLAIN`.
+
+**What gets an index**
+
+- Primary keys and UNIQUE columns are indexed automatically.
+- Add indexes for columns you **filter, join or sort by** often: foreign keys are the usual first candidates.
+
+**What indexes cost**
+
+Every insert and update must also update each index, and indexes take space. Index for the queries you actually run, not every column.
+
+## Example
+
+Tallybook's invoices and lines, and a helper that shows the plan:
+
+```python
+import sqlite3
+
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/invoicing/"
+raw = pd.read_csv(base + "invoices_raw.csv", dtype=str, keep_default_na=False).drop_duplicates()
+lines = pd.read_csv(base + "invoice_lines.csv")
+
+conn = sqlite3.connect(":memory:")
+conn.executescript("""
+CREATE TABLE invoices (invoice_id TEXT PRIMARY KEY, customer_id TEXT, issue_date TEXT, due_date TEXT);
+CREATE TABLE invoice_lines (invoice_id TEXT, line_no INTEGER, quantity INTEGER, PRIMARY KEY (invoice_id, line_no));
+""")
+conn.executemany("INSERT OR IGNORE INTO invoices VALUES (?, ?, ?, ?)", raw[["invoice_id", "customer_id", "issue_date", "due_date"]].itertuples(index=False))
+conn.executemany("INSERT INTO invoice_lines VALUES (?, ?, ?)", lines[["invoice_id", "line_no", "quantity"]].itertuples(index=False))
+
+def plan(sql, params=()):
+    return " / ".join(row[3] for row in conn.execute("EXPLAIN QUERY PLAN " + sql, params))
+
+BY_CUSTOMER = "SELECT invoice_id, issue_date FROM invoices WHERE customer_id = ? ORDER BY issue_date"
+print("Invoices by customer:", plan(BY_CUSTOMER, ("C0145",)))
+print("Lines for an invoice:", plan("SELECT * FROM invoice_lines WHERE invoice_id = ?", ("INV-100357",)))
+```
+
+```text
+Invoices by customer: SCAN invoices / USE TEMP B-TREE FOR ORDER BY
+Lines for an invoice: SEARCH invoice_lines USING INDEX sqlite_autoindex_invoice_lines_1 (invoice_id=?)
+```
+
+Looking up one invoice's lines already searches: the composite primary key starts with `invoice_id`, so it doubles as an index. Finding a customer's invoices scans every invoice, then sorts them. Add an index on the columns the query filters and sorts by:
+
+```python
+conn.execute("CREATE INDEX idx_invoices_customer_date ON invoices (customer_id, issue_date)")
+print("Invoices by customer:", plan(BY_CUSTOMER, ("C0145",)))
+print("Rows found:", len(conn.execute(BY_CUSTOMER, ("C0145",)).fetchall()))
+```
+
+```text
+Invoices by customer: SEARCH invoices USING INDEX idx_invoices_customer_date (customer_id=?)
+Rows found: 4
+```
+
+Now the database jumps to customer C0145's entries, already in date order, so the separate sort disappears too. With 1,200 invoices you won't feel the difference; with a million, it's the difference between milliseconds and seconds.
+
+## Walkthrough
+
+1. Run the cells. Check the plan for `WHERE issue_date >= ?` alone. Does the new index help? Why not?
+2. Write the index the "overdue invoices" query (`WHERE due_date < ?`) would need.
+3. Which of Tallybook's tables gets the most inserts? What does that mean for adding indexes to it?
+4. List the indexes you'd create for the API in lesson 8.
+
+## Practice
+
+```answer
+{
+  "id": "dba-06-p1",
+  "prompt": "How many invoices does customer **C0145** have?",
+  "answer": 4,
+  "format": "number",
+  "dataset": "invoicing",
+  "files": ["invoices_raw", "invoice_lines"],
+  "pyVerify": "len(conn.execute(BY_CUSTOMER, ('C0145',)).fetchall())",
+  "hint": "The 'Rows found' line.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "What does 'SCAN invoices' in a query plan mean?",
+    "options": ["The table is being backed up", "Every row of invoices is read to answer the query", "An index is used", "The query failed"],
+    "answer": 1,
+    "explanation": "Fine for small tables, slow for big ones."
+  },
+  {
+    "prompt": "Which columns are the best first candidates for indexes?",
+    "options": ["Every column", "Columns you filter, join or sort by often, such as foreign keys", "Text descriptions", "None"],
+    "answer": 1,
+    "explanation": "Index for real queries."
+  },
+  {
+    "prompt": "What do indexes cost?",
+    "options": ["Nothing", "Slower inserts and updates, and extra space", "Slower reads", "Data loss"],
+    "answer": 1,
+    "explanation": "Every write updates every index."
+  }
+]
+```
+$md$, true, true, 6, array['dba-06-p1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('dba-m07', 'databases-and-apis-for-developers', 'Migrations', 7, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('databases-and-apis-for-developers:migrations', 'databases-and-apis-for-developers', 'dba-m07', 'migrations', 'Migrations', 'Change a live database''s schema safely with numbered, versioned migrations that run once each, in order, inside transactions, and that every environment applies the same way.', 25, $md$
+## The problem
+
+Tallybook added a `currency` column to invoices on a developer's laptop with one command. Staging got it a week later, typed by hand with a different default. Production got it a month later, by someone else, without the index. Three databases, three slightly different schemas, and a bug that only happened in production.
+
+Schema changes need the same discipline as code: written down, reviewed, versioned, and applied the same way everywhere. That's what **migrations** are.
+
+## The concept
+
+**Migrations**
+
+A numbered list of schema changes, each a small SQL script, kept in version control with the code:
+
+| Version | Change |
+| :-- | :-- |
+| 1 | create the tables |
+| 2 | add `currency` to invoices, default `NGN` |
+| 3 | add the customer-date index |
+| 4 | create `credit_notes` |
+
+**Running them**
+
+The database records which version it's at. A migration tool applies every **pending** migration, in order, each in a transaction, and records the new version. Running it again does nothing. SQLite has a built-in slot for this: `PRAGMA user_version`. Tools such as Alembic (Python) or Flyway do the same with a version table.
+
+**Rules for safe migrations**
+
+- Never edit a migration that has already run anywhere; add a new one.
+- Make changes backwards-compatible (CI/CD course, lesson 9): add a column with a default before code needs it; remove old columns only after no code uses them.
+- Test migrations on a copy of production data before production.
+
+## Example
+
+A small migration runner:
+
+```python
+import sqlite3
+
+MIGRATIONS = [
+    # 1: the first tables
+    """
+    CREATE TABLE customers (customer_id TEXT PRIMARY KEY, business_name TEXT NOT NULL);
+    CREATE TABLE invoices (invoice_id TEXT PRIMARY KEY, customer_id TEXT NOT NULL REFERENCES customers (customer_id),
+                           issue_date TEXT NOT NULL);
+    """,
+    # 2: invoices get a currency, defaulting to naira for every existing row
+    "ALTER TABLE invoices ADD COLUMN currency TEXT NOT NULL DEFAULT 'NGN';",
+    # 3: the portal's invoice list query needs this index (lesson 6)
+    "CREATE INDEX idx_invoices_customer_date ON invoices (customer_id, issue_date);",
+    # 4: credit notes (lesson 2's task)
+    """
+    CREATE TABLE credit_notes (credit_note_id INTEGER PRIMARY KEY, invoice_id TEXT NOT NULL REFERENCES invoices (invoice_id),
+                               amount_kobo INTEGER NOT NULL CONSTRAINT positive_credit CHECK (amount_kobo > 0),
+                               reason TEXT NOT NULL);
+    """,
+]
+
+def migrate(conn, target=len(MIGRATIONS)):
+    current = conn.execute("PRAGMA user_version").fetchone()[0]
+    applied = []
+    for version in range(current + 1, target + 1):
+        conn.execute("BEGIN")
+        try:
+            for statement in MIGRATIONS[version - 1].split(";"):
+                if statement.strip():
+                    conn.execute(statement)
+            conn.execute(f"PRAGMA user_version = {version}")
+            conn.execute("COMMIT")
+        except Exception:
+            conn.execute("ROLLBACK")
+            raise
+        applied.append(version)
+    return applied
+
+conn = sqlite3.connect(":memory:", isolation_level=None)
+print("Applied up to 2:", migrate(conn, target=2))
+conn.execute("INSERT INTO customers VALUES ('C0001', 'Ada Stores')")
+conn.execute("INSERT INTO invoices (invoice_id, customer_id, issue_date) VALUES ('INV-100001', 'C0001', '2026-09-01')")
+print("Applied the rest:", migrate(conn))
+print("Run again:", migrate(conn))
+print("Schema version:", conn.execute("PRAGMA user_version").fetchone()[0])
+print(conn.execute("SELECT invoice_id, currency FROM invoices").fetchall())
+```
+
+```text
+Applied up to 2: [1, 2]
+Applied the rest: [3, 4]
+Run again: []
+Schema version: 4
+[('INV-100001', 'NGN')]
+```
+
+The second run applies nothing: every environment that runs `migrate` ends up at version 4 with an identical schema, whatever version it started at. The existing invoice got the default currency without anyone touching it.
+
+## Walkthrough
+
+1. Run the cell. Add migration 5: a `paid_on` index on a payments table. Run `migrate` again. Which versions are applied?
+2. Make a migration fail on purpose (a typo in the SQL). Is the version number changed? Is anything half-done?
+3. Why must you never edit migration 2 after it has run in production?
+4. Plan a safe column rename (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "dba-07-p1",
+  "prompt": "What schema version does the database end at?",
+  "answer": 4,
+  "format": "number",
+  "pyVerify": "conn.execute('PRAGMA user_version').fetchone()[0]",
+  "hint": "The 'Schema version' line.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "dba-07-t1",
+  "prompt": "Tallybook wants to rename `customers.business_name` to `trading_name` **without downtime**, while old and new versions of the app run side by side during a release. Write the steps as **numbered migrations and releases**, at least **four**, so that no running version of the app ever breaks.",
+  "minutes": 8,
+  "rows": 7,
+  "placeholder": "1. Migration: add trading_name ...",
+  "rules": [
+    { "label": "At least four numbered steps", "pattern": "^\\s*\\d+[.)]\\s+\\S", "min": 4 },
+    { "label": "Adds the new column first", "pattern": "^\\s*1[.)][^\\n]*(add|create)[^\\n]*trading_name" },
+    { "label": "Copies or backfills the data", "pattern": "copy|backfill|update[^\\n]*set" },
+    { "label": "Code writes or reads both during the change", "pattern": "both|read[^\\n]*trading_name|write[^\\n]*(both|trading_name)" },
+    { "label": "Drops the old column last", "pattern": "(drop|remove)[^\\n]*business_name" },
+    { "label": "Drop comes in the last step", "pattern": "^\\s*[4-9][.)][^\\n]*(drop|remove)" }
+  ],
+  "sample": "1. Migration: add trading_name to customers, allowing NULL at first.\n2. Release: the app writes both business_name and trading_name, and still reads business_name.\n3. Migration: backfill trading_name from business_name for every existing row (UPDATE customers SET trading_name = business_name WHERE trading_name IS NULL).\n4. Release: the app reads trading_name, still writing both.\n5. Release: the app stops writing business_name.\n6. Migration: drop business_name once no running version uses it.",
+  "note": "This 'expand, migrate, contract' pattern is how renames and type changes happen without downtime.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "What is a migration?",
+    "options": ["Moving servers", "A versioned, reviewed schema change applied the same way in every environment", "A backup", "A query"],
+    "answer": 1,
+    "explanation": "Schema changes as code."
+  },
+  {
+    "prompt": "A migration has run in production but has a mistake. What do you do?",
+    "options": ["Edit it", "Write a new migration that corrects it", "Delete it", "Run it again"],
+    "answer": 1,
+    "explanation": "History must match every database."
+  },
+  {
+    "prompt": "Why run each migration in a transaction?",
+    "options": ["Speed", "If it fails halfway, nothing is applied and the version isn't changed", "It's required by SQL", "To lock users out"],
+    "answer": 1,
+    "explanation": "No half-migrated databases."
+  }
+]
+```
+$md$, true, true, 7, array['dba-07-p1', 'dba-07-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('dba-m08', 'databases-and-apis-for-developers', 'REST API Design', 8, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('databases-and-apis-for-developers:rest-api-design', 'databases-and-apis-for-developers', 'dba-m08', 'rest-api-design', 'REST API design', 'Design an API around resources (customers, invoices, payments), choose routes, methods and status codes that clients can rely on, paginate lists, and build it in Flask on the database.', 25, $md$
+## The problem
+
+Tallybook's mobile app needs to show a customer's invoices and let staff record a payment. The first draft API had routes like `/getInvoicesForCustomer?id=C0001` and `/doPayment`, returned 200 for everything (with `"error"` hidden in the body), and sent every invoice a customer had ever had in one response.
+
+Clients write code against an API's shape. A consistent, predictable design saves every client developer time and bugs.
+
+## The concept
+
+**Resources and methods**
+
+Routes name **things**; HTTP methods say what to do with them:
+
+| Method and route | Meaning |
+| :-- | :-- |
+| `GET /customers/C0001` | one customer |
+| `GET /customers/C0001/invoices` | that customer's invoices (a list) |
+| `GET /invoices/INV-100001` | one invoice, with its lines and balance |
+| `POST /invoices/INV-100001/payments` | record a new payment on that invoice |
+
+**Status codes that mean something**
+
+| Code | When |
+| :-- | :-- |
+| 200 OK | a successful read |
+| 201 Created | something was created; a `Location` header says where |
+| 400 Bad Request | the request itself is invalid |
+| 404 Not Found | no such resource |
+| 409 Conflict | valid, but clashes with the current state (a payment larger than what's owed, a reused reference) |
+
+**Pagination**
+
+Lists take `limit` and `offset` (with a sensible maximum), and say how many there are in total, so clients can page through.
+
+## Example
+
+The API on a database built from the invoicing data, with the invoice rules from the Software Engineering course:
+
+```python
+import sqlite3
+from decimal import Decimal, ROUND_HALF_UP
+
+import pandas as pd
+from flask import Flask, jsonify, request
+
+base = "https://academy.cloudtechanalytics.com/datasets/invoicing/"
+customers = pd.read_csv(base + "customers.csv")
+raw = pd.read_csv(base + "invoices_raw.csv", dtype=str, keep_default_na=False).drop_duplicates()
+lines = pd.read_csv(base + "invoice_lines.csv", dtype={"unit_price": str})
+
+def kobo(naira):
+    return int((Decimal(naira.replace("₦", "").replace(",", "")) * 100).quantize(Decimal("1"), rounding=ROUND_HALF_UP))
+
+def round_kobo(amount):
+    return int(amount.quantize(Decimal("1"), rounding=ROUND_HALF_UP))
+
+def invoice_total(line_rows, discount_pct, vat_exempt):
+    subtotal = sum(q * p for q, p in line_rows)
+    after = subtotal - round_kobo(Decimal(subtotal) * discount_pct / 100)
+    return after + (0 if vat_exempt else round_kobo(after * Decimal("0.075")))
+
+bad = set(lines.loc[lines["quantity"] <= 0, "invoice_id"])
+clean = raw[raw["customer_id"].isin(set(customers["customer_id"])) & raw["issue_date"].str.match(r"^\d{4}-\d{2}-\d{2}$")
+            & (raw["discount_pct"].astype(int) <= 20) & (raw["due_date"] >= raw["issue_date"]) & ~raw["invoice_id"].isin(bad)]
+
+db = sqlite3.connect(":memory:", check_same_thread=False)
+db.row_factory = sqlite3.Row
+db.executescript("""
+CREATE TABLE customers (customer_id TEXT PRIMARY KEY, business_name TEXT, city TEXT, vat_exempt INTEGER, payment_terms_days INTEGER);
+CREATE TABLE invoices (invoice_id TEXT PRIMARY KEY, customer_id TEXT REFERENCES customers, issue_date TEXT, due_date TEXT, discount_pct INTEGER);
+CREATE TABLE invoice_lines (invoice_id TEXT, line_no INTEGER, description TEXT, quantity INTEGER, unit_price_kobo INTEGER, PRIMARY KEY (invoice_id, line_no));
+CREATE TABLE payments (bank_reference TEXT PRIMARY KEY, invoice_id TEXT REFERENCES invoices, amount_kobo INTEGER CHECK (amount_kobo > 0));
+CREATE INDEX idx_invoices_customer_date ON invoices (customer_id, issue_date);
+""")
+with db:
+    db.executemany("INSERT INTO customers VALUES (?, ?, ?, ?, ?)", customers.itertuples(index=False))
+    db.executemany("INSERT INTO invoices VALUES (?, ?, ?, ?, ?)", clean[["invoice_id", "customer_id", "issue_date", "due_date", "discount_pct"]].itertuples(index=False))
+    db.executemany("INSERT INTO invoice_lines VALUES (?, ?, ?, ?, ?)",
+                   [(r.invoice_id, r.line_no, r.description, r.quantity, kobo(r.unit_price)) for r in lines[lines["invoice_id"].isin(clean["invoice_id"])].itertuples()])
+    db.executemany("INSERT INTO payments VALUES (?, ?, ?)",
+                   [(f"EXPORT-{r.invoice_id}", r.invoice_id, kobo(r.amount_paid)) for r in clean.itertuples() if kobo(r.amount_paid) > 0])
+
+def invoice_summary(invoice_id):
+    inv = db.execute("SELECT i.*, c.vat_exempt FROM invoices i JOIN customers c USING (customer_id) WHERE invoice_id = ?", (invoice_id,)).fetchone()
+    if inv is None:
+        return None
+    rows = db.execute("SELECT line_no, description, quantity, unit_price_kobo FROM invoice_lines WHERE invoice_id = ? ORDER BY line_no", (invoice_id,)).fetchall()
+    total = invoice_total([(r["quantity"], r["unit_price_kobo"]) for r in rows], inv["discount_pct"], inv["vat_exempt"])
+    paid = db.execute("SELECT COALESCE(SUM(amount_kobo), 0) FROM payments WHERE invoice_id = ?", (invoice_id,)).fetchone()[0]
+    return {"invoice_id": invoice_id, "customer_id": inv["customer_id"], "due_date": inv["due_date"],
+            "lines": [dict(r) for r in rows], "total_kobo": total, "paid_kobo": paid, "balance_kobo": total - paid}
+
+app = Flask(__name__)
+
+@app.get("/customers/<customer_id>/invoices")
+def customer_invoices(customer_id):
+    if db.execute("SELECT 1 FROM customers WHERE customer_id = ?", (customer_id,)).fetchone() is None:
+        return jsonify(error="No such customer"), 404
+    limit = min(int(request.args.get("limit", 10)), 50)
+    offset = int(request.args.get("offset", 0))
+    count = db.execute("SELECT COUNT(*) FROM invoices WHERE customer_id = ?", (customer_id,)).fetchone()[0]
+    rows = db.execute("SELECT invoice_id, issue_date, due_date FROM invoices WHERE customer_id = ? ORDER BY issue_date DESC LIMIT ? OFFSET ?",
+                      (customer_id, limit, offset)).fetchall()
+    return jsonify(total=count, limit=limit, offset=offset, invoices=[dict(r) for r in rows])
+
+@app.get("/invoices/<invoice_id>")
+def get_invoice(invoice_id):
+    summary = invoice_summary(invoice_id)
+    return (jsonify(summary), 200) if summary else (jsonify(error="No such invoice"), 404)
+
+@app.post("/invoices/<invoice_id>/payments")
+def add_payment(invoice_id):
+    summary = invoice_summary(invoice_id)
+    if summary is None:
+        return jsonify(error="No such invoice"), 404
+    body = request.get_json(silent=True) or {}
+    amount, reference = body.get("amount_kobo"), body.get("bank_reference")
+    if not isinstance(amount, int) or amount <= 0 or not reference:
+        return jsonify(error="Send a positive whole-number amount_kobo and a bank_reference"), 400
+    if amount > summary["balance_kobo"]:
+        return jsonify(error=f"Payment exceeds the balance of {summary['balance_kobo']} kobo"), 409
+    try:
+        with db:
+            db.execute("INSERT INTO payments VALUES (?, ?, ?)", (reference, invoice_id, amount))
+    except sqlite3.IntegrityError:
+        return jsonify(error="This bank_reference has already been recorded"), 409
+    return jsonify(invoice_summary(invoice_id)), 201, {"Location": f"/invoices/{invoice_id}"}
+
+client = app.test_client()
+r = client.get("/customers/C0145/invoices?limit=3")
+print(r.status_code, {k: r.get_json()[k] for k in ("total", "limit", "offset")}, [i["invoice_id"] for i in r.get_json()["invoices"]])
+```
+
+```text
+200 {'total': 4, 'limit': 3, 'offset': 0} ['INV-100357', 'INV-100760', 'INV-100832']
+```
+
+Now a payment's journey: read an unpaid invoice, pay part of it, then try the mistakes a client might make:
+
+```python
+unpaid = db.execute("""SELECT i.invoice_id FROM invoices i LEFT JOIN payments p USING (invoice_id)
+                       WHERE p.invoice_id IS NULL ORDER BY i.invoice_id LIMIT 1""").fetchone()[0]
+before = client.get(f"/invoices/{unpaid}").get_json()
+print("Before:", before["total_kobo"], "total,", before["balance_kobo"], "balance")
+
+steps = [
+    ("pay 100,000 kobo", {"amount_kobo": 100_000, "bank_reference": "BNK-9001"}),
+    ("same reference again", {"amount_kobo": 100_000, "bank_reference": "BNK-9001"}),
+    ("more than the balance", {"amount_kobo": before["total_kobo"], "bank_reference": "BNK-9002"}),
+    ("no amount", {"bank_reference": "BNK-9003"}),
+]
+for name, body in steps:
+    r = client.post(f"/invoices/{unpaid}/payments", json=body)
+    detail = r.get_json().get("error") or f"balance now {r.get_json()['balance_kobo']}, Location {r.headers['Location']}"
+    print(f"{name:22} {r.status_code}  {detail}")
+print("Unknown invoice:", client.get("/invoices/INV-000000").status_code)
+```
+
+```text
+Before: 3784484 total, 3784484 balance
+pay 100,000 kobo       201  balance now 3684484, Location /invoices/INV-100001
+same reference again   409  This bank_reference has already been recorded
+more than the balance  409  Payment exceeds the balance of 3684484 kobo
+no amount              400  Send a positive whole-number amount_kobo and a bank_reference
+Unknown invoice: 404
+```
+
+Each outcome has its own status code, so a client can handle it without reading error text: 201 to show the new balance, 409 to tell the user it's already recorded or too much, 400 to fix the form, 404 for a wrong link.
+
+## Walkthrough
+
+1. Run the cells. Page through C0145's invoices with `offset=3`. What changes in the response?
+2. Add `GET /customers/<id>` returning the customer and their total balance.
+3. Why is a reused bank reference 409 and not 400?
+4. Design the routes for credit notes (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "dba-08-p1",
+  "prompt": "How many invoices does the API say customer **C0145** has in total?",
+  "answer": 4,
+  "format": "number",
+  "dataset": "invoicing",
+  "files": ["customers", "invoices_raw", "invoice_lines"],
+  "pyVerify": "client.get('/customers/C0145/invoices').get_json()['total']",
+  "hint": "The total in the first output.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "dba-08-t1",
+  "prompt": "Design the API for **credit notes**: one line per endpoint, giving the **method and route**, what it does, and its **status codes** (success and at least one error each). Include at least **three** endpoints.",
+  "minutes": 6,
+  "rows": 5,
+  "placeholder": "POST /invoices/{id}/credit-notes: ...",
+  "rules": [
+    { "label": "At least three endpoint lines", "pattern": "^\\s*[-*]?\\s*(GET|POST|PUT|PATCH|DELETE)\\s+/\\S+", "min": 3 },
+    { "label": "A POST that creates, with 201", "pattern": "POST[^\\n]*201" },
+    { "label": "A GET with 200", "pattern": "GET[^\\n]*200" },
+    { "label": "404 for missing resources", "pattern": "404" },
+    { "label": "400 or 409 for invalid requests or conflicts", "pattern": "400|409" },
+    { "label": "Resource-style routes (no verbs like /create or /get)", "pattern": "/(create|get|do|make)[A-Z_-]", "absent": true }
+  ],
+  "sample": "POST /invoices/{id}/credit-notes: issue a credit note with amount_kobo and reason; 201 with a Location header, 400 if the amount or reason is missing, 404 if the invoice doesn't exist, 409 if the credit exceeds the invoice's balance.\nGET /invoices/{id}/credit-notes: list an invoice's credit notes; 200, 404 if the invoice doesn't exist.\nGET /credit-notes/{id}: one credit note; 200, 404 if it doesn't exist.",
+  "note": "There's no DELETE: credit notes are financial records, so a mistake is corrected with another document, not erased.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Which route is designed around resources?",
+    "options": ["/getInvoices?customer=C0001", "GET /customers/C0001/invoices", "/doPayment", "/api?action=list"],
+    "answer": 1,
+    "explanation": "Nouns in routes, verbs as methods."
+  },
+  {
+    "prompt": "A valid payment would make the invoice overpaid. Which status fits?",
+    "options": ["200", "409 Conflict", "500", "201"],
+    "answer": 1,
+    "explanation": "The request is valid but clashes with the current state."
+  },
+  {
+    "prompt": "Why paginate lists?",
+    "options": ["To hide data", "So responses stay small and fast however much data a customer has", "HTTP requires it", "To slow clients"],
+    "answer": 1,
+    "explanation": "And say the total, so clients can page."
+  }
+]
+```
+$md$, true, true, 8, array['dba-08-p1', 'dba-08-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('dba-m09', 'databases-and-apis-for-developers', 'Testing the API', 9, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('databases-and-apis-for-developers:testing-the-api', 'databases-and-apis-for-developers', 'dba-m09', 'testing-the-api', 'Testing the API', 'Test an API and its database together with pytest, using fixtures that give every test a fresh, small database, so tests are fast, independent and repeatable.', 15, $md$
+## The problem
+
+Tallybook's first API tests ran against a shared development database. One test recorded a payment; another test, run afterwards, found the balance changed and failed. Tests passed or failed depending on the order they ran in, and on what someone had done to the database that morning. People stopped trusting them.
+
+Good tests are **independent**: each starts from a known state, and nothing one test does affects another.
+
+## The concept
+
+**Fixtures**
+
+A pytest **fixture** is a function that prepares something a test needs and hands it over. A test asks for it by naming it as a parameter:
+
+```python norun
+@pytest.fixture
+def client():
+    db = make_test_database()      # fresh for every test
+    yield create_app(db).test_client()
+```
+
+**An app factory**
+
+`create_app(db)` builds the app around whichever database it's given: the real one in production, a fresh in-memory one in tests.
+
+**Small, known test data**
+
+Tests use a few rows written into the fixture, chosen to make expected answers easy to work out by hand, not the full production data.
+
+**What to test in an API**
+
+Every endpoint's success case, each error status, and the rules that involve the database: totals, balances, uniqueness, and that a refused request changed nothing.
+
+## Example
+
+The API as a module with an app factory, and its tests. Write both files and run pytest:
+
+```bash
+%%bash
+cat > pytest.ini <<'EOF'
+[pytest]
+addopts = -q -p no:cacheprovider --tb=short
+console_output_style = classic
+EOF
+cat > billing_api.py <<'EOF'
+import sqlite3
+
+from flask import Flask, jsonify, request
+
+SCHEMA = """
+CREATE TABLE invoices (invoice_id TEXT PRIMARY KEY, total_kobo INTEGER NOT NULL);
+CREATE TABLE payments (bank_reference TEXT PRIMARY KEY,
+                       invoice_id TEXT NOT NULL REFERENCES invoices (invoice_id),
+                       amount_kobo INTEGER NOT NULL CHECK (amount_kobo > 0));
+"""
+
+
+def balance(db, invoice_id):
+    row = db.execute("SELECT total_kobo FROM invoices WHERE invoice_id = ?", (invoice_id,)).fetchone()
+    if row is None:
+        return None
+    paid = db.execute("SELECT COALESCE(SUM(amount_kobo), 0) FROM payments WHERE invoice_id = ?", (invoice_id,)).fetchone()[0]
+    return row[0] - paid
+
+
+def create_app(db):
+    app = Flask(__name__)
+
+    @app.get("/invoices/<invoice_id>")
+    def get_invoice(invoice_id):
+        owed = balance(db, invoice_id)
+        if owed is None:
+            return jsonify(error="No such invoice"), 404
+        return jsonify(invoice_id=invoice_id, balance_kobo=owed)
+
+    @app.post("/invoices/<invoice_id>/payments")
+    def add_payment(invoice_id):
+        owed = balance(db, invoice_id)
+        if owed is None:
+            return jsonify(error="No such invoice"), 404
+        body = request.get_json(silent=True) or {}
+        amount, reference = body.get("amount_kobo"), body.get("bank_reference")
+        if not isinstance(amount, int) or amount <= 0 or not reference:
+            return jsonify(error="Send a positive amount_kobo and a bank_reference"), 400
+        if amount > owed:
+            return jsonify(error="Payment exceeds the balance"), 409
+        try:
+            with db:
+                db.execute("INSERT INTO payments VALUES (?, ?, ?)", (reference, invoice_id, amount))
+        except sqlite3.IntegrityError:
+            return jsonify(error="Reference already recorded"), 409
+        return jsonify(invoice_id=invoice_id, balance_kobo=balance(db, invoice_id)), 201
+    return app
+EOF
+cat > test_billing_api.py <<'EOF'
+import sqlite3
+
+import pytest
+
+from billing_api import SCHEMA, create_app
+
+
+@pytest.fixture
+def db():
+    conn = sqlite3.connect(":memory:", check_same_thread=False)
+    conn.execute("PRAGMA foreign_keys = ON")
+    conn.executescript(SCHEMA)
+    conn.execute("INSERT INTO invoices VALUES ('INV-1', 215000)")   # N2,150.00 owed
+    conn.commit()
+    yield conn
+    conn.close()
+
+
+@pytest.fixture
+def client(db):
+    return create_app(db).test_client()
+
+
+def test_new_invoice_shows_full_balance(client):
+    assert client.get("/invoices/INV-1").get_json()["balance_kobo"] == 215000
+
+
+def test_unknown_invoice_is_404(client):
+    assert client.get("/invoices/NOPE").status_code == 404
+
+
+def test_part_payment_reduces_balance(client):
+    r = client.post("/invoices/INV-1/payments", json={"amount_kobo": 15000, "bank_reference": "B1"})
+    assert r.status_code == 201
+    assert r.get_json()["balance_kobo"] == 200000
+
+
+def test_overpayment_is_refused_and_changes_nothing(client, db):
+    r = client.post("/invoices/INV-1/payments", json={"amount_kobo": 215001, "bank_reference": "B2"})
+    assert r.status_code == 409
+    assert db.execute("SELECT COUNT(*) FROM payments").fetchone()[0] == 0
+
+
+def test_reused_reference_is_refused(client):
+    client.post("/invoices/INV-1/payments", json={"amount_kobo": 1000, "bank_reference": "B3"})
+    r = client.post("/invoices/INV-1/payments", json={"amount_kobo": 1000, "bank_reference": "B3"})
+    assert r.status_code == 409
+
+
+@pytest.mark.parametrize("body", [{}, {"amount_kobo": 0, "bank_reference": "B4"}, {"amount_kobo": "100", "bank_reference": "B4"}, {"amount_kobo": 100}])
+def test_invalid_payment_is_400(client, body):
+    assert client.post("/invoices/INV-1/payments", json=body).status_code == 400
+EOF
+python -m pytest
+```
+
+```text
+.........
+9 passed in 0.01s
+```
+
+Nine tests (the parametrized one counts four times), each with its own fresh database. Run them in any order, as often as you like: same result. Notice `test_overpayment_is_refused_and_changes_nothing` checks the database directly, not just the status code: a refused request must leave no trace.
+
+## Walkthrough
+
+1. Run the cell in Colab. Then break the code: change `amount > owed` to `amount >= owed`. Which test fails, and is that the behaviour you want?
+2. Add a test that paying the exact balance leaves a balance of 0.
+3. Why does the `client` fixture take `db` as a parameter?
+4. Write a test for a new rule (the task below).
+
+## Practice
+
+```task
+{
+  "id": "dba-09-t1",
+  "prompt": "Write a **pytest test** using the `client` and `db` fixtures that checks paying the **exact balance** returns **201**, leaves a balance of **0**, and that **one** payment row exists.",
+  "minutes": 6,
+  "rows": 8,
+  "placeholder": "def test_paying_the_exact_balance_...(client, db):",
+  "rules": [
+    { "label": "A test function using client and db", "pattern": "def\\s+test_\\w+\\s*\\(\\s*(client\\s*,\\s*db|db\\s*,\\s*client)\\s*\\)" },
+    { "label": "Posts a payment of 215000", "pattern": "post\\([^)]*215_?000" },
+    { "label": "Asserts status 201", "pattern": "status_code\\s*==\\s*201" },
+    { "label": "Asserts a balance of 0", "pattern": "balance_kobo[\"']\\]\\s*==\\s*0\\b" },
+    { "label": "Checks one payment row in the database", "pattern": "db\\.execute\\([^)]*COUNT[\\s\\S]*==\\s*1\\b" }
+  ],
+  "sample": "def test_paying_the_exact_balance_clears_it(client, db):\n    r = client.post(\"/invoices/INV-1/payments\", json={\"amount_kobo\": 215000, \"bank_reference\": \"B9\"})\n    assert r.status_code == 201\n    assert r.get_json()[\"balance_kobo\"] == 0\n    assert db.execute(\"SELECT COUNT(*) FROM payments\").fetchone()[0] == 1",
+  "note": "The boundary from the Software Engineering course again: paying exactly what's owed must be allowed.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "Why give each test a fresh database?",
+    "options": ["It's faster", "So no test depends on what another test did, and results don't depend on order", "pytest requires it", "To save disk"],
+    "answer": 1,
+    "explanation": "Independent tests are trustworthy tests."
+  },
+  {
+    "prompt": "What does an app factory like create_app(db) make possible?",
+    "options": ["Faster requests", "Running the same app on a test database in tests and the real one in production", "Automatic deployment", "Encryption"],
+    "answer": 1,
+    "explanation": "Inject what the app depends on."
+  },
+  {
+    "prompt": "A refused overpayment returns 409. What else should the test check?",
+    "options": ["Nothing", "That no payment row was written", "The server's CPU", "The response time"],
+    "answer": 1,
+    "explanation": "Refusals must leave no trace."
+  }
+]
+```
+$md$, true, true, 9, array['dba-09-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('dba-m10', 'databases-and-apis-for-developers', 'Final Project', 10, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('databases-and-apis-for-developers:final-project', 'databases-and-apis-for-developers', 'dba-m10', 'final-project', '"Final project: Tallybook''s invoicing database and API"', 'Plan your final project, a migrated, constrained database and a tested REST API for invoices and payments, with every rule enforced in the database and every endpoint tested.', 20, $md$
+## The problem
+
+Tallybook is ready to retire its CSV exports. Your final project is the replacement: a database with a schema built by migrations and protected by constraints, loaded from the export with every refused row explained, and a REST API for customers, invoices and payments, tested with fresh databases.
+
+## The concept
+
+**What the project contains**
+
+| Part | Built in |
+| :-- | :-- |
+| Schema with keys and named constraints, as migrations | lessons 2, 3 and 7 |
+| A loader that reports every refused row | lesson 3 |
+| Parameterised queries for balances and lists | lesson 4 |
+| A transactional, idempotent payment import | lesson 5 |
+| Indexes justified by query plans | lesson 6 |
+| The REST API with clear status codes and pagination | lesson 8 |
+| Tests with fixtures for every endpoint and rule | lesson 9 |
+
+**Prove it reconciles**
+
+The API's balances must agree with a direct SQL calculation for every invoice, and every row of the export must be either loaded or refused with a reason.
+
+## Example
+
+A reconciliation in SQL alone: total invoiced, paid and outstanding across all loaded invoices, from the same rules the API uses.
+
+```python
+import sqlite3
+from decimal import Decimal, ROUND_HALF_UP
+
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/invoicing/"
+customers = pd.read_csv(base + "customers.csv")
+raw = pd.read_csv(base + "invoices_raw.csv", dtype=str, keep_default_na=False).drop_duplicates()
+lines = pd.read_csv(base + "invoice_lines.csv", dtype={"unit_price": str})
+
+def kobo(naira):
+    return int((Decimal(naira.replace("₦", "").replace(",", "")) * 100).quantize(Decimal("1"), rounding=ROUND_HALF_UP))
+
+bad = set(lines.loc[lines["quantity"] <= 0, "invoice_id"])
+clean = raw[raw["customer_id"].isin(set(customers["customer_id"])) & raw["issue_date"].str.match(r"^\d{4}-\d{2}-\d{2}$")
+            & (raw["discount_pct"].astype(int) <= 20) & (raw["due_date"] >= raw["issue_date"]) & ~raw["invoice_id"].isin(bad)]
+
+db = sqlite3.connect(":memory:")
+db.executescript("""
+CREATE TABLE customers (customer_id TEXT PRIMARY KEY, vat_exempt INTEGER);
+CREATE TABLE invoices (invoice_id TEXT PRIMARY KEY, customer_id TEXT, discount_pct INTEGER, paid_kobo INTEGER);
+CREATE TABLE invoice_lines (invoice_id TEXT, quantity INTEGER, unit_price_kobo INTEGER);
+""")
+db.executemany("INSERT INTO customers VALUES (?, ?)", customers[["customer_id", "vat_exempt"]].itertuples(index=False))
+db.executemany("INSERT INTO invoices VALUES (?, ?, ?, ?)", [(r.invoice_id, r.customer_id, int(r.discount_pct), kobo(r.amount_paid)) for r in clean.itertuples()])
+db.executemany("INSERT INTO invoice_lines VALUES (?, ?, ?)", [(r.invoice_id, r.quantity, kobo(r.unit_price)) for r in lines[lines["invoice_id"].isin(clean["invoice_id"])].itertuples()])
+
+rows = db.execute("""
+    SELECT i.invoice_id, i.discount_pct, c.vat_exempt, i.paid_kobo, SUM(l.quantity * l.unit_price_kobo) AS subtotal
+    FROM invoices i JOIN customers c USING (customer_id) JOIN invoice_lines l USING (invoice_id)
+    GROUP BY i.invoice_id
+""").fetchall()
+
+def rk(x):
+    return int(Decimal(x).quantize(Decimal("1"), rounding=ROUND_HALF_UP))
+
+invoiced = paid = 0
+for invoice_id, discount, exempt, paid_kobo, subtotal in rows:
+    after = subtotal - rk(Decimal(subtotal) * discount / 100)
+    invoiced += after + (0 if exempt else rk(after * Decimal("0.075")))
+    paid += paid_kobo
+print(f"Invoices: {len(rows)}")
+print(f"Invoiced:    ₦{invoiced / 100:,.2f}")
+print(f"Paid:        ₦{paid / 100:,.2f}")
+print(f"Outstanding: ₦{(invoiced - paid) / 100:,.2f}")
+```
+
+```text
+Invoices: 1133
+Invoiced:    ₦138,718,871.36
+Paid:        ₦104,078,481.37
+Outstanding: ₦34,640,389.99
+```
+
+Your API's balances, summed over every invoice, must give exactly the outstanding figure. If they don't, one of the two has a bug, and your tests should find which.
+
+## Walkthrough
+
+1. Build the migrations, loader, API and tests.
+2. Reconcile the API's balances with the SQL figures above.
+3. Write the README: how to run the migrations, the loader, the API and the tests.
+4. Open the project brief on the course page and plan the write-up.
+
+## Practice
+
+```answer
+{
+  "id": "dba-10-p1",
+  "prompt": "How many invoices are in the reconciliation?",
+  "answer": 1133,
+  "format": "number",
+  "dataset": "invoicing",
+  "files": ["customers", "invoices_raw", "invoice_lines"],
+  "pyVerify": "len(rows)",
+  "hint": "The Invoices line.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "dba-10-t1",
+  "prompt": "Write the **README section** for your project (60 to 150 words): what the service does, how to **run the migrations**, how to **load** the export (and where refused rows go), how to **start** the API, and how to **run the tests**.",
+  "minutes": 6,
+  "rows": 8,
+  "placeholder": "## Tallybook invoicing service ...",
+  "rules": [
+    { "label": "Migrations", "pattern": "migrat" },
+    { "label": "Loading and refused rows", "pattern": "(load|import)[\\s\\S]*(refused|rejected|report)" },
+    { "label": "Starting the API", "pattern": "flask|api|server|run" },
+    { "label": "Running the tests", "pattern": "pytest|test" },
+    { "label": "A command in backticks", "pattern": "`[^`]+`", "min": 2 },
+    { "label": "Between 60 and 150 words", "minWords": 60, "maxWords": 150 }
+  ],
+  "sample": "## Tallybook invoicing service\n\nA SQLite database and Flask API for customers, invoices and payments, replacing the CSV exports.\n\n1. Create or update the database: `python migrate.py tallybook.db`. It applies any pending migrations and does nothing if the database is current.\n2. Load an export: `python load.py tallybook.db invoices_raw.csv`. Every refused row is written to `refused.csv` with the constraint it broke, for the finance team to review.\n3. Start the API: `flask --app api run`. Endpoints are listed in `API.md`.\n4. Run the tests: `python -m pytest`. Each test uses its own in-memory database, so they can run in any order.",
+  "note": "A README someone can follow without asking you a question is part of the software.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "How do you know the API's balances are right?",
+    "options": ["It doesn't crash", "They reconcile exactly with an independent SQL calculation, and tests cover each rule", "They look plausible", "The client is happy"],
+    "answer": 1,
+    "explanation": "Two independent routes to the same number."
+  },
+  {
+    "prompt": "Where should 'discount at most 20%' be enforced?",
+    "options": ["Only in the API", "In the database as a constraint, and in the API for a friendly message", "Only in the client", "Nowhere"],
+    "answer": 1,
+    "explanation": "Constraint for safety, validation for clarity."
+  },
+  {
+    "prompt": "What makes the payment import safe to re-run?",
+    "options": ["Running it at night", "A transaction per batch and a unique bank reference per payment", "Deleting payments first", "A bigger database"],
+    "answer": 1,
+    "explanation": "Atomic and idempotent."
+  }
+]
+```
+$md$, true, true, 10, array['dba-10-p1', 'dba-10-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+
 -- Course: Data Analyst Capstone: End-to-End BI Project
 insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
-values ('data-analyst-capstone', 'full', null, 'data-analyst-capstone', 'CAP', 'Data Analyst Capstone: End-to-End BI Project', 'Take a retail chain''s raw till export all the way to a reviewed dashboard and a board-ready executive summary, using the tools of your choice.', 'The capstone of the Data Analyst track. Voltline Electronics, a chain of eight stores, sends you 18 months of raw till data and one question from its chief executive: what''s really driving our 37% growth? You''ll plan the analysis, profile and clean a genuinely messy export (a duplicated upload, mixed date formats, inconsistent store names and test transactions), build a model that looks up costs by date and compares sales with monthly targets, decompose the growth, find what''s going wrong where, and put a value on missed sales. Then you''ll build a dashboard, write an executive summary, prepare for the board''s questions and publish the project for your portfolio. Use Excel, Power BI, SQL or Python: the work is assessed on the answers, not the tool.', 'data-analytics', 'intermediate', 4, 'Career project', 14, true, 'available', true, array['Turning a business brief into an analysis plan', 'Profiling and cleaning raw data with a quality log', 'Modelling data at the right grain', 'Decomposing growth into price, new stores and volume', 'Judging targets fairly', 'Estimating lost sales with stated assumptions', 'Finding-led dashboards and executive summaries', 'Presenting and publishing a portfolio project']::text[], array['The core Data Analyst courses: Excel, SQL and Power BI (or Python)', 'Comfort cleaning data and building a dashboard in at least one tool']::text[], 'Voltline Electronics: commercial review', true, true, true, true, false, 60, 38)
+values ('data-analyst-capstone', 'full', null, 'data-analyst-capstone', 'CAP', 'Data Analyst Capstone: End-to-End BI Project', 'Take a retail chain''s raw till export all the way to a reviewed dashboard and a board-ready executive summary, using the tools of your choice.', 'The capstone of the Data Analyst track. Voltline Electronics, a chain of eight stores, sends you 18 months of raw till data and one question from its chief executive: what''s really driving our 37% growth? You''ll plan the analysis, profile and clean a genuinely messy export (a duplicated upload, mixed date formats, inconsistent store names and test transactions), build a model that looks up costs by date and compares sales with monthly targets, decompose the growth, find what''s going wrong where, and put a value on missed sales. Then you''ll build a dashboard, write an executive summary, prepare for the board''s questions and publish the project for your portfolio. Use Excel, Power BI, SQL or Python: the work is assessed on the answers, not the tool.', 'data-analytics', 'intermediate', 4, 'Career project', 14, true, 'available', true, array['Turning a business brief into an analysis plan', 'Profiling and cleaning raw data with a quality log', 'Modelling data at the right grain', 'Decomposing growth into price, new stores and volume', 'Judging targets fairly', 'Estimating lost sales with stated assumptions', 'Finding-led dashboards and executive summaries', 'Presenting and publishing a portfolio project']::text[], array['The core Data Analyst courses: Excel, SQL and Power BI (or Python)', 'Comfort cleaning data and building a dashboard in at least one tool']::text[], 'Voltline Electronics: commercial review', true, true, true, true, false, 60, 39)
 on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level = excluded.level, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
@@ -54115,6 +55916,108 @@ values ('sweq12', 1, 'Test APIs like any other code.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 
+-- Assessment: Databases and APIs for Developers: final assessment
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('databases-and-apis-for-developers-final', 'databases-and-apis-for-developers', 'final', null, 'Databases and APIs for Developers: final assessment', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dbaq01', 'databases-and-apis-for-developers-final', 1, 'Invoices store a copy of the customer''s business name. The customer renames their business. What goes wrong?', '["Nothing","Old invoices show the old name; copies disagree","The database crashes","Invoices are deleted"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dbaq01', 1, 'Store each fact once and link by key.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dbaq02', 'databases-and-apis-for-developers-final', 2, 'Which constraint refuses an invoice for a customer who doesn''t exist?', '["NOT NULL","A foreign key (REFERENCES customers)","PRIMARY KEY","An index"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dbaq02', 1, 'Foreign keys enforce relationships.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dbaq03', 'databases-and-apis-for-developers-final', 3, 'Why name CHECK constraints (CONSTRAINT discount_limit CHECK ...)?', '["It''s faster","Error messages say which rule was broken, so code can respond clearly","It''s required","To hide them"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dbaq03', 1, 'Useful errors.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dbaq04', 'databases-and-apis-for-developers-final', 4, 'Which is the safe way to query by a user-supplied name?', '["f\"... WHERE name = ''{name}''\"","conn.execute(\"... WHERE name = ?\", (name,))","\"... WHERE name = ''\" + name + \"''\"","Escape quotes by hand"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dbaq04', 1, 'Parameters keep values as data.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dbaq05', 'databases-and-apis-for-developers-final', 5, 'A batch import fails on its 4th of 6 rows. With a transaction, how many rows are saved?', '["3","0","5","6"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dbaq05', 1, 'All or nothing.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dbaq06', 'databases-and-apis-for-developers-final', 6, 'What makes re-running a payment import safe?', '["Running it at night","A unique bank reference per payment, with duplicates ignored","Deleting payments first","A bigger server"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dbaq06', 1, 'Idempotency.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dbaq07', 'databases-and-apis-for-developers-final', 7, 'A query plan says ''SCAN invoices'' for WHERE customer_id = ?. What helps?', '["More memory","An index on customer_id","A bigger table","Removing the WHERE"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dbaq07', 1, 'Search instead of scan.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dbaq08', 'databases-and-apis-for-developers-final', 8, 'A migration that already ran in production has a mistake. What do you do?', '["Edit it","Add a new migration that corrects it","Delete the database","Run it again"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dbaq08', 1, 'Never rewrite history that has run.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dbaq09', 'databases-and-apis-for-developers-final', 9, 'How do you rename a column with no downtime?', '["Rename it in one step","Add the new column, write both, backfill, switch reads, then drop the old one","Stop the app","Create a new database"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dbaq09', 1, 'Expand, migrate, contract.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dbaq10', 'databases-and-apis-for-developers-final', 10, 'A payment is valid but more than the invoice''s balance. Which status code fits?', '["200","409 Conflict","500","404"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dbaq10', 1, 'Valid request, conflicting state.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dbaq11', 'databases-and-apis-for-developers-final', 11, 'A successful POST creates a payment. What should the response include?', '["Status 200 only","Status 201 and a Location header for the new or updated resource","A redirect","Nothing"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dbaq11', 1, 'Tell the client what was created and where.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dbaq12', 'databases-and-apis-for-developers-final', 12, 'Why give each API test its own fresh in-memory database?', '["It''s required by Flask","So tests are independent and give the same result in any order","To test performance","To save disk"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dbaq12', 1, 'Trustworthy tests.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
 -- Assessment: Prompting Essentials: module check
 insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
 values ('aipf-m01-check', 'ai-productivity-fundamentals', 'module', 'aipf-m01', 'Prompting Essentials: module check', 60, true)
@@ -57484,6 +59387,14 @@ Work in Google Colab (or on your own computer) with the invoicing dataset (https
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
 
 
+-- Project: Tallybook's invoicing database and API
+insert into public.projects (id, course_id, title, summary, brief_md, tasks, datasets, rubric, required)
+values ('dba-tallybook-database-and-api', 'databases-and-apis-for-developers', 'Tallybook''s invoicing database and API', 'A migrated, constrained database and a tested REST API for customers, invoices and payments, loaded from a messy export with every refused row explained and every balance reconciled.', $md$Tallybook is retiring its CSV exports. Build the database and API that replace them, and prove they're right.
+
+Work in Google Colab (or on your own computer) with the invoicing dataset (https://academy.cloudtechanalytics.com/datasets/invoicing/: customers.csv, invoices_raw.csv and invoice_lines.csv). Put your code in a Git repository on GitHub. Submit the repository link, and paste your **schema**, your **test run output** and your **reconciliation** below, followed by a short note on where each part is in the repository.$md$, array['Schema: customers, invoices, invoice lines, payments and credit notes, with keys and named constraints, built by numbered migrations.', 'Loader: loads the export, refusing bad rows through the database''s constraints and reporting every refusal with its reason.', 'Payments import: transactional and idempotent, keyed on the bank reference.', 'Indexes: one for each important query, justified with query plans.', 'API: customers, invoices with balances, paginated lists and payments, with clear status codes.', 'Tests: pytest with fixtures giving every test a fresh database, covering every endpoint and rule.', 'A reconciliation of API balances against an independent SQL calculation, and a README.']::text[], array['invoicing']::text[], array['The schema stores each fact once, with keys and constraints that make bad states impossible.', 'Migrations are numbered, transactional and safe to re-run.', 'Every query uses parameters; none is built from text.', 'Imports are atomic and idempotent.', 'The API uses resource-style routes, correct status codes and pagination.', 'Tests are independent and cover success, every error and refused requests leaving no trace.', 'Balances reconcile exactly, and the README lets someone else run everything.']::text[], true)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
+
+
 -- Track: Become a Data Analyst
 insert into public.tracks (id, slug, title, summary, badge_name, badge_code, skills, position, published)
 values ('data-analyst', 'data-analyst', 'Become a Data Analyst', 'The route we recommend from no experience to a junior data analyst role. Learn how analysis works, then the tools teams use every day (Excel, SQL, Power BI and Python) on realistic company data. Build portfolio projects that answer real business questions, and finish with your CV, LinkedIn and interview preparation.', 'CloudTech Data Analyst', 'DATAANALYST', array['Spreadsheet analysis in Excel', 'Statistics: averages, spread, confidence intervals and tests', 'Querying databases with SQL, from first SELECT to cohorts and window functions', 'Data modelling and star schemas', 'Dashboards in Power BI, with DAX measures you can trust', 'Analysis in Python and pandas', 'Turning data into findings a manager can act on']::text[], 1, true)
@@ -57760,15 +59671,19 @@ values ('software-developer', 'sql-for-data-analysis', 'Core', false, 5)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 insert into public.track_courses (track_id, course_id, stage, required, position)
-values ('software-developer', 'cicd-and-containers', 'Specialist', false, 6)
+values ('software-developer', 'databases-and-apis-for-developers', 'Specialist', true, 6)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 insert into public.track_courses (track_id, course_id, stage, required, position)
-values ('software-developer', 'career-essentials', 'Career', true, 7)
+values ('software-developer', 'cicd-and-containers', 'Specialist', false, 7)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 insert into public.track_courses (track_id, course_id, stage, required, position)
-values ('software-developer', 'build-your-student-portfolio', 'Career', false, 8)
+values ('software-developer', 'career-essentials', 'Career', true, 8)
+on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
+
+insert into public.track_courses (track_id, course_id, stage, required, position)
+values ('software-developer', 'build-your-student-portfolio', 'Career', false, 9)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 

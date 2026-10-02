@@ -101,7 +101,7 @@ Every row has exactly one outcome, and they add up. That table, with your test r
   "rules": [
     { "label": "Totals change (kobo, rounding)", "pattern": "kobo|round" },
     { "label": "Testing (tests, boundary, passing)", "pattern": "test" },
-    { "label": "Export handling with numbers", "pattern": "(quarantin|duplicat|fixed)[\\s\\S]*\\d|\\d[\\s\\S]*(quarantin|duplicat|fixed)" },
+    { "label": "Export handling with numbers", "pattern": "\\d[^.\\n]{0,120}(quarantin|duplicat|fixed)|(quarantin|duplicat|fixed)[^.\\n]{0,120}\\d" },
     { "label": "An action for the finance team", "pattern": "review|check|approve|confirm|sign" },
     { "label": "Between 80 and 180 words", "minWords": 80, "maxWords": 180 }
   ],

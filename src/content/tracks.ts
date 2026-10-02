@@ -380,7 +380,7 @@ export const TRACKS: Track[] = [
         summary: "Build for the web and ship safely.",
         items: [
           { kind: "upcoming", title: "Web Development with JavaScript", why: "HTML, CSS and JavaScript for the pages people use, with tests and accessibility.", level: 2 },
-          { kind: "upcoming", title: "Databases and APIs for Developers", why: "Design schemas, write migrations and build APIs on a real database.", level: 3 },
+          { kind: "course", courseId: "databases-and-apis-for-developers", why: "Schemas, constraints, transactions, migrations and a tested REST API, on a real company's invoicing data." },
           { kind: "course", courseId: "cicd-and-containers", why: "Containers, pipelines and safe releases for the code you write.", required: false },
         ],
       },
