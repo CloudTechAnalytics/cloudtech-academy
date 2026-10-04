@@ -13,6 +13,7 @@
 //   links point at real courses and datasets, and every SQL starter runs
 // Run: npm run test:content
 import initSqlJs from "sql.js";
+import { stripTypeScriptTypes } from "node:module";
 import fs from "node:fs";
 import path from "node:path";
 import { openDataset, query } from "./lib/csv-db.mjs";
@@ -222,10 +223,9 @@ for (const course of COURSES) {
 
 // Assessments are plain data in TypeScript: strip the type annotations and evaluate them.
 function loadAssessments(file) {
-  const src = fs
-    .readFileSync(file, "utf8")
-    .replace(/^import .*$/gm, "")
-    .replace(/export const \w+: AssessmentDef(\[\])? =/, "return");
+  // Strip the TypeScript types (Node's built-in stripper), then run the file and take its export.
+  const src = stripTypeScriptTypes(fs.readFileSync(file, "utf8").replace(/^import type .*$/gm, ""))
+    .replace(/export const \w+\s*=/, "return");
   const value = new Function(src)();
   return Array.isArray(value) ? value : [value];
 }
@@ -276,7 +276,6 @@ for (const m of badgeModules) if (!checkedModules.has(m)) fail(`module ${m} has 
 for (const m of checkedModules) if (!badgeModules.includes(m)) fail(`module check for ${m}, which has no badge in the catalogue`);
 
 // Practice projects (src/content/projects.ts, loaded with its types stripped).
-const { stripTypeScriptTypes } = await import("node:module");
 const os = await import("node:os");
 const { pathToFileURL } = await import("node:url");
 const projectsJs = path.join(os.tmpdir(), `cta-projects-${process.pid}.mjs`);

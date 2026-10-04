@@ -4071,84 +4071,122 @@ on conflict (id) do update set course_id = excluded.course_id, module_id = exclu
 
 -- Course: Python for Beginners
 insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
-values ('python-for-beginners', 'short', 'Python Basics', 'python-for-beginners', 'PY', 'Python for Beginners', 'Write your first Python code in Google Colab: variables, decisions, loops and functions, ending with a budget tracker project.', 'Start programming with one of the world''s most popular languages, with nothing to install. Learn values and variables, make decisions with if statements, repeat work with loops, and write your own functions, then build a small budget tracker for your portfolio. Each module takes 20 to 25 minutes, including tasks you do yourself, and ends with a check and a badge.', 'python', 'beginner', 1, 'Beginner', null, true, 'available', true, array['Python variables and types', 'Conditions, lists and loops', 'Writing functions', 'Dictionaries and a small project']::text[], array['No experience needed', 'A free Google account for Google Colab']::text[], null, true, false, false, false, true, 60, 8)
+values ('python-for-beginners', 'short', 'Python Basics', 'python-for-beginners', 'PY', 'Python for Beginners', 'Learn Python step by step in Google Colab, from your first line of code to variables, text, decisions, lists, loops, dictionaries, functions and errors, ending with a budget tracker project.', 'Start programming with one of the world''s most popular languages, with nothing to install. Ten step-by-step lessons take you through the whole foundation, each idea explained with small examples you run yourself: printing and comments, variables and data types, numbers and maths, working with text, decisions with if, lists and tuples, for and while loops, dictionaries and sets, your own functions, and handling errors and using modules. Along the way you build a budget tracker for your portfolio. Each module has tasks you do yourself, a check and a badge.', 'python', 'beginner', 1, 'Beginner', null, true, 'available', true, array['Run Python in Google Colab', 'Variables, data types and conversions', 'Numbers, maths and formatting', 'Working with text', 'Decisions with if, elif and else', 'Lists, tuples, dictionaries and sets', 'for and while loops', 'Writing functions', 'Handling errors and using modules']::text[], array['No experience needed', 'A free Google account for Google Colab']::text[], null, true, false, false, false, true, 60, 8)
 on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level = excluded.level, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
-values ('py-m01', 'python-for-beginners', 'First Steps in Python', 1, 'Python First Steps', 'PYSTART', array['Run Python in Google Colab', 'Store values in variables', 'Know the main data types', 'Do maths and format text with f-strings']::text[])
+values ('py-m01', 'python-for-beginners', 'First Steps in Python', 1, 'Python First Steps', 'PYSTART', array['Run Python in Google Colab', 'Print text and numbers', 'Write comments', 'Read an error message']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('python-for-beginners:first-steps-in-python', 'python-for-beginners', 'py-m01', 'first-steps-in-python', 'First Steps in Python', 'Run Python in your browser with Google Colab, and learn values, variables, types and simple maths, with nothing to install.', 20, $md$
+values ('python-for-beginners:first-steps-in-python', 'python-for-beginners', 'py-m01', 'first-steps-in-python', 'First Steps in Python', 'What programming is, how to run Python in your browser with Google Colab, print, comments, how Python reads your code, and how to read an error message.', 25, $md$
 ## Why Python
 
-Python is one of the most popular programming languages in the world, and one of the easiest to read. It's used for data analysis, automation, websites, AI and more. If you want a career in data or tech, it's a strong first language.
+A **program** is a list of instructions for a computer, written in a language it understands. **Python** is one of the most popular programming languages in the world, and one of the easiest to read: its instructions look close to plain English. It's used for:
+
+- **data analysis**: cleaning, summarising and charting data (pandas, matplotlib);
+- **automation**: renaming files, sending reports, filling spreadsheets;
+- **websites and apps**: Instagram's servers run Python;
+- **AI and machine learning**: most AI tools are built with it.
+
+If you want a career in data or tech, it's a strong first language, and everything you learn here carries over to other languages.
 
 ## Open Google Colab
 
-You don't need to install anything. **Google Colab** runs Python in your browser for free.
+You don't need to install anything. **Google Colab** runs Python in your browser, for free, on Google's computers.
 
 1. Go to **colab.research.google.com** and sign in with a Google account.
-2. Click **New notebook**.
-3. You'll see a **code cell**. Type code in it and press **Shift + Enter** to run it.
+2. Click **New notebook**. It opens with one empty **code cell**.
+3. Click **Untitled0.ipynb** at the top and rename it, for example "Python practice".
 
-The notebook saves to your Google Drive automatically.
+A notebook is made of **cells**:
+
+| Cell | Holds | How to add |
+| :-- | :-- | :-- |
+| **Code cell** | Python code you can run | **+ Code** |
+| **Text cell** | notes and headings | **+ Text** |
+
+To run a code cell, click the ▶ button on its left, or press **Shift + Enter** (run and move to the next cell). The output appears under the cell. The notebook saves to your Google Drive automatically.
+
+> [!NOTE]
+> If Colab sits idle for a while, it **disconnects** and forgets everything you ran. That's normal. Click **Connect**, then run your cells again from the top (**Runtime → Run all**).
 
 ## Your first line of code
+
+Type this in a code cell and run it:
 
 ```python
 print("Hello, I'm learning Python!")
 ```
 
-Run it. `print()` shows whatever you put inside the brackets.
-
-## Variables
-
-A **variable** is a name that stores a value. Use `=` to assign:
-
-```python
-name = "Ifeoma"
-age = 20
-cgpa = 4.21
-is_student = True
-
-print(name)
-print("Age:", age)
+```text
+Hello, I'm learning Python!
 ```
 
-Variable names use lowercase letters and underscores (`first_name`, not `First Name`). They can't start with a number or contain spaces.
+`print()` is a **function**: a built-in command that does a job. Its job is to show whatever you put inside the brackets. The text is in quotation marks so Python knows it's text, not code.
 
-## The main types
-
-| Type | Example | Used for |
-| :-- | :-- | :-- |
-| `str` (string) | `"Lagos"` | Text, always in quotes |
-| `int` (integer) | `42` | Whole numbers |
-| `float` | `3.75` | Decimal numbers |
-| `bool` (boolean) | `True`, `False` | Yes/no values |
-
-Check a type with `type(age)`.
-
-## Maths and text
+You can print several things at once, separated by commas. `print` puts a space between them:
 
 ```python
-price = 2500
-quantity = 4
-total = price * quantity
-print("Total: ₦", total)
-
-# f-strings put values inside text
-print(f"{name} bought {quantity} items for ₦{total:,}")
+print("Lagos", "Abuja", "Kano")
+print("Total:", 2500)
 ```
 
-Operators: `+` add, `-` subtract, `*` multiply, `/` divide, `**` power, `%` remainder. Lines starting with `#` are **comments**; Python ignores them.
+```text
+Lagos Abuja Kano
+Total: 2500
+```
 
-> [!NOTE]
-> `"5" + "5"` gives `"55"` (joining text), but `5 + 5` gives `10`. If a number is stored as text, convert it with `int("5")` or `float("5.5")`.
+Python can also calculate. Without quotes, `2 + 3` is a sum:
+
+```python
+print(2 + 3)
+print("2 + 3")
+```
+
+```text
+5
+2 + 3
+```
+
+The first line works out the answer; the second prints the text exactly as written. Quotes make the difference.
+
+## How Python reads your code
+
+Python runs your code **one line at a time, from top to bottom**:
+
+```python
+print("First")
+print("Second")
+print("Third")
+```
+
+```text
+First
+Second
+Third
+```
+
+Each instruction usually goes on its own line. Capitals matter: `print` works, `Print` and `PRINT` don't. And in Python, the **spaces at the start of a line** mean something (you'll see why in the lesson on conditions), so for now, start every line at the left edge.
+
+## Comments
+
+Anything after a `#` on a line is a **comment**. Python ignores it; it's a note for people reading your code, including you next month:
+
+```python
+# Work out monthly transport cost
+print(700 * 2 * 22)  # fare × trips a day × days
+```
+
+```text
+30800
+```
+
+Comments explain **why** the code does something. You'll also use `#` to switch a line off while you test, without deleting it.
 
 ## When it goes wrong
 
-Errors are normal, and Python's error messages tell you what went wrong if you read the **last line** first. The three you'll meet most this week:
+Errors are normal, even for experts. Python's error messages tell you what went wrong if you read the **last line** first. The three you'll meet most:
 
 ```python norun
 print("Hello)
@@ -4168,22 +4206,35 @@ print(nmae)
 NameError: name 'nmae' is not defined
 ```
 
-A **NameError** means you used a name Python doesn't know: usually a typo, or a variable whose cell you haven't run yet. (After restarting Colab, run your earlier cells again.)
+A **NameError** means you used a name Python doesn't know: usually a typo, or a variable whose cell you haven't run yet. (After Colab disconnects or restarts, run your earlier cells again.)
 
 ```python norun
-age = 20
-print("Age: " + age)
+Print("Hello")
 ```
 
 ```text nocheck
-TypeError: can only concatenate str (not "int") to str
+NameError: name 'Print' is not defined
 ```
 
-A **TypeError** means you mixed types that don't go together: here, text plus a number. Fix it with an f-string, `print(f"Age: {age}")`, or by converting, `"Age: " + str(age)`.
+Capitals matter: Python knows `print`, not `Print`.
+
+> [!TIP]
+> When an error appears, don't panic and don't retype everything. Read the last line, find the line number it mentions, and look closely at that line for a missing quote, bracket or comma.
+
+## Summary
+
+| You want to... | Write |
+| :-- | :-- |
+| show text | `print("Hello")` |
+| show several values | `print("Total:", 2500)` |
+| calculate | `print(2 + 3)` |
+| add a note | `# comment` |
+| run a cell in Colab | **Shift + Enter** |
+| start again after a disconnect | **Runtime → Run all** |
 
 ## Try it
 
-Open a new Colab notebook called "Python practice" and work through these. Run your code, then type the result here.
+Open your Colab notebook and work through these. Run your code, then type the result here.
 
 ```answer
 {
@@ -4191,7 +4242,7 @@ Open a new Colab notebook called "Python practice" and work through these. Run y
   "prompt": "One bus trip costs **₦700**. You make **2 trips a day** for **22 days** in a month. Write the calculation in Python: how much do you spend on transport in the month?",
   "answer": 30800,
   "format": "naira",
-  "hint": "trips = 2 * 22, then trips * 700",
+  "hint": "print(700 * 2 * 22)",
   "pyVerify": "700 * 2 * 22",
   "required": true
 }
@@ -4213,7 +4264,7 @@ Open a new Colab notebook called "Python practice" and work through these. Run y
 ```answer
 {
   "id": "py-m01-a3",
-  "prompt": "What **type** is `4.21`? Type the short name Python uses.",
+  "prompt": "What **type** is `4.21`? Type the short name Python uses. (Run `type(4.21)` to find out; the next lesson explains types.)",
   "answer": "float",
   "format": "text",
   "accept": ["<class 'float'>", "a float"],
@@ -4225,7 +4276,364 @@ Open a new Colab notebook called "Python practice" and work through these. Run y
 ```task
 {
   "id": "py-m01-t1",
-  "prompt": "Write code that stores **your name, course, level and number of courses** this semester in four variables, then prints one sentence about you with an **f-string**, for example *Ifeoma is a 200 level Economics student taking 9 courses.* Run it in Colab, then paste your code here.",
+  "prompt": "Write a short program with **at least three `print` lines**: your name, your course, and a calculation (for example your monthly transport cost), with a **comment** above it explaining what it works out. Run it in Colab, then paste your code here.",
+  "minutes": 6,
+  "rows": 8,
+  "placeholder": "# About me\nprint(\"...\")",
+  "rules": [
+    { "label": "At least three print lines", "pattern": "^\\s*print\\(", "min": 3 },
+    { "label": "Text in quotes", "pattern": "print\\(\\s*[\"'][^\"'\\n]+[\"']" },
+    { "label": "A calculation with an operator", "pattern": "print\\([^\\n]*\\d+\\s*[-+*/]\\s*\\d+" },
+    { "label": "A comment starting with #", "pattern": "#\\s*\\S" }
+  ],
+  "sample": "# About me\nprint(\"My name is Ifeoma\")\nprint(\"I study Economics\")\n# Monthly transport: fare x trips a day x days\nprint(700 * 2 * 22)",
+  "required": true
+}
+```
+$md$, true, true, 1, array['py-m01-a1', 'py-m01-a2', 'py-m01-a3', 'py-m01-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('py-m04', 'python-for-beginners', 'Variables and Data Types', 2, 'Python Variables', 'PYVARS', array['Store and update values in variables', 'Know the main data types', 'Convert between types', 'Put values into text with f-strings']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('python-for-beginners:variables-and-data-types', 'python-for-beginners', 'py-m04', 'variables-and-data-types', 'Variables and Data Types', 'Store values in variables, name them well, know Python''s main data types, check a value''s type, and convert between types.', 35, $md$
+## Variables
+
+A **variable** is a name that stores a value, so you can use it later. Create one with `=`:
+
+```python
+name = "Ifeoma"
+age = 20
+print(name)
+print(age)
+```
+
+```text
+Ifeoma
+20
+```
+
+Read `=` as "**is set to**", not "equals": `age = 20` means "set age to 20". The name goes on the left, the value on the right.
+
+Once a variable exists, use its name anywhere you'd use the value:
+
+```python
+price = 2500
+quantity = 4
+total = price * quantity
+print(total)
+```
+
+```text
+10000
+```
+
+### Changing a variable
+
+A variable holds one value at a time. Assign again and the old value is replaced:
+
+```python
+balance = 5000
+print(balance)
+balance = 3200
+print(balance)
+```
+
+```text
+5000
+3200
+```
+
+You can use a variable's current value to work out its new one. This is very common:
+
+```python
+balance = 5000
+balance = balance - 1800   # spend 1,800
+print(balance)
+```
+
+```text
+3200
+```
+
+Python works out the right-hand side first (5000 − 1800), then stores the answer in `balance`. There's a shortcut for it, `balance -= 1800`, and the same for the other operators: `+=`, `*=`, `/=`.
+
+### Naming variables
+
+| Rule | Allowed | Not allowed |
+| :-- | :-- | :-- |
+| Letters, numbers and underscores only | `first_name`, `total2` | `first-name`, `first name` |
+| Can't start with a number | `course2` | `2course` |
+| Capitals matter | `Age` and `age` are different variables | |
+| Not a Python keyword | `class_name` | `class`, `if`, `for` |
+
+And by convention:
+
+- use **lowercase with underscores** (`monthly_budget`), called snake_case;
+- choose names that **say what's inside**: `transport_cost` beats `x` or `tc`.
+
+> [!TIP]
+> Good names are the cheapest way to make code readable. `total = price * quantity` explains itself; `t = p * q` doesn't.
+
+### Several at once
+
+You can assign several variables in one line, matching names to values in order:
+
+```python
+city, state = "Ibadan", "Oyo"
+print(city, state)
+```
+
+```text
+Ibadan Oyo
+```
+
+## Data types
+
+Every value has a **type**, which decides what you can do with it. You can add two numbers, but you can't sensibly multiply two names. Python's main types:
+
+| Type | Name in Python | Examples | Used for |
+| :-- | :-- | :-- | :-- |
+| text | `str` (string) | `"Lagos"`, `'ECO 201'`, `""` | names, codes, messages |
+| whole number | `int` (integer) | `42`, `-7`, `0` | counts, IDs, ages |
+| decimal number | `float` | `3.75`, `-0.5`, `2.0` | prices with kobo, averages |
+| true or false | `bool` (boolean) | `True`, `False` | yes/no answers |
+| nothing | `NoneType` | `None` | "no value yet" |
+
+Check any value's type with `type()`:
+
+```python
+print(type("Lagos"))
+print(type(42))
+print(type(4.21))
+print(type(True))
+print(type(None))
+```
+
+```text
+<class 'str'>
+<class 'int'>
+<class 'float'>
+<class 'bool'>
+<class 'NoneType'>
+```
+
+### Strings
+
+Text goes in quotes, single or double; both work, as long as they match. Use double quotes when the text contains an apostrophe:
+
+```python
+course = 'Economics'
+message = "I'm in 200 level"
+print(course)
+print(message)
+```
+
+```text
+Economics
+I'm in 200 level
+```
+
+### Numbers: int and float
+
+A number with a decimal point is a `float`, even if it ends in `.0`:
+
+```python
+print(type(5))
+print(type(5.0))
+```
+
+```text
+<class 'int'>
+<class 'float'>
+```
+
+Don't use commas inside numbers: `60,000` isn't sixty thousand to Python. Write `60000`, or use an underscore to make it readable: `60_000`.
+
+```python
+budget = 60_000
+print(budget)
+```
+
+```text
+60000
+```
+
+### Booleans
+
+`True` and `False` (capital first letter, no quotes) are answers to yes/no questions. You'll get them from comparisons:
+
+```python
+print(25 > 18)
+print("Lagos" == "Abuja")
+```
+
+```text
+True
+False
+```
+
+You'll use booleans all the time in the lesson on conditions.
+
+### None
+
+`None` means "no value". It's what you store when a value isn't known yet:
+
+```python
+graduation_year = None
+print(graduation_year)
+```
+
+```text
+None
+```
+
+## Converting between types
+
+Values often arrive as the wrong type, especially numbers stored as text (from a form, a file or a spreadsheet). Text that looks like a number doesn't behave like one:
+
+```python
+print("5" + "5")
+print(5 + 5)
+```
+
+```text
+55
+10
+```
+
+With text, `+` **joins**; with numbers, it **adds**. Convert with these functions:
+
+| Function | Converts to | Example | Result |
+| :-- | :-- | :-- | :-- |
+| `int()` | whole number | `int("42")` | `42` |
+| `float()` | decimal | `float("3.5")` | `3.5` |
+| `str()` | text | `str(2500)` | `"2500"` |
+| `bool()` | true or false | `bool(0)` | `False` |
+
+```python
+fee_text = "45000"
+fee = int(fee_text)
+print(fee + 5000)
+print(int(9.99))
+print(float(7))
+print(str(2026) + " budget")
+```
+
+```text
+50000
+9
+7.0
+2026 budget
+```
+
+Note that `int(9.99)` gives `9`: it **cuts off** the decimals, it doesn't round. Use `round(9.99)` to round.
+
+Conversions only work when they make sense:
+
+```python norun
+int("forty")
+```
+
+```text nocheck
+ValueError: invalid literal for int() with base 10: 'forty'
+```
+
+A **ValueError** means the value can't be converted.
+
+## Putting values into text
+
+To mix text and numbers in one message, use an **f-string**: put `f` before the opening quote, and variables inside `{curly brackets}`:
+
+```python
+name = "Musa"
+level = 300
+print(f"{name} is in {level} level")
+```
+
+```text
+Musa is in 300 level
+```
+
+Without an f-string, joining text and a number with `+` fails, because they're different types:
+
+```python norun
+print("Level: " + level)
+```
+
+```text nocheck
+TypeError: can only concatenate str (not "int") to str
+```
+
+Fix it with an f-string, `f"Level: {level}"`, or by converting, `"Level: " + str(level)`. You'll learn much more about f-strings in the lesson on text.
+
+## Getting input from the user
+
+`input()` pauses your program and waits for someone to type, then gives you what they typed, **always as text**:
+
+```python norun
+name = input("What is your name? ")
+age = int(input("How old are you? "))
+print(f"Hello {name}, next year you'll be {age + 1}")
+```
+
+Notice `int(...)` around the second `input`: without it, `age` would be text and `age + 1` would fail. In Colab, a box appears under the cell for you to type into.
+
+## Summary
+
+| You want to... | Write |
+| :-- | :-- |
+| store a value | `name = "Ifeoma"` |
+| update a value | `balance = balance - 1800` or `balance -= 1800` |
+| check a type | `type(value)` |
+| text to a number | `int("42")`, `float("3.5")` |
+| a number to text | `str(2500)` |
+| text with values in it | `f"{name} is {age}"` |
+| ask the user | `input("Question? ")` (gives text) |
+
+## Try it
+
+```answer
+{
+  "id": "py-m04-a1",
+  "prompt": "You start the month with `balance = 60000`. You spend 12,500 on transport and 28,000 on food, updating `balance` after each. What is `balance` at the end?",
+  "answer": 19500,
+  "format": "naira",
+  "hint": "balance = 60000, then balance -= 12500, then balance -= 28000.",
+  "pyVerify": "60000 - 12500 - 28000",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "py-m04-a2",
+  "prompt": "What does `int(\"45000\") + 5000` give?",
+  "answer": 50000,
+  "format": "number",
+  "pyVerify": "int('45000') + 5000",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "py-m04-a3",
+  "prompt": "What does `int(7.9)` give?",
+  "answer": 7,
+  "format": "number",
+  "hint": "int() cuts off the decimals; it doesn't round.",
+  "pyVerify": "int(7.9)",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "py-m04-t1",
+  "prompt": "Write code that stores **your name, course, level and number of courses** this semester in four variables (at least one text and one number), then prints one sentence about you with an **f-string**, for example *Ifeoma is a 200 level Economics student taking 9 courses.* Run it in Colab, then paste your code here.",
   "minutes": 6,
   "rows": 8,
   "placeholder": "name = \"...\"\ncourse = \"...\"\n...\nprint(f\"...\")",
@@ -4239,16 +4647,846 @@ Open a new Colab notebook called "Python practice" and work through these. Run y
   "required": true
 }
 ```
-$md$, true, true, 1, array['py-m01-a1', 'py-m01-a2', 'py-m01-a3', 'py-m01-t1']::text[])
+$md$, true, true, 2, array['py-m04-a1', 'py-m04-a2', 'py-m04-a3', 'py-m04-t1']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
-values ('py-m02', 'python-for-beginners', 'Decisions, Lists and Loops', 2, 'Python Logic', 'PYLOOPS', array['Make decisions with if, elif and else', 'Store values in lists', 'Repeat work with for loops', 'Use range and zip']::text[])
+values ('py-m05', 'python-for-beginners', 'Numbers and Maths', 3, 'Python Numbers', 'PYNUM', array['Use the arithmetic operators', 'Follow the order of operations', 'Round and use the math module', 'Work out percentages and format money']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('python-for-beginners:decisions-and-loops', 'python-for-beginners', 'py-m02', 'decisions-and-loops', 'Decisions, Lists and Loops', 'Make your code decide with if statements, store many values in lists, and repeat work with for loops.', 25, $md$
-## Making decisions with if
+values ('python-for-beginners:numbers-and-maths', 'python-for-beginners', 'py-m05', 'numbers-and-maths', 'Numbers and Maths', 'Do arithmetic in Python: the operators, whole-number division and remainders, the order of operations, rounding, useful built-in functions, the math module and formatting money.', 35, $md$
+## Arithmetic operators
+
+Python is a very good calculator. The operators:
+
+| Operator | Does | Example | Result |
+| :-- | :-- | :-- | :-- |
+| `+` | add | `7 + 2` | `9` |
+| `-` | subtract | `7 - 2` | `5` |
+| `*` | multiply | `7 * 2` | `14` |
+| `/` | divide | `7 / 2` | `3.5` |
+| `//` | divide and drop the remainder | `7 // 2` | `3` |
+| `%` | remainder after dividing | `7 % 2` | `1` |
+| `**` | to the power of | `7 ** 2` | `49` |
+
+```python
+print(7 + 2)
+print(7 - 2)
+print(7 * 2)
+print(7 / 2)
+print(7 // 2)
+print(7 % 2)
+print(7 ** 2)
+```
+
+```text
+9
+5
+14
+3.5
+3
+1
+49
+```
+
+### Division always gives a float
+
+`/` always returns a decimal, even when the answer is whole:
+
+```python
+print(10 / 2)
+```
+
+```text
+5.0
+```
+
+That's usually fine. When you need a whole number, use `//` or `int()`.
+
+### Whole-number division and remainder
+
+`//` and `%` answer two everyday questions. You have ₦25,000 and data bundles cost ₦3,500: how many can you buy, and what's left?
+
+```python
+money = 25000
+bundle = 3500
+print(money // bundle)   # how many bundles
+print(money % bundle)    # change left over
+```
+
+```text
+7
+500
+```
+
+Seven bundles, ₦500 change. `%` is also how you check whether a number is even (`n % 2 == 0`) or turn 130 minutes into hours and minutes:
+
+```python
+minutes = 130
+print(minutes // 60, "hours and", minutes % 60, "minutes")
+```
+
+```text
+2 hours and 10 minutes
+```
+
+## The order of operations
+
+Python follows the same order as maths: brackets first, then powers, then `*` `/` `//` `%`, then `+` `-`. When operators have the same rank, it works left to right.
+
+```python
+print(2 + 3 * 4)
+print((2 + 3) * 4)
+```
+
+```text
+14
+20
+```
+
+In the first line, `3 * 4` happens first. Brackets change the order. When in doubt, add brackets: they cost nothing and make your intent clear.
+
+A practical example. Your scores are 67, 81 and 54. The average needs brackets round the sum:
+
+```python
+print(67 + 81 + 54 / 3)
+print((67 + 81 + 54) / 3)
+```
+
+```text
+166.0
+67.33333333333333
+```
+
+The first is wrong: only 54 was divided by 3.
+
+## Rounding
+
+`round(number, places)` rounds to a number of decimal places. With no places, it rounds to a whole number:
+
+```python
+average = (67 + 81 + 54) / 3
+print(round(average, 2))
+print(round(average))
+```
+
+```text
+67.33
+67
+```
+
+> [!NOTE]
+> Python rounds exact halves to the nearest **even** number: `round(2.5)` is `2` and `round(3.5)` is `4`. This "banker's rounding" avoids bias when rounding many numbers. If you need halves always to round up, for money for example, the `decimal` module does that; you'll meet it in later courses.
+
+### Why 0.1 + 0.2 isn't exactly 0.3
+
+```python
+print(0.1 + 0.2)
+```
+
+```text
+0.30000000000000004
+```
+
+Computers store decimals in binary, and some decimals, like 0.1, can't be stored exactly, just as 1/3 can't be written exactly as a decimal. The error is tiny, but it shows up. Round when you display results, and never test decimals with `==`.
+
+## Useful built-in functions
+
+| Function | Returns | Example | Result |
+| :-- | :-- | :-- | :-- |
+| `abs(x)` | the value without its sign | `abs(-500)` | `500` |
+| `min(a, b, ...)` | the smallest | `min(67, 81, 54)` | `54` |
+| `max(a, b, ...)` | the largest | `max(67, 81, 54)` | `81` |
+| `round(x, n)` | x rounded to n places | `round(3.14159, 2)` | `3.14` |
+| `pow(x, y)` | x to the power y | `pow(2, 10)` | `1024` |
+
+```python
+print(abs(-500))
+print(min(67, 81, 54), max(67, 81, 54))
+```
+
+```text
+500
+54 81
+```
+
+## The math module
+
+More maths lives in the `math` **module**, a collection of extra tools you **import** before using:
+
+```python
+import math
+
+print(math.sqrt(144))
+print(math.ceil(4.1))
+print(math.floor(4.9))
+print(math.pi)
+```
+
+```text
+12.0
+5
+4
+3.141592653589793
+```
+
+`math.ceil` rounds **up** and `math.floor` rounds **down**, whatever the decimal. That's handy for "how many buses do we need?": 130 students at 18 seats a bus needs `math.ceil(130 / 18)`, which is 8, not 7.2.
+
+```python
+import math
+
+students = 130
+seats = 18
+print(math.ceil(students / seats))
+```
+
+```text
+8
+```
+
+## Working with money
+
+### Percentages
+
+A percentage is just multiplication by a fraction. 7.5% VAT on ₦40,000:
+
+```python
+price = 40000
+vat_rate = 7.5
+vat = price * vat_rate / 100
+print(vat)
+print(price + vat)
+```
+
+```text
+3000.0
+43000.0
+```
+
+A 15% discount, and what share one amount is of another:
+
+```python
+print(40000 * (1 - 15 / 100))
+print(round(12500 / 60000 * 100, 1))
+```
+
+```text
+34000.0
+20.8
+```
+
+So ₦12,500 is 20.8% of ₦60,000.
+
+### Formatting numbers for people
+
+Long numbers are hard to read. Inside an f-string, add a **format** after a colon:
+
+| Format | Does | Example | Shows |
+| :-- | :-- | :-- | :-- |
+| `:,` | thousands separators | `f"{1234567:,}"` | `1,234,567` |
+| `:.2f` | two decimal places | `f"{3.14159:.2f}"` | `3.14` |
+| `:,.0f` | separators, no decimals | `f"{43000.0:,.0f}"` | `43,000` |
+| `:.1%` | as a percentage | `f"{0.208:.1%}"` | `20.8%` |
+
+```python
+total = 43000.0
+print(f"Total: ₦{total:,.0f}")
+print(f"Share: {12500 / 60000:.1%}")
+```
+
+```text
+Total: ₦43,000
+Share: 20.8%
+```
+
+## When it goes wrong
+
+```python norun
+print(100 / 0)
+```
+
+```text nocheck
+ZeroDivisionError: division by zero
+```
+
+Dividing by zero is impossible, and Python stops. Check the divisor first, for example `if count > 0:`, when it could be zero.
+
+```python norun
+print("100" * 2 + 50)
+```
+
+```text nocheck
+TypeError: can only concatenate str (not "int") to str
+```
+
+`"100"` is text, so `"100" * 2` is `"100100"`, and text plus a number fails. Convert first: `int("100") * 2 + 50`.
+
+## Summary
+
+| You want... | Write |
+| :-- | :-- |
+| a division with decimals | `a / b` |
+| how many whole times | `a // b` |
+| what's left over | `a % b` |
+| a power | `a ** b` |
+| a rounded result | `round(x, 2)` |
+| round up / down | `math.ceil(x)` / `math.floor(x)` |
+| a percentage of a value | `value * rate / 100` |
+| money for people | `f"₦{amount:,.0f}"` |
+
+## Try it
+
+```answer
+{
+  "id": "py-m05-a1",
+  "prompt": "You have **₦25,000**. Data bundles cost **₦3,500** each. Using `%`, how much **change** is left after buying as many bundles as you can?",
+  "answer": 500,
+  "format": "naira",
+  "pyVerify": "25000 % 3500",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "py-m05-a2",
+  "prompt": "What does `2 + 3 * 4 ** 2` give? Work it out, then check in Colab.",
+  "answer": 50,
+  "format": "number",
+  "hint": "Powers first, then multiplication, then addition.",
+  "pyVerify": "2 + 3 * 4 ** 2",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "py-m05-a3",
+  "prompt": "A trip needs seats for **130** students. Each bus holds **18**. How many buses do you need? Use `math.ceil`.",
+  "answer": 8,
+  "format": "number",
+  "pyVerify": "math.ceil(130 / 18)",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "py-m05-t1",
+  "prompt": "Write a small **shopping calculator**: store a price and a quantity, work out the subtotal, add **7.5% VAT**, and print the subtotal, VAT and total as naira with **thousands separators** using f-strings. Run it, then paste your code.",
+  "minutes": 8,
+  "rows": 10,
+  "placeholder": "price = ...\nquantity = ...",
+  "rules": [
+    { "label": "A price and a quantity in variables", "pattern": "^\\s*\\w+\\s*=\\s*\\d", "min": 2 },
+    { "label": "Multiplies them", "pattern": "\\w+\\s*\\*\\s*\\w+" },
+    { "label": "Works out 7.5% VAT", "pattern": "7\\.5|0\\.075" },
+    { "label": "Prints with f-strings", "pattern": "print\\(\\s*f[\"']", "min": 2 },
+    { "label": "Formats with thousands separators", "pattern": "\\{[^}]*:,[^}]*\\}" }
+  ],
+  "sample": "price = 8500\nquantity = 3\nsubtotal = price * quantity\nvat = subtotal * 7.5 / 100\ntotal = subtotal + vat\nprint(f\"Subtotal: ₦{subtotal:,.0f}\")\nprint(f\"VAT (7.5%): ₦{vat:,.0f}\")\nprint(f\"Total: ₦{total:,.0f}\")",
+  "required": true
+}
+```
+$md$, true, true, 3, array['py-m05-a1', 'py-m05-a2', 'py-m05-a3', 'py-m05-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('py-m06', 'python-for-beginners', 'Working with Text', 4, 'Python Text', 'PYTEXT', array['Index and slice strings', 'Clean text with string methods', 'Split and join text', 'Format output with f-strings']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('python-for-beginners:working-with-text', 'python-for-beginners', 'py-m06', 'working-with-text', 'Working with Text', 'Strings in depth: quotes and special characters, joining and repeating, length, indexing and slicing, the most useful string methods, splitting and joining, and f-string formatting.', 30, $md$
+## Strings
+
+Text in Python is a **string** (`str`): a sequence of characters in quotes. Single and double quotes work the same way:
+
+```python
+course = "Economics"
+code = 'ECO 201'
+print(course, code)
+```
+
+```text
+Economics ECO 201
+```
+
+Use double quotes when the text contains an apostrophe, or single quotes when it contains double quotes:
+
+```python
+print("I'm in 200 level")
+print('She said "well done"')
+```
+
+```text
+I'm in 200 level
+She said "well done"
+```
+
+### Special characters
+
+A **backslash** `\` starts a special character inside a string:
+
+| Write | Means |
+| :-- | :-- |
+| `\n` | a new line |
+| `\t` | a tab |
+| `\'` or `\"` | a quote inside quotes of the same kind |
+| `\\` | one backslash |
+
+```python
+print("Name:\tAdaeze\nLevel:\t300")
+```
+
+```text
+Name:	Adaeze
+Level:	300
+```
+
+For text over several lines, use **triple quotes**:
+
+```python
+address = """Block C, Room 14
+Queen Amina Hall
+University of Lagos"""
+print(address)
+```
+
+```text
+Block C, Room 14
+Queen Amina Hall
+University of Lagos
+```
+
+## Joining and repeating
+
+`+` joins strings; `*` repeats one:
+
+```python
+first = "Chidi"
+last = "Okeke"
+print(first + " " + last)
+print("-" * 20)
+```
+
+```text
+Chidi Okeke
+--------------------
+```
+
+## Length
+
+`len()` counts the characters, including spaces:
+
+```python
+print(len("Chidi Okeke"))
+```
+
+```text
+11
+```
+
+## Indexing: one character
+
+Each character has a position, its **index**, starting at **0**:
+
+| Character | P | y | t | h | o | n |
+| :-- | :-- | :-- | :-- | :-- | :-- | :-- |
+| Index | 0 | 1 | 2 | 3 | 4 | 5 |
+| From the end | -6 | -5 | -4 | -3 | -2 | -1 |
+
+```python
+word = "Python"
+print(word[0])
+print(word[2])
+print(word[-1])
+```
+
+```text
+P
+t
+n
+```
+
+Negative indexes count from the end, so `[-1]` is always the last character, however long the string.
+
+## Slicing: part of a string
+
+`text[start:stop]` takes the characters from `start` up to, **but not including**, `stop`:
+
+```python
+code = "ECO201-2026"
+print(code[0:3])
+print(code[3:6])
+print(code[7:])
+print(code[:6])
+print(code[-4:])
+```
+
+```text
+ECO
+201
+2026
+ECO201
+2026
+```
+
+- Leave out `start` to begin at the start; leave out `stop` to go to the end.
+- The number of characters you get is `stop − start`: `[0:3]` gives 3.
+
+## String methods
+
+A **method** is a function that belongs to a value. You call it with a dot: `text.upper()`. String methods never change the original string (strings can't be changed); they give you a new one.
+
+### Changing case
+
+```python
+name = "adaeze OKAFOR"
+print(name.upper())
+print(name.lower())
+print(name.title())
+print(name.capitalize())
+```
+
+```text
+ADAEZE OKAFOR
+adaeze okafor
+Adaeze Okafor
+Adaeze okafor
+```
+
+### Removing spaces
+
+Data typed by people often has stray spaces. `strip()` removes them from both ends:
+
+```python
+entry = "   lagos  "
+print(f"[{entry}]")
+print(f"[{entry.strip()}]")
+print(f"[{entry.strip().title()}]")
+```
+
+```text
+[   lagos  ]
+[lagos]
+[Lagos]
+```
+
+You can **chain** methods, as in the last line: strip, then title-case. `lstrip()` and `rstrip()` remove spaces from one side only.
+
+### Finding and replacing
+
+```python
+email = "musa.bello@gmail.com"
+print(email.replace("gmail.com", "unilag.edu.ng"))
+print(email.find("@"))
+print(email.count("a"))
+print("bello" in email)
+print(email.startswith("musa"))
+print(email.endswith(".com"))
+```
+
+```text
+musa.bello@unilag.edu.ng
+10
+2
+True
+True
+True
+```
+
+- `find` gives the index where something first appears, or `-1` if it isn't there.
+- `in` asks "is this inside?" and gives `True` or `False`.
+
+### Checking what's in a string
+
+| Method | True when the string... | `"2026"` | `"ECO"` | `"ECO 201"` |
+| :-- | :-- | :-- | :-- | :-- |
+| `isdigit()` | is all digits | True | False | False |
+| `isalpha()` | is all letters | False | True | False |
+| `isupper()` | has no lowercase letters | False | True | True |
+
+These are useful for checking input before converting it, for example `if text.isdigit(): number = int(text)`.
+
+## Splitting and joining
+
+`split()` breaks a string into a **list** of pieces. With no argument, it splits on spaces:
+
+```python
+sentence = "Data analysis with Python"
+print(sentence.split())
+
+line = "Adaeze,Economics,200,4.21"
+print(line.split(","))
+```
+
+```text
+['Data', 'analysis', 'with', 'Python']
+['Adaeze', 'Economics', '200', '4.21']
+```
+
+The second example is how a line of a CSV file breaks into its values. (Each piece is still text: `"200"`, not `200`.)
+
+`join()` does the opposite: it glues a list of strings together, with the string you call it on between each piece:
+
+```python
+parts = ["2026", "09", "15"]
+print("-".join(parts))
+print(", ".join(["Lagos", "Abuja", "Kano"]))
+```
+
+```text
+2026-09-15
+Lagos, Abuja, Kano
+```
+
+## f-strings in depth
+
+An **f-string** puts values inside text. Anything in `{}` is worked out and inserted:
+
+```python
+name = "Musa"
+fee = 45000
+print(f"{name} owes ₦{fee:,}")
+print(f"Half is {fee / 2}")
+print(f"In capitals: {name.upper()}")
+```
+
+```text
+Musa owes ₦45,000
+Half is 22500.0
+In capitals: MUSA
+```
+
+After the value, a colon and a **format** control how it looks:
+
+| Format | Does | Example | Shows |
+| :-- | :-- | :-- | :-- |
+| `:,` | thousands separators | `{45000:,}` | `45,000` |
+| `:.2f` | 2 decimal places | `{3.14159:.2f}` | `3.14` |
+| `:.0%` | as a percentage | `{0.25:.0%}` | `25%` |
+| `:<10` | left-align in 10 spaces | `{"Food":<10}` | `Food      ` |
+| `:>10` | right-align in 10 spaces | `{4500:>10}` | `      4500` |
+| `:^10` | centre in 10 spaces | `{"Hi":^10}` | `    Hi    ` |
+
+Alignment lines up simple tables:
+
+```python
+print(f"{'Item':<10}{'Cost':>10}")
+print(f"{'Food':<10}{28000:>10,}")
+print(f"{'Data':<10}{6000:>10,}")
+```
+
+```text
+Item            Cost
+Food          28,000
+Data           6,000
+```
+
+## When it goes wrong
+
+```python norun
+word = "Python"
+word[0] = "J"
+```
+
+```text nocheck
+TypeError: 'str' object does not support item assignment
+```
+
+Strings **can't be changed** in place. Make a new one instead: `word = "J" + word[1:]`.
+
+```python norun
+print("Python"[10])
+```
+
+```text nocheck
+IndexError: string index out of range
+```
+
+"Python" has positions 0 to 5. Slices don't raise this error (`"Python"[3:10]` gives `"hon"`), but single indexes do.
+
+```python norun
+name = "musa"
+name.upper()
+print(name)
+```
+
+```text nocheck
+musa
+```
+
+No error, but no change either: `upper()` returned a new string, and it was thrown away. Store it: `name = name.upper()`.
+
+## Summary
+
+| You want to... | Write |
+| :-- | :-- |
+| join text | `first + " " + last` |
+| count characters | `len(text)` |
+| one character | `text[0]`, `text[-1]` |
+| part of the text | `text[start:stop]` |
+| change case | `.upper()`, `.lower()`, `.title()` |
+| remove stray spaces | `.strip()` |
+| replace | `.replace("old", "new")` |
+| check if it contains | `"x" in text` |
+| split into a list | `text.split(",")` |
+| join a list | `", ".join(items)` |
+| format a value | `f"{value:,.2f}"` |
+
+## Try it
+
+```answer
+{
+  "id": "py-m06-a1",
+  "prompt": "`code = \"ECO201-2026\"`. What does `code[3:6]` give? Type it without quotes.",
+  "answer": "201",
+  "format": "text",
+  "pyVerify": "'ECO201-2026'[3:6]",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "py-m06-a2",
+  "prompt": "What does `\"   abuja   \".strip().title()` give? Type it without quotes.",
+  "answer": "Abuja",
+  "format": "text",
+  "pyVerify": "'   abuja   '.strip().title()",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "py-m06-a3",
+  "prompt": "`line = \"Adaeze,Economics,200,4.21\"`. How many items are in `line.split(\",\")`?",
+  "answer": 4,
+  "format": "number",
+  "pyVerify": "len('Adaeze,Economics,200,4.21'.split(','))",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "py-m06-t1",
+  "prompt": "Clean up a messy name and email: start with `name = \"  aDAEZE   okafor \"`. Print the name **stripped and in title case**, print its **initials** (first letter of each part, using `split()` and indexing), and build an email like `adaeze.okafor@student.edu.ng` from it in **lowercase**. Paste your code.",
+  "minutes": 10,
+  "rows": 10,
+  "placeholder": "name = \"  aDAEZE   okafor \"",
+  "rules": [
+    { "label": "Uses strip()", "pattern": "\\.strip\\(\\)" },
+    { "label": "Uses title()", "pattern": "\\.title\\(\\)" },
+    { "label": "Splits the name", "pattern": "\\.split\\(" },
+    { "label": "Indexes a character with [0]", "pattern": "\\[0\\]" },
+    { "label": "Makes it lowercase", "pattern": "\\.lower\\(\\)" },
+    { "label": "Builds an email with @", "pattern": "@" }
+  ],
+  "sample": "name = \"  aDAEZE   okafor \"\nclean = name.strip().title()\nprint(clean)\nparts = clean.split()\nprint(parts[0][0] + parts[1][0])\nemail = \".\".join(parts).lower() + \"@student.edu.ng\"\nprint(email)",
+  "required": true
+}
+```
+$md$, true, true, 4, array['py-m06-a1', 'py-m06-a2', 'py-m06-a3', 'py-m06-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('py-m07', 'python-for-beginners', 'Conditions: if, elif and else', 5, 'Python Decisions', 'PYIF', array['Compare values', 'Make decisions with if, elif and else', 'Combine conditions with and, or and not', 'Use truthy and falsy values']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('python-for-beginners:conditions-if-elif-else', 'python-for-beginners', 'py-m07', 'conditions-if-elif-else', '"Conditions: if, elif and else"', 'Make your code decide. Comparison and logical operators, if, elif and else, indentation, nested decisions, the one-line form, and which values count as true.', 30, $md$
+## Comparisons give True or False
+
+Every decision starts with a question that's either true or false. **Comparison operators** ask those questions:
+
+| Operator | Asks | Example | Result |
+| :-- | :-- | :-- | :-- |
+| `==` | equal to? | `5 == 5` | `True` |
+| `!=` | not equal to? | `5 != 3` | `True` |
+| `>` | greater than? | `5 > 3` | `True` |
+| `<` | less than? | `5 < 3` | `False` |
+| `>=` | greater than or equal? | `5 >= 5` | `True` |
+| `<=` | less than or equal? | `4 <= 3` | `False` |
+
+```python
+score = 67
+print(score >= 50)
+print(score == 70)
+print("Lagos" == "lagos")
+```
+
+```text
+True
+False
+False
+```
+
+Text comparisons are exact: capitals matter, so `"Lagos"` and `"lagos"` aren't equal.
+
+> [!WARNING]
+> `=` **stores** a value; `==` **compares** two values. `score = 70` sets score; `score == 70` asks whether it's 70. Mixing them up is the commonest beginner mistake.
+
+## if: do something only when it's true
+
+```python
+balance = 4500
+if balance < 5000:
+    print("Low balance: top up soon")
+print("Done")
+```
+
+```text
+Low balance: top up soon
+Done
+```
+
+The parts of an `if`:
+
+1. `if`, then a condition, then a **colon** `:`.
+2. The lines that belong to it are **indented** by four spaces. That's the **block**.
+3. When the condition is true, the block runs. When it's false, Python skips it.
+4. The first line back at the left edge (`print("Done")`) isn't part of the `if`: it always runs.
+
+### Indentation is part of the code
+
+In most languages, indentation is just for looks. In Python, it decides which lines belong to the `if`:
+
+```python
+balance = 8000
+if balance < 5000:
+    print("Low balance")
+    print("Top up soon")
+print("Balance checked")
+```
+
+```text
+Balance checked
+```
+
+Both indented lines were skipped because the condition was false. Colab indents for you when you press Enter after a colon. Use four spaces, and keep it consistent.
+
+## else: the alternative
+
+`else` runs when the condition is false. Exactly one of the two blocks runs:
+
+```python
+score = 45
+if score >= 50:
+    print("Pass")
+else:
+    print("Fail: register for the resit")
+```
+
+```text
+Fail: register for the resit
+```
+
+## elif: several choices
+
+`elif` ("else if") adds more conditions. Python checks them **from the top** and runs the **first** block whose condition is true, then skips the rest:
 
 ```python
 score = 67
@@ -4259,67 +5497,146 @@ elif score >= 60:
     grade = "B"
 elif score >= 50:
     grade = "C"
+elif score >= 45:
+    grade = "D"
 else:
     grade = "F"
 
 print(f"Score {score} is grade {grade}")
 ```
 
-Two rules that catch every beginner:
-
-- The line before a block ends with a **colon** `:`.
-- The block is **indented** (4 spaces). Indentation is how Python knows what belongs inside the `if`.
-
-Comparison operators: `==` equal, `!=` not equal, `>`, `<`, `>=`, `<=`. Combine conditions with `and`, `or` and `not`.
-
-> [!WARNING]
-> `=` assigns a value; `==` compares two values. `if score = 70:` is an error.
-
-## Lists
-
-A **list** stores many values in order, inside square brackets:
-
-```python
-courses = ["ECO 201", "STA 211", "GST 201"]
-scores = [67, 81, 54]
-
-print(courses[0])      # first item: ECO 201 (counting starts at 0)
-print(len(scores))     # how many items: 3
-courses.append("CSC 201")  # add one to the end
-print(max(scores), min(scores), sum(scores))
+```text
+Score 67 is grade B
 ```
 
-## Loops
+67 isn't `>= 70`, so Python moves on; it **is** `>= 60`, so grade is `"B"` and the remaining checks are skipped. That's why the order matters: put the highest band first. If `score >= 50` came first, 67 would be graded C.
 
-A **for loop** runs the same code for every item in a list:
+## Combining conditions: and, or, not
+
+| Operator | True when | Example |
+| :-- | :-- | :-- |
+| `and` | **both** sides are true | `age >= 18 and has_id` |
+| `or` | **at least one** side is true | `day == "Sat" or day == "Sun"` |
+| `not` | the condition is **false** | `not is_paid` |
 
 ```python
-for course in courses:
-    print("Registered:", course)
+cgpa = 4.1
+attendance = 82
+
+if cgpa >= 4.0 and attendance >= 75:
+    print("Eligible for the scholarship")
+else:
+    print("Not eligible")
 ```
 
-Loop over two lists together with `zip`:
+```text
+Eligible for the scholarship
+```
 
 ```python
-for course, score in zip(courses, scores):
-    if score >= 50:
-        print(f"{course}: {score} - pass")
+day = "Sunday"
+if day == "Saturday" or day == "Sunday":
+    print("Weekend")
+```
+
+```text
+Weekend
+```
+
+Note that each side of `or` is a complete comparison. `day == "Saturday" or "Sunday"` looks right but is always true, a classic bug; the `in` operator below is a neater way to write it.
+
+### Ranges in one go
+
+Python lets you chain comparisons the way you'd write them in maths:
+
+```python
+temperature = 31
+if 25 <= temperature <= 35:
+    print("Normal for Lagos")
+```
+
+```text
+Normal for Lagos
+```
+
+### Checking membership with in
+
+`in` checks whether a value is in a list (or a string):
+
+```python
+day = "Sunday"
+if day in ["Saturday", "Sunday"]:
+    print("Weekend")
+```
+
+```text
+Weekend
+```
+
+## Nested decisions
+
+A block can contain another `if`. Indent once more for each level:
+
+```python
+is_student = True
+level = 100
+
+if is_student:
+    if level == 100:
+        fee = 20000
     else:
-        print(f"{course}: {score} - fail")
+        fee = 35000
+else:
+    fee = 50000
+
+print(f"Fee: ₦{fee:,}")
 ```
 
-Repeat something a set number of times with `range`:
+```text
+Fee: ₦20,000
+```
+
+More than two or three levels deep gets hard to read. Often `and` or `elif` does the same job more simply.
+
+## The one-line form
+
+For a simple either-or **value**, there's a short form: `value_if_true if condition else value_if_false`:
 
 ```python
-for week in range(1, 5):
-    print("Week", week)
+score = 58
+result = "Pass" if score >= 50 else "Fail"
+print(result)
 ```
 
-This prints weeks 1 to 4. `range` stops **before** the second number.
+```text
+Pass
+```
+
+Use it only when it's easy to read. For anything longer, write a full `if`/`else`.
+
+## Truthy and falsy values
+
+`if` doesn't need a comparison. Any value can be tested, and Python treats some as false:
+
+| Treated as false | Everything else is true |
+| :-- | :-- |
+| `False`, `None`, `0`, `0.0`, `""` (empty text), `[]` (empty list) | `True`, any non-zero number, any non-empty text or list |
+
+```python
+name = ""
+if name:
+    print(f"Hello {name}")
+else:
+    print("Please enter your name")
+```
+
+```text
+Please enter your name
+```
+
+That's a common way to check that someone actually typed something.
 
 ## When it goes wrong
-
-Four mistakes cause most beginner errors with `if` and loops:
 
 ```python norun
 if score >= 50
@@ -4330,25 +5647,382 @@ if score >= 50
 SyntaxError: expected ':'
 ```
 
-**Missing colon.** Every `if`, `elif`, `else` and `for` line ends with `:`.
+**Missing colon.** Every `if`, `elif` and `else` line ends with `:`.
 
 ```python norun
-for course in courses:
-print(course)
+if score >= 50:
+print("Pass")
 ```
 
 ```text nocheck
-IndentationError: expected an indented block after 'for' statement on line 1
+IndentationError: expected an indented block after 'if' statement on line 1
 ```
 
-**Missing indentation.** The lines inside a block must be indented (Colab adds 4 spaces when you press Enter after a colon).
+**Missing indentation.** The block must be indented.
 
 ```python norun
 if score = 70:
     print("Exactly 70")
 ```
 
-**`=` instead of `==`.** One `=` stores a value; `==` compares. Python stops with a SyntaxError and usually suggests `==`.
+```text nocheck
+SyntaxError: invalid syntax. Maybe you meant '==' or ':=' instead of '='?
+```
+
+**`=` instead of `==`.** Python even suggests the fix.
+
+## Summary
+
+| You want to... | Write |
+| :-- | :-- |
+| run code only if true | `if cond:` + indented block |
+| choose between two | `if cond: ... else: ...` |
+| choose between several | `if ... elif ... elif ... else ...` (highest band first) |
+| require both | `a and b` |
+| accept either | `a or b` (full comparisons on both sides) |
+| reverse a condition | `not a` |
+| check a range | `low <= x <= high` |
+| check a list | `x in [...]` |
+| pick a value in one line | `a if cond else b` |
+
+## Try it
+
+```answer
+{
+  "id": "py-m07-a1",
+  "prompt": "Using the grading rules in the lesson (70+ A, 60+ B, 50+ C, 45+ D, otherwise F), what grade does a score of **46** get?",
+  "answer": "D",
+  "format": "text",
+  "pyVerify": "'A' if 46 >= 70 else 'B' if 46 >= 60 else 'C' if 46 >= 50 else 'D' if 46 >= 45 else 'F'",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "py-m07-a2",
+  "prompt": "`cgpa = 3.9` and `attendance = 90`. Is `cgpa >= 4.0 and attendance >= 75` True or False?",
+  "answer": "False",
+  "format": "text",
+  "accept": ["false"],
+  "pyVerify": "str(3.9 >= 4.0 and 90 >= 75)",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "py-m07-a3",
+  "prompt": "What does `\"Pass\" if 49 >= 50 else \"Fail\"` give? Type it without quotes.",
+  "answer": "Fail",
+  "format": "text",
+  "pyVerify": "'Pass' if 49 >= 50 else 'Fail'",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "py-m07-t1",
+  "prompt": "Write a **data plan advisor**: store how many GB someone used last month in a variable, then use `if`, `elif` and `else` to recommend a plan (for example under 2 GB: Basic; 2 to 10 GB: Standard; over 10 GB: Premium), and print the recommendation with an f-string. Add one extra condition using `and` or `or` (for example, students get a discount). Paste your code.",
+  "minutes": 8,
+  "rows": 14,
+  "placeholder": "used_gb = 6.5\nis_student = True\n\nif ...",
+  "rules": [
+    { "label": "if, elif and else, each ending with a colon", "pattern": "^\\s*(if|elif|else)\\b[^\\n]*:\\s*$", "min": 3 },
+    { "label": "Blocks are indented", "pattern": "^( {4}|\\t)\\S", "min": 3 },
+    { "label": "Uses comparisons like < or >=", "pattern": "(<|>|<=|>=)\\s*\\d", "min": 2 },
+    { "label": "Uses and or or", "pattern": "\\b(and|or)\\b" },
+    { "label": "Prints with an f-string", "pattern": "print\\(\\s*f[\"']" },
+    { "label": "Compares with == or >= / <=, not a single =", "pattern": "if\\s+[^\\n:]*[^=!<>]=[^=][^\\n]*:", "absent": true }
+  ],
+  "sample": "used_gb = 6.5\nis_student = True\n\nif used_gb < 2:\n    plan = \"Basic\"\nelif used_gb <= 10:\n    plan = \"Standard\"\nelse:\n    plan = \"Premium\"\n\nif is_student and plan != \"Basic\":\n    print(f\"We recommend {plan}, with the student discount.\")\nelse:\n    print(f\"We recommend {plan}.\")",
+  "required": true
+}
+```
+$md$, true, true, 5, array['py-m07-a1', 'py-m07-a2', 'py-m07-a3', 'py-m07-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('py-m08', 'python-for-beginners', 'Lists and Tuples', 6, 'Python Lists', 'PYLIST', array['Create, index and slice lists', 'Add, change and remove items', 'Sort and summarise lists', 'Use tuples for fixed values']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('python-for-beginners:lists-and-tuples', 'python-for-beginners', 'py-m08', 'lists-and-tuples', 'Lists and Tuples', 'Store many values in one variable. Create lists, read items by index and slice, add, change and remove items, sort, search and summarise, copy safely, and when to use a tuple instead.', 30, $md$
+## What a list is
+
+A **list** stores many values, in order, in one variable. Write the items inside **square brackets**, separated by commas:
+
+```python
+courses = ["ECO 201", "STA 211", "GST 201"]
+scores = [67, 81, 54]
+print(courses)
+print(scores)
+```
+
+```text
+['ECO 201', 'STA 211', 'GST 201']
+[67, 81, 54]
+```
+
+A list can hold any type, even a mix, and can be empty: `[]`. It keeps items in the order you put them in, and can contain the same value more than once.
+
+## Reading items: indexing
+
+Like the characters in a string, list items are numbered from **0**:
+
+```python
+courses = ["ECO 201", "STA 211", "GST 201", "CSC 201"]
+print(courses[0])
+print(courses[1])
+print(courses[-1])
+print(len(courses))
+```
+
+```text
+ECO 201
+STA 211
+CSC 201
+4
+```
+
+- `[0]` is the first item, `[1]` the second.
+- `[-1]` is the last item, `[-2]` the one before.
+- `len()` counts the items. The last index is always `len(list) - 1`.
+
+## Reading several items: slicing
+
+`list[start:stop]` gives a new list from `start` up to, but not including, `stop`:
+
+```python
+scores = [67, 81, 54, 72, 45, 90]
+print(scores[0:3])
+print(scores[3:])
+print(scores[-2:])
+print(scores[::2])
+```
+
+```text
+[67, 81, 54]
+[72, 45, 90]
+[45, 90]
+[67, 54, 45]
+```
+
+The third number in `[::2]` is a **step**: every second item. `[::-1]` reverses a list.
+
+## Changing a list
+
+Unlike strings, lists can be changed after they're made.
+
+### Changing an item
+
+```python
+scores = [67, 81, 54]
+scores[2] = 58   # a remark raised the third score
+print(scores)
+```
+
+```text
+[67, 81, 58]
+```
+
+### Adding items
+
+| Method | Does | Example |
+| :-- | :-- | :-- |
+| `append(x)` | adds one item to the **end** | `courses.append("MTH 201")` |
+| `insert(i, x)` | adds an item **at position i** | `courses.insert(0, "GST 101")` |
+| `extend(list)` | adds **every item** of another list | `courses.extend(["A", "B"])` |
+
+```python
+courses = ["ECO 201", "STA 211"]
+courses.append("CSC 201")
+courses.insert(0, "GST 201")
+courses.extend(["MTH 201", "ACC 201"])
+print(courses)
+```
+
+```text
+['GST 201', 'ECO 201', 'STA 211', 'CSC 201', 'MTH 201', 'ACC 201']
+```
+
+### Removing items
+
+| Method | Removes | Example |
+| :-- | :-- | :-- |
+| `remove(x)` | the **first item equal to** x | `courses.remove("STA 211")` |
+| `pop()` | the **last** item, and gives it back | `last = courses.pop()` |
+| `pop(i)` | the item **at position i** | `first = courses.pop(0)` |
+| `clear()` | everything | `courses.clear()` |
+
+```python
+courses = ["GST 201", "ECO 201", "STA 211", "CSC 201"]
+courses.remove("STA 211")
+dropped = courses.pop()
+print(courses)
+print("Dropped:", dropped)
+```
+
+```text
+['GST 201', 'ECO 201']
+Dropped: CSC 201
+```
+
+## Searching
+
+```python
+courses = ["GST 201", "ECO 201", "STA 211"]
+print("ECO 201" in courses)
+print("MTH 201" in courses)
+print(courses.index("STA 211"))
+```
+
+```text
+True
+False
+2
+```
+
+`in` answers yes or no; `index()` tells you where. `index()` raises an error if the item isn't there, so check with `in` first when you're not sure. `count(x)` tells you how many times x appears.
+
+## Summarising numbers
+
+Python's built-in functions work on whole lists:
+
+```python
+scores = [67, 81, 54, 72, 45]
+print(len(scores))
+print(sum(scores))
+print(min(scores), max(scores))
+print(round(sum(scores) / len(scores), 1))
+```
+
+```text
+5
+319
+45 81
+63.8
+```
+
+That last line is the average: total divided by the number of scores.
+
+## Sorting
+
+`sort()` puts a list in order, **changing the list itself**. `sorted()` gives a **new** sorted list and leaves the original alone:
+
+```python
+scores = [67, 81, 54, 72, 45]
+ranked = sorted(scores, reverse=True)
+print(ranked)
+print(scores)
+
+scores.sort()
+print(scores)
+```
+
+```text
+[81, 72, 67, 54, 45]
+[67, 81, 54, 72, 45]
+[45, 54, 67, 72, 81]
+```
+
+Text sorts alphabetically, with capitals before lowercase letters. `reverse=True` sorts from largest to smallest, or Z to A.
+
+## Copying a list safely
+
+This catches almost everyone once:
+
+```python
+original = [67, 81, 54]
+copy = original
+copy.append(90)
+print(original)
+```
+
+```text
+[67, 81, 54, 90]
+```
+
+`copy = original` doesn't copy the list: it gives the **same list** a second name. Changing it through one name changes it for both. To make a real copy, use `.copy()` or a full slice:
+
+```python
+original = [67, 81, 54]
+copy = original.copy()
+copy.append(90)
+print(original)
+print(copy)
+```
+
+```text
+[67, 81, 54]
+[67, 81, 54, 90]
+```
+
+## Lists inside lists
+
+A list can contain other lists, which is a simple way to store a table:
+
+```python
+results = [
+    ["Adaeze", 67],
+    ["Musa", 81],
+    ["Tobi", 54],
+]
+print(results[1])
+print(results[1][0], results[1][1])
+```
+
+```text
+['Musa', 81]
+Musa 81
+```
+
+`results[1]` is the second row; `results[1][0]` is the first item in that row.
+
+## Tuples: lists that can't change
+
+A **tuple** is like a list that can't be changed after it's made. Write it with **round brackets**:
+
+```python
+location = (6.5244, 3.3792)   # Lagos: latitude, longitude
+print(location[0])
+print(len(location))
+```
+
+```text
+6.5244
+2
+```
+
+Use a tuple for values that belong together and shouldn't change, such as coordinates, or a date as `(year, month, day)`. Trying to change one fails:
+
+```python norun
+location[0] = 9.0
+```
+
+```text nocheck
+TypeError: 'tuple' object does not support item assignment
+```
+
+You can **unpack** a tuple (or list) into separate variables:
+
+```python
+latitude, longitude = location
+print(latitude, longitude)
+```
+
+```text
+6.5244 3.3792
+```
+
+| | List `[ ]` | Tuple `( )` |
+| :-- | :-- | :-- |
+| Can change after creation | yes | no |
+| Typical use | a collection that grows or changes | a fixed group of values |
+| Example | the courses you're taking | a GPS location |
+
+## When it goes wrong
 
 ```python norun
 scores = [67, 81, 54]
@@ -4359,11 +6033,466 @@ print(scores[3])
 IndexError: list index out of range
 ```
 
-**Off by one.** Three items have positions 0, 1 and 2. The last item is `scores[-1]` or `scores[len(scores) - 1]`.
+**Off by one.** Three items have positions 0, 1 and 2. Use `scores[-1]` for the last one.
+
+```python norun
+courses = ["ECO 201", "STA 211"]
+courses.remove("MTH 201")
+```
+
+```text nocheck
+ValueError: list.remove(x): x not in list
+```
+
+**Removing something that isn't there.** Check first: `if "MTH 201" in courses: courses.remove("MTH 201")`.
+
+```python norun
+scores = [67, 81, 54]
+scores = scores.sort()
+print(scores)
+```
+
+```text nocheck
+None
+```
+
+**Storing the result of `sort()`.** `sort()` changes the list and returns `None`. Either call `scores.sort()` on its own line, or use `scores = sorted(scores)`.
+
+## Summary
+
+| You want to... | Write |
+| :-- | :-- |
+| make a list | `items = [a, b, c]` |
+| the first / last item | `items[0]` / `items[-1]` |
+| part of a list | `items[1:3]` |
+| how many | `len(items)` |
+| add to the end | `items.append(x)` |
+| remove a value | `items.remove(x)` |
+| check if it's there | `x in items` |
+| total, smallest, largest | `sum(items)`, `min(items)`, `max(items)` |
+| a sorted copy | `sorted(items)` (or `reverse=True`) |
+| a real copy | `items.copy()` |
+| a fixed group | `point = (x, y)` |
 
 ## Try it
 
-Use these scores in Colab for the first three questions:
+Use this list in Colab:
+
+```python
+my_scores = [67, 81, 54, 72, 45]
+```
+
+```answer
+{
+  "id": "py-m08-a1",
+  "prompt": "What is `my_scores[-2]`?",
+  "answer": 72,
+  "format": "number",
+  "pyVerify": "my_scores[-2]",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "py-m08-a2",
+  "prompt": "What is `sorted(my_scores, reverse=True)[0:3]`? Type the list as Python shows it.",
+  "answer": "[81, 72, 67]",
+  "format": "text",
+  "accept": ["81, 72, 67"],
+  "pyVerify": "str(sorted(my_scores, reverse=True)[0:3])",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "py-m08-a3",
+  "prompt": "If you run `my_scores.append(90)` and then `print(len(my_scores))`, what number is printed?",
+  "answer": 6,
+  "format": "number",
+  "pyVerify": "len(my_scores + [90])",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "py-m08-t1",
+  "prompt": "Make a **shopping list** of at least four items. **Add** two items (one with `append`, one with `insert`), **remove** one you no longer need, **sort** the list, then print how many items there are and the list itself. Paste your code.",
+  "minutes": 8,
+  "rows": 10,
+  "placeholder": "shopping = [\"rice\", ...]",
+  "rules": [
+    { "label": "A list of at least four text items", "pattern": "=\\s*\\[\\s*[\"'][^\"'\\n]+[\"'](\\s*,\\s*[\"'][^\"'\\n]+[\"']){3,}" },
+    { "label": "Uses append", "pattern": "\\.append\\(" },
+    { "label": "Uses insert", "pattern": "\\.insert\\(" },
+    { "label": "Removes an item (remove or pop)", "pattern": "\\.(remove|pop)\\(" },
+    { "label": "Sorts (sort or sorted)", "pattern": "\\.sort\\(|sorted\\(" },
+    { "label": "Prints the count with len", "pattern": "len\\(" }
+  ],
+  "sample": "shopping = [\"rice\", \"beans\", \"plantain\", \"bread\"]\nshopping.append(\"eggs\")\nshopping.insert(0, \"tomatoes\")\nshopping.remove(\"bread\")\nshopping.sort()\nprint(len(shopping), \"items\")\nprint(shopping)",
+  "required": true
+}
+```
+$md$, true, true, 6, array['py-m08-a1', 'py-m08-a2', 'py-m08-a3', 'py-m08-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('py-m02', 'python-for-beginners', 'Loops: for and while', 7, 'Python Loops', 'PYLOOPS', array['Loop over lists, text and range', 'Build totals, counts and new lists', 'Use while, break and continue', 'Write simple list comprehensions']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('python-for-beginners:decisions-and-loops', 'python-for-beginners', 'py-m02', 'decisions-and-loops', '"Loops: for and while"', 'Repeat work without repeating code. for loops over lists, text and range, running totals and counters, enumerate and zip, while loops, break and continue, and a first look at list comprehensions.', 40, $md$
+## Why loops
+
+Suppose you want to print a grade for each of 40 students. Writing 40 `print` lines is slow, error-prone and has to change every time the class changes. A **loop** runs the same code once for each item, however many there are.
+
+Python has two kinds:
+
+| Loop | Repeats | Use when |
+| :-- | :-- | :-- |
+| `for` | once for **each item** in a collection | you have a list, a string or a range |
+| `while` | **as long as** a condition is true | you don't know in advance how many times |
+
+## for loops
+
+```python
+courses = ["ECO 201", "STA 211", "GST 201"]
+
+for course in courses:
+    print("Registered:", course)
+
+print("All done")
+```
+
+```text
+Registered: ECO 201
+Registered: STA 211
+Registered: GST 201
+All done
+```
+
+How to read it:
+
+1. `for course in courses:` takes the first item and calls it `course`.
+2. The indented block runs with that value.
+3. Python takes the next item, and runs the block again, until the list runs out.
+4. Then it carries on with the first unindented line.
+
+`course` is a variable name you choose. Pick one that describes a single item: `for score in scores`, `for name in names`.
+
+### Looping over text
+
+A string is a sequence of characters, so a `for` loop goes through it one character at a time:
+
+```python
+for letter in "Lagos":
+    print(letter)
+```
+
+```text
+L
+a
+g
+o
+s
+```
+
+### range: counting
+
+`range()` produces a series of numbers, perfect for repeating something a set number of times:
+
+| Write | Gives |
+| :-- | :-- |
+| `range(5)` | 0, 1, 2, 3, 4 |
+| `range(1, 5)` | 1, 2, 3, 4 |
+| `range(0, 20, 5)` | 0, 5, 10, 15 |
+| `range(10, 0, -2)` | 10, 8, 6, 4, 2 |
+
+`range` always stops **before** the stop number. The third number is the step.
+
+```python
+for week in range(1, 5):
+    print("Week", week)
+```
+
+```text
+Week 1
+Week 2
+Week 3
+Week 4
+```
+
+## Building up a result
+
+Most useful loops **accumulate** something: a total, a count or a new list. The pattern is always the same: start with an empty value **before** the loop, update it **inside**, use it **after**.
+
+### A running total
+
+```python
+spending = [2500, 1200, 6000, 800]
+total = 0
+for amount in spending:
+    total = total + amount
+print(f"Total spent: ₦{total:,}")
+```
+
+```text
+Total spent: ₦10,500
+```
+
+(Python's `sum(spending)` does this in one step, but the pattern works for anything, not just adding.)
+
+### A counter
+
+How many scores are 70 or above? Start at 0 and add 1 each time the condition is true:
+
+```python
+scores = [67, 81, 54, 72, 45]
+count = 0
+for score in scores:
+    if score >= 70:
+        count += 1
+print(count, "scores are 70 or above")
+```
+
+```text
+2 scores are 70 or above
+```
+
+`count += 1` is short for `count = count + 1`.
+
+### Building a new list
+
+Start with an empty list and `append` to it:
+
+```python
+scores = [67, 81, 54, 72, 45]
+passed = []
+for score in scores:
+    if score >= 50:
+        passed.append(score)
+print(passed)
+```
+
+```text
+[67, 81, 54, 72]
+```
+
+## Loops with decisions
+
+Put an `if` inside the loop to treat items differently. The `if` block is indented one more level:
+
+```python
+scores = [67, 81, 54, 72, 45]
+for score in scores:
+    if score >= 70:
+        grade = "A"
+    elif score >= 60:
+        grade = "B"
+    elif score >= 50:
+        grade = "C"
+    else:
+        grade = "F"
+    print(f"{score}: {grade}")
+```
+
+```text
+67: B
+81: A
+54: C
+72: A
+45: F
+```
+
+## enumerate: the position as well as the item
+
+Sometimes you need each item's position too. `enumerate()` gives both:
+
+```python
+courses = ["ECO 201", "STA 211", "GST 201"]
+for number, course in enumerate(courses, start=1):
+    print(f"{number}. {course}")
+```
+
+```text
+1. ECO 201
+2. STA 211
+3. GST 201
+```
+
+## zip: two lists side by side
+
+`zip()` pairs up items from two lists, first with first, second with second:
+
+```python
+courses = ["ECO 201", "STA 211", "GST 201"]
+scores = [67, 81, 54]
+for course, score in zip(courses, scores):
+    result = "pass" if score >= 50 else "fail"
+    print(f"{course}: {score} ({result})")
+```
+
+```text
+ECO 201: 67 (pass)
+STA 211: 81 (pass)
+GST 201: 54 (pass)
+```
+
+## while loops
+
+A `while` loop keeps going **as long as** its condition is true. Use it when you don't know how many repeats you'll need.
+
+You save ₦4,500 a week towards a ₦40,000 phone. How many weeks?
+
+```python
+saved = 0
+weeks = 0
+while saved < 40000:
+    saved += 4500
+    weeks += 1
+print(f"{weeks} weeks: you'll have ₦{saved:,}")
+```
+
+```text
+9 weeks: you'll have ₦40,500
+```
+
+Each time round, Python checks `saved < 40000`. While it's true, it runs the block. After week 9, `saved` is 40,500, the condition is false, and the loop stops.
+
+> [!WARNING]
+> Something inside a `while` loop must eventually make the condition false. If you forgot `saved += 4500`, `saved` would stay 0 and the loop would never end. In Colab, stop a runaway cell with the ■ button next to it.
+
+## break and continue
+
+`break` stops a loop immediately. `continue` skips the rest of this round and moves on to the next item.
+
+The first score below 50:
+
+```python
+scores = [67, 81, 44, 72, 45]
+for score in scores:
+    if score < 50:
+        print("First fail:", score)
+        break
+```
+
+```text
+First fail: 44
+```
+
+The loop stops at 44 and never looks at 72 or 45.
+
+Skip blank entries:
+
+```python
+names = ["Adaeze", "", "Musa", "", "Tobi"]
+for name in names:
+    if name == "":
+        continue
+    print("Hello", name)
+```
+
+```text
+Hello Adaeze
+Hello Musa
+Hello Tobi
+```
+
+## Loops inside loops
+
+A loop can contain another loop. The inner one runs completely for each round of the outer one:
+
+```python
+for day in ["Mon", "Tue"]:
+    for period in [1, 2, 3]:
+        print(day, period)
+```
+
+```text
+Mon 1
+Mon 2
+Mon 3
+Tue 1
+Tue 2
+Tue 3
+```
+
+## List comprehensions: a loop in one line
+
+Building a new list from an old one is so common that Python has a short form, a **list comprehension**:
+
+```python
+scores = [67, 81, 54, 72, 45]
+passed = [score for score in scores if score >= 50]
+curved = [score + 5 for score in scores]
+print(passed)
+print(curved)
+```
+
+```text
+[67, 81, 54, 72]
+[72, 86, 59, 77, 50]
+```
+
+Read `[score + 5 for score in scores]` as "score + 5, for each score in scores". It does exactly what the append loop does. Use it for simple cases; write the full loop when the logic gets longer.
+
+## When it goes wrong
+
+```python norun
+for course in courses
+    print(course)
+```
+
+```text nocheck
+SyntaxError: expected ':'
+```
+
+**Missing colon** after the `for` line.
+
+```python norun
+for course in courses:
+print(course)
+```
+
+```text nocheck
+IndentationError: expected an indented block after 'for' statement on line 1
+```
+
+**Missing indentation** inside the loop.
+
+```python norun
+total = 0
+for amount in [100, 200, 300]:
+    total = 0
+    total += amount
+print(total)
+```
+
+```text nocheck
+300
+```
+
+**Resetting inside the loop.** `total = 0` belongs **before** the loop. Inside, it wipes the total each time, so only the last amount survives.
+
+## Summary
+
+| You want to... | Write |
+| :-- | :-- |
+| do something for each item | `for item in items:` |
+| repeat n times | `for i in range(n):` |
+| a running total | `total = 0` before, `total += x` inside |
+| a count | `count = 0` before, `count += 1` inside an `if` |
+| the position too | `for i, item in enumerate(items, start=1):` |
+| two lists together | `for a, b in zip(list_a, list_b):` |
+| repeat until a condition changes | `while condition:` (and change it inside) |
+| stop early / skip one | `break` / `continue` |
+| a new list in one line | `[x * 2 for x in items if x > 0]` |
+
+## Try it
+
+Use these scores in Colab:
 
 ```python
 my_scores = [67, 81, 54, 72, 45]
@@ -4372,10 +6501,10 @@ my_scores = [67, 81, 54, 72, 45]
 ```answer
 {
   "id": "py-m02-a1",
-  "prompt": "What is the **average** of `my_scores`? One decimal place.",
+  "prompt": "Using a loop and a running total (or `sum`), what is the **average** of `my_scores`? One decimal place.",
   "answer": 63.8,
   "format": "number",
-  "hint": "sum(my_scores) / len(my_scores)",
+  "hint": "total ÷ len(my_scores)",
   "pyVerify": "round(sum(my_scores) / len(my_scores), 1)",
   "required": true
 }
@@ -4396,10 +6525,11 @@ my_scores = [67, 81, 54, 72, 45]
 ```answer
 {
   "id": "py-m02-a3",
-  "prompt": "With the grading rules in the lesson (70+ A, 60+ B, 50+ C, otherwise F), what grade does **54** get?",
-  "answer": "C",
-  "format": "text",
-  "pyVerify": "'A' if 54 >= 70 else 'B' if 54 >= 60 else 'C' if 54 >= 50 else 'F'",
+  "prompt": "You save **₦3,000** a week towards **₦25,000**. Using a `while` loop, how many **weeks** until you reach it?",
+  "answer": 9,
+  "format": "number",
+  "hint": "Keep adding 3000 to saved and 1 to weeks while saved < 25000.",
+  "pyVerify": "math.ceil(25000 / 3000)",
   "required": true
 }
 ```
@@ -4423,18 +6553,449 @@ my_scores = [67, 81, 54, 72, 45]
   "required": true
 }
 ```
-$md$, true, true, 2, array['py-m02-a1', 'py-m02-a2', 'py-m02-a3', 'py-m02-t1']::text[])
+$md$, true, true, 7, array['py-m02-a1', 'py-m02-a2', 'py-m02-a3', 'py-m02-t1']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
-values ('py-m03', 'python-for-beginners', 'Functions and a Mini Project', 3, 'Python Functions', 'PYFUNC', array['Write functions with parameters and return', 'Use dictionaries', 'Combine it all in a small program', 'Save a notebook to GitHub']::text[])
+values ('py-m09', 'python-for-beginners', 'Dictionaries and Sets', 8, 'Python Dictionaries', 'PYDICT', array['Store and look up values by key', 'Loop through keys, values and items', 'Count things with a dictionary', 'Find unique values with sets']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('python-for-beginners:functions-and-a-mini-project', 'python-for-beginners', 'py-m03', 'functions-and-a-mini-project', 'Functions and a Mini Project', 'Write your own functions, use dictionaries, and put it all together in a small budget tracker you can show in your portfolio.', 25, $md$
-## Functions
+values ('python-for-beginners:dictionaries-and-sets', 'python-for-beginners', 'py-m09', 'dictionaries-and-sets', 'Dictionaries and Sets', 'Store values by name with dictionaries: create, read safely with get, add, change and remove, loop through keys, values and items, count things, and nest data. Then sets for unique values.', 30, $md$
+## What a dictionary is
 
-A **function** is a named block of code you can reuse. Define it with `def`:
+A list finds values by **position**: `scores[0]`. That's awkward when the values have names. Is the student's department `student[1]` or `student[2]`? A **dictionary** stores **key: value** pairs, so you look values up by name, like a word in a real dictionary.
+
+Write it with **curly brackets**, a colon between each key and its value, and commas between pairs:
+
+```python
+student = {
+    "name": "Musa",
+    "department": "Accounting",
+    "level": 300,
+    "cgpa": 3.9,
+}
+print(student)
+```
+
+```text
+{'name': 'Musa', 'department': 'Accounting', 'level': 300, 'cgpa': 3.9}
+```
+
+- **Keys** are usually text, and each key appears only once.
+- **Values** can be anything: text, numbers, lists, even other dictionaries.
+- Dictionaries keep the order you added things in.
+
+## Reading values
+
+Put the key in square brackets:
+
+```python
+print(student["name"])
+print(student["level"])
+```
+
+```text
+Musa
+300
+```
+
+If the key doesn't exist, that's an error. `get()` is the safe way: it returns `None`, or a default you choose, instead:
+
+```python
+print(student.get("cgpa"))
+print(student.get("hall"))
+print(student.get("hall", "Not assigned"))
+```
+
+```text
+3.9
+None
+Not assigned
+```
+
+Check whether a key exists with `in`:
+
+```python
+print("level" in student)
+print("hall" in student)
+```
+
+```text
+True
+False
+```
+
+## Adding, changing and removing
+
+Assigning to a key **adds** it if it's new and **changes** it if it exists:
+
+```python
+student["hall"] = "Jaja"       # new key: added
+student["level"] = 400         # existing key: changed
+print(student)
+```
+
+```text
+{'name': 'Musa', 'department': 'Accounting', 'level': 400, 'cgpa': 3.9, 'hall': 'Jaja'}
+```
+
+| You want to... | Write |
+| :-- | :-- |
+| add or change one | `d["key"] = value` |
+| add or change several | `d.update({"a": 1, "b": 2})` |
+| remove one and get its value | `value = d.pop("key")` |
+| remove one | `del d["key"]` |
+| empty it | `d.clear()` |
+
+```python
+student.update({"cgpa": 4.0, "phone": "0803 000 0000"})
+removed = student.pop("phone")
+print(student)
+print("Removed:", removed)
+```
+
+```text
+{'name': 'Musa', 'department': 'Accounting', 'level': 400, 'cgpa': 4.0, 'hall': 'Jaja'}
+Removed: 0803 000 0000
+```
+
+## Looping through a dictionary
+
+Three methods give you the parts:
+
+| Method | Gives |
+| :-- | :-- |
+| `.keys()` | the keys |
+| `.values()` | the values |
+| `.items()` | key and value pairs |
+
+```python
+spending = {"Food": 28000, "Transport": 12500, "Data": 6000}
+
+for item in spending.keys():
+    print(item)
+
+print(sum(spending.values()))
+
+for item, amount in spending.items():
+    print(f"{item}: ₦{amount:,}")
+```
+
+```text
+Food
+Transport
+Data
+46500
+Food: ₦28,000
+Transport: ₦12,500
+Data: ₦6,000
+```
+
+`.items()` is the one you'll use most: each round gives you the key and its value, unpacked into two variables. (Looping over the dictionary itself, `for item in spending:`, gives the keys.)
+
+## Finding the largest
+
+`max` on a dictionary compares **keys** by default. To find the key with the largest **value**, tell it to compare using `spending.get`:
+
+```python
+print(max(spending, key=spending.get))
+print(max(spending.values()))
+```
+
+```text
+Food
+28000
+```
+
+## Counting with a dictionary
+
+A very common job: count how often each value appears. Start with an empty dictionary and add 1 for each item, using `get` with a default of 0 for keys you haven't seen yet:
+
+```python
+departments = ["Accounting", "Economics", "Accounting", "Law", "Economics", "Accounting"]
+counts = {}
+for dept in departments:
+    counts[dept] = counts.get(dept, 0) + 1
+print(counts)
+```
+
+```text
+{'Accounting': 3, 'Economics': 2, 'Law': 1}
+```
+
+The first time Python sees "Accounting", `counts.get("Accounting", 0)` gives 0, so it becomes 1. Next time it gives 1, so it becomes 2, and so on.
+
+## Nested data
+
+Values can be lists or other dictionaries. That's how real data is often shaped, for example data from websites and apps:
+
+```python
+student = {
+    "name": "Adaeze",
+    "courses": ["ECO 201", "STA 211"],
+    "address": {"city": "Ibadan", "state": "Oyo"},
+}
+print(student["courses"][0])
+print(student["address"]["city"])
+```
+
+```text
+ECO 201
+Ibadan
+```
+
+Read it from left to right: `student["address"]` is the inner dictionary, and `["city"]` looks inside that.
+
+A **list of dictionaries** is a natural way to store a table, one dictionary per row:
+
+```python
+students = [
+    {"name": "Adaeze", "level": 200},
+    {"name": "Musa", "level": 300},
+    {"name": "Tobi", "level": 200},
+]
+for s in students:
+    if s["level"] == 200:
+        print(s["name"])
+```
+
+```text
+Adaeze
+Tobi
+```
+
+## Sets: unique values
+
+A **set** is a collection with **no duplicates** and no particular order. Write it with curly brackets (but no colons), or make one from a list with `set()`:
+
+```python
+cities = ["Lagos", "Abuja", "Lagos", "Kano", "Abuja"]
+unique = set(cities)
+print(len(unique))
+print("Kano" in unique)
+```
+
+```text
+3
+True
+```
+
+Duplicates disappear, so `len(set(items))` counts distinct values. Sets also compare groups. Students taking each of two courses:
+
+```python
+eco = {"Adaeze", "Musa", "Tobi"}
+sta = {"Musa", "Tobi", "Chidi"}
+print(sorted(eco & sta))   # in both
+print(sorted(eco | sta))   # in either
+print(sorted(eco - sta))   # in ECO but not STA
+```
+
+```text
+['Musa', 'Tobi']
+['Adaeze', 'Chidi', 'Musa', 'Tobi']
+['Adaeze']
+```
+
+(`sorted` turns each set into an ordered list, so the output is always the same.)
+
+| Collection | Brackets | Ordered | Duplicates | Look up by |
+| :-- | :-- | :-- | :-- | :-- |
+| list | `[ ]` | yes | allowed | position |
+| tuple | `( )` | yes | allowed | position (can't change) |
+| dictionary | `{key: value}` | yes | keys unique | key |
+| set | `{ }` | no | not allowed | membership (`in`) |
+
+## When it goes wrong
+
+```python norun
+print(student["Name"])
+```
+
+```text nocheck
+KeyError: 'Name'
+```
+
+**A key that isn't there.** Keys must match exactly, capitals included. Use `student.get("Name", "unknown")` when a key might be missing.
+
+```python norun
+empty = {}
+print(type(empty))
+```
+
+```text nocheck
+<class 'dict'>
+```
+
+**`{}` is an empty dictionary, not a set.** Make an empty set with `set()`.
+
+```python norun
+for item, amount in spending:
+    print(item, amount)
+```
+
+```text nocheck
+ValueError: too many values to unpack (expected 2)
+```
+
+**Forgetting `.items()`.** Looping over a dictionary gives only the keys; add `.items()` to get pairs.
+
+## Summary
+
+| You want to... | Write |
+| :-- | :-- |
+| make a dictionary | `d = {"key": value, ...}` |
+| read a value | `d["key"]` |
+| read safely | `d.get("key", default)` |
+| add or change | `d["key"] = value` |
+| remove | `d.pop("key")` |
+| loop through pairs | `for k, v in d.items():` |
+| total of values | `sum(d.values())` |
+| key with the largest value | `max(d, key=d.get)` |
+| count things | `counts[x] = counts.get(x, 0) + 1` |
+| distinct values | `set(items)` |
+
+## Try it
+
+```answer
+{
+  "id": "py-m09-a1",
+  "prompt": "`prices = {\"rice\": 52000, \"beans\": 38000, \"garri\": 15000}`. What is `sum(prices.values())`?",
+  "answer": 105000,
+  "format": "number",
+  "pyVerify": "sum({'rice': 52000, 'beans': 38000, 'garri': 15000}.values())",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "py-m09-a2",
+  "prompt": "Using the `prices` dictionary above, what does `prices.get(\"yam\", 0)` give?",
+  "answer": 0,
+  "format": "number",
+  "pyVerify": "{'rice': 52000, 'beans': 38000, 'garri': 15000}.get('yam', 0)",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "py-m09-a3",
+  "prompt": "How many distinct cities are in `[\"Lagos\", \"Abuja\", \"Lagos\", \"Kano\", \"Ibadan\", \"Abuja\"]`?",
+  "answer": 4,
+  "format": "number",
+  "pyVerify": "len(set(['Lagos', 'Abuja', 'Lagos', 'Kano', 'Ibadan', 'Abuja']))",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "py-m09-t1",
+  "prompt": "Write a **vote counter**: start with a list of at least eight votes for three candidates (names as text), count them into a dictionary with a loop and `get`, print each candidate's votes with `.items()`, and print the **winner** using `max` with `key=`. Paste your code.",
+  "minutes": 10,
+  "rows": 12,
+  "placeholder": "votes = [\"Ada\", \"Musa\", ...]\ncounts = {}",
+  "rules": [
+    { "label": "A list of at least eight votes", "pattern": "=\\s*\\[\\s*[\"'][^\"'\\n]+[\"'](\\s*,\\s*[\"'][^\"'\\n]+[\"']){7,}" },
+    { "label": "Starts an empty dictionary", "pattern": "=\\s*\\{\\s*\\}" },
+    { "label": "A for loop over the votes", "pattern": "^\\s*for\\s+\\w+\\s+in\\s+\\w+\\s*:" },
+    { "label": "Counts with get(..., 0) + 1", "pattern": "\\.get\\([^)]*,\\s*0\\s*\\)\\s*\\+\\s*1" },
+    { "label": "Loops through .items()", "pattern": "\\.items\\(\\)" },
+    { "label": "Finds the winner with max(..., key=...)", "pattern": "max\\([^)]*key\\s*=" }
+  ],
+  "sample": "votes = [\"Ada\", \"Musa\", \"Ada\", \"Tobi\", \"Ada\", \"Musa\", \"Tobi\", \"Ada\"]\ncounts = {}\nfor vote in votes:\n    counts[vote] = counts.get(vote, 0) + 1\n\nfor name, total in counts.items():\n    print(f\"{name}: {total}\")\n\nwinner = max(counts, key=counts.get)\nprint(f\"Winner: {winner}\")",
+  "required": true
+}
+```
+$md$, true, true, 8, array['py-m09-a1', 'py-m09-a2', 'py-m09-a3', 'py-m09-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('py-m03', 'python-for-beginners', 'Functions and a Mini Project', 9, 'Python Functions', 'PYFUNC', array['Write functions with parameters and return', 'Use default and keyword arguments', 'Understand scope', 'Build a small budget tracker']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('python-for-beginners:functions-and-a-mini-project', 'python-for-beginners', 'py-m03', 'functions-and-a-mini-project', 'Functions and a Mini Project', 'Write your own functions: parameters and arguments, return versus print, default and keyword arguments, returning several values, scope and docstrings. Then put everything together in a budget tracker for your portfolio.', 35, $md$
+## What a function is
+
+You've been using functions since the first lesson: `print()`, `len()`, `round()`, `sum()`. A **function** is a named block of code that does one job. You can also write your own, so that a calculation you need often is written **once** and **reused**:
+
+- Less repetition: fix a bug in one place, not ten.
+- Clearer code: `vat(price)` says what it does.
+- Easier testing: check the function on its own.
+
+## Defining and calling a function
+
+```python
+def greet():
+    print("Welcome to CloudTech Academy")
+
+greet()
+greet()
+```
+
+```text
+Welcome to CloudTech Academy
+Welcome to CloudTech Academy
+```
+
+- `def` starts the **definition**, followed by the function's name, brackets and a colon.
+- The indented block is the **body**: the code that runs when the function is called.
+- Defining a function doesn't run it. **Calling** it, `greet()`, does, as many times as you like.
+
+Name functions like variables (lowercase with underscores), ideally with a verb: `calculate_vat`, `print_report`.
+
+## Parameters and arguments
+
+A function becomes useful when you can give it inputs. **Parameters** are the names in the definition; **arguments** are the values you pass when you call it:
+
+```python
+def greet(name):
+    print(f"Welcome, {name}!")
+
+greet("Adaeze")
+greet("Musa")
+```
+
+```text
+Welcome, Adaeze!
+Welcome, Musa!
+```
+
+With several parameters, arguments are matched in order:
+
+```python
+def describe(name, level):
+    print(f"{name} is in {level} level")
+
+describe("Tobi", 200)
+```
+
+```text
+Tobi is in 200 level
+```
+
+## return: sending a result back
+
+`print` shows a value on screen. `return` **sends it back** to the code that called the function, so it can be stored and used:
+
+```python
+def vat(price):
+    return price * 7.5 / 100
+
+tax = vat(40000)
+print(tax)
+print(40000 + vat(40000))
+```
+
+```text
+3000.0
+43000.0
+```
+
+`return` also **ends** the function: any lines after it in the same block don't run. A grading function can return as soon as it knows the answer:
 
 ```python
 def grade(score):
@@ -4446,39 +7007,136 @@ def grade(score):
         return "C"
     return "F"
 
-print(grade(74))  # A
-print(grade(48))  # F
+print(grade(74))
+print(grade(48))
 ```
 
-- `score` is a **parameter**: the input the function works with.
-- `return` sends a result back.
-- Write a function once and call it as many times as you like.
-
-## Dictionaries
-
-A **dictionary** stores **key: value** pairs, like a label and its value:
-
-```python
-student = {
-    "name": "Musa",
-    "department": "Accounting",
-    "level": 300,
-}
-
-print(student["name"])
-student["cgpa"] = 3.9   # add a new key
+```text
+A
+F
 ```
 
-Loop through one with `.items()`:
+### print or return?
+
+| | `print` inside the function | `return` from the function |
+| :-- | :-- | :-- |
+| Shows the value | yes | no (unless you print it) |
+| Can you use the value afterwards? | no | yes: store it, add it, compare it |
+| Good for | messages to the user | calculations |
+
+Most functions that **calculate** should `return`. A function with no `return` gives back `None`.
+
+## Default values
+
+Give a parameter a **default** with `=` in the definition. If the caller leaves it out, the default is used:
 
 ```python
-for key, value in student.items():
-    print(key, "→", value)
+def add_vat(price, rate=7.5):
+    return price + price * rate / 100
+
+print(add_vat(40000))
+print(add_vat(40000, 10))
+```
+
+```text
+43000.0
+44000.0
+```
+
+Parameters with defaults must come **after** those without.
+
+## Keyword arguments
+
+You can name arguments when you call a function, so their order doesn't matter and the call explains itself:
+
+```python
+def loan_repayment(amount, months, rate):
+    total = amount + amount * rate / 100
+    return total / months
+
+print(loan_repayment(amount=120000, months=6, rate=10))
+print(loan_repayment(months=6, rate=10, amount=120000))
+```
+
+```text
+22000.0
+22000.0
+```
+
+## Returning several values
+
+Return several values separated by commas, and unpack them into several variables:
+
+```python
+def summary(scores):
+    return min(scores), max(scores), sum(scores) / len(scores)
+
+lowest, highest, average = summary([67, 81, 54, 72, 45])
+print(lowest, highest, round(average, 1))
+```
+
+```text
+45 81 63.8
+```
+
+(Python packs the values into a tuple and unpacks them for you.)
+
+## Scope: variables inside functions
+
+Variables created **inside** a function exist only inside it. They're **local**:
+
+```python
+def calculate():
+    result = 100 * 2
+    return result
+
+print(calculate())
+```
+
+```text
+200
+```
+
+Outside, `result` doesn't exist: `print(result)` would give a NameError. That's a good thing: functions don't accidentally overwrite each other's variables. Pass values **in** as arguments and get them **out** with `return`.
+
+## Docstrings
+
+A **docstring** is a description in triple quotes on the first line of the body. It tells other people (and you, later) what the function does:
+
+```python
+def naira(amount):
+    """Format an amount as naira with thousands separators, e.g. ₦12,500."""
+    return f"₦{amount:,.0f}"
+
+print(naira(12500))
+print(naira.__doc__)
+```
+
+```text
+₦12,500
+Format an amount as naira with thousands separators, e.g. ₦12,500.
+```
+
+In Colab, typing `naira(` also shows the docstring in a pop-up, and `help(naira)` prints it with the function's details.
+
+## Functions that use functions
+
+Functions can call other functions, so you build bigger jobs out of small, tested pieces:
+
+```python
+def total_with_vat(prices):
+    return sum(add_vat(p) for p in prices)
+
+print(naira(total_with_vat([40000, 8500, 1500])))
+```
+
+```text
+₦53,750
 ```
 
 ## Mini project: a monthly budget tracker
 
-Put it all together. Copy this into Colab and run it:
+Put everything together: variables, a dictionary, functions, a loop, maths, f-strings and decisions. Copy this into Colab and run it:
 
 ```python
 budget = 60000
@@ -4511,10 +7169,19 @@ else:
     print(f"You are over budget by {naira(-left)}.")
 ```
 
-Read it line by line. You've seen every piece: variables, a dictionary, a function, a loop, maths, f-strings and an if statement.
+```text
+Monthly spending
+Food          ₦28,000  50.0%
+Transport     ₦12,500  22.3%
+Data           ₦6,000  10.7%
+Books          ₦4,500   8.0%
+Other          ₦5,000   8.9%
+------------------------------
+Total         ₦56,000
+You have ₦4,000 left.
+```
 
-> [!TIP]
-> `{item:<10}` pads text to 10 characters, aligned left; `>10` aligns right. It makes simple tables line up.
+Read it line by line. You've met every piece in this course: the `spending` dictionary, the `naira` function, the loop over `.items()`, the percentage maths, the aligned f-strings and the final `if`.
 
 ## When it goes wrong
 
@@ -4529,21 +7196,49 @@ print(total_cost(500, 4))
 None
 ```
 
-**Forgetting `return`.** The function calculated the value and then threw it away. Without `return`, a function gives back `None`. Add `return price * quantity`.
+**Forgetting `return`.** The function calculated the value, then threw it away. Add `return price * quantity`.
 
 ```python norun
-print(student["Name"])
+def greet(name):
+    print(f"Hello {name}")
+
+greet()
 ```
 
 ```text nocheck
-KeyError: 'Name'
+TypeError: greet() missing 1 required positional argument: 'name'
 ```
 
-**A key that isn't there.** Dictionary keys must match exactly, capitals included: the key is `"name"`. Use `student.get("Name", "unknown")` when a key might be missing.
+**Missing an argument.** The function needs a name; give it one, or a default (`name="friend"`).
+
+```python norun
+greet("Ada")
+
+def greet(name):
+    print(f"Hello {name}")
+```
+
+```text nocheck
+NameError: name 'greet' is not defined
+```
+
+**Calling before defining.** Python reads top to bottom, so define functions before you call them (in Colab, run the cell with the `def` first).
 
 ## Show it off
 
 Save your notebook, then in Colab choose **File → Save a copy in GitHub** to put it in a repository (see the Git & GitHub course). It's a small but real project for your portfolio.
+
+## Summary
+
+| You want to... | Write |
+| :-- | :-- |
+| define a function | `def name(params):` + indented body |
+| call it | `name(args)` |
+| send back a result | `return value` |
+| an optional input | `def f(x, rate=7.5):` |
+| name the inputs when calling | `f(amount=100, months=6)` |
+| return several values | `return a, b` then `x, y = f()` |
+| describe it | `"""Docstring."""` on the first line |
 
 ## Try it
 
@@ -4591,9 +7286,343 @@ Run the budget tracker as it is in the lesson, then answer these about **its** n
   "required": true
 }
 ```
+$md$, true, true, 9, array['py-m03-a1', 'py-m03-a2', 'py-m03-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-Then save your notebook with **File → Save a copy in GitHub** (or to Drive), and add a short text cell at the top describing what it does.
-$md$, true, true, 3, array['py-m03-a1', 'py-m03-a2', 'py-m03-t1']::text[])
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('py-m10', 'python-for-beginners', 'Errors, Modules and Next Steps', 10, 'Python Errors and Modules', 'PYERR', array['Read a traceback', 'Handle errors with try and except', 'Raise your own errors', 'Use the random, datetime and statistics modules']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('python-for-beginners:errors-modules-and-next-steps', 'python-for-beginners', 'py-m10', 'errors-modules-and-next-steps', 'Errors, Modules and Next Steps', 'Handle errors gracefully with try and except, raise your own, use Python''s built-in modules (random, datetime, statistics), install more with pip, and plan what to learn next.', 30, $md$
+## Reading a traceback
+
+When Python hits an error it can't handle, it stops and prints a **traceback**: the trail of lines it was running. Read it from the **bottom**:
+
+```python norun
+def average(scores):
+    return sum(scores) / len(scores)
+
+print(average([]))
+```
+
+```text nocheck
+Traceback (most recent call last):
+  File "<ipython-input-1>", line 4, in <module>
+    print(average([]))
+  File "<ipython-input-1>", line 2, in average
+    return sum(scores) / len(scores)
+ZeroDivisionError: division by zero
+```
+
+1. The **last line** says what went wrong: `ZeroDivisionError: division by zero`.
+2. The lines above show **where**: line 2, inside `average`, called from line 4.
+3. So: `average` was given an empty list, and `len([])` is 0.
+
+The errors you've met in this course:
+
+| Error | Usually means |
+| :-- | :-- |
+| `SyntaxError` | Python can't read the line: a missing colon, quote or bracket |
+| `IndentationError` | a block isn't indented, or indented inconsistently |
+| `NameError` | a misspelt name, or a cell that hasn't been run |
+| `TypeError` | the wrong type: text plus a number, or a missing argument |
+| `ValueError` | the right type but an impossible value: `int("forty")` |
+| `IndexError` | a list or string position that doesn't exist |
+| `KeyError` | a dictionary key that doesn't exist |
+| `ZeroDivisionError` | dividing by zero |
+
+## Handling errors with try and except
+
+Some errors aren't bugs in your code: they come from the outside world. A user types "forty" instead of 40; a file is missing. `try` and `except` let your program **handle** the problem instead of crashing:
+
+```python
+text = "forty"
+try:
+    age = int(text)
+    print(f"Next year you'll be {age + 1}")
+except ValueError:
+    print(f"'{text}' isn't a number. Please type digits, like 40.")
+```
+
+```text
+'forty' isn't a number. Please type digits, like 40.
+```
+
+1. Python runs the `try` block.
+2. If an error happens, it **jumps** to the matching `except` block instead of stopping.
+3. If no error happens, the `except` block is skipped.
+
+Try it with a valid value:
+
+```python
+text = "40"
+try:
+    age = int(text)
+    print(f"Next year you'll be {age + 1}")
+except ValueError:
+    print(f"'{text}' isn't a number.")
+```
+
+```text
+Next year you'll be 41
+```
+
+### Catch specific errors
+
+Name the error you expect. You can have several `except` blocks for different errors:
+
+```python
+def safe_average(scores):
+    try:
+        return sum(scores) / len(scores)
+    except ZeroDivisionError:
+        return 0
+    except TypeError:
+        print("The list must contain numbers only.")
+        return None
+
+print(safe_average([67, 81, 54]))
+print(safe_average([]))
+print(safe_average([67, "eighty"]))
+```
+
+```text
+67.33333333333333
+0
+The list must contain numbers only.
+None
+```
+
+> [!WARNING]
+> Avoid a bare `except:` that catches **everything**. It also hides real bugs, such as a typo in a variable name, and your program carries on with wrong results. Catch the specific errors you expect.
+
+### else and finally
+
+Two optional extras:
+
+- `else` runs only if **no** error happened.
+- `finally` runs **always**, error or not, which is useful for clean-up.
+
+```python
+try:
+    amount = int("2500")
+except ValueError:
+    print("Not a number")
+else:
+    print(f"Recorded ₦{amount:,}")
+finally:
+    print("Check complete")
+```
+
+```text
+Recorded ₦2,500
+Check complete
+```
+
+### A loop that keeps asking
+
+Combined with a loop, `try` lets a program keep asking until it gets a valid answer. (This uses `input`, so run it in Colab rather than reading it here.)
+
+```python norun
+while True:
+    try:
+        age = int(input("How old are you? "))
+        break
+    except ValueError:
+        print("Please type a whole number.")
+print(f"Thanks. You're {age}.")
+```
+
+`while True` loops forever, and `break` leaves the loop once `int()` succeeds.
+
+## Raising your own errors
+
+Your functions can **raise** an error when they're given something that makes no sense, rather than quietly returning a wrong answer:
+
+```python
+def apply_discount(price, percent):
+    if not 0 <= percent <= 100:
+        raise ValueError(f"Discount must be between 0 and 100, not {percent}")
+    return price * (1 - percent / 100)
+
+print(apply_discount(40000, 15))
+try:
+    apply_discount(40000, 150)
+except ValueError as error:
+    print("Error:", error)
+```
+
+```text
+34000.0
+Error: Discount must be between 0 and 100, not 150
+```
+
+`except ValueError as error` gives you the error object, so you can print its message.
+
+## Modules: using code others have written
+
+A **module** is a file of ready-made functions. Python comes with hundreds (the **standard library**). Bring one in with `import`, then use its functions with a dot:
+
+```python
+import statistics
+
+scores = [67, 81, 54, 72, 45]
+print(statistics.mean(scores))
+print(statistics.median(scores))
+```
+
+```text
+63.8
+67
+```
+
+Ways to import:
+
+| Write | Then use |
+| :-- | :-- |
+| `import statistics` | `statistics.mean(x)` |
+| `import statistics as st` | `st.mean(x)` (a shorter name) |
+| `from statistics import mean` | `mean(x)` (just that function) |
+
+### random
+
+```python
+import random
+
+random.seed(1)   # makes the "random" results repeatable, for this lesson
+names = ["Adaeze", "Musa", "Tobi", "Chidi"]
+print(random.choice(names))
+print(random.randint(1, 6))
+```
+
+```text
+Musa
+5
+```
+
+`random.choice` picks an item; `random.randint(1, 6)` rolls a die. Without `random.seed`, you'd get different results each run, which is the point. `random.shuffle(names)` mixes a list up.
+
+### datetime
+
+```python
+from datetime import date
+
+start = date(2026, 9, 15)
+exam = date(2026, 12, 7)
+print((exam - start).days, "days until the exam")
+print(exam.strftime("%A %d %B %Y"))
+```
+
+```text
+83 days until the exam
+Monday 07 December 2026
+```
+
+Subtracting two dates gives the time between them; `strftime` formats a date for people. `date.today()` gives today's date.
+
+## Installing more: pip
+
+Beyond the standard library, thousands of free packages are published for Python. You install them with **pip**. In Colab, run it in a cell with `!` in front:
+
+```bash norun
+!pip install requests
+```
+
+The most important ones for data work, **pandas** (tables), **matplotlib** (charts) and **numpy** (numbers), are already installed in Colab:
+
+```python norun
+import pandas as pd
+data = pd.DataFrame({"name": ["Adaeze", "Musa"], "score": [67, 81]})
+print(data)
+```
+
+You'll use them in the next course.
+
+## What to learn next
+
+You now know the core of Python: values and types, text and numbers, decisions, lists, loops, dictionaries, functions, errors and modules. That's the same foundation every Python programmer builds on. Where to go from here:
+
+| If you want to... | Take |
+| :-- | :-- |
+| analyse real data with tables and charts | **Python for Data** (short) or **Python for Data Analytics** |
+| build programs properly, with tests | **Software Engineering with Python** |
+| work with AI models | **Generative AI Engineering** |
+| keep your code safe and shared | **Git and GitHub** |
+
+> [!TIP]
+> The fastest way to get better is to build small things you actually want: a budget tracker for your real spending, a quiz for your course, a script that renames your photos. When you get stuck, read the error's last line, search it, and try again.
+
+## Summary
+
+| You want to... | Write |
+| :-- | :-- |
+| handle an expected error | `try: ... except ValueError: ...` |
+| run code only if it worked | `else:` after `except` |
+| run clean-up code always | `finally:` |
+| stop on bad input | `raise ValueError("message")` |
+| use a module | `import statistics` then `statistics.mean(x)` |
+| pick at random | `random.choice(items)` |
+| days between dates | `(date2 - date1).days` |
+| install a package in Colab | `!pip install name` |
+
+## Try it
+
+```answer
+{
+  "id": "py-m10-a1",
+  "prompt": "What is the **median** of `[67, 81, 54, 72, 45]`? Use `statistics.median`.",
+  "answer": 67,
+  "format": "number",
+  "pyVerify": "statistics.median([67, 81, 54, 72, 45])",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "py-m10-a2",
+  "prompt": "How many **days** are there from `date(2026, 9, 15)` to `date(2026, 12, 7)`?",
+  "answer": 83,
+  "format": "number",
+  "pyVerify": "(date(2026, 12, 7) - date(2026, 9, 15)).days",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "py-m10-a3",
+  "prompt": "Which error does `int(\"twelve\")` raise? Type its name.",
+  "answer": "ValueError",
+  "format": "text",
+  "accept": ["valueerror"],
+  "pyVerify": "'ValueError'",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "py-m10-t1",
+  "prompt": "Write a function `parse_amount(text)` that turns text like `\"12,500\"` or `\" 4500 \"` into a number: **strip** spaces, **remove commas**, and convert with `int()` inside a **try**. If it can't be converted, **catch the ValueError** and return `None`. Test it with at least three values, including one that fails. Paste your code.",
+  "minutes": 10,
+  "rows": 14,
+  "placeholder": "def parse_amount(text):\n    try:\n        ...",
+  "rules": [
+    { "label": "A function called parse_amount", "pattern": "^\\s*def\\s+parse_amount\\s*\\(" },
+    { "label": "Uses try and except", "pattern": "^\\s*try\\s*:", "min": 1 },
+    { "label": "Catches ValueError specifically", "pattern": "except\\s+ValueError" },
+    { "label": "Strips spaces", "pattern": "\\.strip\\(\\)" },
+    { "label": "Removes commas", "pattern": "\\.replace\\(\\s*[\"'],[\"']" },
+    { "label": "Returns None when it fails", "pattern": "return\\s+None" },
+    { "label": "Tests it at least three times", "pattern": "parse_amount\\(\\s*[\"']", "min": 3 }
+  ],
+  "sample": "def parse_amount(text):\n    \"\"\"Turn text like '12,500' into a number, or None if it isn't one.\"\"\"\n    try:\n        return int(text.strip().replace(\",\", \"\"))\n    except ValueError:\n        return None\n\nprint(parse_amount(\"12,500\"))\nprint(parse_amount(\" 4500 \"))\nprint(parse_amount(\"ten thousand\"))",
+  "required": true
+}
+```
+$md$, true, true, 10, array['py-m10-a1', 'py-m10-a2', 'py-m10-a3', 'py-m10-t1']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 
@@ -73941,105 +76970,429 @@ values ('py-m01-check', 'python-for-beginners', 'module', 'py-m01', 'First Steps
 on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('py-m01-q1', 'py-m01-check', 1, 'What does this print? price = 2500; quantity = 4; print(price * quantity)', '["25004","10000","2500 * 4","An error"]'::jsonb)
+values ('py-m01-q1', 'py-m01-check', 1, 'What does print(2 + 3) show?', '["2 + 3","5","23","An error"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('py-m01-q1', 1, 'Both are numbers, so * multiplies.')
+values ('py-m01-q1', 1, 'Without quotes, Python works out the sum.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('py-m01-q2', 'py-m01-check', 2, 'What is "7" + "3" in Python?', '["10","\"73\"","An error","\"10\""]'::jsonb)
+values ('py-m01-q2', 'py-m01-check', 2, 'What does print("2 + 3") show?', '["5","2 + 3","\"2 + 3\"","An error"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('py-m01-q2', 1, 'Text plus text joins the strings.')
+values ('py-m01-q2', 1, 'In quotes, it''s text, printed exactly as written.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('py-m01-q3', 'py-m01-check', 3, 'print("Age: " + 20) gives a TypeError. Which fix works?', '["print(\"Age: \" + \"twenty\" + 20)","print(f\"Age: {20}\")","print(\"Age: \" - 20)","print(Age: 20)"]'::jsonb)
+values ('py-m01-q3', 'py-m01-check', 3, 'What does Python do with a line that starts with #?', '["Runs it twice","Ignores it: it''s a comment","Prints it","Stops the program"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('py-m01-q3', 1, 'An f-string, or str(20), turns the number into text.')
+values ('py-m01-q3', 1, 'Comments are notes for people.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('py-m01-q4', 'py-m01-check', 4, 'You restart Colab and run a cell that uses name, but get NameError: name ''name'' is not defined. Why?', '["Python forgot how to print","The cell that created name hasn''t been run since the restart","Variables can''t be called name","Colab is offline"]'::jsonb)
+values ('py-m01-q4', 'py-m01-check', 4, 'You type Print("Hi") and get NameError: name ''Print'' is not defined. Why?', '["Colab is offline","Capitals matter: the function is print","Text needs single quotes","Hi is too short"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('py-m01-q4', 1, 'Restarting clears memory; run the earlier cells again.')
+values ('py-m01-q4', 1, 'Python is case-sensitive.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('py-m01-q5', 'py-m01-check', 5, 'Which is a valid variable name?', '["first name","2nd_course","first_name","first-name"]'::jsonb)
+values ('py-m01-q5', 'py-m01-check', 5, 'Colab disconnected while you were away. What should you do before carrying on?', '["Nothing","Run your earlier cells again, e.g. Runtime → Run all","Delete the notebook","Restart your computer"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('py-m01-q5', 2, 'Letters, numbers and underscores; no spaces or hyphens; can''t start with a number.')
+values ('py-m01-q5', 1, 'A disconnect clears everything that was run.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('py-m01-q6', 'py-m01-check', 6, 'What type is True?', '["str","int","bool","float"]'::jsonb)
+values ('py-m01-q6', 'py-m01-check', 6, 'Which part of an error message should you read first?', '["The first line","The last line","The middle","None: just retype the code"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('py-m01-q6', 2, 'True and False are booleans.')
+values ('py-m01-q6', 1, 'The last line names the error and what went wrong.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 
--- Assessment: Decisions, Lists and Loops: module check
+-- Assessment: Variables and Data Types: module check
 insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
-values ('py-m02-check', 'python-for-beginners', 'module', 'py-m02', 'Decisions, Lists and Loops: module check', 60, true)
+values ('py-m04-check', 'python-for-beginners', 'module', 'py-m04', 'Variables and Data Types: module check', 60, true)
 on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('py-m02-q1', 'py-m02-check', 1, 'scores = [67, 81, 54]. What is scores[1]?', '["67","81","54","An error"]'::jsonb)
+values ('py-m04-q1', 'py-m04-check', 1, 'balance = 5000, then balance = balance - 1800. What is balance?', '["5000","1800","3200","An error"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('py-m02-q1', 1, 'Positions start at 0, so [1] is the second item.')
+values ('py-m04-q1', 2, 'The right side is worked out first, then stored.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('py-m02-q2', 'py-m02-check', 2, 'What does range(1, 5) produce in a for loop?', '["1, 2, 3, 4, 5","1, 2, 3, 4","0, 1, 2, 3, 4","5 numbers starting at 5"]'::jsonb)
+values ('py-m04-q2', 'py-m04-check', 2, 'Which is a valid variable name?', '["first name","2nd_course","first_name","first-name"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('py-m02-q2', 1, 'range stops before the second number.')
+values ('py-m04-q2', 2, 'Letters, numbers and underscores; no spaces or hyphens; can''t start with a number.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('py-m02-q3', 'py-m02-check', 3, 'score = 65. With if score >= 70: A, elif score >= 60: B, else: C, what grade?', '["A","B","C","A and B"]'::jsonb)
+values ('py-m04-q3', 'py-m04-check', 3, 'What type is 4.0?', '["int","float","str","bool"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('py-m02-q3', 1, 'The first true condition wins: 65 is not >= 70 but is >= 60.')
+values ('py-m04-q3', 1, 'A decimal point makes it a float.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('py-m02-q4', 'py-m02-check', 4, 'Python says SyntaxError: expected '':'' on an if line. What''s wrong?', '["The variable is misspelled","The if line is missing its colon at the end","You used == instead of =","The list is empty"]'::jsonb)
+values ('py-m04-q4', 'py-m04-check', 4, 'What is "7" + "3"?', '["10","\"73\"","An error","\"10\""]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('py-m02-q4', 1, 'if, elif, else and for lines end with a colon.')
+values ('py-m04-q4', 1, 'Text plus text joins the strings.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('py-m02-q5', 'py-m02-check', 5, 'Which line correctly checks whether score is exactly 70?', '["if score = 70:","if score == 70:","if score === 70:","if (score) 70:"]'::jsonb)
+values ('py-m04-q5', 'py-m04-check', 5, 'What does int(9.99) give?', '["10","9","9.99","An error"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('py-m02-q5', 1, '== compares; = assigns.')
+values ('py-m04-q5', 1, 'int() cuts off the decimals; it doesn''t round.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('py-m02-q6', 'py-m02-check', 6, 'scores = [67, 81, 54]. What does print(scores[3]) give?', '["54","None","IndexError: list index out of range","67"]'::jsonb)
+values ('py-m04-q6', 'py-m04-check', 6, 'age = 20. Which prints "Age: 20" without an error?', '["print(\"Age: \" + age)","print(f\"Age: {age}\")","print(\"Age: {age}\")","print(Age: age)"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('py-m02-q6', 2, 'Three items have positions 0 to 2. Use scores[-1] for the last item.')
+values ('py-m04-q6', 1, 'An f-string puts the value into the text.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Numbers and Maths: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('py-m05-check', 'python-for-beginners', 'module', 'py-m05', 'Numbers and Maths: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('py-m05-q1', 'py-m05-check', 1, 'What is 7 // 2?', '["3.5","3","1","4"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('py-m05-q1', 1, '// divides and drops the remainder.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('py-m05-q2', 'py-m05-check', 2, 'What is 17 % 5?', '["3.4","2","3","85"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('py-m05-q2', 1, '% gives the remainder: 17 = 3 × 5 + 2.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('py-m05-q3', 'py-m05-check', 3, 'What is 2 + 3 * 4?', '["20","14","24","9"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('py-m05-q3', 1, 'Multiplication comes before addition.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('py-m05-q4', 'py-m05-check', 4, 'What does 10 / 2 give?', '["5","5.0","\"5\"","2"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('py-m05-q4', 1, '/ always returns a float.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('py-m05-q5', 'py-m05-check', 5, '130 students, 18 seats per bus. Which gives the number of buses needed?', '["130 // 18","round(130 / 18)","math.ceil(130 / 18)","130 % 18"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('py-m05-q5', 2, 'ceil rounds up: 8 buses, not 7.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('py-m05-q6', 'py-m05-check', 6, 'What does f"{1234567:,.0f}" produce?', '["1234567","1,234,567","1.234.567","1,234,567.0"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('py-m05-q6', 1, ', adds thousands separators and .0f shows no decimals.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Working with Text: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('py-m06-check', 'python-for-beginners', 'module', 'py-m06', 'Working with Text: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('py-m06-q1', 'py-m06-check', 1, 'word = "Python". What is word[0]?', '["P","y","n","Python"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('py-m06-q1', 0, 'Indexes start at 0.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('py-m06-q2', 'py-m06-check', 2, 'word = "Python". What is word[-1]?', '["P","n","o","An error"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('py-m06-q2', 1, '-1 is always the last character.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('py-m06-q3', 'py-m06-check', 3, 'code = "ECO201". What is code[0:3]?', '["ECO2","ECO","CO2","201"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('py-m06-q3', 1, 'A slice stops before the second index.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('py-m06-q4', 'py-m06-check', 4, 'What does "  lagos ".strip().title() give?', '["\"  Lagos \"","\"Lagos\"","\"LAGOS\"","\"lagos\""]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('py-m06-q4', 1, 'strip removes outer spaces; title capitalises.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('py-m06-q5', 'py-m06-check', 5, 'What does "a,b,c".split(",") give?', '["\"abc\"","[\"a\", \"b\", \"c\"]","[\"a,b,c\"]","3"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('py-m06-q5', 1, 'split breaks text into a list at each comma.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('py-m06-q6', 'py-m06-check', 6, 'name = "musa"; name.upper(); print(name). What prints?', '["MUSA","musa","Musa","An error"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('py-m06-q6', 1, 'Methods return a new string; store it with name = name.upper().')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Conditions: if, elif and else: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('py-m07-check', 'python-for-beginners', 'module', 'py-m07', 'Conditions: if, elif and else: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('py-m07-q1', 'py-m07-check', 1, 'score = 65. With if score >= 70: A, elif score >= 60: B, else: C, what grade?', '["A","B","C","A and B"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('py-m07-q1', 1, 'The first true condition wins.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('py-m07-q2', 'py-m07-check', 2, 'Which line checks whether score is exactly 70?', '["if score = 70:","if score == 70:","if score === 70:","if (score) 70:"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('py-m07-q2', 1, '== compares; = assigns.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('py-m07-q3', 'py-m07-check', 3, 'Python says SyntaxError: expected '':'' on an if line. What''s wrong?', '["A misspelt variable","The if line is missing its colon","You used ==","The block is too long"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('py-m07-q3', 1, 'if, elif and else lines end with a colon.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('py-m07-q4', 'py-m07-check', 4, 'When is a and b true?', '["When either is true","When both are true","When both are false","Always"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('py-m07-q4', 1, 'and needs both sides.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('py-m07-q5', 'py-m07-check', 5, 'Why is if day == "Sat" or "Sun": always true?', '["It isn''t","\"Sun\" on its own is non-empty text, which counts as true","or is broken","Days are special"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('py-m07-q5', 1, 'Write day == "Sat" or day == "Sun", or day in [...].')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('py-m07-q6', 'py-m07-check', 6, 'name = "". What does if name: do?', '["Runs its block","Skips its block: empty text counts as false","Gives an error","Prints the name"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('py-m07-q6', 1, 'Empty text, 0, None and empty lists are falsy.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Lists and Tuples: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('py-m08-check', 'python-for-beginners', 'module', 'py-m08', 'Lists and Tuples: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('py-m08-q1', 'py-m08-check', 1, 'scores = [67, 81, 54]. What is scores[1]?', '["67","81","54","An error"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('py-m08-q1', 1, 'Positions start at 0.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('py-m08-q2', 'py-m08-check', 2, 'scores = [67, 81, 54]. What does scores[3] give?', '["54","None","IndexError: list index out of range","67"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('py-m08-q2', 2, 'Three items have positions 0 to 2.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('py-m08-q3', 'py-m08-check', 3, 'Which adds 90 to the end of scores?', '["scores.add(90)","scores.append(90)","scores + 90","scores[3] = 90"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('py-m08-q3', 1, 'append adds one item to the end.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('py-m08-q4', 'py-m08-check', 4, 'a = [1, 2]; b = a; b.append(3). What is a?', '["[1, 2]","[1, 2, 3]","[3]","An error"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('py-m08-q4', 1, 'b = a gives the same list a second name. Use a.copy() for a real copy.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('py-m08-q5', 'py-m08-check', 5, 'What does sorted([3, 1, 2], reverse=True) give?', '["[1, 2, 3]","[3, 2, 1]","None","[3, 1, 2]"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('py-m08-q5', 1, 'reverse=True sorts largest first.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('py-m08-q6', 'py-m08-check', 6, 'What''s the main difference between a list and a tuple?', '["Tuples hold only numbers","A tuple can''t be changed after it''s made","Lists can''t be indexed","There''s none"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('py-m08-q6', 1, 'Use tuples for fixed groups of values.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Loops: for and while: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('py-m02-check', 'python-for-beginners', 'module', 'py-m02', 'Loops: for and while: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('py-m02-q1', 'py-m02-check', 1, 'What does range(1, 5) produce in a for loop?', '["1, 2, 3, 4, 5","1, 2, 3, 4","0, 1, 2, 3, 4","5 numbers starting at 5"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('py-m02-q1', 1, 'range stops before the second number.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('py-m02-q2', 'py-m02-check', 2, 'total = 0; for x in [5, 10, 15]: total += x. What is total?', '["15","30","51015","0"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('py-m02-q2', 1, 'The loop adds each value.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('py-m02-q3', 'py-m02-check', 3, 'A loop sets total = 0 inside its block, then adds the amount. What happens?', '["The right total","Only the last amount survives","An error","Double the total"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('py-m02-q3', 1, 'Start totals before the loop, not inside it.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('py-m02-q4', 'py-m02-check', 4, 'What does break do in a loop?', '["Skips one item","Stops the loop immediately","Pauses for a second","Restarts the loop"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('py-m02-q4', 1, 'continue skips one item; break stops.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('py-m02-q5', 'py-m02-check', 5, 'When should you use a while loop?', '["To loop over a list","When you don''t know in advance how many repeats you need","Never","Only with numbers"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('py-m02-q5', 1, 'while repeats as long as a condition is true.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('py-m02-q6', 'py-m02-check', 6, 'What does [x * 2 for x in [1, 2, 3]] give?', '["[1, 2, 3, 1, 2, 3]","[2, 4, 6]","12","[1, 2, 3]"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('py-m02-q6', 1, 'A list comprehension makes a new list, doubling each item.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Dictionaries and Sets: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('py-m09-check', 'python-for-beginners', 'module', 'py-m09', 'Dictionaries and Sets: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('py-m09-q1', 'py-m09-check', 1, 'student = {"name": "Musa", "level": 300}. What is student["level"]?', '["\"level\"","300","Musa","An error"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('py-m09-q1', 1, 'A dictionary looks up a value by its key.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('py-m09-q2', 'py-m09-check', 2, 'student["Name"] gives KeyError: ''Name''. Why?', '["Dictionaries can''t hold names","Keys must match exactly; the key is \"name\"","The dictionary is empty","You need a list"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('py-m09-q2', 1, 'Use the exact key, or .get() with a default.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('py-m09-q3', 'py-m09-check', 3, 'What does student.get("hall", "None yet") return if there''s no hall key?', '["An error","None yet","hall","False"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('py-m09-q3', 1, 'get returns the default when the key is missing.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('py-m09-q4', 'py-m09-check', 4, 'spending = {"Food": 28000, "Data": 6000}. What is sum(spending.values())?', '["2","34000","\"Food\"","28000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('py-m09-q4', 1, '.values() gives the amounts; sum adds them.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('py-m09-q5', 'py-m09-check', 5, 'What does max(spending, key=spending.get) return for {"Food": 28000, "Data": 6000}?', '["28000","\"Food\"","\"Data\"","6000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('py-m09-q5', 1, 'It returns the key whose value is largest.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('py-m09-q6', 'py-m09-check', 6, 'What is len(set(["Lagos", "Abuja", "Lagos"]))?', '["3","2","1","An error"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('py-m09-q6', 1, 'A set keeps each value once.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 
@@ -74057,43 +77410,97 @@ values ('py-m03-q1', 1, 'Without return, the function gives back None.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('py-m03-q2', 'py-m03-check', 2, 'student = {"name": "Musa", "level": 300}. What is student["level"]?', '["\"level\"","300","Musa","An error"]'::jsonb)
+values ('py-m03-q2', 'py-m03-check', 2, 'def add_vat(price, rate=7.5): ... What does add_vat(1000) use for rate?', '["0","7.5","An error","1000"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('py-m03-q2', 1, 'A dictionary looks up a value by its key.')
+values ('py-m03-q2', 1, 'The default is used when the argument is left out.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('py-m03-q3', 'py-m03-check', 3, 'student["Name"] gives KeyError: ''Name''. Why?', '["Dictionaries can''t hold names","Keys must match exactly; the key is \"name\" in lower case","The dictionary is empty","You need a list instead"]'::jsonb)
+values ('py-m03-q3', 'py-m03-check', 3, 'What''s the difference between print and return in a function?', '["None","return sends the value back so it can be used; print only shows it","print is faster","return shows it on screen"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('py-m03-q3', 1, 'Use the exact key, or .get() with a default.')
+values ('py-m03-q3', 1, 'Calculations should return their result.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('py-m03-q4', 'py-m03-check', 4, 'spending = {"Food": 28000, "Data": 6000}. What is sum(spending.values())?', '["2","34000","\"Food\"","28000"]'::jsonb)
+values ('py-m03-q4', 'py-m03-check', 4, 'A variable created inside a function. Can code outside the function use it?', '["Yes, always","No: it''s local to the function","Only in Colab","Only if it''s a number"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('py-m03-q4', 1, '.values() gives the amounts; sum adds them.')
+values ('py-m03-q4', 1, 'Pass values in as arguments and out with return.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('py-m03-q5', 'py-m03-check', 5, 'What does max(spending, key=spending.get) return for {"Food": 28000, "Data": 6000}?', '["28000","\"Food\"","\"Data\"","6000"]'::jsonb)
+values ('py-m03-q5', 'py-m03-check', 5, 'def f(): return 1, 2. What does a, b = f() store in b?', '["1","2","(1, 2)","An error"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('py-m03-q5', 1, 'It returns the key whose value is largest.')
+values ('py-m03-q5', 1, 'The returned values are unpacked in order.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('py-m03-q6', 'py-m03-check', 6, 'What does f"{1234567:,.0f}" produce?', '["1234567","1,234,567","1.234.567","1,234,567.0"]'::jsonb)
+values ('py-m03-q6', 'py-m03-check', 6, 'greet() gives TypeError: missing 1 required positional argument: ''name''. What''s the fix?', '["Delete the function","Pass a name, e.g. greet(\"Ada\"), or give name a default","Use print instead","Restart Colab"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('py-m03-q6', 1, ', adds thousands separators and .0f shows no decimals.')
+values ('py-m03-q6', 1, 'The function needs the argument it was defined with.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Errors, Modules and Next Steps: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('py-m10-check', 'python-for-beginners', 'module', 'py-m10', 'Errors, Modules and Next Steps: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('py-m10-q1', 'py-m10-check', 1, 'int("forty") raises which error?', '["TypeError","ValueError","NameError","KeyError"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('py-m10-q1', 1, 'The type is right (text) but the value can''t be converted.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('py-m10-q2', 'py-m10-check', 2, 'In try: ... except ValueError: ..., when does the except block run?', '["Always","Only if a ValueError happens in the try block","Never","Before the try block"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('py-m10-q2', 1, 'except handles the error you name.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('py-m10-q3', 'py-m10-check', 3, 'Why avoid a bare except: that catches everything?', '["It''s slower","It hides real bugs, like typos, and the program carries on wrongly","It''s not allowed","It only works in Colab"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('py-m10-q3', 1, 'Catch the specific errors you expect.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('py-m10-q4', 'py-m10-check', 4, 'What does raise ValueError("...") do?', '["Prints a warning and continues","Stops with that error, unless something catches it","Fixes the value","Nothing"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('py-m10-q4', 1, 'Raise errors for inputs that make no sense.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('py-m10-q5', 'py-m10-check', 5, 'After import statistics, how do you get the median of scores?', '["median(scores)","statistics.median(scores)","scores.median()","import median"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('py-m10-q5', 1, 'Use the module name, a dot and the function.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('py-m10-q6', 'py-m10-check', 6, 'How do you install a package in a Colab cell?', '["install requests","!pip install requests","import pip requests","pip(requests)"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('py-m10-q6', 1, 'The ! runs a command; pip installs packages.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 
@@ -74164,6 +77571,22 @@ on conflict (id) do update set assessment_id = excluded.assessment_id, position 
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
 values ('py-f08', 1, '% gives the remainder: 17 = 3 × 5 + 2.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('py-f09', 'python-for-beginners-final', 9, 'What does "Data Analysis".split() give?', '["\"DataAnalysis\"","[\"Data\", \"Analysis\"]","2","[\"D\", \"a\", ...]"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('py-f09', 1, 'split() with no argument splits on spaces.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('py-f10', 'python-for-beginners-final', 10, 'Which safely converts text to a number without crashing on bad input?', '["int(text)","try: n = int(text) except ValueError: n = None","number(text)","text.int()"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('py-f10', 1, 'try and except handle the error.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 
