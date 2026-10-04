@@ -13,12 +13,13 @@
     "datasets": "node scripts/generate-datasets.mjs && node scripts/dataset-meta.mjs",
     "datasets:meta": "node scripts/dataset-meta.mjs",
     "seed": "node scripts/build-seed.mjs",
-    "test:content": "node scripts/test-content.mjs",
+    "test:content": "node scripts/test-content.mjs && node scripts/build-notebooks.mjs --check",
     "test:js": "node scripts/test-js.mjs webjs",
     "test:shell": "node scripts/test-shell.mjs",
     "test:python": "py scripts/test-python.py --fresh python-analytics statistics ml features experiments forecasting genai agents llmops cloud linux terraform cicd observability swe dbapi pm product ds-capstone ai-capstone devops-capstone && py scripts/test-python.py python python-data",
     "brand:assets": "node scripts/generate-brand-assets.mjs",
-    "images": "node scripts/image-sizes.mjs"
+    "images": "node scripts/image-sizes.mjs",
+    "notebooks": "node scripts/build-notebooks.mjs"
   },
   "dependencies": {
     "@fontsource-variable/inter": "^5.3.0",

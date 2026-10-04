@@ -3,6 +3,7 @@ import { marked, type Token, type Tokens } from "marked";
 import { AlertTriangle, Briefcase, Info, Lightbulb } from "lucide-react";
 import { parseAnswer, parseDataset, parseExercise, parseQuiz, parseTask } from "@/lib/lesson-format";
 import { RunnableSql } from "./sql/RunnableSql";
+import { RunnablePython } from "./RunnablePython";
 import { SqlExercise } from "./sql/SqlExercise";
 import { LessonQuiz } from "./LessonQuiz";
 import { CopyButton } from "./sql/SqlParts";
@@ -24,7 +25,7 @@ const decode = (s: string) =>
   s.replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&#39;/g, "'");
 
 /** Labels for formula code blocks, e.g. ```excel or ```dax. */
-const CODE_LABELS: Record<string, string> = { excel: "Excel formula", sheets: "Google Sheets formula", dax: "DAX", m: "Power Query (M)", sql: "SQL", bash: "Shell (bash)", hcl: "Terraform (HCL)", dockerfile: "Dockerfile", yaml: "YAML", js: "JavaScript", html: "HTML" };
+const CODE_LABELS: Record<string, string> = { text: "Output", excel: "Excel formula", sheets: "Google Sheets formula", dax: "DAX", m: "Power Query (M)", sql: "SQL", bash: "Shell (bash)", hcl: "Terraform (HCL)", dockerfile: "Dockerfile", yaml: "YAML", js: "JavaScript", html: "HTML" };
 
 const safeHref = (href: string) => (/^(https?:|mailto:|\/|#)/i.test(href) ? href : "#");
 
@@ -116,7 +117,13 @@ type Ctx = {
   onExerciseSolved: (id: string) => void;
   sectionIndex: { n: number };
   exerciseLabel: { current: string };
+  /** Every runnable Python block in the lesson, in order, so a block can run the ones before it. */
+  pythonBlocks: string[];
+  lessonKey: string;
 };
+
+/** Python fences that can run in the browser: ```python, but not ```python norun. */
+const isRunnablePython = (lang: string) => /^python\b/.test(lang) && !/\bnorun\b/.test(lang);
 
 function Block({ token, ctx }: { token: Token; ctx: Ctx }): ReactNode {
   switch (token.type) {
@@ -285,6 +292,10 @@ function Block({ token, ctx }: { token: Token; ctx: Ctx }): ReactNode {
         return <p className="rounded-lg border border-danger/40 bg-danger/10 px-3 py-2 text-[0.875rem]">This block couldn't be read: {e instanceof Error ? e.message : String(e)}</p>;
       }
       if (/^sql\b/.test(lang) && /\brun\b/.test(lang)) return <RunnableSql sql={c.text} />;
+      if (isRunnablePython(lang)) {
+        const index = ctx.pythonBlocks.indexOf(c.text);
+        if (index >= 0) return <RunnablePython code={c.text} index={index} blocks={ctx.pythonBlocks} lessonKey={ctx.lessonKey} />;
+      }
       const codeLabel = CODE_LABELS[lang.split(/\s+/)[0]];
       return (
         <div className="not-prose relative">
@@ -313,13 +324,20 @@ export function LessonContent({
   body,
   completedExercises = [],
   onExerciseSolved = () => {},
+  lessonKey = "preview",
 }: {
   body: string;
   completedExercises?: string[];
   onExerciseSolved?: (id: string) => void;
+  /** Identifies the lesson, so its Python examples share one namespace. */
+  lessonKey?: string;
 }) {
   const tokens = useMemo(() => marked.lexer(body), [body]);
-  const ctx: Ctx = { completedExercises, onExerciseSolved, sectionIndex: { n: 0 }, exerciseLabel: { current: "Practice" } };
+  const pythonBlocks = useMemo(
+    () => tokens.flatMap((t) => (t.type === "code" && isRunnablePython(((t as Tokens.Code).lang ?? "").trim()) ? [(t as Tokens.Code).text] : [])),
+    [tokens],
+  );
+  const ctx: Ctx = { completedExercises, onExerciseSolved, sectionIndex: { n: 0 }, exerciseLabel: { current: "Practice" }, pythonBlocks, lessonKey };
   return (
     <div className="lesson">
       {tokens.map((t, i) => (

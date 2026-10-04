@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { Link, useParams } from "react-router";
-import { ArrowLeft, ArrowRight, Award, CheckCircle2, Clock, ListTree, Lock, X } from "lucide-react";
+import { ArrowLeft, ArrowRight, Award, CheckCircle2, Clock, ExternalLink, ListTree, Lock, X } from "lucide-react";
 import { useSeo } from "@/lib/seo";
 import { useCourse, useLearner } from "@/lib/data";
 import { moduleTaskIds, publishedLessons } from "@/lib/certificates";
@@ -10,6 +10,7 @@ import { getBackend } from "@/lib/backend";
 import { PageLoading } from "@/lib/auth";
 import { LessonContent, lessonSections } from "@/components/LessonContent";
 import { LessonSidebar } from "@/components/LessonSidebar";
+import { colabUrl, hasNotebook } from "@/lib/python/colab";
 import { ProgressBar } from "@/components/ProgressBar";
 import { Button, ButtonLink } from "@/components/Button";
 import NotFound from "./NotFound";
@@ -177,6 +178,19 @@ export default function Learn() {
               </span>
             )}
           </p>
+          {hasNotebook(lesson.body) && (
+            <p className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-2 text-[0.875rem] text-muted">
+              <a
+                href={colabUrl(course.id, lesson.slug)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-lg border border-line-strong bg-paper px-3 py-1.5 font-semibold text-ink hover:border-brass"
+              >
+                <ExternalLink aria-hidden className="h-4 w-4 text-brass-dark" /> Open in Colab
+              </a>
+              <span>Every example as a notebook you can run, edit and save to your Google Drive.</span>
+            </p>
+          )}
           {!learner.signedIn && !learner.loading && (
             <p className="mt-5 rounded-lg border border-brass/40 bg-brass-pale/35 px-4 py-3 text-[0.9rem]">
               You can read and practise without an account.{" "}
@@ -194,7 +208,7 @@ export default function Learn() {
         </header>
 
         <div className="max-w-[46rem] pt-8">
-          <LessonContent body={lesson.body} completedExercises={completedExercises} onExerciseSolved={onExerciseSolved} />
+          <LessonContent body={lesson.body} completedExercises={completedExercises} onExerciseSolved={onExerciseSolved} lessonKey={lesson.id} />
         </div>
 
         {badgeModule && (
