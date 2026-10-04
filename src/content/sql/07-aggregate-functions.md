@@ -1,7 +1,7 @@
 ---
 title: Aggregate functions
-minutes: 15
-summary: Summarise many rows into one answer with COUNT, SUM, AVG, MIN and MAX.
+minutes: 30
+summary: Summarise many rows into one answer with COUNT, SUM, AVG, MIN and MAX: missing values, distinct counts, rounding and filtering first, step by step.
 ---
 
 ## The problem
@@ -16,28 +16,185 @@ None of these needs a list of shipments. Each needs **one number** calculated fr
 
 ## The concept
 
-**Aggregate functions** take a column of values and return a single value.
+Every query so far returned one result row for each table row. An **aggregate function** does something different: it takes **many** values and returns **one**. How many shipments? What's the total charged? What's the biggest booking? Each of those is a single number summarising thousands of rows.
 
-| Function | Returns |
-| :-- | :-- |
-| `COUNT(*)` | the number of rows |
-| `COUNT(column)` | the number of rows where that column is not NULL |
-| `COUNT(DISTINCT column)` | the number of different values |
-| `SUM(column)` | the total |
-| `AVG(column)` | the average |
-| `MIN(column)` / `MAX(column)` | the smallest / largest value |
+### The five aggregate functions
 
-Aggregates **ignore NULLs**. `AVG` of a column with some NULLs averages only the values that exist.
+| Function | Returns | Works on |
+| :-- | :-- | :-- |
+| `COUNT(*)` | the number of rows | any table |
+| `COUNT(column)` | the number of rows where the column **has a value** | any column |
+| `COUNT(DISTINCT column)` | the number of **different** values | any column |
+| `SUM(column)` | the total | numbers |
+| `AVG(column)` | the average (mean) | numbers |
+| `MIN(column)` | the smallest value | numbers, text, dates |
+| `MAX(column)` | the largest value | numbers, text, dates |
 
-`ROUND(value, 2)` rounds to two decimal places, which keeps averages readable.
+### The syntax
 
-## Example
+```sql
+SELECT AGGREGATE(column) AS name
+FROM table_name
+WHERE condition;
+```
+
+Always give an aggregate an alias. Otherwise the column heading is the expression itself, such as `SUM(freight_charge)`.
+
+### COUNT: how many rows?
+
+`COUNT(*)` counts rows, whatever is in them:
+
+```sql run
+SELECT COUNT(*) AS shipments
+FROM shipments;
+```
+
+Combine it with `WHERE` to count a slice:
+
+```sql run
+SELECT COUNT(*) AS cancelled_shipments
+FROM shipments
+WHERE status = 'Cancelled';
+```
+
+### COUNT(column) and missing values
+
+`COUNT(column)` counts only the rows where that column is **not** `NULL`. That makes it a quick way to see how complete a column is:
 
 ```sql run
 SELECT
-  COUNT(*)                    AS shipments,
-  SUM(freight_charge)         AS total_charged,
-  ROUND(AVG(freight_charge))  AS average_charge
+  COUNT(*)             AS shipments,
+  COUNT(ship_date)     AS shipped,
+  COUNT(delivery_date) AS delivered
+FROM shipments;
+```
+
+2,683 shipments, of which 2,515 have a ship date and 2,411 a delivery date. The rest are still booked, in transit or cancelled.
+
+### COUNT(DISTINCT): how many different values?
+
+```sql run
+SELECT
+  COUNT(*)                           AS customers,
+  COUNT(account_manager_id)          AS with_a_manager,
+  COUNT(DISTINCT account_manager_id) AS managers_used
+FROM customers;
+```
+
+Read the three answers carefully:
+
+- `COUNT(*)` is 120: every customer.
+- `COUNT(account_manager_id)` is 112: the eight customers without a manager are skipped.
+- `COUNT(DISTINCT account_manager_id)` is 8: eight different account managers share those 112 customers.
+
+### SUM and AVG
+
+`SUM` adds up a column; `AVG` gives the average. Both work only on numbers.
+
+```sql run
+SELECT
+  SUM(containers) AS total_containers,
+  AVG(containers) AS average_containers
+FROM shipments;
+```
+
+The average is a long decimal, 2.3108… Use `ROUND(value, places)` to make it readable:
+
+```sql run
+SELECT
+  SUM(containers)           AS total_containers,
+  ROUND(AVG(containers), 2) AS average_containers
+FROM shipments;
+```
+
+`ROUND(x)` with no second number rounds to a whole number, which suits money in naira.
+
+### MIN and MAX
+
+`MIN` and `MAX` work on numbers, text and dates:
+
+```sql run
+SELECT
+  MIN(booking_date)   AS first_booking,
+  MAX(booking_date)   AS latest_booking,
+  MIN(freight_charge) AS smallest_charge,
+  MAX(freight_charge) AS largest_charge
+FROM shipments;
+```
+
+On text, `MIN` is the first alphabetically and `MAX` the last:
+
+```sql run
+SELECT MIN(company_name) AS first, MAX(company_name) AS last
+FROM customers;
+```
+
+### Aggregates ignore NULL
+
+Every aggregate except `COUNT(*)` skips `NULL` values. So `AVG` of a column with gaps averages **only the values that exist**, not treating the gaps as zero. That's usually what you want, but be aware of it: an average over 50 known values out of 100 rows describes those 50, not all 100.
+
+### Filter first, then summarise
+
+`WHERE` runs **before** the aggregates. Whatever rows `WHERE` removes are never counted or added. This matters at Harbourline, because cancelled shipments still have a `freight_charge` recorded, although the customer was never billed:
+
+```sql run
+SELECT
+  COUNT(*)            AS cancelled,
+  SUM(freight_charge) AS charge_recorded
+FROM shipments
+WHERE status = 'Cancelled';
+```
+
+That's over ₦1.1 billion that would inflate "total revenue" if you forgot to exclude cancellations. So a revenue figure needs a `WHERE`:
+
+```sql run
+SELECT
+  COUNT(*)                   AS shipments,
+  SUM(freight_charge)        AS total_charged,
+  ROUND(AVG(freight_charge)) AS average_charge
+FROM shipments
+WHERE status <> 'Cancelled';
+```
+
+### Calculations inside an aggregate
+
+You can aggregate a calculation, not just a column. The total weight in tonnes:
+
+```sql run
+SELECT ROUND(SUM(weight_kg / 1000.0), 1) AS total_tonnes
+FROM shipments
+WHERE status <> 'Cancelled';
+```
+
+And you can calculate with aggregates. The average charge per container across all delivered shipments is the total charge divided by the total containers:
+
+```sql run
+SELECT
+  SUM(freight_charge) / SUM(containers) AS charge_per_container
+FROM shipments
+WHERE status = 'Delivered';
+```
+
+### Aggregates and ordinary columns don't mix (yet)
+
+This query looks reasonable but doesn't make sense:
+
+```sql
+SELECT company_name, COUNT(*)
+FROM customers;
+```
+
+`COUNT(*)` gives one number for the whole table. Which of the 120 company names should sit next to it? Most databases refuse to run it. SQLite runs it and picks one name arbitrarily, which is worse, because it looks like an answer. To show a count **per** company, city or month, you need `GROUP BY`, the next lesson.
+
+## Example
+
+Finance's 2025 summary: how many shipments, the total charged, and the average charge, excluding cancellations.
+
+```sql run
+SELECT
+  COUNT(*)                   AS shipments,
+  SUM(freight_charge)        AS total_charged,
+  ROUND(AVG(freight_charge)) AS average_charge
 FROM shipments
 WHERE booking_date BETWEEN '2025-01-01' AND '2025-12-31'
   AND status <> 'Cancelled';
@@ -45,24 +202,33 @@ WHERE booking_date BETWEEN '2025-01-01' AND '2025-12-31'
 
 ## Walkthrough
 
-1. `WHERE` keeps 2025 bookings and removes cancelled ones, which were never charged.
-2. The three aggregates then run over the rows that remain.
-3. The result is **one row**, however many shipments there were.
+1. `FROM shipments` takes every shipment.
+2. `WHERE` keeps 2025 bookings and removes cancelled ones, which were never billed.
+3. `COUNT(*)`, `SUM` and `AVG` each run over the rows that remain.
+4. The result is **one row**, however many shipments there were.
 
-The difference between `COUNT(*)` and `COUNT(column)` matters when a column has NULLs:
+### Common mistakes
 
-```sql run
-SELECT
-  COUNT(*)                        AS customers,
-  COUNT(account_manager_id)       AS with_manager,
-  COUNT(DISTINCT account_manager_id) AS managers_used
-FROM customers;
-```
+| Mistake | What happens | Fix |
+| :-- | :-- | :-- |
+| Forgetting `WHERE status <> 'Cancelled'` | Totals include charges never billed | Filter first |
+| `COUNT(column)` when you meant every row | Rows with `NULL` in that column are missed | `COUNT(*)` |
+| `SUM` on a text column | An error, or a meaningless 0 | Aggregate a number column |
+| An ordinary column next to an aggregate, with no `GROUP BY` | An error, or an arbitrary value in SQLite | Use `GROUP BY` (next lesson) |
+| `AVG` assumed to include missing values | The average only covers known values | Check `COUNT(column)` alongside |
+| `WHERE COUNT(*) > 5` | An error: `WHERE` runs before aggregates | Use `HAVING` (lesson 9) |
 
-`COUNT(*)` counts every customer. `COUNT(account_manager_id)` skips the ones with no manager. `COUNT(DISTINCT …)` counts how many different managers look after customers.
+### Summary
 
-> [!WARNING]
-> You can't mix aggregates with ordinary columns without saying how to group them. `SELECT company_name, COUNT(*) FROM customers` doesn't mean anything sensible: which company name should sit next to the total? The next lesson, GROUP BY, solves this.
+| You want... | Write |
+| :-- | :-- |
+| how many rows | `COUNT(*)` |
+| how many have a value | `COUNT(col)` |
+| how many different values | `COUNT(DISTINCT col)` |
+| a total | `SUM(col)` |
+| an average, rounded | `ROUND(AVG(col), 2)` |
+| smallest / largest / earliest / latest | `MIN(col)` / `MAX(col)` |
+| a summary of some rows only | add `WHERE` before the aggregate runs |
 
 ## Practice
 

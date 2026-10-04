@@ -13843,7 +13843,7 @@ values ('sql-m07', 'sql-for-data-analysis', 'Aggregate Functions', 7, null, null
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('sql-for-data-analysis:aggregate-functions', 'sql-for-data-analysis', 'sql-m07', 'aggregate-functions', 'Aggregate functions', 'Summarise many rows into one answer with COUNT, SUM, AVG, MIN and MAX.', 15, $md$
+values ('sql-for-data-analysis:aggregate-functions', 'sql-for-data-analysis', 'sql-m07', 'aggregate-functions', 'Aggregate functions', 'Summarise many rows into one answer with COUNT, SUM, AVG, MIN and MAX: missing values, distinct counts, rounding and filtering first, step by step.', 30, $md$
 ## The problem
 
 The managing director has a board meeting tomorrow and asks for a few numbers about 2025:
@@ -13856,28 +13856,185 @@ None of these needs a list of shipments. Each needs **one number** calculated fr
 
 ## The concept
 
-**Aggregate functions** take a column of values and return a single value.
+Every query so far returned one result row for each table row. An **aggregate function** does something different: it takes **many** values and returns **one**. How many shipments? What's the total charged? What's the biggest booking? Each of those is a single number summarising thousands of rows.
 
-| Function | Returns |
-| :-- | :-- |
-| `COUNT(*)` | the number of rows |
-| `COUNT(column)` | the number of rows where that column is not NULL |
-| `COUNT(DISTINCT column)` | the number of different values |
-| `SUM(column)` | the total |
-| `AVG(column)` | the average |
-| `MIN(column)` / `MAX(column)` | the smallest / largest value |
+### The five aggregate functions
 
-Aggregates **ignore NULLs**. `AVG` of a column with some NULLs averages only the values that exist.
+| Function | Returns | Works on |
+| :-- | :-- | :-- |
+| `COUNT(*)` | the number of rows | any table |
+| `COUNT(column)` | the number of rows where the column **has a value** | any column |
+| `COUNT(DISTINCT column)` | the number of **different** values | any column |
+| `SUM(column)` | the total | numbers |
+| `AVG(column)` | the average (mean) | numbers |
+| `MIN(column)` | the smallest value | numbers, text, dates |
+| `MAX(column)` | the largest value | numbers, text, dates |
 
-`ROUND(value, 2)` rounds to two decimal places, which keeps averages readable.
+### The syntax
 
-## Example
+```sql
+SELECT AGGREGATE(column) AS name
+FROM table_name
+WHERE condition;
+```
+
+Always give an aggregate an alias. Otherwise the column heading is the expression itself, such as `SUM(freight_charge)`.
+
+### COUNT: how many rows?
+
+`COUNT(*)` counts rows, whatever is in them:
+
+```sql run
+SELECT COUNT(*) AS shipments
+FROM shipments;
+```
+
+Combine it with `WHERE` to count a slice:
+
+```sql run
+SELECT COUNT(*) AS cancelled_shipments
+FROM shipments
+WHERE status = 'Cancelled';
+```
+
+### COUNT(column) and missing values
+
+`COUNT(column)` counts only the rows where that column is **not** `NULL`. That makes it a quick way to see how complete a column is:
 
 ```sql run
 SELECT
-  COUNT(*)                    AS shipments,
-  SUM(freight_charge)         AS total_charged,
-  ROUND(AVG(freight_charge))  AS average_charge
+  COUNT(*)             AS shipments,
+  COUNT(ship_date)     AS shipped,
+  COUNT(delivery_date) AS delivered
+FROM shipments;
+```
+
+2,683 shipments, of which 2,515 have a ship date and 2,411 a delivery date. The rest are still booked, in transit or cancelled.
+
+### COUNT(DISTINCT): how many different values?
+
+```sql run
+SELECT
+  COUNT(*)                           AS customers,
+  COUNT(account_manager_id)          AS with_a_manager,
+  COUNT(DISTINCT account_manager_id) AS managers_used
+FROM customers;
+```
+
+Read the three answers carefully:
+
+- `COUNT(*)` is 120: every customer.
+- `COUNT(account_manager_id)` is 112: the eight customers without a manager are skipped.
+- `COUNT(DISTINCT account_manager_id)` is 8: eight different account managers share those 112 customers.
+
+### SUM and AVG
+
+`SUM` adds up a column; `AVG` gives the average. Both work only on numbers.
+
+```sql run
+SELECT
+  SUM(containers) AS total_containers,
+  AVG(containers) AS average_containers
+FROM shipments;
+```
+
+The average is a long decimal, 2.3108… Use `ROUND(value, places)` to make it readable:
+
+```sql run
+SELECT
+  SUM(containers)           AS total_containers,
+  ROUND(AVG(containers), 2) AS average_containers
+FROM shipments;
+```
+
+`ROUND(x)` with no second number rounds to a whole number, which suits money in naira.
+
+### MIN and MAX
+
+`MIN` and `MAX` work on numbers, text and dates:
+
+```sql run
+SELECT
+  MIN(booking_date)   AS first_booking,
+  MAX(booking_date)   AS latest_booking,
+  MIN(freight_charge) AS smallest_charge,
+  MAX(freight_charge) AS largest_charge
+FROM shipments;
+```
+
+On text, `MIN` is the first alphabetically and `MAX` the last:
+
+```sql run
+SELECT MIN(company_name) AS first, MAX(company_name) AS last
+FROM customers;
+```
+
+### Aggregates ignore NULL
+
+Every aggregate except `COUNT(*)` skips `NULL` values. So `AVG` of a column with gaps averages **only the values that exist**, not treating the gaps as zero. That's usually what you want, but be aware of it: an average over 50 known values out of 100 rows describes those 50, not all 100.
+
+### Filter first, then summarise
+
+`WHERE` runs **before** the aggregates. Whatever rows `WHERE` removes are never counted or added. This matters at Harbourline, because cancelled shipments still have a `freight_charge` recorded, although the customer was never billed:
+
+```sql run
+SELECT
+  COUNT(*)            AS cancelled,
+  SUM(freight_charge) AS charge_recorded
+FROM shipments
+WHERE status = 'Cancelled';
+```
+
+That's over ₦1.1 billion that would inflate "total revenue" if you forgot to exclude cancellations. So a revenue figure needs a `WHERE`:
+
+```sql run
+SELECT
+  COUNT(*)                   AS shipments,
+  SUM(freight_charge)        AS total_charged,
+  ROUND(AVG(freight_charge)) AS average_charge
+FROM shipments
+WHERE status <> 'Cancelled';
+```
+
+### Calculations inside an aggregate
+
+You can aggregate a calculation, not just a column. The total weight in tonnes:
+
+```sql run
+SELECT ROUND(SUM(weight_kg / 1000.0), 1) AS total_tonnes
+FROM shipments
+WHERE status <> 'Cancelled';
+```
+
+And you can calculate with aggregates. The average charge per container across all delivered shipments is the total charge divided by the total containers:
+
+```sql run
+SELECT
+  SUM(freight_charge) / SUM(containers) AS charge_per_container
+FROM shipments
+WHERE status = 'Delivered';
+```
+
+### Aggregates and ordinary columns don't mix (yet)
+
+This query looks reasonable but doesn't make sense:
+
+```sql
+SELECT company_name, COUNT(*)
+FROM customers;
+```
+
+`COUNT(*)` gives one number for the whole table. Which of the 120 company names should sit next to it? Most databases refuse to run it. SQLite runs it and picks one name arbitrarily, which is worse, because it looks like an answer. To show a count **per** company, city or month, you need `GROUP BY`, the next lesson.
+
+## Example
+
+Finance's 2025 summary: how many shipments, the total charged, and the average charge, excluding cancellations.
+
+```sql run
+SELECT
+  COUNT(*)                   AS shipments,
+  SUM(freight_charge)        AS total_charged,
+  ROUND(AVG(freight_charge)) AS average_charge
 FROM shipments
 WHERE booking_date BETWEEN '2025-01-01' AND '2025-12-31'
   AND status <> 'Cancelled';
@@ -13885,24 +14042,33 @@ WHERE booking_date BETWEEN '2025-01-01' AND '2025-12-31'
 
 ## Walkthrough
 
-1. `WHERE` keeps 2025 bookings and removes cancelled ones, which were never charged.
-2. The three aggregates then run over the rows that remain.
-3. The result is **one row**, however many shipments there were.
+1. `FROM shipments` takes every shipment.
+2. `WHERE` keeps 2025 bookings and removes cancelled ones, which were never billed.
+3. `COUNT(*)`, `SUM` and `AVG` each run over the rows that remain.
+4. The result is **one row**, however many shipments there were.
 
-The difference between `COUNT(*)` and `COUNT(column)` matters when a column has NULLs:
+### Common mistakes
 
-```sql run
-SELECT
-  COUNT(*)                        AS customers,
-  COUNT(account_manager_id)       AS with_manager,
-  COUNT(DISTINCT account_manager_id) AS managers_used
-FROM customers;
-```
+| Mistake | What happens | Fix |
+| :-- | :-- | :-- |
+| Forgetting `WHERE status <> 'Cancelled'` | Totals include charges never billed | Filter first |
+| `COUNT(column)` when you meant every row | Rows with `NULL` in that column are missed | `COUNT(*)` |
+| `SUM` on a text column | An error, or a meaningless 0 | Aggregate a number column |
+| An ordinary column next to an aggregate, with no `GROUP BY` | An error, or an arbitrary value in SQLite | Use `GROUP BY` (next lesson) |
+| `AVG` assumed to include missing values | The average only covers known values | Check `COUNT(column)` alongside |
+| `WHERE COUNT(*) > 5` | An error: `WHERE` runs before aggregates | Use `HAVING` (lesson 9) |
 
-`COUNT(*)` counts every customer. `COUNT(account_manager_id)` skips the ones with no manager. `COUNT(DISTINCT …)` counts how many different managers look after customers.
+### Summary
 
-> [!WARNING]
-> You can't mix aggregates with ordinary columns without saying how to group them. `SELECT company_name, COUNT(*) FROM customers` doesn't mean anything sensible: which company name should sit next to the total? The next lesson, GROUP BY, solves this.
+| You want... | Write |
+| :-- | :-- |
+| how many rows | `COUNT(*)` |
+| how many have a value | `COUNT(col)` |
+| how many different values | `COUNT(DISTINCT col)` |
+| a total | `SUM(col)` |
+| an average, rounded | `ROUND(AVG(col), 2)` |
+| smallest / largest / earliest / latest | `MIN(col)` / `MAX(col)` |
+| a summary of some rows only | add `WHERE` before the aggregate runs |
 
 ## Practice
 
@@ -14021,7 +14187,7 @@ values ('sql-m08', 'sql-for-data-analysis', 'GROUP BY', 8, null, null, '{}'::tex
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('sql-for-data-analysis:group-by', 'sql-for-data-analysis', 'sql-m08', 'group-by', 'GROUP BY', 'Calculate totals and counts for each customer, route, month or status.', 15, $md$
+values ('sql-for-data-analysis:group-by', 'sql-for-data-analysis', 'sql-m08', 'group-by', 'GROUP BY', 'Calculate totals per customer, route, month or status: how grouping works, the golden rule, several columns, calculated groups and NULL, step by step.', 30, $md$
 ## The problem
 
 Harbourline has thousands of shipment records. Your manager wants to know:
@@ -14032,20 +14198,186 @@ You know how to add up containers for the whole company with `SUM`. Now you need
 
 ## The concept
 
-`GROUP BY` splits the rows into groups that share a value, then runs your aggregate functions **once per group**.
+An aggregate on its own gives one answer for the whole table. `GROUP BY` gives one answer **per group**: shipments per customer, revenue per month, customers per city.
 
-Think of it as sorting shipment slips into piles, one pile per customer, then counting the containers in each pile.
+It works in three steps:
 
-Two rules keep you out of trouble:
+1. **Split** the rows into groups that share the same value in the `GROUP BY` column.
+2. **Summarise** each group separately with the aggregate functions.
+3. **Return** one row per group.
 
-1. Every column in `SELECT` must either be in `GROUP BY` or be inside an aggregate function.
-2. `GROUP BY` comes after `WHERE` and before `ORDER BY`.
+![Seven shipments are split into three groups by status: Delivered, In transit and Cancelled. Each group is counted and its containers added up, giving a result with one row per status.](/images/courses/sql/group-by.svg "GROUP BY status: split the rows by status, summarise each group, return one row per group. (Illustration with simplified data.)")
+
+### The syntax
 
 ```sql
-SELECT … FROM … WHERE … GROUP BY … ORDER BY … LIMIT …
+SELECT group_column, AGGREGATE(column) AS name
+FROM table_name
+WHERE condition
+GROUP BY group_column
+ORDER BY ...;
 ```
 
+`GROUP BY` comes **after** `WHERE` and **before** `ORDER BY`:
+
+```sql
+SELECT ... FROM ... WHERE ... GROUP BY ... ORDER BY ... LIMIT ...
+```
+
+### Your first GROUP BY
+
+How many shipments are in each status?
+
+```sql run
+SELECT status, COUNT(*) AS shipments
+FROM shipments
+GROUP BY status;
+```
+
+Four statuses, four rows. Add more aggregates and each one is worked out per group:
+
+```sql run
+SELECT
+  status,
+  COUNT(*)        AS shipments,
+  SUM(containers) AS containers
+FROM shipments
+GROUP BY status;
+```
+
+### The golden rule
+
+Every column in `SELECT` must be **either**:
+
+- listed in `GROUP BY`, **or**
+- inside an aggregate function.
+
+Why? Each result row represents a whole group. `status` is the same for every row in its group, so it can be shown. `containers` differs from row to row, so on its own it has no single value for the group; `SUM(containers)` does.
+
+This breaks the rule:
+
+```sql
+SELECT status, shipment_id, COUNT(*)
+FROM shipments
+GROUP BY status;
+```
+
+There are 2,411 delivered shipments. Which `shipment_id` should appear on the "Delivered" row? Most databases reject the query. SQLite runs it and shows one arbitrary ID, which looks like an answer but means nothing.
+
+### Grouping by a column you summarise elsewhere
+
+Customers per city, largest first:
+
+```sql run
+SELECT city, COUNT(*) AS customers
+FROM customers
+GROUP BY city
+ORDER BY customers DESC;
+```
+
+Average, shortest and longest planned journey for each transport mode:
+
+```sql run
+SELECT
+  mode,
+  COUNT(*)                          AS routes,
+  ROUND(AVG(target_transit_days), 1) AS average_days,
+  MIN(target_transit_days)          AS shortest,
+  MAX(target_transit_days)          AS longest
+FROM routes
+GROUP BY mode;
+```
+
+Air routes average under two days; sea routes 23.
+
+### Filter rows first, then group
+
+`WHERE` removes rows **before** they're grouped, so they never reach any group. This year's busiest customers by containers, excluding cancellations:
+
+```sql run
+SELECT
+  customer_id,
+  COUNT(*)        AS shipments,
+  SUM(containers) AS containers
+FROM shipments
+WHERE booking_date >= '2026-01-01'
+  AND status <> 'Cancelled'
+GROUP BY customer_id
+ORDER BY containers DESC
+LIMIT 10;
+```
+
+The result shows customer IDs rather than names, because names live in the `customers` table. You'll bring them together in the JOINs lesson.
+
+### Grouping by several columns
+
+List more than one column and you get one group for each **combination**:
+
+```sql run
+SELECT city, industry, COUNT(*) AS customers
+FROM customers
+GROUP BY city, industry
+ORDER BY city, customers DESC;
+```
+
+Each row is one city and industry pair. A pair with no customers simply doesn't appear: `GROUP BY` only creates groups for values that exist.
+
+### Grouping by a calculation
+
+You can group by a calculated value. `strftime('%Y-%m', booking_date)` turns a date into its year and month, such as `'2026-03'`, which gives monthly figures:
+
+```sql run
+SELECT
+  strftime('%Y-%m', booking_date) AS month,
+  COUNT(*)                        AS shipments,
+  SUM(containers)                 AS containers
+FROM shipments
+GROUP BY month
+ORDER BY month;
+```
+
+Change the format to `'%Y'` for yearly totals:
+
+```sql run
+SELECT
+  strftime('%Y', booking_date) AS year,
+  COUNT(*)                     AS shipments
+FROM shipments
+GROUP BY year;
+```
+
+> [!NOTE]
+> `strftime` is SQLite's date-formatting function. The idea is the same elsewhere, with different names: `to_char(booking_date, 'YYYY-MM')` in PostgreSQL and Oracle, `FORMAT(booking_date, 'yyyy-MM')` in SQL Server, and `DATE_FORMAT(booking_date, '%Y-%m')` in MySQL.
+
+### Groups and NULL
+
+Rows where the grouping column is `NULL` form **one group of their own**. Customers per account manager, including the ones with none:
+
+```sql run
+SELECT account_manager_id, COUNT(*) AS customers
+FROM customers
+GROUP BY account_manager_id
+ORDER BY account_manager_id;
+```
+
+The first row, with an empty manager, is the eight customers nobody looks after yet.
+
+### Sorting grouped results
+
+`ORDER BY` runs after grouping, so it can sort by the group column or by an aggregate's alias:
+
+```sql run
+SELECT method, COUNT(*) AS payments, SUM(amount) AS total
+FROM payments
+GROUP BY method
+ORDER BY total DESC;
+```
+
+Bank transfers bring in by far the most money.
+
 ## Example
+
+Kemi wants to know who ships the most this year: the top ten customers by containers.
 
 ```sql run
 SELECT
@@ -14061,40 +14393,35 @@ LIMIT 10;
 
 ## Walkthrough
 
-Line by line:
+The database works through it in this order:
 
-- `FROM shipments WHERE booking_date >= '2026-01-01'` takes this year's shipments.
-- `GROUP BY customer_id` makes one group per customer.
-- `COUNT(*)` counts the shipments in each group, and `SUM(containers)` adds up their containers.
-- `ORDER BY containers DESC` puts the biggest shippers first. Here `containers` refers to the alias you created.
-- `LIMIT 10` keeps the top ten.
+1. `FROM shipments`: every shipment.
+2. `WHERE booking_date >= '2026-01-01'`: only this year's.
+3. `GROUP BY customer_id`: one group per customer.
+4. `SELECT`: for each group, the customer ID, `COUNT(*)` of its shipments and `SUM(containers)`.
+5. `ORDER BY containers DESC`: biggest shippers first. `containers` here is the alias you created.
+6. `LIMIT 10`: the top ten.
 
-The result has one row per customer, not one per shipment. You'll see customer IDs rather than names, because names live in the `customers` table. You'll join the two in the JOINs lesson.
+### Common mistakes
 
-You can group by more than one column. This counts customers for each city and industry combination:
+| Mistake | What happens | Fix |
+| :-- | :-- | :-- |
+| A column in `SELECT` that's neither grouped nor aggregated | An error, or an arbitrary value in SQLite | Add it to `GROUP BY` or wrap it in an aggregate |
+| `GROUP BY` before `WHERE` | A syntax error | `WHERE` then `GROUP BY` |
+| Expecting a row for a group with no data | It isn't there | `GROUP BY` only shows values that exist |
+| Grouping by `booking_date` for monthly totals | One group per **day** | Group by `strftime('%Y-%m', booking_date)` |
+| Filtering a total with `WHERE SUM(...) > ...` | An error | Use `HAVING` (next lesson) |
 
-```sql run
-SELECT city, industry, COUNT(*) AS customers
-FROM customers
-GROUP BY city, industry
-ORDER BY city, customers DESC;
-```
+### Summary
 
-Each row is one city and industry pair, with the number of customers in it.
-
-You can also group by a calculated value. `strftime('%Y-%m', booking_date)` turns a date into its year and month, which gives monthly totals:
-
-```sql run
-SELECT
-  strftime('%Y-%m', booking_date) AS month,
-  COUNT(*) AS shipments
-FROM shipments
-GROUP BY month
-ORDER BY month;
-```
-
-> [!NOTE]
-> `strftime` is SQLite's date formatting function. PostgreSQL uses `to_char(booking_date, 'YYYY-MM')` and SQL Server uses `FORMAT(booking_date, 'yyyy-MM')`. The GROUP BY idea is identical.
+| You want... | Write |
+| :-- | :-- |
+| a count per group | `SELECT g, COUNT(*) FROM t GROUP BY g` |
+| several figures per group | `SELECT g, COUNT(*), SUM(x), AVG(y) ... GROUP BY g` |
+| one group per combination | `GROUP BY g1, g2` |
+| monthly totals | `GROUP BY strftime('%Y-%m', date_col)` |
+| some rows only | `WHERE` before `GROUP BY` |
+| biggest groups first | `ORDER BY total DESC` |
 
 ## Practice
 
@@ -14218,7 +14545,7 @@ values ('sql-m09', 'sql-for-data-analysis', 'HAVING', 9, null, null, '{}'::text[
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('sql-for-data-analysis:having', 'sql-for-data-analysis', 'sql-m09', 'having', 'HAVING', 'Filter groups after they''re calculated, such as customers with more than 30 shipments.', 20, $md$
+values ('sql-for-data-analysis:having', 'sql-for-data-analysis', 'sql-m09', 'having', 'HAVING', 'Filter groups after they''re calculated: WHERE versus HAVING, the order clauses run in, minimum group sizes and several conditions, step by step.', 20, $md$
 ## The problem
 
 Harbourline is planning a loyalty discount for its most active customers. The rule the sales director proposes is simple:
@@ -14229,21 +14556,98 @@ You can count shipments per customer with `GROUP BY`. But you can't write `WHERE
 
 ## The concept
 
-`HAVING` filters **groups**, after the aggregates are calculated. `WHERE` filters **rows**, before grouping.
+`HAVING` filters **groups**. It's the `WHERE` of grouped results: after `GROUP BY` has built the groups and the aggregates have been worked out, `HAVING` keeps the groups whose totals meet a condition.
+
+### WHERE or HAVING?
 
 | | `WHERE` | `HAVING` |
 | :-- | :-- | :-- |
-| Filters | individual rows | groups |
-| Runs | before `GROUP BY` | after `GROUP BY` |
-| Can use aggregates like `COUNT(*)` | no | yes |
+| Filters | individual **rows** | whole **groups** |
+| Runs | **before** `GROUP BY` | **after** `GROUP BY` |
+| Can use `COUNT`, `SUM`, `AVG`... | no | yes |
+| Example | `WHERE status <> 'Cancelled'` | `HAVING COUNT(*) > 30` |
 
-The full order of clauses is now:
+A simple test: if the condition is about **one row** (this shipment's status, this booking's date), it goes in `WHERE`. If it's about a **total for a group** (this customer's number of shipments, this route's average charge), it goes in `HAVING`.
+
+### The syntax
 
 ```sql
-SELECT … FROM … WHERE … GROUP BY … HAVING … ORDER BY … LIMIT …
+SELECT group_column, AGGREGATE(column) AS name
+FROM table_name
+WHERE row_condition
+GROUP BY group_column
+HAVING group_condition
+ORDER BY ...;
 ```
 
-## Example
+The complete order of the clauses you've learned:
+
+```sql
+SELECT ... FROM ... WHERE ... GROUP BY ... HAVING ... ORDER BY ... LIMIT ...
+```
+
+And the order the database **runs** them in, which explains what each clause can see:
+
+| Step | Clause | Does |
+| :-- | :-- | :-- |
+| 1 | `FROM` | picks the table |
+| 2 | `WHERE` | removes rows |
+| 3 | `GROUP BY` | builds groups |
+| 4 | `HAVING` | removes groups |
+| 5 | `SELECT` | works out the columns |
+| 6 | `ORDER BY` | sorts |
+| 7 | `LIMIT` | cuts |
+
+### Your first HAVING
+
+Which cities have ten or more customers?
+
+```sql run
+SELECT city, COUNT(*) AS customers
+FROM customers
+GROUP BY city
+HAVING COUNT(*) >= 10;
+```
+
+Without `HAVING`, you'd get all eight cities. With it, only the five big ones.
+
+### Why WHERE can't do it
+
+Try to put the count in `WHERE`:
+
+```sql
+SELECT city, COUNT(*) AS customers
+FROM customers
+WHERE COUNT(*) >= 10
+GROUP BY city;
+```
+
+It fails. `WHERE` runs at step 2, before any groups exist, so there's nothing to count yet. Conditions on aggregates always go in `HAVING`.
+
+### HAVING with other aggregates
+
+Any aggregate works in `HAVING`. Industries with at least 15 customers:
+
+```sql run
+SELECT industry, COUNT(*) AS customers
+FROM customers
+GROUP BY industry
+HAVING COUNT(*) >= 15;
+```
+
+Payment methods that brought in more than ₦2 billion:
+
+```sql run
+SELECT method, COUNT(*) AS payments, SUM(amount) AS total
+FROM payments
+GROUP BY method
+HAVING SUM(amount) > 2000000000
+ORDER BY total DESC;
+```
+
+### Using WHERE and HAVING together
+
+Most real questions need both. Which customers made more than 30 bookings in 2025?
 
 ```sql run
 SELECT
@@ -14256,18 +14660,15 @@ HAVING COUNT(*) > 30
 ORDER BY shipments_2025 DESC;
 ```
 
-## Walkthrough
+- `WHERE` keeps only 2025 rows: a **row** filter.
+- `GROUP BY` makes one group per customer.
+- `HAVING COUNT(*) > 30` keeps customers with more than 30 of those rows: a **group** filter.
 
-The database works through it in this order:
+24 customers qualify.
 
-1. `FROM shipments` takes all shipments.
-2. `WHERE …` keeps only 2025 bookings. This is a row filter.
-3. `GROUP BY customer_id` builds one group per customer.
-4. `COUNT(*)` counts each group.
-5. `HAVING COUNT(*) > 30` keeps only groups with more than 30 shipments. This is a group filter.
-6. `ORDER BY` sorts what's left.
+### Minimum group size
 
-Use both together when you need both kinds of filter. Here, routes that are expensive on average **and** busy enough for the average to mean something:
+An average over three shipments isn't worth much. `HAVING COUNT(*) >= n` keeps only groups big enough for their averages to mean something. The routes with the highest average charge, among routes with at least 50 shipments:
 
 ```sql run
 SELECT
@@ -14281,8 +14682,74 @@ HAVING COUNT(*) >= 50
 ORDER BY avg_charge DESC;
 ```
 
+### Several conditions in HAVING
+
+`AND` and `OR` work in `HAVING` just as in `WHERE`. Customers with more than 20 shipments **and** an average of at least two containers per shipment:
+
+```sql run
+SELECT
+  customer_id,
+  COUNT(*)                  AS shipments,
+  ROUND(AVG(containers), 2) AS avg_containers
+FROM shipments
+GROUP BY customer_id
+HAVING COUNT(*) > 20
+   AND AVG(containers) >= 2
+ORDER BY shipments DESC;
+```
+
+### Can HAVING use an alias?
+
+Databases differ. SQLite and MySQL accept `HAVING shipments_2025 > 30`; PostgreSQL and SQL Server don't, because `HAVING` runs before `SELECT`. Repeat the aggregate (`HAVING COUNT(*) > 30`) and your query works everywhere.
+
+## Example
+
+Finance wants to know which customers booked a lot in 2025, to offer them a volume discount: customers with more than 30 bookings, busiest first.
+
+```sql run
+SELECT
+  customer_id,
+  COUNT(*)        AS shipments_2025,
+  SUM(containers) AS containers_2025
+FROM shipments
+WHERE booking_date BETWEEN '2025-01-01' AND '2025-12-31'
+  AND status <> 'Cancelled'
+GROUP BY customer_id
+HAVING COUNT(*) > 30
+ORDER BY shipments_2025 DESC;
+```
+
+## Walkthrough
+
+1. `FROM shipments`: every shipment.
+2. `WHERE ...`: 2025 bookings that weren't cancelled. Row by row.
+3. `GROUP BY customer_id`: one group per customer.
+4. `HAVING COUNT(*) > 30`: keep customers with more than 30 of those bookings. Group by group.
+5. `SELECT`: the customer, their count and their containers.
+6. `ORDER BY shipments_2025 DESC`: busiest first.
+
 > [!TIP]
-> If a condition doesn't involve an aggregate, put it in `WHERE`, not `HAVING`. It gives the same answer, but filtering rows early means less work for the database.
+> If a condition doesn't involve an aggregate, put it in `WHERE`, even though `HAVING` would accept it. The answer is the same, but removing rows early means the database groups less data.
+
+### Common mistakes
+
+| Mistake | What happens | Fix |
+| :-- | :-- | :-- |
+| `WHERE COUNT(*) > 30` | An error | Move it to `HAVING` |
+| `HAVING` before `GROUP BY` | A syntax error | `GROUP BY` then `HAVING` |
+| A row condition in `HAVING`, such as `HAVING status <> 'Cancelled'` | Works only if `status` is grouped, and filters too late | Put row conditions in `WHERE` |
+| Relying on an alias in `HAVING` | Fails in PostgreSQL and SQL Server | Repeat the aggregate |
+| Confusing `COUNT(*) > 30` with `>= 30` | Off by one group | Read the question's wording carefully |
+
+### Summary
+
+| You want... | Write |
+| :-- | :-- |
+| groups with more than n rows | `HAVING COUNT(*) > n` |
+| groups whose total passes a level | `HAVING SUM(x) > level` |
+| groups big enough to trust | `HAVING COUNT(*) >= n` |
+| a row filter **and** a group filter | `WHERE ... GROUP BY ... HAVING ...` |
+| several group conditions | `HAVING a AND b` |
 
 ## Practice
 

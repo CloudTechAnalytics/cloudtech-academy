@@ -1,7 +1,7 @@
 ---
 title: HAVING
 minutes: 20
-summary: Filter groups after they're calculated, such as customers with more than 30 shipments.
+summary: Filter groups after they're calculated: WHERE versus HAVING, the order clauses run in, minimum group sizes and several conditions, step by step.
 ---
 
 ## The problem
@@ -14,21 +14,98 @@ You can count shipments per customer with `GROUP BY`. But you can't write `WHERE
 
 ## The concept
 
-`HAVING` filters **groups**, after the aggregates are calculated. `WHERE` filters **rows**, before grouping.
+`HAVING` filters **groups**. It's the `WHERE` of grouped results: after `GROUP BY` has built the groups and the aggregates have been worked out, `HAVING` keeps the groups whose totals meet a condition.
+
+### WHERE or HAVING?
 
 | | `WHERE` | `HAVING` |
 | :-- | :-- | :-- |
-| Filters | individual rows | groups |
-| Runs | before `GROUP BY` | after `GROUP BY` |
-| Can use aggregates like `COUNT(*)` | no | yes |
+| Filters | individual **rows** | whole **groups** |
+| Runs | **before** `GROUP BY` | **after** `GROUP BY` |
+| Can use `COUNT`, `SUM`, `AVG`... | no | yes |
+| Example | `WHERE status <> 'Cancelled'` | `HAVING COUNT(*) > 30` |
 
-The full order of clauses is now:
+A simple test: if the condition is about **one row** (this shipment's status, this booking's date), it goes in `WHERE`. If it's about a **total for a group** (this customer's number of shipments, this route's average charge), it goes in `HAVING`.
+
+### The syntax
 
 ```sql
-SELECT … FROM … WHERE … GROUP BY … HAVING … ORDER BY … LIMIT …
+SELECT group_column, AGGREGATE(column) AS name
+FROM table_name
+WHERE row_condition
+GROUP BY group_column
+HAVING group_condition
+ORDER BY ...;
 ```
 
-## Example
+The complete order of the clauses you've learned:
+
+```sql
+SELECT ... FROM ... WHERE ... GROUP BY ... HAVING ... ORDER BY ... LIMIT ...
+```
+
+And the order the database **runs** them in, which explains what each clause can see:
+
+| Step | Clause | Does |
+| :-- | :-- | :-- |
+| 1 | `FROM` | picks the table |
+| 2 | `WHERE` | removes rows |
+| 3 | `GROUP BY` | builds groups |
+| 4 | `HAVING` | removes groups |
+| 5 | `SELECT` | works out the columns |
+| 6 | `ORDER BY` | sorts |
+| 7 | `LIMIT` | cuts |
+
+### Your first HAVING
+
+Which cities have ten or more customers?
+
+```sql run
+SELECT city, COUNT(*) AS customers
+FROM customers
+GROUP BY city
+HAVING COUNT(*) >= 10;
+```
+
+Without `HAVING`, you'd get all eight cities. With it, only the five big ones.
+
+### Why WHERE can't do it
+
+Try to put the count in `WHERE`:
+
+```sql
+SELECT city, COUNT(*) AS customers
+FROM customers
+WHERE COUNT(*) >= 10
+GROUP BY city;
+```
+
+It fails. `WHERE` runs at step 2, before any groups exist, so there's nothing to count yet. Conditions on aggregates always go in `HAVING`.
+
+### HAVING with other aggregates
+
+Any aggregate works in `HAVING`. Industries with at least 15 customers:
+
+```sql run
+SELECT industry, COUNT(*) AS customers
+FROM customers
+GROUP BY industry
+HAVING COUNT(*) >= 15;
+```
+
+Payment methods that brought in more than ₦2 billion:
+
+```sql run
+SELECT method, COUNT(*) AS payments, SUM(amount) AS total
+FROM payments
+GROUP BY method
+HAVING SUM(amount) > 2000000000
+ORDER BY total DESC;
+```
+
+### Using WHERE and HAVING together
+
+Most real questions need both. Which customers made more than 30 bookings in 2025?
 
 ```sql run
 SELECT
@@ -41,18 +118,15 @@ HAVING COUNT(*) > 30
 ORDER BY shipments_2025 DESC;
 ```
 
-## Walkthrough
+- `WHERE` keeps only 2025 rows: a **row** filter.
+- `GROUP BY` makes one group per customer.
+- `HAVING COUNT(*) > 30` keeps customers with more than 30 of those rows: a **group** filter.
 
-The database works through it in this order:
+24 customers qualify.
 
-1. `FROM shipments` takes all shipments.
-2. `WHERE …` keeps only 2025 bookings. This is a row filter.
-3. `GROUP BY customer_id` builds one group per customer.
-4. `COUNT(*)` counts each group.
-5. `HAVING COUNT(*) > 30` keeps only groups with more than 30 shipments. This is a group filter.
-6. `ORDER BY` sorts what's left.
+### Minimum group size
 
-Use both together when you need both kinds of filter. Here, routes that are expensive on average **and** busy enough for the average to mean something:
+An average over three shipments isn't worth much. `HAVING COUNT(*) >= n` keeps only groups big enough for their averages to mean something. The routes with the highest average charge, among routes with at least 50 shipments:
 
 ```sql run
 SELECT
@@ -66,8 +140,74 @@ HAVING COUNT(*) >= 50
 ORDER BY avg_charge DESC;
 ```
 
+### Several conditions in HAVING
+
+`AND` and `OR` work in `HAVING` just as in `WHERE`. Customers with more than 20 shipments **and** an average of at least two containers per shipment:
+
+```sql run
+SELECT
+  customer_id,
+  COUNT(*)                  AS shipments,
+  ROUND(AVG(containers), 2) AS avg_containers
+FROM shipments
+GROUP BY customer_id
+HAVING COUNT(*) > 20
+   AND AVG(containers) >= 2
+ORDER BY shipments DESC;
+```
+
+### Can HAVING use an alias?
+
+Databases differ. SQLite and MySQL accept `HAVING shipments_2025 > 30`; PostgreSQL and SQL Server don't, because `HAVING` runs before `SELECT`. Repeat the aggregate (`HAVING COUNT(*) > 30`) and your query works everywhere.
+
+## Example
+
+Finance wants to know which customers booked a lot in 2025, to offer them a volume discount: customers with more than 30 bookings, busiest first.
+
+```sql run
+SELECT
+  customer_id,
+  COUNT(*)        AS shipments_2025,
+  SUM(containers) AS containers_2025
+FROM shipments
+WHERE booking_date BETWEEN '2025-01-01' AND '2025-12-31'
+  AND status <> 'Cancelled'
+GROUP BY customer_id
+HAVING COUNT(*) > 30
+ORDER BY shipments_2025 DESC;
+```
+
+## Walkthrough
+
+1. `FROM shipments`: every shipment.
+2. `WHERE ...`: 2025 bookings that weren't cancelled. Row by row.
+3. `GROUP BY customer_id`: one group per customer.
+4. `HAVING COUNT(*) > 30`: keep customers with more than 30 of those bookings. Group by group.
+5. `SELECT`: the customer, their count and their containers.
+6. `ORDER BY shipments_2025 DESC`: busiest first.
+
 > [!TIP]
-> If a condition doesn't involve an aggregate, put it in `WHERE`, not `HAVING`. It gives the same answer, but filtering rows early means less work for the database.
+> If a condition doesn't involve an aggregate, put it in `WHERE`, even though `HAVING` would accept it. The answer is the same, but removing rows early means the database groups less data.
+
+### Common mistakes
+
+| Mistake | What happens | Fix |
+| :-- | :-- | :-- |
+| `WHERE COUNT(*) > 30` | An error | Move it to `HAVING` |
+| `HAVING` before `GROUP BY` | A syntax error | `GROUP BY` then `HAVING` |
+| A row condition in `HAVING`, such as `HAVING status <> 'Cancelled'` | Works only if `status` is grouped, and filters too late | Put row conditions in `WHERE` |
+| Relying on an alias in `HAVING` | Fails in PostgreSQL and SQL Server | Repeat the aggregate |
+| Confusing `COUNT(*) > 30` with `>= 30` | Off by one group | Read the question's wording carefully |
+
+### Summary
+
+| You want... | Write |
+| :-- | :-- |
+| groups with more than n rows | `HAVING COUNT(*) > n` |
+| groups whose total passes a level | `HAVING SUM(x) > level` |
+| groups big enough to trust | `HAVING COUNT(*) >= n` |
+| a row filter **and** a group filter | `WHERE ... GROUP BY ... HAVING ...` |
+| several group conditions | `HAVING a AND b` |
 
 ## Practice
 
