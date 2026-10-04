@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 430" width="1160" height="430" role="img" aria-label="GROUP BY compared with a window function. GROUP BY mode turns five routes into two rows, one per mode. AVG over a window partitioned by mode keeps all five rows and adds each mode's average as a new column.">
+<title>GROUP BY compared with a window function. GROUP BY mode turns five routes into two rows, one per mode. AVG over a window partitioned by mode keeps all five rows and adds each mode's average as a new column.</title>
+<rect width="1160" height="430" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+  <text x="30" y="38" font-size="15" font-weight="700" fill="#1F1F1F">routes</text>
+  <rect x="30" y="52" width="290" height="270" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+  <path d="M30,62 a10,10 0 0 1 10,-10 h270 a10,10 0 0 1 10,10 v30 h-290 z" fill="#2B2A28"/>
+  <text x="46" y="78" font-size="12.5" font-weight="700" fill="#FFFFFF">route</text>
+  <text x="130" y="78" font-size="12.5" font-weight="700" fill="#FFFFFF">mode</text>
+  <text x="300" y="78" font-size="12.5" font-weight="700" fill="#FFFFFF" text-anchor="end">days</text>
+  <g font-size="14" fill="#2A2926">
+    <text x="46" y="122">A</text><text x="130" y="122">Air</text><text x="300" y="122" text-anchor="end">1</text>
+    <line x1="30" x2="320" y1="140" y2="140" stroke="#EDE6D8"/>
+    <text x="46" y="168">B</text><text x="130" y="168">Air</text><text x="300" y="168" text-anchor="end">3</text>
+    <line x1="30" x2="320" y1="186" y2="186" stroke="#EDE6D8"/>
+    <text x="46" y="214">C</text><text x="130" y="214">Sea</text><text x="300" y="214" text-anchor="end">20</text>
+    <line x1="30" x2="320" y1="232" y2="232" stroke="#EDE6D8"/>
+    <text x="46" y="260">D</text><text x="130" y="260">Sea</text><text x="300" y="260" text-anchor="end">30</text>
+    <line x1="30" x2="320" y1="278" y2="278" stroke="#EDE6D8"/>
+    <text x="46" y="306">E</text><text x="130" y="306">Sea</text><text x="300" y="306" text-anchor="end">40</text>
+  </g>
+
+  <text x="380" y="38" font-size="15" font-weight="700" fill="#1F1F1F">GROUP BY: rows collapse</text>
+  <rect x="380" y="52" width="320" height="130" rx="10" fill="#FFFFFF" stroke="#B38A3E" stroke-width="1.5"/>
+  <path d="M380,62 a10,10 0 0 1 10,-10 h300 a10,10 0 0 1 10,10 v30 h-320 z" fill="#765923"/>
+  <text x="396" y="78" font-size="12.5" font-weight="700" fill="#FFFFFF">mode</text>
+  <text x="684" y="78" font-size="12.5" font-weight="700" fill="#FFFFFF" text-anchor="end">avg_days</text>
+  <g font-size="14" fill="#2A2926">
+    <text x="396" y="122">Air</text><text x="684" y="122" text-anchor="end">2</text>
+    <line x1="380" x2="700" y1="140" y2="140" stroke="#EDE6D8"/>
+    <text x="396" y="168">Sea</text><text x="684" y="168" text-anchor="end">30</text>
+  </g>
+  <text x="380" y="214" font-family="'JetBrains Mono', Consolas, 'Courier New', monospace" font-size="12" fill="#2A2926">SELECT mode, AVG(days) AS avg_days</text>
+  <text x="380" y="234" font-family="'JetBrains Mono', Consolas, 'Courier New', monospace" font-size="12" fill="#2A2926">FROM routes GROUP BY mode;</text>
+  <text x="380" y="270" font-size="13.5" fill="#5E5A52">5 rows in, 2 rows out.</text>
+  <text x="380" y="292" font-size="13.5" fill="#5E5A52">You can't see the individual routes.</text>
+
+  <text x="760" y="38" font-size="15" font-weight="700" fill="#1F1F1F">Window: every row kept</text>
+  <rect x="760" y="52" width="370" height="270" rx="10" fill="#FFFFFF" stroke="#B38A3E" stroke-width="1.5"/>
+  <path d="M760,62 a10,10 0 0 1 10,-10 h350 a10,10 0 0 1 10,10 v30 h-370 z" fill="#765923"/>
+  <text x="776" y="78" font-size="12.5" font-weight="700" fill="#FFFFFF">route</text>
+  <text x="840" y="78" font-size="12.5" font-weight="700" fill="#FFFFFF">mode</text>
+  <text x="1000" y="78" font-size="12.5" font-weight="700" fill="#FFFFFF" text-anchor="end">days</text>
+  <text x="1114" y="78" font-size="12.5" font-weight="700" fill="#FFFFFF" text-anchor="end">mode_avg</text>
+  <rect x="761" y="93" width="368" height="92" fill="#F6F0E2"/>
+  <g font-size="14" fill="#2A2926">
+    <text x="776" y="122">A</text><text x="840" y="122">Air</text><text x="1000" y="122" text-anchor="end">1</text><text x="1114" y="122" text-anchor="end" font-weight="700" fill="#765923">2</text>
+    <line x1="760" x2="1130" y1="140" y2="140" stroke="#EDE6D8"/>
+    <text x="776" y="168">B</text><text x="840" y="168">Air</text><text x="1000" y="168" text-anchor="end">3</text><text x="1114" y="168" text-anchor="end" font-weight="700" fill="#765923">2</text>
+    <line x1="760" x2="1130" y1="186" y2="186" stroke="#CFC4B2"/>
+    <text x="776" y="214">C</text><text x="840" y="214">Sea</text><text x="1000" y="214" text-anchor="end">20</text><text x="1114" y="214" text-anchor="end" font-weight="700" fill="#765923">30</text>
+    <line x1="760" x2="1130" y1="232" y2="232" stroke="#EDE6D8"/>
+    <text x="776" y="260">D</text><text x="840" y="260">Sea</text><text x="1000" y="260" text-anchor="end">30</text><text x="1114" y="260" text-anchor="end" font-weight="700" fill="#765923">30</text>
+    <line x1="760" x2="1130" y1="278" y2="278" stroke="#EDE6D8"/>
+    <text x="776" y="306">E</text><text x="840" y="306">Sea</text><text x="1000" y="306" text-anchor="end">40</text><text x="1114" y="306" text-anchor="end" font-weight="700" fill="#765923">30</text>
+  </g>
+  <text x="760" y="354" font-family="'JetBrains Mono', Consolas, 'Courier New', monospace" font-size="12" fill="#2A2926">SELECT route, mode, days,</text>
+  <text x="760" y="374" font-family="'JetBrains Mono', Consolas, 'Courier New', monospace" font-size="12" fill="#2A2926">  AVG(days) OVER (PARTITION BY mode) AS mode_avg</text>
+  <text x="760" y="394" font-family="'JetBrains Mono', Consolas, 'Courier New', monospace" font-size="12" fill="#2A2926">FROM routes;</text>
+  <text x="760" y="420" font-size="13.5" fill="#5E5A52">5 rows in, 5 rows out, with the group's figure alongside.</text>
+</g>
+</svg>
