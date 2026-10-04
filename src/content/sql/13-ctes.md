@@ -1,7 +1,7 @@
 ---
 title: CTEs
-minutes: 15
-summary: Break complex questions into named steps with WITH, and avoid double-counting when combining totals.
+minutes: 25
+summary: Break complex questions into named steps with WITH: several and reused steps, checking as you build, COALESCE and recursive CTEs for calendars, step by step.
 ---
 
 ## The problem
@@ -14,21 +14,211 @@ What a customer owes is **what we charged** for delivered shipments, minus **wha
 
 ## The concept
 
-A **CTE** (common table expression) is a named, temporary result you define at the top of a query with `WITH`, and then use like a table.
+A **CTE** (common table expression) is a named, temporary result that you define at the top of a query with `WITH`, then use as if it were a table. It does the same job as a subquery in `FROM`, but you read it **top to bottom**, one step at a time, like a recipe. For anything with more than one step, that makes queries far easier to write, read and check.
+
+### The syntax
+
+```sql
+WITH step_name AS (
+  SELECT ...
+)
+SELECT ...
+FROM step_name;
+```
+
+- `WITH` starts the query.
+- `step_name` is the name you give the result.
+- The query inside the brackets defines it.
+- The **main query** after the brackets uses it like a table.
+
+A CTE only exists while the query runs. Nothing is saved in the database.
+
+### A subquery, rewritten as a CTE
+
+The average number of shipments per customer, from the subqueries lesson:
+
+```sql run
+SELECT ROUND(AVG(shipment_count), 1) AS avg_shipments_per_customer
+FROM (
+  SELECT customer_id, COUNT(*) AS shipment_count
+  FROM shipments
+  GROUP BY customer_id
+) AS per_customer;
+```
+
+The same thing as a CTE:
+
+```sql run
+WITH per_customer AS (
+  SELECT customer_id, COUNT(*) AS shipment_count
+  FROM shipments
+  GROUP BY customer_id
+)
+SELECT ROUND(AVG(shipment_count), 1) AS avg_shipments_per_customer
+FROM per_customer;
+```
+
+Same answer. But now the first step is written first, has a name, and the main query reads like a sentence: "the average shipment count from per_customer".
+
+### Several steps
+
+Separate CTEs with **commas**, and write `WITH` only once. A later CTE can use an earlier one:
 
 ```sql
 WITH step_one AS (
-  SELECT …
+  SELECT ...
 ),
 step_two AS (
-  SELECT … FROM step_one …
+  SELECT ... FROM step_one ...
 )
-SELECT … FROM step_two;
+SELECT ... FROM step_two;
 ```
 
-A CTE does the same job as a subquery in `FROM`, but you read it top to bottom, like a recipe, and you can use each step more than once. CTEs only exist while the query runs.
+Customers who shipped more than average, by name:
+
+```sql run
+WITH per_customer AS (
+  SELECT customer_id, COUNT(*) AS shipment_count
+  FROM shipments
+  GROUP BY customer_id
+),
+average AS (
+  SELECT AVG(shipment_count) AS avg_count
+  FROM per_customer
+)
+SELECT c.company_name, pc.shipment_count
+FROM per_customer AS pc
+JOIN customers AS c ON c.customer_id = pc.customer_id
+WHERE pc.shipment_count > (SELECT avg_count FROM average)
+ORDER BY pc.shipment_count DESC;
+```
+
+1. `per_customer`: one row per customer with their count.
+2. `average`: one row, the average of those counts. It uses the step above.
+3. The main query joins the counts to customer names and keeps those above average.
+
+### Reusing a step
+
+A CTE can be used more than once in the same query. Each customer's shipments as a share of the busiest customer's:
+
+```sql run
+WITH per_customer AS (
+  SELECT customer_id, COUNT(*) AS shipments
+  FROM shipments
+  GROUP BY customer_id
+)
+SELECT
+  customer_id,
+  shipments,
+  ROUND(100.0 * shipments / (SELECT MAX(shipments) FROM per_customer), 1) AS pct_of_busiest
+FROM per_customer
+ORDER BY shipments DESC
+LIMIT 10;
+```
+
+`per_customer` is used twice: as the main table, and inside the subquery that finds the maximum. With subqueries in `FROM`, you'd have to write the counting query out twice.
+
+### Building and checking step by step
+
+The real strength of CTEs is that you can check each step on its own. Build a CTE, look at it, then add the next:
+
+```sql run
+WITH charged AS (
+  SELECT customer_id, SUM(freight_charge) AS total_charged
+  FROM shipments
+  WHERE status = 'Delivered'
+  GROUP BY customer_id
+)
+SELECT * FROM charged
+LIMIT 5;
+```
+
+When that looks right, add the next step and change the final `SELECT`. When a number looks wrong at the end, you can point the final `SELECT` at any step and see where it went wrong.
+
+### COALESCE: replacing missing values
+
+When you `LEFT JOIN` two summaries, rows with no match get `NULL`, and any arithmetic with `NULL` gives `NULL`: `1000 - NULL` is `NULL`, not 1000. `COALESCE(value, fallback)` returns the first argument that isn't `NULL`:
+
+```sql run
+SELECT
+  COALESCE(NULL, 0)       AS a,
+  COALESCE(250, 0)        AS b,
+  1000 - NULL             AS without_coalesce,
+  1000 - COALESCE(NULL, 0) AS with_coalesce;
+```
+
+You'll need it in the example below.
+
+### Recursive CTEs: generating rows
+
+A CTE can refer to **itself**, which lets it generate rows. The commonest use is a calendar: a row for every month, even months with no data. Customer 75's bookings, month by month, have gaps:
+
+```sql run
+SELECT strftime('%Y-%m', booking_date) AS month, COUNT(*) AS shipments
+FROM shipments
+WHERE customer_id = 75
+GROUP BY month;
+```
+
+A report should show zero for the missing months, not skip them. A recursive CTE builds the list of months:
+
+```sql run
+WITH RECURSIVE months AS (
+  SELECT '2025-01-01' AS month_start
+  UNION ALL
+  SELECT date(month_start, '+1 month')
+  FROM months
+  WHERE month_start < '2026-08-01'
+)
+SELECT strftime('%Y-%m', month_start) AS month
+FROM months;
+```
+
+1. The first `SELECT` is the **starting row**: January 2025.
+2. `UNION ALL` adds the rows from the second `SELECT`, which takes the previous row and adds a month.
+3. It repeats until the `WHERE` condition stops it, giving 20 months.
+
+Join the counts to the calendar with a `LEFT JOIN`, and every month appears:
+
+```sql run
+WITH RECURSIVE months AS (
+  SELECT '2025-01-01' AS month_start
+  UNION ALL
+  SELECT date(month_start, '+1 month')
+  FROM months
+  WHERE month_start < '2026-08-01'
+),
+bookings AS (
+  SELECT strftime('%Y-%m', booking_date) AS month, COUNT(*) AS shipments
+  FROM shipments
+  WHERE customer_id = 75
+  GROUP BY month
+)
+SELECT
+  strftime('%Y-%m', m.month_start) AS month,
+  COALESCE(b.shipments, 0)         AS shipments
+FROM months AS m
+LEFT JOIN bookings AS b ON b.month = strftime('%Y-%m', m.month_start)
+ORDER BY month;
+```
+
+> [!WARNING]
+> A recursive CTE needs a condition that stops it. Without the `WHERE month_start < ...`, it would keep adding months forever (most databases stop it after a limit, with an error).
+
+### CTE or subquery?
+
+| Use a CTE when... | A subquery is fine when... |
+| :-- | :-- |
+| there's more than one step | it's one short step |
+| a step is used more than once | it's used once |
+| you'll want to check steps separately | it's obvious at a glance |
+| the query will be read by others | it's a quick one-off |
+
+CTEs are standard SQL and work in SQLite, PostgreSQL, SQL Server, MySQL 8 and Oracle. (In SQL Server, the statement before a `WITH` must end with a semicolon.)
 
 ## Example
+
+The finance director's question: how much does each customer still owe?
 
 ```sql run
 WITH charged AS (
@@ -57,15 +247,34 @@ LIMIT 10;
 
 ## Walkthrough
 
-1. `charged` adds up the charges for delivered shipments, one row per customer.
-2. `paid` adds up payments, one row per customer. Payments don't store the customer, so we join to `shipments` to find it.
-3. The final query joins the two summaries to `customers` and subtracts.
-4. `LEFT JOIN paid` keeps customers who haven't paid anything, and `COALESCE(pd.total_paid, 0)` turns their NULL into 0 so the subtraction works.
+1. `charged` adds up the charges for delivered shipments: one row per customer.
+2. `paid` adds up payments: one row per customer. Payments don't store the customer, so it joins to `shipments` to find them.
+3. The main query joins both summaries to `customers` and subtracts.
+4. `LEFT JOIN paid` keeps customers who haven't paid anything, and `COALESCE(pd.total_paid, 0)` turns their `NULL` into 0 so the subtraction works.
 
-Why two separate summaries? If you joined shipments and payments first and then summed, every shipment with two payments would have its charge counted twice. **Aggregating each table on its own and then joining the totals** avoids that double-counting. It's one of the most common mistakes in real reports.
+Why two separate summaries? If you joined shipments to payments first and then summed, every shipment with two payments would have its charge counted twice (the double-counting trap from the JOINs lesson). **Summarise each table on its own, then join the totals.** CTEs make that pattern easy to write and easy to see.
 
-> [!TIP]
-> Build CTEs one step at a time. Write the first CTE, run `SELECT * FROM charged` to check it, then add the next step. When a number looks wrong, you can check each step on its own.
+### Common mistakes
+
+| Mistake | What happens | Fix |
+| :-- | :-- | :-- |
+| `WITH` written before every CTE | A syntax error | `WITH` once, commas between CTEs |
+| A comma after the last CTE | A syntax error | No comma before the main `SELECT` |
+| Using a CTE before it's defined | "No such table" | Define steps in order |
+| Arithmetic with `NULL` after a `LEFT JOIN` | `NULL` results | `COALESCE(value, 0)` |
+| A recursive CTE with no stop condition | Runs until the database stops it | Add a `WHERE` that ends it |
+| Expecting a CTE to be saved | It's gone after the query | Use a view or a table to keep it |
+
+### Summary
+
+| You want... | Write |
+| :-- | :-- |
+| a named step | `WITH step AS (SELECT ...) SELECT ... FROM step` |
+| several steps | `WITH a AS (...), b AS (SELECT ... FROM a) SELECT ...` |
+| to check a step | point the final `SELECT` at it: `SELECT * FROM a` |
+| a fallback for missing values | `COALESCE(value, 0)` |
+| a row for every month | `WITH RECURSIVE months AS (...)` |
+| totals from two tables without double counting | summarise each in its own CTE, then join |
 
 ## Practice
 

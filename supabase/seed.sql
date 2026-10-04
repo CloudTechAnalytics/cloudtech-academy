@@ -15287,7 +15287,7 @@ values ('sql-m11', 'sql-for-data-analysis', 'CASE Statements', 11, null, null, '
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('sql-for-data-analysis:case-statements', 'sql-for-data-analysis', 'sql-m11', 'case-statements', 'CASE statements', 'Create categories and labels with CASE, and use it to count and compare groups.', 10, $md$
+values ('sql-for-data-analysis:case-statements', 'sql-for-data-analysis', 'sql-m11', 'case-statements', 'CASE statements', 'Turn data into categories with CASE: bands, custom sort orders, counting and summing with SUM(CASE ...), percentages and date arithmetic, step by step.', 30, $md$
 ## The problem
 
 Operations wants to know how reliable Harbourline really is:
@@ -15298,23 +15298,26 @@ The database stores dates, not a column that says "late". You need to **create**
 
 ## The concept
 
-`CASE` returns different values depending on conditions, like IF in Excel.
+`CASE` lets a query make decisions. It checks conditions in order and returns a different value depending on which is true, much like `IF` in Excel. Use it to turn raw data into the categories people actually talk about: "large", "late", "high value", "this year".
+
+### The syntax
 
 ```sql
 CASE
-  WHEN condition_1 THEN value_1
-  WHEN condition_2 THEN value_2
-  ELSE value_otherwise
+  WHEN condition_1 THEN result_1
+  WHEN condition_2 THEN result_2
+  ELSE result_otherwise
 END
 ```
 
-- Conditions are checked from top to bottom, and the **first** one that's true wins.
-- If nothing matches and there's no `ELSE`, the result is NULL.
-- A `CASE` expression can go anywhere a value can: in `SELECT`, `WHERE`, `GROUP BY` or inside an aggregate.
+- The conditions are checked **from top to bottom**, and the **first** true one wins. The rest are ignored.
+- `ELSE` is what you get if nothing matched. Without an `ELSE`, the result is `NULL`.
+- Every `CASE` finishes with `END`. Forgetting it is the commonest `CASE` error.
+- A `CASE` is an **expression**: it produces one value per row, so it can go anywhere a value can, in `SELECT`, `WHERE`, `GROUP BY`, `ORDER BY` or inside an aggregate.
 
-## Example
+### Labelling rows in SELECT
 
-Label shipments by size:
+Size bands for shipments:
 
 ```sql run
 SELECT
@@ -15329,28 +15332,210 @@ FROM shipments
 LIMIT 20;
 ```
 
-## Walkthrough
+Follow a 4-container shipment through: `containers >= 6` is false, so the database tries the next line; `containers >= 3` is true, so the answer is `'Medium'` and checking stops.
 
-For each row, the database checks `containers >= 6` first. If that's false it checks `containers >= 3`, and if neither is true, it falls to `ELSE`. A 4-container shipment fails the first test and passes the second, so it's 'Medium'. The order matters: if you tested `>= 3` first, every large shipment would be labelled 'Medium'.
+### Why the order of WHEN lines matters
 
-Now Kemi's question. `julianday()` turns a date into a day number, so subtracting two of them gives the days between. A delivery is on time when the actual transit is no more than the target:
+Swap the two conditions and see what goes wrong:
+
+```sql run
+SELECT
+  containers,
+  CASE
+    WHEN containers >= 3 THEN 'Medium'
+    WHEN containers >= 6 THEN 'Large'
+    ELSE 'Small'
+  END AS size_band
+FROM shipments
+WHERE containers >= 6
+LIMIT 5;
+```
+
+Every large shipment is now called `'Medium'`, because 8 is also `>= 3`, and that line comes first. When bands overlap, put the **most specific** condition first.
+
+### The simple form
+
+When every condition compares one column to a fixed value, there's a shorter form:
+
+```sql run
+SELECT DISTINCT
+  mode,
+  CASE mode
+    WHEN 'Air'  THEN 'Fast, expensive'
+    WHEN 'Road' THEN 'Regional'
+    WHEN 'Sea'  THEN 'Slow, cheap per tonne'
+  END AS description
+FROM routes;
+```
+
+`CASE mode WHEN 'Air' ...` means `CASE WHEN mode = 'Air' ...`. The simple form can only test for equality; for anything else (`>=`, `LIKE`, `IS NULL`, several columns), use the full form.
+
+### Counting with CASE: SUM(CASE ...)
+
+This pattern is one of the most useful in SQL. A `CASE` that returns `1` or `0` turns a condition into a number, and `SUM` adds up the 1s, which counts the rows that meet the condition:
+
+```sql run
+SELECT
+  COUNT(*)                                          AS shipments,
+  SUM(CASE WHEN status = 'Delivered' THEN 1 ELSE 0 END) AS delivered,
+  SUM(CASE WHEN status = 'Cancelled' THEN 1 ELSE 0 END) AS cancelled
+FROM shipments;
+```
+
+Combined with `GROUP BY`, you get several counts per group in one query, side by side, like a pivot table:
+
+```sql run
+SELECT
+  strftime('%Y', booking_date)                          AS year,
+  SUM(CASE WHEN containers >= 6 THEN 1 ELSE 0 END)      AS large,
+  SUM(CASE WHEN containers BETWEEN 3 AND 5 THEN 1 ELSE 0 END) AS medium,
+  SUM(CASE WHEN containers <= 2 THEN 1 ELSE 0 END)      AS small
+FROM shipments
+GROUP BY year;
+```
+
+### Percentages
+
+Divide a conditional count by the total. Multiply by `100.0` (with the `.0`) to avoid whole-number division:
+
+```sql run
+SELECT
+  ROUND(100.0 * SUM(CASE WHEN status = 'Cancelled' THEN 1 ELSE 0 END) / COUNT(*), 1) AS cancelled_pct
+FROM shipments;
+```
+
+### Summing amounts with CASE
+
+`CASE` can return an amount instead of `1`, so `SUM` adds up only the matching values. Revenue by year, as columns:
+
+```sql run
+SELECT
+  SUM(CASE WHEN booking_date < '2026-01-01' THEN freight_charge ELSE 0 END)  AS revenue_2025,
+  SUM(CASE WHEN booking_date >= '2026-01-01' THEN freight_charge ELSE 0 END) AS revenue_2026
+FROM shipments
+WHERE status <> 'Cancelled';
+```
+
+### Grouping by a CASE
+
+Group by the label itself to count each band:
+
+```sql run
+SELECT
+  CASE
+    WHEN containers >= 6 THEN 'Large'
+    WHEN containers >= 3 THEN 'Medium'
+    ELSE 'Small'
+  END AS size_band,
+  COUNT(*) AS shipments
+FROM shipments
+GROUP BY size_band;
+```
+
+1,892 small, 511 medium and 280 large shipments. (SQLite lets you group by the alias; in some databases you repeat the `CASE` in `GROUP BY`.)
+
+### A custom sort order
+
+Alphabetical isn't always useful. Statuses make more sense in the order a shipment moves through them. `CASE` turns each status into a number to sort by:
+
+```sql run
+SELECT status, COUNT(*) AS shipments
+FROM shipments
+GROUP BY status
+ORDER BY CASE status
+  WHEN 'Booked'     THEN 1
+  WHEN 'In transit' THEN 2
+  WHEN 'Delivered'  THEN 3
+  WHEN 'Cancelled'  THEN 4
+END;
+```
+
+### Handling missing values
+
+`CASE` is a clear way to replace `NULL` with something readable:
+
+```sql run
+SELECT
+  company_name,
+  CASE
+    WHEN account_manager_id IS NULL THEN 'Unassigned'
+    ELSE 'Assigned'
+  END AS manager_status
+FROM customers
+ORDER BY manager_status DESC
+LIMIT 10;
+```
+
+For the plain "use this value if it's missing" case there's a shortcut, `COALESCE(column, fallback)`, which returns the first value that isn't `NULL`. You'll use it in the CTEs lesson.
+
+### Keep the results one type
+
+Every `THEN` and the `ELSE` should return the same kind of value: all text, or all numbers. Mixing them (`THEN 'Late' ELSE 0`) works in SQLite but fails in most databases, and confuses anyone using the result.
+
+### Date arithmetic for "late"
+
+Kemi's question needs the number of days between two dates. `julianday()` turns a date into a day number, so subtracting two gives the days between:
+
+```sql run
+SELECT
+  shipment_id,
+  ship_date,
+  delivery_date,
+  julianday(delivery_date) - julianday(ship_date) AS days_in_transit
+FROM shipments
+WHERE status = 'Delivered'
+LIMIT 5;
+```
+
+> [!NOTE]
+> Date arithmetic is where databases differ most. In PostgreSQL you write `delivery_date - ship_date`; in SQL Server, `DATEDIFF(day, ship_date, delivery_date)`; in MySQL, `DATEDIFF(delivery_date, ship_date)`.
+
+## Example
+
+Kemi's question: for each mode, how many deliveries arrived on time and how many were late, and what share was on time?
 
 ```sql run
 SELECT
   r.mode,
   COUNT(*) AS delivered,
   SUM(CASE WHEN julianday(s.delivery_date) - julianday(s.ship_date) <= r.target_transit_days THEN 1 ELSE 0 END) AS on_time,
-  SUM(CASE WHEN julianday(s.delivery_date) - julianday(s.ship_date) >  r.target_transit_days THEN 1 ELSE 0 END) AS late
+  SUM(CASE WHEN julianday(s.delivery_date) - julianday(s.ship_date) >  r.target_transit_days THEN 1 ELSE 0 END) AS late,
+  ROUND(100.0 * SUM(CASE WHEN julianday(s.delivery_date) - julianday(s.ship_date) <= r.target_transit_days THEN 1 ELSE 0 END) / COUNT(*), 1) AS on_time_pct
 FROM shipments AS s
 JOIN routes AS r ON r.route_id = s.route_id
 WHERE s.status = 'Delivered'
 GROUP BY r.mode;
 ```
 
-`SUM(CASE WHEN … THEN 1 ELSE 0 END)` is one of the most useful patterns in SQL: it counts the rows that meet a condition, inside a GROUP BY, without a separate query for each group.
+## Walkthrough
 
-> [!NOTE]
-> Date arithmetic is one of the places databases differ most. In PostgreSQL you'd write `delivery_date - ship_date`; in SQL Server, `DATEDIFF(day, ship_date, delivery_date)`.
+1. The join brings each delivered shipment together with its route's `target_transit_days`.
+2. For every shipment, `julianday(delivery_date) - julianday(ship_date)` gives the days it actually took.
+3. The first `CASE` returns 1 if that's within the target, otherwise 0. `SUM` counts the 1s: the on-time deliveries.
+4. The second does the same for late ones. Together they add up to `delivered`.
+5. The last column divides on-time by the total and rounds: about three-quarters on time for every mode.
+
+### Common mistakes
+
+| Mistake | What happens | Fix |
+| :-- | :-- | :-- |
+| Forgetting `END` | A syntax error | Every `CASE` ends with `END` |
+| Broad conditions first (`>= 3` before `>= 6`) | Everything lands in the first band | Most specific first |
+| No `ELSE` | Unmatched rows become `NULL` | Add an `ELSE` |
+| `COUNT(CASE WHEN ... THEN 1 ELSE 0 END)` | Counts every row, because 0 isn't `NULL` | Use `SUM`, or drop the `ELSE 0` |
+| `100 * count / total` | Whole-number division: 0 or 100 | `100.0 * count / total` |
+| Mixing text and numbers in the results | Errors in most databases | Return one type |
+
+### Summary
+
+| You want... | Write |
+| :-- | :-- |
+| a label from a condition | `CASE WHEN cond THEN 'A' ELSE 'B' END AS label` |
+| a label from fixed values | `CASE col WHEN 'x' THEN 'X' ... END` |
+| to count rows that match | `SUM(CASE WHEN cond THEN 1 ELSE 0 END)` |
+| a percentage | `ROUND(100.0 * SUM(CASE ...) / COUNT(*), 1)` |
+| a total of matching amounts | `SUM(CASE WHEN cond THEN amount ELSE 0 END)` |
+| a custom sort order | `ORDER BY CASE col WHEN 'a' THEN 1 ... END` |
 
 ## Practice
 
@@ -15447,7 +15632,7 @@ values ('sql-m12', 'sql-for-data-analysis', 'Subqueries', 12, null, null, '{}'::
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('sql-for-data-analysis:subqueries', 'sql-for-data-analysis', 'sql-m12', 'subqueries', 'Subqueries', 'Use the result of one query inside another, in WHERE, SELECT and FROM.', 10, $md$
+values ('sql-for-data-analysis:subqueries', 'sql-for-data-analysis', 'sql-m12', 'subqueries', 'Subqueries', 'Use the result of one query inside another: single values, lists with IN, the NOT IN trap, EXISTS, correlated subqueries and tables in FROM, step by step.', 30, $md$
 ## The problem
 
 Finance wants to review unusually expensive bookings:
@@ -15458,17 +15643,26 @@ To answer it, you need the average first, and then the shipments above it. You c
 
 ## The concept
 
-A **subquery** is a query inside another query, written in brackets. The inner query runs first and its result is used by the outer one.
+A **subquery** is a query inside another query, written in brackets. The inner query works something out, and the outer query uses the answer. It lets one query do what would otherwise take two, with the number always up to date.
 
-There are three common places to put one:
+### Three kinds of answer, three places to use them
 
-1. **In `WHERE`**, to compare against a calculated value or a list.
-2. **In `SELECT`**, to show a calculated value on every row.
-3. **In `FROM`**, to treat a result as if it were a table.
+| The subquery returns... | Called | Use it... | Example |
+| :-- | :-- | :-- | :-- |
+| one value | a **scalar** subquery | anywhere a single value fits: `WHERE`, `SELECT` | `> (SELECT AVG(x) FROM t)` |
+| one column of values | a **list** | with `IN` or `NOT IN` | `IN (SELECT id FROM t)` |
+| a whole table | a **derived table** | in `FROM`, with an alias | `FROM (SELECT ...) AS t` |
 
-A subquery that returns a single value is called a **scalar** subquery. One that returns a list of values works with `IN`.
+### A single value in WHERE
 
-## Example
+The average shipment charge is one number:
+
+```sql run
+SELECT ROUND(AVG(freight_charge)) AS average_charge
+FROM shipments;
+```
+
+Put that query in brackets inside `WHERE`, and the outer query keeps the shipments above it:
 
 ```sql run
 SELECT shipment_id, booking_date, freight_charge
@@ -15477,23 +15671,122 @@ WHERE freight_charge > (SELECT AVG(freight_charge) FROM shipments)
 ORDER BY freight_charge DESC;
 ```
 
-## Walkthrough
+The inner query runs first and returns about ₦7.16 million; the outer query keeps the 1,034 shipments above it. Next month the average changes, and the query still gives the right answer, with nothing copied by hand.
 
-- `(SELECT AVG(freight_charge) FROM shipments)` runs first and returns one number.
-- The outer query keeps shipments whose charge is above that number.
-- Because the average is calculated each time the query runs, the report stays correct as data changes.
+A scalar subquery must return **exactly one value**. If it could return several rows, the database stops with an error (or, in SQLite, silently uses the first one).
 
-A subquery that returns a **list** works with `IN`. Here, customers in the Pharmaceuticals industry, found by ID:
+### A single value in SELECT
+
+A scalar subquery in `SELECT` puts the same value on every row, which is handy for comparisons:
+
+```sql run
+SELECT
+  shipment_id,
+  freight_charge,
+  (SELECT ROUND(AVG(freight_charge)) FROM shipments)                  AS average_charge,
+  freight_charge - (SELECT ROUND(AVG(freight_charge)) FROM shipments) AS above_average
+FROM shipments
+ORDER BY above_average DESC
+LIMIT 10;
+```
+
+### A list with IN
+
+A subquery that returns one column works with `IN`. Shipments for pharmaceutical customers, without a join:
 
 ```sql run
 SELECT shipment_id, booking_date, containers
 FROM shipments
 WHERE customer_id IN (
-  SELECT customer_id FROM customers WHERE industry = 'Pharmaceuticals'
+  SELECT customer_id
+  FROM customers
+  WHERE industry = 'Pharmaceuticals'
 );
 ```
 
-A subquery in `FROM` builds a temporary table you can query again. This finds the average number of shipments per customer, which needs two levels of aggregation:
+The inner query lists the IDs of pharmaceutical customers; the outer query keeps shipments whose `customer_id` is in that list. 294 of them.
+
+### NOT IN, and the NULL trap
+
+`NOT IN` keeps rows whose value is **not** in the list. Customers who have never shipped:
+
+```sql run
+SELECT company_name
+FROM customers
+WHERE customer_id NOT IN (SELECT customer_id FROM shipments);
+```
+
+Fifteen, the same as the `LEFT JOIN` method in the JOINs lesson. But `NOT IN` has a dangerous trap. Which employees don't manage anyone? Their ID never appears as anyone's `manager_id`:
+
+```sql run
+SELECT full_name
+FROM employees
+WHERE employee_id NOT IN (SELECT manager_id FROM employees);
+```
+
+**No rows at all**, although most employees manage nobody. The reason: the two people at the top have no manager, so the list contains a `NULL`. `NOT IN` checks "not equal to any value in the list", and nothing can be proved "not equal" to an unknown, so every row fails. Remove the `NULL`s and you get the real answer:
+
+```sql run
+SELECT full_name
+FROM employees
+WHERE employee_id NOT IN (
+  SELECT manager_id FROM employees WHERE manager_id IS NOT NULL
+);
+```
+
+22 employees. Whenever you use `NOT IN` with a subquery, either filter out `NULL`s or use `NOT EXISTS`, which doesn't have the problem.
+
+### EXISTS and NOT EXISTS
+
+`EXISTS (subquery)` is true if the subquery returns **any** row at all. It's usually written with a condition that links back to the outer row:
+
+```sql run
+SELECT c.company_name
+FROM customers AS c
+WHERE NOT EXISTS (
+  SELECT 1
+  FROM shipments AS s
+  WHERE s.customer_id = c.customer_id
+);
+```
+
+For each customer, the inner query looks for any shipment with that customer's ID. `NOT EXISTS` keeps the customers for whom it finds none. `SELECT 1` is a convention: `EXISTS` only cares whether a row exists, not what's in it.
+
+Customers who shipped something in August 2026:
+
+```sql run
+SELECT c.company_name
+FROM customers AS c
+WHERE EXISTS (
+  SELECT 1
+  FROM shipments AS s
+  WHERE s.customer_id = c.customer_id
+    AND s.booking_date >= '2026-08-01'
+);
+```
+
+### Correlated subqueries
+
+The `EXISTS` examples are **correlated**: the inner query refers to the outer row (`c.customer_id`), so it's worked out again for each row. A correlated subquery can also return a value. Shipments that cost more than the average **on their own route**:
+
+```sql run
+SELECT s.shipment_id, s.route_id, s.freight_charge
+FROM shipments AS s
+WHERE s.freight_charge > (
+  SELECT AVG(s2.freight_charge)
+  FROM shipments AS s2
+  WHERE s2.route_id = s.route_id
+)
+ORDER BY s.route_id, s.freight_charge DESC;
+```
+
+The inner query uses a second alias, `s2`, for the same table, and `s2.route_id = s.route_id` ties it to the current outer row. That's fairer than comparing against the company-wide average: a sea shipment from Shanghai is always dearer than a lorry to Ibadan.
+
+Correlated subqueries are powerful but can be slow on big tables, because the inner query runs once per outer row. Window functions (lesson 14) do the same job faster.
+
+### A table in FROM
+
+A subquery in `FROM` returns a whole result that the outer query treats as a table. It must have an alias. This answers a question that needs two levels of summary, the average number of shipments per customer:
 
 ```sql run
 SELECT ROUND(AVG(shipment_count), 1) AS avg_shipments_per_customer
@@ -15504,10 +15797,58 @@ FROM (
 ) AS per_customer;
 ```
 
-The inner query gives one row per customer; the outer query averages those counts. In most databases a subquery in `FROM` needs an alias, here `per_customer`.
+1. The inner query gives one row per customer, with their count.
+2. The outer query averages those counts: 25.6 shipments per customer who has shipped.
 
-> [!TIP]
-> When a subquery gets long, it becomes hard to read from the inside out. The next lesson, CTEs, lets you write the same thing top to bottom.
+You can't write `AVG(COUNT(*))` directly; nesting aggregates needs a subquery like this.
+
+### Subquery or JOIN?
+
+Many questions can be answered either way. `IN (subquery)` and a join give the same shipments for pharmaceutical customers. Choose the one that reads most clearly:
+
+- If you only **filter** by the other table, `IN` or `EXISTS` often reads better.
+- If you need to **show** columns from the other table, you need a join.
+- For "which have none?", `NOT EXISTS` and `LEFT JOIN ... IS NULL` are both safe; `NOT IN` needs care.
+
+## Example
+
+Finance's request: every shipment that cost more than the average shipment.
+
+```sql run
+SELECT shipment_id, booking_date, freight_charge
+FROM shipments
+WHERE freight_charge > (SELECT AVG(freight_charge) FROM shipments)
+ORDER BY freight_charge DESC;
+```
+
+## Walkthrough
+
+1. The database runs the subquery first: `SELECT AVG(freight_charge) FROM shipments` returns one number.
+2. The outer query compares each shipment's charge with it and keeps the higher ones.
+3. `ORDER BY` puts the most expensive first.
+
+Because the average is worked out every time the query runs, the report is always correct. No number is copied, and nothing goes stale.
+
+### Common mistakes
+
+| Mistake | What happens | Fix |
+| :-- | :-- | :-- |
+| A scalar subquery that returns several rows | An error, or an arbitrary value in SQLite | Make sure it returns one value |
+| `NOT IN` with a `NULL` in the list | No rows at all, and no error | Filter out `NULL`s, or use `NOT EXISTS` |
+| A subquery in `FROM` with no alias | An error in most databases | Add `AS name` |
+| Writing `AVG(COUNT(*))` | An error: aggregates can't be nested | Count in a subquery, average outside |
+| A correlated subquery on a huge table | Slow | Use a join, a CTE or a window function |
+
+### Summary
+
+| You want... | Write |
+| :-- | :-- |
+| rows above an overall figure | `WHERE x > (SELECT AVG(x) FROM t)` |
+| the overall figure on every row | `SELECT ..., (SELECT AVG(x) FROM t) AS avg` |
+| rows whose key is in another list | `WHERE id IN (SELECT id FROM t2 WHERE ...)` |
+| rows with no match elsewhere | `WHERE NOT EXISTS (SELECT 1 FROM t2 WHERE t2.id = t.id)` |
+| a comparison within each group | a correlated subquery on the same table |
+| a summary of a summary | `SELECT AVG(n) FROM (SELECT ... COUNT(*) AS n ...) AS t` |
 
 ## Practice
 
@@ -15604,7 +15945,7 @@ values ('sql-m13', 'sql-for-data-analysis', 'CTEs', 13, null, null, '{}'::text[]
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('sql-for-data-analysis:ctes', 'sql-for-data-analysis', 'sql-m13', 'ctes', 'CTEs', 'Break complex questions into named steps with WITH, and avoid double-counting when combining totals.', 15, $md$
+values ('sql-for-data-analysis:ctes', 'sql-for-data-analysis', 'sql-m13', 'ctes', 'CTEs', 'Break complex questions into named steps with WITH: several and reused steps, checking as you build, COALESCE and recursive CTEs for calendars, step by step.', 25, $md$
 ## The problem
 
 The finance director asks for something that sounds simple:
@@ -15615,21 +15956,211 @@ What a customer owes is **what we charged** for delivered shipments, minus **wha
 
 ## The concept
 
-A **CTE** (common table expression) is a named, temporary result you define at the top of a query with `WITH`, and then use like a table.
+A **CTE** (common table expression) is a named, temporary result that you define at the top of a query with `WITH`, then use as if it were a table. It does the same job as a subquery in `FROM`, but you read it **top to bottom**, one step at a time, like a recipe. For anything with more than one step, that makes queries far easier to write, read and check.
+
+### The syntax
+
+```sql
+WITH step_name AS (
+  SELECT ...
+)
+SELECT ...
+FROM step_name;
+```
+
+- `WITH` starts the query.
+- `step_name` is the name you give the result.
+- The query inside the brackets defines it.
+- The **main query** after the brackets uses it like a table.
+
+A CTE only exists while the query runs. Nothing is saved in the database.
+
+### A subquery, rewritten as a CTE
+
+The average number of shipments per customer, from the subqueries lesson:
+
+```sql run
+SELECT ROUND(AVG(shipment_count), 1) AS avg_shipments_per_customer
+FROM (
+  SELECT customer_id, COUNT(*) AS shipment_count
+  FROM shipments
+  GROUP BY customer_id
+) AS per_customer;
+```
+
+The same thing as a CTE:
+
+```sql run
+WITH per_customer AS (
+  SELECT customer_id, COUNT(*) AS shipment_count
+  FROM shipments
+  GROUP BY customer_id
+)
+SELECT ROUND(AVG(shipment_count), 1) AS avg_shipments_per_customer
+FROM per_customer;
+```
+
+Same answer. But now the first step is written first, has a name, and the main query reads like a sentence: "the average shipment count from per_customer".
+
+### Several steps
+
+Separate CTEs with **commas**, and write `WITH` only once. A later CTE can use an earlier one:
 
 ```sql
 WITH step_one AS (
-  SELECT …
+  SELECT ...
 ),
 step_two AS (
-  SELECT … FROM step_one …
+  SELECT ... FROM step_one ...
 )
-SELECT … FROM step_two;
+SELECT ... FROM step_two;
 ```
 
-A CTE does the same job as a subquery in `FROM`, but you read it top to bottom, like a recipe, and you can use each step more than once. CTEs only exist while the query runs.
+Customers who shipped more than average, by name:
+
+```sql run
+WITH per_customer AS (
+  SELECT customer_id, COUNT(*) AS shipment_count
+  FROM shipments
+  GROUP BY customer_id
+),
+average AS (
+  SELECT AVG(shipment_count) AS avg_count
+  FROM per_customer
+)
+SELECT c.company_name, pc.shipment_count
+FROM per_customer AS pc
+JOIN customers AS c ON c.customer_id = pc.customer_id
+WHERE pc.shipment_count > (SELECT avg_count FROM average)
+ORDER BY pc.shipment_count DESC;
+```
+
+1. `per_customer`: one row per customer with their count.
+2. `average`: one row, the average of those counts. It uses the step above.
+3. The main query joins the counts to customer names and keeps those above average.
+
+### Reusing a step
+
+A CTE can be used more than once in the same query. Each customer's shipments as a share of the busiest customer's:
+
+```sql run
+WITH per_customer AS (
+  SELECT customer_id, COUNT(*) AS shipments
+  FROM shipments
+  GROUP BY customer_id
+)
+SELECT
+  customer_id,
+  shipments,
+  ROUND(100.0 * shipments / (SELECT MAX(shipments) FROM per_customer), 1) AS pct_of_busiest
+FROM per_customer
+ORDER BY shipments DESC
+LIMIT 10;
+```
+
+`per_customer` is used twice: as the main table, and inside the subquery that finds the maximum. With subqueries in `FROM`, you'd have to write the counting query out twice.
+
+### Building and checking step by step
+
+The real strength of CTEs is that you can check each step on its own. Build a CTE, look at it, then add the next:
+
+```sql run
+WITH charged AS (
+  SELECT customer_id, SUM(freight_charge) AS total_charged
+  FROM shipments
+  WHERE status = 'Delivered'
+  GROUP BY customer_id
+)
+SELECT * FROM charged
+LIMIT 5;
+```
+
+When that looks right, add the next step and change the final `SELECT`. When a number looks wrong at the end, you can point the final `SELECT` at any step and see where it went wrong.
+
+### COALESCE: replacing missing values
+
+When you `LEFT JOIN` two summaries, rows with no match get `NULL`, and any arithmetic with `NULL` gives `NULL`: `1000 - NULL` is `NULL`, not 1000. `COALESCE(value, fallback)` returns the first argument that isn't `NULL`:
+
+```sql run
+SELECT
+  COALESCE(NULL, 0)       AS a,
+  COALESCE(250, 0)        AS b,
+  1000 - NULL             AS without_coalesce,
+  1000 - COALESCE(NULL, 0) AS with_coalesce;
+```
+
+You'll need it in the example below.
+
+### Recursive CTEs: generating rows
+
+A CTE can refer to **itself**, which lets it generate rows. The commonest use is a calendar: a row for every month, even months with no data. Customer 75's bookings, month by month, have gaps:
+
+```sql run
+SELECT strftime('%Y-%m', booking_date) AS month, COUNT(*) AS shipments
+FROM shipments
+WHERE customer_id = 75
+GROUP BY month;
+```
+
+A report should show zero for the missing months, not skip them. A recursive CTE builds the list of months:
+
+```sql run
+WITH RECURSIVE months AS (
+  SELECT '2025-01-01' AS month_start
+  UNION ALL
+  SELECT date(month_start, '+1 month')
+  FROM months
+  WHERE month_start < '2026-08-01'
+)
+SELECT strftime('%Y-%m', month_start) AS month
+FROM months;
+```
+
+1. The first `SELECT` is the **starting row**: January 2025.
+2. `UNION ALL` adds the rows from the second `SELECT`, which takes the previous row and adds a month.
+3. It repeats until the `WHERE` condition stops it, giving 20 months.
+
+Join the counts to the calendar with a `LEFT JOIN`, and every month appears:
+
+```sql run
+WITH RECURSIVE months AS (
+  SELECT '2025-01-01' AS month_start
+  UNION ALL
+  SELECT date(month_start, '+1 month')
+  FROM months
+  WHERE month_start < '2026-08-01'
+),
+bookings AS (
+  SELECT strftime('%Y-%m', booking_date) AS month, COUNT(*) AS shipments
+  FROM shipments
+  WHERE customer_id = 75
+  GROUP BY month
+)
+SELECT
+  strftime('%Y-%m', m.month_start) AS month,
+  COALESCE(b.shipments, 0)         AS shipments
+FROM months AS m
+LEFT JOIN bookings AS b ON b.month = strftime('%Y-%m', m.month_start)
+ORDER BY month;
+```
+
+> [!WARNING]
+> A recursive CTE needs a condition that stops it. Without the `WHERE month_start < ...`, it would keep adding months forever (most databases stop it after a limit, with an error).
+
+### CTE or subquery?
+
+| Use a CTE when... | A subquery is fine when... |
+| :-- | :-- |
+| there's more than one step | it's one short step |
+| a step is used more than once | it's used once |
+| you'll want to check steps separately | it's obvious at a glance |
+| the query will be read by others | it's a quick one-off |
+
+CTEs are standard SQL and work in SQLite, PostgreSQL, SQL Server, MySQL 8 and Oracle. (In SQL Server, the statement before a `WITH` must end with a semicolon.)
 
 ## Example
+
+The finance director's question: how much does each customer still owe?
 
 ```sql run
 WITH charged AS (
@@ -15658,15 +16189,34 @@ LIMIT 10;
 
 ## Walkthrough
 
-1. `charged` adds up the charges for delivered shipments, one row per customer.
-2. `paid` adds up payments, one row per customer. Payments don't store the customer, so we join to `shipments` to find it.
-3. The final query joins the two summaries to `customers` and subtracts.
-4. `LEFT JOIN paid` keeps customers who haven't paid anything, and `COALESCE(pd.total_paid, 0)` turns their NULL into 0 so the subtraction works.
+1. `charged` adds up the charges for delivered shipments: one row per customer.
+2. `paid` adds up payments: one row per customer. Payments don't store the customer, so it joins to `shipments` to find them.
+3. The main query joins both summaries to `customers` and subtracts.
+4. `LEFT JOIN paid` keeps customers who haven't paid anything, and `COALESCE(pd.total_paid, 0)` turns their `NULL` into 0 so the subtraction works.
 
-Why two separate summaries? If you joined shipments and payments first and then summed, every shipment with two payments would have its charge counted twice. **Aggregating each table on its own and then joining the totals** avoids that double-counting. It's one of the most common mistakes in real reports.
+Why two separate summaries? If you joined shipments to payments first and then summed, every shipment with two payments would have its charge counted twice (the double-counting trap from the JOINs lesson). **Summarise each table on its own, then join the totals.** CTEs make that pattern easy to write and easy to see.
 
-> [!TIP]
-> Build CTEs one step at a time. Write the first CTE, run `SELECT * FROM charged` to check it, then add the next step. When a number looks wrong, you can check each step on its own.
+### Common mistakes
+
+| Mistake | What happens | Fix |
+| :-- | :-- | :-- |
+| `WITH` written before every CTE | A syntax error | `WITH` once, commas between CTEs |
+| A comma after the last CTE | A syntax error | No comma before the main `SELECT` |
+| Using a CTE before it's defined | "No such table" | Define steps in order |
+| Arithmetic with `NULL` after a `LEFT JOIN` | `NULL` results | `COALESCE(value, 0)` |
+| A recursive CTE with no stop condition | Runs until the database stops it | Add a `WHERE` that ends it |
+| Expecting a CTE to be saved | It's gone after the query | Use a view or a table to keep it |
+
+### Summary
+
+| You want... | Write |
+| :-- | :-- |
+| a named step | `WITH step AS (SELECT ...) SELECT ... FROM step` |
+| several steps | `WITH a AS (...), b AS (SELECT ... FROM a) SELECT ...` |
+| to check a step | point the final `SELECT` at it: `SELECT * FROM a` |
+| a fallback for missing values | `COALESCE(value, 0)` |
+| a row for every month | `WITH RECURSIVE months AS (...)` |
+| totals from two tables without double counting | summarise each in its own CTE, then join |
 
 ## Practice
 

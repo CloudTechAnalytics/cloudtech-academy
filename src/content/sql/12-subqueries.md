@@ -1,7 +1,7 @@
 ---
 title: Subqueries
-minutes: 10
-summary: Use the result of one query inside another, in WHERE, SELECT and FROM.
+minutes: 30
+summary: Use the result of one query inside another: single values, lists with IN, the NOT IN trap, EXISTS, correlated subqueries and tables in FROM, step by step.
 ---
 
 ## The problem
@@ -14,17 +14,26 @@ To answer it, you need the average first, and then the shipments above it. You c
 
 ## The concept
 
-A **subquery** is a query inside another query, written in brackets. The inner query runs first and its result is used by the outer one.
+A **subquery** is a query inside another query, written in brackets. The inner query works something out, and the outer query uses the answer. It lets one query do what would otherwise take two, with the number always up to date.
 
-There are three common places to put one:
+### Three kinds of answer, three places to use them
 
-1. **In `WHERE`**, to compare against a calculated value or a list.
-2. **In `SELECT`**, to show a calculated value on every row.
-3. **In `FROM`**, to treat a result as if it were a table.
+| The subquery returns... | Called | Use it... | Example |
+| :-- | :-- | :-- | :-- |
+| one value | a **scalar** subquery | anywhere a single value fits: `WHERE`, `SELECT` | `> (SELECT AVG(x) FROM t)` |
+| one column of values | a **list** | with `IN` or `NOT IN` | `IN (SELECT id FROM t)` |
+| a whole table | a **derived table** | in `FROM`, with an alias | `FROM (SELECT ...) AS t` |
 
-A subquery that returns a single value is called a **scalar** subquery. One that returns a list of values works with `IN`.
+### A single value in WHERE
 
-## Example
+The average shipment charge is one number:
+
+```sql run
+SELECT ROUND(AVG(freight_charge)) AS average_charge
+FROM shipments;
+```
+
+Put that query in brackets inside `WHERE`, and the outer query keeps the shipments above it:
 
 ```sql run
 SELECT shipment_id, booking_date, freight_charge
@@ -33,23 +42,122 @@ WHERE freight_charge > (SELECT AVG(freight_charge) FROM shipments)
 ORDER BY freight_charge DESC;
 ```
 
-## Walkthrough
+The inner query runs first and returns about ₦7.16 million; the outer query keeps the 1,034 shipments above it. Next month the average changes, and the query still gives the right answer, with nothing copied by hand.
 
-- `(SELECT AVG(freight_charge) FROM shipments)` runs first and returns one number.
-- The outer query keeps shipments whose charge is above that number.
-- Because the average is calculated each time the query runs, the report stays correct as data changes.
+A scalar subquery must return **exactly one value**. If it could return several rows, the database stops with an error (or, in SQLite, silently uses the first one).
 
-A subquery that returns a **list** works with `IN`. Here, customers in the Pharmaceuticals industry, found by ID:
+### A single value in SELECT
+
+A scalar subquery in `SELECT` puts the same value on every row, which is handy for comparisons:
+
+```sql run
+SELECT
+  shipment_id,
+  freight_charge,
+  (SELECT ROUND(AVG(freight_charge)) FROM shipments)                  AS average_charge,
+  freight_charge - (SELECT ROUND(AVG(freight_charge)) FROM shipments) AS above_average
+FROM shipments
+ORDER BY above_average DESC
+LIMIT 10;
+```
+
+### A list with IN
+
+A subquery that returns one column works with `IN`. Shipments for pharmaceutical customers, without a join:
 
 ```sql run
 SELECT shipment_id, booking_date, containers
 FROM shipments
 WHERE customer_id IN (
-  SELECT customer_id FROM customers WHERE industry = 'Pharmaceuticals'
+  SELECT customer_id
+  FROM customers
+  WHERE industry = 'Pharmaceuticals'
 );
 ```
 
-A subquery in `FROM` builds a temporary table you can query again. This finds the average number of shipments per customer, which needs two levels of aggregation:
+The inner query lists the IDs of pharmaceutical customers; the outer query keeps shipments whose `customer_id` is in that list. 294 of them.
+
+### NOT IN, and the NULL trap
+
+`NOT IN` keeps rows whose value is **not** in the list. Customers who have never shipped:
+
+```sql run
+SELECT company_name
+FROM customers
+WHERE customer_id NOT IN (SELECT customer_id FROM shipments);
+```
+
+Fifteen, the same as the `LEFT JOIN` method in the JOINs lesson. But `NOT IN` has a dangerous trap. Which employees don't manage anyone? Their ID never appears as anyone's `manager_id`:
+
+```sql run
+SELECT full_name
+FROM employees
+WHERE employee_id NOT IN (SELECT manager_id FROM employees);
+```
+
+**No rows at all**, although most employees manage nobody. The reason: the two people at the top have no manager, so the list contains a `NULL`. `NOT IN` checks "not equal to any value in the list", and nothing can be proved "not equal" to an unknown, so every row fails. Remove the `NULL`s and you get the real answer:
+
+```sql run
+SELECT full_name
+FROM employees
+WHERE employee_id NOT IN (
+  SELECT manager_id FROM employees WHERE manager_id IS NOT NULL
+);
+```
+
+22 employees. Whenever you use `NOT IN` with a subquery, either filter out `NULL`s or use `NOT EXISTS`, which doesn't have the problem.
+
+### EXISTS and NOT EXISTS
+
+`EXISTS (subquery)` is true if the subquery returns **any** row at all. It's usually written with a condition that links back to the outer row:
+
+```sql run
+SELECT c.company_name
+FROM customers AS c
+WHERE NOT EXISTS (
+  SELECT 1
+  FROM shipments AS s
+  WHERE s.customer_id = c.customer_id
+);
+```
+
+For each customer, the inner query looks for any shipment with that customer's ID. `NOT EXISTS` keeps the customers for whom it finds none. `SELECT 1` is a convention: `EXISTS` only cares whether a row exists, not what's in it.
+
+Customers who shipped something in August 2026:
+
+```sql run
+SELECT c.company_name
+FROM customers AS c
+WHERE EXISTS (
+  SELECT 1
+  FROM shipments AS s
+  WHERE s.customer_id = c.customer_id
+    AND s.booking_date >= '2026-08-01'
+);
+```
+
+### Correlated subqueries
+
+The `EXISTS` examples are **correlated**: the inner query refers to the outer row (`c.customer_id`), so it's worked out again for each row. A correlated subquery can also return a value. Shipments that cost more than the average **on their own route**:
+
+```sql run
+SELECT s.shipment_id, s.route_id, s.freight_charge
+FROM shipments AS s
+WHERE s.freight_charge > (
+  SELECT AVG(s2.freight_charge)
+  FROM shipments AS s2
+  WHERE s2.route_id = s.route_id
+)
+ORDER BY s.route_id, s.freight_charge DESC;
+```
+
+The inner query uses a second alias, `s2`, for the same table, and `s2.route_id = s.route_id` ties it to the current outer row. That's fairer than comparing against the company-wide average: a sea shipment from Shanghai is always dearer than a lorry to Ibadan.
+
+Correlated subqueries are powerful but can be slow on big tables, because the inner query runs once per outer row. Window functions (lesson 14) do the same job faster.
+
+### A table in FROM
+
+A subquery in `FROM` returns a whole result that the outer query treats as a table. It must have an alias. This answers a question that needs two levels of summary, the average number of shipments per customer:
 
 ```sql run
 SELECT ROUND(AVG(shipment_count), 1) AS avg_shipments_per_customer
@@ -60,10 +168,58 @@ FROM (
 ) AS per_customer;
 ```
 
-The inner query gives one row per customer; the outer query averages those counts. In most databases a subquery in `FROM` needs an alias, here `per_customer`.
+1. The inner query gives one row per customer, with their count.
+2. The outer query averages those counts: 25.6 shipments per customer who has shipped.
 
-> [!TIP]
-> When a subquery gets long, it becomes hard to read from the inside out. The next lesson, CTEs, lets you write the same thing top to bottom.
+You can't write `AVG(COUNT(*))` directly; nesting aggregates needs a subquery like this.
+
+### Subquery or JOIN?
+
+Many questions can be answered either way. `IN (subquery)` and a join give the same shipments for pharmaceutical customers. Choose the one that reads most clearly:
+
+- If you only **filter** by the other table, `IN` or `EXISTS` often reads better.
+- If you need to **show** columns from the other table, you need a join.
+- For "which have none?", `NOT EXISTS` and `LEFT JOIN ... IS NULL` are both safe; `NOT IN` needs care.
+
+## Example
+
+Finance's request: every shipment that cost more than the average shipment.
+
+```sql run
+SELECT shipment_id, booking_date, freight_charge
+FROM shipments
+WHERE freight_charge > (SELECT AVG(freight_charge) FROM shipments)
+ORDER BY freight_charge DESC;
+```
+
+## Walkthrough
+
+1. The database runs the subquery first: `SELECT AVG(freight_charge) FROM shipments` returns one number.
+2. The outer query compares each shipment's charge with it and keeps the higher ones.
+3. `ORDER BY` puts the most expensive first.
+
+Because the average is worked out every time the query runs, the report is always correct. No number is copied, and nothing goes stale.
+
+### Common mistakes
+
+| Mistake | What happens | Fix |
+| :-- | :-- | :-- |
+| A scalar subquery that returns several rows | An error, or an arbitrary value in SQLite | Make sure it returns one value |
+| `NOT IN` with a `NULL` in the list | No rows at all, and no error | Filter out `NULL`s, or use `NOT EXISTS` |
+| A subquery in `FROM` with no alias | An error in most databases | Add `AS name` |
+| Writing `AVG(COUNT(*))` | An error: aggregates can't be nested | Count in a subquery, average outside |
+| A correlated subquery on a huge table | Slow | Use a join, a CTE or a window function |
+
+### Summary
+
+| You want... | Write |
+| :-- | :-- |
+| rows above an overall figure | `WHERE x > (SELECT AVG(x) FROM t)` |
+| the overall figure on every row | `SELECT ..., (SELECT AVG(x) FROM t) AS avg` |
+| rows whose key is in another list | `WHERE id IN (SELECT id FROM t2 WHERE ...)` |
+| rows with no match elsewhere | `WHERE NOT EXISTS (SELECT 1 FROM t2 WHERE t2.id = t.id)` |
+| a comparison within each group | a correlated subquery on the same table |
+| a summary of a summary | `SELECT AVG(n) FROM (SELECT ... COUNT(*) AS n ...) AS t` |
 
 ## Practice
 
