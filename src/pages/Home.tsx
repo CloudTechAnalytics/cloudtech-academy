@@ -44,9 +44,9 @@ function HeroMockup() {
           </p>
           <pre className="code-block mt-4 text-[0.8rem]">
             <code>
-              <span className="text-[#93b4ff]">SELECT</span> customer, <span className="text-[#93b4ff]">SUM</span>(containers){"\n"}
-              <span className="text-[#93b4ff]">FROM</span> shipments{"\n"}
-              <span className="text-[#93b4ff]">GROUP BY</span> customer;
+              <span className="text-brass-light">SELECT</span> customer, <span className="text-brass-light">SUM</span>(containers){"\n"}
+              <span className="text-brass-light">FROM</span> shipments{"\n"}
+              <span className="text-brass-light">GROUP BY</span> customer;
             </code>
           </pre>
           <table className="mt-4 w-full text-left text-[0.8rem]">
@@ -249,7 +249,7 @@ export default function Home() {
           <Reveal delay={100}>
             <div className="overflow-hidden rounded-2xl border border-line">
               <div className="flex items-center justify-between px-4 py-2.5" style={{ background: "var(--color-code-bg)" }}>
-                <span className="text-[0.75rem] font-semibold text-[#a9c0ff]">Practice</span>
+                <span className="text-[0.75rem] font-semibold text-brass-light">Practice</span>
                 <span className="rounded-md bg-brass-button px-2.5 py-1 text-[0.75rem] font-semibold text-on-brass">Run and check</span>
               </div>
               <pre className="code-block rounded-none">
