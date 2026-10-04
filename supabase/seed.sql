@@ -13259,7 +13259,7 @@ values ('sql-m05', 'sql-for-data-analysis', 'ORDER BY', 5, null, null, '{}'::tex
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('sql-for-data-analysis:order-by', 'sql-for-data-analysis', 'sql-m05', 'order-by', 'ORDER BY', 'Sort results by one or more columns, in ascending or descending order.', 9, $md$
+values ('sql-for-data-analysis:order-by', 'sql-for-data-analysis', 'sql-m05', 'order-by', 'ORDER BY', 'Sort results by one or more columns, ascending or descending, with tie-breakers, calculations and missing values, step by step.', 25, $md$
 ## The problem
 
 Finance is reviewing the most valuable bookings from the first week of January 2026. They want the biggest charges at the top, so they can check those first.
@@ -13270,19 +13270,137 @@ A database doesn't promise to return rows in any particular order. If order matt
 
 ## The concept
 
-`ORDER BY` sorts the result. It comes after `WHERE`.
+`ORDER BY` sorts the rows of a result. Without it, a database is free to return rows in **any** order: often the order they were stored, but not always, and it can change from one run to the next. If the order matters, you must ask for it.
 
-- `ASC` sorts smallest to largest, A to Z, earliest to latest. It's the default, so you can leave it out.
-- `DESC` sorts largest to smallest, Z to A, latest to earliest.
-- You can sort by **several columns**. The second column only decides the order when the first column has a tie.
-
-The order of the clauses you've learned so far is always:
+### The syntax
 
 ```sql
-SELECT … FROM … WHERE … ORDER BY …
+SELECT column1, column2, ...
+FROM table_name
+WHERE condition
+ORDER BY column1 [ASC | DESC], column2 [ASC | DESC], ...;
 ```
 
+`ORDER BY` comes **after** `WHERE`. The clauses you've learned so far always appear in this order:
+
+| Clause | Job | Required? |
+| :-- | :-- | :-- |
+| `SELECT` | which columns | yes |
+| `FROM` | which table | yes (almost always) |
+| `WHERE` | which rows | no |
+| `ORDER BY` | what order | no |
+
+### Ascending and descending
+
+| Keyword | Order | Numbers | Text | Dates |
+| :-- | :-- | :-- | :-- | :-- |
+| `ASC` | ascending (the default) | smallest first | A to Z | earliest first |
+| `DESC` | descending | largest first | Z to A | latest first |
+
+`ASC` is the default, so `ORDER BY company_name` and `ORDER BY company_name ASC` mean the same thing. Customers in alphabetical order:
+
+```sql run
+SELECT company_name, city
+FROM customers
+ORDER BY company_name;
+```
+
+The staff who've been here longest come first when you sort hire dates ascending:
+
+```sql run
+SELECT full_name, role, hire_date
+FROM employees
+ORDER BY hire_date;
+```
+
+And `DESC` puts the most recent first:
+
+```sql run
+SELECT full_name, role, hire_date
+FROM employees
+ORDER BY hire_date DESC;
+```
+
+### Sorting by several columns
+
+List more than one column, separated by commas. The **first** column decides the order. The second only matters when two rows have the **same** value in the first, like a tie-breaker; the third breaks ties in the second, and so on.
+
+Routes by transport mode, and within each mode, the longest journeys first:
+
+```sql run
+SELECT mode, origin, destination, target_transit_days
+FROM routes
+ORDER BY mode, target_transit_days DESC;
+```
+
+Read the result from the top: the five Air routes come first (A to Z), longest first; then the seven Road routes, longest first; then the eighteen Sea routes. **Each column has its own direction**: here `mode` is ascending and `target_transit_days` is descending. Writing `DESC` once at the end doesn't apply to the earlier columns.
+
+### Sorting by a column you don't show
+
+You can sort by any column in the table, even if it isn't in `SELECT`:
+
+```sql run
+SELECT company_name, city
+FROM customers
+ORDER BY signup_date DESC;
+```
+
+The newest customers come first, though the signup date isn't displayed. It's allowed, but it can confuse the reader, who can't see why the rows are in that order. Usually it's better to show the column you sort by.
+
+### Sorting by a calculation or an alias
+
+You can sort by a calculated value. If you've given it an alias in `SELECT`, you can use the alias, because `ORDER BY` runs **after** `SELECT`:
+
+```sql run
+SELECT
+  shipment_id,
+  containers,
+  freight_charge / containers AS charge_per_container
+FROM shipments
+ORDER BY charge_per_container DESC;
+```
+
+Compare that with `WHERE`, which runs **before** `SELECT` and so can't rely on an alias.
+
+| Step | Clause | Can it use a `SELECT` alias? |
+| :-- | :-- | :-- |
+| 1 | `FROM` picks the table | no |
+| 2 | `WHERE` filters rows | no |
+| 3 | `SELECT` picks and calculates columns | (creates them) |
+| 4 | `ORDER BY` sorts | **yes** |
+
+### Where missing values go
+
+Rows where the sort column is `NULL` have to go somewhere. SQLite and MySQL put them **first** in ascending order (and last in descending); PostgreSQL and Oracle do the opposite. Shipments that haven't been delivered have no `delivery_date`, so they appear at the top:
+
+```sql run
+SELECT shipment_id, status, delivery_date
+FROM shipments
+ORDER BY delivery_date;
+```
+
+Add `NULLS FIRST` or `NULLS LAST` to choose (SQLite, PostgreSQL and Oracle support it):
+
+```sql run
+SELECT shipment_id, status, delivery_date
+FROM shipments
+ORDER BY delivery_date NULLS LAST;
+```
+
+### Sorting text
+
+Text sorts character by character, like a dictionary. Two surprises to watch for:
+
+- **Numbers stored as text** sort as text: `'10'` comes before `'9'`, because `'1'` comes before `'9'`. Store numbers as numbers.
+- **Capitals**: in SQLite, capital letters sort before small letters (`'Zenith'` before `'apex'`). Other databases have their own rules. If case varies in your data, sort by `LOWER(column)`.
+
+### Sorting by position (and why not to)
+
+`ORDER BY 2` sorts by the second column in `SELECT`. It works, but if someone later adds a column at the front, the query silently sorts by the wrong thing. Write the column name.
+
 ## Example
+
+Finance's request: the first week of January 2026, biggest charges first.
 
 ```sql run
 SELECT shipment_id, booking_date, freight_charge
@@ -13291,23 +13409,45 @@ WHERE booking_date BETWEEN '2026-01-01' AND '2026-01-07'
 ORDER BY freight_charge DESC;
 ```
 
-## Walkthrough
-
-- `WHERE` first narrows the data down to the first week of January 2026.
-- `ORDER BY freight_charge DESC` then puts the most expensive shipment first.
-
-Now sort by two columns: routes by mode, and within each mode, longest journeys first.
+Operations' request: routes from the longest journey to the shortest, with origin as a tie-breaker so routes of the same length appear in a predictable order.
 
 ```sql run
 SELECT origin, destination, mode, target_transit_days
 FROM routes
-ORDER BY mode, target_transit_days DESC;
+ORDER BY target_transit_days DESC, origin;
 ```
 
-`mode` sorts A to Z (Air, Road, Sea). Inside each mode, `target_transit_days DESC` puts the longest routes first. Each column in `ORDER BY` has its own direction.
+## Walkthrough
 
-> [!TIP]
-> You can sort by a column you've renamed with `AS`: `ORDER BY weight_tonnes DESC` works if `weight_tonnes` is an alias in your `SELECT`.
+In the first query:
+
+1. `FROM shipments` takes every shipment.
+2. `WHERE booking_date BETWEEN '2026-01-01' AND '2026-01-07'` keeps the first week of January.
+3. `SELECT` picks three columns.
+4. `ORDER BY freight_charge DESC` sorts what's left, largest charge first.
+
+In the second, several routes share the same number of days. Without the tie-breaker `origin`, those routes could come back in a different order each time you run the query. Adding a second sort column makes the result **deterministic**: the same every time. That matters for reports people compare week to week.
+
+### Common mistakes
+
+| Mistake | What happens | Fix |
+| :-- | :-- | :-- |
+| `ORDER BY` before `WHERE` | A syntax error | `... WHERE ... ORDER BY ...` |
+| `ORDER BY mode, target_transit_days DESC` expecting both descending | `mode` is still ascending | Write `DESC` after each column that needs it |
+| No `ORDER BY`, assuming the stored order | Rows can come back in any order | Always sort when order matters |
+| Sorting numbers stored as text | `'10'` before `'9'` | Store numbers as numbers |
+| `ORDER BY 2` | Breaks silently when columns change | Use the column name |
+
+### Summary
+
+| You want... | Write |
+| :-- | :-- |
+| smallest, earliest or A first | `ORDER BY col` (or `ASC`) |
+| largest, latest or Z first | `ORDER BY col DESC` |
+| a tie-breaker | `ORDER BY col1, col2` |
+| different directions | `ORDER BY col1 ASC, col2 DESC` |
+| a calculated order | `ORDER BY alias DESC` |
+| missing values last | `ORDER BY col NULLS LAST` |
 
 ## Practice
 
@@ -13409,7 +13549,7 @@ values ('sql-m06', 'sql-for-data-analysis', 'LIMIT', 6, null, null, '{}'::text[]
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('sql-for-data-analysis:limit', 'sql-for-data-analysis', 'sql-m06', 'limit', 'LIMIT', 'Return only the first rows of a result to answer "top N" questions and page through data.', 15, $md$
+values ('sql-for-data-analysis:limit', 'sql-for-data-analysis', 'sql-m06', 'limit', 'LIMIT', 'Return only the first rows of a sorted result: top N and bottom N, ties at the cut-off, paging with OFFSET, and how other databases write it.', 25, $md$
 ## The problem
 
 "What were our five most expensive shipments ever?"
@@ -13418,16 +13558,27 @@ You can sort all 2,683 shipments by charge and read the top five. But when a rep
 
 ## The concept
 
-`LIMIT n` returns only the first `n` rows of the result. It goes at the very end of the query.
+`LIMIT` keeps only the first rows of a result. On its own, "the first rows" means whatever the database happens to return first, which can be any rows. **Combined with `ORDER BY`**, it answers the questions managers ask all the time: the top five, the ten most recent, the cheapest three.
 
-On its own, `LIMIT` just takes whichever rows come first, which may be any rows. **Combined with `ORDER BY`**, it answers "top N" and "bottom N" questions.
+### The syntax
 
-`OFFSET` skips rows before the limit starts. `LIMIT 10 OFFSET 10` returns rows 11 to 20, which is how apps show "page 2".
+```sql
+SELECT column1, column2, ...
+FROM table_name
+WHERE condition
+ORDER BY column
+LIMIT number OFFSET skip;
+```
 
-> [!NOTE]
-> Other databases write this differently. SQL Server uses `SELECT TOP 5 …`, and standard SQL uses `FETCH FIRST 5 ROWS ONLY`. The idea is the same.
+`LIMIT` goes at the **very end**. The full order of the clauses so far:
 
-## Example
+```sql
+SELECT ... FROM ... WHERE ... ORDER BY ... LIMIT ... OFFSET ...
+```
+
+### Top N: ORDER BY, then LIMIT
+
+The database sorts first and then cuts:
 
 ```sql run
 SELECT shipment_id, booking_date, freight_charge
@@ -13436,14 +13587,71 @@ ORDER BY freight_charge DESC
 LIMIT 5;
 ```
 
-## Walkthrough
+1. `ORDER BY freight_charge DESC` sorts all 2,683 shipments, highest charge first.
+2. `LIMIT 5` keeps the first five rows of that sorted list.
 
-1. `ORDER BY freight_charge DESC` sorts every shipment, highest charge first.
-2. `LIMIT 5` keeps the first five rows of that sorted result.
+Change the direction and the same pattern gives the **bottom** five:
 
-The order matters: the database sorts first, then cuts. If you left out `ORDER BY`, you'd get five random shipments, not the top five.
+```sql run
+SELECT shipment_id, booking_date, freight_charge
+FROM shipments
+WHERE status = 'Delivered'
+ORDER BY freight_charge
+LIMIT 5;
+```
 
-Paging through results works the same way:
+### LIMIT without ORDER BY
+
+Leave out `ORDER BY` and you get five rows, but not five meaningful ones:
+
+```sql run
+SELECT shipment_id, freight_charge
+FROM shipments
+LIMIT 5;
+```
+
+That's useful for one thing: a quick look at a table you don't know yet, without returning thousands of rows.
+
+```sql run
+SELECT *
+FROM payments
+LIMIT 10;
+```
+
+### Ties at the cut-off
+
+What if several rows share the value where the cut falls? 112 shipments carried 8 containers, the most of any. So this query returns five of them, but **which** five isn't defined:
+
+```sql run
+SELECT shipment_id, containers
+FROM shipments
+ORDER BY containers DESC
+LIMIT 5;
+```
+
+Add a tie-breaker to make the answer the same every time:
+
+```sql run
+SELECT shipment_id, containers, booking_date
+FROM shipments
+ORDER BY containers DESC, booking_date
+LIMIT 5;
+```
+
+Now it's "the five earliest 8-container shipments", which is a question with one answer. When someone asks for "the top five", check whether ties are possible, and say how you broke them.
+
+### Skipping rows: OFFSET
+
+`OFFSET n` skips the first `n` rows before `LIMIT` starts counting. Apps use it to show results in pages:
+
+| Page (10 per page) | Write |
+| :-- | :-- |
+| 1 | `LIMIT 10 OFFSET 0` (or just `LIMIT 10`) |
+| 2 | `LIMIT 10 OFFSET 10` |
+| 3 | `LIMIT 10 OFFSET 20` |
+| page p | `LIMIT 10 OFFSET (p − 1) × 10` |
+
+The second page of customers, in signup order:
 
 ```sql run
 SELECT company_name, signup_date
@@ -13452,10 +13660,88 @@ ORDER BY signup_date
 LIMIT 10 OFFSET 10;
 ```
 
-This skips the ten earliest customers and shows the next ten.
+`OFFSET` also answers "the second highest" or "the third most recent":
+
+```sql run
+SELECT shipment_id, freight_charge
+FROM shipments
+ORDER BY freight_charge DESC
+LIMIT 1 OFFSET 1;
+```
+
+That skips the most expensive shipment and returns the next one.
+
+### The same idea in other databases
+
+`LIMIT` is SQLite, MySQL and PostgreSQL. Other databases write it differently:
+
+| Database | Top 5 |
+| :-- | :-- |
+| SQLite, MySQL, PostgreSQL | `... ORDER BY x DESC LIMIT 5` |
+| SQL Server | `SELECT TOP 5 ... ORDER BY x DESC` |
+| SQL Server, PostgreSQL, Oracle (standard SQL) | `... ORDER BY x DESC OFFSET 0 ROWS FETCH NEXT 5 ROWS ONLY` |
+| Oracle | `... ORDER BY x DESC FETCH FIRST 5 ROWS ONLY` |
+
+The idea is identical: sort, then keep the first rows.
+
+## Example
+
+Back to the question: "What were our five most expensive shipments ever?"
+
+```sql run
+SELECT shipment_id, booking_date, containers, freight_charge
+FROM shipments
+ORDER BY freight_charge DESC
+LIMIT 5;
+```
+
+And a related one from finance: "Which five delivered shipments in 2026 had the lowest charge per container?"
+
+```sql run
+SELECT
+  shipment_id,
+  containers,
+  freight_charge / containers AS charge_per_container
+FROM shipments
+WHERE status = 'Delivered'
+  AND booking_date >= '2026-01-01'
+ORDER BY charge_per_container
+LIMIT 5;
+```
+
+## Walkthrough
+
+The second query uses every clause you've learned, in order:
+
+1. `FROM shipments`: start with every shipment.
+2. `WHERE status = 'Delivered' AND booking_date >= '2026-01-01'`: keep delivered shipments booked in 2026.
+3. `SELECT`: show three columns, one of them calculated and named `charge_per_container`.
+4. `ORDER BY charge_per_container`: sort the remaining rows, lowest first. The alias works here because `ORDER BY` runs after `SELECT`.
+5. `LIMIT 5`: keep the first five.
 
 > [!TIP]
-> `LIMIT` is also handy when you're exploring a big table for the first time: `SELECT * FROM shipments LIMIT 20;` shows you what the data looks like without returning everything.
+> On a big table, `LIMIT` can make a query much faster, because the database can stop once it has enough rows. But it still has to look at every row to sort them, so `ORDER BY ... LIMIT` on millions of rows can still take time.
+
+### Common mistakes
+
+| Mistake | What happens | Fix |
+| :-- | :-- | :-- |
+| `LIMIT` without `ORDER BY` for a "top N" | Any N rows, not the top N | Sort first |
+| `LIMIT` before `ORDER BY` | A syntax error | `ORDER BY` then `LIMIT` |
+| Ignoring ties at the cut-off | A different "top 5" on different runs | Add a tie-breaker column |
+| `OFFSET` without `ORDER BY` | Pages overlap or skip rows | Always sort when paging |
+| `SELECT TOP 5` in SQLite | A syntax error | `LIMIT 5` |
+
+### Summary
+
+| You want... | Write |
+| :-- | :-- |
+| a quick look at a table | `SELECT * FROM t LIMIT 10` |
+| the top N | `ORDER BY x DESC LIMIT n` |
+| the bottom N | `ORDER BY x LIMIT n` |
+| a fair top N with ties | `ORDER BY x DESC, y LIMIT n` |
+| page p of size s | `LIMIT s OFFSET (p − 1) × s` |
+| the second highest | `ORDER BY x DESC LIMIT 1 OFFSET 1` |
 
 ## Practice
 

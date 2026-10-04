@@ -1,7 +1,7 @@
 ---
 title: ORDER BY
-minutes: 9
-summary: Sort results by one or more columns, in ascending or descending order.
+minutes: 25
+summary: Sort results by one or more columns, ascending or descending, with tie-breakers, calculations and missing values, step by step.
 ---
 
 ## The problem
@@ -14,19 +14,137 @@ A database doesn't promise to return rows in any particular order. If order matt
 
 ## The concept
 
-`ORDER BY` sorts the result. It comes after `WHERE`.
+`ORDER BY` sorts the rows of a result. Without it, a database is free to return rows in **any** order: often the order they were stored, but not always, and it can change from one run to the next. If the order matters, you must ask for it.
 
-- `ASC` sorts smallest to largest, A to Z, earliest to latest. It's the default, so you can leave it out.
-- `DESC` sorts largest to smallest, Z to A, latest to earliest.
-- You can sort by **several columns**. The second column only decides the order when the first column has a tie.
-
-The order of the clauses you've learned so far is always:
+### The syntax
 
 ```sql
-SELECT … FROM … WHERE … ORDER BY …
+SELECT column1, column2, ...
+FROM table_name
+WHERE condition
+ORDER BY column1 [ASC | DESC], column2 [ASC | DESC], ...;
 ```
 
+`ORDER BY` comes **after** `WHERE`. The clauses you've learned so far always appear in this order:
+
+| Clause | Job | Required? |
+| :-- | :-- | :-- |
+| `SELECT` | which columns | yes |
+| `FROM` | which table | yes (almost always) |
+| `WHERE` | which rows | no |
+| `ORDER BY` | what order | no |
+
+### Ascending and descending
+
+| Keyword | Order | Numbers | Text | Dates |
+| :-- | :-- | :-- | :-- | :-- |
+| `ASC` | ascending (the default) | smallest first | A to Z | earliest first |
+| `DESC` | descending | largest first | Z to A | latest first |
+
+`ASC` is the default, so `ORDER BY company_name` and `ORDER BY company_name ASC` mean the same thing. Customers in alphabetical order:
+
+```sql run
+SELECT company_name, city
+FROM customers
+ORDER BY company_name;
+```
+
+The staff who've been here longest come first when you sort hire dates ascending:
+
+```sql run
+SELECT full_name, role, hire_date
+FROM employees
+ORDER BY hire_date;
+```
+
+And `DESC` puts the most recent first:
+
+```sql run
+SELECT full_name, role, hire_date
+FROM employees
+ORDER BY hire_date DESC;
+```
+
+### Sorting by several columns
+
+List more than one column, separated by commas. The **first** column decides the order. The second only matters when two rows have the **same** value in the first, like a tie-breaker; the third breaks ties in the second, and so on.
+
+Routes by transport mode, and within each mode, the longest journeys first:
+
+```sql run
+SELECT mode, origin, destination, target_transit_days
+FROM routes
+ORDER BY mode, target_transit_days DESC;
+```
+
+Read the result from the top: the five Air routes come first (A to Z), longest first; then the seven Road routes, longest first; then the eighteen Sea routes. **Each column has its own direction**: here `mode` is ascending and `target_transit_days` is descending. Writing `DESC` once at the end doesn't apply to the earlier columns.
+
+### Sorting by a column you don't show
+
+You can sort by any column in the table, even if it isn't in `SELECT`:
+
+```sql run
+SELECT company_name, city
+FROM customers
+ORDER BY signup_date DESC;
+```
+
+The newest customers come first, though the signup date isn't displayed. It's allowed, but it can confuse the reader, who can't see why the rows are in that order. Usually it's better to show the column you sort by.
+
+### Sorting by a calculation or an alias
+
+You can sort by a calculated value. If you've given it an alias in `SELECT`, you can use the alias, because `ORDER BY` runs **after** `SELECT`:
+
+```sql run
+SELECT
+  shipment_id,
+  containers,
+  freight_charge / containers AS charge_per_container
+FROM shipments
+ORDER BY charge_per_container DESC;
+```
+
+Compare that with `WHERE`, which runs **before** `SELECT` and so can't rely on an alias.
+
+| Step | Clause | Can it use a `SELECT` alias? |
+| :-- | :-- | :-- |
+| 1 | `FROM` picks the table | no |
+| 2 | `WHERE` filters rows | no |
+| 3 | `SELECT` picks and calculates columns | (creates them) |
+| 4 | `ORDER BY` sorts | **yes** |
+
+### Where missing values go
+
+Rows where the sort column is `NULL` have to go somewhere. SQLite and MySQL put them **first** in ascending order (and last in descending); PostgreSQL and Oracle do the opposite. Shipments that haven't been delivered have no `delivery_date`, so they appear at the top:
+
+```sql run
+SELECT shipment_id, status, delivery_date
+FROM shipments
+ORDER BY delivery_date;
+```
+
+Add `NULLS FIRST` or `NULLS LAST` to choose (SQLite, PostgreSQL and Oracle support it):
+
+```sql run
+SELECT shipment_id, status, delivery_date
+FROM shipments
+ORDER BY delivery_date NULLS LAST;
+```
+
+### Sorting text
+
+Text sorts character by character, like a dictionary. Two surprises to watch for:
+
+- **Numbers stored as text** sort as text: `'10'` comes before `'9'`, because `'1'` comes before `'9'`. Store numbers as numbers.
+- **Capitals**: in SQLite, capital letters sort before small letters (`'Zenith'` before `'apex'`). Other databases have their own rules. If case varies in your data, sort by `LOWER(column)`.
+
+### Sorting by position (and why not to)
+
+`ORDER BY 2` sorts by the second column in `SELECT`. It works, but if someone later adds a column at the front, the query silently sorts by the wrong thing. Write the column name.
+
 ## Example
+
+Finance's request: the first week of January 2026, biggest charges first.
 
 ```sql run
 SELECT shipment_id, booking_date, freight_charge
@@ -35,23 +153,45 @@ WHERE booking_date BETWEEN '2026-01-01' AND '2026-01-07'
 ORDER BY freight_charge DESC;
 ```
 
-## Walkthrough
-
-- `WHERE` first narrows the data down to the first week of January 2026.
-- `ORDER BY freight_charge DESC` then puts the most expensive shipment first.
-
-Now sort by two columns: routes by mode, and within each mode, longest journeys first.
+Operations' request: routes from the longest journey to the shortest, with origin as a tie-breaker so routes of the same length appear in a predictable order.
 
 ```sql run
 SELECT origin, destination, mode, target_transit_days
 FROM routes
-ORDER BY mode, target_transit_days DESC;
+ORDER BY target_transit_days DESC, origin;
 ```
 
-`mode` sorts A to Z (Air, Road, Sea). Inside each mode, `target_transit_days DESC` puts the longest routes first. Each column in `ORDER BY` has its own direction.
+## Walkthrough
 
-> [!TIP]
-> You can sort by a column you've renamed with `AS`: `ORDER BY weight_tonnes DESC` works if `weight_tonnes` is an alias in your `SELECT`.
+In the first query:
+
+1. `FROM shipments` takes every shipment.
+2. `WHERE booking_date BETWEEN '2026-01-01' AND '2026-01-07'` keeps the first week of January.
+3. `SELECT` picks three columns.
+4. `ORDER BY freight_charge DESC` sorts what's left, largest charge first.
+
+In the second, several routes share the same number of days. Without the tie-breaker `origin`, those routes could come back in a different order each time you run the query. Adding a second sort column makes the result **deterministic**: the same every time. That matters for reports people compare week to week.
+
+### Common mistakes
+
+| Mistake | What happens | Fix |
+| :-- | :-- | :-- |
+| `ORDER BY` before `WHERE` | A syntax error | `... WHERE ... ORDER BY ...` |
+| `ORDER BY mode, target_transit_days DESC` expecting both descending | `mode` is still ascending | Write `DESC` after each column that needs it |
+| No `ORDER BY`, assuming the stored order | Rows can come back in any order | Always sort when order matters |
+| Sorting numbers stored as text | `'10'` before `'9'` | Store numbers as numbers |
+| `ORDER BY 2` | Breaks silently when columns change | Use the column name |
+
+### Summary
+
+| You want... | Write |
+| :-- | :-- |
+| smallest, earliest or A first | `ORDER BY col` (or `ASC`) |
+| largest, latest or Z first | `ORDER BY col DESC` |
+| a tie-breaker | `ORDER BY col1, col2` |
+| different directions | `ORDER BY col1 ASC, col2 DESC` |
+| a calculated order | `ORDER BY alias DESC` |
+| missing values last | `ORDER BY col NULLS LAST` |
 
 ## Practice
 

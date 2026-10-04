@@ -1,7 +1,7 @@
 ---
 title: LIMIT
-minutes: 15
-summary: Return only the first rows of a result to answer "top N" questions and page through data.
+minutes: 25
+summary: Return only the first rows of a sorted result: top N and bottom N, ties at the cut-off, paging with OFFSET, and how other databases write it.
 ---
 
 ## The problem
@@ -12,16 +12,27 @@ You can sort all 2,683 shipments by charge and read the top five. But when a rep
 
 ## The concept
 
-`LIMIT n` returns only the first `n` rows of the result. It goes at the very end of the query.
+`LIMIT` keeps only the first rows of a result. On its own, "the first rows" means whatever the database happens to return first, which can be any rows. **Combined with `ORDER BY`**, it answers the questions managers ask all the time: the top five, the ten most recent, the cheapest three.
 
-On its own, `LIMIT` just takes whichever rows come first, which may be any rows. **Combined with `ORDER BY`**, it answers "top N" and "bottom N" questions.
+### The syntax
 
-`OFFSET` skips rows before the limit starts. `LIMIT 10 OFFSET 10` returns rows 11 to 20, which is how apps show "page 2".
+```sql
+SELECT column1, column2, ...
+FROM table_name
+WHERE condition
+ORDER BY column
+LIMIT number OFFSET skip;
+```
 
-> [!NOTE]
-> Other databases write this differently. SQL Server uses `SELECT TOP 5 …`, and standard SQL uses `FETCH FIRST 5 ROWS ONLY`. The idea is the same.
+`LIMIT` goes at the **very end**. The full order of the clauses so far:
 
-## Example
+```sql
+SELECT ... FROM ... WHERE ... ORDER BY ... LIMIT ... OFFSET ...
+```
+
+### Top N: ORDER BY, then LIMIT
+
+The database sorts first and then cuts:
 
 ```sql run
 SELECT shipment_id, booking_date, freight_charge
@@ -30,14 +41,71 @@ ORDER BY freight_charge DESC
 LIMIT 5;
 ```
 
-## Walkthrough
+1. `ORDER BY freight_charge DESC` sorts all 2,683 shipments, highest charge first.
+2. `LIMIT 5` keeps the first five rows of that sorted list.
 
-1. `ORDER BY freight_charge DESC` sorts every shipment, highest charge first.
-2. `LIMIT 5` keeps the first five rows of that sorted result.
+Change the direction and the same pattern gives the **bottom** five:
 
-The order matters: the database sorts first, then cuts. If you left out `ORDER BY`, you'd get five random shipments, not the top five.
+```sql run
+SELECT shipment_id, booking_date, freight_charge
+FROM shipments
+WHERE status = 'Delivered'
+ORDER BY freight_charge
+LIMIT 5;
+```
 
-Paging through results works the same way:
+### LIMIT without ORDER BY
+
+Leave out `ORDER BY` and you get five rows, but not five meaningful ones:
+
+```sql run
+SELECT shipment_id, freight_charge
+FROM shipments
+LIMIT 5;
+```
+
+That's useful for one thing: a quick look at a table you don't know yet, without returning thousands of rows.
+
+```sql run
+SELECT *
+FROM payments
+LIMIT 10;
+```
+
+### Ties at the cut-off
+
+What if several rows share the value where the cut falls? 112 shipments carried 8 containers, the most of any. So this query returns five of them, but **which** five isn't defined:
+
+```sql run
+SELECT shipment_id, containers
+FROM shipments
+ORDER BY containers DESC
+LIMIT 5;
+```
+
+Add a tie-breaker to make the answer the same every time:
+
+```sql run
+SELECT shipment_id, containers, booking_date
+FROM shipments
+ORDER BY containers DESC, booking_date
+LIMIT 5;
+```
+
+Now it's "the five earliest 8-container shipments", which is a question with one answer. When someone asks for "the top five", check whether ties are possible, and say how you broke them.
+
+### Skipping rows: OFFSET
+
+`OFFSET n` skips the first `n` rows before `LIMIT` starts counting. Apps use it to show results in pages:
+
+| Page (10 per page) | Write |
+| :-- | :-- |
+| 1 | `LIMIT 10 OFFSET 0` (or just `LIMIT 10`) |
+| 2 | `LIMIT 10 OFFSET 10` |
+| 3 | `LIMIT 10 OFFSET 20` |
+| page p | `LIMIT 10 OFFSET (p − 1) × 10` |
+
+The second page of customers, in signup order:
 
 ```sql run
 SELECT company_name, signup_date
@@ -46,10 +114,88 @@ ORDER BY signup_date
 LIMIT 10 OFFSET 10;
 ```
 
-This skips the ten earliest customers and shows the next ten.
+`OFFSET` also answers "the second highest" or "the third most recent":
+
+```sql run
+SELECT shipment_id, freight_charge
+FROM shipments
+ORDER BY freight_charge DESC
+LIMIT 1 OFFSET 1;
+```
+
+That skips the most expensive shipment and returns the next one.
+
+### The same idea in other databases
+
+`LIMIT` is SQLite, MySQL and PostgreSQL. Other databases write it differently:
+
+| Database | Top 5 |
+| :-- | :-- |
+| SQLite, MySQL, PostgreSQL | `... ORDER BY x DESC LIMIT 5` |
+| SQL Server | `SELECT TOP 5 ... ORDER BY x DESC` |
+| SQL Server, PostgreSQL, Oracle (standard SQL) | `... ORDER BY x DESC OFFSET 0 ROWS FETCH NEXT 5 ROWS ONLY` |
+| Oracle | `... ORDER BY x DESC FETCH FIRST 5 ROWS ONLY` |
+
+The idea is identical: sort, then keep the first rows.
+
+## Example
+
+Back to the question: "What were our five most expensive shipments ever?"
+
+```sql run
+SELECT shipment_id, booking_date, containers, freight_charge
+FROM shipments
+ORDER BY freight_charge DESC
+LIMIT 5;
+```
+
+And a related one from finance: "Which five delivered shipments in 2026 had the lowest charge per container?"
+
+```sql run
+SELECT
+  shipment_id,
+  containers,
+  freight_charge / containers AS charge_per_container
+FROM shipments
+WHERE status = 'Delivered'
+  AND booking_date >= '2026-01-01'
+ORDER BY charge_per_container
+LIMIT 5;
+```
+
+## Walkthrough
+
+The second query uses every clause you've learned, in order:
+
+1. `FROM shipments`: start with every shipment.
+2. `WHERE status = 'Delivered' AND booking_date >= '2026-01-01'`: keep delivered shipments booked in 2026.
+3. `SELECT`: show three columns, one of them calculated and named `charge_per_container`.
+4. `ORDER BY charge_per_container`: sort the remaining rows, lowest first. The alias works here because `ORDER BY` runs after `SELECT`.
+5. `LIMIT 5`: keep the first five.
 
 > [!TIP]
-> `LIMIT` is also handy when you're exploring a big table for the first time: `SELECT * FROM shipments LIMIT 20;` shows you what the data looks like without returning everything.
+> On a big table, `LIMIT` can make a query much faster, because the database can stop once it has enough rows. But it still has to look at every row to sort them, so `ORDER BY ... LIMIT` on millions of rows can still take time.
+
+### Common mistakes
+
+| Mistake | What happens | Fix |
+| :-- | :-- | :-- |
+| `LIMIT` without `ORDER BY` for a "top N" | Any N rows, not the top N | Sort first |
+| `LIMIT` before `ORDER BY` | A syntax error | `ORDER BY` then `LIMIT` |
+| Ignoring ties at the cut-off | A different "top 5" on different runs | Add a tie-breaker column |
+| `OFFSET` without `ORDER BY` | Pages overlap or skip rows | Always sort when paging |
+| `SELECT TOP 5` in SQLite | A syntax error | `LIMIT 5` |
+
+### Summary
+
+| You want... | Write |
+| :-- | :-- |
+| a quick look at a table | `SELECT * FROM t LIMIT 10` |
+| the top N | `ORDER BY x DESC LIMIT n` |
+| the bottom N | `ORDER BY x LIMIT n` |
+| a fair top N with ties | `ORDER BY x DESC, y LIMIT n` |
+| page p of size s | `LIMIT s OFFSET (p − 1) × s` |
+| the second highest | `ORDER BY x DESC LIMIT 1 OFFSET 1` |
 
 ## Practice
 
