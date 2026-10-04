@@ -24,7 +24,7 @@ export function RunnableSql({ sql }: { sql: string }) {
     <div className="not-prose">
       <div className="overflow-hidden rounded-xl" style={{ background: "var(--color-code-bg)" }}>
         <div className="flex items-center justify-between gap-2 border-b border-cream/10 px-3 py-2">
-          <span className="text-[0.6875rem] font-semibold uppercase tracking-[0.16em] text-brass-light">SQL example</span>
+          <span className="text-[0.8125rem] font-semibold text-brass-light">SQL example</span>
           <div className="flex items-center gap-1.5">
             <CopyButton text={sql} />
             <RunButton onClick={run} running={running} />

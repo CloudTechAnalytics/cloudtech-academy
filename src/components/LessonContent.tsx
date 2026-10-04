@@ -221,7 +221,7 @@ function Block({ token, ctx }: { token: Token; ctx: Ctx }): ReactNode {
       const c = CALLOUTS[m[1] as keyof typeof CALLOUTS];
       return (
         <aside className={`not-prose rounded-xl border px-4 py-3.5 text-[0.9688rem] leading-relaxed ${c.cls}`}>
-          <p className="mb-1 flex items-center gap-2 text-[0.75rem] font-semibold uppercase tracking-[0.14em] text-ink/80">
+          <p className="mb-1 flex items-center gap-2 text-[0.8125rem] font-semibold text-ink/80">
             <c.icon aria-hidden className="h-4 w-4 text-brass-dark" /> {c.label}
           </p>
           <div className="space-y-2 [&_:not(pre)>code]:rounded [&_:not(pre)>code]:bg-ivory/70 [&_:not(pre)>code]:px-1 [&_:not(pre)>code]:font-mono [&_:not(pre)>code]:text-[0.88em]">
@@ -288,7 +288,7 @@ function Block({ token, ctx }: { token: Token; ctx: Ctx }): ReactNode {
       const codeLabel = CODE_LABELS[lang.split(/\s+/)[0]];
       return (
         <div className="not-prose relative">
-          {codeLabel && <p className="mb-1 text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-muted">{codeLabel}</p>}
+          {codeLabel && <p className="mb-1 text-[0.8125rem] font-semibold text-muted">{codeLabel}</p>}
           <pre className="code-block pr-20">
             <code>{c.text}</code>
           </pre>

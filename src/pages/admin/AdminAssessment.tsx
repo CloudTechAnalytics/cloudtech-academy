@@ -78,7 +78,7 @@ export default function AdminAssessment() {
           {a.questions.map((q, i) => (
             <li key={q.id} className="rounded-2xl border border-line bg-paper p-5">
               <div className="flex items-start justify-between gap-3">
-                <p className="text-[0.75rem] font-semibold uppercase tracking-[0.14em] text-brass-dark">Question {i + 1}</p>
+                <p className="text-[0.8125rem] font-semibold text-brass-dark">Question {i + 1}</p>
                 <button type="button" onClick={() => setA({ ...a, questions: a.questions.filter((_, j) => j !== i) })} className="rounded p-1.5 text-danger hover:bg-danger/10" aria-label={`Delete question ${i + 1}`}>
                   <Trash2 aria-hidden className="h-4 w-4" />
                 </button>

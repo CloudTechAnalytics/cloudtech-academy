@@ -72,11 +72,11 @@ function Row({ s, onDone }: { s: AdminPracticeSubmission; onDone: () => Promise<
       {open && (
         <div className="mt-4 space-y-4">
           <div>
-            <p className="text-[0.75rem] font-semibold uppercase tracking-[0.14em] text-muted">Their summary</p>
+            <p className="text-[0.8125rem] font-semibold text-muted">Their summary</p>
             <p className="mt-1.5 whitespace-pre-wrap rounded-lg border border-line bg-ivory p-3 text-[0.9375rem]">{s.summary}</p>
           </div>
           <div>
-            <p className="text-[0.75rem] font-semibold uppercase tracking-[0.14em] text-muted">
+            <p className="text-[0.8125rem] font-semibold text-muted">
               Their answers ({s.correct} of {s.total} right on the latest attempt)
             </p>
             <ul className="mt-1.5 space-y-1 text-[0.875rem]">

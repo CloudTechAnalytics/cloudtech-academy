@@ -9,7 +9,7 @@ export function DatasetCard({ block }: { block: DatasetBlock }) {
   const files = block.files?.length ? block.files : info.files;
   return (
     <aside className="not-prose rounded-xl border border-line-strong bg-paper px-4 py-4">
-      <p className="flex items-center gap-2 text-[0.75rem] font-semibold uppercase tracking-[0.14em] text-brass-dark">
+      <p className="flex items-center gap-2 text-[0.8125rem] font-semibold text-brass-dark">
         <Database aria-hidden className="h-4 w-4" /> Practice data
       </p>
       <p className="mt-1.5 font-semibold text-ink">{info.name}</p>

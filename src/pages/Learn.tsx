@@ -289,7 +289,7 @@ export default function Learn() {
         <div className="sticky top-24 space-y-8">
           {learner.signedIn && <ProgressBar value={percent} label="Course progress" />}
           <nav aria-label="On this page">
-            <p className="mb-2 text-[0.75rem] font-semibold uppercase tracking-[0.16em] text-muted">On this page</p>
+            <p className="mb-2 text-[0.8125rem] font-semibold text-muted">On this page</p>
             <ul className="space-y-1.5 border-l border-line">
               {sections.map((s) => (
                 <li key={s.id}>

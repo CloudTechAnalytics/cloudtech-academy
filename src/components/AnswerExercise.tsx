@@ -56,7 +56,7 @@ export function AnswerExercise({
   return (
     <section aria-labelledby={`${id}-title`} className="not-prose rounded-2xl border border-line-strong bg-paper p-5 sm:p-6">
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <p id={`${id}-title`} className="text-[0.75rem] font-semibold uppercase tracking-[0.16em] text-brass-dark">
+        <p id={`${id}-title`} className="text-[0.8125rem] font-semibold text-brass-dark">
           {label}
           {spec.required ? "" : " · optional"}
         </p>
