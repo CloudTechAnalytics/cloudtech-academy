@@ -212,7 +212,7 @@ function Block({ token, ctx }: { token: Token; ctx: Ctx }): ReactNode {
       const inner = marked.lexer(m ? q.text.slice(m[0].length) : q.text);
       if (!m)
         return (
-          <blockquote className="border-l-2 border-brass pl-4 font-serif text-[1.15rem] italic text-ink/90">
+          <blockquote className="rounded-r-lg border-l-4 border-brass bg-brass-pale/40 py-3 pl-4 pr-3 text-[1.0625rem] italic text-ink">
             {inner.map((t, i) => (
               <Block key={i} token={t} ctx={ctx} />
             ))}

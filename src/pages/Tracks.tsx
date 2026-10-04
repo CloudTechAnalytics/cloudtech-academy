@@ -8,21 +8,16 @@ import { useAuth } from "@/lib/auth";
 import { getBackend, type Credential, type Enrollment } from "@/lib/backend";
 import { courseMinutes } from "@/lib/certificates";
 import { durationLabel } from "@/lib/format";
-import { LEVELS, requiredCourses, TRACKS, type Track, type TrackItem } from "@/content/tracks";
+import { LEVELS, requiredCourses, TRACKS, type TrackItem } from "@/content/tracks";
 import { PRACTICE_PROJECTS } from "@/content/projects";
 import type { Course } from "@/content/types";
 import { Badge } from "@/components/CourseCard";
 import { Button, ButtonLink } from "@/components/Button";
+import { TrackCard } from "@/components/TrackCard";
 import NotFound from "./NotFound";
 
 /** How long a course takes, as shown on its card. */
 const courseLength = (c: Course) => (c.format === "short" ? durationLabel(courseMinutes(c)) : durationLabel(undefined, c.estimatedHours));
-
-const trackHours = (track: Track, courses: Course[]) => {
-  const ids = new Set(track.stages.flatMap((s) => s.items).flatMap((i) => (i.kind === "course" ? [i.courseId] : [])));
-  const minutes = courses.filter((c) => ids.has(c.id)).reduce((n, c) => n + (c.format === "short" ? courseMinutes(c) : (c.estimatedHours ?? 0) * 60), 0);
-  return Math.round(minutes / 60);
-};
 
 /** /tracks: every career track. */
 export function TracksList() {
@@ -55,35 +50,13 @@ export function TracksList() {
         </div>
       </section>
       <section className="container-page max-w-5xl py-14">
-        <ul className="grid gap-5">
-          {TRACKS.map((t) => {
-            const courseCount = t.stages.flatMap((s) => s.items).filter((i) => i.kind === "course").length;
-            const projectCount = t.stages.flatMap((s) => s.items).filter((i) => i.kind === "project").length;
-            return (
-              <li key={t.id} className="rounded-2xl border border-line bg-paper p-6 sm:p-8">
-                <p className="kicker">{t.outcome}</p>
-                <h2 className="mt-2 font-serif text-[1.9rem] leading-tight">
-                  <Link to={`/tracks/${t.slug}`} className="hover:text-brass-dark">
-                    {t.title}
-                  </Link>
-                </h2>
-                <p className="mt-3 max-w-3xl leading-relaxed text-muted">{t.summary}</p>
-                <p className="mt-4 flex flex-wrap gap-x-5 gap-y-1 text-[0.875rem] text-muted">
-                  <span>{courseCount} courses</span>
-                  {projectCount > 0 && <span>{projectCount} portfolio projects</span>}
-                  <span>About {trackHours(t, courses)} hours</span>
-                  <span>Track badge: {t.badge}</span>
-                </p>
-                <ButtonLink to={`/tracks/${t.slug}`} className="mt-5" arrow>
-                  See the track
-                </ButtonLink>
-              </li>
-            );
-          })}
+        <ul className="grid gap-5 sm:grid-cols-2">
+          {TRACKS.map((t) => (
+            <li key={t.id}>
+              <TrackCard track={t} courses={courses} />
+            </li>
+          ))}
         </ul>
-        <p className="mt-10 text-[0.9375rem] text-muted">
-          More tracks, starting with Business Analysis and Data Engineering, will open once all their courses are ready.
-        </p>
       </section>
     </>
   );
