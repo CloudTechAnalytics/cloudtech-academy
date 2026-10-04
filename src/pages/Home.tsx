@@ -8,34 +8,27 @@ import { Reveal } from "@/components/Reveal";
 import { webSiteJsonLd } from "@/lib/schema";
 import { LEVELS, TRACKS } from "@/content/tracks";
 
-/** A learner in an online lesson, with the kind of progress card the Academy shows. Photo: Unsplash licence. */
-function LearnerVisual() {
+/**
+ * The hero's background: two young developers working through code together in a Lagos office,
+ * washed with the page colour so the text stays readable in both themes.
+ * Photo by Desola Lanre-Ologun (@disruptxn), Unsplash licence.
+ */
+function HeroBackground() {
   return (
-    <div className="relative pb-10 sm:pb-0">
+    <div aria-hidden className="absolute inset-0 -z-10">
       <img
-        src="/images/home/learner.webp"
-        srcSet="/images/home/learner-760.webp 760w, /images/home/learner.webp 1400w"
-        sizes="(min-width: 1024px) 560px, 100vw"
-        alt="A learner at a laptop, following an online lesson"
-        width={1400}
-        height={1120}
+        src="/images/home/learners.webp"
+        srcSet="/images/home/learners-1000.webp 1000w, /images/home/learners.webp 2000w"
+        sizes="100vw"
+        alt=""
+        width={2000}
+        height={1333}
         fetchPriority="high"
-        className="aspect-[5/4] w-full rounded-2xl border border-line object-cover shadow-[0_40px_80px_-48px_rgba(23,23,23,0.55)]"
+        className="h-full w-full object-cover object-[60%_35%]"
       />
-      <div
-        aria-hidden
-        className="absolute bottom-0 left-4 w-[17.5rem] rounded-xl border border-line bg-paper p-4 shadow-[0_24px_48px_-28px_rgba(23,23,23,0.5)] sm:-bottom-8 sm:-left-8"
-      >
-        <p className="text-[0.625rem] font-semibold uppercase tracking-[0.18em] text-brass-dark">SQL for Data Analysis</p>
-        <p className="mt-1.5 font-serif text-[1rem] font-bold leading-snug text-ink">Lesson 7 · Aggregate functions</p>
-        <div className="mt-3 flex items-center justify-between text-[0.6875rem] text-muted">
-          <span>6 of 16 lessons</span>
-          <span className="font-semibold text-ink">38%</span>
-        </div>
-        <div className="mt-1.5 h-1.5 overflow-hidden rounded-full bg-sand">
-          <div className="h-full w-[38%] rounded-full bg-brass" />
-        </div>
-      </div>
+      <div className="absolute inset-0 bg-ivory/[0.78] dark:bg-ivory/[0.72]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_55%_60%_at_50%_50%,var(--color-ivory)_0%,transparent_100%)] opacity-70" />
+      <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-ivory" />
     </div>
   );
 }
@@ -60,18 +53,19 @@ export default function Home() {
 
   return (
     <>
-      <section className="border-b border-line">
-        <div className="container-page grid items-center gap-12 py-16 sm:py-20 lg:grid-cols-12 lg:py-24">
-          <Reveal className="lg:col-span-6">
+      <section className="relative isolate overflow-hidden border-b border-line">
+        <HeroBackground />
+        <div className="container-page py-20 sm:py-28 lg:py-32">
+          <Reveal className="mx-auto flex max-w-3xl flex-col items-center text-center">
             <p className="kicker">CloudTech Academy</p>
-            <h1 className="mt-5 font-serif text-[2.6rem] leading-[1.06] tracking-[-0.02em] sm:text-[3.4rem] xl:text-[3.9rem]">
+            <h1 className="mt-5 font-serif text-[2.6rem] leading-[1.06] tracking-[-0.02em] sm:text-[3.6rem] xl:text-[4.2rem]">
               Learn the skills businesses <span className="text-brass-accent">actually use.</span>
             </h1>
-            <p className="mt-6 max-w-xl text-[1.0625rem] leading-relaxed text-muted sm:text-[1.1875rem]">
+            <p className="mt-6 max-w-2xl text-[1.0625rem] leading-relaxed text-ink-soft sm:text-[1.1875rem]">
               Practical, self-paced courses in data, analytics and technology, designed to help you learn, practise and build real skills without
               expensive course fees.
             </p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <div className="mt-8 flex w-full flex-col justify-center gap-3 sm:w-auto sm:flex-row">
               <ButtonLink to="/tracks" arrow>
                 See career tracks
               </ButtonLink>
@@ -79,7 +73,7 @@ export default function Home() {
                 Start learning free
               </ButtonLink>
             </div>
-            <ol className="mt-10 flex flex-wrap items-center gap-x-2 gap-y-1 text-[0.8125rem] text-muted" aria-label="How each course works">
+            <ol className="mt-10 flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-[0.8125rem] text-ink-soft" aria-label="How each course works">
               {STEPS.map((s, i) => (
                 <li key={s} className="flex items-center gap-2">
                   <span className={i === STEPS.length - 1 ? "font-semibold text-brass-dark" : ""}>{s}</span>
@@ -87,9 +81,6 @@ export default function Home() {
                 </li>
               ))}
             </ol>
-          </Reveal>
-          <Reveal delay={120} className="lg:col-span-6">
-            <LearnerVisual />
           </Reveal>
         </div>
       </section>
