@@ -11962,7 +11962,7 @@ on conflict (id) do update set course_id = excluded.course_id, module_id = exclu
 
 -- Course: SQL for Data Analysis
 insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
-values ('sql-for-data-analysis', 'full', null, 'sql-for-data-analysis', 'SQL', 'SQL for Data Analysis', 'Query real business data with SQL, from your first SELECT to window functions, using a logistics company''s database.', 'SQL is how analysts get answers out of databases. In this course you work with Harbourline Freight, a fictional logistics company, and answer the questions its managers actually ask: who ships the most, which routes run late, what customers still owe. Every lesson starts with a business problem, explains the idea in plain language, and gives you queries to write in a live SQL editor in your browser.', 'data-analytics', 'beginner', 2, 'Beginner to intermediate', 7, true, 'available', true, array['Reading a database schema', 'Selecting, filtering and sorting data', 'Aggregating with GROUP BY and HAVING', 'Joining tables', 'CASE expressions, subqueries and CTEs', 'Window functions for rankings and running totals', 'Turning a business question into a query']::text[], array['No prior SQL needed', 'Comfortable using a computer and a web browser']::text[], 'Harbourline Freight operations review', true, true, true, true, false, 60, 16)
+values ('sql-for-data-analysis', 'full', null, 'sql-for-data-analysis', 'SQL', 'SQL for Data Analysis', 'Query real business data with SQL, from your first SELECT to window functions, using a logistics company''s database.', 'SQL is how analysts get answers out of databases. In this course you work with Harbourline Freight, a fictional logistics company, and answer the questions its managers actually ask: who ships the most, which routes run late, what customers still owe. Every lesson starts with a business problem, explains the idea in plain language, and gives you queries to write in a live SQL editor in your browser.', 'data-analytics', 'beginner', 2, 'Beginner to intermediate', 10, true, 'available', true, array['Reading a database schema', 'Selecting, filtering and sorting data', 'Aggregating with GROUP BY and HAVING', 'Joining tables', 'CASE expressions, subqueries and CTEs', 'Window functions for rankings and running totals', 'Turning a business question into a query']::text[], array['No prior SQL needed', 'Comfortable using a computer and a web browser']::text[], 'Harbourline Freight operations review', true, true, true, true, false, 60, 16)
 on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level = excluded.level, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
@@ -11970,7 +11970,7 @@ values ('sql-m01', 'sql-for-data-analysis', 'Introduction to Databases', 1, null
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('sql-for-data-analysis:introduction-to-databases', 'sql-for-data-analysis', 'sql-m01', 'introduction-to-databases', 'Introduction to databases', 'What a database is, how tables connect, and your first query against a real one.', 9, $md$
+values ('sql-for-data-analysis:introduction-to-databases', 'sql-for-data-analysis', 'sql-m01', 'introduction-to-databases', 'Introduction to databases', 'What a database is and why businesses use one, tables, rows, columns and data types, primary and foreign keys, what SQL is, and your first queries.', 20, $md$
 ## The problem
 
 You've just joined **Harbourline Freight**, a logistics company in Lagos that moves containers for its customers by sea, air and road. On your first morning, Kemi, the head of operations, asks a simple question:
@@ -11981,32 +11981,157 @@ The answer isn't in a spreadsheet on someone's desktop. It lives in the company'
 
 ## The concept
 
-A **database** is an organised store of data that many people and systems can use at once. The kind you'll use in this course is a **relational database**, which keeps data in **tables**.
+### What a database is
 
-A table looks a lot like a spreadsheet:
+A **database** is an organised store of data that many people and systems can use at the same time. Harbourline's booking app writes new shipments into it, finance records payments in it, and you'll read from it to answer questions, all at once, without anyone emailing files around.
 
-- Each **column** holds one kind of information, such as a company name or a booking date.
-- Each **row** is one record: one customer, one shipment, one payment.
-- Every table has a **primary key**, a column whose value is unique for each row. In `customers`, that's `customer_id`.
+Why not just use spreadsheets? For a small list, a spreadsheet is fine. A business database does things a spreadsheet can't:
 
-Tables connect to each other through **foreign keys**. Every shipment belongs to a customer, so the `shipments` table has a `customer_id` column that points back to a row in `customers`. That's what makes the database *relational*.
-
-Harbourline's database has five tables:
-
-| Table | One row is… | Key columns |
+| | Spreadsheet | Database |
 | :-- | :-- | :-- |
-| `customers` | a company that ships with Harbourline | `customer_id`, `company_name`, `industry`, `city`, `account_manager_id` |
-| `shipments` | one booking to move goods | `shipment_id`, `customer_id`, `route_id`, `booking_date`, `status`, `containers`, `freight_charge` |
-| `routes` | a lane Harbourline operates | `route_id`, `origin`, `destination`, `mode`, `target_transit_days` |
-| `payments` | money received for a shipment | `payment_id`, `shipment_id`, `payment_date`, `amount`, `method` |
-| `employees` | a member of staff | `employee_id`, `full_name`, `role`, `team`, `manager_id` |
+| Size | slows down past a few hundred thousand rows | handles millions of rows easily |
+| Many users | one person edits at a time, or copies multiply | thousands of people and apps at once |
+| Rules | anyone can type anything anywhere | rules stop bad data: a shipment must belong to a real customer |
+| Connected data | linked by copying and pasting, or lookups that break | tables linked by keys |
+| Questions | formulas and filters by hand | ask in SQL, get the answer in seconds |
 
-> [!NOTE]
-> **SQL** stands for Structured Query Language. You'll hear it said as "S-Q-L" or "sequel"; both are fine. It works the same way in PostgreSQL, MySQL, SQL Server and SQLite, with small differences in some functions. This course runs on SQLite, right in your browser.
+The software that runs a database is a **database management system** (DBMS). You'll meet the common ones at work: **SQL Server** (Microsoft), **PostgreSQL**, **MySQL**, **Oracle** and **SQLite**. They all speak SQL, with small differences. This course runs **SQLite** inside your browser, so there's nothing to install.
+
+### Tables, rows and columns
+
+The kind of database in this course is a **relational database**, which stores data in **tables**. A table looks like a spreadsheet:
+
+- Each **column** holds one kind of information, such as a company name or a booking date. Every column has a name and a **data type**.
+- Each **row** is one record: one customer, one shipment, one payment.
+- The order of rows has no meaning: a table is a set of records, not a list. If you want an order, you ask for it (you'll learn how in the ORDER BY lesson).
+
+### Data types
+
+Every column holds one type of data. The main types you'll see:
+
+| Type | Holds | Harbourline example |
+| :-- | :-- | :-- |
+| Integer | whole numbers | `containers`, `customer_id` |
+| Decimal (real) | numbers with decimals | prices in other systems |
+| Text | words and codes | `company_name`, `status` |
+| Date | calendar dates | `booking_date` (stored as text, `'2026-03-15'`, in SQLite) |
+
+The type matters when you compare and calculate: numbers add up, text doesn't; dates must be written in the right format.
+
+### Primary keys
+
+Every table has a **primary key**: a column whose value is **unique** for every row and never empty. It's the row's identity, like a customer number on an invoice. In `customers` it's `customer_id`; in `shipments`, `shipment_id`.
+
+Names aren't good keys: two companies can share a name, and names change. IDs don't.
+
+### Foreign keys: how tables connect
+
+A **foreign key** is a column that holds another table's primary key, which links the two. Every shipment belongs to a customer, so `shipments` has a `customer_id` column that points to a row in `customers`.
+
+Look at one shipment. It doesn't store the customer's name, only their ID:
+
+```sql run
+SELECT shipment_id, customer_id, route_id, booking_date, containers
+FROM shipments
+WHERE shipment_id = 100001;
+```
+
+Customer 75. Now look up customer 75 in `customers`:
+
+```sql run
+SELECT customer_id, company_name, city, industry
+FROM customers
+WHERE customer_id = 75;
+```
+
+That's the relational idea: each fact is stored **once**, in the table it belongs to, and keys connect them. If the customer changes their name, it's updated in one place, and every shipment still points to the right company. In the JOINs lesson you'll learn to combine both lookups in one query.
+
+### Harbourline's five tables
+
+| Table | One row is... | Primary key | Links to |
+| :-- | :-- | :-- | :-- |
+| `customers` | a company that ships with Harbourline | `customer_id` | `employees` (its account manager) |
+| `shipments` | one booking to move goods | `shipment_id` | `customers`, `routes` |
+| `routes` | a lane Harbourline operates | `route_id` | |
+| `payments` | money received for a shipment | `payment_id` | `shipments` |
+| `employees` | a member of staff | `employee_id` | `employees` (their manager) |
+
+You'll see the full diagram of how they connect in the next lesson.
+
+### What SQL is
+
+**SQL** (Structured Query Language) is the language for working with relational databases. You'll hear it said "S-Q-L" or "sequel"; both are fine. A piece of SQL is a **statement**, and statements fall into a few families:
+
+| Statement | Does | In this course? |
+| :-- | :-- | :-- |
+| `SELECT` | **reads** data and returns a result | yes, all the time |
+| `INSERT`, `UPDATE`, `DELETE` | add, change or remove rows | mentioned, not practised |
+| `CREATE`, `ALTER`, `DROP` | create or change tables | in the Data Modelling course |
+
+As an analyst, you'll spend nearly all your time writing `SELECT`. It's **safe**: it only reads, so you can't break anything by experimenting.
+
+### Your first query
+
+```sql
+SELECT * FROM routes;
+```
+
+- `SELECT` says you want to read data.
+- `*` means "every column".
+- `FROM routes` says which table to read.
+- `;` marks the end of the statement.
+
+SQL keywords aren't case-sensitive: `select * from routes` works too. The convention, used in this course, is capitals for keywords and lower case for names.
+
+### Running queries in this course
+
+Every grey box with a **Run** button is a live editor connected to the Harbourline database:
+
+1. Read the query, then press **Run** (or Ctrl + Enter).
+2. The result appears underneath as a table, with the number of rows.
+3. You can **edit** any example and run it again. Try changing a table name or a column. To get the original back, reload the page.
+
+### When something goes wrong
+
+Mistakes are normal, and the database tells you what it didn't understand. Here's a query with a deliberate typo:
+
+```sql
+SELECT * FROM route;
+```
+
+Run it (type it into any editor in this course) and you'll see this error in red under the editor:
+
+```text
+no such table: route
+```
+
+The table is called `routes`. Most errors you'll meet early on are like this: a misspelt name, a missing comma, or a missing quote. Read the message, look just before the word it mentions, and fix it.
+
+### Exploring a table you don't know
+
+When you meet a new table, three quick queries tell you most of what you need. How many rows?
+
+```sql run
+SELECT COUNT(*) FROM customers;
+```
+
+What does a row look like?
+
+```sql run
+SELECT * FROM customers LIMIT 5;
+```
+
+And which values does a column hold?
+
+```sql run
+SELECT DISTINCT industry FROM customers;
+```
+
+You'll learn each of these properly in the coming lessons. For now, just notice how quickly you can get to know a table.
 
 ## Example
 
-Here is the query that answers Kemi's question. Press **Run** to try it.
+Here's the query that answers Kemi's question: every route Harbourline operates.
 
 ```sql run
 SELECT * FROM routes;
@@ -12014,15 +12139,25 @@ SELECT * FROM routes;
 
 ## Walkthrough
 
-- `SELECT` tells the database you want to read data.
-- `*` means "every column".
-- `FROM routes` says which table to read from.
-- The semicolon `;` marks the end of the statement. Many tools don't require it, but it's a good habit.
+- `SELECT *` asks for every column.
+- `FROM routes` reads the `routes` table.
+- The result shows all 30 routes, from sea lanes like Shanghai to Lagos (Apapa) to road routes like Lagos to Kano. Each has an ID, an origin, a destination, a mode of transport and a target number of days.
 
-The result is every row and column of the `routes` table: 30 routes, from sea lanes like Shanghai to Lagos (Apapa) to road routes like Lagos to Kano.
+Look at the `route_id` column: it's the primary key. Every shipment stores one of these IDs to say which route it travelled.
 
-> [!TIP]
-> SQL keywords aren't case-sensitive: `select * from routes` works too. Writing keywords in capitals is a convention that makes queries easier to read, and it's the style used in this course.
+### Summary
+
+| Term | Means |
+| :-- | :-- |
+| database | an organised, shared store of data |
+| DBMS | the software that runs it: SQL Server, PostgreSQL, MySQL, SQLite... |
+| table | data about one kind of thing, in rows and columns |
+| row | one record |
+| column | one kind of information, with a data type |
+| primary key | the column that uniquely identifies each row |
+| foreign key | a column holding another table's primary key, linking the two |
+| SQL | the language you use to ask a relational database questions |
+| `SELECT * FROM table;` | read every row and column of a table |
 
 ## Practice
 
@@ -16700,7 +16835,7 @@ values ('sql-m15', 'sql-for-data-analysis', 'Business Analysis with SQL', 15, nu
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('sql-for-data-analysis:business-analysis-with-sql', 'sql-for-data-analysis', 'sql-m15', 'business-analysis-with-sql', 'Business analysis with SQL', 'Turn a vague business question into precise queries, check your numbers, and present a clear answer.', 15, $md$
+values ('sql-for-data-analysis:business-analysis-with-sql', 'sql-for-data-analysis', 'sql-m15', 'business-analysis-with-sql', 'Business analysis with SQL', 'Turn a vague business question into measurable ones: agree definitions, compare like with like, sense-check, and write up four findings from Harbourline''s data.', 25, $md$
 ## The problem
 
 On Friday afternoon, the managing director stops by:
@@ -16711,20 +16846,63 @@ There's no single query for that. The real skill of an analyst isn't knowing eve
 
 ## The concept
 
-A reliable way to work:
+You now know the whole toolkit: `SELECT`, `WHERE`, `ORDER BY`, aggregates, `GROUP BY`, `HAVING`, joins, `CASE`, subqueries, CTEs and window functions. This lesson is about using them together to answer a real business question, which is the actual job.
 
-1. **Break the question down** into things you can measure. "Are we doing well?" becomes: Is shipment volume growing? Which customers drive revenue? Are we delivering on time? Are customers paying?
-2. **Find the data** for each one. Which tables and columns hold it?
-3. **Write the query**, one step at a time, using CTEs.
-4. **Sense-check the answer.** Does the total match a number you already know? Are there cancelled or unfinished records that should be excluded?
-5. **Present it**: one sentence per finding, with the number that supports it.
+### A method for vague questions
+
+1. **Break the question down** into things you can measure. "Are we doing well?" becomes four questions:
+   - Is shipment volume growing?
+   - Which customers drive revenue, and how dependent are we on them?
+   - Are we delivering on time?
+   - Are customers paying, and how fast?
+2. **Agree definitions** before you query (see below).
+3. **Find the data** for each one: which tables and columns hold it?
+4. **Write the query**, one step at a time, using CTEs.
+5. **Sense-check the answer** against something you already know.
+6. **Present it**: one sentence per finding, with the number that supports it.
+
+### Definitions first
+
+The same data gives different answers depending on what you count. Decide, and write it down:
+
+| Term | Harbourline definition | Why |
+| :-- | :-- | :-- |
+| Volume | shipments booked, **excluding** cancelled | cancelled bookings never moved |
+| Revenue | `freight_charge` of **delivered** shipments | a booking in transit isn't billed yet |
+| On time | days from ship to delivery ≤ the route's `target_transit_days` | the promise made to customers |
+| Outstanding | charge minus payments, for delivered shipments | money we're owed |
+| Comparison period | January to August in both years | 2026 data stops at the end of August |
 
 > [!BUSINESS]
-> Decide your definitions before you query. Does "revenue" mean what we charged, or what we received? Do cancelled shipments count? Write your choices down, because two analysts with different definitions will get different answers from the same data, and both will be "right".
+> Two analysts with different definitions will get different answers from the same data, and both will be "right". State your definitions next to your numbers, every time.
+
+### Sense-checking
+
+Before you trust a result, check it against something simple. Do the parts add up to the whole?
+
+```sql run
+SELECT status, COUNT(*) AS shipments
+FROM shipments
+GROUP BY status;
+```
+
+The four statuses should add up to the total number of shipments:
+
+```sql run
+SELECT
+  (SELECT COUNT(*) FROM shipments) AS total,
+  (SELECT SUM(n) FROM (SELECT COUNT(*) AS n FROM shipments GROUP BY status)) AS sum_of_parts;
+```
+
+Both 2,683. Other quick checks: is any total negative that shouldn't be? Are there dates outside the range you expected? Does a join return more rows than the table you started from? A two-minute check catches most mistakes before your manager does.
+
+### Comparing like with like
+
+2026 data runs to the end of August. Comparing all of 2025 with eight months of 2026 would make 2026 look like a collapse. Compare **the same months** in both years. Joining a monthly summary **to itself**, once as this year and once as last year, matched on the month, does exactly that.
 
 ## Example
 
-**Is volume growing?** Compare each month of 2026 with the same month in 2025:
+**1. Is volume growing?** Each month of 2026 against the same month in 2025:
 
 ```sql run
 WITH monthly AS (
@@ -16747,7 +16925,30 @@ WHERE cur.year = '2026'
 ORDER BY cur.month;
 ```
 
-**Which customers drive revenue?** What share of 2025's charges came from the ten biggest customers:
+And the eight months together:
+
+```sql run
+WITH monthly AS (
+  SELECT
+    strftime('%Y', booking_date) AS year,
+    strftime('%m', booking_date) AS month,
+    COUNT(*) AS shipments
+  FROM shipments
+  WHERE status <> 'Cancelled'
+  GROUP BY year, month
+)
+SELECT
+  SUM(prev.shipments) AS jan_aug_2025,
+  SUM(cur.shipments)  AS jan_aug_2026,
+  ROUND(100.0 * (SUM(cur.shipments) - SUM(prev.shipments)) / SUM(prev.shipments), 1) AS change_pct
+FROM monthly AS cur
+JOIN monthly AS prev ON prev.month = cur.month AND prev.year = '2025'
+WHERE cur.year = '2026';
+```
+
+Up 2.9%: 1,019 shipments against 990.
+
+**2. How dependent are we on a few customers?** The top ten customers' share of 2025 revenue:
 
 ```sql run
 WITH by_customer AS (
@@ -16761,21 +16962,86 @@ ranked AS (
   FROM by_customer
 )
 SELECT
+  COUNT(*) AS customers,
   ROUND(100.0 * SUM(CASE WHEN rn <= 10 THEN charged ELSE 0 END) / SUM(charged), 1) AS top10_share_pct
 FROM ranked;
 ```
 
+Ten of 96 customers produced about a third of the revenue.
+
+**3. Are we delivering on time?** By booking year:
+
+```sql run
+SELECT
+  strftime('%Y', s.booking_date) AS year,
+  COUNT(*) AS delivered,
+  ROUND(100.0 * SUM(CASE WHEN julianday(s.delivery_date) - julianday(s.ship_date) <= r.target_transit_days THEN 1 ELSE 0 END) / COUNT(*), 1) AS on_time_pct
+FROM shipments AS s
+JOIN routes AS r ON r.route_id = s.route_id
+WHERE s.status = 'Delivered'
+GROUP BY year;
+```
+
+75.6% in 2025, 78.4% so far in 2026: better, but still about one delivery in five is late.
+
+**4. Are customers paying?** What's still owed on delivered shipments, summarising payments **first** to avoid double counting:
+
+```sql run
+WITH paid AS (
+  SELECT shipment_id, SUM(amount) AS paid
+  FROM payments
+  GROUP BY shipment_id
+)
+SELECT
+  COUNT(*)                                     AS shipments_owing,
+  SUM(s.freight_charge - COALESCE(p.paid, 0))  AS amount_owed
+FROM shipments AS s
+LEFT JOIN paid AS p ON p.shipment_id = s.shipment_id
+WHERE s.status = 'Delivered'
+  AND s.freight_charge - COALESCE(p.paid, 0) > 0;
+```
+
+And how quickly customers pay once a shipment is delivered:
+
+```sql run
+SELECT
+  ROUND(AVG(julianday(p.payment_date) - julianday(s.delivery_date)), 1) AS avg_days_to_pay
+FROM payments AS p
+JOIN shipments AS s ON s.shipment_id = p.shipment_id;
+```
+
 ## Walkthrough
 
-The first query joins the `monthly` CTE **to itself**: once as `cur` (2026) and once as `prev` (2025), matched on the month number. It only covers months that exist in both years, which is exactly what a fair comparison needs. `100.0 *` forces decimal division so the percentage isn't rounded to a whole number too early.
+Each query uses one or two ideas from the course:
 
-The second query answers a question managers care about more than they usually say: **how dependent are we on a few customers?** If ten customers bring in a large share of revenue, losing one of them hurts. The query ranks customers by charges, then compares the top ten's total with everyone's total.
+| Question | Main techniques |
+| :-- | :-- |
+| Volume growth | a monthly CTE, joined to itself to compare years |
+| Customer dependence | `GROUP BY`, `ROW_NUMBER()`, then `SUM(CASE ...)` for a share |
+| On time | a join to routes, date arithmetic, `SUM(CASE ...)` as a percentage |
+| Money owed | summarise payments first, `LEFT JOIN`, `COALESCE` |
 
-Notice the definitions in each: the first excludes cancelled shipments from volume; the second counts only delivered shipments as revenue. Say so when you present the numbers.
+The answers become a short write-up for the managing director. Every sentence has its number and its definition:
 
-A good write-up of these two results would look like:
+> **Volume** is up 2.9% on the same eight months of last year (1,019 shipments against 990, excluding cancellations).
+>
+> **Revenue is concentrated**: our ten largest customers produced about a third (32.5%) of 2025's delivered revenue, so keeping them matters as much as winning new ones.
+>
+> **Reliability is improving** but still a weakness: 78.4% of 2026 deliveries arrived within the route's target, up from 75.6%.
+>
+> **Collections**: customers pay about 13 days after delivery on average, but ₦1.41 billion is still owed on 244 delivered shipments. Finance should chase the largest balances first.
 
-> Volume in 2026 is running [up/down] by about X% on the same months of 2025. Our ten largest customers produced Y% of 2025 revenue, so keeping them matters as much as winning new ones.
+That's the analyst's job: a vague question in, four clear answers out, each backed by a query anyone can rerun.
+
+### Common mistakes
+
+| Mistake | Effect | Fix |
+| :-- | :-- | :-- |
+| Comparing a full year with a part year | A fake decline | Compare the same months |
+| Different definitions in different queries | Numbers that don't reconcile | Agree definitions first |
+| Joining before summing | Double-counted totals | Summarise each table, then join |
+| Reporting a number without its definition | Arguments about whose number is right | State what's included |
+| No sense check | Errors reach the manager | Check that parts add up to the whole |
 
 ## Practice
 

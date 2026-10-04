@@ -555,7 +555,7 @@ export const COURSES: CourseDef[] = [
     difficulty: "beginner",
     level: 2,
     levelLabel: "Beginner to intermediate",
-    estimatedHours: 7,
+    estimatedHours: 10,
     isFree: true,
     status: "available",
     skills: [

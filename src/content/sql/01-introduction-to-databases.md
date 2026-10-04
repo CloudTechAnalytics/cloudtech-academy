@@ -1,7 +1,7 @@
 ---
 title: Introduction to databases
-minutes: 9
-summary: What a database is, how tables connect, and your first query against a real one.
+minutes: 20
+summary: What a database is and why businesses use one, tables, rows, columns and data types, primary and foreign keys, what SQL is, and your first queries.
 ---
 
 ## The problem
@@ -14,32 +14,157 @@ The answer isn't in a spreadsheet on someone's desktop. It lives in the company'
 
 ## The concept
 
-A **database** is an organised store of data that many people and systems can use at once. The kind you'll use in this course is a **relational database**, which keeps data in **tables**.
+### What a database is
 
-A table looks a lot like a spreadsheet:
+A **database** is an organised store of data that many people and systems can use at the same time. Harbourline's booking app writes new shipments into it, finance records payments in it, and you'll read from it to answer questions, all at once, without anyone emailing files around.
 
-- Each **column** holds one kind of information, such as a company name or a booking date.
-- Each **row** is one record: one customer, one shipment, one payment.
-- Every table has a **primary key**, a column whose value is unique for each row. In `customers`, that's `customer_id`.
+Why not just use spreadsheets? For a small list, a spreadsheet is fine. A business database does things a spreadsheet can't:
 
-Tables connect to each other through **foreign keys**. Every shipment belongs to a customer, so the `shipments` table has a `customer_id` column that points back to a row in `customers`. That's what makes the database *relational*.
-
-Harbourline's database has five tables:
-
-| Table | One row is… | Key columns |
+| | Spreadsheet | Database |
 | :-- | :-- | :-- |
-| `customers` | a company that ships with Harbourline | `customer_id`, `company_name`, `industry`, `city`, `account_manager_id` |
-| `shipments` | one booking to move goods | `shipment_id`, `customer_id`, `route_id`, `booking_date`, `status`, `containers`, `freight_charge` |
-| `routes` | a lane Harbourline operates | `route_id`, `origin`, `destination`, `mode`, `target_transit_days` |
-| `payments` | money received for a shipment | `payment_id`, `shipment_id`, `payment_date`, `amount`, `method` |
-| `employees` | a member of staff | `employee_id`, `full_name`, `role`, `team`, `manager_id` |
+| Size | slows down past a few hundred thousand rows | handles millions of rows easily |
+| Many users | one person edits at a time, or copies multiply | thousands of people and apps at once |
+| Rules | anyone can type anything anywhere | rules stop bad data: a shipment must belong to a real customer |
+| Connected data | linked by copying and pasting, or lookups that break | tables linked by keys |
+| Questions | formulas and filters by hand | ask in SQL, get the answer in seconds |
 
-> [!NOTE]
-> **SQL** stands for Structured Query Language. You'll hear it said as "S-Q-L" or "sequel"; both are fine. It works the same way in PostgreSQL, MySQL, SQL Server and SQLite, with small differences in some functions. This course runs on SQLite, right in your browser.
+The software that runs a database is a **database management system** (DBMS). You'll meet the common ones at work: **SQL Server** (Microsoft), **PostgreSQL**, **MySQL**, **Oracle** and **SQLite**. They all speak SQL, with small differences. This course runs **SQLite** inside your browser, so there's nothing to install.
+
+### Tables, rows and columns
+
+The kind of database in this course is a **relational database**, which stores data in **tables**. A table looks like a spreadsheet:
+
+- Each **column** holds one kind of information, such as a company name or a booking date. Every column has a name and a **data type**.
+- Each **row** is one record: one customer, one shipment, one payment.
+- The order of rows has no meaning: a table is a set of records, not a list. If you want an order, you ask for it (you'll learn how in the ORDER BY lesson).
+
+### Data types
+
+Every column holds one type of data. The main types you'll see:
+
+| Type | Holds | Harbourline example |
+| :-- | :-- | :-- |
+| Integer | whole numbers | `containers`, `customer_id` |
+| Decimal (real) | numbers with decimals | prices in other systems |
+| Text | words and codes | `company_name`, `status` |
+| Date | calendar dates | `booking_date` (stored as text, `'2026-03-15'`, in SQLite) |
+
+The type matters when you compare and calculate: numbers add up, text doesn't; dates must be written in the right format.
+
+### Primary keys
+
+Every table has a **primary key**: a column whose value is **unique** for every row and never empty. It's the row's identity, like a customer number on an invoice. In `customers` it's `customer_id`; in `shipments`, `shipment_id`.
+
+Names aren't good keys: two companies can share a name, and names change. IDs don't.
+
+### Foreign keys: how tables connect
+
+A **foreign key** is a column that holds another table's primary key, which links the two. Every shipment belongs to a customer, so `shipments` has a `customer_id` column that points to a row in `customers`.
+
+Look at one shipment. It doesn't store the customer's name, only their ID:
+
+```sql run
+SELECT shipment_id, customer_id, route_id, booking_date, containers
+FROM shipments
+WHERE shipment_id = 100001;
+```
+
+Customer 75. Now look up customer 75 in `customers`:
+
+```sql run
+SELECT customer_id, company_name, city, industry
+FROM customers
+WHERE customer_id = 75;
+```
+
+That's the relational idea: each fact is stored **once**, in the table it belongs to, and keys connect them. If the customer changes their name, it's updated in one place, and every shipment still points to the right company. In the JOINs lesson you'll learn to combine both lookups in one query.
+
+### Harbourline's five tables
+
+| Table | One row is... | Primary key | Links to |
+| :-- | :-- | :-- | :-- |
+| `customers` | a company that ships with Harbourline | `customer_id` | `employees` (its account manager) |
+| `shipments` | one booking to move goods | `shipment_id` | `customers`, `routes` |
+| `routes` | a lane Harbourline operates | `route_id` | |
+| `payments` | money received for a shipment | `payment_id` | `shipments` |
+| `employees` | a member of staff | `employee_id` | `employees` (their manager) |
+
+You'll see the full diagram of how they connect in the next lesson.
+
+### What SQL is
+
+**SQL** (Structured Query Language) is the language for working with relational databases. You'll hear it said "S-Q-L" or "sequel"; both are fine. A piece of SQL is a **statement**, and statements fall into a few families:
+
+| Statement | Does | In this course? |
+| :-- | :-- | :-- |
+| `SELECT` | **reads** data and returns a result | yes, all the time |
+| `INSERT`, `UPDATE`, `DELETE` | add, change or remove rows | mentioned, not practised |
+| `CREATE`, `ALTER`, `DROP` | create or change tables | in the Data Modelling course |
+
+As an analyst, you'll spend nearly all your time writing `SELECT`. It's **safe**: it only reads, so you can't break anything by experimenting.
+
+### Your first query
+
+```sql
+SELECT * FROM routes;
+```
+
+- `SELECT` says you want to read data.
+- `*` means "every column".
+- `FROM routes` says which table to read.
+- `;` marks the end of the statement.
+
+SQL keywords aren't case-sensitive: `select * from routes` works too. The convention, used in this course, is capitals for keywords and lower case for names.
+
+### Running queries in this course
+
+Every grey box with a **Run** button is a live editor connected to the Harbourline database:
+
+1. Read the query, then press **Run** (or Ctrl + Enter).
+2. The result appears underneath as a table, with the number of rows.
+3. You can **edit** any example and run it again. Try changing a table name or a column. To get the original back, reload the page.
+
+### When something goes wrong
+
+Mistakes are normal, and the database tells you what it didn't understand. Here's a query with a deliberate typo:
+
+```sql
+SELECT * FROM route;
+```
+
+Run it (type it into any editor in this course) and you'll see this error in red under the editor:
+
+```text
+no such table: route
+```
+
+The table is called `routes`. Most errors you'll meet early on are like this: a misspelt name, a missing comma, or a missing quote. Read the message, look just before the word it mentions, and fix it.
+
+### Exploring a table you don't know
+
+When you meet a new table, three quick queries tell you most of what you need. How many rows?
+
+```sql run
+SELECT COUNT(*) FROM customers;
+```
+
+What does a row look like?
+
+```sql run
+SELECT * FROM customers LIMIT 5;
+```
+
+And which values does a column hold?
+
+```sql run
+SELECT DISTINCT industry FROM customers;
+```
+
+You'll learn each of these properly in the coming lessons. For now, just notice how quickly you can get to know a table.
 
 ## Example
 
-Here is the query that answers Kemi's question. Press **Run** to try it.
+Here's the query that answers Kemi's question: every route Harbourline operates.
 
 ```sql run
 SELECT * FROM routes;
@@ -47,15 +172,25 @@ SELECT * FROM routes;
 
 ## Walkthrough
 
-- `SELECT` tells the database you want to read data.
-- `*` means "every column".
-- `FROM routes` says which table to read from.
-- The semicolon `;` marks the end of the statement. Many tools don't require it, but it's a good habit.
+- `SELECT *` asks for every column.
+- `FROM routes` reads the `routes` table.
+- The result shows all 30 routes, from sea lanes like Shanghai to Lagos (Apapa) to road routes like Lagos to Kano. Each has an ID, an origin, a destination, a mode of transport and a target number of days.
 
-The result is every row and column of the `routes` table: 30 routes, from sea lanes like Shanghai to Lagos (Apapa) to road routes like Lagos to Kano.
+Look at the `route_id` column: it's the primary key. Every shipment stores one of these IDs to say which route it travelled.
 
-> [!TIP]
-> SQL keywords aren't case-sensitive: `select * from routes` works too. Writing keywords in capitals is a convention that makes queries easier to read, and it's the style used in this course.
+### Summary
+
+| Term | Means |
+| :-- | :-- |
+| database | an organised, shared store of data |
+| DBMS | the software that runs it: SQL Server, PostgreSQL, MySQL, SQLite... |
+| table | data about one kind of thing, in rows and columns |
+| row | one record |
+| column | one kind of information, with a data type |
+| primary key | the column that uniquely identifies each row |
+| foreign key | a column holding another table's primary key, linking the two |
+| SQL | the language you use to ask a relational database questions |
+| `SELECT * FROM table;` | read every row and column of a table |
 
 ## Practice
 

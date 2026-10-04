@@ -1,7 +1,7 @@
 ---
 title: Business analysis with SQL
-minutes: 15
-summary: Turn a vague business question into precise queries, check your numbers, and present a clear answer.
+minutes: 25
+summary: Turn a vague business question into measurable ones: agree definitions, compare like with like, sense-check, and write up four findings from Harbourline's data.
 ---
 
 ## The problem
@@ -14,20 +14,63 @@ There's no single query for that. The real skill of an analyst isn't knowing eve
 
 ## The concept
 
-A reliable way to work:
+You now know the whole toolkit: `SELECT`, `WHERE`, `ORDER BY`, aggregates, `GROUP BY`, `HAVING`, joins, `CASE`, subqueries, CTEs and window functions. This lesson is about using them together to answer a real business question, which is the actual job.
 
-1. **Break the question down** into things you can measure. "Are we doing well?" becomes: Is shipment volume growing? Which customers drive revenue? Are we delivering on time? Are customers paying?
-2. **Find the data** for each one. Which tables and columns hold it?
-3. **Write the query**, one step at a time, using CTEs.
-4. **Sense-check the answer.** Does the total match a number you already know? Are there cancelled or unfinished records that should be excluded?
-5. **Present it**: one sentence per finding, with the number that supports it.
+### A method for vague questions
+
+1. **Break the question down** into things you can measure. "Are we doing well?" becomes four questions:
+   - Is shipment volume growing?
+   - Which customers drive revenue, and how dependent are we on them?
+   - Are we delivering on time?
+   - Are customers paying, and how fast?
+2. **Agree definitions** before you query (see below).
+3. **Find the data** for each one: which tables and columns hold it?
+4. **Write the query**, one step at a time, using CTEs.
+5. **Sense-check the answer** against something you already know.
+6. **Present it**: one sentence per finding, with the number that supports it.
+
+### Definitions first
+
+The same data gives different answers depending on what you count. Decide, and write it down:
+
+| Term | Harbourline definition | Why |
+| :-- | :-- | :-- |
+| Volume | shipments booked, **excluding** cancelled | cancelled bookings never moved |
+| Revenue | `freight_charge` of **delivered** shipments | a booking in transit isn't billed yet |
+| On time | days from ship to delivery ≤ the route's `target_transit_days` | the promise made to customers |
+| Outstanding | charge minus payments, for delivered shipments | money we're owed |
+| Comparison period | January to August in both years | 2026 data stops at the end of August |
 
 > [!BUSINESS]
-> Decide your definitions before you query. Does "revenue" mean what we charged, or what we received? Do cancelled shipments count? Write your choices down, because two analysts with different definitions will get different answers from the same data, and both will be "right".
+> Two analysts with different definitions will get different answers from the same data, and both will be "right". State your definitions next to your numbers, every time.
+
+### Sense-checking
+
+Before you trust a result, check it against something simple. Do the parts add up to the whole?
+
+```sql run
+SELECT status, COUNT(*) AS shipments
+FROM shipments
+GROUP BY status;
+```
+
+The four statuses should add up to the total number of shipments:
+
+```sql run
+SELECT
+  (SELECT COUNT(*) FROM shipments) AS total,
+  (SELECT SUM(n) FROM (SELECT COUNT(*) AS n FROM shipments GROUP BY status)) AS sum_of_parts;
+```
+
+Both 2,683. Other quick checks: is any total negative that shouldn't be? Are there dates outside the range you expected? Does a join return more rows than the table you started from? A two-minute check catches most mistakes before your manager does.
+
+### Comparing like with like
+
+2026 data runs to the end of August. Comparing all of 2025 with eight months of 2026 would make 2026 look like a collapse. Compare **the same months** in both years. Joining a monthly summary **to itself**, once as this year and once as last year, matched on the month, does exactly that.
 
 ## Example
 
-**Is volume growing?** Compare each month of 2026 with the same month in 2025:
+**1. Is volume growing?** Each month of 2026 against the same month in 2025:
 
 ```sql run
 WITH monthly AS (
@@ -50,7 +93,30 @@ WHERE cur.year = '2026'
 ORDER BY cur.month;
 ```
 
-**Which customers drive revenue?** What share of 2025's charges came from the ten biggest customers:
+And the eight months together:
+
+```sql run
+WITH monthly AS (
+  SELECT
+    strftime('%Y', booking_date) AS year,
+    strftime('%m', booking_date) AS month,
+    COUNT(*) AS shipments
+  FROM shipments
+  WHERE status <> 'Cancelled'
+  GROUP BY year, month
+)
+SELECT
+  SUM(prev.shipments) AS jan_aug_2025,
+  SUM(cur.shipments)  AS jan_aug_2026,
+  ROUND(100.0 * (SUM(cur.shipments) - SUM(prev.shipments)) / SUM(prev.shipments), 1) AS change_pct
+FROM monthly AS cur
+JOIN monthly AS prev ON prev.month = cur.month AND prev.year = '2025'
+WHERE cur.year = '2026';
+```
+
+Up 2.9%: 1,019 shipments against 990.
+
+**2. How dependent are we on a few customers?** The top ten customers' share of 2025 revenue:
 
 ```sql run
 WITH by_customer AS (
@@ -64,21 +130,86 @@ ranked AS (
   FROM by_customer
 )
 SELECT
+  COUNT(*) AS customers,
   ROUND(100.0 * SUM(CASE WHEN rn <= 10 THEN charged ELSE 0 END) / SUM(charged), 1) AS top10_share_pct
 FROM ranked;
 ```
 
+Ten of 96 customers produced about a third of the revenue.
+
+**3. Are we delivering on time?** By booking year:
+
+```sql run
+SELECT
+  strftime('%Y', s.booking_date) AS year,
+  COUNT(*) AS delivered,
+  ROUND(100.0 * SUM(CASE WHEN julianday(s.delivery_date) - julianday(s.ship_date) <= r.target_transit_days THEN 1 ELSE 0 END) / COUNT(*), 1) AS on_time_pct
+FROM shipments AS s
+JOIN routes AS r ON r.route_id = s.route_id
+WHERE s.status = 'Delivered'
+GROUP BY year;
+```
+
+75.6% in 2025, 78.4% so far in 2026: better, but still about one delivery in five is late.
+
+**4. Are customers paying?** What's still owed on delivered shipments, summarising payments **first** to avoid double counting:
+
+```sql run
+WITH paid AS (
+  SELECT shipment_id, SUM(amount) AS paid
+  FROM payments
+  GROUP BY shipment_id
+)
+SELECT
+  COUNT(*)                                     AS shipments_owing,
+  SUM(s.freight_charge - COALESCE(p.paid, 0))  AS amount_owed
+FROM shipments AS s
+LEFT JOIN paid AS p ON p.shipment_id = s.shipment_id
+WHERE s.status = 'Delivered'
+  AND s.freight_charge - COALESCE(p.paid, 0) > 0;
+```
+
+And how quickly customers pay once a shipment is delivered:
+
+```sql run
+SELECT
+  ROUND(AVG(julianday(p.payment_date) - julianday(s.delivery_date)), 1) AS avg_days_to_pay
+FROM payments AS p
+JOIN shipments AS s ON s.shipment_id = p.shipment_id;
+```
+
 ## Walkthrough
 
-The first query joins the `monthly` CTE **to itself**: once as `cur` (2026) and once as `prev` (2025), matched on the month number. It only covers months that exist in both years, which is exactly what a fair comparison needs. `100.0 *` forces decimal division so the percentage isn't rounded to a whole number too early.
+Each query uses one or two ideas from the course:
 
-The second query answers a question managers care about more than they usually say: **how dependent are we on a few customers?** If ten customers bring in a large share of revenue, losing one of them hurts. The query ranks customers by charges, then compares the top ten's total with everyone's total.
+| Question | Main techniques |
+| :-- | :-- |
+| Volume growth | a monthly CTE, joined to itself to compare years |
+| Customer dependence | `GROUP BY`, `ROW_NUMBER()`, then `SUM(CASE ...)` for a share |
+| On time | a join to routes, date arithmetic, `SUM(CASE ...)` as a percentage |
+| Money owed | summarise payments first, `LEFT JOIN`, `COALESCE` |
 
-Notice the definitions in each: the first excludes cancelled shipments from volume; the second counts only delivered shipments as revenue. Say so when you present the numbers.
+The answers become a short write-up for the managing director. Every sentence has its number and its definition:
 
-A good write-up of these two results would look like:
+> **Volume** is up 2.9% on the same eight months of last year (1,019 shipments against 990, excluding cancellations).
+>
+> **Revenue is concentrated**: our ten largest customers produced about a third (32.5%) of 2025's delivered revenue, so keeping them matters as much as winning new ones.
+>
+> **Reliability is improving** but still a weakness: 78.4% of 2026 deliveries arrived within the route's target, up from 75.6%.
+>
+> **Collections**: customers pay about 13 days after delivery on average, but ₦1.41 billion is still owed on 244 delivered shipments. Finance should chase the largest balances first.
 
-> Volume in 2026 is running [up/down] by about X% on the same months of 2025. Our ten largest customers produced Y% of 2025 revenue, so keeping them matters as much as winning new ones.
+That's the analyst's job: a vague question in, four clear answers out, each backed by a query anyone can rerun.
+
+### Common mistakes
+
+| Mistake | Effect | Fix |
+| :-- | :-- | :-- |
+| Comparing a full year with a part year | A fake decline | Compare the same months |
+| Different definitions in different queries | Numbers that don't reconcile | Agree definitions first |
+| Joining before summing | Double-counted totals | Summarise each table, then join |
+| Reporting a number without its definition | Arguments about whose number is right | State what's included |
+| No sense check | Errors reach the manager | Check that parts add up to the whole |
 
 ## Practice
 
