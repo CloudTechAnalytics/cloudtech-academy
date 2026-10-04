@@ -135,7 +135,7 @@ export default function Home() {
               Free courses in data and technology
             </p>
             <h1 className="mt-5 font-serif text-[2.5rem] leading-[1.1] tracking-[-0.025em] sm:text-[3.25rem]">
-              Learn the skills businesses <span className="text-brass-accent">actually use</span>
+              Learn the skills businesses <span className="text-brass-accent">actually use.</span>
             </h1>
             <p className="mt-5 max-w-xl text-[1.0625rem] leading-relaxed text-muted sm:text-[1.125rem]">
               Step-by-step courses in data, analytics and technology. Learn each idea, practise it on real-looking company data, and build projects you can
@@ -166,7 +166,7 @@ export default function Home() {
           ].map(([n, label]) => (
             <div key={label} className="text-center sm:text-left">
               <dt className="sr-only">{label}</dt>
-              <dd className="font-serif text-[1.75rem] leading-none text-ink">{n}</dd>
+              <dd className="font-serif text-[1.75rem] leading-none text-ink [font-variant-numeric:lining-nums]">{n}</dd>
               <dd className="mt-1.5 text-[0.875rem] text-muted">{label}</dd>
             </div>
           ))}
