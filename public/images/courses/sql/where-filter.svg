@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 430" width="1100" height="430" role="img" aria-label="How WHERE filters rows: six shipments go in, WHERE checks each row against the condition, and only the two rows where both parts are true come out.">
+<title>How WHERE filters rows: six shipments go in, WHERE checks each row against the condition, and only the two rows where both parts are true come out.</title>
+<rect width="1100" height="430" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+  <text x="40" y="44" font-size="15" font-weight="700" fill="#1F1F1F">shipments (every row)</text>
+  <rect x="40" y="60" width="400" height="336" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+  <path d="M40,70 a10,10 0 0 1 10,-10 h380 a10,10 0 0 1 10,10 v32 h-400 z" fill="#2B2A28"/>
+  <text x="60" y="87" font-size="13" font-weight="700" fill="#FFFFFF">shipment_id</text>
+  <text x="200" y="87" font-size="13" font-weight="700" fill="#FFFFFF">containers</text>
+  <text x="310" y="87" font-size="13" font-weight="700" fill="#FFFFFF">status</text>
+  <g font-size="14" fill="#2A2926">
+    <text x="60" y="132">100001</text><text x="240" y="132" text-anchor="end">8</text><text x="310" y="132">Delivered</text>
+    <line x1="40" x2="440" y1="148" y2="148" stroke="#EDE6D8"/>
+    <text x="60" y="180">100002</text><text x="240" y="180" text-anchor="end">2</text><text x="310" y="180">Delivered</text>
+    <line x1="40" x2="440" y1="196" y2="196" stroke="#EDE6D8"/>
+    <text x="60" y="228">100003</text><text x="240" y="228" text-anchor="end">7</text><text x="310" y="228">Cancelled</text>
+    <line x1="40" x2="440" y1="244" y2="244" stroke="#EDE6D8"/>
+    <text x="60" y="276">100004</text><text x="240" y="276" text-anchor="end">6</text><text x="310" y="276">Delivered</text>
+    <line x1="40" x2="440" y1="292" y2="292" stroke="#EDE6D8"/>
+    <text x="60" y="324">100005</text><text x="240" y="324" text-anchor="end">4</text><text x="310" y="324">In transit</text>
+    <line x1="40" x2="440" y1="340" y2="340" stroke="#EDE6D8"/>
+    <text x="60" y="372">100006</text><text x="240" y="372" text-anchor="end">9</text><text x="310" y="372">In transit</text>
+  </g>
+  <g font-size="16" font-weight="700">
+    <text x="420" y="133" fill="#2F6B3F" text-anchor="end">✓</text>
+    <text x="420" y="181" fill="#9B2C1F" text-anchor="end">✗</text>
+    <text x="420" y="229" fill="#9B2C1F" text-anchor="end">✗</text>
+    <text x="420" y="277" fill="#2F6B3F" text-anchor="end">✓</text>
+    <text x="420" y="325" fill="#9B2C1F" text-anchor="end">✗</text>
+    <text x="420" y="373" fill="#9B2C1F" text-anchor="end">✗</text>
+  </g>
+
+  <rect x="470" y="172" width="210" height="120" rx="12" fill="#EFE4CC" stroke="#B38A3E" stroke-width="1.5"/>
+  <text x="575" y="202" font-size="15" font-weight="700" fill="#765923" text-anchor="middle">WHERE</text>
+  <text x="575" y="228" font-family="'JetBrains Mono', Consolas, 'Courier New', monospace" font-size="12.5" fill="#2A2926" text-anchor="middle">containers &gt;= 6</text>
+  <text x="575" y="250" font-family="'JetBrains Mono', Consolas, 'Courier New', monospace" font-size="12.5" fill="#2A2926" text-anchor="middle">AND status =</text>
+  <text x="575" y="272" font-family="'JetBrains Mono', Consolas, 'Courier New', monospace" font-size="12.5" fill="#2A2926" text-anchor="middle">'Delivered'</text>
+  <path d="M446,232 h18" stroke="#B38A3E" stroke-width="2.5"/>
+  <path d="M686,232 h26" stroke="#B38A3E" stroke-width="2.5"/>
+  <path d="M712,224 l10,8 l-10,8 z" fill="#B38A3E"/>
+
+  <text x="730" y="44" font-size="15" font-weight="700" fill="#1F1F1F">result (rows where it's true)</text>
+  <rect x="730" y="172" width="330" height="152" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+  <path d="M730,182 a10,10 0 0 1 10,-10 h310 a10,10 0 0 1 10,10 v32 h-330 z" fill="#2B2A28"/>
+  <text x="748" y="199" font-size="13" font-weight="700" fill="#FFFFFF">shipment_id</text>
+  <text x="870" y="199" font-size="13" font-weight="700" fill="#FFFFFF">containers</text>
+  <text x="965" y="199" font-size="13" font-weight="700" fill="#FFFFFF">status</text>
+  <g font-size="14" fill="#2A2926">
+    <text x="748" y="246">100001</text><text x="910" y="246" text-anchor="end">8</text><text x="965" y="246">Delivered</text>
+    <line x1="730" x2="1060" y1="264" y2="264" stroke="#EDE6D8"/>
+    <text x="748" y="296">100004</text><text x="910" y="296" text-anchor="end">6</text><text x="965" y="296">Delivered</text>
+  </g>
+  <text x="730" y="360" font-size="13.5" fill="#5E5A52">Rows where the condition is false</text>
+  <text x="730" y="380" font-size="13.5" fill="#5E5A52">are left out of the result.</text>
+  <text x="730" y="404" font-size="13.5" fill="#5E5A52">The table itself doesn't change.</text>
+</g>
+</svg>
