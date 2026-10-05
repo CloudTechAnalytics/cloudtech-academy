@@ -30,7 +30,7 @@ WITH ranked AS (
 SELECT … FROM ranked WHERE rn <= 3;
 ```
 
-**Choosing the numbering function decides what happens to ties:**
+### Choosing the numbering function decides what happens to ties
 
 | Function | Ties | Use when |
 | :-- | :-- | :-- |
@@ -39,6 +39,23 @@ SELECT … FROM ranked WHERE rn <= 3;
 | `DENSE_RANK()` | tied rows share a rank, no gaps | "the top 3 *values*", such as the three highest prices |
 
 Always add a tie-breaker to `ROW_NUMBER` (usually the ID). Without one the database may pick a different row each time you run the query, and two people running the same report get different answers.
+
+**See the difference.** Oakridge Packaging (customer 85) has five shipments of 8 containers, then several of 6:
+
+```sql run
+SELECT
+  shipment_id,
+  containers,
+  ROW_NUMBER() OVER (ORDER BY containers DESC, shipment_id) AS row_num,
+  RANK()       OVER (ORDER BY containers DESC)              AS rnk,
+  DENSE_RANK() OVER (ORDER BY containers DESC)              AS dense_rnk
+FROM shipments
+WHERE customer_id = 85
+ORDER BY containers DESC, shipment_id
+LIMIT 8;
+```
+
+`ROW_NUMBER` gives 1 to 8, splitting the tie by ID. `RANK` gives the five tied rows 1, then **jumps to 6**. `DENSE_RANK` gives them 1, then 2. "Top 3 shipments" with `RANK() <= 3` would return all five 8-container shipments; with `ROW_NUMBER() <= 3` exactly three.
 
 > [!NOTE]
 > Snowflake, BigQuery, Databricks and DuckDB have a shortcut, `QUALIFY rn <= 3`, which filters on a window function without a CTE. SQLite, PostgreSQL, SQL Server and MySQL don't, so the CTE pattern is the one that works everywhere.

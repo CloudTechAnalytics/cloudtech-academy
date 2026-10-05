@@ -20,7 +20,7 @@ This course is about the SQL that working analysts write: longer queries, harder
 
 ## The concept
 
-**NULL means "unknown", not "nothing"**
+### NULL means "unknown", not "nothing"
 
 The 8 missing customers have no account manager: `account_manager_id` is `NULL`. SQL treats NULL as an unknown value, so any comparison with it is also unknown:
 
@@ -42,15 +42,51 @@ WHERE account_manager_id <> 3 OR account_manager_id IS NULL
 
 or replace the NULL first with `COALESCE(account_manager_id, 0) <> 3`.
 
-**The NOT IN trap**
+**See it for yourself.** Run this. It counts the same NULLs four ways:
+
+```sql run
+SELECT
+  COUNT(*)                        AS all_customers,
+  COUNT(account_manager_id)       AS with_manager,
+  SUM(account_manager_id = NULL)  AS equals_null_matches,
+  SUM(account_manager_id IS NULL) AS is_null_matches
+FROM customers;
+```
+
+`COUNT(column)` skips the 8 NULLs (112 of 120). `= NULL` is never true, so it matches nothing, and the sum itself comes out as NULL. Only `IS NULL` finds all 8.
+
+### The NOT IN trap
 
 `NOT IN (subquery)` is the most dangerous NULL trap. If the subquery returns even one NULL, `NOT IN` returns no rows at all, because SQL can't be sure the value isn't equal to the unknown one. `NOT EXISTS` doesn't have this problem, so prefer it.
 
-**Integer division**
+Run the two versions side by side. The question is "which employees manage no customers?":
+
+```sql run
+SELECT COUNT(*) AS employees_managing_no_one
+FROM employees
+WHERE employee_id NOT IN (SELECT account_manager_id FROM customers);
+```
+
+Zero. That's wrong, and nothing warns you: the subquery includes the 8 NULLs. Remove them and the real answer appears:
+
+```sql run
+SELECT COUNT(*) AS employees_managing_no_one
+FROM employees
+WHERE employee_id NOT IN (SELECT account_manager_id FROM customers
+                          WHERE account_manager_id IS NOT NULL);
+```
+
+### Integer division
 
 In SQLite, SQL Server and PostgreSQL, dividing one whole number by another gives a whole number: `7 / 2` is `3`, and `2000 / 2411` is `0`. Multiply by `100.0` (or `1.0`) first to get a decimal. MySQL is the exception: it returns a decimal.
 
-**Readable SQL**
+```sql run
+SELECT 7 / 2 AS integer_division, 7 / 2.0 AS decimal_division, CAST(7 AS REAL) / 2 AS with_cast;
+```
+
+`3`, `3.5`, `3.5`. A percentage written as `100 * part / total` with whole numbers silently rounds down; `100.0 * part / total` doesn't.
+
+### Readable SQL
 
 A query is something other people need to check. Write it so they can:
 

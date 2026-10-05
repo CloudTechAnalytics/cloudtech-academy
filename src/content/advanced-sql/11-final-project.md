@@ -14,7 +14,7 @@ That's four questions, and each one needs a pattern from this course. The board 
 
 ## The concept
 
-**From questions to patterns**
+### From questions to patterns
 
 | Question | Pattern | Lesson |
 | :-- | :-- | :-- |
@@ -24,7 +24,7 @@ That's four questions, and each one needs a pattern from this course. The board 
 | Are we delivering on our promises? | On-time rate by mode and route, period comparison | 1, 7 |
 | Are we getting paid? | Receivables aging, top debtors, days to pay | 10 |
 
-**What makes it board-ready**
+### What makes it board-ready
 
 - **Definitions first**: what counts as revenue (charges on delivered shipments, or cash received?), on time, active and the "as of" date (31 August 2026).
 - **Like for like**: no comparison of a full year with eight months.

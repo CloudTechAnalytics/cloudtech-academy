@@ -12,11 +12,11 @@ The data volume is out of your hands, but how you write the query isn't. The dif
 
 ## The concept
 
-**Scan or search**
+### Scan or search
 
 To find rows, a database either **scans** (reads every row in the table) or **searches** (uses an **index** to jump straight to the rows it needs). An index is like the index at the back of a book: a sorted list of values, each pointing to where the matching rows are. Searching 80 million rows through an index takes a few steps, while scanning them means reading all 80 million.
 
-**Reading the plan**
+### Reading the plan
 
 `EXPLAIN QUERY PLAN` (SQLite), `EXPLAIN` (PostgreSQL, MySQL) or the "estimated execution plan" (SQL Server) shows what the database intends to do, without running the query. Look for:
 
@@ -27,7 +27,7 @@ To find rows, a database either **scans** (reads every row in the table) or **se
 | `USING COVERING INDEX` | the index holds every column needed, so the table isn't touched |
 | `CORRELATED SCALAR SUBQUERY` | a subquery that runs once **per row** of the outer query |
 
-**Habits that keep queries fast**
+### Habits that keep queries fast
 
 1. **Keep filters sargable**: leave the column bare. `WHERE strftime('%Y', booking_date) = '2026'` has to calculate the year for every row, so it can't use an index on `booking_date`. `WHERE booking_date >= '2026-01-01' AND booking_date < '2027-01-01'` can.
 2. **Select only the columns you need.** `SELECT *` reads and sends everything, and stops covering indexes from working.

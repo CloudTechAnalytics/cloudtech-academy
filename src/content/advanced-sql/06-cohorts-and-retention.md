@@ -22,7 +22,7 @@ You build one in three steps:
 
 To work out "periods since start", give every quarter a number that counts up: `year × 4 + quarter`. Then 2026-Q1 minus 2025-Q3 is 2 quarters, even across a year boundary.
 
-**Two traps to say out loud**
+### Two traps to say out loud
 
 - **Left-censoring.** Harbourline's data starts in January 2025, but customers signed up as early as 2021. The "2025-Q1 cohort" is really **everyone already active** when the data begins, not new customers. Treat it as the existing base and compare the genuinely new cohorts separately.
 - **Part periods.** The data ends on 31 August 2026, so 2026-Q3 has two months, not three. Activity in that quarter will look lower simply because it's shorter. Label it or leave it out.

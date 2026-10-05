@@ -14,17 +14,17 @@ None of these is a new SQL feature. Each is a **pattern**: a standard analysis t
 
 ## The concept
 
-**Receivables aging**
+### Receivables aging
 
 Group unpaid amounts into buckets by how long they've been owed (0–30, 31–60, 61–90, over 90 days) as of a fixed date. The older the bucket, the less likely the money is ever collected. Finance teams review an aging report every month.
 
 Steps: total payments per shipment → outstanding = charge − paid → days since delivery, as of the report date → `CASE` into buckets → total by bucket.
 
-**Pareto (concentration)**
+### Pareto (concentration)
 
 How much of revenue comes from the top customers? Sort customers by revenue, take a **running total**, and divide by the grand total. The row where the running share passes 80% tells you how concentrated the business is. High concentration is a risk: lose one big customer and revenue falls sharply.
 
-**RFM segmentation**
+### RFM segmentation
 
 Score every customer on three things:
 

@@ -14,7 +14,7 @@ Period comparisons are where analysts most often embarrass themselves, and the b
 
 ## The concept
 
-**Pivoting with conditional aggregation**
+### Pivoting with conditional aggregation
 
 A pivot turns values in a column (years, modes, statuses) into separate columns. The portable way works in every database: an aggregate wrapped around a `CASE`.
 
@@ -29,7 +29,7 @@ GROUP BY r.mode;
 
 Shorter spellings exist. PostgreSQL and SQLite allow `COUNT(*) FILTER (WHERE …)`, and SQL Server, Oracle and Snowflake have a `PIVOT` operator. But `SUM(CASE …)` works everywhere and is the one you'll read most in other people's code.
 
-**Like for like**
+### Like for like
 
 Compare periods of the same length and the same season:
 
@@ -37,7 +37,7 @@ Compare periods of the same length and the same season:
 - **Same month last year**: August 2026 against August 2025, not against July 2026, if the business is seasonal.
 - Only **complete** periods. A month that's half over always looks like a collapse.
 
-**Growth without errors**
+### Growth without errors
 
 Growth is `(this − last) / last`. If `last` is 0, SQL Server and PostgreSQL raise an error, and SQLite and MySQL return NULL. Make the intention explicit with `NULLIF(last, 0)`, which turns a zero into NULL so the result is NULL, meaning "no comparison possible".
 

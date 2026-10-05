@@ -12,7 +12,7 @@ In SQL for Data Analysis you met `RANK`, `ROW_NUMBER`, running totals and `LAG`.
 
 ## The concept
 
-**The frame**
+### The frame
 
 Inside `OVER (…)`, `PARTITION BY` picks the group and `ORDER BY` sorts it. The **frame** then picks which rows of the group the function uses for the current row:
 
@@ -30,18 +30,77 @@ AVG(shipments) OVER (
 | `ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING` | the whole partition |
 | *(no ORDER BY)* | the whole partition |
 
-**Two default-frame traps**
+### Two default-frame traps
 
 1. With `ORDER BY` and no frame, the default is `RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW`. **RANGE** treats rows with the same `ORDER BY` value as one step. A running total ordered by `booking_date` gives every shipment booked on the same day the *same* total. If you want one step per row, write `ROWS` and add a tie-breaker (`ORDER BY booking_date, shipment_id`).
 2. `LAST_VALUE(x) OVER (ORDER BY …)` returns the **current** row's value, because the default frame stops at the current row. Give it the whole partition, or use `FIRST_VALUE` with the order reversed.
 
-**Shares of a total**
+**Trap 1, live.** Four shipments were booked on 2 January 2025 and four on 3 January. Compare the default frame with an explicit `ROWS` frame:
+
+```sql run
+SELECT
+  shipment_id,
+  booking_date,
+  COUNT(*) OVER (ORDER BY booking_date) AS range_default,
+  COUNT(*) OVER (ORDER BY booking_date, shipment_id
+                 ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS rows_frame
+FROM shipments
+ORDER BY booking_date, shipment_id
+LIMIT 8;
+```
+
+`range_default` jumps 4, 4, 4, 4, 8…: each day's bookings count as one step. `rows_frame` counts 1, 2, 3… one row at a time.
+
+**Trap 2, live.** `LAST_VALUE` with the default frame just returns the current row:
+
+```sql run
+SELECT
+  shipment_id,
+  LAST_VALUE(shipment_id) OVER (ORDER BY booking_date, shipment_id) AS last_default,
+  LAST_VALUE(shipment_id) OVER (ORDER BY booking_date, shipment_id
+                 ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS last_whole
+FROM shipments
+ORDER BY booking_date, shipment_id
+LIMIT 4;
+```
+
+### Shares of a total
 
 `SUM(x) OVER ()` is the grand total on every row, and `SUM(x) OVER (PARTITION BY mode)` is the mode's total. Divide by either to get a share without a second query.
 
-**LAG and LEAD**
+```sql run
+SELECT
+  r.mode,
+  COUNT(*) AS shipments,
+  ROUND(100.0 * COUNT(*) / SUM(COUNT(*)) OVER (), 1) AS pct_of_all
+FROM shipments AS s
+JOIN routes AS r ON r.route_id = s.route_id
+GROUP BY r.mode;
+```
+
+`SUM(COUNT(*)) OVER ()` looks odd but reads simply: after grouping, add up every group's count. Sea carries 70.5% of all bookings.
+
+### LAG and LEAD
 
 `LAG(x, n, default)` looks `n` rows back (1 by default) and `LEAD` looks forward. They're how you calculate month-on-month change, or the gap between one order and the next.
+
+```sql run
+WITH monthly AS (
+  SELECT strftime('%Y-%m', booking_date) AS month, COUNT(*) AS shipments
+  FROM shipments
+  GROUP BY month
+)
+SELECT
+  month,
+  shipments,
+  LAG(shipments) OVER (ORDER BY month)             AS previous_month,
+  shipments - LAG(shipments) OVER (ORDER BY month) AS change
+FROM monthly
+ORDER BY month
+LIMIT 6;
+```
+
+The first month has no previous one, so `LAG` returns NULL: use `LAG(shipments, 1, 0)` if you'd rather see 0.
 
 ## Example
 

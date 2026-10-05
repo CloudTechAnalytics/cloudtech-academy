@@ -22470,7 +22470,7 @@ This course is about the SQL that working analysts write: longer queries, harder
 
 ## The concept
 
-**NULL means "unknown", not "nothing"**
+### NULL means "unknown", not "nothing"
 
 The 8 missing customers have no account manager: `account_manager_id` is `NULL`. SQL treats NULL as an unknown value, so any comparison with it is also unknown:
 
@@ -22492,15 +22492,51 @@ WHERE account_manager_id <> 3 OR account_manager_id IS NULL
 
 or replace the NULL first with `COALESCE(account_manager_id, 0) <> 3`.
 
-**The NOT IN trap**
+**See it for yourself.** Run this. It counts the same NULLs four ways:
+
+```sql run
+SELECT
+  COUNT(*)                        AS all_customers,
+  COUNT(account_manager_id)       AS with_manager,
+  SUM(account_manager_id = NULL)  AS equals_null_matches,
+  SUM(account_manager_id IS NULL) AS is_null_matches
+FROM customers;
+```
+
+`COUNT(column)` skips the 8 NULLs (112 of 120). `= NULL` is never true, so it matches nothing, and the sum itself comes out as NULL. Only `IS NULL` finds all 8.
+
+### The NOT IN trap
 
 `NOT IN (subquery)` is the most dangerous NULL trap. If the subquery returns even one NULL, `NOT IN` returns no rows at all, because SQL can't be sure the value isn't equal to the unknown one. `NOT EXISTS` doesn't have this problem, so prefer it.
 
-**Integer division**
+Run the two versions side by side. The question is "which employees manage no customers?":
+
+```sql run
+SELECT COUNT(*) AS employees_managing_no_one
+FROM employees
+WHERE employee_id NOT IN (SELECT account_manager_id FROM customers);
+```
+
+Zero. That's wrong, and nothing warns you: the subquery includes the 8 NULLs. Remove them and the real answer appears:
+
+```sql run
+SELECT COUNT(*) AS employees_managing_no_one
+FROM employees
+WHERE employee_id NOT IN (SELECT account_manager_id FROM customers
+                          WHERE account_manager_id IS NOT NULL);
+```
+
+### Integer division
 
 In SQLite, SQL Server and PostgreSQL, dividing one whole number by another gives a whole number: `7 / 2` is `3`, and `2000 / 2411` is `0`. Multiply by `100.0` (or `1.0`) first to get a decimal. MySQL is the exception: it returns a decimal.
 
-**Readable SQL**
+```sql run
+SELECT 7 / 2 AS integer_division, 7 / 2.0 AS decimal_division, CAST(7 AS REAL) / 2 AS with_cast;
+```
+
+`3`, `3.5`, `3.5`. A percentage written as `100 * part / total` with whole numbers silently rounds down; `100.0 * part / total` doesn't.
+
+### Readable SQL
 
 A query is something other people need to check. Write it so they can:
 
@@ -22682,7 +22718,7 @@ Nearly every business question has a date in it: this month, last quarter, days 
 
 ## The concept
 
-**Dates in SQLite are text**
+### Dates in SQLite are text
 
 Harbourline stores dates as `YYYY-MM-DD` text. That format sorts correctly and compares correctly (`'2026-03-01' < '2026-04-15'`), and SQLite's date functions read it:
 
@@ -22696,7 +22732,25 @@ Harbourline stores dates as `YYYY-MM-DD` text. That format sorts correctly and c
 | Days between | `julianday(d2) - julianday(d1)` |
 | Day of week (0 = Sunday) | `strftime('%w', d)` |
 
-**The same ideas in other databases**
+Try several at once on real shipments:
+
+```sql run
+SELECT
+  shipment_id,
+  ship_date,
+  delivery_date,
+  date(ship_date, '+30 days')                 AS plus_30_days,
+  strftime('%Y-%m', ship_date)                AS ship_month,
+  julianday(delivery_date) - julianday(ship_date) AS transit_days
+FROM shipments
+WHERE status = 'Delivered'
+ORDER BY shipment_id
+LIMIT 5;
+```
+
+Shipment 100001 left on 11 January 2025 and arrived 38 days later. `julianday` turns a date into a day number, so subtracting two of them gives the days between.
+
+### The same ideas in other databases
 
 Your job may use a different database. The ideas are identical; only the spelling changes:
 
@@ -22707,11 +22761,11 @@ Your job may use a different database. The ideas are identical; only the spellin
 | Days between | `d2 - d1` | `DATEDIFF(day, d1, d2)` | `DATEDIFF(d2, d1)` |
 | Year | `EXTRACT(YEAR FROM d)` | `YEAR(d)` | `YEAR(d)` |
 
-**"As of" dates**
+### "As of" dates
 
 Reports are run as of a date. Harbourline's data ends on 31 August 2026, so "the last 90 days" means after `date('2026-08-31', '-90 days')`. Avoid `date('now')` in analysis you'll hand over: the answer changes every day, and nobody can reproduce it.
 
-**A calendar for missing periods**
+### A calendar for missing periods
 
 `GROUP BY` can only produce groups that exist in the data. To show every month, build a list of months first and `LEFT JOIN` the data onto it. A **recursive CTE** generates the list: it starts with one row, then keeps adding a row based on the previous one until a condition stops it.
 
@@ -23040,7 +23094,7 @@ In SQL for Data Analysis you met `RANK`, `ROW_NUMBER`, running totals and `LAG`.
 
 ## The concept
 
-**The frame**
+### The frame
 
 Inside `OVER (…)`, `PARTITION BY` picks the group and `ORDER BY` sorts it. The **frame** then picks which rows of the group the function uses for the current row:
 
@@ -23058,18 +23112,77 @@ AVG(shipments) OVER (
 | `ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING` | the whole partition |
 | *(no ORDER BY)* | the whole partition |
 
-**Two default-frame traps**
+### Two default-frame traps
 
 1. With `ORDER BY` and no frame, the default is `RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW`. **RANGE** treats rows with the same `ORDER BY` value as one step. A running total ordered by `booking_date` gives every shipment booked on the same day the *same* total. If you want one step per row, write `ROWS` and add a tie-breaker (`ORDER BY booking_date, shipment_id`).
 2. `LAST_VALUE(x) OVER (ORDER BY …)` returns the **current** row's value, because the default frame stops at the current row. Give it the whole partition, or use `FIRST_VALUE` with the order reversed.
 
-**Shares of a total**
+**Trap 1, live.** Four shipments were booked on 2 January 2025 and four on 3 January. Compare the default frame with an explicit `ROWS` frame:
+
+```sql run
+SELECT
+  shipment_id,
+  booking_date,
+  COUNT(*) OVER (ORDER BY booking_date) AS range_default,
+  COUNT(*) OVER (ORDER BY booking_date, shipment_id
+                 ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS rows_frame
+FROM shipments
+ORDER BY booking_date, shipment_id
+LIMIT 8;
+```
+
+`range_default` jumps 4, 4, 4, 4, 8…: each day's bookings count as one step. `rows_frame` counts 1, 2, 3… one row at a time.
+
+**Trap 2, live.** `LAST_VALUE` with the default frame just returns the current row:
+
+```sql run
+SELECT
+  shipment_id,
+  LAST_VALUE(shipment_id) OVER (ORDER BY booking_date, shipment_id) AS last_default,
+  LAST_VALUE(shipment_id) OVER (ORDER BY booking_date, shipment_id
+                 ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS last_whole
+FROM shipments
+ORDER BY booking_date, shipment_id
+LIMIT 4;
+```
+
+### Shares of a total
 
 `SUM(x) OVER ()` is the grand total on every row, and `SUM(x) OVER (PARTITION BY mode)` is the mode's total. Divide by either to get a share without a second query.
 
-**LAG and LEAD**
+```sql run
+SELECT
+  r.mode,
+  COUNT(*) AS shipments,
+  ROUND(100.0 * COUNT(*) / SUM(COUNT(*)) OVER (), 1) AS pct_of_all
+FROM shipments AS s
+JOIN routes AS r ON r.route_id = s.route_id
+GROUP BY r.mode;
+```
+
+`SUM(COUNT(*)) OVER ()` looks odd but reads simply: after grouping, add up every group's count. Sea carries 70.5% of all bookings.
+
+### LAG and LEAD
 
 `LAG(x, n, default)` looks `n` rows back (1 by default) and `LEAD` looks forward. They're how you calculate month-on-month change, or the gap between one order and the next.
+
+```sql run
+WITH monthly AS (
+  SELECT strftime('%Y-%m', booking_date) AS month, COUNT(*) AS shipments
+  FROM shipments
+  GROUP BY month
+)
+SELECT
+  month,
+  shipments,
+  LAG(shipments) OVER (ORDER BY month)             AS previous_month,
+  shipments - LAG(shipments) OVER (ORDER BY month) AS change
+FROM monthly
+ORDER BY month
+LIMIT 6;
+```
+
+The first month has no previous one, so `LAG` returns NULL: use `LAG(shipments, 1, 0)` if you'd rather see 0.
 
 ## Example
 
@@ -23252,7 +23365,7 @@ WITH ranked AS (
 SELECT … FROM ranked WHERE rn <= 3;
 ```
 
-**Choosing the numbering function decides what happens to ties:**
+### Choosing the numbering function decides what happens to ties
 
 | Function | Ties | Use when |
 | :-- | :-- | :-- |
@@ -23261,6 +23374,23 @@ SELECT … FROM ranked WHERE rn <= 3;
 | `DENSE_RANK()` | tied rows share a rank, no gaps | "the top 3 *values*", such as the three highest prices |
 
 Always add a tie-breaker to `ROW_NUMBER` (usually the ID). Without one the database may pick a different row each time you run the query, and two people running the same report get different answers.
+
+**See the difference.** Oakridge Packaging (customer 85) has five shipments of 8 containers, then several of 6:
+
+```sql run
+SELECT
+  shipment_id,
+  containers,
+  ROW_NUMBER() OVER (ORDER BY containers DESC, shipment_id) AS row_num,
+  RANK()       OVER (ORDER BY containers DESC)              AS rnk,
+  DENSE_RANK() OVER (ORDER BY containers DESC)              AS dense_rnk
+FROM shipments
+WHERE customer_id = 85
+ORDER BY containers DESC, shipment_id
+LIMIT 8;
+```
+
+`ROW_NUMBER` gives 1 to 8, splitting the tie by ID. `RANK` gives the five tied rows 1, then **jumps to 6**. `DENSE_RANK` gives them 1, then 2. "Top 3 shipments" with `RANK() <= 3` would return all five 8-container shipments; with `ROW_NUMBER() <= 3` exactly three.
 
 > [!NOTE]
 > Snowflake, BigQuery, Databricks and DuckDB have a shortcut, `QUALIFY rn <= 3`, which filters on a window function without a CTE. SQLite, PostgreSQL, SQL Server and MySQL don't, so the CTE pattern is the one that works everywhere.
@@ -23434,7 +23564,7 @@ You build one in three steps:
 
 To work out "periods since start", give every quarter a number that counts up: `year × 4 + quarter`. Then 2026-Q1 minus 2025-Q3 is 2 quarters, even across a year boundary.
 
-**Two traps to say out loud**
+### Two traps to say out loud
 
 - **Left-censoring.** Harbourline's data starts in January 2025, but customers signed up as early as 2021. The "2025-Q1 cohort" is really **everyone already active** when the data begins, not new customers. Treat it as the existing base and compare the genuinely new cohorts separately.
 - **Part periods.** The data ends on 31 August 2026, so 2026-Q3 has two months, not three. Activity in that quarter will look lower simply because it's shorter. Label it or leave it out.
@@ -23589,7 +23719,7 @@ Period comparisons are where analysts most often embarrass themselves, and the b
 
 ## The concept
 
-**Pivoting with conditional aggregation**
+### Pivoting with conditional aggregation
 
 A pivot turns values in a column (years, modes, statuses) into separate columns. The portable way works in every database: an aggregate wrapped around a `CASE`.
 
@@ -23604,7 +23734,7 @@ GROUP BY r.mode;
 
 Shorter spellings exist. PostgreSQL and SQLite allow `COUNT(*) FILTER (WHERE …)`, and SQL Server, Oracle and Snowflake have a `PIVOT` operator. But `SUM(CASE …)` works everywhere and is the one you'll read most in other people's code.
 
-**Like for like**
+### Like for like
 
 Compare periods of the same length and the same season:
 
@@ -23612,7 +23742,7 @@ Compare periods of the same length and the same season:
 - **Same month last year**: August 2026 against August 2025, not against July 2026, if the business is seasonal.
 - Only **complete** periods. A month that's half over always looks like a collapse.
 
-**Growth without errors**
+### Growth without errors
 
 Growth is `(this − last) / last`. If `last` is 0, SQL Server and PostgreSQL raise an error, and SQLite and MySQL return NULL. Make the intention explicit with `NULLIF(last, 0)`, which turns a zero into NULL so the result is NULL, meaning "no comparison possible".
 
@@ -23945,11 +24075,11 @@ The data volume is out of your hands, but how you write the query isn't. The dif
 
 ## The concept
 
-**Scan or search**
+### Scan or search
 
 To find rows, a database either **scans** (reads every row in the table) or **searches** (uses an **index** to jump straight to the rows it needs). An index is like the index at the back of a book: a sorted list of values, each pointing to where the matching rows are. Searching 80 million rows through an index takes a few steps, while scanning them means reading all 80 million.
 
-**Reading the plan**
+### Reading the plan
 
 `EXPLAIN QUERY PLAN` (SQLite), `EXPLAIN` (PostgreSQL, MySQL) or the "estimated execution plan" (SQL Server) shows what the database intends to do, without running the query. Look for:
 
@@ -23960,7 +24090,7 @@ To find rows, a database either **scans** (reads every row in the table) or **se
 | `USING COVERING INDEX` | the index holds every column needed, so the table isn't touched |
 | `CORRELATED SCALAR SUBQUERY` | a subquery that runs once **per row** of the outer query |
 
-**Habits that keep queries fast**
+### Habits that keep queries fast
 
 1. **Keep filters sargable**: leave the column bare. `WHERE strftime('%Y', booking_date) = '2026'` has to calculate the year for every row, so it can't use an index on `booking_date`. `WHERE booking_date >= '2026-01-01' AND booking_date < '2027-01-01'` can.
 2. **Select only the columns you need.** `SELECT *` reads and sends everything, and stops covering indexes from working.
@@ -24133,17 +24263,17 @@ None of these is a new SQL feature. Each is a **pattern**: a standard analysis t
 
 ## The concept
 
-**Receivables aging**
+### Receivables aging
 
 Group unpaid amounts into buckets by how long they've been owed (0–30, 31–60, 61–90, over 90 days) as of a fixed date. The older the bucket, the less likely the money is ever collected. Finance teams review an aging report every month.
 
 Steps: total payments per shipment → outstanding = charge − paid → days since delivery, as of the report date → `CASE` into buckets → total by bucket.
 
-**Pareto (concentration)**
+### Pareto (concentration)
 
 How much of revenue comes from the top customers? Sort customers by revenue, take a **running total**, and divide by the grand total. The row where the running share passes 80% tells you how concentrated the business is. High concentration is a risk: lose one big customer and revenue falls sharply.
 
-**RFM segmentation**
+### RFM segmentation
 
 Score every customer on three things:
 
@@ -24327,7 +24457,7 @@ That's four questions, and each one needs a pattern from this course. The board 
 
 ## The concept
 
-**From questions to patterns**
+### From questions to patterns
 
 | Question | Pattern | Lesson |
 | :-- | :-- | :-- |
@@ -24337,7 +24467,7 @@ That's four questions, and each one needs a pattern from this course. The board 
 | Are we delivering on our promises? | On-time rate by mode and route, period comparison | 1, 7 |
 | Are we getting paid? | Receivables aging, top debtors, days to pay | 10 |
 
-**What makes it board-ready**
+### What makes it board-ready
 
 - **Definitions first**: what counts as revenue (charges on delivered shipments, or cash received?), on time, active and the "as of" date (31 August 2026).
 - **Like for like**: no comparison of a full year with eight months.

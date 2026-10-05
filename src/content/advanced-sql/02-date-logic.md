@@ -22,7 +22,7 @@ Nearly every business question has a date in it: this month, last quarter, days 
 
 ## The concept
 
-**Dates in SQLite are text**
+### Dates in SQLite are text
 
 Harbourline stores dates as `YYYY-MM-DD` text. That format sorts correctly and compares correctly (`'2026-03-01' < '2026-04-15'`), and SQLite's date functions read it:
 
@@ -36,7 +36,25 @@ Harbourline stores dates as `YYYY-MM-DD` text. That format sorts correctly and c
 | Days between | `julianday(d2) - julianday(d1)` |
 | Day of week (0 = Sunday) | `strftime('%w', d)` |
 
-**The same ideas in other databases**
+Try several at once on real shipments:
+
+```sql run
+SELECT
+  shipment_id,
+  ship_date,
+  delivery_date,
+  date(ship_date, '+30 days')                 AS plus_30_days,
+  strftime('%Y-%m', ship_date)                AS ship_month,
+  julianday(delivery_date) - julianday(ship_date) AS transit_days
+FROM shipments
+WHERE status = 'Delivered'
+ORDER BY shipment_id
+LIMIT 5;
+```
+
+Shipment 100001 left on 11 January 2025 and arrived 38 days later. `julianday` turns a date into a day number, so subtracting two of them gives the days between.
+
+### The same ideas in other databases
 
 Your job may use a different database. The ideas are identical; only the spelling changes:
 
@@ -47,11 +65,11 @@ Your job may use a different database. The ideas are identical; only the spellin
 | Days between | `d2 - d1` | `DATEDIFF(day, d1, d2)` | `DATEDIFF(d2, d1)` |
 | Year | `EXTRACT(YEAR FROM d)` | `YEAR(d)` | `YEAR(d)` |
 
-**"As of" dates**
+### "As of" dates
 
 Reports are run as of a date. Harbourline's data ends on 31 August 2026, so "the last 90 days" means after `date('2026-08-31', '-90 days')`. Avoid `date('now')` in analysis you'll hand over: the answer changes every day, and nobody can reproduce it.
 
-**A calendar for missing periods**
+### A calendar for missing periods
 
 `GROUP BY` can only produce groups that exist in the data. To show every month, build a list of months first and `LEFT JOIN` the data onto it. A **recursive CTE** generates the list: it starts with one row, then keeps adding a row based on the previous one until a condition stops it.
 
