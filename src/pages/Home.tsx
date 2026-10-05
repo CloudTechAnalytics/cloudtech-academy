@@ -146,8 +146,8 @@ export default function Home() {
               <ButtonLink to="/sign-up" arrow>
                 Start learning free
               </ButtonLink>
-              <ButtonLink to="/tracks" variant="secondary">
-                Explore career tracks
+              <ButtonLink to="/programmes" variant="secondary">
+                Explore professional programmes
               </ButtonLink>
             </div>
           </Reveal>
@@ -162,7 +162,7 @@ export default function Home() {
           {[
             [String(courses.length), "courses"],
             [String(lessons), "lessons"],
-            [String(TRACKS.length), "career tracks"],
+            [String(TRACKS.length), "professional programmes"],
             ["Free", "to learn"],
           ].map(([n, label]) => (
             <div key={label} className="text-center sm:text-left">
@@ -178,10 +178,10 @@ export default function Home() {
         <div className="container-page">
           <SectionHeading
             id="tracks-title"
-            kicker="Career tracks"
-            title="Pick a goal, follow the route"
-            intro="Each track puts the right courses in the right order, from your first lesson to a portfolio project."
-            link={{ to: "/tracks", label: "Compare all tracks" }}
+            kicker="Professional programmes"
+            title="Choose a career, earn the certificate"
+            intro="Each programme is a complete route: the right courses in order, a capstone project, and one official Professional Certificate for the whole thing."
+            link={{ to: "/programmes", label: "Compare all programmes" }}
           />
           <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {TRACKS.map((t, i) => (

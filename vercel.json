@@ -90,7 +90,7 @@
   "redirects": [
     {
       "source": "/paths",
-      "destination": "/tracks/data-analyst",
+      "destination": "/programmes/data-analyst",
       "permanent": true
     },
     {

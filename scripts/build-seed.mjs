@@ -17,7 +17,7 @@ await build({
   logLevel: "warn",
   build: { ssr: "scripts/seed-entry.ts", outDir, emptyOutDir: true, copyPublicDir: false },
 });
-const { BUNDLED_COURSES, BUNDLED_ASSESSMENTS, BUNDLED_PROJECTS, CATEGORIES, TRACKS, PRACTICE_PROJECTS, PROJECT_ANSWERS, gradingKey } = await import(pathToFileURL(path.join(outDir, "seed-entry.js")).href);
+const { BUNDLED_COURSES, BUNDLED_ASSESSMENTS, BUNDLED_PROJECTS, CATEGORIES, TRACKS, programmeCertificateAvailable, PRACTICE_PROJECTS, PROJECT_ANSWERS, gradingKey } = await import(pathToFileURL(path.join(outDir, "seed-entry.js")).href);
 
 const str = (s) => (s === null || s === undefined ? "null" : `'${String(s).replace(/'/g, "''")}'`);
 /** Dollar quoting for long Markdown, with a tag that can't appear in the text. */
@@ -144,7 +144,7 @@ for (const p of BUNDLED_PROJECTS) {
 
 TRACKS.forEach((t, i) => {
   out.push(`\n-- Track: ${t.title}`);
-  out.push(upsert("tracks", { id: str(t.id), slug: str(t.slug), title: str(t.title), summary: str(t.summary), badge_name: str(t.badge), badge_code: str(t.badgeCode), skills: arr(t.skills), position: num(i + 1), published: "true" }));
+  out.push(upsert("tracks", { id: str(t.id), slug: str(t.slug), title: str(t.title), summary: str(t.summary), badge_name: str(t.badge), badge_code: str(t.badgeCode), skills: arr(t.skills), position: num(i + 1), published: "true", programme_title: t.programmeTitle ? str(t.programmeTitle) : "null", certificate_enabled: programmeCertificateAvailable(t) ? "true" : "false" }));
   // The track's course list is replaced each time, so courses moved or removed in the file don't linger.
   out.push(`delete from public.track_courses where track_id = ${str(t.id)};\n`);
   let pos = 0;

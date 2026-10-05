@@ -1,5 +1,5 @@
 import { lazy } from "react";
-import { Navigate, Route, Routes } from "react-router";
+import { Navigate, Route, Routes, useParams } from "react-router";
 import { Layout } from "@/components/Layout";
 import { AuthProvider } from "@/lib/auth";
 import { CommunityProvider } from "@/lib/community";
@@ -12,7 +12,13 @@ const Assessment = lazy(() => import("@/pages/Assessment"));
 const Project = lazy(() => import("@/pages/Project"));
 const CourseComplete = lazy(() => import("@/pages/CourseComplete"));
 const CertificatePurchase = lazy(() => import("@/pages/CertificatePurchase"));
+const ProgrammeCertificate = lazy(() => import("@/pages/ProgrammeCertificate"));
 const CredentialView = lazy(() => import("@/pages/CredentialView"));
+function TrackRedirect() {
+  const { slug } = useParams();
+  return <Navigate to={`/programmes/${slug ?? ""}`} replace />;
+}
+
 const TracksList = lazy(() => import("@/pages/Tracks").then((m) => ({ default: m.TracksList })));
 const TrackDetail = lazy(() => import("@/pages/Tracks").then((m) => ({ default: m.TrackDetail })));
 const Students = lazy(() => import("@/pages/Students"));
@@ -75,9 +81,12 @@ export function AppRoutes() {
           <Route path="courses/:slug/certificate" element={<CertificatePurchase />} />
           <Route path="credentials/:credentialId" element={<CredentialView />} />
           <Route path="learn/:course/:lesson" element={<Learn />} />
-          <Route path="tracks" element={<TracksList />} />
-          <Route path="tracks/:slug" element={<TrackDetail />} />
-          <Route path="paths" element={<Navigate to="/tracks/data-analyst" replace />} />
+          <Route path="programmes" element={<TracksList />} />
+          <Route path="programmes/:slug" element={<TrackDetail />} />
+          <Route path="programmes/:slug/certificate" element={<ProgrammeCertificate />} />
+          <Route path="tracks" element={<Navigate to="/programmes" replace />} />
+          <Route path="tracks/:slug" element={<TrackRedirect />} />
+          <Route path="paths" element={<Navigate to="/programmes/data-analyst" replace />} />
           <Route path="students" element={<Students />} />
           <Route path="learners/:slug" element={<LearnerProfile />} />
           <Route path="projects" element={<Projects />} />

@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
-import { Award, CheckCircle2, CircleDashed, Clock, FolderKanban, Hourglass, PlayCircle } from "lucide-react";
+import { Award, CheckCircle2, GraduationCap, CircleDashed, Clock, FolderKanban, Hourglass, PlayCircle } from "lucide-react";
 import { useSeo } from "@/lib/seo";
 import { breadcrumbs } from "@/lib/schema";
 import { useCourses } from "@/lib/data";
 import { useAuth } from "@/lib/auth";
-import { getBackend, type Credential, type Enrollment } from "@/lib/backend";
+import { getBackend, type Certificate, type Credential, type Enrollment } from "@/lib/backend";
 import { courseMinutes } from "@/lib/certificates";
 import { durationLabel } from "@/lib/format";
-import { LEVELS, requiredCourses, TRACKS, type TrackItem } from "@/content/tracks";
+import { capstoneOf, LEVELS, programmeCertificateAvailable, requiredCourses, TRACKS, type TrackItem } from "@/content/tracks";
 import { PRACTICE_PROJECTS } from "@/content/projects";
 import type { Course } from "@/content/types";
 import { Badge } from "@/components/CourseCard";
@@ -19,23 +19,23 @@ import NotFound from "./NotFound";
 /** How long a course takes, as shown on its card. */
 const courseLength = (c: Course) => (c.format === "short" ? durationLabel(courseMinutes(c)) : durationLabel(undefined, c.estimatedHours));
 
-/** /tracks: every career track. */
+/** /programmes: every Professional Programme. */
 export function TracksList() {
   const courses = useCourses();
   useSeo({
-    title: "Career Tracks | CloudTech Academy",
-    description: "Structured routes from no experience to job-ready: courses in order, practice projects, and a track badge when you finish.",
-    jsonLd: breadcrumbs([["Career Tracks", "/tracks"]]),
+    title: "Professional Programmes | CloudTech Academy",
+    description: "Complete routes from no experience to job-ready: courses in order, a capstone project, and an official Professional Certificate for the whole programme.",
+    jsonLd: breadcrumbs([["Professional Programmes", "/programmes"]]),
   });
   return (
     <>
       <section className="border-b border-line">
         <div className="container-page max-w-5xl py-16 sm:py-20">
-          <p className="kicker">Career tracks</p>
+          <p className="kicker">Professional programmes</p>
           <h1 className="mt-4 font-serif text-[2.6rem] leading-[1.05] tracking-[-0.015em] sm:text-[3.4rem]">Learn skills. Build projects. Earn credentials.</h1>
           <p className="mt-5 max-w-2xl text-[1.125rem] leading-relaxed text-muted">
-            A track puts the right courses in the right order for a career, from Foundations to Career Projects. Finish every required course and you earn the track badge, a
-            credential anyone can verify.
+            A programme is a whole career route: the right courses in the right order, ending in a capstone project. Finish it and you earn a free programme badge, then
+            can claim one official Professional Certificate that covers everything you learned, verifiable by anyone.
           </p>
           <ol className="mt-10 grid gap-3 sm:grid-cols-4">
             {([1, 2, 3, 4] as const).map((l) => (
@@ -62,7 +62,7 @@ export function TracksList() {
   );
 }
 
-type Mine = { enrollments: Enrollment[]; credentials: Credential[] } | null;
+type Mine = { enrollments: Enrollment[]; credentials: Credential[]; certificates: Certificate[] } | null;
 
 function ItemCard({ item, courses, mine }: { item: TrackItem; courses: Course[]; mine: Mine }) {
   if (item.kind === "upcoming")
@@ -135,7 +135,7 @@ function ItemCard({ item, courses, mine }: { item: TrackItem; courses: Course[];
   );
 }
 
-/** /tracks/:slug: one track's stages, the learner's progress, and the track badge. */
+/** /programmes/:slug: one programme's stages, the learner's progress, the programme badge and the Professional Certificate. */
 export function TrackDetail() {
   const { slug } = useParams();
   const track = TRACKS.find((t) => t.slug === slug);
@@ -146,13 +146,13 @@ export function TrackDetail() {
   const [error, setError] = useState<string | null>(null);
 
   useSeo({
-    title: track ? `${track.title} | Career Tracks | CloudTech Academy` : "Track not found | CloudTech Academy",
+    title: track ? `${track.programmeTitle ?? track.title} | Professional Programmes | CloudTech Academy` : "Programme not found | CloudTech Academy",
     description: track?.summary ?? "",
     noindex: !track,
     jsonLd: track
       ? breadcrumbs([
-          ["Career Tracks", "/tracks"],
-          [track.title, `/tracks/${track.slug}`],
+          ["Professional Programmes", "/programmes"],
+          [track.title, `/programmes/${track.slug}`],
         ])
       : undefined,
   });
@@ -165,8 +165,8 @@ export function TrackDetail() {
     let alive = true;
     void (async () => {
       const b = await getBackend();
-      const [enrollments, credentials] = await Promise.all([b.listEnrollments(), b.listMyCredentials()]);
-      if (alive) setMine({ enrollments, credentials });
+      const [enrollments, credentials, certificates] = await Promise.all([b.listEnrollments(), b.listMyCredentials(), b.listMyCertificates()]);
+      if (alive) setMine({ enrollments, credentials, certificates });
     })().catch(() => {});
     return () => {
       alive = false;
@@ -181,6 +181,9 @@ export function TrackDetail() {
   const doneCount = required.filter((id) => completedIds.has(id)).length;
   const trackBadge = mine?.credentials.find((c) => c.kind === "track_completion" && c.trackId === track.id && c.status === "valid");
   const eligible = !!mine && required.length > 0 && doneCount === required.length;
+  const certAvailable = programmeCertificateAvailable(track);
+  const capstone = capstoneOf(track);
+  const programmeCert = mine?.certificates.find((c) => c.source === "programme" && c.trackId === track.id && c.status === "valid");
   const firstCourse = track.stages.flatMap((s) => s.items).find((i): i is Extract<TrackItem, { kind: "course" }> => i.kind === "course");
   const nextCourse = required.find((id) => !completedIds.has(id));
   const startHere = courses.find((c) => c.id === (nextCourse ?? firstCourse?.courseId));
@@ -192,7 +195,7 @@ export function TrackDetail() {
       const cred = await (await getBackend()).issueTrackCredential(track.id);
       setMine((m) => (m ? { ...m, credentials: [...m.credentials, cred] } : m));
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Couldn't issue the track badge.");
+      setError(e instanceof Error ? e.message : "Couldn't issue the programme badge.");
     } finally {
       setClaiming(false);
     }
@@ -202,11 +205,11 @@ export function TrackDetail() {
     <>
       <section className="border-b border-line">
         <div className="container-page max-w-5xl py-16 sm:py-20">
-          <Link to="/tracks" className="text-[0.875rem] text-muted hover:text-ink">
-            ← Career tracks
+          <Link to="/programmes" className="text-[0.875rem] text-muted hover:text-ink">
+            ← Professional programmes
           </Link>
-          <p className="kicker mt-6">{track.outcome}</p>
-          <h1 className="mt-3 font-serif text-[2.6rem] leading-[1.05] tracking-[-0.015em] sm:text-[3.4rem]">{track.title}</h1>
+          <p className="kicker mt-6">Professional Programme · {track.outcome}</p>
+          <h1 className="mt-3 font-serif text-[2.6rem] leading-[1.05] tracking-[-0.015em] sm:text-[3.4rem]">{track.programmeTitle ?? track.title}</h1>
           <p className="mt-5 max-w-3xl text-[1.125rem] leading-relaxed text-muted">{track.summary}</p>
           <div className="mt-8 grid gap-6 md:grid-cols-[1.4fr_1fr]">
             <div>
@@ -225,22 +228,44 @@ export function TrackDetail() {
               </p>
               {trackBadge ? (
                 <>
-                  <p className="mt-2 text-[0.9375rem] text-success">You've earned this track badge.</p>
+                  <p className="mt-2 text-[0.9375rem] text-success">You've earned this programme badge.</p>
                   <ButtonLink to={`/credentials/${trackBadge.credentialId}`} className="mt-3" variant="secondary">
                     View your credential
                   </ButtonLink>
+                  <div className="mt-5 border-t border-line pt-4">
+                    <p className="flex items-center gap-2 font-semibold">
+                      <GraduationCap aria-hidden className="h-5 w-5 text-brass-dark" /> Professional Certificate
+                    </p>
+                    {programmeCert ? (
+                      <>
+                        <p className="mt-2 text-[0.9375rem] text-success">You hold the official certificate.</p>
+                        <ButtonLink to={`/dashboard/certificates/${programmeCert.certificateId}`} className="mt-3">
+                          View your certificate
+                        </ButtonLink>
+                      </>
+                    ) : certAvailable ? (
+                      <>
+                        <p className="mt-2 text-[0.9375rem] text-muted">One official, verifiable certificate for the whole programme.</p>
+                        <ButtonLink to={`/programmes/${track.slug}/certificate`} className="mt-3" arrow>
+                          Get your Professional Certificate
+                        </ButtonLink>
+                      </>
+                    ) : (
+                      <p className="mt-2 text-[0.9375rem] text-muted">Opens when the capstone project for this programme is released.</p>
+                    )}
+                  </div>
                 </>
               ) : mine ? (
                 <>
                   <p className="mt-2 text-[0.9375rem] text-muted">
-                    {doneCount} of {required.length} required courses complete.
+                    {doneCount} of {required.length} required courses complete{capstone ? ", including the capstone" : ""}.
                   </p>
                   <div className="mt-2 h-2 overflow-hidden rounded-full bg-sand" aria-hidden>
                     <div className="h-full rounded-full bg-brass" style={{ width: `${required.length ? (doneCount / required.length) * 100 : 0}%` }} />
                   </div>
                   {eligible ? (
                     <Button onClick={() => void claim()} loading={claiming} className="mt-4">
-                      Claim your track badge
+                      Claim your programme badge
                     </Button>
                   ) : (
                     startHere && (
@@ -253,7 +278,10 @@ export function TrackDetail() {
                 </>
               ) : (
                 <>
-                  <p className="mt-2 text-[0.9375rem] text-muted">Complete every required course to earn the track badge, free, with a credential ID anyone can verify.</p>
+                  <p className="mt-2 text-[0.9375rem] text-muted">
+                    Complete every required course{capstone ? " and the capstone project" : ""} to earn the free programme badge
+                    {certAvailable ? ", then claim your official Professional Certificate" : ""}.
+                  </p>
                   {startHere && (
                     <ButtonLink to={`/courses/${startHere.slug}`} className="mt-4" arrow>
                       Start with {startHere.title}
@@ -287,7 +315,7 @@ export function TrackDetail() {
         </ol>
         <p className="mt-12 flex items-start gap-2 text-[0.9375rem] text-muted">
           <Hourglass aria-hidden className="mt-0.5 h-4 w-4 shrink-0" />
-          Courses marked "In preparation" join the track when they're ready. If you've already earned the track badge by then, you keep it.
+          Courses marked "In preparation" join the programme when they're ready. If you've already earned the programme badge by then, you keep it.
         </p>
       </section>
     </>

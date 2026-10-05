@@ -29,6 +29,12 @@ export type Track = {
   id: string;
   slug: string;
   title: string;
+  /**
+   * Set for the Professional Programmes: the field the programme certificate is in ("Data Analysis"),
+   * printed on the certificate as "Professional Certificate in Data Analysis". Tracks without one are
+   * skills tracks and earn the free track badge only.
+   */
+  programmeTitle?: string;
   /** The job or goal, as the learner would say it. */
   outcome: string;
   summary: string;
@@ -45,6 +51,7 @@ export const TRACKS: Track[] = [
     id: "data-analyst",
     slug: "data-analyst",
     title: "Become a Data Analyst",
+    programmeTitle: "Data Analysis",
     outcome: "Get job-ready as a junior data analyst",
     summary:
       "The route we recommend from no experience to a junior data analyst role. Learn how analysis works, then the tools teams use every day (Excel, SQL, Power BI and Python) on realistic company data. Build portfolio projects that answer real business questions, and finish with your CV, LinkedIn and interview preparation.",
@@ -113,6 +120,7 @@ export const TRACKS: Track[] = [
     id: "business-analyst",
     slug: "business-analyst",
     title: "Become a Business Analyst",
+    programmeTitle: "Business Analysis",
     outcome: "Get job-ready as a junior business analyst",
     summary:
       "The route from no experience to a junior business analyst role. Learn to turn requests into the right changes: understand the problem, map the process, write requirements and user stories, and make the business case. Back it up with the data skills employers now expect from BAs (Excel, SQL and Power BI), then present yourself for the job.",
@@ -177,6 +185,7 @@ export const TRACKS: Track[] = [
     id: "data-scientist",
     slug: "data-scientist",
     title: "Become a Data Scientist",
+    programmeTitle: "Data Science",
     outcome: "Get job-ready as a junior data scientist",
     summary:
       "The route to a junior data scientist role. Build the analyst's foundations (statistics, SQL and Python), then learn to build, test and explain machine learning models on realistic Nigerian business data, and to use them responsibly. Data science jobs ask for more than models: they ask for clean data, honest evaluation and results a business can act on, which is what this track teaches.",
@@ -240,6 +249,7 @@ export const TRACKS: Track[] = [
     id: "ai-engineer",
     slug: "ai-engineer",
     title: "Become an AI Engineer",
+    programmeTitle: "AI Engineering",
     outcome: "Build AI features a business can trust",
     summary:
       "The route to building with generative AI professionally, not just using chatbots. Learn the Python and machine learning foundations, then build LLM features properly: prompts as specifications, validated outputs, retrieval with citations, evaluation against human labels, and the privacy, safety and cost controls that decide whether a feature can launch.",
@@ -300,6 +310,7 @@ export const TRACKS: Track[] = [
     id: "cloud-devops-engineer",
     slug: "cloud-devops-engineer",
     title: "Become a Cloud & DevOps Engineer",
+    programmeTitle: "Cloud & DevOps Engineering",
     outcome: "Run cloud systems that are affordable, reliable and secure",
     summary:
       "The route to cloud and DevOps roles. Start by understanding what a cloud estate costs, how reliable it is and who can access it, using a real company's account data, then learn to build and ship infrastructure as code, automate testing and deployment, and keep systems running. Employers hire cloud engineers who can explain a bill and prevent an outage, not just launch servers.",
@@ -360,6 +371,7 @@ export const TRACKS: Track[] = [
     id: "software-developer",
     slug: "software-developer",
     title: "Become a Software Developer",
+    programmeTitle: "Software Development",
     outcome: "Write software that's correct, tested and safe to change",
     summary:
       "The route to junior developer roles. Start with Python and Git, then learn what turns code into software: tests, debugging, validation, version control, code review and APIs, by rebuilding a real company's invoicing code. Then go further into the web, databases and delivery. Employers hire developers who can show tested, well-reviewed code, and that's what this track builds.",
@@ -422,6 +434,7 @@ export const TRACKS: Track[] = [
     id: "project-manager",
     slug: "project-manager",
     title: "Become a Project Manager",
+    programmeTitle: "Project Management",
     outcome: "Plan, deliver and steer projects with evidence, not hope",
     summary:
       "The route to project coordinator and junior project manager roles. Learn to plan a project properly, give honest dates and budgets, measure progress with earned value, manage risks and changes, and report to sponsors so they can decide. Add business analysis and Agile delivery, and the data skills to back every status report with numbers.",
@@ -516,3 +529,15 @@ export const TRACKS: Track[] = [
 /** Courses a learner must complete to earn a track's badge. */
 export const requiredCourses = (track: Track) =>
   track.stages.flatMap((s) => s.items).filter((i): i is Extract<TrackItem, { kind: "course" }> => i.kind === "course" && i.required !== false).map((i) => i.courseId);
+
+/** The capstone course of a programme: the required course whose id ends in "-capstone". */
+export const capstoneOf = (track: Track) => requiredCourses(track).find((id) => id.endsWith("-capstone"));
+
+/**
+ * A programme's official certificate is offered once it has a capstone, so "completed the programme" always
+ * means every required course and a capstone project that applies them together.
+ */
+export const programmeCertificateAvailable = (track: Track) => !!track.programmeTitle && !!capstoneOf(track);
+
+/** The programmes, in track order. */
+export const PROGRAMMES = TRACKS.filter((t) => !!t.programmeTitle);

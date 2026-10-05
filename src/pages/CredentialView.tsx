@@ -112,7 +112,7 @@ export default function CredentialView() {
                     <span className="block text-[0.875rem] text-muted">{project.company}</span>
                   </>
                 ) : track ? (
-                  <Link to={`/tracks/${track.slug}`} className="hover:text-brass-dark">
+                  <Link to={`/programmes/${track.slug}`} className="hover:text-brass-dark">
                     {cred.courseTitle}
                   </Link>
                 ) : course ? (
@@ -180,7 +180,7 @@ export default function CredentialView() {
             <div className="mt-8 rounded-xl border border-line bg-paper p-5">
               <p className="font-semibold">Earn this badge yourself</p>
               <p className="mt-1 text-[0.9375rem] text-muted">It's free: learn at your own pace, do the tasks, and pass the checks.</p>
-              <ButtonLink to={track ? `/tracks/${track.slug}` : `/courses/${course!.slug}`} className="mt-3">
+              <ButtonLink to={track ? `/programmes/${track.slug}` : `/courses/${course!.slug}`} className="mt-3">
                 Start learning — Free
               </ButtonLink>
             </div>

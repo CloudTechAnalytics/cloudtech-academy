@@ -74,7 +74,8 @@ export async function settle(t: PaystackTransaction, expectUserId?: string) {
     return { ok: false as const, error: "The amount paid doesn't match the order." };
   }
   if (order.status === "granted") {
-    const { data: cert } = await db.from("certificates").select("*").eq("user_id", order.user_id).eq("course_id", order.course_id).eq("status", "valid").maybeSingle();
+    const target = order.track_id ? { track_id: order.track_id, source: "programme" } : { course_id: order.course_id, source: "course" };
+    const { data: cert } = await db.from("certificates").select("*").eq("user_id", order.user_id).match(target).eq("status", "valid").maybeSingle();
     return { ok: true as const, certificate: cert };
   }
   const { data: cert, error } = await db.rpc("complete_certificate_order", { p_order_id: order.id, p_provider: "paystack", p_reference: t.reference });

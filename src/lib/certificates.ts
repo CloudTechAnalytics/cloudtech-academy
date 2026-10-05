@@ -112,6 +112,7 @@ export const verifyUrl = (siteUrl: string, certificateId: string) => `${siteUrl}
 
 export const TRAINING_TYPES: { value: TrainingType; label: string }[] = [
   { value: "academy_course", label: "Academy Course" },
+  { value: "academy_programme", label: "Academy Programme" },
   { value: "one_on_one", label: "One-on-One Training" },
   { value: "corporate", label: "Corporate Training" },
   { value: "bootcamp", label: "Bootcamp" },
@@ -127,6 +128,7 @@ export const CERTIFICATE_TYPES: { value: CertificateType; label: string; heading
   { value: "achievement", label: "Certificate of Achievement", heading: "Certificate of Achievement", verb: "is recognised for outstanding achievement in" },
   { value: "participation", label: "Certificate of Participation", heading: "Certificate of Participation", verb: "has participated in" },
   { value: "workshop", label: "Workshop Certificate", heading: "Workshop Certificate", verb: "has attended the workshop" },
+  { value: "professional_programme", label: "Professional Programme Certificate", heading: "Professional Certificate", verb: "has successfully completed the professional programme" },
 ];
 
 export const trainingTypeLabel = (t: TrainingType) => TRAINING_TYPES.find((x) => x.value === t)?.label ?? "Training";
@@ -206,4 +208,4 @@ export const inputFromCertificate = (c: Certificate): CertificateInput => ({
 
 /** What a certificate is for: its title, or the course for course certificates. */
 export const certificateName = (c: Pick<Certificate, "certificateTitle" | "courseTitle" | "source">) =>
-  c.source === "manual" && c.certificateTitle ? c.certificateTitle : c.courseTitle;
+  c.source !== "course" && c.certificateTitle ? (c.source === "programme" ? `Professional Certificate in ${c.certificateTitle}` : c.certificateTitle) : c.courseTitle;

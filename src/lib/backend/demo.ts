@@ -9,7 +9,7 @@ import type { AssessmentDef, Course } from "@/content/types";
 import { requiredExerciseIds } from "../lesson-format";
 import { certificateNumber, eligibility, matchesCertificate, moduleTaskIds, newCredentialId } from "../certificates";
 import { isStale } from "../inactivity";
-import { requiredCourses, TRACKS } from "@/content/tracks";
+import { programmeCertificateAvailable, requiredCourses, TRACKS } from "@/content/tracks";
 import { PROFILE_SLUG_RE, SLUG_HELP } from "../profile";
 import { PRACTICE_PROJECTS } from "@/content/projects";
 import { PROJECT_ANSWERS } from "@/content/project-answers";
@@ -72,8 +72,10 @@ const KEY = "ct-academy-demo-v2";
 
 /** Same starting prices as the database. */
 const DEFAULT_PRICES: CertificatePrice[] = [
-  { currency: "NGN", amount: 3000, active: true, position: 1 },
-  { currency: "USD", amount: 7, active: true, position: 2 },
+  { kind: "course", currency: "NGN", amount: 3000, active: true, position: 1 },
+  { kind: "course", currency: "USD", amount: 7, active: true, position: 2 },
+  { kind: "programme", currency: "NGN", amount: 15000, active: true, position: 1 },
+  { kind: "programme", currency: "USD", amount: 30, active: true, position: 2 },
 ];
 const empty = (): Store => ({
   users: [],
@@ -133,7 +135,11 @@ async function hash(password: string, salt: string) {
 
 const publicUser = ({ id, email, fullName, role }: StoredUser): User => ({ id, email, fullName, role });
 
-const prices = (s = load()) => s.prices ?? DEFAULT_PRICES;
+/** Prices saved by an older demo version had no kind and were all course prices; programme prices are added if missing. */
+const prices = (s = load()): CertificatePrice[] => {
+  const saved = (s.prices ?? DEFAULT_PRICES).map((p) => ({ ...p, kind: p.kind ?? "course" }));
+  return saved.some((p) => p.kind === "programme") ? saved : [...saved, ...DEFAULT_PRICES.filter((p) => p.kind === "programme")];
+};
 
 function recipientName(u: User) {
   if (!u.fullName.trim()) throw new BackendError("Add your full name to your profile first. It appears on your badges and certificate.");
@@ -171,6 +177,32 @@ function publicCredential(s: Store, c: Credential): PublicCredential {
 
 /** Issues the certificate for a paid or granted order (the caller saves). */
 function issueCertificate(s: Store, order: CertificateOrder): Certificate {
+  if (order.trackId) {
+    const track = TRACKS.find((t) => t.id === order.trackId)!;
+    const had = s.certificates.find((c) => c.userId === order.userId && c.trackId === order.trackId && c.status === "valid" && c.source === "programme");
+    if (had) return had;
+    const cred = s.credentials.find((c) => c.credentialId === order.credentialId)!;
+    s.certificateSeq += 1;
+    const programme: Certificate = {
+      ...blankCertificate(),
+      certificateId: certificateNumber(s.certificateSeq),
+      source: "programme",
+      credentialId: cred.credentialId,
+      trackId: track.id,
+      userId: order.userId,
+      recipientName: cred.recipientName,
+      courseTitle: track.title,
+      certificateTitle: track.programmeTitle ?? track.title,
+      trainingType: "academy_programme",
+      certificateType: "professional_programme",
+      description: track.skills.join(", ").slice(0, 600),
+      completionDate: cred.issuedAt.slice(0, 10),
+      templateId: "signature",
+    };
+    s.certificates.push(programme);
+    logEvent(s, programme.certificateId, "issued", null, { order: order.id, payment: order.status, programme: track.id });
+    return programme;
+  }
   const existing = s.certificates.find((c) => c.userId === order.userId && c.courseId === order.courseId && c.status === "valid" && c.source === "course");
   if (existing) return existing;
   const cred = s.credentials.find((c) => c.credentialId === order.credentialId)!;
@@ -204,6 +236,7 @@ function blankCertificate(): Certificate {
     certificateId: "",
     source: "manual",
     credentialId: null,
+    trackId: null,
     userId: null,
     courseId: null,
     recipientName: "",
@@ -783,17 +816,50 @@ export function createDemoBackend(): Backend {
     },
 
     paymentsEnabled: true,
-    async listCertificatePrices() {
-      return prices().filter((p) => p.active);
+    async listCertificatePrices(kind = "course") {
+      return prices().filter((p) => p.kind === kind && p.active);
+    },
+    async startProgrammeOrder(trackId, currency) {
+      const u = requireUser();
+      const s = load();
+      const track = TRACKS.find((t) => t.id === trackId);
+      if (!track) throw new BackendError("Programme not found.");
+      if (!programmeCertificateAvailable(track)) throw new BackendError("The certificate for this programme isn't available yet.");
+      const cred = s.credentials.find((c) => c.userId === u.id && c.trackId === trackId && c.kind === "track_completion" && c.status === "valid");
+      if (!cred) throw new BackendError("Complete every required course and the capstone first, then claim your programme badge.");
+      if (s.certificates.some((c) => c.userId === u.id && c.trackId === trackId && c.status === "valid" && c.source === "programme"))
+        throw new BackendError("You already have the official certificate for this programme.");
+      const price = prices(s).find((p) => p.kind === "programme" && p.currency === currency.toUpperCase() && p.active);
+      if (!price) throw new BackendError("That currency isn't available.");
+      const pending = s.orders.find((o) => o.userId === u.id && o.trackId === trackId && o.status === "pending" && o.currency === price.currency);
+      if (pending) return pending;
+      const order: CertificateOrder = {
+        id: uid(),
+        userId: u.id,
+        courseId: null,
+        trackId,
+        credentialId: cred.credentialId,
+        currency: price.currency,
+        amount: price.amount,
+        status: "pending",
+        provider: null,
+        providerRef: null,
+        note: null,
+        createdAt: now(),
+        paidAt: null,
+      };
+      s.orders.push(order);
+      save(s);
+      return order;
     },
     async startCertificateOrder(courseId, currency) {
       const u = requireUser();
       const s = load();
       const cred = s.credentials.find((c) => c.userId === u.id && c.courseId === courseId && c.kind === "course_completion" && c.status === "valid");
       if (!cred) throw new BackendError("Complete the course first. Your free completion badge comes first.");
-      if (s.certificates.some((c) => c.userId === u.id && c.courseId === courseId && c.status === "valid"))
+      if (s.certificates.some((c) => c.userId === u.id && c.courseId === courseId && c.status === "valid" && c.source === "course"))
         throw new BackendError("You already have the official certificate for this course.");
-      const price = prices(s).find((p) => p.currency === currency.toUpperCase() && p.active);
+      const price = prices(s).find((p) => p.kind === "course" && p.currency === currency.toUpperCase() && p.active);
       if (!price) throw new BackendError("That currency isn't available.");
       const pending = s.orders.find((o) => o.userId === u.id && o.courseId === courseId && o.status === "pending" && o.currency === price.currency);
       if (pending) return pending;
@@ -801,6 +867,7 @@ export function createDemoBackend(): Backend {
         id: uid(),
         userId: u.id,
         courseId,
+        trackId: null,
         credentialId: cred.credentialId,
         currency: price.currency,
         amount: price.amount,
@@ -1281,8 +1348,13 @@ export function createDemoBackend(): Backend {
               ...o,
               learnerName: u?.fullName ?? "Unknown",
               learnerEmail: u?.email ?? "",
-              courseTitle: courses(s).find((c) => c.id === o.courseId)?.title ?? o.courseId,
-              certificateId: s.certificates.find((c) => c.userId === o.userId && c.courseId === o.courseId && c.status === "valid" && c.source !== "manual")?.certificateId ?? null,
+              courseTitle: o.trackId
+                ? `Professional Programme: ${TRACKS.find((t) => t.id === o.trackId)?.programmeTitle ?? o.trackId}`
+                : (courses(s).find((c) => c.id === o.courseId)?.title ?? o.courseId ?? ""),
+              certificateId:
+                s.certificates.find(
+                  (c) => c.userId === o.userId && c.status === "valid" && c.source !== "manual" && (o.trackId ? c.trackId === o.trackId : c.courseId === o.courseId),
+                )?.certificateId ?? null,
             };
           })
           .sort((a, b) => b.createdAt.localeCompare(a.createdAt));
@@ -1329,9 +1401,9 @@ export function createDemoBackend(): Backend {
       async savePrice(price) {
         requireAdmin();
         const s = load();
-        const list = clone(prices(s)).filter((p) => p.currency !== price.currency.toUpperCase());
+        const list = clone(prices(s)).filter((p) => !(p.kind === price.kind && p.currency === price.currency.toUpperCase()));
         list.push({ ...price, currency: price.currency.toUpperCase() });
-        s.prices = list.sort((a, b) => a.position - b.position);
+        s.prices = list.sort((a, b) => a.kind.localeCompare(b.kind) || a.position - b.position);
         save(s);
       },
       async listSubmissions() {

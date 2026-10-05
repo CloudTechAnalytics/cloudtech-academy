@@ -234,6 +234,7 @@ const toCertificate = (r: Row): Certificate => ({
   certificateId: r.certificate_id,
   source: r.source ?? "course",
   credentialId: r.credential_id ?? null,
+  trackId: r.track_id ?? null,
   userId: r.user_id ?? null,
   courseId: r.course_id ?? null,
   recipientName: r.recipient_name,
@@ -283,7 +284,8 @@ const toPublicCertificate = (r: Row): PublicCertificate => ({
 const toOrder = (r: Row): CertificateOrder => ({
   id: r.id,
   userId: r.user_id,
-  courseId: r.course_id,
+  courseId: r.course_id ?? null,
+  trackId: r.track_id ?? null,
   credentialId: r.credential_id,
   currency: r.currency,
   amount: Number(r.amount),
@@ -295,7 +297,7 @@ const toOrder = (r: Row): CertificateOrder => ({
   paidAt: r.paid_at ?? null,
 });
 
-const toPrice = (r: Row): CertificatePrice => ({ currency: r.currency, amount: Number(r.amount), active: r.active, position: r.position });
+const toPrice = (r: Row): CertificatePrice => ({ kind: r.kind ?? "course", currency: r.currency, amount: Number(r.amount), active: r.active, position: r.position });
 
 const toAttempt = (r: Row): AttemptResult => ({
   id: r.id,
@@ -601,8 +603,11 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
       if (error) throw new BackendError(await functionError(error, "Couldn't confirm the payment."));
       return toCertificate((data as { certificate: Row }).certificate);
     },
-    async listCertificatePrices() {
-      return (check(await sb.from("certificate_prices").select("*").eq("active", true).order("position")) as Row[]).map(toPrice);
+    async listCertificatePrices(kind = "course") {
+      return (check(await sb.from("certificate_prices").select("*").eq("kind", kind).eq("active", true).order("position")) as Row[]).map(toPrice);
+    },
+    async startProgrammeOrder(trackId, currency) {
+      return toOrder(check(await sb.rpc("start_programme_order", { p_track_id: trackId, p_currency: currency })) as Row);
     },
     async startCertificateOrder(courseId, currency) {
       return toOrder(check(await sb.rpc("start_certificate_order", { p_course_id: courseId, p_currency: currency })) as Row);
@@ -950,21 +955,23 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
         }));
       },
       async listOrders() {
-        const [orders, profiles, courses, certs] = await Promise.all([
+        const [orders, profiles, courses, tracks, certs] = await Promise.all([
           sb.from("certificate_orders").select("*").order("created_at", { ascending: false }).limit(300),
           sb.from("profiles").select("id, full_name, email"),
           sb.from("courses").select("id, title"),
-          sb.from("certificates").select("user_id, course_id, certificate_id, status").eq("status", "valid").eq("source", "course"),
+          sb.from("tracks").select("id, title, programme_title"),
+          sb.from("certificates").select("user_id, course_id, track_id, certificate_id, status").eq("status", "valid").in("source", ["course", "programme"]),
         ]);
         const people = new Map((check(profiles) as Row[]).map((p) => [p.id, p]));
         const titles = new Map((check(courses) as Row[]).map((c) => [c.id, c.title]));
+        const programmes = new Map((check(tracks) as Row[]).map((t) => [t.id, `Professional Programme: ${t.programme_title ?? t.title}`]));
         const issued = check(certs) as Row[];
         return (check(orders) as Row[]).map((r) => ({
           ...toOrder(r),
           learnerName: people.get(r.user_id)?.full_name ?? "Unknown",
           learnerEmail: people.get(r.user_id)?.email ?? "",
-          courseTitle: titles.get(r.course_id) ?? r.course_id,
-          certificateId: issued.find((c) => c.user_id === r.user_id && c.course_id === r.course_id)?.certificate_id ?? null,
+          courseTitle: r.track_id ? (programmes.get(r.track_id) ?? r.track_id) : (titles.get(r.course_id) ?? r.course_id),
+          certificateId: issued.find((c) => c.user_id === r.user_id && (r.track_id ? c.track_id === r.track_id : c.course_id === r.course_id))?.certificate_id ?? null,
         }));
       },
       async listPracticeSubmissions() {
@@ -992,10 +999,10 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
         return toCertificate(check(await sb.rpc("admin_grant_certificate", { p_order_id: orderId, p_note: note })) as Row);
       },
       async listPrices() {
-        return (check(await sb.from("certificate_prices").select("*").order("position")) as Row[]).map(toPrice);
+        return (check(await sb.from("certificate_prices").select("*").order("kind").order("position")) as Row[]).map(toPrice);
       },
       async savePrice(price) {
-        check(await sb.from("certificate_prices").upsert({ currency: price.currency.toUpperCase(), amount: price.amount, active: price.active, position: price.position }));
+        check(await sb.from("certificate_prices").upsert({ kind: price.kind, currency: price.currency.toUpperCase(), amount: price.amount, active: price.active, position: price.position }, { onConflict: "kind,currency" }));
       },
       async listSubmissions() {
         const [subs, profiles, projects] = await Promise.all([

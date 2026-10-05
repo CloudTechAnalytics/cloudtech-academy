@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router";
 import { Award, Ban, Copy, Download, Eye, Mail, MoreHorizontal, Pencil, Plus, RefreshCw, Trash2 } from "lucide-react";
-import { getBackend, type AdminCertificate, type AdminOrder, type CertificatePrice } from "@/lib/backend";
+import { getBackend, type AdminCertificate, type AdminOrder, type CertificateKind, type CertificatePrice } from "@/lib/backend";
 import { PageLoading } from "@/lib/auth";
 import { formatDate } from "@/lib/format";
 import { formatMoney } from "@/lib/currency";
@@ -183,17 +183,71 @@ function PriceRow({ price, onSave }: { price: CertificatePrice; onSave: (p: Cert
   );
 }
 
+function PriceTable({ kind, title, note, prices, onSave }: { kind: CertificateKind; title: string; note: string; prices: CertificatePrice[]; onSave: (p: CertificatePrice) => Promise<void> }) {
+  const [currency, setCurrency] = useState("");
+  const [amount, setAmount] = useState("");
+  const [err, setErr] = useState<string | null>(null);
+  const mine = prices.filter((p) => p.kind === kind);
+  return (
+    <div>
+      <h3 className="font-serif text-[1.2rem]">{title}</h3>
+      <p className="mt-1 max-w-2xl text-[0.875rem] text-muted">{note}</p>
+      <div className="table-scroll mt-3 max-w-2xl rounded-2xl border border-line bg-paper">
+        <table>
+          <thead>
+            <tr>
+              <th>Currency</th>
+              <th>Price</th>
+              <th>Status</th>
+              <th>
+                <span className="sr-only">Save</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {mine.map((p) => (
+              <PriceRow key={`${kind}-${p.currency}`} price={p} onSave={onSave} />
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <form
+        className="mt-3 flex max-w-2xl flex-wrap items-end gap-3"
+        onSubmit={(e) => {
+          e.preventDefault();
+          const c = currency.trim().toUpperCase();
+          if (!/^[A-Z]{3}$/.test(c) || !(Number(amount) > 0)) return setErr("Enter a three-letter currency code (e.g. GBP) and a price.");
+          setErr(null);
+          void onSave({ kind, currency: c, amount: Number(amount), active: true, position: mine.length + 1 }).then(() => {
+            setCurrency("");
+            setAmount("");
+          });
+        }}
+      >
+        <div className="w-32">
+          <TextField label="Add currency" value={currency} onChange={(e) => setCurrency(e.target.value)} placeholder="GBP" maxLength={3} />
+        </div>
+        <div className="w-40">
+          <TextField label="Price" type="number" min={0.01} step="0.01" value={amount} onChange={(e) => setAmount(e.target.value)} />
+        </div>
+        <Button type="submit" variant="secondary">
+          Add
+        </Button>
+      </form>
+      {err && <p className="mt-2 text-[0.8125rem] text-danger">{err}</p>}
+    </div>
+  );
+}
+
 function Pricing() {
   // Admins see every price, including ones switched off.
   const { data, error, reload } = useAdminData(async () => (await getBackend()).admin.listPrices());
-  const [currency, setCurrency] = useState("");
-  const [amount, setAmount] = useState("");
   const [msg, setMsg] = useState<{ tone: "success" | "error"; text: string } | null>(null);
   const save = async (p: CertificatePrice) => {
     setMsg(null);
     try {
       await (await getBackend()).admin.savePrice(p);
-      setMsg({ tone: "success", text: `${p.currency} price saved.` });
+      setMsg({ tone: "success", text: `${p.kind === "programme" ? "Programme" : "Course"} ${p.currency} price saved.` });
       await reload();
     } catch (e) {
       setMsg({ tone: "error", text: e instanceof Error ? e.message : "Couldn't save the price." });
@@ -212,47 +266,10 @@ function Pricing() {
       <div className="mt-3" aria-live="polite">
         {msg && <Alert tone={msg.tone}>{msg.text}</Alert>}
       </div>
-      <div className="table-scroll mt-4 max-w-2xl rounded-2xl border border-line bg-paper">
-        <table>
-          <thead>
-            <tr>
-              <th>Currency</th>
-              <th>Price</th>
-              <th>Status</th>
-              <th>
-                <span className="sr-only">Save</span>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.map((p) => (
-              <PriceRow key={p.currency} price={p} onSave={save} />
-            ))}
-          </tbody>
-        </table>
+      <div className="mt-4 space-y-10">
+        <PriceTable kind="programme" title="Professional Programme certificates" note="One certificate for a whole programme: every required course and the capstone. Priced higher than a single course." prices={data} onSave={save} />
+        <PriceTable kind="course" title="Course certificates" note="The optional certificate for a single completed course." prices={data} onSave={save} />
       </div>
-      <form
-        className="mt-4 flex max-w-2xl flex-wrap items-end gap-3"
-        onSubmit={(e) => {
-          e.preventDefault();
-          const c = currency.trim().toUpperCase();
-          if (!/^[A-Z]{3}$/.test(c) || !(Number(amount) > 0)) return setMsg({ tone: "error", text: "Enter a three-letter currency code (e.g. GBP) and a price." });
-          void save({ currency: c, amount: Number(amount), active: true, position: data.length + 1 }).then(() => {
-            setCurrency("");
-            setAmount("");
-          });
-        }}
-      >
-        <div className="w-32">
-          <TextField label="Add currency" value={currency} onChange={(e) => setCurrency(e.target.value)} placeholder="GBP" maxLength={3} />
-        </div>
-        <div className="w-40">
-          <TextField label="Price" type="number" min={0.01} step="0.01" value={amount} onChange={(e) => setAmount(e.target.value)} />
-        </div>
-        <Button type="submit" variant="secondary">
-          Add
-        </Button>
-      </form>
     </section>
   );
 }

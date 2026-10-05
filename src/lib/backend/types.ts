@@ -109,9 +109,9 @@ export type AdminPracticeSubmission = PracticeSubmission & { learnerName: string
 /** valid: active. replaced: corrected by a reissue; the replacement is the valid one. */
 export type OfficialCertificateStatus = "valid" | "revoked" | "replaced";
 
-export type TrainingType = "academy_course" | "one_on_one" | "corporate" | "bootcamp" | "workshop" | "private" | "other";
+export type TrainingType = "academy_course" | "academy_programme" | "one_on_one" | "corporate" | "bootcamp" | "workshop" | "private" | "other";
 
-export type CertificateType = "completion" | "participation" | "professional_training" | "achievement" | "workshop";
+export type CertificateType = "completion" | "participation" | "professional_training" | "achievement" | "workshop" | "professional_programme";
 
 /**
  * An official certificate. source "course": the optional, paid certificate for a completed Academy
@@ -120,9 +120,11 @@ export type CertificateType = "completion" | "participation" | "professional_tra
 export type Certificate = {
   id: string;
   certificateId: string;
-  source: "course" | "manual";
-  /** The course completion credential it certifies (course certificates only). */
+  source: "course" | "manual" | "programme";
+  /** The course or track completion credential it certifies (course and programme certificates). */
   credentialId: string | null;
+  /** The career track, for a Professional Programme certificate. */
+  trackId: string | null;
   /** The recipient's Academy account, if they have one. */
   userId: string | null;
   courseId: string | null;
@@ -229,14 +231,19 @@ export type PublicProfile = {
   certificates: Pick<PublicCertificate, "certificateId" | "credentialId" | "recipientName" | "courseTitle" | "issuedAt" | "status">[];
 };
 
-export type CertificatePrice = { currency: string; amount: number; active: boolean; position: number };
+/** What a certificate costs: course certificates and Professional Programme certificates are priced separately. */
+export type CertificateKind = "course" | "programme";
+
+export type CertificatePrice = { kind: CertificateKind; currency: string; amount: number; active: boolean; position: number };
 
 export type OrderStatus = "pending" | "paid" | "granted" | "failed" | "cancelled";
 
 export type CertificateOrder = {
   id: string;
   userId: string;
-  courseId: string;
+  /** Set for a course certificate order; trackId is set for a programme order. */
+  courseId: string | null;
+  trackId: string | null;
   credentialId: string;
   currency: string;
   amount: number;
@@ -439,9 +446,11 @@ export interface Backend {
   submitPracticeProject(input: { projectId: string; workUrl: string; summary: string; answers: Record<string, number | string | null> }): Promise<PracticeResult>;
 
   /* ---------- official certificate (optional, paid) ---------- */
-  listCertificatePrices(): Promise<CertificatePrice[]>;
+  listCertificatePrices(kind?: CertificateKind): Promise<CertificatePrice[]>;
   /** Starts (or reuses) an order. The course must be complete. */
   startCertificateOrder(courseId: string, currency: string): Promise<CertificateOrder>;
+  /** Starts (or reuses) an order for a Professional Programme certificate. The programme badge must be held first. */
+  startProgrammeOrder(trackId: string, currency: string): Promise<CertificateOrder>;
   listMyOrders(): Promise<CertificateOrder[]>;
   /** Whether online payment is switched on. Until it is, admins grant certificates by hand. */
   readonly paymentsEnabled: boolean;
