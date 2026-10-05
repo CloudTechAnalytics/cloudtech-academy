@@ -40017,24 +40017,20 @@ There's no table with a "churn" column waiting for you. There's a list of custom
 
 ## The concept
 
-**Features beat algorithms**
+### Features beat algorithms
 
 In most business problems, the difference between a weak and a strong model comes from the features, not the algorithm. A logistic regression with well-built features usually beats a sophisticated model given raw data. Feature engineering is where domain knowledge enters the model.
 
-**The snapshot**
+### The snapshot
 
 Every row in a training table describes a customer **at a moment in time**: the **snapshot date**. Then:
 
 - **Features** use only data from **on or before** the snapshot.
 - The **target** uses only data from **after** the snapshot, over a fixed **horizon**.
 
-```
-          features: look back            target: look ahead
-  ◄──────────────────────────────── | ──────────────────────────►
-                                 snapshot           snapshot + 60 days
-```
+![A timeline split at the snapshot date. To the left, features look back: transactions and value in the last 30 and 90 days, recency, failures, tenure. To the right, the target looks ahead: churned if no transaction in the 60 days after the snapshot.](/images/courses/features/snapshot-timeline.svg "Features look back from the snapshot; the target looks ahead over the horizon.")
 
-**Defining churn precisely**
+### Defining churn precisely
 
 Paystream has no contract to cancel, so "churn" must be defined from behaviour. This course uses:
 
@@ -40183,7 +40179,7 @@ A model can't learn from 65,825 separate transactions. It needs one row per cust
 
 ## The concept
 
-**The building blocks**
+### The building blocks
 
 | Family | Feature | Idea |
 | :-- | :-- | :-- |
@@ -40194,7 +40190,7 @@ A model can't learn from 65,825 separate transactions. It needs one row per cust
 | **Experience** | failed transactions, and the failure rate | are they having a bad time? |
 | **Profile** | tenure, KYC tier, acquisition channel | who they are and how they arrived |
 
-**Time windows**
+### Time windows
 
 Calculate the same measure over several windows (30 and 90 days). Comparing windows gives **trend** features, often the most predictive of all, because churn is usually a fade, not a sudden stop:
 
@@ -40202,11 +40198,11 @@ Calculate the same measure over several windows (30 and 90 days). Comparing wind
 
 The `+ 1` stops division by zero for customers with no earlier activity. A trend below 1 means activity is falling.
 
-**Missing means zero (here)**
+### Missing means zero (here)
 
 A customer with no failed transactions in the window has no rows to count, so the count comes back missing. Here, missing genuinely means zero: fill it with 0. Don't do that blindly elsewhere: sometimes missing means unknown.
 
-**Check before you model**
+### Check before you model
 
 For each new feature, look at the churn rate across its range (for example by quartile). If churn barely changes, the feature probably won't help.
 
@@ -40358,21 +40354,23 @@ What went wrong? Two of the commonest mistakes in applied machine learning. The 
 
 ## The concept
 
-**Leakage through a feature**
+### Leakage through a feature
 
 Any feature calculated with data from after the snapshot leaks the answer. With events, it's easy to do by accident: "transactions in the last 30 days" computed on the full table, instead of the table cut at the snapshot, includes the very period you're predicting.
 
-**Leakage through the split**
+### Leakage through the split
 
 A random split puts customers from the same month in both training and test. Even with clean features, the model is tested on the **same period** it learned from: same season, same competitor activity, same app version. Real use is different: you train on the past and predict the **future**, which is always a little different.
 
-**The time-based split**
+### The time-based split
 
 - Build tables at several snapshots.
 - **Train** on earlier snapshots, **test** on a later one.
 - Only train on snapshots whose labels were **complete** by the time you'd make the test prediction. With a 60-day horizon, a model used on 31 March can only learn from snapshots up to 31 December: January's outcomes run until early April, so they weren't known yet.
 
 The time-based score is usually lower. It's also the honest one.
+
+![Two rows of monthly snapshots from July to March. Random split: every month's rows are mixed into training and test. Time-based split: July to December train, January and February left out because their labels are incomplete, March is the test.](/images/courses/features/time-split.svg "A random split tests on the past it learned from; a time-based split tests on the future.")
 
 ## Example
 
@@ -40565,7 +40563,7 @@ The honest answer is "let's test it". Boosting is powerful when there are comple
 
 ## The concept
 
-**Gradient boosting**
+### Gradient boosting
 
 Boosting builds trees **one after another**, each new tree correcting the errors the previous ones made. Compared with a random forest (independent trees, averaged), boosting usually reaches higher accuracy, but has more settings to tune and overfits more easily.
 
@@ -40578,7 +40576,7 @@ scikit-learn's `HistGradientBoostingClassifier` is fast, handles missing values 
 | `max_depth` or `max_leaf_nodes` | how complex each tree is |
 | `early_stopping` | stop adding trees when a validation score stops improving |
 
-**A fair comparison**
+### A fair comparison
 
 - Same training snapshots, same test snapshot, same features.
 - Same measure (AUC here), and look at more than one: calibration (lesson 5) and the top-decile capture that matters for the business (lesson 6).
@@ -40751,20 +40749,22 @@ A model can rank customers well (high AUC) and still give probabilities that are
 
 ## The concept
 
-**AUC and calibration measure different things**
+### AUC and calibration measure different things
 
 - **AUC**: does the model put churners above non-churners? Only the **order** matters.
 - **Calibration**: when the model says 20%, do about 20% churn? The **values** matter.
 
-**The reliability table**
+### The reliability table
 
 Group customers by predicted probability (for example into deciles) and compare, in each group, the **average prediction** with the **actual churn rate**. A calibrated model's two columns match. Plotted, the points lie on the diagonal.
 
-**The Brier score**
+![A reliability diagram: a calibrated model's points follow the diagonal; an overconfident model's points fall below it, predicting 40% where about 25% churn.](/images/courses/features/reliability.svg "Calibrated points sit on the diagonal. An illustration of the idea.")
+
+### The Brier score
 
 The average of (prediction − outcome)², from 0 (perfect) upwards. Lower is better. It rewards both good ranking and good calibration. Compare it with the Brier score of predicting the overall churn rate for everyone.
 
-**Fixing calibration**
+### Fixing calibration
 
 `CalibratedClassifierCV` re-maps a model's probabilities using cross-validation (with `method="sigmoid"` or `"isotonic"`). It needs enough data, and it fixes the shape of the probabilities, not a change in the world (lesson 7).
 
@@ -40938,7 +40938,7 @@ That's a different question from "how good is the model overall", and it has a d
 
 ## The concept
 
-**Gains and lift**
+### Gains and lift
 
 Sort customers by predicted probability, highest first, and cut the list into deciles:
 
@@ -40947,7 +40947,9 @@ Sort customers by predicted probability, highest first, and cut the list into de
 
 A random list captures 10% of churners in its top 10%. A useful model captures far more.
 
-**From lift to a decision**
+![A gains curve: the model's curve rises steeply above the diagonal of a random list, so the top of the list finds a much larger share of churners.](/images/courses/features/gains.svg "A gains curve, illustrated. You'll measure Paystream's real one in this lesson.")
+
+### From lift to a decision
 
 For the top k% of the list:
 
@@ -41159,7 +41161,7 @@ Every model is a snapshot of the past. When the past stops being a good guide to
 
 ## The concept
 
-**Kinds of drift**
+### Kinds of drift
 
 | Kind | What changes | Paystream example |
 | :-- | :-- | :-- |
@@ -41167,14 +41169,14 @@ Every model is a snapshot of the past. When the past stops being a good guide to
 | **Concept drift** | the relationship between features and outcome | social-ads customers now churn far more at the same activity level |
 | **Feature drift** | the distribution of the inputs | a new product changes how often people transact |
 
-**Monitoring signals**
+### Monitoring signals
 
 - **Predicted vs actual rate**, once outcomes are known: the clearest sign.
 - **Performance** (AUC, top-decile capture) on each new month as labels mature.
 - **Rates by segment**: a change in one group (one channel, one region) shows where the world moved.
 - **Feature distributions** compared with training data.
 
-**Retraining**
+### Retraining
 
 Retrain on the most recent snapshots whose labels are complete, on a schedule (for example monthly) and whenever monitoring flags drift. Keep the same time-based test discipline: the new model is judged on a later snapshot than any it trained on.
 
@@ -41374,7 +41376,7 @@ The best projects also add something the course didn't: a new feature that captu
 
 ## The concept
 
-**The project, step by step**
+### The project, step by step
 
 | Step | Deliverable | Lesson |
 | :-- | :-- | :-- |
@@ -41386,7 +41388,7 @@ The best projects also add something the course didn't: a new feature that captu
 | Target | gains, lift and a calling plan with its value | 6 |
 | Monitor | drift checks by segment, a retraining rule and triggers | 7 |
 
-**Ideas for new features**
+### Ideas for new features
 
 - **Variety**: the number of different transaction types in the last 90 days. Customers who use several services may be stickier.
 - **Large-value share**: the share of value from transfers, where competitors usually compete.

@@ -12,7 +12,7 @@ The honest answer is "let's test it". Boosting is powerful when there are comple
 
 ## The concept
 
-**Gradient boosting**
+### Gradient boosting
 
 Boosting builds trees **one after another**, each new tree correcting the errors the previous ones made. Compared with a random forest (independent trees, averaged), boosting usually reaches higher accuracy, but has more settings to tune and overfits more easily.
 
@@ -25,7 +25,7 @@ scikit-learn's `HistGradientBoostingClassifier` is fast, handles missing values 
 | `max_depth` or `max_leaf_nodes` | how complex each tree is |
 | `early_stopping` | stop adding trees when a validation score stops improving |
 
-**A fair comparison**
+### A fair comparison
 
 - Same training snapshots, same test snapshot, same features.
 - Same measure (AUC here), and look at more than one: calibration (lesson 5) and the top-decile capture that matters for the business (lesson 6).

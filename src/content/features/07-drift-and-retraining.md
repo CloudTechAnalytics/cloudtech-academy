@@ -12,7 +12,7 @@ Every model is a snapshot of the past. When the past stops being a good guide to
 
 ## The concept
 
-**Kinds of drift**
+### Kinds of drift
 
 | Kind | What changes | Paystream example |
 | :-- | :-- | :-- |
@@ -20,14 +20,14 @@ Every model is a snapshot of the past. When the past stops being a good guide to
 | **Concept drift** | the relationship between features and outcome | social-ads customers now churn far more at the same activity level |
 | **Feature drift** | the distribution of the inputs | a new product changes how often people transact |
 
-**Monitoring signals**
+### Monitoring signals
 
 - **Predicted vs actual rate**, once outcomes are known: the clearest sign.
 - **Performance** (AUC, top-decile capture) on each new month as labels mature.
 - **Rates by segment**: a change in one group (one channel, one region) shows where the world moved.
 - **Feature distributions** compared with training data.
 
-**Retraining**
+### Retraining
 
 Retrain on the most recent snapshots whose labels are complete, on a schedule (for example monthly) and whenever monitoring flags drift. Keep the same time-based test discipline: the new model is judged on a later snapshot than any it trained on.
 

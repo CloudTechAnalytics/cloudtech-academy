@@ -12,21 +12,23 @@ What went wrong? Two of the commonest mistakes in applied machine learning. The 
 
 ## The concept
 
-**Leakage through a feature**
+### Leakage through a feature
 
 Any feature calculated with data from after the snapshot leaks the answer. With events, it's easy to do by accident: "transactions in the last 30 days" computed on the full table, instead of the table cut at the snapshot, includes the very period you're predicting.
 
-**Leakage through the split**
+### Leakage through the split
 
 A random split puts customers from the same month in both training and test. Even with clean features, the model is tested on the **same period** it learned from: same season, same competitor activity, same app version. Real use is different: you train on the past and predict the **future**, which is always a little different.
 
-**The time-based split**
+### The time-based split
 
 - Build tables at several snapshots.
 - **Train** on earlier snapshots, **test** on a later one.
 - Only train on snapshots whose labels were **complete** by the time you'd make the test prediction. With a 60-day horizon, a model used on 31 March can only learn from snapshots up to 31 December: January's outcomes run until early April, so they weren't known yet.
 
 The time-based score is usually lower. It's also the honest one.
+
+![Two rows of monthly snapshots from July to March. Random split: every month's rows are mixed into training and test. Time-based split: July to December train, January and February left out because their labels are incomplete, March is the test.](/images/courses/features/time-split.svg "A random split tests on the past it learned from; a time-based split tests on the future.")
 
 ## Example
 

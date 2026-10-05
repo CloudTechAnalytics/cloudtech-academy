@@ -12,24 +12,20 @@ There's no table with a "churn" column waiting for you. There's a list of custom
 
 ## The concept
 
-**Features beat algorithms**
+### Features beat algorithms
 
 In most business problems, the difference between a weak and a strong model comes from the features, not the algorithm. A logistic regression with well-built features usually beats a sophisticated model given raw data. Feature engineering is where domain knowledge enters the model.
 
-**The snapshot**
+### The snapshot
 
 Every row in a training table describes a customer **at a moment in time**: the **snapshot date**. Then:
 
 - **Features** use only data from **on or before** the snapshot.
 - The **target** uses only data from **after** the snapshot, over a fixed **horizon**.
 
-```
-          features: look back            target: look ahead
-  ◄──────────────────────────────── | ──────────────────────────►
-                                 snapshot           snapshot + 60 days
-```
+![A timeline split at the snapshot date. To the left, features look back: transactions and value in the last 30 and 90 days, recency, failures, tenure. To the right, the target looks ahead: churned if no transaction in the 60 days after the snapshot.](/images/courses/features/snapshot-timeline.svg "Features look back from the snapshot; the target looks ahead over the horizon.")
 
-**Defining churn precisely**
+### Defining churn precisely
 
 Paystream has no contract to cancel, so "churn" must be defined from behaviour. This course uses:
 
