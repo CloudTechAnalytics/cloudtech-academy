@@ -10,7 +10,7 @@ Tallybook wants to retire `billing.py`. Your final project is its replacement: a
 
 ## The concept
 
-**What the project contains**
+### What the project contains
 
 | Part | Built in |
 | :-- | :-- |
@@ -21,7 +21,7 @@ Tallybook wants to retire `billing.py`. Your final project is its replacement: a
 | A review of `billing.py` and your own code | lesson 8 |
 | `api.py` with tests using the test client | lesson 9 |
 
-**Prove it**
+### Prove it
 
 A test run with every test passing, a reconciliation of the export (every row valid, fixed, dropped as a duplicate, or quarantined, with counts that add up), and the totals the new code gives compared with the old, invoice by invoice.
 

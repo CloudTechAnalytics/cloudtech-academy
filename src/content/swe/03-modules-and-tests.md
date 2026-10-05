@@ -12,11 +12,11 @@ Every time someone touched the invoice code, someone else checked a few invoices
 
 ## The concept
 
-**Modules**
+### Modules
 
 A `.py` file is a **module**. Put the invoice rules in `invoicing.py`, and any other code can `import` them. One file, one source of truth.
 
-**pytest**
+### pytest
 
 pytest finds files named `test_*.py`, runs every function named `test_*` in them, and reports which passed and which failed. A test is a function with an `assert`:
 
@@ -27,13 +27,15 @@ def test_vat_exempt_customer_pays_no_vat():
 
 `pytest.raises` checks that something **fails** the way it should.
 
-**What makes a good test**
+![pytest finds test_*.py files, runs each test_ function, checks each assert, and reports a dot per pass and F per failure; an annotated test shows its name, a hand-worked comment, the call and assert, and a pytest.raises test](/images/courses/swe/pytest.svg "pytest finds test files and functions, runs them, and reports each one.")
+
+### What makes a good test
 
 - One behaviour per test, named after that behaviour.
 - Small, readable inputs, with the expected answer worked out by hand (and a comment showing how).
 - Include the cases that went wrong before (half-kobo rounding) and the rules that must hold (no discount above 20%).
 
-**Running it in Colab**
+### Running it in Colab
 
 The cells in this course start with `%%bash` and use `cat > file <<'EOF'` to write files, then run `python -m pytest`. A `pytest.ini` file keeps the output compact.
 

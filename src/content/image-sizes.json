@@ -619,6 +619,42 @@
   760,
   340
  ],
+ "/images/courses/swe/api-flow.svg": [
+  760,
+  420
+ ],
+ "/images/courses/swe/boundaries.svg": [
+  760,
+  360
+ ],
+ "/images/courses/swe/code-review.svg": [
+  760,
+  400
+ ],
+ "/images/courses/swe/float-rounding.svg": [
+  760,
+  400
+ ],
+ "/images/courses/swe/function-machine.svg": [
+  760,
+  400
+ ],
+ "/images/courses/swe/git-branches.svg": [
+  760,
+  400
+ ],
+ "/images/courses/swe/pytest.svg": [
+  760,
+  400
+ ],
+ "/images/courses/swe/traceback.svg": [
+  760,
+  400
+ ],
+ "/images/courses/swe/validation.svg": [
+  760,
+  400
+ ],
  "/images/courses/terraform/clickops-vs-iac.svg": [
   760,
   400

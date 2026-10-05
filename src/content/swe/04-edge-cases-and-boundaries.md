@@ -12,7 +12,7 @@ Bugs cluster at **boundaries**: the exact point where a rule changes. Tests that
 
 ## The concept
 
-**Boundary value testing**
+### Boundary value testing
 
 For every rule with a threshold, test **just below**, **exactly at**, and **just above** each boundary, plus the extremes:
 
@@ -26,11 +26,13 @@ For every rule with a threshold, test **just below**, **exactly at**, and **just
 | 90 | 3 | exactly three |
 | 120 | 3 | capped at three |
 
-**Parametrize**
+![A step chart of late-fee periods against days late, rising at 30, 60 and 90 days and capped at 3; red dots mark the tests at 0, 29, 30, 31, 60, 90 and 120, with a zoom on 29, 30 and 31](/images/courses/swe/boundaries.svg "Test just below, at and just above each boundary.")
+
+### Parametrize
 
 `@pytest.mark.parametrize` runs one test with many inputs, so a table like this becomes one short test, and each row is reported separately.
 
-**Fix with a failing test first**
+### Fix with a failing test first
 
 When you find a bug: first write a test that fails because of it, then fix the code, then watch the test pass. The test proves the bug existed and stays fixed.
 

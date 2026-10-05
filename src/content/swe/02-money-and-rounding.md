@@ -10,7 +10,7 @@ Customers complained that totals were sometimes a kobo out. Engineers assumed it
 
 ## The concept
 
-**Floating-point numbers can't store most decimals exactly**
+### Floating-point numbers can't store most decimals exactly
 
 Computers store `float` values in binary, and most decimal fractions (like 0.1) have no exact binary form. Small errors appear, and rounding can then go the wrong way:
 
@@ -26,7 +26,7 @@ print(round(2.675, 2))
 
 2.675 is actually stored as slightly less than 2.675, so it rounds down.
 
-**Python's round() rounds halves to even**
+### Python's round() rounds halves to even
 
 `round()` uses "banker's rounding": a value exactly halfway goes to the nearest **even** number. Tallybook's rule (and most invoices') is to round halves **up**:
 
@@ -38,11 +38,13 @@ print(round(16.5), round(17.5), round(0.5))
 16 18 0
 ```
 
-**The fix**
+### The fix
 
 - Store money as **whole kobo** in integers. Integers are exact.
 - When a calculation produces fractions (VAT, discounts), use `Decimal` and round explicitly with `ROUND_HALF_UP`.
 - Convert to naira only for display.
+
+![2.675 stored as a float is 2.67499999…, so round(2.675, 2) gives 2.67; a table compares round() with ROUND_HALF_UP for 0.5, 2.5, 16.5 and 17.5 (0, 2, 16, 18 against 1, 3, 17, 18); the fix: integer kobo, Decimal with ROUND_HALF_UP, naira only for display](/images/courses/swe/float-rounding.svg "Floats can't store most decimals exactly, and round() rounds halves to even.")
 
 ## Example
 

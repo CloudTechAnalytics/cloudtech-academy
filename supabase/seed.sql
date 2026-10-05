@@ -57398,7 +57398,7 @@ This course is about the difference between code that works once and **software*
 
 ## The concept
 
-**Functions**
+### Functions
 
 A function gives a piece of logic a name, clear **inputs** (parameters) and a clear **output** (the return value):
 
@@ -57415,11 +57415,11 @@ Good functions:
 - **return** a result rather than printing it, so other code (and tests) can use it;
 - are short enough to read in one go.
 
-**Single source of truth**
+### Single source of truth
 
 Each business rule (VAT rate, discount limit, rounding) should live in **one** place. If three copies of the code each apply VAT, they will eventually disagree.
 
-**Tallybook's rules**
+### Tallybook's rules
 
 | Rule | |
 | :-- | :-- |
@@ -57427,6 +57427,8 @@ Each business rule (VAT rate, discount limit, rounding) should live in **one** p
 | Discount | a percentage of the subtotal, at most 20% |
 | VAT | 7.5% of the amount after discount, unless the customer is VAT-exempt |
 | Rounding | to the nearest kobo, with halves rounded up |
+
+![invoice_total worked by hand: inputs 3 × 1,000.00 and 1 × 500.00 with a 10% discount give a subtotal of 3,500.00, minus 350.00 discount, 3,150.00, plus 236.25 VAT, returning 3,386.25; below, rules copied into three scripts drift apart while one imported function keeps them in step](/images/courses/swe/function-machine.svg "A function: named inputs, the rules in one place, one returned result.")
 
 ## Example
 
@@ -57539,7 +57541,7 @@ Customers complained that totals were sometimes a kobo out. Engineers assumed it
 
 ## The concept
 
-**Floating-point numbers can't store most decimals exactly**
+### Floating-point numbers can't store most decimals exactly
 
 Computers store `float` values in binary, and most decimal fractions (like 0.1) have no exact binary form. Small errors appear, and rounding can then go the wrong way:
 
@@ -57555,7 +57557,7 @@ print(round(2.675, 2))
 
 2.675 is actually stored as slightly less than 2.675, so it rounds down.
 
-**Python's round() rounds halves to even**
+### Python's round() rounds halves to even
 
 `round()` uses "banker's rounding": a value exactly halfway goes to the nearest **even** number. Tallybook's rule (and most invoices') is to round halves **up**:
 
@@ -57567,11 +57569,13 @@ print(round(16.5), round(17.5), round(0.5))
 16 18 0
 ```
 
-**The fix**
+### The fix
 
 - Store money as **whole kobo** in integers. Integers are exact.
 - When a calculation produces fractions (VAT, discounts), use `Decimal` and round explicitly with `ROUND_HALF_UP`.
 - Convert to naira only for display.
+
+![2.675 stored as a float is 2.67499999…, so round(2.675, 2) gives 2.67; a table compares round() with ROUND_HALF_UP for 0.5, 2.5, 16.5 and 17.5 (0, 2, 16, 18 against 1, 3, 17, 18); the fix: integer kobo, Decimal with ROUND_HALF_UP, naira only for display](/images/courses/swe/float-rounding.svg "Floats can't store most decimals exactly, and round() rounds halves to even.")
 
 ## Example
 
@@ -57712,11 +57716,11 @@ Every time someone touched the invoice code, someone else checked a few invoices
 
 ## The concept
 
-**Modules**
+### Modules
 
 A `.py` file is a **module**. Put the invoice rules in `invoicing.py`, and any other code can `import` them. One file, one source of truth.
 
-**pytest**
+### pytest
 
 pytest finds files named `test_*.py`, runs every function named `test_*` in them, and reports which passed and which failed. A test is a function with an `assert`:
 
@@ -57727,13 +57731,15 @@ def test_vat_exempt_customer_pays_no_vat():
 
 `pytest.raises` checks that something **fails** the way it should.
 
-**What makes a good test**
+![pytest finds test_*.py files, runs each test_ function, checks each assert, and reports a dot per pass and F per failure; an annotated test shows its name, a hand-worked comment, the call and assert, and a pytest.raises test](/images/courses/swe/pytest.svg "pytest finds test files and functions, runs them, and reports each one.")
+
+### What makes a good test
 
 - One behaviour per test, named after that behaviour.
 - Small, readable inputs, with the expected answer worked out by hand (and a comment showing how).
 - Include the cases that went wrong before (half-kobo rounding) and the rules that must hold (no discount above 20%).
 
-**Running it in Colab**
+### Running it in Colab
 
 The cells in this course start with `%%bash` and use `cat > file <<'EOF'` to write files, then run `python -m pytest`. A `pytest.ini` file keeps the output compact.
 
@@ -57900,7 +57906,7 @@ Bugs cluster at **boundaries**: the exact point where a rule changes. Tests that
 
 ## The concept
 
-**Boundary value testing**
+### Boundary value testing
 
 For every rule with a threshold, test **just below**, **exactly at**, and **just above** each boundary, plus the extremes:
 
@@ -57914,11 +57920,13 @@ For every rule with a threshold, test **just below**, **exactly at**, and **just
 | 90 | 3 | exactly three |
 | 120 | 3 | capped at three |
 
-**Parametrize**
+![A step chart of late-fee periods against days late, rising at 30, 60 and 90 days and capped at 3; red dots mark the tests at 0, 29, 30, 31, 60, 90 and 120, with a zoom on 29, 30 and 31](/images/courses/swe/boundaries.svg "Test just below, at and just above each boundary.")
+
+### Parametrize
 
 `@pytest.mark.parametrize` runs one test with many inputs, so a table like this becomes one short test, and each row is reported separately.
 
-**Fix with a failing test first**
+### Fix with a failing test first
 
 When you find a bug: first write a test that fails because of it, then fix the code, then watch the test pass. The test proves the bug existed and stays fixed.
 
@@ -58097,14 +58105,14 @@ Debugging is a method, not luck: read the error properly, reproduce it with the 
 
 ## The concept
 
-**Reading a traceback**
+### Reading a traceback
 
 A traceback lists the calls that led to an error, most recent **last**. Read it from the bottom:
 
 1. The last line: the **type** of error and its message (`ValueError: could not convert string to float: '₦12,500.00'`).
 2. The lines above: **where** it happened, innermost call last.
 
-**A debugging method**
+### A debugging method
 
 | Step | Question |
 | :-- | :-- |
@@ -58114,7 +58122,9 @@ A traceback lists the calls that led to an error, most recent **last**. Read it 
 | Fix the cause | handle every kind properly, not just the first one found |
 | Test | add a test with the input that failed |
 
-**Look at the data, not just the code**
+![A traceback with three numbered pointers: start at the last line (ValueError and the value '₦12,500.00'), then where it failed (parse_amount), then who called it; below, the five steps read, reproduce, find all, fix the cause, test](/images/courses/swe/traceback.svg "Read a traceback from the bottom up.")
+
+### Look at the data, not just the code
 
 When code crashes on data, the fastest route is often to ask the data directly: which values in this column don't look like the rest?
 
@@ -58241,15 +58251,15 @@ Lesson 5 fixed one problem in the invoice export. There are several more: invoic
 
 ## The concept
 
-**Validate at the boundary**
+### Validate at the boundary
 
 Check data where it enters your system (an import, an API request, a form), before any calculation uses it.
 
-**Collect problems, don't stop at the first**
+### Collect problems, don't stop at the first
 
 A validator returns a **list of problems** for each record. An empty list means valid. Then you can report every problem at once, with counts.
 
-**Decide what happens to invalid records**
+### Decide what happens to invalid records
 
 | Option | When |
 | :-- | :-- |
@@ -58259,7 +58269,9 @@ A validator returns a **list of problems** for each record. An empty list means 
 
 Never silently drop bad records: totals become wrong and nobody knows.
 
-**Raise errors with useful messages**
+![Three incoming records pass through a validator: one returns an empty problem list, two return problems such as a negative quantity, a price that isn't a number and a discount over 20; problem records are rejected, quarantined, or fixed automatically only when the fix is certain](/images/courses/swe/validation.svg "Validate where data enters: a list of problems per record, and a decision for each.")
+
+### Raise errors with useful messages
 
 When a function can't continue, `raise ValueError(...)` with a message that says what was wrong and what was expected, as `invoice_total` does for discounts.
 
@@ -58418,7 +58430,7 @@ Before Git, Tallybook's code lived on one engineer's laptop and a shared folder,
 
 ## The concept
 
-**The basic cycle**
+### The basic cycle
 
 | Command | Does |
 | :-- | :-- |
@@ -58429,11 +58441,13 @@ Before Git, Tallybook's code lived on one engineer's laptop and a shared folder,
 | `git log` | the history of commits |
 | `git diff` | what changed, line by line |
 
-**Branches**
+### Branches
 
 A branch is a separate line of work. Make a branch for each change, commit to it, and **merge** it into `main` when it's reviewed and tested. `main` always works.
 
-**Good commits**
+![Working folder to staging area with git add, then to history with git commit; below, a round-vat branch leaves main, gets three small commits, and is merged back into main after review](/images/courses/swe/git-branches.svg "The add–commit cycle, and a branch merged back into main.")
+
+### Good commits
 
 - **Small**: one change per commit, so each can be understood, reviewed and undone.
 - **Clear messages**: say what and why, in the imperative ("Round VAT half up"), not "fixed stuff".
@@ -58593,7 +58607,7 @@ Tallybook's original billing module, `billing.py`, is still used by the month-en
 
 ## The concept
 
-**What reviewers look for, in order**
+### What reviewers look for, in order
 
 1. **Correctness**: does it do what the rules say, including edge cases?
 2. **Risk**: errors swallowed, data changed in place, shared state, security.
@@ -58601,7 +58615,7 @@ Tallybook's original billing module, `billing.py`, is still used by the month-en
 4. **Clarity**: names, function size, comments that explain why.
 5. **Style**: formatting and conventions (leave this to automatic tools).
 
-**Common problems a tool can flag**
+### Common problems a tool can flag
 
 | Pattern | Why it's a problem |
 | :-- | :-- |
@@ -58612,9 +58626,11 @@ Tallybook's original billing module, `billing.py`, is still used by the month-en
 | global state | functions that change a module-level dictionary are hard to test |
 | `print` instead of returning or logging | results can't be used or tested |
 
-**Writing review comments**
+### Writing review comments
 
 Be specific (line and problem), explain why, suggest a fix, and separate must-fix from nice-to-have. Review the code, not the person.
+
+![Review priorities from most to least important: correctness, risk, tests, clarity, style; beside them, a mutable default argument log=[] that makes the second call return ['a', 'b'], and the fix log=None](/images/courses/swe/code-review.svg "Review in priority order; and one example of what to catch.")
 
 ## Example
 
@@ -58801,7 +58817,7 @@ Tallybook's mobile app, website and month-end job each had their own copy of the
 
 ## The concept
 
-**A web API**
+### A web API
 
 Clients send HTTP requests (lesson 8 of the Linux course) with JSON bodies; the API returns JSON responses with a status code.
 
@@ -58812,17 +58828,19 @@ Clients send HTTP requests (lesson 8 of the Linux course) with JSON bodies; the 
 | 404 | no such resource |
 | 500 | the server failed (should never be caused by bad input) |
 
-**Flask**
+### Flask
 
 A small Python web framework: decorate a function with a route, read the request, return a response.
 
-**Validate, then calculate**
+### Validate, then calculate
 
 The API checks every request (lesson 6) and returns **400 with a clear message** for bad input. A traceback or a 500 for bad input is a bug.
 
-**Test without a server**
+### Test without a server
 
 Flask's **test client** sends requests to the app directly, so API tests run as fast as any other test.
+
+![A client posts JSON to /invoices/total; the API validates it, and a bad request gets a 400 with a message while a good one returns 200 with total_kobo 193500; a table of status codes 200, 400, 404, 500; tests use app.test_client() without a server](/images/courses/swe/api-flow.svg "Validate, then calculate: 400 with a clear message for bad input, 200 with the result for good.")
 
 ## Example
 
@@ -58960,7 +58978,7 @@ Tallybook wants to retire `billing.py`. Your final project is its replacement: a
 
 ## The concept
 
-**What the project contains**
+### What the project contains
 
 | Part | Built in |
 | :-- | :-- |
@@ -58971,7 +58989,7 @@ Tallybook wants to retire `billing.py`. Your final project is its replacement: a
 | A review of `billing.py` and your own code | lesson 8 |
 | `api.py` with tests using the test client | lesson 9 |
 
-**Prove it**
+### Prove it
 
 A test run with every test passing, a reconciliation of the export (every row valid, fixed, dropped as a duplicate, or quarantined, with counts that add up), and the totals the new code gives compared with the old, invoice by invoice.
 

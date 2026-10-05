@@ -10,7 +10,7 @@ Tallybook's original billing module, `billing.py`, is still used by the month-en
 
 ## The concept
 
-**What reviewers look for, in order**
+### What reviewers look for, in order
 
 1. **Correctness**: does it do what the rules say, including edge cases?
 2. **Risk**: errors swallowed, data changed in place, shared state, security.
@@ -18,7 +18,7 @@ Tallybook's original billing module, `billing.py`, is still used by the month-en
 4. **Clarity**: names, function size, comments that explain why.
 5. **Style**: formatting and conventions (leave this to automatic tools).
 
-**Common problems a tool can flag**
+### Common problems a tool can flag
 
 | Pattern | Why it's a problem |
 | :-- | :-- |
@@ -29,9 +29,11 @@ Tallybook's original billing module, `billing.py`, is still used by the month-en
 | global state | functions that change a module-level dictionary are hard to test |
 | `print` instead of returning or logging | results can't be used or tested |
 
-**Writing review comments**
+### Writing review comments
 
 Be specific (line and problem), explain why, suggest a fix, and separate must-fix from nice-to-have. Review the code, not the person.
+
+![Review priorities from most to least important: correctness, risk, tests, clarity, style; beside them, a mutable default argument log=[] that makes the second call return ['a', 'b'], and the fix log=None](/images/courses/swe/code-review.svg "Review in priority order; and one example of what to catch.")
 
 ## Example
 

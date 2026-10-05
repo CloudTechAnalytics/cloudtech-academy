@@ -12,14 +12,14 @@ Debugging is a method, not luck: read the error properly, reproduce it with the 
 
 ## The concept
 
-**Reading a traceback**
+### Reading a traceback
 
 A traceback lists the calls that led to an error, most recent **last**. Read it from the bottom:
 
 1. The last line: the **type** of error and its message (`ValueError: could not convert string to float: '₦12,500.00'`).
 2. The lines above: **where** it happened, innermost call last.
 
-**A debugging method**
+### A debugging method
 
 | Step | Question |
 | :-- | :-- |
@@ -29,7 +29,9 @@ A traceback lists the calls that led to an error, most recent **last**. Read it 
 | Fix the cause | handle every kind properly, not just the first one found |
 | Test | add a test with the input that failed |
 
-**Look at the data, not just the code**
+![A traceback with three numbered pointers: start at the last line (ValueError and the value '₦12,500.00'), then where it failed (parse_amount), then who called it; below, the five steps read, reproduce, find all, fix the cause, test](/images/courses/swe/traceback.svg "Read a traceback from the bottom up.")
+
+### Look at the data, not just the code
 
 When code crashes on data, the fastest route is often to ask the data directly: which values in this column don't look like the rest?
 

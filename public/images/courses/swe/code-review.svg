@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 400" width="760" height="400" role="img" aria-label="What a reviewer checks, in priority order: correctness first, then risk, then tests, then clarity, and style last, which should be left to automatic tools. Beside it, a common bug a review should catch: a mutable default argument. def add(item, log=[]) shares one list between calls, so the second call returns both items.">
+<title>Review in priority order; one example of what to catch.</title>
+
+<rect width="760" height="400" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="28.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Review in this order</text>
+<rect x="16.0" y="42.0" width="380.0" height="50.0" rx="6" fill="#9B2C1F"/>
+<text xml:space="preserve" x="30.0" y="64.0" font-size="13.5" fill="#FFFFFF" font-weight="700" text-anchor="start">1. Correctness</text>
+<text xml:space="preserve" x="30.0" y="82.0" font-size="11.5" fill="#FFFFFF" font-weight="400" text-anchor="start">does it follow the rules, edge cases too?</text>
+<rect x="16.0" y="100.0" width="340.0" height="50.0" rx="6" fill="#C0602F"/>
+<text xml:space="preserve" x="30.0" y="122.0" font-size="13.5" fill="#FFFFFF" font-weight="700" text-anchor="start">2. Risk</text>
+<text xml:space="preserve" x="30.0" y="140.0" font-size="11.5" fill="#FFFFFF" font-weight="400" text-anchor="start">swallowed errors, shared state, security</text>
+<rect x="16.0" y="158.0" width="300.0" height="50.0" rx="6" fill="#B38A3E"/>
+<text xml:space="preserve" x="30.0" y="180.0" font-size="13.5" fill="#FFFFFF" font-weight="700" text-anchor="start">3. Tests</text>
+<text xml:space="preserve" x="30.0" y="198.0" font-size="11.5" fill="#FFFFFF" font-weight="400" text-anchor="start">would they catch a mistake?</text>
+<rect x="16.0" y="216.0" width="260.0" height="50.0" rx="6" fill="#C9A867"/>
+<text xml:space="preserve" x="30.0" y="238.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="start">4. Clarity</text>
+<text xml:space="preserve" x="30.0" y="256.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">names, size, comments saying why</text>
+<rect x="16.0" y="274.0" width="220.0" height="50.0" rx="6" fill="#DCC594"/>
+<text xml:space="preserve" x="30.0" y="296.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="start">5. Style</text>
+<text xml:space="preserve" x="30.0" y="314.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">leave to automatic tools</text>
+<text xml:space="preserve" x="420.0" y="28.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Catch this: a mutable default</text>
+<rect x="420.0" y="42.0" width="324.0" height="148.0" rx="8" fill="#2A2926" stroke="#2A2926" stroke-width="1"/>
+<text xml:space="preserve" x="432.0" y="66.0" font-size="12" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">def add(item, log=[]):</text>
+<text xml:space="preserve" x="432.0" y="87.0" font-size="12" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">    log.append(item)</text>
+<text xml:space="preserve" x="432.0" y="108.0" font-size="12" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">    return log</text>
+<text xml:space="preserve" x="432.0" y="129.0" font-size="12" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace"></text>
+<text xml:space="preserve" x="432.0" y="150.0" font-size="12" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">add('a')   # ['a']</text>
+<text xml:space="preserve" x="432.0" y="171.0" font-size="12" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">add('b')   # ['a', 'b']  ✗</text>
+<text xml:space="preserve" x="420.0" y="214.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">The default list is created once and shared by</text>
+<text xml:space="preserve" x="420.0" y="232.1" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">every call.</text>
+<rect x="420.0" y="250.0" width="324.0" height="64.0" rx="8" fill="#2A2926" stroke="#2A2926" stroke-width="1"/>
+<text xml:space="preserve" x="432.0" y="274.0" font-size="12" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">def add(item, log=None):</text>
+<text xml:space="preserve" x="432.0" y="295.0" font-size="12" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">    log = [] if log is None else log</text>
+<text xml:space="preserve" x="16.0" y="352.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Comments: the line, the problem, why it matters, a suggested fix. Mark must-fix apart from nice-to-have.</text>
+<text xml:space="preserve" x="16.0" y="376.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">Review the code, not the person.</text>
+</g></svg>
