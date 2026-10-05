@@ -10,14 +10,16 @@ Tallybook's customers pay invoices from a web page on their phones. The page tod
 
 ## The concept
 
-**A page load, step by step**
+### A page load, step by step
 
 1. The browser asks a server for a page (an HTTP request, as in the Linux course).
 2. The server returns **HTML**, which links to **CSS** and **JavaScript** files; the browser fetches those too.
 3. The browser builds the **DOM**, a live tree of the page's elements, applies the CSS, and runs the JavaScript.
 4. JavaScript can change the DOM, react to clicks and typing, and call APIs without reloading the page.
 
-**Three languages, three jobs**
+![The browser requests a page, the server returns HTML, the browser fetches the linked CSS and JavaScript, builds the DOM tree and runs the JavaScript; below, HTML for structure, CSS for presentation, JavaScript for behaviour](/images/courses/webjs/page-load.svg "A page load: request, HTML, CSS and JavaScript, then the DOM.")
+
+### Three languages, three jobs
 
 | Language | Job | Example |
 | :-- | :-- | :-- |
@@ -25,7 +27,7 @@ Tallybook's customers pay invoices from a web page on their phones. The page tod
 | **CSS** | presentation and layout | "on phones, stack the summary under the table" |
 | **JavaScript** | behaviour | "when the amount changes, update the balance shown" |
 
-**Running JavaScript today**
+### Running JavaScript today
 
 Every browser has a **console** for running JavaScript. Open any page, press **F12** (or Ctrl+Shift+J on Windows, Cmd+Option+J on a Mac) and choose **Console**. Type a line and press Enter. Every JavaScript example in this course runs there. For the HTML examples, save the code as a file ending in `.html` and open it in your browser, or paste it into a free online editor such as CodePen.
 

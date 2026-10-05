@@ -12,7 +12,7 @@ There's a second lesson hiding here: browser validation is for **people**, not f
 
 ## The concept
 
-**Validate in two places**
+### Validate in two places
 
 | Where | Purpose |
 | :-- | :-- |
@@ -21,14 +21,16 @@ There's a second lesson hiding here: browser validation is for **people**, not f
 
 The API from the Databases and APIs course already refuses bad payments with 400 and 409. The page's checks are a courtesy on top.
 
-**Good error messages**
+### Good error messages
 
 - Say what's wrong and how to fix it ("Enter the reference from your bank transfer"), not just "Invalid".
 - Show them next to the field, and link them with `aria-describedby`, so they're announced.
 - Mark the field with `aria-invalid="true"`, and move focus to the first field with an error on submit.
 - Don't rely on colour alone.
 
-**Built-in or custom**
+![A bank reference field with a red border and the message 'Enter the reference from your bank transfer', annotated: visible label, aria-invalid, a message that says how to fix it with an icon, linked by aria-describedby; below, validation in the browser for feedback and on the server for the real rules](/images/courses/webjs/form-errors.svg "A good error says how to fix it, sits next to the field, and is announced.")
+
+### Built-in or custom
 
 HTML attributes (`required`, `type="email"`, `pattern`) give basic checks for free. For messages you control, add `novalidate` to the form and validate in JavaScript.
 

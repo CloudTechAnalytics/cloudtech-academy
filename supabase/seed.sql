@@ -60943,14 +60943,16 @@ Tallybook's customers pay invoices from a web page on their phones. The page tod
 
 ## The concept
 
-**A page load, step by step**
+### A page load, step by step
 
 1. The browser asks a server for a page (an HTTP request, as in the Linux course).
 2. The server returns **HTML**, which links to **CSS** and **JavaScript** files; the browser fetches those too.
 3. The browser builds the **DOM**, a live tree of the page's elements, applies the CSS, and runs the JavaScript.
 4. JavaScript can change the DOM, react to clicks and typing, and call APIs without reloading the page.
 
-**Three languages, three jobs**
+![The browser requests a page, the server returns HTML, the browser fetches the linked CSS and JavaScript, builds the DOM tree and runs the JavaScript; below, HTML for structure, CSS for presentation, JavaScript for behaviour](/images/courses/webjs/page-load.svg "A page load: request, HTML, CSS and JavaScript, then the DOM.")
+
+### Three languages, three jobs
 
 | Language | Job | Example |
 | :-- | :-- | :-- |
@@ -60958,7 +60960,7 @@ Tallybook's customers pay invoices from a web page on their phones. The page tod
 | **CSS** | presentation and layout | "on phones, stack the summary under the table" |
 | **JavaScript** | behaviour | "when the amount changes, update the balance shown" |
 
-**Running JavaScript today**
+### Running JavaScript today
 
 Every browser has a **console** for running JavaScript. Open any page, press **F12** (or Ctrl+Shift+J on Windows, Cmd+Option+J on a Mac) and choose **Console**. Type a line and press Enter. Every JavaScript example in this course runs there. For the HTML examples, save the code as a file ending in `.html` and open it in your browser, or paste it into a free online editor such as CodePen.
 
@@ -61048,11 +61050,11 @@ The payment page must show an invoice's total, with discount and VAT, exactly as
 
 ## The concept
 
-**Variables**
+### Variables
 
 `const` for values that won't be reassigned (most of them), `let` for those that will. Avoid the old `var`.
 
-**Functions**
+### Functions
 
 ```js norun
 function invoiceTotal(lines, discountPct = 0, vatExempt = false) {
@@ -61063,13 +61065,15 @@ function invoiceTotal(lines, discountPct = 0, vatExempt = false) {
 
 Arrow functions are a shorter form: `const double = (n) => n * 2;`
 
-**Numbers**
+### Numbers
 
 JavaScript has one number type, a 64-bit float. Whole numbers are exact up to about 9 million billion, so **kobo as whole numbers** is safe; fractions like `0.075` are not exact.
 
-**Rounding**
+### Rounding
 
 `Math.round` rounds halves **up** for positive numbers (`Math.round(16.5)` is 17), unlike Python's `round`. But it rounds `-16.5` to -16, and it can only round what it's given: if a calculation lands on 16.499999999999996 instead of 16.5, it rounds down.
+
+![8.95 * 100 is 894.9999999999999, so Math.floor gives 894 and loses a kobo while Math.round gives 895; Math.round(16.5) is 17 but Math.round(-16.5) is -16; the rule: whole kobo everywhere, convert typed naira once](/images/courses/webjs/money-js.svg "Floats lose kobo: convert once with Math.round, then keep whole kobo.")
 
 ## Example
 
@@ -61207,7 +61211,7 @@ When a customer opens the portal, the page receives their invoices from the API 
 
 ## The concept
 
-**Objects and arrays**
+### Objects and arrays
 
 ```js norun
 const invoice = { id: "INV-100357", dueDate: "2026-08-03", totalKobo: 4250458, paidKobo: 0 };
@@ -61215,7 +61219,7 @@ const invoices = [invoice, /* ... */];
 invoice.totalKobo;                 // read a property
 ```
 
-**Array methods**
+### Array methods
 
 | Method | Returns |
 | :-- | :-- |
@@ -61225,11 +61229,13 @@ invoice.totalKobo;                 // read a property
 | `toSorted(fn)` | a sorted copy (`sort` sorts in place) |
 | `find(fn)` | the first matching item |
 
-**Intl**
+![Four example invoices: filter drops the two fully paid ones, map turns the other two into balances of 100,000 and 80,000 kobo, reduce adds them to 180,000 kobo, and Intl formats it as ₦1,800.00](/images/courses/webjs/filter-map-reduce.svg "filter, map, reduce, then format: four invoices to one amount owed.")
+
+### Intl
 
 `Intl.NumberFormat` and `Intl.DateTimeFormat` format numbers, currencies and dates for a locale, such as `en-NG`.
 
-**JSON**
+### JSON
 
 `JSON.parse(text)` turns API text into objects; `JSON.stringify(value)` turns objects into text.
 
@@ -61348,7 +61354,7 @@ Accessible HTML isn't extra work: it's using the right element for each job, whi
 
 ## The concept
 
-**Semantic elements**
+### Semantic elements
 
 | Use | Instead of |
 | :-- | :-- |
@@ -61358,11 +61364,13 @@ Accessible HTML isn't extra work: it's using the right element for each job, whi
 | `<button>` | a clickable `<div>` (no keyboard, no role) |
 | `<label for="amount">` linked to `<input id="amount">` | placeholder text as the only label |
 
-**Forms**
+### Forms
 
 Every input needs a visible **label**. Give inputs the right `type` and `inputmode` (phones show a number pad for `inputmode="decimal"`), and connect hints and errors with `aria-describedby`.
 
-**Checking**
+![A page outline with header, nav, main (h1, table with caption, form with label, input and button) and footer; beside it, an amount field whose label is linked by for and id and whose hint is linked by aria-describedby](/images/courses/webjs/semantic-html.svg "Semantic elements give the page structure that keyboards and screen readers can use.")
+
+### Checking
 
 Use the keyboard only (Tab, Shift+Tab, Enter, Space), zoom to 200%, and run the **Lighthouse** accessibility audit in Chrome's DevTools.
 
@@ -61488,7 +61496,7 @@ Most of Tallybook's customers open invoices on a phone, from a link in an email 
 
 ## The concept
 
-**CSS rules**
+### CSS rules
 
 ```css
 selector { property: value; }
@@ -61496,12 +61504,12 @@ selector { property: value; }
 
 Select by element (`button`), class (`.summary`) or id (`#amount`), and set properties such as `color`, `padding`, `font-size`.
 
-**Layout**
+### Layout
 
 - **Flexbox** (`display: flex`) lines items up in a row or column, with gaps and alignment.
 - **Grid** (`display: grid`) places items in rows and columns.
 
-**Mobile first**
+### Mobile first
 
 Write the phone layout as the default. Then add **media queries** that change the layout when there's room:
 
@@ -61509,9 +61517,11 @@ Write the phone layout as the default. Then add **media queries** that change th
 @media (min-width: 700px) { /* rules for wider screens */ }
 ```
 
-**Touch-friendly**
+### Touch-friendly
 
 Tap targets at least about 44 pixels tall, body text at least 16px (which also stops phones zooming into form fields), and enough contrast to read in daylight.
+
+![The phone layout stacks summary, invoice table and payment form in one column; a media query at 700px uses grid-template-columns and grid-template-areas to put the table on the left and the summary and form on the right](/images/courses/webjs/mobile-first.svg "Write the phone layout first; a media query adds columns when there's room.")
 
 ## Example
 
@@ -61605,31 +61615,33 @@ On the old page, customers typed an amount, pressed Pay, waited for a whole new 
 
 ## The concept
 
-**Finding elements**
+### Finding elements
 
 ```js norun
 const amount = document.querySelector("#amount");   // CSS selectors
 const output = document.querySelector("#after-payment");
 ```
 
-**Reading and changing them**
+### Reading and changing them
 
 `input.value` is what's typed (always text). `element.textContent = "..."` changes visible text safely. Avoid `innerHTML` with anything a user typed: it can run as HTML.
 
-**Events**
+### Events
 
 ```js norun
 amount.addEventListener("input", () => { /* runs on every keystroke */ });
 form.addEventListener("submit", (event) => { event.preventDefault(); /* ... */ });
 ```
 
-**Keep logic out of event handlers**
+### Keep logic out of event handlers
 
 Put the calculation in a plain function that takes values and returns a result. The event handler only reads the page, calls the function, and writes the result. The function can then be tested without a page (lesson 9).
 
-**Announce changes**
+### Announce changes
 
 `aria-live="polite"` on an element makes screen readers read out its new text when it changes.
+
+![Typing 2500 fires an input event; the handler reads input.value as text, calls balanceAfter(1000000, "2500") which returns remainingKobo 750000, and writes the result with textContent; aria-live announces it; textContent is safe, innerHTML with user input is not](/images/courses/webjs/dom-events.svg "The handler reads and writes the page; a plain function does the calculation.")
 
 ## Example
 
@@ -61767,7 +61779,7 @@ There's a second lesson hiding here: browser validation is for **people**, not f
 
 ## The concept
 
-**Validate in two places**
+### Validate in two places
 
 | Where | Purpose |
 | :-- | :-- |
@@ -61776,14 +61788,16 @@ There's a second lesson hiding here: browser validation is for **people**, not f
 
 The API from the Databases and APIs course already refuses bad payments with 400 and 409. The page's checks are a courtesy on top.
 
-**Good error messages**
+### Good error messages
 
 - Say what's wrong and how to fix it ("Enter the reference from your bank transfer"), not just "Invalid".
 - Show them next to the field, and link them with `aria-describedby`, so they're announced.
 - Mark the field with `aria-invalid="true"`, and move focus to the first field with an error on submit.
 - Don't rely on colour alone.
 
-**Built-in or custom**
+![A bank reference field with a red border and the message 'Enter the reference from your bank transfer', annotated: visible label, aria-invalid, a message that says how to fix it with an icon, linked by aria-describedby; below, validation in the browser for feedback and on the server for the real rules](/images/courses/webjs/form-errors.svg "A good error says how to fix it, sits next to the field, and is announced.")
+
+### Built-in or custom
 
 HTML attributes (`required`, `type="email"`, `pattern`) give basic checks for free. For messages you control, add `novalidate` to the form and validate in JavaScript.
 
@@ -61933,7 +61947,7 @@ The old page sent the payment and then showed either "Success" or nothing at all
 
 ## The concept
 
-**fetch, async and await**
+### fetch, async and await
 
 ```js norun
 async function sendPayment(invoiceId, body) {
@@ -61949,11 +61963,11 @@ async function sendPayment(invoiceId, body) {
 
 `await` pauses the function until the response arrives, without freezing the page.
 
-**fetch only throws on network failure**
+### fetch only throws on network failure
 
 A 400 or 409 response is still a **response**: `fetch` succeeds, and you must check `response.ok` or `response.status`. Only a lost connection makes `fetch` throw.
 
-**Every outcome has a message**
+### Every outcome has a message
 
 | Outcome | What the customer sees |
 | :-- | :-- |
@@ -61963,9 +61977,11 @@ A 400 or 409 response is still a **response**: `fetch` succeeds, and you must ch
 | 404 | "This invoice link isn't valid" |
 | network error | "We couldn't reach Tallybook. Your payment wasn't recorded. Check your connection and try again." |
 
-**States**
+### States
 
 Disable the button and show "Recording payment..." while waiting, so it can't be pressed twice.
+
+![Pressing Pay disables the button while fetch runs; if fetch throws, show the network error message; otherwise check the status: 201 recorded with the new balance, 400 the server's message, 409 duplicate or too much, 404 invalid invoice link](/images/courses/webjs/fetch-outcomes.svg "fetch throws only when the connection fails; every status still needs checking.")
 
 ## Example
 
@@ -62114,17 +62130,19 @@ The payment page now has four pieces of logic: the invoice total, the live balan
 
 ## The concept
 
-**Test the functions, not the clicks**
+### Test the functions, not the clicks
 
 Because the logic lives in plain functions (lessons 6 to 8), most of it can be tested without a browser page at all: call the function, compare the result.
 
-**A test is still just an assertion**
+### A test is still just an assertion
 
 Every test framework does the same thing: run named checks, report which passed and which failed.
 
-**Real projects**
+### Real projects
 
 In a project with Node.js, use a test framework: **Vitest** or **Jest** (`npm install -D vitest`, then `npx vitest`). They find `*.test.js` files, run them on every change, and can simulate a page for DOM tests. For checking whole pages in real browsers, teams use **Playwright** or Cypress. The tests you write here move into those files almost unchanged.
+
+![A test pyramid: many fast function tests with Vitest or Jest, such as checking balanceAfter, and a few whole-page tests in a real browser with Playwright or Cypress](/images/courses/webjs/testing.svg "Many fast tests of plain functions; a few tests of whole pages in a browser.")
 
 ## Example
 
@@ -62270,7 +62288,7 @@ Tallybook wants the new pay-an-invoice page live before the next month-end. Your
 
 ## The concept
 
-**What the page includes**
+### What the page includes
 
 | Part | Built in |
 | :-- | :-- |
@@ -62282,7 +62300,7 @@ Tallybook wants the new pay-an-invoice page live before the next month-end. Your
 | Every API outcome handled, with loading states | lesson 8 |
 | Automated tests for the logic | lesson 9 |
 
-**Evidence**
+### Evidence
 
 A checklist with a result for each item: keyboard only, screen reader (NVDA on Windows, VoiceOver on a phone), 320px wide, 200% zoom, Lighthouse accessibility score, slow network (DevTools' "Slow 3G"), and the test results.
 

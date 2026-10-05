@@ -714,5 +714,41 @@
  "/images/courses/terraform/workflow.svg": [
   760,
   300
+ ],
+ "/images/courses/webjs/dom-events.svg": [
+  760,
+  380
+ ],
+ "/images/courses/webjs/fetch-outcomes.svg": [
+  760,
+  440
+ ],
+ "/images/courses/webjs/filter-map-reduce.svg": [
+  760,
+  440
+ ],
+ "/images/courses/webjs/form-errors.svg": [
+  760,
+  400
+ ],
+ "/images/courses/webjs/mobile-first.svg": [
+  760,
+  400
+ ],
+ "/images/courses/webjs/money-js.svg": [
+  760,
+  380
+ ],
+ "/images/courses/webjs/page-load.svg": [
+  760,
+  420
+ ],
+ "/images/courses/webjs/semantic-html.svg": [
+  760,
+  440
+ ],
+ "/images/courses/webjs/testing.svg": [
+  760,
+  380
  ]
 }

@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 420" width="760" height="420" role="img" aria-label="How a page loads. The browser requests a page; the server returns HTML, which links to CSS and JavaScript files that the browser also fetches. The browser builds the DOM, a tree of the page's elements, applies the CSS and runs the JavaScript, which can change the DOM, react to typing and clicks, and call APIs without reloading. HTML gives structure, CSS presentation, JavaScript behaviour.">
+<title>A page load: request, HTML, CSS and JavaScript, then the DOM.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker><marker id="a2F5D8A" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2F5D8A"/></marker></defs>
+<rect width="760" height="420" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="30.0" width="170.0" height="200.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="101.0" y="58.0" font-size="15" fill="#2A2926" font-weight="700" text-anchor="middle">Browser</text>
+<rect x="574.0" y="30.0" width="170.0" height="200.0" rx="10" fill="#FFFFFF" stroke="#2F6B3F" stroke-width="1.5"/>
+<text xml:space="preserve" x="659.0" y="58.0" font-size="15" fill="#2F6B3F" font-weight="700" text-anchor="middle">Server</text>
+<path d="M190.0,90.0 L570.0,90.0" fill="none" stroke="#2F5D8A" stroke-width="2" marker-end="url(#a2F5D8A)"/>
+<text xml:space="preserve" x="380.0" y="84.0" font-size="12" fill="#2F5D8A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">1  GET /pay/INV-100357</text>
+<path d="M570.0,124.0 L190.0,124.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<text xml:space="preserve" x="380.0" y="118.0" font-size="12" fill="#8A6A1F" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">2  HTML (links to CSS, JS)</text>
+<path d="M190.0,158.0 L570.0,158.0" fill="none" stroke="#2F5D8A" stroke-width="2" marker-end="url(#a2F5D8A)"/>
+<text xml:space="preserve" x="380.0" y="152.0" font-size="12" fill="#2F5D8A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">3  GET styles.css, app.js</text>
+<path d="M570.0,192.0 L190.0,192.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<text xml:space="preserve" x="380.0" y="186.0" font-size="12" fill="#8A6A1F" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">4  CSS and JavaScript</text>
+<text xml:space="preserve" x="101.0" y="100.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="middle">builds the DOM</text>
+<text xml:space="preserve" x="101.0" y="118.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="middle">applies CSS</text>
+<text xml:space="preserve" x="101.0" y="136.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="middle">runs JS</text>
+<line x1="101.0" y1="168.0" x2="56.0" y2="184.0" stroke="#CFC4B2" stroke-width="1.5"/>
+<line x1="101.0" y1="168.0" x2="146.0" y2="184.0" stroke="#CFC4B2" stroke-width="1.5"/>
+<line x1="146.0" y1="198.0" x2="146.0" y2="212.0" stroke="#CFC4B2" stroke-width="1.5"/>
+<rect x="79.0" y="150.0" width="39.3" height="18.0" rx="6" fill="#F3EBD8"/>
+<text xml:space="preserve" x="85.0" y="163.0" font-size="11" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">html</text>
+<rect x="34.0" y="180.0" width="39.3" height="18.0" rx="6" fill="#F3EBD8"/>
+<text xml:space="preserve" x="40.0" y="193.0" font-size="11" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">head</text>
+<rect x="124.0" y="180.0" width="39.3" height="18.0" rx="6" fill="#F3EBD8"/>
+<text xml:space="preserve" x="130.0" y="193.0" font-size="11" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">body</text>
+<rect x="124.0" y="208.0" width="39.3" height="18.0" rx="6" fill="#F3EBD8"/>
+<text xml:space="preserve" x="130.0" y="221.0" font-size="11" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">form</text>
+<path d="M101.0,232.0 L101.0,250.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<text xml:space="preserve" x="112.0" y="246.0" font-size="12" fill="#8A6A1F" font-weight="700" text-anchor="start">5  JavaScript updates the page; fetch() calls APIs, no reload</text>
+<rect x="16.0" y="276.0" width="232.0" height="100.0" rx="10" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.5"/>
+<text xml:space="preserve" x="32.0" y="304.0" font-size="15" fill="#2F5D8A" font-weight="700" text-anchor="start">HTML</text>
+<text xml:space="preserve" x="32.0" y="326.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">structure and meaning</text>
+<text xml:space="preserve" x="32.0" y="348.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">a form with a field labelled</text>
+<text xml:space="preserve" x="32.0" y="365.4" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">Amount</text>
+<rect x="264.0" y="276.0" width="232.0" height="100.0" rx="10" fill="#EEEAF5" stroke="#5C4F80" stroke-width="1.5"/>
+<text xml:space="preserve" x="280.0" y="304.0" font-size="15" fill="#5C4F80" font-weight="700" text-anchor="start">CSS</text>
+<text xml:space="preserve" x="280.0" y="326.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">presentation and layout</text>
+<text xml:space="preserve" x="280.0" y="348.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">on phones, stack the summary</text>
+<rect x="512.0" y="276.0" width="232.0" height="100.0" rx="10" fill="#F3EBD8" stroke="#8A6A1F" stroke-width="1.5"/>
+<text xml:space="preserve" x="528.0" y="304.0" font-size="15" fill="#8A6A1F" font-weight="700" text-anchor="start">JavaScript</text>
+<text xml:space="preserve" x="528.0" y="326.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">behaviour</text>
+<text xml:space="preserve" x="528.0" y="348.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">update the balance as you type</text>
+<text xml:space="preserve" x="16.0" y="404.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">Press F12 and choose Console to run JavaScript on any page.</text>
+</g></svg>

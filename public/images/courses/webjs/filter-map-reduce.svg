@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 440" width="760" height="440" role="img" aria-label="Chaining array methods, with example invoices. Four invoices: two fully paid, one with 100,000 kobo still owed, one with 80,000 owed. filter keeps the two with a balance; map turns each into its balance; reduce adds them to 180,000 kobo; Intl.NumberFormat with en-NG and NGN displays it as ₦1,800.00.">
+<title>filter, map, reduce, then format: four invoices to one amount owed.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="440" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="252.0" width="728.0" height="102.0" rx="8" fill="#2A2926" stroke="#2A2926" stroke-width="1"/>
+<text xml:space="preserve" x="28.0" y="276.0" font-size="12" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">invoices</text>
+<text xml:space="preserve" x="28.0" y="296.0" font-size="12" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">  .filter((i) =&gt; i.totalKobo &gt; i.paidKobo)   // only invoices with something owed</text>
+<text xml:space="preserve" x="28.0" y="316.0" font-size="12" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">  .map((i) =&gt; i.totalKobo - i.paidKobo)      // each one's balance</text>
+<text xml:space="preserve" x="28.0" y="336.0" font-size="12" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">  .reduce((sum, b) =&gt; sum + b, 0)            // add them up, starting at 0</text>
+<text xml:space="preserve" x="16.0" y="30.0" font-size="13.5" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">invoices</text>
+<text xml:space="preserve" x="206.0" y="30.0" font-size="13.5" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">filter</text>
+<text xml:space="preserve" x="396.0" y="30.0" font-size="13.5" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">map</text>
+<text xml:space="preserve" x="586.0" y="30.0" font-size="13.5" fill="#8A6A1F" font-weight="700" text-anchor="start">reduce → format</text>
+<rect x="16.0" y="42.0" width="160.0" height="42.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="26.0" y="60.0" font-size="11.5" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">INV-1</text>
+<text xml:space="preserve" x="26.0" y="76.0" font-size="10.5" fill="#5E5A52" font-weight="400" text-anchor="start">50,000 / paid 50,000</text>
+<text xml:space="preserve" x="190.0" y="68.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">✗ dropped: fully paid</text>
+<rect x="16.0" y="92.0" width="160.0" height="42.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="26.0" y="110.0" font-size="11.5" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">INV-2</text>
+<text xml:space="preserve" x="26.0" y="126.0" font-size="10.5" fill="#5E5A52" font-weight="400" text-anchor="start">120,000 / paid 20,000</text>
+<path d="M178.0,113.0 L202.0,113.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="206.0" y="92.0" width="160.0" height="42.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.3"/>
+<text xml:space="preserve" x="216.0" y="118.0" font-size="11.5" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">INV-2: owes</text>
+<path d="M368.0,113.0 L392.0,113.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="396.0" y="92.0" width="160.0" height="42.0" rx="10" fill="#FFFFFF" stroke="#2F5D8A" stroke-width="1.3"/>
+<text xml:space="preserve" x="476.0" y="119.0" font-size="14" fill="#2F5D8A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">100,000</text>
+<rect x="16.0" y="142.0" width="160.0" height="42.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="26.0" y="160.0" font-size="11.5" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">INV-3</text>
+<text xml:space="preserve" x="26.0" y="176.0" font-size="10.5" fill="#5E5A52" font-weight="400" text-anchor="start">80,000 / paid 0</text>
+<path d="M178.0,163.0 L202.0,163.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="206.0" y="142.0" width="160.0" height="42.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.3"/>
+<text xml:space="preserve" x="216.0" y="168.0" font-size="11.5" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">INV-3: owes</text>
+<path d="M368.0,163.0 L392.0,163.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="396.0" y="142.0" width="160.0" height="42.0" rx="10" fill="#FFFFFF" stroke="#2F5D8A" stroke-width="1.3"/>
+<text xml:space="preserve" x="476.0" y="169.0" font-size="14" fill="#2F5D8A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">80,000</text>
+<rect x="16.0" y="192.0" width="160.0" height="42.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="26.0" y="210.0" font-size="11.5" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">INV-4</text>
+<text xml:space="preserve" x="26.0" y="226.0" font-size="10.5" fill="#5E5A52" font-weight="400" text-anchor="start">30,000 / paid 30,000</text>
+<text xml:space="preserve" x="190.0" y="218.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">✗ dropped: fully paid</text>
+<path d="M558,113 C575,113 575,134 590,134" fill="none" stroke="#8A6A1F" stroke-width="1.8" marker-end="url(#a8A6A1F)"/>
+<path d="M558,163 C575,163 575,144 590,144" fill="none" stroke="#8A6A1F" stroke-width="1.8" marker-end="url(#a8A6A1F)"/>
+<rect x="592.0" y="104.0" width="152.0" height="70.0" rx="10" fill="#F3EBD8" stroke="#B38A3E" stroke-width="1.5"/>
+<text xml:space="preserve" x="668.0" y="130.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">180,000 kobo</text>
+<text xml:space="preserve" x="668.0" y="156.0" font-size="16" fill="#8A6A1F" font-weight="700" text-anchor="middle">₦1,800.00</text>
+<text xml:space="preserve" x="16.0" y="378.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">filter keeps items, map transforms each, reduce combines them into one value.</text>
+<text xml:space="preserve" x="16.0" y="402.0" font-size="11.5" fill="#8A6A1F" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">new Intl.NumberFormat("en-NG", { style: "currency", currency: "NGN" }).format(kobo / 100)</text>
+<text xml:space="preserve" x="16.0" y="428.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">Example invoices, for illustration.</text>
+</g></svg>

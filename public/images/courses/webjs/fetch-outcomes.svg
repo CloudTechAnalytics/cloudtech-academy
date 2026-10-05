@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 440" width="760" height="440" role="img" aria-label="Handling every outcome of a payment request. While waiting, the button is disabled and shows Recording payment. If fetch throws, the connection failed and the customer is told the payment wasn't recorded. Otherwise there is a response: check response.ok and the status. 201 means recorded, with the new balance from the server; 400 shows the server's message by the form; 409 explains a duplicate or too-large payment; 404 says the invoice link isn't valid.">
+<title>fetch throws only when the connection fails; every status still needs checking.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker><marker id="a9B2C1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#9B2C1F"/></marker></defs>
+<rect width="760" height="440" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="30.0" width="180.0" height="70.0" rx="10" fill="#F3EBD8" stroke="#B38A3E" stroke-width="1.5"/>
+<text xml:space="preserve" x="106.0" y="58.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="middle">Pay pressed</text>
+<text xml:space="preserve" x="106.0" y="80.0" font-size="12" fill="#8A6A1F" font-weight="400" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">await fetch(…)</text>
+<rect x="16.0" y="112.0" width="180.0" height="40.0" rx="6" fill="#EDE8DD"/>
+<text xml:space="preserve" x="106.0" y="137.0" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="middle">Recording payment…</text>
+<text xml:space="preserve" x="106.0" y="170.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="middle">button disabled: can't</text>
+<text xml:space="preserve" x="106.0" y="186.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="middle">be pressed twice</text>
+<path d="M198.0,65.0 L250.0,65.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="254.0" y="30.0" width="170.0" height="70.0" rx="10" fill="#FFFFFF" stroke="#8A6A1F" stroke-width="1.5"/>
+<text xml:space="preserve" x="339.0" y="58.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="middle">did fetch throw?</text>
+<text xml:space="preserve" x="339.0" y="80.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">try / catch</text>
+<path d="M339,102 L339,300" fill="none" stroke="#9B2C1F" stroke-width="2" marker-end="url(#a9B2C1F)"/>
+<text xml:space="preserve" x="348.0" y="200.0" font-size="12" fill="#9B2C1F" font-weight="700" text-anchor="start">yes</text>
+<rect x="254.0" y="304.0" width="490.0" height="70.0" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.4"/>
+<text xml:space="preserve" x="270.0" y="330.0" font-size="13.5" fill="#9B2C1F" font-weight="700" text-anchor="start">Network error</text>
+<text xml:space="preserve" x="270.0" y="352.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">"We couldn't reach Tallybook. Your payment wasn't recorded. Check your</text>
+<text xml:space="preserve" x="270.0" y="369.4" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">connection and try again."</text>
+<path d="M426.0,65.0 L466.0,65.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<text xml:space="preserve" x="446.0" y="56.0" font-size="12" fill="#2F6B3F" font-weight="700" text-anchor="middle">no</text>
+<text xml:space="preserve" x="470.0" y="34.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">a response: check the status</text>
+<rect x="470.0" y="46.0" width="274.0" height="50.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.3"/>
+<text xml:space="preserve" x="484.0" y="76.0" font-size="14" fill="#2F6B3F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">201</text>
+<text xml:space="preserve" x="526.0" y="66.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">Payment recorded: show the new</text>
+<text xml:space="preserve" x="526.0" y="82.7" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">balance from the server</text>
+<rect x="470.0" y="104.0" width="274.0" height="50.0" rx="10" fill="#F3EBD8" stroke="#8A6A1F" stroke-width="1.3"/>
+<text xml:space="preserve" x="484.0" y="134.0" font-size="14" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">400</text>
+<text xml:space="preserve" x="526.0" y="124.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">show the server's message next to</text>
+<text xml:space="preserve" x="526.0" y="140.7" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">the form</text>
+<rect x="470.0" y="162.0" width="274.0" height="50.0" rx="10" fill="#F3EBD8" stroke="#8A6A1F" stroke-width="1.3"/>
+<text xml:space="preserve" x="484.0" y="192.0" font-size="14" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">409</text>
+<text xml:space="preserve" x="526.0" y="182.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">already recorded, or more than you</text>
+<text xml:space="preserve" x="526.0" y="198.7" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">owe: explain</text>
+<rect x="470.0" y="220.0" width="274.0" height="50.0" rx="10" fill="#F3EBD8" stroke="#8A6A1F" stroke-width="1.3"/>
+<text xml:space="preserve" x="484.0" y="250.0" font-size="14" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">404</text>
+<text xml:space="preserve" x="526.0" y="240.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">"This invoice link isn't valid"</text>
+<text xml:space="preserve" x="16.0" y="410.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">A 400 or 409 is not an exception: fetch succeeded. Check response.ok or response.status every time.</text>
+</g></svg>

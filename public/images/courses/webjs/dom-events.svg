@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 380" width="760" height="380" role="img" aria-label="From a keystroke to the screen, with an example. The customer types 2500 in the amount field, which fires an input event. The handler reads input.value, the text 2500, and calls a plain function, balanceAfter, with a balance of 1,000,000 kobo, which returns remainingKobo 750,000. The handler writes ₦7,500.00 into the page with textContent, and aria-live makes screen readers announce it. The function has no page code in it, so it can be tested on its own.">
+<title>The handler reads and writes the page; a plain function does the calculation.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="380" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="30.0" width="165.5" height="110.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="28.0" y="56.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="start">Typing</text>
+<text xml:space="preserve" x="28.0" y="80.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">"2500" in #amount</text>
+<text xml:space="preserve" x="28.0" y="97.4" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">fires an input event</text>
+<path d="M184.5,85.0 L200.5,85.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="203.5" y="30.0" width="165.5" height="110.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="215.5" y="56.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="start">Handler reads</text>
+<text xml:space="preserve" x="215.5" y="80.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">input.value → "2500"</text>
+<text xml:space="preserve" x="215.5" y="97.4" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">(always text)</text>
+<path d="M372.0,85.0 L388.0,85.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="391.0" y="30.0" width="165.5" height="110.0" rx="10" fill="#F3EBD8" stroke="#B38A3E" stroke-width="1.5"/>
+<text xml:space="preserve" x="403.0" y="56.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="start">Plain function</text>
+<text xml:space="preserve" x="403.0" y="80.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">balanceAfter(1000000,</text>
+<text xml:space="preserve" x="403.0" y="97.4" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">"2500") →</text>
+<text xml:space="preserve" x="403.0" y="114.8" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">remainingKobo: 750000</text>
+<path d="M559.5,85.0 L575.5,85.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="578.5" y="30.0" width="165.5" height="110.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="590.5" y="56.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="start">Handler writes</text>
+<text xml:space="preserve" x="590.5" y="80.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">textContent = "…you'll</text>
+<text xml:space="preserve" x="590.5" y="97.4" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">owe ₦7,500.00"</text>
+<rect x="16.0" y="170.0" width="728.0" height="70.0" rx="10" fill="#FFFFFF" stroke="#2F5D8A" stroke-width="1.4"/>
+<text xml:space="preserve" x="32.0" y="196.0" font-size="13" fill="#2F5D8A" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">aria-live="polite"</text>
+<text xml:space="preserve" x="220.0" y="196.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">screen readers read out the new text when it changes: "After this payment</text>
+<text xml:space="preserve" x="220.0" y="214.1" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">you'll owe ₦7,500.00"</text>
+<rect x="16.0" y="260.0" width="356.0" height="76.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.4"/>
+<text xml:space="preserve" x="32.0" y="286.0" font-size="13.5" fill="#2F6B3F" font-weight="700" text-anchor="start">✓ textContent</text>
+<text xml:space="preserve" x="32.0" y="310.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">shows exactly what was typed, as text.</text>
+<rect x="388.0" y="260.0" width="356.0" height="76.0" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.4"/>
+<text xml:space="preserve" x="404.0" y="286.0" font-size="13.5" fill="#9B2C1F" font-weight="700" text-anchor="start">✗ innerHTML with user input</text>
+<text xml:space="preserve" x="404.0" y="310.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">anything typed can run as HTML on the page.</text>
+<text xml:space="preserve" x="16.0" y="362.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">Example values. Keep logic in the plain function: it can be tested without a page.</text>
+</g></svg>

@@ -10,7 +10,7 @@ Tallybook wants the new pay-an-invoice page live before the next month-end. Your
 
 ## The concept
 
-**What the page includes**
+### What the page includes
 
 | Part | Built in |
 | :-- | :-- |
@@ -22,7 +22,7 @@ Tallybook wants the new pay-an-invoice page live before the next month-end. Your
 | Every API outcome handled, with loading states | lesson 8 |
 | Automated tests for the logic | lesson 9 |
 
-**Evidence**
+### Evidence
 
 A checklist with a result for each item: keyboard only, screen reader (NVDA on Windows, VoiceOver on a phone), 320px wide, 200% zoom, Lighthouse accessibility score, slow network (DevTools' "Slow 3G"), and the test results.
 
