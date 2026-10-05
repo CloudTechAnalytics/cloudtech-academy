@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
-import { Award, CheckCircle2, GraduationCap, CircleDashed, Clock, FolderKanban, Hourglass, PlayCircle } from "lucide-react";
+import { Award, CheckCircle2, ChevronDown, GraduationCap, CircleDashed, Clock, FolderKanban, Hourglass, PlayCircle } from "lucide-react";
 import { useSeo } from "@/lib/seo";
 import { breadcrumbs } from "@/lib/schema";
 import { useCourses } from "@/lib/data";
@@ -8,7 +8,7 @@ import { useAuth } from "@/lib/auth";
 import { getBackend, type Certificate, type Credential, type Enrollment } from "@/lib/backend";
 import { courseMinutes } from "@/lib/certificates";
 import { durationLabel } from "@/lib/format";
-import { capstoneOf, LEVELS, programmeCertificateAvailable, requiredCourses, TRACKS, type TrackItem } from "@/content/tracks";
+import { capstoneOf, LEVELS, programmeCertificateAvailable, requiredCourses, TRACKS, type Track, type TrackItem } from "@/content/tracks";
 import { PRACTICE_PROJECTS } from "@/content/projects";
 import type { Course } from "@/content/types";
 import { Badge } from "@/components/CourseCard";
@@ -132,6 +132,54 @@ function ItemCard({ item, courses, mine }: { item: TrackItem; courses: Course[];
           ))}
       </p>
     </div>
+  );
+}
+
+/** One module of a programme: a dropdown that opens to show what it teaches. */
+function ProgrammeModule({ index, stage, courses, mine, open }: { index: number; stage: Track["stages"][number]; courses: Course[]; mine: Mine; open: boolean }) {
+  const items = stage.items.map((item) => ({ item, course: item.kind === "course" ? courses.find((c) => c.id === item.courseId) : undefined }));
+  const real = items.filter((x) => x.course);
+  const done = real.filter((x) => mine?.credentials.some((c) => c.courseId === x.course!.id && c.kind === "course_completion" && c.status === "valid")).length;
+  return (
+    <details open={open} className="group rounded-2xl border border-line bg-paper [&_summary::-webkit-details-marker]:hidden">
+      <summary className="flex cursor-pointer list-none items-start gap-4 p-5 sm:p-6">
+        <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-brass-pale font-serif text-[1.05rem] text-brass-dark">{index + 1}</span>
+        <span className="min-w-0 flex-1">
+          <span className="block text-[0.75rem] font-semibold uppercase tracking-wide text-brass-dark">Module {index + 1}</span>
+          <span className="mt-0.5 block font-serif text-[1.35rem] leading-snug">{stage.title}</span>
+          <span className="mt-1 block text-[0.9375rem] text-muted">{stage.summary}</span>
+          {mine && real.length > 0 && (
+            <span className="mt-2 block text-[0.8125rem] font-semibold text-muted">
+              {done} of {real.length} {real.length === 1 ? "course" : "courses"} complete
+            </span>
+          )}
+        </span>
+        <ChevronDown aria-hidden className="mt-2 h-5 w-5 shrink-0 text-muted transition-transform group-open:rotate-180" />
+      </summary>
+      <div className="space-y-4 border-t border-line p-5 sm:p-6">
+        {items.map(({ item, course }) =>
+          course ? (
+            <div key={course.id} className="rounded-xl bg-sand/40 p-4">
+              <ItemCard item={item} courses={courses} mine={mine} />
+              {course.modules.length > 0 && (
+                <>
+                  <p className="mt-4 text-[0.8125rem] font-semibold">You'll learn</p>
+                  <ul className="mt-2 grid gap-x-6 gap-y-1.5 sm:grid-cols-2">
+                    {course.modules.map((m) => (
+                      <li key={m.id} className="flex items-start gap-2 text-[0.9rem]">
+                        <CheckCircle2 aria-hidden className="mt-0.5 h-4 w-4 shrink-0 text-brass-dark" /> {m.title}
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              )}
+            </div>
+          ) : (
+            <ItemCard key={item.kind === "project" ? item.projectId : item.kind === "upcoming" ? item.title : ""} item={item} courses={courses} mine={mine} />
+          ),
+        )}
+      </div>
+    </details>
   );
 }
 
@@ -295,21 +343,12 @@ export function TrackDetail() {
       </section>
 
       <section className="container-page max-w-5xl py-14">
-        <ol className="space-y-12">
+        <h2 className="font-serif text-[1.8rem] leading-tight">What you'll learn, module by module</h2>
+        <p className="mt-1 text-muted">Work through the modules in order. Open one to see exactly what it covers.</p>
+        <ol className="mt-6 space-y-3">
           {track.stages.map((stage, i) => (
             <li key={stage.title}>
-              <div className="flex items-baseline gap-3">
-                <span className="font-serif text-[1.1rem] text-brass-dark">{String(i + 1).padStart(2, "0")}</span>
-                <h2 className="font-serif text-[1.8rem] leading-tight">{stage.title}</h2>
-              </div>
-              <p className="mt-1 text-muted">{stage.summary}</p>
-              <ul className="mt-5 grid gap-4 md:grid-cols-2">
-                {stage.items.map((item) => (
-                  <li key={item.kind === "course" ? item.courseId : item.kind === "project" ? item.projectId : item.title}>
-                    <ItemCard item={item} courses={courses} mine={mine} />
-                  </li>
-                ))}
-              </ul>
+              <ProgrammeModule index={i} stage={stage} courses={courses} mine={mine} open={i === 0} />
             </li>
           ))}
         </ol>
