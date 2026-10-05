@@ -16,6 +16,8 @@ The data volume is out of your hands, but how you write the query isn't. The dif
 
 To find rows, a database either **scans** (reads every row in the table) or **searches** (uses an **index** to jump straight to the rows it needs). An index is like the index at the back of a book: a sorted list of values, each pointing to where the matching rows are. Searching 80 million rows through an index takes a few steps, while scanning them means reading all 80 million.
 
+![A function on a column forces a scan while a bare column can use an index; the words in a query plan; and four habits for fast queries](/images/courses/advanced-sql/performance.svg "Keep columns bare in filters so an index can be used, and read the plan. (Illustration with simplified data.)")
+
 ### Reading the plan
 
 `EXPLAIN QUERY PLAN` (SQLite), `EXPLAIN` (PostgreSQL, MySQL) or the "estimated execution plan" (SQL Server) shows what the database intends to do, without running the query. Look for:

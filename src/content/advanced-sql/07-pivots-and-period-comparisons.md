@@ -18,6 +18,8 @@ Period comparisons are where analysts most often embarrass themselves, and the b
 
 A pivot turns values in a column (years, modes, statuses) into separate columns. The portable way works in every database: an aggregate wrapped around a `CASE`.
 
+![A long table pivoted into one row per year with SUM of CASE; and comparing the same months of each year rather than a full year against a part year](/images/courses/advanced-sql/pivot.svg "CASE inside SUM turns rows into columns; compare like with like. (Illustration with simplified data.)")
+
 ```sql
 SELECT
   r.mode,

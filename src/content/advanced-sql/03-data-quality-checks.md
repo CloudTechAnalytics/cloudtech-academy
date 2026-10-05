@@ -14,6 +14,8 @@ A report built on data nobody checked can be wrong in ways no query will warn yo
 
 Data quality checks are short queries that test what you're assuming. Run them on any new table, and again whenever the data is refreshed.
 
+![Four data quality checks: profile, orphans, duplicates and reconciliation, with an orphan payment found by an anti-join](/images/courses/advanced-sql/data-quality.svg "Profile, find orphans and duplicates, reconcile totals, check the logic. (Illustration with simplified data.)")
+
 | Check | Question | Typical query |
 | :-- | :-- | :-- |
 | **Profile** | How many rows, NULLs, distinct values, min and max? | `COUNT(*)`, `COUNT(col)`, `COUNT(DISTINCT col)`, `MIN`, `MAX` |

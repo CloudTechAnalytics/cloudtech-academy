@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 446" width="760" height="446" role="img" aria-label="Three business-analysis patterns, with illustrative numbers. Receivables aging buckets unpaid invoices by how overdue they are: current, 1 to 30 days, 31 to 60 days and over 60 days, with older buckets more worrying. A Pareto analysis ranks customers by revenue and shows the cumulative share: here the top two of ten customers bring about 60 percent. RFM scoring rates each customer on recency (how recently they bought), frequency (how often) and monetary value (how much), and combines the scores into segments.">
+<title>Aging buckets, a Pareto curve and RFM scores: three patterns analysts reuse.</title>
+
+<rect width="760" height="446" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="28.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Receivables aging</text>
+<rect x="16.0" y="42.0" width="200.0" height="22.0" rx="3" fill="#2F6B3F"/>
+<text xml:space="preserve" x="224.0" y="59.0" font-size="11.5" fill="#2A2926" font-weight="700" text-anchor="start">Current: ₦40m</text>
+<rect x="16.0" y="72.0" width="140.0" height="22.0" rx="3" fill="#2F5D8A"/>
+<text xml:space="preserve" x="164.0" y="89.0" font-size="11.5" fill="#2A2926" font-weight="700" text-anchor="start">1–30 days: ₦28m</text>
+<rect x="16.0" y="102.0" width="90.0" height="22.0" rx="3" fill="#B38A3E"/>
+<text xml:space="preserve" x="114.0" y="119.0" font-size="11.5" fill="#2A2926" font-weight="700" text-anchor="start">31–60: ₦18m</text>
+<rect x="16.0" y="132.0" width="70.0" height="22.0" rx="3" fill="#9B2C1F"/>
+<text xml:space="preserve" x="94.0" y="149.0" font-size="11.5" fill="#2A2926" font-weight="700" text-anchor="start">60+: ₦14m</text>
+<text xml:space="preserve" x="16.0" y="168.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">older = more worrying</text>
+<text xml:space="preserve" x="396.0" y="28.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Pareto: cumulative share of revenue</text>
+<rect x="420.0" y="62.0" width="24.0" height="108.0" rx="2" fill="#DCC594"/>
+<rect x="452.0" y="90.8" width="24.0" height="79.2" rx="2" fill="#DCC594"/>
+<rect x="484.0" y="119.6" width="24.0" height="50.4" rx="2" fill="#DCC594"/>
+<rect x="516.0" y="134.0" width="24.0" height="36.0" rx="2" fill="#DCC594"/>
+<rect x="548.0" y="141.2" width="24.0" height="28.8" rx="2" fill="#DCC594"/>
+<rect x="580.0" y="148.4" width="24.0" height="21.6" rx="2" fill="#DCC594"/>
+<rect x="612.0" y="155.6" width="24.0" height="14.4" rx="2" fill="#DCC594"/>
+<rect x="644.0" y="159.2" width="24.0" height="10.8" rx="2" fill="#DCC594"/>
+<rect x="676.0" y="162.8" width="24.0" height="7.2" rx="2" fill="#DCC594"/>
+<rect x="708.0" y="166.4" width="24.0" height="3.6" rx="2" fill="#DCC594"/>
+<path d="M432,132.2 L464,104.5 L496,86.8 L528,74.2 L560,64.2 L592,56.6 L624,51.6 L656,47.8 L688,45.3 L720,44.0" fill="none" stroke="#2F5D8A" stroke-width="2.4"/>
+<circle cx="464.0" cy="104.5" r="4" fill="#2F5D8A"/>
+<circle cx="720.0" cy="44.0" r="4" fill="#2F5D8A"/>
+<line x1="420.0" y1="69.2" x2="740.0" y2="69.2" stroke="#9B2C1F" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text xml:space="preserve" x="738.0" y="63.2" font-size="11" fill="#9B2C1F" font-weight="700" text-anchor="end">80%</text>
+<text xml:space="preserve" x="464.0" y="94.5" font-size="11" fill="#2F5D8A" font-weight="700" text-anchor="start">top 2 customers: 52%</text>
+<line x1="420.0" y1="170.0" x2="740.0" y2="170.0" stroke="#CFC4B2" stroke-width="1.2"/>
+<text xml:space="preserve" x="580.0" y="186.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="middle">customers, biggest first</text>
+<text xml:space="preserve" x="16.0" y="224.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">RFM: who to look after</text>
+<rect x="16.0" y="238.0" width="440.0" height="30.0" rx="0" fill="#F3EBD8"/>
+<text xml:space="preserve" x="26.0" y="258.0" font-size="12" fill="#8A6A1F" font-weight="700" text-anchor="start">Customer</text>
+<text xml:space="preserve" x="126.0" y="258.0" font-size="12" fill="#8A6A1F" font-weight="700" text-anchor="start">R</text>
+<text xml:space="preserve" x="186.0" y="258.0" font-size="12" fill="#8A6A1F" font-weight="700" text-anchor="start">F</text>
+<text xml:space="preserve" x="246.0" y="258.0" font-size="12" fill="#8A6A1F" font-weight="700" text-anchor="start">M</text>
+<text xml:space="preserve" x="306.0" y="258.0" font-size="12" fill="#8A6A1F" font-weight="700" text-anchor="start">Segment</text>
+<rect x="16.0" y="268.0" width="440.0" height="30.0" rx="0" fill="#FFFFFF"/>
+<text xml:space="preserve" x="26.0" y="288.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">C1</text>
+<text xml:space="preserve" x="126.0" y="288.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">5</text>
+<text xml:space="preserve" x="186.0" y="288.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">5</text>
+<text xml:space="preserve" x="246.0" y="288.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">5</text>
+<text xml:space="preserve" x="306.0" y="288.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="start">Champion</text>
+<rect x="16.0" y="298.0" width="440.0" height="30.0" rx="0" fill="#FBF8F2"/>
+<text xml:space="preserve" x="26.0" y="318.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">C2</text>
+<text xml:space="preserve" x="126.0" y="318.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">1</text>
+<text xml:space="preserve" x="186.0" y="318.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">4</text>
+<text xml:space="preserve" x="246.0" y="318.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">4</text>
+<text xml:space="preserve" x="306.0" y="318.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="start">At risk</text>
+<rect x="16.0" y="328.0" width="440.0" height="30.0" rx="0" fill="#FFFFFF"/>
+<text xml:space="preserve" x="26.0" y="348.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">C3</text>
+<text xml:space="preserve" x="126.0" y="348.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">5</text>
+<text xml:space="preserve" x="186.0" y="348.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">1</text>
+<text xml:space="preserve" x="246.0" y="348.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">2</text>
+<text xml:space="preserve" x="306.0" y="348.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="start">New / small</text>
+<text xml:space="preserve" x="16.0" y="382.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">Recency: days since last booking.  Frequency: how many bookings.  Monetary: how much they spent.</text>
+<text xml:space="preserve" x="16.0" y="404.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">Score each 1–5 (NTILE), combine, then name the segments.</text>
+<text xml:space="preserve" x="16.0" y="430.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Always state the as-of date and what counts as revenue.</text>
+</g></svg>

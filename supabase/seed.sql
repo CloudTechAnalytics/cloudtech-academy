@@ -22540,6 +22540,8 @@ This course is about the SQL that working analysts write: longer queries, harder
 
 The 8 missing customers have no account manager: `account_manager_id` is `NULL`. SQL treats NULL as an unknown value, so any comparison with it is also unknown:
 
+![Comparisons with NULL are unknown so WHERE drops the row; IS NULL finds it; NOT IN with a NULL returns nothing; aggregates ignore NULL; integer division truncates](/images/courses/advanced-sql/null-logic.svg "NULL is unknown: comparisons skip it, NOT IN breaks on it, aggregates ignore it. (Illustration with simplified data.)")
+
 | Expression | Result |
 | :-- | :-- |
 | `NULL <> 3` | NULL (unknown), so `WHERE` drops the row |
@@ -22788,6 +22790,8 @@ Nearly every business question has a date in it: this month, last quarter, days 
 
 Harbourline stores dates as `YYYY-MM-DD` text. That format sorts correctly and compares correctly (`'2026-03-01' < '2026-04-15'`), and SQLite's date functions read it:
 
+![Subtracting two dates gives days, a month bucket from a date, and a calendar LEFT JOINed to the data so a missing month shows as zero](/images/courses/advanced-sql/dates.svg "Dates subtract into days; months with no rows need a calendar to appear as zero. (Illustration with simplified data.)")
+
 | Task | SQLite |
 | :-- | :-- |
 | Month label | `strftime('%Y-%m', d)` |
@@ -22992,6 +22996,8 @@ A report built on data nobody checked can be wrong in ways no query will warn yo
 
 Data quality checks are short queries that test what you're assuming. Run them on any new table, and again whenever the data is refreshed.
 
+![Four data quality checks: profile, orphans, duplicates and reconciliation, with an orphan payment found by an anti-join](/images/courses/advanced-sql/data-quality.svg "Profile, find orphans and duplicates, reconcile totals, check the logic. (Illustration with simplified data.)")
+
 | Check | Question | Typical query |
 | :-- | :-- | :-- |
 | **Profile** | How many rows, NULLs, distinct values, min and max? | `COUNT(*)`, `COUNT(col)`, `COUNT(DISTINCT col)`, `MIN`, `MAX` |
@@ -23163,6 +23169,8 @@ In SQL for Data Analysis you met `RANK`, `ROW_NUMBER`, running totals and `LAG`.
 ### The frame
 
 Inside `OVER (…)`, `PARTITION BY` picks the group and `ORDER BY` sorts it. The **frame** then picks which rows of the group the function uses for the current row:
+
+![A running total and a three-row moving average over 10, 20, 30, 40 with the frame highlighted; the default-frame trap with ties; and LAG, LEAD and share of total](/images/courses/advanced-sql/window-frames.svg "A frame is the set of rows a window function sees for each row. (Illustration with simplified data.)")
 
 ```sql
 AVG(shipments) OVER (
@@ -23439,6 +23447,8 @@ SELECT … FROM ranked WHERE rn <= 3;
 | `RANK()` | tied rows share a rank, and the next one skips | "everyone in the top 3, including ties" |
 | `DENSE_RANK()` | tied rows share a rank, no gaps | "the top 3 *values*", such as the three highest prices |
 
+![ROW_NUMBER, RANK and DENSE_RANK on four routes where two tie, and which to choose for latest row, top three with ties, and second highest](/images/courses/advanced-sql/ranking.svg "Choose ROW_NUMBER, RANK or DENSE_RANK by what ties should do. (Illustration with simplified data.)")
+
 Always add a tie-breaker to `ROW_NUMBER` (usually the ID). Without one the database may pick a different row each time you run the query, and two people running the same report get different answers.
 
 **See the difference.** Oakridge Packaging (customer 85) has five shipments of 8 containers, then several of 6:
@@ -23622,6 +23632,8 @@ Counting active customers per quarter doesn't answer it. The count was 80 in the
 
 A **cohort** is a group of customers who share a starting point: here, the quarter of their first booking. A **retention table** counts how many from each cohort are active 0, 1, 2… periods later.
 
+![A retention triangle: cohorts by first-booking quarter against quarters since, with blank cells for quarters that haven't happened, and four steps to build it](/images/courses/advanced-sql/cohorts.svg "A retention triangle: each row is a cohort; columns are quarters since the first booking. (Illustration with simplified data.)")
+
 You build one in three steps:
 
 1. **Activity**: one row per customer per period they were active (`SELECT DISTINCT customer_id, period`).
@@ -23788,6 +23800,8 @@ Period comparisons are where analysts most often embarrass themselves, and the b
 ### Pivoting with conditional aggregation
 
 A pivot turns values in a column (years, modes, statuses) into separate columns. The portable way works in every database: an aggregate wrapped around a `CASE`.
+
+![A long table pivoted into one row per year with SUM of CASE; and comparing the same months of each year rather than a full year against a part year](/images/courses/advanced-sql/pivot.svg "CASE inside SUM turns rows into columns; compare like with like. (Illustration with simplified data.)")
 
 ```sql
 SELECT
@@ -23974,6 +23988,8 @@ Joins you already know (`INNER`, `LEFT`) combine matching rows. This lesson cove
 | **Range (non-equi) join** | Which band or period does a value fall in? | `ON value BETWEEN band.lo AND band.hi` |
 | **Cross join** | Every combination, even ones with no data | `routes CROSS JOIN months` |
 
+![Anti-join, semi-join, self join and cross join, each with a tiny example of which rows come out](/images/courses/advanced-sql/join-patterns.svg "Anti-join, semi-join, self join and cross join: four ways to ask about matches. (Illustration with simplified data.)")
+
 A semi-join never duplicates rows, however many matches there are, and it stops looking at the first match.
 
 **Recursive CTEs** have two parts joined by `UNION ALL`: an **anchor** (the starting rows, such as people with no manager) and a **recursive part** that joins the CTE to the table to find the next level down. It repeats until a level finds no new rows. Always carry a `level` column, and make sure the recursion can end: a loop in the data (A manages B, B manages A) would run forever, and a `WHERE level < 10` guard prevents that.
@@ -24144,6 +24160,8 @@ The data volume is out of your hands, but how you write the query isn't. The dif
 ### Scan or search
 
 To find rows, a database either **scans** (reads every row in the table) or **searches** (uses an **index** to jump straight to the rows it needs). An index is like the index at the back of a book: a sorted list of values, each pointing to where the matching rows are. Searching 80 million rows through an index takes a few steps, while scanning them means reading all 80 million.
+
+![A function on a column forces a scan while a bare column can use an index; the words in a query plan; and four habits for fast queries](/images/courses/advanced-sql/performance.svg "Keep columns bare in filters so an index can be used, and read the plan. (Illustration with simplified data.)")
 
 ### Reading the plan
 
@@ -24332,6 +24350,8 @@ None of these is a new SQL feature. Each is a **pattern**: a standard analysis t
 ### Receivables aging
 
 Group unpaid amounts into buckets by how long they've been owed (0–30, 31–60, 61–90, over 90 days) as of a fixed date. The older the bucket, the less likely the money is ever collected. Finance teams review an aging report every month.
+
+![Receivables aging buckets, a Pareto curve with the cumulative share of revenue, and an RFM score table with segments](/images/courses/advanced-sql/business-patterns.svg "Aging buckets, a Pareto curve and RFM scores: three patterns analysts reuse. (Illustration with simplified data.)")
 
 Steps: total payments per shipment → outstanding = charge − paid → days since delivery, as of the report date → `CASE` into buckets → total by bucket.
 

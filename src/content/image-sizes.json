@@ -1,4 +1,44 @@
 {
+ "/images/courses/advanced-sql/business-patterns.svg": [
+  760,
+  446
+ ],
+ "/images/courses/advanced-sql/cohorts.svg": [
+  760,
+  440
+ ],
+ "/images/courses/advanced-sql/data-quality.svg": [
+  760,
+  440
+ ],
+ "/images/courses/advanced-sql/dates.svg": [
+  760,
+  440
+ ],
+ "/images/courses/advanced-sql/join-patterns.svg": [
+  760,
+  440
+ ],
+ "/images/courses/advanced-sql/null-logic.svg": [
+  760,
+  430
+ ],
+ "/images/courses/advanced-sql/performance.svg": [
+  760,
+  466
+ ],
+ "/images/courses/advanced-sql/pivot.svg": [
+  760,
+  430
+ ],
+ "/images/courses/advanced-sql/ranking.svg": [
+  760,
+  430
+ ],
+ "/images/courses/advanced-sql/window-frames.svg": [
+  760,
+  440
+ ],
  "/images/courses/agents/agent-loop.svg": [
   760,
   430

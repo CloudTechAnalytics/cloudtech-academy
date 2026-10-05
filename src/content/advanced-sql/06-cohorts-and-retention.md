@@ -14,6 +14,8 @@ Counting active customers per quarter doesn't answer it. The count was 80 in the
 
 A **cohort** is a group of customers who share a starting point: here, the quarter of their first booking. A **retention table** counts how many from each cohort are active 0, 1, 2… periods later.
 
+![A retention triangle: cohorts by first-booking quarter against quarters since, with blank cells for quarters that haven't happened, and four steps to build it](/images/courses/advanced-sql/cohorts.svg "A retention triangle: each row is a cohort; columns are quarters since the first booking. (Illustration with simplified data.)")
+
 You build one in three steps:
 
 1. **Activity**: one row per customer per period they were active (`SELECT DISTINCT customer_id, period`).

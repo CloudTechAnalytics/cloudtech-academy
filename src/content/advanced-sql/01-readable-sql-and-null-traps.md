@@ -24,6 +24,8 @@ This course is about the SQL that working analysts write: longer queries, harder
 
 The 8 missing customers have no account manager: `account_manager_id` is `NULL`. SQL treats NULL as an unknown value, so any comparison with it is also unknown:
 
+![Comparisons with NULL are unknown so WHERE drops the row; IS NULL finds it; NOT IN with a NULL returns nothing; aggregates ignore NULL; integer division truncates](/images/courses/advanced-sql/null-logic.svg "NULL is unknown: comparisons skip it, NOT IN breaks on it, aggregates ignore it. (Illustration with simplified data.)")
+
 | Expression | Result |
 | :-- | :-- |
 | `NULL <> 3` | NULL (unknown), so `WHERE` drops the row |

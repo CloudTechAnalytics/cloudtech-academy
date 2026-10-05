@@ -38,6 +38,8 @@ SELECT … FROM ranked WHERE rn <= 3;
 | `RANK()` | tied rows share a rank, and the next one skips | "everyone in the top 3, including ties" |
 | `DENSE_RANK()` | tied rows share a rank, no gaps | "the top 3 *values*", such as the three highest prices |
 
+![ROW_NUMBER, RANK and DENSE_RANK on four routes where two tie, and which to choose for latest row, top three with ties, and second highest](/images/courses/advanced-sql/ranking.svg "Choose ROW_NUMBER, RANK or DENSE_RANK by what ties should do. (Illustration with simplified data.)")
+
 Always add a tie-breaker to `ROW_NUMBER` (usually the ID). Without one the database may pick a different row each time you run the query, and two people running the same report get different answers.
 
 **See the difference.** Oakridge Packaging (customer 85) has five shipments of 8 containers, then several of 6:

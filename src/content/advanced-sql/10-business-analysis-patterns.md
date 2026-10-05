@@ -18,6 +18,8 @@ None of these is a new SQL feature. Each is a **pattern**: a standard analysis t
 
 Group unpaid amounts into buckets by how long they've been owed (0–30, 31–60, 61–90, over 90 days) as of a fixed date. The older the bucket, the less likely the money is ever collected. Finance teams review an aging report every month.
 
+![Receivables aging buckets, a Pareto curve with the cumulative share of revenue, and an RFM score table with segments](/images/courses/advanced-sql/business-patterns.svg "Aging buckets, a Pareto curve and RFM scores: three patterns analysts reuse. (Illustration with simplified data.)")
+
 Steps: total payments per shipment → outstanding = charge − paid → days since delivery, as of the report date → `CASE` into buckets → total by bucket.
 
 ### Pareto (concentration)

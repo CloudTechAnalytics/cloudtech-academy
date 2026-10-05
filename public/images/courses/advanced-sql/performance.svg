@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 466" width="760" height="466" role="img" aria-label="Query performance. Without an index the database scans every row; with one it searches straight to the matches. A filter is sargable, able to use an index, when the column is left bare: booking_date greater than or equal to 2026-03-01 and less than 2026-04-01. Wrapping the column in a function, such as strftime on booking_date, forces a scan of every row. EXPLAIN QUERY PLAN shows which will happen: SCAN means every row is read, SEARCH USING INDEX means it jumps to the rows it needs. Habits: select only needed columns, filter early, aggregate before joining, avoid a leading wildcard in LIKE.">
+<title>Keep columns bare in filters so an index can be used, and read the plan.</title>
+
+<rect width="760" height="466" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="20.0" width="356.0" height="140.0" rx="8" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.5"/>
+<text xml:space="preserve" x="30.0" y="46.0" font-size="12.5" fill="#9B2C1F" font-weight="700" text-anchor="start">✗ Not sargable: a function on the column</text>
+<rect x="30.0" y="56.0" width="328.0" height="42.0" rx="8" fill="#2A2926" stroke="#2A2926" stroke-width="1"/>
+<text xml:space="preserve" x="42.0" y="80.0" font-size="10.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">WHERE strftime('%Y-%m', booking_date) = '2026-03'</text>
+<text xml:space="preserve" x="30.0" y="144.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="start">→ SCAN shipments: every row is read</text>
+<rect x="388.0" y="20.0" width="356.0" height="140.0" rx="8" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.5"/>
+<text xml:space="preserve" x="402.0" y="46.0" font-size="12.5" fill="#2F6B3F" font-weight="700" text-anchor="start">✓ Sargable: the bare column</text>
+<rect x="402.0" y="56.0" width="328.0" height="62.0" rx="8" fill="#2A2926" stroke="#2A2926" stroke-width="1"/>
+<text xml:space="preserve" x="414.0" y="80.0" font-size="10.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">WHERE booking_date &gt;= '2026-03-01'</text>
+<text xml:space="preserve" x="414.0" y="100.0" font-size="10.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">  AND booking_date &lt;  '2026-04-01'</text>
+<text xml:space="preserve" x="402.0" y="144.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="start">→ SEARCH USING INDEX: jumps to the rows</text>
+<text xml:space="preserve" x="16.0" y="190.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Reading a plan: EXPLAIN QUERY PLAN</text>
+<rect x="16.0" y="204.0" width="728.0" height="32.0" rx="4" fill="#FFFFFF"/>
+<text xml:space="preserve" x="28.0" y="225.0" font-size="12" fill="#9B2C1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">SCAN shipments</text>
+<text xml:space="preserve" x="740.0" y="225.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="end">reads every row: slow on big tables</text>
+<rect x="16.0" y="242.0" width="728.0" height="32.0" rx="4" fill="#FFFFFF"/>
+<text xml:space="preserve" x="28.0" y="263.0" font-size="12" fill="#2F6B3F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">SEARCH shipments USING INDEX …</text>
+<text xml:space="preserve" x="740.0" y="263.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="end">jumps to the matching rows</text>
+<rect x="16.0" y="280.0" width="728.0" height="32.0" rx="4" fill="#FFFFFF"/>
+<text xml:space="preserve" x="28.0" y="301.0" font-size="12" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">USE TEMP B-TREE FOR ORDER BY</text>
+<text xml:space="preserve" x="740.0" y="301.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="end">an extra sort: an index could avoid it</text>
+<text xml:space="preserve" x="16.0" y="338.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Habits that keep queries fast</text>
+<rect x="16.0" y="352.0" width="172.0" height="76.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="28.0" y="376.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="start">Select what you need</text>
+<text xml:space="preserve" x="28.0" y="394.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">not SELECT * on wide</text>
+<text xml:space="preserve" x="28.0" y="409.9" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">tables</text>
+<rect x="200.0" y="352.0" width="172.0" height="76.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="212.0" y="376.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="start">Filter early</text>
+<text xml:space="preserve" x="212.0" y="394.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">WHERE before joins and</text>
+<text xml:space="preserve" x="212.0" y="409.9" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">GROUPs</text>
+<rect x="384.0" y="352.0" width="172.0" height="76.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="396.0" y="376.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="start">Aggregate, then join</text>
+<text xml:space="preserve" x="396.0" y="394.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">pre-aggregate in a CTE</text>
+<rect x="568.0" y="352.0" width="172.0" height="76.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="580.0" y="376.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="start">No leading wildcard</text>
+<text xml:space="preserve" x="580.0" y="394.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">LIKE 'Foo%' can use an</text>
+<text xml:space="preserve" x="580.0" y="409.9" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">index; '%Foo%' can't</text>
+<text xml:space="preserve" x="16.0" y="456.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">Indexes cost space and slow writes: add them for what you actually filter, join or sort by.</text>
+</g></svg>

@@ -23,6 +23,8 @@ Joins you already know (`INNER`, `LEFT`) combine matching rows. This lesson cove
 | **Range (non-equi) join** | Which band or period does a value fall in? | `ON value BETWEEN band.lo AND band.hi` |
 | **Cross join** | Every combination, even ones with no data | `routes CROSS JOIN months` |
 
+![Anti-join, semi-join, self join and cross join, each with a tiny example of which rows come out](/images/courses/advanced-sql/join-patterns.svg "Anti-join, semi-join, self join and cross join: four ways to ask about matches. (Illustration with simplified data.)")
+
 A semi-join never duplicates rows, however many matches there are, and it stops looking at the first match.
 
 **Recursive CTEs** have two parts joined by `UNION ALL`: an **anchor** (the starting rows, such as people with no manager) and a **recursive part** that joins the CTE to the table to find the next level down. It repeats until a level finds no new rows. Always carry a `level` column, and make sure the recursion can end: a loop in the data (A manages B, B manages A) would run forever, and a `WHERE level < 10` guard prevents that.

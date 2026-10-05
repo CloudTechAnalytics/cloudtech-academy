@@ -26,6 +26,8 @@ Nearly every business question has a date in it: this month, last quarter, days 
 
 Harbourline stores dates as `YYYY-MM-DD` text. That format sorts correctly and compares correctly (`'2026-03-01' < '2026-04-15'`), and SQLite's date functions read it:
 
+![Subtracting two dates gives days, a month bucket from a date, and a calendar LEFT JOINed to the data so a missing month shows as zero](/images/courses/advanced-sql/dates.svg "Dates subtract into days; months with no rows need a calendar to appear as zero. (Illustration with simplified data.)")
+
 | Task | SQLite |
 | :-- | :-- |
 | Month label | `strftime('%Y-%m', d)` |

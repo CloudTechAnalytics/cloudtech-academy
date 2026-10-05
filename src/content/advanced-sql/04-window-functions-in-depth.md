@@ -16,6 +16,8 @@ In SQL for Data Analysis you met `RANK`, `ROW_NUMBER`, running totals and `LAG`.
 
 Inside `OVER (…)`, `PARTITION BY` picks the group and `ORDER BY` sorts it. The **frame** then picks which rows of the group the function uses for the current row:
 
+![A running total and a three-row moving average over 10, 20, 30, 40 with the frame highlighted; the default-frame trap with ties; and LAG, LEAD and share of total](/images/courses/advanced-sql/window-frames.svg "A frame is the set of rows a window function sees for each row. (Illustration with simplified data.)")
+
 ```sql
 AVG(shipments) OVER (
   ORDER BY month
