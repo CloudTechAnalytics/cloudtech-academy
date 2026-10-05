@@ -24480,7 +24480,7 @@ Models are usually described at three levels, from business language down to dat
 | **Logical** | Each thing's attributes, its key, and the relationships with their cardinality | Analysts and designers | *Customer (Customer ID, Name, Region); Order (Order ID, Customer ID, …); one customer to many orders.* |
 | **Physical** | Real tables in one specific database: names, data types, constraints, indexes | Database developers | `CREATE TABLE orders (order_id INT PRIMARY KEY, …)` in SQL Server |
 
-**Why it matters to an analyst**
+### Why it matters to an analyst
 
 - Good models make questions easy: "revenue by region" is one join, not a cleaning project.
 - Most "the numbers don't match" arguments come from models that store the same fact twice.
@@ -24577,14 +24577,14 @@ Kolanut wants to store its customers properly. Someone suggests one column calle
 
 ![A customers table with callouts: the table is the entity, each column an attribute, each row one instance, the primary key identifies each row and the foreign key points to a sales rep.](/images/courses/modelling/entity-anatomy.svg "The parts of a table, using Kolanut's customers.")
 
-**Rules for good attributes**
+### Rules for good attributes
 
 1. **One fact per column.** Not `"Kano, North West"`; use `city` and `region`.
 2. **One value per cell.** Not `"Malt drink, Chin chin"`; that's two rows of something else.
 3. **The right data type.** Numbers you calculate with are numbers; dates are dates; IDs and phone numbers are **text** or integers you never add up. (`08031234567` stored as a number loses its leading zero.)
 4. **Clear names.** `customer_name`, not `name2` or `CustNm`.
 
-**Common data types**
+### Common data types
 
 | Type | For | Examples |
 | :-- | :-- | :-- |
@@ -24719,7 +24719,7 @@ This is how SQL Server shows them for Harbourline's `customers` table:
 
 ![SQL Server Object Explorer listing the columns of dbo.customers: customer_id marked PK, account_manager_id marked FK, and the other columns with their data types.](/images/courses/sql/ssms-object-explorer.webp "Harbourline in SQL Server: the key icon and PK mark the primary key (2); FK marks the foreign key (3). The tables are listed above (1).")
 
-**Natural vs surrogate keys**
+### Natural vs surrogate keys
 
 | | Natural key | Surrogate key |
 | :-- | :-- | :-- |
@@ -24733,6 +24733,31 @@ Analytics models usually use **surrogate keys**, and keep natural keys as ordina
 **Composite key:** a key made of two or more columns together. In a table of which students take which courses, neither `student_id` nor `course_id` is unique alone, but the pair `(student_id, course_id)` is.
 
 **Referential integrity:** every foreign key value must exist as a primary key in the other table. A shipment for customer 999 when there is no customer 999 is an **orphan**, and it silently drops out of inner joins.
+
+### Testing a key on real data
+
+Never assume a column is a key: count. A column (or set of columns) is a valid key only if the number of **distinct** values equals the number of **rows**. On Kolanut's sales data:
+
+| Candidate key | Rows | Distinct values | A key? |
+| :-- | --: | --: | :-- |
+| `customers.customer_id` | 90 | 90 | Yes |
+| `orders.order_id` | 4,266 | 4,266 | Yes |
+| `orders.customer_id` | 4,266 | 90 | No: a foreign key, repeated on each customer's lines |
+| `orders(customer_id, order_date)` | 4,266 | 3,982 | No: 263 shop visits bought more than one product |
+| `orders(customer_id, order_date, product_id)` | 4,266 | 4,246 | No: on 20 occasions a shop ordered the same product twice in a day |
+
+The last row is the surprising one, and the reason to test. It looks as if "this customer, this day, this product" should be unique, but the data says otherwise. If you'd built a model on that assumption, those 20 lines would collide. That's why the order system gives every line its own `order_id`: a **surrogate key** that is unique by design.
+
+In SQL, the test is one query:
+
+```sql
+SELECT COUNT(*) AS rows, COUNT(DISTINCT customer_id) AS distinct_ids
+FROM customers;
+```
+
+In a spreadsheet, compare `=ROWS(range)` with `=COUNTA(UNIQUE(range))`.
+
+**And test the foreign keys.** For every foreign key, count the values that have no match in the other table. For Kolanut, every `customer_id` and `product_id` in `orders` matches a real customer and product: zero orphans.
 
 ## Example
 
@@ -24889,6 +24914,18 @@ At Harbourline, a shipment is usually paid in one go, but some customers pay in 
 In crow's-foot notation, a bar means "one", a crow's foot means "many", and a circle means "zero is allowed". The legend in the diagram shows all four endings.
 
 **Why many-to-many needs a bridge.** You can't put `course_id` on the students table (a student takes several courses) or `student_id` on courses (a course has several students). So you create a table with one row per pairing, `enrolments(student_id, course_id, enrolled_on)`, turning one many-to-many into two one-to-manys. The bridge often carries its own facts, such as the enrolment date or a grade.
+
+### Reading cardinality from real data
+
+You can check a relationship's cardinality by counting. For Kolanut, customers to orders:
+
+| Question | Answer | So |
+| :-- | :-- | :-- |
+| How many orders can one customer have? | From 2 to 175 order lines; the median customer has 30 | **Many** on the orders side |
+| How many customers can one order line have? | Exactly one: `customer_id` is never blank | **One**, and mandatory |
+| Does every customer have at least one order? | Yes, all 90 | Here, but a new customer might not: optional in the design |
+
+Write it as a sentence, both ways round, before you draw it: *"Each customer places one or more order lines; each order line belongs to exactly one customer."* If either half sounds wrong, the line on the diagram is wrong too.
 
 ## Example
 
@@ -25161,6 +25198,70 @@ A memory aid: every non-key column should depend on **the key, the whole key, an
 
 ![Before: a flat invoice sheet with repeated customer, city, product and category values shaded. After: customers, invoices, invoice_lines and products tables joined by keys.](/images/courses/modelling/normalisation.svg "The same data, before and after normalising to third normal form.")
 
+### Step by step: one sheet to third normal form
+
+Here's a sales clerk's invoice sheet: two invoices, the way people often keep them in a spreadsheet. The customers, cities, products and list prices are Kolanut's; the invoices are made up for the example.
+
+**Start: the flat sheet**
+
+| invoice_id | invoice_date | customer | customer_city | items |
+| :-- | :-- | :-- | :-- | :-- |
+| INV-1 | 2026-03-02 | Kayode Distributors | Surulere | Malt drink 330ml × 5; Bar soap × 2 |
+| INV-2 | 2026-03-02 | Grace Provisions | Nnewi | Malt drink 330ml × 3; Plantain chips × 4 |
+
+You can't total the malt drink sold without reading text: `items` holds several values in one cell.
+
+**Step 1: first normal form.** One value per cell, one row per item, and a key. The key is now the pair `(invoice_id, product)`:
+
+| invoice_id | product | invoice_date | customer | customer_city | category | quantity | unit_price |
+| :-- | :-- | :-- | :-- | :-- | :-- | --: | --: |
+| INV-1 | Malt drink 330ml | 2026-03-02 | Kayode Distributors | Surulere | Beverages | 5 | 14,800 |
+| INV-1 | Bar soap | 2026-03-02 | Kayode Distributors | Surulere | Personal care | 2 | 15,600 |
+| INV-2 | Malt drink 330ml | 2026-03-02 | Grace Provisions | Nnewi | Beverages | 3 | 14,800 |
+| INV-2 | Plantain chips | 2026-03-02 | Grace Provisions | Nnewi | Snacks | 4 | 9,900 |
+
+Now it can be summed, but look at the repetition: Kayode Distributors and Surulere appear on every line of INV-1; "Beverages" appears on every malt drink line.
+
+**Step 2: second normal form.** Ask of each column: does it depend on the **whole** key `(invoice_id, product)`, or only on part of it?
+
+| Column | Depends on | So |
+| :-- | :-- | :-- |
+| `invoice_date`, `customer`, `customer_city` | `invoice_id` alone | Move to an `invoices` table |
+| `category` | `product` alone | Move to a `products` table |
+| `quantity`, `unit_price` | Both: this product on this invoice | Stay on the line |
+
+| invoices: invoice_id | invoice_date | customer | customer_city |
+| :-- | :-- | :-- | :-- |
+| INV-1 | 2026-03-02 | Kayode Distributors | Surulere |
+| INV-2 | 2026-03-02 | Grace Provisions | Nnewi |
+
+| products: product | category |
+| :-- | :-- |
+| Malt drink 330ml | Beverages |
+| Bar soap | Personal care |
+| Plantain chips | Snacks |
+
+| invoice_lines: invoice_id | product | quantity | unit_price |
+| :-- | :-- | --: | --: |
+| INV-1 | Malt drink 330ml | 5 | 14,800 |
+| INV-1 | Bar soap | 2 | 15,600 |
+| INV-2 | Malt drink 330ml | 3 | 14,800 |
+| INV-2 | Plantain chips | 4 | 9,900 |
+
+**Step 3: third normal form.** In `invoices`, `customer_city` depends on the **customer**, not on the invoice: Kayode Distributors is in Surulere whichever invoice you look at. That's a non-key column depending on another non-key column, so it moves to a `customers` table, and `invoices` keeps just the customer's key:
+
+| customers: customer_id | customer_name | city |
+| :-- | :-- | :-- |
+| 1 | Kayode Distributors | Surulere |
+| 2 | Grace Provisions | Nnewi |
+
+| invoices: invoice_id | invoice_date | customer_id |
+| :-- | :-- | --: |
+| INV-1 | 2026-03-02 | 1 |
+| INV-2 | 2026-03-02 | 2 |
+
+Four tables, each about one thing. Kayode Distributors' city is stored once; if the shop moves, one cell changes. A new product can be added to `products` before anyone buys it. And joining the four tables back together rebuilds the original sheet exactly: no information was lost.
+
 **What stays on the line?** `unit_price` stays on `invoice_lines` even though products have a list price. The price *charged* is a fact about that sale (discounts, the January 2026 price rise), not about the product. Deciding which facts belong to which entity is the judgement at the heart of normalisation.
 
 ## Example
@@ -25313,6 +25414,42 @@ Put together, the fact sits in the middle and the dimensions around it: a **star
 
 **Grain first, always.** Every measure in the fact table must be true at that grain. `credit_limit` is a fact about a customer, not an order line; put it in the fact table and summing it across lines would multiply it.
 
+### Kinds of fact
+
+Not every number in a fact table can simply be added up. Check each one:
+
+| Kind | Can be summed across | Kolanut example | Careful with |
+| :-- | :-- | :-- | :-- |
+| **Additive** | Every dimension | `quantity`, `revenue`: total by month, customer, product, anything | Nothing: these are the easy ones |
+| **Semi-additive** | Some dimensions, not time | A stock level or account balance: add across warehouses, but not across days | Use the last value, or the average, over time |
+| **Non-additive** | Nothing | `unit_price`, `discount_pct`, any ratio | Never sum; recalculate from additive parts (revenue ÷ packs) |
+
+Summing `discount_pct` across Kolanut's lines gives a meaningless number. The average discount should be calculated from totals: (gross revenue − net revenue) ÷ gross revenue. Storing the additive parts (`quantity`, gross and net amounts) makes every ratio possible.
+
+### Kinds of fact table
+
+| Kind | One row per | Example | Use for |
+| :-- | :-- | :-- | :-- |
+| **Transaction** | Event, when it happens | Each order line; each payment | Most analysis: what happened, when, to whom |
+| **Periodic snapshot** | Thing per period | Each product's stock at the end of each day | Levels over time: stock, balances, headcount |
+| **Accumulating snapshot** | Process instance, updated as it moves | Each shipment, with booked, shipped and delivered dates | Process durations: days from booking to delivery |
+
+Kolanut's `orders` is a transaction fact. Harbourline's `shipments` is close to an accumulating snapshot: one row per shipment, with dates filled in as the shipment moves.
+
+### Dimension attributes
+
+Good dimensions are **wide** and **descriptive**. Everything a report might filter or group by belongs there, in words people use:
+
+| dim_customer column | Why |
+| :-- | :-- |
+| `customer_key` | The key the fact table uses |
+| `customer_name`, `city`, `region` | Who and where |
+| `channel` | Kiosk, Supermarket or Wholesale |
+| `sales_rep` | Who looks after them |
+| `joined_year`, `size_band` | Derived attributes, worked out once instead of in every report |
+
+Prefer text over codes (`Wholesale`, not `W`), and fill gaps with a clear value (`Unknown`) rather than blanks, so filters show something sensible.
+
 **Dimensions are allowed to repeat.** `dim_customer` can hold `region` and `sales_rep` as text, even though that repeats values a normalised database would split out. Analysts filter by them constantly; one join is worth the repetition.
 
 ## Example
@@ -25441,7 +25578,7 @@ On 1 April 2026, Peace Provisions moved from Kano (North West) to Abuja (North C
 
 ## The concept
 
-**Star or snowflake?**
+### Star or snowflake?
 
 ![Two layouts. Star: fact_order_lines joined to dim_product, which has category as a column. Snowflake: dim_product joined further to a dim_category table.](/images/courses/modelling/star-vs-snowflake.svg "A snowflake splits a dimension into further tables.")
 

@@ -29,6 +29,18 @@ In crow's-foot notation, a bar means "one", a crow's foot means "many", and a ci
 
 **Why many-to-many needs a bridge.** You can't put `course_id` on the students table (a student takes several courses) or `student_id` on courses (a course has several students). So you create a table with one row per pairing, `enrolments(student_id, course_id, enrolled_on)`, turning one many-to-many into two one-to-manys. The bridge often carries its own facts, such as the enrolment date or a grade.
 
+### Reading cardinality from real data
+
+You can check a relationship's cardinality by counting. For Kolanut, customers to orders:
+
+| Question | Answer | So |
+| :-- | :-- | :-- |
+| How many orders can one customer have? | From 2 to 175 order lines; the median customer has 30 | **Many** on the orders side |
+| How many customers can one order line have? | Exactly one: `customer_id` is never blank | **One**, and mandatory |
+| Does every customer have at least one order? | Yes, all 90 | Here, but a new customer might not: optional in the design |
+
+Write it as a sentence, both ways round, before you draw it: *"Each customer places one or more order lines; each order line belongs to exactly one customer."* If either half sounds wrong, the line on the diagram is wrong too.
+
 ## Example
 
 Harbourline's shipments-to-payments relationship is **one-to-many**, and optional on the payments side. How many payments do shipments have?

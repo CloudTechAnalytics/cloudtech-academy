@@ -10,7 +10,7 @@ On 1 April 2026, Peace Provisions moved from Kano (North West) to Abuja (North C
 
 ## The concept
 
-**Star or snowflake?**
+### Star or snowflake?
 
 ![Two layouts. Star: fact_order_lines joined to dim_product, which has category as a column. Snowflake: dim_product joined further to a dim_category table.](/images/courses/modelling/star-vs-snowflake.svg "A snowflake splits a dimension into further tables.")
 

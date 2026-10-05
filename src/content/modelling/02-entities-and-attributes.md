@@ -18,14 +18,14 @@ Kolanut wants to store its customers properly. Someone suggests one column calle
 
 ![A customers table with callouts: the table is the entity, each column an attribute, each row one instance, the primary key identifies each row and the foreign key points to a sales rep.](/images/courses/modelling/entity-anatomy.svg "The parts of a table, using Kolanut's customers.")
 
-**Rules for good attributes**
+### Rules for good attributes
 
 1. **One fact per column.** Not `"Kano, North West"`; use `city` and `region`.
 2. **One value per cell.** Not `"Malt drink, Chin chin"`; that's two rows of something else.
 3. **The right data type.** Numbers you calculate with are numbers; dates are dates; IDs and phone numbers are **text** or integers you never add up. (`08031234567` stored as a number loses its leading zero.)
 4. **Clear names.** `customer_name`, not `name2` or `CustNm`.
 
-**Common data types**
+### Common data types
 
 | Type | For | Examples |
 | :-- | :-- | :-- |

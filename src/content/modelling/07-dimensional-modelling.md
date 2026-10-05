@@ -32,6 +32,42 @@ Put together, the fact sits in the middle and the dimensions around it: a **star
 
 **Grain first, always.** Every measure in the fact table must be true at that grain. `credit_limit` is a fact about a customer, not an order line; put it in the fact table and summing it across lines would multiply it.
 
+### Kinds of fact
+
+Not every number in a fact table can simply be added up. Check each one:
+
+| Kind | Can be summed across | Kolanut example | Careful with |
+| :-- | :-- | :-- | :-- |
+| **Additive** | Every dimension | `quantity`, `revenue`: total by month, customer, product, anything | Nothing: these are the easy ones |
+| **Semi-additive** | Some dimensions, not time | A stock level or account balance: add across warehouses, but not across days | Use the last value, or the average, over time |
+| **Non-additive** | Nothing | `unit_price`, `discount_pct`, any ratio | Never sum; recalculate from additive parts (revenue ÷ packs) |
+
+Summing `discount_pct` across Kolanut's lines gives a meaningless number. The average discount should be calculated from totals: (gross revenue − net revenue) ÷ gross revenue. Storing the additive parts (`quantity`, gross and net amounts) makes every ratio possible.
+
+### Kinds of fact table
+
+| Kind | One row per | Example | Use for |
+| :-- | :-- | :-- | :-- |
+| **Transaction** | Event, when it happens | Each order line; each payment | Most analysis: what happened, when, to whom |
+| **Periodic snapshot** | Thing per period | Each product's stock at the end of each day | Levels over time: stock, balances, headcount |
+| **Accumulating snapshot** | Process instance, updated as it moves | Each shipment, with booked, shipped and delivered dates | Process durations: days from booking to delivery |
+
+Kolanut's `orders` is a transaction fact. Harbourline's `shipments` is close to an accumulating snapshot: one row per shipment, with dates filled in as the shipment moves.
+
+### Dimension attributes
+
+Good dimensions are **wide** and **descriptive**. Everything a report might filter or group by belongs there, in words people use:
+
+| dim_customer column | Why |
+| :-- | :-- |
+| `customer_key` | The key the fact table uses |
+| `customer_name`, `city`, `region` | Who and where |
+| `channel` | Kiosk, Supermarket or Wholesale |
+| `sales_rep` | Who looks after them |
+| `joined_year`, `size_band` | Derived attributes, worked out once instead of in every report |
+
+Prefer text over codes (`Wholesale`, not `W`), and fill gaps with a clear value (`Unknown`) rather than blanks, so filters show something sensible.
+
 **Dimensions are allowed to repeat.** `dim_customer` can hold `region` and `sales_rep` as text, even though that repeats values a normalised database would split out. Analysts filter by them constantly; one join is worth the repetition.
 
 ## Example

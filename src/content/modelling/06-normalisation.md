@@ -28,6 +28,70 @@ A memory aid: every non-key column should depend on **the key, the whole key, an
 
 ![Before: a flat invoice sheet with repeated customer, city, product and category values shaded. After: customers, invoices, invoice_lines and products tables joined by keys.](/images/courses/modelling/normalisation.svg "The same data, before and after normalising to third normal form.")
 
+### Step by step: one sheet to third normal form
+
+Here's a sales clerk's invoice sheet: two invoices, the way people often keep them in a spreadsheet. The customers, cities, products and list prices are Kolanut's; the invoices are made up for the example.
+
+**Start: the flat sheet**
+
+| invoice_id | invoice_date | customer | customer_city | items |
+| :-- | :-- | :-- | :-- | :-- |
+| INV-1 | 2026-03-02 | Kayode Distributors | Surulere | Malt drink 330ml × 5; Bar soap × 2 |
+| INV-2 | 2026-03-02 | Grace Provisions | Nnewi | Malt drink 330ml × 3; Plantain chips × 4 |
+
+You can't total the malt drink sold without reading text: `items` holds several values in one cell.
+
+**Step 1: first normal form.** One value per cell, one row per item, and a key. The key is now the pair `(invoice_id, product)`:
+
+| invoice_id | product | invoice_date | customer | customer_city | category | quantity | unit_price |
+| :-- | :-- | :-- | :-- | :-- | :-- | --: | --: |
+| INV-1 | Malt drink 330ml | 2026-03-02 | Kayode Distributors | Surulere | Beverages | 5 | 14,800 |
+| INV-1 | Bar soap | 2026-03-02 | Kayode Distributors | Surulere | Personal care | 2 | 15,600 |
+| INV-2 | Malt drink 330ml | 2026-03-02 | Grace Provisions | Nnewi | Beverages | 3 | 14,800 |
+| INV-2 | Plantain chips | 2026-03-02 | Grace Provisions | Nnewi | Snacks | 4 | 9,900 |
+
+Now it can be summed, but look at the repetition: Kayode Distributors and Surulere appear on every line of INV-1; "Beverages" appears on every malt drink line.
+
+**Step 2: second normal form.** Ask of each column: does it depend on the **whole** key `(invoice_id, product)`, or only on part of it?
+
+| Column | Depends on | So |
+| :-- | :-- | :-- |
+| `invoice_date`, `customer`, `customer_city` | `invoice_id` alone | Move to an `invoices` table |
+| `category` | `product` alone | Move to a `products` table |
+| `quantity`, `unit_price` | Both: this product on this invoice | Stay on the line |
+
+| invoices: invoice_id | invoice_date | customer | customer_city |
+| :-- | :-- | :-- | :-- |
+| INV-1 | 2026-03-02 | Kayode Distributors | Surulere |
+| INV-2 | 2026-03-02 | Grace Provisions | Nnewi |
+
+| products: product | category |
+| :-- | :-- |
+| Malt drink 330ml | Beverages |
+| Bar soap | Personal care |
+| Plantain chips | Snacks |
+
+| invoice_lines: invoice_id | product | quantity | unit_price |
+| :-- | :-- | --: | --: |
+| INV-1 | Malt drink 330ml | 5 | 14,800 |
+| INV-1 | Bar soap | 2 | 15,600 |
+| INV-2 | Malt drink 330ml | 3 | 14,800 |
+| INV-2 | Plantain chips | 4 | 9,900 |
+
+**Step 3: third normal form.** In `invoices`, `customer_city` depends on the **customer**, not on the invoice: Kayode Distributors is in Surulere whichever invoice you look at. That's a non-key column depending on another non-key column, so it moves to a `customers` table, and `invoices` keeps just the customer's key:
+
+| customers: customer_id | customer_name | city |
+| :-- | :-- | :-- |
+| 1 | Kayode Distributors | Surulere |
+| 2 | Grace Provisions | Nnewi |
+
+| invoices: invoice_id | invoice_date | customer_id |
+| :-- | :-- | --: |
+| INV-1 | 2026-03-02 | 1 |
+| INV-2 | 2026-03-02 | 2 |
+
+Four tables, each about one thing. Kayode Distributors' city is stored once; if the shop moves, one cell changes. A new product can be added to `products` before anyone buys it. And joining the four tables back together rebuilds the original sheet exactly: no information was lost.
+
 **What stays on the line?** `unit_price` stays on `invoice_lines` even though products have a list price. The price *charged* is a fact about that sale (discounts, the January 2026 price rise), not about the product. Deciding which facts belong to which entity is the judgement at the heart of normalisation.
 
 ## Example
