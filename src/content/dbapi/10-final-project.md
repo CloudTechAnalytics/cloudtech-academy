@@ -10,7 +10,7 @@ Tallybook is ready to retire its CSV exports. Your final project is the replacem
 
 ## The concept
 
-**What the project contains**
+### What the project contains
 
 | Part | Built in |
 | :-- | :-- |
@@ -22,7 +22,7 @@ Tallybook is ready to retire its CSV exports. Your final project is the replacem
 | The REST API with clear status codes and pagination | lesson 8 |
 | Tests with fixtures for every endpoint and rule | lesson 9 |
 
-**Prove it reconciles**
+### Prove it reconciles
 
 The API's balances must agree with a direct SQL calculation for every invoice, and every row of the export must be either loaded or refused with a reason.
 

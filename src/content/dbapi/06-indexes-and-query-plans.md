@@ -10,20 +10,22 @@ The customer portal's "your invoices" page got slower every month. With a few th
 
 ## The concept
 
-**Scan or search**
+### Scan or search
 
 Without help, a database answers `WHERE customer_id = ?` by reading every row: a **scan**. An **index** is a sorted structure (like a book's index) that lets it jump straight to the matching rows: a **search**.
 
-**Query plans**
+![Without an index, all 10 invoice rows are read to find customer C0007; with a sorted index on customer_id, the database jumps to C0007 and reads only its 3 rows](/images/courses/dbapi/scan-search.svg "Without an index, every row is read; with one, the database jumps to the matches.")
+
+### Query plans
 
 `EXPLAIN QUERY PLAN` shows how SQLite will run a query, without running it. `SCAN invoices` means every row is read; `SEARCH invoices USING INDEX ...` means it jumps to the rows it needs. PostgreSQL's equivalent is `EXPLAIN`.
 
-**What gets an index**
+### What gets an index
 
 - Primary keys and UNIQUE columns are indexed automatically.
 - Add indexes for columns you **filter, join or sort by** often: foreign keys are the usual first candidates.
 
-**What indexes cost**
+### What indexes cost
 
 Every insert and update must also update each index, and indexes take space. Index for the queries you actually run, not every column.
 

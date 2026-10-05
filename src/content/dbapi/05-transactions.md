@@ -12,7 +12,7 @@ Changes that belong together must happen **all or not at all**. That's what a **
 
 ## The concept
 
-**ACID**
+### ACID
 
 | Property | Meaning |
 | :-- | :-- |
@@ -21,7 +21,7 @@ Changes that belong together must happen **all or not at all**. That's what a **
 | **Isolated** | other users don't see half-finished changes |
 | **Durable** | once committed, changes survive a crash |
 
-**In Python's sqlite3**
+### In Python's sqlite3
 
 ```python norun
 with conn:            # starts a transaction
@@ -30,9 +30,11 @@ with conn:            # starts a transaction
 # commits if the block finishes; rolls back everything if an exception escapes
 ```
 
-**Idempotency**
+### Idempotency
 
 Imports get re-run. Give each payment the bank's unique reference, make it `UNIQUE`, and a re-run can't insert it twice.
+
+![Insert a payment, crash, then the invoice update never runs: without a transaction the payment is saved but the invoice still shows unpaid; inside with conn: both are rolled back. A UNIQUE bank reference stops a re-run from recording a payment twice](/images/courses/dbapi/transactions.svg "All or nothing: a crash halfway leaves no half-finished change.")
 
 ## Example
 

@@ -12,7 +12,7 @@ Good tests are **independent**: each starts from a known state, and nothing one 
 
 ## The concept
 
-**Fixtures**
+### Fixtures
 
 A pytest **fixture** is a function that prepares something a test needs and hands it over. A test asks for it by naming it as a parameter:
 
@@ -23,17 +23,19 @@ def client():
     yield create_app(db).test_client()
 ```
 
-**An app factory**
+### An app factory
 
 `create_app(db)` builds the app around whichever database it's given: the real one in production, a fresh in-memory one in tests.
 
-**Small, known test data**
+### Small, known test data
 
 Tests use a few rows written into the fixture, chosen to make expected answers easy to work out by hand, not the full production data.
 
-**What to test in an API**
+### What to test in an API
 
 Every endpoint's success case, each error status, and the rules that involve the database: totals, balances, uniqueness, and that a refused request changed nothing.
+
+![A test asks for the client fixture, which builds a fresh in-memory database with known rows, creates the app around it and hands over a test client; the same create_app uses the real database in production](/images/courses/dbapi/fixtures.svg "A fixture builds a fresh database and app for every test.")
 
 ## Example
 

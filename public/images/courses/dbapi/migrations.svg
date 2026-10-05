@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 380" width="760" height="380" role="img" aria-label="Running migrations. Migrations are numbered SQL scripts kept with the code. The database records the version it's at, here version 2. The migration tool applies every pending migration in order, 3 then 4, each in its own transaction, and records the new version. Running it again finds nothing pending and does nothing.">
+<title>The database records its version; the tool applies only what's pending, in order.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="380" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="40.0" width="170.0" height="90.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.5"/>
+<text xml:space="preserve" x="30.0" y="66.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">1.sql</text>
+<text xml:space="preserve" x="30.0" y="90.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">create the tables</text>
+<path d="M188.0,85.0 L198.0,85.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="200.0" y="40.0" width="170.0" height="90.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.5"/>
+<text xml:space="preserve" x="214.0" y="66.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">2.sql</text>
+<text xml:space="preserve" x="214.0" y="90.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">add currency, default</text>
+<text xml:space="preserve" x="214.0" y="107.4" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">NGN</text>
+<path d="M372.0,85.0 L382.0,85.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="384.0" y="40.0" width="170.0" height="90.0" rx="10" fill="#FFFFFF" stroke="#B38A3E" stroke-width="1.5" stroke-dasharray="6 4"/>
+<text xml:space="preserve" x="398.0" y="66.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">3.sql</text>
+<text xml:space="preserve" x="398.0" y="90.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">add customer-date</text>
+<text xml:space="preserve" x="398.0" y="107.4" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">index</text>
+<path d="M556.0,85.0 L566.0,85.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="568.0" y="40.0" width="170.0" height="90.0" rx="10" fill="#FFFFFF" stroke="#B38A3E" stroke-width="1.5" stroke-dasharray="6 4"/>
+<text xml:space="preserve" x="582.0" y="66.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">4.sql</text>
+<text xml:space="preserve" x="582.0" y="90.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">create credit_notes</text>
+<text xml:space="preserve" x="16.0" y="28.0" font-size="13" fill="#5E5A52" font-weight="700" text-anchor="start">migrations/ (in git, never edited once run)</text>
+<text xml:space="preserve" x="101.0" y="152.0" font-size="12.5" fill="#2F6B3F" font-weight="700" text-anchor="middle">already applied</text>
+<line x1="30.0" y1="140.0" x2="356.0" y2="140.0" stroke="#2F6B3F" stroke-width="2"/>
+<text xml:space="preserve" x="469.0" y="152.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="middle">pending: applied now, in order</text>
+<line x1="384.0" y1="140.0" x2="726.0" y2="140.0" stroke="#B38A3E" stroke-width="2"/>
+<rect x="16.0" y="180.0" width="340.0" height="80.0" rx="10" fill="#FFFFFF" stroke="#2F5D8A" stroke-width="1.5"/>
+<text xml:space="preserve" x="32.0" y="208.0" font-size="14" fill="#2F5D8A" font-weight="700" text-anchor="start">Database</text>
+<text xml:space="preserve" x="32.0" y="236.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">PRAGMA user_version = 2</text>
+<path d="M358.0,220.0 L386.0,220.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="390.0" y="180.0" width="354.0" height="80.0" rx="10" fill="#FFFFFF" stroke="#2F5D8A" stroke-width="1.5"/>
+<text xml:space="preserve" x="406.0" y="208.0" font-size="14" fill="#2F5D8A" font-weight="700" text-anchor="start">After the run</text>
+<text xml:space="preserve" x="406.0" y="236.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">3 and 4 applied, version recorded</text>
+<text xml:space="preserve" x="16.0" y="292.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Each migration runs in a transaction: a failure leaves the version where it was. Running the tool again finds</text>
+<text xml:space="preserve" x="16.0" y="310.1" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">nothing pending and changes nothing.</text>
+<text xml:space="preserve" x="16.0" y="346.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Need a change? Add migration 5. Test it on a copy of production data first.</text>
+</g></svg>

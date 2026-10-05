@@ -159,6 +159,42 @@
   760,
   380
  ],
+ "/images/courses/dbapi/app-database.svg": [
+  760,
+  380
+ ],
+ "/images/courses/dbapi/constraints.svg": [
+  760,
+  400
+ ],
+ "/images/courses/dbapi/fixtures.svg": [
+  760,
+  380
+ ],
+ "/images/courses/dbapi/migrations.svg": [
+  760,
+  380
+ ],
+ "/images/courses/dbapi/parameters.svg": [
+  760,
+  400
+ ],
+ "/images/courses/dbapi/rest.svg": [
+  760,
+  420
+ ],
+ "/images/courses/dbapi/scan-search.svg": [
+  760,
+  400
+ ],
+ "/images/courses/dbapi/schema.svg": [
+  760,
+  440
+ ],
+ "/images/courses/dbapi/transactions.svg": [
+  760,
+  420
+ ],
  "/images/courses/excel/chart-choice.svg": [
   760,
   664

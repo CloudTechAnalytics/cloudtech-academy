@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 380" width="760" height="380" role="img" aria-label="An application talking to a relational database. The Python app sends SQL with separate values through sqlite3 and gets rows back. Inside the database: tables hold the data, constraints refuse bad rows, transactions make groups of changes all-or-nothing, and indexes find rows quickly.">
+<title>The app sends SQL and values; the database stores, guards and finds the data.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="380" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="40.0" width="200.0" height="230.0" rx="10" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.5"/>
+<text xml:space="preserve" x="32.0" y="68.0" font-size="15" fill="#2F5D8A" font-weight="700" text-anchor="start">Python app</text>
+<rect x="30.0" y="84.0" width="172.0" height="94.0" rx="8" fill="#2A2926" stroke="#2A2926" stroke-width="1"/>
+<text xml:space="preserve" x="42.0" y="108.0" font-size="11" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">conn.execute(</text>
+<text xml:space="preserve" x="42.0" y="126.0" font-size="11" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">  "SELECT … WHERE</text>
+<text xml:space="preserve" x="42.0" y="144.0" font-size="11" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">   city = ?",</text>
+<text xml:space="preserve" x="42.0" y="162.0" font-size="11" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">  ("Lagos",))</text>
+<text xml:space="preserve" x="32.0" y="196.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">One question language:</text>
+<text xml:space="preserve" x="32.0" y="214.1" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">SQL</text>
+<path d="M220.0,120.0 L290.0,120.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<text xml:space="preserve" x="255.0" y="110.0" font-size="11.5" fill="#8A6A1F" font-weight="700" text-anchor="middle">SQL + values</text>
+<path d="M290.0,200.0 L220.0,200.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<text xml:space="preserve" x="255.0" y="190.0" font-size="11.5" fill="#8A6A1F" font-weight="700" text-anchor="middle">rows</text>
+<rect x="294.0" y="30.0" width="450.0" height="250.0" rx="10" fill="#FFFFFF" stroke="#B38A3E" stroke-width="1.8"/>
+<text xml:space="preserve" x="310.0" y="58.0" font-size="15" fill="#2A2926" font-weight="700" text-anchor="start">Database (SQLite: one file)</text>
+<rect x="310.0" y="74.0" width="202.0" height="90.0" rx="8" fill="#F3EBD8"/>
+<text xml:space="preserve" x="324.0" y="102.0" font-size="14" fill="#8A6A1F" font-weight="700" text-anchor="start">Tables</text>
+<text xml:space="preserve" x="324.0" y="126.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">named, typed columns; keys</text>
+<text xml:space="preserve" x="324.0" y="143.4" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">link rows</text>
+<rect x="522.0" y="74.0" width="202.0" height="90.0" rx="8" fill="#F6E3E0"/>
+<text xml:space="preserve" x="536.0" y="102.0" font-size="14" fill="#9B2C1F" font-weight="700" text-anchor="start">Constraints</text>
+<text xml:space="preserve" x="536.0" y="126.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">refuse bad data at the door</text>
+<rect x="310.0" y="174.0" width="202.0" height="90.0" rx="8" fill="#E5F0E8"/>
+<text xml:space="preserve" x="324.0" y="202.0" font-size="14" fill="#2F6B3F" font-weight="700" text-anchor="start">Transactions</text>
+<text xml:space="preserve" x="324.0" y="226.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">a group of changes: all or</text>
+<text xml:space="preserve" x="324.0" y="243.4" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">nothing</text>
+<rect x="522.0" y="174.0" width="202.0" height="90.0" rx="8" fill="#E6EEF6"/>
+<text xml:space="preserve" x="536.0" y="202.0" font-size="14" fill="#2F5D8A" font-weight="700" text-anchor="start">Indexes</text>
+<text xml:space="preserve" x="536.0" y="226.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">find rows without reading</text>
+<text xml:space="preserve" x="536.0" y="243.4" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">them all</text>
+<text xml:space="preserve" x="16.0" y="316.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">SQLite is built into Python as sqlite3. PostgreSQL and MySQL work the same way for almost everything here.</text>
+<text xml:space="preserve" x="16.0" y="342.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Rules live in the database too, so they hold for every app, script and person that writes to it.</text>
+</g></svg>

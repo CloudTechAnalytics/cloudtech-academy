@@ -59126,7 +59126,7 @@ Applications keep their data in a **database**. In this course you'll design Tal
 
 ## The concept
 
-**What a relational database provides**
+### What a relational database provides
 
 | Need | How the database helps |
 | :-- | :-- |
@@ -59137,11 +59137,13 @@ Applications keep their data in a **database**. In this course you'll design Tal
 | Speed | **indexes** find rows without reading the whole table |
 | One question language | **SQL** |
 
-**SQLite**
+![A Python app sends SQL and values to the database and gets rows back; inside the database are tables, constraints, transactions and indexes](/images/courses/dbapi/app-database.svg "The app sends SQL and values; the database stores, guards and finds the data.")
+
+### SQLite
 
 A complete relational database in a single file (or in memory), built into Python as `sqlite3`. Production systems often use PostgreSQL or MySQL; the ideas and almost all the SQL in this course carry over directly.
 
-**From Python**
+### From Python
 
 ```python norun
 import sqlite3
@@ -59270,23 +59272,25 @@ A good **schema**, the design of a database's tables, stores each fact once, lin
 
 ## The concept
 
-**One table per kind of thing**
+### One table per kind of thing
 
 Customers, invoices, invoice lines and payments are different things with different lifetimes, so each gets a table.
 
-**Keys**
+### Keys
 
 - A **primary key** identifies each row (`customer_id`).
 - A **foreign key** points to a row in another table (`invoices.customer_id` → `customers.customer_id`).
 - A **composite key** uses more than one column: an invoice line is identified by its invoice **and** its line number.
 
-**Don't repeat facts**
+### Don't repeat facts
 
 Store the customer's name once, in `customers`. Store totals? Usually **not**: they can be calculated from the lines, and a stored total can disagree with them. (If you store one for speed, you must keep it in step.)
 
-**Money and dates**
+### Money and dates
 
 Money as **integer kobo** (Software Engineering, lesson 2). Dates in SQLite as `YYYY-MM-DD` text, which sorts and compares correctly.
+
+![Entity-relationship diagram: customers (customer_id primary key) has zero or more invoices (invoice_id primary key, customer_id foreign key); each invoice has one or more invoice_lines (composite key invoice_id and line_no) and zero or more payments (payment_id primary key, invoice_id foreign key)](/images/courses/dbapi/schema.svg "Tallybook's schema: four tables linked by keys.")
 
 ## Example
 
@@ -59472,12 +59476,14 @@ Rules that must **always** hold belong in the database itself, as **constraints*
 | `REFERENCES` (foreign key) | a link to a row that doesn't exist |
 | `CHECK (...)` | any row where the condition is false |
 
-**Two SQLite details**
+![Five example rows: a duplicate customer refused by PRIMARY KEY, a missing business name by NOT NULL, an invoice for a non-existent customer by REFERENCES, a 35% discount by CHECK, and a valid invoice inserted](/images/courses/dbapi/constraints.svg "Each constraint refuses a different kind of bad row.")
+
+### Two SQLite details
 
 - Foreign keys are only enforced after `PRAGMA foreign_keys = ON`, on every connection. (PostgreSQL always enforces them.)
 - An empty string `''` is **not** NULL. `NOT NULL` won't catch a blank customer ID; the foreign key will, because no customer has the ID `''`.
 
-**Database rules and code rules**
+### Database rules and code rules
 
 Keep both: validate in code to give users friendly messages, and constrain in the database so the rule holds everywhere. In code, catch `sqlite3.IntegrityError` and turn it into a clear response.
 
@@ -59628,7 +59634,7 @@ The fix is simple and universal: **never put values into SQL text; pass them as 
 
 ## The concept
 
-**Parameters**
+### Parameters
 
 ```python norun
 # Never:
@@ -59639,11 +59645,13 @@ conn.execute("SELECT * FROM customers WHERE business_name = ?", (name,))
 
 With `?` placeholders, the database receives the SQL and the values separately. A value can contain any characters (apostrophes, quotes, SQL keywords) and is always treated as data.
 
-**Results**
+![An f-string pastes the value into SQL, so Mama's Kitchen causes a syntax error and x' OR '1'='1 matches every row; a ? placeholder sends the SQL and the value separately, so the value is only ever data](/images/courses/dbapi/parameters.svg "f-strings paste values into SQL; placeholders keep them separate.")
+
+### Results
 
 `fetchone()` gets one row, `fetchall()` all of them. Setting `conn.row_factory = sqlite3.Row` lets you use column names: `row["business_name"]`.
 
-**Let the database do the work**
+### Let the database do the work
 
 Joins and `GROUP BY` in SQL are usually faster and clearer than loading whole tables into Python and looping.
 
@@ -59815,7 +59823,7 @@ Changes that belong together must happen **all or not at all**. That's what a **
 
 ## The concept
 
-**ACID**
+### ACID
 
 | Property | Meaning |
 | :-- | :-- |
@@ -59824,7 +59832,7 @@ Changes that belong together must happen **all or not at all**. That's what a **
 | **Isolated** | other users don't see half-finished changes |
 | **Durable** | once committed, changes survive a crash |
 
-**In Python's sqlite3**
+### In Python's sqlite3
 
 ```python norun
 with conn:            # starts a transaction
@@ -59833,9 +59841,11 @@ with conn:            # starts a transaction
 # commits if the block finishes; rolls back everything if an exception escapes
 ```
 
-**Idempotency**
+### Idempotency
 
 Imports get re-run. Give each payment the bank's unique reference, make it `UNIQUE`, and a re-run can't insert it twice.
+
+![Insert a payment, crash, then the invoice update never runs: without a transaction the payment is saved but the invoice still shows unpaid; inside with conn: both are rolled back. A UNIQUE bank reference stops a re-run from recording a payment twice](/images/courses/dbapi/transactions.svg "All or nothing: a crash halfway leaves no half-finished change.")
 
 ## Example
 
@@ -60001,20 +60011,22 @@ The customer portal's "your invoices" page got slower every month. With a few th
 
 ## The concept
 
-**Scan or search**
+### Scan or search
 
 Without help, a database answers `WHERE customer_id = ?` by reading every row: a **scan**. An **index** is a sorted structure (like a book's index) that lets it jump straight to the matching rows: a **search**.
 
-**Query plans**
+![Without an index, all 10 invoice rows are read to find customer C0007; with a sorted index on customer_id, the database jumps to C0007 and reads only its 3 rows](/images/courses/dbapi/scan-search.svg "Without an index, every row is read; with one, the database jumps to the matches.")
+
+### Query plans
 
 `EXPLAIN QUERY PLAN` shows how SQLite will run a query, without running it. `SCAN invoices` means every row is read; `SEARCH invoices USING INDEX ...` means it jumps to the rows it needs. PostgreSQL's equivalent is `EXPLAIN`.
 
-**What gets an index**
+### What gets an index
 
 - Primary keys and UNIQUE columns are indexed automatically.
 - Add indexes for columns you **filter, join or sort by** often: foreign keys are the usual first candidates.
 
-**What indexes cost**
+### What indexes cost
 
 Every insert and update must also update each index, and indexes take space. Index for the queries you actually run, not every column.
 
@@ -60131,7 +60143,7 @@ Schema changes need the same discipline as code: written down, reviewed, version
 
 ## The concept
 
-**Migrations**
+### Migrations
 
 A numbered list of schema changes, each a small SQL script, kept in version control with the code:
 
@@ -60142,11 +60154,13 @@ A numbered list of schema changes, each a small SQL script, kept in version cont
 | 3 | add the customer-date index |
 | 4 | create `credit_notes` |
 
-**Running them**
+### Running them
 
 The database records which version it's at. A migration tool applies every **pending** migration, in order, each in a transaction, and records the new version. Running it again does nothing. SQLite has a built-in slot for this: `PRAGMA user_version`. Tools such as Alembic (Python) or Flyway do the same with a version table.
 
-**Rules for safe migrations**
+![Migrations 1 to 4 in order; the database is at version 2, so the tool applies 3 then 4, each in a transaction, and records the new version; running again does nothing](/images/courses/dbapi/migrations.svg "The database records its version; the tool applies only what's pending, in order.")
+
+### Rules for safe migrations
 
 - Never edit a migration that has already run anywhere; add a new one.
 - Make changes backwards-compatible (CI/CD course, lesson 9): add a column with a default before code needs it; remove old columns only after no code uses them.
@@ -60298,7 +60312,7 @@ Clients write code against an API's shape. A consistent, predictable design save
 
 ## The concept
 
-**Resources and methods**
+### Resources and methods
 
 Routes name **things**; HTTP methods say what to do with them:
 
@@ -60309,7 +60323,7 @@ Routes name **things**; HTTP methods say what to do with them:
 | `GET /invoices/INV-100001` | one invoice, with its lines and balance |
 | `POST /invoices/INV-100001/payments` | record a new payment on that invoice |
 
-**Status codes that mean something**
+### Status codes that mean something
 
 | Code | When |
 | :-- | :-- |
@@ -60319,9 +60333,11 @@ Routes name **things**; HTTP methods say what to do with them:
 | 404 Not Found | no such resource |
 | 409 Conflict | valid, but clashes with the current state (a payment larger than what's owed, a reused reference) |
 
-**Pagination**
+### Pagination
 
 Lists take `limit` and `offset` (with a sensible maximum), and say how many there are in total, so clients can page through.
+
+![GET and POST routes with their status codes, error codes 400, 404 and 409, and pagination: of 23 items, limit 10 and offset 10 return items 11 to 20, with the total in the response](/images/courses/dbapi/rest.svg "Routes for things, methods for actions, meaningful status codes, and pagination.")
 
 ## Example
 
@@ -60543,7 +60559,7 @@ Good tests are **independent**: each starts from a known state, and nothing one 
 
 ## The concept
 
-**Fixtures**
+### Fixtures
 
 A pytest **fixture** is a function that prepares something a test needs and hands it over. A test asks for it by naming it as a parameter:
 
@@ -60554,17 +60570,19 @@ def client():
     yield create_app(db).test_client()
 ```
 
-**An app factory**
+### An app factory
 
 `create_app(db)` builds the app around whichever database it's given: the real one in production, a fresh in-memory one in tests.
 
-**Small, known test data**
+### Small, known test data
 
 Tests use a few rows written into the fixture, chosen to make expected answers easy to work out by hand, not the full production data.
 
-**What to test in an API**
+### What to test in an API
 
 Every endpoint's success case, each error status, and the rules that involve the database: totals, balances, uniqueness, and that a refused request changed nothing.
+
+![A test asks for the client fixture, which builds a fresh in-memory database with known rows, creates the app around it and hands over a test client; the same create_app uses the real database in production](/images/courses/dbapi/fixtures.svg "A fixture builds a fresh database and app for every test.")
 
 ## Example
 
@@ -60759,7 +60777,7 @@ Tallybook is ready to retire its CSV exports. Your final project is the replacem
 
 ## The concept
 
-**What the project contains**
+### What the project contains
 
 | Part | Built in |
 | :-- | :-- |
@@ -60771,7 +60789,7 @@ Tallybook is ready to retire its CSV exports. Your final project is the replacem
 | The REST API with clear status codes and pagination | lesson 8 |
 | Tests with fixtures for every endpoint and rule | lesson 9 |
 
-**Prove it reconciles**
+### Prove it reconciles
 
 The API's balances must agree with a direct SQL calculation for every invoice, and every row of the export must be either loaded or refused with a reason.
 

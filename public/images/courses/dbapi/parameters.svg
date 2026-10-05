@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 400" width="760" height="400" role="img" aria-label="Why queries use parameters. Building SQL with an f-string pastes the value into the SQL text: the name Mama's Kitchen breaks the query with a stray quote, and a value like x' OR '1'='1 changes the query so it matches every row. With a question-mark placeholder, the SQL and the value travel separately, and the value is always treated as data.">
+<title>f-strings paste values into SQL; placeholders keep them separate.</title>
+
+<rect width="760" height="400" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="16.0" width="728.0" height="176.0" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.4"/>
+<text xml:space="preserve" x="32.0" y="42.0" font-size="14" fill="#9B2C1F" font-weight="700" text-anchor="start">✗ f-string: the value becomes part of the SQL</text>
+<rect x="32.0" y="54.0" width="696.0" height="42.0" rx="8" fill="#2A2926" stroke="#2A2926" stroke-width="1"/>
+<text xml:space="preserve" x="44.0" y="78.0" font-size="12" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">f"SELECT * FROM customers WHERE business_name = '{name}'"</text>
+<text xml:space="preserve" x="32.0" y="120.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">name = Mama's Kitchen</text>
+<text xml:space="preserve" x="268.0" y="120.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">→ … = 'Mama's Kitchen'</text>
+<text xml:space="preserve" x="728.0" y="120.0" font-size="12" fill="#9B2C1F" font-weight="700" text-anchor="end">syntax error</text>
+<text xml:space="preserve" x="32.0" y="146.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">name = x' OR '1'='1</text>
+<text xml:space="preserve" x="268.0" y="146.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">→ … = 'x' OR '1'='1'</text>
+<text xml:space="preserve" x="728.0" y="146.0" font-size="12" fill="#9B2C1F" font-weight="700" text-anchor="end">matches every row</text>
+<text xml:space="preserve" x="32.0" y="176.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">The quote in the value ends the string early: the value is now SQL.</text>
+<rect x="16.0" y="208.0" width="728.0" height="150.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.4"/>
+<text xml:space="preserve" x="32.0" y="234.0" font-size="14" fill="#2F6B3F" font-weight="700" text-anchor="start">✓ Placeholder: SQL and value sent separately</text>
+<rect x="32.0" y="246.0" width="696.0" height="42.0" rx="8" fill="#2A2926" stroke="#2A2926" stroke-width="1"/>
+<text xml:space="preserve" x="44.0" y="270.0" font-size="12" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">conn.execute("SELECT * FROM customers WHERE business_name = ?", (name,))</text>
+<rect x="32.0" y="300.0" width="300.0" height="40.0" rx="6" fill="#FFFFFF"/>
+<text xml:space="preserve" x="44.0" y="325.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">SQL: … WHERE business_name = ?</text>
+<rect x="360.0" y="300.0" width="368.0" height="40.0" rx="6" fill="#FFFFFF"/>
+<text xml:space="preserve" x="372.0" y="325.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">value: "Mama's Kitchen"  (just data)</text>
+<text xml:space="preserve" x="16.0" y="384.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Any characters are safe as values: apostrophes, quotes, SQL keywords.</text>
+</g></svg>

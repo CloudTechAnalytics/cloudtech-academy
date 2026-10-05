@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 420" width="760" height="420" role="img" aria-label="A transaction makes related changes all-or-nothing. Recording a payment takes two changes: insert the payment, then mark the invoice paid. If the program crashes between them without a transaction, the payment is saved but the invoice still shows as unpaid. Inside with conn:, the crash rolls both back, and the import can simply be run again. A UNIQUE bank reference makes the re-run safe: a payment already recorded can't be inserted twice.">
+<title>All or nothing: a crash halfway leaves no half-finished change.</title>
+
+<rect width="760" height="420" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="16.0" width="356.0" height="250.0" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.4"/>
+<text xml:space="preserve" x="32.0" y="44.0" font-size="14" fill="#9B2C1F" font-weight="700" text-anchor="start">✗ No transaction</text>
+<rect x="32.0" y="60.0" width="324.0" height="40.0" rx="6" fill="#FFFFFF"/>
+<circle cx="50.0" cy="80.0" r="12" fill="#8A6A1F"/>
+<text xml:space="preserve" x="50.0" y="84.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
+<text xml:space="preserve" x="70.0" y="85.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">INSERT payment BNK-7001</text>
+<text xml:space="preserve" x="344.0" y="85.0" font-size="11.5" fill="#5E5A52" font-weight="700" text-anchor="end">done</text>
+<rect x="32.0" y="110.0" width="324.0" height="40.0" rx="6" fill="#FFFFFF"/>
+<circle cx="50.0" cy="130.0" r="12" fill="#9B2C1F"/>
+<text xml:space="preserve" x="50.0" y="134.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
+<text xml:space="preserve" x="70.0" y="135.0" font-size="12.5" fill="#9B2C1F" font-weight="700" text-anchor="start">crash!</text>
+<rect x="32.0" y="160.0" width="324.0" height="40.0" rx="6" fill="#FFFFFF"/>
+<circle cx="50.0" cy="180.0" r="12" fill="#8A6A1F"/>
+<text xml:space="preserve" x="50.0" y="184.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
+<text xml:space="preserve" x="70.0" y="185.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">UPDATE invoice: paid</text>
+<text xml:space="preserve" x="344.0" y="185.0" font-size="11.5" fill="#5E5A52" font-weight="700" text-anchor="end">never runs</text>
+<text xml:space="preserve" x="32.0" y="238.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">Result:</text>
+<text xml:space="preserve" x="92.0" y="238.0" font-size="12.5" fill="#9B2C1F" font-weight="700" text-anchor="start">payment saved, invoice still unpaid</text>
+<rect x="388.0" y="16.0" width="356.0" height="250.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.4"/>
+<text xml:space="preserve" x="404.0" y="44.0" font-size="14" fill="#2F6B3F" font-weight="700" text-anchor="start">✓ Inside  with conn:</text>
+<rect x="404.0" y="60.0" width="324.0" height="40.0" rx="6" fill="#FFFFFF"/>
+<circle cx="422.0" cy="80.0" r="12" fill="#8A6A1F"/>
+<text xml:space="preserve" x="422.0" y="84.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
+<text xml:space="preserve" x="442.0" y="85.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">INSERT payment BNK-7001</text>
+<text xml:space="preserve" x="716.0" y="85.0" font-size="11.5" fill="#5E5A52" font-weight="700" text-anchor="end">done</text>
+<rect x="404.0" y="110.0" width="324.0" height="40.0" rx="6" fill="#FFFFFF"/>
+<circle cx="422.0" cy="130.0" r="12" fill="#9B2C1F"/>
+<text xml:space="preserve" x="422.0" y="134.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
+<text xml:space="preserve" x="442.0" y="135.0" font-size="12.5" fill="#9B2C1F" font-weight="700" text-anchor="start">crash!</text>
+<rect x="404.0" y="160.0" width="324.0" height="40.0" rx="6" fill="#FFFFFF"/>
+<circle cx="422.0" cy="180.0" r="12" fill="#8A6A1F"/>
+<text xml:space="preserve" x="422.0" y="184.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
+<text xml:space="preserve" x="442.0" y="185.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">UPDATE invoice: paid</text>
+<text xml:space="preserve" x="716.0" y="185.0" font-size="11.5" fill="#5E5A52" font-weight="700" text-anchor="end">never runs</text>
+<text xml:space="preserve" x="404.0" y="238.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">Result:</text>
+<text xml:space="preserve" x="464.0" y="238.0" font-size="12.5" fill="#2F6B3F" font-weight="700" text-anchor="start">rolled back: nothing saved, run it again</text>
+<rect x="16.0" y="282.0" width="728.0" height="100.0" rx="10" fill="#FFFFFF" stroke="#B38A3E" stroke-width="1.5"/>
+<text xml:space="preserve" x="32.0" y="308.0" font-size="14" fill="#8A6A1F" font-weight="700" text-anchor="start">Idempotency: re-running an import must be safe</text>
+<text xml:space="preserve" x="32.0" y="334.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Store the bank's reference in a UNIQUE column. On a re-run, BNK-7001 is refused as a duplicate instead</text>
+<text xml:space="preserve" x="32.0" y="352.1" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">of being recorded twice.</text>
+<text xml:space="preserve" x="16.0" y="410.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">ACID: atomic, consistent, isolated, durable.</text>
+</g></svg>

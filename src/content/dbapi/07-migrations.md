@@ -12,7 +12,7 @@ Schema changes need the same discipline as code: written down, reviewed, version
 
 ## The concept
 
-**Migrations**
+### Migrations
 
 A numbered list of schema changes, each a small SQL script, kept in version control with the code:
 
@@ -23,11 +23,13 @@ A numbered list of schema changes, each a small SQL script, kept in version cont
 | 3 | add the customer-date index |
 | 4 | create `credit_notes` |
 
-**Running them**
+### Running them
 
 The database records which version it's at. A migration tool applies every **pending** migration, in order, each in a transaction, and records the new version. Running it again does nothing. SQLite has a built-in slot for this: `PRAGMA user_version`. Tools such as Alembic (Python) or Flyway do the same with a version table.
 
-**Rules for safe migrations**
+![Migrations 1 to 4 in order; the database is at version 2, so the tool applies 3 then 4, each in a transaction, and records the new version; running again does nothing](/images/courses/dbapi/migrations.svg "The database records its version; the tool applies only what's pending, in order.")
+
+### Rules for safe migrations
 
 - Never edit a migration that has already run anywhere; add a new one.
 - Make changes backwards-compatible (CI/CD course, lesson 9): add a column with a default before code needs it; remove old columns only after no code uses them.

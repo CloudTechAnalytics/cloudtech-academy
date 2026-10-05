@@ -12,7 +12,7 @@ Clients write code against an API's shape. A consistent, predictable design save
 
 ## The concept
 
-**Resources and methods**
+### Resources and methods
 
 Routes name **things**; HTTP methods say what to do with them:
 
@@ -23,7 +23,7 @@ Routes name **things**; HTTP methods say what to do with them:
 | `GET /invoices/INV-100001` | one invoice, with its lines and balance |
 | `POST /invoices/INV-100001/payments` | record a new payment on that invoice |
 
-**Status codes that mean something**
+### Status codes that mean something
 
 | Code | When |
 | :-- | :-- |
@@ -33,9 +33,11 @@ Routes name **things**; HTTP methods say what to do with them:
 | 404 Not Found | no such resource |
 | 409 Conflict | valid, but clashes with the current state (a payment larger than what's owed, a reused reference) |
 
-**Pagination**
+### Pagination
 
 Lists take `limit` and `offset` (with a sensible maximum), and say how many there are in total, so clients can page through.
+
+![GET and POST routes with their status codes, error codes 400, 404 and 409, and pagination: of 23 items, limit 10 and offset 10 return items 11 to 20, with the total in the response](/images/courses/dbapi/rest.svg "Routes for things, methods for actions, meaningful status codes, and pagination.")
 
 ## Example
 

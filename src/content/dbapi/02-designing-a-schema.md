@@ -12,23 +12,25 @@ A good **schema**, the design of a database's tables, stores each fact once, lin
 
 ## The concept
 
-**One table per kind of thing**
+### One table per kind of thing
 
 Customers, invoices, invoice lines and payments are different things with different lifetimes, so each gets a table.
 
-**Keys**
+### Keys
 
 - A **primary key** identifies each row (`customer_id`).
 - A **foreign key** points to a row in another table (`invoices.customer_id` → `customers.customer_id`).
 - A **composite key** uses more than one column: an invoice line is identified by its invoice **and** its line number.
 
-**Don't repeat facts**
+### Don't repeat facts
 
 Store the customer's name once, in `customers`. Store totals? Usually **not**: they can be calculated from the lines, and a stored total can disagree with them. (If you store one for speed, you must keep it in step.)
 
-**Money and dates**
+### Money and dates
 
 Money as **integer kobo** (Software Engineering, lesson 2). Dates in SQLite as `YYYY-MM-DD` text, which sorts and compares correctly.
+
+![Entity-relationship diagram: customers (customer_id primary key) has zero or more invoices (invoice_id primary key, customer_id foreign key); each invoice has one or more invoice_lines (composite key invoice_id and line_no) and zero or more payments (payment_id primary key, invoice_id foreign key)](/images/courses/dbapi/schema.svg "Tallybook's schema: four tables linked by keys.")
 
 ## Example
 
