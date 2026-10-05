@@ -12,19 +12,19 @@ Cloud providers give you far more than a total. Every resource's cost, every day
 
 ## The concept
 
-**The billing export**
+### The billing export
 
 One row per resource per day (or hour), with the service, the cost, and any **tags** (labels such as `environment=production` and `team=invoicing`) attached to the resource.
 
-**Allocate the cost**
+### Allocate the cost
 
 Group by service (what), environment (why) and team (who). Spend with no team tag is **unallocated**: nobody is accountable for it, and it's often where waste hides.
 
-**Watch the currency**
+### Watch the currency
 
 Cloud is billed in dollars. For a Nigerian company earning in naira, the naira cost can rise even when usage doesn't, so budgets should state the exchange rate they assume.
 
-**Explain growth**
+### Explain growth
 
 Break the change between two months into its parts: which services, environments and teams grew, and whether it came from new resources or from more usage of existing ones.
 

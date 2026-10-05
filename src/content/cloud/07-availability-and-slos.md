@@ -10,19 +10,21 @@ Tallybook promises customers that the app is available "99.9% of the time". Over
 
 ## The concept
 
-**SLOs and error budgets**
+### SLOs and error budgets
 
 A **service level objective** (SLO) is an availability target, such as 99.9% a month. The allowed downtime is the **error budget**: 0.1% of a 30-day month is 43.2 minutes. When the budget is spent, reliability work takes priority over new features.
 
-**Components in series**
+### Components in series
 
 If the app needs the load balancer **and** the web tier **and** the API **and** the database, its availability is the **product** of theirs. Every component in the chain lowers the total.
 
-**Components in parallel**
+### Components in parallel
 
 If any one of several redundant copies is enough, the chance they're all down at once is the **product of their unavailabilities**. Two copies at 99.5% each give 1 − 0.005² = 99.9975%.
 
-**Single points of failure**
+![In series: load balancer 99.99%, web tier 99.95%, API 99.9% and database 99.5% multiply to about 99.34%, roughly 4.7 hours of downtime a month. In parallel: two databases at 99.5% each give 99.9975%.](/images/courses/cloud/series-parallel.svg "Series multiplies availability down; parallel multiplies downtime away. Example figures.")
+
+### Single points of failure
 
 A component with no redundancy (one database in one zone) often dominates downtime, no matter how many web servers you add.
 

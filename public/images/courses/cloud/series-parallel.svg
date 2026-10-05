@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 400" width="760" height="400" role="img" aria-label="Availability in series and in parallel, with example figures. In series, the app needs every component: a load balancer at 99.99 percent, a web tier at 99.95, an API at 99.9 and a database at 99.5 multiply to about 99.34 percent. The single database dominates. In parallel, two database copies at 99.5 percent each are both down only 0.5 percent times 0.5 percent of the time, giving 99.9975 percent.">
+<title>In series availabilities multiply down; in parallel, redundancy multiplies the downtime away.</title>
+<defs><marker id="a2F6B3F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2F6B3F"/></marker><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="400" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="30.0" font-size="15" fill="#2A2926" font-weight="700" text-anchor="start">In series: every component must be up</text>
+<rect x="16.0" y="46.0" width="160.0" height="64.0" rx="8" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.4"/>
+<text xml:space="preserve" x="96.0" y="72.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="middle">Load balancer</text>
+<text xml:space="preserve" x="96.0" y="94.0" font-size="13" fill="#8A6A1F" font-weight="700" text-anchor="middle">99.99%</text>
+<path d="M178.0,78.0 L198.0,78.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="200.0" y="46.0" width="160.0" height="64.0" rx="8" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.4"/>
+<text xml:space="preserve" x="280.0" y="72.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="middle">Web tier</text>
+<text xml:space="preserve" x="280.0" y="94.0" font-size="13" fill="#8A6A1F" font-weight="700" text-anchor="middle">99.95%</text>
+<path d="M362.0,78.0 L382.0,78.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="384.0" y="46.0" width="160.0" height="64.0" rx="8" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.4"/>
+<text xml:space="preserve" x="464.0" y="72.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="middle">API</text>
+<text xml:space="preserve" x="464.0" y="94.0" font-size="13" fill="#8A6A1F" font-weight="700" text-anchor="middle">99.9%</text>
+<path d="M546.0,78.0 L566.0,78.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="568.0" y="46.0" width="160.0" height="64.0" rx="8" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.4"/>
+<text xml:space="preserve" x="648.0" y="72.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="middle">Database</text>
+<text xml:space="preserve" x="648.0" y="94.0" font-size="13" fill="#8A6A1F" font-weight="700" text-anchor="middle">99.5%</text>
+<text xml:space="preserve" x="16.0" y="140.0" font-size="14" fill="#8A6A1F" font-weight="700" text-anchor="start">0.9999 × 0.9995 × 0.999 × 0.995 ≈ 99.34% available</text>
+<text xml:space="preserve" x="16.0" y="162.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">About 4.7 hours of downtime a month, most of it from the one database.</text>
+<line x1="16.0" y1="186.0" x2="744.0" y2="186.0" stroke="#EDE6D8" stroke-width="1.5"/>
+<text xml:space="preserve" x="16.0" y="216.0" font-size="15" fill="#2A2926" font-weight="700" text-anchor="start">In parallel: any one copy is enough</text>
+<rect x="16.0" y="236.0" width="200.0" height="56.0" rx="10" fill="#FFFFFF" stroke="#2F6B3F" stroke-width="1.5"/>
+<text xml:space="preserve" x="116.0" y="270.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="middle">Database A: 99.5%</text>
+<rect x="16.0" y="304.0" width="200.0" height="56.0" rx="10" fill="#FFFFFF" stroke="#2F6B3F" stroke-width="1.5"/>
+<text xml:space="preserve" x="116.0" y="338.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="middle">Database B: 99.5%</text>
+<path d="M218,264 C250,264 250,298 280,298" fill="none" stroke="#2F6B3F" stroke-width="1.6" marker-end="url(#a2F6B3F)"/>
+<path d="M218,332 C250,332 250,298 280,298" fill="none" stroke="#2F6B3F" stroke-width="1.6" marker-end="url(#a2F6B3F)"/>
+<rect x="284.0" y="270.0" width="200.0" height="56.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.5"/>
+<text xml:space="preserve" x="384.0" y="304.0" font-size="15" fill="#2F6B3F" font-weight="700" text-anchor="middle">99.9975%</text>
+<text xml:space="preserve" x="504.0" y="262.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">Both down only 0.005 × 0.005 of</text>
+<text xml:space="preserve" x="504.0" y="280.9" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">the time: 1 − 0.005² = 99.9975%.</text>
+<text xml:space="preserve" x="16.0" y="388.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">Example figures. Remove single points of failure before adding more copies of everything else.</text>
+</g></svg>

@@ -49309,7 +49309,7 @@ The finance director has two worries. The cloud bill, paid in dollars, has grown
 
 **Cloud computing** means renting computing resources from a provider, paying for what you use, usually by the hour or second, instead of buying hardware.
 
-**Service models**
+### Service models
 
 | Model | You rent | You manage | Example at Tallybook |
 | :-- | :-- | :-- | :-- |
@@ -49317,15 +49317,17 @@ The finance director has two worries. The cloud bill, paid in dollars, has grown
 | **PaaS** (platform) | a managed service | your data and settings | the managed database |
 | **SaaS** (software) | finished software | your users and data | email, accounting software |
 
-**Regions and zones**
+### Regions and zones
 
 A **region** is a geographic area (Tallybook uses Cape Town, the closest to Lagos). Each region has several **availability zones**: separate data centres with their own power and networking. Spreading across zones protects against one failing (lesson 7).
 
-**Shared responsibility**
+### Shared responsibility
 
 The provider secures the buildings, hardware and its own services. **You** are responsible for what you put on them: who has access, which data is public, software updates on your servers, and your settings. Most cloud breaches are customer misconfigurations, not provider failures.
 
-**Elasticity**
+![A grid of seven layers, from buildings and power up to your data and users, against four models. On your own servers you manage every layer; with IaaS the provider manages the virtual machines and below; with PaaS also the operating system and runtime; with SaaS everything except your data and users.](/images/courses/cloud/service-models.svg "Who manages what: the provider takes on more as you move from IaaS to SaaS.")
+
+### Elasticity
 
 The big promise: resources can grow and shrink with demand, and you stop paying when you stop using them. That only helps if you actually use it (lessons 4 to 6).
 
@@ -49442,19 +49444,19 @@ Cloud providers give you far more than a total. Every resource's cost, every day
 
 ## The concept
 
-**The billing export**
+### The billing export
 
 One row per resource per day (or hour), with the service, the cost, and any **tags** (labels such as `environment=production` and `team=invoicing`) attached to the resource.
 
-**Allocate the cost**
+### Allocate the cost
 
 Group by service (what), environment (why) and team (who). Spend with no team tag is **unallocated**: nobody is accountable for it, and it's often where waste hides.
 
-**Watch the currency**
+### Watch the currency
 
 Cloud is billed in dollars. For a Nigerian company earning in naira, the naira cost can rise even when usage doesn't, so budgets should state the exchange rate they assume.
 
-**Explain growth**
+### Explain growth
 
 Break the change between two months into its parts: which services, environments and teams grew, and whether it came from new resources or from more usage of existing ones.
 
@@ -49640,19 +49642,21 @@ But shrinking servers carelessly is how outages happen. The decision needs data:
 
 ## The concept
 
-**Utilisation**
+### Utilisation
 
 The share of a server's CPU and memory in use, measured every few minutes by the provider's monitoring. Tallybook has hourly averages for every running VM in August.
 
-**Use peaks, not averages**
+### Use peaks, not averages
 
 A server at 15% average CPU might hit 90% for an hour every day. Size for the **95th percentile** (p95): the level it stays under 95% of the time. For critical systems, check the true maximum too.
 
-**A rightsizing rule**
+![An illustrative week of hourly CPU with a sharp peak near 80% every weekday morning and quiet weekends. The average is about 15%; the 95th percentile is about 68%.](/images/courses/cloud/average-vs-p95.svg "The average hides the peak. Size for the p95.")
+
+### A rightsizing rule
 
 For example: if p95 CPU is under 30% **and** p95 memory is under 40%, move down one size (which halves CPU and memory). After the change, p95 CPU would be roughly double, still under 60%, leaving headroom.
 
-**Size isn't the only fix**
+### Size isn't the only fix
 
 Servers that are busy only in office hours are better **scheduled** (lesson 5) than shrunk; servers doing nothing at all should be **removed** (lesson 4).
 
@@ -49829,7 +49833,7 @@ Nobody at Tallybook did anything wrong on any single day. Forgotten resources ar
 
 ## The concept
 
-**Common kinds of waste**
+### Common kinds of waste
 
 | Waste | How to spot it |
 | :-- | :-- |
@@ -49839,7 +49843,7 @@ Nobody at Tallybook did anything wrong on any single day. Forgotten resources ar
 | **Unused IP addresses** | reserved public IPs attached to nothing are charged |
 | **Old snapshots** | backups kept far longer than any policy requires |
 
-**Remove safely**
+### Remove safely
 
 1. Find an owner (tags, names, creation history), and ask.
 2. If nobody claims it: **snapshot then delete** for disks; **stop, wait, then delete** for servers.
@@ -49998,11 +50002,11 @@ Meanwhile, the production servers that genuinely run all the time are paid at th
 
 ## The concept
 
-**Schedules**
+### Schedules
 
 Stop non-production servers outside working hours and start them again in the morning, automatically. Their disks are kept, so nothing is lost. Engineers who need a server out of hours can start it themselves.
 
-**Pricing models**
+### Pricing models
 
 | Model | Discount (illustrative) | Commitment | Good for |
 | :-- | :-- | :-- | :-- |
@@ -50010,9 +50014,11 @@ Stop non-production servers outside working hours and start them again in the mo
 | **Committed use** (reservations, savings plans) | around 30 to 40% | pay for 1 or 3 years whether used or not | the steady baseline that always runs |
 | **Spot** | around 60 to 70% | none, but the provider can reclaim the server at short notice | work that can be interrupted and retried |
 
-**Commit only to the baseline**
+### Commit only to the baseline
 
 Commit to what runs every hour of the year (after rightsizing and clean-up), never to peaks. Over-commitment is paying for servers you no longer use.
+
+![An illustrative day of server demand: a steady baseline in green for committed-use pricing, a daytime rise in blue for on-demand, and short batch jobs in gold for spot.](/images/courses/cloud/pricing-layers.svg "Match the pricing model to each layer of demand.")
 
 ## Example
 
@@ -50155,21 +50161,23 @@ The same fixed fleet is wasteful and too small. **Autoscaling** adjusts the numb
 
 ## The concept
 
-**Capacity**
+### Capacity
 
 Each web server can handle about 9,000 requests an hour at full load. Running servers at 100% makes responses slow, so you aim for a **target utilisation**, such as 60%, leaving headroom for sudden rises.
 
 **Servers needed** = requests per hour ÷ (9,000 × target utilisation), rounded up, never below a **minimum** (for resilience, at least 2, in different zones).
 
-**Autoscaling rules**
+### Autoscaling rules
 
 - **Target tracking**: keep average CPU near a target by adding or removing servers.
 - **Scheduled scaling**: add capacity before known peaks (month-end mornings), because new servers take a few minutes to start.
 - **Limits**: a minimum for resilience, a maximum to cap cost if something goes wrong.
 
-**Latency and load**
+### Latency and load
 
 Response time rises slowly as utilisation grows, then sharply as servers approach full load. Watching p95 latency against utilisation shows where the danger zone starts.
+
+![An illustrative curve: response time stays low up to about 60% utilisation, then climbs steeply into a shaded danger zone above 70%.](/images/courses/cloud/latency-utilisation.svg "Keep headroom: latency climbs sharply near full load.")
 
 ## Example
 
@@ -50318,19 +50326,21 @@ Tallybook promises customers that the app is available "99.9% of the time". Over
 
 ## The concept
 
-**SLOs and error budgets**
+### SLOs and error budgets
 
 A **service level objective** (SLO) is an availability target, such as 99.9% a month. The allowed downtime is the **error budget**: 0.1% of a 30-day month is 43.2 minutes. When the budget is spent, reliability work takes priority over new features.
 
-**Components in series**
+### Components in series
 
 If the app needs the load balancer **and** the web tier **and** the API **and** the database, its availability is the **product** of theirs. Every component in the chain lowers the total.
 
-**Components in parallel**
+### Components in parallel
 
 If any one of several redundant copies is enough, the chance they're all down at once is the **product of their unavailabilities**. Two copies at 99.5% each give 1 − 0.005² = 99.9975%.
 
-**Single points of failure**
+![In series: load balancer 99.99%, web tier 99.95%, API 99.9% and database 99.5% multiply to about 99.34%, roughly 4.7 hours of downtime a month. In parallel: two databases at 99.5% each give 99.9975%.](/images/courses/cloud/series-parallel.svg "Series multiplies availability down; parallel multiplies downtime away. Example figures.")
+
+### Single points of failure
 
 A component with no redundancy (one database in one zone) often dominates downtime, no matter how many web servers you add.
 
@@ -50498,7 +50508,7 @@ Tallybook's account has 20 people and 8 service accounts (logins used by softwar
 
 ## The concept
 
-**Identity and access management (IAM)**
+### Identity and access management (IAM)
 
 Every person and program that can act in the account is a **principal** with permissions.
 
@@ -50511,11 +50521,11 @@ Every person and program that can act in the account is a **principal** with per
 | **Remove unused service accounts** | software that no longer runs shouldn't hold keys |
 | **No unintended public storage** | public buckets are readable by anyone on the internet |
 
-**Least privilege**
+### Least privilege
 
 Give each principal only the permissions its job needs. Developers rarely need admin; a backup job needs to write backups, not delete databases.
 
-**Fix by risk**
+### Fix by risk
 
 An administrator without MFA, or an admin access key that's two years old, comes before a non-admin's stale key.
 
@@ -50682,19 +50692,19 @@ A one-off clean-up saves money once. Six months later, without a process, the wa
 
 ## The concept
 
-**Ownership and showback**
+### Ownership and showback
 
 Every resource has a team tag, and each team sees its own monthly cost (**showback**). Untagged resources are reported until they're claimed.
 
-**Budgets and alerts**
+### Budgets and alerts
 
 A monthly budget per team and environment, with alerts at, for example, 80% and 100%, and an alert on unusual daily spikes (the same control-limit idea as monitoring).
 
-**Unit costs**
+### Unit costs
 
 Divide cost by a measure of business activity: cost per thousand requests, per invoice sent, per active customer. If the bill grows but unit cost stays flat or falls, the growth is the business growing. If unit cost rises, look for waste or a design problem.
 
-**The review cycle**
+### The review cycle
 
 Monthly: review showback, unit costs and the waste report. Quarterly: review commitments, rightsizing and the architecture.
 
@@ -50835,7 +50845,7 @@ Your final project is that review, built from the data in this course.
 
 ## The concept
 
-**The parts of the review**
+### The parts of the review
 
 | Part | Built in |
 | :-- | :-- |

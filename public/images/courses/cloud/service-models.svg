@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 460" width="760" height="460" role="img" aria-label="Who manages what under each service model. Seven layers run from the buildings at the bottom to your data and users at the top. On your own servers, you manage all seven. With IaaS, the provider manages the physical servers and below; you manage the operating system upwards. With PaaS, the provider also manages the operating system and runtime; you manage the application and data. With SaaS, you manage only your data and users. In every model, your data, access and settings stay your responsibility.">
+<title>Service models: the provider takes on more layers as you move from IaaS to SaaS.</title>
+
+<rect width="760" height="460" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="264.0" y="30.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="middle">On your own servers</text>
+<text xml:space="preserve" x="400.0" y="30.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="middle">IaaS</text>
+<text xml:space="preserve" x="536.0" y="30.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="middle">PaaS</text>
+<text xml:space="preserve" x="672.0" y="30.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="middle">SaaS</text>
+<text xml:space="preserve" x="188.0" y="72.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="end">Your data and users</text>
+<rect x="200.0" y="50.0" width="128.0" height="40.0" rx="5" fill="#2F5D8A"/>
+<text xml:space="preserve" x="264.0" y="75.0" font-size="12" fill="#FFFFFF" font-weight="700" text-anchor="middle">you</text>
+<rect x="336.0" y="50.0" width="128.0" height="40.0" rx="5" fill="#2F5D8A"/>
+<text xml:space="preserve" x="400.0" y="75.0" font-size="12" fill="#FFFFFF" font-weight="700" text-anchor="middle">you</text>
+<rect x="472.0" y="50.0" width="128.0" height="40.0" rx="5" fill="#2F5D8A"/>
+<text xml:space="preserve" x="536.0" y="75.0" font-size="12" fill="#FFFFFF" font-weight="700" text-anchor="middle">you</text>
+<rect x="608.0" y="50.0" width="128.0" height="40.0" rx="5" fill="#2F5D8A"/>
+<text xml:space="preserve" x="672.0" y="75.0" font-size="12" fill="#FFFFFF" font-weight="700" text-anchor="middle">you</text>
+<text xml:space="preserve" x="188.0" y="122.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="end">Application</text>
+<rect x="200.0" y="100.0" width="128.0" height="40.0" rx="5" fill="#2F5D8A"/>
+<text xml:space="preserve" x="264.0" y="125.0" font-size="12" fill="#FFFFFF" font-weight="700" text-anchor="middle">you</text>
+<rect x="336.0" y="100.0" width="128.0" height="40.0" rx="5" fill="#2F5D8A"/>
+<text xml:space="preserve" x="400.0" y="125.0" font-size="12" fill="#FFFFFF" font-weight="700" text-anchor="middle">you</text>
+<rect x="472.0" y="100.0" width="128.0" height="40.0" rx="5" fill="#2F5D8A"/>
+<text xml:space="preserve" x="536.0" y="125.0" font-size="12" fill="#FFFFFF" font-weight="700" text-anchor="middle">you</text>
+<rect x="608.0" y="100.0" width="128.0" height="40.0" rx="5" fill="#DCC594"/>
+<text xml:space="preserve" x="672.0" y="125.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="middle">provider</text>
+<text xml:space="preserve" x="188.0" y="172.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="end">Runtime and middleware</text>
+<rect x="200.0" y="150.0" width="128.0" height="40.0" rx="5" fill="#2F5D8A"/>
+<text xml:space="preserve" x="264.0" y="175.0" font-size="12" fill="#FFFFFF" font-weight="700" text-anchor="middle">you</text>
+<rect x="336.0" y="150.0" width="128.0" height="40.0" rx="5" fill="#2F5D8A"/>
+<text xml:space="preserve" x="400.0" y="175.0" font-size="12" fill="#FFFFFF" font-weight="700" text-anchor="middle">you</text>
+<rect x="472.0" y="150.0" width="128.0" height="40.0" rx="5" fill="#DCC594"/>
+<text xml:space="preserve" x="536.0" y="175.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="middle">provider</text>
+<rect x="608.0" y="150.0" width="128.0" height="40.0" rx="5" fill="#DCC594"/>
+<text xml:space="preserve" x="672.0" y="175.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="middle">provider</text>
+<text xml:space="preserve" x="188.0" y="222.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="end">Operating system</text>
+<rect x="200.0" y="200.0" width="128.0" height="40.0" rx="5" fill="#2F5D8A"/>
+<text xml:space="preserve" x="264.0" y="225.0" font-size="12" fill="#FFFFFF" font-weight="700" text-anchor="middle">you</text>
+<rect x="336.0" y="200.0" width="128.0" height="40.0" rx="5" fill="#DCC594"/>
+<text xml:space="preserve" x="400.0" y="225.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="middle">provider</text>
+<rect x="472.0" y="200.0" width="128.0" height="40.0" rx="5" fill="#DCC594"/>
+<text xml:space="preserve" x="536.0" y="225.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="middle">provider</text>
+<rect x="608.0" y="200.0" width="128.0" height="40.0" rx="5" fill="#DCC594"/>
+<text xml:space="preserve" x="672.0" y="225.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="middle">provider</text>
+<text xml:space="preserve" x="188.0" y="272.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="end">Virtual machines</text>
+<rect x="200.0" y="250.0" width="128.0" height="40.0" rx="5" fill="#2F5D8A"/>
+<text xml:space="preserve" x="264.0" y="275.0" font-size="12" fill="#FFFFFF" font-weight="700" text-anchor="middle">you</text>
+<rect x="336.0" y="250.0" width="128.0" height="40.0" rx="5" fill="#DCC594"/>
+<text xml:space="preserve" x="400.0" y="275.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="middle">provider</text>
+<rect x="472.0" y="250.0" width="128.0" height="40.0" rx="5" fill="#DCC594"/>
+<text xml:space="preserve" x="536.0" y="275.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="middle">provider</text>
+<rect x="608.0" y="250.0" width="128.0" height="40.0" rx="5" fill="#DCC594"/>
+<text xml:space="preserve" x="672.0" y="275.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="middle">provider</text>
+<text xml:space="preserve" x="188.0" y="322.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="end">Physical servers and network</text>
+<rect x="200.0" y="300.0" width="128.0" height="40.0" rx="5" fill="#2F5D8A"/>
+<text xml:space="preserve" x="264.0" y="325.0" font-size="12" fill="#FFFFFF" font-weight="700" text-anchor="middle">you</text>
+<rect x="336.0" y="300.0" width="128.0" height="40.0" rx="5" fill="#DCC594"/>
+<text xml:space="preserve" x="400.0" y="325.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="middle">provider</text>
+<rect x="472.0" y="300.0" width="128.0" height="40.0" rx="5" fill="#DCC594"/>
+<text xml:space="preserve" x="536.0" y="325.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="middle">provider</text>
+<rect x="608.0" y="300.0" width="128.0" height="40.0" rx="5" fill="#DCC594"/>
+<text xml:space="preserve" x="672.0" y="325.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="middle">provider</text>
+<text xml:space="preserve" x="188.0" y="372.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="end">Buildings and power</text>
+<rect x="200.0" y="350.0" width="128.0" height="40.0" rx="5" fill="#2F5D8A"/>
+<text xml:space="preserve" x="264.0" y="375.0" font-size="12" fill="#FFFFFF" font-weight="700" text-anchor="middle">you</text>
+<rect x="336.0" y="350.0" width="128.0" height="40.0" rx="5" fill="#DCC594"/>
+<text xml:space="preserve" x="400.0" y="375.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="middle">provider</text>
+<rect x="472.0" y="350.0" width="128.0" height="40.0" rx="5" fill="#DCC594"/>
+<text xml:space="preserve" x="536.0" y="375.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="middle">provider</text>
+<rect x="608.0" y="350.0" width="128.0" height="40.0" rx="5" fill="#DCC594"/>
+<text xml:space="preserve" x="672.0" y="375.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="middle">provider</text>
+<text xml:space="preserve" x="16.0" y="418.0" font-size="13" fill="#8A6A1F" font-weight="700" text-anchor="start">Shared responsibility: in every model, your data, who has access and your settings are yours to secure.</text>
+<text xml:space="preserve" x="16.0" y="436.9" font-size="13" fill="#8A6A1F" font-weight="700" text-anchor="start">Most cloud breaches are customer misconfigurations.</text>
+</g></svg>

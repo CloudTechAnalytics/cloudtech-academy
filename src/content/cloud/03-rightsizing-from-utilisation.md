@@ -12,19 +12,21 @@ But shrinking servers carelessly is how outages happen. The decision needs data:
 
 ## The concept
 
-**Utilisation**
+### Utilisation
 
 The share of a server's CPU and memory in use, measured every few minutes by the provider's monitoring. Tallybook has hourly averages for every running VM in August.
 
-**Use peaks, not averages**
+### Use peaks, not averages
 
 A server at 15% average CPU might hit 90% for an hour every day. Size for the **95th percentile** (p95): the level it stays under 95% of the time. For critical systems, check the true maximum too.
 
-**A rightsizing rule**
+![An illustrative week of hourly CPU with a sharp peak near 80% every weekday morning and quiet weekends. The average is about 15%; the 95th percentile is about 68%.](/images/courses/cloud/average-vs-p95.svg "The average hides the peak. Size for the p95.")
+
+### A rightsizing rule
 
 For example: if p95 CPU is under 30% **and** p95 memory is under 40%, move down one size (which halves CPU and memory). After the change, p95 CPU would be roughly double, still under 60%, leaving headroom.
 
-**Size isn't the only fix**
+### Size isn't the only fix
 
 Servers that are busy only in office hours are better **scheduled** (lesson 5) than shrunk; servers doing nothing at all should be **removed** (lesson 4).
 

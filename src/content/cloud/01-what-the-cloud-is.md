@@ -14,7 +14,7 @@ The finance director has two worries. The cloud bill, paid in dollars, has grown
 
 **Cloud computing** means renting computing resources from a provider, paying for what you use, usually by the hour or second, instead of buying hardware.
 
-**Service models**
+### Service models
 
 | Model | You rent | You manage | Example at Tallybook |
 | :-- | :-- | :-- | :-- |
@@ -22,15 +22,17 @@ The finance director has two worries. The cloud bill, paid in dollars, has grown
 | **PaaS** (platform) | a managed service | your data and settings | the managed database |
 | **SaaS** (software) | finished software | your users and data | email, accounting software |
 
-**Regions and zones**
+### Regions and zones
 
 A **region** is a geographic area (Tallybook uses Cape Town, the closest to Lagos). Each region has several **availability zones**: separate data centres with their own power and networking. Spreading across zones protects against one failing (lesson 7).
 
-**Shared responsibility**
+### Shared responsibility
 
 The provider secures the buildings, hardware and its own services. **You** are responsible for what you put on them: who has access, which data is public, software updates on your servers, and your settings. Most cloud breaches are customer misconfigurations, not provider failures.
 
-**Elasticity**
+![A grid of seven layers, from buildings and power up to your data and users, against four models. On your own servers you manage every layer; with IaaS the provider manages the virtual machines and below; with PaaS also the operating system and runtime; with SaaS everything except your data and users.](/images/courses/cloud/service-models.svg "Who manages what: the provider takes on more as you move from IaaS to SaaS.")
+
+### Elasticity
 
 The big promise: resources can grow and shrink with demand, and you stop paying when you stop using them. That only helps if you actually use it (lessons 4 to 6).
 

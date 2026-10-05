@@ -12,11 +12,11 @@ Meanwhile, the production servers that genuinely run all the time are paid at th
 
 ## The concept
 
-**Schedules**
+### Schedules
 
 Stop non-production servers outside working hours and start them again in the morning, automatically. Their disks are kept, so nothing is lost. Engineers who need a server out of hours can start it themselves.
 
-**Pricing models**
+### Pricing models
 
 | Model | Discount (illustrative) | Commitment | Good for |
 | :-- | :-- | :-- | :-- |
@@ -24,9 +24,11 @@ Stop non-production servers outside working hours and start them again in the mo
 | **Committed use** (reservations, savings plans) | around 30 to 40% | pay for 1 or 3 years whether used or not | the steady baseline that always runs |
 | **Spot** | around 60 to 70% | none, but the provider can reclaim the server at short notice | work that can be interrupted and retried |
 
-**Commit only to the baseline**
+### Commit only to the baseline
 
 Commit to what runs every hour of the year (after rightsizing and clean-up), never to peaks. Over-commitment is paying for servers you no longer use.
+
+![An illustrative day of server demand: a steady baseline in green for committed-use pricing, a daytime rise in blue for on-demand, and short batch jobs in gold for spot.](/images/courses/cloud/pricing-layers.svg "Match the pricing model to each layer of demand.")
 
 ## Example
 
