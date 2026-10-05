@@ -34,6 +34,8 @@ SELECT ... FROM ... WHERE ... ORDER BY ... LIMIT ... OFFSET ...
 
 The database sorts first and then cuts:
 
+![Shipments sorted by containers descending with the top three kept; two pages of three rows made with OFFSET; and the warning about ties at the cut-off](/images/courses/sql/limit-offset.svg "Top N is ORDER BY, then LIMIT; OFFSET skips rows to make pages. (Illustration with simplified data.)")
+
 ```sql run
 SELECT shipment_id, booking_date, freight_charge
 FROM shipments

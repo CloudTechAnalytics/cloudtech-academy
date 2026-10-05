@@ -33,6 +33,8 @@ SQL keywords aren't case-sensitive: `select`, `SELECT` and `Select` all work. Mo
 
 List the columns you want, in the order you want them:
 
+![SELECT picks columns from a table and AS names a calculated column; DISTINCT turns six status values into three different ones](/images/courses/sql/select.svg "SELECT picks the columns; AS renames them; DISTINCT removes repeats. (Illustration with simplified data.)")
+
 ```sql run
 SELECT company_name, city, industry
 FROM customers;

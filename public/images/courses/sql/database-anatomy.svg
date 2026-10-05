@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 420" width="760" height="420" role="img" aria-label="What a relational database holds and how SQL talks to it. A shipments table has columns, such as shipment_id, status and containers, and rows, one per shipment. shipment_id is the primary key: it identifies each row. customer_id is a foreign key: it points to the primary key of a row in the customers table, which is how tables connect. You send a SQL query to the database; it finds the matching rows and returns a result table.">
+<title>Tables hold rows and columns; keys connect tables; a query returns a result table.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="420" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="28.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">customers</text>
+<text xml:space="preserve" x="330.0" y="28.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">shipments</text>
+<rect x="16.0" y="38.0" width="280.0" height="28.0" rx="0" fill="#F3EBD8"/>
+<text xml:space="preserve" x="26.0" y="58.0" font-size="12" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">customer_id</text>
+<text xml:space="preserve" x="136.0" y="58.0" font-size="12" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">company</text>
+<rect x="16.0" y="66.0" width="280.0" height="28.0" rx="0" fill="#FFFFFF"/>
+<text xml:space="preserve" x="26.0" y="86.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">C1</text>
+<text xml:space="preserve" x="136.0" y="86.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">Ade Foods</text>
+<rect x="16.0" y="94.0" width="280.0" height="28.0" rx="0" fill="#FBF8F2"/>
+<text xml:space="preserve" x="26.0" y="114.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">C2</text>
+<text xml:space="preserve" x="136.0" y="114.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">Kano Mills</text>
+<rect x="16.0" y="122.0" width="280.0" height="28.0" rx="0" fill="#FFFFFF"/>
+<text xml:space="preserve" x="26.0" y="142.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">C3</text>
+<text xml:space="preserve" x="136.0" y="142.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">Sun Retail</text>
+<line x1="16.0" y1="150.0" x2="296.0" y2="150.0" stroke="#CFC4B2" stroke-width="1"/>
+<rect x="330.0" y="38.0" width="320.0" height="28.0" rx="0" fill="#F3EBD8"/>
+<text xml:space="preserve" x="340.0" y="58.0" font-size="12" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">shipment_id</text>
+<text xml:space="preserve" x="450.0" y="58.0" font-size="12" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">customer_id</text>
+<text xml:space="preserve" x="560.0" y="58.0" font-size="12" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">containers</text>
+<rect x="330.0" y="66.0" width="320.0" height="28.0" rx="0" fill="#FFFFFF"/>
+<text xml:space="preserve" x="340.0" y="86.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">S101</text>
+<text xml:space="preserve" x="450.0" y="86.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">C2</text>
+<text xml:space="preserve" x="560.0" y="86.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">8</text>
+<rect x="330.0" y="94.0" width="320.0" height="28.0" rx="0" fill="#FBF8F2"/>
+<text xml:space="preserve" x="340.0" y="114.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">S102</text>
+<text xml:space="preserve" x="450.0" y="114.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">C1</text>
+<text xml:space="preserve" x="560.0" y="114.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">3</text>
+<rect x="330.0" y="122.0" width="320.0" height="28.0" rx="0" fill="#FFFFFF"/>
+<text xml:space="preserve" x="340.0" y="142.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">S103</text>
+<text xml:space="preserve" x="450.0" y="142.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">C2</text>
+<text xml:space="preserve" x="560.0" y="142.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">5</text>
+<line x1="330.0" y1="150.0" x2="650.0" y2="150.0" stroke="#CFC4B2" stroke-width="1"/>
+<text xml:space="preserve" x="70.0" y="36.0" font-size="10" fill="#2A2926" font-weight="400" text-anchor="start"></text>
+<rect x="16.0" y="34.0" width="110.0" height="20.0" rx="10" fill="none" stroke="none" stroke-width="1.5"/>
+<text xml:space="preserve" x="28.0" y="172.0" font-size="11.5" fill="#8A6A1F" font-weight="700" text-anchor="start">PK  customer_id identifies each customer</text>
+<text xml:space="preserve" x="342.0" y="172.0" font-size="11.5" fill="#2F5D8A" font-weight="700" text-anchor="start">PK  shipment_id    FK  customer_id → customers (the same ids)</text>
+<text xml:space="preserve" x="16.0" y="202.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">Row = one record.   Column = one field with one data type.</text>
+<text xml:space="preserve" x="16.0" y="240.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">A query and its result</text>
+<rect x="16.0" y="252.0" width="340.0" height="88.0" rx="8" fill="#2A2926" stroke="#2A2926" stroke-width="1"/>
+<text xml:space="preserve" x="28.0" y="276.0" font-size="12.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">SELECT shipment_id, containers</text>
+<text xml:space="preserve" x="28.0" y="298.0" font-size="12.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">FROM shipments</text>
+<text xml:space="preserve" x="28.0" y="320.0" font-size="12.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">WHERE containers &gt;= 5;</text>
+<path d="M360.0,296.0 L410.0,296.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="414.0" y="262.0" width="120.0" height="68.0" rx="8" fill="#F3EBD8" stroke="#B38A3E" stroke-width="1.5"/>
+<text xml:space="preserve" x="474.0" y="292.0" font-size="13" fill="#8A6A1F" font-weight="700" text-anchor="middle">database</text>
+<text xml:space="preserve" x="474.0" y="312.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="middle">finds the rows</text>
+<path d="M536.0,296.0 L566.0,296.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="570.0" y="266.0" width="174.0" height="26.0" rx="0" fill="#F3EBD8"/>
+<text xml:space="preserve" x="580.0" y="284.0" font-size="10.5" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">shipment_id</text>
+<text xml:space="preserve" x="676.0" y="284.0" font-size="10.5" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">containers</text>
+<rect x="570.0" y="292.0" width="174.0" height="26.0" rx="0" fill="#FFFFFF"/>
+<text xml:space="preserve" x="580.0" y="310.0" font-size="10.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">S101</text>
+<text xml:space="preserve" x="676.0" y="310.0" font-size="10.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">8</text>
+<rect x="570.0" y="318.0" width="174.0" height="26.0" rx="0" fill="#FBF8F2"/>
+<text xml:space="preserve" x="580.0" y="336.0" font-size="10.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">S103</text>
+<text xml:space="preserve" x="676.0" y="336.0" font-size="10.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">5</text>
+<line x1="570.0" y1="344.0" x2="744.0" y2="344.0" stroke="#CFC4B2" stroke-width="1"/>
+<text xml:space="preserve" x="16.0" y="396.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">SQL describes what you want; the database works out how to get it. A query never changes the data.</text>
+</g></svg>

@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 442" width="760" height="442" role="img" aria-label="How SELECT works. FROM names the table. SELECT picks which columns appear, in the order you list them; SELECT star picks all of them. AS gives a column a new name in the result. A calculated column, containers times 2, is worked out for each row. DISTINCT removes duplicate rows from the result: three different statuses from six rows.">
+<title>SELECT picks the columns; AS renames them; DISTINCT removes repeats.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="442" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="16.0" width="380.0" height="88.0" rx="8" fill="#2A2926" stroke="#2A2926" stroke-width="1"/>
+<text xml:space="preserve" x="28.0" y="40.0" font-size="12.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">SELECT shipment_id,</text>
+<text xml:space="preserve" x="28.0" y="62.0" font-size="12.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">       containers * 2 AS teu</text>
+<text xml:space="preserve" x="28.0" y="84.0" font-size="12.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">FROM shipments;</text>
+<text xml:space="preserve" x="412.0" y="38.0" font-size="12.5" fill="#2F5D8A" font-weight="700" text-anchor="start">FROM: which table</text>
+<text xml:space="preserve" x="412.0" y="62.0" font-size="12.5" fill="#2F6B3F" font-weight="700" text-anchor="start">SELECT: which columns, in this order</text>
+<text xml:space="preserve" x="412.0" y="86.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">AS: a new name for the column</text>
+<rect x="16.0" y="116.0" width="340.0" height="24.0" rx="0" fill="#F3EBD8"/>
+<text xml:space="preserve" x="26.0" y="132.0" font-size="11" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">shipment_id</text>
+<text xml:space="preserve" x="136.0" y="132.0" font-size="11" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">status</text>
+<text xml:space="preserve" x="256.0" y="132.0" font-size="11" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">containers</text>
+<rect x="16.0" y="140.0" width="340.0" height="24.0" rx="0" fill="#FFFFFF"/>
+<text xml:space="preserve" x="26.0" y="156.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">101</text>
+<text xml:space="preserve" x="136.0" y="156.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">Delivered</text>
+<text xml:space="preserve" x="256.0" y="156.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">8</text>
+<rect x="16.0" y="164.0" width="340.0" height="24.0" rx="0" fill="#FBF8F2"/>
+<text xml:space="preserve" x="26.0" y="180.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">102</text>
+<text xml:space="preserve" x="136.0" y="180.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">In transit</text>
+<text xml:space="preserve" x="256.0" y="180.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">3</text>
+<rect x="16.0" y="188.0" width="340.0" height="24.0" rx="0" fill="#FFFFFF"/>
+<text xml:space="preserve" x="26.0" y="204.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">103</text>
+<text xml:space="preserve" x="136.0" y="204.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">Delivered</text>
+<text xml:space="preserve" x="256.0" y="204.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">5</text>
+<rect x="16.0" y="212.0" width="340.0" height="24.0" rx="0" fill="#FBF8F2"/>
+<text xml:space="preserve" x="26.0" y="228.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">104</text>
+<text xml:space="preserve" x="136.0" y="228.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">Cancelled</text>
+<text xml:space="preserve" x="256.0" y="228.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">6</text>
+<line x1="16.0" y1="236.0" x2="356.0" y2="236.0" stroke="#CFC4B2" stroke-width="1"/>
+<path d="M364.0,172.0 L410.0,172.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="414.0" y="116.0" width="200.0" height="24.0" rx="0" fill="#F3EBD8"/>
+<text xml:space="preserve" x="424.0" y="132.0" font-size="11" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">shipment_id</text>
+<text xml:space="preserve" x="534.0" y="132.0" font-size="11" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">teu</text>
+<rect x="414.0" y="140.0" width="200.0" height="24.0" rx="0" fill="#FFFFFF"/>
+<text xml:space="preserve" x="424.0" y="156.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">101</text>
+<text xml:space="preserve" x="534.0" y="156.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">16</text>
+<rect x="414.0" y="164.0" width="200.0" height="24.0" rx="0" fill="#FBF8F2"/>
+<text xml:space="preserve" x="424.0" y="180.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">102</text>
+<text xml:space="preserve" x="534.0" y="180.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">6</text>
+<rect x="414.0" y="188.0" width="200.0" height="24.0" rx="0" fill="#FFFFFF"/>
+<text xml:space="preserve" x="424.0" y="204.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">103</text>
+<text xml:space="preserve" x="534.0" y="204.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">10</text>
+<rect x="414.0" y="212.0" width="200.0" height="24.0" rx="0" fill="#FBF8F2"/>
+<text xml:space="preserve" x="424.0" y="228.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">104</text>
+<text xml:space="preserve" x="534.0" y="228.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">12</text>
+<line x1="414.0" y1="236.0" x2="614.0" y2="236.0" stroke="#CFC4B2" stroke-width="1"/>
+<text xml:space="preserve" x="414.0" y="252.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">only the chosen columns; teu is calculated per row</text>
+<text xml:space="preserve" x="16.0" y="282.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">DISTINCT: one row per different value</text>
+<rect x="16.0" y="294.0" width="340.0" height="66.0" rx="8" fill="#2A2926" stroke="#2A2926" stroke-width="1"/>
+<text xml:space="preserve" x="28.0" y="318.0" font-size="12.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">SELECT DISTINCT status</text>
+<text xml:space="preserve" x="28.0" y="340.0" font-size="12.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">FROM shipments;</text>
+<rect x="380.0" y="292.0" width="104.0" height="24.0" rx="4" fill="#E5F0E8"/>
+<text xml:space="preserve" x="432.0" y="309.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="middle">Delivered</text>
+<rect x="492.0" y="292.0" width="104.0" height="24.0" rx="4" fill="#E6EEF6"/>
+<text xml:space="preserve" x="544.0" y="309.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="middle">In transit</text>
+<rect x="604.0" y="292.0" width="104.0" height="24.0" rx="4" fill="#E5F0E8"/>
+<text xml:space="preserve" x="656.0" y="309.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="middle">Delivered</text>
+<rect x="380.0" y="322.0" width="104.0" height="24.0" rx="4" fill="#F6E3E0"/>
+<text xml:space="preserve" x="432.0" y="339.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="middle">Cancelled</text>
+<rect x="492.0" y="322.0" width="104.0" height="24.0" rx="4" fill="#E5F0E8"/>
+<text xml:space="preserve" x="544.0" y="339.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="middle">Delivered</text>
+<rect x="604.0" y="322.0" width="104.0" height="24.0" rx="4" fill="#E6EEF6"/>
+<text xml:space="preserve" x="656.0" y="339.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="middle">In transit</text>
+<path d="M540.0,356.0 L540.0,374.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="380.0" y="380.0" width="104.0" height="24.0" rx="4" fill="#E5F0E8"/>
+<text xml:space="preserve" x="432.0" y="397.0" font-size="11" fill="#2A2926" font-weight="700" text-anchor="middle">Delivered</text>
+<rect x="492.0" y="380.0" width="104.0" height="24.0" rx="4" fill="#E6EEF6"/>
+<text xml:space="preserve" x="544.0" y="397.0" font-size="11" fill="#2A2926" font-weight="700" text-anchor="middle">In transit</text>
+<rect x="604.0" y="380.0" width="104.0" height="24.0" rx="4" fill="#F6E3E0"/>
+<text xml:space="preserve" x="656.0" y="397.0" font-size="11" fill="#2A2926" font-weight="700" text-anchor="middle">Cancelled</text>
+<text xml:space="preserve" x="16.0" y="428.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">SELECT * means every column: handy for a first look, but name the columns you need.</text>
+</g></svg>

@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 440" width="760" height="440" role="img" aria-label="Subqueries: a query inside a query. The inner query runs first and its answer feeds the outer one. A scalar subquery returns one value: the average containers per shipment, 5.5, so the outer query keeps shipments above it. A list subquery returns a column of values, used with IN. A derived table returns a whole table, used in FROM with an alias. NOT IN returns nothing if the list contains a NULL.">
+<title>A subquery's answer feeds the outer query: one value, a list, or a table.</title>
+
+<rect width="760" height="440" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="16.0" width="420.0" height="127.0" rx="8" fill="#2A2926" stroke="#2A2926" stroke-width="1"/>
+<text xml:space="preserve" x="28.0" y="40.0" font-size="12" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">SELECT shipment_id, containers</text>
+<text xml:space="preserve" x="28.0" y="61.0" font-size="12" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">FROM shipments</text>
+<text xml:space="preserve" x="28.0" y="82.0" font-size="12" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">WHERE containers &gt; (</text>
+<text xml:space="preserve" x="28.0" y="103.0" font-size="12" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">   SELECT AVG(containers) FROM shipments</text>
+<text xml:space="preserve" x="28.0" y="124.0" font-size="12" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">);</text>
+<rect x="450.0" y="16.0" width="294.0" height="116.0" rx="8" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.5"/>
+<text xml:space="preserve" x="464.0" y="40.0" font-size="12.5" fill="#2F5D8A" font-weight="700" text-anchor="start">1  inner query runs first</text>
+<text xml:space="preserve" x="464.0" y="64.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">AVG(containers) = 5.5</text>
+<text xml:space="preserve" x="464.0" y="92.0" font-size="12.5" fill="#2F6B3F" font-weight="700" text-anchor="start">2  outer query: containers &gt; 5.5</text>
+<text xml:space="preserve" x="464.0" y="114.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">keeps 8, 6, 9</text>
+<text xml:space="preserve" x="16.0" y="172.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Three kinds of answer, three places to use them</text>
+<rect x="16.0" y="186.0" width="232.0" height="112.0" rx="8" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.4"/>
+<text xml:space="preserve" x="30.0" y="210.0" font-size="13.5" fill="#2F5D8A" font-weight="700" text-anchor="start">one value</text>
+<text xml:space="preserve" x="30.0" y="230.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">called a scalar subquery</text>
+<text xml:space="preserve" x="30.0" y="254.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">use in: WHERE or SELECT</text>
+<text xml:space="preserve" x="30.0" y="278.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">&gt; (SELECT AVG(x) …)</text>
+<rect x="264.0" y="186.0" width="232.0" height="112.0" rx="8" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.4"/>
+<text xml:space="preserve" x="278.0" y="210.0" font-size="13.5" fill="#2F6B3F" font-weight="700" text-anchor="start">one column</text>
+<text xml:space="preserve" x="278.0" y="230.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">called a list subquery</text>
+<text xml:space="preserve" x="278.0" y="254.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">use in: IN / NOT IN</text>
+<text xml:space="preserve" x="278.0" y="278.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">IN (SELECT id …)</text>
+<rect x="512.0" y="186.0" width="232.0" height="112.0" rx="8" fill="#F3EBD8" stroke="#B38A3E" stroke-width="1.4"/>
+<text xml:space="preserve" x="526.0" y="210.0" font-size="13.5" fill="#8A6A1F" font-weight="700" text-anchor="start">a table</text>
+<text xml:space="preserve" x="526.0" y="230.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">called a derived table subquery</text>
+<text xml:space="preserve" x="526.0" y="254.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">use in: FROM, with an alias</text>
+<text xml:space="preserve" x="526.0" y="278.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">FROM (SELECT …) AS t</text>
+<rect x="16.0" y="318.0" width="728.0" height="80.0" rx="8" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.4"/>
+<text xml:space="preserve" x="30.0" y="344.0" font-size="13.5" fill="#9B2C1F" font-weight="700" text-anchor="start">The NOT IN trap</text>
+<text xml:space="preserve" x="30.0" y="366.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">If the list contains a NULL, NOT IN returns no rows at all (nothing can be proved "not equal" to an unknown).</text>
+<text xml:space="preserve" x="30.0" y="383.4" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Remove NULLs from the list, or use NOT EXISTS.</text>
+<text xml:space="preserve" x="16.0" y="426.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">Subquery or JOIN? Often either works: choose the one that reads most clearly.</text>
+</g></svg>

@@ -735,6 +735,26 @@
   760,
   430
  ],
+ "/images/courses/sql/aggregates.svg": [
+  760,
+  430
+ ],
+ "/images/courses/sql/case.svg": [
+  760,
+  430
+ ],
+ "/images/courses/sql/clause-order.svg": [
+  760,
+  446
+ ],
+ "/images/courses/sql/cte.svg": [
+  760,
+  446
+ ],
+ "/images/courses/sql/database-anatomy.svg": [
+  760,
+  420
+ ],
  "/images/courses/sql/group-by.svg": [
   760,
   380
@@ -747,9 +767,21 @@
   760,
   570
  ],
+ "/images/courses/sql/limit-offset.svg": [
+  760,
+  430
+ ],
  "/images/courses/sql/mysql-workbench-layout.svg": [
   760,
   560
+ ],
+ "/images/courses/sql/order-by.svg": [
+  760,
+  430
+ ],
+ "/images/courses/sql/select.svg": [
+  760,
+  442
  ],
  "/images/courses/sql/ssms-object-explorer.webp": [
   330,
@@ -758,6 +790,10 @@
  "/images/courses/sql/ssms-window.webp": [
   1430,
   863
+ ],
+ "/images/courses/sql/subquery.svg": [
+  760,
+  440
  ],
  "/images/courses/sql/where-filter.svg": [
   760,

@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 446" width="760" height="446" role="img" aria-label="The order in which SQL works a query, which is not the order you write it. FROM picks the table; WHERE filters rows; GROUP BY forms groups; HAVING filters groups; SELECT picks and names the columns; ORDER BY sorts; LIMIT cuts. That is why WHERE can't use COUNT or SUM, which don't exist until groups are built, while HAVING can. A worked example: of six shipments, WHERE removes the cancelled one first, then groups of the rest are counted, and HAVING keeps groups with more than one row.">
+<title>WHERE filters rows before grouping; HAVING filters groups after.</title>
+
+<rect width="760" height="446" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="20.0" width="95.4" height="60.0" rx="8" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="63.7" y="46.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">FROM</text>
+<text xml:space="preserve" x="63.7" y="66.0" font-size="10.5" fill="#5E5A52" font-weight="400" text-anchor="middle">pick the table</text>
+<text xml:space="preserve" x="116.4" y="54.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="middle">›</text>
+<rect x="121.4" y="20.0" width="95.4" height="60.0" rx="8" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.5"/>
+<text xml:space="preserve" x="169.1" y="46.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">WHERE</text>
+<text xml:space="preserve" x="169.1" y="66.0" font-size="10.5" fill="#5E5A52" font-weight="400" text-anchor="middle">filter rows</text>
+<text xml:space="preserve" x="221.9" y="54.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="middle">›</text>
+<rect x="226.9" y="20.0" width="95.4" height="60.0" rx="8" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="274.6" y="46.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">GROUP BY</text>
+<text xml:space="preserve" x="274.6" y="66.0" font-size="10.5" fill="#5E5A52" font-weight="400" text-anchor="middle">form groups</text>
+<text xml:space="preserve" x="327.3" y="54.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="middle">›</text>
+<rect x="332.3" y="20.0" width="95.4" height="60.0" rx="8" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.5"/>
+<text xml:space="preserve" x="380.0" y="46.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">HAVING</text>
+<text xml:space="preserve" x="380.0" y="66.0" font-size="10.5" fill="#5E5A52" font-weight="400" text-anchor="middle">filter groups</text>
+<text xml:space="preserve" x="432.7" y="54.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="middle">›</text>
+<rect x="437.7" y="20.0" width="95.4" height="60.0" rx="8" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="485.4" y="46.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">SELECT</text>
+<text xml:space="preserve" x="485.4" y="66.0" font-size="10.5" fill="#5E5A52" font-weight="400" text-anchor="middle">choose columns</text>
+<text xml:space="preserve" x="538.1" y="54.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="middle">›</text>
+<rect x="543.1" y="20.0" width="95.4" height="60.0" rx="8" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="590.9" y="46.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">ORDER BY</text>
+<text xml:space="preserve" x="590.9" y="66.0" font-size="10.5" fill="#5E5A52" font-weight="400" text-anchor="middle">sort</text>
+<text xml:space="preserve" x="643.6" y="54.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="middle">›</text>
+<rect x="648.6" y="20.0" width="95.4" height="60.0" rx="8" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="696.3" y="46.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">LIMIT</text>
+<text xml:space="preserve" x="696.3" y="66.0" font-size="10.5" fill="#5E5A52" font-weight="400" text-anchor="middle">cut</text>
+<text xml:space="preserve" x="16.0" y="106.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Worked example</text>
+<rect x="16.0" y="118.0" width="420.0" height="127.0" rx="8" fill="#2A2926" stroke="#2A2926" stroke-width="1"/>
+<text xml:space="preserve" x="28.0" y="142.0" font-size="12" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">SELECT status, COUNT(*) AS n</text>
+<text xml:space="preserve" x="28.0" y="163.0" font-size="12" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">FROM shipments</text>
+<text xml:space="preserve" x="28.0" y="184.0" font-size="12" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">WHERE status &lt;&gt; 'Cancelled'</text>
+<text xml:space="preserve" x="28.0" y="205.0" font-size="12" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">GROUP BY status</text>
+<text xml:space="preserve" x="28.0" y="226.0" font-size="12" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">HAVING COUNT(*) &gt; 1;</text>
+<text xml:space="preserve" x="450.0" y="136.0" font-size="12" fill="#2F5D8A" font-weight="700" text-anchor="start">1  WHERE removes row 104 (cancelled)</text>
+<text xml:space="preserve" x="450.0" y="160.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="start">2  GROUP BY makes two groups</text>
+<text xml:space="preserve" x="450.0" y="184.0" font-size="12" fill="#2F6B3F" font-weight="700" text-anchor="start">3  HAVING keeps groups with n &gt; 1</text>
+<rect x="16.0" y="262.0" width="224.0" height="72.0" rx="8" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.4"/>
+<text xml:space="preserve" x="28.0" y="286.0" font-size="13" fill="#2F6B3F" font-weight="700" text-anchor="start">Delivered</text>
+<text xml:space="preserve" x="28.0" y="308.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">containers: 8, 5, 2</text>
+<text xml:space="preserve" x="228.0" y="286.0" font-size="12" fill="#2F6B3F" font-weight="700" text-anchor="end">n = 3  ✓</text>
+<rect x="256.0" y="262.0" width="224.0" height="72.0" rx="8" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.4"/>
+<text xml:space="preserve" x="268.0" y="286.0" font-size="13" fill="#2F5D8A" font-weight="700" text-anchor="start">In transit</text>
+<text xml:space="preserve" x="268.0" y="308.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">containers: 3, 9</text>
+<text xml:space="preserve" x="468.0" y="286.0" font-size="12" fill="#2F6B3F" font-weight="700" text-anchor="end">n = 2  ✓</text>
+<text xml:space="preserve" x="500.0" y="292.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Result: both groups pass n &gt; 1</text>
+<rect x="16.0" y="354.0" width="356.0" height="70.0" rx="10" fill="#FFFFFF" stroke="#2F5D8A" stroke-width="1.3"/>
+<text xml:space="preserve" x="30.0" y="378.0" font-size="13" fill="#2F5D8A" font-weight="700" text-anchor="start">WHERE: one row's value</text>
+<text xml:space="preserve" x="30.0" y="400.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">status &lt;&gt; 'Cancelled'  (before grouping)</text>
+<rect x="388.0" y="354.0" width="356.0" height="70.0" rx="10" fill="#FFFFFF" stroke="#2F6B3F" stroke-width="1.3"/>
+<text xml:space="preserve" x="402.0" y="378.0" font-size="13" fill="#2F6B3F" font-weight="700" text-anchor="start">HAVING: a group's total</text>
+<text xml:space="preserve" x="402.0" y="400.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">COUNT(*) &gt; 1  (after grouping)</text>
+</g></svg>

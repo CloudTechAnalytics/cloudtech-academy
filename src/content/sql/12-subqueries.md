@@ -24,6 +24,8 @@ A **subquery** is a query inside another query, written in brackets. The inner q
 | one column of values | a **list** | with `IN` or `NOT IN` | `IN (SELECT id FROM t)` |
 | a whole table | a **derived table** | in `FROM`, with an alias | `FROM (SELECT ...) AS t` |
 
+![An inner query computes an average of 5.5 that the outer query compares against; three kinds of subquery answer (one value, a list, a table); and the NOT IN trap with NULL](/images/courses/sql/subquery.svg "A subquery's answer feeds the outer query: one value, a list, or a table. (Illustration with simplified data.)")
+
 ### A single value in WHERE
 
 The average shipment charge is one number:

@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 430" width="760" height="430" role="img" aria-label="How CASE works: it checks each WHEN in order and returns the result of the first one that is true, otherwise the ELSE. For a delay in days: at least 7 gives Severe, at least 2 gives Late, otherwise On time. A delay of 9 is Severe; a delay of 3 fails the first test and gets Late; a delay of 0 gets On time. If the WHEN lines are swapped, a delay of 9 is already at least 2, so it's labelled Late and the Severe line never runs. Put the most specific condition first.">
+<title>CASE returns the result of the first WHEN that's true; order matters.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="430" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="28.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">CASE</text>
+<text xml:space="preserve" x="100.0" y="28.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">checked top to bottom: the first true WHEN wins</text>
+<rect x="16.0" y="40.0" width="250.0" height="44.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="30.0" y="68.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">WHEN delay &gt;= 7</text>
+<path d="M268.0,62.0 L296.0,62.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="300.0" y="40.0" width="130.0" height="44.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.3"/>
+<text xml:space="preserve" x="314.0" y="68.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">THEN 'Severe'</text>
+<rect x="16.0" y="94.0" width="250.0" height="44.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="30.0" y="122.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">WHEN delay &gt;= 2</text>
+<path d="M268.0,116.0 L296.0,116.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="300.0" y="94.0" width="130.0" height="44.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.3"/>
+<text xml:space="preserve" x="314.0" y="122.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">THEN 'Late'</text>
+<rect x="16.0" y="148.0" width="250.0" height="44.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="30.0" y="176.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">ELSE</text>
+<path d="M268.0,170.0 L296.0,170.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="300.0" y="148.0" width="130.0" height="44.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.3"/>
+<text xml:space="preserve" x="314.0" y="176.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">THEN 'On time'</text>
+<rect x="470.0" y="40.0" width="274.0" height="44.0" rx="6" fill="#F6E3E0"/>
+<text xml:space="preserve" x="486.0" y="68.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">delay = 9</text>
+<text xml:space="preserve" x="620.0" y="68.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">→  Severe</text>
+<rect x="470.0" y="94.0" width="274.0" height="44.0" rx="6" fill="#FBEBD6"/>
+<text xml:space="preserve" x="486.0" y="122.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">delay = 3</text>
+<text xml:space="preserve" x="620.0" y="122.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">→  Late</text>
+<rect x="470.0" y="148.0" width="274.0" height="44.0" rx="6" fill="#E5F0E8"/>
+<text xml:space="preserve" x="486.0" y="176.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">delay = 0</text>
+<text xml:space="preserve" x="620.0" y="176.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">→  On time</text>
+<rect x="16.0" y="214.0" width="728.0" height="96.0" rx="8" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.4"/>
+<text xml:space="preserve" x="32.0" y="240.0" font-size="13.5" fill="#9B2C1F" font-weight="700" text-anchor="start">✗ Wrong order</text>
+<text xml:space="preserve" x="32.0" y="264.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">WHEN delay &gt;= 2 THEN 'Late'</text>
+<text xml:space="preserve" x="32.0" y="284.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">WHEN delay &gt;= 7 THEN 'Severe'   ← never reached</text>
+<text xml:space="preserve" x="440.0" y="264.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">delay = 9 is already &gt;= 2,</text>
+<text xml:space="preserve" x="440.0" y="284.0" font-size="12" fill="#9B2C1F" font-weight="700" text-anchor="start">so it is labelled 'Late'.</text>
+<text xml:space="preserve" x="16.0" y="344.0" font-size="13" fill="#8A6A1F" font-weight="700" text-anchor="start">Put the most specific condition first.</text>
+<text xml:space="preserve" x="16.0" y="368.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Without an ELSE, rows that match no WHEN get NULL.</text>
+<text xml:space="preserve" x="16.0" y="392.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">Use CASE in SELECT to label rows, inside SUM() to count by condition, or in GROUP BY.</text>
+</g></svg>

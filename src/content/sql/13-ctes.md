@@ -37,6 +37,8 @@ A CTE only exists while the query runs. Nothing is saved in the database.
 
 The average number of shipments per customer, from the subqueries lesson:
 
+![A WITH query in three named steps: delivered shipments, containers per customer, and the final biggest customer; why CTEs read top to bottom](/images/courses/sql/cte.svg "WITH names each step, so a long query reads top to bottom. (Illustration with simplified data.)")
+
 ```sql run
 SELECT ROUND(AVG(shipment_count), 1) AS avg_shipments_per_customer
 FROM (

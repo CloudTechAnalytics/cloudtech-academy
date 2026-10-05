@@ -35,6 +35,8 @@ END
 
 Size bands for shipments:
 
+![CASE checks WHEN lines top to bottom and returns the first true one: a delay of 9 is Severe, 3 is Late and 0 is On time; with the lines in the wrong order, 9 is wrongly labelled Late](/images/courses/sql/case.svg "CASE returns the result of the first WHEN that's true; order matters. (Illustration with simplified data.)")
+
 ```sql run
 SELECT
   shipment_id,

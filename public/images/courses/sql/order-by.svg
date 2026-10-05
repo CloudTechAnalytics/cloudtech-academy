@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 430" width="760" height="430" role="img" aria-label="Sorting with ORDER BY. Ascending, the default, puts the smallest first; DESC puts the largest first. With two sort columns, the second breaks ties: ordering by status, then by containers descending, sorts the statuses alphabetically and, within each status, the biggest shipment first. Missing values, NULL, go first in SQLite and MySQL in ascending order, and last in PostgreSQL and Oracle; NULLS FIRST or NULLS LAST makes it explicit.">
+<title>ORDER BY sorts the result; later columns break ties; NULLs go first or last.</title>
+
+<rect width="760" height="430" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="28.0" font-size="13" fill="#2F6B3F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">ORDER BY containers</text>
+<text xml:space="preserve" x="264.0" y="28.0" font-size="13" fill="#2F5D8A" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">ORDER BY containers DESC</text>
+<rect x="16.0" y="38.0" width="230.0" height="26.0" rx="0" fill="#F3EBD8"/>
+<text xml:space="preserve" x="26.0" y="56.0" font-size="11.5" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">shipment_id</text>
+<text xml:space="preserve" x="146.0" y="56.0" font-size="11.5" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">containers</text>
+<rect x="16.0" y="64.0" width="230.0" height="26.0" rx="0" fill="#FFFFFF"/>
+<text xml:space="preserve" x="26.0" y="82.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">105</text>
+<text xml:space="preserve" x="146.0" y="82.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">2</text>
+<rect x="16.0" y="90.0" width="230.0" height="26.0" rx="0" fill="#FBF8F2"/>
+<text xml:space="preserve" x="26.0" y="108.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">102</text>
+<text xml:space="preserve" x="146.0" y="108.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">3</text>
+<rect x="16.0" y="116.0" width="230.0" height="26.0" rx="0" fill="#FFFFFF"/>
+<text xml:space="preserve" x="26.0" y="134.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">103</text>
+<text xml:space="preserve" x="146.0" y="134.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">5</text>
+<rect x="16.0" y="142.0" width="230.0" height="26.0" rx="0" fill="#FBF8F2"/>
+<text xml:space="preserve" x="26.0" y="160.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">104</text>
+<text xml:space="preserve" x="146.0" y="160.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">6</text>
+<rect x="16.0" y="168.0" width="230.0" height="26.0" rx="0" fill="#FFFFFF"/>
+<text xml:space="preserve" x="26.0" y="186.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">101</text>
+<text xml:space="preserve" x="146.0" y="186.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">8</text>
+<rect x="16.0" y="194.0" width="230.0" height="26.0" rx="0" fill="#FBF8F2"/>
+<text xml:space="preserve" x="26.0" y="212.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">106</text>
+<text xml:space="preserve" x="146.0" y="212.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">9</text>
+<line x1="16.0" y1="220.0" x2="246.0" y2="220.0" stroke="#CFC4B2" stroke-width="1"/>
+<rect x="264.0" y="38.0" width="230.0" height="26.0" rx="0" fill="#F3EBD8"/>
+<text xml:space="preserve" x="274.0" y="56.0" font-size="11.5" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">shipment_id</text>
+<text xml:space="preserve" x="394.0" y="56.0" font-size="11.5" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">containers</text>
+<rect x="264.0" y="64.0" width="230.0" height="26.0" rx="0" fill="#FFFFFF"/>
+<text xml:space="preserve" x="274.0" y="82.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">106</text>
+<text xml:space="preserve" x="394.0" y="82.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">9</text>
+<rect x="264.0" y="90.0" width="230.0" height="26.0" rx="0" fill="#FBF8F2"/>
+<text xml:space="preserve" x="274.0" y="108.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">101</text>
+<text xml:space="preserve" x="394.0" y="108.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">8</text>
+<rect x="264.0" y="116.0" width="230.0" height="26.0" rx="0" fill="#FFFFFF"/>
+<text xml:space="preserve" x="274.0" y="134.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">104</text>
+<text xml:space="preserve" x="394.0" y="134.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">6</text>
+<rect x="264.0" y="142.0" width="230.0" height="26.0" rx="0" fill="#FBF8F2"/>
+<text xml:space="preserve" x="274.0" y="160.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">103</text>
+<text xml:space="preserve" x="394.0" y="160.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">5</text>
+<rect x="264.0" y="168.0" width="230.0" height="26.0" rx="0" fill="#FFFFFF"/>
+<text xml:space="preserve" x="274.0" y="186.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">102</text>
+<text xml:space="preserve" x="394.0" y="186.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">3</text>
+<rect x="264.0" y="194.0" width="230.0" height="26.0" rx="0" fill="#FBF8F2"/>
+<text xml:space="preserve" x="274.0" y="212.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">105</text>
+<text xml:space="preserve" x="394.0" y="212.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">2</text>
+<line x1="264.0" y1="220.0" x2="494.0" y2="220.0" stroke="#CFC4B2" stroke-width="1"/>
+<text xml:space="preserve" x="16.0" y="238.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">smallest first (the default, ASC)</text>
+<text xml:space="preserve" x="264.0" y="238.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">largest first</text>
+<text xml:space="preserve" x="16.0" y="272.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Two sort columns: the second breaks ties</text>
+<rect x="16.0" y="284.0" width="340.0" height="44.0" rx="8" fill="#2A2926" stroke="#2A2926" stroke-width="1"/>
+<text xml:space="preserve" x="28.0" y="308.0" font-size="12" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">ORDER BY status, containers DESC</text>
+<rect x="380.0" y="284.0" width="182.0" height="26.0" rx="4" fill="#F6E3E0"/>
+<text xml:space="preserve" x="388.0" y="302.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">Cancelled, 6</text>
+<rect x="570.0" y="284.0" width="182.0" height="26.0" rx="4" fill="#E5F0E8"/>
+<text xml:space="preserve" x="578.0" y="302.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">Delivered, 8</text>
+<rect x="380.0" y="314.0" width="182.0" height="26.0" rx="4" fill="#E5F0E8"/>
+<text xml:space="preserve" x="388.0" y="332.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">Delivered, 5</text>
+<rect x="570.0" y="314.0" width="182.0" height="26.0" rx="4" fill="#E5F0E8"/>
+<text xml:space="preserve" x="578.0" y="332.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">Delivered, 2</text>
+<rect x="380.0" y="344.0" width="182.0" height="26.0" rx="4" fill="#E6EEF6"/>
+<text xml:space="preserve" x="388.0" y="362.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">In transit, 9</text>
+<rect x="570.0" y="344.0" width="182.0" height="26.0" rx="4" fill="#E6EEF6"/>
+<text xml:space="preserve" x="578.0" y="362.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">In transit, 3</text>
+<text xml:space="preserve" x="16.0" y="350.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">NULL (missing) values</text>
+<text xml:space="preserve" x="16.0" y="372.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">SQLite, MySQL: first when ascending.   PostgreSQL, Oracle: last.</text>
+<text xml:space="preserve" x="16.0" y="394.0" font-size="12" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">Say it explicitly:  ORDER BY delivery_date NULLS LAST</text>
+</g></svg>

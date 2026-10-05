@@ -41,6 +41,8 @@ ORDER BY column1 [ASC | DESC], column2 [ASC | DESC], ...;
 | `ASC` | ascending (the default) | smallest first | A to Z | earliest first |
 | `DESC` | descending | largest first | Z to A | latest first |
 
+![Six shipments sorted by containers ascending and descending; sorting by status then containers descending, where the second column breaks ties; and where NULLs go](/images/courses/sql/order-by.svg "ORDER BY sorts the result; later columns break ties; NULLs go first or last. (Illustration with simplified data.)")
+
 `ASC` is the default, so `ORDER BY company_name` and `ORDER BY company_name ASC` mean the same thing. Customers in alphabetical order:
 
 ```sql run

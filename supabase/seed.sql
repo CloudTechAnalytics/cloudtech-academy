@@ -17251,6 +17251,8 @@ The software that runs a database is a **database management system** (DBMS). Yo
 
 The kind of database in this course is a **relational database**, which stores data in **tables**. A table looks like a spreadsheet:
 
+![A customers table and a shipments table with primary and foreign keys marked, and a SELECT query sent to the database that returns a result table of two rows](/images/courses/sql/database-anatomy.svg "Tables hold rows and columns; keys connect tables; a query returns a result table. (Illustration with simplified data.)")
+
 - Each **column** holds one kind of information, such as a company name or a booking date. Every column has a name and a **data type**.
 - Each **row** is one record: one customer, one shipment, one payment.
 - The order of rows has no meaning: a table is a set of records, not a list. If you want an order, you ask for it (you'll learn how in the ORDER BY lesson).
@@ -17686,6 +17688,8 @@ SQL keywords aren't case-sensitive: `select`, `SELECT` and `Select` all work. Mo
 ### Selecting specific columns
 
 List the columns you want, in the order you want them:
+
+![SELECT picks columns from a table and AS names a calculated column; DISTINCT turns six status values into three different ones](/images/courses/sql/select.svg "SELECT picks the columns; AS renames them; DISTINCT removes repeats. (Illustration with simplified data.)")
 
 ```sql run
 SELECT company_name, city, industry
@@ -18682,6 +18686,8 @@ ORDER BY column1 [ASC | DESC], column2 [ASC | DESC], ...;
 | `ASC` | ascending (the default) | smallest first | A to Z | earliest first |
 | `DESC` | descending | largest first | Z to A | latest first |
 
+![Six shipments sorted by containers ascending and descending; sorting by status then containers descending, where the second column breaks ties; and where NULLs go](/images/courses/sql/order-by.svg "ORDER BY sorts the result; later columns break ties; NULLs go first or last. (Illustration with simplified data.)")
+
 `ASC` is the default, so `ORDER BY company_name` and `ORDER BY company_name ASC` mean the same thing. Customers in alphabetical order:
 
 ```sql run
@@ -18964,6 +18970,8 @@ SELECT ... FROM ... WHERE ... ORDER BY ... LIMIT ... OFFSET ...
 ### Top N: ORDER BY, then LIMIT
 
 The database sorts first and then cuts:
+
+![Shipments sorted by containers descending with the top three kept; two pages of three rows made with OFFSET; and the warning about ties at the cut-off](/images/courses/sql/limit-offset.svg "Top N is ORDER BY, then LIMIT; OFFSET skips rows to make pages. (Illustration with simplified data.)")
 
 ```sql run
 SELECT shipment_id, booking_date, freight_charge
@@ -19254,6 +19262,8 @@ Every query so far returned one result row for each table row. An **aggregate fu
 | `AVG(column)` | the average (mean) | numbers |
 | `MIN(column)` | the smallest value | numbers, text, dates |
 | `MAX(column)` | the largest value | numbers, text, dates |
+
+![Six values, one of them NULL, with COUNT(*) 6, COUNT(column) 5, SUM 27, AVG 5.4, MIN 2 and MAX 9](/images/courses/sql/aggregates.svg "Aggregates collapse many rows into one value, and they ignore NULL. (Illustration with simplified data.)")
 
 ### The syntax
 
@@ -19951,6 +19961,8 @@ You can count shipments per customer with `GROUP BY`. But you can't write `WHERE
 | Runs | **before** `GROUP BY` | **after** `GROUP BY` |
 | Can use `COUNT`, `SUM`, `AVG`... | no | yes |
 | Example | `WHERE status <> 'Cancelled'` | `HAVING COUNT(*) > 30` |
+
+![The order SQL works a query: FROM, WHERE, GROUP BY, HAVING, SELECT, ORDER BY, LIMIT, with a worked example where WHERE removes a cancelled row and HAVING keeps groups with more than one row](/images/courses/sql/clause-order.svg "WHERE filters rows before grouping; HAVING filters groups after. (Illustration with simplified data.)")
 
 A simple test: if the condition is about **one row** (this shipment's status, this booking's date), it goes in `WHERE`. If it's about a **total for a group** (this customer's number of shipments, this route's average charge), it goes in `HAVING`.
 
@@ -20704,6 +20716,8 @@ END
 
 Size bands for shipments:
 
+![CASE checks WHEN lines top to bottom and returns the first true one: a delay of 9 is Severe, 3 is Late and 0 is On time; with the lines in the wrong order, 9 is wrongly labelled Late](/images/courses/sql/case.svg "CASE returns the result of the first WHEN that's true; order matters. (Illustration with simplified data.)")
+
 ```sql run
 SELECT
   shipment_id,
@@ -21038,6 +21052,8 @@ A **subquery** is a query inside another query, written in brackets. The inner q
 | one column of values | a **list** | with `IN` or `NOT IN` | `IN (SELECT id FROM t)` |
 | a whole table | a **derived table** | in `FROM`, with an alias | `FROM (SELECT ...) AS t` |
 
+![An inner query computes an average of 5.5 that the outer query compares against; three kinds of subquery answer (one value, a list, a table); and the NOT IN trap with NULL](/images/courses/sql/subquery.svg "A subquery's answer feeds the outer query: one value, a list, or a table. (Illustration with simplified data.)")
+
 ### A single value in WHERE
 
 The average shipment charge is one number:
@@ -21363,6 +21379,8 @@ A CTE only exists while the query runs. Nothing is saved in the database.
 ### A subquery, rewritten as a CTE
 
 The average number of shipments per customer, from the subqueries lesson:
+
+![A WITH query in three named steps: delivered shipments, containers per customer, and the final biggest customer; why CTEs read top to bottom](/images/courses/sql/cte.svg "WITH names each step, so a long query reads top to bottom. (Illustration with simplified data.)")
 
 ```sql run
 SELECT ROUND(AVG(shipment_count), 1) AS avg_shipments_per_customer

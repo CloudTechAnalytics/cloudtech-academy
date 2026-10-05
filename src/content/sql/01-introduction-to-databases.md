@@ -34,6 +34,8 @@ The software that runs a database is a **database management system** (DBMS). Yo
 
 The kind of database in this course is a **relational database**, which stores data in **tables**. A table looks like a spreadsheet:
 
+![A customers table and a shipments table with primary and foreign keys marked, and a SELECT query sent to the database that returns a result table of two rows](/images/courses/sql/database-anatomy.svg "Tables hold rows and columns; keys connect tables; a query returns a result table. (Illustration with simplified data.)")
+
 - Each **column** holds one kind of information, such as a company name or a booking date. Every column has a name and a **data type**.
 - Each **row** is one record: one customer, one shipment, one payment.
 - The order of rows has no meaning: a table is a set of records, not a list. If you want an order, you ask for it (you'll learn how in the ORDER BY lesson).

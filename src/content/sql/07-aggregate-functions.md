@@ -30,6 +30,8 @@ Every query so far returned one result row for each table row. An **aggregate fu
 | `MIN(column)` | the smallest value | numbers, text, dates |
 | `MAX(column)` | the largest value | numbers, text, dates |
 
+![Six values, one of them NULL, with COUNT(*) 6, COUNT(column) 5, SUM 27, AVG 5.4, MIN 2 and MAX 9](/images/courses/sql/aggregates.svg "Aggregates collapse many rows into one value, and they ignore NULL. (Illustration with simplified data.)")
+
 ### The syntax
 
 ```sql

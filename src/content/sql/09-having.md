@@ -25,6 +25,8 @@ You can count shipments per customer with `GROUP BY`. But you can't write `WHERE
 | Can use `COUNT`, `SUM`, `AVG`... | no | yes |
 | Example | `WHERE status <> 'Cancelled'` | `HAVING COUNT(*) > 30` |
 
+![The order SQL works a query: FROM, WHERE, GROUP BY, HAVING, SELECT, ORDER BY, LIMIT, with a worked example where WHERE removes a cancelled row and HAVING keeps groups with more than one row](/images/courses/sql/clause-order.svg "WHERE filters rows before grouping; HAVING filters groups after. (Illustration with simplified data.)")
+
 A simple test: if the condition is about **one row** (this shipment's status, this booking's date), it goes in `WHERE`. If it's about a **total for a group** (this customer's number of shipments, this route's average charge), it goes in `HAVING`.
 
 ### The syntax
