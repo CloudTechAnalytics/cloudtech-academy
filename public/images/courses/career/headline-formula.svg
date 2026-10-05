@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 300" width="760" height="300" role="img" aria-label="The LinkedIn headline formula: target role, then key tools, then what you do, then your city, separated by vertical bars. The example reads 'Junior Accountant | Excel &amp; QuickBooks | Month-end reports | Abuja'. Recruiters search by these words.">
+<title>A headline is built from the words a recruiter would search for.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="300" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="28.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Headline formula (up to 220 characters)</text>
+<rect x="16.0" y="42.0" width="176.0" height="76.0" rx="10" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.6"/>
+<text xml:space="preserve" x="26.0" y="66.0" font-size="12" fill="#2F5D8A" font-weight="700" text-anchor="start">Target role</text>
+<text xml:space="preserve" x="26.0" y="98.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="start">Junior Accountant</text>
+<text xml:space="preserve" x="198.0" y="86.0" font-size="18" fill="#5E5A52" font-weight="700" text-anchor="middle">|</text>
+<rect x="204.0" y="42.0" width="190.0" height="76.0" rx="10" fill="#F3EBD8" stroke="#B38A3E" stroke-width="1.6"/>
+<text xml:space="preserve" x="214.0" y="66.0" font-size="12" fill="#B38A3E" font-weight="700" text-anchor="start">Key tools</text>
+<text xml:space="preserve" x="214.0" y="98.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="start">Excel &amp; QuickBooks</text>
+<text xml:space="preserve" x="400.0" y="86.0" font-size="18" fill="#5E5A52" font-weight="700" text-anchor="middle">|</text>
+<rect x="406.0" y="42.0" width="186.0" height="76.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.6"/>
+<text xml:space="preserve" x="416.0" y="66.0" font-size="12" fill="#2F6B3F" font-weight="700" text-anchor="start">What you do</text>
+<text xml:space="preserve" x="416.0" y="98.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="start">Month-end reports</text>
+<text xml:space="preserve" x="598.0" y="86.0" font-size="18" fill="#5E5A52" font-weight="700" text-anchor="middle">|</text>
+<rect x="604.0" y="42.0" width="120.0" height="76.0" rx="10" fill="#EEEAF5" stroke="#5C4F80" stroke-width="1.6"/>
+<text xml:space="preserve" x="614.0" y="66.0" font-size="12" fill="#5C4F80" font-weight="700" text-anchor="start">City</text>
+<text xml:space="preserve" x="614.0" y="98.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="start">Abuja</text>
+<text xml:space="preserve" x="16.0" y="154.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Weak versus strong</text>
+<rect x="16.0" y="168.0" width="250.0" height="50.0" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.2"/>
+<text xml:space="preserve" x="28.0" y="198.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Student at the university</text>
+<path d="M270.0,193.0 L292.0,193.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="296.0" y="168.0" width="448.0" height="50.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.2"/>
+<text xml:space="preserve" x="308.0" y="190.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Accounting Student | Excel &amp; QuickBooks | Graduate roles | Abuja</text>
+<rect x="16.0" y="228.0" width="250.0" height="50.0" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.2"/>
+<text xml:space="preserve" x="28.0" y="258.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Hardworking and passionate</text>
+<path d="M270.0,253.0 L292.0,253.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="296.0" y="228.0" width="448.0" height="50.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.2"/>
+<text xml:space="preserve" x="308.0" y="250.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Junior Accountant | Month-end reports | Open to roles in Abuja</text>
+</g></svg>

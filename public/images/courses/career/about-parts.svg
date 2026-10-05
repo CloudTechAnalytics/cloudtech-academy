@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 380" width="760" height="380" role="img" aria-label="The four parts of a LinkedIn About section. Only the opening lines show before see more, so the first line is a hook. Then proof with numbers, then your skills, then what you are looking for and how to reach you.">
+<title>About: hook, proof, skills, what you want.</title>
+
+<rect width="760" height="380" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="28.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Four short parts, in the first person</text>
+<rect x="16.0" y="42.0" width="728.0" height="72.0" rx="10" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.4"/>
+<circle cx="40.0" cy="64.0" r="12" fill="#2F5D8A"/>
+<text xml:space="preserve" x="40.0" y="68.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
+<text xml:space="preserve" x="62.0" y="69.0" font-size="14" fill="#2F5D8A" font-weight="700" text-anchor="start">Hook</text>
+<text xml:space="preserve" x="62.0" y="88.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">One line that makes people click 'see</text>
+<text xml:space="preserve" x="62.0" y="104.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">more'.</text>
+<text xml:space="preserve" x="340.0" y="69.0" font-size="11.5" fill="#2F5D8A" font-weight="700" text-anchor="start">Example</text>
+<text xml:space="preserve" x="340.0" y="89.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">I turn messy stock records into clear weekly reports.</text>
+<rect x="16.0" y="122.0" width="728.0" height="72.0" rx="10" fill="#F3EBD8" stroke="#B38A3E" stroke-width="1.4"/>
+<circle cx="40.0" cy="144.0" r="12" fill="#B38A3E"/>
+<text xml:space="preserve" x="40.0" y="148.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
+<text xml:space="preserve" x="62.0" y="149.0" font-size="14" fill="#B38A3E" font-weight="700" text-anchor="start">Proof</text>
+<text xml:space="preserve" x="62.0" y="168.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">What you did, with the numbers.</text>
+<text xml:space="preserve" x="340.0" y="149.0" font-size="11.5" fill="#B38A3E" font-weight="700" text-anchor="start">Example</text>
+<text xml:space="preserve" x="340.0" y="169.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">At my family's shop, I cut a Friday count from 4 hours to</text>
+<text xml:space="preserve" x="340.0" y="187.1" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">90 minutes.</text>
+<rect x="16.0" y="202.0" width="728.0" height="72.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.4"/>
+<circle cx="40.0" cy="224.0" r="12" fill="#2F6B3F"/>
+<text xml:space="preserve" x="40.0" y="228.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
+<text xml:space="preserve" x="62.0" y="229.0" font-size="14" fill="#2F6B3F" font-weight="700" text-anchor="start">Skills</text>
+<text xml:space="preserve" x="62.0" y="248.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">The tools you use, spelled as adverts</text>
+<text xml:space="preserve" x="62.0" y="264.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">spell them.</text>
+<text xml:space="preserve" x="340.0" y="229.0" font-size="11.5" fill="#2F6B3F" font-weight="700" text-anchor="start">Example</text>
+<text xml:space="preserve" x="340.0" y="249.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Excel, Google Sheets, data entry, reporting.</text>
+<rect x="16.0" y="282.0" width="728.0" height="72.0" rx="10" fill="#EEEAF5" stroke="#5C4F80" stroke-width="1.4"/>
+<circle cx="40.0" cy="304.0" r="12" fill="#5C4F80"/>
+<text xml:space="preserve" x="40.0" y="308.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">4</text>
+<text xml:space="preserve" x="62.0" y="309.0" font-size="14" fill="#5C4F80" font-weight="700" text-anchor="start">What you want</text>
+<text xml:space="preserve" x="62.0" y="328.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">The role you want and how to reach you.</text>
+<text xml:space="preserve" x="340.0" y="309.0" font-size="11.5" fill="#5C4F80" font-weight="700" text-anchor="start">Example</text>
+<text xml:space="preserve" x="340.0" y="329.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Looking for a junior admin role in Kano. Message me here.</text>
+<rect x="16.0" y="366.0" width="728.0" height="1.0" rx="0" fill="#EDE6D8"/>
+</g></svg>

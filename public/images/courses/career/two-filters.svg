@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 430" width="760" height="430" role="img" aria-label="How a CV is read: first software (an applicant tracking system) that files the text into fields and lets recruiters search by keyword, then a person who spends under a minute checking recent job, employer, dates and fit. A simple one-column CV passes both; a CV with sidebars, tables, text boxes, icons or images can be misread by the software.">
+<title>Two readers: the software that files your CV, then a person who skims it.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="430" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="26.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Your CV passes two filters, in this order</text>
+<rect x="16.0" y="40.0" width="350.0" height="130.0" rx="10" fill="#FFFFFF" stroke="#2F5D8A" stroke-width="1.6"/>
+<circle cx="38.0" cy="62.0" r="12" fill="#2F5D8A"/>
+<text xml:space="preserve" x="38.0" y="66.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
+<text xml:space="preserve" x="58.0" y="67.0" font-size="14.5" fill="#2F5D8A" font-weight="700" text-anchor="start">Software (ATS)</text>
+<text xml:space="preserve" x="30.0" y="94.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Reads the text, files it into fields (name,</text>
+<text xml:space="preserve" x="30.0" y="112.1" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">jobs, skills) and lets recruiters search by</text>
+<text xml:space="preserve" x="30.0" y="130.2" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">keyword.</text>
+<text xml:space="preserve" x="30.0" y="150.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">Risk: it can't read it, or the words don't match.</text>
+<path d="M370.0,105.0 L394.0,105.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="398.0" y="40.0" width="346.0" height="130.0" rx="10" fill="#FFFFFF" stroke="#2F6B3F" stroke-width="1.6"/>
+<circle cx="420.0" cy="62.0" r="12" fill="#2F6B3F"/>
+<text xml:space="preserve" x="420.0" y="66.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
+<text xml:space="preserve" x="440.0" y="67.0" font-size="14.5" fill="#2F6B3F" font-weight="700" text-anchor="start">A person, in under a minute</text>
+<text xml:space="preserve" x="412.0" y="94.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Checks latest job title, employer, dates and</text>
+<text xml:space="preserve" x="412.0" y="112.1" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">whether you match the advert.</text>
+<text xml:space="preserve" x="412.0" y="150.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">Risk: they can't find it fast.</text>
+<text xml:space="preserve" x="16.0" y="204.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">The same CV, built two ways</text>
+<rect x="16.0" y="216.0" width="350.0" height="196.0" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.6"/>
+<text xml:space="preserve" x="30.0" y="240.0" font-size="13.5" fill="#9B2C1F" font-weight="700" text-anchor="start">✗ Template with sidebar</text>
+<rect x="30.0" y="252.0" width="100.0" height="148.0" rx="4" fill="#E8C7C2"/>
+<text xml:space="preserve" x="80.0" y="276.0" font-size="11.5" fill="#9B2C1F" font-weight="700" text-anchor="middle">photo</text>
+<text xml:space="preserve" x="80.0" y="296.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="middle">contact</text>
+<text xml:space="preserve" x="80.0" y="314.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="middle">skill bars</text>
+<text xml:space="preserve" x="80.0" y="332.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="middle">● ● ● ○ ○</text>
+<rect x="142.0" y="252.0" width="210.0" height="14.0" rx="3" fill="#E8C7C2"/>
+<rect x="142.0" y="274.0" width="210.0" height="8.0" rx="3" fill="#EFD9D5"/>
+<rect x="142.0" y="290.0" width="160.0" height="8.0" rx="3" fill="#EFD9D5"/>
+<rect x="142.0" y="314.0" width="210.0" height="14.0" rx="3" fill="#E8C7C2"/>
+<rect x="142.0" y="336.0" width="190.0" height="8.0" rx="3" fill="#EFD9D5"/>
+<rect x="142.0" y="352.0" width="210.0" height="8.0" rx="3" fill="#EFD9D5"/>
+<text xml:space="preserve" x="142.0" y="388.0" font-size="11.5" fill="#9B2C1F" font-weight="700" text-anchor="start">Text in columns, boxes and icons</text>
+<rect x="378.0" y="216.0" width="366.0" height="196.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.6"/>
+<text xml:space="preserve" x="392.0" y="240.0" font-size="13.5" fill="#2F6B3F" font-weight="700" text-anchor="start">✓ One column, plain headings</text>
+<text xml:space="preserve" x="392.0" y="266.0" font-size="11.5" fill="#2F6B3F" font-weight="700" text-anchor="start">PROFILE</text>
+<rect x="392.0" y="272.0" width="285.0" height="8.0" rx="3" fill="#C5DCCB"/>
+<text xml:space="preserve" x="392.0" y="302.0" font-size="11.5" fill="#2F6B3F" font-weight="700" text-anchor="start">SKILLS</text>
+<rect x="392.0" y="308.0" width="266.0" height="8.0" rx="3" fill="#C5DCCB"/>
+<text xml:space="preserve" x="392.0" y="338.0" font-size="11.5" fill="#2F6B3F" font-weight="700" text-anchor="start">EXPERIENCE</text>
+<rect x="392.0" y="344.0" width="304.0" height="8.0" rx="3" fill="#C5DCCB"/>
+<text xml:space="preserve" x="392.0" y="374.0" font-size="11.5" fill="#2F6B3F" font-weight="700" text-anchor="start">EDUCATION</text>
+<rect x="392.0" y="380.0" width="247.0" height="8.0" rx="3" fill="#C5DCCB"/>
+<text xml:space="preserve" x="392.0" y="402.0" font-size="11.5" fill="#2F6B3F" font-weight="700" text-anchor="start">Reads in the same order for software and people</text>
+</g></svg>
