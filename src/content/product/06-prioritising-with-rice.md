@@ -10,7 +10,7 @@ Ten ideas, one team, one quarter. Ranked by how often they come up in feedback, 
 
 ## The concept
 
-**RICE**
+### RICE
 
 > score = Reach × Impact × Confidence ÷ Effort
 
@@ -21,11 +21,13 @@ Ten ideas, one team, one quarter. Ranked by how often they come up in feedback, 
 | **Confidence** | how sure we are of the reach and impact | 1 high, 0.8 medium, 0.5 low |
 | **Effort** | how much work | person-weeks |
 
-**Scores are for discussion, not autopilot**
+### Scores are for discussion, not autopilot
 
 RICE makes assumptions visible so people can challenge them. Check how sensitive the ranking is to the uncertain inputs, and record why you overrode it when you do.
 
-**Where the inputs come from**
+![RICE scores for three invented items: savings goals 2,133, USSD top-up 750 and faster KYC retry 3,000, with the impact and confidence scales and a reminder that scores are for discussion](/images/courses/product/rice.svg "RICE: reach × impact × confidence ÷ effort, for three invented items.")
+
+### Where the inputs come from
 
 Reach from funnels and feedback (lessons 3 to 5), impact from interviews and past launches, confidence from the strength of that evidence, effort from the engineers.
 

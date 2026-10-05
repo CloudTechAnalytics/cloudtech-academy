@@ -12,21 +12,23 @@ But users who choose to set up a savings goal are already the most engaged users
 
 ## The concept
 
-**Self-selection**
+### Self-selection
 
 When users choose whether to use a feature, adopters differ from non-adopters before the feature exists. Any comparison between them mixes the feature's effect with those differences.
 
-**A randomised holdout**
+### A randomised holdout
 
 Paystream did something wise: it gave early access to a **random** half of users and held the other half back. Because the groups were chosen by chance, they're alike except for access. Comparing **all** early-access users (adopters or not) with the holdout measures the effect of offering the feature. This is the experimentation course's A/B test, applied to a launch.
 
-**Effect per adopter**
+### Effect per adopter
 
 The holdout comparison is diluted by early-access users who never adopted. Dividing the difference by the adoption rate gives a rough effect per adopter.
 
-**Guardrails**
+### Guardrails
 
 Metrics that must not get worse, such as support tickets or failed transactions, checked the same way.
+
+![Comparing adopters with non-adopters is biased by self-selection; a random holdout compares like with like: 26% against 20% is a 6 point effect of offering the feature, about 15 points per adopter at 40% adoption](/images/courses/product/holdout.svg "Self-selection biases adopter comparisons; a random holdout doesn't.")
 
 ## Example
 

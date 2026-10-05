@@ -10,7 +10,7 @@ Paystream's leadership meets to agree next quarter's product plan. They want to 
 
 ## The concept
 
-**The parts of the review**
+### The parts of the review
 
 | Part | Built in |
 | :-- | :-- |
@@ -21,7 +21,7 @@ Paystream's leadership meets to agree next quarter's product plan. They want to 
 | The savings goals launch review | lesson 8 |
 | The spec for the top priority | lesson 9 |
 
-**Evidence chain**
+### Evidence chain
 
 Every roadmap item should trace back: a user problem (interviews, feedback), its size (funnel, retention), its score (RICE), and the outcome measure (spec).
 

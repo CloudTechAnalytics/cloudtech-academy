@@ -12,21 +12,23 @@ Feedback is evidence, but only if you count it carefully and know where it came 
 
 ## The concept
 
-**Count by theme and source**
+### Count by theme and source
 
 Tag every item with a theme (the dataset is already tagged), then count by theme **and** by source. A theme that dominates one source but not the others is a sign of that channel's audience, not of all users.
 
-**Weigh against your users**
+### Weigh against your users
 
 Compare who gives feedback with who your users are. If one segment is 15% of users but gives most of the feedback on a theme, that theme matters to them, not necessarily to everyone.
 
-**Severity**
+### Severity
 
 App store ratings show how much an issue hurts. One-star reviews about crashes cost downloads.
 
-**Requests are not solutions**
+### Requests are not solutions
 
 "Add USSD" is one user's idea of a solution; the problem is "I can't pay when the network is bad". Keep problems and requested solutions apart.
+
+![Feedback themes counted by source with illustrative shares: crashes dominate app store reviews, slow support dominates support tickets, and missing USSD dominates sales team notes](/images/courses/product/feedback-sources.svg "Count themes by source: each channel speaks for its own audience.")
 
 ## Example
 

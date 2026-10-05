@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 420" width="760" height="420" role="img" aria-label="Retention curves and a cohort table, with illustrative numbers. A curve that keeps falling towards zero means people try the product and leave. A curve that flattens, here around 35 percent, means a core of users has made it a habit. Below, a cohort grid shows the share active in each week after starting for four monthly cohorts; the most recent cohort has not yet reached later weeks, so only weeks every cohort has reached can be compared: right-censoring.">
+<title>A curve that flattens means a habit; recent cohorts haven't reached later weeks yet.</title>
+
+<rect width="760" height="420" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<line x1="50.0" y1="220.0" x2="380.0" y2="220.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="42.0" y="224.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="end">0%</text>
+<line x1="50.0" y1="132.0" x2="380.0" y2="132.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="42.0" y="136.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="end">50%</text>
+<line x1="50.0" y1="44.0" x2="380.0" y2="44.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="42.0" y="48.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="end">100%</text>
+<text xml:space="preserve" x="50.0" y="236.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="middle">wk 0</text>
+<text xml:space="preserve" x="132.5" y="236.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="middle">wk 2</text>
+<text xml:space="preserve" x="215.0" y="236.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="middle">wk 4</text>
+<text xml:space="preserve" x="297.5" y="236.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="middle">wk 6</text>
+<text xml:space="preserve" x="380.0" y="236.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="middle">wk 8</text>
+<path d="M50.0,44.0 L91.2,108.7 L132.5,136.8 L173.8,149.0 L215.0,154.3 L256.2,156.6 L297.5,157.6 L338.8,158.1 L380.0,158.3" fill="none" stroke="#2F6B3F" stroke-width="2.8"/>
+<path d="M50.0,44.0 L91.2,108.3 L132.5,149.1 L173.8,175.0 L215.0,191.4 L256.2,201.9 L297.5,208.5 L338.8,212.7 L380.0,215.4" fill="none" stroke="#9B2C1F" stroke-width="2.8"/>
+<text xml:space="preserve" x="376.0" y="148.3" font-size="12" fill="#2F6B3F" font-weight="700" text-anchor="end">flattens: a habit</text>
+<text xml:space="preserve" x="376.0" y="192.5" font-size="12" fill="#9B2C1F" font-weight="700" text-anchor="end">keeps falling: tried and left</text>
+<text xml:space="preserve" x="16.0" y="28.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="start">Share active, weeks since starting (illustration)</text>
+<text xml:space="preserve" x="410.0" y="36.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">Cohort table: share still active</text>
+<text xml:space="preserve" x="478.0" y="56.0" font-size="10.5" fill="#5E5A52" font-weight="400" text-anchor="middle">0</text>
+<text xml:space="preserve" x="508.0" y="56.0" font-size="10.5" fill="#5E5A52" font-weight="400" text-anchor="middle">1</text>
+<text xml:space="preserve" x="538.0" y="56.0" font-size="10.5" fill="#5E5A52" font-weight="400" text-anchor="middle">2</text>
+<text xml:space="preserve" x="568.0" y="56.0" font-size="10.5" fill="#5E5A52" font-weight="400" text-anchor="middle">3</text>
+<text xml:space="preserve" x="598.0" y="56.0" font-size="10.5" fill="#5E5A52" font-weight="400" text-anchor="middle">4</text>
+<text xml:space="preserve" x="628.0" y="56.0" font-size="10.5" fill="#5E5A52" font-weight="400" text-anchor="middle">5</text>
+<text xml:space="preserve" x="658.0" y="56.0" font-size="10.5" fill="#5E5A52" font-weight="400" text-anchor="middle">6</text>
+<text xml:space="preserve" x="688.0" y="56.0" font-size="10.5" fill="#5E5A52" font-weight="400" text-anchor="middle">7</text>
+<text xml:space="preserve" x="718.0" y="56.0" font-size="10.5" fill="#5E5A52" font-weight="400" text-anchor="middle">8</text>
+<text xml:space="preserve" x="410.0" y="85.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="start">Jan</text>
+<rect x="466.0" y="66.0" width="28.0" height="26.0" rx="3" fill="#C9E0CF"/>
+<text xml:space="preserve" x="480.0" y="84.0" font-size="10.5" fill="#2A2926" font-weight="400" text-anchor="middle">100</text>
+<rect x="496.0" y="66.0" width="28.0" height="26.0" rx="3" fill="#E5F0E8"/>
+<text xml:space="preserve" x="510.0" y="84.0" font-size="10.5" fill="#2A2926" font-weight="400" text-anchor="middle">52</text>
+<rect x="526.0" y="66.0" width="28.0" height="26.0" rx="3" fill="#E5F0E8"/>
+<text xml:space="preserve" x="540.0" y="84.0" font-size="10.5" fill="#2A2926" font-weight="400" text-anchor="middle">41</text>
+<rect x="556.0" y="66.0" width="28.0" height="26.0" rx="3" fill="#E5F0E8"/>
+<text xml:space="preserve" x="570.0" y="84.0" font-size="10.5" fill="#2A2926" font-weight="400" text-anchor="middle">38</text>
+<rect x="586.0" y="66.0" width="28.0" height="26.0" rx="3" fill="#E5F0E8"/>
+<text xml:space="preserve" x="600.0" y="84.0" font-size="10.5" fill="#2A2926" font-weight="400" text-anchor="middle">36</text>
+<rect x="616.0" y="66.0" width="28.0" height="26.0" rx="3" fill="#E5F0E8"/>
+<text xml:space="preserve" x="630.0" y="84.0" font-size="10.5" fill="#2A2926" font-weight="400" text-anchor="middle">35</text>
+<rect x="646.0" y="66.0" width="28.0" height="26.0" rx="3" fill="#E5F0E8"/>
+<text xml:space="preserve" x="660.0" y="84.0" font-size="10.5" fill="#2A2926" font-weight="400" text-anchor="middle">35</text>
+<rect x="676.0" y="66.0" width="28.0" height="26.0" rx="3" fill="#E5F0E8"/>
+<text xml:space="preserve" x="690.0" y="84.0" font-size="10.5" fill="#2A2926" font-weight="400" text-anchor="middle">34</text>
+<rect x="706.0" y="66.0" width="28.0" height="26.0" rx="3" fill="#E5F0E8"/>
+<text xml:space="preserve" x="720.0" y="84.0" font-size="10.5" fill="#2A2926" font-weight="400" text-anchor="middle">34</text>
+<text xml:space="preserve" x="410.0" y="115.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="start">Feb</text>
+<rect x="466.0" y="96.0" width="28.0" height="26.0" rx="3" fill="#C9E0CF"/>
+<text xml:space="preserve" x="480.0" y="114.0" font-size="10.5" fill="#2A2926" font-weight="400" text-anchor="middle">100</text>
+<rect x="496.0" y="96.0" width="28.0" height="26.0" rx="3" fill="#E5F0E8"/>
+<text xml:space="preserve" x="510.0" y="114.0" font-size="10.5" fill="#2A2926" font-weight="400" text-anchor="middle">55</text>
+<rect x="526.0" y="96.0" width="28.0" height="26.0" rx="3" fill="#E5F0E8"/>
+<text xml:space="preserve" x="540.0" y="114.0" font-size="10.5" fill="#2A2926" font-weight="400" text-anchor="middle">43</text>
+<rect x="556.0" y="96.0" width="28.0" height="26.0" rx="3" fill="#E5F0E8"/>
+<text xml:space="preserve" x="570.0" y="114.0" font-size="10.5" fill="#2A2926" font-weight="400" text-anchor="middle">39</text>
+<rect x="586.0" y="96.0" width="28.0" height="26.0" rx="3" fill="#E5F0E8"/>
+<text xml:space="preserve" x="600.0" y="114.0" font-size="10.5" fill="#2A2926" font-weight="400" text-anchor="middle">37</text>
+<rect x="616.0" y="96.0" width="28.0" height="26.0" rx="3" fill="#E5F0E8"/>
+<text xml:space="preserve" x="630.0" y="114.0" font-size="10.5" fill="#2A2926" font-weight="400" text-anchor="middle">36</text>
+<rect x="646.0" y="96.0" width="28.0" height="26.0" rx="3" fill="#E5F0E8"/>
+<text xml:space="preserve" x="660.0" y="114.0" font-size="10.5" fill="#2A2926" font-weight="400" text-anchor="middle">35</text>
+<rect x="676.0" y="96.0" width="28.0" height="26.0" rx="3" fill="#E5F0E8"/>
+<text xml:space="preserve" x="690.0" y="114.0" font-size="10.5" fill="#2A2926" font-weight="400" text-anchor="middle">35</text>
+<rect x="706.0" y="96.0" width="28.0" height="26.0" rx="3" fill="#F2EFE8"/>
+<text xml:space="preserve" x="720.0" y="113.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="middle">–</text>
+<text xml:space="preserve" x="410.0" y="145.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="start">Mar</text>
+<rect x="466.0" y="126.0" width="28.0" height="26.0" rx="3" fill="#C9E0CF"/>
+<text xml:space="preserve" x="480.0" y="144.0" font-size="10.5" fill="#2A2926" font-weight="400" text-anchor="middle">100</text>
+<rect x="496.0" y="126.0" width="28.0" height="26.0" rx="3" fill="#E5F0E8"/>
+<text xml:space="preserve" x="510.0" y="144.0" font-size="10.5" fill="#2A2926" font-weight="400" text-anchor="middle">58</text>
+<rect x="526.0" y="126.0" width="28.0" height="26.0" rx="3" fill="#E5F0E8"/>
+<text xml:space="preserve" x="540.0" y="144.0" font-size="10.5" fill="#2A2926" font-weight="400" text-anchor="middle">46</text>
+<rect x="556.0" y="126.0" width="28.0" height="26.0" rx="3" fill="#E5F0E8"/>
+<text xml:space="preserve" x="570.0" y="144.0" font-size="10.5" fill="#2A2926" font-weight="400" text-anchor="middle">41</text>
+<rect x="586.0" y="126.0" width="28.0" height="26.0" rx="3" fill="#E5F0E8"/>
+<text xml:space="preserve" x="600.0" y="144.0" font-size="10.5" fill="#2A2926" font-weight="400" text-anchor="middle">38</text>
+<rect x="616.0" y="126.0" width="28.0" height="26.0" rx="3" fill="#E5F0E8"/>
+<text xml:space="preserve" x="630.0" y="144.0" font-size="10.5" fill="#2A2926" font-weight="400" text-anchor="middle">36</text>
+<rect x="646.0" y="126.0" width="28.0" height="26.0" rx="3" fill="#F2EFE8"/>
+<text xml:space="preserve" x="660.0" y="143.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="middle">–</text>
+<rect x="676.0" y="126.0" width="28.0" height="26.0" rx="3" fill="#F2EFE8"/>
+<text xml:space="preserve" x="690.0" y="143.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="middle">–</text>
+<rect x="706.0" y="126.0" width="28.0" height="26.0" rx="3" fill="#F2EFE8"/>
+<text xml:space="preserve" x="720.0" y="143.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="middle">–</text>
+<text xml:space="preserve" x="410.0" y="175.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="start">Apr</text>
+<rect x="466.0" y="156.0" width="28.0" height="26.0" rx="3" fill="#C9E0CF"/>
+<text xml:space="preserve" x="480.0" y="174.0" font-size="10.5" fill="#2A2926" font-weight="400" text-anchor="middle">100</text>
+<rect x="496.0" y="156.0" width="28.0" height="26.0" rx="3" fill="#C9E0CF"/>
+<text xml:space="preserve" x="510.0" y="174.0" font-size="10.5" fill="#2A2926" font-weight="400" text-anchor="middle">60</text>
+<rect x="526.0" y="156.0" width="28.0" height="26.0" rx="3" fill="#E5F0E8"/>
+<text xml:space="preserve" x="540.0" y="174.0" font-size="10.5" fill="#2A2926" font-weight="400" text-anchor="middle">47</text>
+<rect x="556.0" y="156.0" width="28.0" height="26.0" rx="3" fill="#F2EFE8"/>
+<text xml:space="preserve" x="570.0" y="173.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="middle">–</text>
+<rect x="586.0" y="156.0" width="28.0" height="26.0" rx="3" fill="#F2EFE8"/>
+<text xml:space="preserve" x="600.0" y="173.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="middle">–</text>
+<rect x="616.0" y="156.0" width="28.0" height="26.0" rx="3" fill="#F2EFE8"/>
+<text xml:space="preserve" x="630.0" y="173.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="middle">–</text>
+<rect x="646.0" y="156.0" width="28.0" height="26.0" rx="3" fill="#F2EFE8"/>
+<text xml:space="preserve" x="660.0" y="173.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="middle">–</text>
+<rect x="676.0" y="156.0" width="28.0" height="26.0" rx="3" fill="#F2EFE8"/>
+<text xml:space="preserve" x="690.0" y="173.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="middle">–</text>
+<rect x="706.0" y="156.0" width="28.0" height="26.0" rx="3" fill="#F2EFE8"/>
+<text xml:space="preserve" x="720.0" y="173.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="middle">–</text>
+<text xml:space="preserve" x="410.0" y="204.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">– not reached yet (right-censoring)</text>
+<text xml:space="preserve" x="16.0" y="290.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Compare cohorts to see if the product is improving; compare segments to see who it works for.</text>
+<text xml:space="preserve" x="16.0" y="314.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">The flat level matters more than the first week.</text>
+<text xml:space="preserve" x="16.0" y="342.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">Only compare weeks every cohort has reached (here, weeks 0 to 2).</text>
+</g></svg>

@@ -64082,11 +64082,11 @@ A product manager's job is to decide **what to build next and why**, using evide
 
 ## The concept
 
-**Outcomes, not outputs**
+### Outcomes, not outputs
 
 An **output** is something shipped: "savings goals launched". An **outcome** is a change in what users do: "more salary earners keep money in Paystream for a month". Product managers are measured on outcomes; shipping is only the means.
 
-**Product and project**
+### Product and project
 
 | | Project manager | Product manager |
 | :-- | :-- | :-- |
@@ -64096,9 +64096,11 @@ An **output** is something shipped: "savings goals launched". An **outcome** is 
 
 Most teams need both, and the Project Manager track teaches both.
 
-**A north star metric**
+### A north star metric
 
 One number that captures the value users get, which the whole team can move. For a wallet: **weekly active users who make at least one transaction**, not downloads or signups.
+
+![An output (savings goals launched) leads to changed behaviour, an outcome and a business result; a comparison of project manager and product manager questions; and the north star metric of weekly active users who transact](/images/courses/product/output-outcome.svg "Ship outputs to change outcomes; the north star counts users getting value.")
 
 ## Example
 
@@ -64227,11 +64229,11 @@ The researcher interviewed 24 users, six from each segment. The interviews are c
 
 ## The concept
 
-**Jobs to be done**
+### Jobs to be done
 
 People don't want a wallet; they want to get something done. "Collect payment quickly at my stall" is a job. Features are judged by how well they help with a job.
 
-**Interviewing well**
+### Interviewing well
 
 | Instead of | Ask |
 | :-- | :-- |
@@ -64241,7 +64243,9 @@ People don't want a wallet; they want to get something done. "Collect payment qu
 
 Ask about **past behaviour**, not opinions about the future. People are poor at predicting what they'll do.
 
-**Coding notes**
+![A job to be done, and three weak interview questions (leading, hypothetical, asking for features) beside better ones that ask about the last time something happened](/images/courses/product/interviews.svg "Ask about the last time, not what people say they'd do.")
+
+### Coding notes
 
 Tag each interview with the job, the pain and anything surprising, then count across interviews. Six interviews per segment won't give percentages you can trust, but they show patterns worth measuring.
 
@@ -64368,21 +64372,23 @@ Feedback is evidence, but only if you count it carefully and know where it came 
 
 ## The concept
 
-**Count by theme and source**
+### Count by theme and source
 
 Tag every item with a theme (the dataset is already tagged), then count by theme **and** by source. A theme that dominates one source but not the others is a sign of that channel's audience, not of all users.
 
-**Weigh against your users**
+### Weigh against your users
 
 Compare who gives feedback with who your users are. If one segment is 15% of users but gives most of the feedback on a theme, that theme matters to them, not necessarily to everyone.
 
-**Severity**
+### Severity
 
 App store ratings show how much an issue hurts. One-star reviews about crashes cost downloads.
 
-**Requests are not solutions**
+### Requests are not solutions
 
 "Add USSD" is one user's idea of a solution; the problem is "I can't pay when the network is bad". Keep problems and requested solutions apart.
+
+![Feedback themes counted by source with illustrative shares: crashes dominate app store reviews, slow support dominates support tickets, and missing USSD dominates sales team notes](/images/courses/product/feedback-sources.svg "Count themes by source: each channel speaks for its own audience.")
 
 ## Example
 
@@ -64532,21 +64538,23 @@ Interviews and feedback both pointed at verification. But how much does it reall
 
 ## The concept
 
-**A funnel**
+### A funnel
 
 The steps a new user takes to get value, in order, with the share who reach each one. Paystream's onboarding funnel: phone verified → BVN verified → first deposit → first transfer.
 
-**Step conversion**
+### Step conversion
 
 The share of users at one step who reach the next. The step with the lowest conversion (and the most users lost) is where to look first.
 
-**Activation**
+### Activation
 
 The moment a new user first gets the product's value. For a wallet, the **first transfer**: users who make one are far more likely to keep using the app (lesson 5).
 
-**Segments and channels**
+### Segments and channels
 
 Break every funnel down. An average can hide a step that works for most users and fails badly for one segment.
+
+![An onboarding funnel from phone verified to first transfer with step conversion between steps, and the same funnel for two segments where market traders lose far more at BVN verification](/images/courses/product/funnel.svg "A funnel shows where users are lost; segments show who it fails.")
 
 ## Example
 
@@ -64679,18 +64687,20 @@ Getting users to a first transfer is only half the job. A wallet that people use
 
 ## The concept
 
-**Cohorts**
+### Cohorts
 
 Group users by when they started (their **cohort**), then track what share are active in each week after they started. Comparing cohorts shows whether the product is improving over time; comparing segments shows who it works for.
 
-**Reading a retention curve**
+### Reading a retention curve
 
 - A curve that keeps falling towards zero: people try it and leave.
 - A curve that **flattens**: a core of users has made it a habit. That flat level matters more than the first week.
 
-**Right-censoring**
+### Right-censoring
 
 Recent cohorts haven't had time to reach week 8. Only compare weeks every cohort has reached.
+
+![A retention curve that flattens at a habit level next to one that keeps falling to zero, and a cohort table where recent cohorts have not yet reached later weeks](/images/courses/product/retention.svg "A curve that flattens means a habit; recent cohorts haven't reached later weeks yet.")
 
 ## Example
 
@@ -64809,7 +64819,7 @@ Ten ideas, one team, one quarter. Ranked by how often they come up in feedback, 
 
 ## The concept
 
-**RICE**
+### RICE
 
 > score = Reach × Impact × Confidence ÷ Effort
 
@@ -64820,11 +64830,13 @@ Ten ideas, one team, one quarter. Ranked by how often they come up in feedback, 
 | **Confidence** | how sure we are of the reach and impact | 1 high, 0.8 medium, 0.5 low |
 | **Effort** | how much work | person-weeks |
 
-**Scores are for discussion, not autopilot**
+### Scores are for discussion, not autopilot
 
 RICE makes assumptions visible so people can challenge them. Check how sensitive the ranking is to the uncertain inputs, and record why you overrode it when you do.
 
-**Where the inputs come from**
+![RICE scores for three invented items: savings goals 2,133, USSD top-up 750 and faster KYC retry 3,000, with the impact and confidence scales and a reminder that scores are for discussion](/images/courses/product/rice.svg "RICE: reach × impact × confidence ÷ effort, for three invented items.")
+
+### Where the inputs come from
 
 Reach from funnels and feedback (lessons 3 to 5), impact from interviews and past launches, confidence from the strength of that evidence, effort from the engineers.
 
@@ -64959,11 +64971,11 @@ Paystream's last roadmap was a list of features with dates, promised to everyone
 
 ## The concept
 
-**Capacity**
+### Capacity
 
 A team has a fixed number of person-weeks in a quarter, minus holidays, support and the unexpected (keep about 20% free). The roadmap can't hold more than that.
 
-**Now, next, later**
+### Now, next, later
 
 | Column | Meaning | Detail |
 | :-- | :-- | :-- |
@@ -64973,13 +64985,15 @@ A team has a fixed number of person-weeks in a quarter, minus holidays, support 
 
 No exact dates beyond "now": the further out, the less anyone can know.
 
-**Outcome-based items**
+### Outcome-based items
 
 Each item names the outcome and how it's measured: "Help traders get verified at agents, so trader BVN verification rises from 57% to 70%", not just "Agent BVN feature".
 
-**Saying no**
+### Saying no
 
 A roadmap is as much about what's left out. Record why, so the decision can be revisited when evidence changes.
+
+![A capacity bar showing 27 of 32 usable person-weeks planned, then Now, Next and Later columns with outcome-based items, and a Won't do list with a reason](/images/courses/product/roadmap.svg "Now, next, later: committed, shaped, rough; and a roadmap can't exceed capacity.")
 
 ## Example
 
@@ -65127,21 +65141,23 @@ But users who choose to set up a savings goal are already the most engaged users
 
 ## The concept
 
-**Self-selection**
+### Self-selection
 
 When users choose whether to use a feature, adopters differ from non-adopters before the feature exists. Any comparison between them mixes the feature's effect with those differences.
 
-**A randomised holdout**
+### A randomised holdout
 
 Paystream did something wise: it gave early access to a **random** half of users and held the other half back. Because the groups were chosen by chance, they're alike except for access. Comparing **all** early-access users (adopters or not) with the holdout measures the effect of offering the feature. This is the experimentation course's A/B test, applied to a launch.
 
-**Effect per adopter**
+### Effect per adopter
 
 The holdout comparison is diluted by early-access users who never adopted. Dividing the difference by the adoption rate gives a rough effect per adopter.
 
-**Guardrails**
+### Guardrails
 
 Metrics that must not get worse, such as support tickets or failed transactions, checked the same way.
+
+![Comparing adopters with non-adopters is biased by self-selection; a random holdout compares like with like: 26% against 20% is a 6 point effect of offering the feature, about 15 points per adopter at 40% adoption](/images/courses/product/holdout.svg "Self-selection biases adopter comparisons; a random holdout doesn't.")
 
 ## Example
 
@@ -65272,7 +65288,7 @@ A **product spec** (often called a PRD, product requirements document) answers a
 
 ## The concept
 
-**What a good spec contains**
+### What a good spec contains
 
 | Section | Answers |
 | :-- | :-- |
@@ -65285,9 +65301,11 @@ A **product spec** (often called a PRD, product requirements document) answers a
 | Launch and measurement plan | how it's rolled out and evaluated (a holdout, lesson 8) |
 | Open questions | what isn't known yet |
 
-**Baselines from data**
+### Baselines from data
 
 A target without a baseline is a guess. Measure the current value first, then set a realistic target.
+
+![The eight sections of a product spec and an example of a baseline of 58% and a realistic target of 65% for trader BVN verification](/images/courses/product/spec.svg "A spec: problem, users, goal with baseline and target, guardrails, scope, non-goals, plan, open questions.")
 
 ## Example
 
@@ -65404,7 +65422,7 @@ Paystream's leadership meets to agree next quarter's product plan. They want to 
 
 ## The concept
 
-**The parts of the review**
+### The parts of the review
 
 | Part | Built in |
 | :-- | :-- |
@@ -65415,7 +65433,7 @@ Paystream's leadership meets to agree next quarter's product plan. They want to 
 | The savings goals launch review | lesson 8 |
 | The spec for the top priority | lesson 9 |
 
-**Evidence chain**
+### Evidence chain
 
 Every roadmap item should trace back: a user problem (interviews, feedback), its size (funnel, retention), its score (RICE), and the outcome measure (spec).
 

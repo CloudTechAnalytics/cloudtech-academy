@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 430" width="760" height="430" role="img" aria-label="A now, next, later roadmap with a capacity check, using illustrative numbers. The team has 40 person-weeks this quarter; keeping 20 percent free for support and the unexpected leaves 32. The Now column commits 27 person-weeks across three outcome-based items, which fits. Next holds shaped items that may change, and Later holds rough ideas. Items name the outcome and how it is measured. A Won't do list records why things were left out.">
+<title>Now, next, later: committed, shaped, rough; and a roadmap can't exceed capacity.</title>
+
+<rect width="760" height="430" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="28.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="start">Capacity this quarter</text>
+<rect x="16.0" y="40.0" width="728.0" height="30.0" rx="4" fill="#F2EFE8"/>
+<rect x="16.0" y="40.0" width="491.4" height="30.0" rx="4" fill="#B38A3E"/>
+<rect x="598.4" y="40.0" width="145.6" height="30.0" rx="0" fill="#E9DFC9"/>
+<line x1="598.4" y1="36.0" x2="598.4" y2="74.0" stroke="#8A6A1F" stroke-width="2" stroke-dasharray="4 3"/>
+<text xml:space="preserve" x="26.0" y="61.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">27 planned</text>
+<text xml:space="preserve" x="606.4" y="61.0" font-size="12" fill="#5E5A52" font-weight="700" text-anchor="start">8 free (20%)</text>
+<text xml:space="preserve" x="592.4" y="90.0" font-size="11.5" fill="#8A6A1F" font-weight="700" text-anchor="end">32 usable of 40 person-weeks</text>
+<rect x="16.0" y="108.0" width="330.0" height="220.0" rx="10" fill="#F3EBD8" stroke="#B38A3E" stroke-width="1.5"/>
+<text xml:space="preserve" x="30.0" y="134.0" font-size="15" fill="#B38A3E" font-weight="700" text-anchor="start">Now</text>
+<text xml:space="preserve" x="332.0" y="134.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="end">committed, specific</text>
+<rect x="28.0" y="150.0" width="306.0" height="50.0" rx="6" fill="#FFFFFF"/>
+<text xml:space="preserve" x="36.0" y="169.0" font-size="11.2" fill="#2A2926" font-weight="400" text-anchor="start">Help traders get verified at agents · measure:</text>
+<text xml:space="preserve" x="36.0" y="185.2" font-size="11.2" fill="#2A2926" font-weight="400" text-anchor="start">BVN rate ↑ 10 wks</text>
+<rect x="28.0" y="208.0" width="306.0" height="50.0" rx="6" fill="#FFFFFF"/>
+<text xml:space="preserve" x="36.0" y="227.0" font-size="11.2" fill="#2A2926" font-weight="400" text-anchor="start">Savings goals v1 · measure: 30-day balance kept</text>
+<text xml:space="preserve" x="36.0" y="243.2" font-size="11.2" fill="#2A2926" font-weight="400" text-anchor="start">12 wks</text>
+<rect x="28.0" y="266.0" width="306.0" height="50.0" rx="6" fill="#FFFFFF"/>
+<text xml:space="preserve" x="36.0" y="285.0" font-size="11.2" fill="#2A2926" font-weight="400" text-anchor="start">Faster KYC retry · measure: drop-off at BVN ↓ 5</text>
+<text xml:space="preserve" x="36.0" y="301.2" font-size="11.2" fill="#2A2926" font-weight="400" text-anchor="start">wks</text>
+<rect x="360.0" y="108.0" width="190.0" height="220.0" rx="10" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.5"/>
+<text xml:space="preserve" x="374.0" y="134.0" font-size="15" fill="#2F5D8A" font-weight="700" text-anchor="start">Next</text>
+<text xml:space="preserve" x="536.0" y="134.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="end">shaped, may change</text>
+<rect x="372.0" y="150.0" width="166.0" height="28.0" rx="6" fill="#FFFFFF"/>
+<text xml:space="preserve" x="380.0" y="169.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">USSD top-up</text>
+<rect x="372.0" y="186.0" width="166.0" height="28.0" rx="6" fill="#FFFFFF"/>
+<text xml:space="preserve" x="380.0" y="205.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">Bill payments</text>
+<rect x="560.0" y="108.0" width="184.0" height="220.0" rx="10" fill="#F2EFE8" stroke="#5E5A52" stroke-width="1.5"/>
+<text xml:space="preserve" x="574.0" y="134.0" font-size="15" fill="#2A2926" font-weight="700" text-anchor="start">Later</text>
+<text xml:space="preserve" x="730.0" y="134.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="end">ideas worth keeping</text>
+<rect x="572.0" y="150.0" width="160.0" height="28.0" rx="6" fill="#FFFFFF"/>
+<text xml:space="preserve" x="580.0" y="169.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">Merchant lending</text>
+<rect x="572.0" y="186.0" width="160.0" height="28.0" rx="6" fill="#FFFFFF"/>
+<text xml:space="preserve" x="580.0" y="205.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">Multi-currency wallets</text>
+<text xml:space="preserve" x="16.0" y="356.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">No exact dates beyond "now": the further out, the less anyone can know.</text>
+<rect x="16.0" y="372.0" width="728.0" height="44.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="30.0" y="398.0" font-size="12.5" fill="#9B2C1F" font-weight="700" text-anchor="start">Won't do (and why)</text>
+<text xml:space="preserve" x="190.0" y="398.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Cold room alerts: only two users asked; revisit if the evidence changes.</text>
+</g></svg>
