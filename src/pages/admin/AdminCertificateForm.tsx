@@ -10,6 +10,7 @@ import {
   type StudentSummary,
 } from "@/lib/backend";
 import type { Course } from "@/content/types";
+import { PROGRAMMES } from "@/content/tracks";
 import { PageLoading } from "@/lib/auth";
 import { CERTIFICATE_TYPES, certificateName, inputFromCertificate, today, TRAINING_TYPES, trainingTypeLabel, certificateTypeMeta, formatDay } from "@/lib/certificates";
 import { CertificateDocument, type CertificateRender } from "@/components/CertificateDocument";
@@ -194,6 +195,8 @@ export function AdminCertificateIssue({ mode }: { mode: "new" | "reissue" }) {
   const { certificateId = "" } = useParams();
   const navigate = useNavigate();
   const [input, setInput] = useState<CertificateInput>(EMPTY);
+  /** A Professional Programme picked as the starting point; it only fills in names, the certificate stays manual. */
+  const [programmeId, setProgrammeId] = useState("");
   const [reason, setReason] = useState("");
   const [original, setOriginal] = useState<AdminCertificate | null>(null);
   const [step, setStep] = useState<"edit" | "preview" | "done">("edit");
@@ -357,10 +360,26 @@ export function AdminCertificateIssue({ mode }: { mode: "new" | "reissue" }) {
             {!courseLocked && (
               <div className="sm:col-span-2">
                 <SelectField
-                  label={input.trainingType === "academy_course" ? "Academy course" : "Academy course (optional)"}
-                  value={input.courseId}
-                  hint="Choosing a course fills in the names below. Leave it empty for training outside the Academy."
+                  label={input.trainingType === "academy_course" ? "Academy course or programme" : "Academy course or programme (optional)"}
+                  value={programmeId ? `programme:${programmeId}` : input.courseId}
+                  hint="Choosing one fills in the names below. Leave it empty for training outside the Academy."
                   onChange={(v) => {
+                    if (v.startsWith("programme:")) {
+                      const t = PROGRAMMES.find((x) => x.id === v.slice(10));
+                      if (!t) return;
+                      setProgrammeId(t.id);
+                      setInput((i) => ({
+                        ...i,
+                        courseId: "",
+                        trainingType: "academy_programme",
+                        certificateType: "professional_programme",
+                        programmeName: t.title,
+                        certificateTitle: t.programmeTitle ?? t.title,
+                        description: i.description.trim() ? i.description : t.skills.join(", ").slice(0, 600),
+                      }));
+                      return;
+                    }
+                    setProgrammeId("");
                     const c = lists.courses.find((x) => x.id === v);
                     setInput((i) => ({
                       ...i,
@@ -371,11 +390,20 @@ export function AdminCertificateIssue({ mode }: { mode: "new" | "reissue" }) {
                   }}
                 >
                   <option value="">None</option>
-                  {lists.courses.map((c) => (
-                    <option key={c.id} value={c.id}>
-                      {c.title}
-                    </option>
-                  ))}
+                  <optgroup label="Professional Programmes">
+                    {PROGRAMMES.map((t) => (
+                      <option key={t.id} value={`programme:${t.id}`}>
+                        {t.programmeTitle ?? t.title}
+                      </option>
+                    ))}
+                  </optgroup>
+                  <optgroup label="Courses">
+                    {lists.courses.map((c) => (
+                      <option key={c.id} value={c.id}>
+                        {c.title}
+                      </option>
+                    ))}
+                  </optgroup>
                 </SelectField>
               </div>
             )}
