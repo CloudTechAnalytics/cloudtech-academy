@@ -320,7 +320,8 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
     async listEnrollments() {
       const { data } = await sb.auth.getSession();
       if (!data.session) return [];
-      return (check(await sb.from("enrollments").select("*")) as Row[]).map((r) => ({
+      // Always filter to the signed-in user: row-level security also lets admins read everyone's rows.
+      return (check(await sb.from("enrollments").select("*").eq("user_id", data.session.user.id)) as Row[]).map((r) => ({
         courseId: r.course_id,
         enrolledAt: r.enrolled_at,
         completedAt: r.completed_at,
@@ -352,8 +353,8 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
       const { data } = await sb.auth.getSession();
       if (!data.session) return { completedLessons: [], completedExercises: [] };
       const [lessons, exercises] = await Promise.all([
-        sb.from("lesson_progress").select("lesson_id").eq("course_id", courseId),
-        sb.from("exercise_completions").select("exercise_id").eq("course_id", courseId),
+        sb.from("lesson_progress").select("lesson_id").eq("user_id", data.session.user.id).eq("course_id", courseId),
+        sb.from("exercise_completions").select("exercise_id").eq("user_id", data.session.user.id).eq("course_id", courseId),
       ]);
       return {
         completedLessons: (check(lessons) as Row[]).map((r) => r.lesson_id),
@@ -382,12 +383,12 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
     async listAttempts(assessmentId) {
       const { data } = await sb.auth.getSession();
       if (!data.session) return [];
-      return (check(await sb.from("assessment_attempts").select("*").eq("assessment_id", assessmentId).order("submitted_at")) as Row[]).map(toAttempt);
+      return (check(await sb.from("assessment_attempts").select("*").eq("user_id", data.session.user.id).eq("assessment_id", assessmentId).order("submitted_at")) as Row[]).map(toAttempt);
     },
     async getSubmission(projectId) {
       const { data } = await sb.auth.getSession();
       if (!data.session) return null;
-      const row = check(await sb.from("project_submissions").select("*").eq("project_id", projectId).maybeSingle()) as Row | null;
+      const row = check(await sb.from("project_submissions").select("*").eq("user_id", data.session.user.id).eq("project_id", projectId).maybeSingle()) as Row | null;
       return row ? toSubmission(row) : null;
     },
     async submitProject(projectId, { content, url }) {
