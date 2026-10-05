@@ -231,6 +231,16 @@
   .lesson strong {
     @apply font-semibold text-ink;
   }
+  /* Cascadia Code and similar fonts draw >= as ≥ and <> as a diamond. Learners copy what they
+     see, so show the characters they actually type. */
+  code,
+  pre,
+  kbd,
+  textarea,
+  .font-mono {
+    font-variant-ligatures: none;
+    font-feature-settings: "calt" 0, "liga" 0;
+  }
   .lesson :not(pre) > code {
     @apply rounded-md bg-sand px-1.5 py-0.5 font-mono text-[0.88em] text-ink;
   }
