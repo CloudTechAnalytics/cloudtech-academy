@@ -16,7 +16,7 @@ That question is the heart of business analysis, and this course teaches you to 
 
 ## The concept
 
-**What a business analyst does**
+### What a business analyst does
 
 A business analyst (BA) helps an organisation change for the better, by understanding how it works now, working out what needs to change and why, and specifying the change clearly enough that it can be built, bought or adopted. The BA sits between the people with the problem (the "business") and the people who'll deliver the solution (developers, suppliers, the operations team).
 
@@ -29,7 +29,7 @@ A business analyst (BA) helps an organisation change for the better, by understa
 
 The roles overlap, especially in small companies, where one person may do all four. A BA who can query data is far more effective, which is why this track includes Excel, SQL and Power BI.
 
-**The business analysis cycle**
+### The business analysis cycle
 
 1. **Understand the problem**: stakeholders, goals and the current situation, measured with data where possible.
 2. **Analyse the current state**: how the work flows today and where it breaks.
@@ -38,7 +38,7 @@ The roles overlap, especially in small companies, where one person may do all fo
 5. **Justify it**: a business case comparing the options.
 6. **Support delivery**: answer questions, test the solution and help people adopt it.
 
-**Problem, not solution**
+### Problem, not solution
 
 Requests usually arrive as solutions: "we need a system", "build a dashboard", "hire another clerk". Your first job is to work backwards to the problem with questions like "What would be different if we had it?", "What does it cost us not to have it?" and "How would we know it worked?".
 

@@ -12,7 +12,7 @@ Before you change anything, measure it. The **baseline** you set now is the yard
 
 ## The concept
 
-**Baseline measures**
+### Baseline measures
 
 Choose a few measures that capture the problem, and calculate them from the data you have:
 
@@ -23,13 +23,13 @@ Choose a few measures that capture the problem, and calculate them from the data
 | **Overdue value** | total of unpaid invoices past due | money at risk now |
 | **Overdue age** | overdue value by how long it's been outstanding | how much might never be paid |
 
-**Three questions to ask of every measure**
+### Three questions to ask of every measure
 
 1. **Is it getting worse, better or staying the same?** Compare by year or quarter.
 2. **Is it everywhere, or concentrated?** Break it down by client type, practice area or lawyer.
 3. **How big is it?** Put a naira figure on it, so it can be compared with the cost of fixing it.
 
-**A note on definitions**
+### A note on definitions
 
 Ashgrove marks an invoice "Overdue" when it's unpaid more than 30 days after issue, but there are no written payment terms. Note any definition like that in your analysis: if the firm later introduces 14-day terms, "overdue" will suddenly jump, without any change in client behaviour.
 
@@ -44,6 +44,8 @@ Average days to pay, by the year the invoice was issued:
 | 2026 (to August) | 99 | 47.1 |
 
 It's getting slowly worse, by about 2 to 3 days a year. And the overdue money isn't concentrated in a few bad payers: it's spread across 32 of Ashgrove's 50 clients, companies and individuals alike. That points to a **process** problem (no terms, no reminders, no routine chasing), not a problem with particular clients.
+
+![Bars for average days to pay by year issued: 42.4 in 2024, 45.5 in 2025, 47.1 in 2026 to August, all above a dashed line at 30 days.](/images/courses/ba/days-to-pay-trend.svg "The baseline: days to pay is rising, and well above a 30-day term.")
 
 ## Walkthrough
 

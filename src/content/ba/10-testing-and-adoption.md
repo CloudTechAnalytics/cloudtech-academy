@@ -12,7 +12,7 @@ The new process is ready. Reminders are set up, the invoice template has a due d
 
 ## The concept
 
-**User acceptance testing (UAT)**
+### User acceptance testing (UAT)
 
 Before go-live, the people who'll use the change test it against real scenarios. Each test case says:
 
@@ -26,11 +26,13 @@ Before go-live, the people who'll use the change test it against real scenarios.
 
 Your acceptance criteria from lesson 7 are the starting point: most Given/When/Then scenarios become UAT cases almost word for word.
 
-**Traceability**
+### Traceability
 
 A **traceability matrix** links every requirement to the user stories, test cases and KPIs that cover it. It answers two questions: "Has every requirement been tested?" and "Why does this feature exist?". A requirement with no test hasn't been checked. A feature with no requirement is scope creep.
 
-**Adoption: the people side**
+![Six linked boxes: business requirement (reduce days to pay to 30), functional requirement FR-03 (reminder 7 days before due), user story (automatic reminder), acceptance criterion (no reminder on payment plans), UAT test case UAT-06, and KPI (average days to pay).](/images/courses/ba/traceability.svg "One requirement traced from the goal to its test and its measure.")
+
+### Adoption: the people side
 
 People adopt a change when they understand **why**, know **how**, and find it easier than the old way. Plan for:
 
@@ -39,7 +41,7 @@ People adopt a change when they understand **why**, know **how**, and find it ea
 - **Support**: a named person to ask in the first weeks.
 - **Switching off the old way**: the spreadsheet and the notebook are retired on a fixed date, or they never will be.
 
-**Measure the benefits**
+### Measure the benefits
 
 After go-live, rerun the baseline measures from lesson 4 with exactly the same definitions, monthly, and report against the business case targets. That's the only way to say "it worked".
 

@@ -33826,7 +33826,7 @@ That question is the heart of business analysis, and this course teaches you to 
 
 ## The concept
 
-**What a business analyst does**
+### What a business analyst does
 
 A business analyst (BA) helps an organisation change for the better, by understanding how it works now, working out what needs to change and why, and specifying the change clearly enough that it can be built, bought or adopted. The BA sits between the people with the problem (the "business") and the people who'll deliver the solution (developers, suppliers, the operations team).
 
@@ -33839,7 +33839,7 @@ A business analyst (BA) helps an organisation change for the better, by understa
 
 The roles overlap, especially in small companies, where one person may do all four. A BA who can query data is far more effective, which is why this track includes Excel, SQL and Power BI.
 
-**The business analysis cycle**
+### The business analysis cycle
 
 1. **Understand the problem**: stakeholders, goals and the current situation, measured with data where possible.
 2. **Analyse the current state**: how the work flows today and where it breaks.
@@ -33848,7 +33848,7 @@ The roles overlap, especially in small companies, where one person may do all fo
 5. **Justify it**: a business case comparing the options.
 6. **Support delivery**: answer questions, test the solution and help people adopt it.
 
-**Problem, not solution**
+### Problem, not solution
 
 Requests usually arrive as solutions: "we need a system", "build a dashboard", "hire another clerk". Your first job is to work backwards to the problem with questions like "What would be different if we had it?", "What does it cost us not to have it?" and "How would we know it worked?".
 
@@ -33950,7 +33950,7 @@ Projects rarely fail because the analysis was too technical. They fail because s
 
 ## The concept
 
-**Who counts as a stakeholder**
+### Who counts as a stakeholder
 
 Anyone who **affects** the change or is **affected** by it: the people who'll pay for it, use it, run it, support it, or be on the receiving end of it. Look in four directions:
 
@@ -33959,7 +33959,7 @@ Anyone who **affects** the change or is **affected** by it: the people who'll pa
 - **Out**: customers and suppliers (clients, the software vendor, the bank).
 - **Around**: support and control (IT, the auditor, regulators such as the data protection authority).
 
-**The power and interest grid**
+### The power and interest grid
 
 Place each stakeholder on two scales: their **power** over the change and their **interest** in it.
 
@@ -33970,7 +33970,9 @@ Place each stakeholder on two scales: their **power** over the change and their 
 
 The people who do the work every day often sit in "keep informed", but their knowledge is essential, and their resistance can sink a project. Don't confuse low power with low importance.
 
-**RACI: who does what**
+![A two-by-two grid of power against interest. Managing partner in Manage closely; lawyers and clients in Keep satisfied; the accounts officer and the IT contractor in Keep informed; Monitor is empty.](/images/courses/ba/power-interest.svg "Ashgrove's stakeholders on the grid. The accounts officer has low power and high interest: keep her informed and involve her in the design.")
+
+### RACI: who does what
 
 For each key decision or deliverable, a RACI chart says who is:
 
@@ -34079,7 +34081,7 @@ Requirements aren't sitting in people's heads waiting to be collected. They have
 
 ## The concept
 
-**Elicitation techniques**
+### Elicitation techniques
 
 | Technique | Best for | Watch out for |
 | :-- | :-- | :-- |
@@ -34091,7 +34093,7 @@ Requirements aren't sitting in people's heads waiting to be collected. They have
 
 Use more than one. Observation and data often contradict interviews, and the contradiction is usually where the real problem is.
 
-**Questions that get facts**
+### Questions that get facts
 
 - **Open** questions get stories: "Walk me through what happens when a matter's work is finished." "How do you know an invoice is overdue?"
 - **Closed** questions confirm details: "Is that every month?" "Who signs it off?"
@@ -34099,7 +34101,7 @@ Use more than one. Observation and data often contradict interviews, and the con
 - **Ask for examples**: "Tell me about the last invoice that was paid late." A specific case beats a general opinion.
 - **Ask about exceptions**: "When doesn't it work like that?"
 
-**Five whys**
+### Five whys
 
 Keep asking "why?" to get from the symptom to the root cause:
 
@@ -34210,7 +34212,7 @@ Before you change anything, measure it. The **baseline** you set now is the yard
 
 ## The concept
 
-**Baseline measures**
+### Baseline measures
 
 Choose a few measures that capture the problem, and calculate them from the data you have:
 
@@ -34221,13 +34223,13 @@ Choose a few measures that capture the problem, and calculate them from the data
 | **Overdue value** | total of unpaid invoices past due | money at risk now |
 | **Overdue age** | overdue value by how long it's been outstanding | how much might never be paid |
 
-**Three questions to ask of every measure**
+### Three questions to ask of every measure
 
 1. **Is it getting worse, better or staying the same?** Compare by year or quarter.
 2. **Is it everywhere, or concentrated?** Break it down by client type, practice area or lawyer.
 3. **How big is it?** Put a naira figure on it, so it can be compared with the cost of fixing it.
 
-**A note on definitions**
+### A note on definitions
 
 Ashgrove marks an invoice "Overdue" when it's unpaid more than 30 days after issue, but there are no written payment terms. Note any definition like that in your analysis: if the firm later introduces 14-day terms, "overdue" will suddenly jump, without any change in client behaviour.
 
@@ -34242,6 +34244,8 @@ Average days to pay, by the year the invoice was issued:
 | 2026 (to August) | 99 | 47.1 |
 
 It's getting slowly worse, by about 2 to 3 days a year. And the overdue money isn't concentrated in a few bad payers: it's spread across 32 of Ashgrove's 50 clients, companies and individuals alike. That points to a **process** problem (no terms, no reminders, no routine chasing), not a problem with particular clients.
+
+![Bars for average days to pay by year issued: 42.4 in 2024, 45.5 in 2025, 47.1 in 2026 to August, all above a dashed line at 30 days.](/images/courses/ba/days-to-pay-trend.svg "The baseline: days to pay is rising, and well above a 30-day term.")
 
 ## Walkthrough
 
@@ -34361,7 +34365,7 @@ A **process map** puts the whole journey on one page: every step, who does it, a
 
 ## The concept
 
-**Swimlane diagrams**
+### Swimlane diagrams
 
 A swimlane diagram has a horizontal lane for each role, and the steps flow from left to right across the lanes:
 
@@ -34375,11 +34379,11 @@ A swimlane diagram has a horizontal lane for each role, and the steps flow from 
 
 This is a simplified version of **BPMN** (Business Process Model and Notation), the international standard. Draw it in draw.io (free), Microsoft Visio, Lucidchart or on paper. The thinking matters more than the tool.
 
-**Map the "as is" before the "to be"**
+### Map the "as is" before the "to be"
 
 Map what really happens today, including the workarounds, not what the procedures manual says. Walk it with the people who do it, and check it against the data.
 
-**Where to look for problems**
+### Where to look for problems
 
 | Problem | Sign on the map |
 | :-- | :-- |
@@ -34404,6 +34408,8 @@ Ashgrove's billing process **as is**, written lane by lane:
 9. **Accounts**: marks the invoice paid when the bank statement arrives.
 
 Three problems jump out: steps 2 and 8 have **no trigger**, so they happen late or not at all; step 5 has a **rework loop**; and step 6 sends an invoice with **no due date**, so step 7 has no deadline. The data agrees: the first invoice on a matter goes out an average of 18 days after the matter opens, and two-thirds of payments arrive after 30 days.
+
+![A swimlane diagram with lanes Lawyer, Accounts, Partner and Client and nine numbered steps. Step 2 (lawyer sends time when they remember) and step 8 (accounts chases when a partner asks) are marked T for no trigger; step 5 (partner review) is marked R with a dashed loop back to step 4; step 6 (invoice with no due date) is marked with an exclamation mark; step 7 (client pays when they choose) is marked W for waiting.](/images/courses/ba/billing-as-is.svg "The as-is process as a swimlane diagram. Every problem sits at a handoff between lanes.")
 
 ## Walkthrough
 
@@ -34496,7 +34502,7 @@ Every line sounds reasonable, and none of them can be built or tested. How quick
 
 ## The concept
 
-**Types of requirement**
+### Types of requirement
 
 | Type | Says | Example for Ashgrove |
 | :-- | :-- | :-- |
@@ -34505,7 +34511,7 @@ Every line sounds reasonable, and none of them can be built or tested. How quick
 | **Non-functional requirement** | how **well** it must do it: speed, security, availability, usability | The overdue report shall load in under 5 seconds. |
 | **Business rule** | a policy that applies whatever the solution | Invoices are due 30 days after issue. Reminders are not sent to clients on a payment plan. |
 
-**Good requirements are testable**
+### Good requirements are testable
 
 A requirement is good when someone could write a test that it passes or fails. Check each one against these questions:
 
@@ -34517,7 +34523,7 @@ A requirement is good when someone could write a test that it passes or fails. C
 
 Use **"shall"** (or "must") for requirements, and keep each one short.
 
-**MoSCoW prioritisation**
+### MoSCoW prioritisation
 
 Not everything can be in the first release. MoSCoW sorts requirements into:
 
@@ -34630,7 +34636,7 @@ Agile teams don't work from long specifications. They work from a **backlog** of
 
 ## The concept
 
-**The user story format**
+### The user story format
 
 > As a **[type of user]**, I want **[something]**, so that **[benefit]**.
 
@@ -34638,7 +34644,7 @@ Agile teams don't work from long specifications. They work from a **backlog** of
 
 The "so that" is the most important part. It tells the team **why**, which lets them suggest a better way to deliver the benefit, and it lets the product owner prioritise by value.
 
-**INVEST: what makes a good story**
+### INVEST: what makes a good story
 
 | Letter | Means |
 | :-- | :-- |
@@ -34651,7 +34657,7 @@ The "so that" is the most important part. It tells the team **why**, which lets 
 
 A story too big to build in a sprint is an **epic**: split it, usually by user, by step in the process, or by rule ("send reminders" → "first reminder", "second reminder", "don't remind clients on a payment plan").
 
-**Acceptance criteria: Given / When / Then**
+### Acceptance criteria: Given / When / Then
 
 Each story has a few acceptance criteria that define "done", written as scenarios:
 
@@ -34672,6 +34678,8 @@ Write one for the normal case and one for each important exception. They become 
 > 3. **Given** a client on an agreed payment plan, **when** a reminder would be due, **then** no reminder is sent, and the invoice appears on the accounts officer's exceptions list.
 
 Criterion 2 catches the embarrassing bug (reminding someone who has paid). Criterion 3 comes straight from a business rule found in lesson 6. Good criteria are where the BA's knowledge of the edge cases pays off.
+
+![A user story card reading As an accounts officer, I want clients to get an automatic reminder before the due date, so that fewer invoices go overdue without me phoning anyone; below it three numbered acceptance criteria: normal case, already paid, and payment-plan exception.](/images/courses/ba/user-story.svg "A story says who, what and why; its acceptance criteria say when it's done.")
 
 ## Walkthrough
 
@@ -34762,7 +34770,7 @@ Nobody ever wrote down what "collection rate" meant. Reporting is the part of a 
 
 ## The concept
 
-**A KPI definition card**
+### A KPI definition card
 
 For every key measure, agree and write down:
 
@@ -34780,11 +34788,11 @@ For every key measure, agree and write down:
 
 The definition and the baseline are the parts that prevent arguments. Calculate the baseline with **exactly** the same formula you'll use afterwards.
 
-**Report specifications**
+### Report specifications
 
 For each report: who uses it, what decision it supports, the measures and breakdowns, filters, how often it's refreshed, and who can see it. A one-line description ("an overdue report") isn't a specification.
 
-**Data requirements**
+### Data requirements
 
 List the data each report needs, where it comes from, and the **quality rules** it must meet: every invoice has a due date; every paid invoice has a paid date; amounts are positive. Ashgrove's current data has no due date at all, so "days overdue" can't be calculated today. That's a data requirement the new process must create.
 
@@ -34899,7 +34907,7 @@ The managing partner has two quotes on her desk: a practice-management system at
 
 ## The concept
 
-**The structure of a business case**
+### The structure of a business case
 
 1. **The problem and its cost**: from your baseline (lesson 4).
 2. **Options**, always including **do nothing** (or "do minimum").
@@ -34908,18 +34916,18 @@ The managing partner has two quotes on her desk: a practice-management system at
 5. **Comparison**: payback, net benefit over a fixed period, and risks.
 6. **Recommendation**: the option, why, and what would change your mind.
 
-**Turning faster payment into naira**
+### Turning faster payment into naira
 
 Getting paid sooner releases cash once: **annual billing × days saved ÷ 365**. Released cash has a value every year: what it would cost to borrow it, or what it could earn.
 
-**Two simple measures**
+### Two simple measures
 
 - **Payback period** = one-off cost ÷ annual net benefit. How soon the option pays for itself.
 - **Net benefit over three years** = 3 × annual net benefit − one-off cost.
 
 Larger organisations also use **net present value (NPV)**, which discounts future benefits because a naira next year is worth less than a naira today. For short, small projects like this one, payback and net benefit are usually enough, as long as you state the assumptions.
 
-**Assumptions and sensitivity**
+### Assumptions and sensitivity
 
 Every benefit rests on an assumption, such as "days to pay falls from 45 to 30". State each one, and test the important ones: "If days to pay only falls to 38, does the option still pay back within two years?" A case that collapses when one assumption moves a little isn't a strong case.
 
@@ -34936,6 +34944,8 @@ Ashgrove's options. Annual billing is about ₦600m; overdue debt written off is
 | Accounts time saved per year | 0 | 0 | ₦1.2m |
 
 For option B: the cash released is ₦600m × 10 ÷ 365 = ₦16.4m, worth ₦3.3m a year at 20%. Write-offs fall by 0.5% of ₦600m, which is ₦3.0m a year. Take off the ₦0.6m running cost and the annual net benefit is **₦5.7m**. Payback is ₦1.5m ÷ ₦5.7m, about **3 months**, and the net benefit over three years is about **₦15.6m**.
+
+![A waterfall chart for option B: released cash adds ₦3.3m, fewer write-offs add ₦3.0m, running cost takes away ₦0.6m, leaving a net benefit of ₦5.7m a year.](/images/courses/ba/option-b-benefit.svg "Option B's annual net benefit, built up from its assumptions.")
 
 You'll work out option C in the practice tasks. The comparison is closer than the sales demo suggested.
 
@@ -35046,7 +35056,7 @@ The new process is ready. Reminders are set up, the invoice template has a due d
 
 ## The concept
 
-**User acceptance testing (UAT)**
+### User acceptance testing (UAT)
 
 Before go-live, the people who'll use the change test it against real scenarios. Each test case says:
 
@@ -35060,11 +35070,13 @@ Before go-live, the people who'll use the change test it against real scenarios.
 
 Your acceptance criteria from lesson 7 are the starting point: most Given/When/Then scenarios become UAT cases almost word for word.
 
-**Traceability**
+### Traceability
 
 A **traceability matrix** links every requirement to the user stories, test cases and KPIs that cover it. It answers two questions: "Has every requirement been tested?" and "Why does this feature exist?". A requirement with no test hasn't been checked. A feature with no requirement is scope creep.
 
-**Adoption: the people side**
+![Six linked boxes: business requirement (reduce days to pay to 30), functional requirement FR-03 (reminder 7 days before due), user story (automatic reminder), acceptance criterion (no reminder on payment plans), UAT test case UAT-06, and KPI (average days to pay).](/images/courses/ba/traceability.svg "One requirement traced from the goal to its test and its measure.")
+
+### Adoption: the people side
 
 People adopt a change when they understand **why**, know **how**, and find it easier than the old way. Plan for:
 
@@ -35073,7 +35085,7 @@ People adopt a change when they understand **why**, know **how**, and find it ea
 - **Support**: a named person to ask in the first weeks.
 - **Switching off the old way**: the spreadsheet and the notebook are retired on a fixed date, or they never will be.
 
-**Measure the benefits**
+### Measure the benefits
 
 After go-live, rerun the baseline measures from lesson 4 with exactly the same definitions, monthly, and report against the business case targets. That's the only way to say "it worked".
 
@@ -35182,7 +35194,7 @@ You've seen this shape of request before: a solution, arriving first. Your job i
 
 ## The concept
 
-**The pack, and where each part comes from**
+### The pack, and where each part comes from
 
 | Part | What it contains | Lesson |
 | :-- | :-- | :-- |
@@ -35197,7 +35209,7 @@ You've seen this shape of request before: a solution, arriving first. Your job i
 | Business case | options including do nothing, payback, risks, a recommendation | 9 |
 | UAT and adoption | test cases, traceability, adoption plan | 10 |
 
-**Start from the data, then ask why**
+### Start from the data, then ask why
 
 Customers complain about not knowing where shipments are, but **why** do they need to know? Usually because a shipment is late and nobody told them. If deliveries were reliable, or customers were told in advance when one would be late, would they still want GPS? That's the question your analysis has to answer before anyone gets a quote.
 

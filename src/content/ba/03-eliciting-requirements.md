@@ -12,7 +12,7 @@ Requirements aren't sitting in people's heads waiting to be collected. They have
 
 ## The concept
 
-**Elicitation techniques**
+### Elicitation techniques
 
 | Technique | Best for | Watch out for |
 | :-- | :-- | :-- |
@@ -24,7 +24,7 @@ Requirements aren't sitting in people's heads waiting to be collected. They have
 
 Use more than one. Observation and data often contradict interviews, and the contradiction is usually where the real problem is.
 
-**Questions that get facts**
+### Questions that get facts
 
 - **Open** questions get stories: "Walk me through what happens when a matter's work is finished." "How do you know an invoice is overdue?"
 - **Closed** questions confirm details: "Is that every month?" "Who signs it off?"
@@ -32,7 +32,7 @@ Use more than one. Observation and data often contradict interviews, and the con
 - **Ask for examples**: "Tell me about the last invoice that was paid late." A specific case beats a general opinion.
 - **Ask about exceptions**: "When doesn't it work like that?"
 
-**Five whys**
+### Five whys
 
 Keep asking "why?" to get from the symptom to the root cause:
 

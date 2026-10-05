@@ -17,7 +17,7 @@ Every line sounds reasonable, and none of them can be built or tested. How quick
 
 ## The concept
 
-**Types of requirement**
+### Types of requirement
 
 | Type | Says | Example for Ashgrove |
 | :-- | :-- | :-- |
@@ -26,7 +26,7 @@ Every line sounds reasonable, and none of them can be built or tested. How quick
 | **Non-functional requirement** | how **well** it must do it: speed, security, availability, usability | The overdue report shall load in under 5 seconds. |
 | **Business rule** | a policy that applies whatever the solution | Invoices are due 30 days after issue. Reminders are not sent to clients on a payment plan. |
 
-**Good requirements are testable**
+### Good requirements are testable
 
 A requirement is good when someone could write a test that it passes or fails. Check each one against these questions:
 
@@ -38,7 +38,7 @@ A requirement is good when someone could write a test that it passes or fails. C
 
 Use **"shall"** (or "must") for requirements, and keep each one short.
 
-**MoSCoW prioritisation**
+### MoSCoW prioritisation
 
 Not everything can be in the first release. MoSCoW sorts requirements into:
 

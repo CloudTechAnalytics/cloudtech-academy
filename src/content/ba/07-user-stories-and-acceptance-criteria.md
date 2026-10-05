@@ -12,7 +12,7 @@ Agile teams don't work from long specifications. They work from a **backlog** of
 
 ## The concept
 
-**The user story format**
+### The user story format
 
 > As a **[type of user]**, I want **[something]**, so that **[benefit]**.
 
@@ -20,7 +20,7 @@ Agile teams don't work from long specifications. They work from a **backlog** of
 
 The "so that" is the most important part. It tells the team **why**, which lets them suggest a better way to deliver the benefit, and it lets the product owner prioritise by value.
 
-**INVEST: what makes a good story**
+### INVEST: what makes a good story
 
 | Letter | Means |
 | :-- | :-- |
@@ -33,7 +33,7 @@ The "so that" is the most important part. It tells the team **why**, which lets 
 
 A story too big to build in a sprint is an **epic**: split it, usually by user, by step in the process, or by rule ("send reminders" → "first reminder", "second reminder", "don't remind clients on a payment plan").
 
-**Acceptance criteria: Given / When / Then**
+### Acceptance criteria: Given / When / Then
 
 Each story has a few acceptance criteria that define "done", written as scenarios:
 
@@ -54,6 +54,8 @@ Write one for the normal case and one for each important exception. They become 
 > 3. **Given** a client on an agreed payment plan, **when** a reminder would be due, **then** no reminder is sent, and the invoice appears on the accounts officer's exceptions list.
 
 Criterion 2 catches the embarrassing bug (reminding someone who has paid). Criterion 3 comes straight from a business rule found in lesson 6. Good criteria are where the BA's knowledge of the edge cases pays off.
+
+![A user story card reading As an accounts officer, I want clients to get an automatic reminder before the due date, so that fewer invoices go overdue without me phoning anyone; below it three numbered acceptance criteria: normal case, already paid, and payment-plan exception.](/images/courses/ba/user-story.svg "A story says who, what and why; its acceptance criteria say when it's done.")
 
 ## Walkthrough
 

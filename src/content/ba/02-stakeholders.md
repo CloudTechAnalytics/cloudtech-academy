@@ -12,7 +12,7 @@ Projects rarely fail because the analysis was too technical. They fail because s
 
 ## The concept
 
-**Who counts as a stakeholder**
+### Who counts as a stakeholder
 
 Anyone who **affects** the change or is **affected** by it: the people who'll pay for it, use it, run it, support it, or be on the receiving end of it. Look in four directions:
 
@@ -21,7 +21,7 @@ Anyone who **affects** the change or is **affected** by it: the people who'll pa
 - **Out**: customers and suppliers (clients, the software vendor, the bank).
 - **Around**: support and control (IT, the auditor, regulators such as the data protection authority).
 
-**The power and interest grid**
+### The power and interest grid
 
 Place each stakeholder on two scales: their **power** over the change and their **interest** in it.
 
@@ -32,7 +32,9 @@ Place each stakeholder on two scales: their **power** over the change and their 
 
 The people who do the work every day often sit in "keep informed", but their knowledge is essential, and their resistance can sink a project. Don't confuse low power with low importance.
 
-**RACI: who does what**
+![A two-by-two grid of power against interest. Managing partner in Manage closely; lawyers and clients in Keep satisfied; the accounts officer and the IT contractor in Keep informed; Monitor is empty.](/images/courses/ba/power-interest.svg "Ashgrove's stakeholders on the grid. The accounts officer has low power and high interest: keep her informed and involve her in the design.")
+
+### RACI: who does what
 
 For each key decision or deliverable, a RACI chart says who is:
 

@@ -12,7 +12,7 @@ Nobody ever wrote down what "collection rate" meant. Reporting is the part of a 
 
 ## The concept
 
-**A KPI definition card**
+### A KPI definition card
 
 For every key measure, agree and write down:
 
@@ -30,11 +30,11 @@ For every key measure, agree and write down:
 
 The definition and the baseline are the parts that prevent arguments. Calculate the baseline with **exactly** the same formula you'll use afterwards.
 
-**Report specifications**
+### Report specifications
 
 For each report: who uses it, what decision it supports, the measures and breakdowns, filters, how often it's refreshed, and who can see it. A one-line description ("an overdue report") isn't a specification.
 
-**Data requirements**
+### Data requirements
 
 List the data each report needs, where it comes from, and the **quality rules** it must meet: every invoice has a due date; every paid invoice has a paid date; amounts are positive. Ashgrove's current data has no due date at all, so "days overdue" can't be calculated today. That's a data requirement the new process must create.
 

@@ -12,7 +12,7 @@ A **process map** puts the whole journey on one page: every step, who does it, a
 
 ## The concept
 
-**Swimlane diagrams**
+### Swimlane diagrams
 
 A swimlane diagram has a horizontal lane for each role, and the steps flow from left to right across the lanes:
 
@@ -26,11 +26,11 @@ A swimlane diagram has a horizontal lane for each role, and the steps flow from 
 
 This is a simplified version of **BPMN** (Business Process Model and Notation), the international standard. Draw it in draw.io (free), Microsoft Visio, Lucidchart or on paper. The thinking matters more than the tool.
 
-**Map the "as is" before the "to be"**
+### Map the "as is" before the "to be"
 
 Map what really happens today, including the workarounds, not what the procedures manual says. Walk it with the people who do it, and check it against the data.
 
-**Where to look for problems**
+### Where to look for problems
 
 | Problem | Sign on the map |
 | :-- | :-- |
@@ -55,6 +55,8 @@ Ashgrove's billing process **as is**, written lane by lane:
 9. **Accounts**: marks the invoice paid when the bank statement arrives.
 
 Three problems jump out: steps 2 and 8 have **no trigger**, so they happen late or not at all; step 5 has a **rework loop**; and step 6 sends an invoice with **no due date**, so step 7 has no deadline. The data agrees: the first invoice on a matter goes out an average of 18 days after the matter opens, and two-thirds of payments arrive after 30 days.
+
+![A swimlane diagram with lanes Lawyer, Accounts, Partner and Client and nine numbered steps. Step 2 (lawyer sends time when they remember) and step 8 (accounts chases when a partner asks) are marked T for no trigger; step 5 (partner review) is marked R with a dashed loop back to step 4; step 6 (invoice with no due date) is marked with an exclamation mark; step 7 (client pays when they choose) is marked W for waiting.](/images/courses/ba/billing-as-is.svg "The as-is process as a swimlane diagram. Every problem sits at a handoff between lanes.")
 
 ## Walkthrough
 

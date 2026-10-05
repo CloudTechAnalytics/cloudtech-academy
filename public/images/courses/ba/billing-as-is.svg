@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 610" width="760" height="610" role="img" aria-label="Ashgrove's billing process as is, drawn as a swimlane diagram with lanes for Lawyer, Accounts, Partner and Client. Problems are marked: no trigger when lawyers send their time and when accounts chase payment; a rework loop when the partner finds a wrong rate; no due date on the invoice.">
+<title>Ashgrove's as-is billing process, with its problems marked.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker><marker id="a9B2C1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#9B2C1F"/></marker></defs>
+<rect width="760" height="610" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="16.0" width="728.0" height="118.0" rx="6" fill="#FFFFFF"/>
+<rect x="16.0" y="16.0" width="74.0" height="118.0" rx="6" fill="#EFE4CC"/>
+<text xml:space="preserve" x="53.0" y="79.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="middle">Lawyer</text>
+<rect x="16.0" y="138.0" width="728.0" height="118.0" rx="6" fill="#F7F3EA"/>
+<rect x="16.0" y="138.0" width="74.0" height="118.0" rx="6" fill="#EFE4CC"/>
+<text xml:space="preserve" x="53.0" y="201.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="middle">Accounts</text>
+<rect x="16.0" y="260.0" width="728.0" height="118.0" rx="6" fill="#FFFFFF"/>
+<rect x="16.0" y="260.0" width="74.0" height="118.0" rx="6" fill="#EFE4CC"/>
+<text xml:space="preserve" x="53.0" y="323.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="middle">Partner</text>
+<rect x="16.0" y="382.0" width="728.0" height="118.0" rx="6" fill="#F7F3EA"/>
+<rect x="16.0" y="382.0" width="74.0" height="118.0" rx="6" fill="#EFE4CC"/>
+<text xml:space="preserve" x="53.0" y="445.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="middle">Client</text>
+<rect x="96.0" y="38.0" width="100.0" height="76.0" rx="6" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<text xml:space="preserve" x="102.0" y="56.0" font-size="11.5" fill="#5E5A52" font-weight="700" text-anchor="start">1</text>
+<text xml:space="preserve" x="114.0" y="56.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Finishes</text>
+<text xml:space="preserve" x="114.0" y="71.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">the work</text>
+<rect x="204.0" y="38.0" width="100.0" height="76.0" rx="6" fill="#FFFFFF" stroke="#9B2C1F" stroke-width="1.6"/>
+<text xml:space="preserve" x="210.0" y="56.0" font-size="11.5" fill="#5E5A52" font-weight="700" text-anchor="start">2</text>
+<text xml:space="preserve" x="222.0" y="56.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Sends time</text>
+<text xml:space="preserve" x="222.0" y="71.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">by WhatsApp</text>
+<text xml:space="preserve" x="222.0" y="86.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">when they</text>
+<text xml:space="preserve" x="222.0" y="101.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">remember</text>
+<rect x="282.0" y="28.0" width="16.2" height="18.0" rx="6" fill="#9B2C1F"/>
+<text xml:space="preserve" x="287.0" y="41.0" font-size="11" fill="#FFFFFF" font-weight="700" text-anchor="start">T</text>
+<rect x="204.0" y="160.0" width="100.0" height="76.0" rx="6" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<text xml:space="preserve" x="210.0" y="178.0" font-size="11.5" fill="#5E5A52" font-weight="700" text-anchor="start">3</text>
+<text xml:space="preserve" x="222.0" y="178.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Types time</text>
+<text xml:space="preserve" x="222.0" y="193.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">into the</text>
+<text xml:space="preserve" x="222.0" y="208.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">spreadsheet</text>
+<rect x="312.0" y="160.0" width="100.0" height="76.0" rx="6" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<text xml:space="preserve" x="318.0" y="178.0" font-size="11.5" fill="#5E5A52" font-weight="700" text-anchor="start">4</text>
+<text xml:space="preserve" x="330.0" y="178.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Drafts the</text>
+<text xml:space="preserve" x="330.0" y="193.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">invoice in</text>
+<text xml:space="preserve" x="330.0" y="208.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Word</text>
+<rect x="312.0" y="282.0" width="100.0" height="76.0" rx="6" fill="#FFFFFF" stroke="#9B2C1F" stroke-width="1.6"/>
+<text xml:space="preserve" x="318.0" y="300.0" font-size="11.5" fill="#5E5A52" font-weight="700" text-anchor="start">5</text>
+<text xml:space="preserve" x="330.0" y="300.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Reviews</text>
+<text xml:space="preserve" x="330.0" y="315.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">draft: wrong</text>
+<text xml:space="preserve" x="330.0" y="330.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">rate?</text>
+<rect x="390.0" y="272.0" width="16.2" height="18.0" rx="6" fill="#9B2C1F"/>
+<text xml:space="preserve" x="395.0" y="285.0" font-size="11" fill="#FFFFFF" font-weight="700" text-anchor="start">R</text>
+<rect x="420.0" y="160.0" width="100.0" height="76.0" rx="6" fill="#FFFFFF" stroke="#9B2C1F" stroke-width="1.6"/>
+<text xml:space="preserve" x="426.0" y="178.0" font-size="11.5" fill="#5E5A52" font-weight="700" text-anchor="start">6</text>
+<text xml:space="preserve" x="438.0" y="178.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Emails PDF.</text>
+<text xml:space="preserve" x="438.0" y="193.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">No due date</text>
+<rect x="498.0" y="150.0" width="16.2" height="18.0" rx="6" fill="#9B2C1F"/>
+<text xml:space="preserve" x="503.0" y="163.0" font-size="11" fill="#FFFFFF" font-weight="700" text-anchor="start">!</text>
+<rect x="420.0" y="404.0" width="100.0" height="76.0" rx="6" fill="#FFFFFF" stroke="#9B2C1F" stroke-width="1.6"/>
+<text xml:space="preserve" x="426.0" y="422.0" font-size="11.5" fill="#5E5A52" font-weight="700" text-anchor="start">7</text>
+<text xml:space="preserve" x="438.0" y="422.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Pays when</text>
+<text xml:space="preserve" x="438.0" y="437.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">they choose</text>
+<text xml:space="preserve" x="438.0" y="452.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">or when</text>
+<text xml:space="preserve" x="438.0" y="467.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">chased</text>
+<rect x="498.0" y="394.0" width="16.2" height="18.0" rx="6" fill="#9B2C1F"/>
+<text xml:space="preserve" x="503.0" y="407.0" font-size="11" fill="#FFFFFF" font-weight="700" text-anchor="start">W</text>
+<rect x="528.0" y="160.0" width="100.0" height="76.0" rx="6" fill="#FFFFFF" stroke="#9B2C1F" stroke-width="1.6"/>
+<text xml:space="preserve" x="534.0" y="178.0" font-size="11.5" fill="#5E5A52" font-weight="700" text-anchor="start">8</text>
+<text xml:space="preserve" x="546.0" y="178.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Chases by</text>
+<text xml:space="preserve" x="546.0" y="193.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">phone when</text>
+<text xml:space="preserve" x="546.0" y="208.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">a partner</text>
+<text xml:space="preserve" x="546.0" y="223.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">asks</text>
+<rect x="606.0" y="150.0" width="16.2" height="18.0" rx="6" fill="#9B2C1F"/>
+<text xml:space="preserve" x="611.0" y="163.0" font-size="11" fill="#FFFFFF" font-weight="700" text-anchor="start">T</text>
+<rect x="636.0" y="160.0" width="100.0" height="76.0" rx="6" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<text xml:space="preserve" x="642.0" y="178.0" font-size="11.5" fill="#5E5A52" font-weight="700" text-anchor="start">9</text>
+<text xml:space="preserve" x="654.0" y="178.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Marks paid</text>
+<text xml:space="preserve" x="654.0" y="193.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">from the</text>
+<text xml:space="preserve" x="654.0" y="208.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">bank</text>
+<text xml:space="preserve" x="654.0" y="223.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">statement</text>
+<path d="M196.0,76.0 L200.0,76.0" fill="none" stroke="#8A6A1F" stroke-width="1.6" marker-end="url(#a8A6A1F)"/>
+<path d="M254,114 L254,156" fill="none" stroke="#8A6A1F" stroke-width="1.6" marker-end="url(#a8A6A1F)"/>
+<path d="M304.0,198.0 L308.0,198.0" fill="none" stroke="#8A6A1F" stroke-width="1.6" marker-end="url(#a8A6A1F)"/>
+<path d="M362,236 L362,278" fill="none" stroke="#8A6A1F" stroke-width="1.6" marker-end="url(#a8A6A1F)"/>
+<path d="M412,320 C420,320 440,240 470,240" fill="none" stroke="#8A6A1F" stroke-width="1.6" marker-end="url(#a8A6A1F)"/>
+<path d="M470,236 L470,400" fill="none" stroke="#8A6A1F" stroke-width="1.6" marker-end="url(#a8A6A1F)"/>
+<path d="M520,442 C528,442 548,240 578,240" fill="none" stroke="#8A6A1F" stroke-width="1.6" marker-end="url(#a8A6A1F)"/>
+<path d="M628.0,198.0 L632.0,198.0" fill="none" stroke="#8A6A1F" stroke-width="1.6" marker-end="url(#a8A6A1F)"/>
+<path d="M392,282 C392,262 392,258 392,240" fill="none" stroke="#9B2C1F" stroke-width="1.6" marker-end="url(#a9B2C1F)" stroke-dasharray="5 4"/>
+<text xml:space="preserve" x="316.0" y="376.0" font-size="11.5" fill="#9B2C1F" font-weight="700" text-anchor="start">R: back to step 4</text>
+<text xml:space="preserve" x="16.0" y="530.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">T  no trigger: happens only when someone remembers or asks</text>
+<text xml:space="preserve" x="16.0" y="552.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">R  rework loop: invoices corrected and re-drafted</text>
+<text xml:space="preserve" x="16.0" y="574.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">W  waiting: no due date, so no deadline     !  missing information</text>
+</g></svg>

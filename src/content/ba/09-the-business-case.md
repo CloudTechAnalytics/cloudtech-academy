@@ -12,7 +12,7 @@ The managing partner has two quotes on her desk: a practice-management system at
 
 ## The concept
 
-**The structure of a business case**
+### The structure of a business case
 
 1. **The problem and its cost**: from your baseline (lesson 4).
 2. **Options**, always including **do nothing** (or "do minimum").
@@ -21,18 +21,18 @@ The managing partner has two quotes on her desk: a practice-management system at
 5. **Comparison**: payback, net benefit over a fixed period, and risks.
 6. **Recommendation**: the option, why, and what would change your mind.
 
-**Turning faster payment into naira**
+### Turning faster payment into naira
 
 Getting paid sooner releases cash once: **annual billing × days saved ÷ 365**. Released cash has a value every year: what it would cost to borrow it, or what it could earn.
 
-**Two simple measures**
+### Two simple measures
 
 - **Payback period** = one-off cost ÷ annual net benefit. How soon the option pays for itself.
 - **Net benefit over three years** = 3 × annual net benefit − one-off cost.
 
 Larger organisations also use **net present value (NPV)**, which discounts future benefits because a naira next year is worth less than a naira today. For short, small projects like this one, payback and net benefit are usually enough, as long as you state the assumptions.
 
-**Assumptions and sensitivity**
+### Assumptions and sensitivity
 
 Every benefit rests on an assumption, such as "days to pay falls from 45 to 30". State each one, and test the important ones: "If days to pay only falls to 38, does the option still pay back within two years?" A case that collapses when one assumption moves a little isn't a strong case.
 
@@ -49,6 +49,8 @@ Ashgrove's options. Annual billing is about ₦600m; overdue debt written off is
 | Accounts time saved per year | 0 | 0 | ₦1.2m |
 
 For option B: the cash released is ₦600m × 10 ÷ 365 = ₦16.4m, worth ₦3.3m a year at 20%. Write-offs fall by 0.5% of ₦600m, which is ₦3.0m a year. Take off the ₦0.6m running cost and the annual net benefit is **₦5.7m**. Payback is ₦1.5m ÷ ₦5.7m, about **3 months**, and the net benefit over three years is about **₦15.6m**.
+
+![A waterfall chart for option B: released cash adds ₦3.3m, fewer write-offs add ₦3.0m, running cost takes away ₦0.6m, leaving a net benefit of ₦5.7m a year.](/images/courses/ba/option-b-benefit.svg "Option B's annual net benefit, built up from its assumptions.")
 
 You'll work out option C in the practice tasks. The comparison is closer than the sales demo suggested.
 

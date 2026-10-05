@@ -14,7 +14,7 @@ You've seen this shape of request before: a solution, arriving first. Your job i
 
 ## The concept
 
-**The pack, and where each part comes from**
+### The pack, and where each part comes from
 
 | Part | What it contains | Lesson |
 | :-- | :-- | :-- |
@@ -29,7 +29,7 @@ You've seen this shape of request before: a solution, arriving first. Your job i
 | Business case | options including do nothing, payback, risks, a recommendation | 9 |
 | UAT and adoption | test cases, traceability, adoption plan | 10 |
 
-**Start from the data, then ask why**
+### Start from the data, then ask why
 
 Customers complain about not knowing where shipments are, but **why** do they need to know? Usually because a shipment is late and nobody told them. If deliveries were reliable, or customers were told in advance when one would be late, would they still want GPS? That's the question your analysis has to answer before anyone gets a quote.
 
