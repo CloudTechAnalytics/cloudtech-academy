@@ -54376,15 +54376,15 @@ On 1 June, the platform team switched to a new pipeline: every change tested, bu
 
 ## The concept
 
-**Continuous integration (CI)**
+### Continuous integration (CI)
 
 Every change is merged often (at least daily) and automatically built and tested, so problems are found while they're small and fresh.
 
-**Continuous delivery and deployment (CD)**
+### Continuous delivery and deployment (CD)
 
 Every change that passes the pipeline can be released at any time (delivery), or is released automatically (deployment), by a repeatable process, not by hand.
 
-**The four DORA measures**
+### The four DORA measures
 
 Years of research by the DORA team found four measures that separate high-performing software teams:
 
@@ -54396,6 +54396,8 @@ Years of research by the DORA team found four measures that separate high-perfor
 | **Time to restore** | When one does, how long until service is restored? | shorter |
 
 Speed and stability aren't a trade-off: teams that release small changes often are usually **more** stable, because each change is easier to test, understand and undo.
+
+![A pipeline from commit through build, test, scan and staging to production, with CI covering every change and CD meaning any passing change can ship; below it, the four DORA measures and which way each should move](/images/courses/cicd/pipeline-dora.svg "A CI/CD pipeline, and the four DORA measures of how well it works.")
 
 ## Example
 
@@ -54526,7 +54528,7 @@ Containers fix this. The pipeline builds the app **once** into an **image**, tes
 
 ## The concept
 
-**Images and containers**
+### Images and containers
 
 - An **image** is a packaged app with everything it needs to run: the code, its libraries, and a minimal operating system. It doesn't change once built.
 - A **container** is a running instance of an image, isolated from other containers on the same machine.
@@ -54534,7 +54536,9 @@ Containers fix this. The pipeline builds the app **once** into an **image**, tes
 
 Build once, run anywhere the same way: on a laptop, in testing, in production.
 
-**Dockerfiles**
+![A Dockerfile is built into an image of read-only layers (base OS, Node.js runtime, dependencies, app code), pushed to a registry with a tag, then pulled and run as three identical containers](/images/courses/cicd/image-registry.svg "Dockerfile → image → registry → containers.")
+
+### Dockerfiles
 
 A Dockerfile is the recipe for an image:
 
@@ -54549,7 +54553,7 @@ A Dockerfile is the recipe for an image:
 | `EXPOSE` | document the port the app listens on |
 | `CMD` | the command that starts the app |
 
-**Layers and caching**
+### Layers and caching
 
 Each instruction creates a **layer**. When you rebuild, Docker reuses layers that haven't changed, **up to the first instruction whose input changed**; everything after it is rebuilt. Order matters: put what changes least (installing dependencies) before what changes most (your code).
 
@@ -54677,7 +54681,7 @@ Tools such as **hadolint** check Dockerfiles automatically. You'll write a small
 
 ## The concept
 
-**Rules for a good Dockerfile**
+### Rules for a good Dockerfile
 
 | Rule | Why | Fix |
 | :-- | :-- | :-- |
@@ -54689,7 +54693,9 @@ Tools such as **hadolint** check Dockerfiles automatically. You'll write a small
 | Exclude junk | `COPY . .` copies `.git`, `.env`, local `node_modules` | a `.dockerignore` file |
 | Exec-form CMD | the app receives stop signals properly | `CMD ["node", "server.js"]` |
 
-**Multi-stage builds**
+![Two Dockerfiles after a one-line code change: copying all code before npm ci rebuilds the install layer; copying package files and installing first keeps the install layer cached](/images/courses/cicd/layer-cache.svg "Install dependencies before copying code, so code changes reuse the cached install layer.")
+
+### Multi-stage builds
 
 Build in one stage with all the tools, then copy only the result into a small runtime image:
 
@@ -54858,7 +54864,7 @@ The platform team scanned all four of Tallybook's candidate images. The current 
 
 ## The concept
 
-**Reading a finding**
+### Reading a finding
 
 | Field | Meaning |
 | :-- | :-- |
@@ -54867,12 +54873,12 @@ The platform team scanned all four of Tallybook's candidate images. The current 
 | Fixed version | the version that fixes it; empty means no fix exists yet |
 | Severity | CRITICAL, HIGH, MEDIUM, LOW |
 
-**Two sources of findings**
+### Two sources of findings
 
 - **OS packages** come from the base image. You fix most of them by choosing a smaller, newer base image and rebuilding regularly.
 - **Language packages** (npm, pip) are your app's dependencies. You fix them by upgrading in your own code.
 
-**A practical rule**
+### A practical rule
 
 Block a release on **CRITICAL or HIGH findings that have a fix**, warn on the rest, and rebuild images regularly so fixes in the base image arrive without anyone asking.
 
@@ -55036,11 +55042,11 @@ Before you can review a pipeline, you need to read its YAML fluently, and know a
 
 ## The concept
 
-**YAML**
+### YAML
 
 A text format of keys, values and nested blocks, where **indentation is structure**. Lists start with `-`.
 
-**A GitHub Actions workflow**
+### A GitHub Actions workflow
 
 | Key | Meaning |
 | :-- | :-- |
@@ -55054,7 +55060,9 @@ A text format of keys, values and nested blocks, where **indentation is structur
 
 Without `needs`, jobs run **in parallel**.
 
-**A YAML trap**
+![lint and test run in parallel; build needs both; deploy-staging needs build; deploy-production needs deploy-staging and an approval](/images/courses/cicd/job-graph.svg "Jobs run in parallel unless needs makes them wait.")
+
+### A YAML trap
 
 In YAML 1.1, which many libraries (including Python's PyYAML) follow, the bare word `on` means **true**. So loading a workflow in Python gives a key `True`, not `"on"`. GitHub reads it correctly; your scripts must handle it.
 
@@ -55207,7 +55215,7 @@ Tallybook's old workflow has six security and safety problems in 28 lines. Each 
 
 ## The concept
 
-**What to check in every pipeline**
+### What to check in every pipeline
 
 | Check | Risk | Fix |
 | :-- | :-- | :-- |
@@ -55218,7 +55226,7 @@ Tallybook's old workflow has six security and safety problems in 28 lines. Each 
 | Secrets in logs | printing a secret exposes it to anyone who can read logs | never print secrets; GitHub masks them, but masking can miss multi-line values like SSH keys and any transformed copy |
 | Approvals | production changes with no human gate | an `environment: production` with required reviewers |
 
-**Deploy artifacts, not repositories**
+### Deploy artifacts, not repositories
 
 The old workflow ran `git pull` and `npm install` on the servers. The new one deploys the **image** that was built, tested and scanned in the pipeline.
 
@@ -55355,16 +55363,16 @@ In June, a change took about 20 minutes to get through Tallybook's new pipeline.
 
 ## The concept
 
-**Measure by step**
+### Measure by step
 
 Total pipeline time is the sum of its steps (plus time queued waiting for a machine). Speed up the biggest step first.
 
-**Caching**
+### Caching
 
 - **Dependency cache**: save the downloaded packages between runs, keyed on the lock file, so `npm ci` only downloads when dependencies change.
 - **Image layer cache**: reuse unchanged layers from previous builds (lesson 2), which only helps if the Dockerfile is ordered well (lesson 3).
 
-**Other levers**
+### Other levers
 
 Run independent steps in parallel, split slow test suites across machines, and avoid doing work twice (for example, building the image in one job and rebuilding it in another).
 
@@ -55484,7 +55492,7 @@ The new pipeline releases each version as a **canary** first: 10% of traffic for
 
 ## The concept
 
-**Deployment strategies**
+### Deployment strategies
 
 | Strategy | How | Risk if the release is bad |
 | :-- | :-- | :-- |
@@ -55493,7 +55501,9 @@ The new pipeline releases each version as a **canary** first: 10% of traffic for
 | **Blue-green** | start a full new set, switch traffic, keep the old set to switch back | everyone affected, but switching back is instant |
 | **Canary** | send a small share of traffic to the new version, compare, then promote or roll back | limited to the canary's share, for a few minutes |
 
-**Canary analysis**
+![Ten instances over three steps for each strategy: all at once switches everything; rolling switches a few at a time; blue-green switches all traffic to a new set while keeping the old one; canary sends a small share first, then promotes](/images/courses/cicd/deploy-strategies.svg "How much traffic a bad release can reach, and how fast you can undo it.")
+
+### Canary analysis
 
 Compare the canary with the **baseline** (the old version, serving at the same time): error rate, latency. A simple rule:
 
@@ -55644,7 +55654,7 @@ Even with good tests and canaries, some bad releases reach customers. What matte
 
 ## The concept
 
-**Roll back or fix forward?**
+### Roll back or fix forward?
 
 | | Roll back | Fix forward |
 | :-- | :-- | :-- |
@@ -55654,11 +55664,13 @@ Even with good tests and canaries, some bad releases reach customers. What matte
 
 Restore service first; understand the cause afterwards.
 
-**Making rollbacks possible**
+### Making rollbacks possible
 
 - Keep previous images in the registry, tagged by version.
 - Make **database changes backwards-compatible** (add a column first, start using it in a later release, remove the old one later still), so the previous app version still works.
 - Use **feature flags**: ship new code switched off, turn it on separately, and switch it off instantly if it misbehaves, with no deployment at all.
+
+![Three releases: expand adds the new column, migrate makes the app use it, contract removes the old column; every step can be rolled back safely, unlike renaming the column and changing the app in one release](/images/courses/cicd/expand-contract.svg "Change the database in steps, so the previous app version always still works.")
 
 ## Example
 
@@ -55772,7 +55784,7 @@ Three months after switching to the new pipeline, Tallybook's CTO wants a review
 
 ## The concept
 
-**The parts of the review**
+### The parts of the review
 
 | Part | Built in |
 | :-- | :-- |
@@ -55784,7 +55796,7 @@ Three months after switching to the new pipeline, Tallybook's CTO wants a review
 | Canary performance and policy | lesson 8 |
 | Recovery | lesson 9 |
 
-**Show the trade-offs**
+### Show the trade-offs
 
 The board will ask whether faster releases mean more risk. The data answers it; make sure your review shows it plainly.
 

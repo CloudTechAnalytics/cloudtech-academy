@@ -12,7 +12,7 @@ The platform team scanned all four of Tallybook's candidate images. The current 
 
 ## The concept
 
-**Reading a finding**
+### Reading a finding
 
 | Field | Meaning |
 | :-- | :-- |
@@ -21,12 +21,12 @@ The platform team scanned all four of Tallybook's candidate images. The current 
 | Fixed version | the version that fixes it; empty means no fix exists yet |
 | Severity | CRITICAL, HIGH, MEDIUM, LOW |
 
-**Two sources of findings**
+### Two sources of findings
 
 - **OS packages** come from the base image. You fix most of them by choosing a smaller, newer base image and rebuilding regularly.
 - **Language packages** (npm, pip) are your app's dependencies. You fix them by upgrading in your own code.
 
-**A practical rule**
+### A practical rule
 
 Block a release on **CRITICAL or HIGH findings that have a fix**, warn on the rest, and rebuild images regularly so fixes in the base image arrive without anyone asking.
 

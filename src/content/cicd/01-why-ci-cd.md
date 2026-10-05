@@ -12,15 +12,15 @@ On 1 June, the platform team switched to a new pipeline: every change tested, bu
 
 ## The concept
 
-**Continuous integration (CI)**
+### Continuous integration (CI)
 
 Every change is merged often (at least daily) and automatically built and tested, so problems are found while they're small and fresh.
 
-**Continuous delivery and deployment (CD)**
+### Continuous delivery and deployment (CD)
 
 Every change that passes the pipeline can be released at any time (delivery), or is released automatically (deployment), by a repeatable process, not by hand.
 
-**The four DORA measures**
+### The four DORA measures
 
 Years of research by the DORA team found four measures that separate high-performing software teams:
 
@@ -32,6 +32,8 @@ Years of research by the DORA team found four measures that separate high-perfor
 | **Time to restore** | When one does, how long until service is restored? | shorter |
 
 Speed and stability aren't a trade-off: teams that release small changes often are usually **more** stable, because each change is easier to test, understand and undo.
+
+![A pipeline from commit through build, test, scan and staging to production, with CI covering every change and CD meaning any passing change can ship; below it, the four DORA measures and which way each should move](/images/courses/cicd/pipeline-dora.svg "A CI/CD pipeline, and the four DORA measures of how well it works.")
 
 ## Example
 

@@ -67,6 +67,30 @@
   760,
   484
  ],
+ "/images/courses/cicd/deploy-strategies.svg": [
+  760,
+  440
+ ],
+ "/images/courses/cicd/expand-contract.svg": [
+  760,
+  340
+ ],
+ "/images/courses/cicd/image-registry.svg": [
+  760,
+  380
+ ],
+ "/images/courses/cicd/job-graph.svg": [
+  760,
+  340
+ ],
+ "/images/courses/cicd/layer-cache.svg": [
+  760,
+  380
+ ],
+ "/images/courses/cicd/pipeline-dora.svg": [
+  760,
+  400
+ ],
  "/images/courses/cloud/average-vs-p95.svg": [
   760,
   360

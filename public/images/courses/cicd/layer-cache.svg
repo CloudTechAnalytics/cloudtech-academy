@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 380" width="760" height="380" role="img" aria-label="Why the order of a Dockerfile matters for caching. Each instruction is a layer; when a layer changes, every layer after it is rebuilt. Copying all the code before installing dependencies means any code change reinstalls everything. Copying only the package files first, installing, then copying the code means a code change reuses the cached install layer.">
+<title>Copy package files and install before copying code, so code changes reuse the install layer.</title>
+
+<rect width="760" height="380" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="30.0" font-size="15" fill="#9B2C1F" font-weight="700" text-anchor="start">✗ Code copied first</text>
+<rect x="16.0" y="44.0" width="356.0" height="42.0" rx="5" fill="#E5F0E8"/>
+<text xml:space="preserve" x="28.0" y="70.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">FROM node:20.17-slim</text>
+<text xml:space="preserve" x="360.0" y="70.0" font-size="12" fill="#5E5A52" font-weight="700" text-anchor="end">cached</text>
+<rect x="16.0" y="94.0" width="356.0" height="42.0" rx="5" fill="#FBEBD6"/>
+<text xml:space="preserve" x="28.0" y="120.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">COPY . .</text>
+<text xml:space="preserve" x="360.0" y="120.0" font-size="12" fill="#8A6A1F" font-weight="700" text-anchor="end">changed</text>
+<rect x="16.0" y="144.0" width="356.0" height="42.0" rx="5" fill="#F6E3E0"/>
+<text xml:space="preserve" x="28.0" y="170.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">RUN npm ci</text>
+<text xml:space="preserve" x="360.0" y="170.0" font-size="12" fill="#9B2C1F" font-weight="700" text-anchor="end">rebuilt: slow</text>
+<rect x="16.0" y="194.0" width="356.0" height="42.0" rx="5" fill="#F6E3E0"/>
+<text xml:space="preserve" x="28.0" y="220.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">CMD …</text>
+<text xml:space="preserve" x="360.0" y="220.0" font-size="12" fill="#9B2C1F" font-weight="700" text-anchor="end">rebuilt</text>
+<text xml:space="preserve" x="388.0" y="30.0" font-size="15" fill="#2F6B3F" font-weight="700" text-anchor="start">✓ Dependencies first</text>
+<rect x="388.0" y="44.0" width="356.0" height="42.0" rx="5" fill="#E5F0E8"/>
+<text xml:space="preserve" x="400.0" y="70.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">FROM node:20.17-slim</text>
+<text xml:space="preserve" x="732.0" y="70.0" font-size="12" fill="#5E5A52" font-weight="700" text-anchor="end">cached</text>
+<rect x="388.0" y="94.0" width="356.0" height="42.0" rx="5" fill="#E5F0E8"/>
+<text xml:space="preserve" x="400.0" y="120.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">COPY package*.json ./</text>
+<text xml:space="preserve" x="732.0" y="120.0" font-size="12" fill="#5E5A52" font-weight="700" text-anchor="end">cached</text>
+<rect x="388.0" y="144.0" width="356.0" height="42.0" rx="5" fill="#E5F0E8"/>
+<text xml:space="preserve" x="400.0" y="170.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">RUN npm ci</text>
+<text xml:space="preserve" x="732.0" y="170.0" font-size="12" fill="#5E5A52" font-weight="700" text-anchor="end">cached</text>
+<rect x="388.0" y="194.0" width="356.0" height="42.0" rx="5" fill="#FBEBD6"/>
+<text xml:space="preserve" x="400.0" y="220.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">COPY . .</text>
+<text xml:space="preserve" x="732.0" y="220.0" font-size="12" fill="#8A6A1F" font-weight="700" text-anchor="end">changed: fast</text>
+<rect x="388.0" y="244.0" width="356.0" height="42.0" rx="5" fill="#F6E3E0"/>
+<text xml:space="preserve" x="400.0" y="270.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">CMD …</text>
+<text xml:space="preserve" x="732.0" y="270.0" font-size="12" fill="#9B2C1F" font-weight="700" text-anchor="end">rebuilt</text>
+<text xml:space="preserve" x="16.0" y="330.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">After a one-line code change, the left Dockerfile reinstalls every package; the right one reuses the</text>
+<text xml:space="preserve" x="16.0" y="348.9" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">install layer and rebuilds in seconds.</text>
+</g></svg>
