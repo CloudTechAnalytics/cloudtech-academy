@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 360" width="760" height="360" role="img" aria-label="An illustration of why agent runs get expensive. At every step the whole conversation so far is re-sent as input: instructions, tool definitions, the request and every earlier tool result. So input tokens grow with each step: here about 2,000 at step 1, rising to about 4,500 at step 6. The total for a six-step run is much more than twice a three-step run.">
+<title>Each step re-sends everything so far, so input tokens grow step by step.</title>
+
+<rect width="760" height="360" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<line x1="80.0" y1="280.0" x2="520.0" y2="280.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="72.0" y="284.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="end">0</text>
+<line x1="80.0" y1="188.0" x2="520.0" y2="188.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="72.0" y="192.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="end">2,000</text>
+<line x1="80.0" y1="96.0" x2="520.0" y2="96.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="72.0" y="100.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="end">4,000</text>
+<rect x="94.0" y="188.0" width="54.0" height="92.0" rx="3" fill="#DCC594"/>
+<rect x="94.0" y="188.0" width="54.0" height="0.0" rx="3" fill="#B38A3E"/>
+<text xml:space="preserve" x="121.0" y="298.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="middle">step 1</text>
+<rect x="166.0" y="188.0" width="54.0" height="92.0" rx="3" fill="#DCC594"/>
+<rect x="166.0" y="165.0" width="54.0" height="23.0" rx="3" fill="#B38A3E"/>
+<text xml:space="preserve" x="193.0" y="298.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="middle">step 2</text>
+<rect x="238.0" y="188.0" width="54.0" height="92.0" rx="3" fill="#DCC594"/>
+<rect x="238.0" y="142.0" width="54.0" height="46.0" rx="3" fill="#B38A3E"/>
+<text xml:space="preserve" x="265.0" y="298.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="middle">step 3</text>
+<rect x="310.0" y="188.0" width="54.0" height="92.0" rx="3" fill="#DCC594"/>
+<rect x="310.0" y="119.0" width="54.0" height="69.0" rx="3" fill="#B38A3E"/>
+<text xml:space="preserve" x="337.0" y="298.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="middle">step 4</text>
+<rect x="382.0" y="188.0" width="54.0" height="92.0" rx="3" fill="#DCC594"/>
+<rect x="382.0" y="96.0" width="54.0" height="92.0" rx="3" fill="#B38A3E"/>
+<text xml:space="preserve" x="409.0" y="298.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="middle">step 5</text>
+<rect x="454.0" y="188.0" width="54.0" height="92.0" rx="3" fill="#DCC594"/>
+<rect x="454.0" y="73.0" width="54.0" height="115.0" rx="3" fill="#B38A3E"/>
+<text xml:space="preserve" x="481.0" y="298.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="middle">step 6</text>
+<line x1="80.0" y1="280.0" x2="520.0" y2="280.0" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="16.0" y="30.0" font-size="15" fill="#2A2926" font-weight="700" text-anchor="start">Input tokens sent at each step (illustration)</text>
+<rect x="540.0" y="60.0" width="204.0" height="200.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<rect x="556.0" y="84.0" width="14.0" height="14.0" rx="3" fill="#DCC594"/>
+<text xml:space="preserve" x="578.0" y="96.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">instructions, tool</text>
+<text xml:space="preserve" x="578.0" y="114.1" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">definitions, request</text>
+<rect x="556.0" y="148.0" width="14.0" height="14.0" rx="3" fill="#B38A3E"/>
+<text xml:space="preserve" x="578.0" y="160.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">earlier steps' tool</text>
+<text xml:space="preserve" x="578.0" y="178.1" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">calls and results</text>
+<text xml:space="preserve" x="16.0" y="330.0" font-size="13" fill="#8A6A1F" font-weight="700" text-anchor="start">Short tool results, a step limit and a token budget keep this in check.</text>
+</g></svg>

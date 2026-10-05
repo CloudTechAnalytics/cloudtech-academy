@@ -12,7 +12,7 @@ You don't need an API key to do it well. The recorded runs, the data the tools r
 
 ## The concept
 
-**What v3 needs**
+### What v3 needs
 
 | Part | Built in |
 | :-- | :-- |
@@ -24,7 +24,7 @@ You don't need an API key to do it well. The recorded runs, the data the tools r
 | Cost and latency, with limits | lesson 8 |
 | An operating plan | lesson 9 |
 
-**One evaluation function**
+### One evaluation function
 
 As with the support assistant in Generative AI Engineering, build one function that produces the same table for any version: accuracy, unsafe actions, hand-over rate, leaks, loops, cost per correct resolution and latency.
 

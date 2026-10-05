@@ -1,4 +1,28 @@
 {
+ "/images/courses/agents/agent-loop.svg": [
+  760,
+  430
+ ],
+ "/images/courses/agents/risk-ladder.svg": [
+  760,
+  360
+ ],
+ "/images/courses/agents/rollout.svg": [
+  760,
+  300
+ ],
+ "/images/courses/agents/token-growth.svg": [
+  760,
+  360
+ ],
+ "/images/courses/agents/tool-definition.svg": [
+  760,
+  400
+ ],
+ "/images/courses/agents/tool-injection.svg": [
+  760,
+  420
+ ],
  "/images/courses/agile-ba/burn-up.svg": [
   760,
   440

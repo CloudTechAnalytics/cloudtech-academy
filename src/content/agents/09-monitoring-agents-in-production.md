@@ -12,11 +12,11 @@ Paystream's head of support asks for the operating plan: what will be watched, w
 
 ## The concept
 
-**Log every step**
+### Log every step
 
 The trace format from this course (run, step, tool, arguments, result, tokens, seconds), plus the prompt version, model version and final action. Without traces, you can't investigate a complaint or an incident.
 
-**Watch daily**
+### Watch daily
 
 | Measure | Why |
 | :-- | :-- |
@@ -27,13 +27,15 @@ The trace format from this course (run, step, tool, arguments, result, tokens, s
 | Tokens and seconds per run | cost and customer wait |
 | Injection flags | attacks |
 
-**Sample and review**
+### Sample and review
 
 People review a random sample of runs every week, graded with the same labels as the evaluation set, so accuracy is measured on live traffic, not just the test set.
 
-**Roll out gradually**
+### Roll out gradually
 
 Start with **shadow mode** (the agent proposes, people act), then a small share of live requests, then more, with a **kill switch** that sends everything back to people instantly.
+
+![Three stages: shadow mode where the agent proposes and people act, then a small share of live requests, then a larger share; a kill switch can send everything back to people at any stage.](/images/courses/agents/rollout.svg "Roll out in stages, with a kill switch throughout.")
 
 ## Example
 

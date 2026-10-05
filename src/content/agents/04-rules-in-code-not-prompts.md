@@ -16,15 +16,15 @@ A model is not a reliable calculator of business rules. Code is.
 
 ## The concept
 
-**Decide in code, explain with the model**
+### Decide in code, explain with the model
 
 If a decision follows a fixed rule (dates, thresholds, eligibility, limits), write it as a function and give the agent a **tool** that returns the decision and the reason. The model's job becomes understanding the request and explaining the outcome, not doing date arithmetic.
 
-**Make it mandatory**
+### Make it mandatory
 
 The tool that acts (`open_transfer_case`) can itself refuse unless the eligibility check passed. Then even if the model skips the check, the action can't happen.
 
-**Test the rule against labels**
+### Test the rule against labels
 
 The rule function can be tested against decisions people have already made. If it disagrees with them, either the code or the written policy is wrong, and you want to know before the agent goes live.
 

@@ -12,14 +12,14 @@ Agents need evaluation on two levels: the **outcome** and the **path**.
 
 ## The concept
 
-**Outcome evaluation**
+### Outcome evaluation
 
 Compare the agent's final action with the expected action on a labelled set of real requests. Report it:
 
 - overall, and **by expected action** (fraud and refunds matter more than limit questions);
 - with a **confusion table**: what the agent did instead, when it was wrong.
 
-**Trajectory evaluation**
+### Trajectory evaluation
 
 Check the steps, not just the end:
 
@@ -30,7 +30,7 @@ Check the steps, not just the end:
 
 A run can reach the right outcome by a dangerous path (opening a case without checking, which happened to be correct). Trajectory checks catch that.
 
-**Safe and unsafe errors**
+### Safe and unsafe errors
 
 An over-cautious hand-over to a person costs a little staff time. A wrong action (a refund, a case for someone else's transfer) can cost money or trust. Count them separately.
 

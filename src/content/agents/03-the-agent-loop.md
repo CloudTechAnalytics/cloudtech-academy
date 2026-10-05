@@ -12,13 +12,13 @@ A production loop needs more than "keep going until the model stops". It needs l
 
 ## The concept
 
-**The loop**
+### The loop
 
 1. Send the conversation and tool definitions to the model.
 2. If the response asks for tool calls, run each one, append the results to the conversation, and go back to 1.
 3. If it doesn't, the model has given its final answer: stop.
 
-**Guards every loop needs**
+### Guards every loop needs
 
 | Guard | Why |
 | :-- | :-- |
