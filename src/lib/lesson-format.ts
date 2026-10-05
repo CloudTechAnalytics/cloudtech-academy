@@ -20,7 +20,12 @@ export function parseFrontmatter(raw: string): { meta: Record<string, string>; b
   const meta: Record<string, string> = {};
   for (const line of m[1].split("\n")) {
     const i = line.indexOf(":");
-    if (i > 0) meta[line.slice(0, i).trim()] = line.slice(i + 1).trim();
+    if (i <= 0) continue;
+    let value = line.slice(i + 1).trim();
+    // YAML lets a value be quoted (needed when it contains a colon): drop the quotes.
+    const q = value.match(/^"(.*)"$/) ?? value.match(/^'(.*)'$/);
+    if (q) value = q[1].replace(/\\"/g, '"');
+    meta[line.slice(0, i).trim()] = value;
   }
   return { meta, body: text.slice(m[0].length) };
 }

@@ -3570,7 +3570,7 @@ values ('web-m01', 'web-development-for-beginners', 'HTML: The Structure', 1, 'H
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('web-development-for-beginners:html-the-structure', 'web-development-for-beginners', 'web-m01', 'html-the-structure', '"HTML: The Structure"', 'Learn how web pages are built, write your first HTML page with headings, text, links, images and lists, and open it in your browser.', 25, $md$
+values ('web-development-for-beginners:html-the-structure', 'web-development-for-beginners', 'web-m01', 'html-the-structure', 'HTML: The Structure', 'Learn how web pages are built, write your first HTML page with headings, text, links, images and lists, and open it in your browser.', 25, $md$
 ## How a web page works
 
 Every website is built from three languages that work together:
@@ -3688,7 +3688,7 @@ values ('web-m02', 'web-development-for-beginners', 'CSS: The Style', 2, 'CSS Ba
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('web-development-for-beginners:css-the-style', 'web-development-for-beginners', 'web-m02', 'css-the-style', '"CSS: The Style"', 'Style your page with colours, fonts, spacing and a simple layout, and make it look good on a phone.', 25, $md$
+values ('web-development-for-beginners:css-the-style', 'web-development-for-beginners', 'web-m02', 'css-the-style', 'CSS: The Style', 'Style your page with colours, fonts, spacing and a simple layout, and make it look good on a phone.', 25, $md$
 ## Connect a stylesheet
 
 CSS lives in its own file. In your `my-website` folder, create `style.css`, then link it inside the `<head>` of `index.html`:
@@ -3832,7 +3832,7 @@ values ('web-m03', 'web-development-for-beginners', 'JavaScript: The Behaviour',
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('web-development-for-beginners:javascript-the-behaviour', 'web-development-for-beginners', 'web-m03', 'javascript-the-behaviour', '"JavaScript: The Behaviour"', 'Add interaction to your page with JavaScript, using variables, functions and a button that responds when someone clicks it.', 25, $md$
+values ('web-development-for-beginners:javascript-the-behaviour', 'web-development-for-beginners', 'web-m03', 'javascript-the-behaviour', 'JavaScript: The Behaviour', 'Add interaction to your page with JavaScript, using variables, functions and a button that responds when someone clicks it.', 25, $md$
 ## What JavaScript adds
 
 HTML and CSS make a page look right. **JavaScript** makes it *do* things: respond to clicks, show and hide content, check forms, and fetch data.
@@ -5397,7 +5397,7 @@ values ('py-m07', 'python-for-beginners', 'Conditions: if, elif and else', 5, 'P
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('python-for-beginners:conditions-if-elif-else', 'python-for-beginners', 'py-m07', 'conditions-if-elif-else', '"Conditions: if, elif and else"', 'Make your code decide. Comparison and logical operators, if, elif and else, indentation, nested decisions, the one-line form, and which values count as true.', 30, $md$
+values ('python-for-beginners:conditions-if-elif-else', 'python-for-beginners', 'py-m07', 'conditions-if-elif-else', 'Conditions: if, elif and else', 'Make your code decide. Comparison and logical operators, if, elif and else, indentation, nested decisions, the one-line form, and which values count as true.', 30, $md$
 ## Comparisons give True or False
 
 Every decision starts with a question that's either true or false. **Comparison operators** ask those questions:
@@ -6143,7 +6143,7 @@ values ('py-m02', 'python-for-beginners', 'Loops: for and while', 7, 'Python Loo
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('python-for-beginners:decisions-and-loops', 'python-for-beginners', 'py-m02', 'decisions-and-loops', '"Loops: for and while"', 'Repeat work without repeating code. for loops over lists, text and range, running totals and counters, enumerate and zip, while loops, break and continue, and a first look at list comprehensions.', 40, $md$
+values ('python-for-beginners:decisions-and-loops', 'python-for-beginners', 'py-m02', 'decisions-and-loops', 'Loops: for and while', 'Repeat work without repeating code. for loops over lists, text and range, running totals and counters, enumerate and zip, while loops, break and continue, and a first look at list comprehensions.', 40, $md$
 ## Why loops
 
 Suppose you want to print a grade for each of 40 students. Writing 40 `print` lines is slow, error-prone and has to change every time the class changes. A **loop** runs the same code once for each item, however many there are.
@@ -14935,7 +14935,7 @@ values ('xls-m11', 'excel-for-data-analysis', 'Mini Project', 11, null, null, '{
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('excel-for-data-analysis:mini-project', 'excel-for-data-analysis', 'xls-m11', 'mini-project', '"Mini project: what do discounts cost?"', 'A guided analysis of Kolanut''s discounts from question to recommendation, using everything in the course.', 15, $md$
+values ('excel-for-data-analysis:mini-project', 'excel-for-data-analysis', 'xls-m11', 'mini-project', 'Mini project: what do discounts cost?', 'A guided analysis of Kolanut''s discounts from question to recommendation, using everything in the course.', 15, $md$
 ## The problem
 
 Kolanut's finance manager raises a concern: *"We give discounts all the time. How much are they costing us, who gets them, and are we getting anything back?"*
@@ -15282,7 +15282,7 @@ values ('stat-m02', 'statistics-for-data-analysis', 'Averages: Mean, Median and 
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('statistics-for-data-analysis:averages', 'statistics-for-data-analysis', 'stat-m02', 'averages', '"Averages: mean, median and mode"', 'Calculate the three averages, see how a few extreme values pull the mean, choose the right average for the question, and report it honestly.', 25, $md$
+values ('statistics-for-data-analysis:averages', 'statistics-for-data-analysis', 'stat-m02', 'averages', 'Averages: mean, median and mode', 'Calculate the three averages, see how a few extreme values pull the mean, choose the right average for the question, and report it honestly.', 25, $md$
 ## The problem
 
 Ashgrove Chambers' managing partner asks two questions about the firm's invoices:
@@ -15524,7 +15524,7 @@ values ('stat-m03', 'statistics-for-data-analysis', 'Spread: Range, IQR and Stan
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('statistics-for-data-analysis:spread', 'statistics-for-data-analysis', 'stat-m03', 'spread', '"Spread: range, IQR and standard deviation"', 'Measure how spread out data is with the range, the interquartile range and the standard deviation, know which standard deviation to use, and compare variability fairly with the coefficient of variation.', 25, $md$
+values ('statistics-for-data-analysis:spread', 'statistics-for-data-analysis', 'stat-m03', 'spread', 'Spread: range, IQR and standard deviation', 'Measure how spread out data is with the range, the interquartile range and the standard deviation, know which standard deviation to use, and compare variability fairly with the coefficient of variation.', 25, $md$
 ## The problem
 
 Harbourline Freight's customers keep asking the same question: "How long will my shipment take?" The operations manager's answer is the average: "Sea freight takes about 27 days."
@@ -16664,7 +16664,7 @@ values ('stat-m09', 'statistics-for-data-analysis', 'Comparing Groups', 9, null,
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('statistics-for-data-analysis:comparing-groups', 'statistics-for-data-analysis', 'stat-m09', 'comparing-groups', '"Comparing groups: is the difference real?"', 'Test whether a difference between two groups is more than chance, with T.TEST for averages and a two-proportion test for rates, read p-values correctly, and keep statistical significance separate from practical importance.', 25, $md$
+values ('statistics-for-data-analysis:comparing-groups', 'statistics-for-data-analysis', 'stat-m09', 'comparing-groups', 'Comparing groups: is the difference real?', 'Test whether a difference between two groups is more than chance, with T.TEST for averages and a two-proportion test for rates, read p-values correctly, and keep statistical significance separate from practical importance.', 25, $md$
 ## The problem
 
 In January 2026, Kolanut raised its prices by about 9% across its range. Six months later the commercial director wants to know:
@@ -17027,7 +17027,7 @@ values ('stat-m11', 'statistics-for-data-analysis', 'Final Project', 11, null, n
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('statistics-for-data-analysis:final-project', 'statistics-for-data-analysis', 'stat-m11', 'final-project', '"Final project: delivery performance review"', 'Plan and start your final project, a statistical review of Harbourline Freight''s delivery performance that uses every tool in the course, and check your set-up with three warm-ups.', 20, $md$
+values ('statistics-for-data-analysis:final-project', 'statistics-for-data-analysis', 'stat-m11', 'final-project', 'Final project: delivery performance review', 'Plan and start your final project, a statistical review of Harbourline Freight''s delivery performance that uses every tool in the course, and check your set-up with three warm-ups.', 20, $md$
 ## The problem
 
 Harbourline Freight's customers judge it on one thing: does the shipment arrive when promised? The operations director wants a review she can take to the board:
@@ -24316,7 +24316,7 @@ values ('asql-m11', 'advanced-sql', 'Final Project', 11, null, null, '{}'::text[
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('advanced-sql:final-project', 'advanced-sql', 'asql-m11', 'final-project', '"Final project: commercial health check"', 'Plan your final project, a commercial health check of Harbourline Freight for its leadership team, and warm up with two of its queries.', 20, $md$
+values ('advanced-sql:final-project', 'advanced-sql', 'asql-m11', 'final-project', 'Final project: commercial health check', 'Plan your final project, a commercial health check of Harbourline Freight for its leadership team, and warm up with two of its queries.', 20, $md$
 ## The problem
 
 Harbourline Freight's managing director is preparing for a board meeting and asks for a **commercial health check**:
@@ -28798,7 +28798,7 @@ values ('dax-m03', 'power-bi-dax', 'Iterators', 3, null, null, '{}'::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('power-bi-dax:iterators', 'power-bi-dax', 'dax-m03', 'iterators', '"Iterators: SUMX, AVERAGEX and friends"', 'Calculate row by row and then aggregate, choose the right "average of what", and use RELATED to bring values from a dimension into the loop.', 25, $md$
+values ('power-bi-dax:iterators', 'power-bi-dax', 'dax-m03', 'iterators', 'Iterators: SUMX, AVERAGEX and friends', 'Calculate row by row and then aggregate, choose the right "average of what", and use RELATED to bring values from a dimension into the loop.', 25, $md$
 ## The problem
 
 The sales director asks a simple-sounding question: "What's our average sale?" Three analysts give three answers:
@@ -30406,7 +30406,7 @@ values ('dax-m11', 'power-bi-dax', 'Final Project', 11, null, null, '{}'::text[]
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('power-bi-dax:final-project', 'power-bi-dax', 'dax-m11', 'final-project', '"Final project: Kolanut commercial dashboard"', 'Plan your final project, a DAX-driven commercial dashboard for Kolanut''s leadership, and warm up with three of its measures.', 20, $md$
+values ('power-bi-dax:final-project', 'power-bi-dax', 'dax-m11', 'final-project', 'Final project: Kolanut commercial dashboard', 'Plan your final project, a DAX-driven commercial dashboard for Kolanut''s leadership, and warm up with three of its measures.', 20, $md$
 ## The problem
 
 Kolanut Distribution's managing director wants one Power BI report for the monthly leadership meeting:
@@ -30950,7 +30950,7 @@ values ('pyan-m03', 'python-for-data-analytics', 'DataFrames: Load and Explore',
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('python-for-data-analytics:dataframes-load-and-explore', 'python-for-data-analytics', 'pyan-m03', 'dataframes-load-and-explore', '"DataFrames: load and explore"', 'Load CSV files into pandas DataFrames, check their size, columns and types, select columns, and get a first feel for the data with describe, value_counts and nunique.', 30, $md$
+values ('python-for-data-analytics:dataframes-load-and-explore', 'python-for-data-analytics', 'pyan-m03', 'dataframes-load-and-explore', 'DataFrames: load and explore', 'Load CSV files into pandas DataFrames, check their size, columns and types, select columns, and get a first feel for the data with describe, value_counts and nunique.', 30, $md$
 ## The problem
 
 The sales director has sent Bisi three files from Kolanut's system: `orders.csv`, `customers.csv` and `products.csv`, and asked "what's in here?" before anyone builds a report on them.
@@ -33104,7 +33104,7 @@ values ('pyan-m12', 'python-for-data-analytics', 'Final Project', 12, null, null
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('python-for-data-analytics:final-project', 'python-for-data-analytics', 'pyan-m12', 'final-project', '"Final project: customer health review"', 'Plan and start your final project, a customer health review for Kolanut Distribution. Find which customers are growing, which are slipping, and what''s really behind the North West''s fall.', 20, $md$
+values ('python-for-data-analytics:final-project', 'python-for-data-analytics', 'pyan-m12', 'final-project', 'Final project: customer health review', 'Plan and start your final project, a customer health review for Kolanut Distribution. Find which customers are growing, which are slipping, and what''s really behind the North West''s fall.', 20, $md$
 ## The problem
 
 The board has seen Bisi's headline (lesson 9): North West revenue fell 47% from H1 2025 to H1 2026. The managing director's follow-up is the kind of question a final project should answer:
@@ -34647,7 +34647,7 @@ values ('ba-m11', 'business-analysis-fundamentals', 'Final Project', 11, null, n
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('business-analysis-fundamentals:final-project', 'business-analysis-fundamentals', 'ba-m11', 'final-project', '"Final project: Harbourline''s tracking request"', 'Plan your final project, a complete business analysis pack for a freight company whose operations director wants a customer tracking app, and start with the data.', 20, $md$
+values ('business-analysis-fundamentals:final-project', 'business-analysis-fundamentals', 'ba-m11', 'final-project', 'Final project: Harbourline''s tracking request', 'Plan your final project, a complete business analysis pack for a freight company whose operations director wants a customer tracking app, and start with the data.', 20, $md$
 ## The problem
 
 Your final project moves to a new organisation. Harbourline Freight moves containers and air cargo into West Africa. Its operations director, Mr Emeka Nwosu, sends this:
@@ -35980,7 +35980,7 @@ values ('aba-m10', 'agile-business-analysis', 'Final Project', 10, null, null, '
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('agile-business-analysis:final-project', 'agile-business-analysis', 'aba-m10', 'final-project', '"Final project: Harbourline''s delay notifications"', 'Plan your final project, an agile delivery pack for a freight company''s customer delay-notification service, from vision and story map to forecast and pilot plan.', 20, $md$
+values ('agile-business-analysis:final-project', 'agile-business-analysis', 'aba-m10', 'final-project', 'Final project: Harbourline''s delay notifications', 'Plan your final project, an agile delivery pack for a freight company''s customer delay-notification service, from vision and story map to forecast and pilot plan.', 20, $md$
 ## The problem
 
 In Business Analysis Fundamentals, Harbourline Freight's operations director asked for a GPS tracking app. The analysis found something different: about a quarter of deliveries arrive late on every kind of route, and customers usually find out only when a shipment doesn't arrive. The managing director agreed to start smaller, with a service that **tells customers about delays before they happen**, built by a small Scrum team in two-week sprints.
@@ -37350,7 +37350,7 @@ values ('pil-m10', 'process-improvement-bpmn-lean', 'Final Project', 10, null, n
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('process-improvement-bpmn-lean:final-project', 'process-improvement-bpmn-lean', 'pil-m10', 'final-project', '"Final project: the next improvement cycle"', 'Plan your final project, a full improvement case for Harbourline''s next PDCA cycle, and summarise it on one page in the A3 format Lean organisations use.', 20, $md$
+values ('process-improvement-bpmn-lean:final-project', 'process-improvement-bpmn-lean', 'pil-m10', 'final-project', 'Final project: the next improvement cycle', 'Plan your final project, a full improvement case for Harbourline''s next PDCA cycle, and summarise it on one page in the A3 format Lean organisations use.', 20, $md$
 ## The problem
 
 The pre-arrival checklist worked: about 2.25 fewer days at port per clearance and roughly ₦103,000 less demurrage per container. The operations director wants to keep going. "What's next, and what will it be worth?"
@@ -39284,7 +39284,7 @@ values ('ml-m11', 'machine-learning-fundamentals', 'Final Project', 11, null, nu
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('machine-learning-fundamentals:final-project', 'machine-learning-fundamentals', 'ml-m11', 'final-project', '"Final project: Ladder''s credit model"', 'Plan your final project, a complete, responsible default model and lending recommendation for a microfinance bank, and start with the questions every credit model must answer.', 25, $md$
+values ('machine-learning-fundamentals:final-project', 'machine-learning-fundamentals', 'ml-m11', 'final-project', 'Final project: Ladder''s credit model', 'Plan your final project, a complete, responsible default model and lending recommendation for a microfinance bank, and start with the questions every credit model must answer.', 25, $md$
 ## The problem
 
 Ladder Microfinance's board has approved a pilot: for six months, new applications will be scored by a model, and those above the threshold will be referred for review rather than approved automatically. The head of credit risk asks you to deliver the model and everything around it: the analysis behind it, the evidence it works, the threshold and what it's worth, the explanation for declined borrowers, the fairness checks, and the plan for monitoring it.
@@ -40797,7 +40797,7 @@ values ('fem-m08', 'feature-engineering-model-evaluation', 'Final Project', 8, n
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('feature-engineering-model-evaluation:final-project', 'feature-engineering-model-evaluation', 'fem-m08', 'final-project', '"Final project: Paystream''s retention model"', 'Plan your final project, an end-to-end churn model with point-in-time features, time-based validation, calibration, targeting and monitoring, and start with a feature of your own.', 20, $md$
+values ('feature-engineering-model-evaluation:final-project', 'feature-engineering-model-evaluation', 'fem-m08', 'final-project', 'Final project: Paystream''s retention model', 'Plan your final project, an end-to-end churn model with point-in-time features, time-based validation, calibration, targeting and monitoring, and start with a feature of your own.', 20, $md$
 ## The problem
 
 Paystream's head of growth wants a churn model the retention team can use every month from June 2026, and a plan for keeping it honest as the competitor keeps pushing. You'll build it end to end: features as of each month-end, a time-based test, a fair model comparison, calibrated probabilities, a calling plan with its value, and monitoring.
@@ -42239,7 +42239,7 @@ values ('abt-m09', 'experimentation-ab-testing', 'Final Project', 9, null, null,
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('experimentation-ab-testing:final-project', 'experimentation-ab-testing', 'abt-m09', 'final-project', '"Final project: Paystream''s experiment review"', 'Plan your final project, a full review of Paystream''s four experiments and a design for the next one, and start by checking every test before trusting any result.', 20, $md$
+values ('experimentation-ab-testing:final-project', 'experimentation-ab-testing', 'abt-m09', 'final-project', 'Final project: Paystream''s experiment review', 'Plan your final project, a full review of Paystream''s four experiments and a design for the next one, and start by checking every test before trusting any result.', 20, $md$
 ## The problem
 
 Paystream's leadership wants a review of the quarter's experiments before it makes three decisions: whether to roll out the new signup flow, whether to raise the transfer fee, and whether to expand cash-out agents to more states. It also wants to know whether the banner result the marketing team keeps quoting can be trusted.
@@ -43724,7 +43724,7 @@ values ('tsf-m09', 'time-series-forecasting', 'Final Project', 9, null, null, '{
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('time-series-forecasting:final-project', 'time-series-forecasting', 'tsf-m09', 'final-project', '"Final project: the depot''s ordering forecast"', 'Plan your final project, a tested forecasting and ordering system for all six products at Kolanut''s Lagos depot, and start by backtesting a product other than the malt drink.', 20, $md$
+values ('time-series-forecasting:final-project', 'time-series-forecasting', 'tsf-m09', 'final-project', 'Final project: the depot''s ordering forecast', 'Plan your final project, a tested forecasting and ordering system for all six products at Kolanut''s Lagos depot, and start by backtesting a product other than the malt drink.', 20, $md$
 ## The problem
 
 Kolanut's operations director wants the Lagos depot to stop ordering by feel. Your final project is the system that replaces it: forecasts for all six products, tested honestly over time, turned into weekly order quantities with safety stock, and a short guide to when people should override it.
@@ -45358,7 +45358,7 @@ values ('gai-m10', 'generative-ai-engineering', 'Final Project', 10, null, null,
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('generative-ai-engineering:final-project', 'generative-ai-engineering', 'gai-m10', 'final-project', '"Final project: Paystream''s support assistant"', 'Plan your final project, a support assistant prototype with ticket triage and grounded answers, evaluated honestly and made safe, and set up the evaluation harness first.', 20, $md$
+values ('generative-ai-engineering:final-project', 'generative-ai-engineering', 'gai-m10', 'final-project', 'Final project: Paystream''s support assistant', 'Plan your final project, a support assistant prototype with ticket triage and grounded answers, evaluated honestly and made safe, and set up the evaluation harness first.', 20, $md$
 ## The problem
 
 Paystream's head of support wants a decision in a month: should the company launch an AI support assistant, and if so, which design? Your final project is the prototype and, more importantly, the evidence: how accurate it is, where it fails, what it costs, and what keeps it safe.
@@ -46959,7 +46959,7 @@ values ('agt-m10', 'ai-agents-tool-use', 'Final Project', 10, null, null, '{}'::
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('ai-agents-tool-use:final-project', 'ai-agents-tool-use', 'agt-m10', 'final-project', '"Final project: Paystream''s support agent"', 'Plan your final project, a support agent designed, tested on recorded runs, and made safe, with an evaluation and operating plan the head of support can sign off.', 20, $md$
+values ('ai-agents-tool-use:final-project', 'ai-agents-tool-use', 'agt-m10', 'final-project', 'Final project: Paystream''s support agent', 'Plan your final project, a support agent designed, tested on recorded runs, and made safe, with an evaluation and operating plan the head of support can sign off.', 20, $md$
 ## The problem
 
 Paystream's head of support has the traces for v1 and v2 and a decision to make: put an agent in front of customers, and if so, with which tools, limits and controls? Your final project is the design for **v3**, and the evidence for it.
@@ -48516,7 +48516,7 @@ values ('ops-m10', 'llm-evaluation-safety-production', 'Final Project', 10, null
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('llm-evaluation-safety-production:final-project', 'llm-evaluation-safety-production', 'ops-m10', 'final-project', '"Final project: Paystream''s AI quality and safety plan"', 'Plan your final project, the evaluation and safety programme for a live AI assistant, with a release decision, red-team fixes, a fair guardrail, monitoring that would have caught every incident, and an incident playbook.', 20, $md$
+values ('llm-evaluation-safety-production:final-project', 'llm-evaluation-safety-production', 'ops-m10', 'final-project', 'Final project: Paystream''s AI quality and safety plan', 'Plan your final project, the evaluation and safety programme for a live AI assistant, with a release decision, red-team fixes, a fair guardrail, monitoring that would have caught every incident, and an incident playbook.', 20, $md$
 ## The problem
 
 Paystream's head of support and its security lead want one document: how the assistant will be kept accurate and safe from now on. It must answer three immediate questions (should r2 or r3 ship? what threshold should the guardrail use? why did the incidents take so long to find?) and set up the process that answers them next time without a crisis.
@@ -50198,7 +50198,7 @@ values ('cld-m10', 'cloud-fundamentals-cost-reliability', 'Final Project', 10, n
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('cloud-fundamentals-cost-reliability:final-project', 'cloud-fundamentals-cost-reliability', 'cld-m10', 'final-project', '"Final project: Tallybook''s cloud review"', 'Plan your final project, a cost, reliability and security review of a real-looking cloud estate, with every saving and risk measured and a 90-day plan the leadership can approve.', 20, $md$
+values ('cloud-fundamentals-cost-reliability:final-project', 'cloud-fundamentals-cost-reliability', 'cld-m10', 'final-project', 'Final project: Tallybook''s cloud review', 'Plan your final project, a cost, reliability and security review of a real-looking cloud estate, with every saving and risk measured and a 90-day plan the leadership can approve.', 20, $md$
 ## The problem
 
 Tallybook's CTO and finance director want one document: what the company should change in its cloud, in what order, what it will save, and what it will fix. They'll share it with investors, who have asked how Tallybook will keep cloud costs under control as it grows, and whether the month-end outages will happen again.
@@ -51886,7 +51886,7 @@ values ('lnx-m10', 'linux-networking-basics', 'Final Project', 10, null, null, '
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('linux-networking-basics:final-project', 'linux-networking-basics', 'lnx-m10', 'final-project', '"Final project: what happened on prod-web-01"', 'Plan your final project, a full investigation of Tallybook''s web server from its logs and command output, with a timeline, findings, fixes and the scripts that would have caught each problem.', 20, $md$
+values ('linux-networking-basics:final-project', 'linux-networking-basics', 'lnx-m10', 'final-project', 'Final project: what happened on prod-web-01', 'Plan your final project, a full investigation of Tallybook''s web server from its logs and command output, with a timeline, findings, fixes and the scripts that would have caught each problem.', 20, $md$
 ## The problem
 
 Tallybook's CTO has asked for a written investigation of prod-web-01, the server you've been examining. Investors and an enterprise customer will read the summary. It must say what happened, when, how you know, how serious it is, and what has been and will be done, with every claim backed by a command and its output.
@@ -53556,7 +53556,7 @@ values ('iac-m10', 'terraform-infrastructure-as-code', 'Final Project', 10, null
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('terraform-infrastructure-as-code:final-project', 'terraform-infrastructure-as-code', 'iac-m10', 'final-project', '"Final project: Tallybook''s infrastructure review"', 'Plan your final project, a review of Tallybook''s Terraform estate and six pending pull requests, with policy checks, drift and secrets findings, and the plan to make Terraform the only way infrastructure changes.', 20, $md$
+values ('terraform-infrastructure-as-code:final-project', 'terraform-infrastructure-as-code', 'iac-m10', 'final-project', 'Final project: Tallybook''s infrastructure review', 'Plan your final project, a review of Tallybook''s Terraform estate and six pending pull requests, with policy checks, drift and secrets findings, and the plan to make Terraform the only way infrastructure changes.', 20, $md$
 ## The problem
 
 Tallybook's CTO wants to adopt infrastructure as code properly, and wants one document to do it: what's wrong today, what to do with the six pull requests waiting, and the rules and pipeline from now on. Your final project is that review, built from the state, plans and variable files in this course.
@@ -55101,7 +55101,7 @@ values ('cicd-m10', 'cicd-and-containers', 'Final Project', 10, null, null, '{}'
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('cicd-and-containers:final-project', 'cicd-and-containers', 'cicd-m10', 'final-project', '"Final project: Tallybook''s delivery review"', 'Plan your final project, a review of how Tallybook builds, secures and releases software, with DORA measures, fixed Dockerfile and workflow, scanning and canary policies, and the next improvements.', 20, $md$
+values ('cicd-and-containers:final-project', 'cicd-and-containers', 'cicd-m10', 'final-project', 'Final project: Tallybook''s delivery review', 'Plan your final project, a review of how Tallybook builds, secures and releases software, with DORA measures, fixed Dockerfile and workflow, scanning and canary policies, and the next improvements.', 20, $md$
 ## The problem
 
 Three months after switching to the new pipeline, Tallybook's CTO wants a review for the board: was it worth it, what's still risky, and what comes next? Your final project is that review, built from the files and data in this course, with fixed versions of the Dockerfile and workflow attached.
@@ -56565,7 +56565,7 @@ values ('sre-m10', 'observability-site-reliability', 'Final Project', 10, null, 
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('observability-site-reliability:final-project', 'observability-site-reliability', 'sre-m10', 'final-project', '"Final project: Tallybook''s reliability review"', 'Plan your final project, a reliability review that finds the real cause of the month-end outages with metrics, logs and traces, and sets the SLOs, alerts, capacity plan and practices that prevent them.', 20, $md$
+values ('observability-site-reliability:final-project', 'observability-site-reliability', 'sre-m10', 'final-project', 'Final project: Tallybook''s reliability review', 'Plan your final project, a reliability review that finds the real cause of the month-end outages with metrics, logs and traces, and sets the SLOs, alerts, capacity plan and practices that prevent them.', 20, $md$
 ## The problem
 
 Tallybook's CTO has read three explanations of the month-end outages: too few web servers, a cryptominer, and now a database connection pool. The board wants one clear account and a plan. Your final project is the reliability review: what really happened, proved with telemetry, and what Tallybook will measure and change so it doesn't happen again.
@@ -58266,7 +58266,7 @@ values ('swe-m10', 'software-engineering-with-python', 'Final Project', 10, null
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('software-engineering-with-python:final-project', 'software-engineering-with-python', 'swe-m10', 'final-project', '"Final project: Tallybook''s invoicing service"', 'Plan your final project, a tested, version-controlled invoicing package and API that replaces the old billing module, with every rule tested at its boundaries and every row of the export accounted for.', 20, $md$
+values ('software-engineering-with-python:final-project', 'software-engineering-with-python', 'swe-m10', 'final-project', 'Final project: Tallybook''s invoicing service', 'Plan your final project, a tested, version-controlled invoicing package and API that replaces the old billing module, with every rule tested at its boundaries and every row of the export accounted for.', 20, $md$
 ## The problem
 
 Tallybook wants to retire `billing.py`. Your final project is its replacement: a small, tested invoicing package with an API, in a Git repository, and a short report showing that it's correct, how it handles the messy export, and what it changes for customers.
@@ -60047,7 +60047,7 @@ values ('dba-m10', 'databases-and-apis-for-developers', 'Final Project', 10, nul
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('databases-and-apis-for-developers:final-project', 'databases-and-apis-for-developers', 'dba-m10', 'final-project', '"Final project: Tallybook''s invoicing database and API"', 'Plan your final project, a migrated, constrained database and a tested REST API for invoices and payments, with every rule enforced in the database and every endpoint tested.', 20, $md$
+values ('databases-and-apis-for-developers:final-project', 'databases-and-apis-for-developers', 'dba-m10', 'final-project', 'Final project: Tallybook''s invoicing database and API', 'Plan your final project, a migrated, constrained database and a tested REST API for invoices and payments, with every rule enforced in the database and every endpoint tested.', 20, $md$
 ## The problem
 
 Tallybook is ready to retire its CSV exports. Your final project is the replacement: a database with a schema built by migrations and protected by constraints, loaded from the export with every refused row explained, and a REST API for customers, invoices and payments, tested with fresh databases.
@@ -61540,7 +61540,7 @@ values ('wjs-m10', 'web-development-with-javascript', 'Final Project', 10, null,
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('web-development-with-javascript:final-project', 'web-development-with-javascript', 'wjs-m10', 'final-project', '"Final project: Tallybook''s pay-an-invoice page"', 'Plan your final project, an accessible, responsive payment page that calculates exactly, validates clearly, talks to the API safely and is backed by tests.', 20, $md$
+values ('web-development-with-javascript:final-project', 'web-development-with-javascript', 'wjs-m10', 'final-project', 'Final project: Tallybook''s pay-an-invoice page', 'Plan your final project, an accessible, responsive payment page that calculates exactly, validates clearly, talks to the API safely and is backed by tests.', 20, $md$
 ## The problem
 
 Tallybook wants the new pay-an-invoice page live before the next month-end. Your final project is the page itself, and the evidence that it works for every customer: on a small phone, with a keyboard, with a screen reader, on a bad connection, and when someone types something unexpected.
@@ -63154,7 +63154,7 @@ values ('pmf-m10', 'project-management-fundamentals', 'Final Project', 10, null,
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('project-management-fundamentals:final-project', 'project-management-fundamentals', 'pmf-m10', 'final-project', '"Final project: the depot''s week 10 review"', 'Plan your final project, a complete project review for the steering committee, with the schedule, earned value, forecast, risks and change decisions brought together into a status report and recommendations.', 20, $md$
+values ('project-management-fundamentals:final-project', 'project-management-fundamentals', 'pmf-m10', 'final-project', 'Final project: the depot''s week 10 review', 'Plan your final project, a complete project review for the steering committee, with the schedule, earned value, forecast, risks and change decisions brought together into a status report and recommendations.', 20, $md$
 ## The problem
 
 The steering committee meets at the end of week 10. They want one report: where the depot project stands, whether it will open by 30 September, what it will cost, what could still go wrong, and what they need to decide today. Your final project is that report, with the analysis behind it.
@@ -64638,7 +64638,7 @@ values ('pdm-m10', 'product-management-fundamentals', 'Final Project', 10, null,
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('product-management-fundamentals:final-project', 'product-management-fundamentals', 'pdm-m10', 'final-project', '"Final project: Paystream''s next quarter"', 'Plan your final project, a product review and quarter plan for Paystream, from user evidence and funnels to a prioritised, outcome-based roadmap, an honest launch review and a spec for the top priority.', 20, $md$
+values ('product-management-fundamentals:final-project', 'product-management-fundamentals', 'pdm-m10', 'final-project', 'Final project: Paystream''s next quarter', 'Plan your final project, a product review and quarter plan for Paystream, from user evidence and funnels to a prioritised, outcome-based roadmap, an honest launch review and a spec for the top priority.', 20, $md$
 ## The problem
 
 Paystream's leadership meets to agree next quarter's product plan. They want to know what users struggle with most, what the team will build and why, what last quarter's launch really achieved, and how they'll know the next one worked. Your final project is that product review.
@@ -67251,7 +67251,7 @@ values ('bac-m08', 'business-analyst-capstone', 'The Decision Paper', 8, null, n
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('business-analyst-capstone:the-decision-paper', 'business-analyst-capstone', 'bac-m08', 'the-decision-paper', '"The decision paper"', 'Bring the analysis together into a decision paper the board can approve. Lead with the recommendation, back it with evidence, state the conditions and risks, prepare for the hard questions, and plan your final project.', 25, $md$
+values ('business-analyst-capstone:the-decision-paper', 'business-analyst-capstone', 'bac-m08', 'the-decision-paper', 'The decision paper', 'Bring the analysis together into a decision paper the board can approve. Lead with the recommendation, back it with evidence, state the conditions and risks, prepare for the hard questions, and plan your final project.', 25, $md$
 ## The problem
 
 The board meets in a week. Its members won't read 40 slides. They need one short paper that tells them what to decide, why, what it costs, what could go wrong and how they'll know it worked. Everything you've done in this capstone feeds that paper. This lesson shapes it, and your final project delivers it.
