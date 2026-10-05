@@ -199,6 +199,30 @@
   760,
   460
  ],
+ "/images/courses/forecasting/decision-timeline.svg": [
+  760,
+  300
+ ],
+ "/images/courses/forecasting/holdout.svg": [
+  760,
+  260
+ ],
+ "/images/courses/forecasting/interval-order.svg": [
+  760,
+  380
+ ],
+ "/images/courses/forecasting/lag-trap.svg": [
+  760,
+  300
+ ],
+ "/images/courses/forecasting/rolling-origin.svg": [
+  760,
+  330
+ ],
+ "/images/courses/forecasting/water-series.svg": [
+  760,
+  400
+ ],
  "/images/courses/ml/confusion-threshold.svg": [
   760,
   470

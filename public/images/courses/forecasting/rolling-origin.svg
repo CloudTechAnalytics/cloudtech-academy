@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 330" width="760" height="330" role="img" aria-label="Rolling-origin backtesting. Four forecast origins, one per row. At each, the model trains on everything before the origin (pale) and forecasts the next 28 days (blue), which are then scored. The origins cover different situations, such as a December, an Eid and the period after a price rise.">
+<title>Rolling-origin backtesting: several honest train-then-forecast tests across time.</title>
+
+<rect width="760" height="330" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="62.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">Origin 1</text>
+<text xml:space="preserve" x="16.0" y="78.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">Sep</text>
+<rect x="140.0" y="44.0" width="255.0" height="30.0" rx="4" fill="#DCC594"/>
+<rect x="397.0" y="44.0" width="40.8" height="30.0" rx="4" fill="#2F5D8A"/>
+<text xml:space="preserve" x="445.8" y="64.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">WAPE 1</text>
+<text xml:space="preserve" x="16.0" y="116.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">Origin 2</text>
+<text xml:space="preserve" x="16.0" y="132.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">Dec</text>
+<rect x="140.0" y="98.0" width="316.2" height="30.0" rx="4" fill="#DCC594"/>
+<rect x="458.2" y="98.0" width="40.8" height="30.0" rx="4" fill="#2F5D8A"/>
+<text xml:space="preserve" x="507.0" y="118.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">WAPE 2</text>
+<text xml:space="preserve" x="16.0" y="170.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">Origin 3</text>
+<text xml:space="preserve" x="16.0" y="186.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">Eid</text>
+<rect x="140.0" y="152.0" width="382.5" height="30.0" rx="4" fill="#DCC594"/>
+<rect x="524.5" y="152.0" width="40.8" height="30.0" rx="4" fill="#2F5D8A"/>
+<text xml:space="preserve" x="573.3" y="172.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">WAPE 3</text>
+<text xml:space="preserve" x="16.0" y="224.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">Origin 4</text>
+<text xml:space="preserve" x="16.0" y="240.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">after price rise</text>
+<rect x="140.0" y="206.0" width="448.8" height="30.0" rx="4" fill="#DCC594"/>
+<rect x="590.8" y="206.0" width="40.8" height="30.0" rx="4" fill="#2F5D8A"/>
+<text xml:space="preserve" x="639.6" y="226.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">WAPE 4</text>
+<text xml:space="preserve" x="16.0" y="280.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">Report the average across origins, the worst one, and whether a method wins consistently. Each origin</text>
+<text xml:space="preserve" x="16.0" y="298.9" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">uses only its own past, so every test is honest.</text>
+</g></svg>

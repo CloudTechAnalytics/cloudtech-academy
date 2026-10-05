@@ -12,15 +12,15 @@ A single number isn't enough to order from. He needs a range (how high could it 
 
 ## The concept
 
-**Prediction intervals from past errors**
+### Prediction intervals from past errors
 
 The simplest honest way to get a range: look at how wrong the model was on the training data (its **residuals**), and add their spread to the forecast. With a log model, take the 5th and 95th percentiles of the residuals and add them to the log forecast, giving a 90% interval.
 
-**Check the coverage**
+### Check the coverage
 
 On the test period, count how often actual sales fell inside the interval. A 90% interval should contain about 90% of days. If it contains fewer, it's too narrow, often because the future is less predictable than the past suggested (a break, a new competitor), and you should widen it.
 
-**From forecast to order**
+### From forecast to order
 
 For the period an order must cover:
 
@@ -31,6 +31,8 @@ Safety stock depends on the **service level**: the share of order periods in whi
 > safety stock ≈ z × standard deviation of the forecast error over the period
 
 with z = 1.28 for 90%, 1.65 for 95%. Higher service costs more stock; the right level balances lost sales against holding costs.
+
+![A forecast line with a shaded 90% prediction band over 28 days, beside a box: order = forecast + safety stock − stock on hand, with z = 1.28 for 90% service and 1.65 for 95%.](/images/courses/forecasting/interval-order.svg "From a forecast range to an order, illustrated.")
 
 ## Example
 

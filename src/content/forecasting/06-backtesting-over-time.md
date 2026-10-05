@@ -12,15 +12,17 @@ Forecasters handle this with **backtesting**: replaying history as if they had u
 
 ## The concept
 
-**Rolling-origin backtesting**
+### Rolling-origin backtesting
 
 1. Choose a series of forecast dates (origins), for example the first day of each of several months.
 2. At each origin, train on everything before it, and forecast the next 28 days.
 3. Score each forecast, then look at the average **and** the spread across origins.
 
+![Four rows, one per forecast origin, each training on everything before its origin and forecasting the next 28 days, labelled September, December, Eid and after the price rise.](/images/courses/forecasting/rolling-origin.svg "Rolling-origin backtesting: several honest tests across different situations.")
+
 Because each origin only uses its own past, every fold is an honest test. The origins should cover the situations you care about: here, a December, an Eid and the period after the price rise.
 
-**What to look for**
+### What to look for
 
 - **Average WAPE** across origins: the typical accuracy.
 - **Worst origin**: how badly can it go wrong?

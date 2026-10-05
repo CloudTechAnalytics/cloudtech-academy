@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 300" width="760" height="300" role="img" aria-label="The lag trap. The forecast is made today for days 15 to 28. A feature such as yesterday's sales is unknown for those days at the time of forecasting, so using it in testing produces a forecast that can't be made in real life. A lag of 28 days or more is known in advance and is allowed.">
+<title>A lag feature is allowed only if it's at least as long as the horizon.</title>
+<defs><marker id="a2F6B3F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2F6B3F"/></marker><marker id="a9B2C1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#9B2C1F"/></marker></defs>
+<rect width="760" height="300" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="30.5" y="102.0" width="15.7" height="36.0" rx="2" fill="#DCC594"/>
+<rect x="47.2" y="102.0" width="15.7" height="36.0" rx="2" fill="#DCC594"/>
+<rect x="63.8" y="102.0" width="15.7" height="36.0" rx="2" fill="#DCC594"/>
+<rect x="80.5" y="102.0" width="15.7" height="36.0" rx="2" fill="#DCC594"/>
+<rect x="97.2" y="102.0" width="15.7" height="36.0" rx="2" fill="#DCC594"/>
+<rect x="113.8" y="102.0" width="15.7" height="36.0" rx="2" fill="#DCC594"/>
+<rect x="130.5" y="102.0" width="15.7" height="36.0" rx="2" fill="#DCC594"/>
+<rect x="147.2" y="102.0" width="15.7" height="36.0" rx="2" fill="#DCC594"/>
+<rect x="163.8" y="102.0" width="15.7" height="36.0" rx="2" fill="#DCC594"/>
+<rect x="180.5" y="102.0" width="15.7" height="36.0" rx="2" fill="#DCC594"/>
+<rect x="197.2" y="102.0" width="15.7" height="36.0" rx="2" fill="#DCC594"/>
+<rect x="213.8" y="102.0" width="15.7" height="36.0" rx="2" fill="#DCC594"/>
+<rect x="230.5" y="102.0" width="15.7" height="36.0" rx="2" fill="#DCC594"/>
+<rect x="247.2" y="102.0" width="15.7" height="36.0" rx="2" fill="#DCC594"/>
+<rect x="263.8" y="102.0" width="15.7" height="36.0" rx="2" fill="#EFE8DA"/>
+<rect x="280.5" y="102.0" width="15.7" height="36.0" rx="2" fill="#EFE8DA"/>
+<rect x="297.2" y="102.0" width="15.7" height="36.0" rx="2" fill="#EFE8DA"/>
+<rect x="313.8" y="102.0" width="15.7" height="36.0" rx="2" fill="#EFE8DA"/>
+<rect x="330.5" y="102.0" width="15.7" height="36.0" rx="2" fill="#EFE8DA"/>
+<rect x="347.2" y="102.0" width="15.7" height="36.0" rx="2" fill="#EFE8DA"/>
+<rect x="363.8" y="102.0" width="15.7" height="36.0" rx="2" fill="#EFE8DA"/>
+<rect x="380.5" y="102.0" width="15.7" height="36.0" rx="2" fill="#EFE8DA"/>
+<rect x="397.2" y="102.0" width="15.7" height="36.0" rx="2" fill="#EFE8DA"/>
+<rect x="413.8" y="102.0" width="15.7" height="36.0" rx="2" fill="#EFE8DA"/>
+<rect x="430.5" y="102.0" width="15.7" height="36.0" rx="2" fill="#EFE8DA"/>
+<rect x="447.2" y="102.0" width="15.7" height="36.0" rx="2" fill="#EFE8DA"/>
+<rect x="463.8" y="102.0" width="15.7" height="36.0" rx="2" fill="#EFE8DA"/>
+<rect x="480.5" y="102.0" width="15.7" height="36.0" rx="2" fill="#EFE8DA"/>
+<rect x="497.2" y="102.0" width="15.7" height="36.0" rx="2" fill="#2F5D8A"/>
+<rect x="513.8" y="102.0" width="15.7" height="36.0" rx="2" fill="#2F5D8A"/>
+<rect x="530.5" y="102.0" width="15.7" height="36.0" rx="2" fill="#2F5D8A"/>
+<rect x="547.2" y="102.0" width="15.7" height="36.0" rx="2" fill="#2F5D8A"/>
+<rect x="563.8" y="102.0" width="15.7" height="36.0" rx="2" fill="#2F5D8A"/>
+<rect x="580.5" y="102.0" width="15.7" height="36.0" rx="2" fill="#2F5D8A"/>
+<rect x="597.2" y="102.0" width="15.7" height="36.0" rx="2" fill="#2F5D8A"/>
+<rect x="613.8" y="102.0" width="15.7" height="36.0" rx="2" fill="#2F5D8A"/>
+<rect x="630.5" y="102.0" width="15.7" height="36.0" rx="2" fill="#2F5D8A"/>
+<rect x="647.2" y="102.0" width="15.7" height="36.0" rx="2" fill="#2F5D8A"/>
+<rect x="663.8" y="102.0" width="15.7" height="36.0" rx="2" fill="#2F5D8A"/>
+<rect x="680.5" y="102.0" width="15.7" height="36.0" rx="2" fill="#2F5D8A"/>
+<rect x="697.2" y="102.0" width="15.7" height="36.0" rx="2" fill="#2F5D8A"/>
+<rect x="713.8" y="102.0" width="15.7" height="36.0" rx="2" fill="#2F5D8A"/>
+<line x1="263.3" y1="80.0" x2="263.3" y2="160.0" stroke="#2A2926" stroke-width="2.2"/>
+<text xml:space="preserve" x="263.3" y="72.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="middle">today: make the forecast</text>
+<text xml:space="preserve" x="146.7" y="164.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="middle">known history</text>
+<text xml:space="preserve" x="380.0" y="164.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="middle">days 1 to 14: not known yet</text>
+<text xml:space="preserve" x="613.3" y="164.0" font-size="12.5" fill="#2F5D8A" font-weight="700" text-anchor="middle">days 15 to 28: forecast</text>
+<path d="M613.3333333333334,98 C613.3333333333334,50 596.6666666666667,50 596.6666666666667,98" fill="none" stroke="#9B2C1F" stroke-width="1.8" marker-end="url(#a9B2C1F)"/>
+<text xml:space="preserve" x="730.0" y="46.0" font-size="12" fill="#9B2C1F" font-weight="700" text-anchor="end">✗ lag 1: yesterday isn't known yet</text>
+<path d="M613.3333333333334,142 C613.3333333333334,206 146.66666666666669,206 146.66666666666669,142" fill="none" stroke="#2F6B3F" stroke-width="1.8" marker-end="url(#a2F6B3F)"/>
+<text xml:space="preserve" x="380.0" y="224.0" font-size="12" fill="#2F6B3F" font-weight="700" text-anchor="middle">✓ lag 28: already in the known history</text>
+<text xml:space="preserve" x="16.0" y="288.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">A lag shorter than the horizon makes a test look great and can't be produced in real use: it's leakage.</text>
+</g></svg>

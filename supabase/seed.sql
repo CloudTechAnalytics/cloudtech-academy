@@ -42970,7 +42970,7 @@ So every Monday, the depot manager needs a number: how much of each product will
 
 ## The concept
 
-**A forecast serves a decision**
+### A forecast serves a decision
 
 Before choosing any method, answer four questions:
 
@@ -42981,11 +42981,13 @@ Before choosing any method, answer four questions:
 | **Granularity**: what level of detail? | units per product per week (daily forecasts, added up) |
 | **Cost of errors**: which hurts more? | running out (lost sales and customers) usually hurts more than overstock |
 
-**Time series data**
+![Four weeks on a timeline. The order is placed today and takes two weeks to arrive, so weeks 1 and 2 are covered by stock and the forecast that matters is weeks 3 and 4.](/images/courses/forecasting/decision-timeline.svg "Why the horizon is weeks 3 and 4: the period the order must last.")
+
+### Time series data
 
 A time series is a measurement taken at regular intervals: daily units here. Unlike the rows in earlier courses, the order matters. Yesterday's sales tell you something about today's, and the past is all you have to learn from.
 
-**What forecasts can and can't do**
+### What forecasts can and can't do
 
 A forecast extends the patterns of the past: trends, seasons, regular events. It can't foresee things that have never happened (a competitor's launch, a strike). Good forecasting is honest about that, with a range as well as a number.
 
@@ -43122,7 +43124,7 @@ Every forecasting method, from the simplest to the most advanced, works by captu
 
 ## The concept
 
-**The building blocks of a demand series**
+### The building blocks of a demand series
 
 | Component | What it is | Kolanut example |
 | :-- | :-- | :-- |
@@ -43133,13 +43135,15 @@ Every forecasting method, from the simplest to the most advanced, works by captu
 | **Promotions** | planned changes that lift sales | week-long price promotions |
 | **Noise** | what's left | weather, a big customer's order |
 
-**Measuring each one**
+### Measuring each one
 
 - **Trend**: a 28-day or 365-day rolling average smooths the rest away.
 - **Seasonal profiles**: average units by weekday, or by month, divided by the overall average, give **seasonal indices** (1.25 = 25% above average).
 - **Events**: compare event days with similar non-event days.
 
-**Additive or multiplicative?**
+![Daily units of bottled water from July 2022 to June 2026 as a pale jagged line, with a 28-day rolling average as a dark line that rises slowly and peaks each December.](/images/courses/forecasting/water-series.svg "Bottled water: the rolling average reveals the trend and the December peaks under the daily noise.")
+
+### Additive or multiplicative?
 
 When December adds a **percentage** (say 30%) rather than a fixed number of units, and that percentage stays similar as sales grow, the pattern is multiplicative. That's typical of demand, and it's why many forecasts model the log of sales, as you did with rents in Machine Learning Fundamentals.
 
@@ -43271,17 +43275,19 @@ The only test that counts is the one that mimics real use: build the forecast us
 
 ## The concept
 
-**A time-based hold-out**
+### A time-based hold-out
 
 Choose a cut-off. Everything before it is training data; everything after is the test period. Forecast the whole test period from the training data alone, then compare. Here: train up to 28 February 2026, and forecast March to June 2026, which includes Eid, a payday each month and several promotions.
 
-**Measuring error: WAPE**
+![A timeline split at 28 February 2026: training from July 2022 to February 2026, and the test period March to June 2026.](/images/courses/forecasting/holdout.svg "A time-based hold-out: forecast the whole test period from the training data alone.")
+
+### Measuring error: WAPE
 
 > WAPE (weighted absolute percentage error) = total absolute error ÷ total actual sales
 
 It reads as "the forecast is off by about x% of sales", it handles days with zero sales (where the usual percentage error breaks), and it weights busy days more than quiet ones, as the business does. Also check **bias**: (total forecast − total actual) ÷ total actual. A forecast that's always 5% high is a different problem from one that's randomly off.
 
-**Baselines**
+### Baselines
 
 | Baseline | Forecast for each future day |
 | :-- | :-- |
@@ -43439,17 +43445,19 @@ A forecast that uses everything known about the future dates should beat one tha
 
 ## The concept
 
-**Features known in advance**
+### Features known in advance
 
 For each future date, build the features you already know: trend (years since the start), weekday, month, payday, days before Eid, the December build-up, promotion planned, the week after a promotion, and the price level. Then fit a regression on the past and apply it to future dates.
 
-**Log scale, again**
+### Log scale, again
 
 Patterns here are multiplicative (December adds a percentage), so fit on log(units + 1) and convert back with exp(prediction) − 1. Drop days the depot was closed from training, and forecast zero for them.
 
-**The lag trap**
+### The lag trap
 
 Yesterday's sales are a powerful predictor of today's, so it's tempting to add "units 1 day ago" as a feature. But you're forecasting weeks 3 and 4 ahead: when you make the forecast, you don't know yesterday's sales for those days. **A lag feature is only allowed if it's at least as long as the horizon** (here, 28 days or more). Using shorter lags in testing gives a forecast that looks great and can't be produced in real life: it's leakage, in time-series form.
+
+![A strip of days: known history up to today, days 1 to 14 not yet known, and days 15 to 28 being forecast. A lag of 1 day points into the unknown period and is crossed out; a lag of 28 days points back into the known history and is allowed.](/images/courses/forecasting/lag-trap.svg "A lag must be at least as long as the horizon.")
 
 ## Example
 
@@ -43615,15 +43623,15 @@ A forecasting model can answer both questions, and it must, or it will keep maki
 
 ## The concept
 
-**Measuring effects from the model**
+### Measuring effects from the model
 
 In the log-scale calendar regression, each coefficient `c` means the feature multiplies sales by `exp(c)`. So `exp(c) − 1` is the percentage effect of a promotion, of the pre-Eid days, of payday, all estimated together, holding the others equal. That's better than comparing raw averages, which mix promotions in busy and quiet months.
 
-**The post-promotion dip**
+### The post-promotion dip
 
 Promotions often **pull sales forward**: shops stock up at the low price and buy less the following week. The true gain is the promotion lift minus the dip afterwards. Measure both.
 
-**Structural breaks**
+### Structural breaks
 
 A **structural break** is a lasting change in the level or pattern: a price rise, a new competitor, a lost major customer. Past data from before the break describes a world that no longer exists. Options:
 
@@ -43807,15 +43815,17 @@ Forecasters handle this with **backtesting**: replaying history as if they had u
 
 ## The concept
 
-**Rolling-origin backtesting**
+### Rolling-origin backtesting
 
 1. Choose a series of forecast dates (origins), for example the first day of each of several months.
 2. At each origin, train on everything before it, and forecast the next 28 days.
 3. Score each forecast, then look at the average **and** the spread across origins.
 
+![Four rows, one per forecast origin, each training on everything before its origin and forecasting the next 28 days, labelled September, December, Eid and after the price rise.](/images/courses/forecasting/rolling-origin.svg "Rolling-origin backtesting: several honest tests across different situations.")
+
 Because each origin only uses its own past, every fold is an honest test. The origins should cover the situations you care about: here, a December, an Eid and the period after the price rise.
 
-**What to look for**
+### What to look for
 
 - **Average WAPE** across origins: the typical accuracy.
 - **Worst origin**: how badly can it go wrong?
@@ -43987,15 +43997,15 @@ A single number isn't enough to order from. He needs a range (how high could it 
 
 ## The concept
 
-**Prediction intervals from past errors**
+### Prediction intervals from past errors
 
 The simplest honest way to get a range: look at how wrong the model was on the training data (its **residuals**), and add their spread to the forecast. With a log model, take the 5th and 95th percentiles of the residuals and add them to the log forecast, giving a 90% interval.
 
-**Check the coverage**
+### Check the coverage
 
 On the test period, count how often actual sales fell inside the interval. A 90% interval should contain about 90% of days. If it contains fewer, it's too narrow, often because the future is less predictable than the past suggested (a break, a new competitor), and you should widen it.
 
-**From forecast to order**
+### From forecast to order
 
 For the period an order must cover:
 
@@ -44006,6 +44016,8 @@ Safety stock depends on the **service level**: the share of order periods in whi
 > safety stock ≈ z × standard deviation of the forecast error over the period
 
 with z = 1.28 for 90%, 1.65 for 95%. Higher service costs more stock; the right level balances lost sales against holding costs.
+
+![A forecast line with a shaded 90% prediction band over 28 days, beside a box: order = forecast + safety stock − stock on hand, with z = 1.28 for 90% service and 1.65 for 95%.](/images/courses/forecasting/interval-order.svg "From a forecast range to an order, illustrated.")
 
 ## Example
 
@@ -44165,21 +44177,21 @@ The malt drink is one of six products at the depot, and Kolanut has other depots
 
 ## The concept
 
-**One method, many series**
+### One method, many series
 
 Wrap the whole method (features, training, forecast) in a function, and run it for each product. Score every product with the same backtest, so they're comparable.
 
-**Accuracy differs by product**
+### Accuracy differs by product
 
 - High-volume, stable products are usually easiest.
 - Products with strong seasonality or frequent promotions are harder.
 - Low-volume products have more random noise relative to their sales, so their WAPE is higher even with a good model.
 
-**Where to spend human attention**
+### Where to spend human attention
 
 Rank products by **WAPE × sales value**: the products where forecast errors cost the most money. Review those by hand, and let the method run on the rest.
 
-**Top-down or bottom-up?**
+### Top-down or bottom-up?
 
 Totals are easier to forecast than their parts, because errors partly cancel out. If the business needs a total (for the depot's warehouse space or cash), forecast it directly as well as summing the products, and compare.
 
@@ -44311,7 +44323,7 @@ Kolanut's operations director wants the Lagos depot to stop ordering by feel. Yo
 
 ## The concept
 
-**The project, step by step**
+### The project, step by step
 
 | Step | Deliverable | Lesson |
 | :-- | :-- | :-- |
@@ -44324,7 +44336,7 @@ Kolanut's operations director wants the Lagos depot to stop ordering by feel. Yo
 | Order | intervals with checked coverage, safety stock and the ordering rule | 7 |
 | Scale | the method run for all products, with review priorities | 8 |
 
-**When should people override the forecast?**
+### When should people override the forecast?
 
 A forecasting system needs a short list of situations where a person must step in: an event the data has never seen (a new competitor, a strike, a fuel shortage), a change in promotion plans after the forecast is made, or a run of forecast errors beyond the agreed limit.
 

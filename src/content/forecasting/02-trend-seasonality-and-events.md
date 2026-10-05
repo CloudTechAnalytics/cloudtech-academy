@@ -12,7 +12,7 @@ Every forecasting method, from the simplest to the most advanced, works by captu
 
 ## The concept
 
-**The building blocks of a demand series**
+### The building blocks of a demand series
 
 | Component | What it is | Kolanut example |
 | :-- | :-- | :-- |
@@ -23,13 +23,15 @@ Every forecasting method, from the simplest to the most advanced, works by captu
 | **Promotions** | planned changes that lift sales | week-long price promotions |
 | **Noise** | what's left | weather, a big customer's order |
 
-**Measuring each one**
+### Measuring each one
 
 - **Trend**: a 28-day or 365-day rolling average smooths the rest away.
 - **Seasonal profiles**: average units by weekday, or by month, divided by the overall average, give **seasonal indices** (1.25 = 25% above average).
 - **Events**: compare event days with similar non-event days.
 
-**Additive or multiplicative?**
+![Daily units of bottled water from July 2022 to June 2026 as a pale jagged line, with a 28-day rolling average as a dark line that rises slowly and peaks each December.](/images/courses/forecasting/water-series.svg "Bottled water: the rolling average reveals the trend and the December peaks under the daily noise.")
+
+### Additive or multiplicative?
 
 When December adds a **percentage** (say 30%) rather than a fixed number of units, and that percentage stays similar as sales grow, the pattern is multiplicative. That's typical of demand, and it's why many forecasts model the log of sales, as you did with rents in Machine Learning Fundamentals.
 

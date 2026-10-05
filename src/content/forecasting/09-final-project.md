@@ -10,7 +10,7 @@ Kolanut's operations director wants the Lagos depot to stop ordering by feel. Yo
 
 ## The concept
 
-**The project, step by step**
+### The project, step by step
 
 | Step | Deliverable | Lesson |
 | :-- | :-- | :-- |
@@ -23,7 +23,7 @@ Kolanut's operations director wants the Lagos depot to stop ordering by feel. Yo
 | Order | intervals with checked coverage, safety stock and the ordering rule | 7 |
 | Scale | the method run for all products, with review priorities | 8 |
 
-**When should people override the forecast?**
+### When should people override the forecast?
 
 A forecasting system needs a short list of situations where a person must step in: an event the data has never seen (a new competitor, a strike, a fuel shortage), a change in promotion plans after the forecast is made, or a run of forecast errors beyond the agreed limit.
 

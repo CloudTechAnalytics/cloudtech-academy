@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 260" width="760" height="260" role="img" aria-label="A time-based hold-out. Everything up to 28 February 2026 is training data; March to June 2026 is the test period. The whole test period is forecast from the training data alone, then compared with what actually happened.">
+<title>Train on the past up to a cut-off; forecast the whole test period; then compare.</title>
+
+<rect width="760" height="260" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="30.0" y="76.0" width="581.0" height="48.0" rx="6" fill="#DCC594"/>
+<text xml:space="preserve" x="320.5" y="105.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="middle">training: July 2022 to February 2026</text>
+<rect x="615.0" y="76.0" width="115.0" height="48.0" rx="6" fill="#2F5D8A"/>
+<text xml:space="preserve" x="672.5" y="105.0" font-size="14" fill="#FFFFFF" font-weight="700" text-anchor="middle">test</text>
+<line x1="613.0" y1="54.0" x2="613.0" y2="146.0" stroke="#2A2926" stroke-width="2"/>
+<text xml:space="preserve" x="613.0" y="46.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="middle">cut-off: 28 Feb 2026</text>
+<text xml:space="preserve" x="670.5" y="144.0" font-size="12" fill="#2F5D8A" font-weight="700" text-anchor="middle">Mar to Jun 2026</text>
+<text xml:space="preserve" x="16.0" y="196.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">No row from the test period may be used to fit the model. Score with WAPE (total absolute error ÷ total</text>
+<text xml:space="preserve" x="16.0" y="214.8" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">actual) and check bias. Every method, baselines included, uses the same cut-off.</text>
+</g></svg>
