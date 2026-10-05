@@ -18,6 +18,8 @@ AI is a strong **starting point** for research and a weak **finishing point**.
 
 The rule: **AI points you to the research; it doesn't replace it.** Every fact and reference in your work must come from a source you have found and read yourself.
 
+![A four-step research workflow: AI gives an overview and search terms, you find real sources, AI summarises and you check against the source, and you keep a research log](/images/courses/ai-students/research-workflow.svg "AI points to the research; you find, read and check the sources.")
+
 ## Step 1: get an overview and search terms
 
 ```text

@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 360" width="760" height="360" role="img" aria-label="Building a good study prompt from four parts: your level, what confuses you, the format you want such as simple English with a local example, and a request that it checks your understanding and waits for your answer. Each part is shown with an example sentence.">
+<title>A good study prompt tells the AI who you are, what you need and how to teach.</title>
+
+<rect width="760" height="360" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="28.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Four parts of a prompt that teaches</text>
+<rect x="16.0" y="42.0" width="728.0" height="62.0" rx="10" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.4"/>
+<circle cx="40.0" cy="73.0" r="12" fill="#2F5D8A"/>
+<text xml:space="preserve" x="40.0" y="77.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
+<text xml:space="preserve" x="64.0" y="78.0" font-size="14" fill="#2F5D8A" font-weight="700" text-anchor="start">Your level</text>
+<text xml:space="preserve" x="250.0" y="78.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">"I'm a 200-level biology student."</text>
+<rect x="16.0" y="112.0" width="728.0" height="62.0" rx="10" fill="#F3EBD8" stroke="#8A6A1F" stroke-width="1.4"/>
+<circle cx="40.0" cy="143.0" r="12" fill="#8A6A1F"/>
+<text xml:space="preserve" x="40.0" y="147.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
+<text xml:space="preserve" x="64.0" y="148.0" font-size="14" fill="#8A6A1F" font-weight="700" text-anchor="start">What confuses you</text>
+<text xml:space="preserve" x="250.0" y="148.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">"I don't get how enzymes speed up reactions."</text>
+<rect x="16.0" y="182.0" width="728.0" height="62.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.4"/>
+<circle cx="40.0" cy="213.0" r="12" fill="#2F6B3F"/>
+<text xml:space="preserve" x="40.0" y="217.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
+<text xml:space="preserve" x="64.0" y="218.0" font-size="14" fill="#2F6B3F" font-weight="700" text-anchor="start">The format</text>
+<text xml:space="preserve" x="250.0" y="218.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">"Explain in simple English with an example from daily life."</text>
+<rect x="16.0" y="252.0" width="728.0" height="62.0" rx="10" fill="#EEEAF5" stroke="#5C4F80" stroke-width="1.4"/>
+<circle cx="40.0" cy="283.0" r="12" fill="#5C4F80"/>
+<text xml:space="preserve" x="40.0" y="287.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">4</text>
+<text xml:space="preserve" x="64.0" y="288.0" font-size="14" fill="#5C4F80" font-weight="700" text-anchor="start">Check me</text>
+<text xml:space="preserve" x="250.0" y="288.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">"Ask me two questions and wait for my answers."</text>
+<text xml:space="preserve" x="16.0" y="340.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Without the last part, the AI answers its own questions and you are back to reading.</text>
+</g></svg>

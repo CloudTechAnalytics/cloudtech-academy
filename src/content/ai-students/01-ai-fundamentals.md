@@ -17,6 +17,8 @@ That one fact explains most of what you need to know:
 
 Think of an AI assistant as a fast, well-read study partner who is sometimes confidently wrong. Very useful, as long as you stay in charge.
 
+![A question goes to the model, which predicts a helpful reply from patterns in text; so it is strong at explaining, rephrasing, giving examples and quizzing, and risky for exact dates, statistics, quotes and references](/images/courses/ai-students/how-it-answers.svg "An AI assistant predicts helpful words; it does not look facts up.")
+
 ## What it looks like when it works, and when it doesn't
 
 **When it works.** Ask for an explanation at your level, with a local example:
@@ -73,6 +75,8 @@ Every school, department and lecturer sets their own rules on AI. Some allow it 
 2. **Never submit AI-written work as your own** where that isn't allowed. It can count as plagiarism or exam malpractice.
 3. **Be ready to explain** everything you submit. If you couldn't explain it in a viva, it isn't yours.
 4. **Declare how you used AI** whenever you're asked to.
+
+![First check the course's AI rules: if AI isn't allowed for the work, don't use it; if it is, understand rather than outsource, be able to explain everything, and declare how you used it](/images/courses/ai-students/rules-first.svg "Rules first, then use AI to learn rather than to do the assessment.")
 
 > [!TIP]
 > A simple test: use AI to help you **understand and practise**, not to **do the assessment for you**.

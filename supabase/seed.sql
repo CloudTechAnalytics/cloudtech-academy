@@ -1916,6 +1916,8 @@ That one fact explains most of what you need to know:
 
 Think of an AI assistant as a fast, well-read study partner who is sometimes confidently wrong. Very useful, as long as you stay in charge.
 
+![A question goes to the model, which predicts a helpful reply from patterns in text; so it is strong at explaining, rephrasing, giving examples and quizzing, and risky for exact dates, statistics, quotes and references](/images/courses/ai-students/how-it-answers.svg "An AI assistant predicts helpful words; it does not look facts up.")
+
 ## What it looks like when it works, and when it doesn't
 
 **When it works.** Ask for an explanation at your level, with a local example:
@@ -1972,6 +1974,8 @@ Every school, department and lecturer sets their own rules on AI. Some allow it 
 2. **Never submit AI-written work as your own** where that isn't allowed. It can count as plagiarism or exam malpractice.
 3. **Be ready to explain** everything you submit. If you couldn't explain it in a viva, it isn't yours.
 4. **Declare how you used AI** whenever you're asked to.
+
+![First check the course's AI rules: if AI isn't allowed for the work, don't use it; if it is, understand rather than outsource, be able to explain everything, and declare how you used it](/images/courses/ai-students/rules-first.svg "Rules first, then use AI to learn rather than to do the assessment.")
 
 > [!TIP]
 > A simple test: use AI to help you **understand and practise**, not to **do the assessment for you**.
@@ -2046,6 +2050,8 @@ Reading your notes again feels productive, but it mostly builds **familiarity**:
 
 AI assistants are very good at the parts of studying that are tedious to do alone: explaining a topic another way, writing practice questions, quizzing you, and turning notes into flashcards. Used well, AI makes you do **more** thinking, not less.
 
+![Re-reading feels easy but builds only familiarity, while retrieval feels harder and builds memory; a study loop where you paste notes, the AI asks one question and waits, you answer from memory, and it checks what you missed](/images/courses/ai-students/retrieval.svg "Re-reading builds familiarity; retrieval builds memory.")
+
 ## Ask for explanations that test you
 
 Tell the assistant your level, what confuses you, and ask it to **check your understanding before moving on**:
@@ -2058,6 +2064,8 @@ understood. Wait for my answers before telling me if I'm right.
 ```
 
 That last line matters. Without it, the AI explains and then answers its own questions, and you're back to reading. With it, the chat becomes a tutor that waits for you.
+
+![Four parts of a prompt that teaches: your level, what confuses you, the format you want, and a request that it checks you and waits for your answers](/images/courses/ai-students/prompt-parts.svg "A good study prompt says who you are, what you need and how to teach.")
 
 Some assistants have a **study or learning mode** that guides you with questions instead of giving the answer straight away. If yours has one, try it for topics you find hard.
 
@@ -2094,6 +2102,8 @@ Paste notes like these into an AI assistant and ask:
 - "Write 5 multiple-choice questions on these notes, with an explanation for each wrong option."
 - "Ask me 5 questions on these notes one at a time. Wait for each answer and tell me what I missed."
 - "Which parts are most likely to come up in an exam, and why?" (Treat this as a guess, not a promise.)
+
+![Your own lecture notes turned into four study tools: flashcards, multiple-choice questions, a one-by-one quiz and a revision plan](/images/courses/ai-students/notes-to-tools.svg "One set of notes, four study tools.")
 
 > [!WARNING]
 > AI makes mistakes in calculations and science working. Use it to understand the **method**, then check the steps yourself or against a worked example from your course.
@@ -2204,6 +2214,8 @@ AI is a strong **starting point** for research and a weak **finishing point**.
 | Comparing arguments you've already read | Deciding what's true |
 
 The rule: **AI points you to the research; it doesn't replace it.** Every fact and reference in your work must come from a source you have found and read yourself.
+
+![A four-step research workflow: AI gives an overview and search terms, you find real sources, AI summarises and you check against the source, and you keep a research log](/images/courses/ai-students/research-workflow.svg "AI points to the research; you find, read and check the sources.")
 
 ## Step 1: get an overview and search terms
 
@@ -2347,6 +2359,8 @@ There's a big difference between these two requests:
 
 - **"Write my essay on social media regulation."** The AI does the thinking. You learn nothing, the result sounds like everyone else's, and in most courses it isn't allowed.
 - **"Here's my paragraph. List what's unclear or weak. Don't rewrite it."** You do the thinking; the AI points at problems; you fix them and get better at writing.
+
+![Asking an AI to write your essay means it does the thinking; asking it to list the problems in your draft means you do the thinking; a four-step routine of plan, write, ask for problems and declare](/images/courses/ai-students/coach-not-ghostwriter.svg "A coach lists the problems; a ghostwriter does your thinking.")
 
 The second approach keeps the work yours and keeps you within most schools' rules. Always check your course's AI policy first: if it says no AI in assessed writing, that includes feedback on drafts.
 

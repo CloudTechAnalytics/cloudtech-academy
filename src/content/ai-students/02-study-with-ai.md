@@ -10,6 +10,8 @@ Reading your notes again feels productive, but it mostly builds **familiarity**:
 
 AI assistants are very good at the parts of studying that are tedious to do alone: explaining a topic another way, writing practice questions, quizzing you, and turning notes into flashcards. Used well, AI makes you do **more** thinking, not less.
 
+![Re-reading feels easy but builds only familiarity, while retrieval feels harder and builds memory; a study loop where you paste notes, the AI asks one question and waits, you answer from memory, and it checks what you missed](/images/courses/ai-students/retrieval.svg "Re-reading builds familiarity; retrieval builds memory.")
+
 ## Ask for explanations that test you
 
 Tell the assistant your level, what confuses you, and ask it to **check your understanding before moving on**:
@@ -22,6 +24,8 @@ understood. Wait for my answers before telling me if I'm right.
 ```
 
 That last line matters. Without it, the AI explains and then answers its own questions, and you're back to reading. With it, the chat becomes a tutor that waits for you.
+
+![Four parts of a prompt that teaches: your level, what confuses you, the format you want, and a request that it checks you and waits for your answers](/images/courses/ai-students/prompt-parts.svg "A good study prompt says who you are, what you need and how to teach.")
 
 Some assistants have a **study or learning mode** that guides you with questions instead of giving the answer straight away. If yours has one, try it for topics you find hard.
 
@@ -58,6 +62,8 @@ Paste notes like these into an AI assistant and ask:
 - "Write 5 multiple-choice questions on these notes, with an explanation for each wrong option."
 - "Ask me 5 questions on these notes one at a time. Wait for each answer and tell me what I missed."
 - "Which parts are most likely to come up in an exam, and why?" (Treat this as a guess, not a promise.)
+
+![Your own lecture notes turned into four study tools: flashcards, multiple-choice questions, a one-by-one quiz and a revision plan](/images/courses/ai-students/notes-to-tools.svg "One set of notes, four study tools.")
 
 > [!WARNING]
 > AI makes mistakes in calculations and science working. Use it to understand the **method**, then check the steps yourself or against a worked example from your course.
