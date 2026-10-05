@@ -45,6 +45,8 @@ The errors you've met in this course:
 
 Some errors aren't bugs in your code: they come from the outside world. A user types "forty" instead of 40; a file is missing. `try` and `except` let your program **handle** the problem instead of crashing:
 
+![A try block dividing by people: with 4 people the except block is skipped, with 0 it catches a ZeroDivisionError and the program carries on; the try, except, else and finally parts; and how to read a KeyError traceback from the bottom](/images/courses/python/try-except.svg "try runs the risky code; except catches a named error; the program carries on.")
+
 ```python
 text = "forty"
 try:

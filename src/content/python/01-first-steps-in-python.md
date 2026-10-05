@@ -79,6 +79,8 @@ The first line works out the answer; the second prints the text exactly as writt
 
 Python runs your code **one line at a time, from top to bottom**:
 
+![A four-line program run from the top: a comment is ignored, name stores text, two prints produce output; and a program that stops at an undefined variable with a NameError, so the next line never runs](/images/courses/python/how-python-runs.svg "Python runs code from the top, one line at a time, and stops at an error.")
+
 ```python
 print("First")
 print("Second")

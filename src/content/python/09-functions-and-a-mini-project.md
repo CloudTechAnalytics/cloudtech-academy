@@ -14,6 +14,8 @@ You've been using functions since the first lesson: `print()`, `len()`, `round()
 
 ## Defining and calling a function
 
+![A function area(width, height) with a docstring and a return, called with 4 and 3; print versus return; and local scope and default values](/images/courses/python/functions.svg "Define once, call many times: arguments in, a returned value out.")
+
 ```python
 def greet():
     print("Welcome to CloudTech Academy")

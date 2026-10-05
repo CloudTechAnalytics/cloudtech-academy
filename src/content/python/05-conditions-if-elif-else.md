@@ -94,6 +94,8 @@ Fail: register for the resit
 
 `elif` ("else if") adds more conditions. Python checks them **from the top** and runs the **first** block whose condition is true, then skips the rest:
 
+![Ticket prices decided by if, elif and else: for an age of 34 the first two conditions are false, the third is true and the ticket is adult; and the combining words and, or and not](/images/courses/python/if-elif-else.svg "if / elif / else: the first true condition runs, and the rest are skipped.")
+
 ```python
 score = 67
 

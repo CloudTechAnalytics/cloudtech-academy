@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 420" width="760" height="420" role="img" aria-label="How Python reads a program: from the top, one line at a time. Three example lines run in order and each print produces a line of output. A comment, starting with a hash, is ignored by Python and written for people. If a line has an error, Python stops there and shows a message naming the line, and the lines after it don't run.">
+<title>Python runs code from the top, one line at a time, and stops at an error.</title>
+
+<rect width="760" height="420" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="16.0" width="380.0" height="134.0" rx="8" fill="#2A2926" stroke="#2A2926" stroke-width="1"/>
+<text xml:space="preserve" x="28.0" y="40.0" font-size="13" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace"># greet the class</text>
+<text xml:space="preserve" x="28.0" y="68.0" font-size="13" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">name = "Chika"</text>
+<text xml:space="preserve" x="28.0" y="96.0" font-size="13" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">print("Hello,", name)</text>
+<text xml:space="preserve" x="28.0" y="124.0" font-size="13" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">print(2 + 3)</text>
+<text xml:space="preserve" x="412.0" y="38.0" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="start">1  ignored: a comment, for people</text>
+<text xml:space="preserve" x="412.0" y="66.0" font-size="12.5" fill="#2F5D8A" font-weight="700" text-anchor="start">2  stores the text in name</text>
+<text xml:space="preserve" x="412.0" y="94.0" font-size="12.5" fill="#2F6B3F" font-weight="700" text-anchor="start">3  prints a line</text>
+<text xml:space="preserve" x="412.0" y="122.0" font-size="12.5" fill="#2F6B3F" font-weight="700" text-anchor="start">4  prints a line</text>
+<rect x="16.0" y="168.0" width="380.0" height="74.0" rx="10" fill="#FFFFFF" stroke="#2F6B3F" stroke-width="1.4"/>
+<text xml:space="preserve" x="30.0" y="192.0" font-size="12.5" fill="#2F6B3F" font-weight="700" text-anchor="start">Output</text>
+<text xml:space="preserve" x="30.0" y="216.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">Hello, Chika</text>
+<text xml:space="preserve" x="30.0" y="234.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">5</text>
+<text xml:space="preserve" x="16.0" y="276.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">When a line has an error</text>
+<rect x="16.0" y="288.0" width="500.0" height="88.0" rx="8" fill="#2A2926" stroke="#2A2926" stroke-width="1"/>
+<text xml:space="preserve" x="28.0" y="312.0" font-size="12.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">print("Start")</text>
+<text xml:space="preserve" x="28.0" y="334.0" font-size="12.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">print(total)        # total was never created</text>
+<text xml:space="preserve" x="28.0" y="356.0" font-size="12.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">print("Never reached")</text>
+<rect x="16.0" y="372.0" width="500.0" height="36.0" rx="6" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.3"/>
+<text xml:space="preserve" x="30.0" y="395.0" font-size="12.5" fill="#9B2C1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">NameError: name 'total' is not defined</text>
+<text xml:space="preserve" x="536.0" y="318.0" font-size="12.5" fill="#9B2C1F" font-weight="700" text-anchor="start">Python stops at line 2 and</text>
+<text xml:space="preserve" x="536.0" y="336.1" font-size="12.5" fill="#9B2C1F" font-weight="700" text-anchor="start">tells you why. Line 3 never</text>
+<text xml:space="preserve" x="536.0" y="354.2" font-size="12.5" fill="#9B2C1F" font-weight="700" text-anchor="start">runs.</text>
+</g></svg>

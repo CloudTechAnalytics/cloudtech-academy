@@ -4171,6 +4171,8 @@ The first line works out the answer; the second prints the text exactly as writt
 
 Python runs your code **one line at a time, from top to bottom**:
 
+![A four-line program run from the top: a comment is ignored, name stores text, two prints produce output; and a program that stops at an undefined variable with a NameError, so the next line never runs](/images/courses/python/how-python-runs.svg "Python runs code from the top, one line at a time, and stops at an error.")
+
 ```python
 print("First")
 print("Second")
@@ -4417,6 +4419,8 @@ Every value has a **type**, which decides what you can do with it. You can add t
 | decimal number | `float` | `3.75`, `-0.5`, `2.0` | prices with kobo, averages |
 | true or false | `bool` (boolean) | `True`, `False` | yes/no answers |
 | nothing | `NoneType` | `None` | "no value yet" |
+
+![Five labelled boxes holding a str, an int, a float, a bool and None, and four type conversions: int of the text 120, str of 12, float of the text 2.5 and int of 2.6 giving 2](/images/courses/python/variables-types.svg "A variable is a labelled box; every value has a type, and you can convert between types.")
 
 Check any value's type with `type()`:
 
@@ -4750,6 +4754,8 @@ print(minutes // 60, "hours and", minutes % 60, "minutes")
 ## The order of operations
 
 Python follows the same order as maths: brackets first, then powers, then `*` `/` `//` `%`, then `+` `-`. When operators have the same rank, it works left to right.
+
+![The seven arithmetic operators worked with 17 and 5, including division giving 3.4, whole-number division 3 and remainder 2; and the order of operations on 10 - 2 * 3 ** 2, giving -8](/images/courses/python/operators.svg "The operators, with 17 and 5, and the order Python works things out.")
 
 ```python
 print(2 + 3 * 4)
@@ -5131,6 +5137,8 @@ Negative indexes count from the end, so `[-1]` is always the last character, how
 
 `text[start:stop]` takes the characters from `start` up to, **but not including**, `stop`:
 
+![The text DATA-2026 with positions 0 to 8 from the left and -9 to -1 from the right; the slice word[0:4] gives DATA and word[5:] gives 2026](/images/courses/python/string-positions.svg "String positions count from 0 on the left and −1 on the right; a slice stops before its end.")
+
 ```python
 code = "ECO201-2026"
 print(code[0:3])
@@ -5504,6 +5512,8 @@ Fail: register for the resit
 
 `elif` ("else if") adds more conditions. Python checks them **from the top** and runs the **first** block whose condition is true, then skips the rest:
 
+![Ticket prices decided by if, elif and else: for an age of 34 the first two conditions are false, the third is true and the ticket is adult; and the combining words and, or and not](/images/courses/python/if-elif-else.svg "if / elif / else: the first true condition runs, and the rest are skipped.")
+
 ```python
 score = 67
 
@@ -5768,6 +5778,8 @@ values ('python-for-beginners:lists-and-tuples', 'python-for-beginners', 'py-m08
 ## What a list is
 
 A **list** stores many values, in order, in one variable. Write the items inside **square brackets**, separated by commas:
+
+![A list of five foods with positions 0 to 4 and -5 to -1, the slice foods[1:3], the main methods to change a list, why b = a doesn't copy a list, and tuples](/images/courses/python/lists.svg "A list's positions, a slice, and the ways to change a list.")
 
 ```python
 courses = ["ECO 201", "STA 211", "GST 201"]
@@ -6242,6 +6254,8 @@ Week 4
 
 ## Building up a result
 
+![A for loop adding a list of prices into a running total of 525 round by round; a while loop doubling x until it passes 100; and break, continue, enumerate and zip](/images/courses/python/loops.svg "A for loop takes each item in turn; a while loop repeats while a condition holds.")
+
 Most useful loops **accumulate** something: a total, a count or a new list. The pattern is always the same: start with an empty value **before** the loop, update it **inside**, use it **after**.
 
 ### A running total
@@ -6583,6 +6597,8 @@ values ('python-for-beginners:dictionaries-and-sets', 'python-for-beginners', 'p
 A list finds values by **position**: `scores[0]`. That's awkward when the values have names. Is the student's department `student[1]` or `student[2]`? A **dictionary** stores **key: value** pairs, so you look values up by name, like a word in a real dictionary.
 
 Write it with **curly brackets**, a colon between each key and its value, and commas between pairs:
+
+![A dictionary of name, age and city pairs read by key, get() with a default, a KeyError for a missing key; counting apple and pear with get; and a set removing duplicates from 3, 1, 3, 2, 1](/images/courses/python/dictionaries-sets.svg "A dictionary maps keys to values; a set keeps each value once.")
 
 ```python
 student = {
@@ -6943,6 +6959,8 @@ You've been using functions since the first lesson: `print()`, `len()`, `round()
 - Easier testing: check the function on its own.
 
 ## Defining and calling a function
+
+![A function area(width, height) with a docstring and a return, called with 4 and 3; print versus return; and local scope and default values](/images/courses/python/functions.svg "Define once, call many times: arguments in, a returned value out.")
 
 ```python
 def greet():
@@ -7351,6 +7369,8 @@ The errors you've met in this course:
 ## Handling errors with try and except
 
 Some errors aren't bugs in your code: they come from the outside world. A user types "forty" instead of 40; a file is missing. `try` and `except` let your program **handle** the problem instead of crashing:
+
+![A try block dividing by people: with 4 people the except block is skipped, with 0 it catches a ZeroDivisionError and the program carries on; the try, except, else and finally parts; and how to read a KeyError traceback from the bottom](/images/courses/python/try-except.svg "try runs the risky code; except catches a named error; the program carries on.")
 
 ```python
 text = "forty"

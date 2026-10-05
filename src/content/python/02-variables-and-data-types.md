@@ -107,6 +107,8 @@ Every value has a **type**, which decides what you can do with it. You can add t
 | true or false | `bool` (boolean) | `True`, `False` | yes/no answers |
 | nothing | `NoneType` | `None` | "no value yet" |
 
+![Five labelled boxes holding a str, an int, a float, a bool and None, and four type conversions: int of the text 120, str of 12, float of the text 2.5 and int of 2.6 giving 2](/images/courses/python/variables-types.svg "A variable is a labelled box; every value has a type, and you can convert between types.")
+
 Check any value's type with `type()`:
 
 ```python

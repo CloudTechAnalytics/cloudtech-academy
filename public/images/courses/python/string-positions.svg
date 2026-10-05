@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 400" width="760" height="400" role="img" aria-label="Indexing and slicing the text DATA-2026. Each character has a position counting from 0 on the left, and from minus 1 on the right. Position 0 is D and minus 1 is 6. A slice from 0 to 4 takes positions 0, 1, 2 and 3, giving DATA, because the end position is not included. A slice from 5 onwards gives 2026.">
+<title>String positions count from 0 on the left and −1 on the right; a slice stops before its end.</title>
+
+<rect width="760" height="400" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="40.0" y="70.0" width="68.0" height="60.0" rx="6" fill="#F3EBD8"/>
+<text xml:space="preserve" x="74.0" y="110.0" font-size="24" fill="#2A2926" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">D</text>
+<text xml:space="preserve" x="74.0" y="58.0" font-size="13" fill="#2F5D8A" font-weight="700" text-anchor="middle">0</text>
+<text xml:space="preserve" x="74.0" y="152.0" font-size="13" fill="#5C4F80" font-weight="700" text-anchor="middle">-9</text>
+<rect x="116.0" y="70.0" width="68.0" height="60.0" rx="6" fill="#F3EBD8"/>
+<text xml:space="preserve" x="150.0" y="110.0" font-size="24" fill="#2A2926" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">A</text>
+<text xml:space="preserve" x="150.0" y="58.0" font-size="13" fill="#2F5D8A" font-weight="700" text-anchor="middle">1</text>
+<text xml:space="preserve" x="150.0" y="152.0" font-size="13" fill="#5C4F80" font-weight="700" text-anchor="middle">-8</text>
+<rect x="192.0" y="70.0" width="68.0" height="60.0" rx="6" fill="#F3EBD8"/>
+<text xml:space="preserve" x="226.0" y="110.0" font-size="24" fill="#2A2926" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">T</text>
+<text xml:space="preserve" x="226.0" y="58.0" font-size="13" fill="#2F5D8A" font-weight="700" text-anchor="middle">2</text>
+<text xml:space="preserve" x="226.0" y="152.0" font-size="13" fill="#5C4F80" font-weight="700" text-anchor="middle">-7</text>
+<rect x="268.0" y="70.0" width="68.0" height="60.0" rx="6" fill="#F3EBD8"/>
+<text xml:space="preserve" x="302.0" y="110.0" font-size="24" fill="#2A2926" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">A</text>
+<text xml:space="preserve" x="302.0" y="58.0" font-size="13" fill="#2F5D8A" font-weight="700" text-anchor="middle">3</text>
+<text xml:space="preserve" x="302.0" y="152.0" font-size="13" fill="#5C4F80" font-weight="700" text-anchor="middle">-6</text>
+<rect x="344.0" y="70.0" width="68.0" height="60.0" rx="6" fill="#F2EFE8"/>
+<text xml:space="preserve" x="378.0" y="110.0" font-size="24" fill="#2A2926" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">-</text>
+<text xml:space="preserve" x="378.0" y="58.0" font-size="13" fill="#2F5D8A" font-weight="700" text-anchor="middle">4</text>
+<text xml:space="preserve" x="378.0" y="152.0" font-size="13" fill="#5C4F80" font-weight="700" text-anchor="middle">-5</text>
+<rect x="420.0" y="70.0" width="68.0" height="60.0" rx="6" fill="#E6EEF6"/>
+<text xml:space="preserve" x="454.0" y="110.0" font-size="24" fill="#2A2926" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">2</text>
+<text xml:space="preserve" x="454.0" y="58.0" font-size="13" fill="#2F5D8A" font-weight="700" text-anchor="middle">5</text>
+<text xml:space="preserve" x="454.0" y="152.0" font-size="13" fill="#5C4F80" font-weight="700" text-anchor="middle">-4</text>
+<rect x="496.0" y="70.0" width="68.0" height="60.0" rx="6" fill="#E6EEF6"/>
+<text xml:space="preserve" x="530.0" y="110.0" font-size="24" fill="#2A2926" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">0</text>
+<text xml:space="preserve" x="530.0" y="58.0" font-size="13" fill="#2F5D8A" font-weight="700" text-anchor="middle">6</text>
+<text xml:space="preserve" x="530.0" y="152.0" font-size="13" fill="#5C4F80" font-weight="700" text-anchor="middle">-3</text>
+<rect x="572.0" y="70.0" width="68.0" height="60.0" rx="6" fill="#E6EEF6"/>
+<text xml:space="preserve" x="606.0" y="110.0" font-size="24" fill="#2A2926" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">2</text>
+<text xml:space="preserve" x="606.0" y="58.0" font-size="13" fill="#2F5D8A" font-weight="700" text-anchor="middle">7</text>
+<text xml:space="preserve" x="606.0" y="152.0" font-size="13" fill="#5C4F80" font-weight="700" text-anchor="middle">-2</text>
+<rect x="648.0" y="70.0" width="68.0" height="60.0" rx="6" fill="#E6EEF6"/>
+<text xml:space="preserve" x="682.0" y="110.0" font-size="24" fill="#2A2926" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">6</text>
+<text xml:space="preserve" x="682.0" y="58.0" font-size="13" fill="#2F5D8A" font-weight="700" text-anchor="middle">8</text>
+<text xml:space="preserve" x="682.0" y="152.0" font-size="13" fill="#5C4F80" font-weight="700" text-anchor="middle">-1</text>
+<text xml:space="preserve" x="16.0" y="40.0" font-size="12" fill="#2F5D8A" font-weight="700" text-anchor="start">position from the left</text>
+<text xml:space="preserve" x="16.0" y="178.0" font-size="12" fill="#5C4F80" font-weight="700" text-anchor="start">position from the right</text>
+<path d="M40,210 L40,218 L336,218 L336,210" fill="none" stroke="#B38A3E" stroke-width="2"/>
+<text xml:space="preserve" x="188.0" y="240.0" font-size="13" fill="#8A6A1F" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">word[0:4]  →  "DATA"</text>
+<path d="M420,210 L420,218 L716,218 L716,210" fill="none" stroke="#2F5D8A" stroke-width="2"/>
+<text xml:space="preserve" x="568.0" y="240.0" font-size="13" fill="#2F5D8A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">word[5:]  →  "2026"</text>
+<text xml:space="preserve" x="16.0" y="290.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">word[0] is "D" and word[-1] is "6". A slice [a:b] starts at a and stops before b.</text>
+<text xml:space="preserve" x="16.0" y="314.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">len(word) is 9, so the last position is 8. Asking for word[9] is an IndexError.</text>
+<text xml:space="preserve" x="16.0" y="346.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Strings can't be changed in place: methods like .upper() and .strip() give a new string.</text>
+</g></svg>

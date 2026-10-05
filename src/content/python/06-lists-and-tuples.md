@@ -8,6 +8,8 @@ summary: Store many values in one variable. Create lists, read items by index an
 
 A **list** stores many values, in order, in one variable. Write the items inside **square brackets**, separated by commas:
 
+![A list of five foods with positions 0 to 4 and -5 to -1, the slice foods[1:3], the main methods to change a list, why b = a doesn't copy a list, and tuples](/images/courses/python/lists.svg "A list's positions, a slice, and the ways to change a list.")
+
 ```python
 courses = ["ECO 201", "STA 211", "GST 201"]
 scores = [67, 81, 54]

@@ -86,6 +86,8 @@ Week 4
 
 ## Building up a result
 
+![A for loop adding a list of prices into a running total of 525 round by round; a while loop doubling x until it passes 100; and break, continue, enumerate and zip](/images/courses/python/loops.svg "A for loop takes each item in turn; a while loop repeats while a condition holds.")
+
 Most useful loops **accumulate** something: a total, a count or a new list. The pattern is always the same: start with an empty value **before** the loop, update it **inside**, use it **after**.
 
 ### A running total

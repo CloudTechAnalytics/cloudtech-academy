@@ -83,6 +83,8 @@ print(minutes // 60, "hours and", minutes % 60, "minutes")
 
 Python follows the same order as maths: brackets first, then powers, then `*` `/` `//` `%`, then `+` `-`. When operators have the same rank, it works left to right.
 
+![The seven arithmetic operators worked with 17 and 5, including division giving 3.4, whole-number division 3 and remainder 2; and the order of operations on 10 - 2 * 3 ** 2, giving -8](/images/courses/python/operators.svg "The operators, with 17 and 5, and the order Python works things out.")
+
 ```python
 print(2 + 3 * 4)
 print((2 + 3) * 4)

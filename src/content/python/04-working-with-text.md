@@ -121,6 +121,8 @@ Negative indexes count from the end, so `[-1]` is always the last character, how
 
 `text[start:stop]` takes the characters from `start` up to, **but not including**, `stop`:
 
+![The text DATA-2026 with positions 0 to 8 from the left and -9 to -1 from the right; the slice word[0:4] gives DATA and word[5:] gives 2026](/images/courses/python/string-positions.svg "String positions count from 0 on the left and −1 on the right; a slice stops before its end.")
+
 ```python
 code = "ECO201-2026"
 print(code[0:3])

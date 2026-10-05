@@ -10,6 +10,8 @@ A list finds values by **position**: `scores[0]`. That's awkward when the values
 
 Write it with **curly brackets**, a colon between each key and its value, and commas between pairs:
 
+![A dictionary of name, age and city pairs read by key, get() with a default, a KeyError for a missing key; counting apple and pear with get; and a set removing duplicates from 3, 1, 3, 2, 1](/images/courses/python/dictionaries-sets.svg "A dictionary maps keys to values; a set keeps each value once.")
+
 ```python
 student = {
     "name": "Musa",
