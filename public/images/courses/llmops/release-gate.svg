@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 440" width="760" height="440" role="img" aria-label="An automatic release gate in the deployment pipeline. A change runs the regression suite and red-team set, and the results are checked against rules agreed in advance: overall pass rate at least the live release's minus a small tolerance; no fall in fraud or safety categories and no broken safety case; latency and cost within budget; attack success rate no worse than live. If every rule passes, the release can deploy; if any fails, it's blocked unless someone overrides it, and the override is recorded.">
+<title>A release gate: rules agreed in advance, checked automatically before deploy.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="440" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="150.0" width="150.0" height="80.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="91.0" y="186.0" font-size="15" fill="#2A2926" font-weight="700" text-anchor="middle">Change</text>
+<text xml:space="preserve" x="91.0" y="208.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="middle">release r3</text>
+<path d="M168.0,190.0 L196.0,190.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="200.0" y="30.0" width="330.0" height="352.0" rx="10" fill="#FFFFFF" stroke="#B38A3E" stroke-width="1.8"/>
+<text xml:space="preserve" x="216.0" y="58.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Gate rules (agreed in advance)</text>
+<rect x="216.0" y="80.0" width="298.0" height="64.0" rx="6" fill="#F7F3EA"/>
+<text xml:space="preserve" x="228.0" y="102.0" font-size="13.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Overall</text>
+<text xml:space="preserve" x="228.0" y="122.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">pass rate ≥ live − small tolerance</text>
+<rect x="216.0" y="152.0" width="298.0" height="64.0" rx="6" fill="#F7F3EA"/>
+<text xml:space="preserve" x="228.0" y="174.0" font-size="13.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Critical</text>
+<text xml:space="preserve" x="228.0" y="194.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">no fall in fraud or safety; no broken</text>
+<text xml:space="preserve" x="228.0" y="212.1" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">safety case</text>
+<rect x="216.0" y="224.0" width="298.0" height="64.0" rx="6" fill="#F7F3EA"/>
+<text xml:space="preserve" x="228.0" y="246.0" font-size="13.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Budgets</text>
+<text xml:space="preserve" x="228.0" y="266.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">latency and cost per request within limits</text>
+<rect x="216.0" y="296.0" width="298.0" height="64.0" rx="6" fill="#F7F3EA"/>
+<text xml:space="preserve" x="228.0" y="318.0" font-size="13.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Red-team</text>
+<text xml:space="preserve" x="228.0" y="338.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">attack success rate no worse than live</text>
+<path d="M532.0,130.0 L576.0,100.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<path d="M532.0,250.0 L576.0,280.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="580.0" y="60.0" width="164.0" height="80.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.5"/>
+<text xml:space="preserve" x="662.0" y="96.0" font-size="14" fill="#2F6B3F" font-weight="700" text-anchor="middle">All pass</text>
+<text xml:space="preserve" x="662.0" y="118.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="middle">deploy</text>
+<rect x="580.0" y="240.0" width="164.0" height="100.0" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.5"/>
+<text xml:space="preserve" x="662.0" y="272.0" font-size="14" fill="#9B2C1F" font-weight="700" text-anchor="middle">Any fails</text>
+<text xml:space="preserve" x="662.0" y="294.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="middle">blocked, unless</text>
+<text xml:space="preserve" x="662.0" y="312.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="middle">an override is</text>
+<text xml:space="preserve" x="662.0" y="330.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="middle">recorded</text>
+<text xml:space="preserve" x="16.0" y="420.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">Run it in the same pipeline (CI) that deploys, so a failing release can't slip through quietly.</text>
+</g></svg>

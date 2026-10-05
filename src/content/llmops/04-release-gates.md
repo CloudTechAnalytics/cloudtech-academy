@@ -12,7 +12,7 @@ Software teams solve this with **gates**: automatic checks that run on every cha
 
 ## The concept
 
-**A release gate is a set of rules, agreed in advance**
+### A release gate is a set of rules, agreed in advance
 
 | Rule | Example |
 | :-- | :-- |
@@ -24,6 +24,8 @@ Software teams solve this with **gates**: automatic checks that run on every cha
 **Agree the rules before you see the results.** Otherwise, the rules bend to fit the release people want to ship.
 
 **Run the gate automatically**, in the same pipeline that deploys the change (often called CI), so that a failing release can't be deployed without someone explicitly overriding it, and the override is recorded.
+
+![A change enters a gate with four rules agreed in advance: overall pass rate, critical categories, budgets and red-team. If all pass, deploy; if any fails, it's blocked unless an override is recorded.](/images/courses/llmops/release-gate.svg "A release gate, run automatically before deploy.")
 
 ## Example
 

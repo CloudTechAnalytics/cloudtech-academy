@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 330" width="760" height="330" role="img" aria-label="How precise a pass rate is depends on the number of cases. For a 90 percent pass rate, the 95 percent Wilson interval is about 74 to 97 percent with 30 cases, 83 to 94 percent with 100 cases, and 87 to 93 percent with 400 cases.">
+<title>A pass rate from 30 cases is far less precise than one from 400.</title>
+
+<rect width="760" height="330" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<line x1="150.0" y1="50.0" x2="150.0" y2="250.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="150.0" y="272.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="middle">60%</text>
+<line x1="292.5" y1="50.0" x2="292.5" y2="250.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="292.5" y="272.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="middle">70%</text>
+<line x1="435.0" y1="50.0" x2="435.0" y2="250.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="435.0" y="272.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="middle">80%</text>
+<line x1="577.5" y1="50.0" x2="577.5" y2="250.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="577.5" y="272.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="middle">90%</text>
+<line x1="720.0" y1="50.0" x2="720.0" y2="250.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="720.0" y="272.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="middle">100%</text>
+<line x1="577.5" y1="44.0" x2="577.5" y2="250.0" stroke="#8A6A1F" stroke-width="1.6" stroke-dasharray="4 3"/>
+<text xml:space="preserve" x="577.5" y="38.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="middle">observed: 90%</text>
+<text xml:space="preserve" x="136.0" y="85.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="end">30 cases</text>
+<line x1="354.9" y1="80.0" x2="670.7" y2="80.0" stroke="#2F5D8A" stroke-width="5"/>
+<circle cx="577.5" cy="80.0" r="6" fill="#8A6A1F"/>
+<text xml:space="preserve" x="680.7" y="85.0" font-size="13" fill="#2F5D8A" font-weight="700" text-anchor="start">74% to 97%</text>
+<text xml:space="preserve" x="136.0" y="149.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="end">100 cases</text>
+<line x1="471.5" y1="144.0" x2="641.3" y2="144.0" stroke="#2F5D8A" stroke-width="5"/>
+<circle cx="577.5" cy="144.0" r="6" fill="#8A6A1F"/>
+<text xml:space="preserve" x="651.3" y="149.0" font-size="13" fill="#2F5D8A" font-weight="700" text-anchor="start">83% to 94%</text>
+<text xml:space="preserve" x="136.0" y="213.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="end">400 cases</text>
+<line x1="530.0" y1="208.0" x2="614.1" y2="208.0" stroke="#2F5D8A" stroke-width="5"/>
+<circle cx="577.5" cy="208.0" r="6" fill="#8A6A1F"/>
+<text xml:space="preserve" x="624.1" y="213.0" font-size="13" fill="#2F5D8A" font-weight="700" text-anchor="start">87% to 93%</text>
+<text xml:space="preserve" x="16.0" y="312.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">95% Wilson intervals for a 90% pass rate. Small categories need wide margins before you call a change.</text>
+</g></svg>

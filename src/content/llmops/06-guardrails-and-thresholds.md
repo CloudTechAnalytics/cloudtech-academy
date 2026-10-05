@@ -12,7 +12,7 @@ Security wants a low threshold, to catch everything. Support wants a high one, b
 
 ## The concept
 
-**Every threshold is a trade-off**
+### Every threshold is a trade-off
 
 | | Message is harmful | Message is harmless |
 | :-- | :-- | :-- |
@@ -25,7 +25,7 @@ Security wants a low threshold, to catch everything. Support wants a high one, b
 
 **Choose by cost, not by habit.** A 0.5 threshold is not special. Put a cost on each kind of error, or set a minimum recall and then pick the threshold that blocks the fewest genuine customers.
 
-**Check fairness**
+### Check fairness
 
 Calculate the false positive rate **separately for each group** (language, region, age). A guardrail that blocks one group's harmless messages far more often treats those customers worse, and it's often invisible in the overall numbers.
 

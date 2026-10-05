@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 330" width="760" height="330" role="img" aria-label="Paired comparison of two releases on the same test cases. Cases both releases pass, or both fail, say nothing about the difference. Only the cases release 2 fixed, and the cases it broke, matter; McNemar's test asks whether fixes and breaks are balanced, like coin tosses.">
+<title>Compare releases case by case: only fixes and breaks matter.</title>
+
+<rect width="760" height="330" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="390.0" y="30.0" font-size="14" fill="#5E5A52" font-weight="700" text-anchor="middle">Release 2</text>
+<text xml:space="preserve" x="305.0" y="52.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="middle">passes</text>
+<text xml:space="preserve" x="475.0" y="52.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="middle">fails</text>
+<text xml:space="preserve" x="206.0" y="132.5" font-size="13" fill="#2A2926" font-weight="700" text-anchor="end">passes</text>
+<text xml:space="preserve" x="206.0" y="217.5" font-size="13" fill="#2A2926" font-weight="700" text-anchor="end">fails</text>
+<text xml:space="preserve" x="24.0" y="179.0" font-size="14" fill="#5E5A52" font-weight="700" text-anchor="start">Release 1</text>
+<rect x="223.0" y="63.0" width="164.0" height="96.0" rx="8" fill="#F2EFE8"/>
+<text xml:space="preserve" x="305.0" y="117.0" font-size="14" fill="#5E5A52" font-weight="700" text-anchor="middle">both pass</text>
+<rect x="393.0" y="63.0" width="164.0" height="96.0" rx="8" fill="#F6E3E0"/>
+<text xml:space="preserve" x="475.0" y="117.0" font-size="18" fill="#9B2C1F" font-weight="700" text-anchor="middle">BROKE</text>
+<rect x="223.0" y="165.0" width="164.0" height="96.0" rx="8" fill="#E5F0E8"/>
+<text xml:space="preserve" x="305.0" y="219.0" font-size="18" fill="#2F6B3F" font-weight="700" text-anchor="middle">FIXED</text>
+<rect x="393.0" y="165.0" width="164.0" height="96.0" rx="8" fill="#F2EFE8"/>
+<text xml:space="preserve" x="475.0" y="219.0" font-size="14" fill="#5E5A52" font-weight="700" text-anchor="middle">both fail</text>
+<rect x="570.0" y="50.0" width="174.0" height="210.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="584.0" y="76.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">Only FIXED and BROKE</text>
+<text xml:space="preserve" x="584.0" y="94.8" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">say anything about</text>
+<text xml:space="preserve" x="584.0" y="113.7" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">the difference.</text>
+<text xml:space="preserve" x="584.0" y="160.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">McNemar's test: are</text>
+<text xml:space="preserve" x="584.0" y="178.1" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">fixes and breaks</text>
+<text xml:space="preserve" x="584.0" y="196.2" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">balanced, as if by</text>
+<text xml:space="preserve" x="584.0" y="214.4" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">coin toss?</text>
+<text xml:space="preserve" x="16.0" y="312.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Then look inside: a net improvement can hide broken cases in a high-stakes category.</text>
+</g></svg>

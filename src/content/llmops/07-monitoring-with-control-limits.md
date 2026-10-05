@@ -12,7 +12,7 @@ Dashboards don't detect problems. Alerts with sensible limits do.
 
 ## The concept
 
-**Control limits**
+### Control limits
 
 Every metric varies from day to day. A **control limit** marks the edge of normal variation:
 
@@ -20,11 +20,13 @@ Every metric varies from day to day. A **control limit** marks the edge of norma
 
 computed over a **baseline** window, such as the previous 28 days. A day outside the limits is unusual enough to investigate.
 
-**Why from the metric's own history**
+![An illustrative daily refusal rate over six weeks with an average line and an upper limit from the first 28 days. From day 36 the rate jumps above the limit.](/images/courses/llmops/control-chart.svg "A control chart, illustrated: day 36 is outside normal variation.")
+
+### Why from the metric's own history
 
 A fixed rule like "alert if refusals pass 10%" is either too loose (a jump from 3% to 8% stays under it) or too tight (noisy days trigger it). Limits learned from the data fit each metric.
 
-**Practical details**
+### Practical details
 
 - Exclude known incident days from the baseline, so a problem doesn't raise its own limit.
 - Weekly patterns (Sundays are quieter) can need separate baselines for each day of the week, or rates rather than counts.

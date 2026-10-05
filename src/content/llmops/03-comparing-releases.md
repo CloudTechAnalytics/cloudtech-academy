@@ -15,7 +15,7 @@ Both ran on the same 400 cases as the live release, r1. r2's overall score is hi
 
 ## The concept
 
-**Paired comparison**
+### Paired comparison
 
 Because every release runs on the same cases, compare them case by case:
 
@@ -26,11 +26,13 @@ Because every release runs on the same cases, compare them case by case:
 
 Only the **fixed** and **broke** cases tell you anything about the difference.
 
-**Is the difference real?**
+![A two-by-two grid of release 1 against release 2, pass or fail. Both pass and both fail are greyed out; release 2 broke and release 2 fixed are highlighted.](/images/courses/llmops/paired.svg "Compare releases case by case. Only fixes and breaks carry information.")
+
+### Is the difference real?
 
 If the two releases were equally good, each changed case would be equally likely to be a fix or a break, like a coin toss. **McNemar's test** checks that: an exact binomial test on the fixed and broke counts. A small p-value (below 0.05) suggests a real difference.
 
-**Look inside the total**
+### Look inside the total
 
 An overall improvement can hide a regression in one category. For a high-stakes category, even a few broken cases matter, and with only 50 cases, you should look at exactly which ones broke.
 

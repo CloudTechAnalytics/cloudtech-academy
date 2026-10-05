@@ -271,6 +271,30 @@
   760,
   366
  ],
+ "/images/courses/llmops/control-chart.svg": [
+  760,
+  380
+ ],
+ "/images/courses/llmops/incident-timeline.svg": [
+  760,
+  300
+ ],
+ "/images/courses/llmops/interval-width.svg": [
+  760,
+  330
+ ],
+ "/images/courses/llmops/lifecycle.svg": [
+  760,
+  430
+ ],
+ "/images/courses/llmops/paired.svg": [
+  760,
+  330
+ ],
+ "/images/courses/llmops/release-gate.svg": [
+  760,
+  440
+ ],
  "/images/courses/ml/confusion-threshold.svg": [
   760,
   470

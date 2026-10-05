@@ -47732,7 +47732,7 @@ Nothing in the original evaluation was wrong. The world around the assistant cha
 
 ## The concept
 
-**What changes after launch**
+### What changes after launch
 
 | Change | Example | Who controls it |
 | :-- | :-- | :-- |
@@ -47741,16 +47741,18 @@ Nothing in the original evaluation was wrong. The world around the assistant cha
 | **Your data** | help articles edited, the search index rebuilt | you, often another team |
 | **Your users** | new questions, new attacks, new languages | nobody |
 
-**Offline and online evaluation**
+### Offline and online evaluation
 
 - **Offline**: a fixed test suite, run before every release. It tells you whether a change is safe to ship.
 - **Online**: measurements of live traffic (refusals, hand-overs, latency, feedback, graded samples). It tells you whether something has gone wrong since.
 
 You need both. Offline tests can't see a provider's update; online metrics can't stop a bad release before customers see it.
 
-**The lifecycle**
+### The lifecycle
 
 Change → offline regression suite → release gate → gradual rollout → online monitoring → incident response → new test cases from what went wrong → back to the suite.
+
+![Six steps in a loop: change, regression suite and release gate (offline), then gradual rollout, monitoring and incident response (online), with every incident adding new test cases.](/images/courses/llmops/lifecycle.svg "Offline tests before release, online monitoring after, and incidents feeding back into the suite.")
 
 ## Example
 
@@ -47864,7 +47866,7 @@ A **regression suite** fixes that: the same set of cases, with the expected beha
 
 ## The concept
 
-**What a good suite covers**
+### What a good suite covers
 
 - **Every category** of real traffic, roughly in proportion, plus extra cases for high-stakes ones (fraud).
 - **Difficulty**: easy, medium and hard cases, so improvements on hard cases show.
@@ -47874,9 +47876,11 @@ A **regression suite** fixes that: the same set of cases, with the expected beha
 
 **Each case needs a clear expected behaviour**, written so that two graders would agree whether an answer passes.
 
-**How precise is a score?**
+### How precise is a score?
 
 A pass rate from a finite set of cases is an estimate. With *n* cases and pass rate *p*, a 95% confidence interval is roughly ± 2 × √(p(1 − p)/n). The **Wilson interval** is a better version for rates near 0 or 1. The key point: a category with 30 cases has a much wider interval than the whole suite of 400.
+
+![95% Wilson intervals for a 90% pass rate: 74% to 97% with 30 cases, 83% to 94% with 100 cases, 87% to 93% with 400 cases.](/images/courses/llmops/interval-width.svg "The same 90% pass rate is far less certain from 30 cases than from 400.")
 
 ## Example
 
@@ -48026,7 +48030,7 @@ Both ran on the same 400 cases as the live release, r1. r2's overall score is hi
 
 ## The concept
 
-**Paired comparison**
+### Paired comparison
 
 Because every release runs on the same cases, compare them case by case:
 
@@ -48037,11 +48041,13 @@ Because every release runs on the same cases, compare them case by case:
 
 Only the **fixed** and **broke** cases tell you anything about the difference.
 
-**Is the difference real?**
+![A two-by-two grid of release 1 against release 2, pass or fail. Both pass and both fail are greyed out; release 2 broke and release 2 fixed are highlighted.](/images/courses/llmops/paired.svg "Compare releases case by case. Only fixes and breaks carry information.")
+
+### Is the difference real?
 
 If the two releases were equally good, each changed case would be equally likely to be a fix or a break, like a coin toss. **McNemar's test** checks that: an exact binomial test on the fixed and broke counts. A small p-value (below 0.05) suggests a real difference.
 
-**Look inside the total**
+### Look inside the total
 
 An overall improvement can hide a regression in one category. For a high-stakes category, even a few broken cases matter, and with only 50 cases, you should look at exactly which ones broke.
 
@@ -48213,7 +48219,7 @@ Software teams solve this with **gates**: automatic checks that run on every cha
 
 ## The concept
 
-**A release gate is a set of rules, agreed in advance**
+### A release gate is a set of rules, agreed in advance
 
 | Rule | Example |
 | :-- | :-- |
@@ -48225,6 +48231,8 @@ Software teams solve this with **gates**: automatic checks that run on every cha
 **Agree the rules before you see the results.** Otherwise, the rules bend to fit the release people want to ship.
 
 **Run the gate automatically**, in the same pipeline that deploys the change (often called CI), so that a failing release can't be deployed without someone explicitly overriding it, and the override is recorded.
+
+![A change enters a gate with four rules agreed in advance: overall pass rate, critical categories, budgets and red-team. If all pass, deploy; if any fails, it's blocked unless an override is recorded.](/images/courses/llmops/release-gate.svg "A release gate, run automatically before deploy.")
 
 ## Example
 
@@ -48356,7 +48364,7 @@ They wrote 240 attacks across six techniques and ran each against all three rele
 
 **Red-teaming** is structured, deliberate attack on your own system before others do it.
 
-**A catalogue of techniques**
+### A catalogue of techniques
 
 | Technique | Example |
 | :-- | :-- |
@@ -48367,12 +48375,12 @@ They wrote 240 attacks across six techniques and ran each against all three rele
 | Other languages | the same attack in Pidgin or mixed language |
 | Multi-turn escalation | friendly chat first, then the request |
 
-**Measure it**
+### Measure it
 
 - **Attack success rate (ASR)**: share of attacks that achieved their goal, graded by a person against a clear definition of success.
 - Break it down by **technique**, **release** and **defence**, because defences work unevenly.
 
-**Close the loop**
+### Close the loop
 
 Every successful attack becomes a fix (prompt, guardrail, tool permission) **and** a test case in the regression suite, so it stays fixed.
 
@@ -48510,7 +48518,7 @@ Security wants a low threshold, to catch everything. Support wants a high one, b
 
 ## The concept
 
-**Every threshold is a trade-off**
+### Every threshold is a trade-off
 
 | | Message is harmful | Message is harmless |
 | :-- | :-- | :-- |
@@ -48523,7 +48531,7 @@ Security wants a low threshold, to catch everything. Support wants a high one, b
 
 **Choose by cost, not by habit.** A 0.5 threshold is not special. Put a cost on each kind of error, or set a minimum recall and then pick the threshold that blocks the fewest genuine customers.
 
-**Check fairness**
+### Check fairness
 
 Calculate the false positive rate **separately for each group** (language, region, age). A guardrail that blocks one group's harmless messages far more often treats those customers worse, and it's often invisible in the overall numbers.
 
@@ -48695,7 +48703,7 @@ Dashboards don't detect problems. Alerts with sensible limits do.
 
 ## The concept
 
-**Control limits**
+### Control limits
 
 Every metric varies from day to day. A **control limit** marks the edge of normal variation:
 
@@ -48703,11 +48711,13 @@ Every metric varies from day to day. A **control limit** marks the edge of norma
 
 computed over a **baseline** window, such as the previous 28 days. A day outside the limits is unusual enough to investigate.
 
-**Why from the metric's own history**
+![An illustrative daily refusal rate over six weeks with an average line and an upper limit from the first 28 days. From day 36 the rate jumps above the limit.](/images/courses/llmops/control-chart.svg "A control chart, illustrated: day 36 is outside normal variation.")
+
+### Why from the metric's own history
 
 A fixed rule like "alert if refusals pass 10%" is either too loose (a jump from 3% to 8% stays under it) or too tight (noisy days trigger it). Limits learned from the data fit each metric.
 
-**Practical details**
+### Practical details
 
 - Exclude known incident days from the baseline, so a problem doesn't raise its own limit.
 - Weekly patterns (Sundays are quieter) can need separate baselines for each day of the week, or rates rather than counts.
@@ -48846,7 +48856,7 @@ The team had been watching thumbs-down feedback, which barely moved. But they al
 
 ## The concept
 
-**Why feedback is weak**
+### Why feedback is weak
 
 - Only a few per cent of customers click thumbs up or down.
 - Those who do aren't typical: people click when they're annoyed, often about things the assistant can't change (fees, limits, policies).
@@ -48854,11 +48864,11 @@ The team had been watching thumbs-down feedback, which barely moved. But they al
 
 Feedback is useful for finding examples to read, but it isn't a measure of accuracy.
 
-**Sampled grading**
+### Sampled grading
 
 A random sample of conversations, graded by trained people against the same standard as the regression suite. It's an unbiased estimate of live accuracy.
 
-**Small samples are noisy, so pool them**
+### Small samples are noisy, so pool them
 
 With 30 graded conversations a day, one day's accuracy jumps around by many points. Pool several days: 7 days give 210 graded conversations and a much more stable estimate. Use the same control-limit idea as lesson 7, with the limit based on the sample size:
 
@@ -49008,13 +49018,15 @@ When an AI feature misbehaves, the first hour matters: who decides, what gets sw
 
 ## The concept
 
-**Measure incidents**
+### Measure incidents
 
 - **Time to detect**: from start to detection.
 - **Time to resolve**: from detection to fix.
 - **How detected**: your own alerts, or someone else (customers, social media)? Incidents found by others are the ones your monitoring missed.
 
-**Prepare before it happens**
+![A timeline from problem starts to detected to resolved, with time to detect and time to resolve marked, and a note on whether your own alert or customers found it.](/images/courses/llmops/incident-timeline.svg "The two numbers every incident is measured by, and who found it.")
+
+### Prepare before it happens
 
 | Prepared in advance | Example |
 | :-- | :-- |
@@ -49023,7 +49035,7 @@ When an AI feature misbehaves, the first hour matters: who decides, what gets sw
 | **Safe fallbacks** | pin the model version; roll back to the last good release or index; switch the assistant to "hand over everything" |
 | **Customer message** | a pre-written notice that a person will help |
 
-**Blameless postmortems**
+### Blameless postmortems
 
 After each incident, write: timeline, impact, root cause, why it wasn't caught earlier, and actions with owners and dates. Focus on **systems**, not people. "Nobody checked the index" becomes "the index rebuild had no automated check that all articles were present."
 
@@ -49141,7 +49153,7 @@ Your final project is that programme, built from the data in this course.
 
 ## The concept
 
-**What the plan contains**
+### What the plan contains
 
 | Part | Built in |
 | :-- | :-- |
@@ -49152,7 +49164,7 @@ Your final project is that programme, built from the data in this course.
 | Alerts with control limits | lessons 7 and 8 |
 | Incident playbook and a postmortem | lesson 9 |
 
-**A backtest of your monitoring**
+### A backtest of your monitoring
 
 The strongest evidence for a monitoring plan is to run it on the past: for each incident, the date your alerts would have fired, against the date it was actually found.
 

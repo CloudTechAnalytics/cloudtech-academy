@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 430" width="760" height="430" role="img" aria-label="The lifecycle of an LLM feature in production: a change goes through the offline regression suite and a release gate, then a gradual rollout, online monitoring, and incident response when something goes wrong. Every incident adds new test cases to the suite, closing the loop.">
+<title>Offline tests stop bad releases; online monitoring catches what changes after.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="430" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="46.0" width="220.0" height="120.0" rx="10" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.5"/>
+<circle cx="42.0" cy="76.0" r="12" fill="#8A6A1F"/>
+<text xml:space="preserve" x="42.0" y="80.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
+<text xml:space="preserve" x="62.0" y="81.0" font-size="15" fill="#2A2926" font-weight="700" text-anchor="start">Change</text>
+<text xml:space="preserve" x="34.0" y="116.0" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">prompt, code, model or data</text>
+<rect x="270.0" y="46.0" width="220.0" height="120.0" rx="10" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.5"/>
+<circle cx="296.0" cy="76.0" r="12" fill="#8A6A1F"/>
+<text xml:space="preserve" x="296.0" y="80.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
+<text xml:space="preserve" x="316.0" y="81.0" font-size="15" fill="#2A2926" font-weight="700" text-anchor="start">Regression suite</text>
+<text xml:space="preserve" x="288.0" y="116.0" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">fixed test cases, run</text>
+<text xml:space="preserve" x="288.0" y="134.8" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">offline</text>
+<rect x="524.0" y="46.0" width="220.0" height="120.0" rx="10" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.5"/>
+<circle cx="550.0" cy="76.0" r="12" fill="#8A6A1F"/>
+<text xml:space="preserve" x="550.0" y="80.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
+<text xml:space="preserve" x="570.0" y="81.0" font-size="15" fill="#2A2926" font-weight="700" text-anchor="start">Release gate</text>
+<text xml:space="preserve" x="542.0" y="116.0" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">rules agreed in advance</text>
+<rect x="524.0" y="236.0" width="220.0" height="120.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.5"/>
+<circle cx="550.0" cy="266.0" r="12" fill="#8A6A1F"/>
+<text xml:space="preserve" x="550.0" y="270.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">4</text>
+<text xml:space="preserve" x="570.0" y="271.0" font-size="15" fill="#2A2926" font-weight="700" text-anchor="start">Gradual rollout</text>
+<text xml:space="preserve" x="542.0" y="306.0" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">small share first</text>
+<rect x="270.0" y="236.0" width="220.0" height="120.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.5"/>
+<circle cx="296.0" cy="266.0" r="12" fill="#8A6A1F"/>
+<text xml:space="preserve" x="296.0" y="270.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">5</text>
+<text xml:space="preserve" x="316.0" y="271.0" font-size="15" fill="#2A2926" font-weight="700" text-anchor="start">Monitoring</text>
+<text xml:space="preserve" x="288.0" y="306.0" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">live metrics with control</text>
+<text xml:space="preserve" x="288.0" y="324.9" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">limits</text>
+<rect x="16.0" y="236.0" width="220.0" height="120.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.5"/>
+<circle cx="42.0" cy="266.0" r="12" fill="#8A6A1F"/>
+<text xml:space="preserve" x="42.0" y="270.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">6</text>
+<text xml:space="preserve" x="62.0" y="271.0" font-size="15" fill="#2A2926" font-weight="700" text-anchor="start">Incident response</text>
+<text xml:space="preserve" x="34.0" y="306.0" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">roll back, fix, write it up</text>
+<path d="M238.0,106.0 L266.0,106.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<path d="M492.0,106.0 L520.0,106.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<path d="M634.0,168.0 L634.0,232.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<path d="M520.0,296.0 L492.0,296.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<path d="M266.0,296.0 L238.0,296.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<path d="M126,234 L126,170" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)" stroke-dasharray="6 4"/>
+<text xml:space="preserve" x="140.0" y="210.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">every incident becomes new test cases</text>
+<text xml:space="preserve" x="16.0" y="30.0" font-size="13" fill="#2F5D8A" font-weight="700" text-anchor="start">Offline (before release)</text>
+<text xml:space="preserve" x="16.0" y="384.0" font-size="13" fill="#2F6B3F" font-weight="700" text-anchor="start">Online (after release)</text>
+<text xml:space="preserve" x="16.0" y="410.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">You need both: offline tests can't see a provider's model update; online metrics can't stop a bad release</text>
+<text xml:space="preserve" x="16.0" y="428.1" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">reaching customers.</text>
+</g></svg>
