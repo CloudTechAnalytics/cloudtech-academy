@@ -321,11 +321,8 @@ export function AdminCertificateIssue({ mode }: { mode: "new" | "reissue" }) {
           )}
 
           <Section title="Recipient">
-            <div className="sm:col-span-2">
-              <TextField label="Full name, as it should appear" value={input.recipientName} onChange={(e) => set("recipientName", e.target.value)} error={errors.recipientName} autoComplete="off" maxLength={120} />
-            </div>
+            <TextField label="Full name, as it should appear" value={input.recipientName} onChange={(e) => set("recipientName", e.target.value)} error={errors.recipientName} autoComplete="off" maxLength={120} />
             <TextField label="Email address (optional)" type="email" value={input.recipientEmail} onChange={(e) => set("recipientEmail", e.target.value)} error={errors.recipientEmail} hint="Kept private. Never shown on verification." maxLength={200} />
-            <div className="hidden sm:block" />
             {!courseLocked && (
               <AccountPicker
                 students={lists.students}
