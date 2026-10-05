@@ -21,6 +21,8 @@ A reviewer will spend a minute or two on each project. Help them:
 | Code, websites, data analysis | GitHub | A repository with a README (see the Git & GitHub course) |
 | Videos | YouTube (unlisted is fine) or Drive | A link, plus a thumbnail image |
 
+![Four kinds of work matched to where they live and how to share them, then three checks to make before sharing any link](/images/courses/portfolio/hosting.svg "Put each kind of work somewhere linkable, then test the link.")
+
 > [!WARNING]
 > Before sharing a link, open it in a private browser window. If it asks you to sign in, your settings are wrong. Also check you haven't shared **edit** access by mistake.
 

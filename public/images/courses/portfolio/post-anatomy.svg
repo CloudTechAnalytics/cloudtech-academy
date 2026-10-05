@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 430" width="760" height="430" role="img" aria-label="The shape of a LinkedIn post: a hook of one or two lines that shows before see more, then the story with what you did and learned, then the result or proof, then thanks and a question. Add a picture, be specific and honest, and use three to five hashtags.">
+<title>Hook, story, proof, thanks and a question.</title>
+
+<rect width="760" height="430" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="28.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">The shape of a good post</text>
+<rect x="16.0" y="40.0" width="440.0" height="372.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.6"/>
+<circle cx="42.0" cy="66.0" r="14" fill="#DCC594"/>
+<text xml:space="preserve" x="64.0" y="63.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">Your name</text>
+<text xml:space="preserve" x="64.0" y="79.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">Student · 1h</text>
+<rect x="30.0" y="92.0" width="412.0" height="52.0" rx="6" fill="#E5F0E8"/>
+<text xml:space="preserve" x="40.0" y="112.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">I built my first stock tracker, and</text>
+<text xml:space="preserve" x="40.0" y="130.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">it showed me something unexpected.</text>
+<text xml:space="preserve" x="442.0" y="140.0" font-size="11.5" fill="#2F5D8A" font-weight="700" text-anchor="end">…see more</text>
+<line x1="30.0" y1="154.0" x2="442.0" y2="154.0" stroke="#EDE6D8" stroke-width="1"/>
+<rect x="30.0" y="164.0" width="412.0" height="60.0" rx="6" fill="#F3EBD8"/>
+<text xml:space="preserve" x="40.0" y="184.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">What I did, the challenge,</text>
+<text xml:space="preserve" x="40.0" y="202.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">and what I learned.</text>
+<rect x="30.0" y="232.0" width="412.0" height="74.0" rx="6" fill="#E6EEF6"/>
+<rect x="40.0" y="242.0" width="150.0" height="54.0" rx="4" fill="#C9D8E8"/>
+<text xml:space="preserve" x="115.0" y="274.0" font-size="11.5" fill="#2F5D8A" font-weight="400" text-anchor="middle">screenshot</text>
+<text xml:space="preserve" x="204.0" y="266.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">A number, a picture,</text>
+<text xml:space="preserve" x="204.0" y="284.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">or a link.</text>
+<rect x="30.0" y="314.0" width="412.0" height="56.0" rx="6" fill="#EEEAF5"/>
+<text xml:space="preserve" x="40.0" y="334.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">Thanks to my study group.</text>
+<text xml:space="preserve" x="40.0" y="352.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">Which tool do you use?</text>
+<text xml:space="preserve" x="30.0" y="392.0" font-size="11.5" fill="#2F5D8A" font-weight="400" text-anchor="start">#Excel  #StudentProject  #Inventory</text>
+<line x1="458.0" y1="118.0" x2="488.0" y2="118.0" stroke="#2F6B3F" stroke-width="1.5"/>
+<circle cx="502.0" cy="118.0" r="12" fill="#2F6B3F"/>
+<text xml:space="preserve" x="502.0" y="122.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
+<text xml:space="preserve" x="522.0" y="123.0" font-size="13.5" fill="#2F6B3F" font-weight="700" text-anchor="start">Hook</text>
+<text xml:space="preserve" x="522.0" y="142.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">1–2 lines. Only these show before</text>
+<text xml:space="preserve" x="522.0" y="158.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">'see more'.</text>
+<line x1="458.0" y1="194.0" x2="488.0" y2="194.0" stroke="#B38A3E" stroke-width="1.5"/>
+<circle cx="502.0" cy="194.0" r="12" fill="#B38A3E"/>
+<text xml:space="preserve" x="502.0" y="198.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
+<text xml:space="preserve" x="522.0" y="199.0" font-size="13.5" fill="#B38A3E" font-weight="700" text-anchor="start">Story</text>
+<text xml:space="preserve" x="522.0" y="218.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">What you did, the challenge, what</text>
+<text xml:space="preserve" x="522.0" y="234.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">you learned.</text>
+<line x1="458.0" y1="269.0" x2="488.0" y2="269.0" stroke="#2F5D8A" stroke-width="1.5"/>
+<circle cx="502.0" cy="269.0" r="12" fill="#2F5D8A"/>
+<text xml:space="preserve" x="502.0" y="273.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
+<text xml:space="preserve" x="522.0" y="274.0" font-size="13.5" fill="#2F5D8A" font-weight="700" text-anchor="start">Proof</text>
+<text xml:space="preserve" x="522.0" y="293.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">A number, a picture or a link.</text>
+<line x1="458.0" y1="342.0" x2="488.0" y2="342.0" stroke="#5C4F80" stroke-width="1.5"/>
+<circle cx="502.0" cy="342.0" r="12" fill="#5C4F80"/>
+<text xml:space="preserve" x="502.0" y="346.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">4</text>
+<text xml:space="preserve" x="522.0" y="347.0" font-size="13.5" fill="#5C4F80" font-weight="700" text-anchor="start">Thanks + question</text>
+<text xml:space="preserve" x="522.0" y="366.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">Credit helpers; invite a reply.</text>
+</g></svg>

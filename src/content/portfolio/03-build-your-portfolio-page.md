@@ -30,6 +30,8 @@ Keep it to **one page** with these sections, in this order:
 4. **Skills and credentials:** tools you use, plus certificates and badges with their verification links.
 5. **Contact:** your email and LinkedIn. You don't need your phone number or home address.
 
+![A one-page portfolio with five sections in order: header, about, three projects with pictures, skills and credentials, and contact](/images/courses/portfolio/page-layout.svg "One page, five sections, in this order.")
+
 ## Build it with Google Sites
 
 1. Go to **sites.google.com** and click **Blank site** (or pick a template).

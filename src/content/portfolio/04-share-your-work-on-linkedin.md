@@ -17,6 +17,8 @@ Most strong LinkedIn posts follow a simple pattern:
 3. **Result or proof:** a number, a picture, a link.
 4. **Thanks and a question:** credit people who helped, and invite a reply.
 
+![A LinkedIn post with four parts: a hook that shows before see more, the story, the proof, and thanks with a question](/images/courses/portfolio/post-anatomy.svg "Hook, story, proof, thanks and a question.")
+
 ## An example
 
 ```text

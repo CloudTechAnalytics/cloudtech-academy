@@ -2892,6 +2892,8 @@ Start small. For each possible piece, ask:
 
 Choose the **three** strongest. You can add more later.
 
+![Everything you have made is filtered through three questions down to your best three pieces](/images/courses/portfolio/pick-three.svg "Start wide, then narrow to your best three.")
+
 ## Structure each piece the same way
 
 For every project, prepare four short parts. This works on a portfolio page, on LinkedIn and in interviews:
@@ -2900,6 +2902,8 @@ For every project, prepare four short parts. This works on a portfolio page, on 
 - **What I did:** the tools and steps.
 - **The result:** a number, an outcome or feedback.
 - **See it:** a link, image or file.
+
+![The four parts of a project summary: the problem, what I did, the result and see it, each with an example](/images/courses/portfolio/project-summary.svg "Problem, what I did, the result, see it.")
 
 > [!TIP]
 > "Built an Excel tracker that cut our class dues reconciliation from two hours to ten minutes" is far stronger than "Made a spreadsheet".
@@ -2967,6 +2971,8 @@ A reviewer will spend a minute or two on each project. Help them:
 | Designs and posters | Canva, or images on your portfolio page | Canva share link set to view-only, or an exported PNG/PDF |
 | Code, websites, data analysis | GitHub | A repository with a README (see the Git & GitHub course) |
 | Videos | YouTube (unlisted is fine) or Drive | A link, plus a thumbnail image |
+
+![Four kinds of work matched to where they live and how to share them, then three checks to make before sharing any link](/images/courses/portfolio/hosting.svg "Put each kind of work somewhere linkable, then test the link.")
 
 > [!WARNING]
 > Before sharing a link, open it in a private browser window. If it asks you to sign in, your settings are wrong. Also check you haven't shared **edit** access by mistake.
@@ -3084,6 +3090,8 @@ Keep it to **one page** with these sections, in this order:
 4. **Skills and credentials:** tools you use, plus certificates and badges with their verification links.
 5. **Contact:** your email and LinkedIn. You don't need your phone number or home address.
 
+![A one-page portfolio with five sections in order: header, about, three projects with pictures, skills and credentials, and contact](/images/courses/portfolio/page-layout.svg "One page, five sections, in this order.")
+
 ## Build it with Google Sites
 
 1. Go to **sites.google.com** and click **Blank site** (or pick a template).
@@ -3160,6 +3168,8 @@ Most strong LinkedIn posts follow a simple pattern:
 2. **Story:** what you did, the challenge, and what you learned.
 3. **Result or proof:** a number, a picture, a link.
 4. **Thanks and a question:** credit people who helped, and invite a reply.
+
+![A LinkedIn post with four parts: a hook that shows before see more, the story, the proof, and thanks with a question](/images/courses/portfolio/post-anatomy.svg "Hook, story, proof, thanks and a question.")
 
 ## An example
 

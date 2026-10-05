@@ -40,6 +40,8 @@ Start small. For each possible piece, ask:
 
 Choose the **three** strongest. You can add more later.
 
+![Everything you have made is filtered through three questions down to your best three pieces](/images/courses/portfolio/pick-three.svg "Start wide, then narrow to your best three.")
+
 ## Structure each piece the same way
 
 For every project, prepare four short parts. This works on a portfolio page, on LinkedIn and in interviews:
@@ -48,6 +50,8 @@ For every project, prepare four short parts. This works on a portfolio page, on 
 - **What I did:** the tools and steps.
 - **The result:** a number, an outcome or feedback.
 - **See it:** a link, image or file.
+
+![The four parts of a project summary: the problem, what I did, the result and see it, each with an example](/images/courses/portfolio/project-summary.svg "Problem, what I did, the result, see it.")
 
 > [!TIP]
 > "Built an Excel tracker that cut our class dues reconciliation from two hours to ten minutes" is far stronger than "Made a spreadsheet".
