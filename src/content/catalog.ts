@@ -497,7 +497,7 @@ export const COURSES: CourseDef[] = [
     difficulty: "beginner",
     level: 2,
     levelLabel: "Beginner",
-    estimatedHours: 7,
+    estimatedHours: 9,
     isFree: true,
     status: "available",
     skills: ["Formulas and functions", "IF, SUMIF and COUNTIF", "XLOOKUP", "Data cleaning", "Pivot tables", "Charts"],

@@ -38,6 +38,20 @@ Growth %: =(H1_2026 - H1_2025) / H1_2025
 
 Add a region criterion to get the same by region. Format growth as a percentage with one decimal.
 
+**Growth, step by step.** Growth is the change divided by where you started:
+
+| Step | Formula | Kolanut, H1 |
+| :-- | :-- | --: |
+| Change | `=new - old` | 290,730,455 − 244,163,070 = 46,567,385 |
+| Growth | `=change / old` | 46,567,385 ÷ 244,163,070 = 0.191 |
+| Shown as % | Format as Percentage, 1 decimal | **19.1%** |
+
+Divide by the **old** value, not the new one: dividing by 290.7m would give 16.0%, which understates the growth. If the old value could be zero (a brand-new region), wrap it: `=IFERROR((new-old)/old, "new")`.
+
+**Percentage points versus per cent.** When the thing that changes is already a percentage, say which you mean. Supermarkets went from 24.8% of revenue in 2025 to 26.3% in 2026. That's a rise of **1.5 percentage points**, or **6% in relative terms** (1.5 ÷ 24.8). "Up 1.5%" is ambiguous, and a careful reader will ask which.
+
+**Inputs in cells, not in formulas.** Put the period dates in labelled cells on `Calc` (say `B1` = start, `B2` = end) and refer to them: `">="&$B$1`. Next quarter, you change two cells instead of editing every formula. That's what makes a workbook reusable.
+
 > [!BUSINESS]
 > Always compare the same period (H1 with H1), and say what's included: "revenue after discounts, all channels, January–June". Kolanut also raised prices 8–12% in January 2026, so part of the growth is price, not volume. A good summary says so.
 

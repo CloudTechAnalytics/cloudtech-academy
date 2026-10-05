@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 470" width="1160" height="470" role="img" aria-label="The four areas of a pivot table and the table they produce. region in Rows gives one row per region; year in Columns gives one column per year; Sum of revenue in Values fills the cells; channel in Filters limits the whole table.">
+<title>The four areas of a pivot table and the table they produce: region in Rows, year in Columns, Sum of revenue in Values, channel in Filters.</title>
+<rect width="1160" height="470" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+  <text x="40" y="40" font-size="16" font-weight="700" fill="#2A2926">You drag fields into four areas…</text>
+  <!-- areas 2x2 -->
+  <g font-size="13">
+    <rect x="40" y="60" width="190" height="96" rx="10" fill="#FFFFFF" stroke="#7A6C9B" stroke-width="1.6"/>
+    <text x="56" y="84" font-weight="700" fill="#5C4F80">Filters</text>
+    <rect x="56" y="100" width="158" height="32" rx="6" fill="#EEEAF5"/><text x="70" y="121" fill="#2A2926">channel</text>
+
+    <rect x="250" y="60" width="190" height="96" rx="10" fill="#FFFFFF" stroke="#2F5D8A" stroke-width="1.6"/>
+    <text x="266" y="84" font-weight="700" fill="#2F5D8A">Columns</text>
+    <rect x="266" y="100" width="158" height="32" rx="6" fill="#E6EEF6"/><text x="280" y="121" fill="#2A2926">year (order_date)</text>
+
+    <rect x="40" y="176" width="190" height="96" rx="10" fill="#FFFFFF" stroke="#8A6A1F" stroke-width="1.6"/>
+    <text x="56" y="200" font-weight="700" fill="#8A6A1F">Rows</text>
+    <rect x="56" y="216" width="158" height="32" rx="6" fill="#F3EBD8"/><text x="70" y="237" fill="#2A2926">region</text>
+
+    <rect x="250" y="176" width="190" height="96" rx="10" fill="#FFFFFF" stroke="#2F6B3F" stroke-width="1.6"/>
+    <text x="266" y="200" font-weight="700" fill="#2F6B3F">Values</text>
+    <rect x="266" y="216" width="158" height="32" rx="6" fill="#E5F0E8"/><text x="280" y="237" fill="#2A2926">Sum of revenue</text>
+  </g>
+  <g font-size="13.5" fill="#2A2926">
+    <text x="40" y="310"><tspan font-weight="700" fill="#8A6A1F">Rows</tspan>: one row per value, down the side.</text>
+    <text x="40" y="334"><tspan font-weight="700" fill="#2F5D8A">Columns</tspan>: one column per value, across the top.</text>
+    <text x="40" y="358"><tspan font-weight="700" fill="#2F6B3F">Values</tspan>: the numbers, summed, counted or averaged.</text>
+    <text x="40" y="382"><tspan font-weight="700" fill="#5C4F80">Filters</tspan>: limit the whole table, e.g. Wholesale only.</text>
+  </g>
+
+  <path d="M462,170 L520,170" stroke="#8A6A1F" stroke-width="2.4" fill="none"/>
+  <path d="M514,163 L524,170 L514,177 z" fill="#8A6A1F"/>
+
+  <!-- result -->
+  <text x="540" y="40" font-size="16" font-weight="700" fill="#2A2926">…and Excel builds the summary</text>
+  <rect x="540" y="60" width="580" height="44" rx="8" fill="#EEEAF5"/>
+  <text x="558" y="88" font-size="13.5" fill="#2A2926"><tspan font-weight="700" fill="#5C4F80">channel</tspan>   (All)  ▾</text>
+  <rect x="540" y="116" width="580" height="300" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+  <rect x="541" y="117" width="578" height="38" fill="#F7F3EA"/>
+  <g font-size="13.5">
+    <text x="558" y="141" font-weight="700" fill="#2A2926">Sum of revenue</text>
+    <text x="830" y="141" font-weight="700" fill="#2F5D8A" text-anchor="end">2025</text>
+    <text x="960" y="141" font-weight="700" fill="#2F5D8A" text-anchor="end">2026</text>
+    <text x="1100" y="141" font-weight="700" fill="#2A2926" text-anchor="end">Grand Total</text>
+  </g>
+  <g font-size="13.5" fill="#2A2926">
+    <text x="558" y="182" fill="#8A6A1F" font-weight="700">Lagos</text><text x="830" y="182" text-anchor="end">258,393,705</text><text x="960" y="182" text-anchor="end">152,768,595</text><text x="1100" y="182" text-anchor="end">411,162,300</text>
+    <text x="558" y="214" fill="#8A6A1F" font-weight="700">North Central</text><text x="830" y="214" text-anchor="end">50,374,935</text><text x="960" y="214" text-anchor="end">27,165,785</text><text x="1100" y="214" text-anchor="end">77,540,720</text>
+    <text x="558" y="246" fill="#8A6A1F" font-weight="700">North West</text><text x="830" y="246" text-anchor="end">64,934,505</text><text x="960" y="246" text-anchor="end">16,646,820</text><text x="1100" y="246" text-anchor="end">81,581,325</text>
+    <text x="558" y="278" fill="#8A6A1F" font-weight="700">South East</text><text x="830" y="278" text-anchor="end">40,948,980</text><text x="960" y="278" text-anchor="end">19,367,705</text><text x="1100" y="278" text-anchor="end">60,316,685</text>
+    <text x="558" y="310" fill="#8A6A1F" font-weight="700">South South</text><text x="830" y="310" text-anchor="end">45,314,580</text><text x="960" y="310" text-anchor="end">23,088,650</text><text x="1100" y="310" text-anchor="end">68,403,230</text>
+    <text x="558" y="342" fill="#8A6A1F" font-weight="700">South West</text><text x="830" y="342" text-anchor="end">79,844,085</text><text x="960" y="342" text-anchor="end">51,692,900</text><text x="1100" y="342" text-anchor="end">131,536,985</text>
+  </g>
+  <line x1="540" x2="1120" y1="360" y2="360" stroke="#CFC4B2"/>
+  <g font-size="13.5" font-weight="700" fill="#2A2926">
+    <text x="558" y="392">Grand Total</text><text x="830" y="392" text-anchor="end">539,810,790</text><text x="960" y="392" text-anchor="end">290,730,455</text><text x="1100" y="392" text-anchor="end">830,541,245</text>
+  </g>
+  <text x="40" y="420" font-size="13" fill="#5E5A52">Kolanut's real figures. 2026 covers January</text><text x="40" y="440" font-size="13" fill="#5E5A52">to June only: compare it with the first half of 2025.</text>
+</g>
+</svg>

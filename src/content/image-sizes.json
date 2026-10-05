@@ -1,4 +1,8 @@
 {
+ "/images/courses/excel/chart-choice.svg": [
+  1160,
+  520
+ ],
  "/images/courses/excel/chart.webp": [
   1310,
   620
@@ -27,9 +31,17 @@
   880,
   660
  ],
+ "/images/courses/excel/pivot-areas.svg": [
+  1160,
+  470
+ ],
  "/images/courses/excel/pivot-table.webp": [
   1426,
   713
+ ],
+ "/images/courses/excel/relative-absolute.svg": [
+  1160,
+  430
  ],
  "/images/courses/excel/remove-duplicates.webp": [
   820,
@@ -43,9 +55,17 @@
   950,
   220
  ],
+ "/images/courses/excel/sumifs-anatomy.svg": [
+  1160,
+  470
+ ],
  "/images/courses/excel/sumifs.webp": [
   900,
   420
+ ],
+ "/images/courses/excel/xlookup-flow.svg": [
+  1160,
+  440
  ],
  "/images/courses/excel/xlookup.webp": [
   1060,

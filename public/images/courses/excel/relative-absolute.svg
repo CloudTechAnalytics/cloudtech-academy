@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 430" width="1160" height="430" role="img" aria-label="Copying a share-of-total formula down three rows. Without dollar signs, the reference to the total cell K1 moves to K2 and K3, which are empty, giving #DIV/0! errors. With $K$1, the total stays fixed and every row gives the right share.">
+<title>Copying a share-of-total formula down three rows. Without dollar signs, the reference to the total cell K1 moves to K2 and K3, which are empty, giving #DIV/0! errors. With $K$1, the total stays fixed and every row gives the right share.</title>
+<rect width="1160" height="430" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+  <!-- left -->
+  <text x="40" y="44" font-size="16" font-weight="700" fill="#9B2C1F">Relative: =H2/K1, copied down</text>
+  <g font-size="13" fill="#5E5A52"><text x="70" y="78">row</text><text x="150" y="78">H (revenue)</text><text x="290" y="78">formula in I</text><text x="470" y="78">result</text></g>
+  <rect x="40" y="90" width="520" height="176" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+  <g font-size="14" fill="#2A2926">
+    <text x="78" y="124">2</text><text x="150" y="124">260,400</text>
+    <text x="290" y="124" font-family="'JetBrains Mono', Consolas, monospace" font-size="13">=H2/<tspan font-weight="700" fill="#2F6B3F">K1</tspan></text><text x="470" y="124">0.03%</text>
+    <line x1="40" x2="560" y1="146" y2="146" stroke="#EDE6D8"/>
+    <text x="78" y="180">3</text><text x="150" y="180">92,400</text>
+    <text x="290" y="180" font-family="'JetBrains Mono', Consolas, monospace" font-size="13">=H3/<tspan font-weight="700" fill="#9B2C1F">K2</tspan></text><text x="470" y="180" fill="#9B2C1F" font-weight="700">#DIV/0!</text>
+    <line x1="40" x2="560" y1="202" y2="202" stroke="#EDE6D8"/>
+    <text x="78" y="236">4</text><text x="150" y="236">14,400</text>
+    <text x="290" y="236" font-family="'JetBrains Mono', Consolas, monospace" font-size="13">=H4/<tspan font-weight="700" fill="#9B2C1F">K3</tspan></text><text x="470" y="236" fill="#9B2C1F" font-weight="700">#DIV/0!</text>
+  </g>
+  <text x="40" y="300" font-size="14" fill="#2A2926">Both references move down a row each time.</text>
+  <text x="40" y="322" font-size="14" fill="#2A2926">K2 and K3 are empty, so Excel divides by zero.</text>
+
+  <!-- right -->
+  <text x="610" y="44" font-size="16" font-weight="700" fill="#2F6B3F">Absolute: =H2/$K$1, copied down</text>
+  <g font-size="13" fill="#5E5A52"><text x="640" y="78">row</text><text x="720" y="78">H (revenue)</text><text x="860" y="78">formula in I</text><text x="1040" y="78">result</text></g>
+  <rect x="610" y="90" width="520" height="176" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+  <g font-size="14" fill="#2A2926">
+    <text x="648" y="124">2</text><text x="720" y="124">260,400</text>
+    <text x="860" y="124" font-family="'JetBrains Mono', Consolas, monospace" font-size="13">=H2/<tspan font-weight="700" fill="#2F6B3F">$K$1</tspan></text><text x="1040" y="124">0.03%</text>
+    <line x1="610" x2="1130" y1="146" y2="146" stroke="#EDE6D8"/>
+    <text x="648" y="180">3</text><text x="720" y="180">92,400</text>
+    <text x="860" y="180" font-family="'JetBrains Mono', Consolas, monospace" font-size="13">=H3/<tspan font-weight="700" fill="#2F6B3F">$K$1</tspan></text><text x="1040" y="180">0.01%</text>
+    <line x1="610" x2="1130" y1="202" y2="202" stroke="#EDE6D8"/>
+    <text x="648" y="236">4</text><text x="720" y="236">14,400</text>
+    <text x="860" y="236" font-family="'JetBrains Mono', Consolas, monospace" font-size="13">=H4/<tspan font-weight="700" fill="#2F6B3F">$K$1</tspan></text><text x="1040" y="236">0.00%</text>
+  </g>
+  <text x="610" y="300" font-size="14" fill="#2A2926">H moves with each row, as it should.</text>
+  <text x="610" y="322" font-size="14" fill="#2A2926">$K$1 is locked: every row divides by the grand total.</text>
+
+  <rect x="40" y="350" width="1090" height="56" rx="10" fill="#EFE4CC" stroke="#B38A3E" stroke-width="1.5"/>
+  <text x="60" y="384" font-size="14.5" fill="#2A2926"><tspan font-weight="700">K1 holds the grand total, ₦830,541,245.</tspan> The $ before the column letter locks the column; the $ before the row number locks the row. Press F4 to add them.</text>
+</g>
+</svg>

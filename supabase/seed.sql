@@ -10857,7 +10857,7 @@ on conflict (id) do update set course_id = excluded.course_id, module_id = exclu
 
 -- Course: Excel for Data Analysis
 insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
-values ('excel-for-data-analysis', 'full', null, 'excel-for-data-analysis', 'XLS', 'Excel for Data Analysis', 'Clean, analyse and present business data in Excel, from formulas and XLOOKUP to pivot tables and charts.', 'Excel is still where most business analysis happens. Learn to work with real datasets: sort and filter, write the formulas analysts use every day, clean messy data, summarise with pivot tables and present results with clear charts.', 'data-analytics', 'beginner', 2, 'Beginner', 7, true, 'available', true, array['Formulas and functions', 'IF, SUMIF and COUNTIF', 'XLOOKUP', 'Data cleaning', 'Pivot tables', 'Charts']::text[], array['Microsoft Excel 2021 or Microsoft 365 (Google Sheets works for most lessons)', 'Comfortable using a computer; no Excel experience needed']::text[], 'Kolanut sales performance review', true, true, true, true, false, 60, 14)
+values ('excel-for-data-analysis', 'full', null, 'excel-for-data-analysis', 'XLS', 'Excel for Data Analysis', 'Clean, analyse and present business data in Excel, from formulas and XLOOKUP to pivot tables and charts.', 'Excel is still where most business analysis happens. Learn to work with real datasets: sort and filter, write the formulas analysts use every day, clean messy data, summarise with pivot tables and present results with clear charts.', 'data-analytics', 'beginner', 2, 'Beginner', 9, true, 'available', true, array['Formulas and functions', 'IF, SUMIF and COUNTIF', 'XLOOKUP', 'Data cleaning', 'Pivot tables', 'Charts']::text[], array['Microsoft Excel 2021 or Microsoft 365 (Google Sheets works for most lessons)', 'Comfortable using a computer; no Excel experience needed']::text[], 'Kolanut sales performance review', true, true, true, true, false, 60, 14)
 on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level = excluded.level, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
@@ -10876,7 +10876,48 @@ This course takes you from opening a raw file to a finished analysis. First, the
 
 **Why Excel?** It's on almost every office computer, everyone can open your file, and it covers the full cycle: import, clean, calculate, summarise, chart. Larger data goes into databases and Power BI, but Excel stays the everyday tool.
 
-**The Excel window**
+### Workbooks, worksheets, cells and ranges
+
+Four words you'll use in every lesson:
+
+| Word | Means | Example |
+| :-- | :-- | :-- |
+| **Workbook** | The Excel file itself (`.xlsx`) | `Kolanut-sales.xlsx` |
+| **Worksheet** (sheet) | One page of the workbook, with its own grid | `Orders`, `Customers` |
+| **Cell** | One box in the grid, named by its column letter and row number | `B2` is column B, row 2 |
+| **Range** | A block of cells, written first cell : last cell | `A1:H4267` |
+
+Columns are lettered A, B, C … Z, then AA, AB and so on, up to XFD (16,384 columns). Rows are numbered 1 to 1,048,576. That limit, about a million rows, is one reason very large data moves to a database.
+
+### What can go in a cell
+
+| Type | Example | Excel aligns it | Notes |
+| :-- | :-- | :-- | :-- |
+| **Number** | `18600` | Right | Can be calculated with |
+| **Text** | `Kayode Distributors` | Left | Includes "numbers" Excel couldn't read, such as `₦18,600` |
+| **Date** | `2025-01-01` | Right | Stored as a number of days, shown as a date |
+| **Formula** | `=E2*F2` | (its result) | Starts with `=`; the cell shows the result |
+
+The alignment is a free check: if a column of numbers has some values sitting on the **left**, those are text, and `SUM` will skip them. You'll use this check in lessons 2 and 7.
+
+> [!NOTE]
+> **Value versus format.** A cell's *value* is what's stored; its *format* is how it's shown. `0.25` formatted as a percentage shows `25%`; `194688.52` formatted with no decimals shows `194,689`. The formula bar always shows the true value.
+
+### Ranges versus Tables
+
+A plain **range** is just cells. A **Table** (Insert → Table, or Ctrl + T) is a range that Excel knows is a dataset:
+
+| | Plain range | Table |
+| :-- | :-- | :-- |
+| Grows when you add rows | No | Yes |
+| Filter buttons on the headers | Only if you turn them on | Always |
+| Formulas fill down a new column | No | Yes, automatically |
+| Readable references | `E2:E4267` | `Orders[quantity]` |
+| Banded rows | No | Yes |
+
+This course turns every dataset into a Table first. It's the habit that saves the most mistakes later.
+
+### The Excel window
 
 This is Excel with Kolanut's orders loaded as a Table, exactly as you'll set it up in this course:
 
@@ -11049,7 +11090,24 @@ The managing director wants one number to start: Kolanut's total revenue since J
 
 ## The concept
 
-**Two ways to open a CSV**
+### What a CSV file is
+
+Most data reaches an analyst as a **CSV** file: *comma-separated values*. It's plain text, one row per line, with commas between the columns. Open `orders.csv` in Notepad and you see exactly this:
+
+```text
+order_id,order_date,customer_id,product_id,quantity,unit_price,discount_pct
+10001,2025-01-01,27,3,14,18600,0
+10002,2025-01-01,56,1,7,13200,0
+10003,2025-01-01,37,2,4,3600,0
+```
+
+- The **first line** is the header: the column names.
+- Each **following line** is one record: here, one product on one order.
+- A value containing a comma is wrapped in quotes: `"2,050,000"`.
+
+A CSV holds **only values**. There are no formulas, no formatting, no column widths, no multiple sheets. Every system can write one, which is why they're everywhere; and because it's just text, the program that opens it has to **guess** what each value is. That guess is where problems start.
+
+### Two ways to open a CSV
 
 | Method | What happens | Use when |
 | :-- | :-- | :-- |
@@ -11065,15 +11123,64 @@ Excel's guesses can go wrong: codes with leading zeros lose them (`007` becomes 
 
 Importing through **Data → From Text/CSV** lets you catch these before they spread.
 
-**Values vs formatting.** A cell's *value* is what's stored; its *format* is how it's shown. `0.19` formatted as a percentage shows `19%`. Formatting never changes the value, so rounding a display to 0 decimals doesn't round the number used in calculations.
+### Check the data types
 
-**Calculated columns in a Table.** Type a formula once in a Table column and Excel fills it down for every row, using **structured references**: `[@quantity]` means "the quantity in this row".
+After loading, check that each column came in as the right type. Click a cell and look at **Home → Number Format** (the drop-down in the Number group):
+
+| Column | Should be | Shows as | If it's wrong |
+| :-- | :-- | :-- | :-- |
+| `order_id`, `customer_id`, `product_id` | Number (or text, for codes with leading zeros) | `10001` | Fine either way, as long as both tables match |
+| `order_date` | **Date** | `01/01/2025` or `2025-01-01` | Left-aligned dates are text: re-import (lesson 7) |
+| `quantity`, `unit_price`, `discount_pct` | **Number** | `14`, `18600`, `0` | Left-aligned numbers are text |
+
+A quick test for a whole column: select it and look at the status bar. If it shows **Sum**, the cells are numbers; if it only shows **Count**, they're text.
+
+### Number formats
+
+A cell's *value* is what's stored; its *format* is how it's shown. `0.19` formatted as a percentage shows `19%`. Formatting never changes the value, so rounding a display to 0 decimals doesn't round the number used in calculations.
+
+Open the full list with **Ctrl + 1** (Format Cells) → **Number** tab:
+
+| Format | `260400` shows as | Use for |
+| :-- | :-- | :-- |
+| General | `260400` | The default: Excel decides |
+| Number, 0 decimals, 1000 separator | `260,400` | Money in reports, counts |
+| Currency (₦) | `₦260,400.00` | Invoices, where the symbol helps |
+| Percentage | `26040000%` | Only for ratios such as `0.19` → `19%` |
+| Date | `12-Dec-2612` | Only for real dates! |
+| Text | `260400`, left-aligned | Codes and phone numbers, not amounts |
+
+The last rows show why formats matter: the same number shown as a date or a percentage is nonsense. If a column suddenly displays dates or `####`, check its format before you check the data. (`####` just means the column is too narrow: double-click the column border to widen it.)
+
+### Calculated columns in a Table
+
+Type a formula once in a Table column and Excel fills it down for every row, using **structured references**: `[@quantity]` means "the quantity in this row".
+
+| Reference | Means |
+| :-- | :-- |
+| `[@quantity]` | The quantity in **this row** |
+| `Orders[quantity]` | The **whole** quantity column of the Orders table |
+| `Orders[@quantity]` | This row's quantity, written from outside the table |
+| `Orders` | All the data rows of the table |
 
 **Kolanut revenue for one order line:**
 
 ```excel
 =[@quantity]*[@unit_price]*(1-[@discount_pct]/100)
 ```
+
+The discount is stored as a whole number (`5` means 5%), so it's divided by 100. `1 - 5/100` is `0.95`: the customer pays 95% of the full price.
+
+Outside a Table, you write the formula in the first row with ordinary references, `=E2*F2*(1-G2/100)`, and copy it down by **double-clicking the fill handle**: the small square at the bottom right of the selected cell. Excel copies it down as far as the column next to it has data.
+
+### Saving your work
+
+| Save as | Keeps | Use for |
+| :-- | :-- | :-- |
+| **Excel Workbook (.xlsx)** | Formulas, formatting, Tables, several sheets, charts | Your working file. Always. |
+| CSV (.csv) | Values of the **current sheet** only | Sending data to another system |
+
+If you open a CSV, add formulas, and press Ctrl + S, Excel asks whether to keep the CSV format. Choose **Save As → Excel Workbook**. Saving as CSV silently throws away every formula, every other sheet and all formatting.
 
 ## Example
 
@@ -11219,41 +11326,171 @@ values ('xls-m03', 'excel-for-data-analysis', 'Sorting and Filtering', 3, null, 
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('excel-for-data-analysis:sorting-and-filtering', 'excel-for-data-analysis', 'xls-m03', 'sorting-and-filtering', 'Sorting and filtering', 'Find the rows that matter with multi-level sorts, filters, SUBTOTAL and the FILTER function.', 25, $md$
+values ('excel-for-data-analysis:sorting-and-filtering', 'excel-for-data-analysis', 'xls-m03', 'sorting-and-filtering', 'Sorting and filtering', 'Sort by one or several columns, filter by values, numbers, dates and text, total only the visible rows with SUBTOTAL, and build live filtered lists with FILTER and SORTBY.', 25, $md$
 ## The problem
 
 A sales manager asks three quick questions: *What was our single biggest order line? How many lines got the full 10% discount? How busy was December?* Each answer is buried somewhere in 4,266 rows. Sorting and filtering bring the right rows to the top.
 
 ## The concept
 
-**Sorting** reorders rows. **Data → Sort** lets you sort by several columns in turn: region A→Z, then within each region, revenue largest first (use **Add Level**).
+**Sorting** changes the order of the rows. **Filtering** hides the rows you don't want, for now, without deleting anything. Between them, they answer most "show me…" questions in seconds.
 
-**Filtering** hides rows that don't match, without deleting them. Turn filters on with **Ctrl + Shift + L** (Tables have them already). Each column's drop-down offers:
+This lesson uses the `Orders` table with the `revenue` column you added in lesson 2.
 
-- tick-boxes for specific values;
-- **Number Filters** (Greater Than, Top 10…);
-- **Date Filters** (This Month, Between…), and dates grouped by year and month in the list.
+### Sorting by one column
 
-**Counting what you see.** `SUM` and `COUNT` include hidden rows. `SUBTOTAL` ignores rows hidden by a filter:
+Click any cell in the column, then:
+
+| To sort | Click | Or, from the column's drop-down |
+| :-- | :-- | :-- |
+| Smallest to largest, A to Z, oldest to newest | **Data → A→Z** | Sort Smallest to Largest |
+| Largest to smallest, Z to A, newest to oldest | **Data → Z→A** | Sort Largest to Smallest |
+
+Excel names the options by what's in the column: **A to Z** for text, **Smallest to Largest** for numbers, **Oldest to Newest** for dates.
+
+Sort `revenue` largest to smallest, and the top three order lines are:
+
+| order_id | order_date | product_id | quantity | unit_price | revenue |
+| --: | :-- | --: | --: | --: | --: |
+| 14243 | 2026-06-27 | 13 | 29 | 24,600 | 713,400 |
+| 13264 | 2026-02-28 | 9 | 30 | 23,300 | 699,000 |
+| 12447 | 2025-11-25 | 13 | 30 | 22,800 | 684,000 |
+
+> [!WARNING]
+> Sort the **whole table**, never a single column. If you select just one column and sort it, Excel may sort only that column, and quantities end up next to the wrong orders: the data is scrambled with no error. Excel usually warns you ("Expand the selection?"); always choose **Expand**. Inside a Table, sorting from a column's drop-down always moves whole rows, which is another reason to use Tables.
+
+### Sorting by several columns
+
+To sort by one column and then, within ties, by another, use the **Sort dialog**: **Data → Sort** (Alt, A, S, S).
+
+1. **Sort by** `order_date`, Order **Newest to Oldest**.
+2. Click **Add Level**. **Then by** `revenue`, **Largest to Smallest**.
+3. OK.
+
+Now the most recent day comes first, and within each day the biggest lines are at the top. Excel applies the levels in order: the second level only decides the order of rows that tie on the first.
+
+Two more options in the Sort dialog:
+
+- **Custom List** (in the Order box): sort by an order that isn't alphabetical, such as `Small, Medium, Large` or the days of the week.
+- **Sort On: Cell Color**: bring highlighted rows to the top.
+
+> [!TIP]
+> To get the original order back after sorting, sort by an ID column such as `order_id`. If your data has no ID, add one before you start (a column numbered 1, 2, 3…): it's your way home.
+
+### Filtering
+
+Filtering hides rows that don't match, so you can look at a slice. Nothing is deleted: clear the filter and every row comes back.
+
+Turn filters on with **Ctrl + Shift + L** (or **Data → Filter**). Tables have them already: the small arrow in each header.
+
+Each column's drop-down offers three kinds of filter, depending on what's in the column:
+
+| Column holds | Drop-down offers | Example |
+| :-- | :-- | :-- |
+| Any values | **Tick boxes** for each distinct value, with a search box | `discount_pct`: tick only **10** |
+| Numbers | **Number Filters**: Equals, Greater Than, Between, **Top 10**, Above Average… | `revenue` Greater Than 500,000 |
+| Dates | **Date Filters**: Before, After, Between, This Month, Last Quarter…, and dates grouped by year and month | `order_date`: expand 2025, tick December |
+| Text | **Text Filters**: Begins With, Contains, Does Not Contain… | `customer_name` Contains `Mart` |
+
+Some results on Kolanut's orders:
+
+| Filter | Lines shown |
+| :-- | --: |
+| `discount_pct` = 10 | 525 |
+| `revenue` Greater Than 500,000 | 162 |
+| `revenue` Above Average | 1,812 |
+| `order_date` in December 2025 | 334 |
+| `product_id` = 13 | 237 |
+
+**Filters on several columns combine with AND.** Filter `discount_pct` to 10 **and** `quantity` to Greater Than or Equal To 20, and you see the 218 lines that pass both.
+
+### How to tell a filter is on
+
+Filters are easy to forget, and a forgotten filter gives wrong totals. Three signs:
+
+1. The column's arrow becomes a **funnel** icon.
+2. The **row numbers turn blue** and skip (2, 5, 9…), because rows in between are hidden.
+3. The **status bar** says "525 of 4266 records found".
+
+Clear one column's filter from its drop-down (**Clear Filter From…**), or all of them with **Data → Clear** (Alt, A, C).
+
+### Totals that respect the filter: SUBTOTAL
+
+`SUM`, `COUNT` and `AVERAGE` include **hidden** rows. With a filter on, `=SUM(Orders[revenue])` still shows ₦830,541,245. To total only what's visible, use `SUBTOTAL`:
 
 ```excel
-=SUBTOTAL(9, Orders[revenue])
+=SUBTOTAL(function_num, ref1, ...)
 ```
 
-The first argument picks the calculation: 9 = sum, 3 = count of non-empty cells, 1 = average. A Table's **Total Row** (Table Design → Total Row) uses `SUBTOTAL` automatically.
+| function_num | Calculates | Like |
+| --: | :-- | :-- |
+| 1 | Average | `AVERAGE` |
+| 2 | Count of numbers | `COUNT` |
+| 3 | Count of non-empty cells | `COUNTA` |
+| 4 | Largest | `MAX` |
+| 5 | Smallest | `MIN` |
+| 9 | Sum | `SUM` |
 
-**The FILTER function** (Excel 365/2021 and Google Sheets) returns matching rows as a new range, so your original data stays untouched:
+With `discount_pct` filtered to 10:
+
+| You write | Result |
+| :-- | :-- |
+| `=SUM(Orders[revenue])` | 830,541,245 (ignores the filter) |
+| `=SUBTOTAL(9, Orders[revenue])` | 122,835,600 (visible rows only) |
+| `=SUBTOTAL(3, Orders[order_id])` | 525 |
+
+A Table's **Total Row** (Table Design → tick **Total Row**) adds a row under the table with a drop-down in each column: Sum, Count, Average… It uses `SUBTOTAL`, so it always follows the filter.
+
+### The FILTER function
+
+Filtering with the drop-downs changes what you **see**. The `FILTER` function **copies** matching rows to another place, so the original stays untouched and the result updates when the data changes. (Excel 365 and 2021 onwards, and Google Sheets.)
+
+```excel
+=FILTER(array, include, [if_empty])
+```
+
+| Argument | Meaning |
+| :-- | :-- |
+| `array` | What to return: a whole table or some columns |
+| `include` | A test for each row: TRUE keeps it |
+| `if_empty` | Optional: what to show if no row passes |
 
 ```excel
 =FILTER(Orders, Orders[discount_pct]=10, "none")
 ```
 
-> [!WARNING]
-> Sort the **whole table**, never a single column. Sorting one column alone scrambles your data: quantities end up next to the wrong orders. Inside a Table, sorting from a column's drop-down always moves whole rows, which is another reason to use Tables.
+Type it in one empty cell on another sheet and the 525 matching rows **spill** into the cells below and to the right. (Copy the headers yourself: `FILTER` returns only the data.)
+
+For several conditions, multiply the tests for **AND** and add them for **OR**. Each test must be in its own brackets:
+
+```excel
+=FILTER(Orders, (Orders[discount_pct]=10) * (Orders[quantity]>=20))   → 218 rows: both
+=FILTER(Orders, (Orders[discount_pct]=10) + (Orders[quantity]>=25))   → 982 rows: either
+```
+
+### SORT and SORTBY
+
+Like `FILTER`, these return a sorted **copy**:
+
+```excel
+=SORT(array, [sort_index], [sort_order])
+=SORT(Orders, 8, -1)                          → the whole table by column 8 (revenue), largest first
+=SORTBY(Orders, Orders[revenue], -1)          → the same, naming the column
+```
+
+`sort_order` is `1` for ascending and `-1` for descending. They combine with `FILTER`, working from the inside out:
+
+```excel
+=SORTBY(FILTER(Orders, Orders[discount_pct]=10), FILTER(Orders[revenue], Orders[discount_pct]=10), -1)
+```
+
+That's every 10%-discount line, biggest first. For one-off looks the drop-downs are quicker; for a report that should update itself, use the functions.
 
 ## Example
 
-To find the biggest single order line: click the `revenue` drop-down → **Sort Largest to Smallest**. The top row is order line **14243**: 29 packs of Body lotion 400ml at ₦24,600 on 27 June 2026, worth ₦713,400.
+**What is the biggest single order line?** Click the `revenue` drop-down → **Sort Largest to Smallest**. The top row is order line **14243**: 29 packs of Body lotion 400ml (product 13) at ₦24,600 on 27 June 2026, worth ₦713,400.
+
+**How much did the 10% discount lines bring in?** Filter `discount_pct` to 10. The status bar shows 525 of 4,266 records. Select the `revenue` column: the status bar's **Sum** shows ₦122,835,600 (the status bar, like `SUBTOTAL`, adds only visible cells). An average of ₦233,973 per line, against ₦194,689 for all lines.
 
 ## Walkthrough
 
@@ -11269,13 +11506,20 @@ This is what filtering `discount_pct` to 10 looks like:
 **How many lines had a 10% discount?**
 
 1. Click the `discount_pct` drop-down, untick *Select All*, tick **10**, OK.
-2. The status bar at the bottom of the window shows *"X of 4266 records found"*. Or turn on the Table's **Total Row** and set the `order_id` total to **Count**.
-3. Clear the filter afterwards: **Data → Clear**.
+2. The status bar at the bottom of the window shows *"525 of 4266 records found"*. Or turn on the Table's **Total Row** and set the `order_id` total to **Count**.
+3. Under the table, or on another sheet, type `=SUBTOTAL(9, Orders[revenue])`. It should show 122,835,600.
+4. Clear the filter: **Data → Clear**. The SUBTOTAL changes back to 830,541,245.
 
 **How many lines in December 2025?**
 
 1. Open the `order_date` drop-down. Dates are grouped: expand **2025**, untick everything except **December**.
-2. Read the count the same way.
+2. Read the count the same way: 334.
+
+**The ten biggest lines.**
+
+1. Clear all filters.
+2. `revenue` drop-down → **Number Filters → Top 10…** → Top **10** Items → OK.
+3. Sort the result largest to smallest. The smallest of the ten is ₦641,915.
 
 **Shortcuts for sorting and filtering**
 
@@ -11285,6 +11529,17 @@ This is what filtering `discount_pct` to 10 looks like:
 | Alt + ↓ (on a header cell) | Open that column's filter drop-down |
 | Alt, A, S, S | Open the Sort dialog |
 | Alt, A, C | Clear all filters |
+
+### Summary
+
+| Need | Use |
+| :-- | :-- |
+| Reorder by one column | Data → A→Z / Z→A, or the column drop-down |
+| Reorder by several columns | Data → Sort, Add Level |
+| Show only some rows | The column drop-down: tick boxes, Number, Date or Text Filters |
+| Totals of the visible rows | `SUBTOTAL(9, ...)`, or the Table's Total Row |
+| A filtered copy that updates itself | `FILTER(array, test)`; `*` for AND, `+` for OR |
+| A sorted copy | `SORT` or `SORTBY` |
 
 ## Practice
 
@@ -11419,100 +11674,309 @@ values ('xls-m04', 'excel-for-data-analysis', 'Formulas and Functions', 4, null,
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('excel-for-data-analysis:formulas-and-functions', 'excel-for-data-analysis', 'xls-m04', 'formulas-and-functions', 'Formulas and functions', 'How formulas work, relative and absolute references, the core functions, and how to read Excel''s error messages.', 15, $md$
+values ('excel-for-data-analysis:formulas-and-functions', 'excel-for-data-analysis', 'xls-m04', 'formulas-and-functions', 'Formulas and functions', 'Write formulas, lock references with $, and use SUM, AVERAGE, MEDIAN, COUNT, ROUND, date functions and UNIQUE, step by step, with every error value explained.', 30, $md$
 ## The problem
 
 You'll write hundreds of formulas as an analyst. Most mistakes come from a few causes: a reference that shifts when copied, a function applied to the wrong range, or an error value spreading silently through a workbook. Get the basics right once and those mistakes mostly disappear.
 
 ## The concept
 
-**A formula starts with `=`.** It can use cell references, numbers, operators and functions:
+A **formula** is an instruction that tells Excel to calculate something. A **function** is a ready-made formula with a name, such as `SUM` or `AVERAGE`, that does a common job for you.
+
+This lesson works on the `Orders` table you built in lesson 2. Its columns are:
+
+| Column | A | B | C | D | E | F | G | H |
+| :-- | :-- | :-- | :-- | :-- | :-- | :-- | :-- | :-- |
+| Header | order_id | order_date | customer_id | product_id | quantity | unit_price | discount_pct | revenue |
+| Row 2 | 10001 | 2025-01-01 | 27 | 3 | 14 | 18,600 | 0 | 260,400 |
+
+The data runs from row 2 to row 4267: 4,266 order lines.
+
+### Writing a formula
+
+Every formula starts with an **equals sign**. Without it, Excel treats what you type as text.
 
 ```excel
-=B2*C2              multiply two cells
-=SUM(E2:E4267)      add a range
-=ROUND(F2/1000, 1)  a function inside a function
+=E2*F2
 ```
 
-Operators follow maths order: brackets, then `^`, then `*` and `/`, then `+` and `-`. `=1+2*3` is 7, `=(1+2)*3` is 9.
+1. Click an empty cell.
+2. Type `=`.
+3. Click cell `E2` (or type it). Excel colours the reference and outlines the cell in the same colour.
+4. Type `*`, then click `F2`.
+5. Press **Enter**. The cell shows the result, `260,400`. The **formula bar** above the grid still shows `=E2*F2`.
 
-**Relative vs absolute references**
+That is the rule to remember: **the cell shows the result, the formula bar shows the formula.**
 
-When you copy a formula, relative references shift; absolute ones (with `$`) don't.
+### Operators and the order of calculation
 
-| Reference | Copied one row down becomes | Use for |
+| Operator | Meaning | Example | Result |
+| :-- | :-- | :-- | :-- |
+| `+` | add | `=5+3` | 8 |
+| `-` | subtract | `=5-3` | 2 |
+| `*` | multiply | `=5*3` | 15 |
+| `/` | divide | `=6/3` | 2 |
+| `^` | power | `=5^2` | 25 |
+| `&` | join text | `="Jan"&" 2025"` | Jan 2025 |
+
+Excel calculates in maths order: **brackets first, then powers, then multiply and divide, then add and subtract.**
+
+```excel
+=1+2*3        → 7, because 2*3 happens first
+=(1+2)*3      → 9, because the brackets happen first
+```
+
+This matters for the revenue formula from lesson 2:
+
+```excel
+=E2*F2*(1-G2/100)
+```
+
+Without the brackets, `=E2*F2*1-G2/100` would multiply first and then subtract a tiny number, which is wrong. For row 5 (28 packs at ₦6,000 with a 5% discount), the bracketed version gives ₦159,600; the unbracketed version gives ₦167,999.95.
+
+> [!TIP]
+> When in doubt, add brackets. They never hurt, and they make the formula easier to read.
+
+### Cell references
+
+A reference such as `E2` means "the value in column E, row 2". If that value changes, every formula that uses it updates on its own. That's why analysts write `=E2*F2` instead of typing `=14*18600`: the formula keeps working when the data changes.
+
+A **range** is a block of cells, written as first cell, colon, last cell:
+
+| You write | It means |
+| :-- | :-- |
+| `E2:E4267` | Column E from row 2 to row 4267 |
+| `A1:H1` | Row 1 from column A to column H (the headers) |
+| `E:E` | The whole of column E |
+| `Orders[quantity]` | The quantity column of the `Orders` table, however long it grows |
+
+Inside a table, prefer the table names. `Orders[quantity]` is easier to read than `E2:E4267`, and it stays correct when new rows are added.
+
+### Relative and absolute references
+
+When you copy a formula to another cell, Excel **adjusts its references** by the same distance you moved. Copy `=E2*F2` one row down and it becomes `=E3*F3`. That's a **relative** reference, and it's usually what you want: each row calculates its own revenue.
+
+Sometimes you want a reference **not** to move: a total, a tax rate or an exchange rate that sits in one cell. Put a **dollar sign** in front of the part you want to lock. That's an **absolute** reference.
+
+![Two copies of a share-of-total formula, side by side. With =H2/K1 copied down, K1 moves to K2 and K3, which are empty, so rows 3 and 4 show #DIV/0!. With =H2/$K$1, K1 stays fixed and every row divides by the grand total.](/images/courses/excel/relative-absolute.svg "Relative references move when you copy; absolute references ($) stay put.")
+
+| Reference | Copied one row down | Copied one column right | Use it for |
+| :-- | :-- | :-- | :-- |
+| `K1` | `K2` | `L1` | Row-by-row calculations |
+| `$K$1` | `$K$1` | `$K$1` | One fixed cell: a total or a rate |
+| `$K1` | `$K2` | `$K1` | Column locked, row moves |
+| `K$1` | `K$1` | `L$1` | Row locked, column moves |
+
+You don't need to type the dollars. While you're editing a formula, put the cursor on a reference and press **F4**. Each press cycles `K1` → `$K$1` → `K$1` → `$K1` → `K1`. (On many laptops it's **Fn + F4**.)
+
+> [!NOTE]
+> Structured references such as `Orders[revenue]` don't need dollar signs. A table column name always means the same column.
+
+### Functions
+
+A function has a **name**, then **brackets** holding its **arguments**: the values it works on, separated by commas.
+
+```excel
+=FUNCTION_NAME(argument1, argument2, ...)
+=ROUND(194688.52, 0)
+```
+
+As you type `=RO`, Excel lists matching functions. Press **Tab** to accept one. Once the bracket is open, a tooltip shows the arguments it expects; optional ones are in square brackets.
+
+The rest of this section takes the everyday functions one at a time. Each result is from Kolanut's real `Orders` table, so you can check your own answers against it.
+
+### SUM
+
+Adds up numbers.
+
+```excel
+=SUM(number1, [number2], ...)
+```
+
+| You write | Result | What it means |
 | :-- | :-- | :-- |
-| `B2` | `B3` | Row-by-row calculations |
-| `$B$2` | `$B$2` | A fixed cell, like a total or a rate |
-| `$B2` | `$B3` | Column fixed, row moves |
-| `B$2` | `B$2` | Row fixed, column moves |
+| `=SUM(Orders[revenue])` | 830,541,245 | Total revenue, all 4,266 lines |
+| `=SUM(Orders[quantity])` | 58,757 | Total packs sold |
+| `=SUM(E2:E4)` | 25 | Packs on the first three lines (14 + 7 + 4) |
 
-Press **F4** while the cursor is on a reference to cycle through these.
+`SUM` ignores text and empty cells. That's helpful, but it can hide a problem: a number stored as text (often from a bad import) is quietly left out. If a total looks too small, check for numbers that sit on the **left** of their cell; Excel puts text on the left and numbers on the right.
 
-**Functions you'll use every day**
+**Shortcut:** select the cell under a column of numbers and press **Alt + =** (AutoSum). Excel writes the `SUM` for you.
 
-| Function | Returns |
+### AVERAGE, MEDIAN, MIN and MAX
+
+```excel
+=AVERAGE(number1, [number2], ...)
+=MEDIAN(number1, [number2], ...)
+=MIN(number1, [number2], ...)
+=MAX(number1, [number2], ...)
+```
+
+| You write | Result | What it means |
+| :-- | :-- | :-- |
+| `=AVERAGE(Orders[revenue])` | 194,688.52 | The mean order line |
+| `=MEDIAN(Orders[revenue])` | 166,680 | The middle order line, when all are sorted |
+| `=MIN(Orders[revenue])` | 3,420 | The smallest line: 1 pack of water with 5% off |
+| `=MAX(Orders[revenue])` | 713,400 | The largest line: 29 packs at ₦24,600 |
+| `=AVERAGE(Orders[quantity])` | 13.77 | Packs per line, on average |
+
+Why are the average and the median different? A few very large lines pull the average up. The median is "the typical line", the average is "total divided by count". When a manager asks "what does a normal order look like?", the median is often the better answer. You'll meet this again in the Statistics course.
+
+> [!WARNING]
+> `AVERAGE` skips empty cells, but it counts zeros. A blank where a zero should be (or a zero where nothing was recorded) changes the result. Know which one your data uses.
+
+### COUNT, COUNTA and COUNTBLANK
+
+These three are easy to mix up.
+
+| Function | Counts | `Orders` example | Result |
+| :-- | :-- | :-- | :-- |
+| `COUNT` | Cells that contain **numbers** (dates are numbers too) | `=COUNT(Orders[revenue])` | 4,266 |
+| `COUNTA` | Cells that are **not empty**: numbers, text, anything | `=COUNTA(Orders[order_id])` | 4,266 |
+| `COUNTBLANK` | Cells that are **empty** | `=COUNTBLANK(Orders[revenue])` | 0 |
+
+So how many order lines are there? `=COUNTA(Orders[order_id])` gives 4,266, or `=ROWS(Orders)` counts the table's rows directly.
+
+Use `COUNT` and `COUNTA` together as a quick data check: if `=COUNT(Orders[quantity])` is lower than `=COUNTA(Orders[quantity])`, some quantities are stored as text.
+
+### ROUND
+
+Rounds a number to a set number of decimal places.
+
+```excel
+=ROUND(number, num_digits)
+```
+
+| You write | Result | `num_digits` means |
+| :-- | :-- | :-- |
+| `=ROUND(194688.52, 0)` | 194,689 | Whole number |
+| `=ROUND(194688.52, -3)` | 195,000 | Nearest thousand (negative goes left of the point) |
+| `=ROUND(194688.52/1000, 1)` | 194.7 | Thousands, one decimal: "₦194.7k" |
+| `=ROUND(AVERAGE(Orders[revenue]), 0)` | 194,689 | A function inside a function |
+
+The last one is called **nesting**: Excel works from the inside out. First `AVERAGE` gives 194,688.52, then `ROUND` turns it into 194,689.
+
+> [!NOTE]
+> **ROUND versus number formatting.** Formatting a cell to show no decimals only changes how it **looks**; the full value is still used in calculations. `ROUND` changes the **value** itself. Use formatting for display and `ROUND` when the rounded number is what you want to calculate with, such as money paid out.
+
+### YEAR, MONTH, DAY and TEXT for dates
+
+Excel stores a date as a **number**: the count of days since 1 January 1900. That's why you can subtract dates to get a number of days, and why `COUNT` counts dates. These functions pull the parts out.
+
+| You write (row 2 date is 2025-01-01) | Result |
 | :-- | :-- |
-| `SUM`, `AVERAGE`, `MIN`, `MAX` | Total, mean, smallest, largest |
-| `COUNT` | How many cells contain **numbers** |
-| `COUNTA` | How many cells are **not empty** |
-| `COUNTBLANK` | How many cells are empty |
-| `ROUND(x, n)` | x rounded to n decimals |
-| `YEAR`, `MONTH`, `DAY` | Parts of a date |
-| `TEXT(date, "mmm yyyy")` | A date shown as text, e.g. "Dec 2025" |
-| `UNIQUE(range)` | The distinct values (365/2021, Sheets) |
-| `IFERROR(x, alt)` | x, or alt if x is an error |
+| `=YEAR(B2)` | 2025 |
+| `=MONTH(B2)` | 1 |
+| `=DAY(B2)` | 1 |
+| `=TEXT(B2, "mmm yyyy")` | Jan 2025 |
+| `=TEXT(B2, "yyyy-mm")` | 2025-01 |
+| `=TEXT(B2, "ddd")` | Wed |
+| `=MAX(Orders[order_date]) - MIN(Orders[order_date]) + 1` | 546 (days from first order to last) |
 
-**Error values and what they mean**
+`YEAR` and `MONTH` return **numbers**. `TEXT` returns **text**. For a column you'll group by month, `TEXT(date, "yyyy-mm")` is a good choice because `2025-01`, `2025-02` ... sort in the right order as text. `"mmm yyyy"` reads better, but "Apr 2025" sorts before "Jan 2025" alphabetically.
 
-| Error | Usual cause |
-| :-- | :-- |
-| `#DIV/0!` | Dividing by zero or an empty cell |
-| `#VALUE!` | Maths on text, e.g. `="₦1,000"*2` |
-| `#N/A` | A lookup found no match |
-| `#REF!` | A referenced cell was deleted |
-| `#NAME?` | A misspelled function or a missing quote |
-| `#SPILL!` | A dynamic array (like UNIQUE) has no room to spill |
+### UNIQUE
+
+Returns the distinct values in a range, each once.
+
+```excel
+=UNIQUE(array)
+```
+
+`=UNIQUE(Orders[product_id])` fills a column with the 16 product IDs. It **spills**: you type it in one cell, and the results flow down into the cells below. Count them with `=COUNTA(UNIQUE(Orders[product_id]))` (16), or count order days with `=COUNTA(UNIQUE(Orders[order_date]))` (546).
+
+`UNIQUE` is in Excel 365 and Excel 2021 onwards. In Google Sheets it's also `UNIQUE`, and `COUNTUNIQUE` counts in one step.
+
+### IFERROR
+
+Shows something else when a formula gives an error.
+
+```excel
+=IFERROR(value, value_if_error)
+```
+
+`=IFERROR(H2/K2, 0)` gives 0 instead of `#DIV/0!` when `K2` is empty.
+
+Use it carefully. An error usually means something is wrong, and `IFERROR` hides it. Fix the cause first; use `IFERROR` only where the error is expected, such as a lookup for a customer who genuinely isn't in the list (lesson 6).
+
+### Error values and what they mean
+
+When a formula can't work, Excel shows an error value instead of a result. Each one tells you something specific.
+
+| Error | What went wrong | Example | How to fix it |
+| :-- | :-- | :-- | :-- |
+| `#DIV/0!` | Dividing by zero or an empty cell | `=H2/K2` with `K2` empty | Lock the reference (`$K$1`) or check the cell |
+| `#VALUE!` | Maths on text | `="₦1,000"*2` | Store the number without the ₦ sign or comma |
+| `#NAME?` | Excel doesn't recognise a name | `=SUMM(H2:H10)`, or text without quotes | Check spelling and quotes |
+| `#REF!` | A referenced cell no longer exists | You deleted column K that a formula used | Undo, or rewrite the formula |
+| `#N/A` | A lookup found no match | `XLOOKUP` for a missing customer | Check the lookup value (lesson 6) |
+| `#SPILL!` | A spilling formula has no room | `UNIQUE` with data in the cells below | Clear the cells in the way |
+| `####` | Not an error: the column is too narrow | A long number or date | Widen the column |
+
+Errors **spread**. If `H2` shows `#VALUE!`, then `=SUM(H2:H4267)` shows `#VALUE!` too. Always fix the first error in the chain, not the total at the end.
 
 ## Example
 
-**Share of total with an absolute reference.** With revenue in column H and the grand total in `K1`:
+**What share of total revenue does each order line make up?**
 
-```excel
-=H2/$K$1
-```
+1. In `K1`, put the grand total: `=SUM(Orders[revenue])`. It shows 830,541,245.
+2. In `I2`, the first line's share: `=H2/$K$1`. Format column I as a percentage with two decimals.
+3. Press **Enter**. Because column I is right next to the table, Excel adds it as a new table column and fills the formula down every row for you, written as `=[@revenue]/$K$1`: the same formula in table language. (Outside a table, double-click the fill handle, the small square at the bottom right of the cell, to copy a formula down.)
 
-Copy it down: `H2` becomes `H3`, `H4`…, but `$K$1` stays fixed. Without the dollars, the second row would divide by `K2`, which is empty, and show `#DIV/0!`.
+Row 2 shows 0.03%: ₦260,400 out of ₦830,541,245. Every row divides by the same total because `$K$1` is locked. If you'd written `=H2/K1`, row 3 would divide by `K2`, which is empty, and show `#DIV/0!`, exactly as in the diagram above.
 
-**Month for grouping.** Next to each order, `=TEXT([@order_date], "yyyy-mm")` gives `2025-12`, handy for summaries that sort correctly.
+To check the result, `=SUM(I2:I4267)` should be exactly 100%. Testing a result like this is a habit worth building.
+
+**Revenue by year.** Add a column `year` with `=YEAR([@order_date])`. You'll learn to total by year with `SUMIFS` in the next lesson, but you can already check one year by filtering: 2025 brings in ₦539,810,790 from 2,832 lines; January to June 2026 brings in ₦290,730,455 from 1,434 lines.
 
 ## Walkthrough
 
-When a sheet has many formulas, **Ctrl + `** (the key left of 1) shows every formula instead of its result. Press it again to switch back.
+Build a small **summary block** to the right of your `Orders` table, one figure per row. This is the first step of most analyses: before anything clever, know the basic size and shape of the data.
+
+1. In `K3`, type the label `Total revenue`. In `L3`, type `=SUM(Orders[revenue])`. It should show 830,541,245.
+2. Below it, add these rows:
+
+   | Label (K) | Formula (L) | Expect |
+   | :-- | :-- | :-- |
+   | Packs sold | `=SUM(Orders[quantity])` | 58,757 |
+   | Order lines | `=COUNTA(Orders[order_id])` | 4,266 |
+   | Average per line | `=ROUND(AVERAGE(Orders[revenue]), 0)` | 194,689 |
+   | Median per line | `=MEDIAN(Orders[revenue])` | 166,680 |
+   | Largest line | `=MAX(Orders[revenue])` | 713,400 |
+   | Days with orders | `=COUNTA(UNIQUE(Orders[order_date]))` | 546 |
+
+3. Format the money cells: select them, press **Ctrl + 1**, choose **Number**, tick **Use 1000 Separator**, set decimals to 0.
+4. Press **Ctrl + `** (the key left of 1) to show every formula instead of its result. Check each one points at the right column. Press it again to switch back.
 
 ![A summary sheet in Show Formulas mode, where each value cell displays its formula.](/images/courses/excel/show-formulas.webp "Ctrl + ` (Show Formulas): each cell shows its formula (2); the formula bar (1) always shows the selected cell's.")
 
-The same summary with results showing: total revenue ₦830,541,245, 58,757 packs, 4,266 order lines, ₦194,689 per line, ₦713,400 largest line, 546 days.
-
-1. In your `Orders` table, next to the data, calculate:
-   - total units sold: `=SUM(Orders[quantity])`
-   - average revenue per line: `=AVERAGE(Orders[revenue])`
-   - the number of different days with orders: `=COUNTA(UNIQUE(Orders[order_date]))`
-2. Wrap the average in `ROUND(…, 0)` to get whole naira.
-3. Check a result by a second route: the status bar shows Sum, Average and Count when you select a column. If your formula and the status bar disagree, find out why before moving on.
+5. **Check by a second route.** Click the `revenue` column header to select it. The **status bar** at the bottom of the window shows Average, Count and Sum. Sum should match `L3`. If your formula and the status bar disagree, find out why before moving on: usually a filter is on, or a number is stored as text.
 
 **Shortcuts for formulas**
 
 | Keys | Does |
 | :-- | :-- |
 | = | Start a formula |
-| F2 | Edit the selected cell (and see which cells it uses) |
+| F2 | Edit the selected cell, with its references coloured |
 | F4 | While editing, cycle `A1` → `$A$1` → `A$1` → `$A1` |
-| Ctrl + ` | Show / hide all formulas |
+| Ctrl + ` | Show or hide all formulas |
 | Ctrl + Enter | Enter the same formula into every selected cell |
 | Ctrl + D | Fill down from the cell above |
 | Alt + = | AutoSum |
 | Tab | Accept a function name that Excel suggests while you type |
+
+### Summary
+
+| Need | Use |
+| :-- | :-- |
+| Calculate from other cells | `=` then references and operators |
+| Keep a reference fixed when copying | `$K$1` (press F4) |
+| Total, mean, middle, smallest, largest | `SUM`, `AVERAGE`, `MEDIAN`, `MIN`, `MAX` |
+| Count numbers / non-empty / empty cells | `COUNT`, `COUNTA`, `COUNTBLANK` |
+| Round a value | `ROUND(x, digits)` |
+| Parts of a date | `YEAR`, `MONTH`, `DAY`, `TEXT(date, "yyyy-mm")` |
+| Distinct values | `UNIQUE` |
+| Replace an expected error | `IFERROR(x, alt)` |
 
 ## Practice
 
@@ -11615,6 +12079,35 @@ Optional drills. They don't count towards the certificate, but they're the faste
 }
 ```
 
+```answer
+{
+  "id": "xls-04-d4",
+  "prompt": "Back to Kolanut: what is the **median revenue per order line**?",
+  "answer": 166680,
+  "format": "naira",
+  "dataset": "sales",
+  "files": ["orders"],
+  "verify": "SELECT AVG(r) FROM (SELECT quantity * unit_price * (1 - discount_pct / 100.0) AS r FROM orders ORDER BY r LIMIT 2 OFFSET 2132)",
+  "hint": "=MEDIAN(Orders[revenue]).",
+  "explanation": "₦166,680, well below the ₦194,689 average: a few big lines pull the average up.",
+  "required": false
+}
+```
+
+```answer
+{
+  "id": "xls-04-d5",
+  "prompt": "How many **different products** appear in Kolanut's orders?",
+  "answer": 16,
+  "format": "number",
+  "dataset": "sales",
+  "files": ["orders"],
+  "verify": "SELECT COUNT(DISTINCT product_id) FROM orders",
+  "hint": "=COUNTA(UNIQUE(Orders[product_id])).",
+  "required": false
+}
+```
+
 ## Check your understanding
 
 ```quiz
@@ -11636,6 +12129,24 @@ Optional drills. They don't count towards the certificate, but they're the faste
     "options": ["Dividing by zero", "Doing arithmetic on text, such as a number stored with a ₦ sign", "A lookup with no match", "A deleted cell"],
     "answer": 1,
     "explanation": "#VALUE! usually means a calculation received text where it expected a number."
+  },
+  {
+    "prompt": "What does =ROUND(194688.52, -3) return?",
+    "options": ["194,688.520", "194,689", "195,000", "194,000"],
+    "answer": 2,
+    "explanation": "A negative number of digits rounds to the left of the decimal point: -3 means the nearest thousand."
+  },
+  {
+    "prompt": "The average order line is ₦194,689 but the median is ₦166,680. Why is the average higher?",
+    "options": ["The average ignores small lines", "A few very large lines pull the average up", "The median counts only discounted lines", "One of them must be wrong"],
+    "answer": 1,
+    "explanation": "The average is sensitive to large values; the median is just the middle line. A gap like this means the data is skewed towards big orders."
+  },
+  {
+    "prompt": "You want a month column that sorts correctly as text. Which is best?",
+    "options": ["=TEXT([@order_date], \"mmm yyyy\")", "=TEXT([@order_date], \"yyyy-mm\")", "=MONTH([@order_date])", "=DAY([@order_date])"],
+    "answer": 1,
+    "explanation": "\"2025-01\", \"2025-02\"... sort in date order. \"Apr 2025\" would sort before \"Jan 2025\", and MONTH alone mixes up the two years."
   }
 ]
 ```
@@ -11647,82 +12158,271 @@ values ('xls-m05', 'excel-for-data-analysis', 'IF, SUMIF, COUNTIF', 5, null, nul
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('excel-for-data-analysis:if-sumif-countif', 'excel-for-data-analysis', 'xls-m05', 'if-sumif-countif', 'IF, SUMIF and COUNTIF', 'Make decisions inside formulas with IF, and total or count only the rows that meet conditions with SUMIFS and COUNTIFS.', 15, $md$
+values ('excel-for-data-analysis:if-sumif-countif', 'excel-for-data-analysis', 'xls-m05', 'if-sumif-countif', 'IF, SUMIF and COUNTIF', 'Make decisions with IF, AND, OR and IFS, then count, total and average only the rows you want with COUNTIFS, SUMIFS, AVERAGEIFS and MAXIFS, step by step.', 30, $md$
 ## The problem
 
 Filtering answers one question at a time. But the sales director wants a table: revenue by product, lines by month, discounted lines this year. Rebuilding filters for every cell would take all day. **Conditional functions** calculate totals and counts for rows that meet a condition, directly in a formula.
 
 ## The concept
 
-**IF: choose between two results**
+Lesson 4's functions work on **every** row: `SUM(Orders[revenue])` adds all 4,266 lines. The functions in this lesson add a **condition**: "add up revenue, but only for product 1", "count the lines, but only the discounted ones". They come in two families:
+
+- **`IF` and friends** decide something **for one row**: "is this line large or small?"
+- **`SUMIFS`, `COUNTIFS` and friends** summarise **many rows** that pass a test: "how much did large lines bring in?"
+
+### Conditions: the building block
+
+A **condition** (also called a **logical test**) is a comparison that is either `TRUE` or `FALSE`. Type these into any cell to see:
+
+| You write | Row 2 values | Result |
+| :-- | :-- | :-- |
+| `=E2>=20` | quantity 14 | FALSE |
+| `=E2<20` | quantity 14 | TRUE |
+| `=G2=0` | discount 0 | TRUE |
+| `=D2<>3` | product 3 | FALSE |
+
+| Operator | Meaning |
+| :-- | :-- |
+| `=` | equal to |
+| `<>` | not equal to |
+| `>` and `>=` | greater than, greater than or equal to |
+| `<` and `<=` | less than, less than or equal to |
+
+Text in a condition goes in **double quotes**: `=C2="Lagos"`. Text comparisons in Excel ignore upper and lower case, so `"lagos"` matches `Lagos`.
+
+### IF
+
+Returns one value when a condition is true and another when it's false.
 
 ```excel
-=IF(condition, value_if_true, value_if_false)
+=IF(logical_test, value_if_true, value_if_false)
+```
+
+| Argument | Meaning |
+| :-- | :-- |
+| `logical_test` | The question: anything that gives TRUE or FALSE |
+| `value_if_true` | What to return when the answer is TRUE |
+| `value_if_false` | What to return when the answer is FALSE |
+
+In the `Orders` table, a new column `size`:
+
+```excel
 =IF([@quantity]>=20, "Large", "Small")
 ```
 
-Combine conditions with `AND` and `OR`:
+Row 2 has 14 packs, so it shows `Small`. Row 5 has 28 packs, so it shows `Large`. Across the whole table, 1,032 lines are Large and 3,234 are Small.
+
+The results don't have to be text. They can be numbers or other formulas:
+
+```excel
+=IF([@discount_pct]>0, [@quantity]*[@unit_price]-[@revenue], 0)
+```
+
+That's the naira given away in discount on each line, or 0 when there was no discount.
+
+> [!WARNING]
+> A common mistake is putting quotes round numbers: `=IF(E2>="20", ...)`. With quotes, `"20"` is text, and the comparison won't do what you expect. Numbers never need quotes; text always does.
+
+### AND, OR and NOT
+
+To test more than one thing, put the tests inside `AND` or `OR`:
+
+| Function | TRUE when | Example |
+| :-- | :-- | :-- |
+| `AND(test1, test2, ...)` | **every** test is true | `AND([@quantity]>=20, [@discount_pct]=0)` |
+| `OR(test1, test2, ...)` | **at least one** test is true | `OR([@quantity]>=20, [@discount_pct]>0)` |
+| `NOT(test)` | the test is false | `NOT([@discount_pct]=0)` |
+
+On Kolanut's orders:
+
+- `AND(quantity>=20, discount_pct=0)`: large lines sold at full price. **374** lines.
+- `OR(quantity>=20, discount_pct>0)`: lines that are large, discounted or both. **2,121** lines.
+
+Put either one inside `IF`:
 
 ```excel
 =IF(AND([@quantity]>=20, [@discount_pct]=0), "Large, full price", "Other")
 ```
 
-For several outcomes, `IFS` is easier to read than nested IFs:
+### IFS: more than two outcomes
+
+`IF` gives two answers. For three or more, you could put an IF inside an IF (a **nested IF**):
 
 ```excel
+=IF([@quantity]>=20, "Large", IF([@quantity]>=10, "Medium", "Small"))
+```
+
+That works, but each extra level makes it harder to read. `IFS` lists the tests in order instead:
+
+```excel
+=IFS(test1, value1, test2, value2, ..., TRUE, value_otherwise)
 =IFS([@quantity]>=20, "Large", [@quantity]>=10, "Medium", TRUE, "Small")
 ```
 
-**SUMIF and COUNTIF: one condition**
+Excel checks the tests **from left to right and stops at the first true one**. So a line of 25 packs passes the first test and becomes "Large"; it never reaches the second. The final `TRUE` is a catch-all: if nothing else matched, use this.
+
+| Band | Rule | Lines |
+| :-- | :-- | --: |
+| Large | 20 packs or more | 1,032 |
+| Medium | 10 to 19 packs | 1,777 |
+| Small | 9 packs or fewer | 1,457 |
+
+The bands add up to 4,266, every line exactly once. Checking that is a good habit: it proves no line fell through a gap.
+
+> [!TIP]
+> Order matters in `IFS`. If you wrote the `>=10` test first, a line of 25 packs would stop there and be called "Medium". Always test from the most specific (or largest) down.
+
+`IFS` is in Excel 2019 and later, and in Google Sheets. In older Excel, use the nested IF.
+
+### COUNTIF and SUMIF: one condition
+
+Now for the summarising family. `COUNTIF` counts the cells in a range that meet a condition.
 
 ```excel
-=SUMIF(range_to_test, condition, range_to_add)
-=SUMIF(Orders[product_id], 1, Orders[revenue])       revenue from product 1
-=COUNTIF(Orders[discount_pct], ">0")                  lines with any discount
+=COUNTIF(range, criteria)
 ```
-
-**SUMIFS and COUNTIFS: several conditions** (note the order changes: the range to add comes **first**)
 
 ```excel
-=SUMIFS(range_to_add, range1, condition1, range2, condition2, …)
-=COUNTIFS(range1, condition1, range2, condition2, …)
+=COUNTIF(Orders[discount_pct], ">0")     → 1,747 discounted lines
+=COUNTIF(Orders[quantity], ">=20")       → 1,032 large lines
+=COUNTIF(Orders[size], "Large")          → 1,032, counting the size column instead
 ```
 
-**Conditions with dates or cell values** are built as text with `&`:
+`SUMIF` adds up the cells **in another column** for the rows that meet the condition.
+
+```excel
+=SUMIF(range, criteria, [sum_range])
+```
+
+| Argument | Meaning |
+| :-- | :-- |
+| `range` | The column to **test** |
+| `criteria` | The condition |
+| `sum_range` | The column to **add up** for the rows that pass |
+
+```excel
+=SUMIF(Orders[product_id], 1, Orders[revenue])       → 59,804,940 from product 1
+=SUMIF(Orders[discount_pct], ">0", Orders[revenue])  → 416,170,045 from discounted lines
+```
+
+Notice how the criteria are written: a plain value (`1`, `"Large"`) means "equal to"; a comparison goes **inside the quotes** with the number: `">0"`, `">=20"`, `"<>0"`.
+
+### SUMIFS and COUNTIFS: several conditions
+
+The `-IFS` versions (with an S) take as many conditions as you like, in **pairs**: a range to test, then its condition. A row is included only if it passes **all** of them.
+
+```excel
+=SUMIFS(sum_range, criteria_range1, criteria1, [criteria_range2, criteria2], ...)
+=COUNTIFS(criteria_range1, criteria1, [criteria_range2, criteria2], ...)
+```
+
+![The SUMIFS formula broken into its parts: the range to add first, then two pairs of range and condition. Six example rows are tested; only the two that pass both tests are added.](/images/courses/excel/sumifs-anatomy.svg "SUMIFS: what to add comes first, then each test as a range and a condition. Only rows that pass every test are added.")
+
+> [!WARNING]
+> **The argument order is different.** In `SUMIF`, the range to add comes **last**. In `SUMIFS`, it comes **first**. Many analysts use `SUMIFS` even for one condition, so they only have to remember one order.
+
+```excel
+=SUMIFS(Orders[revenue], Orders[product_id], 1, Orders[discount_pct], ">0")
+→ 27,877,340: product 1 lines that were discounted
+
+=COUNTIFS(Orders[quantity], ">=20", Orders[discount_pct], 0)
+→ 374: large lines at full price, the same answer as the AND test above
+```
+
+`COUNTIFS` and `SUMIFS` only do **AND** (all conditions true). For OR, add two results together, for example `=COUNTIF(..., "Lagos") + COUNTIF(..., "Abuja")`, taking care not to count any row twice.
+
+### AVERAGEIFS, MAXIFS and MINIFS
+
+The same pattern works for averages, largest and smallest values:
+
+| You write | Result | Meaning |
+| :-- | :-- | :-- |
+| `=AVERAGEIFS(Orders[revenue], Orders[product_id], 1)` | 194,171.88 | Average product 1 line |
+| `=AVERAGEIFS(Orders[revenue], Orders[discount_pct], ">0")` | 238,219.83 | Average discounted line |
+| `=AVERAGEIFS(Orders[revenue], Orders[discount_pct], 0)` | 164,498.29 | Average full-price line |
+| `=MAXIFS(Orders[revenue], Orders[product_id], 1)` | 444,000 | Largest product 1 line |
+| `=MINIFS(Orders[revenue], Orders[product_id], 1)` | 13,200 | Smallest product 1 line: one pack |
+
+The averages tell a story: discounted lines are much bigger than full-price ones (₦238k against ₦164k). That fits a business that gives discounts to customers buying in bulk. You found that with two formulas.
+
+### Conditions on dates
+
+To test a date, join the comparison to a date with `&`. `DATE(year, month, day)` builds the date, which avoids any confusion between day-month and month-day formats.
 
 ```excel
 =SUMIFS(Orders[revenue], Orders[order_date], ">="&DATE(2025,10,1), Orders[order_date], "<="&DATE(2025,12,31))
+→ 160,799,625: October to December 2025
 ```
 
-That's revenue for October–December 2025: two conditions on the same column give a date range.
+Two conditions on the **same column** give you a range: on or after 1 October **and** on or before 31 December.
 
-> [!TIP]
-> Put conditions in cells instead of typing them into formulas: `=SUMIFS(Orders[revenue], Orders[product_id], A2)`. Then a whole column of product IDs in A gives a whole summary table with one formula copied down.
+The same `&` trick works with a cell: `">="&K2` means "greater than or equal to whatever is in K2". That lets you change a report's dates without touching the formula.
+
+### Wildcards for text
+
+In criteria, `*` stands for "any characters" and `?` for "exactly one character". The `Customers` table has names such as `Peace Mart` and `Grace Provisions`:
+
+| You write | Counts names that | Result |
+| :-- | :-- | --: |
+| `=COUNTIF(Customers[customer_name], "*Mart")` | **end** with Mart | 13 |
+| `=COUNTIF(Customers[customer_name], "*Mart*")` | **contain** Mart anywhere | 20 |
+| `=COUNTIF(Customers[region], "Lagos")` | are exactly Lagos | 34 |
+| `=COUNTIFS(Customers[region], "Lagos", Customers[channel], "Wholesale")` | are Lagos **and** Wholesale | 9 |
 
 ## Example
 
-Revenue per product, as a small summary table:
+**Revenue for every product, in one formula.** Instead of typing each product ID into the formula, put the conditions in cells:
 
-| A: product_id | B: revenue |
-| --: | :-- |
-| 1 | `=SUMIFS(Orders[revenue], Orders[product_id], A2)` |
-| 2 | (copied down) |
-| … | … |
+1. On a new sheet, type `product_id` in `A1` and the numbers 1 to 16 in `A2:A17`.
+2. In `B1` type `revenue`, and in `B2`:
 
-Copy the formula down beside product IDs 1 to 16, and you have revenue for every product.
+   ```excel
+   =SUMIFS(Orders[revenue], Orders[product_id], A2)
+   ```
 
-Here it is built on Kolanut's data, with a second column counting order lines:
+3. Copy `B2` down to `B17`. Each row tests against its own product ID, because `A2` is relative: it becomes `A3`, `A4`, and so on.
+4. In `C1` type `lines`, and in `C2`: `=COUNTIFS(Orders[product_id], A2)`. Copy it down.
 
 ![A summary table of product IDs 1 to 16 with revenue from SUMIFS and order lines from COUNTIFS; the formula bar shows the SUMIFS formula for product 1.](/images/courses/excel/sumifs.webp "One SUMIFS formula (1), copied down beside the product IDs (2), gives revenue for every product (3). Product 1 brought in ₦59,804,940.")
 
+Product 1 shows ₦59,804,940 from 308 lines. A total under the table, `=SUM(B2:B17)`, should be exactly ₦830,541,245: every line belongs to one product, so the products must add back up to the grand total.
+
+This is a small version of a **pivot table** (lesson 8). Building it with formulas first shows you what a pivot table does underneath.
+
 ## Walkthrough
 
-1. Add a `size` column to the Orders table: `=IF([@quantity]>=20, "Large", "Small")`.
-2. Count large lines: `=COUNTIF(Orders[size], "Large")`.
-3. Revenue from product 1 (Malt drink): `=SUMIF(Orders[product_id], 1, Orders[revenue])`.
-4. Discounted lines in 2026: `=COUNTIFS(Orders[order_date], ">="&DATE(2026,1,1), Orders[discount_pct], ">0")`.
+Work through these in your `Orders` table. Each step builds on the last.
 
-Check step 4 with a filter (order_date in 2026, discount_pct not 0). Two methods agreeing is the best evidence you're right.
+1. **Classify each line.** Add a column `size`:
+
+   ```excel
+   =IFS([@quantity]>=20, "Large", [@quantity]>=10, "Medium", TRUE, "Small")
+   ```
+
+2. **Count each band.** Below or beside the table, type `Large`, `Medium` and `Small` in three cells, say `K2:K4`. In `L2`: `=COUNTIF(Orders[size], K2)`, and copy down. You should get 1,032, 1,777 and 1,457.
+3. **Check the total.** `=SUM(L2:L4)` must be 4,266. If it isn't, a line fell through a gap in your IFS.
+4. **Revenue per band.** In `M2`: `=SUMIFS(Orders[revenue], Orders[size], K2)`, copied down. Large lines bring in ₦361,021,385, more than 43% of all revenue from less than a quarter of the lines.
+5. **Product 1 revenue:** `=SUMIF(Orders[product_id], 1, Orders[revenue])`, which should be 59,804,940.
+6. **Discounted lines in 2026:**
+
+   ```excel
+   =COUNTIFS(Orders[order_date], ">="&DATE(2026,1,1), Orders[discount_pct], ">0")
+   ```
+
+7. **Check step 6 another way.** Filter the table: order_date in 2026, discount_pct not 0. The status bar count should match your formula. Two methods agreeing is the best evidence you're right.
+
+### Summary
+
+| Need | Use |
+| :-- | :-- |
+| A different result depending on a test | `IF(test, if_true, if_false)` |
+| Several tests together | `AND(...)`, `OR(...)`, `NOT(...)` |
+| Three or more outcomes | `IFS(test1, v1, test2, v2, TRUE, otherwise)` |
+| Count rows that pass tests | `COUNTIF` (one) or `COUNTIFS` (several) |
+| Add up rows that pass tests | `SUMIF(test_range, test, sum_range)` or `SUMIFS(sum_range, test_range, test, ...)` |
+| Average, largest, smallest that pass | `AVERAGEIFS`, `MAXIFS`, `MINIFS` |
+| A date range | Two tests on one column: `">="&DATE(...)` and `"<="&DATE(...)` |
+| Part of a text value | Wildcards `*` and `?` |
 
 ## Practice
 
@@ -11841,6 +12541,50 @@ Optional drills. They don't count towards the certificate, but they're the faste
 }
 ```
 
+```answer
+{
+  "id": "xls-05-d4",
+  "prompt": "Back to Kolanut: what is the **average revenue of a discounted order line** (discount above 0)? Round to the nearest naira.",
+  "answer": 238220,
+  "tolerance": 1,
+  "format": "naira",
+  "dataset": "sales",
+  "files": ["orders"],
+  "verify": "SELECT ROUND(AVG(quantity * unit_price * (1 - discount_pct / 100.0))) FROM orders WHERE discount_pct > 0",
+  "hint": "=ROUND(AVERAGEIFS(Orders[revenue], Orders[discount_pct], \">0\"), 0)",
+  "explanation": "₦238,220, against ₦164,498 for a full-price line. Discounts go with bigger orders.",
+  "required": false
+}
+```
+
+```answer
+{
+  "id": "xls-05-d5",
+  "prompt": "How many Kolanut order lines were **large (20 packs or more) and sold at full price** (discount 0)?",
+  "answer": 374,
+  "format": "number",
+  "dataset": "sales",
+  "files": ["orders"],
+  "verify": "SELECT COUNT(*) FROM orders WHERE quantity >= 20 AND discount_pct = 0",
+  "hint": "=COUNTIFS(Orders[quantity], \">=20\", Orders[discount_pct], 0)",
+  "required": false
+}
+```
+
+```answer
+{
+  "id": "xls-05-d6",
+  "prompt": "How many Kolanut customers have a name **containing** the word \"Provisions\"?",
+  "answer": 15,
+  "format": "number",
+  "dataset": "sales",
+  "files": ["customers"],
+  "verify": "SELECT COUNT(*) FROM customers WHERE LOWER(customer_name) LIKE '%provisions%'",
+  "hint": "=COUNTIF(Customers[customer_name], \"*Provisions*\"). The stars are wildcards.",
+  "required": false
+}
+```
+
 ## Check your understanding
 
 ```quiz
@@ -11862,6 +12606,18 @@ Optional drills. They don't count towards the certificate, but they're the faste
     "options": ["100,000 or more", "Less than 100,000", "Exactly 100,000", "Not 100,000"],
     "answer": 0,
     "explanation": ">= means greater than or equal to."
+  },
+  {
+    "prompt": "=IFS([@quantity]>=10, \"Medium\", [@quantity]>=20, \"Large\", TRUE, \"Small\"). What does a line of 25 packs show?",
+    "options": ["Large", "Medium", "Small", "An error"],
+    "answer": 1,
+    "explanation": "IFS stops at the first true test. 25 >= 10 is true, so it never reaches the Large test. Test the largest band first."
+  },
+  {
+    "prompt": "Which formula counts lines that are large OR discounted?",
+    "options": ["=COUNTIFS(Orders[quantity], \">=20\", Orders[discount_pct], \">0\")", "A helper column with =OR([@quantity]>=20, [@discount_pct]>0), then COUNTIF on TRUE", "=COUNTIF(Orders[quantity], \">=20 OR >0\")", "=SUMIFS(Orders[quantity], \">=20\")"],
+    "answer": 1,
+    "explanation": "COUNTIFS only does AND. For OR, test each row with OR in a helper column and count the TRUEs (2,121 lines)."
   }
 ]
 ```
@@ -11873,68 +12629,238 @@ values ('xls-m06', 'excel-for-data-analysis', 'XLOOKUP', 6, null, null, '{}'::te
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('excel-for-data-analysis:xlookup', 'excel-for-data-analysis', 'xls-m06', 'xlookup', 'XLOOKUP', 'Bring columns from one table into another with XLOOKUP, and recognise VLOOKUP and INDEX/MATCH in older files.', 20, $md$
+values ('excel-for-data-analysis:xlookup', 'excel-for-data-analysis', 'xls-m06', 'xlookup', 'XLOOKUP', 'Bring details from one table into another with XLOOKUP, put values into bands, spot why a lookup fails, and read VLOOKUP and INDEX/MATCH in older files.', 20, $md$
 ## The problem
 
 The director asks: *"How much did we sell in Lagos? And how much in Beverages?"* The orders table has `customer_id` and `product_id`, but no region and no category. Those live in `customers.csv` and `products.csv`. You need to bring them across, row by row. That's a **lookup**.
 
 ## The concept
 
-**XLOOKUP** finds a value in one column and returns the matching value from another:
+Real data is split across tables, and for good reason. Kolanut has 90 customers and 4,266 order lines. Writing "Alhaji Musa Wholesale, Lagos, Wholesale, Tolu Adeyemi" on every one of that customer's lines would repeat the same facts hundreds of times, and a change of sales rep would mean editing hundreds of rows. So the orders keep only a **key**, `customer_id`, and the details live once, in `Customers`.
+
+| Table | One row per | Key column | Useful details |
+| :-- | :-- | :-- | :-- |
+| `Orders` | order line (4,266) | `order_id` | `customer_id`, `product_id`, quantity, price |
+| `Customers` | customer (90) | `customer_id` | name, channel, region, city, sales rep |
+| `Products` | product (16) | `product_id` | name, category, list price |
+
+A **lookup** goes the other way: for each order line, take its `customer_id`, find that customer in `Customers`, and bring back the detail you need. It's the Excel version of a SQL `JOIN`.
+
+### XLOOKUP
 
 ```excel
-=XLOOKUP(lookup_value, lookup_array, return_array, [if_not_found])
+=XLOOKUP(lookup_value, lookup_array, return_array, [if_not_found], [match_mode], [search_mode])
 ```
 
-- `lookup_value`: what you're looking for (this order's customer_id)
-- `lookup_array`: where to look for it (the customer_id column of Customers)
-- `return_array`: what to bring back (the region column of Customers)
-- `if_not_found`: optional text to show instead of `#N/A`
+| Argument | Meaning | In our example |
+| :-- | :-- | :-- |
+| `lookup_value` | What you're looking for | This order's `[@customer_id]` |
+| `lookup_array` | The column to search in | `Customers[customer_id]` |
+| `return_array` | The column to bring back from | `Customers[region]` |
+| `if_not_found` | Optional: what to show if there's no match | `"Not found"` |
+| `match_mode` | Optional: `0` exact (default), `-1` exact or next smaller, `1` exact or next larger, `2` wildcard | (leave out) |
+| `search_mode` | Optional: `1` first to last (default), `-1` last to first | (leave out) |
 
-**Region for each order line:**
+Most of the time you only need the first three or four.
+
+![XLOOKUP takes customer_id 27 from an order, finds 27 in the customer_id column of Customers, and returns the region from that same row: Lagos.](/images/courses/excel/xlookup-flow.svg "XLOOKUP finds the value in the lookup column, then returns the value from the same row of the return column.")
 
 ```excel
 =XLOOKUP([@customer_id], Customers[customer_id], Customers[region], "Not found")
 ```
 
-XLOOKUP matches **exactly** by default, which is what you want for IDs.
+Read it aloud as: "Take this row's customer ID, find it in the Customers ID column, and give me the region on that row. If you can't find it, say Not found."
 
-**In older files you'll meet two other methods:**
+Order 10001 is for customer 27. Customer 27 is Alhaji Musa Wholesale, in Lagos, so the cell shows `Lagos`.
+
+> [!NOTE]
+> The `lookup_array` and `return_array` must be the **same length**. With table columns such as `Customers[customer_id]` and `Customers[region]`, they always are.
+
+### More examples
+
+| You want | Formula | Order 10001 gives |
+| :-- | :-- | :-- |
+| Customer's name | `=XLOOKUP([@customer_id], Customers[customer_id], Customers[customer_name])` | Alhaji Musa Wholesale |
+| Customer's channel | `=XLOOKUP([@customer_id], Customers[customer_id], Customers[channel])` | Wholesale |
+| Product's name | `=XLOOKUP([@product_id], Products[product_id], Products[product_name])` | Orange juice 1L (12) |
+| Product's category | `=XLOOKUP([@product_id], Products[product_id], Products[category])` | Beverages |
+| Product's list price | `=XLOOKUP([@product_id], Products[product_id], Products[list_price])` | 20,800 |
+
+That last one is interesting: product 3's **list** price is ₦20,800, but order 10001 was charged ₦18,600 per pack. Comparing the two is how you'd find out how much below list price the sales team sells.
+
+The lookup value doesn't have to come from the same row. To find one customer by hand, type the ID in a cell (say `K2`) and look it up:
 
 ```excel
-=VLOOKUP(C2, Customers!A:H, 4, FALSE)
-=INDEX(Customers!D:D, MATCH(C2, Customers!A:A, 0))
+=XLOOKUP(K2, Customers[customer_id], Customers[customer_name], "No such customer")
 ```
 
-- **VLOOKUP** needs the ID in the first column and a column *number* (4). Insert a column and the number silently points at the wrong data. Always use `FALSE` for exact match; the default (`TRUE`) returns wrong values on unsorted data.
-- **INDEX/MATCH** was the robust choice before XLOOKUP and still works everywhere.
+With 42 in `K2`, it shows `Divine Superstore Uyo`. With 999, it shows `No such customer`.
 
-Google Sheets supports XLOOKUP too.
+### When there's no match: #N/A
 
-> [!WARNING]
-> A lookup returns the **first** match. If the lookup table has duplicate IDs (like the messy customer export in the next lesson), you'll silently get one of them. Always check that the ID column you're looking up in is unique.
+Without `if_not_found`, a failed lookup shows `#N/A`. That's not always bad: it tells you something is missing. The common causes:
+
+| Cause | Example | Fix |
+| :-- | :-- | :-- |
+| The ID really isn't there | A new customer not yet added to `Customers` | Add the customer, or show "Not found" |
+| Number stored as text | `27` in one table, `"27"` (left-aligned) in the other | Convert with **Data → Text to Columns → Finish**, or `=VALUE()` |
+| Extra spaces | `"Lagos "` with a trailing space | Clean with `TRIM` (lesson 7) |
+| Wrong column | Searching names when you meant IDs | Check the `lookup_array` |
+
+> [!TIP]
+> After adding a lookup column, always filter it for "Not found" or `#N/A`. Zero missing is the result you want; anything else needs explaining before you trust a total built on it.
+
+### Duplicates: the silent problem
+
+XLOOKUP returns the **first** match it finds. If the lookup table has the same ID twice (for example, a customer exported twice with different regions), you'll get the first one and no warning.
+
+Check the key column is unique before you rely on it:
+
+```excel
+=COUNTA(Customers[customer_id]) = COUNTA(UNIQUE(Customers[customer_id]))
+```
+
+`TRUE` means every ID appears once. For Kolanut's `Customers` it's `TRUE`: 90 rows, 90 different IDs. The messy export in the next lesson is a different story.
+
+### Approximate match: putting values into bands
+
+Lookups aren't only for IDs. With `match_mode` set to `-1` ("exact match or the next smaller value"), XLOOKUP puts a number into a **band**. Make a small table called `Bands`, sorted by its lower limit:
+
+| from | band |
+| --: | :-- |
+| 0 | Under ₦50k |
+| 50,000 | ₦50k to ₦200k |
+| 200,000 | ₦200k to ₦500k |
+| 500,000 | ₦500k and over |
+
+```excel
+=XLOOKUP([@revenue], Bands[from], Bands[band], , -1)
+```
+
+A line worth ₦260,400 has no exact match in `from`, so XLOOKUP takes the next smaller value, 200,000, and returns `₦200k to ₦500k`. (The two commas leave `if_not_found` empty.)
+
+Across all order lines: 614 under ₦50k, 1,891 from ₦50k to ₦200k, 1,599 from ₦200k to ₦500k, and 162 of ₦500k and over.
+
+This is often neater than a long `IFS`: to change the bands, you edit the little table, not the formula.
+
+### VLOOKUP: the older way
+
+You'll meet `VLOOKUP` in almost every workbook built before 2020.
+
+```excel
+=VLOOKUP(lookup_value, table_array, col_index_num, [range_lookup])
+=VLOOKUP(C2, Customers!A:H, 4, FALSE)
+```
+
+| Argument | Meaning |
+| :-- | :-- |
+| `lookup_value` | What you're looking for |
+| `table_array` | The whole lookup table; the ID **must** be its first column |
+| `col_index_num` | Which column of that table to return, counted from the left: 4 is region |
+| `range_lookup` | `FALSE` for an exact match. **Always type FALSE.** |
+
+It works, but it has three traps:
+
+1. **The default is approximate.** Leave out `FALSE` and VLOOKUP assumes the table is sorted and returns the nearest value, often the wrong customer, with no error.
+2. **The column number is fragile.** Insert a column in `Customers` and `4` now points at a different column. Every result changes, silently.
+3. **It only looks right.** The ID has to be the first column, so you can't look up an ID from a name.
+
+XLOOKUP fixes all three, which is why it's the one to learn first.
+
+### INDEX and MATCH
+
+Before XLOOKUP, careful analysts used `INDEX` with `MATCH`. It still works in every version of Excel and in Google Sheets.
+
+```excel
+=INDEX(return_range, MATCH(lookup_value, lookup_range, 0))
+=INDEX(Customers[region], MATCH([@customer_id], Customers[customer_id], 0))
+```
+
+It's two functions working together:
+
+- `MATCH(27, Customers[customer_id], 0)` finds **which row** 27 is on: `27` (customer 27 is the 27th row). The `0` means exact match.
+- `INDEX(Customers[region], 27)` returns the 27th value of the region column: `Lagos`.
+
+### Which one to use
+
+| | XLOOKUP | VLOOKUP | INDEX/MATCH |
+| :-- | :-- | :-- | :-- |
+| Excel version | 365, 2021 and later | All | All |
+| Google Sheets | Yes | Yes | Yes |
+| Exact match by default | Yes | **No** | With `0` |
+| Survives inserted columns | Yes | **No** | Yes |
+| Can look left | Yes | **No** | Yes |
+| Built-in "not found" text | Yes | No (wrap in IFERROR) | No (wrap in IFERROR) |
+
+Write XLOOKUP. Read the other two when you inherit a workbook, and if a file has to open in Excel 2016 or earlier, use INDEX/MATCH.
 
 ## Example
 
-Order line 10001 has `customer_id` 27 and `product_id` 3.
+**Which region brings in the most revenue?**
 
-- `XLOOKUP(27, Customers[customer_id], Customers[region])` returns the region of customer 27.
-- `XLOOKUP(3, Products[product_id], Products[category])` returns **Beverages** (product 3 is Orange juice 1L).
+Once each order line has a `region` column from XLOOKUP, `SUMIFS` from lesson 5 does the rest. Type the six region names in `K2:K7` and in `L2`:
 
-After the walkthrough below, the Orders table has three looked-up columns:
+```excel
+=SUMIFS(Orders[revenue], Orders[region], K2)
+```
+
+| Region | Revenue |
+| :-- | --: |
+| Lagos | 411,162,300 |
+| South West | 131,536,985 |
+| North West | 81,581,325 |
+| North Central | 77,540,720 |
+| South South | 68,403,230 |
+| South East | 60,316,685 |
+| **Total** | **830,541,245** |
+
+The total matches the grand total from lesson 4, so no line was lost or double-counted. Lagos alone is just under half of all revenue.
+
+The same pattern with a `category` column:
+
+| Category | Revenue |
+| :-- | --: |
+| Household | 244,769,040 |
+| Personal care | 235,483,370 |
+| Beverages | 224,612,360 |
+| Snacks | 125,676,475 |
+
+After the walkthrough below, your Orders table will look like this:
 
 ![The Orders table with new region, channel and category columns filled by XLOOKUP; the formula bar shows the XLOOKUP for region.](/images/courses/excel/xlookup.webp "XLOOKUP in the formula bar (1) and the three new columns it fills (2). None says Not found, so every ID matched.")
 
 ## Walkthrough
 
-1. Load `customers.csv` and `products.csv` into the same workbook as Tables named `Customers` and `Products` (Data → From Text/CSV, as in lesson 2).
-2. In the Orders table, add a column `region`:
-   `=XLOOKUP([@customer_id], Customers[customer_id], Customers[region], "Not found")`
-3. Add a column `category`:
-   `=XLOOKUP([@product_id], Products[product_id], Products[category], "Not found")`
-4. Filter each new column for "Not found". There should be none; if there are, some IDs don't match.
-5. Now combine with SUMIFS from the last lesson:
-   `=SUMIFS(Orders[revenue], Orders[region], "Lagos")`
+1. **Load the lookup tables.** In the same workbook as `Orders`, load `customers.csv` and `products.csv` (Data → From Text/CSV, as in lesson 2). Click in each, press **Ctrl + T**, and name them `Customers` and `Products` (Table Design → Table Name).
+2. **Check the keys are unique.** On any spare cell:
+   `=COUNTA(Customers[customer_id]) = COUNTA(UNIQUE(Customers[customer_id]))`. It should say `TRUE`. Do the same for `Products[product_id]`.
+3. **Add region.** In the first empty column of `Orders`, type the header `region`, then in the first row:
+
+   ```excel
+   =XLOOKUP([@customer_id], Customers[customer_id], Customers[region], "Not found")
+   ```
+
+   The table fills it down every row.
+4. **Add channel and category** the same way, returning `Customers[channel]` and `Products[category]` (looking up `[@product_id]` in `Products[product_id]`).
+5. **Check for misses.** Filter each new column: there should be no "Not found".
+6. **Use them.** Total Lagos revenue with `=SUMIFS(Orders[revenue], Orders[region], "Lagos")`, and check you get ₦411,162,300.
+7. **Combine two lookups.** Lagos revenue from Beverages only:
+
+   ```excel
+   =SUMIFS(Orders[revenue], Orders[region], "Lagos", Orders[category], "Beverages")
+   ```
+
+   That's ₦116,162,310.
+
+### Summary
+
+| Need | Use |
+| :-- | :-- |
+| Bring a detail from another table | `XLOOKUP(key, Other[key], Other[detail], "Not found")` |
+| Put numbers into bands | `XLOOKUP(value, Bands[from], Bands[band], , -1)` |
+| Check a key column is unique | `COUNTA(col) = COUNTA(UNIQUE(col))` |
+| Read an older workbook | `VLOOKUP(..., FALSE)` or `INDEX(..., MATCH(..., 0))` |
+| Find why a lookup fails | Look for missing IDs, numbers stored as text, and extra spaces |
 
 ## Practice
 
@@ -12071,7 +12997,7 @@ values ('xls-m07', 'excel-for-data-analysis', 'Data Cleaning', 7, null, null, '{
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('excel-for-data-analysis:data-cleaning', 'excel-for-data-analysis', 'xls-m07', 'data-cleaning', 'Data cleaning in Excel', 'Clean a real messy export with TRIM, PROPER, SUBSTITUTE, VALUE, Remove Duplicates, a mapping table and Power Query''s locale-aware dates.', 20, $md$
+values ('excel-for-data-analysis:data-cleaning', 'excel-for-data-analysis', 'xls-m07', 'data-cleaning', 'Data cleaning in Excel', 'Find and fix messy data step by step: TRIM, CLEAN, PROPER, SUBSTITUTE, VALUE, LEFT and RIGHT, mapping tables, Remove Duplicates and day-first dates.', 30, $md$
 ## The problem
 
 Kolanut's customer list, exported from its old system, is a mess: names with stray spaces and random capitals, regions spelled 23 different ways, three date formats, credit limits stored as text with `₦` signs, and 12 customers listed twice. The new system needs a clean list, and finance wants the total credit extended to customers.
@@ -12082,26 +13008,141 @@ Kolanut's customer list, exported from its old system, is a mess: names with str
 
 ## The concept
 
-**Text functions for cleaning**
+**Cleaning** means turning data that a person can read into data that a formula can trust. Excel treats `Lagos`, `LAGOS` and `Lagos ` (with a space) as text, and a SUMIFS for `"Lagos"` will miss the one with the space. A credit limit typed as `₦2,050,000` is text too, so `SUM` skips it without a word.
 
-| Function | Does | Example |
+### Step 1: look before you fix
+
+Before changing anything, find out what's wrong and how often. Here is what a quick inspection of the 102 rows of `customer_list_raw.csv` finds:
+
+| Column | Problem | How many rows |
+| :-- | :-- | --: |
+| Customer Name | Spaces at the start | 22 |
+| Customer Name | Spaces at the end | 28 |
+| Customer Name | ALL CAPITALS / all lower case | 18 / 8 |
+| Customer Name | The same customer listed twice | 12 pairs |
+| Region | 23 different spellings of 6 regions | all |
+| Phone | Three formats: `0803…`, `+234 803…`, `234803…`; some with spaces | 42 with spaces |
+| Date Joined | Three formats: `2023-07-11`, `22/10/2023`, `15-May-2024` | 49 / 28 / 25 |
+| Credit Limit | `₦` signs, commas, `.00` endings; 3 blank | 15 with ₦ |
+
+Counting problems first matters for two reasons: you know when you've finished, and you can **prove** the fix worked by counting again afterwards.
+
+Useful checks for finding problems:
+
+| Check | Formula | TRUE means |
 | :-- | :-- | :-- |
-| `TRIM(x)` | Removes spaces at the start and end, and repeated spaces inside | `"  Ada  Mart "` → `"Ada Mart"` |
-| `CLEAN(x)` | Removes invisible non-printing characters (common in exports) | |
-| `PROPER(x)` | Capitalises Each Word | `"PEACE MART"` → `"Peace Mart"` |
-| `UPPER(x)`, `LOWER(x)` | All capitals / all lower case | |
-| `SUBSTITUTE(x, old, new)` | Replaces every `old` with `new` | remove `₦`: `SUBSTITUTE(x,"₦","")` |
-| `VALUE(x)` | Turns text that looks like a number into a number | `"1200000"` → 1200000 |
+| Extra spaces | `=[@[Customer Name]]<>TRIM([@[Customer Name]])` | The value has stray spaces |
+| Text, not a number | `=ISTEXT([@[Credit Limit]])` | SUM will skip it |
+| Number | `=ISNUMBER([@[Credit Limit]])` | Ready to calculate with |
+| Length | `=LEN([@Phone])` | (Returns the number of characters) |
 
-Functions can be nested. A clean credit limit from text like `₦1,200,000.00`:
+> [!NOTE]
+> Inside the brackets of a table reference, a column name with a space needs its own brackets: `[@[Customer Name]]`, not `[@Customer Name]`.
+
+### TRIM
+
+Removes spaces at the start and end, and turns runs of spaces inside the text into one.
+
+```excel
+=TRIM(text)
+```
+
+| Raw | `=TRIM(...)` | `LEN` before → after |
+| :-- | :-- | :-- |
+| `"kayode distributors   "` | `"kayode distributors"` | 22 → 19 |
+| `"  ADA SUPERSTORE"` | `"ADA SUPERSTORE"` | 16 → 14 |
+| `"  Peace   Mart "` | `"Peace Mart"` | 15 → 10 |
+
+`TRIM` only removes the ordinary space character. Text copied from websites sometimes contains a **non-breaking space** (character 160) that `TRIM` leaves alone. If `TRIM` seems not to work, use `=TRIM(SUBSTITUTE(x, CHAR(160), " "))`.
+
+### CLEAN
+
+Removes invisible control characters, such as line breaks, that some systems put into exports.
+
+```excel
+=CLEAN(text)
+```
+
+You can't see what it removes, which is why it's often used together with TRIM as a matter of habit: `=TRIM(CLEAN(x))`.
+
+### PROPER, UPPER and LOWER
+
+Change the capitals.
+
+| Function | Does | `"ADA SUPERSTORE"` becomes |
+| :-- | :-- | :-- |
+| `PROPER(text)` | Capital first letter of each word | `Ada Superstore` |
+| `UPPER(text)` | ALL CAPITALS | `ADA SUPERSTORE` |
+| `LOWER(text)` | all lower case | `ada superstore` |
+
+`PROPER` is right for names, but check the results: it turns `ABC Stores` into `Abc Stores` and `McDonald` into `Mcdonald`. `LOWER` is useful for **matching**: compare lower-case versions and capitals stop mattering.
+
+### SUBSTITUTE
+
+Replaces every occurrence of some text with other text.
+
+```excel
+=SUBSTITUTE(text, old_text, new_text)
+```
+
+| You write | Result |
+| :-- | :-- |
+| `=SUBSTITUTE("₦2,050,000", "₦", "")` | `2,050,000` (still text) |
+| `=SUBSTITUTE("2,050,000", ",", "")` | `2050000` (still text) |
+| `=SUBSTITUTE("0915 628 5995", " ", "")` | `09156285995` |
+| `=SUBSTITUTE("South-West", "-", " ")` | `South West` |
+
+Replacing with `""` (nothing) deletes. To remove two different things, **nest** one SUBSTITUTE inside another: the inner one runs first.
+
+### VALUE
+
+Turns text that looks like a number into a real number.
+
+```excel
+=VALUE(text)
+```
+
+`=VALUE("2050000")` gives the number 2,050,000, which now sits on the **right** of the cell and can be summed. `VALUE` can't cope with a `₦` sign, so remove that first. Putting it all together for a credit limit:
 
 ```excel
 =IFERROR(VALUE(SUBSTITUTE(SUBSTITUTE(TRIM([@[Credit Limit]]),"₦",""),",","")), "")
 ```
 
-(Inside the brackets of a Table reference, a column name with a space needs its own brackets: `[@[Credit Limit]]`.)
+Read it from the inside out:
 
-**Standardising categories with a mapping table.** Don't write a giant nested IF for 23 region spellings. Make a two-column table, `RegionMap`, with every messy spelling (in lower case) and its clean version, then look it up:
+1. `TRIM(...)`: `"₦2,050,000"` (no change here, but it handles stray spaces)
+2. `SUBSTITUTE(..., "₦", "")`: `"2,050,000"`
+3. `SUBSTITUTE(..., ",", "")`: `"2050000"`
+4. `VALUE(...)`: the number 2050000. `"500,000.00"` becomes 500000 the same way.
+5. `IFERROR(..., "")`: a blank limit gives an error at step 4, so show a blank instead.
+
+### LEFT, RIGHT, MID and LEN
+
+Take part of a text value.
+
+| Function | Returns | Example | Result |
+| :-- | :-- | :-- | :-- |
+| `LEFT(text, n)` | The first n characters | `=LEFT("08089165939", 4)` | `0808` |
+| `RIGHT(text, n)` | The last n characters | `=RIGHT("2348136236612", 10)` | `8136236612` |
+| `MID(text, start, n)` | n characters from position start | `=MID("2023-07-11", 6, 2)` | `07` |
+| `LEN(text)` | How many characters | `=LEN("08089165939")` | 11 |
+
+These are perfect for the phone numbers. Every Nigerian mobile number ends in the same 10 digits, whatever the prefix: `08136236612`, `+234 813 623 6612` and `2348136236612` are all the same phone. So remove spaces and `+`, keep the last 10 digits, and put a `0` in front:
+
+```excel
+="0"&RIGHT(SUBSTITUTE(SUBSTITUTE([@Phone]," ",""),"+",""),10)
+```
+
+All 102 phones come out as 11 digits starting `07`, `08` or `09`. The `&` joins text, and keeping the result as **text** protects the leading zero.
+
+> [!WARNING]
+> Never let Excel store a phone number as a number: it drops the leading `0` and may show long ones as `8.09E+09`. Phone numbers, account numbers and IDs with leading zeros are **text**.
+
+### Standardising categories with a mapping table
+
+The Region column has 23 spellings of 6 regions. After `LOWER(TRIM(...))` there are still 16: `south west`, `south-west`, `sw` and so on. You could write a huge nested IF, but a **mapping table** is easier to read, check and extend.
+
+Make a two-column table called `RegionMap` with every messy spelling (lower case, trimmed) and its clean version:
 
 | raw | clean |
 | :-- | :-- |
@@ -12109,26 +13150,48 @@ Functions can be nested. A clean credit limit from text like `₦1,200,000.00`:
 | sw | South West |
 | south-west | South West |
 | south west | South West |
+| se | South East |
 | … | … |
+
+Then look each row up with XLOOKUP from lesson 6:
 
 ```excel
 =XLOOKUP(LOWER(TRIM([@Region])), RegionMap[raw], RegionMap[clean], "CHECK")
 ```
 
-Anything that shows `CHECK` is a spelling you haven't mapped yet.
+Anything that shows `CHECK` is a spelling you haven't mapped yet. Add a row to `RegionMap` and it fixes itself. When nothing shows `CHECK`, every row has one of the six clean regions.
 
-**Remove duplicates** (**Data → Remove Duplicates**) deletes rows that repeat in the columns you choose. Excel ignores capital letters when comparing, but **not** spaces, so trim first.
+### Remove Duplicates
 
-**Dates: the trap.** The export mixes `2023-07-11`, `22/10/2023` and `30-Sep-2023`. On a computer set to US format, Excel reads `01/09/2022` as **9 January** and leaves `22/10/2023` as text, because there is no 22nd month. Half your dates are wrong and the other half aren't dates. The reliable fix is to import through Power Query and tell it the dates are day-first:
+**Data → Remove Duplicates** deletes rows that repeat in the columns you choose, keeping the **first** copy it meets.
+
+Two things decide whether it works:
+
+1. **Clean first.** Excel ignores capitals when comparing, but not spaces: `Ada Stores` and `Ada Stores   ` look like two customers. Trim before removing duplicates.
+2. **Choose the columns.** Tick only the columns that define "the same customer", here the cleaned name. With every column ticked, two copies count as duplicates only if every column matches exactly.
+
+Because it keeps the first copy, **sort first** if one copy is better. To keep the copy that has a credit limit, sort the limit column largest to smallest before removing duplicates.
+
+To **find** duplicates without deleting anything, count each name: `=COUNTIF([Name], [@Name])`. Anything above 1 appears more than once.
+
+### Dates: the trap
+
+The export mixes `2023-07-11`, `22/10/2023` and `15-May-2024`. On a computer set to US format, Excel reads `01/09/2022` as **9 January** and leaves `22/10/2023` as text, because there is no 22nd month. Half your dates are wrong and the other half aren't dates.
+
+You can spot the problem: real dates sit on the **right** of the cell, text dates on the **left**, and `=ISNUMBER([@[Date Joined]])` is FALSE for text.
+
+The reliable fix is to import through **Power Query** and tell it the dates are day-first:
 
 1. **Data → From Text/CSV** → choose the file → **Transform Data**.
 2. Right-click the **Date Joined** column → **Change Type → Using Locale…**
 3. Data type **Date**, locale **English (United Kingdom)** (day-first), OK.
 4. **Home → Close & Load**.
 
-Check a few rows against the raw file afterwards: `01/09/2022` should now be 1 September 2022.
+Check a few rows against the raw file afterwards: `01/09/2022` should now be 1 September 2022, and `15-May-2024` should be 15 May 2024.
 
-**Import it properly first.** Opened with **Data → From Text/CSV**, the messy file comes in far better than by double-clicking:
+### Import it properly first
+
+Opened with **Data → From Text/CSV**, the messy file comes in far better than by double-clicking:
 
 ![The From Text/CSV preview of the messy customer export: File Origin is UTF-8, phone numbers keep their leading zeros, dates and credit limits are recognised.](/images/courses/excel/import-messy.webp "Excel's import preview for the messy export.")
 
@@ -12137,9 +13200,11 @@ Check a few rows against the raw file afterwards: `01/09/2022` should now be 1 S
 3. **Date Joined** is recognised as dates. It read them day-first because this computer uses a UK date format. On a US-format computer, change the type with a locale in Power Query, as described above.
 4. **Credit Limit** is recognised as numbers; the blank one shows as `null`.
 
-Import gives the cleanest starting point, but names, regions and duplicates still need fixing, and that's what the formulas below do.
+Import gives the cleanest starting point, but names, regions and duplicates still need fixing, and that's what the formulas do.
 
 ## Example
+
+Three raw rows, and what the cleaning formulas make of them:
 
 | Raw | Clean |
 | :-- | :-- |
@@ -12147,35 +13212,55 @@ Import gives the cleanest starting point, but names, regions and duplicates stil
 | `  ADA SUPERSTORE` · `Lagos` · `2023-07-11` · `1,200,000` | Ada Superstore · Lagos · 11 Jul 2023 · 1,200,000 |
 | `Hajia Amina Superstore` · `north central` · `21/04/2023` · `850000` | Hajia Amina Superstore · North Central · 21 Apr 2023 · 850,000 |
 
+Each cleaned value is one formula from this lesson. The name is `PROPER(TRIM(...))`, the region is the `RegionMap` lookup, the date is the Power Query locale, and the limit is the nested `SUBSTITUTE`/`VALUE`.
+
 ## Walkthrough
 
 A clean, repeatable workflow:
 
-1. **Keep the raw sheet untouched.** Load the file (with the Power Query date fix above) into a sheet called `Raw`.
-2. **Add helper columns** next to the data, one per cleaned field:
+1. **Keep the raw sheet untouched.** Load the file (with the Power Query date fix above) into a sheet called `Raw`. If something goes wrong later, you can always start again from it.
+2. **Count the problems** with the checks from step 1 of this lesson, and write the counts down.
+3. **Add helper columns** next to the data, one per cleaned field:
    - `Name`: `=PROPER(TRIM(CLEAN([@[Customer Name]])))`
    - `Region clean`: the XLOOKUP on `RegionMap`
-   - `Limit`: the nested SUBSTITUTE/VALUE formula
+   - `Phone clean`: the `RIGHT`/`SUBSTITUTE` formula
+   - `Limit`: the nested `SUBSTITUTE`/`VALUE` formula
+
    Here are the helper columns on Kolanut's export, next to the raw data:
 
    ![The raw customer export with helper columns Name, Region clean and Limit added on the right; the formula bar shows the nested SUBSTITUTE and VALUE formula.](/images/courses/excel/cleaning.webp "Raw columns (1, 2) and their cleaned versions (4), built by formulas like the one in the formula bar (3).")
 
-3. **Filter each helper column** for `CHECK`, errors and blanks, and fix the mapping until none are left.
-4. **Copy the helper columns** and paste them into a new sheet `Clean` with **Paste Special → Values** (Ctrl + Alt + V, then V). They're now fixed values, not formulas.
-5. On `Clean`, **Data → Remove Duplicates** (Alt, A, M) on the name column:
+4. **Filter each helper column** for `CHECK`, errors and blanks, and fix the mapping until none are left.
+5. **Copy the helper columns** and paste them into a new sheet `Clean` with **Paste Special → Values** (Ctrl + Alt + V, then V). They're now fixed values, not formulas.
+6. On `Clean`, sort by `Limit` largest to smallest, then **Data → Remove Duplicates** (Alt, A, M) on the name column:
 
    ![The Remove Duplicates dialog listing the table's columns with tick boxes, and My data has headers ticked.](/images/courses/excel/remove-duplicates.webp "Remove Duplicates. Tick only the columns that define a duplicate (1): here, just the cleaned name.")
 
-   1. **Columns**: untick everything except the cleaned name. With every column ticked, two copies count as duplicates only if *every* column matches, and these copies have different phone formats.
+   1. **Columns**: untick everything except the cleaned name.
    2. **My data has headers** keeps the header row out of the comparison.
    3. **OK** reports how many duplicates were removed (12 here) and how many unique rows remain (90).
-6. **Log it**: on a `Notes` sheet, write what you did and the row counts before and after (102 → 90).
+7. **Count again.** Six distinct regions, 90 customers, 90 distinct phones, every limit a number or blank.
+8. **Log it**: on a `Notes` sheet, write what you did and the row counts before and after (102 → 90). Someone will ask.
 
 > [!WARNING]
 > If a formula shows up as text instead of calculating, the column was formatted as **Text** (common after importing with text columns). Set the column to **General** (Home → Number format), then click the cell, press **F2** and **Enter**.
 
 > [!TIP]
-> Flash Fill (**Data → Flash Fill**, or Ctrl + E) is handy for one-off pattern cleaning: type the cleaned version of the first two cells yourself and Excel guesses the rest. Always check its guesses; it can't explain its rule.
+> Flash Fill (**Data → Flash Fill**, or Ctrl + E) is handy for one-off pattern cleaning: type the cleaned version of the first two cells yourself and Excel guesses the rest. Always check its guesses; it can't explain its rule, and it won't update when the data changes.
+
+### Summary
+
+| Problem | Fix |
+| :-- | :-- |
+| Stray spaces | `TRIM` (and `SUBSTITUTE(x, CHAR(160), " ")` for web spaces) |
+| Invisible characters | `CLEAN` |
+| Random capitals | `PROPER`, `UPPER`, `LOWER` |
+| Unwanted characters (₦, commas, dashes) | `SUBSTITUTE(x, old, "")` |
+| Numbers stored as text | `VALUE` after removing symbols |
+| Part of a value | `LEFT`, `RIGHT`, `MID`, `LEN` |
+| Many spellings of one category | A mapping table and `XLOOKUP` |
+| Repeated rows | Clean, sort, then Data → Remove Duplicates |
+| Mixed date formats | Power Query → Change Type → Using Locale |
 
 ## Practice
 
@@ -12312,37 +13397,147 @@ values ('xls-m08', 'excel-for-data-analysis', 'Pivot Tables', 8, null, null, '{}
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('excel-for-data-analysis:pivot-tables', 'excel-for-data-analysis', 'xls-m08', 'pivot-tables', 'Pivot tables', 'Summarise thousands of rows in seconds - by region, month, channel or rep - with pivot tables, grouping, percentages and slicers.', 20, $md$
+values ('excel-for-data-analysis:pivot-tables', 'excel-for-data-analysis', 'xls-m08', 'pivot-tables', 'Pivot tables', 'Summarise thousands of rows in seconds with pivot tables: the four areas, sum, count and average, percentages and growth, date grouping, top N, slicers and refreshing.', 30, $md$
 ## The problem
 
 SUMIFS works, but a summary of revenue by region *and* month would need 6 × 18 = 108 formulas. The director will then ask for it by channel instead. **Pivot tables** build these summaries by dragging fields, and rebuild them in seconds when the question changes.
 
 ## The concept
 
-A pivot table has four areas:
+A **pivot table** is a summary that Excel builds for you. You tell it which column to group by and which numbers to add up, and it does what dozens of `SUMIFS` formulas would do, in a second. Change your mind, drag a field somewhere else, and the summary rebuilds itself.
 
-| Area | Holds | Example |
+The name comes from **pivoting**: turning the same data round to look at it from another side. Revenue by region, then by month, then by channel, all from one table.
+
+### What a pivot table needs
+
+The source must be a clean, **tabular** list:
+
+- **One header row**, with a name in every column.
+- **One row per record** (here, per order line).
+- **No blank rows or columns** in the middle, and no subtotal rows.
+- **The columns you want to group by**: for Kolanut, the `revenue`, `region`, `channel` and `category` columns you added in lessons 2 and 6.
+
+Your `Orders` table already meets all of these. Build pivots on a **Table**, not a fixed range: when rows are added to the Table, a Refresh picks them up. A pivot built on `A1:K4267` would miss them.
+
+### The four areas
+
+![On the left, the four areas of the PivotTable Fields pane: channel in Filters, year in Columns, region in Rows and Sum of revenue in Values. On the right, the resulting pivot table: revenue by region for 2025 and 2026, with grand totals.](/images/courses/excel/pivot-areas.svg "Each area of the field list controls one part of the pivot table.")
+
+| Area | Holds | Each value becomes | Example |
+| :-- | :-- | :-- | :-- |
+| **Rows** | Categories down the side | A row | `region` |
+| **Columns** | Categories across the top | A column | year of `order_date` |
+| **Values** | The numbers to summarise | The cells in the middle | Sum of `revenue` |
+| **Filters** | A filter for the whole pivot | (a drop-down above it) | `channel` |
+
+You need at least one field in **Values** and usually one in **Rows**. Columns and Filters are optional. Put **text** fields (region, channel) in Rows, Columns or Filters; put **number** fields (revenue, quantity) in Values.
+
+> [!TIP]
+> Keep the number of columns small. Six regions down the side and two years across is easy to read; eighteen months across is not. Put the field with more values in **Rows**.
+
+### Summarise Values By: sum, count, average…
+
+Numbers in Values are **summed** by default. Right-click any number in the pivot → **Summarize Values By** to change it.
+
+With `channel` in Rows and `revenue` in Values three times, each summarised a different way:
+
+| Channel | Sum of revenue | Count of revenue | Average of revenue |
+| :-- | --: | --: | --: |
+| Kiosk | 39,888,675 | 777 | 51,337 |
+| Supermarket | 210,387,665 | 1,308 | 160,847 |
+| Wholesale | 580,264,905 | 2,181 | 266,055 |
+| **Grand Total** | **830,541,245** | **4,266** | **194,689** |
+
+Each summary answers a different question. **Sum**: how much did each channel bring in? **Count**: how many order lines? **Average**: how big is a typical line? Wholesale lines average five times the size of kiosk lines.
+
+> [!WARNING]
+> If a number field shows **Count** instead of **Sum** when you add it, some cells in that column are text or blank. Check the source column with the tests from lesson 7.
+
+### Show Values As: percentages and differences
+
+**Summarise Values By** decides *what* to calculate. **Show Values As** (right-click a number) decides *how to show it*:
+
+| Show Values As | Each cell becomes | Use it to ask |
 | :-- | :-- | :-- |
-| **Rows** | Categories down the side | region |
-| **Columns** | Categories across the top | year |
-| **Values** | The numbers, summarised | Sum of revenue |
-| **Filters** | A filter for the whole pivot | channel = Wholesale |
+| % of Grand Total | Its share of the overall total | What share does each region bring in? |
+| % of Column Total | Its share of its column | What share of 2025 came from Lagos? |
+| % of Row Total | Its share of its row | How did Lagos split between the years? |
+| Difference From | Minus a chosen base item | How much more than last year? |
+| % Difference From | The percentage change from a base item | By what percentage did it grow? |
+| Running Total In | Adds up as it goes | How much by the end of each month? |
 
-**Summarise Values By** changes Sum to Count, Average, Max…
-**Show Values As** turns numbers into **% of Grand Total**, **% of Column Total**, **Difference From**…
+The same region pivot as **% of Grand Total**:
 
-**Dates** can be grouped into Years, Quarters and Months: right-click a date in the pivot → **Group**. Recent Excel versions group dates automatically when you add a date field.
+| Region | % of revenue |
+| :-- | --: |
+| Lagos | 49.5% |
+| South West | 15.8% |
+| North West | 9.8% |
+| North Central | 9.3% |
+| South South | 8.2% |
+| South East | 7.3% |
 
-**Slicers** are clickable filter buttons: **PivotTable Analyze → Insert Slicer**.
+And with years across the top as **% of Column Total**, Lagos's share rises from 47.9% of 2025's revenue to 52.5% of 2026's so far. That's a story worth telling: the business is leaning more on Lagos, not less.
 
-A pivot table **doesn't update by itself**. After the source data changes: **Data → Refresh All** (Ctrl + Alt + F5).
+To show the amount **and** the percentage side by side, drag `revenue` into Values **twice** and set **Show Values As** only on the second one.
 
-> [!NOTE]
-> Build pivots on a **Table** (your `Orders` table with the revenue, region and category columns from lessons 2 and 6). When rows are added to the Table, Refresh picks them up. A pivot built on a fixed range like A1:J4267 would miss them.
+### Grouping dates
+
+A date field in Rows or Columns would give one row per day: 546 of them. **Group** it instead: right-click any date in the pivot → **Group** → choose **Months**, **Quarters** and **Years** (choose Years together with Months, or January 2025 and January 2026 are added together).
+
+Recent versions of Excel group dates automatically when you add a date field; click the **+** next to a year to see its quarters and months.
+
+By quarter, Kolanut's revenue grows almost every quarter:
+
+| Year | Quarter | Revenue |
+| :-- | :-- | --: |
+| 2025 | Q1 | 119,509,320 |
+| 2025 | Q2 | 124,653,750 |
+| 2025 | Q3 | 134,848,095 |
+| 2025 | Q4 | 160,799,625 |
+| 2026 | Q1 | 143,209,130 |
+| 2026 | Q2 | 147,521,325 |
+
+December 2025 alone was ₦66,284,310, the biggest month by far: the festive season. That's why Q4 stands out.
+
+Numbers can be grouped too: right-click a quantity in Rows → **Group** → Starting at 1, Ending at 30, By 10 gives bands 1–10, 11–20, 21–30.
+
+### Sorting and filtering inside a pivot
+
+- **Sort**: right-click a number → **Sort → Largest to Smallest**. The pivot keeps that order when it refreshes.
+- **Filter a row field**: click the drop-down on **Row Labels**. **Value Filters → Top 10** shows the top N items by value: the top 5 customers, the top 3 products.
+- **Filters area**: drag `channel` to Filters, and a drop-down above the pivot limits everything to one channel.
+
+### Slicers
+
+A **slicer** is a set of buttons that filters the pivot with one click, which is clearer than a drop-down for anyone reading your report.
+
+1. Click inside the pivot.
+2. **PivotTable Analyze → Insert Slicer**, tick `channel`, OK.
+3. Click **Wholesale**: the pivot shows wholesale only. Ctrl + click to choose several. The clear-filter icon in the corner shows everything again.
+
+A **timeline** (**PivotTable Analyze → Insert Timeline**) is a slicer for dates: drag across months to filter a period.
+
+### Refreshing
+
+A pivot table is a **snapshot**. It doesn't update by itself when the source data changes. After editing or adding rows: **Data → Refresh All** (Ctrl + Alt + F5), or right-click the pivot → **Refresh**.
+
+> [!WARNING]
+> Forgetting to refresh is the most common pivot mistake. If a number looks out of date, refresh before you look for anything else.
+
+### GETPIVOTDATA
+
+If you type `=` and click a cell inside a pivot, Excel writes a `GETPIVOTDATA` formula instead of a simple reference:
+
+```excel
+=GETPIVOTDATA("revenue", $A$3, "region", "Lagos")
+```
+
+That's deliberate: it finds "Lagos revenue" by name, so it still works when the pivot is re-sorted or reshaped. It's useful for a summary page that quotes pivot figures. If you'd rather have plain references, turn it off under **PivotTable Analyze → Options ▾ → Generate GetPivotData**.
 
 ## Example
 
-Revenue by channel, with **Show Values As → % of Grand Total**:
+**Revenue by channel, with each channel's share.** `channel` in Rows, `revenue` in Values twice, the second shown as **% of Grand Total**:
 
 | Channel | Sum of revenue | % of total |
 | :-- | --: | --: |
@@ -12351,17 +13546,21 @@ Revenue by channel, with **Show Values As → % of Grand Total**:
 | Kiosk | 39,888,675 | 4.8% |
 | **Grand Total** | **830,541,245** | **100%** |
 
-Wholesalers are fewer than a quarter of Kolanut's customers but bring in 70% of revenue.
+Wholesalers are 21 of Kolanut's 90 customers, fewer than a quarter, but bring in 70% of revenue. A director would want to know which wholesalers, and whether any are at risk: that's the next question, and with `customer_name` in Rows and a **Top 10** filter, the next pivot.
+
+**This half-year against the same half last year.** The data stops at June 2026, so comparing 2026 with all of 2025 isn't fair. Filter both years to January–June (group by Months and Years, and filter the months): the first half of 2025 brought in ₦244,163,070 and the first half of 2026 ₦290,730,455, **19.1% more**. **Show Values As → % Difference From**, with Base field Years and Base item 2025, calculates that for you.
 
 ## Walkthrough
 
-1. Click inside the `Orders` table (with its `revenue`, `region` and `category` columns).
+1. Click inside the `Orders` table (with its `revenue`, `region`, `channel` and `category` columns).
 2. **Insert → PivotTable → From Table/Range → New Worksheet**, OK.
 3. In the PivotTable Fields pane, drag `region` to **Rows** and `revenue` to **Values**. You get Sum of revenue by region.
 4. Drag `order_date` to **Columns**. Excel groups it by year (click the `+` to see quarters and months). If it doesn't, right-click a date → **Group** → select Months and Years.
 5. Right-click any revenue number → **Number Format** → Number, 0 decimals, with a thousands separator.
-6. Sort: right-click a revenue number → **Sort → Largest to Smallest**.
-7. **Insert Slicer** for `channel`. Click Wholesale, then Kiosk, and watch the whole pivot change.
+6. Sort: right-click a revenue number in the Grand Total column → **Sort → Largest to Smallest**.
+7. Check the Grand Total is ₦830,541,245, the same as your `SUM` from lesson 4. If not, the pivot needs refreshing or its source range is wrong.
+8. **Insert Slicer** for `channel`. Click Wholesale, then Kiosk, and watch the whole pivot change.
+9. Drag `order_date` out of Columns, and drag `revenue` into Values a second time. Right-click the second one → **Show Values As → % of Grand Total**.
 
 ![A pivot table of revenue and percentage of total by region, a channel slicer, and the PivotTable Fields pane with region in Rows and two value fields.](/images/courses/excel/pivot-table.webp "Revenue by region with % of total (1). The field list (2), the areas you drag fields into (3), and a slicer (4).")
 
@@ -12369,8 +13568,6 @@ Wholesalers are fewer than a quarter of Kolanut's customers but bring in 70% of 
 2. **Field list**: every column of the source Table. Ticked fields are in use.
 3. **Areas**: Filters, Columns, Rows and Values. Drag fields between them to reshape the summary.
 4. **Slicer** for `channel`: click Wholesale and the pivot shows wholesale revenue only.
-
-To get the channel percentages in the Example: `channel` in Rows, `revenue` in Values **twice**; on the second, right-click → **Show Values As → % of Grand Total**.
 
 **Shortcuts for pivot tables**
 
@@ -12380,6 +13577,19 @@ To get the channel percentages in the Example: `channel` in Rows, `revenue` in V
 | Alt + F5 | Refresh the selected pivot |
 | Ctrl + Alt + F5 | Refresh all pivots and connections |
 | Alt + ↓ (on a field in the pivot) | Filter or sort that field |
+
+### Summary
+
+| Need | Do |
+| :-- | :-- |
+| Summarise by a category | Category in **Rows**, number in **Values** |
+| A second dimension | Another category in **Columns** |
+| Count or average instead of sum | Right-click → **Summarize Values By** |
+| Shares, differences, running totals | Right-click → **Show Values As** |
+| Months, quarters, years | Right-click a date → **Group** |
+| Top N items | Row Labels → **Value Filters → Top 10** |
+| One-click filtering | **Insert Slicer** or **Insert Timeline** |
+| Up-to-date numbers | **Refresh All** (Ctrl + Alt + F5) |
 
 ## Practice
 
@@ -12516,59 +13726,147 @@ values ('xls-m09', 'excel-for-data-analysis', 'Charts and Visualization', 9, nul
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('excel-for-data-analysis:charts-and-visualization', 'excel-for-data-analysis', 'xls-m09', 'charts-and-visualization', 'Charts and visualization', 'Build clear line, bar and combo charts from pivot tables, and use conditional formatting and sparklines to make tables readable.', 20, $md$
+values ('excel-for-data-analysis:charts-and-visualization', 'excel-for-data-analysis', 'xls-m09', 'charts-and-visualization', 'Charts and visualization', 'Choose the right chart for the question, build line, bar, stacked and combo charts and PivotCharts, fix Excel''s defaults, and make tables readable with conditional formatting and sparklines.', 20, $md$
 ## The problem
 
 The pivot tables show the numbers, but a table of 18 months × 6 regions doesn't jump out at anyone. The sales director needs to *see* the December peak, the Lagos growth and the North West fall. Excel can chart all of it, but its defaults need work before a chart is fit for a meeting.
 
 ## The concept
 
-**Pick the chart from the question** (as in Data Analytics Foundations):
+A chart is an argument. It should make one point so clearly that the reader gets it in five seconds. Excel will draw almost anything with two clicks; the skill is choosing the right chart and then removing everything that doesn't help.
 
-| Question | Excel chart |
-| :-- | :-- |
-| Trend over time | **Line** |
-| Compare categories | **Clustered bar** (horizontal) or **column** |
-| Parts of a whole, 2–4 parts | **100% stacked bar**, or a donut |
-| Two measures with different scales | **Combo** (column + line on a secondary axis), sparingly |
+### Pick the chart from the question
 
-**PivotCharts** (PivotTable Analyze → PivotChart) are linked to the pivot: filter or slice the pivot and the chart follows.
+Start from what you want the reader to understand, not from the chart menu.
 
-**Fix the defaults, every time**
+![Four small charts from Kolanut's data. A line chart of monthly revenue peaking in December 2025; a sorted bar chart of revenue by region with Lagos far ahead; 100% stacked bars of channel share in 2025 and 2026; a combo chart of quarterly revenue as columns and order lines as a line.](/images/courses/excel/chart-choice.svg "One question, one chart type. All four are drawn from Kolanut's real figures.")
 
-1. **Title** that states the finding: click the title and type, e.g. "December is our biggest month by far".
-2. **Delete what doesn't help**: legend for a single series, heavy gridlines, field buttons on PivotCharts (right-click → Hide All Field Buttons).
-3. **Axis**: bars start at 0; format numbers as millions. In Format Axis, set **Display units** to Millions.
-4. **Colour**: one colour for everything, one accent for the point you're making.
-5. **Sort** bars largest to smallest (sort the pivot and the chart follows).
+| The question | Chart | Excel menu | Kolanut example |
+| :-- | :-- | :-- | :-- |
+| How has it changed over time? | **Line** | Insert → Line | Revenue per month |
+| Which is biggest? How do they compare? | **Bar** (horizontal) or **column** | Insert → Bar → Clustered Bar | Revenue per region |
+| What share does each part make up? | **100% stacked bar** (or a pie, for 2 or 3 parts) | Insert → Bar → 100% Stacked Bar | Channel share per year |
+| How do two different measures move together? | **Combo**: columns plus a line on a second axis | Insert → Combo | Revenue and order lines per quarter |
+| Is there a relationship between two numbers? | **Scatter** | Insert → Scatter | Quantity against revenue per line |
 
-**Tables can be visual too**
+Some rules of thumb:
 
-- **Conditional formatting → Data Bars** puts a small bar in each cell.
-- **Color Scales** shade high and low values.
-- **Sparklines** (Insert → Sparklines → Line) draw a tiny trend chart inside one cell: good for a row per region.
+- **Line charts are for time.** Months, quarters, years along the bottom, in order. Don't use a line to join categories such as regions; the line suggests a trend that isn't there.
+- **Horizontal bars for names.** Region and product names fit on the left of a bar chart; on a column chart they're squashed or turned sideways.
+- **Pies only for a few parts.** With more than three or four slices, nobody can compare them. A sorted bar chart does the same job better.
+- **Avoid 3D**, shadows and pictures in bars. They distort the sizes your reader is trying to compare.
+
+### Making a chart
+
+You can chart a normal range, a Table, or a pivot table.
+
+1. Select the data, including the headers: for example the two columns **region** and **revenue** of a small summary.
+2. **Insert →** choose the chart. **Insert → Recommended Charts** shows previews if you're unsure.
+3. The chart appears floating on the sheet. Drag it into place; drag a corner to resize.
+
+When a chart is selected, two extra ribbon tabs appear: **Chart Design** (chart type, data, styles) and **Format** (colours and lines of the part you've selected). The **+** button beside the chart adds or removes elements: titles, labels, gridlines, legend.
+
+**Shortcut:** select the data and press **Alt + F1** for an instant default chart on the same sheet, or **F11** for one on its own sheet.
+
+### PivotCharts
+
+A **PivotChart** is drawn from a pivot table and stays linked to it. Filter, slice or re-sort the pivot and the chart follows. Click inside a pivot → **PivotTable Analyze → PivotChart**.
+
+PivotCharts show grey **field buttons** on the chart. They're useful while you build, but clutter a finished chart: right-click one → **Hide All Field Buttons on Chart**.
+
+### Parts of a chart
+
+| Part | What it is | Usually |
+| :-- | :-- | :-- |
+| **Chart title** | Text at the top | State the finding |
+| **Axis** | The scales: horizontal (categories) and vertical (values) | Keep, but tidy the numbers |
+| **Axis titles** | Labels on the axes | Only if the units aren't obvious |
+| **Gridlines** | Lines across the plot area | Light grey, or remove |
+| **Legend** | Key to the colours | Remove for a single series |
+| **Data labels** | The value printed on a point or bar | Label only the points that matter |
+
+Click any part to select it, then press **Ctrl + 1** to open its Format pane.
+
+### Fix the defaults, every time
+
+Excel's default chart is a starting point. Five changes turn it into something fit for a meeting:
+
+1. **A title that states the finding.** Not "Sum of revenue by month" but "December is our biggest month by far". Click the title and type.
+2. **Delete what doesn't help**: the legend for a single series, heavy gridlines, field buttons on PivotCharts.
+3. **Readable numbers.** Double-click the vertical axis → **Display units: Millions** and tick **Show display units label**. "60" with "Millions" beats "60,000,000".
+4. **Bars start at zero.** Excel does this for bar charts, but check if you've changed the axis: a bar that starts at ₦50m makes small differences look huge.
+5. **One colour, one accent.** Make every bar the same calm colour, then click one bar twice to select just it and give it a strong colour: the one you're talking about.
+
+And **sort bars** largest to smallest (sort the pivot or the data, and the chart follows), unless the categories have a natural order, such as months or size bands.
+
+### Combo charts and the secondary axis
+
+Revenue is in hundreds of millions; order lines are in hundreds. On one axis, the lines would be flat along the bottom. A **combo chart** gives the second measure its own axis on the right:
+
+1. Make a summary with quarter, revenue and order lines.
+2. **Insert → Combo → Clustered Column - Line on Secondary Axis**.
+3. Label both axes clearly, so nobody reads the line against the wrong scale.
+
+Use combos sparingly. Two axes make it easy to suggest a relationship that isn't there, just by choosing the scales.
+
+### Conditional formatting: tables that show patterns
+
+Sometimes the table is the right output, and you just need the pattern to jump out. **Home → Conditional Formatting**:
+
+| Option | Does | Good for |
+| :-- | :-- | :-- |
+| **Data Bars** | A small bar inside each cell | Comparing values in a column |
+| **Color Scales** | Shades cells from low to high | Spotting highs and lows in a grid, such as region × month |
+| **Icon Sets** | Arrows or traffic lights | Sparingly: status columns |
+| **Highlight Cells Rules** | Colours cells that meet a rule, e.g. Greater Than | Flagging exceptions, such as negative growth |
+| **Top/Bottom Rules** | Colours the top or bottom N or % | The top 10 customers |
+
+Conditional formatting updates as the numbers change, so a weekly report flags its own problems.
+
+### Sparklines
+
+A **sparkline** is a tiny chart inside one cell: one trend per row. With a region-by-month pivot, a column of sparklines shows each region's shape at a glance.
+
+1. Select the empty cells where the sparklines will go, one per row.
+2. **Insert → Sparklines → Line**.
+3. **Data Range**: the monthly figures for those rows. OK.
+4. On the **Sparkline** tab, tick **High Point** to mark each region's best month.
 
 ## Example
 
-**Monthly revenue line chart:** pivot with `order_date` grouped into Years and Months in Rows and `revenue` in Values, then **PivotChart → Line**. The chart shows a steady ₦36–49m a month in 2025, a spike to ₦66.3m in December 2025, then a higher base of ₦43–55m a month in 2026 after the January price rise.
+**Monthly revenue line chart.** A pivot with `order_date` grouped into Years and Months in Rows and `revenue` in Values, then **PivotChart → Line**. The chart shows ₦36m to ₦49m a month through most of 2025, a spike to ₦66.3m in December 2025, then a higher base of ₦43m to ₦55m a month in 2026, after prices rose in January (malt drink went from ₦13,200 to ₦14,800 a pack).
 
-**Category bar chart for one month:** `category` in Rows, `revenue` in Values, `order_date` filtered to December 2025, sorted descending, as a clustered bar.
+The finding for the title: **"December is our biggest month by far"**.
+
+**Revenue by category for December.** `category` in Rows, `revenue` in Values, `order_date` filtered to December 2025, sorted largest to smallest, as a clustered bar:
+
+| Category | December 2025 revenue |
+| :-- | --: |
+| Household | 21,026,400 |
+| Beverages | 18,834,090 |
+| Personal care | 18,297,540 |
+| Snacks | 8,126,280 |
+
+A title such as "Household led December; Snacks trailed at ₦8.1m" tells the reader what to see.
+
+**Channel share by year.** A 100% stacked bar of channel revenue for 2025 and 2026 shows how steady the mix is: Wholesale 70.2% then 69.2%, Supermarket 24.8% then 26.3%, Kiosk 5.0% then 4.5%. Supermarkets are slowly gaining share. A 100% stacked bar makes that easy to see; two pies side by side would not.
 
 ## Walkthrough
 
-1. Build the monthly pivot described above.
+1. Build the monthly pivot described above: `order_date` in Rows grouped by Months and Years, `revenue` in Values.
 2. Click inside it → **PivotTable Analyze → PivotChart → Line → OK**.
 3. Right-click a field button on the chart → **Hide All Field Buttons on Chart**.
-4. Click the legend → Delete (one series doesn't need one).
+4. Click the legend → **Delete** (one series doesn't need one).
 5. Double-click the vertical axis → **Display units: Millions**; tick **Show display units label**.
-6. Click the chart title and write the finding.
-7. Click the December 2025 point twice (to select just that point) → **Add Data Label**.
+6. Click the gridlines → **Ctrl + 1** → make them a light grey, or delete them.
+7. Click the chart title and write the finding.
+8. Click the December 2025 point twice (to select just that point) → right-click → **Add Data Label**.
 
 The result, built on Kolanut's monthly revenue:
 
 ![A line chart of Kolanut's monthly revenue from January 2025 to June 2026 titled December is our biggest month by far, with the axis in millions and the December point labelled ₦66.3m.](/images/courses/excel/chart.webp "A finished chart: a title that states the finding (1), axis in millions (2), one labelled point (3), and the monthly figures it's drawn from (4).")
 
-Then, for the regional table, select the H1 2026 revenue column → **Home → Conditional Formatting → Data Bars → Solid Fill**.
+9. Then, for a regional table, select the revenue column → **Home → Conditional Formatting → Data Bars → Solid Fill**. Lagos's bar dwarfs the rest, which is exactly the point.
 
 **Shortcuts for charts**
 
@@ -12578,6 +13876,19 @@ Then, for the regional table, select the H1 2026 revenue column → **Home → C
 | F11 | Insert a chart on its own sheet |
 | Ctrl + 1 | Open the Format pane for the selected chart element |
 | Alt, N, R | Recommended Charts |
+
+### Summary
+
+| Need | Use |
+| :-- | :-- |
+| A trend over time | Line chart |
+| Compare categories | Sorted horizontal bar chart |
+| Share of a whole | 100% stacked bar (pie only for 2 or 3 parts) |
+| Two measures with different scales | Combo with a secondary axis, sparingly |
+| A chart that follows the pivot | PivotChart |
+| A finished chart | Finding as title, no clutter, millions, one accent colour |
+| Patterns in a table | Conditional formatting: data bars, colour scales |
+| A trend per row | Sparklines |
 
 ## Practice
 
@@ -12716,6 +14027,20 @@ Growth %: =(H1_2026 - H1_2025) / H1_2025
 ```
 
 Add a region criterion to get the same by region. Format growth as a percentage with one decimal.
+
+**Growth, step by step.** Growth is the change divided by where you started:
+
+| Step | Formula | Kolanut, H1 |
+| :-- | :-- | --: |
+| Change | `=new - old` | 290,730,455 − 244,163,070 = 46,567,385 |
+| Growth | `=change / old` | 46,567,385 ÷ 244,163,070 = 0.191 |
+| Shown as % | Format as Percentage, 1 decimal | **19.1%** |
+
+Divide by the **old** value, not the new one: dividing by 290.7m would give 16.0%, which understates the growth. If the old value could be zero (a brand-new region), wrap it: `=IFERROR((new-old)/old, "new")`.
+
+**Percentage points versus per cent.** When the thing that changes is already a percentage, say which you mean. Supermarkets went from 24.8% of revenue in 2025 to 26.3% in 2026. That's a rise of **1.5 percentage points**, or **6% in relative terms** (1.5 ÷ 24.8). "Up 1.5%" is ambiguous, and a careful reader will ask which.
+
+**Inputs in cells, not in formulas.** Put the period dates in labelled cells on `Calc` (say `B1` = start, `B2` = end) and refer to them: `">="&$B$1`. Next quarter, you change two cells instead of editing every formula. That's what makes a workbook reusable.
 
 > [!BUSINESS]
 > Always compare the same period (H1 with H1), and say what's included: "revenue after discounts, all channels, January–June". Kolanut also raised prices 8–12% in January 2026, so part of the growth is price, not volume. A good summary says so.

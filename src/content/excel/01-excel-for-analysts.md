@@ -14,7 +14,48 @@ This course takes you from opening a raw file to a finished analysis. First, the
 
 **Why Excel?** It's on almost every office computer, everyone can open your file, and it covers the full cycle: import, clean, calculate, summarise, chart. Larger data goes into databases and Power BI, but Excel stays the everyday tool.
 
-**The Excel window**
+### Workbooks, worksheets, cells and ranges
+
+Four words you'll use in every lesson:
+
+| Word | Means | Example |
+| :-- | :-- | :-- |
+| **Workbook** | The Excel file itself (`.xlsx`) | `Kolanut-sales.xlsx` |
+| **Worksheet** (sheet) | One page of the workbook, with its own grid | `Orders`, `Customers` |
+| **Cell** | One box in the grid, named by its column letter and row number | `B2` is column B, row 2 |
+| **Range** | A block of cells, written first cell : last cell | `A1:H4267` |
+
+Columns are lettered A, B, C … Z, then AA, AB and so on, up to XFD (16,384 columns). Rows are numbered 1 to 1,048,576. That limit, about a million rows, is one reason very large data moves to a database.
+
+### What can go in a cell
+
+| Type | Example | Excel aligns it | Notes |
+| :-- | :-- | :-- | :-- |
+| **Number** | `18600` | Right | Can be calculated with |
+| **Text** | `Kayode Distributors` | Left | Includes "numbers" Excel couldn't read, such as `₦18,600` |
+| **Date** | `2025-01-01` | Right | Stored as a number of days, shown as a date |
+| **Formula** | `=E2*F2` | (its result) | Starts with `=`; the cell shows the result |
+
+The alignment is a free check: if a column of numbers has some values sitting on the **left**, those are text, and `SUM` will skip them. You'll use this check in lessons 2 and 7.
+
+> [!NOTE]
+> **Value versus format.** A cell's *value* is what's stored; its *format* is how it's shown. `0.25` formatted as a percentage shows `25%`; `194688.52` formatted with no decimals shows `194,689`. The formula bar always shows the true value.
+
+### Ranges versus Tables
+
+A plain **range** is just cells. A **Table** (Insert → Table, or Ctrl + T) is a range that Excel knows is a dataset:
+
+| | Plain range | Table |
+| :-- | :-- | :-- |
+| Grows when you add rows | No | Yes |
+| Filter buttons on the headers | Only if you turn them on | Always |
+| Formulas fill down a new column | No | Yes, automatically |
+| Readable references | `E2:E4267` | `Orders[quantity]` |
+| Banded rows | No | Yes |
+
+This course turns every dataset into a Table first. It's the habit that saves the most mistakes later.
+
+### The Excel window
 
 This is Excel with Kolanut's orders loaded as a Table, exactly as you'll set it up in this course:
 

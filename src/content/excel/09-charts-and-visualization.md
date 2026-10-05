@@ -1,7 +1,7 @@
 ---
 title: Charts and visualization
 minutes: 20
-summary: Build clear line, bar and combo charts from pivot tables, and use conditional formatting and sparklines to make tables readable.
+summary: Choose the right chart for the question, build line, bar, stacked and combo charts and PivotCharts, fix Excel's defaults, and make tables readable with conditional formatting and sparklines.
 ---
 
 ## The problem
@@ -10,52 +10,140 @@ The pivot tables show the numbers, but a table of 18 months × 6 regions doesn't
 
 ## The concept
 
-**Pick the chart from the question** (as in Data Analytics Foundations):
+A chart is an argument. It should make one point so clearly that the reader gets it in five seconds. Excel will draw almost anything with two clicks; the skill is choosing the right chart and then removing everything that doesn't help.
 
-| Question | Excel chart |
-| :-- | :-- |
-| Trend over time | **Line** |
-| Compare categories | **Clustered bar** (horizontal) or **column** |
-| Parts of a whole, 2–4 parts | **100% stacked bar**, or a donut |
-| Two measures with different scales | **Combo** (column + line on a secondary axis), sparingly |
+### Pick the chart from the question
 
-**PivotCharts** (PivotTable Analyze → PivotChart) are linked to the pivot: filter or slice the pivot and the chart follows.
+Start from what you want the reader to understand, not from the chart menu.
 
-**Fix the defaults, every time**
+![Four small charts from Kolanut's data. A line chart of monthly revenue peaking in December 2025; a sorted bar chart of revenue by region with Lagos far ahead; 100% stacked bars of channel share in 2025 and 2026; a combo chart of quarterly revenue as columns and order lines as a line.](/images/courses/excel/chart-choice.svg "One question, one chart type. All four are drawn from Kolanut's real figures.")
 
-1. **Title** that states the finding: click the title and type, e.g. "December is our biggest month by far".
-2. **Delete what doesn't help**: legend for a single series, heavy gridlines, field buttons on PivotCharts (right-click → Hide All Field Buttons).
-3. **Axis**: bars start at 0; format numbers as millions. In Format Axis, set **Display units** to Millions.
-4. **Colour**: one colour for everything, one accent for the point you're making.
-5. **Sort** bars largest to smallest (sort the pivot and the chart follows).
+| The question | Chart | Excel menu | Kolanut example |
+| :-- | :-- | :-- | :-- |
+| How has it changed over time? | **Line** | Insert → Line | Revenue per month |
+| Which is biggest? How do they compare? | **Bar** (horizontal) or **column** | Insert → Bar → Clustered Bar | Revenue per region |
+| What share does each part make up? | **100% stacked bar** (or a pie, for 2 or 3 parts) | Insert → Bar → 100% Stacked Bar | Channel share per year |
+| How do two different measures move together? | **Combo**: columns plus a line on a second axis | Insert → Combo | Revenue and order lines per quarter |
+| Is there a relationship between two numbers? | **Scatter** | Insert → Scatter | Quantity against revenue per line |
 
-**Tables can be visual too**
+Some rules of thumb:
 
-- **Conditional formatting → Data Bars** puts a small bar in each cell.
-- **Color Scales** shade high and low values.
-- **Sparklines** (Insert → Sparklines → Line) draw a tiny trend chart inside one cell: good for a row per region.
+- **Line charts are for time.** Months, quarters, years along the bottom, in order. Don't use a line to join categories such as regions; the line suggests a trend that isn't there.
+- **Horizontal bars for names.** Region and product names fit on the left of a bar chart; on a column chart they're squashed or turned sideways.
+- **Pies only for a few parts.** With more than three or four slices, nobody can compare them. A sorted bar chart does the same job better.
+- **Avoid 3D**, shadows and pictures in bars. They distort the sizes your reader is trying to compare.
+
+### Making a chart
+
+You can chart a normal range, a Table, or a pivot table.
+
+1. Select the data, including the headers: for example the two columns **region** and **revenue** of a small summary.
+2. **Insert →** choose the chart. **Insert → Recommended Charts** shows previews if you're unsure.
+3. The chart appears floating on the sheet. Drag it into place; drag a corner to resize.
+
+When a chart is selected, two extra ribbon tabs appear: **Chart Design** (chart type, data, styles) and **Format** (colours and lines of the part you've selected). The **+** button beside the chart adds or removes elements: titles, labels, gridlines, legend.
+
+**Shortcut:** select the data and press **Alt + F1** for an instant default chart on the same sheet, or **F11** for one on its own sheet.
+
+### PivotCharts
+
+A **PivotChart** is drawn from a pivot table and stays linked to it. Filter, slice or re-sort the pivot and the chart follows. Click inside a pivot → **PivotTable Analyze → PivotChart**.
+
+PivotCharts show grey **field buttons** on the chart. They're useful while you build, but clutter a finished chart: right-click one → **Hide All Field Buttons on Chart**.
+
+### Parts of a chart
+
+| Part | What it is | Usually |
+| :-- | :-- | :-- |
+| **Chart title** | Text at the top | State the finding |
+| **Axis** | The scales: horizontal (categories) and vertical (values) | Keep, but tidy the numbers |
+| **Axis titles** | Labels on the axes | Only if the units aren't obvious |
+| **Gridlines** | Lines across the plot area | Light grey, or remove |
+| **Legend** | Key to the colours | Remove for a single series |
+| **Data labels** | The value printed on a point or bar | Label only the points that matter |
+
+Click any part to select it, then press **Ctrl + 1** to open its Format pane.
+
+### Fix the defaults, every time
+
+Excel's default chart is a starting point. Five changes turn it into something fit for a meeting:
+
+1. **A title that states the finding.** Not "Sum of revenue by month" but "December is our biggest month by far". Click the title and type.
+2. **Delete what doesn't help**: the legend for a single series, heavy gridlines, field buttons on PivotCharts.
+3. **Readable numbers.** Double-click the vertical axis → **Display units: Millions** and tick **Show display units label**. "60" with "Millions" beats "60,000,000".
+4. **Bars start at zero.** Excel does this for bar charts, but check if you've changed the axis: a bar that starts at ₦50m makes small differences look huge.
+5. **One colour, one accent.** Make every bar the same calm colour, then click one bar twice to select just it and give it a strong colour: the one you're talking about.
+
+And **sort bars** largest to smallest (sort the pivot or the data, and the chart follows), unless the categories have a natural order, such as months or size bands.
+
+### Combo charts and the secondary axis
+
+Revenue is in hundreds of millions; order lines are in hundreds. On one axis, the lines would be flat along the bottom. A **combo chart** gives the second measure its own axis on the right:
+
+1. Make a summary with quarter, revenue and order lines.
+2. **Insert → Combo → Clustered Column - Line on Secondary Axis**.
+3. Label both axes clearly, so nobody reads the line against the wrong scale.
+
+Use combos sparingly. Two axes make it easy to suggest a relationship that isn't there, just by choosing the scales.
+
+### Conditional formatting: tables that show patterns
+
+Sometimes the table is the right output, and you just need the pattern to jump out. **Home → Conditional Formatting**:
+
+| Option | Does | Good for |
+| :-- | :-- | :-- |
+| **Data Bars** | A small bar inside each cell | Comparing values in a column |
+| **Color Scales** | Shades cells from low to high | Spotting highs and lows in a grid, such as region × month |
+| **Icon Sets** | Arrows or traffic lights | Sparingly: status columns |
+| **Highlight Cells Rules** | Colours cells that meet a rule, e.g. Greater Than | Flagging exceptions, such as negative growth |
+| **Top/Bottom Rules** | Colours the top or bottom N or % | The top 10 customers |
+
+Conditional formatting updates as the numbers change, so a weekly report flags its own problems.
+
+### Sparklines
+
+A **sparkline** is a tiny chart inside one cell: one trend per row. With a region-by-month pivot, a column of sparklines shows each region's shape at a glance.
+
+1. Select the empty cells where the sparklines will go, one per row.
+2. **Insert → Sparklines → Line**.
+3. **Data Range**: the monthly figures for those rows. OK.
+4. On the **Sparkline** tab, tick **High Point** to mark each region's best month.
 
 ## Example
 
-**Monthly revenue line chart:** pivot with `order_date` grouped into Years and Months in Rows and `revenue` in Values, then **PivotChart → Line**. The chart shows a steady ₦36–49m a month in 2025, a spike to ₦66.3m in December 2025, then a higher base of ₦43–55m a month in 2026 after the January price rise.
+**Monthly revenue line chart.** A pivot with `order_date` grouped into Years and Months in Rows and `revenue` in Values, then **PivotChart → Line**. The chart shows ₦36m to ₦49m a month through most of 2025, a spike to ₦66.3m in December 2025, then a higher base of ₦43m to ₦55m a month in 2026, after prices rose in January (malt drink went from ₦13,200 to ₦14,800 a pack).
 
-**Category bar chart for one month:** `category` in Rows, `revenue` in Values, `order_date` filtered to December 2025, sorted descending, as a clustered bar.
+The finding for the title: **"December is our biggest month by far"**.
+
+**Revenue by category for December.** `category` in Rows, `revenue` in Values, `order_date` filtered to December 2025, sorted largest to smallest, as a clustered bar:
+
+| Category | December 2025 revenue |
+| :-- | --: |
+| Household | 21,026,400 |
+| Beverages | 18,834,090 |
+| Personal care | 18,297,540 |
+| Snacks | 8,126,280 |
+
+A title such as "Household led December; Snacks trailed at ₦8.1m" tells the reader what to see.
+
+**Channel share by year.** A 100% stacked bar of channel revenue for 2025 and 2026 shows how steady the mix is: Wholesale 70.2% then 69.2%, Supermarket 24.8% then 26.3%, Kiosk 5.0% then 4.5%. Supermarkets are slowly gaining share. A 100% stacked bar makes that easy to see; two pies side by side would not.
 
 ## Walkthrough
 
-1. Build the monthly pivot described above.
+1. Build the monthly pivot described above: `order_date` in Rows grouped by Months and Years, `revenue` in Values.
 2. Click inside it → **PivotTable Analyze → PivotChart → Line → OK**.
 3. Right-click a field button on the chart → **Hide All Field Buttons on Chart**.
-4. Click the legend → Delete (one series doesn't need one).
+4. Click the legend → **Delete** (one series doesn't need one).
 5. Double-click the vertical axis → **Display units: Millions**; tick **Show display units label**.
-6. Click the chart title and write the finding.
-7. Click the December 2025 point twice (to select just that point) → **Add Data Label**.
+6. Click the gridlines → **Ctrl + 1** → make them a light grey, or delete them.
+7. Click the chart title and write the finding.
+8. Click the December 2025 point twice (to select just that point) → right-click → **Add Data Label**.
 
 The result, built on Kolanut's monthly revenue:
 
 ![A line chart of Kolanut's monthly revenue from January 2025 to June 2026 titled December is our biggest month by far, with the axis in millions and the December point labelled ₦66.3m.](/images/courses/excel/chart.webp "A finished chart: a title that states the finding (1), axis in millions (2), one labelled point (3), and the monthly figures it's drawn from (4).")
 
-Then, for the regional table, select the H1 2026 revenue column → **Home → Conditional Formatting → Data Bars → Solid Fill**.
+9. Then, for a regional table, select the revenue column → **Home → Conditional Formatting → Data Bars → Solid Fill**. Lagos's bar dwarfs the rest, which is exactly the point.
 
 **Shortcuts for charts**
 
@@ -65,6 +153,19 @@ Then, for the regional table, select the H1 2026 revenue column → **Home → C
 | F11 | Insert a chart on its own sheet |
 | Ctrl + 1 | Open the Format pane for the selected chart element |
 | Alt, N, R | Recommended Charts |
+
+### Summary
+
+| Need | Use |
+| :-- | :-- |
+| A trend over time | Line chart |
+| Compare categories | Sorted horizontal bar chart |
+| Share of a whole | 100% stacked bar (pie only for 2 or 3 parts) |
+| Two measures with different scales | Combo with a secondary axis, sparingly |
+| A chart that follows the pivot | PivotChart |
+| A finished chart | Finding as title, no clutter, millions, one accent colour |
+| Patterns in a table | Conditional formatting: data bars, colour scales |
+| A trend per row | Sparklines |
 
 ## Practice
 
