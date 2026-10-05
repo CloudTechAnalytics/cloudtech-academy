@@ -7692,6 +7692,8 @@ orders = pd.read_csv(url)
 
 `orders` is now a **DataFrame**: a table with rows and named columns. `pd` is the usual short name for pandas.
 
+![A small DataFrame with named columns, a row index and one type per column, and the six first-look commands: head, shape, info, describe, value_counts and nunique](/images/courses/python-data/dataframe.svg "A DataFrame is a table: named columns, a row index, one type per column.")
+
 ## Take a first look
 
 Run each line in its own cell:
@@ -7833,6 +7835,8 @@ orders["revenue"].sum()
 
 Total revenue is **₦830,541,245**. Notice there's no loop: pandas does the maths for every row at once.
 
+![Revenue calculated for three example rows by one line of vectorised maths, and a text date converted to a real date so the year and month can be pulled out](/images/courses/python-data/columns-dates.svg "One line of maths fills a whole new column; real dates let you pull out year and month.")
+
 ## Filter rows
 
 Put a condition inside square brackets to keep only the matching rows:
@@ -7848,6 +7852,8 @@ Combine conditions with `&` (and) or `|` (or), with brackets around each one:
 ```python
 discounted_2026 = orders[(orders["discount_pct"] > 0) & (orders["year"] == 2026)]
 ```
+
+![A condition on quantity gives True or False for each of five rows, and only the True rows are kept; combining conditions with & and | and brackets](/images/courses/python-data/filter-mask.svg "A condition makes a True/False mask; only the True rows are kept.")
 
 ## Sort
 
@@ -7931,6 +7937,8 @@ values ('python-for-data-analysis:group-join-and-chart', 'python-for-data-analys
 
 `groupby` is the pandas version of a pivot table. Total revenue by year:
 
+![Six rows split into North and South groups, each summed, giving North 500 and South 450](/images/courses/python-data/groupby.svg "groupby: split into groups, calculate for each, combine the results.")
+
 ```python
 orders.groupby("year")["revenue"].sum()
 ```
@@ -7962,6 +7970,8 @@ sales.columns
 
 `merge` matches rows where the key column has the same value, like a lookup in Excel.
 
+![An orders table and a products table are matched on product_id, so each order gains the product name](/images/courses/python-data/merge.svg "merge matches rows on a key column, like a lookup in Excel.")
+
 ## Answer business questions
 
 ```python
@@ -7984,6 +7994,8 @@ Lagos brings in **₦411,162,300**, about half of all revenue, followed by South
 ## Make charts
 
 pandas can draw charts directly:
+
+![Two charts drawn with illustrative numbers: a bar chart comparing four product groups and a line chart of monthly revenue rising to a peak in May, with the pandas plot code](/images/courses/python-data/charts.svg "Bars compare categories; lines show change over time.")
 
 ```python
 by_region = sales.groupby("region")["revenue"].sum().sort_values()

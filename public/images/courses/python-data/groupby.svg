@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 430" width="760" height="430" role="img" aria-label="groupby splits a table into groups, applies a calculation to each, and combines the results. For six illustrative rows with a region and revenue, grouping by region puts the three North rows together, 100, 250 and 150, and the three South rows together, 300, 50 and 100. Summing each group gives North 500 and South 450. This is the pandas version of a pivot table.">
+<title>groupby: split into groups, calculate for each, combine the results.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="430" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="28.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">sales</text>
+<rect x="16.0" y="38.0" width="190.0" height="28.0" rx="3" fill="#FFFFFF"/>
+<text xml:space="preserve" x="28.0" y="57.0" font-size="12.5" fill="#2F5D8A" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">North</text>
+<text xml:space="preserve" x="180.0" y="57.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="end" font-family="'JetBrains Mono', Consolas, monospace">100</text>
+<rect x="16.0" y="68.0" width="190.0" height="28.0" rx="3" fill="#FBF8F2"/>
+<text xml:space="preserve" x="28.0" y="87.0" font-size="12.5" fill="#B38A3E" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">South</text>
+<text xml:space="preserve" x="180.0" y="87.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="end" font-family="'JetBrains Mono', Consolas, monospace">300</text>
+<rect x="16.0" y="98.0" width="190.0" height="28.0" rx="3" fill="#FFFFFF"/>
+<text xml:space="preserve" x="28.0" y="117.0" font-size="12.5" fill="#2F5D8A" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">North</text>
+<text xml:space="preserve" x="180.0" y="117.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="end" font-family="'JetBrains Mono', Consolas, monospace">250</text>
+<rect x="16.0" y="128.0" width="190.0" height="28.0" rx="3" fill="#FBF8F2"/>
+<text xml:space="preserve" x="28.0" y="147.0" font-size="12.5" fill="#B38A3E" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">South</text>
+<text xml:space="preserve" x="180.0" y="147.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="end" font-family="'JetBrains Mono', Consolas, monospace">50</text>
+<rect x="16.0" y="158.0" width="190.0" height="28.0" rx="3" fill="#FFFFFF"/>
+<text xml:space="preserve" x="28.0" y="177.0" font-size="12.5" fill="#2F5D8A" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">North</text>
+<text xml:space="preserve" x="180.0" y="177.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="end" font-family="'JetBrains Mono', Consolas, monospace">150</text>
+<rect x="16.0" y="188.0" width="190.0" height="28.0" rx="3" fill="#FBF8F2"/>
+<text xml:space="preserve" x="28.0" y="207.0" font-size="12.5" fill="#B38A3E" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">South</text>
+<text xml:space="preserve" x="180.0" y="207.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="end" font-family="'JetBrains Mono', Consolas, monospace">100</text>
+<text xml:space="preserve" x="214.0" y="176.0" font-size="12" fill="#5E5A52" font-weight="700" text-anchor="start">split</text>
+<path d="M222.0,140.0 L276.0,100.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<path d="M222.0,140.0 L276.0,190.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="280.0" y="40.0" width="200.0" height="96.0" rx="8" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.5"/>
+<text xml:space="preserve" x="294.0" y="64.0" font-size="13.5" fill="#2F5D8A" font-weight="700" text-anchor="start">North</text>
+<text xml:space="preserve" x="294.0" y="86.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">100</text>
+<text xml:space="preserve" x="294.0" y="102.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">250</text>
+<text xml:space="preserve" x="294.0" y="118.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">150</text>
+<path d="M484.0,88.0 L540.0,108.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="280.0" y="150.0" width="200.0" height="96.0" rx="8" fill="#F3EBD8" stroke="#B38A3E" stroke-width="1.5"/>
+<text xml:space="preserve" x="294.0" y="174.0" font-size="13.5" fill="#8A6A1F" font-weight="700" text-anchor="start">South</text>
+<text xml:space="preserve" x="294.0" y="196.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">300</text>
+<text xml:space="preserve" x="294.0" y="212.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">50</text>
+<text xml:space="preserve" x="294.0" y="228.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">100</text>
+<path d="M484.0,198.0 L540.0,148.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<text xml:space="preserve" x="496.0" y="84.0" font-size="12" fill="#5E5A52" font-weight="700" text-anchor="start">sum</text>
+<rect x="544.0" y="78.0" width="200.0" height="100.0" rx="10" fill="#FFFFFF" stroke="#2F6B3F" stroke-width="1.5"/>
+<text xml:space="preserve" x="558.0" y="102.0" font-size="12.5" fill="#2F6B3F" font-weight="700" text-anchor="start">Result</text>
+<text xml:space="preserve" x="558.0" y="130.0" font-size="13" fill="#2F5D8A" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">North    500</text>
+<text xml:space="preserve" x="558.0" y="156.0" font-size="13" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">South    450</text>
+<rect x="16.0" y="262.0" width="728.0" height="46.0" rx="8" fill="#2A2926" stroke="#2A2926" stroke-width="1"/>
+<text xml:space="preserve" x="28.0" y="286.0" font-size="13" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">sales.groupby("region")["revenue"].sum()</text>
+<text xml:space="preserve" x="16.0" y="336.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Same idea, other summaries: .mean(), .count(), .max(), .min().</text>
+<text xml:space="preserve" x="16.0" y="360.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Add .sort_values(ascending=False) to rank the groups, and .idxmax() to name the biggest one.</text>
+<text xml:space="preserve" x="16.0" y="388.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">It's the pandas version of an Excel pivot table, in one line.</text>
+</g></svg>

@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 440" width="760" height="440" role="img" aria-label="Two kinds of chart for two kinds of question, drawn with illustrative numbers. A bar chart compares categories: revenue by product group, here Tea 46, Coffee 31, Juice 24 and Water 12 million naira. A line chart shows change over time: monthly revenue from January to June, rising from 20 to a peak of 38 in May. In pandas, call plot with kind bar or kind line on a summary, and add a title and axis labels.">
+<title>Bars compare categories; lines show change over time.</title>
+
+<rect width="760" height="440" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="28.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="start">Bar: compare categories</text>
+<text xml:space="preserve" x="396.0" y="28.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="start">Line: change over time</text>
+<line x1="56.0" y1="230.0" x2="346.0" y2="230.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="48.0" y="234.0" font-size="10.5" fill="#5E5A52" font-weight="400" text-anchor="end">0</text>
+<line x1="56.0" y1="162.0" x2="346.0" y2="162.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="48.0" y="166.0" font-size="10.5" fill="#5E5A52" font-weight="400" text-anchor="end">20</text>
+<line x1="56.0" y1="94.0" x2="346.0" y2="94.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="48.0" y="98.0" font-size="10.5" fill="#5E5A52" font-weight="400" text-anchor="end">40</text>
+<rect x="64.0" y="73.6" width="54.0" height="156.4" rx="3" fill="#2F5D8A"/>
+<text xml:space="preserve" x="91.0" y="246.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="middle">Tea</text>
+<text xml:space="preserve" x="91.0" y="67.6" font-size="11" fill="#2A2926" font-weight="700" text-anchor="middle">46</text>
+<rect x="134.0" y="124.6" width="54.0" height="105.4" rx="3" fill="#B38A3E"/>
+<text xml:space="preserve" x="161.0" y="246.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="middle">Coffee</text>
+<text xml:space="preserve" x="161.0" y="118.6" font-size="11" fill="#2A2926" font-weight="700" text-anchor="middle">31</text>
+<rect x="204.0" y="148.4" width="54.0" height="81.6" rx="3" fill="#2F6B3F"/>
+<text xml:space="preserve" x="231.0" y="246.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="middle">Juice</text>
+<text xml:space="preserve" x="231.0" y="142.4" font-size="11" fill="#2A2926" font-weight="700" text-anchor="middle">24</text>
+<rect x="274.0" y="189.2" width="54.0" height="40.8" rx="3" fill="#5C4F80"/>
+<text xml:space="preserve" x="301.0" y="246.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="middle">Water</text>
+<text xml:space="preserve" x="301.0" y="183.2" font-size="11" fill="#2A2926" font-weight="700" text-anchor="middle">12</text>
+<line x1="420.0" y1="230.0" x2="720.0" y2="230.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="412.0" y="234.0" font-size="10.5" fill="#5E5A52" font-weight="400" text-anchor="end">0</text>
+<line x1="420.0" y1="162.0" x2="720.0" y2="162.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="412.0" y="166.0" font-size="10.5" fill="#5E5A52" font-weight="400" text-anchor="end">20</text>
+<line x1="420.0" y1="94.0" x2="720.0" y2="94.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="412.0" y="98.0" font-size="10.5" fill="#5E5A52" font-weight="400" text-anchor="end">40</text>
+<path d="M434,162.0 L488,141.60000000000002 L542,148.4 L596,117.8 L650,100.80000000000001 L704,111.0" fill="none" stroke="#2F5D8A" stroke-width="2.6"/>
+<circle cx="434.0" cy="162.0" r="4" fill="#2F5D8A"/>
+<text xml:space="preserve" x="434.0" y="246.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="middle">Jan</text>
+<circle cx="488.0" cy="141.6" r="4" fill="#2F5D8A"/>
+<text xml:space="preserve" x="488.0" y="246.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="middle">Feb</text>
+<circle cx="542.0" cy="148.4" r="4" fill="#2F5D8A"/>
+<text xml:space="preserve" x="542.0" y="246.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="middle">Mar</text>
+<circle cx="596.0" cy="117.8" r="4" fill="#2F5D8A"/>
+<text xml:space="preserve" x="596.0" y="246.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="middle">Apr</text>
+<circle cx="650.0" cy="100.8" r="4" fill="#2F5D8A"/>
+<text xml:space="preserve" x="650.0" y="246.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="middle">May</text>
+<circle cx="704.0" cy="111.0" r="4" fill="#2F5D8A"/>
+<text xml:space="preserve" x="704.0" y="246.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="middle">Jun</text>
+<text xml:space="preserve" x="650.0" y="90.8" font-size="11" fill="#2F5D8A" font-weight="700" text-anchor="middle">peak: 38</text>
+<text xml:space="preserve" x="16.0" y="268.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">Revenue (₦m), illustrative</text>
+<rect x="16.0" y="284.0" width="728.0" height="88.0" rx="8" fill="#2A2926" stroke="#2A2926" stroke-width="1"/>
+<text xml:space="preserve" x="28.0" y="308.0" font-size="12" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">by_group = sales.groupby("group")["revenue"].sum()</text>
+<text xml:space="preserve" x="28.0" y="330.0" font-size="12" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">by_group.plot(kind="bar", title="Revenue by group")</text>
+<text xml:space="preserve" x="28.0" y="352.0" font-size="12" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">monthly.plot(kind="line", title="Monthly revenue")</text>
+<text xml:space="preserve" x="16.0" y="396.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Always add a title and label the axes: a chart should make sense without anyone explaining it.</text>
+<text xml:space="preserve" x="16.0" y="420.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">Bars for categories, lines for time, and write one sentence with a number under each chart.</text>
+</g></svg>

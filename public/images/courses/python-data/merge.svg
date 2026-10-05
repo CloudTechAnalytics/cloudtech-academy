@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 400" width="760" height="400" role="img" aria-label="Joining two tables with merge. The orders table has product_id but not names. The products table has product_id and a product name. merge matches rows where product_id has the same value, like a lookup in Excel, and adds the name columns to each order. An order for P2 gets the name Black Tea, because P2 matches P2 in the products table.">
+<title>merge matches rows on a key column, like a lookup in Excel.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker><marker id="aB38A3E" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#B38A3E"/></marker></defs>
+<rect width="760" height="400" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="28.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">orders</text>
+<rect x="16.0" y="36.0" width="190.0" height="28.0" rx="0" fill="#F3EBD8"/>
+<text xml:space="preserve" x="28.0" y="55.0" font-size="11.5" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">order_id</text>
+<text xml:space="preserve" x="120.0" y="55.0" font-size="11.5" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">product_id</text>
+<rect x="16.0" y="64.0" width="190.0" height="30.0" rx="0" fill="#FFFFFF"/>
+<text xml:space="preserve" x="28.0" y="84.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">5001</text>
+<text xml:space="preserve" x="140.0" y="84.0" font-size="12.5" fill="#2F5D8A" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">P2</text>
+<rect x="16.0" y="94.0" width="190.0" height="30.0" rx="0" fill="#FFFFFF"/>
+<text xml:space="preserve" x="28.0" y="114.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">5002</text>
+<text xml:space="preserve" x="140.0" y="114.0" font-size="12.5" fill="#2F5D8A" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">P1</text>
+<rect x="16.0" y="124.0" width="190.0" height="30.0" rx="0" fill="#FFFFFF"/>
+<text xml:space="preserve" x="28.0" y="144.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">5003</text>
+<text xml:space="preserve" x="140.0" y="144.0" font-size="12.5" fill="#2F5D8A" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">P2</text>
+<text xml:space="preserve" x="280.0" y="28.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">products</text>
+<rect x="280.0" y="36.0" width="190.0" height="28.0" rx="0" fill="#F3EBD8"/>
+<text xml:space="preserve" x="292.0" y="55.0" font-size="11.5" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">product_id</text>
+<text xml:space="preserve" x="392.0" y="55.0" font-size="11.5" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">name</text>
+<rect x="280.0" y="64.0" width="190.0" height="30.0" rx="0" fill="#FFFFFF"/>
+<text xml:space="preserve" x="292.0" y="84.0" font-size="12.5" fill="#2F5D8A" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">P1</text>
+<text xml:space="preserve" x="392.0" y="84.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Green Tea</text>
+<rect x="280.0" y="94.0" width="190.0" height="30.0" rx="0" fill="#FFFFFF"/>
+<text xml:space="preserve" x="292.0" y="114.0" font-size="12.5" fill="#2F5D8A" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">P2</text>
+<text xml:space="preserve" x="392.0" y="114.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Black Tea</text>
+<path d="M206,110 C240,110 250,94 278,94" fill="none" stroke="#B38A3E" stroke-width="1.8" marker-end="url(#aB38A3E)"/>
+<text xml:space="preserve" x="240.0" y="82.0" font-size="11" fill="#8A6A1F" font-weight="700" text-anchor="middle">match</text>
+<path d="M374.0,160.0 L374.0,196.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<text xml:space="preserve" x="380.0" y="182.0" font-size="11.5" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">orders.merge(products, on="product_id")</text>
+<text xml:space="preserve" x="16.0" y="214.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">sales</text>
+<rect x="16.0" y="222.0" width="470.0" height="28.0" rx="0" fill="#F3EBD8"/>
+<text xml:space="preserve" x="28.0" y="241.0" font-size="11.5" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">order_id</text>
+<text xml:space="preserve" x="130.0" y="241.0" font-size="11.5" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">product_id</text>
+<text xml:space="preserve" x="270.0" y="241.0" font-size="11.5" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">name</text>
+<rect x="16.0" y="250.0" width="470.0" height="30.0" rx="0" fill="#E5F0E8"/>
+<text xml:space="preserve" x="28.0" y="270.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">5001</text>
+<text xml:space="preserve" x="130.0" y="270.0" font-size="12.5" fill="#2F5D8A" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">P2</text>
+<text xml:space="preserve" x="270.0" y="270.0" font-size="12.5" fill="#2F6B3F" font-weight="700" text-anchor="start">Black Tea</text>
+<rect x="16.0" y="280.0" width="470.0" height="30.0" rx="0" fill="#E5F0E8"/>
+<text xml:space="preserve" x="28.0" y="300.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">5002</text>
+<text xml:space="preserve" x="130.0" y="300.0" font-size="12.5" fill="#2F5D8A" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">P1</text>
+<text xml:space="preserve" x="270.0" y="300.0" font-size="12.5" fill="#2F6B3F" font-weight="700" text-anchor="start">Green Tea</text>
+<rect x="16.0" y="310.0" width="470.0" height="30.0" rx="0" fill="#E5F0E8"/>
+<text xml:space="preserve" x="28.0" y="330.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">5003</text>
+<text xml:space="preserve" x="130.0" y="330.0" font-size="12.5" fill="#2F5D8A" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">P2</text>
+<text xml:space="preserve" x="270.0" y="330.0" font-size="12.5" fill="#2F6B3F" font-weight="700" text-anchor="start">Black Tea</text>
+<rect x="510.0" y="222.0" width="234.0" height="118.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="524.0" y="246.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Every order now carries the</text>
+<text xml:space="preserve" x="524.0" y="263.4" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">name. Chain more merges to bring</text>
+<text xml:space="preserve" x="524.0" y="280.8" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">in customers, regions and</text>
+<text xml:space="preserve" x="524.0" y="298.2" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">categories.</text>
+<text xml:space="preserve" x="16.0" y="372.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">The key column must hold the same kind of value in both tables.</text>
+</g></svg>

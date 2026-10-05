@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 430" width="760" height="430" role="img" aria-label="What a DataFrame is. A table with named columns, an index of row numbers starting at 0, and one type per column. A small illustrative tea-orders table has columns order_id, product_id, quantity and unit_price. Below, the first-look commands: head shows the first rows, info lists columns, types and missing values, describe gives summary statistics for numbers, value_counts counts each value of a column, and nunique counts the different values.">
+<title>A DataFrame is a table: named columns, a row index, one type per column.</title>
+
+<rect width="760" height="430" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="30.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">orders</text>
+<rect x="70.0" y="40.0" width="530.0" height="32.0" rx="0" fill="#F3EBD8"/>
+<text xml:space="preserve" x="82.0" y="61.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">order_id</text>
+<text xml:space="preserve" x="212.0" y="61.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">product_id</text>
+<text xml:space="preserve" x="352.0" y="61.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">quantity</text>
+<text xml:space="preserve" x="482.0" y="61.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">unit_price</text>
+<text xml:space="preserve" x="16.0" y="61.0" font-size="11" fill="#5E5A52" font-weight="700" text-anchor="start">index</text>
+<rect x="70.0" y="72.0" width="530.0" height="30.0" rx="0" fill="#FFFFFF"/>
+<text xml:space="preserve" x="30.0" y="92.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">0</text>
+<text xml:space="preserve" x="82.0" y="92.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">5001</text>
+<text xml:space="preserve" x="212.0" y="92.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">T-101</text>
+<text xml:space="preserve" x="352.0" y="92.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">12</text>
+<text xml:space="preserve" x="482.0" y="92.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">1,800</text>
+<rect x="70.0" y="102.0" width="530.0" height="30.0" rx="0" fill="#FBF8F2"/>
+<text xml:space="preserve" x="30.0" y="122.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">1</text>
+<text xml:space="preserve" x="82.0" y="122.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">5002</text>
+<text xml:space="preserve" x="212.0" y="122.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">T-102</text>
+<text xml:space="preserve" x="352.0" y="122.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">5</text>
+<text xml:space="preserve" x="482.0" y="122.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">2,400</text>
+<rect x="70.0" y="132.0" width="530.0" height="30.0" rx="0" fill="#FFFFFF"/>
+<text xml:space="preserve" x="30.0" y="152.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">2</text>
+<text xml:space="preserve" x="82.0" y="152.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">5003</text>
+<text xml:space="preserve" x="212.0" y="152.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">T-101</text>
+<text xml:space="preserve" x="352.0" y="152.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">20</text>
+<text xml:space="preserve" x="482.0" y="152.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">1,800</text>
+<rect x="70.0" y="162.0" width="530.0" height="30.0" rx="0" fill="#FBF8F2"/>
+<text xml:space="preserve" x="30.0" y="182.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">3</text>
+<text xml:space="preserve" x="82.0" y="182.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">5004</text>
+<text xml:space="preserve" x="212.0" y="182.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">T-103</text>
+<text xml:space="preserve" x="352.0" y="182.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">8</text>
+<text xml:space="preserve" x="482.0" y="182.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">3,100</text>
+<line x1="70.0" y1="40.0" x2="600.0" y2="40.0" stroke="#CFC4B2" stroke-width="1"/>
+<line x1="70.0" y1="192.0" x2="600.0" y2="192.0" stroke="#CFC4B2" stroke-width="1"/>
+<text xml:space="preserve" x="76.0" y="214.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">each column holds one type: text, numbers, dates</text>
+<text xml:space="preserve" x="612.0" y="100.0" font-size="11.5" fill="#2F5D8A" font-weight="700" text-anchor="start">each row is one order</text>
+<text xml:space="preserve" x="612.0" y="116.7" font-size="11.5" fill="#2F5D8A" font-weight="700" text-anchor="start">line</text>
+<text xml:space="preserve" x="16.0" y="258.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">A first look, one command per cell</text>
+<rect x="16.0" y="272.0" width="356.0" height="44.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="28.0" y="292.0" font-size="11.5" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">orders.head()</text>
+<text xml:space="preserve" x="28.0" y="309.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">first five rows</text>
+<rect x="388.0" y="272.0" width="356.0" height="44.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="400.0" y="292.0" font-size="11.5" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">orders.shape</text>
+<text xml:space="preserve" x="400.0" y="309.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">(rows, columns)</text>
+<rect x="16.0" y="324.0" width="356.0" height="44.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="28.0" y="344.0" font-size="11.5" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">orders.info()</text>
+<text xml:space="preserve" x="28.0" y="361.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">columns, types, missing values</text>
+<rect x="388.0" y="324.0" width="356.0" height="44.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="400.0" y="344.0" font-size="11.5" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">orders.describe()</text>
+<text xml:space="preserve" x="400.0" y="361.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">min, mean, max of number columns</text>
+<rect x="16.0" y="376.0" width="356.0" height="44.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="28.0" y="396.0" font-size="11.5" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">orders["product_id"].value_counts()</text>
+<text xml:space="preserve" x="28.0" y="413.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">how often each value appears</text>
+<rect x="388.0" y="376.0" width="356.0" height="44.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="400.0" y="396.0" font-size="11.5" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">orders["product_id"].nunique()</text>
+<text xml:space="preserve" x="400.0" y="413.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">how many different values</text>
+</g></svg>

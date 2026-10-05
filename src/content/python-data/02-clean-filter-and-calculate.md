@@ -36,6 +36,8 @@ orders["revenue"].sum()
 
 Total revenue is **₦830,541,245**. Notice there's no loop: pandas does the maths for every row at once.
 
+![Revenue calculated for three example rows by one line of vectorised maths, and a text date converted to a real date so the year and month can be pulled out](/images/courses/python-data/columns-dates.svg "One line of maths fills a whole new column; real dates let you pull out year and month.")
+
 ## Filter rows
 
 Put a condition inside square brackets to keep only the matching rows:
@@ -51,6 +53,8 @@ Combine conditions with `&` (and) or `|` (or), with brackets around each one:
 ```python
 discounted_2026 = orders[(orders["discount_pct"] > 0) & (orders["year"] == 2026)]
 ```
+
+![A condition on quantity gives True or False for each of five rows, and only the True rows are kept; combining conditions with & and | and brackets](/images/courses/python-data/filter-mask.svg "A condition makes a True/False mask; only the True rows are kept.")
 
 ## Sort
 

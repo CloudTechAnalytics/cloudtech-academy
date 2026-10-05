@@ -8,6 +8,8 @@ summary: Summarise data with groupby, join tables with merge, and turn the answe
 
 `groupby` is the pandas version of a pivot table. Total revenue by year:
 
+![Six rows split into North and South groups, each summed, giving North 500 and South 450](/images/courses/python-data/groupby.svg "groupby: split into groups, calculate for each, combine the results.")
+
 ```python
 orders.groupby("year")["revenue"].sum()
 ```
@@ -39,6 +41,8 @@ sales.columns
 
 `merge` matches rows where the key column has the same value, like a lookup in Excel.
 
+![An orders table and a products table are matched on product_id, so each order gains the product name](/images/courses/python-data/merge.svg "merge matches rows on a key column, like a lookup in Excel.")
+
 ## Answer business questions
 
 ```python
@@ -61,6 +65,8 @@ Lagos brings in **₦411,162,300**, about half of all revenue, followed by South
 ## Make charts
 
 pandas can draw charts directly:
+
+![Two charts drawn with illustrative numbers: a bar chart comparing four product groups and a line chart of monthly revenue rising to a peak in May, with the pandas plot code](/images/courses/python-data/charts.svg "Bars compare categories; lines show change over time.")
 
 ```python
 by_region = sales.groupby("region")["revenue"].sum().sort_values()
