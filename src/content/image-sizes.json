@@ -1,4 +1,40 @@
 {
+ "/images/courses/daf/analysis-cycle.svg": [
+  1160,
+  350
+ ],
+ "/images/courses/daf/bi-pipeline.svg": [
+  1160,
+  380
+ ],
+ "/images/courses/daf/column-types.svg": [
+  1160,
+  360
+ ],
+ "/images/courses/daf/four-kinds.svg": [
+  1160,
+  430
+ ],
+ "/images/courses/daf/kolanut-erd.svg": [
+  1160,
+  420
+ ],
+ "/images/courses/daf/kpi-tree.svg": [
+  1160,
+  470
+ ],
+ "/images/courses/daf/mean-median.svg": [
+  1160,
+  420
+ ],
+ "/images/courses/daf/region-mapping.svg": [
+  1160,
+  652
+ ],
+ "/images/courses/daf/weak-strong-chart.svg": [
+  1160,
+  460
+ ],
  "/images/courses/excel/chart-choice.svg": [
   1160,
   520

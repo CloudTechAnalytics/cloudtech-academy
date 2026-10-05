@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 380" width="1160" height="380" role="img" aria-label="The BI pipeline in four stages. Source systems (orders, finance, HR, CRM) feed an ETL stage that extracts, cleans and combines the data. That loads into a data model or warehouse: one trusted version with relationships and agreed calculations. Dashboards and reports read from the model and refresh on a schedule, for example every morning at 7.">
+<title>The BI pipeline: source systems → ETL → data model or warehouse → dashboards and reports, refreshed on a schedule.</title>
+<defs><marker id="p" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="1160" height="380" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+  <g font-size="13" fill="#2A2926">
+    <text x="40" y="44" font-size="15" font-weight="700">1 · Sources</text>
+    <rect x="40" y="62" width="200" height="40" rx="8" fill="#FFFFFF" stroke="#CFC4B2"/><text x="58" y="87">Order system</text>
+    <rect x="40" y="112" width="200" height="40" rx="8" fill="#FFFFFF" stroke="#CFC4B2"/><text x="58" y="137">Finance / billing</text>
+    <rect x="40" y="162" width="200" height="40" rx="8" fill="#FFFFFF" stroke="#CFC4B2"/><text x="58" y="187">HR and payroll</text>
+    <rect x="40" y="212" width="200" height="40" rx="8" fill="#FFFFFF" stroke="#CFC4B2"/><text x="58" y="237">CRM, spreadsheets</text>
+    <text x="40" y="282" fill="#5E5A52">Where work happens.</text><text x="40" y="300" fill="#5E5A52">Each team's own system.</text>
+
+    <text x="320" y="44" font-size="15" font-weight="700">2 · ETL</text>
+    <rect x="320" y="62" width="220" height="190" rx="10" fill="#F3EBD8" stroke="#B38A3E" stroke-width="1.5"/>
+    <text x="340" y="96" font-weight="700">Extract</text><text x="340" y="116" fill="#4A4436">copy data out</text>
+    <text x="340" y="150" font-weight="700">Transform</text><text x="340" y="170" fill="#4A4436">clean, combine, calculate</text>
+    <text x="340" y="204" font-weight="700">Load</text><text x="340" y="224" fill="#4A4436">into the model</text>
+    <text x="320" y="282" fill="#5E5A52">In Power BI: Power Query.</text><text x="320" y="300" fill="#5E5A52">Cleaning, as in lesson 5.</text>
+
+    <text x="620" y="44" font-size="15" font-weight="700">3 · Model / warehouse</text>
+    <rect x="620" y="62" width="230" height="190" rx="10" fill="#FFFFFF" stroke="#2F5D8A" stroke-width="1.8"/>
+    <rect x="640" y="82" width="86" height="34" rx="6" fill="#E6EEF6"/><text x="652" y="104" font-size="12">customers</text>
+    <rect x="744" y="82" width="86" height="34" rx="6" fill="#E6EEF6"/><text x="756" y="104" font-size="12">products</text>
+    <rect x="690" y="150" width="90" height="34" rx="6" fill="#DCE7F2"/><text x="710" y="172" font-size="12" font-weight="700">orders</text>
+    <path d="M683,116 L722,150 M787,116 L748,150" stroke="#2F5D8A" stroke-width="1.5"/>
+    <text x="640" y="212" font-size="12" fill="#2F5D8A">+ agreed measures:</text><text x="640" y="230" font-size="12" fill="#2F5D8A">revenue, growth, active customers</text>
+    <text x="620" y="282" fill="#5E5A52">One trusted version:</text><text x="620" y="300" fill="#5E5A52">the "single source of truth".</text>
+
+    <text x="930" y="44" font-size="15" font-weight="700">4 · Dashboards</text>
+    <rect x="930" y="62" width="200" height="190" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+    <rect x="946" y="78" width="52" height="32" rx="4" fill="#F3EBD8"/><rect x="1004" y="78" width="52" height="32" rx="4" fill="#F3EBD8"/><rect x="1062" y="78" width="52" height="32" rx="4" fill="#F3EBD8"/>
+    <polyline points="950,180 975,165 1000,170 1025,150 1050,158 1075,135 1110,140" fill="none" stroke="#B38A3E" stroke-width="2.4"/>
+    <rect x="950" y="195" width="120" height="10" fill="#DCC594"/><rect x="950" y="211" width="88" height="10" fill="#DCC594"/><rect x="950" y="227" width="60" height="10" fill="#9B2C1F"/>
+    <text x="930" y="282" fill="#5E5A52">Power BI, Tableau,</text><text x="930" y="300" fill="#5E5A52">Looker Studio.</text>
+  </g>
+  <g stroke="#8A6A1F" stroke-width="2.2" fill="none" marker-end="url(#p)">
+    <path d="M244,157 L314,157"/><path d="M544,157 L614,157"/><path d="M854,157 L924,157"/>
+  </g>
+  <rect x="320" y="326" width="810" height="38" rx="8" fill="#EFE4CC" stroke="#B38A3E"/>
+  <text x="340" y="350" font-size="13.5" fill="#2A2926"><tspan font-weight="700">Scheduled refresh</tspan>, for example every morning at 7: stages 2 to 4 run again on new data, with no one rebuilding anything.</text>
+</g>
+</svg>

@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 652" width="1160" height="652" role="img" aria-label="The Region column of the raw customer export has 23 different spellings, such as LAGOS, lagos, SW, South-West and south west. A mapping table turns them into six clean regions: Lagos, South West, South East, South South, North Central and North West.">
+<title>23 raw spellings of region mapped to 6 clean regions.</title>
+<rect width="1160" height="652" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text x="40" y="30" font-size="15" font-weight="700" fill="#2A2926">Raw: 23 spellings (rows)</text><text x="1120" y="30" font-size="15" font-weight="700" fill="#2A2926" text-anchor="end">Clean: 6 regions (rows)</text>
+<rect x="40" y="43" width="230" height="20" rx="4" fill="#FFFFFF" stroke="#E3DACB"/><text x="50" y="58" font-family="'JetBrains Mono', Consolas, monospace" font-size="12.5" fill="#2A2926">"Lagos"</text><text x="262" y="58" font-size="12" fill="#5E5A52" text-anchor="end">13</text>
+<rect x="40" y="67" width="230" height="20" rx="4" fill="#FFFFFF" stroke="#E3DACB"/><text x="50" y="82" font-family="'JetBrains Mono', Consolas, monospace" font-size="12.5" fill="#2A2926">"LAGOS"</text><text x="262" y="82" font-size="12" fill="#5E5A52" text-anchor="end">10</text>
+<rect x="40" y="91" width="230" height="20" rx="4" fill="#FFFFFF" stroke="#E3DACB"/><text x="50" y="106" font-family="'JetBrains Mono', Consolas, monospace" font-size="12.5" fill="#2A2926">"Lagos·"</text><text x="262" y="106" font-size="12" fill="#5E5A52" text-anchor="end">8</text>
+<rect x="40" y="115" width="230" height="20" rx="4" fill="#FFFFFF" stroke="#E3DACB"/><text x="50" y="130" font-family="'JetBrains Mono', Consolas, monospace" font-size="12.5" fill="#2A2926">"lagos"</text><text x="262" y="130" font-size="12" fill="#5E5A52" text-anchor="end">3</text>
+<rect x="40" y="139" width="230" height="20" rx="4" fill="#FFFFFF" stroke="#E3DACB"/><text x="50" y="154" font-family="'JetBrains Mono', Consolas, monospace" font-size="12.5" fill="#2A2926">"south·west"</text><text x="262" y="154" font-size="12" fill="#5E5A52" text-anchor="end">5</text>
+<rect x="40" y="163" width="230" height="20" rx="4" fill="#FFFFFF" stroke="#E3DACB"/><text x="50" y="178" font-family="'JetBrains Mono', Consolas, monospace" font-size="12.5" fill="#2A2926">"SW"</text><text x="262" y="178" font-size="12" fill="#5E5A52" text-anchor="end">4</text>
+<rect x="40" y="187" width="230" height="20" rx="4" fill="#FFFFFF" stroke="#E3DACB"/><text x="50" y="202" font-family="'JetBrains Mono', Consolas, monospace" font-size="12.5" fill="#2A2926">"South·West"</text><text x="262" y="202" font-size="12" fill="#5E5A52" text-anchor="end">3</text>
+<rect x="40" y="211" width="230" height="20" rx="4" fill="#FFFFFF" stroke="#E3DACB"/><text x="50" y="226" font-family="'JetBrains Mono', Consolas, monospace" font-size="12.5" fill="#2A2926">"South-West"</text><text x="262" y="226" font-size="12" fill="#5E5A52" text-anchor="end">1</text>
+<rect x="40" y="235" width="230" height="20" rx="4" fill="#FFFFFF" stroke="#E3DACB"/><text x="50" y="250" font-family="'JetBrains Mono', Consolas, monospace" font-size="12.5" fill="#2A2926">"South·East"</text><text x="262" y="250" font-size="12" fill="#5E5A52" text-anchor="end">9</text>
+<rect x="40" y="259" width="230" height="20" rx="4" fill="#FFFFFF" stroke="#E3DACB"/><text x="50" y="274" font-family="'JetBrains Mono', Consolas, monospace" font-size="12.5" fill="#2A2926">"SE"</text><text x="262" y="274" font-size="12" fill="#5E5A52" text-anchor="end">5</text>
+<rect x="40" y="283" width="230" height="20" rx="4" fill="#FFFFFF" stroke="#E3DACB"/><text x="50" y="298" font-family="'JetBrains Mono', Consolas, monospace" font-size="12.5" fill="#2A2926">"South-East"</text><text x="262" y="298" font-size="12" fill="#5E5A52" text-anchor="end">5</text>
+<rect x="40" y="307" width="230" height="20" rx="4" fill="#FFFFFF" stroke="#E3DACB"/><text x="50" y="322" font-family="'JetBrains Mono', Consolas, monospace" font-size="12.5" fill="#2A2926">"south·south"</text><text x="262" y="322" font-size="12" fill="#5E5A52" text-anchor="end">3</text>
+<rect x="40" y="331" width="230" height="20" rx="4" fill="#FFFFFF" stroke="#E3DACB"/><text x="50" y="346" font-family="'JetBrains Mono', Consolas, monospace" font-size="12.5" fill="#2A2926">"South·South"</text><text x="262" y="346" font-size="12" fill="#5E5A52" text-anchor="end">3</text>
+<rect x="40" y="355" width="230" height="20" rx="4" fill="#FFFFFF" stroke="#E3DACB"/><text x="50" y="370" font-family="'JetBrains Mono', Consolas, monospace" font-size="12.5" fill="#2A2926">"South-South"</text><text x="262" y="370" font-size="12" fill="#5E5A52" text-anchor="end">3</text>
+<rect x="40" y="379" width="230" height="20" rx="4" fill="#FFFFFF" stroke="#E3DACB"/><text x="50" y="394" font-family="'JetBrains Mono', Consolas, monospace" font-size="12.5" fill="#2A2926">"SS"</text><text x="262" y="394" font-size="12" fill="#5E5A52" text-anchor="end">2</text>
+<rect x="40" y="403" width="230" height="20" rx="4" fill="#FFFFFF" stroke="#E3DACB"/><text x="50" y="418" font-family="'JetBrains Mono', Consolas, monospace" font-size="12.5" fill="#2A2926">"North·Central"</text><text x="262" y="418" font-size="12" fill="#5E5A52" text-anchor="end">4</text>
+<rect x="40" y="427" width="230" height="20" rx="4" fill="#FFFFFF" stroke="#E3DACB"/><text x="50" y="442" font-family="'JetBrains Mono', Consolas, monospace" font-size="12.5" fill="#2A2926">"north·central"</text><text x="262" y="442" font-size="12" fill="#5E5A52" text-anchor="end">3</text>
+<rect x="40" y="451" width="230" height="20" rx="4" fill="#FFFFFF" stroke="#E3DACB"/><text x="50" y="466" font-family="'JetBrains Mono', Consolas, monospace" font-size="12.5" fill="#2A2926">"North-Central"</text><text x="262" y="466" font-size="12" fill="#5E5A52" text-anchor="end">3</text>
+<rect x="40" y="475" width="230" height="20" rx="4" fill="#FFFFFF" stroke="#E3DACB"/><text x="50" y="490" font-family="'JetBrains Mono', Consolas, monospace" font-size="12.5" fill="#2A2926">"NC"</text><text x="262" y="490" font-size="12" fill="#5E5A52" text-anchor="end">1</text>
+<rect x="40" y="499" width="230" height="20" rx="4" fill="#FFFFFF" stroke="#E3DACB"/><text x="50" y="514" font-family="'JetBrains Mono', Consolas, monospace" font-size="12.5" fill="#2A2926">"North·West"</text><text x="262" y="514" font-size="12" fill="#5E5A52" text-anchor="end">6</text>
+<rect x="40" y="523" width="230" height="20" rx="4" fill="#FFFFFF" stroke="#E3DACB"/><text x="50" y="538" font-family="'JetBrains Mono', Consolas, monospace" font-size="12.5" fill="#2A2926">"North-West"</text><text x="262" y="538" font-size="12" fill="#5E5A52" text-anchor="end">4</text>
+<rect x="40" y="547" width="230" height="20" rx="4" fill="#FFFFFF" stroke="#E3DACB"/><text x="50" y="562" font-family="'JetBrains Mono', Consolas, monospace" font-size="12.5" fill="#2A2926">"NW"</text><text x="262" y="562" font-size="12" fill="#5E5A52" text-anchor="end">2</text>
+<rect x="40" y="571" width="230" height="20" rx="4" fill="#FFFFFF" stroke="#E3DACB"/><text x="50" y="586" font-family="'JetBrains Mono', Consolas, monospace" font-size="12.5" fill="#2A2926">"north·west"</text><text x="262" y="586" font-size="12" fill="#5E5A52" text-anchor="end">2</text>
+<rect x="860" y="67" width="260" height="44" rx="8" fill="#FFFFFF" stroke="#B38A3E" stroke-width="1.8"/><text x="878" y="94" font-size="15" font-weight="700" fill="#B38A3E">Lagos</text><text x="1104" y="94" font-size="13" fill="#5E5A52" text-anchor="end">34</text>
+<path d="M272,53 C560,53 560,89 858,89" fill="none" stroke="#B38A3E" stroke-opacity="0.55" stroke-width="1.6"/>
+<path d="M272,77 C560,77 560,89 858,89" fill="none" stroke="#B38A3E" stroke-opacity="0.55" stroke-width="1.6"/>
+<path d="M272,101 C560,101 560,89 858,89" fill="none" stroke="#B38A3E" stroke-opacity="0.55" stroke-width="1.6"/>
+<path d="M272,125 C560,125 560,89 858,89" fill="none" stroke="#B38A3E" stroke-opacity="0.55" stroke-width="1.6"/>
+<rect x="860" y="159" width="260" height="44" rx="8" fill="#FFFFFF" stroke="#2F5D8A" stroke-width="1.8"/><text x="878" y="186" font-size="15" font-weight="700" fill="#2F5D8A">South West</text><text x="1104" y="186" font-size="13" fill="#5E5A52" text-anchor="end">13</text>
+<path d="M272,149 C560,149 560,181 858,181" fill="none" stroke="#2F5D8A" stroke-opacity="0.55" stroke-width="1.6"/>
+<path d="M272,173 C560,173 560,181 858,181" fill="none" stroke="#2F5D8A" stroke-opacity="0.55" stroke-width="1.6"/>
+<path d="M272,197 C560,197 560,181 858,181" fill="none" stroke="#2F5D8A" stroke-opacity="0.55" stroke-width="1.6"/>
+<path d="M272,221 C560,221 560,181 858,181" fill="none" stroke="#2F5D8A" stroke-opacity="0.55" stroke-width="1.6"/>
+<rect x="860" y="251" width="260" height="44" rx="8" fill="#FFFFFF" stroke="#2F6B3F" stroke-width="1.8"/><text x="878" y="278" font-size="15" font-weight="700" fill="#2F6B3F">South East</text><text x="1104" y="278" font-size="13" fill="#5E5A52" text-anchor="end">19</text>
+<path d="M272,245 C560,245 560,273 858,273" fill="none" stroke="#2F6B3F" stroke-opacity="0.55" stroke-width="1.6"/>
+<path d="M272,269 C560,269 560,273 858,273" fill="none" stroke="#2F6B3F" stroke-opacity="0.55" stroke-width="1.6"/>
+<path d="M272,293 C560,293 560,273 858,273" fill="none" stroke="#2F6B3F" stroke-opacity="0.55" stroke-width="1.6"/>
+<rect x="860" y="343" width="260" height="44" rx="8" fill="#FFFFFF" stroke="#7A6C9B" stroke-width="1.8"/><text x="878" y="370" font-size="15" font-weight="700" fill="#7A6C9B">South South</text><text x="1104" y="370" font-size="13" fill="#5E5A52" text-anchor="end">11</text>
+<path d="M272,317 C560,317 560,365 858,365" fill="none" stroke="#7A6C9B" stroke-opacity="0.55" stroke-width="1.6"/>
+<path d="M272,341 C560,341 560,365 858,365" fill="none" stroke="#7A6C9B" stroke-opacity="0.55" stroke-width="1.6"/>
+<path d="M272,365 C560,365 560,365 858,365" fill="none" stroke="#7A6C9B" stroke-opacity="0.55" stroke-width="1.6"/>
+<path d="M272,389 C560,389 560,365 858,365" fill="none" stroke="#7A6C9B" stroke-opacity="0.55" stroke-width="1.6"/>
+<rect x="860" y="435" width="260" height="44" rx="8" fill="#FFFFFF" stroke="#9B5B2C" stroke-width="1.8"/><text x="878" y="462" font-size="15" font-weight="700" fill="#9B5B2C">North Central</text><text x="1104" y="462" font-size="13" fill="#5E5A52" text-anchor="end">11</text>
+<path d="M272,413 C560,413 560,457 858,457" fill="none" stroke="#9B5B2C" stroke-opacity="0.55" stroke-width="1.6"/>
+<path d="M272,437 C560,437 560,457 858,457" fill="none" stroke="#9B5B2C" stroke-opacity="0.55" stroke-width="1.6"/>
+<path d="M272,461 C560,461 560,457 858,457" fill="none" stroke="#9B5B2C" stroke-opacity="0.55" stroke-width="1.6"/>
+<path d="M272,485 C560,485 560,457 858,457" fill="none" stroke="#9B5B2C" stroke-opacity="0.55" stroke-width="1.6"/>
+<rect x="860" y="527" width="260" height="44" rx="8" fill="#FFFFFF" stroke="#5E7A3A" stroke-width="1.8"/><text x="878" y="554" font-size="15" font-weight="700" fill="#5E7A3A">North West</text><text x="1104" y="554" font-size="13" fill="#5E5A52" text-anchor="end">14</text>
+<path d="M272,509 C560,509 560,549 858,549" fill="none" stroke="#5E7A3A" stroke-opacity="0.55" stroke-width="1.6"/>
+<path d="M272,533 C560,533 560,549 858,549" fill="none" stroke="#5E7A3A" stroke-opacity="0.55" stroke-width="1.6"/>
+<path d="M272,557 C560,557 560,549 858,549" fill="none" stroke="#5E7A3A" stroke-opacity="0.55" stroke-width="1.6"/>
+<path d="M272,581 C560,581 560,549 858,549" fill="none" stroke="#5E7A3A" stroke-opacity="0.55" stroke-width="1.6"/>
+<text x="40" y="634" font-size="12.5" fill="#5E5A52">From customer_list_raw.csv (102 rows). A · marks a space, so "Lagos·" has a trailing space. Rule: trim, lower-case, then look up in a mapping table.</text>
+</g></svg>

@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 420" width="1160" height="420" role="img" aria-label="A histogram of the value of Kolanut's 4,266 order lines, in bands of 50,000 naira. Most lines are worth under 250,000 naira, with a long tail of large lines up to 713,400 naira. The median, 166,680 naira, sits to the left of the mean, 194,689 naira, because the large lines pull the mean up.">
+<title>Distribution of order line values: a long right tail pulls the mean (₦194,689) above the median (₦166,680).</title>
+<rect width="1160" height="420" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text x="40" y="34" font-size="15" font-weight="700" fill="#2A2926">Kolanut's 4,266 order lines, by value</text><text x="40" y="54" font-size="12.5" fill="#5E5A52">Number of lines in each ₦50,000 band</text>
+<line x1="90" x2="1110" y1="278.7" y2="278.7" stroke="#EDE6D8"/><text x="82" y="282.7" font-size="11" fill="#5E5A52" text-anchor="end">200</text>
+<line x1="90" x2="1110" y1="217.3" y2="217.3" stroke="#EDE6D8"/><text x="82" y="221.3" font-size="11" fill="#5E5A52" text-anchor="end">400</text>
+<line x1="90" x2="1110" y1="156.0" y2="156.0" stroke="#EDE6D8"/><text x="82" y="160.0" font-size="11" fill="#5E5A52" text-anchor="end">600</text>
+<rect x="92.0" y="151.7" width="64.0" height="188.3" fill="#DCC594"/>
+<rect x="160.0" y="123.2" width="64.0" height="216.8" fill="#DCC594"/>
+<rect x="228.0" y="148.9" width="64.0" height="191.1" fill="#DCC594"/>
+<rect x="296.0" y="168.0" width="64.0" height="172.0" fill="#DCC594"/>
+<rect x="364.0" y="199.2" width="64.0" height="140.8" fill="#DCC594"/>
+<rect x="432.0" y="229.0" width="64.0" height="111.0" fill="#DCC594"/>
+<rect x="500.0" y="248.3" width="64.0" height="91.7" fill="#DCC594"/>
+<rect x="568.0" y="269.5" width="64.0" height="70.5" fill="#DCC594"/>
+<rect x="636.0" y="296.1" width="64.0" height="43.9" fill="#DCC594"/>
+<rect x="704.0" y="307.5" width="64.0" height="32.5" fill="#DCC594"/>
+<rect x="772.0" y="315.5" width="64.0" height="24.5" fill="#DCC594"/>
+<rect x="840.0" y="324.6" width="64.0" height="15.4" fill="#DCC594"/>
+<rect x="908.0" y="331.7" width="64.0" height="8.3" fill="#DCC594"/>
+<rect x="976.0" y="338.7" width="64.0" height="1.3" fill="#DCC594"/>
+<rect x="1044.0" y="339.7" width="64.0" height="0.3" fill="#DCC594"/>
+<text x="90.0" y="358" font-size="11" fill="#5E5A52" text-anchor="middle">0k</text>
+<text x="226.0" y="358" font-size="11" fill="#5E5A52" text-anchor="middle">100k</text>
+<text x="362.0" y="358" font-size="11" fill="#5E5A52" text-anchor="middle">200k</text>
+<text x="498.0" y="358" font-size="11" fill="#5E5A52" text-anchor="middle">300k</text>
+<text x="634.0" y="358" font-size="11" fill="#5E5A52" text-anchor="middle">400k</text>
+<text x="770.0" y="358" font-size="11" fill="#5E5A52" text-anchor="middle">500k</text>
+<text x="906.0" y="358" font-size="11" fill="#5E5A52" text-anchor="middle">600k</text>
+<text x="1042.0" y="358" font-size="11" fill="#5E5A52" text-anchor="middle">700k</text>
+<line x1="90" x2="1110" y1="340" y2="340" stroke="#CFC4B2"/>
+<line x1="316.7" x2="316.7" y1="80" y2="340" stroke="#2F5D8A" stroke-width="2.4" stroke-dasharray="0"/><text x="308.7" y="92" font-size="13" font-weight="700" fill="#2F5D8A" text-anchor="end">Median ₦166,680</text>
+<line x1="354.8" x2="354.8" y1="80" y2="340" stroke="#9B2C1F" stroke-width="2.4" stroke-dasharray="6 4"/><text x="362.8" y="92" font-size="13" font-weight="700" fill="#9B2C1F">Mean ₦194,689</text>
+<text x="797.2" y="250" font-size="13" fill="#2A2926">A long tail of big wholesale lines,</text><text x="797.2" y="270" font-size="13" fill="#2A2926">up to ₦713,400, pulls the mean right.</text>
+<text x="40" y="400" font-size="12.5" fill="#5E5A52">Half the lines are worth less than ₦166,680. The mean is higher than what a typical line is worth.</text></g></svg>

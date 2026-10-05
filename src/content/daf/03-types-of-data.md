@@ -1,7 +1,7 @@
 ---
 title: Types of data
 minutes: 15
-summary: Structured and unstructured data, numbers and categories, and the most important question about any table - what does one row mean?
+summary: Structured and unstructured data, numbers and categories, what you can calculate with each type, identifiers, dates, and the grain of a table.
 ---
 
 ## The problem
@@ -10,35 +10,93 @@ You open Kolanut's `orders.csv` for the first time. Some columns hold numbers yo
 
 ## The concept
 
-**Structured vs unstructured**
+Before you calculate anything, you need to know two things about a table: **what kind of data each column holds**, and **what one row stands for**. Get either wrong and the numbers you produce will look fine and be wrong.
 
-- **Structured data** fits in rows and columns with a fixed meaning: orders, invoices, attendance records. This course works with structured data.
-- **Unstructured data** has no fixed layout: emails, WhatsApp messages, scanned contracts, photos. It holds value too, but needs other techniques to analyse.
+### Structured, semi-structured and unstructured
 
-**Quantitative vs qualitative**
+| Kind | What it looks like | Examples | How it's analysed |
+| :-- | :-- | :-- | :-- |
+| **Structured** | Rows and columns, each column with a fixed meaning | Orders, invoices, attendance records, CSV files | Spreadsheets, SQL, BI tools |
+| **Semi-structured** | Labelled fields, but not a fixed grid | JSON from a website or app, system logs | Flattened into tables first, often with Python |
+| **Unstructured** | No fixed layout at all | Emails, WhatsApp messages, scanned contracts, photos, call recordings | Text analysis, AI models, or reading by people |
+
+Most business analysis works on structured data, and so does this course. But much of a company's knowledge sits in unstructured data: the reason a customer left is in an email, not a column.
+
+### Quantitative and qualitative
+
+**Quantitative** data is numbers that measure an amount. **Qualitative** (or categorical) data puts things into groups.
 
 | Type | What it is | Examples |
 | :-- | :-- | :-- |
-| **Quantitative, discrete** | Counts: whole numbers | Quantity ordered, number of staff |
-| **Quantitative, continuous** | Measurements: can take any value | Weight in kg, revenue in naira |
+| **Quantitative, discrete** | Counts: whole numbers | Packs ordered, number of staff, number of visits |
+| **Quantitative, continuous** | Measurements: can take any value in a range | Weight in kg, revenue in naira, hours worked |
 | **Qualitative, nominal** | Categories with no order | Region, product category, payment method |
-| **Qualitative, ordinal** | Categories with an order | Job level (Junior < Mid < Senior), rating (Poor, Fair, Good) |
+| **Qualitative, ordinal** | Categories with a natural order | Job level (Junior < Mid < Senior), rating (Poor, Fair, Good) |
 
-**Identifiers look like numbers but aren't.** `customer_id` 42 is not "twice" customer 21. Adding or averaging IDs is meaningless. Treat them as labels.
+### What you can do with each type
 
-**Dates and times** deserve their own type. They let you group by month, measure time between events, and compare periods.
+The type decides which calculations make sense. This table is worth remembering:
 
-**Grain: what one row represents**
+| Type | Count it | Put it in order | Add or subtract | Average it | Kolanut example |
+| :-- | :-: | :-: | :-: | :-: | :-- |
+| Nominal category | ✓ | ✗ | ✗ | ✗ | Region: "how many Lagos customers?" |
+| Ordinal category | ✓ | ✓ | ✗ | ✗ | Job level: "how many are Mid or above?" |
+| Discrete count | ✓ | ✓ | ✓ | ✓ | Quantity: "total packs" |
+| Continuous amount | ✓ | ✓ | ✓ | ✓ | Revenue: "average line value" |
+| Date | ✓ | ✓ | Subtract only | (rarely) | Days between hire and exit |
+| Identifier | ✓ | ✗ | ✗ | ✗ | Count distinct customers |
 
-The *grain* of a table is the answer to "one row = one what?". In Kolanut's data:
+So you can say "34 Lagos customers" but never "the average region"; "Senior is above Mid" but not "Senior minus Junior equals Mid".
 
-| File | One row is |
-| :-- | :-- |
-| `orders.csv` | one product on one order (an order line) |
-| `customers.csv` | one customer |
-| `products.csv` | one product |
+> [!WARNING]
+> **Ordinal categories are often stored as numbers**, such as a satisfaction score from 1 to 5. It's tempting to average them, and people often do, but the gap between 1 and 2 isn't necessarily the same as between 4 and 5. Report the share in each category ("62% rated 4 or 5") alongside, or instead of, an average.
 
-Getting the grain wrong causes real errors. If you think each row in `orders.csv` is a whole order and count rows to get "number of orders", you'll count some orders more than once whenever a shop buys several products on the same day.
+### Identifiers: numbers that aren't numbers
+
+`customer_id` 42 is not "twice" customer 21. An identifier is a **label** that happens to use digits. Adding or averaging IDs gives a meaningless number, though a spreadsheet will happily calculate it.
+
+What you **can** do with an identifier:
+
+- **Count** them: how many order lines?
+- **Count distinct** values: how many different customers ordered?
+- **Use them to link tables**: find customer 27 in `customers.csv` (next lesson).
+
+Phone numbers, account numbers, postcodes and staff numbers are identifiers too. Store them as **text**, so a leading zero survives: `08089165939` as a number becomes `8089165939`.
+
+### Dates and times
+
+Dates deserve their own type, because they let you:
+
+- **group** by day, month, quarter or year;
+- **measure** time between events, such as days from order to delivery or hire to exit;
+- **compare** periods, such as January to June this year against last year.
+
+A spreadsheet stores a date as a number of days, which is why subtraction works. But a date stored as **text** can't be grouped or subtracted, and a date read in the wrong format (month-first instead of day-first) is silently wrong. You'll fix both in lesson 5.
+
+### Grain: what one row represents
+
+The **grain** of a table is the answer to "one row = one what?".
+
+![The first three rows of orders.csv, with each column labelled: order_id, customer_id and product_id as identifiers, order_date as a date, quantity as a discrete count, unit_price as a continuous amount, discount_pct as a percentage. A bracket underneath says one row equals one order line.](/images/courses/daf/column-types.svg "Kolanut's orders table, column by column. Decide each column's type and the table's grain before you calculate.")
+
+| File | One row is | Rows |
+| :-- | :-- | --: |
+| `orders.csv` | one product on one order (an **order line**) | 4,266 |
+| `customers.csv` | one customer | 90 |
+| `products.csv` | one product | 16 |
+
+Getting the grain wrong causes real errors. Each order line has its own `order_id`, and a shop that buys three products on the same day appears as three rows. So "how many orders?" depends on what you mean:
+
+| Question | Answer from Kolanut's data |
+| :-- | --: |
+| How many order **lines**? (count rows) | 4,266 |
+| How many **shop visits**? (distinct customer and date pairs) | 3,982 |
+| How many visits bought **more than one** product? | 263 |
+
+Neither 4,266 nor 3,982 is "wrong"; they answer different questions. The mistake is reporting one while the reader thinks it's the other. Say which you counted.
+
+> [!TIP]
+> When you open any new table, write one sentence: "Each row is one ___." If you can't finish the sentence, find out before you calculate anything.
 
 ## Example
 
@@ -53,10 +111,21 @@ The first rows of `orders.csv`:
 - `order_id`, `customer_id`, `product_id`: identifiers (labels, not quantities).
 - `order_date`: a date.
 - `quantity`: quantitative, discrete.
-- `unit_price`: quantitative, the price actually charged for one unit (one pack).
+- `unit_price`: quantitative, continuous: the price actually charged for one unit (one pack).
 - `discount_pct`: quantitative, the percentage taken off this line: 0, 5 or 10.
 
 Reading the first row: order line 10001 was **14 packs of product 3 at ₦18,600 a pack**, with no discount.
+
+And `customers.csv`:
+
+| Column | Type |
+| :-- | :-- |
+| `customer_id` | Identifier (the key) |
+| `customer_name`, `city` | Text labels |
+| `channel` (Kiosk, Supermarket, Wholesale), `region` | Nominal categories |
+| `sales_rep` | Nominal category |
+| `joined_date` | Date |
+| `credit_limit` | Continuous amount (naira) |
 
 ```dataset
 { "dataset": "sales", "files": ["orders", "customers", "products"] }
@@ -67,12 +136,24 @@ Reading the first row: order line 10001 was **14 packs of product 3 at ₦18,600
 Open `orders.csv` in Google Sheets (File → Import → Upload) or Excel (File → Open).
 
 1. Look at the header row. Each column name tells you what the column holds.
-2. Press **Ctrl + ↓** (Cmd + ↓ on a Mac) in column A to jump to the last row. The row number tells you how many rows there are. Remember that row 1 is the header.
-3. For each column, decide: identifier, number, category or date?
-4. Ask the grain question: what does one row stand for?
+2. Press **Ctrl + ↓** (Cmd + ↓ on a Mac) in column A to jump to the last row. The row number tells you how many rows there are. Remember that row 1 is the header: 4,267 − 1 = 4,266 rows.
+3. For each column, decide: identifier, number, category or date? Write it down, as in the tables above.
+4. Check numbers are numbers: they sit on the **right** of the cell. Text sits on the **left**.
+5. Ask the grain question and write the sentence: "Each row is one order line."
+6. Do the same for `customers.csv` and `products.csv`.
 
 > [!WARNING]
 > Spreadsheet programs sometimes guess types wrongly: a date read as text, or a long ID shown as `1.23E+15`. When a column looks strange, check its type before you trust any calculation on it.
+
+### Summary
+
+| Term | Meaning |
+| :-- | :-- |
+| Structured / unstructured | Fits in rows and columns / doesn't |
+| Discrete / continuous | Counts / measurements |
+| Nominal / ordinal | Categories without / with an order |
+| Identifier | A label made of digits: count it, never add it |
+| Grain | What one row stands for |
 
 ## Practice
 

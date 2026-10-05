@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 360" width="1160" height="360" role="img" aria-label="The first rows of Kolanut's orders table, with each column labelled by its type. order_id, customer_id and product_id are identifiers: labels, never added up. order_date is a date. quantity is a discrete count. unit_price is a continuous amount of money. discount_pct is a number from a small set: 0, 5 or 10. The bracket under one row says: one row equals one order line.">
+<title>Each column of the orders table labelled with its type: identifiers, a date, a count, an amount and a percentage. One row is one order line.</title>
+<rect width="1160" height="360" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+  <g font-size="12.5" font-weight="700" text-anchor="middle">
+    <rect x="40" y="30" width="130" height="44" rx="8" fill="#EEEAF5"/><text x="105" y="50" fill="#5C4F80">Identifier</text><text x="105" y="66" font-weight="400" fill="#5C4F80">a label</text>
+    <rect x="180" y="30" width="140" height="44" rx="8" fill="#E6EEF6"/><text x="250" y="50" fill="#2F5D8A">Date</text><text x="250" y="66" font-weight="400" fill="#2F5D8A">group, subtract</text>
+    <rect x="330" y="30" width="130" height="44" rx="8" fill="#EEEAF5"/><text x="395" y="50" fill="#5C4F80">Identifier</text><text x="395" y="66" font-weight="400" fill="#5C4F80">points to customers</text>
+    <rect x="470" y="30" width="130" height="44" rx="8" fill="#EEEAF5"/><text x="535" y="50" fill="#5C4F80">Identifier</text><text x="535" y="66" font-weight="400" fill="#5C4F80">points to products</text>
+    <rect x="610" y="30" width="150" height="44" rx="8" fill="#E5F0E8"/><text x="685" y="50" fill="#2F6B3F">Count (discrete)</text><text x="685" y="66" font-weight="400" fill="#2F6B3F">whole packs</text>
+    <rect x="770" y="30" width="170" height="44" rx="8" fill="#E5F0E8"/><text x="855" y="50" fill="#2F6B3F">Amount (continuous)</text><text x="855" y="66" font-weight="400" fill="#2F6B3F">naira per pack</text>
+    <rect x="950" y="30" width="170" height="44" rx="8" fill="#F3EBD8"/><text x="1035" y="50" fill="#8A6A1F">Percentage</text><text x="1035" y="66" font-weight="400" fill="#8A6A1F">only 0, 5 or 10</text>
+  </g>
+  <rect x="40" y="90" width="1080" height="176" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+  <rect x="41" y="91" width="1078" height="40" fill="#F7F3EA"/>
+  <g font-family="'JetBrains Mono', Consolas, monospace" font-size="14" fill="#2A2926" text-anchor="middle">
+    <text x="105" y="117" font-weight="700">order_id</text><text x="250" y="117" font-weight="700">order_date</text><text x="395" y="117" font-weight="700">customer_id</text><text x="535" y="117" font-weight="700">product_id</text><text x="685" y="117" font-weight="700">quantity</text><text x="855" y="117" font-weight="700">unit_price</text><text x="1035" y="117" font-weight="700">discount_pct</text>
+    <rect x="42" y="134" width="1076" height="40" fill="#FBF3E2"/>
+    <text x="105" y="160">10001</text><text x="250" y="160">2025-01-01</text><text x="395" y="160">27</text><text x="535" y="160">3</text><text x="685" y="160">14</text><text x="855" y="160">18600</text><text x="1035" y="160">0</text>
+    <text x="105" y="204">10002</text><text x="250" y="204">2025-01-01</text><text x="395" y="204">56</text><text x="535" y="204">1</text><text x="685" y="204">7</text><text x="855" y="204">13200</text><text x="1035" y="204">0</text>
+    <text x="105" y="248">10003</text><text x="250" y="248">2025-01-01</text><text x="395" y="248">37</text><text x="535" y="248">2</text><text x="685" y="248">4</text><text x="855" y="248">3600</text><text x="1035" y="248">0</text>
+  </g>
+  <path d="M40,282 L40,292 L1120,292 L1120,282" stroke="#8A6A1F" stroke-width="1.8" fill="none"/>
+  <text x="580" y="318" font-size="14.5" font-weight="700" fill="#8A6A1F" text-anchor="middle">Grain: one row = one order line (one product, on one order)</text>
+  <text x="580" y="342" font-size="13" fill="#5E5A52" text-anchor="middle">Row 10001 reads: 14 packs of product 3, for customer 27, at ₦18,600 a pack, no discount.</text>
+</g>
+</svg>

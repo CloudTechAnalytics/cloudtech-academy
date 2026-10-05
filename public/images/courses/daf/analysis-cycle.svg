@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 350" width="1160" height="350" role="img" aria-label="The six steps of an analysis, in order: Ask, Collect, Clean, Analyse, Share, Act. An arrow from Act loops back to Ask, because every decision raises the next question. Each step has a Kolanut example underneath.">
+<title>The six steps of an analysis: Ask, Collect, Clean, Analyse, Share, Act, with a loop back from Act to Ask.</title>
+<defs><marker id="b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="1160" height="350" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+  <g font-size="12.5" fill="#5E5A52">
+  <rect x="40" y="70" width="160" height="165" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+  <rect x="226" y="70" width="160" height="165" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+  <rect x="412" y="70" width="160" height="165" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+  <rect x="598" y="70" width="160" height="165" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+  <rect x="784" y="70" width="160" height="165" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+  <rect x="970" y="70" width="160" height="165" rx="10" fill="#F3EBD8" stroke="#B38A3E" stroke-width="1.5"/>
+  </g>
+  <g fill="#B38A3E" font-size="13" font-weight="700">
+    <circle cx="66" cy="98" r="14"/><circle cx="252" cy="98" r="14"/><circle cx="438" cy="98" r="14"/><circle cx="624" cy="98" r="14"/><circle cx="810" cy="98" r="14"/><circle cx="996" cy="98" r="14" fill="#8A6A1F"/>
+  </g>
+  <g fill="#FFFFFF" font-size="13" font-weight="700" text-anchor="middle">
+    <text x="66" y="103">1</text><text x="252" y="103">2</text><text x="438" y="103">3</text><text x="624" y="103">4</text><text x="810" y="103">5</text><text x="996" y="103">6</text>
+  </g>
+  <g font-size="17" font-weight="700" fill="#2A2926">
+    <text x="88" y="104">Ask</text><text x="274" y="104">Collect</text><text x="460" y="104">Clean</text><text x="646" y="104">Analyse</text><text x="832" y="104">Share</text><text x="1018" y="104">Act</text>
+  </g>
+  <g font-size="12.5" fill="#2A2926">
+    <text x="56" y="140">Agree a question</text><text x="56" y="158">someone will act on</text>
+    <text x="56" y="196" fill="#5E5A52">"Did H1 revenue</text><text x="56" y="214" fill="#5E5A52">grow, and where?"</text>
+
+    <text x="242" y="140">Find the data that</text><text x="242" y="158">can answer it</text>
+    <text x="242" y="196" fill="#5E5A52">orders.csv and</text><text x="242" y="214" fill="#5E5A52">customers.csv</text>
+
+    <text x="428" y="140">Fix what would</text><text x="428" y="158">mislead you</text>
+    <text x="428" y="196" fill="#5E5A52">23 spellings of</text><text x="428" y="214" fill="#5E5A52">6 regions → 6</text>
+
+    <text x="614" y="140">Summarise, compare,</text><text x="614" y="158">find the exceptions</text>
+    <text x="614" y="196" fill="#5E5A52">+19.1% overall;</text><text x="614" y="214" fill="#5E5A52">North West −46.6%</text>
+
+    <text x="800" y="140">Make the point clear</text><text x="800" y="158">in a minute</text>
+    <text x="800" y="196" fill="#5E5A52">One chart, one</text><text x="800" y="214" fill="#5E5A52">headline sentence</text>
+
+    <text x="986" y="140">Someone decides;</text><text x="986" y="158">check it worked</text>
+    <text x="986" y="196" fill="#5E5A52">Call North West's</text><text x="986" y="214" fill="#5E5A52">five biggest shops</text>
+  </g>
+  <g stroke="#8A6A1F" stroke-width="2" fill="none" marker-end="url(#b)">
+    <path d="M202,152 L222,152"/><path d="M388,152 L408,152"/><path d="M574,152 L594,152"/><path d="M760,152 L780,152"/><path d="M946,152 L966,152"/>
+    <path d="M1050,237 C1050,292 120,292 120,241" stroke-dasharray="6 5"/>
+  </g>
+  <text x="585" y="326" font-size="13" fill="#8A6A1F" text-anchor="middle" font-weight="700">Every decision raises the next question</text>
+  <text x="40" y="44" font-size="15" font-weight="700" fill="#2A2926">The analysis cycle, with Kolanut's half-year review as the example</text>
+</g>
+</svg>

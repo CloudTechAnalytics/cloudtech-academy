@@ -9347,7 +9347,7 @@ values ('daf-m01', 'data-analytics-foundations', 'What is Data Analytics?', 1, n
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('data-analytics-foundations:what-is-data-analytics', 'data-analytics-foundations', 'daf-m01', 'what-is-data-analytics', 'What is data analytics?', 'What analysts actually do, the four kinds of analytics, and the steps every analysis follows.', 20, $md$
+values ('data-analytics-foundations:what-is-data-analytics', 'data-analytics-foundations', 'daf-m01', 'what-is-data-analytics', 'What is data analytics?', 'What analysts actually do: data, information and insight, the four kinds of analytics, the data jobs and tools, and the six steps every analysis follows.', 20, $md$
 ## The problem
 
 Kolanut Distribution sells drinks, snacks and household goods to shops across Nigeria. Every order is written into a system: who bought, what, how many, at what price, on which day. After eighteen months that system holds more than four thousand order lines.
@@ -9366,16 +9366,84 @@ Turning the rows into those answers is **data analytics**.
 
 The word that matters is *decisions*. A table of numbers is not analysis. Analysis ends when someone can act: restock earlier, call a customer, drop a product, hire in one region instead of another.
 
+### Data, information and insight
+
+It helps to separate three things that people often call "data":
+
+| | What it is | Kolanut example |
+| :-- | :-- | :-- |
+| **Data** | Raw recorded facts, one event at a time | `10001, 2025-01-01, customer 27, product 3, 14 packs, ₦18,600` |
+| **Information** | Data summarised so it answers "what?" | Revenue in March 2025 was ₦46.3 million |
+| **Insight** | Information that explains "why", and points to "so what?" | March's jump came mostly from drinks; stock more drinks before the next hot season |
+
+An analyst's job is to move up this list. Each step needs judgement: which rows to include, how to summarise them, what to compare them with.
+
+### The four kinds of analytics
+
 Analytics questions come in four kinds, each harder than the last:
 
-| Kind | Question it answers | Kolanut example |
-| :-- | :-- | :-- |
-| **Descriptive** | What happened? | Revenue in March 2025 was ₦46.3 million. |
-| **Diagnostic** | Why did it happen? | North West revenue fell because shops there ordered less often, not because we lost them. |
-| **Predictive** | What is likely to happen? | December 2026 sales will again be far above an average month (in 2025 they were about 45% higher). |
-| **Prescriptive** | What should we do? | Send more stock to Lagos warehouses in November. |
+![A staircase of four steps: descriptive (what happened?), diagnostic (why?), predictive (what will happen?) and prescriptive (what should we do?), each with a Kolanut example.](/images/courses/daf/four-kinds.svg "Each kind of analytics builds on the one below it.")
 
-Most day-to-day analyst work is descriptive and diagnostic. They are the foundation: you can't predict what you can't describe.
+| Kind | Question it answers | Kolanut example | Typical tools |
+| :-- | :-- | :-- | :-- |
+| **Descriptive** | What happened? | Revenue in March 2025 was ₦46.3 million. | Totals, averages, charts, dashboards |
+| **Diagnostic** | Why did it happen? | North West revenue fell because shops there ordered less often, not because we lost them. | Breaking totals down, comparing groups |
+| **Predictive** | What is likely to happen? | December 2026 will again be far above an average month (December 2025 was 47% above 2025's monthly average). | Trends, seasonality, statistical models |
+| **Prescriptive** | What should we do? | Send more stock to Lagos warehouses in November. | Scenarios, optimisation, business judgement |
+
+Most day-to-day analyst work is descriptive and diagnostic. They are the foundation: you can't predict what you haven't described, and a prediction nobody can explain is hard to trust.
+
+> [!NOTE]
+> Prescriptive doesn't always mean complicated maths. Often it's a clear descriptive and diagnostic analysis, plus a sensible recommendation. "North West shops are ordering half as often; call the five biggest this month" is prescriptive.
+
+### Who works with data
+
+"Data analyst" is one of several data jobs. They overlap, but the focus differs:
+
+| Role | Main question | Main tools |
+| :-- | :-- | :-- |
+| **Data analyst** | What happened, and why? | Excel, SQL, Power BI or Tableau |
+| **Business analyst** | What does the business need, and how should the process change? | Interviews, process maps, requirements, Excel |
+| **Data scientist** | What will happen? Can we predict or automate it? | Python, statistics, machine learning |
+| **Data engineer** | How do we get reliable data to everyone who needs it? | Databases, SQL, pipelines, cloud tools |
+
+This course is the foundation for all four. The data analyst path is the most common way in.
+
+### The tools of the job
+
+| Tool | What it's for | Course here |
+| :-- | :-- | :-- |
+| **Spreadsheets** (Excel, Google Sheets) | Small and medium data, quick analysis, sharing with anyone | Excel for Data Analysis |
+| **SQL** | Asking questions of databases, where most company data lives | SQL for Data Analysis |
+| **BI tools** (Power BI, Tableau) | Dashboards that refresh themselves | Power BI Fundamentals |
+| **Python** | Automation, large data, statistics, machine learning | Python for Beginners |
+
+You don't need all of them to start. Spreadsheets and a little SQL already answer most business questions.
+
+### The analysis cycle
+
+Every analysis, big or small, follows roughly the same steps:
+
+![Six boxes in a row: Ask, Collect, Clean, Analyse, Share and Act, each with an example from Kolanut's half-year review, and an arrow from Act back to Ask.](/images/courses/daf/analysis-cycle.svg "The analysis cycle. Most of the value is decided in the first step and the last.")
+
+1. **Ask.** Agree the question with the person who will use the answer. "How are sales?" is vague. "Did first-half revenue grow compared with last year, and in which regions?" is answerable.
+2. **Collect.** Find the data that can answer it: which system, which tables, which dates.
+3. **Clean.** Fix what would mislead you: duplicates, inconsistent spellings, missing values.
+4. **Analyse.** Summarise, compare, look for patterns and exceptions.
+5. **Share.** Present the finding so the audience understands it in a minute: a clear chart, a short summary.
+6. **Act.** Someone makes a decision, and you check later whether it worked. That check usually raises the next question, and the cycle starts again.
+
+Where does the time go? On a typical piece of work, collecting and cleaning take far longer than the analysis itself. Beginners are often surprised by this; experienced analysts plan for it.
+
+### Common beginner mistakes
+
+| Mistake | What it looks like | Instead |
+| :-- | :-- | :-- |
+| Starting with the data | Opening the file and "seeing what's there" | Start with the question and the decision |
+| Reporting everything | A 20-page report with every number | Report what answers the question; keep the rest in an appendix |
+| Stopping at the total | "Revenue grew 19%" | Break it down: which regions, products, customers? |
+| No comparison | "Revenue was ₦290.7m" | Against what? Last year, target, another region |
+| Hiding the method | Numbers nobody can check | Say where the data came from and how you calculated |
 
 ## Example
 
@@ -9392,18 +9460,25 @@ Here is Kolanut's revenue for the first six months of 2025, rounded to millions 
 
 A **descriptive** reading: revenue ranged from ₦36.1m to ₦46.3m, and March was the best month.
 
-A **diagnostic** question it raises: *why* were March and April stronger? (In this data, drink sales rise in the hot, dry months, and Easter shopping falls in that period.)
+A **diagnostic** question it raises: *why* was March stronger? Breaking March down by product category answers it: drinks went from ₦10.7m in February to ₦16.2m in March. That ₦5.5m is more than half of the month's ₦10.1m increase; personal care and snacks added the rest, and household goods dipped slightly. The rise was mostly drinks.
+
+A **predictive** question: will next March be strong too? One year of data is a weak basis; with two or three years, you could see whether March is reliably strong.
+
+A **prescriptive** suggestion: if the drinks pattern repeats, order more drinks stock in February.
+
+Notice how each step needed the one before: you can only ask why March was strong once you've seen that it was.
 
 ## Walkthrough
 
-Every analysis, big or small, follows roughly the same steps:
+Practise telling the four kinds apart, and turning vague questions into answerable ones.
 
-1. **Ask.** Agree the question with the person who will use the answer. "How are sales?" is vague. "Did first-half revenue grow compared with last year, and in which regions?" is answerable.
-2. **Collect.** Find the data that can answer it: which system, which tables, which dates.
-3. **Clean.** Fix what would mislead you: duplicates, inconsistent spellings, missing values.
-4. **Analyse.** Summarise, compare, look for patterns and exceptions.
-5. **Share.** Present the finding so the audience understands it in a minute: a clear chart, a short summary.
-6. **Act.** Someone makes a decision, and you check later whether it worked.
+1. **Classify.** For each question, decide which kind it is:
+   - "How many order lines did we have in June?" (descriptive)
+   - "Why did June revenue fall from May?" (diagnostic)
+   - "How much stock will we need next December?" (predictive)
+   - "Should we stop giving 10% discounts to wholesalers?" (prescriptive)
+2. **Sharpen a vague question.** "How are our customers doing?" can't be answered. Ask: who wants to know, and what will they decide? If the sales director is deciding where to send reps, a good version is: *"Which regions had fewer active customers in January to June 2026 than a year earlier?"*
+3. **Check it's answerable.** A good question names a **measure** (active customers), a **breakdown** (by region), a **period** (January to June 2026), and a **comparison** (a year earlier).
 
 > [!BUSINESS]
 > In most companies the analyst sits between the people who hold the data (IT, operations) and the people who make decisions (managers). Half the job is technical; the other half is asking good questions and explaining answers in plain language.
@@ -9412,6 +9487,16 @@ The rest of this course takes each step in turn. By the end you'll run the whole
 
 > [!NOTE]
 > From lesson 3 onwards you'll need a spreadsheet program. Google Sheets is free with a Google account and works in the browser; Microsoft Excel works too.
+
+### Summary
+
+| Term | Meaning |
+| :-- | :-- |
+| Data analytics | Using data to answer questions and support decisions |
+| Data → information → insight | Raw facts → summaries → explanations that point to action |
+| Descriptive / diagnostic | What happened? Why? |
+| Predictive / prescriptive | What will happen? What should we do? |
+| The analysis cycle | Ask, collect, clean, analyse, share, act |
 
 ## Practice
 
@@ -9488,14 +9573,27 @@ values ('daf-m02', 'data-analytics-foundations', 'How Businesses Use Data', 2, n
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('data-analytics-foundations:how-businesses-use-data', 'data-analytics-foundations', 'daf-m02', 'how-businesses-use-data', 'How businesses use data', 'Where data comes from in a company, how each team uses it, and what a KPI is.', 20, $md$
+values ('data-analytics-foundations:how-businesses-use-data', 'data-analytics-foundations', 'daf-m02', 'how-businesses-use-data', 'How businesses use data', 'Where company data comes from, what makes a good KPI, leading and lagging indicators, and how a KPI tree shows why a number moved.', 20, $md$
 ## The problem
 
 A new analyst joins Kolanut and asks for "the data". The answer is: *which* data? Sales keeps orders. The warehouse tracks stock. Finance holds invoices and payments. HR has staff records and attendance. Each team uses its own data to run its own part of the business, and the most useful questions usually need two or more of them together.
 
 ## The concept
 
-Every business activity leaves a record. Some common ones:
+### Where business data comes from
+
+Every business activity leaves a record. Most of it is produced by the systems people use to do their jobs, not collected for analysis:
+
+| Source | What it is | Kolanut example |
+| :-- | :-- | :-- |
+| **Transaction systems** | Software that records each sale, payment or delivery as it happens | The order system that writes `orders.csv` |
+| **ERP** (enterprise resource planning) | One system covering finance, stock and purchasing; SAP, Oracle, Odoo and Sage are common | Stock levels and supplier invoices |
+| **CRM** (customer relationship management) | Customers, contacts, visits and deals | The customer list with channel and sales rep |
+| **HR and payroll systems** | Staff, salaries, attendance, leave | `employees.csv`, `attendance.csv` |
+| **Spreadsheets** | Anything a team tracks by hand | A rep's list of shops visited this week |
+| **External data** | From outside the company | Exchange rates, inflation, fuel prices |
+
+Each team uses its own data to run its own part of the business:
 
 | Team | Data it produces | Decisions it supports |
 | :-- | :-- | :-- |
@@ -9505,22 +9603,86 @@ Every business activity leaves a record. Some common ones:
 | HR | Staff, salaries, attendance, leave | Hiring plans, where people are leaving |
 | Marketing | Campaigns, website visits, enquiries | Which channels bring customers |
 
-A **KPI (key performance indicator)** is a number a business watches regularly because it shows whether things are going well. A good KPI is:
+The most useful questions usually need **two or more** sources together. "Are our biggest customers paying on time?" needs sales data and finance data. Joining sources is a skill you'll practise in lesson 4 and in the SQL course.
+
+### Metrics and KPIs
+
+A **metric** is any number you can measure: order lines, website visits, calls made. A **KPI (key performance indicator)** is one of the few metrics a business chooses to watch regularly, because it shows whether things are going well.
+
+Every KPI is a metric; most metrics are not KPIs. A sales team might track fifty metrics and report five KPIs.
+
+A good KPI is:
 
 - **Clearly defined.** Everyone calculates it the same way.
 - **Tied to a goal.** It moves when the business gets better or worse.
 - **Actionable.** Someone can do something when it changes.
+- **Timely.** It's available often enough to act on: weekly or monthly, not once a year.
 
-Some KPIs you'll meet often:
+### The parts of a KPI definition
 
-| KPI | Calculation |
+"Revenue" sounds obvious until two people calculate it differently. A written definition removes the argument:
+
+| Part | Kolanut's revenue KPI |
 | :-- | :-- |
-| Revenue | Sum of sales value in a period |
-| Growth rate | (This period − last period) ÷ last period × 100 |
-| Average order value | Revenue ÷ number of orders |
-| On-time delivery rate | Deliveries on time ÷ all deliveries × 100 |
-| Staff turnover | People who left ÷ average headcount × 100 |
-| Collection rate | Invoices paid ÷ invoices issued × 100 |
+| **Name** | Net revenue |
+| **Formula** | Sum of quantity × unit price × (1 − discount ÷ 100), over all order lines |
+| **Includes / excludes** | After discounts; before VAT; all channels |
+| **Period** | Calendar month, reported by the 5th of the next month |
+| **Source** | `orders.csv` from the order system |
+| **Target** | ₦50m a month in 2026 |
+| **Owner** | Sales director |
+
+The **owner** matters: a KPI without someone responsible for it is just a number on a slide.
+
+### Common KPIs and how they're calculated
+
+| KPI | Calculation | Team |
+| :-- | :-- | :-- |
+| Revenue | Sum of sales value in a period | Sales |
+| Growth rate | (This period − last period) ÷ last period × 100 | Everyone |
+| Average order value | Revenue ÷ number of orders | Sales |
+| Active customers | Customers with at least one order in the period | Sales |
+| On-time delivery rate | Deliveries on time ÷ all deliveries × 100 | Operations |
+| Staff turnover | People who left ÷ average headcount × 100 | HR |
+| Collection rate | Invoices paid ÷ invoices issued × 100 | Finance |
+| Days sales outstanding | Money owed by customers ÷ sales per day | Finance |
+
+### Leading and lagging indicators
+
+A **lagging** indicator tells you what has already happened: revenue, profit, staff who left. It's the result you care about, but by the time it moves, it's too late to change.
+
+A **leading** indicator moves **before** the result, so there's time to act:
+
+| Lagging (the result) | Leading (an early warning) |
+| :-- | :-- |
+| Monthly revenue | Orders booked this week; customers who haven't ordered in 30 days |
+| Staff turnover | Absence rates; overtime hours |
+| Bad debts written off | Invoices more than 30 days overdue |
+
+A good dashboard shows both: the result, and the signals that predict it.
+
+### Breaking a KPI into a tree
+
+When a KPI moves, the next question is *why*. A **KPI tree** splits it into the parts that multiply to make it, so you can see which part moved.
+
+For revenue: **revenue = active customers × order lines per customer × revenue per line.** And revenue per line = packs per line × price per pack.
+
+![A KPI tree. Revenue of ₦290.7m in January to June 2026 (up 19.1%) splits into active customers (90, up 23.3%), order lines per customer (15.9, down 12.1%) and revenue per line (₦202,741, up 9.9%). Revenue per line splits into packs per line (13.7) and naira per pack (₦14,811, up 8.8%).](/images/courses/daf/kpi-tree.svg "Kolanut's first-half revenue as a KPI tree. Two branches grew; one shrank.")
+
+Reading Kolanut's tree, first half of 2026 against the first half of 2025:
+
+- Revenue grew **19.1%**, from ₦244.2m to ₦290.7m.
+- **More customers** ordered: 90 against 73, as new shops joined.
+- **Prices rose**: each pack earned 8.8% more, after January's price rise.
+- But each customer ordered **less often**: 15.9 lines against 18.1.
+
+The headline (+19.1%) hides a warning sign. Without the tree, "revenue is up" is the whole story; with it, you know to ask why customers are ordering less often.
+
+### Vanity metrics
+
+A **vanity metric** looks impressive but doesn't help anyone decide anything: total registered customers ever, total social media followers, total app downloads. They only go up, so they always look good.
+
+Ask of any number: *if this went down, what would we do differently?* If the answer is "nothing", it isn't a KPI.
 
 ## Example
 
@@ -9528,7 +9690,7 @@ Three businesses, three uses of data:
 
 - **A distributor** (Kolanut) compares revenue by region each month. When one region drops, the sales manager calls the rep covering it before the quarter is lost.
 - **A logistics company** tracks on-time delivery by route. A route that is late 30% of the time gets a new schedule or a different carrier.
-- **A law firm** watches outstanding invoices. Partners get a weekly list of clients whose invoices are more than 30 days overdue.
+- **A law firm** watches outstanding invoices. Partners get a weekly list of clients whose invoices are more than 30 days overdue: a **leading** indicator for cash problems.
 
 In each case the data isn't collected *for* analysis. It exists because the business runs. Analytics makes it useful a second time.
 
@@ -9549,8 +9711,21 @@ In a month, Kolanut delivered **1,240** orders. **62** arrived later than promis
 1. Revenue ÷ orders = 48,000,000 ÷ 1,240.
 2. = **₦38,710** (rounded to the nearest naira).
 
+**Check it against a target.** If the target for on-time delivery is 97%, the month missed it by 2 percentage points: 25 more deliveries would have needed to arrive on time (97% of 1,240 is 1,203; 1,203 − 1,178 = 25). Turning a gap into a count like this makes it concrete for the people who have to fix it.
+
 > [!TIP]
 > Always write down how a KPI is calculated, including what's left out (cancelled orders? returns?). Two people calculating "revenue" differently is one of the most common causes of confusion in meetings.
+
+### Summary
+
+| Term | Meaning |
+| :-- | :-- |
+| Metric | Any number you can measure |
+| KPI | One of the few metrics the business watches to judge performance |
+| KPI definition | Name, formula, inclusions, period, source, target, owner |
+| Lagging / leading | The result / an early warning of it |
+| KPI tree | A KPI split into the parts that multiply to make it |
+| Vanity metric | A number that looks good but drives no decision |
 
 ## Practice
 
@@ -9637,42 +9812,100 @@ values ('daf-m03', 'data-analytics-foundations', 'Types of Data', 3, null, null,
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('data-analytics-foundations:types-of-data', 'data-analytics-foundations', 'daf-m03', 'types-of-data', 'Types of data', 'Structured and unstructured data, numbers and categories, and the most important question about any table - what does one row mean?', 15, $md$
+values ('data-analytics-foundations:types-of-data', 'data-analytics-foundations', 'daf-m03', 'types-of-data', 'Types of data', 'Structured and unstructured data, numbers and categories, what you can calculate with each type, identifiers, dates, and the grain of a table.', 15, $md$
 ## The problem
 
 You open Kolanut's `orders.csv` for the first time. Some columns hold numbers you can add up (`quantity`). Some hold numbers you must *never* add up (`customer_id`). Some hold dates. Before you calculate anything, you need to know what kind of data each column is, and what a single row stands for.
 
 ## The concept
 
-**Structured vs unstructured**
+Before you calculate anything, you need to know two things about a table: **what kind of data each column holds**, and **what one row stands for**. Get either wrong and the numbers you produce will look fine and be wrong.
 
-- **Structured data** fits in rows and columns with a fixed meaning: orders, invoices, attendance records. This course works with structured data.
-- **Unstructured data** has no fixed layout: emails, WhatsApp messages, scanned contracts, photos. It holds value too, but needs other techniques to analyse.
+### Structured, semi-structured and unstructured
 
-**Quantitative vs qualitative**
+| Kind | What it looks like | Examples | How it's analysed |
+| :-- | :-- | :-- | :-- |
+| **Structured** | Rows and columns, each column with a fixed meaning | Orders, invoices, attendance records, CSV files | Spreadsheets, SQL, BI tools |
+| **Semi-structured** | Labelled fields, but not a fixed grid | JSON from a website or app, system logs | Flattened into tables first, often with Python |
+| **Unstructured** | No fixed layout at all | Emails, WhatsApp messages, scanned contracts, photos, call recordings | Text analysis, AI models, or reading by people |
+
+Most business analysis works on structured data, and so does this course. But much of a company's knowledge sits in unstructured data: the reason a customer left is in an email, not a column.
+
+### Quantitative and qualitative
+
+**Quantitative** data is numbers that measure an amount. **Qualitative** (or categorical) data puts things into groups.
 
 | Type | What it is | Examples |
 | :-- | :-- | :-- |
-| **Quantitative, discrete** | Counts: whole numbers | Quantity ordered, number of staff |
-| **Quantitative, continuous** | Measurements: can take any value | Weight in kg, revenue in naira |
+| **Quantitative, discrete** | Counts: whole numbers | Packs ordered, number of staff, number of visits |
+| **Quantitative, continuous** | Measurements: can take any value in a range | Weight in kg, revenue in naira, hours worked |
 | **Qualitative, nominal** | Categories with no order | Region, product category, payment method |
-| **Qualitative, ordinal** | Categories with an order | Job level (Junior < Mid < Senior), rating (Poor, Fair, Good) |
+| **Qualitative, ordinal** | Categories with a natural order | Job level (Junior < Mid < Senior), rating (Poor, Fair, Good) |
 
-**Identifiers look like numbers but aren't.** `customer_id` 42 is not "twice" customer 21. Adding or averaging IDs is meaningless. Treat them as labels.
+### What you can do with each type
 
-**Dates and times** deserve their own type. They let you group by month, measure time between events, and compare periods.
+The type decides which calculations make sense. This table is worth remembering:
 
-**Grain: what one row represents**
+| Type | Count it | Put it in order | Add or subtract | Average it | Kolanut example |
+| :-- | :-: | :-: | :-: | :-: | :-- |
+| Nominal category | ✓ | ✗ | ✗ | ✗ | Region: "how many Lagos customers?" |
+| Ordinal category | ✓ | ✓ | ✗ | ✗ | Job level: "how many are Mid or above?" |
+| Discrete count | ✓ | ✓ | ✓ | ✓ | Quantity: "total packs" |
+| Continuous amount | ✓ | ✓ | ✓ | ✓ | Revenue: "average line value" |
+| Date | ✓ | ✓ | Subtract only | (rarely) | Days between hire and exit |
+| Identifier | ✓ | ✗ | ✗ | ✗ | Count distinct customers |
 
-The *grain* of a table is the answer to "one row = one what?". In Kolanut's data:
+So you can say "34 Lagos customers" but never "the average region"; "Senior is above Mid" but not "Senior minus Junior equals Mid".
 
-| File | One row is |
-| :-- | :-- |
-| `orders.csv` | one product on one order (an order line) |
-| `customers.csv` | one customer |
-| `products.csv` | one product |
+> [!WARNING]
+> **Ordinal categories are often stored as numbers**, such as a satisfaction score from 1 to 5. It's tempting to average them, and people often do, but the gap between 1 and 2 isn't necessarily the same as between 4 and 5. Report the share in each category ("62% rated 4 or 5") alongside, or instead of, an average.
 
-Getting the grain wrong causes real errors. If you think each row in `orders.csv` is a whole order and count rows to get "number of orders", you'll count some orders more than once whenever a shop buys several products on the same day.
+### Identifiers: numbers that aren't numbers
+
+`customer_id` 42 is not "twice" customer 21. An identifier is a **label** that happens to use digits. Adding or averaging IDs gives a meaningless number, though a spreadsheet will happily calculate it.
+
+What you **can** do with an identifier:
+
+- **Count** them: how many order lines?
+- **Count distinct** values: how many different customers ordered?
+- **Use them to link tables**: find customer 27 in `customers.csv` (next lesson).
+
+Phone numbers, account numbers, postcodes and staff numbers are identifiers too. Store them as **text**, so a leading zero survives: `08089165939` as a number becomes `8089165939`.
+
+### Dates and times
+
+Dates deserve their own type, because they let you:
+
+- **group** by day, month, quarter or year;
+- **measure** time between events, such as days from order to delivery or hire to exit;
+- **compare** periods, such as January to June this year against last year.
+
+A spreadsheet stores a date as a number of days, which is why subtraction works. But a date stored as **text** can't be grouped or subtracted, and a date read in the wrong format (month-first instead of day-first) is silently wrong. You'll fix both in lesson 5.
+
+### Grain: what one row represents
+
+The **grain** of a table is the answer to "one row = one what?".
+
+![The first three rows of orders.csv, with each column labelled: order_id, customer_id and product_id as identifiers, order_date as a date, quantity as a discrete count, unit_price as a continuous amount, discount_pct as a percentage. A bracket underneath says one row equals one order line.](/images/courses/daf/column-types.svg "Kolanut's orders table, column by column. Decide each column's type and the table's grain before you calculate.")
+
+| File | One row is | Rows |
+| :-- | :-- | --: |
+| `orders.csv` | one product on one order (an **order line**) | 4,266 |
+| `customers.csv` | one customer | 90 |
+| `products.csv` | one product | 16 |
+
+Getting the grain wrong causes real errors. Each order line has its own `order_id`, and a shop that buys three products on the same day appears as three rows. So "how many orders?" depends on what you mean:
+
+| Question | Answer from Kolanut's data |
+| :-- | --: |
+| How many order **lines**? (count rows) | 4,266 |
+| How many **shop visits**? (distinct customer and date pairs) | 3,982 |
+| How many visits bought **more than one** product? | 263 |
+
+Neither 4,266 nor 3,982 is "wrong"; they answer different questions. The mistake is reporting one while the reader thinks it's the other. Say which you counted.
+
+> [!TIP]
+> When you open any new table, write one sentence: "Each row is one ___." If you can't finish the sentence, find out before you calculate anything.
 
 ## Example
 
@@ -9687,10 +9920,21 @@ The first rows of `orders.csv`:
 - `order_id`, `customer_id`, `product_id`: identifiers (labels, not quantities).
 - `order_date`: a date.
 - `quantity`: quantitative, discrete.
-- `unit_price`: quantitative, the price actually charged for one unit (one pack).
+- `unit_price`: quantitative, continuous: the price actually charged for one unit (one pack).
 - `discount_pct`: quantitative, the percentage taken off this line: 0, 5 or 10.
 
 Reading the first row: order line 10001 was **14 packs of product 3 at ₦18,600 a pack**, with no discount.
+
+And `customers.csv`:
+
+| Column | Type |
+| :-- | :-- |
+| `customer_id` | Identifier (the key) |
+| `customer_name`, `city` | Text labels |
+| `channel` (Kiosk, Supermarket, Wholesale), `region` | Nominal categories |
+| `sales_rep` | Nominal category |
+| `joined_date` | Date |
+| `credit_limit` | Continuous amount (naira) |
 
 ```dataset
 { "dataset": "sales", "files": ["orders", "customers", "products"] }
@@ -9701,12 +9945,24 @@ Reading the first row: order line 10001 was **14 packs of product 3 at ₦18,600
 Open `orders.csv` in Google Sheets (File → Import → Upload) or Excel (File → Open).
 
 1. Look at the header row. Each column name tells you what the column holds.
-2. Press **Ctrl + ↓** (Cmd + ↓ on a Mac) in column A to jump to the last row. The row number tells you how many rows there are. Remember that row 1 is the header.
-3. For each column, decide: identifier, number, category or date?
-4. Ask the grain question: what does one row stand for?
+2. Press **Ctrl + ↓** (Cmd + ↓ on a Mac) in column A to jump to the last row. The row number tells you how many rows there are. Remember that row 1 is the header: 4,267 − 1 = 4,266 rows.
+3. For each column, decide: identifier, number, category or date? Write it down, as in the tables above.
+4. Check numbers are numbers: they sit on the **right** of the cell. Text sits on the **left**.
+5. Ask the grain question and write the sentence: "Each row is one order line."
+6. Do the same for `customers.csv` and `products.csv`.
 
 > [!WARNING]
 > Spreadsheet programs sometimes guess types wrongly: a date read as text, or a long ID shown as `1.23E+15`. When a column looks strange, check its type before you trust any calculation on it.
+
+### Summary
+
+| Term | Meaning |
+| :-- | :-- |
+| Structured / unstructured | Fits in rows and columns / doesn't |
+| Discrete / continuous | Counts / measurements |
+| Nominal / ordinal | Categories without / with an order |
+| Identifier | A label made of digits: count it, never add it |
+| Grain | What one row stands for |
 
 ## Practice
 
@@ -9809,40 +10065,89 @@ values ('daf-m04', 'data-analytics-foundations', 'Understanding Databases', 4, n
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('data-analytics-foundations:understanding-databases', 'data-analytics-foundations', 'daf-m04', 'understanding-databases', 'Understanding databases', 'Tables, keys and relationships, why companies keep data in databases, and your first look at SQL.', 15, $md$
+values ('data-analytics-foundations:understanding-databases', 'data-analytics-foundations', 'daf-m04', 'understanding-databases', 'Understanding databases', 'Spreadsheets versus databases, tables, primary and foreign keys, kinds of relationship, entity-relationship diagrams, normalisation, and a first look at SQL.', 20, $md$
 ## The problem
 
 Kolanut's `orders.csv` says customer **12** bought something. It doesn't say who customer 12 is, where they are, or which sales rep looks after them. That information lives in a different file, `customers.csv`. Why split it up? And how do you put it back together?
 
 ## The concept
 
-A **database** stores data in several **tables**, each about one kind of thing: customers, products, orders. Tables connect through **keys**.
+A **database** is an organised store of data that many people and programs can use at the same time, safely. Most company data you'll analyse lives in one: the order system, the accounting system and the HR system each sit on top of a database.
 
-- A **primary key** uniquely identifies each row in a table. `customer_id` is the primary key of `customers`: no two customers share one.
-- A **foreign key** is a column that points to a primary key in another table. `customer_id` in `orders` is a foreign key: it says *which* customer placed the order.
+### Spreadsheet or database?
 
-The link between the two is a **relationship**. Here it's **one-to-many**: one customer can have many orders, but each order belongs to one customer.
+| | Spreadsheet | Database |
+| :-- | :-- | :-- |
+| Size | Up to about a million rows per sheet; slow well before that | Millions or billions of rows |
+| Users | One person edits at a time (or a few, carefully) | Thousands at once, without overwriting each other |
+| Rules | Anyone can type anything anywhere | Each column has a type; keys must be unique; rules are enforced |
+| Asking questions | Formulas, filters, pivots | SQL queries |
+| Good for | Analysis, quick work, sharing results | Storing the business's records reliably |
 
-```
-customers (one)                 orders (many)
-customer_id  customer_name  ←── customer_id  order_id  quantity …
-```
+Analysts use both: they pull data **out** of the database with SQL, then often finish the analysis in a spreadsheet or a BI tool.
 
-**Why not keep everything in one big sheet?**
+A **relational database** (the most common kind) stores data in several **tables**, each about one kind of thing, and links them through **keys**. Common ones are PostgreSQL, MySQL, Microsoft SQL Server, Oracle and SQLite.
+
+### Tables, rows and columns
+
+| Database word | Means | Kolanut example |
+| :-- | :-- | :-- |
+| **Table** | All the records of one kind | `customers` |
+| **Row** (record) | One of those things | Customer 27, Alhaji Musa Wholesale |
+| **Column** (field) | One fact about each thing, with a fixed type | `region`, which is text |
+| **Schema** | The list of tables, their columns and how they link | The diagram below |
+
+### Keys and relationships
+
+- A **primary key (PK)** uniquely identifies each row in its table. `customer_id` is the primary key of `customers`: no two customers share one, and none is empty.
+- A **foreign key (FK)** is a column that points to a primary key in another table. `customer_id` in `orders` is a foreign key: it says *which* customer bought that line.
+
+![Three tables: customers (primary key customer_id), orders (primary key order_id, foreign keys customer_id and product_id) and products (primary key product_id). Lines link each primary key to the matching foreign key, with one at the customers and products end and many at the orders end.](/images/courses/daf/kolanut-erd.svg "Kolanut's schema as an entity-relationship diagram (ERD).")
+
+A drawing like this is called an **entity-relationship diagram (ERD)**. It's the map of a database; when you join a new company, ask for it first.
+
+### Kinds of relationship
+
+| Relationship | Means | Example |
+| :-- | :-- | :-- |
+| **One-to-many** | One row here matches many rows there | One customer has many order lines; one product appears on many order lines |
+| **One-to-one** | One row matches exactly one row | One employee has one payroll record |
+| **Many-to-many** | Many rows here match many rows there | Students and courses: a student takes many courses, a course has many students |
+
+One-to-many is by far the most common. A many-to-many relationship is stored through a third table in the middle, sometimes called a **junction** or **bridge** table. Kolanut's `orders` is exactly that between customers and products: a customer buys many products, a product is bought by many customers, and each order line records one customer-product pair.
+
+### Why not keep everything in one big sheet?
 
 If every order line repeated the customer's name, region, city and rep, then:
 
-- the same facts would be typed thousands of times, so mistakes creep in;
-- when a customer moves city, you'd have to change hundreds of rows;
+- the same facts would be typed thousands of times, so mistakes creep in: "Alhaji Musa Wholesale" on 130 rows and "Alhaji Musa Wholesal" on four;
+- when a customer moves city or changes rep, you'd have to change hundreds of rows, and miss some;
 - the file grows much larger than it needs to be.
 
-Storing each fact once, and linking with keys, avoids all three. This design is called **normalisation**.
+Storing each fact **once**, and linking with keys, avoids all three. This design is called **normalisation**.
 
-**SQL** (Structured Query Language) is the language used to ask databases questions. Analysts use it every day. You'll learn it properly in the SQL course; here's a first taste.
+The opposite is also useful. For analysis, you often want one wide table with everything side by side: each order line with its customer's region and product's category. Building that is called **denormalising**, and it's what a join does.
+
+### SQL: asking a database questions
+
+**SQL** (Structured Query Language, said "S-Q-L" or "sequel") is the language used to ask relational databases questions. Analysts use it every day. A query has a small set of parts, always in this order:
+
+| Clause | Does | Example |
+| :-- | :-- | :-- |
+| `SELECT` | Which columns to show | `SELECT company_name, city` |
+| `FROM` | Which table | `FROM customers` |
+| `JOIN ... ON` | Bring in another table through a key | `JOIN customers c ON c.customer_id = s.customer_id` |
+| `WHERE` | Which rows to keep | `WHERE city = 'Kano'` |
+| `GROUP BY` | Which groups to summarise by | `GROUP BY city` |
+| `ORDER BY` | How to sort the result | `ORDER BY shipments DESC` |
+
+You'll learn each one properly in the SQL course. Here, it's enough to read a query and see what it's asking.
 
 ## Example
 
-This SQL runs in your browser against a small freight company's database (Harbourline, used in the SQL course). Press **Run**:
+These queries run in your browser against a small freight company's database (Harbourline, used in the SQL course). It has customers, routes, shipments and payments. Press **Run** on each.
+
+**One table, some rows.** The customers based in Kano:
 
 ```sql run
 SELECT company_name, city, industry
@@ -9852,7 +10157,7 @@ WHERE city = 'Kano';
 
 Read it almost like English: *select* these columns *from* the customers table *where* the city is Kano.
 
-Now a query that uses a relationship. It **joins** each shipment to its customer through `customer_id`, so we can see names next to shipments:
+**Following a relationship.** Each shipment has a `customer_id`. A **join** looks it up in `customers`, so names appear next to shipments:
 
 ```sql run
 SELECT s.shipment_id, c.company_name, s.containers
@@ -9861,14 +10166,43 @@ JOIN customers AS c ON c.customer_id = s.customer_id
 LIMIT 10;
 ```
 
+`s` and `c` are short nicknames (aliases) for the two tables. `ON c.customer_id = s.customer_id` is the key that links them.
+
+**A summary.** How many customers are in each city, biggest first:
+
+```sql run
+SELECT city, COUNT(*) AS customers
+FROM customers
+GROUP BY city
+ORDER BY customers DESC;
+```
+
+Lagos comes first with 46 of Harbourline's 120 customers. That's the same question you'd answer with a pivot table, asked of a database.
+
 ## Walkthrough
 
 You can follow a relationship by hand, too. Suppose you want to know where the customer on Kolanut order **10050** is based.
 
 1. In `orders.csv`, find order_id **10050**. Its `customer_id` is **13**.
-2. In `customers.csv`, find customer_id **13**: *Peace Provisions*, region **North West**, city **Kano**.
+2. In `customers.csv`, find customer_id **13**: *Peace Provisions*, a kiosk in **Kano**, region **North West**, looked after by **Sani Garba**.
+3. While you're in `orders.csv`, note its `product_id`: **5**. In `products.csv`, product 5 is **Plantain chips 150g (20)**, a snack.
 
-That two-step lookup is exactly what a database join does, for every row at once. In spreadsheets you'll do the same with a lookup formula (XLOOKUP, in the Excel course).
+So order line 10050 was five packs of plantain chips for a kiosk in Kano. Three tables, two keys, one complete picture. That two-step lookup is exactly what a database join does, for every row at once. In spreadsheets you'll do the same with a lookup formula (XLOOKUP, in the Excel course).
+
+**Check the keys.** A primary key must be unique. In a spreadsheet, compare the number of rows with the number of distinct IDs: `customers.csv` has 90 rows and 90 different `customer_id` values, so it's a valid key. If a column has fewer distinct values than rows, it can't be the primary key.
+
+### Summary
+
+| Term | Meaning |
+| :-- | :-- |
+| Database | An organised, shared, rule-enforcing store of data |
+| Table / row / column | All records of one kind / one record / one fact about each |
+| Primary key | Unique ID for each row of a table |
+| Foreign key | A column pointing to another table's primary key |
+| One-to-many | The most common relationship: one customer, many orders |
+| Normalisation | Storing each fact once and linking with keys |
+| ERD | The diagram of tables and relationships |
+| SQL | The language for asking databases questions |
 
 ## Practice
 
@@ -9953,7 +10287,7 @@ values ('daf-m05', 'data-analytics-foundations', 'Data Cleaning', 5, null, null,
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('data-analytics-foundations:data-cleaning', 'data-analytics-foundations', 'daf-m05', 'data-cleaning', 'Data cleaning', 'The problems real data arrives with, how they mislead you, and a safe way to fix them.', 20, $md$
+values ('data-analytics-foundations:data-cleaning', 'data-analytics-foundations', 'daf-m05', 'data-cleaning', 'Data cleaning', 'The six sides of data quality, profiling before you fix, mapping tables, missing values and outliers, and a safe, logged cleaning plan.', 20, $md$
 ## The problem
 
 Kolanut is moving to a new system, and IT has exported the customer list from the old one. Open it and something is off straight away: some names are in capitals, some have spaces before them, Lagos is written four different ways, and a few customers appear twice.
@@ -9962,7 +10296,22 @@ If you counted customers in this file, you'd get the wrong number. If you totall
 
 ## The concept
 
-The most common problems:
+**Data cleaning** means finding and fixing the problems in a dataset that would make your analysis wrong. It's not glamorous, and it's often most of the work. A beautiful chart built on dirty data is a confident wrong answer.
+
+### What "good data" means
+
+Data quality has several sides. It helps to name them, because each is checked differently:
+
+| Dimension | Question | Kolanut example of a problem |
+| :-- | :-- | :-- |
+| **Accuracy** | Are the values true? | A credit limit typed as ₦20,500,000 instead of ₦2,050,000 |
+| **Completeness** | Is anything missing? | 3 customers with a blank credit limit |
+| **Consistency** | Is the same thing written the same way? | `Lagos`, `LAGOS`, `lagos`, `Lagos ` |
+| **Validity** | Does each value fit the rules? | A date that isn't a date; a negative quantity |
+| **Uniqueness** | Is each thing recorded once? | 12 customers listed twice |
+| **Timeliness** | Is it up to date? | A customer list exported six months ago |
+
+### The common problems
 
 | Problem | Example | What it breaks |
 | :-- | :-- | :-- |
@@ -9974,12 +10323,72 @@ The most common problems:
 | **Missing values** | A blank credit limit | Averages and totals change meaning |
 | **Outliers** | A quantity of 10,000 when most are under 40 | Averages are dragged up; could be a typo |
 
-**Rules for cleaning safely**
+### Step 1: profile before you fix
+
+**Profiling** means measuring the problems before changing anything. For Kolanut's raw customer export of 102 rows:
+
+| Check | Finding |
+| :-- | :-- |
+| Rows | 102 |
+| Different customer names, after trimming and ignoring capitals | 90, so 12 rows are duplicates |
+| Names with spaces at the start or end | 42 |
+| Different spellings in the Region column | 23, for 6 real regions |
+| Date formats in Date Joined | 3: `2023-07-11` (49 rows), `22/10/2023` (28), `15-May-2024` (25) |
+| Credit limits containing `₦` | 15 |
+| Blank credit limits | 3 |
+
+Profiling tells you how big each problem is, which ones matter most, and gives you numbers to check against afterwards. When you've finished, run the same checks again: duplicates 0, region spellings 6, blanks still 3 (unless you found the real values).
+
+### Standardising categories
+
+The Region column is a classic consistency problem. Twenty-three spellings, six regions:
+
+![Twenty-three raw region spellings on the left, such as "LAGOS", "Lagos " with a trailing space, "SW" and "South-West", each linked to one of six clean regions on the right.](/images/courses/daf/region-mapping.svg "Every raw spelling maps to exactly one clean region. Counts are rows in the raw file, duplicates included.")
+
+The reliable way to fix this is a **mapping table**: a two-column list of every raw spelling and the clean value it should become. Clean the raw value a little first (remove spaces, make it lower case), then look it up. Any value not in the table is flagged, so nothing slips through, and adding a new spelling is one new row.
+
+### Missing values
+
+A blank is not the same as zero. A blank credit limit means "we don't know"; a zero would mean "this customer gets no credit". Treating one as the other changes your totals and averages.
+
+| Option | When to use it | Risk |
+| :-- | :-- | :-- |
+| **Leave it blank** and say so | Usually the best default | Some calculations skip blanks; say how many |
+| **Mark it** "Unknown" | Categories, such as a missing region | None, if it's visible in reports |
+| **Find the real value** | When someone can look it up | Takes time, but it's the right answer |
+| **Fill with an estimate** (average, median) | Rarely, and only for modelling | Invents data; always disclose it |
+| **Remove the row** | When the row is useless without it | You may remove a pattern along with it |
+
+Whatever you choose, **write it down** and report how many values it affected.
+
+### Outliers
+
+An **outlier** is a value far from the rest. It can be:
+
+- **an error**: a quantity of 3,000 typed instead of 30;
+- **real and important**: a genuinely huge order from a new wholesaler.
+
+Don't delete outliers automatically. Check the largest and smallest values in each number column first. Kolanut's quantities run from 1 to 30 packs, so a 3,000 would stand out at once. Then decide case by case, and if you exclude one, report the result with and without it.
+
+### Rules for cleaning safely
 
 1. **Never edit the original.** Keep the raw file untouched; work on a copy.
-2. **Keep a cleaning log.** Write down each change: what, why, how many rows. Anyone can then repeat or question your work.
-3. **Fix the cause when you can.** If the old system allowed free-typed regions, the new one should use a drop-down list.
-4. **Don't guess silently.** If a value is missing, decide on a rule (leave blank, mark "Unknown") and state it.
+2. **Profile first.** Count the problems before fixing them.
+3. **Fix in a sensible order.** Trim and standardise text before removing duplicates, or near-duplicates will survive.
+4. **Keep a cleaning log.** Write down each change: what, why, how many rows. Anyone can then repeat or question your work.
+5. **Don't guess silently.** If a value is missing, decide on a rule and state it.
+6. **Fix the cause when you can.** If the old system allowed free-typed regions, the new one should use a drop-down list.
+
+A cleaning log can be as simple as this:
+
+| Step | Change | Rows affected |
+| :-- | :-- | --: |
+| 1 | Trimmed spaces from Customer Name | 42 |
+| 2 | Mapped 23 region spellings to 6 regions | 102 |
+| 3 | Read all dates as day first | 102 |
+| 4 | Removed `₦`, commas and `.00` from Credit Limit | 99 |
+| 5 | Removed duplicate customers (kept the copy with a credit limit) | 12 |
+| 6 | Left 2 customers' credit limits blank; flagged to finance | 2 |
 
 ## Example
 
@@ -10001,26 +10410,39 @@ After cleaning:
 | Hajia Amina Superstore | North Central | 2023-04-21 | 850000 |
 | Peace Mart | South West | 2022-09-01 | 1500000 |
 
-Look at `01/09/2022`. Is that 1 September or 9 January? Nigeria writes day first, so it's **1 September 2022**, but a spreadsheet set to US format would read it as 9 January. Mixed date formats are one of the most dangerous cleaning problems, because the wrong answer still *looks* like a date.
+Look at `01/09/2022`. Is that 1 September or 9 January? Nigeria writes day first, so it's **1 September 2022**, but a spreadsheet set to US format would read it as 9 January. Mixed date formats are one of the most dangerous cleaning problems, because the wrong answer still *looks* like a date. Writing the clean dates as `2022-09-01` (year-month-day) removes the doubt for everyone who reads them later.
 
 ## Walkthrough
 
 A cleaning plan for this file, in the order you'd do it:
 
 1. **Save a copy** of the raw file and work only on the copy.
-2. **Trim spaces and fix capitals** in names (spreadsheets have `TRIM` and `PROPER` functions for this; the Excel course shows them).
-3. **Standardise regions** to six agreed spellings: Lagos, South West, South East, South South, North Central, North West. `SW`, `South-West` and `south west` all become `South West`.
-4. **Remove duplicates** *after* steps 2 and 3. Before trimming, `ADA SUPERSTORE` and `Ada Superstore` look different, so duplicate removal would miss them.
-5. **Convert dates** to one format, reading each as day/month/year.
-6. **Turn money into numbers**: remove `₦`, commas and `.00`.
-7. **Log** what you changed and how many rows it affected.
+2. **Profile it**: count rows, distinct names, region spellings, blanks. Write the numbers down.
+3. **Trim spaces and fix capitals** in names (spreadsheets have `TRIM` and `PROPER` functions for this; the Excel course shows them).
+4. **Standardise regions** to six agreed spellings: Lagos, South West, South East, South South, North Central, North West. `SW`, `South-West` and `south west` all become `South West`.
+5. **Remove duplicates** *after* steps 3 and 4. Before trimming, `ADA SUPERSTORE` and `Ada Superstore` look different, so duplicate removal would miss them.
+6. **Convert dates** to one format, reading each as day/month/year.
+7. **Turn money into numbers**: remove `₦`, commas and `.00`.
+8. **Profile again** and compare with step 2: 90 customers, 6 regions.
+9. **Log** what you changed and how many rows it affected.
 
 ```dataset
 { "dataset": "cleaning", "files": ["customer_list_raw"] }
 ```
 
 > [!TIP]
-> In Google Sheets, **Data → Data cleanup → Trim whitespace** and **Data → Data cleanup → Remove duplicates** do steps 2 and 4 in a few clicks. In Excel, **Data → Remove Duplicates** does step 4.
+> In Google Sheets, **Data → Data cleanup → Trim whitespace** and **Data → Data cleanup → Remove duplicates** do steps 3 and 5 in a few clicks. In Excel, **Data → Remove Duplicates** does step 5.
+
+### Summary
+
+| Term | Meaning |
+| :-- | :-- |
+| Data quality | Accuracy, completeness, consistency, validity, uniqueness, timeliness |
+| Profiling | Measuring the problems before fixing them |
+| Mapping table | Raw value → clean value, for standardising categories |
+| Missing value | Unknown, not zero: decide a rule and state it |
+| Outlier | A value far from the rest: check it, don't just delete it |
+| Cleaning log | What you changed, why, and how many rows |
 
 ## Practice
 
@@ -10106,7 +10528,7 @@ values ('daf-m06', 'data-analytics-foundations', 'Data Analysis', 6, null, null,
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('data-analytics-foundations:data-analysis', 'data-analytics-foundations', 'daf-m06', 'data-analysis', 'Data analysis', 'The handful of calculations behind most business analysis - totals, averages, shares and growth - and the traps in each.', 15, $md$
+values ('data-analytics-foundations:data-analysis', 'data-analytics-foundations', 'daf-m06', 'data-analysis', 'Data analysis', 'The calculations behind most business analysis, one at a time: totals, distinct counts, mean, median and mode, shares, growth, percentage points and rates, and the traps in each.', 25, $md$
 ## The problem
 
 Kolanut's data is clean. Now the managing director asks: "Did we do better in the first half of 2026 than the first half of 2025, and where did the money come from?"
@@ -10115,22 +10537,107 @@ Answering needs only a few calculations, used carefully. Most business analysis 
 
 ## The concept
 
-| Calculation | What it tells you | Formula |
-| :-- | :-- | :-- |
-| **Total** | How much, overall | Add the values |
-| **Count** | How many | Count the rows (or distinct items) |
-| **Average (mean)** | A typical value | Total ÷ count |
-| **Median** | The middle value when sorted | Half the values are above, half below |
-| **Share of total** | How much one part contributes | Part ÷ total × 100 |
-| **Growth rate** | How much something changed | (New − old) ÷ old × 100 |
-
-**Mean or median?** The mean is pulled towards extreme values; the median isn't. When a few values are much larger than the rest, as with salaries or order sizes, the median is often the fairer "typical" figure. Report both when they differ a lot.
-
-**Compare like with like.** Compare January with January, the first half of one year with the first half of the next. Comparing December with January mostly shows the Christmas season, not performance.
+Most business analysis is built from a small toolkit of calculations. The skill isn't the arithmetic; it's choosing the right one and knowing its traps.
 
 **Revenue at Kolanut** is calculated per order line as:
 
 > revenue = quantity × unit_price × (1 − discount_pct ÷ 100)
+
+### The toolkit
+
+| Calculation | What it tells you | How |
+| :-- | :-- | :-- |
+| **Total** | How much, overall | Add the values |
+| **Count** | How many | Count the rows |
+| **Distinct count** | How many different things | Count each value once |
+| **Average (mean)** | Total spread evenly | Total ÷ count |
+| **Median** | The middle value | Sort, take the middle one |
+| **Mode** | The most common value | The value that appears most |
+| **Minimum, maximum, range** | The extremes, and how far apart | Smallest, largest, largest − smallest |
+| **Share of total** | How much one part contributes | Part ÷ total × 100 |
+| **Growth rate** | How much something changed | (New − old) ÷ old × 100 |
+| **Rate per** | A fair comparison of different-sized groups | Total ÷ size of group |
+
+The sections below take them in turn, each with Kolanut's real figures.
+
+### Totals, counts and distinct counts
+
+| Question | Calculation | Answer |
+| :-- | :-- | --: |
+| How much revenue, January 2025 to June 2026? | Total of revenue | ₦830,541,245 |
+| How many order lines? | Count of rows | 4,266 |
+| How many different customers ordered? | Distinct count of `customer_id` | 90 |
+| How many different products were sold? | Distinct count of `product_id` | 16 |
+
+A **count** and a **distinct count** answer different questions: 4,266 order lines came from 90 customers. Mixing them up is a common source of wrong numbers in reports.
+
+### Mean, median and mode
+
+Three ways to describe a "typical" value:
+
+| Measure | How | Kolanut order lines |
+| :-- | :-- | :-- |
+| **Mean** | Total ÷ count | ₦194,689 per line |
+| **Median** | The middle value, when sorted | ₦166,680 per line |
+| **Mode** | The most common value | 5 packs is the most common quantity (226 lines) |
+
+![A histogram of order line values in ₦50,000 bands. Most lines are under ₦250,000, with a long tail to the right up to ₦713,400. The median line, ₦166,680, sits to the left of the mean, ₦194,689.](/images/courses/daf/mean-median.svg "When values have a long tail, the mean is pulled towards it and the median isn't.")
+
+Why do the mean and median differ? Most lines are small or medium, but a long tail of big lines (405 of the 411 lines worth ₦400,000 or more are wholesale) pulls the mean up. The median only cares about the middle, so the tail doesn't move it.
+
+**Which to use?**
+
+- When values are roughly symmetric, mean and median are close; use the mean.
+- When a few values are much larger than the rest (salaries, order sizes, house prices), the **median** is the fairer "typical" figure. Report both when they differ a lot.
+- The **mean** is still the right one when you need totals: mean × count = total. You can't do that with a median.
+
+### Minimum, maximum and range
+
+The extremes are a quick sanity check as well as a fact. Kolanut's order lines run from **₦3,420** (one pack of bottled water with 5% off) to **₦713,400** (29 packs of body lotion). Quantities run from 1 to 30 packs.
+
+Always look at the minimum and maximum of every number column before analysing. A negative quantity, a price of zero, or a date in 2099 tells you there's cleaning to do.
+
+### Share of total
+
+**Share = part ÷ total × 100.** It answers "how much of the whole does this part make up?"
+
+Shares let you compare parts of very different sizes, and they always add up to 100%, which makes a good check.
+
+### Growth rate
+
+**Growth = (new − old) ÷ old × 100.** Divide by the **old** value: the starting point.
+
+Growth can be negative (a fall). Report a fall as a fall: "fell 46.6%", not "grew −46.6%".
+
+> [!WARNING]
+> **Percentages and percentage points are different.** If Lagos's share of revenue goes from 48.4% to 52.5%, that's a rise of **4.1 percentage points** (52.5 − 48.4), but **8.5% in relative terms** (4.1 ÷ 48.4). "Up 4.1%" is ambiguous; say which you mean.
+
+### Rates: comparing groups of different sizes
+
+Lagos brings in far more revenue than South South, but it also has far more customers: 34 against 11. To compare fairly, divide by the size of the group: **revenue per customer**, **orders per customer**, **sales per rep**. A rate turns "bigger" into "better or worse".
+
+### Averages of groups: the trap
+
+Average line value by channel:
+
+| Channel | Order lines | Average line value |
+| :-- | --: | --: |
+| Kiosk | 777 | ₦51,337 |
+| Supermarket | 1,308 | ₦160,847 |
+| Wholesale | 2,181 | ₦266,055 |
+
+The overall average is ₦194,689. But if you average the three channel averages, you get ₦159,413, which is wrong. That simple average treats Kiosk's 777 lines as if they counted as much as Wholesale's 2,181. To combine averages, go back to the totals: total revenue ÷ total lines.
+
+> [!TIP]
+> Never average averages, or add up percentages from different groups. Recalculate from the underlying totals and counts.
+
+### Compare like with like
+
+Compare January with January, the first half of one year with the first half of the next. Comparing December with January mostly shows the festive season, not performance. And if the data stops at June 2026, compare January to June 2026 with January to June 2025, not with all of 2025.
+
+### Rounding
+
+Round for **display**, not for **calculation**. If you round each region to one decimal place first and then calculate from the rounded numbers, the last digit of your answer can change. Calculate with the full figures, then round the result.
 
 ## Example
 
@@ -10146,11 +10653,13 @@ Revenue by region, first half (January–June) of each year, in millions of nair
 | North West | 31.1 | 16.6 |
 | **Total** | **244.2** | **290.7** |
 
-**Growth.** (290.7 − 244.2) ÷ 244.2 × 100 = **19.0%**. The business grew.
+**Growth.** (290.7 − 244.2) ÷ 244.2 × 100 = **19.0%**. The business grew. (From the unrounded totals, ₦244,163,070 and ₦290,730,455, it's 19.1%: an example of rounding changing the last digit.)
 
-**Share.** Lagos brought in 152.8 ÷ 290.7 × 100 = **52.6%** of H1 2026 revenue: more than half the business comes from one region.
+**Share.** Lagos brought in 152.8 ÷ 290.7 × 100 = **52.6%** of H1 2026 revenue (52.5% from the unrounded figures): more than half the business comes from one region. A year earlier it was 48.4%. Kolanut is depending more on Lagos, not less.
 
-**The exception.** North West went the other way, from 31.1 to 16.6. A total that grew 19% hides a region that nearly halved. That's why analysts always break totals down.
+**The exception.** North West went the other way, from 31.1 to 16.6: a fall of (31.1 − 16.6) ÷ 31.1 × 100 = **46.6%**. A total that grew 19% hides a region that nearly halved. That's why analysts always break totals down.
+
+**A rate explains it.** North West had 10 ordering customers in H1 2025 and 11 in H1 2026, so it didn't lose customers. But its order lines fell from 176 to 91. Lines per customer fell from 17.6 to 8.3: the same shops ordered less than half as often.
 
 ## Walkthrough
 
@@ -10159,7 +10668,7 @@ Revenue by region, first half (January–June) of each year, in millions of nair
 - The **mean** order line is worth **₦194,689**.
 - The **median** order line is worth about **₦166,680**.
 
-The mean is higher because wholesalers place a smaller number of very large orders (up to ₦713,400 on a single line), which pull the average up. If a manager asks "what does a typical order line look like?", the median is the more honest answer.
+The mean is higher because wholesalers place many very large orders (up to ₦713,400 on a single line), which pull the average up. If a manager asks "what does a typical order line look like?", the median is the more honest answer.
 
 **Averages by group** often tell the real story. Average quantity per order line:
 
@@ -10171,8 +10680,27 @@ The mean is higher because wholesalers place a smaller number of very large orde
 
 One overall average (13.8 packs) would describe none of these customers well.
 
+**Try it yourself.** In a spreadsheet with `orders.csv`:
+
+1. Add a revenue column with the formula above.
+2. Calculate the total, count, mean and median of revenue. Check you get ₦830,541,245, 4,266, ₦194,689 and ₦166,680.
+3. Find the minimum and maximum. Do they look sensible?
+4. Work out what share of all revenue came from the single largest line (713,400 ÷ 830,541,245 × 100). It's tiny, under 0.1%, so no one line distorts the total, even though big lines do lift the mean.
+
 > [!WARNING]
 > A percentage without its base can mislead. "Sales in our smallest region grew 50%!" could mean ₦2m became ₦3m. Always show the underlying numbers next to growth rates.
+
+### Summary
+
+| Need | Use |
+| :-- | :-- |
+| How much / how many | Total / count / distinct count |
+| A typical value | Median for skewed data; mean when you need totals |
+| A quick sanity check | Minimum and maximum |
+| Part of a whole | Share = part ÷ total × 100 |
+| Change over time | Growth = (new − old) ÷ old × 100 |
+| Fair comparison of different-sized groups | A rate: per customer, per rep |
+| Combining group averages | Recalculate from totals; never average averages |
 
 ## Practice
 
@@ -10285,46 +10813,95 @@ values ('daf-m07', 'data-analytics-foundations', 'Data Visualization', 7, null, 
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('data-analytics-foundations:data-visualization', 'data-analytics-foundations', 'daf-m07', 'data-visualization', 'Data visualization', 'Which chart answers which question, and the design habits that make a chart clear in five seconds.', 15, $md$
+values ('data-analytics-foundations:data-visualization', 'data-analytics-foundations', 'daf-m07', 'data-visualization', 'Data visualization', 'How people read charts, which chart answers which question, the parts of a chart, colour, misleading charts, and the habits that make a chart clear in five seconds.', 20, $md$
 ## The problem
 
 You've found that North West revenue nearly halved while the rest of the business grew. You could say it in a sentence, but the sales director will remember a chart. The wrong chart, though, can hide the finding or even suggest the opposite.
 
 ## The concept
 
-**Pick the chart from the question.**
+A chart is a way of making one point quickly. Good charts are chosen for the question, designed so the eye goes straight to the point, and honest about the numbers.
 
-| Question | Chart | Example |
+### How people read charts
+
+A chart turns numbers into something the eye can compare: positions, lengths, angles, areas, colours. People judge some of these much more accurately than others:
+
+| Encoding | How accurately people compare it | Used in |
+| :-- | :-- | :-- |
+| **Position** along a common scale | Very accurately | Line charts, dot plots, scatter plots |
+| **Length** from a common baseline | Very accurately | Bar charts |
+| **Angle** and **area** | Poorly | Pie and donut charts, bubbles |
+| **Colour intensity** | Roughly | Heat maps |
+
+That's the reason behind most chart advice. Bars and lines use position and length, which we read well; pies use angles, which we don't. When the comparison matters, use bars or lines.
+
+### Pick the chart from the question
+
+| Question | Chart | Kolanut example |
 | :-- | :-- | :-- |
 | How does something change over time? | **Line chart** | Monthly revenue, January 2025 to June 2026 |
 | How do categories compare? | **Bar chart** (horizontal bars for long labels) | Revenue by region |
+| How do two periods compare, by category? | **Paired bars** | Each region, H1 2025 against H1 2026 |
 | What is it made of? | **Stacked bar** or, for 2–4 parts, a **pie/donut** | Revenue split by channel |
-| Are two measures related? | **Scatter plot** | Credit limit vs amount ordered, per customer |
+| Are two measures related? | **Scatter plot** | Credit limit against amount ordered, per customer |
+| How are values spread out? | **Histogram** | Order line values in ₦50,000 bands |
 | What is the one number? | **Big number (card)** with a comparison | "₦290.7m, up 19% on H1 2025" |
 | Exact values to look up | **Table** | Revenue by product and month |
 
-**Design habits that make charts clear**
+A **table** is the right choice more often than people think: when the reader needs exact numbers rather than a pattern, give them a table.
+
+### The parts of a chart
+
+| Part | Job | Habit |
+| :-- | :-- | :-- |
+| **Title** | Tells the reader what to see | Write the finding, not the topic |
+| **Subtitle** | Says what's measured | "Revenue, January to June, ₦ million" |
+| **Axes** | Give the scale | Start bar charts at zero; label units once |
+| **Data labels** | Exact values where they matter | Label the bars or points you discuss, not every one |
+| **Legend** | Decodes colours | Prefer labelling series directly |
+| **Source note** | Says where the data came from | Small, at the bottom |
+
+### Design habits that make charts clear
 
 1. **Title with the finding**, not the topic: "North West revenue nearly halved" beats "Revenue by region".
-2. **Start bar charts at zero.** Cutting the axis makes small differences look huge.
-3. **Sort bars** from largest to smallest unless the categories have a natural order (months, job levels).
+2. **Start bar charts at zero.** A bar's length is its value; cutting the axis makes small differences look huge.
+3. **Sort bars** from largest to smallest unless the categories have a natural order (months, job levels, size bands).
 4. **Highlight one thing.** Grey for context, one strong colour for the point you're making.
 5. **Label directly** instead of using a legend the reader must decode.
-6. **Remove clutter:** heavy gridlines, 3D effects, shadows, backgrounds.
+6. **Remove clutter:** heavy gridlines, 3D effects, shadows, backgrounds, unnecessary decimals.
+7. **Round sensibly.** ₦290.7m, not ₦290,730,455.00, on a chart for a director.
 
-**Charts to avoid**
+### Colour
 
-- **3D charts.** Perspective distorts the sizes you're comparing.
-- **Pie charts with many slices.** People can't compare angles well; past four slices, use a bar chart.
-- **Two different y-axes** on one chart, unless the audience is used to them. They invite false conclusions.
+- **Use colour for meaning, not decoration.** If every bar is a different colour, the reader looks for a meaning that isn't there.
+- **Grey is your friend.** It lets the highlighted item stand out.
+- **Red and green together** are hard to tell apart for about 1 in 12 men with colour blindness. Pair colour with something else: a label, a position, a shape.
+- **Be consistent.** If Lagos is gold on one chart, keep it gold on the next.
+
+### Charts that mislead
+
+Some charts mislead by accident; a careful analyst avoids all of these:
+
+| Problem | Effect | Fix |
+| :-- | :-- | :-- |
+| **Bar axis that doesn't start at zero** | A 5% difference looks like 50% | Start bars at zero, or use a line or dot chart |
+| **3D charts** | Perspective makes near slices or bars look bigger | Always 2D |
+| **Pie with many slices** | Angles can't be compared past four slices | Sorted bar chart |
+| **Two y-axes** | The scales can be chosen to suggest any relationship | Two separate charts, or use sparingly and label clearly |
+| **Cherry-picked period** | Starting the chart at a low point makes any growth look dramatic | Show a fair period and say why you chose it |
+| **Unequal time gaps** | Points spaced evenly when the dates aren't | Use a real date axis |
 
 ## Example
 
-The same data, two ways.
+The same data, two ways:
+
+![Two charts of the same data. Left: a six-slice pie of first-half 2026 revenue in bright colours, titled Revenue by region. Right: paired horizontal bars for each region, 2025 in grey and 2026 in gold, with North West's 2026 bar in red, titled Every region but two grew; North West nearly halved.](/images/courses/daf/weak-strong-chart.svg "The pie shows one period and hides the finding. The paired bars show the change, and the title says what it is.")
 
 **Weak:** a pie chart of H1 2026 revenue with six slices, titled "Revenue by region", in six bright colours. Lagos is obviously biggest; nothing else is readable, and the North West fall is invisible because a pie shows only one period.
 
 **Strong:** a bar chart with each region's H1 2025 bar in light grey and its H1 2026 bar next to it, North West's 2026 bar in red, sorted by 2026 revenue, titled *"Every region but two grew; North West nearly halved."* The point is visible in five seconds.
+
+What changed? The **chart type** now matches the question (a comparison over two periods). The **title** states the finding. **Colour** is used once, for the point. Nothing was added; the strong version is mostly the weak one with the noise removed and the right comparison put in.
 
 ## Walkthrough
 
@@ -10335,11 +10912,26 @@ To build the strong version in a spreadsheet:
 3. Select it and insert a **clustered bar** (or column) chart.
 4. Colour the 2025 series light grey and the 2026 series dark.
 5. Click North West's 2026 bar alone and colour it red.
-6. Replace the default title with the finding.
+6. Replace the default title with the finding, and add a subtitle with the units: "Revenue, January to June, ₦ million".
 7. Delete the gridlines you don't need, and check the axis starts at 0.
+8. Add data labels to the 2026 bars only.
 
 > [!TIP]
 > The five-second test: show the chart to someone for five seconds and ask what it says. If they can't tell you the finding, change the title or the highlighting before changing anything else.
+
+### Summary
+
+| Need | Use |
+| :-- | :-- |
+| Change over time | Line chart |
+| Compare categories | Sorted bar chart |
+| Two periods by category | Paired bars |
+| Parts of a whole | Stacked bar; pie only for 2–4 parts |
+| Relationship between two measures | Scatter plot |
+| Spread of values | Histogram |
+| One headline number | A card, with a comparison |
+| Exact values | A table |
+| Every chart | Finding as the title, zero baseline for bars, one highlight, no clutter |
 
 ## Practice
 
@@ -10421,7 +11013,7 @@ values ('daf-m08', 'data-analytics-foundations', 'Business Intelligence', 8, nul
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('data-analytics-foundations:business-intelligence', 'data-analytics-foundations', 'daf-m08', 'business-intelligence', 'Business intelligence', 'How BI turns one-off analysis into dashboards people use every week, and the pipeline behind them.', 15, $md$
+values ('data-analytics-foundations:business-intelligence', 'data-analytics-foundations', 'daf-m08', 'business-intelligence', 'Business intelligence', 'Analytics versus BI, the pipeline from source systems to dashboards, a single source of truth, dashboard design, and self-service with governance.', 15, $md$
 ## The problem
 
 Every Monday, Kolanut's sales manager asks for the same numbers: last week's revenue, revenue by region, overdue customers. Every Monday an analyst spends two hours rebuilding the same spreadsheet. The numbers are useful; the process is wasteful, and each rebuild risks a new mistake.
@@ -10430,29 +11022,72 @@ Every Monday, Kolanut's sales manager asks for the same numbers: last week's rev
 
 ## The concept
 
-**Analytics vs BI.** The words overlap, but a useful distinction:
+### Analytics and BI
 
-- **Analytics** answers a question, often a new one: *why did North West fall?*
-- **BI** monitors the business with the same questions, repeatedly: *how is each region doing this week?*
+The words overlap, but a useful distinction:
 
-Good analysis often becomes BI. Once you know North West matters, you put it on the dashboard.
+| | Analytics | Business intelligence |
+| :-- | :-- | :-- |
+| Question | Often new: *why did North West fall?* | The same ones, repeatedly: *how is each region doing this week?* |
+| Output | A one-off analysis, a recommendation | Dashboards and reports that refresh themselves |
+| Built for | One decision | Many people, every week |
+| Typical tools | Spreadsheets, SQL, Python | Power BI, Tableau, Looker Studio |
 
-**The BI pipeline**
+Good analysis often becomes BI. Once you know North West matters, you put it on the dashboard so nobody has to ask again.
 
-```
-Source systems  →  Extract, transform, load (ETL)  →  Data warehouse / model  →  Reports & dashboards
-(orders, finance,    (clean, combine, calculate)        (one trusted version)       (Power BI, Tableau,
- HR, CRM)                                                                             Looker Studio)
-```
+### The BI pipeline
 
-1. **Sources**: the systems where work happens.
-2. **ETL**: copying data out, cleaning it and shaping it. In Power BI this is Power Query.
-3. **Model / warehouse**: clean tables with relationships and agreed calculations, a *single source of truth*.
-4. **Dashboards**: the views people look at, refreshed on a schedule.
+![Four stages from left to right: source systems (orders, finance, HR, CRM), ETL (extract, transform, load), a data model or warehouse with related tables and agreed measures, and dashboards. A bar underneath says the whole pipeline refreshes on a schedule.](/images/courses/daf/bi-pipeline.svg "The BI pipeline. Build it once, and every refresh repeats stages 2 to 4 on new data.")
 
-**Dashboards vs reports.** A **dashboard** is a one-screen summary of KPIs for monitoring. A **report** goes deeper, with several pages and details to explore. Most BI tools produce both.
+1. **Sources**: the systems where work happens: the order system, billing, HR, CRM, and the odd spreadsheet.
+2. **ETL** (extract, transform, load): copying data out, cleaning it and shaping it. In Power BI this is Power Query. Every cleaning step from lesson 5 becomes an automated step that runs on each refresh.
+3. **Model / warehouse**: clean tables with relationships (lesson 4) and agreed calculations: a **single source of truth**. A large company keeps this in a **data warehouse**, a database built for analysis; a small one may keep it inside the BI file itself.
+4. **Dashboards and reports**: the views people look at, refreshed on a schedule.
 
-**Common BI tools:** Microsoft Power BI, Tableau, Google Looker Studio, Qlik. Power BI is widely used in Nigerian companies because many already pay for Microsoft 365; it's covered in its own course here.
+### A single source of truth
+
+Without BI, every team builds its own spreadsheet, and their numbers disagree. Sales says revenue was ₦48m (before discounts), finance says ₦46m (after discounts and returns), and the meeting is spent arguing about whose number is right.
+
+A **single source of truth** means one place where each KPI is calculated, one way, from one set of cleaned data. Everyone's dashboard reads from it, so everyone sees the same number. The definitions from lesson 2 (name, formula, inclusions, source) are written into the model once.
+
+### Dashboards and reports
+
+| | Dashboard | Report |
+| :-- | :-- | :-- |
+| Purpose | Monitor: "are we OK?" | Explore and explain: "why?" |
+| Size | One screen | Several pages |
+| Content | A few KPIs, a trend, an exception list | Detail, breakdowns, tables |
+| Used | Daily or weekly, in seconds | When a question comes up |
+
+Most BI tools produce both, and a good dashboard links through to the report for detail.
+
+### Designing a dashboard
+
+1. **Start from the decisions.** Who opens this, and what will they do differently because of it?
+2. **Top-left is read first.** Put the headline KPIs there.
+3. **Every number needs a comparison**: against last year, last month or target. "₦290.7m" means little; "₦290.7m, up 19% on last year" means something.
+4. **Use the chart rules from lesson 7.** Lines for trends, sorted bars for comparisons, one highlight colour.
+5. **End with an action list**: the customers to call, the invoices to chase.
+6. **Leave things out.** Four KPIs and three visuals beat twenty tiles nobody reads.
+
+### Self-service and governance
+
+Modern BI tools let business users build their own reports from the shared model: **self-service BI**. It's powerful, but it needs **governance**:
+
+- **Certified data**: the official model is marked as trusted, so people build on it rather than on private copies.
+- **Access**: each person sees the data they're allowed to; a regional manager might see only their region. In Power BI this is called row-level security.
+- **Ownership**: each dashboard and each KPI has an owner who answers questions about it.
+
+### Common BI tools
+
+| Tool | Notes |
+| :-- | :-- |
+| **Microsoft Power BI** | Widely used in Nigerian companies, because many already pay for Microsoft 365. Covered in its own course here. |
+| **Tableau** | Strong on visual exploration; popular in larger companies. |
+| **Google Looker Studio** | Free, browser-based, works well with Google Sheets. |
+| **Qlik** | Common in some industries, such as manufacturing and banking. |
+
+The ideas in this lesson apply to all of them; the menus differ.
 
 ## Example
 
@@ -10468,21 +11103,35 @@ A sensible first dashboard for Kolanut's sales manager:
 
 Four KPIs, three visuals, one action list. The discipline is leaving things *out*.
 
+Note the leading indicator in the bottom table: a customer ordering less often is an early warning, before revenue falls. That's exactly what happened in the North West, and a list like this would have flagged those shops while there was still time to act.
+
 ## Walkthrough
 
 When a law firm like Ashgrove Chambers builds BI for its partners, it follows the same steps:
 
 1. **Agree the KPIs** with the partners: open matters, hearings adjourned, invoices overdue, **collection rate**.
-2. **Define each one precisely.** Collection rate = paid invoices ÷ all invoices issued × 100, counted by number of invoices.
+2. **Define each one precisely.** Collection rate = paid invoices ÷ all invoices issued × 100, counted by **number** of invoices. That choice matters: counted by **value** instead, Ashgrove's rate is 81.5%, because paid invoices are larger on average than unpaid ones. Both are reasonable; what's not reasonable is two partners using different ones.
 3. **Connect the sources:** the matter management system and the billing system.
 4. **Check the numbers** against a manual calculation before anyone relies on the dashboard.
 5. **Schedule the refresh**, for example every morning at 7.
+6. **Name an owner** for each KPI, who answers when someone asks "why did this change?"
 
 Step 4 is the one people skip. A dashboard that is wrong once loses trust for months.
 
 ```dataset
 { "dataset": "legal", "files": ["invoices"], "note": "Ashgrove Chambers' invoices from 2024 to August 2026: amount, status (Paid, Outstanding, Overdue) and payment date." }
 ```
+
+### Summary
+
+| Term | Meaning |
+| :-- | :-- |
+| BI | Building analysis once, so it refreshes and many people can use it |
+| ETL | Extract, transform, load: the automated cleaning stage |
+| Data warehouse / model | Clean, related tables with agreed measures |
+| Single source of truth | One place, one definition for each KPI |
+| Dashboard / report | Monitor at a glance / explore in detail |
+| Governance | Certified data, access rules and owners |
 
 ## Practice
 
@@ -10569,7 +11218,7 @@ values ('daf-m09', 'data-analytics-foundations', 'From Question to Insight', 9, 
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('data-analytics-foundations:from-question-to-insight', 'data-analytics-foundations', 'daf-m09', 'from-question-to-insight', 'From question to insight', 'A repeatable method for turning a vague business worry into a clear finding and a recommendation.', 10, $md$
+values ('data-analytics-foundations:from-question-to-insight', 'data-analytics-foundations', 'daf-m09', 'from-question-to-insight', 'From question to insight', 'A repeatable method from a vague worry to a recommendation: clarify, make it measurable, break the total down, test and rule out explanations, and tell the story answer-first.', 10, $md$
 ## The problem
 
 The sales director at Kolanut says: *"Something's wrong in the North. Can you look into it?"*
@@ -10578,7 +11227,9 @@ That isn't a question you can answer with data yet. This lesson is about the met
 
 ## The concept
 
-**The question-to-insight method**
+Most requests to an analyst start vague: "North West looks bad, can you have a look?" This lesson is a repeatable method for turning that into a clear finding and a recommendation someone can act on.
+
+### The question-to-insight method
 
 1. **Clarify the business question.** Who is asking, what decision are they facing, by when?
 2. **Make it measurable.** Name the measure, the comparison and the period.
@@ -10587,16 +11238,70 @@ That isn't a question you can answer with data yet. This lesson is about the met
 5. **Explain** the pattern: test possible reasons against the data.
 6. **Recommend** something specific, and say how you'd know if it worked.
 
-**Finding vs insight.** A *finding* says what the data shows ("North West revenue fell 47%"). An *insight* adds why it matters and what to do ("North West shops are ordering half as often; if we win back the old order frequency, we recover about ₦14m per half-year").
+### Step 1: clarify
 
-**Test more than one explanation.** For a fall in revenue, the usual suspects are:
+Before touching data, ask the person three questions:
+
+| Ask | Why |
+| :-- | :-- |
+| **What decision** will this help you make? | It tells you what "useful" means. "Should we replace the North West approach?" needs a different analysis from "how much stock should we send?" |
+| **By when?** | A rough answer on Friday may beat a perfect one next month |
+| **What do you already believe?** | You'll know which explanation to test first, and which belief your answer has to address |
+
+### Step 2: make it measurable
+
+A measurable question names four things:
+
+| Part | Vague | Measurable |
+| :-- | :-- | :-- |
+| **Measure** | "how it's doing" | revenue after discounts |
+| **Scope** | "the North" | customers in the North West region |
+| **Period** | "lately" | January to June 2026 |
+| **Comparison** | (none) | against January to June 2025 |
+
+Put together: *How did North West revenue in January to June 2026 compare with the same months of 2025, and what drove the change?*
+
+### Steps 4 and 5: break it down and test explanations
+
+A total can be broken into parts that multiply together, like the KPI tree in lesson 2. For a fall in revenue, the usual suspects are:
 
 | Possible cause | What you'd see in the data |
 | :-- | :-- |
 | Fewer customers | Fewer distinct customers ordering |
 | Customers ordering less often | Same customers, fewer order lines each |
 | Smaller orders | Fewer packs per order line |
-| Lower prices or bigger discounts | Lower price per pack or higher discount % |
+| Lower prices or bigger discounts | Lower naira per pack or higher discount % |
+
+Each one is a **hypothesis**: a possible explanation you can check with a number. Work through them all, not just the first one that seems to fit. The ones you **rule out** are as useful as the one you confirm.
+
+> [!TIP]
+> **Ask "why?" more than once.** "Revenue fell" → why? "Fewer order lines" → why? "Shops ordered less often" → why? At some point the data runs out and the next "why" needs a conversation with customers or staff. That's the point to stop analysing and start recommending.
+
+### Finding versus insight
+
+A *finding* says what the data shows ("North West revenue fell 47%"). An *insight* adds why it matters and what to do ("North West shops are ordering half as often; if we win back the old order frequency, we recover about ₦14m per half-year").
+
+| | Says | Example |
+| :-- | :-- | :-- |
+| **Data** | A fact | North West: 91 order lines in H1 2026 |
+| **Finding** | What changed | North West revenue fell 46.6% |
+| **Insight** | Why, and so what | The same shops are ordering half as often; that's worth about ₦14m a half-year |
+| **Recommendation** | What to do, and how to check | Call the five largest accounts this month; target 150 order lines next half-year |
+
+### Correlation is not cause
+
+Two things moving together doesn't mean one causes the other. North West's fall came in the same half-year as the price rise, but prices rose in **every** region, and most regions grew. So the price rise alone can't explain North West. Always ask: did the same thing happen somewhere that didn't fall? If so, it probably isn't the cause.
+
+### Telling the story
+
+Decision-makers are busy. Put the **answer first**, then the reasons, then the detail:
+
+1. **Answer**: "North West revenue nearly halved because shops ordered half as often. We haven't lost customers."
+2. **Evidence**: the table, one chart.
+3. **What to do**: the recommendation, with a target and a date.
+4. **Limits**: what the data can't tell you yet.
+
+This is sometimes called the **pyramid principle**: lead with the conclusion, support it underneath. A report that saves its answer for the last page loses its readers on page one.
 
 ## Example
 
@@ -10608,13 +11313,23 @@ That isn't a question you can answer with data yet. This lesson is about the met
 
 **4. Analyse.**
 
-| North West | H1 2025 | H1 2026 | Change |
+| North West, January–June | 2025 | 2026 | Change |
 | :-- | --: | --: | --: |
 | Revenue (₦m) | 31.1 | 16.6 | −46.6% |
 | Customers who ordered | 10 | 11 | +1 |
 | Order lines | 176 | 91 | −48% |
+| Order lines per customer | 17.6 | 8.3 | −53% |
+| Packs per order line | 13.9 | 12.7 | −9% |
+| Naira per pack | 12,724 | 14,450 | +14% |
 
-**5. Explain.** Customers didn't leave: 11 ordered in 2026, one more than in 2025. Prices *rose* in January 2026, so price cuts aren't the cause either. The fall is almost entirely **order frequency**: the same shops ordered about half as often.
+**5. Explain.** Test each suspect:
+
+- **Fewer customers?** No: 11 ordered in 2026, one more than in 2025. Ruled out.
+- **Lower prices?** No: naira per pack *rose* 14%, after January's price rise. Ruled out.
+- **Smaller orders?** A little: packs per line fell 9%. A minor cause.
+- **Ordering less often?** Yes: order lines per customer more than halved, from 17.6 to 8.3. **The main cause.**
+
+The fall is mostly **order frequency**: the same shops ordered about half as often, with slightly smaller orders on top.
 
 **6. Recommend.** Find out why North West shops are ordering less often. Ask the regional rep and call the five largest accounts this month: are they buying from a competitor, or is delivery unreliable? Set a target of 150 order lines next half-year and track it monthly.
 
@@ -10623,11 +11338,30 @@ That isn't a question you can answer with data yet. This lesson is about the met
 Notice what the analysis did *not* do:
 
 - It didn't stop at "revenue fell 47%". That's a finding, not an explanation.
-- It didn't guess. Each explanation was checked against a number.
+- It didn't guess. Each explanation was checked against a number, and two were ruled out.
 - It didn't claim more than the data shows. The data says *what* changed (frequency); only a conversation with customers can say *why*. A good recommendation names the next question as well as the next action.
+
+Now practise the method on your own question. Pick one of these and write steps 1 and 2 on paper:
+
+- "Are our supermarkets doing well?"
+- "Are discounts worth it?"
+- "Is Lagos too important to us?"
+
+For each, write: the decision it supports, the measure, the scope, the period and the comparison. Then list two or three hypotheses and the number that would test each.
 
 > [!BUSINESS]
 > The most valuable sentence an analyst can say is often "the data rules out X". Here, ruling out lost customers and price cuts saved the director from two wrong fixes: a customer-acquisition campaign and a discount.
+
+### Summary
+
+| Step | Key question |
+| :-- | :-- |
+| Clarify | What decision, by when, and what do you already believe? |
+| Measurable | Which measure, scope, period and comparison? |
+| Data | Does it exist, and is it clean? |
+| Analyse | What changed, and which part of the total moved? |
+| Explain | Which hypotheses does the data confirm or rule out? |
+| Recommend | What should happen, by when, and how will we know it worked? |
 
 ## Practice
 
@@ -10732,7 +11466,34 @@ A complete analysis, even a small one, has five parts. You'll produce them for t
 4. **The finding**, in one or two sentences.
 5. **The recommendation** and its limits: what the data can't tell you.
 
-**A note on small numbers.** Kolanut has 80 employees. When you split them by department, some groups have only 6 or 8 people. One resignation in a group of 8 moves the rate by 12.5 percentage points. Report the counts next to the rates, and be careful about strong conclusions from small groups.
+### What each part looks like
+
+| Part | Length | Good example |
+| :-- | :-- | :-- |
+| Question | One sentence | "Of everyone employed since 2018, what share resigned, and does it differ by department?" |
+| Data | A short paragraph or list | "`employees.csv`, 80 rows, one per employee. No cleaning needed; no rows excluded." |
+| Analysis | One table or chart, plus the method in a line | The department table below, built with a pivot table |
+| Finding | One or two sentences, with numbers | "Customer Service: 3 of 8 resigned (37.5%), about three times the company rate of 13.8%." |
+| Recommendation and limits | Two or three sentences | What to do next, and what the data can't show |
+
+### A note on small numbers
+
+Kolanut has 80 employees. When you split them by department, some groups have only 6 or 8 people. One resignation in a group of 8 moves the rate by 12.5 percentage points. Report the counts next to the rates ("3 of 8", not just "37.5%"), and be careful about strong conclusions from small groups.
+
+### Look for a hidden third factor
+
+Leavers earned less: a median of ₦355,000 a month, against ₦525,000 for staff who stayed. It's tempting to conclude "low pay makes people leave". But every leaver was Junior or Mid level, and junior staff earn less **because they're junior**. Job level could explain both the lower pay and the resignations.
+
+A factor that is linked to both things you're comparing is called a **confounder**. Before claiming that A causes B, ask: is there a C that drives both? Here, the fair comparison is pay within the **same** job level, and with only 11 leavers, the numbers are too small to settle it. Say so.
+
+### Checks before you share
+
+1. **Do the totals add up?** Department staff should sum to 80; resigned to 11.
+2. **Does one number match a second method?** A pivot count and a `COUNTIFS` should agree.
+3. **Are the counts shown next to the percentages?**
+4. **Is every number in the summary also in the analysis?** No figure should appear from nowhere.
+5. **Could someone else repeat it?** Your data and method notes should be enough.
+6. **Is the limit stated?** What the data can't tell you, in one sentence.
 
 ## Example
 
