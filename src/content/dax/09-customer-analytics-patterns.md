@@ -16,7 +16,7 @@ These are some of the most requested measures in any business with repeat custom
 
 ## The concept
 
-**Pattern 1: a rolling window from the selected date**
+### Pattern 1: a rolling window from the selected date
 
 "As of" the last date in the current filter, look back a fixed number of days:
 
@@ -32,7 +32,7 @@ RETURN
 
 At June 2026, `LastDay` is 30 June and the window is 1 to 30 June.
 
-**Pattern 2: everything up to a date**
+### Pattern 2: everything up to a date
 
 "Ever ordered by the end of the period" needs every date up to `LastDay`. Remove the date filters explicitly, then add the condition:
 
@@ -53,7 +53,7 @@ Lapsed Customers 30d = [Customers to Date] - [Active Customers 30d]
 
 The same pattern gives **headcount on a date** in HR data: employees hired on or before the date, who haven't left by it.
 
-**Pattern 3: cumulative share (Pareto)**
+### Pattern 3: cumulative share (Pareto)
 
 Rank customers by revenue, then add up everyone whose revenue is at least the current customer's:
 
@@ -77,6 +77,8 @@ SWITCH (
 ```
 
 Class A customers together make up the first 80% of revenue. They get the most attention from account managers.
+
+![A Pareto chart of the 81 customers who ordered in 2025: bars for each customer's revenue, largest first, and a running-share line that rises steeply and flattens. The first 28 customers take it past 80%.](/images/courses/dax/pareto-2025.svg "The Pareto pattern on 2025 alone. The practice asks you to find the class A count across all dates.")
 
 ## Example
 

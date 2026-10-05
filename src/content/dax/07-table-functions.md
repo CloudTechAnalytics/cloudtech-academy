@@ -35,7 +35,7 @@ COUNTROWS ( FILTER ( VALUES ( orders[customer_id] ), <condition per customer> ) 
 
 `FILTER` iterates the customers, so the condition runs in a row context. Use a **measure** in the condition and context transition calculates it for each customer.
 
-**Filter direction matters in table logic too**
+### Filter direction matters in table logic too
 
 You might try to count each customer's categories with `CALCULATE ( DISTINCTCOUNT ( products[category] ) )`. It returns **4 for everyone**: filters flow from `products` to `orders`, never from `orders` back to `products`. Count the categories **through the fact table** instead:
 
@@ -45,7 +45,7 @@ COUNTROWS ( SUMMARIZE ( orders, products[category] ) )
 
 `SUMMARIZE` lists the categories that actually appear in the customer's order lines.
 
-**DAX query view**
+### DAX query view
 
 Power BI Desktop's **DAX query view** (the fourth icon on the left) runs a query and shows the resulting table, so you can see a virtual table before you count it:
 

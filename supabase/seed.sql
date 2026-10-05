@@ -28548,7 +28548,7 @@ In Power BI Fundamentals you wrote your first measures. This course goes deep: h
 
 ## The concept
 
-**The model comes first**
+### The model comes first
 
 DAX is evaluated over the **model**: tables joined by relationships, with filters flowing from the "one" side to the "many" side. Kolanut's model is a small star schema:
 
@@ -28561,15 +28561,15 @@ DAX is evaluated over the **model**: tables joined by relationships, with filter
 
 Filters flow **downhill**, from a dimension to the fact. Selecting "Lagos" in `customers[region]` filters `orders`. Selecting a product filters `orders` too. But nothing flows back up: filtering `orders` doesn't filter `products`. You'll meet the consequences of that in almost every lesson.
 
-**Measures, not dragged columns**
+### Measures, not dragged columns
 
 Every number in a report should come from an explicit measure: written once, named clearly, formatted, and reused. Dragging a column into a visual creates an "implicit measure" that nobody can find, check or reuse.
 
-**Base measures first, then build on them**
+### Base measures first, then build on them
 
 Write a handful of simple **base measures**, then build everything else from them. When the definition of revenue changes, you change one measure and the whole report follows.
 
-**Habits of a trustworthy measure library**
+### Habits of a trustworthy measure library
 
 - Keep measures in a dedicated `_Measures` table, in display folders (Sales, Customers, Time).
 - Name them as a manager would say them: `Revenue`, `Discount %`, `Active Customers`.
@@ -28775,7 +28775,7 @@ DAX has two kinds of context.
 
 The crucial rule: **row context doesn't filter anything**. It only lets you read the current row's values, such as `orders[quantity]`. That's why the colleague's column fails: on the row for Kayode Distributors there's a row context on `customers`, but no filter, so `SUMX ( orders, … )` loops over **every** order.
 
-**Context transition**
+### Context transition
 
 `CALCULATE` turns the current row context into a filter context: "filter the model to this row". And every **measure reference** is wrapped in an invisible `CALCULATE`. So this column works:
 
@@ -28791,6 +28791,8 @@ On Kayode's row, `[Revenue]` becomes `CALCULATE ( [Revenue] )`, which filters `c
 | `[Revenue]` | that customer's revenue: context transition |
 | `CALCULATE ( SUMX ( orders, … ) )` | that customer's revenue |
 | `SUMX ( RELATEDTABLE ( orders ), … )` | that customer's revenue: only their related rows |
+
+![On Kayode Distributors' row of the customers table, SUMX over orders sees no filter and returns the grand total, ₦830,541,245. The measure reference [Revenue] is wrapped in a hidden CALCULATE, which turns the row into the filter customer_id = 1, leaving Kayode's 128 order lines: ₦30,793,410.](/images/courses/dax/context-transition.svg "The same row, two formulas. Only the one with CALCULATE (visible or hidden) turns the row into a filter.")
 
 ## Example
 
@@ -28964,7 +28966,28 @@ SUMX ( <table>, <expression> )
 
 `SUM ( orders[quantity] )` is really shorthand for `SUMX ( orders, orders[quantity] )`.
 
-**The table you iterate decides the "average of what"**
+**Row by row.** Here is what `SUMX` does with Kolanut's revenue expression, on the first four order lines:
+
+```dax
+Revenue = SUMX ( orders, orders[quantity] * orders[unit_price] * ( 1 - orders[discount_pct] / 100 ) )
+```
+
+| order_id | quantity | unit_price | discount_pct | Expression for this row | Result |
+| --: | --: | --: | --: | :-- | --: |
+| 10001 | 14 | 18,600 | 0 | 14 × 18,600 × (1 − 0) | 260,400 |
+| 10002 | 7 | 13,200 | 0 | 7 × 13,200 × (1 − 0) | 92,400 |
+| 10003 | 4 | 3,600 | 0 | 4 × 3,600 × (1 − 0) | 14,400 |
+| 10004 | 28 | 6,000 | 5 | 28 × 6,000 × (1 − 0.05) | 159,600 |
+| … | | | | … 4,262 more rows | |
+| | | | | **SUMX adds every result** | **830,541,245** |
+
+1. The table argument, `orders`, decides **which rows** to visit: every row that the current filter context lets through.
+2. For each row, the expression is evaluated with that row's values (row context).
+3. The results are aggregated: added for SUMX, averaged for AVERAGEX, and so on.
+
+You couldn't get this with `SUM ( orders[quantity] ) * SUM ( orders[unit_price] ) * …`. Multiplying the totals is not the same as totalling the products. That's the main reason iterators exist.
+
+### The table you iterate decides the "average of what"
 
 | Measure | Iterates over | Means |
 | :-- | :-- | :-- |
@@ -28976,7 +28999,7 @@ SUMX ( <table>, <expression> )
 
 When you iterate a list of customers and call `[Revenue]`, **context transition** filters each customer in turn, which is exactly what lesson 2 explained. And because `AVERAGEX` skips blanks, months with no sales (such as July 2026, which hasn't happened) don't drag the average down.
 
-**RELATED inside an iterator**
+### RELATED inside an iterator
 
 While iterating `orders` (the many side), `RELATED ( products[list_price] )` fetches the matching value from the one side. That lets you compare what customers paid with the list price.
 
@@ -29150,7 +29173,7 @@ CALCULATE ( <expression>, <filter or modifier>, … )
 
 `CALCULATE` takes the current filter context, changes it with its arguments, then evaluates the expression.
 
-**Filter arguments replace filters on the same column**
+### Filter arguments replace filters on the same column
 
 ```dax
 Revenue Wholesale = CALCULATE ( [Revenue], customers[channel] = "Wholesale" )
@@ -29160,7 +29183,7 @@ The condition replaces any existing filter on `customers[channel]` and keeps eve
 
 To **intersect** with an existing filter instead of replacing it, wrap the condition in `KEEPFILTERS`: `CALCULATE ( [Revenue], KEEPFILTERS ( customers[channel] = "Wholesale" ) )` shows wholesale revenue on the Wholesale row and blank on the others.
 
-**Modifiers remove filters**
+### Modifiers remove filters
 
 | Modifier | Removes |
 | :-- | :-- |
@@ -29171,7 +29194,7 @@ To **intersect** with an existing filter instead of replacing it, wrap the condi
 
 `REMOVEFILTERS` is the modern, clearer name for `ALL` used as a modifier. `ALL` is also a table function you can iterate; `REMOVEFILTERS` can only be used inside `CALCULATE`.
 
-**Three kinds of "share"**
+### Three kinds of "share"
 
 ```dax
 % of Total = DIVIDE ( [Revenue], CALCULATE ( [Revenue], REMOVEFILTERS ( products ) ) )
@@ -29347,7 +29370,7 @@ The measure that answers it needs several steps: revenue now, revenue at last ye
 
 ## The concept
 
-**VAR and RETURN**
+### VAR and RETURN
 
 ```dax
 Measure name =
@@ -29365,7 +29388,7 @@ Variables make measures:
 
 One rule catches everyone: **a variable is calculated where it's defined**, in that filter context, and then never changes. `VAR Total = [Revenue]` followed by `CALCULATE ( Total, … )` doesn't recalculate `Total` with the new filters; it returns the same number. Put the `CALCULATE` inside the variable's definition instead.
 
-**BLANK is not zero**
+### BLANK is not zero
 
 DAX uses `BLANK()` for "no value". Visuals hide rows where every measure is blank, which is usually what you want: a product nobody bought in Kano doesn't clutter the table.
 
@@ -29373,7 +29396,7 @@ DAX uses `BLANK()` for "no value". Visuals hide rows where every measure is blan
 - `[Revenue] + 0` turns blanks into zeros, and suddenly the table shows every customer for every month, thousands of empty rows. Only do it when a zero genuinely means something (a sales rep's month with no sales on a performance page).
 - `COALESCE ( [Revenue], 0 )` does the same job more explicitly.
 
-**Readable DAX**
+### Readable DAX
 
 - One function argument per line, indented, as in the examples in this course.
 - Paste long measures into DAX Formatter (daxformatter.com, a free tool from SQLBI) to lay them out consistently.
@@ -29541,11 +29564,11 @@ Time comparisons are what managers ask for most: this year so far, against last 
 
 ## The concept
 
-**Prerequisites**
+### Prerequisites
 
 Time intelligence functions work on a proper date table: one row per day with no gaps, covering whole years, marked as a date table, and related to the fact table. You built exactly that in lesson 1.
 
-**The core functions**
+### The core functions
 
 Each one returns a **set of dates**, which you use as a filter in `CALCULATE`:
 
@@ -29575,7 +29598,9 @@ CALCULATE (
 
 `TOTALYTD ( [Revenue], 'Date'[Date] )` is a shortcut for the YTD measure. For a financial year ending 30 June, `DATESYTD ( 'Date'[Date], "30/6" )` restarts the count each 1 July.
 
-**The incomplete-year trap**
+![A grid of 18 months, January 2025 to June 2026, with March 2026 selected. Revenue covers March 2026: ₦51.2m. Revenue PM covers February 2026: ₦43.0m. Revenue LY covers March 2025: ₦46.3m. Revenue YTD and Revenue Rolling 3M both cover January to March 2026: ₦143.2m.](/images/courses/dax/time-windows.svg "Each time-intelligence function changes which dates the measure adds up.")
+
+### The incomplete-year trap
 
 At year level, the 2026 filter contains every date from 1 January to 31 December 2026, because the date table covers whole years. `SAMEPERIODLASTYEAR` shifts that to the whole of 2025, and you're comparing six months of sales with twelve.
 
@@ -29771,7 +29796,7 @@ COUNTROWS ( FILTER ( VALUES ( orders[customer_id] ), <condition per customer> ) 
 
 `FILTER` iterates the customers, so the condition runs in a row context. Use a **measure** in the condition and context transition calculates it for each customer.
 
-**Filter direction matters in table logic too**
+### Filter direction matters in table logic too
 
 You might try to count each customer's categories with `CALCULATE ( DISTINCTCOUNT ( products[category] ) )`. It returns **4 for everyone**: filters flow from `products` to `orders`, never from `orders` back to `products`. Count the categories **through the fact table** instead:
 
@@ -29781,7 +29806,7 @@ COUNTROWS ( SUMMARIZE ( orders, products[category] ) )
 
 `SUMMARIZE` lists the categories that actually appear in the customer's order lines.
 
-**DAX query view**
+### DAX query view
 
 Power BI Desktop's **DAX query view** (the fourth icon on the left) runs a query and shows the resulting table, so you can see a virtual table before you count it:
 
@@ -29951,7 +29976,7 @@ Sorting a table visual puts customers in order, but it doesn't give you a rank y
 
 ## The concept
 
-**RANKX**
+### RANKX
 
 ```dax
 RANKX ( <table>, <expression>, [value], [order], [ties] )
@@ -29970,12 +29995,12 @@ Other arguments:
 - `order`: `DESC` (the default, highest = 1) or `ASC`.
 - `ties`: `SKIP` (the default: 1, 2, 2, 4) or `DENSE` (1, 2, 2, 3).
 
-**Two things to tidy**
+### Two things to tidy
 
 - **The total row.** At the total there's no single customer, so the rank is meaningless (it shows 1). Return BLANK there with `ISINSCOPE ( customers[customer_name] )`, which is true only when the visual is grouped by customer.
 - **Customers with no sales** in the period get ranked last. Return BLANK when `[Revenue]` is blank.
 
-**TOPN**
+### TOPN
 
 `TOPN ( n, <table>, <expression> )` returns the top n rows of a table as a virtual table, which you can then iterate:
 
@@ -29984,7 +30009,7 @@ Top 5 Revenue =
 SUMX ( TOPN ( 5, ALL ( customers[customer_name] ), [Revenue] ), [Revenue] )
 ```
 
-**Let the user choose N**
+### Let the user choose N
 
 **Modeling → New parameter → Numeric range** creates a slicer and a measure, such as `[Top N Value]`, that returns the selected number. Use it in place of 5 to make the analysis interactive.
 
@@ -30158,7 +30183,7 @@ These are some of the most requested measures in any business with repeat custom
 
 ## The concept
 
-**Pattern 1: a rolling window from the selected date**
+### Pattern 1: a rolling window from the selected date
 
 "As of" the last date in the current filter, look back a fixed number of days:
 
@@ -30174,7 +30199,7 @@ RETURN
 
 At June 2026, `LastDay` is 30 June and the window is 1 to 30 June.
 
-**Pattern 2: everything up to a date**
+### Pattern 2: everything up to a date
 
 "Ever ordered by the end of the period" needs every date up to `LastDay`. Remove the date filters explicitly, then add the condition:
 
@@ -30195,7 +30220,7 @@ Lapsed Customers 30d = [Customers to Date] - [Active Customers 30d]
 
 The same pattern gives **headcount on a date** in HR data: employees hired on or before the date, who haven't left by it.
 
-**Pattern 3: cumulative share (Pareto)**
+### Pattern 3: cumulative share (Pareto)
 
 Rank customers by revenue, then add up everyone whose revenue is at least the current customer's:
 
@@ -30219,6 +30244,8 @@ SWITCH (
 ```
 
 Class A customers together make up the first 80% of revenue. They get the most attention from account managers.
+
+![A Pareto chart of the 81 customers who ordered in 2025: bars for each customer's revenue, largest first, and a running-share line that rises steeply and flattens. The first 28 customers take it past 80%.](/images/courses/dax/pareto-2025.svg "The Pareto pattern on 2025 alone. The practice asks you to find the class A count across all dates.")
 
 ## Example
 
@@ -30362,7 +30389,7 @@ A report that's slow doesn't get used, and a report that's wrong does damage. On
 
 ## The concept
 
-**Find the slow part first**
+### Find the slow part first
 
 **Optimize → Performance Analyzer → Start recording**, then refresh the visuals. Each visual's time is split into:
 
@@ -30372,7 +30399,7 @@ A report that's slow doesn't get used, and a report that's wrong does damage. On
 
 Copy a slow visual's query into **DAX query view** to run and change it on its own.
 
-**DAX habits that keep measures fast**
+### DAX habits that keep measures fast
 
 | Slow | Faster | Why |
 | :-- | :-- | :-- |
@@ -30385,7 +30412,7 @@ Copy a slow visual's query into **DAX query view** to run and change it on its o
 
 The model matters as much as the DAX. Remove columns nobody uses, and reduce the number of distinct values (split a date-time into a date and a time; round long decimals). The engine compresses columns, and fewer distinct values compress far better.
 
-**Testing measures**
+### Testing measures
 
 Before a report goes out, test each important measure:
 
@@ -30554,7 +30581,7 @@ Every question needs measures from this course: like-for-like time intelligence,
 
 ## The concept
 
-**From questions to measures**
+### From questions to measures
 
 | Question | Measures | Lesson |
 | :-- | :-- | :-- |
@@ -30564,7 +30591,7 @@ Every question needs measures from this course: like-for-like time intelligence,
 | Who's slipping away? | Active Customers 30d, Lapsed Customers 30d, New Customers | 7, 9 |
 | Where's the concentration risk? | Cumulative Share, ABC Class | 9 |
 
-**What makes the measure library trustworthy**
+### What makes the measure library trustworthy
 
 - Base measures defined once, and everything else built on them.
 - Display folders, formats and a description on every measure.

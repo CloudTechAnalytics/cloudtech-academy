@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 400" width="760" height="400" role="img" aria-label="Context transition. In a calculated column on customers, the row for Kayode Distributors has a row context, which by itself filters nothing, so SUMX over orders adds every order line: 830.5 million naira on every row. Referencing the measure Revenue wraps it in CALCULATE, which turns the row into a filter, customer_id = 1. That filter flows to orders, leaving Kayode's 128 order lines, which add up to 30,793,410 naira.">
+<title>Context transition: CALCULATE turns the current row into a filter, so a measure gives that customer's own figure.</title>
+<rect width="760" height="400" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text x="30.0" y="32.0" font-size="16" fill="#2A2926" font-weight="700" text-anchor="start" >A calculated column on customers, on Kayode Distributors' row</text>
+<rect x="30" y="50" width="700" height="44" rx="8" fill="#FFFFFF" stroke="#CFC4B2"/>
+<text x="46.0" y="78.0" font-size="14" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">customer_id 1 · Kayode Distributors · Lagos · Wholesale</text>
+<text x="30.0" y="120.0" font-size="13.5" fill="#5E5A52" font-weight="400" text-anchor="start" >Row context: "this row". It lets you read values, but it filters nothing.</text>
+<rect x="30" y="140" width="335" height="220" rx="10" fill="#FFFFFF" stroke="#9B2C1F" stroke-width="1.6"/>
+<text x="46.0" y="168.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">SUMX ( orders, … )</text>
+<text x="46.0" y="196.0" font-size="13.5" fill="#2A2926" font-weight="400" text-anchor="start" >No filter reaches orders, so it</text>
+<text x="46.0" y="216.0" font-size="13.5" fill="#2A2926" font-weight="400" text-anchor="start" >loops over all 4,266 lines.</text>
+<text x="46.0" y="268.0" font-size="22" fill="#9B2C1F" font-weight="700" text-anchor="start" >₦830,541,245</text>
+<text x="46.0" y="296.0" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start" >on every customer's row:</text>
+<text x="46.0" y="316.0" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start" >the grand total, not Kayode's</text>
+<rect x="395" y="140" width="335" height="220" rx="10" fill="#FFFFFF" stroke="#2F6B3F" stroke-width="1.6"/>
+<text x="411.0" y="168.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">[Revenue]</text>
+<text x="411.0" y="196.0" font-size="13.5" fill="#2A2926" font-weight="400" text-anchor="start" >= CALCULATE ( [Revenue] ): the row</text>
+<text x="411.0" y="216.0" font-size="13.5" fill="#2A2926" font-weight="400" text-anchor="start" >becomes a filter, customer_id = 1,</text>
+<text x="411.0" y="236.0" font-size="13.5" fill="#2A2926" font-weight="400" text-anchor="start" >which flows to Kayode's 128 lines.</text>
+<text x="411.0" y="286.0" font-size="22" fill="#2F6B3F" font-weight="700" text-anchor="start" >₦30,793,410</text>
+<text x="411.0" y="316.0" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start" >Kayode's own revenue</text>
+<text x="30.0" y="388.0" font-size="13.5" fill="#8A6A1F" font-weight="700" text-anchor="start" >Every measure reference carries a hidden CALCULATE. That's context transition.</text>
+</g></svg>

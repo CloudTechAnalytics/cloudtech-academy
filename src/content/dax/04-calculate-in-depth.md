@@ -18,7 +18,7 @@ CALCULATE ( <expression>, <filter or modifier>, … )
 
 `CALCULATE` takes the current filter context, changes it with its arguments, then evaluates the expression.
 
-**Filter arguments replace filters on the same column**
+### Filter arguments replace filters on the same column
 
 ```dax
 Revenue Wholesale = CALCULATE ( [Revenue], customers[channel] = "Wholesale" )
@@ -28,7 +28,7 @@ The condition replaces any existing filter on `customers[channel]` and keeps eve
 
 To **intersect** with an existing filter instead of replacing it, wrap the condition in `KEEPFILTERS`: `CALCULATE ( [Revenue], KEEPFILTERS ( customers[channel] = "Wholesale" ) )` shows wholesale revenue on the Wholesale row and blank on the others.
 
-**Modifiers remove filters**
+### Modifiers remove filters
 
 | Modifier | Removes |
 | :-- | :-- |
@@ -39,7 +39,7 @@ To **intersect** with an existing filter instead of replacing it, wrap the condi
 
 `REMOVEFILTERS` is the modern, clearer name for `ALL` used as a modifier. `ALL` is also a table function you can iterate; `REMOVEFILTERS` can only be used inside `CALCULATE`.
 
-**Three kinds of "share"**
+### Three kinds of "share"
 
 ```dax
 % of Total = DIVIDE ( [Revenue], CALCULATE ( [Revenue], REMOVEFILTERS ( products ) ) )

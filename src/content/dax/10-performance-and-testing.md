@@ -12,7 +12,7 @@ A report that's slow doesn't get used, and a report that's wrong does damage. On
 
 ## The concept
 
-**Find the slow part first**
+### Find the slow part first
 
 **Optimize → Performance Analyzer → Start recording**, then refresh the visuals. Each visual's time is split into:
 
@@ -22,7 +22,7 @@ A report that's slow doesn't get used, and a report that's wrong does damage. On
 
 Copy a slow visual's query into **DAX query view** to run and change it on its own.
 
-**DAX habits that keep measures fast**
+### DAX habits that keep measures fast
 
 | Slow | Faster | Why |
 | :-- | :-- | :-- |
@@ -35,7 +35,7 @@ Copy a slow visual's query into **DAX query view** to run and change it on its o
 
 The model matters as much as the DAX. Remove columns nobody uses, and reduce the number of distinct values (split a date-time into a date and a time; round long decimals). The engine compresses columns, and fewer distinct values compress far better.
 
-**Testing measures**
+### Testing measures
 
 Before a report goes out, test each important measure:
 

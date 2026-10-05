@@ -14,7 +14,7 @@ In Power BI Fundamentals you wrote your first measures. This course goes deep: h
 
 ## The concept
 
-**The model comes first**
+### The model comes first
 
 DAX is evaluated over the **model**: tables joined by relationships, with filters flowing from the "one" side to the "many" side. Kolanut's model is a small star schema:
 
@@ -27,15 +27,15 @@ DAX is evaluated over the **model**: tables joined by relationships, with filter
 
 Filters flow **downhill**, from a dimension to the fact. Selecting "Lagos" in `customers[region]` filters `orders`. Selecting a product filters `orders` too. But nothing flows back up: filtering `orders` doesn't filter `products`. You'll meet the consequences of that in almost every lesson.
 
-**Measures, not dragged columns**
+### Measures, not dragged columns
 
 Every number in a report should come from an explicit measure: written once, named clearly, formatted, and reused. Dragging a column into a visual creates an "implicit measure" that nobody can find, check or reuse.
 
-**Base measures first, then build on them**
+### Base measures first, then build on them
 
 Write a handful of simple **base measures**, then build everything else from them. When the definition of revenue changes, you change one measure and the whole report follows.
 
-**Habits of a trustworthy measure library**
+### Habits of a trustworthy measure library
 
 - Keep measures in a dedicated `_Measures` table, in display folders (Sales, Customers, Time).
 - Name them as a manager would say them: `Revenue`, `Discount %`, `Active Customers`.

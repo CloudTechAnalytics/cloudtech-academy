@@ -12,7 +12,7 @@ Sorting a table visual puts customers in order, but it doesn't give you a rank y
 
 ## The concept
 
-**RANKX**
+### RANKX
 
 ```dax
 RANKX ( <table>, <expression>, [value], [order], [ties] )
@@ -31,12 +31,12 @@ Other arguments:
 - `order`: `DESC` (the default, highest = 1) or `ASC`.
 - `ties`: `SKIP` (the default: 1, 2, 2, 4) or `DENSE` (1, 2, 2, 3).
 
-**Two things to tidy**
+### Two things to tidy
 
 - **The total row.** At the total there's no single customer, so the rank is meaningless (it shows 1). Return BLANK there with `ISINSCOPE ( customers[customer_name] )`, which is true only when the visual is grouped by customer.
 - **Customers with no sales** in the period get ranked last. Return BLANK when `[Revenue]` is blank.
 
-**TOPN**
+### TOPN
 
 `TOPN ( n, <table>, <expression> )` returns the top n rows of a table as a virtual table, which you can then iterate:
 
@@ -45,7 +45,7 @@ Top 5 Revenue =
 SUMX ( TOPN ( 5, ALL ( customers[customer_name] ), [Revenue] ), [Revenue] )
 ```
 
-**Let the user choose N**
+### Let the user choose N
 
 **Modeling → New parameter → Numeric range** creates a slicer and a measure, such as `[Top N Value]`, that returns the selected number. Use it in place of 5 to make the analysis interactive.
 

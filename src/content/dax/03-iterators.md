@@ -32,7 +32,28 @@ SUMX ( <table>, <expression> )
 
 `SUM ( orders[quantity] )` is really shorthand for `SUMX ( orders, orders[quantity] )`.
 
-**The table you iterate decides the "average of what"**
+**Row by row.** Here is what `SUMX` does with Kolanut's revenue expression, on the first four order lines:
+
+```dax
+Revenue = SUMX ( orders, orders[quantity] * orders[unit_price] * ( 1 - orders[discount_pct] / 100 ) )
+```
+
+| order_id | quantity | unit_price | discount_pct | Expression for this row | Result |
+| --: | --: | --: | --: | :-- | --: |
+| 10001 | 14 | 18,600 | 0 | 14 × 18,600 × (1 − 0) | 260,400 |
+| 10002 | 7 | 13,200 | 0 | 7 × 13,200 × (1 − 0) | 92,400 |
+| 10003 | 4 | 3,600 | 0 | 4 × 3,600 × (1 − 0) | 14,400 |
+| 10004 | 28 | 6,000 | 5 | 28 × 6,000 × (1 − 0.05) | 159,600 |
+| … | | | | … 4,262 more rows | |
+| | | | | **SUMX adds every result** | **830,541,245** |
+
+1. The table argument, `orders`, decides **which rows** to visit: every row that the current filter context lets through.
+2. For each row, the expression is evaluated with that row's values (row context).
+3. The results are aggregated: added for SUMX, averaged for AVERAGEX, and so on.
+
+You couldn't get this with `SUM ( orders[quantity] ) * SUM ( orders[unit_price] ) * …`. Multiplying the totals is not the same as totalling the products. That's the main reason iterators exist.
+
+### The table you iterate decides the "average of what"
 
 | Measure | Iterates over | Means |
 | :-- | :-- | :-- |
@@ -44,7 +65,7 @@ SUMX ( <table>, <expression> )
 
 When you iterate a list of customers and call `[Revenue]`, **context transition** filters each customer in turn, which is exactly what lesson 2 explained. And because `AVERAGEX` skips blanks, months with no sales (such as July 2026, which hasn't happened) don't drag the average down.
 
-**RELATED inside an iterator**
+### RELATED inside an iterator
 
 While iterating `orders` (the many side), `RELATED ( products[list_price] )` fetches the matching value from the one side. That lets you compare what customers paid with the list price.
 

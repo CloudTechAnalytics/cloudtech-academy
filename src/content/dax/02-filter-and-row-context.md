@@ -30,7 +30,7 @@ DAX has two kinds of context.
 
 The crucial rule: **row context doesn't filter anything**. It only lets you read the current row's values, such as `orders[quantity]`. That's why the colleague's column fails: on the row for Kayode Distributors there's a row context on `customers`, but no filter, so `SUMX ( orders, … )` loops over **every** order.
 
-**Context transition**
+### Context transition
 
 `CALCULATE` turns the current row context into a filter context: "filter the model to this row". And every **measure reference** is wrapped in an invisible `CALCULATE`. So this column works:
 
@@ -46,6 +46,8 @@ On Kayode's row, `[Revenue]` becomes `CALCULATE ( [Revenue] )`, which filters `c
 | `[Revenue]` | that customer's revenue: context transition |
 | `CALCULATE ( SUMX ( orders, … ) )` | that customer's revenue |
 | `SUMX ( RELATEDTABLE ( orders ), … )` | that customer's revenue: only their related rows |
+
+![On Kayode Distributors' row of the customers table, SUMX over orders sees no filter and returns the grand total, ₦830,541,245. The measure reference [Revenue] is wrapped in a hidden CALCULATE, which turns the row into the filter customer_id = 1, leaving Kayode's 128 order lines: ₦30,793,410.](/images/courses/dax/context-transition.svg "The same row, two formulas. Only the one with CALCULATE (visible or hidden) turns the row into a filter.")
 
 ## Example
 
