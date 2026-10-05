@@ -10,7 +10,7 @@ Tallybook's CTO wants to adopt infrastructure as code properly, and wants one do
 
 ## The concept
 
-**The parts of the review**
+### The parts of the review
 
 | Part | Built in |
 | :-- | :-- |
@@ -22,7 +22,7 @@ Tallybook's CTO wants to adopt infrastructure as code properly, and wants one do
 | Drift and unmanaged resources | lesson 8 |
 | Modules and the pipeline | lesson 9 |
 
-**One scorecard per PR**
+### One scorecard per PR
 
 For each PR: its plan summary, policy results, decision, and your review comment. That table is what the CTO will read first.
 

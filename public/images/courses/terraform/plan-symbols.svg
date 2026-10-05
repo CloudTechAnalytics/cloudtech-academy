@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 380" width="760" height="380" role="img" aria-label="An annotated example plan. A plus sign creates a resource, a tilde changes it in place, a minus destroys it, and minus-slash-plus replaces it by destroying it and creating a new one. The summary line counts a replacement as one add and one destroy.">
+<title>Reading a plan: what each symbol does, and the summary line.</title>
+
+<rect width="760" height="380" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="16.0" width="728.0" height="250.0" rx="8" fill="#2A2926" stroke="#2A2926" stroke-width="1"/>
+<text xml:space="preserve" x="32.0" y="46.0" font-size="13" fill="#8FD19E" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">+</text>
+<text xml:space="preserve" x="80.0" y="46.0" font-size="12.5" fill="#8FD19E" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">resource "aws_security_group_rule" "https"</text>
+<text xml:space="preserve" x="728.0" y="46.0" font-size="12" fill="#8FD19E" font-weight="700" text-anchor="end">create</text>
+<text xml:space="preserve" x="32.0" y="76.0" font-size="13" fill="#9CC3EA" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">~</text>
+<text xml:space="preserve" x="80.0" y="76.0" font-size="12.5" fill="#9CC3EA" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">resource "aws_instance" "api[0]"</text>
+<text xml:space="preserve" x="728.0" y="76.0" font-size="12" fill="#9CC3EA" font-weight="700" text-anchor="end">update in place</text>
+<text xml:space="preserve" x="32.0" y="106.0" font-size="13" fill="#9CC3EA" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">  ~</text>
+<text xml:space="preserve" x="80.0" y="106.0" font-size="12.5" fill="#9CC3EA" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">  instance_type = "m5.2xlarge" -&gt; "m5.xlarge"</text>
+<text xml:space="preserve" x="32.0" y="136.0" font-size="13" fill="#F2A097" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">-</text>
+<text xml:space="preserve" x="80.0" y="136.0" font-size="12.5" fill="#F2A097" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">resource "aws_eip" "old_bastion"</text>
+<text xml:space="preserve" x="728.0" y="136.0" font-size="12" fill="#F2A097" font-weight="700" text-anchor="end">destroy</text>
+<text xml:space="preserve" x="32.0" y="166.0" font-size="13" fill="#F2A097" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">-/+</text>
+<text xml:space="preserve" x="80.0" y="166.0" font-size="12.5" fill="#F2A097" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">resource "aws_db_instance" "main"</text>
+<text xml:space="preserve" x="728.0" y="166.0" font-size="12" fill="#F2A097" font-weight="700" text-anchor="end">REPLACE: destroy, then create</text>
+<text xml:space="preserve" x="32.0" y="196.0" font-size="13" fill="#F3EBD8" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace"></text>
+<text xml:space="preserve" x="80.0" y="196.0" font-size="12.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace"></text>
+<text xml:space="preserve" x="32.0" y="226.0" font-size="13" fill="#E8D6A8" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace"></text>
+<text xml:space="preserve" x="80.0" y="226.0" font-size="12.5" fill="#E8D6A8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">Plan: 2 to add, 1 to change, 2 to destroy.</text>
+<text xml:space="preserve" x="728.0" y="226.0" font-size="12" fill="#E8D6A8" font-weight="700" text-anchor="end">replacement counted in both</text>
+<rect x="16.0" y="286.0" width="728.0" height="76.0" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.4"/>
+<text xml:space="preserve" x="32.0" y="314.0" font-size="14" fill="#9B2C1F" font-weight="700" text-anchor="start">Read every -/+ twice.</text>
+<text xml:space="preserve" x="32.0" y="340.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">A replaced database is a new, empty database. Check why it's being replaced before anyone approves.</text>
+</g></svg>

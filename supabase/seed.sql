@@ -52679,7 +52679,7 @@ Part of Tallybook's infrastructure is managed differently: written as code with 
 
 ## The concept
 
-**ClickOps and its problems**
+### ClickOps and its problems
 
 Changing infrastructure by hand in a console ("ClickOps") is quick once, and costly forever:
 
@@ -52688,11 +52688,13 @@ Changing infrastructure by hand in a console ("ClickOps") is quick once, and cos
 - environments drift apart (staging stops matching production);
 - rebuilding after a disaster depends on memory.
 
-**Infrastructure as code (IaC)**
+### Infrastructure as code (IaC)
 
 Infrastructure is described in text files, kept in git, changed through reviewed pull requests, and applied by a tool. **Terraform** is the most widely used. You write what you want, for example "four API servers of this size", and Terraform works out what to create, change or delete to get there.
 
-**State**
+![Top: ClickOps, an engineer clicking changes straight into the cloud, with no record, review or reproducibility. Bottom: infrastructure as code, a change edited in a .tf file, reviewed in a pull request with its plan, applied by Terraform and recorded in git and state.](/images/courses/terraform/clickops-vs-iac.svg "ClickOps versus infrastructure as code.")
+
+### State
 
 Terraform keeps a **state file** recording every resource it manages and its last known settings. Anything that isn't in the state is invisible to Terraform: it won't change it, review it, or delete it.
 
@@ -52827,7 +52829,7 @@ To review a Terraform change, you need to read the code it changes. And the best
 
 ## The concept
 
-**HCL**
+### HCL
 
 Terraform files (`.tf`) use HashiCorp Configuration Language. The main building block is a **resource**: a type, a name, and arguments.
 
@@ -52859,7 +52861,7 @@ resource "aws_lb_target_group_attachment" "api" {
 - `aws_instance.api` is the resource's **address**; with `count = 4`, its instances are `aws_instance.api[0]` to `[3]`.
 - `aws_instance.api[count.index].id` is a **reference**: Terraform works out the order (create the servers before attaching them).
 
-**The workflow**
+### The workflow
 
 | Command | Does |
 | :-- | :-- |
@@ -52870,6 +52872,8 @@ resource "aws_lb_target_group_attachment" "api" {
 | `terraform apply` | make the changes (after showing the plan again) |
 
 Nothing changes until `apply`. In a team, `plan` runs automatically on every pull request, and `apply` runs from the pipeline after review.
+
+![Four steps: terraform init, fmt and validate, terraform plan (which changes nothing), terraform apply (which changes real infrastructure), with an example plan command.](/images/courses/terraform/workflow.svg "The workflow: plan is safe any time; apply runs after review.")
 
 ## Example
 
@@ -53030,7 +53034,7 @@ With Terraform, the same code builds both environments. Only the **variables** d
 
 ## The concept
 
-**Variables**
+### Variables
 
 ```hcl
 variable "api_count" {
@@ -53052,7 +53056,7 @@ resource "aws_instance" "api" {
 
 Values come from a **variable file** per environment, such as `production.tfvars.json`, passed with `terraform plan -var-file=production.tfvars.json`.
 
-**Locals and outputs**
+### Locals and outputs
 
 ```hcl
 locals {
@@ -53069,7 +53073,7 @@ output "db_endpoint" {
 
 `locals` name values used in several places; `output` publishes values for people or other code (like the database's address).
 
-**What should differ between environments**
+### What should differ between environments
 
 Size and count (staging can be smaller), and things that only matter for real customers (multi-zone databases, long backup retention). What should **not** differ: software versions, security rules and the shape of the system, or staging stops being a useful test.
 
@@ -53220,11 +53224,13 @@ Terraform hides sensitive values when it prints them. It doesn't hide them in th
 
 ## The concept
 
-**What state is for**
+### What state is for
 
 Terraform compares three things on every plan: your code (what you want), the state (what it created last time), and the real infrastructure (what exists now). State is how it knows that `aws_instance.api[2]` is the server with ID `r-0017`.
 
-**Where state should live**
+![Three boxes, code, state and real cloud, feeding into terraform plan: the changes that make reality match the code. A server created by hand isn't in the state, so Terraform can't see it.](/images/courses/terraform/code-state-real.svg "Every plan compares code, state and the real cloud.")
+
+### Where state should live
 
 | Practice | Why |
 | :-- | :-- |
@@ -53233,7 +53239,7 @@ Terraform compares three things on every plan: your code (what you want), the st
 | **Encryption and tight access** | state contains secrets |
 | **Never in git, never emailed** | anyone who has it has the secrets |
 
-**Secrets in state**
+### Secrets in state
 
 Database passwords, generated keys and some API tokens end up in state. Mark variables and outputs `sensitive = true` so they're hidden in output, but treat the state file itself as a secret. Better still, let the database generate and keep its own password in a secrets manager, so it never passes through Terraform.
 
@@ -53374,7 +53380,7 @@ The title is what the author **meant** to do. The plan is what **will** happen. 
 
 ## The concept
 
-**Plan symbols**
+### Plan symbols
 
 | Symbol | Action in JSON | Meaning |
 | :-- | :-- | :-- |
@@ -53386,7 +53392,9 @@ The title is what the author **meant** to do. The plan is what **will** happen. 
 
 The summary line counts a replacement as one add **and** one destroy: `Plan: 1 to add, 0 to change, 1 to destroy.`
 
-**Plan JSON**
+![An example plan: + creates a security group rule, ~ updates a server's instance type in place, - destroys an old IP, -/+ replaces a database, and the summary Plan: 2 to add, 1 to change, 2 to destroy.](/images/courses/terraform/plan-symbols.svg "An annotated plan. Read every -/+ twice.")
+
+### Plan JSON
 
 `terraform show -json plan.out` gives every change as data: the resource's address, the actions, and its attributes `before` and `after`. Review tools and policy checks (lesson 7) read this.
 
@@ -53546,7 +53554,7 @@ Each has a standard fix. Knowing them is a core skill for anyone who approves in
 
 ## The concept
 
-**Renames: `moved` blocks**
+### Renames: `moved` blocks
 
 Tell Terraform the resource moved, and the rename becomes a no-op:
 
@@ -53557,7 +53565,9 @@ moved {
 }
 ```
 
-**Protect what can't be recreated**
+![Left: renaming a database resource without a moved block plans to destroy aws_db_instance.prod and create an empty aws_db_instance.main. Right: with a moved block, the plan has no changes.](/images/courses/terraform/moved-block.svg "A rename without a moved block destroys the database; with one, nothing changes.")
+
+### Protect what can't be recreated
 
 ```hcl
 resource "aws_db_instance" "main" {
@@ -53572,12 +53582,12 @@ resource "aws_db_instance" "main" {
 
 `prevent_destroy` makes Terraform refuse any plan that would destroy the resource. `deletion_protection` makes the cloud provider refuse it too, even from the console.
 
-**Sequence risky changes**
+### Sequence risky changes
 
 - Create the new thing in one PR; switch traffic and delete the old thing in another, after checking.
 - `create_before_destroy` in a `lifecycle` block makes replacements create first.
 
-**Check every changed attribute**
+### Check every changed attribute
 
 An update can hide changes the title doesn't mention. Compare `before` and `after` for every attribute, not just the one you expected.
 
@@ -53718,7 +53728,7 @@ This is **policy as code**. Tools such as Open Policy Agent, Sentinel and Checko
 
 **A policy is a function**: plan in, list of violations out. Each violation names the resource and the rule broken.
 
-**Good first policies**
+### Good first policies
 
 | Policy | Catches |
 | :-- | :-- |
@@ -53728,7 +53738,7 @@ This is **policy as code**. Tools such as Open Policy Agent, Sentinel and Checko
 | Database major version changes need sign-off | PR 106 |
 | No more than N deletions in one plan | PR 101 |
 
-**Block or warn**
+### Block or warn
 
 Some violations should **block** the merge (destroying a database); others should **warn** and require a named senior reviewer (a major upgrade). Every block can still be overridden, with a recorded reason.
 
@@ -53911,21 +53921,21 @@ Every manual change creates **drift**: the real world no longer matches what Ter
 
 ## The concept
 
-**Two kinds of mismatch**
+### Two kinds of mismatch
 
 | Kind | Example | Found by |
 | :-- | :-- | :-- |
 | **Attribute drift** | a managed server resized in the console | `terraform plan` shows a change nobody wrote |
 | **Unmanaged resources** | a server or rule created by hand | comparing the cloud's inventory with state |
 
-**Decide for each**
+### Decide for each
 
 - **Keep it, and bring it under Terraform**: write the code and **import** it.
 - **Change it back**: let Terraform's next apply restore the coded value.
 - **Accept the change**: update the code to match reality.
 - **Delete it**: if nobody needs it.
 
-**Importing**
+### Importing
 
 ```hcl
 import {
@@ -54065,7 +54075,7 @@ Two practices fix this: **modules**, so shared patterns are written once, and a 
 
 ## The concept
 
-**Modules**
+### Modules
 
 A module is a folder of Terraform code with inputs (variables) and outputs, used like a function:
 
@@ -54088,7 +54098,7 @@ module "vpc" {
 
 **Pin versions** of external modules and providers, so the same code gives the same result next month.
 
-**The pipeline**
+### The pipeline
 
 | Stage | Runs | Fails the PR when |
 | :-- | :-- | :-- |
@@ -54100,6 +54110,8 @@ module "vpc" {
 | `terraform apply` | after merge, from the pipeline only | apply errors |
 
 Only the pipeline has permission to apply. People review; the pipeline acts.
+
+![On every pull request: fmt and validate, plan, policy checks on the plan JSON, and the plan posted for review. After approval and merge: apply the reviewed plan and record it. A blocking policy violation stops the merge unless an override is recorded.](/images/courses/terraform/pipeline.svg "Plan and check on every pull request; apply only after merge.")
 
 ## Example
 
@@ -54215,7 +54227,7 @@ Tallybook's CTO wants to adopt infrastructure as code properly, and wants one do
 
 ## The concept
 
-**The parts of the review**
+### The parts of the review
 
 | Part | Built in |
 | :-- | :-- |
@@ -54227,7 +54239,7 @@ Tallybook's CTO wants to adopt infrastructure as code properly, and wants one do
 | Drift and unmanaged resources | lesson 8 |
 | Modules and the pipeline | lesson 9 |
 
-**One scorecard per PR**
+### One scorecard per PR
 
 For each PR: its plan summary, policy results, decision, and your review comment. That table is what the CTO will read first.
 

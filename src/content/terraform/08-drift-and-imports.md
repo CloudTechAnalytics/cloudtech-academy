@@ -12,21 +12,21 @@ Every manual change creates **drift**: the real world no longer matches what Ter
 
 ## The concept
 
-**Two kinds of mismatch**
+### Two kinds of mismatch
 
 | Kind | Example | Found by |
 | :-- | :-- | :-- |
 | **Attribute drift** | a managed server resized in the console | `terraform plan` shows a change nobody wrote |
 | **Unmanaged resources** | a server or rule created by hand | comparing the cloud's inventory with state |
 
-**Decide for each**
+### Decide for each
 
 - **Keep it, and bring it under Terraform**: write the code and **import** it.
 - **Change it back**: let Terraform's next apply restore the coded value.
 - **Accept the change**: update the code to match reality.
 - **Delete it**: if nobody needs it.
 
-**Importing**
+### Importing
 
 ```hcl
 import {

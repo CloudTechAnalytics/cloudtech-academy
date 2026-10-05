@@ -12,11 +12,13 @@ Terraform hides sensitive values when it prints them. It doesn't hide them in th
 
 ## The concept
 
-**What state is for**
+### What state is for
 
 Terraform compares three things on every plan: your code (what you want), the state (what it created last time), and the real infrastructure (what exists now). State is how it knows that `aws_instance.api[2]` is the server with ID `r-0017`.
 
-**Where state should live**
+![Three boxes, code, state and real cloud, feeding into terraform plan: the changes that make reality match the code. A server created by hand isn't in the state, so Terraform can't see it.](/images/courses/terraform/code-state-real.svg "Every plan compares code, state and the real cloud.")
+
+### Where state should live
 
 | Practice | Why |
 | :-- | :-- |
@@ -25,7 +27,7 @@ Terraform compares three things on every plan: your code (what you want), the st
 | **Encryption and tight access** | state contains secrets |
 | **Never in git, never emailed** | anyone who has it has the secrets |
 
-**Secrets in state**
+### Secrets in state
 
 Database passwords, generated keys and some API tokens end up in state. Mark variables and outputs `sensitive = true` so they're hidden in output, but treat the state file itself as a secret. Better still, let the database generate and keep its own password in a secrets manager, so it never passes through Terraform.
 

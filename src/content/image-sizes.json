@@ -558,5 +558,29 @@
  "/images/courses/statistics/trend-residuals.svg": [
   760,
   340
+ ],
+ "/images/courses/terraform/clickops-vs-iac.svg": [
+  760,
+  400
+ ],
+ "/images/courses/terraform/code-state-real.svg": [
+  760,
+  380
+ ],
+ "/images/courses/terraform/moved-block.svg": [
+  760,
+  340
+ ],
+ "/images/courses/terraform/pipeline.svg": [
+  760,
+  380
+ ],
+ "/images/courses/terraform/plan-symbols.svg": [
+  760,
+  380
+ ],
+ "/images/courses/terraform/workflow.svg": [
+  760,
+  300
  ]
 }

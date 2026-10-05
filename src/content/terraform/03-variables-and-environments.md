@@ -12,7 +12,7 @@ With Terraform, the same code builds both environments. Only the **variables** d
 
 ## The concept
 
-**Variables**
+### Variables
 
 ```hcl
 variable "api_count" {
@@ -34,7 +34,7 @@ resource "aws_instance" "api" {
 
 Values come from a **variable file** per environment, such as `production.tfvars.json`, passed with `terraform plan -var-file=production.tfvars.json`.
 
-**Locals and outputs**
+### Locals and outputs
 
 ```hcl
 locals {
@@ -51,7 +51,7 @@ output "db_endpoint" {
 
 `locals` name values used in several places; `output` publishes values for people or other code (like the database's address).
 
-**What should differ between environments**
+### What should differ between environments
 
 Size and count (staging can be smaller), and things that only matter for real customers (multi-zone databases, long backup retention). What should **not** differ: software versions, security rules and the shape of the system, or staging stops being a useful test.
 
