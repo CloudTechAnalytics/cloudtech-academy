@@ -99,7 +99,10 @@ function Figure({ image }: { image: Tokens.Image }) {
       </a>
       <figcaption className="mt-2.5 text-[0.875rem] leading-relaxed text-muted">
         {image.title && decode(image.title)}
-        <span className="block text-[0.8125rem] text-subtle sm:hidden">Tap the image to see it full size.</span>
+        <span className="block text-[0.8125rem] text-subtle">
+          <span className="sm:hidden">Tap</span>
+          <span className="hidden sm:inline">Click</span> the image to see it full size.
+        </span>
       </figcaption>
     </figure>
   );
