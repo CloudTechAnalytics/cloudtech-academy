@@ -10,7 +10,7 @@ Ask someone how long the permits will take and they'll say "about 15 days": the 
 
 ## The concept
 
-**Three-point estimates**
+### Three-point estimates
 
 For each task, ask for three numbers:
 
@@ -18,7 +18,7 @@ For each task, ask for three numbers:
 - **most likely** (M): the usual case;
 - **pessimistic** (P): if things go wrong (but not a disaster).
 
-**PERT**
+### PERT
 
 A standard way to combine them:
 
@@ -27,7 +27,9 @@ A standard way to combine them:
 
 When P is much further from M than O is (as with permits and imports), the expected duration is **longer** than the most likely one.
 
-**Good estimating habits**
+![A triangular three-point estimate with optimistic 4, most likely 6 and pessimistic 14 days: PERT expected duration 7.0 days, longer than the most likely because the tail is on the right](/images/courses/pm/pert.svg "A three-point estimate: a long tail on the right pulls the expected duration above the most likely.")
+
+### Good estimating habits
 
 - Ask the people who'll do the work, and record their reasoning.
 - Estimate effort in working days, then convert to dates with a calendar.

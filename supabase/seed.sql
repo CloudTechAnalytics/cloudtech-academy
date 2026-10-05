@@ -62421,11 +62421,11 @@ Ten weeks in, the fit-out is behind, imported equipment cost more than planned, 
 
 **A project** is temporary work with a defined outcome: it has a start, an end, and something specific to deliver. Running the depot afterwards is operations; launching it is a project.
 
-**Scope, time and cost**
+### Scope, time and cost
 
 Every project balances three things: **what** is delivered (scope), **when** (time) and **for how much** (cost), at an agreed quality. Change one and at least one other moves. Adding a cold room (scope) costs money and time; opening sooner (time) needs more money or less scope.
 
-**The lifecycle**
+### The lifecycle
 
 | Phase | Key outputs |
 | :-- | :-- |
@@ -62434,9 +62434,11 @@ Every project balances three things: **what** is delivered (scope), **when** (ti
 | Delivery | doing the work, tracking it, handling changes |
 | Closing | handing over, lessons learned |
 
-**The charter**
+### The charter
 
 One page that authorises the project: its objective, scope (in and out), deadline, budget, sponsor, project manager, and how success is measured. Without one, people disagree later about what was promised.
+
+![A triangle of scope, time and cost around quality, with an example where adding a cold room raises cost or time; below, the four project phases: initiation, planning, delivery and closing](/images/courses/pm/triple-constraint.svg "Scope, time and cost pull against each other; a project moves through four phases.")
 
 ## Example
 
@@ -62573,22 +62575,24 @@ A **work breakdown structure** (WBS) starts from the outcome and breaks it down,
 
 ## The concept
 
-**Breaking down**
+### Breaking down
 
 1. The project outcome: an open, working Abuja depot.
 2. Major **deliverables** (here, the phases): initiation, facilities, systems, people, operations, launch.
 3. **Work packages**: tasks small enough to estimate with confidence (here, 1 to 25 working days likely) and owned by one person or team.
 
-**Rules of thumb**
+### Rules of thumb
 
 - The **100% rule**: the pieces at each level add up to all of the work of the level above, no more, no less.
 - Name tasks by their outcome ("Install racking", not "Racking").
 - Every task has exactly **one** owner.
 - Split anything too big to estimate or track weekly.
 
-**From WBS to plan**
+### From WBS to plan
 
 The WBS says **what**. Estimates (lesson 3) say **how long**, dependencies and the schedule (lesson 4) say **when**, and daily costs say **how much**.
+
+![A work breakdown structure for racking installation: the outcome splits into Design, Supply and Install deliverables, each with work packages that have one owner; the 100% rule and naming tasks by outcome](/images/courses/pm/wbs.svg "A WBS: outcome, deliverables, work packages with one owner each.")
 
 ## Example
 
@@ -62737,7 +62741,7 @@ Ask someone how long the permits will take and they'll say "about 15 days": the 
 
 ## The concept
 
-**Three-point estimates**
+### Three-point estimates
 
 For each task, ask for three numbers:
 
@@ -62745,7 +62749,7 @@ For each task, ask for three numbers:
 - **most likely** (M): the usual case;
 - **pessimistic** (P): if things go wrong (but not a disaster).
 
-**PERT**
+### PERT
 
 A standard way to combine them:
 
@@ -62754,7 +62758,9 @@ A standard way to combine them:
 
 When P is much further from M than O is (as with permits and imports), the expected duration is **longer** than the most likely one.
 
-**Good estimating habits**
+![A triangular three-point estimate with optimistic 4, most likely 6 and pessimistic 14 days: PERT expected duration 7.0 days, longer than the most likely because the tail is on the right](/images/courses/pm/pert.svg "A three-point estimate: a long tail on the right pulls the expected duration above the most likely.")
+
+### Good estimating habits
 
 - Ask the people who'll do the work, and record their reasoning.
 - Estimate effort in working days, then convert to dates with a calendar.
@@ -62883,16 +62889,18 @@ Twenty-three tasks, each with an owner pushing to finish theirs. But they don't 
 
 ## The concept
 
-**The critical path method (CPM)**
+### The critical path method (CPM)
 
 1. **Forward pass**: each task's **earliest start** is the latest finish of everything it depends on; earliest finish = earliest start + duration. The project's length is the last earliest finish.
 2. **Backward pass**: working back from the end, each task's **latest finish** is the earliest latest start of the tasks that depend on it.
 3. **Float** (slack) = latest start − earliest start: how long a task can slip without delaying the end.
 4. The **critical path** is the chain of tasks with zero float. Any delay on it delays the project.
 
-**Dates**
+### Dates
 
 Durations are working days. Convert with a working calendar (Monday to Friday here; real plans also remove public holidays).
+
+![Six tasks with forward and backward pass values: the critical path A, B, D, F has zero float, while the racking order has 6 days of float and hiring has 14; project length 31 days](/images/courses/pm/critical-path.svg "Forward pass, backward pass, float, and the critical path (an illustration).")
 
 ## Example
 
@@ -63047,21 +63055,23 @@ The sponsor asked: "Will we open by 30 September?" The plan says 11 September wi
 
 ## The concept
 
-**Monte Carlo simulation**
+### Monte Carlo simulation
 
 1. For each task, draw a random duration from its range (here, a triangular distribution between optimistic and pessimistic, peaking at most likely).
 2. Schedule the project with those durations and record the end date.
 3. Repeat thousands of times.
 4. The results form a **distribution** of end dates: you can read off the probability of meeting any date.
 
-**Merge bias**
+### Merge bias
 
 When several paths join (training waits for hiring **and** system testing), the task starts when the **slowest** finishes. Each path alone might be on time, but the chance that all of them are is lower. That's why simulation usually shows later dates than adding up one path's estimates.
 
-**Using the results**
+### Using the results
 
 - Quote dates with confidence: "P80" is the date you have an 80% chance of meeting.
 - A **schedule buffer** is the gap between the plan's date and the date you commit to.
+
+![A histogram of 20,000 simulated project lengths for a small schedule: the plan's 29 days is reached in only about 6% of runs, the median is 35 days and P80 is 38 days](/images/courses/pm/simulation.svg "Thousands of random runs: the plan's date is far from certain, and P80 is later.")
 
 ## Example
 
@@ -63224,7 +63234,7 @@ At the week 10 meeting, the finance director said: "We've spent about ₦58 mill
 
 ## The concept
 
-**Three numbers at the status date**
+### Three numbers at the status date
 
 | Measure | Question | How |
 | :-- | :-- | :-- |
@@ -63232,7 +63242,7 @@ At the week 10 meeting, the finance director said: "We've spent about ₦58 mill
 | **Earned value (EV)** | what work **is** done, in budget terms? | each task's budget × its % complete |
 | **Actual cost (AC)** | what have we spent? | from the accounts |
 
-**What they tell you**
+### What they tell you
 
 | Measure | Formula | Meaning |
 | :-- | :-- | :-- |
@@ -63243,6 +63253,8 @@ At the week 10 meeting, the finance director said: "We've spent about ₦58 mill
 | Estimate at completion (EAC) | budget ÷ CPI | final cost if spending efficiency stays the same |
 
 The budget for all the work is the **budget at completion** (BAC).
+
+![An S-curve of planned value with the status date at week 6: planned value 40, actual cost 36 and earned value 30 give an SPI of 0.75, a CPI of 0.83 and an estimate at completion of 120 against a budget of 100](/images/courses/pm/earned-value.svg "Planned value, earned value and actual cost at the status date, and what they tell you.")
 
 ## Example
 
@@ -63388,7 +63400,7 @@ The baseline schedule said the depot would open on 11 September. It's now the en
 
 ## The concept
 
-**Re-forecasting**
+### Re-forecasting
 
 From the status date, schedule only what's left:
 
@@ -63397,7 +63409,7 @@ From the status date, schedule only what's left:
 - tasks not started need their full estimate;
 - nothing can finish before the status date.
 
-**Which rate for remaining work?**
+### Which rate for remaining work?
 
 | Assumption | Use when |
 | :-- | :-- |
@@ -63405,13 +63417,15 @@ From the status date, schedule only what's left:
 | Remaining work goes at the rate so far | the cause is still there (the contractor is slow) |
 | Re-estimate with the team | always worth doing for critical tasks |
 
-**Red, amber, green**
+### Red, amber, green
 
 A status colour is only useful with clear rules, for example:
 
 - **Green**: forecast meets the deadline with at least 5 days to spare, and CPI ≥ 0.95.
 - **Amber**: forecast meets the deadline with less than 5 days to spare, or CPI between 0.90 and 0.95.
 - **Red**: forecast misses the deadline, or CPI below 0.90.
+
+![Re-forecasting from the status date: finished tasks need nothing, an in-progress task needs its remaining work, tasks not started need their full estimate; below, the green, amber and red rules](/images/courses/pm/forecast.svg "Schedule only what's left from the status date; status colours need clear rules.")
 
 ## Example
 
@@ -63558,17 +63572,17 @@ A risk register isn't paperwork. Used weekly, it's how a project manager spends 
 
 ## The concept
 
-**Risks and issues**
+### Risks and issues
 
 A **risk** might happen; an **issue** has happened. When a risk happens it becomes an issue, and its response becomes urgent.
 
-**Expected monetary value (EMV)**
+### Expected monetary value (EMV)
 
 > EMV = probability × impact
 
 A 40% chance of a ₦3 million cost has an EMV of ₦1.2 million. Ranking by EMV puts likely-and-costly risks first. Do the same for **days**: probability × delay.
 
-**Responses**
+### Responses
 
 | Response | Example |
 | :-- | :-- |
@@ -63577,9 +63591,11 @@ A 40% chance of a ₦3 million cost has an EMV of ₦1.2 million. Ranking by EMV
 | **Transfer** | insurance, fixed-price contracts, forward currency purchase |
 | **Accept** | keep money and time in reserve |
 
-**Contingency**
+### Contingency
 
 A reserve of money (and time) for **identified** risks, roughly their total EMV, held by the project manager and released only when a risk happens.
+
+![A table of four example risks ranked by expected monetary value (probability times impact) with a total EMV of 2.2 million naira as contingency, and the four responses: avoid, reduce, transfer, accept](/images/courses/pm/risk-emv.svg "EMV = probability × impact ranks risks and sizes the contingency; four possible responses.")
 
 ## Example
 
@@ -63716,7 +63732,7 @@ Change control isn't saying no. It's showing the sponsor what each change really
 
 ## The concept
 
-**Assess every change the same way**
+### Assess every change the same way
 
 | Question | How |
 | :-- | :-- |
@@ -63726,11 +63742,13 @@ Change control isn't saying no. It's showing the sponsor what each change really
 | What does it cost? | the request, plus any delay cost |
 | Does it still meet the deadline and the budget plus contingency? | compare |
 
-**Schedule compression**
+### Schedule compression
 
 Two ways to finish sooner: **crashing** (spend money to shorten a critical task: weekend working, more crews) and **fast-tracking** (overlap tasks that were planned in sequence). Both only help on the critical path.
 
-**Decide, don't drift**
+![A change request flow: a task with enough float absorbs the change and the finish is unchanged; a critical-path task moves the finish by the extra days; crashing and fast-tracking shorten the critical path](/images/courses/pm/change-control.svg "A change on a float task can be absorbed; on the critical path it moves the finish.")
+
+### Decide, don't drift
 
 Every request gets a decision (approve, reject, defer to after opening) with a reason, recorded in a change log.
 
@@ -63902,7 +63920,7 @@ The steering committee meets at the end of week 10. They want one report: where 
 
 ## The concept
 
-**The parts of the review**
+### The parts of the review
 
 | Part | Built in |
 | :-- | :-- |
@@ -63914,7 +63932,7 @@ The steering committee meets at the end of week 10. They want one report: where 
 | Risks, responses and contingency | lesson 8 |
 | Change decisions | lesson 9 |
 
-**One page first**
+### One page first
 
 Busy sponsors read the first page. Put the status, the forecast date and cost, and the decisions needed at the top; put the analysis behind it.
 

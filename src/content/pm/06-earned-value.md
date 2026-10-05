@@ -12,7 +12,7 @@ At the week 10 meeting, the finance director said: "We've spent about ₦58 mill
 
 ## The concept
 
-**Three numbers at the status date**
+### Three numbers at the status date
 
 | Measure | Question | How |
 | :-- | :-- | :-- |
@@ -20,7 +20,7 @@ At the week 10 meeting, the finance director said: "We've spent about ₦58 mill
 | **Earned value (EV)** | what work **is** done, in budget terms? | each task's budget × its % complete |
 | **Actual cost (AC)** | what have we spent? | from the accounts |
 
-**What they tell you**
+### What they tell you
 
 | Measure | Formula | Meaning |
 | :-- | :-- | :-- |
@@ -31,6 +31,8 @@ At the week 10 meeting, the finance director said: "We've spent about ₦58 mill
 | Estimate at completion (EAC) | budget ÷ CPI | final cost if spending efficiency stays the same |
 
 The budget for all the work is the **budget at completion** (BAC).
+
+![An S-curve of planned value with the status date at week 6: planned value 40, actual cost 36 and earned value 30 give an SPI of 0.75, a CPI of 0.83 and an estimate at completion of 120 against a budget of 100](/images/courses/pm/earned-value.svg "Planned value, earned value and actual cost at the status date, and what they tell you.")
 
 ## Example
 

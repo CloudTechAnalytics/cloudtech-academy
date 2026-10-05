@@ -12,17 +12,17 @@ A risk register isn't paperwork. Used weekly, it's how a project manager spends 
 
 ## The concept
 
-**Risks and issues**
+### Risks and issues
 
 A **risk** might happen; an **issue** has happened. When a risk happens it becomes an issue, and its response becomes urgent.
 
-**Expected monetary value (EMV)**
+### Expected monetary value (EMV)
 
 > EMV = probability × impact
 
 A 40% chance of a ₦3 million cost has an EMV of ₦1.2 million. Ranking by EMV puts likely-and-costly risks first. Do the same for **days**: probability × delay.
 
-**Responses**
+### Responses
 
 | Response | Example |
 | :-- | :-- |
@@ -31,9 +31,11 @@ A 40% chance of a ₦3 million cost has an EMV of ₦1.2 million. Ranking by EMV
 | **Transfer** | insurance, fixed-price contracts, forward currency purchase |
 | **Accept** | keep money and time in reserve |
 
-**Contingency**
+### Contingency
 
 A reserve of money (and time) for **identified** risks, roughly their total EMV, held by the project manager and released only when a risk happens.
+
+![A table of four example risks ranked by expected monetary value (probability times impact) with a total EMV of 2.2 million naira as contingency, and the four responses: avoid, reduce, transfer, accept](/images/courses/pm/risk-emv.svg "EMV = probability × impact ranks risks and sizes the contingency; four possible responses.")
 
 ## Example
 

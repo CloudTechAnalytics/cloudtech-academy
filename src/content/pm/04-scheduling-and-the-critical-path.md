@@ -10,16 +10,18 @@ Twenty-three tasks, each with an owner pushing to finish theirs. But they don't 
 
 ## The concept
 
-**The critical path method (CPM)**
+### The critical path method (CPM)
 
 1. **Forward pass**: each task's **earliest start** is the latest finish of everything it depends on; earliest finish = earliest start + duration. The project's length is the last earliest finish.
 2. **Backward pass**: working back from the end, each task's **latest finish** is the earliest latest start of the tasks that depend on it.
 3. **Float** (slack) = latest start − earliest start: how long a task can slip without delaying the end.
 4. The **critical path** is the chain of tasks with zero float. Any delay on it delays the project.
 
-**Dates**
+### Dates
 
 Durations are working days. Convert with a working calendar (Monday to Friday here; real plans also remove public holidays).
+
+![Six tasks with forward and backward pass values: the critical path A, B, D, F has zero float, while the racking order has 6 days of float and hiring has 14; project length 31 days](/images/courses/pm/critical-path.svg "Forward pass, backward pass, float, and the critical path (an illustration).")
 
 ## Example
 

@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 430" width="760" height="430" role="img" aria-label="Re-forecasting from the status date, illustrated with five tasks. Finished tasks need no more time. A task in progress needs only its remaining work. Tasks not started need their full estimate. Nothing can finish before the status date. Remaining work can be forecast to plan if the cause of the delay is over, or at the rate so far if the cause remains. Status colours need rules: green if the forecast meets the deadline with at least 5 days to spare and CPI is at least 0.95; amber for less than 5 days to spare or CPI 0.90 to 0.95; red if the forecast misses the deadline or CPI is below 0.90.">
+<title>Schedule only what's left from the status date; status colours need clear rules.</title>
+
+<rect width="760" height="430" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="150.0" y="28.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="middle">0</text>
+<line x1="150.0" y1="34.0" x2="150.0" y2="224.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="268.0" y="28.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="middle">8</text>
+<line x1="268.0" y1="34.0" x2="268.0" y2="224.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="386.0" y="28.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="middle">16</text>
+<line x1="386.0" y1="34.0" x2="386.0" y2="224.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="504.0" y="28.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="middle">24</text>
+<line x1="504.0" y1="34.0" x2="504.0" y2="224.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="622.0" y="28.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="middle">32</text>
+<line x1="622.0" y1="34.0" x2="622.0" y2="224.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="740.0" y="28.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="middle">40</text>
+<line x1="740.0" y1="34.0" x2="740.0" y2="224.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="16.0" y="28.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">working days</text>
+<text xml:space="preserve" x="16.0" y="63.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">Permits</text>
+<rect x="150.0" y="50.0" width="177.0" height="20.0" rx="3" fill="#2F6B3F"/>
+<text xml:space="preserve" x="335.0" y="65.0" font-size="11" fill="#2F6B3F" font-weight="700" text-anchor="start">done</text>
+<text xml:space="preserve" x="16.0" y="99.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">Racking order</text>
+<rect x="179.5" y="86.0" width="88.5" height="20.0" rx="3" fill="#2F6B3F"/>
+<text xml:space="preserve" x="276.0" y="101.0" font-size="11" fill="#2F6B3F" font-weight="700" text-anchor="start">done</text>
+<text xml:space="preserve" x="16.0" y="135.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">Fit-out</text>
+<rect x="327.0" y="122.0" width="59.0" height="20.0" rx="3" fill="#2F6B3F"/>
+<rect x="386.0" y="122.0" width="88.5" height="20.0" rx="3" fill="#B38A3E"/>
+<text xml:space="preserve" x="482.5" y="137.0" font-size="11" fill="#8A6A1F" font-weight="700" text-anchor="start">4 of 10 days done, 6 remaining</text>
+<text xml:space="preserve" x="16.0" y="171.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">Hire staff</text>
+<rect x="386.0" y="158.0" width="118.0" height="20.0" rx="3" fill="#B38A3E"/>
+<text xml:space="preserve" x="512.0" y="173.0" font-size="11" fill="#8A6A1F" font-weight="700" text-anchor="start">full estimate</text>
+<text xml:space="preserve" x="16.0" y="207.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">Train staff</text>
+<rect x="474.5" y="194.0" width="59.0" height="20.0" rx="3" fill="#B38A3E"/>
+<text xml:space="preserve" x="541.5" y="209.0" font-size="11" fill="#8A6A1F" font-weight="700" text-anchor="start">full estimate</text>
+<line x1="386.0" y1="36.0" x2="386.0" y2="230.0" stroke="#9B2C1F" stroke-width="2.2" stroke-dasharray="6 4"/>
+<text xml:space="preserve" x="386.0" y="246.0" font-size="12" fill="#9B2C1F" font-weight="700" text-anchor="middle">status date</text>
+<rect x="16.0" y="262.0" width="12.0" height="12.0" rx="2" fill="#2F6B3F"/>
+<text xml:space="preserve" x="34.0" y="273.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">done</text>
+<rect x="86.0" y="262.0" width="12.0" height="12.0" rx="2" fill="#B38A3E"/>
+<text xml:space="preserve" x="104.0" y="273.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">still to do</text>
+<text xml:space="preserve" x="190.0" y="273.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">Nothing can finish before the status date.</text>
+<rect x="16.0" y="296.0" width="232.0" height="84.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.5"/>
+<circle cx="38.0" cy="324.0" r="8" fill="#2F6B3F"/>
+<text xml:space="preserve" x="56.0" y="330.0" font-size="14" fill="#2F6B3F" font-weight="700" text-anchor="start">Green</text>
+<text xml:space="preserve" x="32.0" y="352.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">forecast meets the deadline with</text>
+<text xml:space="preserve" x="32.0" y="368.7" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">5+ days spare, and CPI ≥ 0.95</text>
+<rect x="264.0" y="296.0" width="232.0" height="84.0" rx="10" fill="#F3EBD8" stroke="#B38A3E" stroke-width="1.5"/>
+<circle cx="286.0" cy="324.0" r="8" fill="#B38A3E"/>
+<text xml:space="preserve" x="304.0" y="330.0" font-size="14" fill="#B38A3E" font-weight="700" text-anchor="start">Amber</text>
+<text xml:space="preserve" x="280.0" y="352.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">less than 5 days spare, or CPI</text>
+<text xml:space="preserve" x="280.0" y="368.7" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">0.90 to 0.95</text>
+<rect x="512.0" y="296.0" width="232.0" height="84.0" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.5"/>
+<circle cx="534.0" cy="324.0" r="8" fill="#9B2C1F"/>
+<text xml:space="preserve" x="552.0" y="330.0" font-size="14" fill="#9B2C1F" font-weight="700" text-anchor="start">Red</text>
+<text xml:space="preserve" x="528.0" y="352.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">forecast misses the deadline, or</text>
+<text xml:space="preserve" x="528.0" y="368.7" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">CPI below 0.90</text>
+<text xml:space="preserve" x="16.0" y="410.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">Remaining work: to plan if the cause is over; at the rate so far if it's still there.</text>
+</g></svg>

@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 430" width="760" height="430" role="img" aria-label="A critical path example with six illustrative tasks. A lease takes 5 days; permits 12, racking order 6 and hiring 8 all follow it; fit-out takes 10 and needs permits and the racking; training takes 4 and needs fit-out and hiring. The forward pass gives a project length of 31 days. The critical path, with zero float, runs through Lease signed, Permits, Fit-out, Train staff. The racking order has 6 days of float and hiring has 14.">
+<title>Forward pass, backward pass, float, and the critical path (an illustration).</title>
+<defs><marker id="a9B2C1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#9B2C1F"/></marker><marker id="a5E5A52" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#5E5A52"/></marker></defs>
+<rect width="760" height="430" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="150.0" width="150.0" height="70.0" rx="8" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.8"/>
+<text xml:space="preserve" x="91.0" y="172.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="middle">A  Lease signed</text>
+<text xml:space="preserve" x="91.0" y="190.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="middle">5 days</text>
+<text xml:space="preserve" x="24.0" y="212.0" font-size="10.5" fill="#2F6B3F" font-weight="700" text-anchor="start">ES 0</text>
+<text xml:space="preserve" x="91.0" y="212.0" font-size="10.5" fill="#2F6B3F" font-weight="700" text-anchor="middle">EF 5</text>
+<text xml:space="preserve" x="158.0" y="212.0" font-size="10.5" fill="#9B2C1F" font-weight="700" text-anchor="end">float 0</text>
+<text xml:space="preserve" x="24.0" y="144.0" font-size="10.5" fill="#2F5D8A" font-weight="700" text-anchor="start">LS 0</text>
+<text xml:space="preserve" x="158.0" y="144.0" font-size="10.5" fill="#2F5D8A" font-weight="700" text-anchor="end">LF 5</text>
+<rect x="200.0" y="70.0" width="150.0" height="70.0" rx="8" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.8"/>
+<text xml:space="preserve" x="275.0" y="92.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="middle">B  Permits</text>
+<text xml:space="preserve" x="275.0" y="110.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="middle">12 days</text>
+<text xml:space="preserve" x="208.0" y="132.0" font-size="10.5" fill="#2F6B3F" font-weight="700" text-anchor="start">ES 5</text>
+<text xml:space="preserve" x="275.0" y="132.0" font-size="10.5" fill="#2F6B3F" font-weight="700" text-anchor="middle">EF 17</text>
+<text xml:space="preserve" x="342.0" y="132.0" font-size="10.5" fill="#9B2C1F" font-weight="700" text-anchor="end">float 0</text>
+<text xml:space="preserve" x="208.0" y="64.0" font-size="10.5" fill="#2F5D8A" font-weight="700" text-anchor="start">LS 5</text>
+<text xml:space="preserve" x="342.0" y="64.0" font-size="10.5" fill="#2F5D8A" font-weight="700" text-anchor="end">LF 17</text>
+<rect x="200.0" y="190.0" width="150.0" height="70.0" rx="8" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.3"/>
+<text xml:space="preserve" x="275.0" y="212.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="middle">C  Racking order</text>
+<text xml:space="preserve" x="275.0" y="230.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="middle">6 days</text>
+<text xml:space="preserve" x="208.0" y="252.0" font-size="10.5" fill="#2F6B3F" font-weight="700" text-anchor="start">ES 5</text>
+<text xml:space="preserve" x="275.0" y="252.0" font-size="10.5" fill="#2F6B3F" font-weight="700" text-anchor="middle">EF 11</text>
+<text xml:space="preserve" x="342.0" y="252.0" font-size="10.5" fill="#8A6A1F" font-weight="700" text-anchor="end">float 6</text>
+<text xml:space="preserve" x="208.0" y="184.0" font-size="10.5" fill="#2F5D8A" font-weight="700" text-anchor="start">LS 11</text>
+<text xml:space="preserve" x="342.0" y="184.0" font-size="10.5" fill="#2F5D8A" font-weight="700" text-anchor="end">LF 17</text>
+<rect x="400.0" y="70.0" width="150.0" height="70.0" rx="8" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.8"/>
+<text xml:space="preserve" x="475.0" y="92.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="middle">D  Fit-out</text>
+<text xml:space="preserve" x="475.0" y="110.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="middle">10 days</text>
+<text xml:space="preserve" x="408.0" y="132.0" font-size="10.5" fill="#2F6B3F" font-weight="700" text-anchor="start">ES 17</text>
+<text xml:space="preserve" x="475.0" y="132.0" font-size="10.5" fill="#2F6B3F" font-weight="700" text-anchor="middle">EF 27</text>
+<text xml:space="preserve" x="542.0" y="132.0" font-size="10.5" fill="#9B2C1F" font-weight="700" text-anchor="end">float 0</text>
+<text xml:space="preserve" x="408.0" y="64.0" font-size="10.5" fill="#2F5D8A" font-weight="700" text-anchor="start">LS 17</text>
+<text xml:space="preserve" x="542.0" y="64.0" font-size="10.5" fill="#2F5D8A" font-weight="700" text-anchor="end">LF 27</text>
+<rect x="400.0" y="300.0" width="150.0" height="70.0" rx="8" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.3"/>
+<text xml:space="preserve" x="475.0" y="322.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="middle">E  Hire staff</text>
+<text xml:space="preserve" x="475.0" y="340.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="middle">8 days</text>
+<text xml:space="preserve" x="408.0" y="362.0" font-size="10.5" fill="#2F6B3F" font-weight="700" text-anchor="start">ES 5</text>
+<text xml:space="preserve" x="475.0" y="362.0" font-size="10.5" fill="#2F6B3F" font-weight="700" text-anchor="middle">EF 13</text>
+<text xml:space="preserve" x="542.0" y="362.0" font-size="10.5" fill="#8A6A1F" font-weight="700" text-anchor="end">float 14</text>
+<text xml:space="preserve" x="408.0" y="294.0" font-size="10.5" fill="#2F5D8A" font-weight="700" text-anchor="start">LS 19</text>
+<text xml:space="preserve" x="542.0" y="294.0" font-size="10.5" fill="#2F5D8A" font-weight="700" text-anchor="end">LF 27</text>
+<rect x="590.0" y="150.0" width="150.0" height="70.0" rx="8" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.8"/>
+<text xml:space="preserve" x="665.0" y="172.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="middle">F  Train staff</text>
+<text xml:space="preserve" x="665.0" y="190.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="middle">4 days</text>
+<text xml:space="preserve" x="598.0" y="212.0" font-size="10.5" fill="#2F6B3F" font-weight="700" text-anchor="start">ES 27</text>
+<text xml:space="preserve" x="665.0" y="212.0" font-size="10.5" fill="#2F6B3F" font-weight="700" text-anchor="middle">EF 31</text>
+<text xml:space="preserve" x="732.0" y="212.0" font-size="10.5" fill="#9B2C1F" font-weight="700" text-anchor="end">float 0</text>
+<text xml:space="preserve" x="598.0" y="144.0" font-size="10.5" fill="#2F5D8A" font-weight="700" text-anchor="start">LS 27</text>
+<text xml:space="preserve" x="732.0" y="144.0" font-size="10.5" fill="#2F5D8A" font-weight="700" text-anchor="end">LF 31</text>
+<path d="M168,185.0 C196,185.0 170,105.0 198,105.0" fill="none" stroke="#9B2C1F" stroke-width="2.2" marker-end="url(#a9B2C1F)"/>
+<path d="M168,185.0 C196,185.0 170,225.0 198,225.0" fill="none" stroke="#5E5A52" stroke-width="1.4" marker-end="url(#a5E5A52)"/>
+<path d="M352,105.0 C380,105.0 370,105.0 398,105.0" fill="none" stroke="#9B2C1F" stroke-width="2.2" marker-end="url(#a9B2C1F)"/>
+<path d="M352,225.0 C380,225.0 370,105.0 398,105.0" fill="none" stroke="#5E5A52" stroke-width="1.4" marker-end="url(#a5E5A52)"/>
+<path d="M91.0,220 L91.0,335.0 L398,335.0" fill="none" stroke="#5E5A52" stroke-width="1.4" marker-end="url(#a5E5A52)"/>
+<path d="M552,105.0 C580,105.0 560,185.0 588,185.0" fill="none" stroke="#9B2C1F" stroke-width="2.2" marker-end="url(#a9B2C1F)"/>
+<path d="M552,335.0 C580,335.0 560,185.0 588,185.0" fill="none" stroke="#5E5A52" stroke-width="1.4" marker-end="url(#a5E5A52)"/>
+<text xml:space="preserve" x="16.0" y="36.0" font-size="13" fill="#9B2C1F" font-weight="700" text-anchor="start">Project length 31 days.  Critical path: A → B → D → F</text>
+<text xml:space="preserve" x="16.0" y="396.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">ES/EF: forward pass.   LS/LF: backward pass.   Float = LS − ES: how long a task can slip without delaying the end.</text>
+<text xml:space="preserve" x="16.0" y="416.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Only a delay on a zero-float (red) task delays the whole project.</text>
+</g></svg>

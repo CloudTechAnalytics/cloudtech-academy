@@ -12,7 +12,7 @@ Change control isn't saying no. It's showing the sponsor what each change really
 
 ## The concept
 
-**Assess every change the same way**
+### Assess every change the same way
 
 | Question | How |
 | :-- | :-- |
@@ -22,11 +22,13 @@ Change control isn't saying no. It's showing the sponsor what each change really
 | What does it cost? | the request, plus any delay cost |
 | Does it still meet the deadline and the budget plus contingency? | compare |
 
-**Schedule compression**
+### Schedule compression
 
 Two ways to finish sooner: **crashing** (spend money to shorten a critical task: weekend working, more crews) and **fast-tracking** (overlap tasks that were planned in sequence). Both only help on the critical path.
 
-**Decide, don't drift**
+![A change request flow: a task with enough float absorbs the change and the finish is unchanged; a critical-path task moves the finish by the extra days; crashing and fast-tracking shorten the critical path](/images/courses/pm/change-control.svg "A change on a float task can be absorbed; on the critical path it moves the finish.")
+
+### Decide, don't drift
 
 Every request gets a decision (approve, reject, defer to after opening) with a reason, recorded in a change log.
 

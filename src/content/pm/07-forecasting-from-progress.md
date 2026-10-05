@@ -10,7 +10,7 @@ The baseline schedule said the depot would open on 11 September. It's now the en
 
 ## The concept
 
-**Re-forecasting**
+### Re-forecasting
 
 From the status date, schedule only what's left:
 
@@ -19,7 +19,7 @@ From the status date, schedule only what's left:
 - tasks not started need their full estimate;
 - nothing can finish before the status date.
 
-**Which rate for remaining work?**
+### Which rate for remaining work?
 
 | Assumption | Use when |
 | :-- | :-- |
@@ -27,13 +27,15 @@ From the status date, schedule only what's left:
 | Remaining work goes at the rate so far | the cause is still there (the contractor is slow) |
 | Re-estimate with the team | always worth doing for critical tasks |
 
-**Red, amber, green**
+### Red, amber, green
 
 A status colour is only useful with clear rules, for example:
 
 - **Green**: forecast meets the deadline with at least 5 days to spare, and CPI ≥ 0.95.
 - **Amber**: forecast meets the deadline with less than 5 days to spare, or CPI between 0.90 and 0.95.
 - **Red**: forecast misses the deadline, or CPI below 0.90.
+
+![Re-forecasting from the status date: finished tasks need nothing, an in-progress task needs its remaining work, tasks not started need their full estimate; below, the green, amber and red rules](/images/courses/pm/forecast.svg "Schedule only what's left from the status date; status colours need clear rules.")
 
 ## Example
 
