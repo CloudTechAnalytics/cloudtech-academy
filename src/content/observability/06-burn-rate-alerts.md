@@ -10,7 +10,7 @@ A fixed alert like "error rate above 1%" is either too sensitive (paging for a 2
 
 ## The concept
 
-**Burn rate**
+### Burn rate
 
 Burn rate = observed error rate ÷ the error rate the SLO allows. With a 99.9% SLO, the allowed rate is 0.1%:
 
@@ -20,7 +20,7 @@ Burn rate = observed error rate ÷ the error rate the SLO allows. With a 99.9% S
 | 1% | 10× | 3 days |
 | 1.44% | 14.4× | about 2 days: **2% of the budget in one hour** |
 
-**Multi-window alerts**
+### Multi-window alerts
 
 Page when **both** a long and a short window are burning fast:
 
@@ -28,6 +28,8 @@ Page when **both** a long and a short window are burning fast:
 - the **5-minute** burn rate is above 14.4 (it's still happening now, not a past blip).
 
 The long window prevents paging on blips; the short window lets the alert clear quickly once the problem stops. Slower burns (for example 6× over 6 hours) open a ticket rather than paging.
+
+![Error budget remaining over 30 days at burn rates of 1 (lasts 30 days), 10 (3 days) and 14.4 (about 2 days); a page fires only when both the 1-hour and 5-minute burn rates exceed 14.4](/images/courses/observability/burn-rate.svg "Burn rate: how fast the error budget is going, and a two-window paging rule.")
 
 ## Example
 

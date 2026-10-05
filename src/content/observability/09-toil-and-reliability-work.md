@@ -12,15 +12,17 @@ Tallybook's platform team is two engineers. Each month, a large part of their ti
 
 **Toil** is work that is manual, repetitive, automatable, reactive, and grows with the service, without making it better. Reviewing pull requests or writing postmortems isn't toil: it's engineering.
 
-**Keep toil bounded**
+### Keep toil bounded
 
 A common target: toil at most **half** of an operations team's time, the rest on engineering that removes future toil and improves reliability.
 
-**Automate by return**
+![Toil is manual, repetitive, automatable, reactive and grows with the service; examples of toil versus engineering, and a bar showing toil at most half of operations time](/images/courses/observability/toil.svg "Toil versus engineering, and the 50% limit.")
+
+### Automate by return
 
 Rank toil by hours per month and how automatable it is. Some of the biggest items aren't automation at all: deleting a noisy alert removes a task entirely.
 
-**An error budget policy**
+### An error budget policy
 
 Written in advance and agreed with the product side:
 

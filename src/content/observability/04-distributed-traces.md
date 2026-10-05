@@ -12,22 +12,17 @@ The logs pointed at the database connection pool. But a request at Tallybook pas
 
 ## The concept
 
-**Spans and traces**
+### Spans and traces
 
 A **trace** is one request's journey. It's made of **spans**: each span is one operation (an HTTP call, a database query), with a start time, a duration, a status, and a **parent** span. The spans form a tree.
 
-```text nocheck
-web   GET /api/invoices ─────────────────────────────────────┐ 5,015 ms
-  api   GET /invoices ──────────────────────────────────────┐
-    db    acquire connection ███████████████████████████████  4,900 ms
-    db    SELECT invoices     █ 98 ms
-```
+![A trace waterfall on a 0 to 5,000 ms axis: web GET /api/invoices 5,015 ms contains api GET /invoices, which contains db acquire connection 4,900 ms and db SELECT invoices 98 ms; self times are 8, 9, 4,900 and 98 ms](/images/courses/observability/trace-waterfall.svg "A trace waterfall: parents wrap their children; self time shows where the time really went.")
 
-**Self time and the critical path**
+### Self time and the critical path
 
 A parent span's duration includes its children. To find where time really goes, look at the **leaf** spans (the ones doing the work), or each span's **self time** (its duration minus its children's).
 
-**Sampling**
+### Sampling
 
 Recording every request is expensive. Most systems sample (for example 1%), plus every request that errors or is very slow.
 

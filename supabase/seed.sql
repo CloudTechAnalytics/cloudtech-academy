@@ -55919,11 +55919,11 @@ Finding the real cause of a problem in a running system, quickly, is what **obse
 
 ## The concept
 
-**Monitoring and observability**
+### Monitoring and observability
 
 **Monitoring** answers questions you thought of in advance ("is CPU above 80%?"). **Observability** is being able to answer questions you didn't think of, from the data a system already produces ("why are only invoice-sending requests slow, and only since 09:40?").
 
-**Three kinds of telemetry**
+### Three kinds of telemetry
 
 | Signal | What it is | Good for |
 | :-- | :-- | :-- |
@@ -55931,9 +55931,11 @@ Finding the real cause of a problem in a running system, quickly, is what **obse
 | **Logs** | timestamped records of events, ideally structured (JSON) | details of what happened to specific requests |
 | **Traces** | the path of one request through every service, with timings | seeing where time is spent, across services |
 
-**The four golden signals**
+### The four golden signals
 
 For any service: **latency** (how long requests take), **traffic** (how many), **errors** (how many fail), and **saturation** (how full the most constrained resource is).
+
+![Three panels for the same incident: a metrics chart where errors jump at 09:40, log lines showing the bulk send job starting and pool errors, and a trace where acquiring a connection takes most of the time; below, the four golden signals: latency, traffic, errors, saturation](/images/courses/observability/three-signals.svg "Metrics say when, logs say what, traces say where.")
 
 ## Example
 
@@ -56048,7 +56050,7 @@ Tallybook's old dashboard showed one latency number: the average. On a normal da
 
 ## The concept
 
-**Percentiles**
+### Percentiles
 
 The **p95** is the time that 95% of requests are faster than; 5% are slower. p50 is the median; p99 is the slowest 1%.
 
@@ -56059,11 +56061,13 @@ The **p95** is the time that 95% of requests are faster than; 5% are slower. p50
 | p99 | the tail: often a different problem (cold caches, lock waits, retries) |
 | Average | dragged by outliers, matches nobody's experience |
 
-**Percentiles don't average**
+### Percentiles don't average
 
 You can't average p95s across minutes or servers and get the p95 of the whole. Compute percentiles from the raw data, or use histogram metrics that can be combined.
 
-**A first dashboard**
+![Twenty request times sorted as bars: p50 is 255 ms, p95 is 900 ms, and the average of 498 ms is pulled up by one 4,200 ms request; a side box shows two servers' p95s of 100 and 1,000 ms averaging to 550 ms while the true p95 is about 1,000 ms](/images/courses/observability/percentiles.svg "p50, p95 and the average for 20 example requests; and why p95s can't be averaged.")
+
+### A first dashboard
 
 For each service: requests per minute, error rate, p50 and p95 (or p99) latency, and saturation of its tightest resource, on the same time axis.
 
@@ -56191,7 +56195,7 @@ Tallybook's services write **structured** logs: one JSON object per line, with n
 
 ## The concept
 
-**Free text versus structured**
+### Free text versus structured
 
 ```text nocheck
 2026-08-31 09:58:12 ERROR db pool exhausted for /api/invoices after 5000ms (40/40)
@@ -56200,11 +56204,13 @@ Tallybook's services write **structured** logs: one JSON object per line, with n
 
 The second can be filtered by `service`, grouped by `route`, and linked to a trace by `trace_id`, without fragile text matching.
 
-**Log levels**
+![A free-text log line compared with the same event as JSON fields: ts, level, service, message, route, pool_in_use, pool_size and trace_id, with arrows showing filter, group, compare and follow; below, the four log levels](/images/courses/observability/structured-logs.svg "Structured logs: every detail is a field you can filter, group or follow.")
+
+### Log levels
 
 `debug` (detail for developers), `info` (normal events), `warn` (something odd, still working), `error` (a request failed). Alert on rates of errors, not individual lines.
 
-**Good logging habits**
+### Good logging habits
 
 - Log events with context (IDs, durations, counts), not prose.
 - Include a **trace ID** so a log line leads to the full request.
@@ -56349,22 +56355,17 @@ The logs pointed at the database connection pool. But a request at Tallybook pas
 
 ## The concept
 
-**Spans and traces**
+### Spans and traces
 
 A **trace** is one request's journey. It's made of **spans**: each span is one operation (an HTTP call, a database query), with a start time, a duration, a status, and a **parent** span. The spans form a tree.
 
-```text nocheck
-web   GET /api/invoices ─────────────────────────────────────┐ 5,015 ms
-  api   GET /invoices ──────────────────────────────────────┐
-    db    acquire connection ███████████████████████████████  4,900 ms
-    db    SELECT invoices     █ 98 ms
-```
+![A trace waterfall on a 0 to 5,000 ms axis: web GET /api/invoices 5,015 ms contains api GET /invoices, which contains db acquire connection 4,900 ms and db SELECT invoices 98 ms; self times are 8, 9, 4,900 and 98 ms](/images/courses/observability/trace-waterfall.svg "A trace waterfall: parents wrap their children; self time shows where the time really went.")
 
-**Self time and the critical path**
+### Self time and the critical path
 
 A parent span's duration includes its children. To find where time really goes, look at the **leaf** spans (the ones doing the work), or each span's **self time** (its duration minus its children's).
 
-**Sampling**
+### Sampling
 
 Recording every request is expensive. Most systems sample (for example 1%), plus every request that errors or is very slow.
 
@@ -56490,13 +56491,15 @@ values ('observability-site-reliability:slis-and-slos', 'observability-site-reli
 
 ## The concept
 
-**SLI, SLO, error budget**
+### SLI, SLO, error budget
 
 - A **service level indicator** (SLI) measures what users experience, as a ratio of good events to all events. For example: the share of requests that succeed, or that finish in under one second.
 - A **service level objective** (SLO) is the target for that ratio over a period: **99.9% of requests succeed, over 30 days**.
 - The **error budget** is what's left: 0.1% of requests may fail. Spending it on releases and experiments is fine; running out means reliability work comes first.
 
-**Choose SLIs users would recognise**
+![SLI (good events over all events) leads to an SLO (99.9% over 30 days) and an error budget (the remaining 0.1%); for 10 million requests a month, 10,000 may fail, about 43 minutes of full outage; budget left means ship, budget spent means reliability first](/images/courses/observability/error-budget.svg "SLI, SLO and the error budget, with example numbers.")
+
+### Choose SLIs users would recognise
 
 | SLI | Good event |
 | :-- | :-- |
@@ -56505,7 +56508,7 @@ values ('observability-site-reliability:slis-and-slos', 'observability-site-reli
 
 Measure them where users meet the service (the load balancer or web tier), not deep inside.
 
-**Pick realistic objectives**
+### Pick realistic objectives
 
 100% is the wrong target: it's impossible, and chasing it stops all change. Pick what users actually need, and what the system can achieve.
 
@@ -56642,7 +56645,7 @@ A fixed alert like "error rate above 1%" is either too sensitive (paging for a 2
 
 ## The concept
 
-**Burn rate**
+### Burn rate
 
 Burn rate = observed error rate ÷ the error rate the SLO allows. With a 99.9% SLO, the allowed rate is 0.1%:
 
@@ -56652,7 +56655,7 @@ Burn rate = observed error rate ÷ the error rate the SLO allows. With a 99.9% S
 | 1% | 10× | 3 days |
 | 1.44% | 14.4× | about 2 days: **2% of the budget in one hour** |
 
-**Multi-window alerts**
+### Multi-window alerts
 
 Page when **both** a long and a short window are burning fast:
 
@@ -56660,6 +56663,8 @@ Page when **both** a long and a short window are burning fast:
 - the **5-minute** burn rate is above 14.4 (it's still happening now, not a past blip).
 
 The long window prevents paging on blips; the short window lets the alert clear quickly once the problem stops. Slower burns (for example 6× over 6 hours) open a ticket rather than paging.
+
+![Error budget remaining over 30 days at burn rates of 1 (lasts 30 days), 10 (3 days) and 14.4 (about 2 days); a page fires only when both the 1-hour and 5-minute burn rates exceed 14.4](/images/courses/observability/burn-rate.svg "Burn rate: how fast the error budget is going, and a two-window paging rule.")
 
 ## Example
 
@@ -56800,11 +56805,11 @@ Alert fatigue is dangerous: people stop trusting alerts, acknowledge without loo
 
 ## The concept
 
-**What makes a good page**
+### What makes a good page
 
 Every page should be: **urgent** (needs action now), **actionable** (a person can do something), and **real** (rarely a false alarm). Anything else should be a ticket, a dashboard, or deleted.
 
-**Measure alerts**
+### Measure alerts
 
 | Measure | Question |
 | :-- | :-- |
@@ -56813,11 +56818,13 @@ Every page should be: **urgent** (needs action now), **actionable** (a person ca
 | Night pages | how often does it wake people? |
 | Time to acknowledge | is it being taken seriously? |
 
-**Symptoms, not causes**
+### Symptoms, not causes
 
 Page on what users experience (SLO burn rate, lesson 6). High CPU, a busy queue, one host briefly unreachable: these are causes or noise; they belong on dashboards unless they directly threaten users.
 
-**Sustainable on-call**
+![A decision flow: an alert that isn't urgent becomes a ticket, one that isn't actionable goes on a dashboard or is deleted, one that isn't real gets fixed; only urgent, actionable, real alerts page. Page on symptoms such as SLO burn, not causes such as high CPU](/images/courses/observability/good-page.svg "A page must be urgent, actionable and real.")
+
+### Sustainable on-call
 
 A small number of pages per shift, a rotation with enough people, handover notes, and time after a bad night to recover. Every page should be reviewed weekly: keep it, fix it, or delete it.
 
@@ -56949,7 +56956,7 @@ Ada fixed the incident by doubling the database connection pool and slowing the 
 
 ## The concept
 
-**Little's law**
+### Little's law
 
 For any system that work flows through:
 
@@ -56957,15 +56964,17 @@ For any system that work flows through:
 
 For a connection pool: **connections in use = requests per second × seconds each request holds a connection**. 133 API requests a second, each holding a connection for 0.3 seconds, need about 40 connections at once.
 
-**Saturation**
+### Saturation
 
 When demand exceeds what a resource can serve, work queues. Waiting time doesn't grow gently: it grows without limit until something times out. That's why the incident went from fine to failing within a minute.
 
-**Headroom and isolation**
+### Headroom and isolation
 
 - Size for the peak plus headroom (for example, peak demand at most 70% of capacity).
 - **Isolate** batch work from user traffic: give background jobs their own, smaller pool, so they can only slow themselves down.
 - Remember the other end: a bigger pool means more connections at the database, which has its own limit.
+
+![Little's law: 133 requests a second times 0.3 seconds each gives about 40 connections, a full pool; below, a bulk job sharing one pool with API requests compared with separate API and job pools](/images/courses/observability/littles-law.svg "Little's law sizes the pool; isolation keeps batch work from starving users.")
 
 ## Example
 
@@ -57103,15 +57112,17 @@ Tallybook's platform team is two engineers. Each month, a large part of their ti
 
 **Toil** is work that is manual, repetitive, automatable, reactive, and grows with the service, without making it better. Reviewing pull requests or writing postmortems isn't toil: it's engineering.
 
-**Keep toil bounded**
+### Keep toil bounded
 
 A common target: toil at most **half** of an operations team's time, the rest on engineering that removes future toil and improves reliability.
 
-**Automate by return**
+![Toil is manual, repetitive, automatable, reactive and grows with the service; examples of toil versus engineering, and a bar showing toil at most half of operations time](/images/courses/observability/toil.svg "Toil versus engineering, and the 50% limit.")
+
+### Automate by return
 
 Rank toil by hours per month and how automatable it is. Some of the biggest items aren't automation at all: deleting a noisy alert removes a task entirely.
 
-**An error budget policy**
+### An error budget policy
 
 Written in advance and agreed with the product side:
 
@@ -57248,7 +57259,7 @@ Tallybook's CTO has read three explanations of the month-end outages: too few we
 
 ## The concept
 
-**The parts of the review**
+### The parts of the review
 
 | Part | Built in |
 | :-- | :-- |
@@ -57258,7 +57269,7 @@ Tallybook's CTO has read three explanations of the month-end outages: too few we
 | Capacity: pool sizing and job isolation | lesson 8 |
 | Toil and the error budget policy | lesson 9 |
 
-**Reconcile the explanations**
+### Reconcile the explanations
 
 Good reviews don't just give the right answer; they explain why the earlier ones were incomplete. The web fleet and the miner were real issues that made things worse, but the evidence shows the pool was the cause. Say so, with the data.
 

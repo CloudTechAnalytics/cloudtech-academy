@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 420" width="760" height="420" role="img" aria-label="Little's law for a connection pool: connections in use equal requests per second times seconds each request holds a connection. 133 requests a second, each holding a connection for 0.3 seconds, need about 40 connections, a full pool of 40 with no headroom. Below: when a batch job shares the pool with user traffic, it can use up the connections users need; giving the job its own small pool means it can only slow itself down.">
+<title>Little's law sizes the pool; isolation keeps batch work from starving users.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="420" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="30.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Little's law</text>
+<text xml:space="preserve" x="16.0" y="66.0" font-size="20" fill="#2F5D8A" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">133 / s</text>
+<text xml:space="preserve" x="16.0" y="88.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">requests per second</text>
+<text xml:space="preserve" x="166.0" y="66.0" font-size="20" fill="#2F5D8A" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">× 0.3 s</text>
+<text xml:space="preserve" x="166.0" y="88.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">each holds a connection</text>
+<text xml:space="preserve" x="316.0" y="66.0" font-size="20" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">≈ 40</text>
+<text xml:space="preserve" x="316.0" y="88.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">connections in use</text>
+<rect x="480.0" y="16.0" width="22.0" height="12.0" rx="2" fill="#2F5D8A"/>
+<rect x="506.0" y="16.0" width="22.0" height="12.0" rx="2" fill="#2F5D8A"/>
+<rect x="532.0" y="16.0" width="22.0" height="12.0" rx="2" fill="#2F5D8A"/>
+<rect x="558.0" y="16.0" width="22.0" height="12.0" rx="2" fill="#2F5D8A"/>
+<rect x="584.0" y="16.0" width="22.0" height="12.0" rx="2" fill="#2F5D8A"/>
+<rect x="610.0" y="16.0" width="22.0" height="12.0" rx="2" fill="#2F5D8A"/>
+<rect x="636.0" y="16.0" width="22.0" height="12.0" rx="2" fill="#2F5D8A"/>
+<rect x="662.0" y="16.0" width="22.0" height="12.0" rx="2" fill="#2F5D8A"/>
+<rect x="688.0" y="16.0" width="22.0" height="12.0" rx="2" fill="#2F5D8A"/>
+<rect x="714.0" y="16.0" width="22.0" height="12.0" rx="2" fill="#2F5D8A"/>
+<rect x="480.0" y="32.0" width="22.0" height="12.0" rx="2" fill="#2F5D8A"/>
+<rect x="506.0" y="32.0" width="22.0" height="12.0" rx="2" fill="#2F5D8A"/>
+<rect x="532.0" y="32.0" width="22.0" height="12.0" rx="2" fill="#2F5D8A"/>
+<rect x="558.0" y="32.0" width="22.0" height="12.0" rx="2" fill="#2F5D8A"/>
+<rect x="584.0" y="32.0" width="22.0" height="12.0" rx="2" fill="#2F5D8A"/>
+<rect x="610.0" y="32.0" width="22.0" height="12.0" rx="2" fill="#2F5D8A"/>
+<rect x="636.0" y="32.0" width="22.0" height="12.0" rx="2" fill="#2F5D8A"/>
+<rect x="662.0" y="32.0" width="22.0" height="12.0" rx="2" fill="#2F5D8A"/>
+<rect x="688.0" y="32.0" width="22.0" height="12.0" rx="2" fill="#2F5D8A"/>
+<rect x="714.0" y="32.0" width="22.0" height="12.0" rx="2" fill="#2F5D8A"/>
+<rect x="480.0" y="48.0" width="22.0" height="12.0" rx="2" fill="#2F5D8A"/>
+<rect x="506.0" y="48.0" width="22.0" height="12.0" rx="2" fill="#2F5D8A"/>
+<rect x="532.0" y="48.0" width="22.0" height="12.0" rx="2" fill="#2F5D8A"/>
+<rect x="558.0" y="48.0" width="22.0" height="12.0" rx="2" fill="#2F5D8A"/>
+<rect x="584.0" y="48.0" width="22.0" height="12.0" rx="2" fill="#2F5D8A"/>
+<rect x="610.0" y="48.0" width="22.0" height="12.0" rx="2" fill="#2F5D8A"/>
+<rect x="636.0" y="48.0" width="22.0" height="12.0" rx="2" fill="#2F5D8A"/>
+<rect x="662.0" y="48.0" width="22.0" height="12.0" rx="2" fill="#2F5D8A"/>
+<rect x="688.0" y="48.0" width="22.0" height="12.0" rx="2" fill="#2F5D8A"/>
+<rect x="714.0" y="48.0" width="22.0" height="12.0" rx="2" fill="#2F5D8A"/>
+<rect x="480.0" y="64.0" width="22.0" height="12.0" rx="2" fill="#2F5D8A"/>
+<rect x="506.0" y="64.0" width="22.0" height="12.0" rx="2" fill="#2F5D8A"/>
+<rect x="532.0" y="64.0" width="22.0" height="12.0" rx="2" fill="#2F5D8A"/>
+<rect x="558.0" y="64.0" width="22.0" height="12.0" rx="2" fill="#2F5D8A"/>
+<rect x="584.0" y="64.0" width="22.0" height="12.0" rx="2" fill="#2F5D8A"/>
+<rect x="610.0" y="64.0" width="22.0" height="12.0" rx="2" fill="#2F5D8A"/>
+<rect x="636.0" y="64.0" width="22.0" height="12.0" rx="2" fill="#2F5D8A"/>
+<rect x="662.0" y="64.0" width="22.0" height="12.0" rx="2" fill="#2F5D8A"/>
+<rect x="688.0" y="64.0" width="22.0" height="12.0" rx="2" fill="#2F5D8A"/>
+<rect x="714.0" y="64.0" width="22.0" height="12.0" rx="2" fill="#2F5D8A"/>
+<text xml:space="preserve" x="480.0" y="98.0" font-size="12" fill="#9B2C1F" font-weight="700" text-anchor="start">pool of 40: every slot in use, no headroom</text>
+<text xml:space="preserve" x="16.0" y="130.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Past 100%, requests queue, and waiting grows without limit until something times out. Size for the peak, with</text>
+<text xml:space="preserve" x="16.0" y="148.1" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">demand at most about 70% of capacity.</text>
+<rect x="16.0" y="176.0" width="356.0" height="196.0" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.4"/>
+<text xml:space="preserve" x="32.0" y="204.0" font-size="14" fill="#9B2C1F" font-weight="700" text-anchor="start">✗ Shared pool</text>
+<rect x="32.0" y="222.0" width="140.0" height="44.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="102.0" y="249.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="middle">API requests</text>
+<rect x="32.0" y="278.0" width="140.0" height="44.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="102.0" y="305.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="middle">bulk send job</text>
+<path d="M174,244 L230,270" fill="none" stroke="#8A6A1F" stroke-width="1.8" marker-end="url(#a8A6A1F)"/>
+<path d="M174,300 L230,282" fill="none" stroke="#8A6A1F" stroke-width="1.8" marker-end="url(#a8A6A1F)"/>
+<rect x="234.0" y="248.0" width="120.0" height="50.0" rx="10" fill="#F3EBD8" stroke="#B38A3E" stroke-width="1.5"/>
+<text xml:space="preserve" x="294.0" y="278.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="middle">one pool</text>
+<text xml:space="preserve" x="32.0" y="344.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">The job takes connections users need.</text>
+<rect x="388.0" y="176.0" width="356.0" height="196.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.4"/>
+<text xml:space="preserve" x="404.0" y="204.0" font-size="14" fill="#2F6B3F" font-weight="700" text-anchor="start">✓ Isolated pools</text>
+<rect x="404.0" y="222.0" width="140.0" height="44.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="474.0" y="249.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="middle">API requests</text>
+<rect x="404.0" y="278.0" width="140.0" height="44.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="474.0" y="305.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="middle">bulk send job</text>
+<path d="M546.0,244.0 L600.0,244.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<path d="M546.0,300.0 L600.0,300.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="604.0" y="222.0" width="124.0" height="44.0" rx="10" fill="#F3EBD8" stroke="#B38A3E" stroke-width="1.5"/>
+<text xml:space="preserve" x="666.0" y="249.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="middle">API pool</text>
+<rect x="604.0" y="284.0" width="124.0" height="32.0" rx="10" fill="#FFFFFF" stroke="#B38A3E" stroke-width="1.5"/>
+<text xml:space="preserve" x="666.0" y="305.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="middle">small job pool</text>
+<text xml:space="preserve" x="404.0" y="344.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">The job can only slow itself down.</text>
+<text xml:space="preserve" x="16.0" y="404.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">And remember the other end: every pool's connections count against the database's own limit.</text>
+</g></svg>

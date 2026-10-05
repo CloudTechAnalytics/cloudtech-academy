@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 400" width="760" height="400" role="img" aria-label="Deciding whether an alert should page someone. Is it urgent, needing action now? If not, make it a ticket. Is it actionable, can a person do something? If not, put it on a dashboard or delete it. Is it real, rarely a false alarm? If not, fix the alert first. Only an alert that passes all three should page. Page on symptoms users feel, like the SLO burn rate, not causes such as high CPU.">
+<title>A page must be urgent, actionable and real; everything else is a ticket, a dashboard, or deleted.</title>
+<defs><marker id="a9B2C1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#9B2C1F"/></marker><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="400" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="30.0" width="100.0" height="60.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="66.0" y="66.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="middle">Alert fires</text>
+<rect x="146.0" y="30.0" width="150.0" height="60.0" rx="10" fill="#F3EBD8" stroke="#B38A3E" stroke-width="1.5"/>
+<text xml:space="preserve" x="221.0" y="56.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="middle">Urgent?</text>
+<text xml:space="preserve" x="221.0" y="76.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="middle">needs action now</text>
+<path d="M118.0,60.0 L142.0,60.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<text xml:space="preserve" x="130.0" y="48.0" font-size="11" fill="#2F6B3F" font-weight="700" text-anchor="middle"></text>
+<path d="M221.0,92.0 L221.0,130.0" fill="none" stroke="#9B2C1F" stroke-width="2" marker-end="url(#a9B2C1F)"/>
+<text xml:space="preserve" x="229.0" y="116.0" font-size="11.5" fill="#9B2C1F" font-weight="700" text-anchor="start">no</text>
+<rect x="146.0" y="134.0" width="150.0" height="64.0" rx="10" fill="#FFFFFF" stroke="#9B2C1F" stroke-width="1.3"/>
+<text xml:space="preserve" x="221.0" y="160.0" font-size="12.5" fill="#9B2C1F" font-weight="700" text-anchor="middle">ticket</text>
+<text xml:space="preserve" x="221.0" y="182.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="middle">handle in working hours</text>
+<rect x="326.0" y="30.0" width="150.0" height="60.0" rx="10" fill="#F3EBD8" stroke="#B38A3E" stroke-width="1.5"/>
+<text xml:space="preserve" x="401.0" y="56.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="middle">Actionable?</text>
+<text xml:space="preserve" x="401.0" y="76.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="middle">a person can act</text>
+<path d="M298.0,60.0 L322.0,60.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<text xml:space="preserve" x="310.0" y="48.0" font-size="11" fill="#2F6B3F" font-weight="700" text-anchor="middle">yes</text>
+<path d="M401.0,92.0 L401.0,130.0" fill="none" stroke="#9B2C1F" stroke-width="2" marker-end="url(#a9B2C1F)"/>
+<text xml:space="preserve" x="409.0" y="116.0" font-size="11.5" fill="#9B2C1F" font-weight="700" text-anchor="start">no</text>
+<rect x="326.0" y="134.0" width="150.0" height="64.0" rx="10" fill="#FFFFFF" stroke="#9B2C1F" stroke-width="1.3"/>
+<text xml:space="preserve" x="401.0" y="160.0" font-size="12.5" fill="#9B2C1F" font-weight="700" text-anchor="middle">dashboard or delete</text>
+<text xml:space="preserve" x="401.0" y="182.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="middle">look, don't wake</text>
+<rect x="506.0" y="30.0" width="150.0" height="60.0" rx="10" fill="#F3EBD8" stroke="#B38A3E" stroke-width="1.5"/>
+<text xml:space="preserve" x="581.0" y="56.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="middle">Real?</text>
+<text xml:space="preserve" x="581.0" y="76.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="middle">rarely a false alarm</text>
+<path d="M478.0,60.0 L502.0,60.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<text xml:space="preserve" x="490.0" y="48.0" font-size="11" fill="#2F6B3F" font-weight="700" text-anchor="middle">yes</text>
+<path d="M581.0,92.0 L581.0,130.0" fill="none" stroke="#9B2C1F" stroke-width="2" marker-end="url(#a9B2C1F)"/>
+<text xml:space="preserve" x="589.0" y="116.0" font-size="11.5" fill="#9B2C1F" font-weight="700" text-anchor="start">no</text>
+<rect x="506.0" y="134.0" width="150.0" height="64.0" rx="10" fill="#FFFFFF" stroke="#9B2C1F" stroke-width="1.3"/>
+<text xml:space="preserve" x="581.0" y="160.0" font-size="12.5" fill="#9B2C1F" font-weight="700" text-anchor="middle">fix the alert</text>
+<text xml:space="preserve" x="581.0" y="182.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="middle">tune or replace it</text>
+<path d="M658.0,60.0 L682.0,60.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<text xml:space="preserve" x="670.0" y="48.0" font-size="11" fill="#2F6B3F" font-weight="700" text-anchor="middle">yes</text>
+<rect x="686.0" y="30.0" width="58.0" height="60.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.6"/>
+<text xml:space="preserve" x="715.0" y="66.0" font-size="13.5" fill="#2F6B3F" font-weight="700" text-anchor="middle">page</text>
+<rect x="16.0" y="226.0" width="356.0" height="124.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.4"/>
+<text xml:space="preserve" x="32.0" y="252.0" font-size="14" fill="#2F6B3F" font-weight="700" text-anchor="start">Page on symptoms</text>
+<text xml:space="preserve" x="32.0" y="278.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">SLO burn rate (errors users see)</text>
+<text xml:space="preserve" x="32.0" y="300.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">latency SLO burning fast</text>
+<text xml:space="preserve" x="32.0" y="322.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">what customers would notice</text>
+<rect x="388.0" y="226.0" width="356.0" height="124.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="404.0" y="252.0" font-size="14" fill="#8A6A1F" font-weight="700" text-anchor="start">Causes and noise: dashboards</text>
+<text xml:space="preserve" x="404.0" y="278.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">high CPU at the daily peak</text>
+<text xml:space="preserve" x="404.0" y="300.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">one host briefly unreachable</text>
+<text xml:space="preserve" x="404.0" y="322.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">a busy queue that's still draining</text>
+<text xml:space="preserve" x="16.0" y="384.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">Review every page weekly: keep it, fix it, or delete it.</text>
+</g></svg>

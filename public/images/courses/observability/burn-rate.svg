@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 380" width="760" height="380" role="img" aria-label="Burn rate. At a burn rate of 1, a 30-day error budget lasts exactly 30 days. At 10 times, it's gone in 3 days; at 14.4 times, in about 2 days, which is 2 percent of the budget every hour. A page fires only when both the 1-hour and the 5-minute burn rates are above 14.4: the long window ignores blips, the short window lets the alert clear soon after the problem stops. Slower burns, such as 6 times over 6 hours, open a ticket.">
+<title>Burn rate: how fast the error budget is going, and a two-window paging rule.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="380" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<line x1="70.0" y1="290.0" x2="420.0" y2="290.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="62.0" y="294.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="end">0%</text>
+<line x1="70.0" y1="170.0" x2="420.0" y2="170.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="62.0" y="174.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="end">50%</text>
+<line x1="70.0" y1="50.0" x2="420.0" y2="50.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="62.0" y="54.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="end">100%</text>
+<text xml:space="preserve" x="70.0" y="308.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="middle">day 0</text>
+<text xml:space="preserve" x="186.7" y="308.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="middle">day 10</text>
+<text xml:space="preserve" x="303.3" y="308.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="middle">day 20</text>
+<text xml:space="preserve" x="420.0" y="308.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="middle">day 30</text>
+<line x1="70.0" y1="50.0" x2="420.0" y2="290.0" stroke="#2F6B3F" stroke-width="2.4"/>
+<line x1="70.0" y1="50.0" x2="105.0" y2="290.0" stroke="#8A6A1F" stroke-width="2.4"/>
+<line x1="70.0" y1="50.0" x2="94.3" y2="290.0" stroke="#9B2C1F" stroke-width="2.4"/>
+<text xml:space="preserve" x="233.3" y="141.2" font-size="12" fill="#2F6B3F" font-weight="700" text-anchor="start">1×: lasts 30 days</text>
+<text xml:space="preserve" x="111.0" y="261.2" font-size="12" fill="#8A6A1F" font-weight="700" text-anchor="start">10×: 3 days</text>
+<text xml:space="preserve" x="100.3" y="170.0" font-size="12" fill="#9B2C1F" font-weight="700" text-anchor="start">14.4×: about 2 days</text>
+<text xml:space="preserve" x="16.0" y="30.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Error budget left (30-day SLO)</text>
+<text xml:space="preserve" x="16.0" y="340.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Burn rate = observed error rate ÷ allowed error rate (0.1% for a 99.9% SLO).</text>
+<text xml:space="preserve" x="16.0" y="362.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">14.4× uses 2% of the month's budget every hour.</text>
+<rect x="452.0" y="40.0" width="292.0" height="260.0" rx="10" fill="#FFFFFF" stroke="#B38A3E" stroke-width="1.6"/>
+<text xml:space="preserve" x="468.0" y="66.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="start">Page only when both are true</text>
+<rect x="468.0" y="82.0" width="260.0" height="46.0" rx="6" fill="#E6EEF6"/>
+<text xml:space="preserve" x="480.0" y="102.0" font-size="13" fill="#2F5D8A" font-weight="700" text-anchor="start">1-hour burn &gt; 14.4</text>
+<text xml:space="preserve" x="480.0" y="120.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">a lot of budget is going</text>
+<text xml:space="preserve" x="598.0" y="148.0" font-size="13" fill="#8A6A1F" font-weight="700" text-anchor="middle">AND</text>
+<rect x="468.0" y="160.0" width="260.0" height="46.0" rx="6" fill="#E6EEF6"/>
+<text xml:space="preserve" x="480.0" y="180.0" font-size="13" fill="#2F5D8A" font-weight="700" text-anchor="start">5-minute burn &gt; 14.4</text>
+<text xml:space="preserve" x="480.0" y="198.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">and it's still happening</text>
+<path d="M598.0,210.0 L598.0,232.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="468.0" y="236.0" width="260.0" height="46.0" rx="6" fill="#F6E3E0"/>
+<text xml:space="preserve" x="598.0" y="264.0" font-size="13" fill="#9B2C1F" font-weight="700" text-anchor="middle">page the on-call engineer</text>
+<text xml:space="preserve" x="468.0" y="326.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">Slower burns (6× over 6 hours) open a</text>
+<text xml:space="preserve" x="468.0" y="343.4" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">ticket instead.</text>
+</g></svg>

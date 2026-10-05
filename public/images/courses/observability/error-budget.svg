@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 400" width="760" height="400" role="img" aria-label="SLI, SLO and error budget. The SLI is good events divided by all events, measured where users meet the service. The SLO is a target for it over a period, such as 99.9 percent of requests succeed over 30 days. The error budget is the 0.1 percent left: with 10 million requests in a month, 10,000 may fail; for a full outage, that's about 43 minutes in 30 days. While budget is left, ship; once it's spent, reliability work comes first.">
+<title>SLI, SLO and the error budget, with example numbers.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="400" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="16.0" width="232.0" height="110.0" rx="10" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.5"/>
+<text xml:space="preserve" x="32.0" y="46.0" font-size="16" fill="#2F5D8A" font-weight="700" text-anchor="start">SLI</text>
+<text xml:space="preserve" x="32.0" y="70.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">what users experience</text>
+<text xml:space="preserve" x="32.0" y="104.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">good events ÷ all events</text>
+<path d="M250.0,71.0 L262.0,71.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="264.0" y="16.0" width="232.0" height="110.0" rx="10" fill="#F3EBD8" stroke="#8A6A1F" stroke-width="1.5"/>
+<text xml:space="preserve" x="280.0" y="46.0" font-size="16" fill="#8A6A1F" font-weight="700" text-anchor="start">SLO</text>
+<text xml:space="preserve" x="280.0" y="70.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">the target, over a period</text>
+<text xml:space="preserve" x="280.0" y="104.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">99.9% succeed, over 30 days</text>
+<path d="M498.0,71.0 L510.0,71.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="512.0" y="16.0" width="232.0" height="110.0" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.5"/>
+<text xml:space="preserve" x="528.0" y="46.0" font-size="16" fill="#9B2C1F" font-weight="700" text-anchor="start">Error budget</text>
+<text xml:space="preserve" x="528.0" y="70.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">what's allowed to fail</text>
+<text xml:space="preserve" x="528.0" y="104.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">the remaining 0.1%</text>
+<text xml:space="preserve" x="16.0" y="164.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">One month, 10,000,000 requests (example)</text>
+<rect x="16.0" y="176.0" width="728.0" height="34.0" rx="4" fill="#E5F0E8"/>
+<rect x="722.2" y="176.0" width="21.8" height="34.0" rx="0" fill="#9B2C1F"/>
+<text xml:space="preserve" x="30.0" y="198.0" font-size="13" fill="#2F6B3F" font-weight="700" text-anchor="start">9,990,000 must succeed (99.9%)</text>
+<path d="M722.16,212 L560,236 M744,212 L744,236" fill="none" stroke="#5E5A52" stroke-width="1.2" stroke-dasharray="3 3"/>
+<rect x="560.0" y="236.0" width="184.0" height="30.0" rx="4" fill="#F6E3E0"/>
+<rect x="560.0" y="236.0" width="64.4" height="30.0" rx="4" fill="#9B2C1F"/>
+<text xml:space="preserve" x="560.0" y="284.0" font-size="12.5" fill="#9B2C1F" font-weight="700" text-anchor="start">budget: 10,000 failures</text>
+<text xml:space="preserve" x="560.0" y="302.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">35% used so far (example)</text>
+<text xml:space="preserve" x="16.0" y="250.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">As time: 0.1% of 30 days is about 43 minutes of full outage a month.</text>
+<text xml:space="preserve" x="16.0" y="286.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">The red sliver is enlarged for visibility.</text>
+<rect x="16.0" y="324.0" width="356.0" height="56.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.4"/>
+<text xml:space="preserve" x="32.0" y="350.0" font-size="13.5" fill="#2F6B3F" font-weight="700" text-anchor="start">Budget left</text>
+<text xml:space="preserve" x="32.0" y="370.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">ship features, run experiments</text>
+<rect x="388.0" y="324.0" width="356.0" height="56.0" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.4"/>
+<text xml:space="preserve" x="404.0" y="350.0" font-size="13.5" fill="#9B2C1F" font-weight="700" text-anchor="start">Budget spent</text>
+<text xml:space="preserve" x="404.0" y="370.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">reliability work comes first</text>
+</g></svg>

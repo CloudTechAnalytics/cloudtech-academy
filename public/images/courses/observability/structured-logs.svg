@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 400" width="760" height="400" role="img" aria-label="The same log event as free text and as structured JSON. Free text needs fragile text matching. The JSON version has named fields: you can filter by service, group by route, compare pool_in_use with pool_size, and follow trace_id to the full trace of that request.">
+<title>Structured logs: every detail is a field you can filter, group or follow.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="400" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="28.0" font-size="13.5" fill="#9B2C1F" font-weight="700" text-anchor="start">Free text: readable, but hard to query</text>
+<rect x="16.0" y="38.0" width="728.0" height="42.0" rx="8" fill="#2A2926" stroke="#2A2926" stroke-width="1"/>
+<text xml:space="preserve" x="28.0" y="62.0" font-size="12.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">09:58:12 ERROR db pool exhausted for /api/invoices after 5000ms (40/40)</text>
+<text xml:space="preserve" x="16.0" y="104.0" font-size="13.5" fill="#2F6B3F" font-weight="700" text-anchor="start">Structured (JSON): every detail is a named field</text>
+<rect x="16.0" y="116.0" width="236.0" height="34.0" rx="5" fill="#FFFFFF"/>
+<text xml:space="preserve" x="26.0" y="138.0" font-size="12" fill="#2F5D8A" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">ts</text>
+<text xml:space="preserve" x="242.0" y="138.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="end" font-family="'JetBrains Mono', Consolas, monospace">2026-08-31T09:58:12Z</text>
+<rect x="264.0" y="116.0" width="236.0" height="34.0" rx="5" fill="#FFFFFF"/>
+<text xml:space="preserve" x="274.0" y="138.0" font-size="12" fill="#2F5D8A" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">level</text>
+<text xml:space="preserve" x="490.0" y="138.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="end" font-family="'JetBrains Mono', Consolas, monospace">error</text>
+<rect x="16.0" y="156.0" width="236.0" height="34.0" rx="5" fill="#FFFFFF"/>
+<text xml:space="preserve" x="26.0" y="178.0" font-size="12" fill="#2F5D8A" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">service</text>
+<text xml:space="preserve" x="242.0" y="178.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="end" font-family="'JetBrains Mono', Consolas, monospace">api</text>
+<rect x="264.0" y="156.0" width="236.0" height="34.0" rx="5" fill="#FFFFFF"/>
+<text xml:space="preserve" x="274.0" y="178.0" font-size="12" fill="#2F5D8A" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">message</text>
+<text xml:space="preserve" x="490.0" y="178.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="end" font-family="'JetBrains Mono', Consolas, monospace">db pool exhausted</text>
+<rect x="16.0" y="196.0" width="236.0" height="34.0" rx="5" fill="#FFFFFF"/>
+<text xml:space="preserve" x="26.0" y="218.0" font-size="12" fill="#2F5D8A" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">route</text>
+<text xml:space="preserve" x="242.0" y="218.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="end" font-family="'JetBrains Mono', Consolas, monospace">GET /api/invoices</text>
+<rect x="264.0" y="196.0" width="236.0" height="34.0" rx="5" fill="#FFFFFF"/>
+<text xml:space="preserve" x="274.0" y="218.0" font-size="12" fill="#2F5D8A" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">pool_in_use</text>
+<text xml:space="preserve" x="490.0" y="218.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="end" font-family="'JetBrains Mono', Consolas, monospace">40</text>
+<rect x="16.0" y="236.0" width="236.0" height="34.0" rx="5" fill="#FFFFFF"/>
+<text xml:space="preserve" x="26.0" y="258.0" font-size="12" fill="#2F5D8A" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">pool_size</text>
+<text xml:space="preserve" x="242.0" y="258.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="end" font-family="'JetBrains Mono', Consolas, monospace">40</text>
+<rect x="264.0" y="236.0" width="236.0" height="34.0" rx="5" fill="#FFFFFF"/>
+<text xml:space="preserve" x="274.0" y="258.0" font-size="12" fill="#2F5D8A" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">trace_id</text>
+<text xml:space="preserve" x="490.0" y="258.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="end" font-family="'JetBrains Mono', Consolas, monospace">4f1c…</text>
+<path d="M506.0,142.0 L528.0,142.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<text xml:space="preserve" x="536.0" y="138.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">filter</text>
+<text xml:space="preserve" x="536.0" y="154.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">service = api, level = error</text>
+<path d="M506.0,182.0 L528.0,182.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<text xml:space="preserve" x="536.0" y="178.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">group</text>
+<text xml:space="preserve" x="536.0" y="194.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">errors per route, per 10 minutes</text>
+<path d="M506.0,222.0 L528.0,222.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<text xml:space="preserve" x="536.0" y="218.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">compare</text>
+<text xml:space="preserve" x="536.0" y="234.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">in use 40 of 40: the pool is full</text>
+<path d="M506.0,262.0 L528.0,262.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<text xml:space="preserve" x="536.0" y="258.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">follow</text>
+<text xml:space="preserve" x="536.0" y="274.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">trace_id opens the full trace</text>
+<text xml:space="preserve" x="16.0" y="316.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="start">Log levels</text>
+<text xml:space="preserve" x="100.0" y="316.0" font-size="13" fill="#5E5A52" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">debug</text>
+<text xml:space="preserve" x="150.0" y="316.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">developer detail</text>
+<text xml:space="preserve" x="262.0" y="316.0" font-size="13" fill="#2F5D8A" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">info</text>
+<text xml:space="preserve" x="312.0" y="316.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">normal events</text>
+<text xml:space="preserve" x="424.0" y="316.0" font-size="13" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">warn</text>
+<text xml:space="preserve" x="474.0" y="316.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">odd, still working</text>
+<text xml:space="preserve" x="586.0" y="316.0" font-size="13" fill="#9B2C1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">error</text>
+<text xml:space="preserve" x="636.0" y="316.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">a request failed</text>
+<text xml:space="preserve" x="16.0" y="356.0" font-size="12.5" fill="#9B2C1F" font-weight="700" text-anchor="start">Never log passwords, card numbers or full phone numbers. Alert on error rates, not single lines.</text>
+</g></svg>

@@ -10,7 +10,7 @@ Ada fixed the incident by doubling the database connection pool and slowing the 
 
 ## The concept
 
-**Little's law**
+### Little's law
 
 For any system that work flows through:
 
@@ -18,15 +18,17 @@ For any system that work flows through:
 
 For a connection pool: **connections in use = requests per second × seconds each request holds a connection**. 133 API requests a second, each holding a connection for 0.3 seconds, need about 40 connections at once.
 
-**Saturation**
+### Saturation
 
 When demand exceeds what a resource can serve, work queues. Waiting time doesn't grow gently: it grows without limit until something times out. That's why the incident went from fine to failing within a minute.
 
-**Headroom and isolation**
+### Headroom and isolation
 
 - Size for the peak plus headroom (for example, peak demand at most 70% of capacity).
 - **Isolate** batch work from user traffic: give background jobs their own, smaller pool, so they can only slow themselves down.
 - Remember the other end: a bigger pool means more connections at the database, which has its own limit.
+
+![Little's law: 133 requests a second times 0.3 seconds each gives about 40 connections, a full pool; below, a bulk job sharing one pool with API requests compared with separate API and job pools](/images/courses/observability/littles-law.svg "Little's law sizes the pool; isolation keeps batch work from starving users.")
 
 ## Example
 

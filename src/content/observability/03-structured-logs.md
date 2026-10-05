@@ -12,7 +12,7 @@ Tallybook's services write **structured** logs: one JSON object per line, with n
 
 ## The concept
 
-**Free text versus structured**
+### Free text versus structured
 
 ```text nocheck
 2026-08-31 09:58:12 ERROR db pool exhausted for /api/invoices after 5000ms (40/40)
@@ -21,11 +21,13 @@ Tallybook's services write **structured** logs: one JSON object per line, with n
 
 The second can be filtered by `service`, grouped by `route`, and linked to a trace by `trace_id`, without fragile text matching.
 
-**Log levels**
+![A free-text log line compared with the same event as JSON fields: ts, level, service, message, route, pool_in_use, pool_size and trace_id, with arrows showing filter, group, compare and follow; below, the four log levels](/images/courses/observability/structured-logs.svg "Structured logs: every detail is a field you can filter, group or follow.")
+
+### Log levels
 
 `debug` (detail for developers), `info` (normal events), `warn` (something odd, still working), `error` (a request failed). Alert on rates of errors, not individual lines.
 
-**Good logging habits**
+### Good logging habits
 
 - Log events with context (IDs, durations, counts), not prose.
 - Include a **trace ID** so a log line leads to the full request.

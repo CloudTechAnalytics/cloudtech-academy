@@ -419,6 +419,42 @@
   760,
   520
  ],
+ "/images/courses/observability/burn-rate.svg": [
+  760,
+  380
+ ],
+ "/images/courses/observability/error-budget.svg": [
+  760,
+  400
+ ],
+ "/images/courses/observability/good-page.svg": [
+  760,
+  400
+ ],
+ "/images/courses/observability/littles-law.svg": [
+  760,
+  420
+ ],
+ "/images/courses/observability/percentiles.svg": [
+  760,
+  400
+ ],
+ "/images/courses/observability/structured-logs.svg": [
+  760,
+  400
+ ],
+ "/images/courses/observability/three-signals.svg": [
+  760,
+  420
+ ],
+ "/images/courses/observability/toil.svg": [
+  760,
+  380
+ ],
+ "/images/courses/observability/trace-waterfall.svg": [
+  760,
+  380
+ ],
  "/images/courses/powerbi/added-custom.webp": [
   1920,
   700
