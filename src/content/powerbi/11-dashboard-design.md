@@ -12,6 +12,21 @@ Your first report page works, but it may look like most first pages: twelve visu
 
 **Hierarchy: the most important thing, biggest and first.** People scan a page top-left to bottom-right (a Z or F pattern). Put the headline numbers along the top, the main chart below them, and details lower down.
 
+### A layout that works
+
+![A report page wireframe with six numbered areas in reading order: a title stating the finding, slicers at the top right, four KPI cards each with a comparison, a large line chart of monthly revenue against last year, a sorted region bar chart with North West in red, and a table of customers to call.](/images/courses/powerbi/page-layout.svg "An overview page in reading order. Each area answers the question the one before it raises.")
+
+| # | Area | Answers |
+| :-- | :-- | :-- |
+| 1 | **Title that states the finding** | "What's the story?" |
+| 2 | **Slicers**, together, out of the way | "Can I see my part?" |
+| 3 | **KPI cards**, each with a comparison | "Are we OK?" |
+| 4 | **Main chart**, biggest, top left of the body | "How did we get here?" |
+| 5 | **Comparison chart**, sorted, one highlight | "Where should I look?" |
+| 6 | **Action table** | "What do I do now?" |
+
+The page reads like a conversation: headline, numbers, trend, where, action. Notice the fourth card: lines per customer fell 12.1% even though revenue grew. That's the leading indicator that points to the North West problem.
+
 **The five-second rule.** A manager glancing at the page for five seconds should get the main message. If they can't, the page has too much or the wrong emphasis.
 
 **Design rules that work**

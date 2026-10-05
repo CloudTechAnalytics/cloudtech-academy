@@ -31,6 +31,32 @@ That's what **Power BI** is for: building an analysis once, connecting it to dat
 
 **How it relates to Excel.** Power Query and pivot-style thinking are shared with Excel, so the Excel course helps a lot. The big differences: Power BI handles millions of rows, keeps several related tables in one model, and produces interactive reports rather than static sheets.
 
+| | Excel | Power BI |
+| :-- | :-- | :-- |
+| Data size | About a million rows per sheet | Many millions of rows, compressed |
+| Several tables | Linked by lookups you write | Related once in a model |
+| Calculations | Cell formulas | DAX measures that respond to filters |
+| Output | Sheets, charts, pivot tables | Interactive report pages and dashboards |
+| Refresh | Usually by hand | Scheduled, automatic |
+| Sharing | Send the file | Publish once; people open it in a browser or on a phone |
+| Best for | Quick, flexible, one-off analysis | Reports many people use repeatedly |
+
+Most analysts use both: Excel to explore and check, Power BI to deliver.
+
+### The building blocks
+
+You'll meet these words throughout the course:
+
+| Term | Means | Lesson |
+| :-- | :-- | :-- |
+| **Query** | A recipe for loading and cleaning one table, in Power Query | 3–5 |
+| **Model** | The loaded tables and the relationships between them | 6–7 |
+| **Measure** | A DAX calculation, worked out for whatever a visual shows | 8–9 |
+| **Visual** | One chart, card, table or slicer on a page | 10 |
+| **Report** | A set of pages built on one model (a `.pbix` file) | 10–12 |
+| **Dashboard** | In the Service, a single page of tiles pinned from reports | 13 |
+| **Workspace** | A shared folder in the Service where reports are published | 13 |
+
 ## Example
 
 By the end of this course you'll have built a Kolanut sales report with:

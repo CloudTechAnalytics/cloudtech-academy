@@ -1,7 +1,7 @@
 ---
 title: Data relationships
 minutes: 15
-summary: Connect tables with one-to-many relationships so filters flow from customers and products to orders.
+summary: Connect tables with one-to-many relationships: cardinality, filter direction, active and inactive relationships, and the star schema of facts and dimensions.
 ---
 
 ## The problem
@@ -10,25 +10,61 @@ You put `region` from the customers table and `revenue` from orders into a bar c
 
 ## The concept
 
-A **relationship** links two tables through a column they share, usually an ID.
+A **relationship** links two tables through a column they share, usually an ID. Once it exists, a filter on one table reaches the other: choose `Lagos` in `customers`, and Power BI counts only Lagos customers' orders. Without it, the two tables don't know about each other.
 
-- **Cardinality.** Almost always **one-to-many** (shown as `1` and `*`): one customer, many orders. The "one" side must have unique values; `customers[customer_id]` does.
-- **Cross-filter direction.** The arrow on the line shows which way filters flow. **Single** (from the one side to the many side) is the default and the right choice almost always: choosing a region filters the customers, which filters their orders.
-- **Active vs inactive.** Only one active path can exist between two tables; others show as dashed lines and are used only when a DAX formula asks for them.
+### The parts of a relationship
 
-**Star schema.** The standard design, which the next lesson explores further:
+Double-click a relationship line in Model view and the **Edit relationship** dialog shows four settings:
 
-```
-            customers
-                │ 1
-                │
-products ─1───* orders *───1─ Date
-```
+| Setting | Means | For Kolanut |
+| :-- | :-- | :-- |
+| **Tables and columns** | Which column in each table holds the matching value | `orders[customer_id]` and `customers[customer_id]` |
+| **Cardinality** | How many rows on each side can match | Many to one (\*:1): many orders, one customer |
+| **Cross-filter direction** | Which way filters flow | Single: from customers to orders |
+| **Active** | Whether Power BI uses it automatically | Yes |
 
-- **Fact table** in the middle: events with numbers (orders).
-- **Dimension tables** around it: the things you filter and group by (customers, products, dates).
+### Cardinality
 
-Filters flow from dimensions into the fact table. Put fields from **dimensions** on axes and slicers, and numbers from the **fact** table in values.
+| Cardinality | Means | When |
+| :-- | :-- | :-- |
+| **One-to-many** (1:\*) | Each value appears once on one side, many times on the other | Almost always: one customer, many orders |
+| **One-to-one** (1:1) | Each value appears once on both sides | Rare; usually a sign the two tables should be one |
+| **Many-to-many** (\*:\*) | Values repeat on both sides | Avoid while learning; results are easy to misread |
+
+The "one" side must have **unique** values. `customers[customer_id]` does: 90 rows, 90 IDs. If Power BI offers only many-to-many when you expected one-to-many, there's a duplicate ID on the side that should be "one". Find it before going further; it's a data problem, not a setting to change.
+
+### Cross-filter direction
+
+The small arrow in the middle of the line shows which way filters travel.
+
+- **Single** (the default): from the one side to the many side. Picking a region filters customers, which filters their orders. This is right almost every time.
+- **Both**: filters travel both ways, so picking a product would also filter the customers list down to those who bought it. Occasionally useful, but with several tables it can make filters take unexpected paths and slow the report. Use it only when you know exactly why.
+
+### Active and inactive relationships
+
+Only one **active** path can exist between two tables. A second relationship between the same tables is created as **inactive** and drawn as a dashed line. It does nothing unless a DAX formula switches it on with `USERELATIONSHIP` (for example, an orders table with both an order date and a delivery date, each related to the same date table).
+
+### The star schema
+
+![The orders fact table in the middle, with customers above it, products to the left and Date to the right. Each dimension has a one-to-many relationship into orders, with arrows showing filters flowing into orders.](/images/courses/powerbi/star-schema.svg "Kolanut's model as a star schema. Filters flow from the dimensions into the fact table.")
+
+The standard design for Power BI models is the **star schema**:
+
+| Table type | Holds | Kolanut | Use its fields for |
+| :-- | :-- | :-- | :-- |
+| **Fact table** | Events, with the numbers you add up | `orders`: 4,266 order lines | Measures in **Values** |
+| **Dimension tables** | The things you describe, filter and group by | `customers`, `products`, and `Date` (next lesson) | **Axes, rows, legends and slicers** |
+
+Each dimension relates **one-to-many** into the fact, so the diagram looks like a star. Two rules follow:
+
+1. **Group by dimension fields**: use `customers[region]`, not a region column copied into orders.
+2. **Measure fact fields**: revenue and quantity come from `orders`.
+
+Why does Power BI work best this way? Filters always flow one clear way, from small dimension tables into the big fact table. Each fact lives once, and the model stays easy to understand when it grows.
+
+### What happens without a relationship
+
+If `customers` and `orders` aren't related and you put `customers[region]` next to `orders[revenue]`, every region shows the **same** number: the grand total, ₦830.5m. Power BI can't tell which orders belong to which region, so it doesn't filter at all. Identical numbers on every row are the classic sign of a missing or broken relationship.
 
 ## Example
 
@@ -51,6 +87,8 @@ With the relationship `customers[customer_id] (1) → orders[customer_id] (*)`:
 
 Without it, every row shows ₦830.5m.
 
+The relationship to `products` works the same way. Put `products[category]` and `customers[region]` in the same matrix, and each cell is filtered by **both** dimensions at once: Lagos and Beverages together come to ₦116,162,310. That's the star schema at work: any combination of dimensions, with no extra formulas.
+
 ## Walkthrough
 
 1. Go to **Model view**. Power BI may already have created relationships: it auto-detects matching column names on load. Check them rather than trusting them.
@@ -58,10 +96,22 @@ Without it, every row shows ₦830.5m.
 3. Double-click the line to open **Edit relationship**. Check: Cardinality **Many to one (\*:1)** from orders to customers; Cross filter direction **Single**; **Make this relationship active** ticked.
 4. Do the same for `products[product_id]` → `orders[product_id]`.
 5. If you merged `category` into orders in lesson 4, delete that column now (in Power Query, delete the merge steps) and use `products[category]` instead.
-6. Back in Report view, build a table visual with `customers[region]` and `orders[revenue]`. Each region should show a different number.
+6. Back in Report view, build a table visual with `customers[region]` and `orders[revenue]`. Each region should show a different number, and the total should be ₦830,541,245.
+7. **Test the other relationship**: a table with `products[category]` and `orders[revenue]`. Again, different numbers on each row, the same total.
 
 > [!TIP]
 > Hide the ID columns on the "many" side (right-click `orders[customer_id]` → **Hide in report view**). Report builders should use `customers[customer_name]` or `customers[region]`, never the foreign key, which only confuses.
+
+### Summary
+
+| Term | Meaning |
+| :-- | :-- |
+| Relationship | A link between two tables through a shared column |
+| One-to-many (1:\*) | The normal case: unique on one side, repeated on the other |
+| Single direction | Filters flow from the one side to the many side |
+| Inactive relationship | A dashed line, used only when DAX asks for it |
+| Star schema | One fact table in the middle, dimensions around it |
+| Same number on every row | Missing or broken relationship |
 
 ## Practice
 

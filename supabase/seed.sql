@@ -25632,6 +25632,32 @@ That's what **Power BI** is for: building an analysis once, connecting it to dat
 
 **How it relates to Excel.** Power Query and pivot-style thinking are shared with Excel, so the Excel course helps a lot. The big differences: Power BI handles millions of rows, keeps several related tables in one model, and produces interactive reports rather than static sheets.
 
+| | Excel | Power BI |
+| :-- | :-- | :-- |
+| Data size | About a million rows per sheet | Many millions of rows, compressed |
+| Several tables | Linked by lookups you write | Related once in a model |
+| Calculations | Cell formulas | DAX measures that respond to filters |
+| Output | Sheets, charts, pivot tables | Interactive report pages and dashboards |
+| Refresh | Usually by hand | Scheduled, automatic |
+| Sharing | Send the file | Publish once; people open it in a browser or on a phone |
+| Best for | Quick, flexible, one-off analysis | Reports many people use repeatedly |
+
+Most analysts use both: Excel to explore and check, Power BI to deliver.
+
+### The building blocks
+
+You'll meet these words throughout the course:
+
+| Term | Means | Lesson |
+| :-- | :-- | :-- |
+| **Query** | A recipe for loading and cleaning one table, in Power Query | 3–5 |
+| **Model** | The loaded tables and the relationships between them | 6–7 |
+| **Measure** | A DAX calculation, worked out for whatever a visual shows | 8–9 |
+| **Visual** | One chart, card, table or slicer on a page | 10 |
+| **Report** | A set of pages built on one model (a `.pbix` file) | 10–12 |
+| **Dashboard** | In the Service, a single page of tiles pinned from reports | 13 |
+| **Workspace** | A shared folder in the Service where reports are published | 13 |
+
 ## Example
 
 By the end of this course you'll have built a Kolanut sales report with:
@@ -25890,6 +25916,43 @@ For a CSV, Power BI shows a **preview** of the first rows with its guess at the 
 
 **Import mode.** Loading copies the data into the `.pbix` file. That makes reports fast. To see new data you **Refresh** (Home → Refresh), which re-reads the source files.
 
+### Storage modes
+
+Import isn't the only way to connect. When you connect to a database, Power BI may ask which mode to use:
+
+| Mode | Where the data lives | Speed | Freshness | Use when |
+| :-- | :-- | :-- | :-- | :-- |
+| **Import** | Copied into the `.pbix` | Fastest | As of the last refresh | Almost always, and for every file source |
+| **DirectQuery** | Stays in the database; each visual sends a query | Slower; depends on the database | Live | The data is huge or must be up to the minute |
+| **Live connection** | An existing published model | Fast | As that model | Your company already has a shared model |
+
+This course uses Import throughout.
+
+### Common sources
+
+| Source | Get data option | Notes |
+| :-- | :-- | :-- |
+| CSV or text file | **Text/CSV** | Check the delimiter and the File Origin (encoding) for `₦` signs |
+| Excel workbook | **Excel workbook** | The Navigator lists each sheet and each Table; choose Tables where you can |
+| Many files of the same layout | **Folder** | Combines every file in a folder: drop next month's file in and refresh |
+| SQL Server, PostgreSQL, MySQL | **Database** | You can paste a SQL query instead of loading whole tables |
+| SharePoint or OneDrive | **SharePoint folder** | Lets the Service refresh without a gateway (lesson 13) |
+| A web page table | **Web** | Handy for public data such as exchange rates |
+
+### Data types in Power BI
+
+Every column has one type, shown by an icon in the Data pane and in Power Query:
+
+| Type | Power Query icon | For | Kolanut column |
+| :-- | :-- | :-- | :-- |
+| Whole number | `123` | Counts, IDs | `quantity`, `customer_id` |
+| Decimal number / Fixed decimal | `1.2` / `$` | Amounts | `revenue` |
+| Date | calendar | Dates without times | `order_date` |
+| Text | `ABC` | Names, categories, codes | `region` |
+| True/False | ✓✗ | Yes/no flags | |
+
+Fixed decimal is stored to four decimal places, which avoids tiny rounding errors in money. Get types right **before** loading: a date stored as text can't be used by the date table, and a number stored as text can't be summed.
+
 **Check what arrived**, every time:
 
 1. **Row counts**: in Table view the row count for the selected table appears at the bottom-left of the window. Compare it with the source.
@@ -26065,6 +26128,55 @@ The orders table has quantity, price and discount, but no revenue. You could cal
 
 **Column profiling.** **View → Column quality / Column distribution / Column profile** show valid, error and empty percentages, distinct counts and value frequencies. By default it profiles only the **first 1,000 rows**: click *"Column profiling based on top 1000 rows"* in the status bar and choose the entire data set.
 
+### Merge and append
+
+Two transformations combine queries, and they're easy to mix up:
+
+![On the left, merge: orders and products are matched on product_id, and the merged orders table gains a category column. On the right, append: January and February order tables with the same columns are stacked into one table of 400 rows.](/images/courses/powerbi/merge-append.svg "Merge adds columns by matching a key. Append adds rows from tables with the same columns.")
+
+| | Merge | Append |
+| :-- | :-- | :-- |
+| Adds | **Columns** from another table | **Rows** from another table |
+| Matches on | A key column in both tables | Column names |
+| Like | XLOOKUP, SQL `JOIN` | Copy-pasting one list under another, SQL `UNION ALL` |
+| Kolanut use | Bring `category` into orders | Combine monthly order files into one |
+
+A merge asks for a **join kind**. The ones you'll use:
+
+| Join kind | Keeps | Use for |
+| :-- | :-- | :-- |
+| **Left outer** (the default) | Every row of the first table, with matches from the second where they exist | Adding details: every order, with its product's category |
+| **Inner** | Only rows that match in both | Keeping only orders for products in a list |
+| **Left anti** | Rows of the first table with **no** match | Finding problems: orders whose product_id isn't in products |
+
+A **left anti** merge is a quick data-quality check: if it returns any rows, some orders point to products that don't exist.
+
+### How Power Query records your work
+
+Every click becomes a step written in **M**, Power Query's language. You rarely type M, but reading it helps:
+
+```m
+= Table.AddColumn(#"Changed Type", "revenue", each [quantity] * [unit_price] * (1 - [discount_pct] / 100), type number)
+```
+
+| Piece | Means |
+| :-- | :-- |
+| `Table.AddColumn` | The function: add a column to a table |
+| `#"Changed Type"` | The input: the result of the previous step, by its name |
+| `"revenue"` | The new column's name |
+| `each [quantity] * …` | The formula, worked out for **each** row |
+| `type number` | The new column's type |
+
+Each step takes the previous step's result and passes its own result on, like a recipe. That's why order matters: delete or move a step and every step after it may break.
+
+### Good habits with steps
+
+1. **Set types early**, straight after loading, and check them: a number column typed as text causes problems in every step after.
+2. **Rename steps** that matter (right-click → Rename): `Added revenue` is clearer than `Added Custom` six months later.
+3. **Remove columns you don't need**, early. Smaller tables load faster.
+4. **Don't edit in Excel first.** Do every change in Power Query, so it repeats on the next refresh instead of being lost.
+5. **Check after each important step**: row counts in the status bar, column quality at 100% valid.
+
 **Close & Apply** (Home) saves your steps and loads the result into the model.
 
 This is the Power Query Editor with Kolanut's three queries:
@@ -26080,13 +26192,7 @@ This is the Power Query Editor with Kolanut's three queries:
 
 ## Example
 
-The revenue custom column, in M:
-
-```m
-= Table.AddColumn(#"Changed Type", "revenue", each [quantity] * [unit_price] * (1 - [discount_pct] / 100), type number)
-```
-
-You don't have to type that: the Custom Column dialog writes it. In the dialog you only enter:
+The revenue custom column shown above is exactly what the Custom Column dialog writes for you. In the dialog you only enter:
 
 ```m
 [quantity] * [unit_price] * (1 - [discount_pct] / 100)
@@ -26375,32 +26481,68 @@ values ('pbi-m06', 'power-bi-fundamentals', 'Data Relationships', 6, null, null,
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('power-bi-fundamentals:data-relationships', 'power-bi-fundamentals', 'pbi-m06', 'data-relationships', 'Data relationships', 'Connect tables with one-to-many relationships so filters flow from customers and products to orders.', 15, $md$
+values ('power-bi-fundamentals:data-relationships', 'power-bi-fundamentals', 'pbi-m06', 'data-relationships', 'Data relationships', 'Connect tables with one-to-many relationships: cardinality, filter direction, active and inactive relationships, and the star schema of facts and dimensions.', 15, $md$
 ## The problem
 
 You put `region` from the customers table and `revenue` from orders into a bar chart, and every bar shows ₦830.5 million. Power BI doesn't know which orders belong to which region. The tables need a **relationship**.
 
 ## The concept
 
-A **relationship** links two tables through a column they share, usually an ID.
+A **relationship** links two tables through a column they share, usually an ID. Once it exists, a filter on one table reaches the other: choose `Lagos` in `customers`, and Power BI counts only Lagos customers' orders. Without it, the two tables don't know about each other.
 
-- **Cardinality.** Almost always **one-to-many** (shown as `1` and `*`): one customer, many orders. The "one" side must have unique values; `customers[customer_id]` does.
-- **Cross-filter direction.** The arrow on the line shows which way filters flow. **Single** (from the one side to the many side) is the default and the right choice almost always: choosing a region filters the customers, which filters their orders.
-- **Active vs inactive.** Only one active path can exist between two tables; others show as dashed lines and are used only when a DAX formula asks for them.
+### The parts of a relationship
 
-**Star schema.** The standard design, which the next lesson explores further:
+Double-click a relationship line in Model view and the **Edit relationship** dialog shows four settings:
 
-```
-            customers
-                │ 1
-                │
-products ─1───* orders *───1─ Date
-```
+| Setting | Means | For Kolanut |
+| :-- | :-- | :-- |
+| **Tables and columns** | Which column in each table holds the matching value | `orders[customer_id]` and `customers[customer_id]` |
+| **Cardinality** | How many rows on each side can match | Many to one (\*:1): many orders, one customer |
+| **Cross-filter direction** | Which way filters flow | Single: from customers to orders |
+| **Active** | Whether Power BI uses it automatically | Yes |
 
-- **Fact table** in the middle: events with numbers (orders).
-- **Dimension tables** around it: the things you filter and group by (customers, products, dates).
+### Cardinality
 
-Filters flow from dimensions into the fact table. Put fields from **dimensions** on axes and slicers, and numbers from the **fact** table in values.
+| Cardinality | Means | When |
+| :-- | :-- | :-- |
+| **One-to-many** (1:\*) | Each value appears once on one side, many times on the other | Almost always: one customer, many orders |
+| **One-to-one** (1:1) | Each value appears once on both sides | Rare; usually a sign the two tables should be one |
+| **Many-to-many** (\*:\*) | Values repeat on both sides | Avoid while learning; results are easy to misread |
+
+The "one" side must have **unique** values. `customers[customer_id]` does: 90 rows, 90 IDs. If Power BI offers only many-to-many when you expected one-to-many, there's a duplicate ID on the side that should be "one". Find it before going further; it's a data problem, not a setting to change.
+
+### Cross-filter direction
+
+The small arrow in the middle of the line shows which way filters travel.
+
+- **Single** (the default): from the one side to the many side. Picking a region filters customers, which filters their orders. This is right almost every time.
+- **Both**: filters travel both ways, so picking a product would also filter the customers list down to those who bought it. Occasionally useful, but with several tables it can make filters take unexpected paths and slow the report. Use it only when you know exactly why.
+
+### Active and inactive relationships
+
+Only one **active** path can exist between two tables. A second relationship between the same tables is created as **inactive** and drawn as a dashed line. It does nothing unless a DAX formula switches it on with `USERELATIONSHIP` (for example, an orders table with both an order date and a delivery date, each related to the same date table).
+
+### The star schema
+
+![The orders fact table in the middle, with customers above it, products to the left and Date to the right. Each dimension has a one-to-many relationship into orders, with arrows showing filters flowing into orders.](/images/courses/powerbi/star-schema.svg "Kolanut's model as a star schema. Filters flow from the dimensions into the fact table.")
+
+The standard design for Power BI models is the **star schema**:
+
+| Table type | Holds | Kolanut | Use its fields for |
+| :-- | :-- | :-- | :-- |
+| **Fact table** | Events, with the numbers you add up | `orders`: 4,266 order lines | Measures in **Values** |
+| **Dimension tables** | The things you describe, filter and group by | `customers`, `products`, and `Date` (next lesson) | **Axes, rows, legends and slicers** |
+
+Each dimension relates **one-to-many** into the fact, so the diagram looks like a star. Two rules follow:
+
+1. **Group by dimension fields**: use `customers[region]`, not a region column copied into orders.
+2. **Measure fact fields**: revenue and quantity come from `orders`.
+
+Why does Power BI work best this way? Filters always flow one clear way, from small dimension tables into the big fact table. Each fact lives once, and the model stays easy to understand when it grows.
+
+### What happens without a relationship
+
+If `customers` and `orders` aren't related and you put `customers[region]` next to `orders[revenue]`, every region shows the **same** number: the grand total, ₦830.5m. Power BI can't tell which orders belong to which region, so it doesn't filter at all. Identical numbers on every row are the classic sign of a missing or broken relationship.
 
 ## Example
 
@@ -26423,6 +26565,8 @@ With the relationship `customers[customer_id] (1) → orders[customer_id] (*)`:
 
 Without it, every row shows ₦830.5m.
 
+The relationship to `products` works the same way. Put `products[category]` and `customers[region]` in the same matrix, and each cell is filtered by **both** dimensions at once: Lagos and Beverages together come to ₦116,162,310. That's the star schema at work: any combination of dimensions, with no extra formulas.
+
 ## Walkthrough
 
 1. Go to **Model view**. Power BI may already have created relationships: it auto-detects matching column names on load. Check them rather than trusting them.
@@ -26430,10 +26574,22 @@ Without it, every row shows ₦830.5m.
 3. Double-click the line to open **Edit relationship**. Check: Cardinality **Many to one (\*:1)** from orders to customers; Cross filter direction **Single**; **Make this relationship active** ticked.
 4. Do the same for `products[product_id]` → `orders[product_id]`.
 5. If you merged `category` into orders in lesson 4, delete that column now (in Power Query, delete the merge steps) and use `products[category]` instead.
-6. Back in Report view, build a table visual with `customers[region]` and `orders[revenue]`. Each region should show a different number.
+6. Back in Report view, build a table visual with `customers[region]` and `orders[revenue]`. Each region should show a different number, and the total should be ₦830,541,245.
+7. **Test the other relationship**: a table with `products[category]` and `orders[revenue]`. Again, different numbers on each row, the same total.
 
 > [!TIP]
 > Hide the ID columns on the "many" side (right-click `orders[customer_id]` → **Hide in report view**). Report builders should use `customers[customer_name]` or `customers[region]`, never the foreign key, which only confuses.
+
+### Summary
+
+| Term | Meaning |
+| :-- | :-- |
+| Relationship | A link between two tables through a shared column |
+| One-to-many (1:\*) | The normal case: unique on one side, repeated on the other |
+| Single direction | Filters flow from the one side to the many side |
+| Inactive relationship | A dashed line, used only when DAX asks for it |
+| Star schema | One fact table in the middle, dimensions around it |
+| Same number on every row | Missing or broken relationship |
 
 ## Practice
 
@@ -26542,20 +26698,34 @@ values ('pbi-m07', 'power-bi-fundamentals', 'Data Modelling', 7, null, null, '{}
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('power-bi-fundamentals:data-modelling', 'power-bi-fundamentals', 'pbi-m07', 'data-modelling', 'Data modelling', 'Finish the star schema with a proper date table, sort months correctly, and tidy the model so reports are easy to build.', 15, $md$
+values ('power-bi-fundamentals:data-modelling', 'power-bi-fundamentals', 'pbi-m07', 'data-modelling', 'Data modelling', 'Complete the star schema with a date table built in DAX, explained piece by piece; mark it, sort months properly, add a hierarchy and tidy the model.', 20, $md$
 ## The problem
 
 You want revenue by month, and year-on-year comparisons. Grouping by `order_date` alone gets messy: months sort alphabetically (April, August, December…), there's nothing to group quarters by, and DAX's time functions (next lessons) need a complete calendar. The answer is a **date table**.
 
 ## The concept
 
-**Why a date table?**
+The star schema from the last lesson has one gap: dates. `orders[order_date]` holds dates, but you can't group it by quarter, sort months properly or use DAX's time functions with it alone. Every serious Power BI model has a separate **date table**.
 
-- One row per day, with no gaps, covering the whole period.
-- Columns to group by: year, quarter, month name, month number.
-- Required for reliable **time intelligence** in DAX (year-to-date, same period last year).
+### Why a date table?
 
-**Build it with DAX** (Modeling → **New table**):
+| Need | Without a date table | With one |
+| :-- | :-- | :-- |
+| Group by year, quarter, month | Power BI's hidden auto date tables, one per date column | One shared set of columns: `Year`, `Quarter`, `Month` |
+| Months in calendar order | "Apr, Aug, Dec, Feb…" (alphabetical) | "Jan, Feb, Mar…", sorted by month number |
+| Days with no orders | Missing from the axis | Present, so gaps show as gaps |
+| Year-to-date, same period last year | Unreliable or impossible | `TOTALYTD`, `SAMEPERIODLASTYEAR` work |
+| Several date columns (order, delivery) | Each grouped separately | All related to one table |
+
+A proper date table has:
+
+- **one row per day**, with **no gaps**, covering whole years;
+- a column of type **Date** that's unique;
+- columns to group and sort by: year, quarter, month name, month number.
+
+### Building it with DAX
+
+**Modeling → New table**, then:
 
 ```dax
 Date =
@@ -26569,44 +26739,100 @@ ADDCOLUMNS (
 )
 ```
 
-Then:
+Read it from the inside out:
 
-1. **Mark as date table**: select the table → Table tools → **Mark as date table** → choose the `Date` column.
-2. **Relate** `Date[Date]` (1) → `orders[order_date]` (*).
-3. **Sort by column**: select `Month` → Column tools → **Sort by column → Month Number**. Now months sort January to December.
+| Piece | Does | For 15 May 2025 |
+| :-- | :-- | :-- |
+| `DATE ( 2025, 1, 1 )` | Builds a date from year, month, day | (the start date) |
+| `CALENDAR ( start, end )` | A one-column table, `[Date]`, with every day from start to end | One row per day of 2025 and 2026 |
+| `ADDCOLUMNS ( table, "Name", expression, … )` | Adds columns, calculated for each row | |
+| `YEAR ( [Date] )` | The year | 2025 |
+| `MONTH ( [Date] )` | Month number, 1 to 12 | 5 |
+| `ROUNDUP ( MONTH ( [Date] ) / 3, 0 )` | Month 1–3 → 1, 4–6 → 2, and so on | 5 ÷ 3 = 1.67 → 2 |
+| `"Q" & …` | Joins text: `&` works as in Excel | Q2 |
+| `FORMAT ( [Date], "mmm" )` | The date as text in a pattern | May |
+| `FORMAT ( [Date], "yyyy-mm" )` | | 2025-05 |
 
-**Tidy model habits**
+> [!NOTE]
+> `CALENDARAUTO()` builds the date range automatically from the dates in your model. It's convenient, but it picks up any stray date column (such as a customer's joining date in 2018), so a fixed `CALENDAR` is easier to predict.
 
-- Hide ID and technical columns report builders shouldn't use.
-- Give tables and columns clear names (`Revenue`, not `Sum of revenue2`).
-- Set formats once in the model (currency, thousands separators), not on every visual.
-- Keep calculations as **measures** (next lessons) rather than many calculated columns.
-- Turn off **Auto date/time** (File → Options and settings → Options → Current file → Data Load) once you have your own date table. It creates hidden date tables for every date column and bloats the file.
+### Mark as date table
+
+Select the table → **Table tools → Mark as date table** → choose the `Date` column. Power BI checks the column is unique with no gaps, and then uses it for time intelligence. If it refuses, the range has a gap or a duplicate.
+
+### Relate it to the fact table
+
+In Model view, drag `Date[Date]` onto `orders[order_date]`: one-to-many, single direction, like the other dimensions. The model is now a full star: `customers`, `products` and `Date` around `orders`.
+
+### Sort by column
+
+Text sorts alphabetically, so a `Month` column shows **Apr, Aug, Dec, Feb, Jan…** on a chart. Fix it once in the model:
+
+1. Select `Date[Month]`.
+2. **Column tools → Sort by column → Month Number**.
+
+Every visual that uses `Month` now shows Jan to Dec in order. The same trick works for anything with a natural order, such as size bands sorted by a band number.
+
+### Hierarchies
+
+A **hierarchy** groups columns from big to small, so users can drill down: Year → Quarter → Month. Right-click `Year` → **Create hierarchy**, then drag `Quarter` and `Month` onto it. In a visual, the drill arrows move between the levels.
+
+### Tidy model habits
+
+A model is used by everyone who builds reports on it, so keep it easy to read:
+
+| Habit | Why |
+| :-- | :-- |
+| **Hide** IDs and technical columns (right-click → Hide in report view) | Report builders see only what they should use |
+| **Clear names**: `Revenue`, not `Sum of revenue2` | Names appear in every visual and tooltip |
+| **Set formats once** in the model: currency, thousands separators | Every visual inherits them |
+| **Set the summarisation** of number columns that shouldn't be added (Column tools → Summarization → Don't summarize) | Stops `customer_id` appearing as "Sum of customer_id" |
+| **Measures**, not lots of calculated columns (next lessons) | Smaller, faster models |
+| **Turn off Auto date/time** once you have your own date table | It creates hidden tables for every date column and bloats the file |
+
+Auto date/time is under **File → Options and settings → Options → Current file → Data Load**.
 
 ## Example
 
-The finished model:
+The finished model is the full star from the last lesson's diagram: `orders` in the middle, `customers`, `products` and `Date` around it.
 
-```
-customers (1) ──* orders *── (1) products
-                     *
-                     │
-                  (1) Date
-```
+Now `Date[Year]` and `Date[Quarter]` on a matrix, `orders[revenue]` in values, gives revenue by quarter:
 
-Now `Date[Year]` and `Date[Month]` on a matrix, `orders[revenue]` in values, gives a correctly sorted month-by-year grid.
+| Year | Quarter | Revenue |
+| :-- | :-- | --: |
+| 2025 | Q1 | 119,509,320 |
+| 2025 | Q2 | 124,653,750 |
+| 2025 | Q3 | 134,848,095 |
+| 2025 | Q4 | 160,799,625 |
+| 2026 | Q1 | (try it yourself) |
+| 2026 | Q2 | (you'll find it in the practice) |
+
+And with `Date[Month]` sorted by `Month Number`, a line chart of 2025 runs January to December in order, with the December peak (₦66,284,310) at the right end, where it belongs.
 
 ## Walkthrough
 
-1. **Modeling → New table**, paste the DAX above, press Enter.
+1. **Modeling → New table**, paste the DAX above, press Enter. The `Date` table appears. Open it in Table view and check the first row is 1 January 2025 and the last is 31 December 2026.
 2. Mark it as a date table.
 3. In Model view, drag `Date[Date]` onto `orders[order_date]`. Check it's one-to-many, single direction.
 4. Sort `Month` by `Month Number`.
-5. Build a **Matrix**: Rows `Date[Year]`, then `Date[Quarter]`; Values `orders[revenue]`. Expand a year with the **+** icons.
-6. Hide `orders[order_date]` in report view, so everyone uses `Date` instead.
+5. Create a hierarchy: Year → Quarter → Month.
+6. Build a **Matrix**: Rows the hierarchy; Values `orders[revenue]`. Expand a year with the **+** icons.
+7. Hide `orders[order_date]` in report view, so everyone uses `Date` instead.
+8. Turn off Auto date/time for this file.
 
 > [!NOTE]
 > The date table runs to 31 December 2026 although the data stops at 30 June 2026. That's intended: complete years make year-level calculations behave, and later data will fit without changes.
+
+### Summary
+
+| Need | Do |
+| :-- | :-- |
+| Group, sort and compare dates properly | A date table: one row per day, whole years |
+| Build it | `ADDCOLUMNS ( CALENDAR ( … ), "Year", YEAR ( [Date] ), … )` |
+| Let DAX time functions use it | Mark as date table |
+| Months in order | Sort `Month` by `Month Number` |
+| Drill from year to month | A hierarchy |
+| A model others can use | Hide technical columns, clear names, formats set once |
 
 ## Practice
 
@@ -26706,44 +26932,146 @@ values ('pbi-m08', 'power-bi-fundamentals', 'DAX Fundamentals', 8, null, null, '
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('power-bi-fundamentals:dax-fundamentals', 'power-bi-fundamentals', 'pbi-m08', 'dax-fundamentals', 'DAX fundamentals', 'The difference between calculated columns and measures, how filter context works, and the core DAX functions.', 15, $md$
+values ('power-bi-fundamentals:dax-fundamentals', 'power-bi-fundamentals', 'pbi-m08', 'dax-fundamentals', 'DAX fundamentals', 'How DAX thinks: calculated columns versus measures, filter context and row context, SUMX, DIVIDE, SWITCH, RELATED and variables, with Kolanut''s real results.', 25, $md$
 ## The problem
 
 Dragging `revenue` into a visual gives "Sum of revenue", which is fine until you need an average per order line, a count of active customers, or a percentage of the total. Those need **DAX** (Data Analysis Expressions), Power BI's formula language. DAX looks like Excel, but it thinks in **columns and filters**, not cells.
 
 ## The concept
 
-**Calculated columns vs measures**
+**DAX** (Data Analysis Expressions) is the formula language of Power BI. It looks like Excel: functions, brackets, commas. But Excel formulas point at **cells**, and DAX formulas work on **columns and tables**, with the answer depending on what's filtered. That one difference is the key to everything in this lesson and the next.
+
+### Writing DAX
+
+Every DAX formula has the same shape: a **name**, an equals sign, and an **expression**.
+
+```dax
+Revenue = SUM ( orders[revenue] )
+```
+
+| Part | Meaning |
+| :-- | :-- |
+| `Revenue` | The name you'll see in the Data pane and in visuals |
+| `SUM ( … )` | A function, with its arguments in brackets |
+| `orders[revenue]` | A column: table name, then column name in square brackets |
+| `[Revenue]` | A measure, written in square brackets with no table name |
+
+Table names with spaces or special characters need single quotes: `'Date'[Year]`. Spaces and line breaks don't matter, so long formulas can be laid out on several lines for readability. Comments start with `//`.
+
+### Calculated columns and measures
+
+DAX can create two different things, and choosing between them is the first decision every time:
 
 | | Calculated column | Measure |
 | :-- | :-- | :-- |
 | Calculated | Once per row, when data refreshes | On the fly, for whatever the visual is showing |
 | Stored | In the table (uses memory) | Not stored |
+| Has a value for | Each row | Each cell of a visual |
 | Use for | A value you'll filter or group by (size band, age group) | Numbers you aggregate: totals, averages, ratios |
-| Example | `Size = IF(orders[quantity] >= 20, "Large", "Small")` | `Revenue = SUM(orders[revenue])` |
+| Example | `Size = IF ( orders[quantity] >= 20, "Large", "Small" )` | `Revenue = SUM ( orders[revenue] )` |
+| Created with | Table tools → New column | Home → New measure |
 
-**Rule of thumb:** if it goes in the **Values** well, make it a measure.
+**Rule of thumb:** if it goes in the **Values** well, make it a measure. If it goes on an **axis, in rows or in a slicer**, it's a column.
 
-**Filter context.** A measure has no fixed answer. In a table of revenue by region, the measure `Revenue` is calculated once per row, each time *filtered* to that region. Slicers, page filters and visual filters add to the context. Understanding "what is filtered right now?" is most of understanding DAX.
+### Filter context
 
-**Row context.** Calculated columns, and *iterator* functions ending in X (`SUMX`, `AVERAGEX`), work row by row. `SUMX` evaluates an expression for each row of a table, then adds the results:
+![A matrix of revenue by region and year. The Lagos 2026 cell has the filters region = Lagos from its row and Year = 2026 from its column. Only the 715 order lines matching both are kept, and SUM of revenue over them gives ₦152,768,595.](/images/courses/powerbi/filter-context.svg "Each cell of a visual evaluates the measure under its own filters: its filter context.")
+
+A measure has no fixed answer. In a matrix of revenue by region and year, the measure `Revenue` is calculated once **per cell**, each time with different filters:
+
+- the **row** adds a filter (region = Lagos);
+- the **column** adds a filter (Year = 2026);
+- **slicers**, **page filters** and **report filters** add more;
+- the **total** row has fewer filters, so it covers more data.
+
+Together these are the cell's **filter context**. Power BI keeps only the rows of `orders` that match, then runs the measure on them. For the Lagos 2026 cell, that's 715 order lines, adding up to ₦152,768,595.
+
+"What is filtered right now?" is the question to ask whenever a DAX number surprises you.
+
+> [!NOTE]
+> This is why a measure's total isn't always the sum of the rows above it. The total is calculated in its own, wider filter context. For `SUM`, the two agree; for a ratio or a distinct count, they often don't. A customer who ordered in both years counts once in each year's row, but only once in the total.
+
+### Row context and iterators
+
+A calculated column works **one row at a time**: `orders[quantity]` means "the quantity in this row". That's **row context**.
+
+Functions ending in X (`SUMX`, `AVERAGEX`, `MAXX`, `COUNTX`) are **iterators**: they create a row context inside a measure. They go through a table row by row, evaluate an expression for each row, then combine the results:
 
 ```dax
+SUMX ( <table>, <expression> )
+
 Revenue = SUMX ( orders, orders[quantity] * orders[unit_price] * ( 1 - orders[discount_pct] / 100 ) )
 ```
 
-This gives the same result as the Power Query `revenue` column plus `SUM`, without storing the column.
+This gives ₦830,541,245 in total, the same as the Power Query `revenue` column plus `SUM`, without storing the column. `SUM ( orders[revenue] )` is really shorthand for `SUMX ( orders, orders[revenue] )`.
 
-**Core functions**
+### The core functions
 
-| Function | Returns |
-| :-- | :-- |
-| `SUM(col)`, `AVERAGE(col)`, `MIN`, `MAX` | Aggregates over the current filter context |
-| `COUNTROWS(table)` | Number of rows |
-| `DISTINCTCOUNT(col)` | Number of different values |
-| `DIVIDE(a, b)` | a ÷ b, returning blank instead of an error when b is 0 |
-| `RELATED(col)` | In a calculated column on the many side, the matching value from the one side |
-| `IF`, `SWITCH` | Conditional logic |
+**Aggregations**: summarise a column over the current filter context.
+
+| Function | Returns | Kolanut, all dates |
+| :-- | :-- | --: |
+| `SUM ( orders[revenue] )` | Total | 830,541,245 |
+| `AVERAGE ( orders[revenue] )` | Mean | 194,688.52 |
+| `MIN ( orders[revenue] )` / `MAX ( … )` | Smallest / largest | 3,420 / 713,400 |
+| `COUNTROWS ( orders )` | Number of rows in a table | 4,266 |
+| `DISTINCTCOUNT ( orders[customer_id] )` | Number of different values | 90 |
+
+**Safe division**:
+
+```dax
+DIVIDE ( <numerator>, <denominator> [, <alternate result>] )
+```
+
+`DIVIDE ( [Revenue], [Order Lines] )` returns blank instead of an error when the denominator is 0 or blank. Use it instead of `/` for every ratio; a visual full of errors because one month had no orders is worse than a blank cell.
+
+**Logic**:
+
+```dax
+IF ( <test>, <value if true> [, <value if false>] )
+SWITCH ( TRUE (), <test1>, <value1>, <test2>, <value2>, …, <else> )
+```
+
+```dax
+Size Band =
+SWITCH (
+    TRUE (),
+    orders[quantity] >= 20, "Large",
+    orders[quantity] >= 10, "Medium",
+    "Small"
+)
+```
+
+`SWITCH ( TRUE (), … )` works like Excel's `IFS`: it returns the value for the first test that's true. As a calculated column on `orders`, it gives 1,032 Large, 1,777 Medium and 1,457 Small lines.
+
+**Relationships**:
+
+| Function | Used in | Does |
+| :-- | :-- | :-- |
+| `RELATED ( products[category] )` | A calculated column on the **many** side | Fetches the matching value from the one side, like XLOOKUP |
+| `RELATEDTABLE ( orders )` | A calculated column on the **one** side | Returns the matching rows from the many side |
+
+For example, a calculated column on `customers`: `Order Lines = COUNTROWS ( RELATEDTABLE ( orders ) )` gives each customer's number of order lines.
+
+### Variables
+
+Long measures are easier to read with **variables**. `VAR` names an intermediate result; `RETURN` gives the answer:
+
+```dax
+Avg Revenue per Line =
+VAR TotalRevenue = SUM ( orders[revenue] )
+VAR Lines = COUNTROWS ( orders )
+RETURN
+    DIVIDE ( TotalRevenue, Lines )
+```
+
+Each variable is calculated once, so variables can also make measures faster.
+
+### Formatting and organising measures
+
+- Set each measure's format once (**Measure tools → Format**): whole number with separators for counts, currency for money, percentage for ratios.
+- Keep measures together in a dedicated table (the walkthrough shows how).
+- Name them as a reader would: `Revenue`, `Order Lines`, `Active Customers`. Avoid `Measure 1`.
 
 ## Example
 
@@ -26760,6 +27088,17 @@ Avg Revenue per Line = DIVIDE ( [Revenue], [Order Lines] )
 ```
 
 Notice the last one uses the others: measures build on measures. Change `Revenue` once and everything using it follows.
+
+In a matrix with `Date[Year]` in Rows, 2025 shows:
+
+| Measure | 2025 |
+| :-- | --: |
+| Revenue | 539,810,790 |
+| Order Lines | 2,832 |
+| Active Customers | 81 |
+| Avg Revenue per Line | 190,611 |
+
+The 2026 row is yours to find in the practice. Note that `Active Customers` for the two years together is 90, not 81 plus the 2026 figure: customers who ordered in both years are counted once in the total.
 
 A calculated column using a relationship:
 
@@ -26782,8 +27121,22 @@ Category = RELATED ( products[category] )
    > That's one reason to keep measures in their own `_Measures` table. If you do create a measure in a data table, give it a different name, such as `Total Revenue`.
 3. Add `Order Lines`, `Active Customers` and `Avg Revenue per Line` the same way.
 4. Format them: select a measure → Measure tools → set format (Whole number with thousands separator for counts; currency for revenue).
-5. Build a Matrix with `Date[Year]` in Rows and all four measures in Values. Each number is calculated for its year: that's filter context at work.
-6. Delete the empty column in `_Measures`; the table becomes a measure folder.
+5. Build a Matrix with `Date[Year]` in Rows and all four measures in Values. Each number is calculated for its year: that's filter context at work. Check the 2025 row against the table above.
+6. Add `customers[region]` to Rows under Year. Each number changes again: now two filters apply to every cell.
+7. Delete the empty column in `_Measures`; the table becomes a measure folder.
+
+### Summary
+
+| Term | Meaning |
+| :-- | :-- |
+| Calculated column | Calculated per row, stored; for grouping and filtering |
+| Measure | Calculated per cell, on the fly; for numbers in Values |
+| Filter context | The filters a cell brings: rows, columns, slicers, page filters |
+| Row context | "This row", in a calculated column or an X function |
+| `SUMX` and friends | Evaluate an expression per row, then aggregate |
+| `DIVIDE` | Division that returns blank instead of an error |
+| `RELATED` | Fetch a value from the one side of a relationship |
+| `VAR` … `RETURN` | Name intermediate results in a long formula |
 
 ## Practice
 
@@ -26886,26 +27239,50 @@ values ('pbi-m09', 'power-bi-fundamentals', 'Measures', 9, null, null, '{}'::tex
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('power-bi-fundamentals:measures', 'power-bi-fundamentals', 'pbi-m09', 'measures', 'Measures with CALCULATE and time intelligence', 'Change the filter context with CALCULATE, build percentage-of-total, year-to-date and year-on-year measures.', 15, $md$
+values ('power-bi-fundamentals:measures', 'power-bi-fundamentals', 'pbi-m09', 'measures', 'Measures with CALCULATE and time intelligence', 'Change the filters with CALCULATE: fixed segments, shares of the total with REMOVEFILTERS and ALLSELECTED, and time intelligence for year to date and year on year.', 20, $md$
 ## The problem
 
 The managing director wants three numbers on every page: *revenue this year to date*, *growth versus the same period last year*, and *each category's share of revenue*. None of these is a plain sum. Each needs a measure that **changes the filters** before calculating.
 
 ## The concept
 
-**CALCULATE** evaluates an expression under modified filters:
+In the last lesson, every measure accepted the filter context it was given: a Lagos cell got Lagos revenue. Many business questions need something different: *Lagos revenue next to every region*, *each category against the total*, *this year against last year*. For those, the measure has to **change the filters** before it calculates. That's what `CALCULATE` does, and it's the most important function in DAX.
+
+### CALCULATE
 
 ```dax
 CALCULATE ( <expression>, <filter1>, <filter2>, … )
 ```
 
+| Argument | Meaning |
+| :-- | :-- |
+| `expression` | Usually a measure: what to calculate |
+| `filter1, filter2, …` | Changes to the filter context, applied **before** the expression runs |
+
+CALCULATE takes the cell's filter context, applies your changes, then evaluates the expression in the new context.
+
+### Adding or replacing a filter
+
 ```dax
-Revenue Lagos = CALCULATE ( [Revenue], customers[region] = "Lagos" )
+Revenue Wholesale = CALCULATE ( [Revenue], customers[channel] = "Wholesale" )
 ```
 
-That measure shows Lagos revenue even in a visual sliced by another region: the filter argument replaces the region filter.
+Across all dates, this gives ₦580,264,905. Put it in a table by **region** and each row shows that region's wholesale revenue: the row's region filter stays, and CALCULATE adds the channel filter.
 
-**Removing filters: ALL / REMOVEFILTERS**
+Put it in a table by **channel**, and every row shows ₦580,264,905, even the Kiosk row. A filter argument on a column **replaces** any existing filter on that same column. That's often exactly what you want (a fixed benchmark beside each row), but it surprises people the first time.
+
+Several filters are combined with AND:
+
+```dax
+Revenue Lagos Beverages =
+CALCULATE ( [Revenue], customers[region] = "Lagos", products[category] = "Beverages" )
+```
+
+That's ₦116,162,310, across all dates.
+
+### Removing filters: REMOVEFILTERS and ALL
+
+To compare each row with a total, remove a filter instead of adding one:
 
 ```dax
 Revenue All Categories = CALCULATE ( [Revenue], REMOVEFILTERS ( products[category] ) )
@@ -26913,9 +27290,34 @@ Revenue All Categories = CALCULATE ( [Revenue], REMOVEFILTERS ( products[categor
 % of Revenue = DIVIDE ( [Revenue], [Revenue All Categories] )
 ```
 
-In a table by category, the first measure ignores the category on each row, giving the grand total, so the ratio is each category's share. Format `% of Revenue` as a percentage.
+![A table of revenue by category. For the Snacks row, Revenue keeps the category filter and gives ₦125,676,475. Revenue All Categories uses CALCULATE with REMOVEFILTERS, drops the filter, and gives ₦830,541,245. DIVIDE gives 15.1%.](/images/courses/powerbi/calculate-removefilters.svg "The numerator keeps the row's filter; the denominator removes it.")
 
-**Time intelligence** (needs the marked date table from lesson 7):
+In each row, `Revenue` is that category's revenue, and `Revenue All Categories` is the grand total, so the ratio is the category's share. Format `% of Revenue` as a percentage.
+
+| Function | Removes |
+| :-- | :-- |
+| `REMOVEFILTERS ( products[category] )` | Filters on one column |
+| `REMOVEFILTERS ( products )` | Filters on every column of a table |
+| `REMOVEFILTERS ()` | Every filter in the model |
+| `ALL ( … )` | The same as REMOVEFILTERS when used inside CALCULATE; also returns a table, so you'll see it in older formulas |
+| `ALLSELECTED ( … )` | Filters from inside the visual, but keeps the user's slicer choices |
+
+> [!TIP]
+> Use `ALLSELECTED` when a share should add up to 100% of what the user has **selected**. With `REMOVEFILTERS ( products[category] )`, a slicer that picks two categories is removed too, so each category is shown as a share of **all four**, and the page won't add up to 100%. (A slicer on a different column, such as region, is unaffected: REMOVEFILTERS only removes filters on the column you name.)
+
+### Time intelligence
+
+DAX has functions that shift and stretch the date filter. They need the **marked date table** from lesson 7.
+
+| Function | Returns | Used for |
+| :-- | :-- | :-- |
+| `TOTALYTD ( <expr>, 'Date'[Date] )` | The expression from 1 January to the last date in context | Year to date |
+| `DATESYTD ( 'Date'[Date] )` | The dates from 1 January to the last date in context | Inside CALCULATE: the same as TOTALYTD |
+| `SAMEPERIODLASTYEAR ( 'Date'[Date] )` | The dates in context, moved back one year | Last year's figure |
+| `DATEADD ( 'Date'[Date], -1, MONTH )` | The dates moved by any number of days, months, quarters or years | Previous month, previous quarter |
+| `DATESINPERIOD ( 'Date'[Date], <end>, -3, MONTH )` | A window of dates ending on a date | Rolling three months |
+
+The three measures you'll use most:
 
 ```dax
 Revenue YTD = TOTALYTD ( [Revenue], 'Date'[Date] )
@@ -26925,9 +27327,27 @@ Revenue LY = CALCULATE ( [Revenue], SAMEPERIODLASTYEAR ( 'Date'[Date] ) )
 YoY % = DIVIDE ( [Revenue] - [Revenue LY], [Revenue LY] )
 ```
 
-- `TOTALYTD` adds everything from 1 January up to the latest date in the current filter.
-- `SAMEPERIODLASTYEAR` shifts the dates in the filter back one year.
-- `YoY %` compares them; blank when there's no previous year.
+- `TOTALYTD` adds everything from 1 January up to the latest date in the current filter. At September 2025 it shows ₦379,011,165: January to September.
+- `SAMEPERIODLASTYEAR` shifts the dates in the filter back one year. In the cell for March 2026, it gives March 2025.
+- `YoY %` compares them. It's blank when there's no previous year, thanks to `DIVIDE`.
+
+### Common measure patterns
+
+| Question | Pattern |
+| :-- | :-- |
+| One segment, whatever the visual shows | `CALCULATE ( [Revenue], customers[channel] = "Wholesale" )` |
+| Share of the total | `DIVIDE ( [Revenue], CALCULATE ( [Revenue], REMOVEFILTERS ( … ) ) )` |
+| Year to date | `TOTALYTD ( [Revenue], 'Date'[Date] )` |
+| Same period last year | `CALCULATE ( [Revenue], SAMEPERIODLASTYEAR ( 'Date'[Date] ) )` |
+| Growth | `DIVIDE ( [Revenue] - [Revenue LY], [Revenue LY] )` |
+| Previous month | `CALCULATE ( [Revenue], DATEADD ( 'Date'[Date], -1, MONTH ) )` |
+
+### When a measure gives a surprising number
+
+1. **Ask what's filtered.** Put the measure in a table with the fields from the visual, one at a time, and watch it change.
+2. **Check the total row.** A different total than you expected usually means a filter is being removed or replaced.
+3. **Test with a Card.** A Card with no other fields shows the measure in the widest context: compare it with a number you know (₦830,541,245 for all revenue).
+4. **Break it into variables** and return each one in turn to see which part is wrong.
 
 ## Example
 
@@ -26939,18 +27359,34 @@ A matrix with `Date[Year]` and `Date[Month]` in Rows:
 | 2026 Feb | 43,042,730 | 36,138,690 | 19.1% |
 | 2026 Mar | 51,202,475 | 46,282,170 | 10.6% |
 
-And **Revenue YTD** at 2026 March shows Q1 2026 in total.
+Check the first row by hand: (48,963,925 − 37,088,460) ÷ 37,088,460 = 0.320, so 32.0%.
+
+At month level, **Revenue YTD** keeps adding: it shows January alone in January, January and February in February, and so on.
 
 > [!WARNING]
 > At **year** level, 2026's YoY % compares January–June 2026 with **all** of 2025, because 2026 only has data to June. Compare full year against half year and 2026 looks like a disaster. Compare **H1 with H1** (filter the page to January–June, or use the monthly or quarterly rows) to get the fair +19.1%.
 
 ## Walkthrough
 
-1. In `_Measures`, add `Revenue All Categories` and `% of Revenue`. Build a table: `products[category]`, `[Revenue]`, `[% of Revenue]`.
-2. Add `Revenue YTD`, `Revenue LY` and `YoY %`. Format YoY % as a percentage with one decimal place.
-3. Build a matrix with `Date[Year]` → `Date[Month]` in Rows and the three measures in Values.
-4. Check one number by hand: February 2026's YoY % should equal (43.04 − 36.14) ÷ 36.14.
-5. Add a **Card** for `Revenue YTD` and a slicer on `Date[Month]`: selecting March 2026 shows year-to-date March.
+1. In `_Measures`, add `Revenue All Categories` and `% of Revenue`. Build a table: `products[category]`, `[Revenue]`, `[% of Revenue]`. The percentages should add up to 100%.
+2. Add a slicer on `products[category]` and pick two categories. The shares no longer add to 100%: each is a share of all four categories. Change `REMOVEFILTERS` to `ALLSELECTED` and they add to 100% again. Decide which one your report needs.
+3. Add `Revenue YTD`, `Revenue LY` and `YoY %`. Format YoY % as a percentage with one decimal place.
+4. Build a matrix with `Date[Year]` → `Date[Month]` in Rows and the three measures in Values.
+5. Check one number by hand: February 2026's YoY % should equal (43.04 − 36.14) ÷ 36.14.
+6. Add a **Card** for `Revenue YTD` and a slicer on `Date[Month]`: selecting March 2026 shows year-to-date March.
+7. Add `Revenue Wholesale` to a table by channel and see the "replace" behaviour for yourself.
+
+### Summary
+
+| Need | Use |
+| :-- | :-- |
+| Change filters, then calculate | `CALCULATE ( expression, filters… )` |
+| A fixed segment | A filter argument: `customers[channel] = "Wholesale"` |
+| A total to compare with | `REMOVEFILTERS ( … )`, or `ALLSELECTED ( … )` to respect slicers |
+| Year to date | `TOTALYTD` |
+| Last year | `SAMEPERIODLASTYEAR` inside CALCULATE |
+| Any shift in time | `DATEADD` |
+| A surprising number | Ask what's filtered; test in a table and a Card |
 
 ## Practice
 
@@ -27100,6 +27536,45 @@ Your model and measures are ready. Now they need to become a page someone can re
 
 **Tooltips.** Hovering shows details; add extra measures to the **Tooltips** well to show more (e.g. YoY % when hovering a region's bar).
 
+### Choosing a visual from the question
+
+| The reader asks | Visual | Kolanut |
+| :-- | :-- | :-- |
+| "How much, in total?" | **Card**, with a comparison measure nearby | Revenue ₦830.5m |
+| "How has it changed?" | **Line chart** on a date axis | Monthly revenue, this year and last |
+| "Which is biggest?" | **Bar chart**, sorted | Revenue by region |
+| "What's the breakdown by two things?" | **Matrix** | Category by year |
+| "Which ones, exactly?" | **Table** | Customers whose orders fell most |
+| "How do two measures relate?" | **Scatter chart** | Customers: credit limit against revenue |
+| "Two measures, different scales, over time" | **Line and clustered column** | Revenue (columns) and order lines (line) by month |
+
+Pie, donut, gauge and map visuals exist too. Use them rarely: a sorted bar chart compares values more accurately than a pie, and a map is only useful when location itself matters.
+
+### Filters at four levels
+
+Besides slicers, the **Filters pane** filters at different scopes:
+
+| Level | Affects | Example |
+| :-- | :-- | :-- |
+| **Visual** | One visual | A top 5 customers bar chart (Filter type: Top N) |
+| **Page** | Every visual on the page | This page shows 2026 only |
+| **Report** (all pages) | Every page | Exclude a test customer everywhere |
+| **Drillthrough** | A detail page, reached by right-clicking a data point | Right-click Lagos → Drill through → Region detail |
+
+Slicers sit on the page where users can see and change them. Filters-pane filters are often set by the report author and can be locked or hidden. A number that looks wrong is often explained by a forgotten filter, so check the Filters pane first.
+
+### Filter or highlight?
+
+When a user clicks a bar, other visuals respond in one of two ways:
+
+| Interaction | What the other visual shows | Good for |
+| :-- | :-- | :-- |
+| **Filter** | Only the selected data | Cards, tables, line charts: the number simply changes |
+| **Highlight** | All the data, with the selected part dark and the rest pale | Bar and column charts: you see the part against the whole |
+| **None** | No change | A visual that should always show the full picture |
+
+Set them with **Format → Edit interactions**: select the visual you'll click, then choose the icon above each other visual.
+
 ## Example
 
 A first report page for Kolanut:
@@ -27243,6 +27718,21 @@ Your first report page works, but it may look like most first pages: twelve visu
 ## The concept
 
 **Hierarchy: the most important thing, biggest and first.** People scan a page top-left to bottom-right (a Z or F pattern). Put the headline numbers along the top, the main chart below them, and details lower down.
+
+### A layout that works
+
+![A report page wireframe with six numbered areas in reading order: a title stating the finding, slicers at the top right, four KPI cards each with a comparison, a large line chart of monthly revenue against last year, a sorted region bar chart with North West in red, and a table of customers to call.](/images/courses/powerbi/page-layout.svg "An overview page in reading order. Each area answers the question the one before it raises.")
+
+| # | Area | Answers |
+| :-- | :-- | :-- |
+| 1 | **Title that states the finding** | "What's the story?" |
+| 2 | **Slicers**, together, out of the way | "Can I see my part?" |
+| 3 | **KPI cards**, each with a comparison | "Are we OK?" |
+| 4 | **Main chart**, biggest, top left of the body | "How did we get here?" |
+| 5 | **Comparison chart**, sorted, one highlight | "Where should I look?" |
+| 6 | **Action table** | "What do I do now?" |
+
+The page reads like a conversation: headline, numbers, trend, where, action. Notice the fourth card: lines per customer fell 12.1% even though revenue grew. That's the leading indicator that points to the North West problem.
 
 **The five-second rule.** A manager glancing at the page for five seconds should get the main message. If they can't, the page has too much or the wrong emphasis.
 

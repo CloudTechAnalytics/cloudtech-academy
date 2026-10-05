@@ -21,6 +21,43 @@ For a CSV, Power BI shows a **preview** of the first rows with its guess at the 
 
 **Import mode.** Loading copies the data into the `.pbix` file. That makes reports fast. To see new data you **Refresh** (Home → Refresh), which re-reads the source files.
 
+### Storage modes
+
+Import isn't the only way to connect. When you connect to a database, Power BI may ask which mode to use:
+
+| Mode | Where the data lives | Speed | Freshness | Use when |
+| :-- | :-- | :-- | :-- | :-- |
+| **Import** | Copied into the `.pbix` | Fastest | As of the last refresh | Almost always, and for every file source |
+| **DirectQuery** | Stays in the database; each visual sends a query | Slower; depends on the database | Live | The data is huge or must be up to the minute |
+| **Live connection** | An existing published model | Fast | As that model | Your company already has a shared model |
+
+This course uses Import throughout.
+
+### Common sources
+
+| Source | Get data option | Notes |
+| :-- | :-- | :-- |
+| CSV or text file | **Text/CSV** | Check the delimiter and the File Origin (encoding) for `₦` signs |
+| Excel workbook | **Excel workbook** | The Navigator lists each sheet and each Table; choose Tables where you can |
+| Many files of the same layout | **Folder** | Combines every file in a folder: drop next month's file in and refresh |
+| SQL Server, PostgreSQL, MySQL | **Database** | You can paste a SQL query instead of loading whole tables |
+| SharePoint or OneDrive | **SharePoint folder** | Lets the Service refresh without a gateway (lesson 13) |
+| A web page table | **Web** | Handy for public data such as exchange rates |
+
+### Data types in Power BI
+
+Every column has one type, shown by an icon in the Data pane and in Power Query:
+
+| Type | Power Query icon | For | Kolanut column |
+| :-- | :-- | :-- | :-- |
+| Whole number | `123` | Counts, IDs | `quantity`, `customer_id` |
+| Decimal number / Fixed decimal | `1.2` / `$` | Amounts | `revenue` |
+| Date | calendar | Dates without times | `order_date` |
+| Text | `ABC` | Names, categories, codes | `region` |
+| True/False | ✓✗ | Yes/no flags | |
+
+Fixed decimal is stored to four decimal places, which avoids tiny rounding errors in money. Get types right **before** loading: a date stored as text can't be used by the date table, and a number stored as text can't be summed.
+
 **Check what arrived**, every time:
 
 1. **Row counts**: in Table view the row count for the selected table appears at the bottom-left of the window. Compare it with the source.

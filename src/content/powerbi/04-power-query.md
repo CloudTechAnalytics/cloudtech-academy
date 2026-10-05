@@ -34,6 +34,55 @@ The orders table has quantity, price and discount, but no revenue. You could cal
 
 **Column profiling.** **View → Column quality / Column distribution / Column profile** show valid, error and empty percentages, distinct counts and value frequencies. By default it profiles only the **first 1,000 rows**: click *"Column profiling based on top 1000 rows"* in the status bar and choose the entire data set.
 
+### Merge and append
+
+Two transformations combine queries, and they're easy to mix up:
+
+![On the left, merge: orders and products are matched on product_id, and the merged orders table gains a category column. On the right, append: January and February order tables with the same columns are stacked into one table of 400 rows.](/images/courses/powerbi/merge-append.svg "Merge adds columns by matching a key. Append adds rows from tables with the same columns.")
+
+| | Merge | Append |
+| :-- | :-- | :-- |
+| Adds | **Columns** from another table | **Rows** from another table |
+| Matches on | A key column in both tables | Column names |
+| Like | XLOOKUP, SQL `JOIN` | Copy-pasting one list under another, SQL `UNION ALL` |
+| Kolanut use | Bring `category` into orders | Combine monthly order files into one |
+
+A merge asks for a **join kind**. The ones you'll use:
+
+| Join kind | Keeps | Use for |
+| :-- | :-- | :-- |
+| **Left outer** (the default) | Every row of the first table, with matches from the second where they exist | Adding details: every order, with its product's category |
+| **Inner** | Only rows that match in both | Keeping only orders for products in a list |
+| **Left anti** | Rows of the first table with **no** match | Finding problems: orders whose product_id isn't in products |
+
+A **left anti** merge is a quick data-quality check: if it returns any rows, some orders point to products that don't exist.
+
+### How Power Query records your work
+
+Every click becomes a step written in **M**, Power Query's language. You rarely type M, but reading it helps:
+
+```m
+= Table.AddColumn(#"Changed Type", "revenue", each [quantity] * [unit_price] * (1 - [discount_pct] / 100), type number)
+```
+
+| Piece | Means |
+| :-- | :-- |
+| `Table.AddColumn` | The function: add a column to a table |
+| `#"Changed Type"` | The input: the result of the previous step, by its name |
+| `"revenue"` | The new column's name |
+| `each [quantity] * …` | The formula, worked out for **each** row |
+| `type number` | The new column's type |
+
+Each step takes the previous step's result and passes its own result on, like a recipe. That's why order matters: delete or move a step and every step after it may break.
+
+### Good habits with steps
+
+1. **Set types early**, straight after loading, and check them: a number column typed as text causes problems in every step after.
+2. **Rename steps** that matter (right-click → Rename): `Added revenue` is clearer than `Added Custom` six months later.
+3. **Remove columns you don't need**, early. Smaller tables load faster.
+4. **Don't edit in Excel first.** Do every change in Power Query, so it repeats on the next refresh instead of being lost.
+5. **Check after each important step**: row counts in the status bar, column quality at 100% valid.
+
 **Close & Apply** (Home) saves your steps and loads the result into the model.
 
 This is the Power Query Editor with Kolanut's three queries:
@@ -49,13 +98,7 @@ This is the Power Query Editor with Kolanut's three queries:
 
 ## Example
 
-The revenue custom column, in M:
-
-```m
-= Table.AddColumn(#"Changed Type", "revenue", each [quantity] * [unit_price] * (1 - [discount_pct] / 100), type number)
-```
-
-You don't have to type that: the Custom Column dialog writes it. In the dialog you only enter:
+The revenue custom column shown above is exactly what the Custom Column dialog writes for you. In the dialog you only enter:
 
 ```m
 [quantity] * [unit_price] * (1 - [discount_pct] / 100)

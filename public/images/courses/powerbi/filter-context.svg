@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 440" width="1160" height="440" role="img" aria-label="How filter context works. In a matrix with region in rows and year in columns, the highlighted cell is Lagos in 2026. Its filter context is region = Lagos (from the row), Year = 2026 (from the column) and anything set by slicers. Power BI keeps only the orders matching all of those filters, then evaluates the measure Revenue = SUM(orders[revenue]) over them: 152,768,595 naira. The same measure in every other cell gets a different set of filters.">
+<title>Filter context: each cell of a visual evaluates the measure over only the rows that match its row, column and slicer filters.</title>
+<defs><marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="1160" height="440" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+  <text x="40" y="36" font-size="15" font-weight="700" fill="#2A2926">1 · A matrix visual</text>
+  <rect x="40" y="52" width="380" height="250" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+  <g font-size="13.5" fill="#2A2926">
+    <text x="58" y="82" font-weight="700">Region</text><text x="290" y="82" font-weight="700" text-anchor="end" fill="#2F6B3F">2025</text><text x="402" y="82" font-weight="700" text-anchor="end" fill="#2F6B3F">2026</text>
+    <line x1="40" x2="420" y1="94" y2="94" stroke="#EDE6D8"/>
+    <rect x="41" y="98" width="378" height="32" fill="#F3EBD8"/>
+    <text x="58" y="119" font-weight="700" fill="#2F5D8A">Lagos</text><text x="290" y="119" text-anchor="end">258.4m</text>
+    <rect x="312" y="101" width="100" height="26" rx="5" fill="#C9A867" stroke="#8A6A1F"/><text x="402" y="119" text-anchor="end" font-weight="700">152.8m</text>
+    <text x="58" y="153">North Central</text><text x="290" y="153" text-anchor="end">50.4m</text><text x="402" y="153" text-anchor="end">27.2m</text>
+    <text x="58" y="183">North West</text><text x="290" y="183" text-anchor="end">64.9m</text><text x="402" y="183" text-anchor="end">16.6m</text>
+    <text x="58" y="213">South East</text><text x="290" y="213" text-anchor="end">40.9m</text><text x="402" y="213" text-anchor="end">19.4m</text>
+    <text x="58" y="243">South South</text><text x="290" y="243" text-anchor="end">45.3m</text><text x="402" y="243" text-anchor="end">23.1m</text>
+    <text x="58" y="273">South West</text><text x="290" y="273" text-anchor="end">79.8m</text><text x="402" y="273" text-anchor="end">51.7m</text>
+  </g>
+  <text x="40" y="330" font-size="13" fill="#5E5A52">Every cell runs the same measure:</text>
+  <text x="40" y="352" font-family="'JetBrains Mono', Consolas, monospace" font-size="13" fill="#2A2926">Revenue = SUM ( orders[revenue] )</text>
+
+  <text x="470" y="36" font-size="15" font-weight="700" fill="#2A2926">2 · The highlighted cell's filters</text>
+  <g font-size="13.5">
+    <rect x="470" y="60" width="250" height="40" rx="8" fill="#E6EEF6"/><text x="486" y="85" fill="#2F5D8A"><tspan font-weight="700">customers[region]</tspan> = Lagos</text>
+    <text x="728" y="85" font-size="12" fill="#5E5A52">from the row</text>
+    <rect x="470" y="110" width="250" height="40" rx="8" fill="#E5F0E8"/><text x="486" y="135" fill="#2F6B3F"><tspan font-weight="700">Date[Year]</tspan> = 2026</text>
+    <text x="728" y="135" font-size="12" fill="#5E5A52">from the column</text>
+    <rect x="470" y="160" width="250" height="40" rx="8" fill="#EEEAF5"/><text x="486" y="185" fill="#5C4F80"><tspan font-weight="700">Slicers, page filters</tspan>: none</text>
+    <text x="728" y="185" font-size="12" fill="#5E5A52">from the page</text>
+  </g>
+  <path d="M422,114 C444,114 448,80 466,80" stroke="#8A6A1F" stroke-width="2" fill="none" marker-end="url(#g)"/>
+  <path d="M422,118 C446,118 446,130 466,130" stroke="#8A6A1F" stroke-width="2" fill="none" marker-end="url(#g)"/>
+
+  <text x="470" y="244" font-size="15" font-weight="700" fill="#2A2926">3 · Only matching orders are kept</text>
+  <rect x="470" y="258" width="300" height="120" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+  <g font-size="12.5" fill="#2A2926">
+    <rect x="471" y="266" width="298" height="22" fill="#FBF3E2"/><text x="486" y="282">Lagos · 2026 · ₦196,840 ✓</text>
+    <text x="486" y="306" fill="#A9A396">North West · 2025 · ₦86,400 ✗</text>
+    <rect x="471" y="314" width="298" height="22" fill="#FBF3E2"/><text x="486" y="330">Lagos · 2026 · ₦139,200 ✓</text>
+    <text x="486" y="354" fill="#A9A396">Lagos · 2025 · ₦260,400 ✗</text>
+    <text x="486" y="372" fill="#5E5A52">… all 4,266 lines checked</text>
+  </g>
+  <path d="M600,204 L600,226" stroke="#8A6A1F" stroke-width="2" marker-end="url(#g)"/>
+
+  <text x="820" y="244" font-size="15" font-weight="700" fill="#2A2926">4 · The measure runs on them</text>
+  <rect x="820" y="258" width="300" height="120" rx="10" fill="#C9A867" stroke="#8A6A1F" stroke-width="1.5"/>
+  <text x="840" y="290" font-size="13" fill="#2A2926">SUM of revenue over 715 lines</text>
+  <text x="840" y="328" font-size="26" font-weight="700" fill="#2A2926">₦152,768,595</text>
+  <text x="840" y="358" font-size="12.5" fill="#2A2926">shown as 152.8m in the cell</text>
+  <path d="M774,318 L814,318" stroke="#8A6A1F" stroke-width="2" marker-end="url(#g)"/>
+  <text x="470" y="420" font-size="13" fill="#8A6A1F" font-weight="700">The measure has no fixed answer: each cell brings its own filters. That set of filters is the filter context.</text>
+</g>
+</svg>

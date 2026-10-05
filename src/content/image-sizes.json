@@ -147,6 +147,10 @@
   1426,
   893
  ],
+ "/images/courses/powerbi/calculate-removefilters.svg": [
+  1160,
+  400
+ ],
  "/images/courses/powerbi/csv-preview.webp": [
   880,
   660
@@ -159,9 +163,17 @@
   1920,
   560
  ],
+ "/images/courses/powerbi/filter-context.svg": [
+  1160,
+  440
+ ],
  "/images/courses/powerbi/get-data.webp": [
   1920,
   1032
+ ],
+ "/images/courses/powerbi/merge-append.svg": [
+  1160,
+  400
  ],
  "/images/courses/powerbi/model-view.webp": [
   1360,
@@ -175,6 +187,10 @@
   882,
   702
  ],
+ "/images/courses/powerbi/page-layout.svg": [
+  1160,
+  520
+ ],
  "/images/courses/powerbi/power-query-editor.webp": [
   1920,
   1032
@@ -186,6 +202,10 @@
  "/images/courses/powerbi/slicer-filter.webp": [
   1320,
   750
+ ],
+ "/images/courses/powerbi/star-schema.svg": [
+  1160,
+  470
  ],
  "/images/courses/powerbi/table-view.webp": [
   1920,
