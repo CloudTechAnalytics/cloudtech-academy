@@ -15122,21 +15122,26 @@ This course gives you those skills, in Excel or Google Sheets, on Kolanut's sale
 
 ## The concept
 
-**Two jobs statistics does**
+### Two jobs statistics does
 
 - **Descriptive statistics** summarise the data you have: the typical salary, how spread out delivery times are, how strongly two things move together. Lessons 2 to 6.
 - **Inferential statistics** help you draw conclusions beyond the data you have: is a difference real or just luck, how precise is an estimate, will a trend continue? Lessons 7 to 10.
 
 Most day-to-day analysis is descriptive. Inference is what stops you announcing a "finding" that's really noise.
 
-**Population and sample**
+### Population and sample
 
 - The **population** is everyone or everything you want to know about: all of Kolanut's customers, every shipment Harbourline will ever make.
 - A **sample** is the part you actually have data on.
 
 Sometimes your data is the whole population. Kolanut's `employees.csv` lists all 80 people who have worked there, so the average salary in it isn't an estimate; it's the fact. Often it isn't: a survey of 200 customers is a sample of all customers, and the answer would be slightly different with a different 200. Asking "is this all of them, or some of them?" decides which tools you need.
 
-**Kinds of variable**
+![A grid of squares standing for all 4,266 Kolanut order lines, with 50 picked at random and darkened. Below, the population mean of ₦194,689 next to the sample mean of ₦171,656.](/images/courses/statistics/population-sample.svg "A random sample of 50 order lines. Its average is close to the true one, but not equal: that gap is what statistics measures.")
+
+A number calculated from the whole population is a **parameter**: the true average order line is ₦194,689. A number calculated from a sample is a **statistic**: this sample of 50 gives ₦171,656. A different 50 would give a different answer. Lessons 7 and 8 show how to say how far off a sample is likely to be.
+
+
+### Kinds of variable
 
 | Kind | What it is | Example | Typical summaries |
 | :-- | :-- | :-- | :-- |
@@ -15147,7 +15152,7 @@ Sometimes your data is the whole population. Kolanut's `employees.csv` lists all
 
 The kind decides what's meaningful. An "average region" is nonsense; an average salary is fine. A job level of "2.4" means nothing even if you coded Junior as 1 and Senior as 3.
 
-**Three ways numbers mislead**
+### Three ways numbers mislead
 
 1. **The wrong average.** A few very high values pull the mean up. Kolanut's mean salary (₦609,250) is well above the median (₦492,500), because ten managers earn over ₦1.2 million. "The typical employee" is closer to the median. Lesson 2 shows how to choose.
 2. **No sense of spread.** "Average delivery time is 27 days" hides whether almost every shipment takes 26–28 days or some take 10 and others 60. Customers experience the spread, not the average. Lesson 3.
@@ -15288,7 +15293,7 @@ Ashgrove Chambers' managing partner asks two questions about the firm's invoices
 
 ## The concept
 
-**The three averages**
+### The three averages
 
 | Average | What it is | Excel / Sheets | Best for |
 | :-- | :-- | :-- | :-- |
@@ -15298,7 +15303,28 @@ Ashgrove Chambers' managing partner asks two questions about the firm's invoices
 
 With an even number of values, the median is the average of the middle two.
 
-**Why they disagree: skew**
+### Working it out by hand
+
+Kolanut's Human Resources team has six people. Their monthly salaries, sorted:
+
+| | Salary |
+| :-- | --: |
+| Sade (Junior) | ₦355,000 |
+| Hauwa (Mid) | ₦545,000 |
+| Yusuf (Senior) | ₦765,000 |
+| Maryam (Senior) | ₦850,000 |
+| Musa (Senior) | ₦1,000,000 |
+| Ngozi (Manager) | ₦1,320,000 |
+
+1. **Mean.** Add them: 355,000 + 545,000 + 765,000 + 850,000 + 1,000,000 + 1,320,000 = 4,835,000. Divide by 6: **₦805,833**.
+2. **Median.** Six values, so take the middle two, Yusuf and Maryam: (765,000 + 850,000) ÷ 2 = **₦807,500**.
+3. **Mode.** Every salary appears once, so there's no mode. The mode is useful for repeated values, not for amounts like these.
+
+Mean and median are almost equal: this team's salaries are spread fairly evenly.
+
+Now imagine, just for the arithmetic, that the manager's salary were ₦3,000,000 instead. The total becomes 6,515,000 and the **mean jumps to ₦1,085,833**. The **median stays at ₦807,500**, because Yusuf and Maryam are still in the middle. One value moved the mean by ₦280,000 and the median not at all.
+
+### Why they disagree: skew
 
 The mean uses every value's size, so a few very large values pull it up. The median only cares about order, so it barely moves.
 
@@ -15308,7 +15334,12 @@ The mean uses every value's size, so a few very large values pull it up. The med
 
 So the gap between mean and median is itself useful information: it tells you the data is skewed and which way.
 
-**Choosing**
+![Each of IT's 12 monthly salaries as a dot on a line from ₦0 to ₦1.5m. Most dots sit between ₦195,000 and ₦975,000; two manager salaries sit far to the right. The median, ₦620,000, is in the middle of the group; the mean, ₦722,083, is pulled to the right.](/images/courses/statistics/mean-median-dots.svg "IT salaries: right-skewed, so the mean sits above the median.")
+
+In IT, two managers earn ₦1,320,000 and ₦1,495,000, well above everyone else. They lift the mean to ₦722,083, while the median, ₦620,000, stays between the sixth and seventh salaries. Seven of the 12 people earn less than the mean.
+
+
+### Choosing
 
 - Asking "what does a **typical** one look like?" Use the **median** for skewed data.
 - Asking "what's the **total** worth, or the per-unit cost?" Use the **mean**: mean × count = total, which is exactly what budgets need. The median can't be multiplied back up.
@@ -15316,11 +15347,11 @@ So the gap between mean and median is itself useful information: it tells you th
 
 When in doubt, report both, with a sentence explaining the gap.
 
-**Averages for groups**
+### Averages for groups
 
 `AVERAGEIFS(average_range, criteria_range, criteria, …)` averages only the rows that meet conditions. There's no `MEDIANIFS`, but `=MEDIAN(IF(criteria_range = "x", values))` does the same job (press Ctrl + Shift + Enter in older Excel), and in Google Sheets you can wrap a `FILTER`: `=MEDIAN(FILTER(values, criteria_range = "x"))`.
 
-**A middle way: the trimmed mean**
+### A middle way: the trimmed mean
 
 `=TRIMMEAN(range, 0.1)` drops the top and bottom 5% (10% in total) and averages the rest. It keeps most of the data's information while ignoring extremes, and it's used for things like judges' scores and some inflation measures.
 
@@ -15504,11 +15535,11 @@ Two datasets can have exactly the same average and behave completely differently
 
 ## The concept
 
-**Range: the simplest spread**
+### Range: the simplest spread
 
 `=MAX(range) - MIN(range)`. Easy to explain, but it depends entirely on the two most extreme values, so one unusual shipment can double it.
 
-**Quartiles and the interquartile range (IQR)**
+### Quartiles and the interquartile range (IQR)
 
 Sort the data and cut it into four equal parts:
 
@@ -15518,6 +15549,10 @@ Sort the data and cut it into four equal parts:
 
 The **IQR = Q3 − Q1** is the range of the middle half of the data. Extremes don't affect it, which makes it the natural partner of the median.
 
+![A box plot of packs per order line. The box runs from Q1 = 7 to Q3 = 19 packs with the median, 13, inside it. Whiskers reach the minimum, 1, and the maximum, 30. A bracket under the box marks the IQR: 12 packs.](/images/courses/statistics/box-plot.svg "A box plot shows the quartiles at a glance: the box is the middle half of the data.")
+
+A **box plot** (Insert → Charts → Box and Whisker in Excel 2016 and later) draws exactly these numbers. For Kolanut's order lines, the middle half order between 7 and 19 packs; the whiskers show the full range, 1 to 30.
+
 ```excel
 =QUARTILE.INC(range, 1)      Q1
 =QUARTILE.INC(range, 3)      Q3
@@ -15526,13 +15561,31 @@ The **IQR = Q3 − Q1** is the range of the middle half of the data. Extremes do
 
 Percentiles answer service-level questions directly: "90% of sea shipments arrive within X days" is a promise a customer can plan around.
 
-**Standard deviation: the typical distance from the mean**
+### Standard deviation: the typical distance from the mean
 
 The **standard deviation (SD)** measures how far values typically are from the mean, in the same units as the data. Roughly:
 
 1. Find each value's distance from the mean.
 2. Square the distances (so negatives don't cancel positives), and average them: that's the **variance**.
 3. Take the square root to get back to the original units: the **standard deviation**.
+
+**By hand, on five real shipments.** The first five delivered Shanghai → Apapa shipments took 36, 36, 37, 38 and 38 days.
+
+| Shipment | Days | Distance from mean (days − 37) | Squared |
+| :-- | --: | --: | --: |
+| 100002 | 36 | −1 | 1 |
+| 100030 | 36 | −1 | 1 |
+| 100051 | 37 | 0 | 0 |
+| 100058 | 38 | +1 | 1 |
+| 100068 | 38 | +1 | 1 |
+| **Total** | **185** | **0** | **4** |
+
+1. **Mean**: 185 ÷ 5 = **37 days**.
+2. The distances always add up to 0, which is why they're squared: otherwise the ups and downs cancel.
+3. **Variance**: the squared distances add to 4. Divide by n − 1 = 4 (a sample): **1**.
+4. **Standard deviation**: √1 = **1 day**. These five shipments are typically about a day from their average.
+
+`=STDEV.S(36,36,37,38,38)` gives 1, the same answer. Dividing by n = 5 instead (`STDEV.P`) gives 0.89.
 
 ```excel
 =STDEV.S(range)    a sample: divides by n − 1
@@ -15543,7 +15596,7 @@ The **standard deviation (SD)** measures how far values typically are from the m
 
 The SD goes with the mean; the IQR goes with the median. On skewed data, report the median and IQR.
 
-**Comparing spread fairly: the coefficient of variation**
+### Comparing spread fairly: the coefficient of variation
 
 Managers' salaries vary by about ₦121,000 and juniors' by about ₦62,000. Are managers' salaries more variable? Not relative to their size. The **coefficient of variation (CV)** puts spread on a common scale:
 
@@ -15694,13 +15747,13 @@ Averages and standard deviations summarise data in one or two numbers, but they 
 
 ## The concept
 
-**The distribution and the histogram**
+### The distribution and the histogram
 
 A **distribution** is how often each value occurs. A **histogram** shows it: the values are grouped into ranges (bins) along the bottom, and each bar's height is how many values fall in that range.
 
 In Excel: select the column, then **Insert → Charts → Histogram** (Excel 2016 and later). Right-click the horizontal axis → **Format Axis** to set the bin width. In Google Sheets: **Insert → Chart → Chart type: Histogram**. Or count bins yourself with `COUNTIFS(range, ">="&low, range, "<"&high)`.
 
-**Shapes to recognise**
+### Shapes to recognise
 
 | Shape | What it looks like | Typical data | Mean vs median |
 | :-- | :-- | :-- | :-- |
@@ -15713,7 +15766,7 @@ A bimodal histogram is a signal to split the data: it usually means two processe
 
 `=SKEW(range)` gives a number: about 0 is symmetric, positive is right-skewed, negative left-skewed. Values above about 1 are strongly skewed.
 
-**How unusual is a value? The z-score**
+### How unusual is a value? The z-score
 
 A **z-score** says how many standard deviations a value is from the mean:
 
@@ -15721,7 +15774,17 @@ A **z-score** says how many standard deviations a value is from the mean:
 
 In Excel: `=STANDARDIZE(value, mean, sd)`. A z-score of 0 is exactly average; +2 is two SDs above. For bell-shaped data, values beyond ±2 are unusual (about 1 in 20) and beyond ±3 very unusual (about 1 in 400). For skewed data, z-scores are a rougher guide, because the tail is longer on one side.
 
-**Flagging outliers: the IQR rule**
+**Worked example.** Shanghai → Apapa shipments average 39.0 days with a standard deviation of 4.7 days.
+
+| Shipment took | Calculation | z | Reading |
+| :-- | :-- | --: | :-- |
+| 36 days | (36 − 39.0) ÷ 4.7 | −0.64 | A little faster than average: normal |
+| 45 days | (45 − 39.0) ÷ 4.7 | +1.28 | Slower than most, but not unusual |
+| 50 days | (50 − 39.0) ÷ 4.7 | +2.34 | Beyond +2: unusually slow, worth a look |
+
+A z-score turns "50 days" into "more than two standard deviations slow", which means the same thing on any route, whatever its normal length.
+
+### Flagging outliers: the IQR rule
 
 A common, robust rule (the one behind box plots):
 
@@ -15730,7 +15793,7 @@ A common, robust rule (the one behind box plots):
 
 Values outside the fences are **outliers**. Because it's built from quartiles, extreme values don't distort the rule itself.
 
-**What to do with an outlier**
+### What to do with an outlier
 
 An outlier is a question, not a mistake. Find out why before you act:
 
@@ -15746,6 +15809,8 @@ Shanghai → Lagos (Apapa), delivered shipments, transit days:
 
 - **Mean** 39.0 days, **SD** 4.7 days.
 - The histogram has a tall block at **35–38 days** (184 of 247 shipments) and then a **long tail to the right**, out to 53 days. Nothing arrives unusually early.
+
+![A histogram of transit days for 247 delivered Shanghai to Lagos shipments. Tall bars at 35 to 38 days, then low bars out to 53 days. A dashed line marks the mean, 39.0 days; another marks mean plus 2 standard deviations, 48.4 days. The bars beyond it are red.](/images/courses/statistics/transit-histogram.svg "Route 1's transit times: a tight block of on-time shipments and a one-sided tail of delays.")
 
 Z-scores make it concrete. The upper threshold of 2 SDs is 39.0 + 2 × 4.7 ≈ 48.4 days. **20 shipments** are more than 2 SDs slow; **none** are more than 2 SDs fast.
 
@@ -15874,7 +15939,7 @@ Rates, percentages and averages of averages cause more wrong conclusions in busi
 
 ## The concept
 
-**Percent change versus percentage points**
+### Percent change versus percentage points
 
 When the thing you're measuring is itself a percentage (an on-time rate, a market share, a conversion rate), there are two ways to describe a change:
 
@@ -15883,7 +15948,7 @@ When the thing you're measuring is itself a percentage (an on-time rate, a marke
 
 Both are correct; they answer different questions. The mistake is writing "fell 13%" when you mean 13 points. Always say which: "on-time delivery fell 13.1 percentage points, from 80.9% to 67.8%". Giving the start and end values removes all doubt.
 
-**Rates need their base**
+### Rates need their base
 
 A rate is a count divided by a base: on-time shipments ÷ delivered shipments. Before comparing rates, check:
 
@@ -15891,7 +15956,7 @@ A rate is a count divided by a base: on-time shipments ÷ delivered shipments. B
 2. **The bases are big enough.** 2 of 3 is 67%, but you'd want far more than 3 before quoting it.
 3. **You show the counts** next to the percentage: "67.8% (80 of 118)".
 
-**Weighted averages**
+### Weighted averages
 
 A simple average treats every row equally. A **weighted average** gives each value a weight, such as its size:
 
@@ -15901,7 +15966,7 @@ In Excel: `=SUMPRODUCT(values, weights) / SUM(weights)`.
 
 Use a weighted average whenever the rows differ in size and the question is about the whole: the average discount on sales (weight by sales value), the average price per pack sold (weight by packs), the average salary across departments (weight by headcount). The simple average answers a different question: "what's the discount on a typical order line?"
 
-**Simpson's paradox**
+### Simpson's paradox
 
 Sometimes a pattern that holds in **every** group reverses when the groups are combined, because the groups are different sizes. An illustration with made-up numbers:
 
@@ -15910,6 +15975,8 @@ Sometimes a pattern that holds in **every** group reverses when the groups are c
 | Easy local deliveries | 90 of 100 (90%) | 760 of 800 (95%) |
 | Hard long-distance deliveries | 360 of 600 (60%) | 70 of 100 (70%) |
 | **All deliveries** | **450 of 700 (64%)** | **830 of 900 (92%)** |
+
+![Paired bars for Depot A and Depot B. Easy local deliveries: A 90% of 100, B 95% of 800. Hard long-distance: A 60% of 600, B 70% of 100. All deliveries: A 64% of 700, B 92% of 900.](/images/courses/statistics/simpson.svg "B is better in each group, but the overall gap is mostly about mix: A does far more hard deliveries.")
 
 Depot B is better on **both** kinds of delivery. But Depot A looks far worse overall, and B even better, simply because A handles mostly hard deliveries. Judge A on its total and you'd blame the wrong team. When groups differ in mix, compare like with like: break the total down by the thing that differs.
 
@@ -16054,11 +16121,11 @@ This lesson measures how strongly two things move together, and then, more impor
 
 ## The concept
 
-**Look first: the scatter chart**
+### Look first: the scatter chart
 
 Put one variable on each axis and plot a dot for each row: **Insert → Scatter** in Excel or Google Sheets. In a few seconds you see whether the dots rise together, fall, or show no pattern; whether the relationship is a straight line or a curve; and whether a few outliers are doing all the work.
 
-**Measure: the correlation coefficient, r**
+### Measure: the correlation coefficient, r
 
 `=CORREL(range1, range2)` gives **Pearson's r**, a number from −1 to +1:
 
@@ -16073,11 +16140,15 @@ Put one variable on each axis and plot a dot for each row: **Insert → Scatter*
 
 These bands are rough guides, not rules. And r only measures **straight-line** relationships: a strong curve (sales rising then falling with price) can give an r near 0.
 
-**r²: how much is explained**
+![Three scatter charts from the course data. Containers against freight charge: dots climb in tight columns, r = 0.93. Quantity against discount percent: three horizontal bands with a slight upward tilt, r = 0.34. Years of service against salary: a shapeless cloud, r = −0.05.](/images/courses/statistics/correlation-panels.svg "What r looks like: very strong, moderate and none, all from real data.")
+
+Notice the middle chart. Discounts are only ever 0, 5 or 10%, so the dots form three bands (spread slightly so they don't sit on top of each other). An r of 0.34 here means "lines with more packs are somewhat more likely to be in the higher bands", not a neat sloping line. Always look at the chart before trusting the number.
+
+### r²: how much is explained
 
 Square r to get **r²** (`=RSQ(range1, range2)`): the share of the variation in one variable that's explained by a straight-line relationship with the other. r = 0.93 gives r² ≈ 0.87: containers explain about 87% of the variation in freight charges.
 
-**The traps**
+### The traps
 
 1. **Correlation is not causation.** Two things can move together because:
    - A causes B (more containers cause a higher charge);
@@ -16088,7 +16159,7 @@ Square r to get **r²** (`=RSQ(range1, range2)`): the share of the variation in 
 3. **Mixing groups.** Two groups with different levels can create a correlation that doesn't exist within either group (the same lesson as Simpson's paradox).
 4. **No correlation isn't "no relationship".** It means no straight-line relationship.
 
-**Getting closer to cause**
+### Getting closer to cause
 
 Data like Kolanut's is **observational**: nobody decided at random who gets a discount. The strongest way to establish cause is an **experiment**: give the discount to a random half of customers for a month and compare (lesson 9 shows how to test the difference). Without one, ask how the data was produced: who decided the discount, and why?
 
@@ -16246,7 +16317,7 @@ Which one is right? Neither, exactly, and both are reasonable. Every sample give
 
 ## The concept
 
-**Samples vary; bigger samples vary less**
+### Samples vary; bigger samples vary less
 
 If you took many random samples and calculated each one's mean, the means would scatter around the true population mean. The **standard error (SE)** measures how much:
 
@@ -16259,13 +16330,13 @@ Two things follow:
 - More spread in the data means a larger SE: noisy data needs bigger samples.
 - The SE shrinks with the **square root** of the sample size. Four times the sample halves the SE; a hundred times the sample divides it by ten. Precision gets expensive.
 
-**A random sample, properly**
+### A random sample, properly
 
 A sample only tells you about the population if it's **random**: every row has the same chance of being picked. The first 50 rows (all from January), the 50 biggest customers, or whoever answered a survey are **biased** samples, and a bigger biased sample is just more confidently wrong.
 
 To draw a random sample in Excel: add a column `=RAND()`, copy it and paste as values, sort by it, and take the first 50 rows. In Google Sheets, `=SORTN(range, 50, 0, RANDARRAY(ROWS(range)), TRUE)` does it in one step.
 
-**The normal distribution and the 68–95–99.7 rule**
+### The normal distribution and the 68–95–99.7 rule
 
 Many measurements follow a symmetric bell shape called the **normal distribution**. For normal data:
 
@@ -16275,7 +16346,17 @@ Many measurements follow a symmetric bell shape called the **normal distribution
 
 Excel calculates exact normal probabilities: `=NORM.DIST(x, mean, sd, TRUE)` is the share of values below *x*.
 
-**Why it matters even for skewed data: the central limit theorem**
+![A bell-shaped normal curve with shaded bands: 68% of values within 1 standard deviation of the mean, 95% within 2, and 99.7% within 3.](/images/courses/statistics/normal-curve.svg "The 68–95–99.7 rule.")
+
+**Worked example.** Suppose a process is normal with mean 100 and SD 10.
+
+| Question | Using the rule | In Excel |
+| :-- | :-- | :-- |
+| What share of values lie between 90 and 110? | Within 1 SD: about 68% | `=NORM.DIST(110,100,10,TRUE) - NORM.DIST(90,100,10,TRUE)` = 0.683 |
+| What share lie above 120? | Beyond +2 SD: half of the 5% outside, about 2.5% | `=1 - NORM.DIST(120,100,10,TRUE)` = 0.023 |
+| Below what value do 95% of values lie? | | `=NORM.INV(0.95,100,10)` = 116.4 |
+
+### Why it matters even for skewed data: the central limit theorem
 
 Order-line revenue is right-skewed, not normal. But the **means of samples** are close to normal, as long as the samples aren't tiny (30 or more is a common rule of thumb). That's the **central limit theorem**, and it's why the SE and the 68–95 rule work for averages almost regardless of the data's shape. It's the foundation for the confidence intervals and tests in the next two lessons.
 
@@ -16411,7 +16492,7 @@ The average across the 327 paid invoices so far is 45.4 days. But those invoices
 
 ## The concept
 
-**What a confidence interval is**
+### What a confidence interval is
 
 A **95% confidence interval** is a range built from a sample so that, if you repeated the sampling many times, 95% of the ranges built this way would contain the true value. In practice: it's the range of values the true number plausibly lies in, given the sample.
 
@@ -16421,7 +16502,11 @@ It's built from the standard error (lesson 7):
 
 The 1.96 comes from the normal distribution: 95% of values lie within 1.96 SDs of the mean.
 
-**For a mean, in Excel**
+![Twenty horizontal lines, each a 95% confidence interval from a random sample of 50 Kolanut order lines, drawn against a vertical line at the true mean of all 4,266 lines, ₦194,689. The sample means scatter between about ₦164,000 and ₦231,000; every interval crosses the true mean.](/images/courses/statistics/confidence-intervals.svg "Twenty real samples, twenty intervals. Each sample's average is off, but its interval usually contains the truth.")
+
+The picture shows what "95% confidence" means. Each sample of 50 lines gives a different average, some well away from the true ₦194,689. But each interval reaches far enough that, in this run, all 20 contain the true mean. Over many more samples, about 1 in 20 would miss. You never know whether **your** interval is one of the misses, which is why 95% is a level of confidence, not a guarantee.
+
+### For a mean, in Excel
 
 ```excel
 =CONFIDENCE.T(0.05, STDEV.S(range), COUNT(range))
@@ -16429,7 +16514,7 @@ The 1.96 comes from the normal distribution: 95% of values lie within 1.96 SDs o
 
 returns the **margin of error** for a 95% interval (0.05 = 5% left over). The interval is `AVERAGE(range) ± margin`. `CONFIDENCE.T` uses the t-distribution, which makes the interval slightly wider for small samples. With more than about 30 values it's almost the same as 1.96 × SE.
 
-**For a percentage (a proportion)**
+### For a percentage (a proportion)
 
 For a share *p* (as a decimal) from *n* observations:
 
@@ -16437,14 +16522,14 @@ For a share *p* (as a decimal) from *n* observations:
 
 In Excel: `=1.96 * SQRT(p * (1 - p) / n)`. This works well when there are at least 10 "yes" and 10 "no" answers; for rarer events, use a bigger sample.
 
-**Reading intervals correctly**
+### Reading intervals correctly
 
 - **Wider interval = less certain.** Smaller samples and noisier data give wider intervals.
 - **Overlapping intervals** for two groups mean the difference **might** be chance; the formal check is a test (next lesson). Intervals that don't overlap at all mean the difference is very unlikely to be chance.
 - An interval only covers **sampling** error. It says nothing about a biased sample, bad data, or a change in the future.
 - Don't say "there's a 95% chance the true value is in this interval". Say "we're 95% confident the true value is between X and Y". (The true value is fixed; it's the interval that varies.)
 
-**Choosing the confidence level**
+### Choosing the confidence level
 
 95% is the convention. 90% gives a narrower interval with less confidence; 99% a wider one with more. Use `CONFIDENCE.T(0.10, …)` for 90% or `CONFIDENCE.T(0.01, …)` for 99%. Pick one before you look at the results, and say which you used.
 
@@ -16592,7 +16677,7 @@ In both cases the numbers are different. The question is whether the difference 
 
 ## The concept
 
-**The logic of a test**
+### The logic of a test
 
 1. Start from the **null hypothesis**: there is no real difference; any gap is just sampling variation.
 2. Calculate how surprising your data would be **if the null were true**. That's the **p-value**: the probability of seeing a difference at least this big by chance alone.
@@ -16600,7 +16685,7 @@ In both cases the numbers are different. The question is whether the difference 
 
 A p-value of 0.23 means: if there were no real effect, you'd see a gap this big about 23% of the time. That's common, so it's not evidence of an effect. A p-value of 0.01 means you'd see it only 1% of the time by chance, so something real is probably going on.
 
-**Comparing two averages: the t-test**
+### Comparing two averages: the t-test
 
 ```excel
 =T.TEST(range1, range2, 2, 3)
@@ -16611,7 +16696,7 @@ A p-value of 0.23 means: if there were no real effect, you'd see a gap this big 
 
 It returns the p-value directly.
 
-**Comparing two rates: the two-proportion test**
+### Comparing two rates: the two-proportion test
 
 For rates *p₁* (from *n₁*) and *p₂* (from *n₂*), with the pooled rate *p* = all "yes" ÷ all observations:
 
@@ -16619,7 +16704,7 @@ For rates *p₁* (from *n₁*) and *p₂* (from *n₂*), with the pooled rate *p
 
 and the two-tailed p-value is `=2 * (1 - NORM.S.DIST(ABS(z), TRUE))`.
 
-**What a test can't tell you**
+### What a test can't tell you
 
 - **"Not significant" doesn't mean "no difference".** It means you can't tell the difference from noise with this much data. A real but small effect needs a bigger sample.
 - **Significant doesn't mean important.** With thousands of rows, a difference of 0.1 packs can be "significant" and still irrelevant. Always report the **size** of the difference, ideally with a confidence interval, not just the p-value.
@@ -16768,7 +16853,7 @@ Both are **regression** questions: fit a line through past data and use it to es
 
 ## The concept
 
-**The line of best fit**
+### The line of best fit
 
 Simple linear regression finds the straight line **y = intercept + slope × x** that sits closest to the points on a scatter chart (it minimises the squared vertical distances, hence "least squares").
 
@@ -16781,19 +16866,21 @@ Simple linear regression finds the straight line **y = intercept + slope × x** 
 
 On a scatter chart, right-click the points → **Add Trendline**, and tick **Display equation** and **Display R-squared**. Google Sheets: **Customise → Series → Trendline**, with the label set to the equation.
 
-**Reading the slope**
+### Reading the slope
 
 The slope is in real units: "₦4.2 million per container", "₦730,000 more revenue each month". That's usually the most useful number regression gives you.
 
-**How good is the line? r²**
+### How good is the line? r²
 
 r² runs from 0 to 1. Near 1, the line captures almost everything and estimates from it are reliable. Near 0, the line explains little: the points scatter widely around it and any single estimate could be far off. There's no universal "good" value. For pricing, you'd want 0.9 or more; for messy business trends, 0.3 can still show a real direction while warning you not to trust individual months.
 
-**Residuals: what the line misses**
+### Residuals: what the line misses
 
 A **residual** is actual minus predicted. Plot or list them. A big residual is a point the line doesn't explain: an outlier worth investigating (December's festive spike). A pattern in the residuals (all positive in the middle, negative at the ends) means a straight line is the wrong shape.
 
-**When regression misleads**
+![Kolanut's 18 months of revenue as dots with a rising trend line. Thin red lines join each dot to the line: these are the residuals. December 2025, at ₦66.3m, sits far above the line.](/images/courses/statistics/trend-residuals.svg "Residuals are the gaps between the data and the line. December 2025's is by far the largest.")
+
+### When regression misleads
 
 - **Extrapolation:** a line fitted to 1–8 containers says nothing reliable about 40 containers. A trend fitted to 18 months says little about 3 years from now.
 - **Seasonality:** a straight line through monthly sales ignores December. Compare the same months year on year (lesson 9) or model seasons separately.
@@ -16951,7 +17038,7 @@ A review like that needs everything in this course: the right averages and sprea
 
 ## The concept
 
-**From questions to statistics**
+### From questions to statistics
 
 Each of the director's questions maps to a tool:
 
@@ -16963,7 +17050,7 @@ Each of the director's questions maps to a tool:
 | Is anything getting better or worse? | Two-proportion test, 2025 against 2026 | 9 |
 | What should a quote look like? | Regression of charge on containers, for one route | 10 |
 
-**Definitions first**
+### Definitions first
 
 State them at the top of your workbook, because every number depends on them:
 
@@ -16971,7 +17058,7 @@ State them at the top of your workbook, because every number depends on them:
 - **On time** = transit days ≤ the route's `target_transit_days`.
 - **Year** = the year of `booking_date`. 2026 runs from January to August only.
 
-**A fair comparison**
+### A fair comparison
 
 Routes have very different targets: one day for Lagos–Ibadan by road, 42 for Shanghai–Onne by sea. Comparing raw transit times across routes is meaningless; compare on-time rates, or days late against each route's own target. And watch for small routes: a route with 36 deliveries has a wide confidence interval.
 

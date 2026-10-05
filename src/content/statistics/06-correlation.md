@@ -16,11 +16,11 @@ This lesson measures how strongly two things move together, and then, more impor
 
 ## The concept
 
-**Look first: the scatter chart**
+### Look first: the scatter chart
 
 Put one variable on each axis and plot a dot for each row: **Insert → Scatter** in Excel or Google Sheets. In a few seconds you see whether the dots rise together, fall, or show no pattern; whether the relationship is a straight line or a curve; and whether a few outliers are doing all the work.
 
-**Measure: the correlation coefficient, r**
+### Measure: the correlation coefficient, r
 
 `=CORREL(range1, range2)` gives **Pearson's r**, a number from −1 to +1:
 
@@ -35,11 +35,15 @@ Put one variable on each axis and plot a dot for each row: **Insert → Scatter*
 
 These bands are rough guides, not rules. And r only measures **straight-line** relationships: a strong curve (sales rising then falling with price) can give an r near 0.
 
-**r²: how much is explained**
+![Three scatter charts from the course data. Containers against freight charge: dots climb in tight columns, r = 0.93. Quantity against discount percent: three horizontal bands with a slight upward tilt, r = 0.34. Years of service against salary: a shapeless cloud, r = −0.05.](/images/courses/statistics/correlation-panels.svg "What r looks like: very strong, moderate and none, all from real data.")
+
+Notice the middle chart. Discounts are only ever 0, 5 or 10%, so the dots form three bands (spread slightly so they don't sit on top of each other). An r of 0.34 here means "lines with more packs are somewhat more likely to be in the higher bands", not a neat sloping line. Always look at the chart before trusting the number.
+
+### r²: how much is explained
 
 Square r to get **r²** (`=RSQ(range1, range2)`): the share of the variation in one variable that's explained by a straight-line relationship with the other. r = 0.93 gives r² ≈ 0.87: containers explain about 87% of the variation in freight charges.
 
-**The traps**
+### The traps
 
 1. **Correlation is not causation.** Two things can move together because:
    - A causes B (more containers cause a higher charge);
@@ -50,7 +54,7 @@ Square r to get **r²** (`=RSQ(range1, range2)`): the share of the variation in 
 3. **Mixing groups.** Two groups with different levels can create a correlation that doesn't exist within either group (the same lesson as Simpson's paradox).
 4. **No correlation isn't "no relationship".** It means no straight-line relationship.
 
-**Getting closer to cause**
+### Getting closer to cause
 
 Data like Kolanut's is **observational**: nobody decided at random who gets a discount. The strongest way to establish cause is an **experiment**: give the discount to a random half of customers for a month and compare (lesson 9 shows how to test the difference). Without one, ask how the data was produced: who decided the discount, and why?
 

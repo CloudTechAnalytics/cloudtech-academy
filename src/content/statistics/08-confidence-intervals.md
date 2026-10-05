@@ -14,7 +14,7 @@ The average across the 327 paid invoices so far is 45.4 days. But those invoices
 
 ## The concept
 
-**What a confidence interval is**
+### What a confidence interval is
 
 A **95% confidence interval** is a range built from a sample so that, if you repeated the sampling many times, 95% of the ranges built this way would contain the true value. In practice: it's the range of values the true number plausibly lies in, given the sample.
 
@@ -24,7 +24,11 @@ It's built from the standard error (lesson 7):
 
 The 1.96 comes from the normal distribution: 95% of values lie within 1.96 SDs of the mean.
 
-**For a mean, in Excel**
+![Twenty horizontal lines, each a 95% confidence interval from a random sample of 50 Kolanut order lines, drawn against a vertical line at the true mean of all 4,266 lines, ₦194,689. The sample means scatter between about ₦164,000 and ₦231,000; every interval crosses the true mean.](/images/courses/statistics/confidence-intervals.svg "Twenty real samples, twenty intervals. Each sample's average is off, but its interval usually contains the truth.")
+
+The picture shows what "95% confidence" means. Each sample of 50 lines gives a different average, some well away from the true ₦194,689. But each interval reaches far enough that, in this run, all 20 contain the true mean. Over many more samples, about 1 in 20 would miss. You never know whether **your** interval is one of the misses, which is why 95% is a level of confidence, not a guarantee.
+
+### For a mean, in Excel
 
 ```excel
 =CONFIDENCE.T(0.05, STDEV.S(range), COUNT(range))
@@ -32,7 +36,7 @@ The 1.96 comes from the normal distribution: 95% of values lie within 1.96 SDs o
 
 returns the **margin of error** for a 95% interval (0.05 = 5% left over). The interval is `AVERAGE(range) ± margin`. `CONFIDENCE.T` uses the t-distribution, which makes the interval slightly wider for small samples. With more than about 30 values it's almost the same as 1.96 × SE.
 
-**For a percentage (a proportion)**
+### For a percentage (a proportion)
 
 For a share *p* (as a decimal) from *n* observations:
 
@@ -40,14 +44,14 @@ For a share *p* (as a decimal) from *n* observations:
 
 In Excel: `=1.96 * SQRT(p * (1 - p) / n)`. This works well when there are at least 10 "yes" and 10 "no" answers; for rarer events, use a bigger sample.
 
-**Reading intervals correctly**
+### Reading intervals correctly
 
 - **Wider interval = less certain.** Smaller samples and noisier data give wider intervals.
 - **Overlapping intervals** for two groups mean the difference **might** be chance; the formal check is a test (next lesson). Intervals that don't overlap at all mean the difference is very unlikely to be chance.
 - An interval only covers **sampling** error. It says nothing about a biased sample, bad data, or a change in the future.
 - Don't say "there's a 95% chance the true value is in this interval". Say "we're 95% confident the true value is between X and Y". (The true value is fixed; it's the interval that varies.)
 
-**Choosing the confidence level**
+### Choosing the confidence level
 
 95% is the convention. 90% gives a narrower interval with less confidence; 99% a wider one with more. Use `CONFIDENCE.T(0.10, …)` for 90% or `CONFIDENCE.T(0.01, …)` for 99%. Pick one before you look at the results, and say which you used.
 

@@ -16,7 +16,7 @@ In both cases the numbers are different. The question is whether the difference 
 
 ## The concept
 
-**The logic of a test**
+### The logic of a test
 
 1. Start from the **null hypothesis**: there is no real difference; any gap is just sampling variation.
 2. Calculate how surprising your data would be **if the null were true**. That's the **p-value**: the probability of seeing a difference at least this big by chance alone.
@@ -24,7 +24,7 @@ In both cases the numbers are different. The question is whether the difference 
 
 A p-value of 0.23 means: if there were no real effect, you'd see a gap this big about 23% of the time. That's common, so it's not evidence of an effect. A p-value of 0.01 means you'd see it only 1% of the time by chance, so something real is probably going on.
 
-**Comparing two averages: the t-test**
+### Comparing two averages: the t-test
 
 ```excel
 =T.TEST(range1, range2, 2, 3)
@@ -35,7 +35,7 @@ A p-value of 0.23 means: if there were no real effect, you'd see a gap this big 
 
 It returns the p-value directly.
 
-**Comparing two rates: the two-proportion test**
+### Comparing two rates: the two-proportion test
 
 For rates *p₁* (from *n₁*) and *p₂* (from *n₂*), with the pooled rate *p* = all "yes" ÷ all observations:
 
@@ -43,7 +43,7 @@ For rates *p₁* (from *n₁*) and *p₂* (from *n₂*), with the pooled rate *p
 
 and the two-tailed p-value is `=2 * (1 - NORM.S.DIST(ABS(z), TRUE))`.
 
-**What a test can't tell you**
+### What a test can't tell you
 
 - **"Not significant" doesn't mean "no difference".** It means you can't tell the difference from noise with this much data. A real but small effect needs a bigger sample.
 - **Significant doesn't mean important.** With thousands of rows, a difference of 0.1 packs can be "significant" and still irrelevant. Always report the **size** of the difference, ideally with a confidence interval, not just the p-value.

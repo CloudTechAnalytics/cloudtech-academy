@@ -246,5 +246,41 @@
  "/images/courses/sql/window-vs-group.svg": [
   1160,
   430
+ ],
+ "/images/courses/statistics/box-plot.svg": [
+  760,
+  280
+ ],
+ "/images/courses/statistics/confidence-intervals.svg": [
+  760,
+  450
+ ],
+ "/images/courses/statistics/correlation-panels.svg": [
+  760,
+  330
+ ],
+ "/images/courses/statistics/mean-median-dots.svg": [
+  760,
+  300
+ ],
+ "/images/courses/statistics/normal-curve.svg": [
+  760,
+  340
+ ],
+ "/images/courses/statistics/population-sample.svg": [
+  760,
+  330
+ ],
+ "/images/courses/statistics/simpson.svg": [
+  760,
+  330
+ ],
+ "/images/courses/statistics/transit-histogram.svg": [
+  760,
+  330
+ ],
+ "/images/courses/statistics/trend-residuals.svg": [
+  760,
+  340
  ]
 }

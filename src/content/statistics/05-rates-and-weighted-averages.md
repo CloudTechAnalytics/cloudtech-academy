@@ -16,7 +16,7 @@ Rates, percentages and averages of averages cause more wrong conclusions in busi
 
 ## The concept
 
-**Percent change versus percentage points**
+### Percent change versus percentage points
 
 When the thing you're measuring is itself a percentage (an on-time rate, a market share, a conversion rate), there are two ways to describe a change:
 
@@ -25,7 +25,7 @@ When the thing you're measuring is itself a percentage (an on-time rate, a marke
 
 Both are correct; they answer different questions. The mistake is writing "fell 13%" when you mean 13 points. Always say which: "on-time delivery fell 13.1 percentage points, from 80.9% to 67.8%". Giving the start and end values removes all doubt.
 
-**Rates need their base**
+### Rates need their base
 
 A rate is a count divided by a base: on-time shipments ÷ delivered shipments. Before comparing rates, check:
 
@@ -33,7 +33,7 @@ A rate is a count divided by a base: on-time shipments ÷ delivered shipments. B
 2. **The bases are big enough.** 2 of 3 is 67%, but you'd want far more than 3 before quoting it.
 3. **You show the counts** next to the percentage: "67.8% (80 of 118)".
 
-**Weighted averages**
+### Weighted averages
 
 A simple average treats every row equally. A **weighted average** gives each value a weight, such as its size:
 
@@ -43,7 +43,7 @@ In Excel: `=SUMPRODUCT(values, weights) / SUM(weights)`.
 
 Use a weighted average whenever the rows differ in size and the question is about the whole: the average discount on sales (weight by sales value), the average price per pack sold (weight by packs), the average salary across departments (weight by headcount). The simple average answers a different question: "what's the discount on a typical order line?"
 
-**Simpson's paradox**
+### Simpson's paradox
 
 Sometimes a pattern that holds in **every** group reverses when the groups are combined, because the groups are different sizes. An illustration with made-up numbers:
 
@@ -52,6 +52,8 @@ Sometimes a pattern that holds in **every** group reverses when the groups are c
 | Easy local deliveries | 90 of 100 (90%) | 760 of 800 (95%) |
 | Hard long-distance deliveries | 360 of 600 (60%) | 70 of 100 (70%) |
 | **All deliveries** | **450 of 700 (64%)** | **830 of 900 (92%)** |
+
+![Paired bars for Depot A and Depot B. Easy local deliveries: A 90% of 100, B 95% of 800. Hard long-distance: A 60% of 600, B 70% of 100. All deliveries: A 64% of 700, B 92% of 900.](/images/courses/statistics/simpson.svg "B is better in each group, but the overall gap is mostly about mix: A does far more hard deliveries.")
 
 Depot B is better on **both** kinds of delivery. But Depot A looks far worse overall, and B even better, simply because A handles mostly hard deliveries. Judge A on its total and you'd blame the wrong team. When groups differ in mix, compare like with like: break the total down by the thing that differs.
 

@@ -12,7 +12,7 @@ Which one is right? Neither, exactly, and both are reasonable. Every sample give
 
 ## The concept
 
-**Samples vary; bigger samples vary less**
+### Samples vary; bigger samples vary less
 
 If you took many random samples and calculated each one's mean, the means would scatter around the true population mean. The **standard error (SE)** measures how much:
 
@@ -25,13 +25,13 @@ Two things follow:
 - More spread in the data means a larger SE: noisy data needs bigger samples.
 - The SE shrinks with the **square root** of the sample size. Four times the sample halves the SE; a hundred times the sample divides it by ten. Precision gets expensive.
 
-**A random sample, properly**
+### A random sample, properly
 
 A sample only tells you about the population if it's **random**: every row has the same chance of being picked. The first 50 rows (all from January), the 50 biggest customers, or whoever answered a survey are **biased** samples, and a bigger biased sample is just more confidently wrong.
 
 To draw a random sample in Excel: add a column `=RAND()`, copy it and paste as values, sort by it, and take the first 50 rows. In Google Sheets, `=SORTN(range, 50, 0, RANDARRAY(ROWS(range)), TRUE)` does it in one step.
 
-**The normal distribution and the 68–95–99.7 rule**
+### The normal distribution and the 68–95–99.7 rule
 
 Many measurements follow a symmetric bell shape called the **normal distribution**. For normal data:
 
@@ -41,7 +41,17 @@ Many measurements follow a symmetric bell shape called the **normal distribution
 
 Excel calculates exact normal probabilities: `=NORM.DIST(x, mean, sd, TRUE)` is the share of values below *x*.
 
-**Why it matters even for skewed data: the central limit theorem**
+![A bell-shaped normal curve with shaded bands: 68% of values within 1 standard deviation of the mean, 95% within 2, and 99.7% within 3.](/images/courses/statistics/normal-curve.svg "The 68–95–99.7 rule.")
+
+**Worked example.** Suppose a process is normal with mean 100 and SD 10.
+
+| Question | Using the rule | In Excel |
+| :-- | :-- | :-- |
+| What share of values lie between 90 and 110? | Within 1 SD: about 68% | `=NORM.DIST(110,100,10,TRUE) - NORM.DIST(90,100,10,TRUE)` = 0.683 |
+| What share lie above 120? | Beyond +2 SD: half of the 5% outside, about 2.5% | `=1 - NORM.DIST(120,100,10,TRUE)` = 0.023 |
+| Below what value do 95% of values lie? | | `=NORM.INV(0.95,100,10)` = 116.4 |
+
+### Why it matters even for skewed data: the central limit theorem
 
 Order-line revenue is right-skewed, not normal. But the **means of samples** are close to normal, as long as the samples aren't tiny (30 or more is a common rule of thumb). That's the **central limit theorem**, and it's why the SE and the 68–95 rule work for averages almost regardless of the data's shape. It's the foundation for the confidence intervals and tests in the next two lessons.
 
