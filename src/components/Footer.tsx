@@ -1,9 +1,11 @@
 import { Link } from "react-router";
 import { ArrowUpRight } from "lucide-react";
 import { AcademyLogo } from "./Logo";
-import { NAV_LINKS, SITE } from "@/lib/site";
+import { navLinks, SITE } from "@/lib/site";
+import { useCommunity } from "@/lib/community";
 
 export function Footer() {
+  const links = navLinks(!!useCommunity().community);
   const link = "text-[0.9375rem] text-cream/75 transition-colors hover:text-cream";
   return (
     <footer className="bg-night text-cream">
@@ -22,7 +24,7 @@ export function Footer() {
         <nav aria-label="Academy" className="lg:col-span-3">
           <h2 className="mb-4 text-[0.875rem] font-medium text-cream/50">Academy</h2>
           <ul className="space-y-3">
-            {NAV_LINKS.map((l) => (
+            {links.map((l) => (
               <li key={l.to}>
                 <Link to={l.to} className={link}>
                   {l.label}

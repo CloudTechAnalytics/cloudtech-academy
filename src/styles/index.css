@@ -249,7 +249,7 @@
   }
   /* Tables scroll sideways on small screens rather than squashing. */
   .table-scroll {
-    @apply overflow-x-auto rounded-xl border border-line;
+    @apply relative overflow-x-auto rounded-xl border border-line;
   }
   .table-scroll table {
     @apply w-full border-collapse text-left text-[0.9rem];

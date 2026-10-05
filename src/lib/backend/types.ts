@@ -250,6 +250,111 @@ export type CertificateOrder = {
 
 export type AdminOrder = CertificateOrder & { learnerName: string; learnerEmail: string; courseTitle: string; certificateId: string | null };
 
+/* ---------------------------------------------------------------- community and events */
+
+/** The Academy's WhatsApp community, controlled by admins. */
+export type CommunitySettings = {
+  name: string;
+  description: string;
+  /** Null until an admin adds one; the community can't be switched on without it. */
+  whatsappUrl: string | null;
+  welcomeMessage: string;
+  buttonText: string;
+  isActive: boolean;
+};
+
+/** What learners and visitors get: only while the community is active. */
+export type PublicCommunity = Omit<CommunitySettings, "isActive" | "whatsappUrl"> & { whatsappUrl: string };
+
+/** Where a Community button was pressed, for the lightweight click count. */
+export type CommunitySource = "homepage" | "welcome" | "dashboard" | "community_page" | "navbar" | "events" | "event_page" | "sign_up";
+
+export type EventType =
+  | "workshop"
+  | "webinar"
+  | "seminar"
+  | "community_day"
+  | "practical_session"
+  | "bootcamp"
+  | "masterclass"
+  | "career_session"
+  | "guest_session"
+  | "networking"
+  | "competition"
+  | "conference"
+  | "training"
+  | "other";
+
+export type EventFormat = "online" | "physical" | "hybrid";
+
+export type EventStatus = "draft" | "published" | "registration_open" | "registration_closed" | "completed" | "cancelled";
+
+/** An Academy event. Only title, date and start time are needed; everything else is optional. */
+export type AcademyEvent = {
+  id: string;
+  slug: string;
+  title: string;
+  eventType: EventType;
+  shortDescription: string | null;
+  description: string | null;
+  /** "What attendees will learn", one point each. */
+  learnPoints: string[];
+  coverImage: string | null;
+  /** ISO instant (UTC). Shown in the event's own time zone. */
+  startDatetime: string;
+  endDatetime: string | null;
+  timezone: string;
+  venue: string | null;
+  format: EventFormat;
+  meetingUrl: string | null;
+  registrationUrl: string | null;
+  /** The event's own WhatsApp link. It never falls back to the main community link. */
+  whatsappUrl: string | null;
+  speakerName: string | null;
+  speakerTitle: string | null;
+  speakerImage: string | null;
+  maxParticipants: number | null;
+  registrationRequired: boolean;
+  status: EventStatus;
+  isFeatured: boolean;
+  /** Groups recurring events, e.g. "community-day". */
+  series: string | null;
+  /** How many people are registered (everyone can see the count, never who). */
+  registeredCount: number;
+  createdAt: string;
+  updatedAt: string;
+};
+
+/** What an admin enters. The id is set when editing. */
+export type EventInput = Omit<AcademyEvent, "id" | "registeredCount" | "createdAt" | "updatedAt"> & { id?: string };
+
+export type AttendanceStatus = "registered" | "attended" | "did_not_attend";
+
+export type EventRegistration = {
+  id: string;
+  eventId: string;
+  userId: string | null;
+  fullName: string;
+  email: string;
+  phone: string | null;
+  registrationStatus: "registered" | "cancelled";
+  attendanceStatus: AttendanceStatus;
+  registeredAt: string;
+  attendedAt: string | null;
+};
+
+export type CommunityStats = {
+  clicksTotal: number;
+  clicks30d: number;
+  upcomingEvents: number;
+  registrationsTotal: number;
+  registrationsUpcoming: number;
+  clickSources: { source: string; clicks: number }[];
+};
+
+/** A recent registration, with the event it was for. */
+export type RecentRegistration = EventRegistration & { eventTitle: string };
+
 export type StudentSummary = {
   userId: string;
   fullName: string;
@@ -352,8 +457,45 @@ export interface Backend {
   /** Records a download in the certificate's audit log (admins, and the certificate's owner). */
   recordCertificateDownload(certificateId: string): Promise<void>;
 
+  /* ---------- community and events ---------- */
+  /** The community's wording and WhatsApp link, or null while it's switched off or not set up. */
+  getCommunity(): Promise<PublicCommunity | null>;
+  /** Counts a press of a Community button. Never blocks the button. */
+  trackCommunityClick(source: CommunitySource): Promise<void>;
+  /** Every event that isn't a draft, soonest first. */
+  listEvents(): Promise<AcademyEvent[]>;
+  getEvent(slug: string): Promise<AcademyEvent | null>;
+  /** Registers for an event. Anyone can; a signed-in learner's account is linked automatically. Registering twice returns the same registration. */
+  registerForEvent(eventId: string, input: { fullName: string; email: string; phone: string }): Promise<EventRegistration>;
+  /**
+   * The event's meeting link. Events open to everyone show it on the page; for events that need registration it's
+   * revealed only to people who registered: by their account, or straight after registering, by the email they used.
+   */
+  revealEventLink(eventId: string, email?: string): Promise<string | null>;
+  listMyRegistrations(): Promise<EventRegistration[]>;
+  cancelMyRegistration(eventId: string): Promise<void>;
+
   /* ---------- admin ---------- */
   admin: {
+    /** The community settings as saved, including while inactive. */
+    getCommunitySettings(): Promise<CommunitySettings>;
+    saveCommunitySettings(settings: CommunitySettings): Promise<void>;
+    communityStats(): Promise<CommunityStats>;
+    recentRegistrations(limit?: number): Promise<RecentRegistration[]>;
+    /** Every event, drafts included, soonest first. */
+    listAllEvents(): Promise<AcademyEvent[]>;
+    getEventById(id: string): Promise<AcademyEvent | null>;
+    /** Creates the event, or updates it when input.id is set. */
+    saveEvent(input: EventInput): Promise<AcademyEvent>;
+    setEventStatus(id: string, status: EventStatus): Promise<void>;
+    /** A new draft with the same details. */
+    duplicateEvent(id: string): Promise<AcademyEvent>;
+    /** Permanently deletes the event and its registrations. */
+    deleteEvent(id: string): Promise<void>;
+    listRegistrations(eventId: string): Promise<EventRegistration[]>;
+    setAttendance(registrationId: string, status: AttendanceStatus): Promise<void>;
+    /** Uploads a cover or speaker image (PNG, JPEG or WebP, up to 2 MB) and returns its public URL. */
+    uploadEventImage(file: File): Promise<string>;
     saveCourse(course: CourseInput): Promise<void>;
     saveModule(module: ModuleInput): Promise<void>;
     deleteModule(moduleId: string): Promise<void>;

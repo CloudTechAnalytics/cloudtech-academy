@@ -1,3 +1,4 @@
+import { ConnectSection } from "@/components/CommunityWidgets";
 import { Link } from "react-router";
 import { ArrowRight, Award, BookOpen, CheckCircle2, FolderKanban, PencilLine } from "lucide-react";
 import { useSeo } from "@/lib/seo";
@@ -232,7 +233,7 @@ export default function Home() {
       </section>
 
       <section aria-labelledby="sandbox-title" className="border-y border-line bg-paper py-16 sm:py-20">
-        <div className="container-page grid gap-10 lg:grid-cols-2 lg:items-center">
+        <div className="container-page grid grid-cols-1 gap-10 lg:grid-cols-2 lg:items-center">
           <Reveal>
             <p className="kicker">Practise as you learn</p>
             <h2 id="sandbox-title" className="mt-2 font-serif text-[1.85rem] leading-tight sm:text-[2.25rem]">
@@ -246,7 +247,7 @@ export default function Home() {
               Try the first lesson
             </ButtonLink>
           </Reveal>
-          <Reveal delay={100}>
+          <Reveal delay={100} className="min-w-0">
             <div className="overflow-hidden rounded-2xl border border-line">
               <div className="flex items-center justify-between px-4 py-2.5" style={{ background: "var(--color-code-bg)" }}>
                 <span className="text-[0.75rem] font-semibold text-brass-light">Practice</span>
@@ -288,6 +289,8 @@ export default function Home() {
           </Reveal>
         </div>
       </section>
+
+      <ConnectSection />
 
       <section aria-labelledby="cta-title" className="pb-20 sm:pb-24">
         <div className="container-page">

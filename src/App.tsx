@@ -2,6 +2,7 @@ import { lazy } from "react";
 import { Navigate, Route, Routes } from "react-router";
 import { Layout } from "@/components/Layout";
 import { AuthProvider } from "@/lib/auth";
+import { CommunityProvider } from "@/lib/community";
 import Home from "@/pages/Home";
 
 const Courses = lazy(() => import("@/pages/Courses"));
@@ -19,6 +20,10 @@ const LearnerProfile = lazy(() => import("@/pages/LearnerProfile"));
 const Projects = lazy(() => import("@/pages/Projects"));
 const ProjectDetail = lazy(() => import("@/pages/ProjectDetail"));
 const Certificates = lazy(() => import("@/pages/Certificates"));
+const Events = lazy(() => import("@/pages/Events"));
+const EventDetail = lazy(() => import("@/pages/EventDetail"));
+const Community = lazy(() => import("@/pages/Community"));
+const Welcome = lazy(() => import("@/pages/Welcome"));
 const Verify = lazy(() => import("@/pages/Verify"));
 const VerifySearch = lazy(() => import("@/pages/Verify").then((m) => ({ default: m.VerifySearch })));
 const About = lazy(() => import("@/pages/About"));
@@ -39,6 +44,11 @@ const AdminLessonEditor = lazy(() => import("@/pages/admin/AdminLessonEditor"));
 const AdminAssessment = lazy(() => import("@/pages/admin/AdminAssessment"));
 const AdminStudents = lazy(() => import("@/pages/admin/AdminStudents").then((m) => ({ default: m.AdminStudents })));
 const AdminStudent = lazy(() => import("@/pages/admin/AdminStudents").then((m) => ({ default: m.AdminStudent })));
+const AdminEvents = lazy(() => import("@/pages/admin/AdminEvents"));
+const AdminEventForm = lazy(() => import("@/pages/admin/AdminEventForm"));
+const AdminEventRegistrations = lazy(() => import("@/pages/admin/AdminEventRegistrations"));
+const AdminCommunity = lazy(() => import("@/pages/admin/AdminCommunity"));
+const AdminSettings = lazy(() => import("@/pages/admin/AdminSettings"));
 const AdminCertificates = lazy(() => import("@/pages/admin/AdminCertificates"));
 const AdminCertificatePayments = lazy(() => import("@/pages/admin/AdminCertificates").then((m) => ({ default: m.AdminCertificatePayments })));
 const AdminCertificateIssue = lazy(() => import("@/pages/admin/AdminCertificateForm").then((m) => ({ default: m.AdminCertificateIssue })));
@@ -52,6 +62,7 @@ const AdminPracticeProjects = lazy(() => import("@/pages/admin/AdminPracticeProj
 export function AppRoutes() {
   return (
     <AuthProvider>
+      <CommunityProvider>
       <Routes>
         <Route element={<Layout />}>
           <Route index element={<Home />} />
@@ -71,6 +82,10 @@ export function AppRoutes() {
           <Route path="learners/:slug" element={<LearnerProfile />} />
           <Route path="projects" element={<Projects />} />
           <Route path="projects/:slug" element={<ProjectDetail />} />
+          <Route path="events" element={<Events />} />
+          <Route path="events/:slug" element={<EventDetail />} />
+          <Route path="community" element={<Community />} />
+          <Route path="welcome" element={<Welcome />} />
           <Route path="certificates" element={<Certificates />} />
           <Route path="verify" element={<VerifySearch />} />
           <Route path="verify/:credentialId" element={<Verify />} />
@@ -94,6 +109,13 @@ export function AppRoutes() {
             <Route path="submissions" element={<AdminSubmissions />} />
             <Route path="practice" element={<AdminPracticeProjects />} />
             <Route path="credentials" element={<AdminCredentials />} />
+            <Route path="events" element={<AdminEvents />} />
+            <Route path="events/new" element={<AdminEventForm />} />
+            <Route path="events/:eventId" element={<AdminEventForm />} />
+            <Route path="events/:eventId/registrations" element={<AdminEventRegistrations />} />
+            <Route path="community" element={<AdminCommunity />} />
+            <Route path="settings" element={<Navigate to="/admin/settings/community" replace />} />
+            <Route path="settings/community" element={<AdminSettings />} />
             <Route path="certificates" element={<AdminCertificates />} />
             <Route path="certificates/payments" element={<AdminCertificatePayments />} />
             <Route path="certificates/new" element={<AdminCertificateIssue mode="new" />} />
@@ -104,6 +126,7 @@ export function AppRoutes() {
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
+      </CommunityProvider>
     </AuthProvider>
   );
 }

@@ -16,6 +16,8 @@ import { CourseCard } from "@/components/CourseCard";
 import { ProgressBar } from "@/components/ProgressBar";
 import { BadgeArtwork } from "@/components/BadgeArtwork";
 import { ShareMenu } from "@/components/ShareMenu";
+import { DashboardConnect, StartingSoonBanner } from "@/components/CommunityWidgets";
+import { useEvents, useMyRegistrations } from "@/lib/event-data";
 import { publishedLessons } from "@/lib/certificates";
 
 type Row = { enrollment: Enrollment; progress: Progress; attempts: AttemptResult[] };
@@ -33,6 +35,8 @@ function DashboardInner() {
   const [removing, setRemoving] = useState(false);
   const [removeError, setRemoveError] = useState<string | null>(null);
   const art = useRef<SVGSVGElement>(null);
+  const { events } = useEvents();
+  const { registrations } = useMyRegistrations();
 
   const load = useCallback(async () => {
     const b = await getBackend();
@@ -127,6 +131,9 @@ function DashboardInner() {
           </div>
         ))}
       </dl>
+
+      <StartingSoonBanner events={events ?? []} registrations={registrations} />
+      <DashboardConnect events={events ?? []} registrations={registrations} />
 
       <section className="mt-12" aria-labelledby="my-learning">
         <h2 id="my-learning" className="font-serif text-[1.7rem]">

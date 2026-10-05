@@ -10,10 +10,14 @@ import {
   BackendError,
   type AttemptResult,
   type Backend,
+  type AcademyEvent,
   type AdminCertificate,
   type Certificate,
   type CertificateOrder,
   type CertificatePrice,
+  type CommunitySettings,
+  type EventInput,
+  type EventRegistration,
   type Credential,
   type PracticeResult,
   type PracticeSubmission,
@@ -42,6 +46,92 @@ function check<T>(res: { data: T; error: { message: string } | null }): T {
   if (res.error) throw new BackendError(res.error.message);
   return res.data;
 }
+
+const toEvent = (r: Row, registered?: number): AcademyEvent => ({
+  id: r.id,
+  slug: r.slug,
+  title: r.title,
+  eventType: r.event_type,
+  shortDescription: r.short_description ?? null,
+  description: r.description ?? null,
+  learnPoints: r.learn_points ?? [],
+  coverImage: r.cover_image ?? null,
+  startDatetime: r.start_datetime,
+  endDatetime: r.end_datetime ?? null,
+  timezone: r.timezone,
+  venue: r.venue ?? null,
+  format: r.format,
+  meetingUrl: r.meeting_url ?? null,
+  registrationUrl: r.registration_url ?? null,
+  whatsappUrl: r.whatsapp_url ?? null,
+  speakerName: r.speaker_name ?? null,
+  speakerTitle: r.speaker_title ?? null,
+  speakerImage: r.speaker_image ?? null,
+  maxParticipants: r.max_participants ?? null,
+  registrationRequired: r.registration_required,
+  status: r.status,
+  isFeatured: r.is_featured,
+  series: r.series ?? null,
+  registeredCount: Number(registered ?? r.registered_count ?? 0),
+  createdAt: r.created_at,
+  updatedAt: r.updated_at,
+});
+
+const toRegistration = (r: Row): EventRegistration => ({
+  id: r.id,
+  eventId: r.event_id,
+  userId: r.user_id ?? null,
+  fullName: r.full_name,
+  email: r.email,
+  phone: r.phone ?? null,
+  registrationStatus: r.registration_status,
+  attendanceStatus: r.attendance_status,
+  registeredAt: r.registered_at,
+  attendedAt: r.attended_at ?? null,
+});
+
+const toCommunity = (r: Row): CommunitySettings => ({
+  name: r.name,
+  description: r.description,
+  whatsappUrl: r.whatsapp_invite_url ?? null,
+  welcomeMessage: r.welcome_message,
+  buttonText: r.button_text,
+  isActive: !!r.is_active,
+});
+
+/** An event as the database columns, with empty text turned into null. */
+const eventRow = (i: EventInput) => {
+  const t = (v: string | null) => (v && v.trim() ? v.trim() : null);
+  return {
+    title: i.title.trim(),
+    slug: i.slug,
+    event_type: i.eventType,
+    short_description: t(i.shortDescription),
+    description: t(i.description),
+    learn_points: i.learnPoints.map((x) => x.trim()).filter(Boolean),
+    cover_image: t(i.coverImage),
+    start_datetime: i.startDatetime,
+    end_datetime: i.endDatetime || null,
+    timezone: i.timezone,
+    venue: t(i.venue),
+    format: i.format,
+    meeting_url: t(i.meetingUrl),
+    registration_url: t(i.registrationUrl),
+    whatsapp_url: t(i.whatsappUrl),
+    speaker_name: t(i.speakerName),
+    speaker_title: t(i.speakerTitle),
+    speaker_image: t(i.speakerImage),
+    max_participants: i.maxParticipants,
+    registration_required: i.registrationRequired,
+    status: i.status,
+    is_featured: i.isFeatured,
+    series: t(i.series),
+  };
+};
+
+/** A friendlier message for the one database error an admin can cause by hand. */
+const eventError = (e: { code?: string; message: string }) =>
+  new BackendError(e.code === "23505" ? "Another event already uses that web address. Change the address and save again." : e.message);
 
 const toLesson = (r: Row): Lesson => ({
   id: r.id,
@@ -541,7 +631,121 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
       check(await sb.rpc("record_certificate_download", { p_certificate_id: certificateId }));
     },
 
+    /* ---------- community and events ---------- */
+    async getCommunity() {
+      const r = (check(await sb.rpc("get_community")) as Row[])?.[0];
+      return r ? { name: r.name, description: r.description, whatsappUrl: r.whatsapp_invite_url, welcomeMessage: r.welcome_message, buttonText: r.button_text } : null;
+    },
+    async trackCommunityClick(source) {
+      // Counting must never get in the way of the button.
+      await sb.rpc("track_community_click", { p_source: source }).then(
+        () => undefined,
+        () => undefined,
+      );
+    },
+    async listEvents() {
+      return (check(await sb.rpc("list_public_events")) as Row[]).map((r) => toEvent(r));
+    },
+    async getEvent(slug) {
+      return (await backend.listEvents()).find((e) => e.slug === slug) ?? null;
+    },
+    async registerForEvent(eventId, input) {
+      return toRegistration(
+        check(await sb.rpc("register_for_event", { p_event_id: eventId, p_full_name: input.fullName, p_email: input.email, p_phone: input.phone })) as Row,
+      );
+    },
+    async revealEventLink(eventId, email) {
+      return (check(await sb.rpc("reveal_event_link", { p_event_id: eventId, p_email: email ?? null })) as string | null) ?? null;
+    },
+    async listMyRegistrations() {
+      const { data } = await sb.auth.getSession();
+      if (!data.session) return [];
+      return (check(await sb.from("academy_event_registrations").select("*").eq("user_id", data.session.user.id).eq("registration_status", "registered")) as Row[]).map(toRegistration);
+    },
+    async cancelMyRegistration(eventId) {
+      check(await sb.rpc("cancel_my_registration", { p_event_id: eventId }));
+    },
+
     admin: {
+      async getCommunitySettings() {
+        return toCommunity(check(await sb.from("academy_community_settings").select("*").eq("id", 1).single()) as Row);
+      },
+      async saveCommunitySettings(c) {
+        const res = await sb
+          .from("academy_community_settings")
+          .update({ name: c.name.trim(), description: c.description.trim(), whatsapp_invite_url: c.whatsappUrl?.trim() || null, welcome_message: c.welcomeMessage.trim(), button_text: c.buttonText.trim() || "Join Community", is_active: c.isActive })
+          .eq("id", 1);
+        if (res.error) throw new BackendError(res.error.message.includes("community_needs_link") ? "Add the WhatsApp invite link before switching the community on." : res.error.message);
+      },
+      async communityStats() {
+        const [stats, sources] = await Promise.all([sb.rpc("admin_community_stats"), sb.rpc("admin_community_click_sources")]);
+        const r = (check(stats) as Row[])[0] ?? {};
+        return {
+          clicksTotal: Number(r.clicks_total ?? 0),
+          clicks30d: Number(r.clicks_30d ?? 0),
+          upcomingEvents: Number(r.upcoming_events ?? 0),
+          registrationsTotal: Number(r.registrations_total ?? 0),
+          registrationsUpcoming: Number(r.registrations_upcoming ?? 0),
+          clickSources: (check(sources) as Row[]).map((x) => ({ source: x.source, clicks: Number(x.clicks) })),
+        };
+      },
+      async recentRegistrations(limit = 8) {
+        const [regs, events] = await Promise.all([
+          sb.from("academy_event_registrations").select("*").order("registered_at", { ascending: false }).limit(limit),
+          sb.from("academy_events").select("id, title"),
+        ]);
+        const titles = new Map((check(events) as Row[]).map((e) => [e.id, e.title]));
+        return (check(regs) as Row[]).map((r) => ({ ...toRegistration(r), eventTitle: titles.get(r.event_id) ?? "Deleted event" }));
+      },
+      async listAllEvents() {
+        const [events, regs] = await Promise.all([
+          sb.from("academy_events").select("*").order("start_datetime", { ascending: true }),
+          sb.from("academy_event_registrations").select("event_id").eq("registration_status", "registered"),
+        ]);
+        const counts = new Map<string, number>();
+        for (const r of check(regs) as Row[]) counts.set(r.event_id, (counts.get(r.event_id) ?? 0) + 1);
+        return (check(events) as Row[]).map((r) => toEvent(r, counts.get(r.id) ?? 0));
+      },
+      async getEventById(id) {
+        return (await backend.admin.listAllEvents()).find((e) => e.id === id) ?? null;
+      },
+      async saveEvent(input) {
+        const row = eventRow(input);
+        const res = input.id ? await sb.from("academy_events").update(row).eq("id", input.id).select("*").single() : await sb.from("academy_events").insert(row).select("*").single();
+        if (res.error) throw eventError(res.error);
+        return toEvent(res.data as Row);
+      },
+      async setEventStatus(id, status) {
+        check(await sb.from("academy_events").update({ status }).eq("id", id));
+      },
+      async duplicateEvent(id) {
+        const src = await backend.admin.getEventById(id);
+        if (!src) throw new BackendError("Event not found.");
+        const taken = new Set((await backend.admin.listAllEvents()).map((e) => e.slug));
+        let slug = `${src.slug}-copy`.slice(0, 95);
+        for (let n = 2; taken.has(slug); n++) slug = `${src.slug}-copy-${n}`.slice(0, 95);
+        const { id: _id, registeredCount: _rc, createdAt: _c, updatedAt: _u, ...rest } = src;
+        void _id; void _rc; void _c; void _u;
+        return backend.admin.saveEvent({ ...rest, title: `${src.title} (copy)`, slug, status: "draft", isFeatured: false });
+      },
+      async deleteEvent(id) {
+        check(await sb.from("academy_events").delete().eq("id", id));
+      },
+      async listRegistrations(eventId) {
+        return (check(await sb.from("academy_event_registrations").select("*").eq("event_id", eventId).order("registered_at", { ascending: false })) as Row[]).map(toRegistration);
+      },
+      async setAttendance(registrationId, status) {
+        check(await sb.rpc("admin_set_attendance", { p_registration_id: registrationId, p_status: status }));
+      },
+      async uploadEventImage(file) {
+        if (!["image/png", "image/jpeg", "image/webp"].includes(file.type)) throw new BackendError("Use a PNG, JPEG or WebP image.");
+        if (file.size > 2 * 1024 * 1024) throw new BackendError("That image is over 2 MB. Choose a smaller one.");
+        const ext = file.type === "image/png" ? "png" : file.type === "image/webp" ? "webp" : "jpg";
+        const path = `${new Date().getFullYear()}/${crypto.randomUUID()}.${ext}`;
+        const up = await sb.storage.from("event-images").upload(path, file, { contentType: file.type, cacheControl: "31536000" });
+        if (up.error) throw new BackendError(up.error.message);
+        return sb.storage.from("event-images").getPublicUrl(path).data.publicUrl;
+      },
       async saveCourse(c) {
         check(
           await sb.from("courses").upsert({

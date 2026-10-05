@@ -18,6 +18,13 @@ import {
   BackendError,
   type AttemptResult,
   type Backend,
+  type AcademyEvent,
+  type AttendanceStatus,
+  type CommunitySettings,
+  type CommunitySource,
+  type EventInput,
+  type EventRegistration,
+  type EventStatus,
   type AdminCertificate,
   type Certificate,
   type CertificateEvent,
@@ -49,6 +56,10 @@ type Store = {
   certificates: Certificate[];
   certificateSeq: number;
   certificateEvents: CertificateEvent[];
+  community: CommunitySettings;
+  communityClicks: { source: CommunitySource | "other"; userId: string | null; at: string }[];
+  events: Omit<AcademyEvent, "registeredCount">[];
+  registrations: EventRegistration[];
   prices: CertificatePrice[] | null; // admin edits (null = defaults)
   courses: Course[] | null; // admin edits (null = bundled content)
   assessments: AssessmentDef[] | null;
@@ -77,6 +88,17 @@ const empty = (): Store => ({
   certificates: [],
   certificateSeq: 0,
   certificateEvents: [],
+  community: {
+    name: "CloudTech Academy Community",
+    description: "Connect with other learners, share your progress, ask questions, discover opportunities and participate in Academy activities.",
+    whatsappUrl: null,
+    welcomeMessage: "Connect with other learners, ask questions, share what you're building and hear about Academy sessions and opportunities.",
+    buttonText: "Join Community",
+    isActive: false,
+  },
+  communityClicks: [],
+  events: [],
+  registrations: [],
   prices: null,
   courses: null,
   assessments: null,
@@ -221,6 +243,28 @@ function logEvent(s: Store, certificateId: string, action: CertificateEventActio
 }
 
 const blank = (v: string) => v.trim() || null;
+
+const WHATSAPP_RE = /^https:\/\/(chat\.whatsapp\.com|wa\.me|whatsapp\.com|www\.whatsapp\.com)\/\S+$/i;
+const THREE_HOURS = 3 * 3_600_000;
+const eventEndMs = (e: Pick<AcademyEvent, "startDatetime" | "endDatetime">) => (e.endDatetime ? new Date(e.endDatetime).getTime() : new Date(e.startDatetime).getTime() + THREE_HOURS);
+
+/** An event with how many people are registered. */
+const withCount = (s: Store, e: Omit<AcademyEvent, "registeredCount">): AcademyEvent => ({
+  ...e,
+  registeredCount: s.registrations.filter((r) => r.eventId === e.id && r.registrationStatus === "registered").length,
+});
+
+/** The same checks the database makes on an event. */
+function checkEvent(s: Store, i: EventInput) {
+  if (i.title.trim().length < 3) throw new BackendError("Give the event a title (at least 3 characters).");
+  if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(i.slug)) throw new BackendError("Use lowercase letters, numbers and hyphens only for the web address.");
+  if (s.events.some((e) => e.slug === i.slug && e.id !== i.id)) throw new BackendError("Another event already uses that web address. Change the address and save again.");
+  if (!i.startDatetime) throw new BackendError("Choose the date and start time.");
+  if (i.endDatetime && i.endDatetime <= i.startDatetime) throw new BackendError("The end time must be after the start time.");
+  for (const u of [i.meetingUrl, i.registrationUrl]) if (u && !/^https?:\/\/\S+$/i.test(u)) throw new BackendError("Links must start with https://");
+  if (i.whatsappUrl && !WHATSAPP_RE.test(i.whatsappUrl)) throw new BackendError("Use a WhatsApp link, such as https://chat.whatsapp.com/…");
+  if (i.maxParticipants !== null && i.maxParticipants < 1) throw new BackendError("Maximum participants must be at least 1.");
+}
 
 /** The same checks the database makes. Returns the certificate's printed and linked fields. */
 function certificateFields(s: Store, i: CertificateInput): Partial<Certificate> {
@@ -808,7 +852,199 @@ export function createDemoBackend(): Backend {
       save(s);
     },
 
+    /* ---------- community and events ---------- */
+    async getCommunity() {
+      const c = load().community;
+      return c.isActive && c.whatsappUrl ? { name: c.name, description: c.description, whatsappUrl: c.whatsappUrl, welcomeMessage: c.welcomeMessage, buttonText: c.buttonText } : null;
+    },
+    async trackCommunityClick(source) {
+      const s = load();
+      if (!s.community.isActive) return;
+      const known = ["homepage", "welcome", "dashboard", "community_page", "navbar", "events", "event_page", "sign_up"];
+      s.communityClicks.push({ source: known.includes(source) ? source : "other", userId: current()?.id ?? null, at: now() });
+      save(s);
+    },
+    async listEvents() {
+      const s = load();
+      return s.events
+        .filter((e) => e.status !== "draft")
+        .map((e) => ({ ...withCount(s, e), meetingUrl: e.registrationRequired ? null : e.meetingUrl }))
+        .sort((a, b) => a.startDatetime.localeCompare(b.startDatetime));
+    },
+    async getEvent(slug) {
+      return (await backend.listEvents()).find((e) => e.slug === slug) ?? null;
+    },
+    async registerForEvent(eventId, input) {
+      const u = current();
+      const s = load();
+      const event = s.events.find((e) => e.id === eventId && e.status !== "draft");
+      if (!event) throw new BackendError("Event not found.");
+      const name = input.fullName.trim();
+      const email = input.email.trim().toLowerCase();
+      const phone = input.phone.trim() || null;
+      if (name.length < 2) throw new BackendError("Enter your full name.");
+      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) throw new BackendError("Enter a valid email address.");
+      if (phone && !/^[0-9+()\-\s]{7,20}$/.test(phone)) throw new BackendError("Enter a valid phone number.");
+      if (!event.registrationRequired) throw new BackendError("This event doesn't need registration.");
+      if (event.status === "cancelled") throw new BackendError("This event was cancelled.");
+      if (event.status === "completed" || eventEndMs(event) < Date.now()) throw new BackendError("This event has ended.");
+      if (event.status === "registration_closed") throw new BackendError("Registration for this event has closed.");
+      const existing = s.registrations.find((r) => r.eventId === eventId && r.email.toLowerCase() === email);
+      if (existing && existing.registrationStatus === "registered") return existing;
+      const taken = s.registrations.filter((r) => r.eventId === eventId && r.registrationStatus === "registered").length;
+      if (event.maxParticipants !== null && taken >= event.maxParticipants) throw new BackendError("This event is full.");
+      if (existing) {
+        Object.assign(existing, { registrationStatus: "registered", attendanceStatus: "registered", fullName: name, phone, userId: u?.id ?? existing.userId, registeredAt: now(), attendedAt: null });
+        save(s);
+        return existing;
+      }
+      const reg: EventRegistration = { id: uid(), eventId, userId: u?.id ?? null, fullName: name, email, phone, registrationStatus: "registered", attendanceStatus: "registered", registeredAt: now(), attendedAt: null };
+      s.registrations.push(reg);
+      save(s);
+      return reg;
+    },
+    async revealEventLink(eventId, email) {
+      const u = current();
+      const s = load();
+      const e = s.events.find((x) => x.id === eventId && x.status !== "draft" && x.status !== "cancelled");
+      if (!e) return null;
+      if (!e.registrationRequired) return e.meetingUrl;
+      const mine = s.registrations.some((r) => r.eventId === eventId && r.registrationStatus === "registered" && ((u && r.userId === u.id) || (email && r.email.toLowerCase() === email.trim().toLowerCase())));
+      return mine ? e.meetingUrl : null;
+    },
+    async listMyRegistrations() {
+      const u = current();
+      return u ? load().registrations.filter((r) => r.userId === u.id && r.registrationStatus === "registered") : [];
+    },
+    async cancelMyRegistration(eventId) {
+      const u = requireUser();
+      const s = load();
+      const r = s.registrations.find((x) => x.eventId === eventId && x.userId === u.id && x.registrationStatus === "registered");
+      if (r) r.registrationStatus = "cancelled";
+      save(s);
+    },
+
     admin: {
+      async getCommunitySettings() {
+        requireAdmin();
+        return load().community;
+      },
+      async saveCommunitySettings(c) {
+        requireAdmin();
+        const url = c.whatsappUrl?.trim() || null;
+        if (url && !WHATSAPP_RE.test(url)) throw new BackendError("Use a WhatsApp invite link, such as https://chat.whatsapp.com/…");
+        if (c.isActive && !url) throw new BackendError("Add the WhatsApp invite link before switching the community on.");
+        const s = load();
+        s.community = { ...c, name: c.name.trim(), description: c.description.trim(), welcomeMessage: c.welcomeMessage.trim(), buttonText: c.buttonText.trim() || "Join Community", whatsappUrl: url };
+        save(s);
+      },
+      async communityStats() {
+        requireAdmin();
+        const s = load();
+        const cutoff = Date.now() - 30 * 86_400_000;
+        const live = s.events.filter((e) => ["published", "registration_open", "registration_closed"].includes(e.status) && eventEndMs(e) >= Date.now());
+        const regs = s.registrations.filter((r) => r.registrationStatus === "registered");
+        const bySource = new Map<string, number>();
+        for (const c of s.communityClicks) if (new Date(c.at).getTime() > cutoff) bySource.set(c.source, (bySource.get(c.source) ?? 0) + 1);
+        return {
+          clicksTotal: s.communityClicks.length,
+          clicks30d: [...bySource.values()].reduce((a, b) => a + b, 0),
+          upcomingEvents: live.length,
+          registrationsTotal: regs.length,
+          registrationsUpcoming: regs.filter((r) => live.some((e) => e.id === r.eventId)).length,
+          clickSources: [...bySource].map(([source, clicks]) => ({ source, clicks })).sort((a, b) => b.clicks - a.clicks),
+        };
+      },
+      async recentRegistrations(limit = 8) {
+        requireAdmin();
+        const s = load();
+        return [...s.registrations]
+          .sort((a, b) => b.registeredAt.localeCompare(a.registeredAt))
+          .slice(0, limit)
+          .map((r) => ({ ...r, eventTitle: s.events.find((e) => e.id === r.eventId)?.title ?? "Deleted event" }));
+      },
+      async listAllEvents() {
+        requireAdmin();
+        const s = load();
+        return s.events.map((e) => withCount(s, e)).sort((a, b) => a.startDatetime.localeCompare(b.startDatetime));
+      },
+      async getEventById(id) {
+        requireAdmin();
+        const s = load();
+        const e = s.events.find((x) => x.id === id);
+        return e ? withCount(s, e) : null;
+      },
+      async saveEvent(input) {
+        requireAdmin();
+        const s = load();
+        checkEvent(s, input);
+        const { id: _id, ...fields } = input;
+        void _id;
+        const t = now();
+        if (input.id) {
+          const e = s.events.find((x) => x.id === input.id);
+          if (!e) throw new BackendError("Event not found.");
+          Object.assign(e, fields, { updatedAt: t });
+          save(s);
+          return withCount(s, e);
+        }
+        const e = { ...fields, id: uid(), createdAt: t, updatedAt: t };
+        s.events.push(e);
+        save(s);
+        return withCount(s, e);
+      },
+      async setEventStatus(id, status: EventStatus) {
+        requireAdmin();
+        const s = load();
+        const e = s.events.find((x) => x.id === id);
+        if (!e) throw new BackendError("Event not found.");
+        Object.assign(e, { status, updatedAt: now() });
+        save(s);
+      },
+      async duplicateEvent(id) {
+        requireAdmin();
+        const s = load();
+        const src = s.events.find((x) => x.id === id);
+        if (!src) throw new BackendError("Event not found.");
+        let slug = `${src.slug}-copy`.slice(0, 95);
+        for (let n = 2; s.events.some((e) => e.slug === slug); n++) slug = `${src.slug}-copy-${n}`.slice(0, 95);
+        const t = now();
+        const copy = { ...src, id: uid(), title: `${src.title} (copy)`, slug, status: "draft" as const, isFeatured: false, createdAt: t, updatedAt: t };
+        s.events.push(copy);
+        save(s);
+        return withCount(s, copy);
+      },
+      async deleteEvent(id) {
+        requireAdmin();
+        const s = load();
+        s.events = s.events.filter((e) => e.id !== id);
+        s.registrations = s.registrations.filter((r) => r.eventId !== id);
+        save(s);
+      },
+      async listRegistrations(eventId) {
+        requireAdmin();
+        return load()
+          .registrations.filter((r) => r.eventId === eventId)
+          .sort((a, b) => b.registeredAt.localeCompare(a.registeredAt));
+      },
+      async setAttendance(registrationId, status: AttendanceStatus) {
+        requireAdmin();
+        const s = load();
+        const r = s.registrations.find((x) => x.id === registrationId);
+        if (!r) throw new BackendError("Registration not found.");
+        Object.assign(r, { attendanceStatus: status, attendedAt: status === "attended" ? now() : null });
+        save(s);
+      },
+      async uploadEventImage(file) {
+        if (!["image/png", "image/jpeg", "image/webp"].includes(file.type)) throw new BackendError("Use a PNG, JPEG or WebP image.");
+        if (file.size > 600 * 1024) throw new BackendError("In demo mode images are stored in your browser, so keep them under 600 KB.");
+        return await new Promise<string>((resolve, reject) => {
+          const r = new FileReader();
+          r.onload = () => resolve(String(r.result));
+          r.onerror = () => reject(new BackendError("Couldn't read that image."));
+          r.readAsDataURL(file);
+        });
+      },
       async saveCourse(input) {
         requireAdmin();
         mutateCourses((list) => {
