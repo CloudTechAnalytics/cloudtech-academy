@@ -1,63 +1,69 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 470" width="1180" height="470" role="img" aria-label="Three levels of a data model: conceptual (things and how they relate), logical (attributes and keys), physical (tables, data types and constraints in a real database).">
-<title>Three levels of a data model: conceptual (things and how they relate), logical (attributes and keys), physical (tables, data types and constraints in a real database).</title>
-<rect width="1180" height="470" fill="#FBF8F2"/>
-<rect x="30" y="20" width="360" height="430" rx="14" fill="#FFFFFF" stroke="#D9CFBF" stroke-width="1.5"/>
-<text x="50" y="56" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="22" font-weight="700" fill="#1F1F1F" text-anchor="start" xml:space="preserve">Conceptual</text>
-<text x="50" y="80" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#6B665C" text-anchor="start" xml:space="preserve">What the business talks about</text>
-<rect x="415" y="20" width="360" height="430" rx="14" fill="#FFFFFF" stroke="#D9CFBF" stroke-width="1.5"/>
-<text x="435" y="56" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="22" font-weight="700" fill="#1F1F1F" text-anchor="start" xml:space="preserve">Logical</text>
-<text x="435" y="80" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#6B665C" text-anchor="start" xml:space="preserve">Attributes, keys and relationships</text>
-<rect x="800" y="20" width="360" height="430" rx="14" fill="#FFFFFF" stroke="#D9CFBF" stroke-width="1.5"/>
-<text x="820" y="56" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="22" font-weight="700" fill="#1F1F1F" text-anchor="start" xml:space="preserve">Physical</text>
-<text x="820" y="80" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#6B665C" text-anchor="start" xml:space="preserve">Tables in a specific database</text>
-<rect x="50" y="162" width="140" height="56" rx="28" fill="#F3E9D2" stroke="#B38A3E" stroke-width="1.8"/>
-<text x="120" y="196" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="16" font-weight="600" fill="#1F1F1F" text-anchor="middle" xml:space="preserve">Customer</text>
-<rect x="230" y="162" width="140" height="56" rx="28" fill="#F3E9D2" stroke="#B38A3E" stroke-width="1.8"/>
-<text x="300" y="196" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="16" font-weight="600" fill="#1F1F1F" text-anchor="middle" xml:space="preserve">Order</text>
-<path d="M190,190 L230,190" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
-<text x="210" y="176" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#6B665C" text-anchor="middle" xml:space="preserve" font-style="italic">places</text>
-<rect x="80" y="280" width="140" height="56" rx="28" fill="#F3E9D2" stroke="#B38A3E" stroke-width="1.8"/>
-<text x="150" y="314" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="16" font-weight="600" fill="#1F1F1F" text-anchor="middle" xml:space="preserve">Product</text>
-<path d="M300,218 L300,308 L220,308" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
-<text x="306" y="270" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#6B665C" text-anchor="start" xml:space="preserve" font-style="italic">contains</text>
-<text x="50" y="400" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13" font-weight="400" fill="#6B665C" text-anchor="start" xml:space="preserve">No columns, no data types.</text>
-<text x="50" y="422" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13" font-weight="400" fill="#6B665C" text-anchor="start" xml:space="preserve">Agreed with managers.</text>
-<rect x="440" y="100" width="160" height="126" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
-<path d="M440,110 a10,10 0 0 1 10,-10 h140 a10,10 0 0 1 10,10 v28 h-160 z" fill="#2B2A28"/>
-<text x="454" y="125" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="16" font-weight="700" fill="#FFFFFF" text-anchor="start" xml:space="preserve">Customer</text>
-<rect x="450" y="148.0" width="18" height="18" rx="4" fill="#B38A3E"/>
-<text x="459.0" y="161.0" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" xml:space="preserve">PK</text>
-<text x="498" y="162.0" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13.5" font-weight="600" fill="#1F1F1F" text-anchor="start" xml:space="preserve">Customer ID</text>
-<rect x="441" y="170.0" width="158" height="26" fill="#FAF6EE"/>
-<text x="498" y="188.0" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#1F1F1F" text-anchor="start" xml:space="preserve">Name</text>
-<text x="498" y="214.0" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#1F1F1F" text-anchor="start" xml:space="preserve">Region</text>
-<rect x="590" y="230" width="160" height="126" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
-<path d="M590,240 a10,10 0 0 1 10,-10 h140 a10,10 0 0 1 10,10 v28 h-160 z" fill="#2B2A28"/>
-<text x="604" y="255" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="16" font-weight="700" fill="#FFFFFF" text-anchor="start" xml:space="preserve">Order</text>
-<rect x="600" y="278.0" width="18" height="18" rx="4" fill="#B38A3E"/>
-<text x="609.0" y="291.0" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" xml:space="preserve">PK</text>
-<text x="648" y="292.0" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13.5" font-weight="600" fill="#1F1F1F" text-anchor="start" xml:space="preserve">Order ID</text>
-<rect x="591" y="300.0" width="158" height="26" fill="#FAF6EE"/>
-<rect x="600" y="304.0" width="18" height="18" rx="4" fill="#5B7C99"/>
-<text x="609.0" y="317.0" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" xml:space="preserve">FK</text>
-<text x="648" y="318.0" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#1F1F1F" text-anchor="start" xml:space="preserve">Customer ID</text>
-<text x="648" y="344.0" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#1F1F1F" text-anchor="start" xml:space="preserve">Order date</text>
-<path d="M600,157.0 L700,157.0 L700,230" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
-<path d="M608,165.0 L608,149.0" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
-<path d="M614,165.0 L614,149.0" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
-<path d="M709,230 L700,214 L691,230" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
-<path d="M700,230 L700,214" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
-<path d="M708,208 L692,208" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
-<text x="435" y="400" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13" font-weight="400" fill="#6B665C" text-anchor="start" xml:space="preserve">Attributes and keys, but not tied</text>
-<text x="435" y="422" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13" font-weight="400" fill="#6B665C" text-anchor="start" xml:space="preserve">to any database product.</text>
-<rect x="820" y="110" width="335" height="200" rx="10" fill="#1E1E1E" stroke="#1E1E1E" stroke-width="1.5"/>
-<text x="836" y="140" font-family="'JetBrains Mono', Consolas, 'Courier New', monospace" font-size="12.5" font-weight="400" fill="#F2EEE6" text-anchor="start" xml:space="preserve">CREATE TABLE orders (</text>
-<text x="836" y="164" font-family="'JetBrains Mono', Consolas, 'Courier New', monospace" font-size="12.5" font-weight="400" fill="#F2EEE6" text-anchor="start" xml:space="preserve">  order_id    INT PRIMARY KEY,</text>
-<text x="836" y="188" font-family="'JetBrains Mono', Consolas, 'Courier New', monospace" font-size="12.5" font-weight="400" fill="#F2EEE6" text-anchor="start" xml:space="preserve">  customer_id INT NOT NULL</text>
-<text x="836" y="212" font-family="'JetBrains Mono', Consolas, 'Courier New', monospace" font-size="12.5" font-weight="400" fill="#F2EEE6" text-anchor="start" xml:space="preserve">    REFERENCES customers(customer_id),</text>
-<text x="836" y="236" font-family="'JetBrains Mono', Consolas, 'Courier New', monospace" font-size="12.5" font-weight="400" fill="#F2EEE6" text-anchor="start" xml:space="preserve">  order_date  DATE NOT NULL,</text>
-<text x="836" y="260" font-family="'JetBrains Mono', Consolas, 'Courier New', monospace" font-size="12.5" font-weight="400" fill="#F2EEE6" text-anchor="start" xml:space="preserve">  quantity    INT CHECK (quantity &gt; 0)</text>
-<text x="836" y="284" font-family="'JetBrains Mono', Consolas, 'Courier New', monospace" font-size="12.5" font-weight="400" fill="#F2EEE6" text-anchor="start" xml:space="preserve">);</text>
-<text x="820" y="400" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13" font-weight="400" fill="#6B665C" text-anchor="start" xml:space="preserve">Exact names, data types and</text>
-<text x="820" y="422" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13" font-weight="400" fill="#6B665C" text-anchor="start" xml:space="preserve">rules for one database (SQL Server…)</text>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 676" width="760" height="676" role="img" aria-label="Three levels of a data model: conceptual (things and how they relate), logical (attributes and keys), physical (tables, data types and constraints in a real database).">
+<title>The same idea at three levels of detail: conceptual, logical, physical.</title>
+
+<rect width="760" height="676" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="16.0" width="728.0" height="150.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<circle cx="40.0" cy="42.0" r="12" fill="#8A6A1F"/>
+<text xml:space="preserve" x="40.0" y="46.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
+<text xml:space="preserve" x="62.0" y="47.0" font-size="16" fill="#2A2926" font-weight="700" text-anchor="start">Conceptual</text>
+<text xml:space="preserve" x="171.0" y="47.0" font-size="13.5" fill="#5E5A52" font-weight="400" text-anchor="start">What the business talks about</text>
+<ellipse cx="140" cy="102" rx="74" ry="28" fill="#F3EBD8" stroke="#B38A3E" stroke-width="1.6"/>
+<text xml:space="preserve" x="140.0" y="107.0" font-size="15" fill="#2A2926" font-weight="700" text-anchor="middle">Customer</text>
+<ellipse cx="380" cy="102" rx="74" ry="28" fill="#F3EBD8" stroke="#B38A3E" stroke-width="1.6"/>
+<text xml:space="preserve" x="380.0" y="107.0" font-size="15" fill="#2A2926" font-weight="700" text-anchor="middle">Order</text>
+<ellipse cx="620" cy="102" rx="74" ry="28" fill="#F3EBD8" stroke="#B38A3E" stroke-width="1.6"/>
+<text xml:space="preserve" x="620.0" y="107.0" font-size="15" fill="#2A2926" font-weight="700" text-anchor="middle">Product</text>
+<line x1="214.0" y1="102.0" x2="306.0" y2="102.0" stroke="#8A6A1F" stroke-width="1.8"/>
+<text xml:space="preserve" x="260.0" y="94.0" font-size="13" fill="#8A6A1F" font-weight="700" text-anchor="middle">places</text>
+<line x1="454.0" y1="102.0" x2="546.0" y2="102.0" stroke="#8A6A1F" stroke-width="1.8"/>
+<text xml:space="preserve" x="500.0" y="94.0" font-size="13" fill="#8A6A1F" font-weight="700" text-anchor="middle">contains</text>
+<text xml:space="preserve" x="40.0" y="152.0" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">No columns, no data types. Agreed with managers.</text>
+<rect x="16.0" y="182.0" width="728.0" height="210.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<circle cx="40.0" cy="208.0" r="12" fill="#8A6A1F"/>
+<text xml:space="preserve" x="40.0" y="212.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
+<text xml:space="preserve" x="62.0" y="213.0" font-size="16" fill="#2A2926" font-weight="700" text-anchor="start">Logical</text>
+<text xml:space="preserve" x="142.5" y="213.0" font-size="13.5" fill="#5E5A52" font-weight="400" text-anchor="start">Attributes, keys and relationships</text>
+<rect x="60.0" y="222.0" width="220.0" height="118.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<path d="M61.0,260.0 L61.0,232.0 Q61.0,223.0 70.0,223.0 L270.0,223.0 Q279.0,223.0 279.0,232.0 L279.0,260.0 Z" fill="#F3EBD8"/>
+<text xml:space="preserve" x="72.0" y="247.0" font-size="15" fill="#2A2926" font-weight="700" text-anchor="start">Customer</text>
+<rect x="66.0" y="266.0" width="208.0" height="20.0" rx="4" fill="#FBF3E2"/>
+<text xml:space="preserve" x="72.0" y="280.5" font-size="11" fill="#8A6A1F" font-weight="700" text-anchor="start">PK</text>
+<text xml:space="preserve" x="98.0" y="280.5" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">Customer ID</text>
+<text xml:space="preserve" x="72.0" y="304.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">Name</text>
+<text xml:space="preserve" x="72.0" y="328.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">Region</text>
+<rect x="380.0" y="222.0" width="220.0" height="118.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<path d="M381.0,260.0 L381.0,232.0 Q381.0,223.0 390.0,223.0 L590.0,223.0 Q599.0,223.0 599.0,232.0 L599.0,260.0 Z" fill="#F3EBD8"/>
+<text xml:space="preserve" x="392.0" y="247.0" font-size="15" fill="#2A2926" font-weight="700" text-anchor="start">Order</text>
+<rect x="386.0" y="266.0" width="208.0" height="20.0" rx="4" fill="#FBF3E2"/>
+<text xml:space="preserve" x="392.0" y="280.5" font-size="11" fill="#8A6A1F" font-weight="700" text-anchor="start">PK</text>
+<text xml:space="preserve" x="418.0" y="280.5" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">Order ID</text>
+<rect x="386.0" y="290.0" width="208.0" height="20.0" rx="4" fill="#E6EEF6"/>
+<text xml:space="preserve" x="392.0" y="304.5" font-size="11" fill="#2F5D8A" font-weight="700" text-anchor="start">FK</text>
+<text xml:space="preserve" x="418.0" y="304.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">Customer ID</text>
+<text xml:space="preserve" x="392.0" y="328.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">Order date</text>
+<path d="M280,276.0 C330,276.0 330,300.0 380,300.0" fill="none" stroke="#8A6A1F" stroke-width="1.8"/>
+<path d="M288.0,283.0 L288.0,269.0 M293.0,283.0 L293.0,269.0" fill="none" stroke="#8A6A1F" stroke-width="1.8"/>
+<path d="M380.0,292.0 L368.0,300.0 L380.0,308.0" fill="none" stroke="#8A6A1F" stroke-width="1.8"/>
+<circle cx="358.0" cy="300.0" r="5" fill="#FFFFFF" stroke="#8A6A1F" stroke-width="1.6"/>
+<text xml:space="preserve" x="40.0" y="380.0" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">Attributes and keys, but not tied to any database product.</text>
+<rect x="16.0" y="408.0" width="728.0" height="250.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<circle cx="40.0" cy="434.0" r="12" fill="#8A6A1F"/>
+<text xml:space="preserve" x="40.0" y="438.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
+<text xml:space="preserve" x="62.0" y="439.0" font-size="16" fill="#2A2926" font-weight="700" text-anchor="start">Physical</text>
+<text xml:space="preserve" x="152.0" y="439.0" font-size="13.5" fill="#5E5A52" font-weight="400" text-anchor="start">Tables in a specific database</text>
+<rect x="40.0" y="448.0" width="520.0" height="169.0" rx="8" fill="#2A2926" stroke="#2A2926" stroke-width="1"/>
+<text xml:space="preserve" x="52.0" y="472.0" font-size="12.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">CREATE TABLE orders (</text>
+<text xml:space="preserve" x="52.0" y="493.0" font-size="12.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">  order_id    INT PRIMARY KEY,</text>
+<text xml:space="preserve" x="52.0" y="514.0" font-size="12.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">  customer_id INT NOT NULL</text>
+<text xml:space="preserve" x="52.0" y="535.0" font-size="12.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">              REFERENCES customers(customer_id),</text>
+<text xml:space="preserve" x="52.0" y="556.0" font-size="12.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">  order_date  DATE NOT NULL,</text>
+<text xml:space="preserve" x="52.0" y="577.0" font-size="12.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">  quantity    INT CHECK (quantity &gt; 0)</text>
+<text xml:space="preserve" x="52.0" y="598.0" font-size="12.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">);</text>
+<text xml:space="preserve" x="578.0" y="470.0" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">Exact names,</text>
+<text xml:space="preserve" x="578.0" y="488.9" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">data types and</text>
+<text xml:space="preserve" x="578.0" y="507.7" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">rules for one</text>
+<text xml:space="preserve" x="578.0" y="526.5" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">database (SQL</text>
+<text xml:space="preserve" x="578.0" y="545.4" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">Server, MySQL,</text>
+<text xml:space="preserve" x="578.0" y="564.2" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">PostgreSQL…)</text>
+</g></svg>

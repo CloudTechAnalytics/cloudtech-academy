@@ -1,57 +1,66 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 430" width="1100" height="430" role="img" aria-label="How WHERE filters rows: six shipments go in, WHERE checks each row against the condition, and only the two rows where both parts are true come out.">
-<title>How WHERE filters rows: six shipments go in, WHERE checks each row against the condition, and only the two rows where both parts are true come out.</title>
-<rect width="1100" height="430" fill="#FBF8F2"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 300" width="760" height="300" role="img" aria-label="How WHERE filters rows: six shipments go in, WHERE checks each row against the condition, and only the two rows where both parts are true come out.">
+<title>WHERE keeps only the rows where the whole condition is true.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="300" fill="#FBF8F2"/>
 <g font-family="Inter, 'Segoe UI', Arial, sans-serif">
-  <text x="40" y="44" font-size="15" font-weight="700" fill="#1F1F1F">shipments (every row)</text>
-  <rect x="40" y="60" width="400" height="336" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
-  <path d="M40,70 a10,10 0 0 1 10,-10 h380 a10,10 0 0 1 10,10 v32 h-400 z" fill="#2B2A28"/>
-  <text x="60" y="87" font-size="13" font-weight="700" fill="#FFFFFF">shipment_id</text>
-  <text x="200" y="87" font-size="13" font-weight="700" fill="#FFFFFF">containers</text>
-  <text x="310" y="87" font-size="13" font-weight="700" fill="#FFFFFF">status</text>
-  <g font-size="14" fill="#2A2926">
-    <text x="60" y="132">100001</text><text x="240" y="132" text-anchor="end">8</text><text x="310" y="132">Delivered</text>
-    <line x1="40" x2="440" y1="148" y2="148" stroke="#EDE6D8"/>
-    <text x="60" y="180">100002</text><text x="240" y="180" text-anchor="end">2</text><text x="310" y="180">Delivered</text>
-    <line x1="40" x2="440" y1="196" y2="196" stroke="#EDE6D8"/>
-    <text x="60" y="228">100003</text><text x="240" y="228" text-anchor="end">7</text><text x="310" y="228">Cancelled</text>
-    <line x1="40" x2="440" y1="244" y2="244" stroke="#EDE6D8"/>
-    <text x="60" y="276">100004</text><text x="240" y="276" text-anchor="end">6</text><text x="310" y="276">Delivered</text>
-    <line x1="40" x2="440" y1="292" y2="292" stroke="#EDE6D8"/>
-    <text x="60" y="324">100005</text><text x="240" y="324" text-anchor="end">4</text><text x="310" y="324">In transit</text>
-    <line x1="40" x2="440" y1="340" y2="340" stroke="#EDE6D8"/>
-    <text x="60" y="372">100006</text><text x="240" y="372" text-anchor="end">9</text><text x="310" y="372">In transit</text>
-  </g>
-  <g font-size="16" font-weight="700">
-    <text x="420" y="133" fill="#2F6B3F" text-anchor="end">✓</text>
-    <text x="420" y="181" fill="#9B2C1F" text-anchor="end">✗</text>
-    <text x="420" y="229" fill="#9B2C1F" text-anchor="end">✗</text>
-    <text x="420" y="277" fill="#2F6B3F" text-anchor="end">✓</text>
-    <text x="420" y="325" fill="#9B2C1F" text-anchor="end">✗</text>
-    <text x="420" y="373" fill="#9B2C1F" text-anchor="end">✗</text>
-  </g>
-
-  <rect x="470" y="172" width="210" height="120" rx="12" fill="#EFE4CC" stroke="#B38A3E" stroke-width="1.5"/>
-  <text x="575" y="202" font-size="15" font-weight="700" fill="#765923" text-anchor="middle">WHERE</text>
-  <text x="575" y="228" font-family="'JetBrains Mono', Consolas, 'Courier New', monospace" font-size="12.5" fill="#2A2926" text-anchor="middle">containers &gt;= 6</text>
-  <text x="575" y="250" font-family="'JetBrains Mono', Consolas, 'Courier New', monospace" font-size="12.5" fill="#2A2926" text-anchor="middle">AND status =</text>
-  <text x="575" y="272" font-family="'JetBrains Mono', Consolas, 'Courier New', monospace" font-size="12.5" fill="#2A2926" text-anchor="middle">'Delivered'</text>
-  <path d="M446,232 h18" stroke="#B38A3E" stroke-width="2.5"/>
-  <path d="M686,232 h26" stroke="#B38A3E" stroke-width="2.5"/>
-  <path d="M712,224 l10,8 l-10,8 z" fill="#B38A3E"/>
-
-  <text x="730" y="44" font-size="15" font-weight="700" fill="#1F1F1F">result (rows where it's true)</text>
-  <rect x="730" y="172" width="330" height="152" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
-  <path d="M730,182 a10,10 0 0 1 10,-10 h310 a10,10 0 0 1 10,10 v32 h-330 z" fill="#2B2A28"/>
-  <text x="748" y="199" font-size="13" font-weight="700" fill="#FFFFFF">shipment_id</text>
-  <text x="870" y="199" font-size="13" font-weight="700" fill="#FFFFFF">containers</text>
-  <text x="965" y="199" font-size="13" font-weight="700" fill="#FFFFFF">status</text>
-  <g font-size="14" fill="#2A2926">
-    <text x="748" y="246">100001</text><text x="910" y="246" text-anchor="end">8</text><text x="965" y="246">Delivered</text>
-    <line x1="730" x2="1060" y1="264" y2="264" stroke="#EDE6D8"/>
-    <text x="748" y="296">100004</text><text x="910" y="296" text-anchor="end">6</text><text x="965" y="296">Delivered</text>
-  </g>
-  <text x="730" y="360" font-size="13.5" fill="#5E5A52">Rows where the condition is false</text>
-  <text x="730" y="380" font-size="13.5" fill="#5E5A52">are left out of the result.</text>
-  <text x="730" y="404" font-size="13.5" fill="#5E5A52">The table itself doesn't change.</text>
-</g>
-</svg>
+<text xml:space="preserve" x="16.0" y="30.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">shipments (every row)</text>
+<rect x="16.0" y="40.0" width="272.0" height="182.0" rx="8" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<path d="M17,66 L17,48 Q17,41 24,41 L280,41 Q287,41 287,48 L287,66 Z" fill="#EFE4CC"/>
+<text xml:space="preserve" x="26.0" y="57.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="start">shipment_id</text>
+<text xml:space="preserve" x="152.0" y="57.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="end">cont.</text>
+<text xml:space="preserve" x="172.0" y="57.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="start">status</text>
+<text xml:space="preserve" x="273.0" y="57.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="middle"></text>
+<rect x="18.0" y="67.0" width="268.0" height="24.0" rx="3" fill="#F3EBD8"/>
+<text xml:space="preserve" x="26.0" y="83.5" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">100001</text>
+<text xml:space="preserve" x="152.0" y="83.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="end">8</text>
+<text xml:space="preserve" x="172.0" y="83.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">Delivered</text>
+<text xml:space="preserve" x="273.0" y="83.5" font-size="13" fill="#2F6B3F" font-weight="400" text-anchor="middle">✓</text>
+<line x1="16.0" y1="92.0" x2="288.0" y2="92.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="109.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">100002</text>
+<text xml:space="preserve" x="152.0" y="109.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="end">2</text>
+<text xml:space="preserve" x="172.0" y="109.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">Delivered</text>
+<text xml:space="preserve" x="273.0" y="109.5" font-size="13" fill="#9B2C1F" font-weight="400" text-anchor="middle">✗</text>
+<line x1="16.0" y1="118.0" x2="288.0" y2="118.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="135.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">100003</text>
+<text xml:space="preserve" x="152.0" y="135.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="end">7</text>
+<text xml:space="preserve" x="172.0" y="135.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">Cancelled</text>
+<text xml:space="preserve" x="273.0" y="135.5" font-size="13" fill="#9B2C1F" font-weight="400" text-anchor="middle">✗</text>
+<rect x="18.0" y="145.0" width="268.0" height="24.0" rx="3" fill="#F3EBD8"/>
+<text xml:space="preserve" x="26.0" y="161.5" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">100004</text>
+<text xml:space="preserve" x="152.0" y="161.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="end">6</text>
+<text xml:space="preserve" x="172.0" y="161.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">Delivered</text>
+<text xml:space="preserve" x="273.0" y="161.5" font-size="13" fill="#2F6B3F" font-weight="400" text-anchor="middle">✓</text>
+<line x1="16.0" y1="170.0" x2="288.0" y2="170.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="187.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">100005</text>
+<text xml:space="preserve" x="152.0" y="187.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="end">4</text>
+<text xml:space="preserve" x="172.0" y="187.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">In transit</text>
+<text xml:space="preserve" x="273.0" y="187.5" font-size="13" fill="#9B2C1F" font-weight="400" text-anchor="middle">✗</text>
+<line x1="16.0" y1="196.0" x2="288.0" y2="196.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="213.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">100006</text>
+<text xml:space="preserve" x="152.0" y="213.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="end">9</text>
+<text xml:space="preserve" x="172.0" y="213.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">In transit</text>
+<text xml:space="preserve" x="273.0" y="213.5" font-size="13" fill="#9B2C1F" font-weight="400" text-anchor="middle">✗</text>
+<rect x="306.0" y="92.0" width="148.0" height="112.0" rx="10" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.6"/>
+<text xml:space="preserve" x="380.0" y="120.0" font-size="16" fill="#2F5D8A" font-weight="700" text-anchor="middle">WHERE</text>
+<text xml:space="preserve" x="380.0" y="146.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">containers &gt;= 6</text>
+<text xml:space="preserve" x="380.0" y="165.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">AND status =</text>
+<text xml:space="preserve" x="380.0" y="184.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">'Delivered'</text>
+<path d="M290.0,148.0 L302.0,148.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<path d="M456.0,148.0 L470.0,148.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<text xml:space="preserve" x="474.0" y="80.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">result (rows where it's true)</text>
+<rect x="474.0" y="90.0" width="270.0" height="78.0" rx="8" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<path d="M475,116 L475,98 Q475,91 482,91 L736,91 Q743,91 743,98 L743,116 Z" fill="#EFE4CC"/>
+<text xml:space="preserve" x="484.0" y="107.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="start">shipment_id</text>
+<text xml:space="preserve" x="610.0" y="107.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="end">cont.</text>
+<text xml:space="preserve" x="630.0" y="107.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="start">status</text>
+<rect x="476.0" y="117.0" width="266.0" height="24.0" rx="3" fill="#F3EBD8"/>
+<text xml:space="preserve" x="484.0" y="133.5" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">100001</text>
+<text xml:space="preserve" x="610.0" y="133.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="end">8</text>
+<text xml:space="preserve" x="630.0" y="133.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">Delivered</text>
+<rect x="476.0" y="143.0" width="266.0" height="24.0" rx="3" fill="#F3EBD8"/>
+<text xml:space="preserve" x="484.0" y="159.5" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">100004</text>
+<text xml:space="preserve" x="610.0" y="159.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="end">6</text>
+<text xml:space="preserve" x="630.0" y="159.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">Delivered</text>
+<text xml:space="preserve" x="16.0" y="262.0" font-size="13.5" fill="#5E5A52" font-weight="400" text-anchor="start">Each row is checked on its own. Rows where the condition is false are left out of the result; the</text>
+<text xml:space="preserve" x="16.0" y="281.6" font-size="13.5" fill="#5E5A52" font-weight="400" text-anchor="start">table itself doesn't change.</text>
+</g></svg>

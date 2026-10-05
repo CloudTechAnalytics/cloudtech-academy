@@ -1,35 +1,28 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 430" width="1160" height="430" role="img" aria-label="The four kinds of analytics as a staircase. Descriptive asks what happened; diagnostic asks why; predictive asks what will happen; prescriptive asks what should we do. Each step is harder and more valuable than the one before, and each depends on the one below it.">
-<title>The four kinds of analytics as a staircase: descriptive, diagnostic, predictive, prescriptive. Each step is harder, more valuable, and depends on the one below.</title>
-<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
-<rect width="1160" height="430" fill="#FBF8F2"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 470" width="760" height="470" role="img" aria-label="The four kinds of analytics as a staircase. Descriptive asks what happened; diagnostic asks why; predictive asks what will happen; prescriptive asks what should we do. Each step is harder and more valuable than the one before, and each depends on the one below it.">
+<title>The four kinds of analytics: each step is harder, more valuable, and depends on the one below.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="470" fill="#FBF8F2"/>
 <g font-family="Inter, 'Segoe UI', Arial, sans-serif">
-  <rect x="60" y="300" width="250" height="90" rx="8" fill="#F3EBD8" stroke="#B38A3E" stroke-width="1.5"/>
-  <rect x="320" y="230" width="250" height="160" rx="8" fill="#EADBB9" stroke="#B38A3E" stroke-width="1.5"/>
-  <rect x="580" y="160" width="250" height="230" rx="8" fill="#DCC594" stroke="#B38A3E" stroke-width="1.5"/>
-  <rect x="840" y="90" width="250" height="300" rx="8" fill="#C9A867" stroke="#8A6A1F" stroke-width="1.5"/>
-  <g fill="#2A2926">
-    <text x="78" y="330" font-size="17" font-weight="700">Descriptive</text>
-    <text x="78" y="354" font-size="14">What happened?</text>
-    <text x="78" y="377" font-size="12.5" fill="#5E5A52">March 2025 revenue: ₦46.3m</text>
-
-    <text x="338" y="260" font-size="17" font-weight="700">Diagnostic</text>
-    <text x="338" y="284" font-size="14">Why did it happen?</text>
-    <text x="338" y="307" font-size="12.5" fill="#4A4436">March jump: mostly drinks,</text>
-    <text x="338" y="325" font-size="12.5" fill="#4A4436">₦10.7m → ₦16.2m</text>
-
-    <text x="598" y="190" font-size="17" font-weight="700">Predictive</text>
-    <text x="598" y="214" font-size="14">What is likely to happen?</text>
-    <text x="598" y="237" font-size="12.5" fill="#3F3A2E">December 2026 will again be</text>
-    <text x="598" y="255" font-size="12.5" fill="#3F3A2E">far above an average month</text>
-
-    <text x="858" y="120" font-size="17" font-weight="700">Prescriptive</text>
-    <text x="858" y="144" font-size="14">What should we do?</text>
-    <text x="858" y="167" font-size="12.5" fill="#2A2926">Move extra stock to Lagos</text>
-    <text x="858" y="185" font-size="12.5" fill="#2A2926">warehouses in November</text>
-  </g>
-  <path d="M80,272 C250,180 600,112 826,104" fill="none" stroke="#8A6A1F" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#a)"/>
-  <text x="80" y="60" font-size="14" font-weight="700" fill="#8A6A1F">Harder, and more valuable, at each step</text>
-  <text x="80" y="82" font-size="13" fill="#5E5A52">Each step stands on the one below: you can't explain or predict what you haven't described.</text>
-  <text x="60" y="415" font-size="12.5" fill="#5E5A52">Most day-to-day analyst work happens on the first two steps.</text>
-</g>
-</svg>
+<rect x="154.0" y="16.0" width="462.0" height="86.0" rx="10" fill="#C9A867" stroke="#B38A3E" stroke-width="1.5"/>
+<text xml:space="preserve" x="172.0" y="46.0" font-size="17" fill="#2A2926" font-weight="700" text-anchor="start">Prescriptive</text>
+<text xml:space="preserve" x="312.0" y="46.0" font-size="14" fill="#2A2926" font-weight="400" text-anchor="start">What should we do?</text>
+<text xml:space="preserve" x="172.0" y="76.0" font-size="13.5" fill="#4A4436" font-weight="400" text-anchor="start">Move extra stock to Lagos warehouses in November.</text>
+<rect x="108.0" y="114.0" width="508.0" height="86.0" rx="10" fill="#DCC594" stroke="#B38A3E" stroke-width="1.5"/>
+<text xml:space="preserve" x="126.0" y="144.0" font-size="17" fill="#2A2926" font-weight="700" text-anchor="start">Predictive</text>
+<text xml:space="preserve" x="245.0" y="144.0" font-size="14" fill="#2A2926" font-weight="400" text-anchor="start">What is likely to happen?</text>
+<text xml:space="preserve" x="126.0" y="174.0" font-size="13.5" fill="#4A4436" font-weight="400" text-anchor="start">December 2026 will again be far above an average month.</text>
+<rect x="62.0" y="212.0" width="554.0" height="86.0" rx="10" fill="#EADBB9" stroke="#B38A3E" stroke-width="1.5"/>
+<text xml:space="preserve" x="80.0" y="242.0" font-size="17" fill="#2A2926" font-weight="700" text-anchor="start">Diagnostic</text>
+<text xml:space="preserve" x="199.0" y="242.0" font-size="14" fill="#2A2926" font-weight="400" text-anchor="start">Why did it happen?</text>
+<text xml:space="preserve" x="80.0" y="272.0" font-size="13.5" fill="#4A4436" font-weight="400" text-anchor="start">March's jump was mostly drinks: ₦10.7m → ₦16.2m.</text>
+<rect x="16.0" y="310.0" width="600.0" height="86.0" rx="10" fill="#F3EBD8" stroke="#B38A3E" stroke-width="1.5"/>
+<text xml:space="preserve" x="34.0" y="340.0" font-size="17" fill="#2A2926" font-weight="700" text-anchor="start">Descriptive</text>
+<text xml:space="preserve" x="163.5" y="340.0" font-size="14" fill="#2A2926" font-weight="400" text-anchor="start">What happened?</text>
+<text xml:space="preserve" x="34.0" y="370.0" font-size="13.5" fill="#4A4436" font-weight="400" text-anchor="start">March 2025 revenue was ₦46.3m.</text>
+<path d="M690,384 L690,30" fill="none" stroke="#8A6A1F" stroke-width="2.2" marker-end="url(#a8A6A1F)"/>
+<text xml:space="preserve" x="700.0" y="150.0" font-size="13" fill="#8A6A1F" font-weight="700" text-anchor="start">harder,</text>
+<text xml:space="preserve" x="700.0" y="168.8" font-size="13" fill="#8A6A1F" font-weight="700" text-anchor="start">more</text>
+<text xml:space="preserve" x="700.0" y="187.7" font-size="13" fill="#8A6A1F" font-weight="700" text-anchor="start">valuable</text>
+<text xml:space="preserve" x="16.0" y="428.0" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">Each step stands on the one below: you can't explain or predict what you haven't described. Most</text>
+<text xml:space="preserve" x="16.0" y="446.9" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">day-to-day analyst work is on the bottom two.</text>
+</g></svg>

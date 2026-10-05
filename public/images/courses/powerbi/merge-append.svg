@@ -1,46 +1,102 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 400" width="1160" height="400" role="img" aria-label="Merge versus append. Merge adds columns: each order row gets the matching product's category, looked up by product_id, like XLOOKUP or a SQL join. Append adds rows: the January and February order files have the same columns and are stacked into one longer table, like SQL UNION ALL.">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 600" width="760" height="600" role="img" aria-label="Merge versus append. Merge adds columns: each order row gets the matching product's category, looked up by product_id, like XLOOKUP or a SQL join. Append adds rows: the January and February order files have the same columns and are stacked into one longer table, like SQL UNION ALL.">
 <title>Merge adds columns by matching a key; append stacks tables with the same columns.</title>
-<rect width="1160" height="400" fill="#FBF8F2"/>
-<g font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12.5" fill="#2A2926">
-  <text x="40" y="36" font-size="16" font-weight="700">Merge: adds columns</text>
-  <text x="40" y="56" fill="#5E5A52">Match rows on a key, like XLOOKUP or a SQL JOIN</text>
-  <rect x="40" y="72" width="200" height="118" rx="8" fill="#FFFFFF" stroke="#CFC4B2"/>
-  <text x="54" y="94" font-weight="700">orders</text>
-  <text x="54" y="118" font-family="Consolas, monospace">10001 · product 3</text>
-  <text x="54" y="140" font-family="Consolas, monospace">10002 · product 1</text>
-  <text x="54" y="162" font-family="Consolas, monospace">10003 · product 2</text>
-  <rect x="260" y="72" width="170" height="118" rx="8" fill="#FFFFFF" stroke="#CFC4B2"/>
-  <text x="274" y="94" font-weight="700">products</text>
-  <text x="274" y="118" font-family="Consolas, monospace">1 · Beverages</text>
-  <text x="274" y="140" font-family="Consolas, monospace">2 · Beverages</text>
-  <text x="274" y="162" font-family="Consolas, monospace">3 · Beverages</text>
-  <text x="235" y="215" font-size="24" fill="#8A6A1F" text-anchor="middle">↓</text>
-  <rect x="40" y="232" width="390" height="118" rx="8" fill="#FFFFFF" stroke="#2F5D8A" stroke-width="1.6"/>
-  <text x="54" y="254" font-weight="700">orders, merged</text>
-  <text x="54" y="278" font-family="Consolas, monospace">10001 · product 3 · <tspan fill="#2F5D8A" font-weight="700">Beverages</tspan></text>
-  <text x="54" y="300" font-family="Consolas, monospace">10002 · product 1 · <tspan fill="#2F5D8A" font-weight="700">Beverages</tspan></text>
-  <text x="54" y="322" font-family="Consolas, monospace">10003 · product 2 · <tspan fill="#2F5D8A" font-weight="700">Beverages</tspan></text>
-  <text x="40" y="378" fill="#5E5A52">Same number of rows; one new column. (First three products shown.)</text>
-
-  <line x1="560" x2="560" y1="30" y2="370" stroke="#E3DACB"/>
-
-  <text x="620" y="36" font-size="16" font-weight="700">Append: adds rows</text>
-  <text x="620" y="56" fill="#5E5A52">Stack tables with the same columns, like SQL UNION ALL</text>
-  <rect x="620" y="72" width="230" height="96" rx="8" fill="#FFFFFF" stroke="#CFC4B2"/>
-  <text x="634" y="94" font-weight="700">orders_jan</text>
-  <text x="634" y="118" font-family="Consolas, monospace">order_id · date · qty</text>
-  <text x="634" y="140" font-family="Consolas, monospace">… 213 rows</text>
-  <rect x="870" y="72" width="230" height="96" rx="8" fill="#FFFFFF" stroke="#CFC4B2"/>
-  <text x="884" y="94" font-weight="700">orders_feb</text>
-  <text x="884" y="118" font-family="Consolas, monospace">order_id · date · qty</text>
-  <text x="884" y="140" font-family="Consolas, monospace">… 187 rows</text>
-  <text x="860" y="205" font-size="24" fill="#8A6A1F" text-anchor="middle">↓</text>
-  <rect x="740" y="222" width="240" height="128" rx="8" fill="#FFFFFF" stroke="#2F6B3F" stroke-width="1.6"/>
-  <text x="754" y="244" font-weight="700">orders, appended</text>
-  <text x="754" y="268" font-family="Consolas, monospace">order_id · date · qty</text>
-  <text x="754" y="290" font-family="Consolas, monospace" fill="#2F6B3F">… 213 January rows</text>
-  <text x="754" y="312" font-family="Consolas, monospace" fill="#2F6B3F">… 187 February rows</text>
-  <text x="754" y="334" font-family="Consolas, monospace" font-weight="700">= 400 rows</text>
-  <text x="620" y="378" fill="#5E5A52">Same columns; more rows. Columns are matched by name.</text>
-</g>
-</svg>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="600" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="28.0" font-size="16" fill="#2A2926" font-weight="700" text-anchor="start">Merge: adds columns</text>
+<text xml:space="preserve" x="200.0" y="28.0" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">match rows on a key, like XLOOKUP or a SQL JOIN</text>
+<text xml:space="preserve" x="16.0" y="54.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">orders</text>
+<rect x="16.0" y="64.0" width="210.0" height="104.0" rx="8" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<path d="M17,90 L17,72 Q17,65 24,65 L218,65 Q225,65 225,72 L225,90 Z" fill="#EFE4CC"/>
+<text xml:space="preserve" x="26.0" y="81.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="start">order_id</text>
+<text xml:space="preserve" x="126.0" y="81.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="start">product_id</text>
+<line x1="16.0" y1="90.0" x2="226.0" y2="90.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="107.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">10001</text>
+<text xml:space="preserve" x="126.0" y="107.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">3</text>
+<line x1="16.0" y1="116.0" x2="226.0" y2="116.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="133.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">10002</text>
+<text xml:space="preserve" x="126.0" y="133.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">1</text>
+<line x1="16.0" y1="142.0" x2="226.0" y2="142.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="159.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">10003</text>
+<text xml:space="preserve" x="126.0" y="159.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">2</text>
+<text xml:space="preserve" x="250.0" y="54.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">products</text>
+<rect x="250.0" y="64.0" width="230.0" height="104.0" rx="8" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<path d="M251,90 L251,72 Q251,65 258,65 L472,65 Q479,65 479,72 L479,90 Z" fill="#EFE4CC"/>
+<text xml:space="preserve" x="260.0" y="81.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="start">product_id</text>
+<text xml:space="preserve" x="370.0" y="81.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="start">category</text>
+<line x1="250.0" y1="90.0" x2="480.0" y2="90.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="260.0" y="107.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">1</text>
+<text xml:space="preserve" x="370.0" y="107.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">Beverages</text>
+<line x1="250.0" y1="116.0" x2="480.0" y2="116.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="260.0" y="133.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">2</text>
+<text xml:space="preserve" x="370.0" y="133.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">Beverages</text>
+<line x1="250.0" y1="142.0" x2="480.0" y2="142.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="260.0" y="159.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">3</text>
+<text xml:space="preserve" x="370.0" y="159.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">Beverages</text>
+<path d="M484.0,120.0 L510.0,120.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<text xml:space="preserve" x="514.0" y="54.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">orders, merged</text>
+<rect x="514.0" y="64.0" width="230.0" height="104.0" rx="8" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<path d="M515,90 L515,72 Q515,65 522,65 L736,65 Q743,65 743,72 L743,90 Z" fill="#EFE4CC"/>
+<text xml:space="preserve" x="524.0" y="81.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="start">order_id</text>
+<text xml:space="preserve" x="598.0" y="81.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="start">prod.</text>
+<text xml:space="preserve" x="652.0" y="81.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="start">category</text>
+<line x1="514.0" y1="90.0" x2="744.0" y2="90.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="524.0" y="107.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">10001</text>
+<text xml:space="preserve" x="598.0" y="107.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">3</text>
+<text xml:space="preserve" x="652.0" y="107.5" font-size="13" fill="#2F5D8A" font-weight="400" text-anchor="start">Beverages</text>
+<line x1="514.0" y1="116.0" x2="744.0" y2="116.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="524.0" y="133.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">10002</text>
+<text xml:space="preserve" x="598.0" y="133.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">1</text>
+<text xml:space="preserve" x="652.0" y="133.5" font-size="13" fill="#2F5D8A" font-weight="400" text-anchor="start">Beverages</text>
+<line x1="514.0" y1="142.0" x2="744.0" y2="142.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="524.0" y="159.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">10003</text>
+<text xml:space="preserve" x="598.0" y="159.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">2</text>
+<text xml:space="preserve" x="652.0" y="159.5" font-size="13" fill="#2F5D8A" font-weight="400" text-anchor="start">Beverages</text>
+<text xml:space="preserve" x="16.0" y="196.0" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">Same number of rows; one new column.</text>
+<line x1="16.0" y1="220.0" x2="744.0" y2="220.0" stroke="#EDE6D8" stroke-width="1.5"/>
+<text xml:space="preserve" x="16.0" y="254.0" font-size="16" fill="#2A2926" font-weight="700" text-anchor="start">Append: adds rows</text>
+<text xml:space="preserve" x="170.0" y="254.0" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">stack tables with the same columns, like SQL UNION ALL</text>
+<text xml:space="preserve" x="16.0" y="280.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">orders_jan (213 rows)</text>
+<rect x="16.0" y="290.0" width="230.0" height="52.0" rx="8" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<path d="M17,316 L17,298 Q17,291 24,291 L238,291 Q245,291 245,298 L245,316 Z" fill="#EFE4CC"/>
+<text xml:space="preserve" x="26.0" y="307.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="start">order_id</text>
+<text xml:space="preserve" x="106.0" y="307.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="start">date</text>
+<text xml:space="preserve" x="206.0" y="307.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="start">qty</text>
+<line x1="16.0" y1="316.0" x2="246.0" y2="316.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="333.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">…</text>
+<text xml:space="preserve" x="106.0" y="333.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">Jan 2025</text>
+<text xml:space="preserve" x="206.0" y="333.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">…</text>
+<text xml:space="preserve" x="16.0" y="374.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">orders_feb (187 rows)</text>
+<rect x="16.0" y="384.0" width="230.0" height="52.0" rx="8" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<path d="M17,410 L17,392 Q17,385 24,385 L238,385 Q245,385 245,392 L245,410 Z" fill="#EFE4CC"/>
+<text xml:space="preserve" x="26.0" y="401.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="start">order_id</text>
+<text xml:space="preserve" x="106.0" y="401.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="start">date</text>
+<text xml:space="preserve" x="206.0" y="401.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="start">qty</text>
+<line x1="16.0" y1="410.0" x2="246.0" y2="410.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="427.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">…</text>
+<text xml:space="preserve" x="106.0" y="427.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">Feb 2025</text>
+<text xml:space="preserve" x="206.0" y="427.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">…</text>
+<path d="M256.0,360.0 L300.0,360.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<text xml:space="preserve" x="310.0" y="304.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">orders, appended</text>
+<rect x="310.0" y="314.0" width="300.0" height="104.0" rx="8" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<path d="M311,340 L311,322 Q311,315 318,315 L602,315 Q609,315 609,322 L609,340 Z" fill="#EFE4CC"/>
+<text xml:space="preserve" x="320.0" y="331.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="start">order_id</text>
+<text xml:space="preserve" x="400.0" y="331.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="start">date</text>
+<text xml:space="preserve" x="560.0" y="331.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="start">qty</text>
+<line x1="310.0" y1="340.0" x2="610.0" y2="340.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="320.0" y="357.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">…</text>
+<text xml:space="preserve" x="400.0" y="357.5" font-size="13" fill="#2F6B3F" font-weight="400" text-anchor="start">213 January rows</text>
+<text xml:space="preserve" x="560.0" y="357.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">…</text>
+<line x1="310.0" y1="366.0" x2="610.0" y2="366.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="320.0" y="383.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">…</text>
+<text xml:space="preserve" x="400.0" y="383.5" font-size="13" fill="#2F6B3F" font-weight="400" text-anchor="start">187 February rows</text>
+<text xml:space="preserve" x="560.0" y="383.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">…</text>
+<rect x="312.0" y="393.0" width="296.0" height="24.0" rx="3" fill="#F3EBD8"/>
+<text xml:space="preserve" x="320.0" y="409.5" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start"></text>
+<text xml:space="preserve" x="400.0" y="409.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">= 400 rows</text>
+<text xml:space="preserve" x="560.0" y="409.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start"></text>
+<text xml:space="preserve" x="16.0" y="470.0" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">Same columns; more rows. Columns are matched by name.</text>
+<rect x="16.0" y="500.0" width="728.0" height="84.0" rx="10" fill="#EFE4CC" stroke="#B38A3E" stroke-width="1.5"/>
+<text xml:space="preserve" x="32.0" y="530.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Merge when you need details from another table.</text>
+<text xml:space="preserve" x="32.0" y="558.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Append when the same kind of data arrives in several files.</text>
+</g></svg>

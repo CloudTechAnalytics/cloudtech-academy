@@ -1,43 +1,47 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 400" width="1160" height="400" role="img" aria-label="How a share-of-total measure works for the Snacks row. The row's filter context is category = Snacks. Revenue, evaluated with that filter, gives 125.7 million naira. Revenue All Categories uses CALCULATE with REMOVEFILTERS on category, so the filter is removed and it gives the grand total, 830.5 million naira. DIVIDE gives 15.1 percent.">
-<title>CALCULATE with REMOVEFILTERS: the numerator keeps the row's category filter, the denominator removes it, and DIVIDE gives the share.</title>
-<defs><marker id="h" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
-<rect width="1160" height="400" fill="#FBF8F2"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 500" width="760" height="500" role="img" aria-label="How a share-of-total measure works for the Snacks row. The row's filter context is category = Snacks. Revenue, evaluated with that filter, gives 125.7 million naira. Revenue All Categories uses CALCULATE with REMOVEFILTERS on category, so the filter is removed and it gives the grand total, 830.5 million naira. DIVIDE gives 15.1 percent.">
+<title>CALCULATE with REMOVEFILTERS: the numerator keeps the row's filter, the denominator removes it.</title>
+
+<rect width="760" height="500" fill="#FBF8F2"/>
 <g font-family="Inter, 'Segoe UI', Arial, sans-serif">
-  <text x="40" y="36" font-size="15" font-weight="700" fill="#2A2926">A table visual, one row per category</text>
-  <rect x="40" y="52" width="340" height="190" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
-  <g font-size="13.5" fill="#2A2926">
-    <text x="58" y="80" font-weight="700">category</text><text x="250" y="80" font-weight="700" text-anchor="end">Revenue</text><text x="362" y="80" font-weight="700" text-anchor="end">% of Rev.</text>
-    <rect x="41" y="182" width="338" height="28" fill="#F3EBD8"/>
-    <text x="58" y="112">Beverages</text><text x="250" y="112" text-anchor="end">224.6m</text><text x="362" y="112" text-anchor="end" fill="#A9A396">…</text>
-    <text x="58" y="144">Household</text><text x="250" y="144" text-anchor="end">244.8m</text><text x="362" y="144" text-anchor="end" fill="#A9A396">…</text>
-    <text x="58" y="172">Personal care</text><text x="250" y="172" text-anchor="end">235.5m</text><text x="362" y="172" text-anchor="end" fill="#A9A396">…</text>
-    <text x="58" y="200" font-weight="700" fill="#2F5D8A">Snacks</text><text x="250" y="200" text-anchor="end">125.7m</text><text x="362" y="200" text-anchor="end" font-weight="700">15.1%</text>
-    <line x1="40" x2="380" y1="212" y2="212" stroke="#CFC4B2"/>
-    <text x="58" y="232" font-weight="700">Total</text><text x="250" y="232" text-anchor="end" font-weight="700">830.5m</text><text x="362" y="232" text-anchor="end" font-weight="700">100.0%</text>
-  </g>
-  <text x="40" y="272" font-size="13" fill="#5E5A52">Row filter for the highlighted row:</text>
-  <rect x="40" y="282" width="270" height="34" rx="8" fill="#E6EEF6"/><text x="56" y="304" font-size="13.5" fill="#2F5D8A"><tspan font-weight="700">products[category]</tspan> = Snacks</text>
-
-  <rect x="450" y="52" width="320" height="110" rx="10" fill="#FFFFFF" stroke="#2F5D8A" stroke-width="1.6"/>
-  <text x="468" y="78" font-family="'JetBrains Mono', Consolas, monospace" font-size="13" font-weight="700" fill="#2A2926">[Revenue]</text>
-  <text x="468" y="102" font-size="13" fill="#2F5D8A">Keeps the filter: Snacks only</text>
-  <text x="468" y="140" font-size="22" font-weight="700" fill="#2A2926">₦125,676,475</text>
-
-  <rect x="450" y="190" width="320" height="150" rx="10" fill="#FFFFFF" stroke="#9B2C1F" stroke-width="1.6"/>
-  <text x="468" y="216" font-family="'JetBrains Mono', Consolas, monospace" font-size="12.5" font-weight="700" fill="#2A2926">CALCULATE ( [Revenue],</text>
-  <text x="468" y="236" font-family="'JetBrains Mono', Consolas, monospace" font-size="12.5" font-weight="700" fill="#2A2926">  REMOVEFILTERS ( products[category] ) )</text>
-  <text x="468" y="262" font-size="13" fill="#9B2C1F"><tspan text-decoration="line-through">category = Snacks</tspan>  removed: all categories</text>
-  <text x="468" y="310" font-size="22" font-weight="700" fill="#2A2926">₦830,541,245</text>
-
-  <path d="M312,299 C380,299 380,110 444,110" stroke="#2F5D8A" stroke-width="2" fill="none" marker-end="url(#h)"/>
-  <path d="M312,299 C380,299 380,262 444,262" stroke="#9B2C1F" stroke-width="2" fill="none" stroke-dasharray="6 4" marker-end="url(#h)"/>
-
-  <rect x="840" y="130" width="280" height="130" rx="10" fill="#C9A867" stroke="#8A6A1F" stroke-width="1.6"/>
-  <text x="860" y="160" font-family="'JetBrains Mono', Consolas, monospace" font-size="13" font-weight="700" fill="#2A2926">DIVIDE ( top, bottom )</text>
-  <text x="860" y="190" font-size="13" fill="#2A2926">125,676,475 ÷ 830,541,245</text>
-  <text x="860" y="236" font-size="30" font-weight="700" fill="#2A2926">15.1%</text>
-  <path d="M774,108 C810,108 810,170 834,170" stroke="#8A6A1F" stroke-width="2" fill="none" marker-end="url(#h)"/>
-  <path d="M774,290 C810,290 810,220 834,220" stroke="#8A6A1F" stroke-width="2" fill="none" marker-end="url(#h)"/>
-  <text x="40" y="378" font-size="13" fill="#8A6A1F" font-weight="700">CALCULATE changes the filter context before the measure runs. Here it takes one filter away, so the bottom of the fraction is always the grand total.</text>
-</g>
-</svg>
+<text xml:space="preserve" x="16.0" y="28.0" font-size="15" fill="#2A2926" font-weight="700" text-anchor="start">A table visual, one row per category</text>
+<rect x="16.0" y="38.0" width="370.0" height="168.0" rx="8" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<path d="M17,66 L17,46 Q17,39 24,39 L378,39 Q385,39 385,46 L385,66 Z" fill="#EFE4CC"/>
+<text xml:space="preserve" x="26.0" y="56.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="start">category</text>
+<text xml:space="preserve" x="256.0" y="56.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="end">Revenue</text>
+<text xml:space="preserve" x="376.0" y="56.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="end">% of Revenue</text>
+<line x1="16.0" y1="66.0" x2="386.0" y2="66.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="84.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">Beverages</text>
+<text xml:space="preserve" x="256.0" y="84.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="end">224.6m</text>
+<text xml:space="preserve" x="376.0" y="84.5" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="end">…</text>
+<line x1="16.0" y1="94.0" x2="386.0" y2="94.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="112.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">Household</text>
+<text xml:space="preserve" x="256.0" y="112.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="end">244.8m</text>
+<text xml:space="preserve" x="376.0" y="112.5" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="end">…</text>
+<line x1="16.0" y1="122.0" x2="386.0" y2="122.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="140.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">Personal care</text>
+<text xml:space="preserve" x="256.0" y="140.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="end">235.5m</text>
+<text xml:space="preserve" x="376.0" y="140.5" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="end">…</text>
+<rect x="18.0" y="151.0" width="366.0" height="26.0" rx="3" fill="#F3EBD8"/>
+<text xml:space="preserve" x="26.0" y="168.5" font-size="13" fill="#2F5D8A" font-weight="700" text-anchor="start">Snacks</text>
+<text xml:space="preserve" x="256.0" y="168.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="end">125.7m</text>
+<text xml:space="preserve" x="376.0" y="168.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="end">15.1%</text>
+<line x1="16.0" y1="178.0" x2="386.0" y2="178.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="196.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">Total</text>
+<text xml:space="preserve" x="256.0" y="196.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="end">830.5m</text>
+<text xml:space="preserve" x="376.0" y="196.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="end">100.0%</text>
+<rect x="400.0" y="72.0" width="344.0" height="36.0" rx="6" fill="#E6EEF6"/>
+<text xml:space="preserve" x="412.0" y="95.0" font-size="13.5" fill="#2F5D8A" font-weight="700" text-anchor="start">Row filter: products[category] = Snacks</text>
+<rect x="16.0" y="232.0" width="358.0" height="130.0" rx="10" fill="#FFFFFF" stroke="#2F5D8A" stroke-width="1.6"/>
+<text xml:space="preserve" x="32.0" y="258.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">[Revenue]</text>
+<text xml:space="preserve" x="32.0" y="284.0" font-size="13.5" fill="#2F5D8A" font-weight="400" text-anchor="start">Keeps the filter: Snacks only</text>
+<text xml:space="preserve" x="32.0" y="336.0" font-size="24" fill="#2A2926" font-weight="700" text-anchor="start">₦125,676,475</text>
+<rect x="386.0" y="232.0" width="358.0" height="130.0" rx="10" fill="#FFFFFF" stroke="#9B2C1F" stroke-width="1.6"/>
+<text xml:space="preserve" x="402.0" y="258.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">CALCULATE ( [Revenue],</text>
+<text xml:space="preserve" x="402.0" y="278.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">  REMOVEFILTERS ( products[category] ) )</text>
+<text xml:space="preserve" x="402.0" y="304.0" font-size="13.5" fill="#9B2C1F" font-weight="400" text-anchor="start">Removes it: all categories</text>
+<text xml:space="preserve" x="402.0" y="342.0" font-size="24" fill="#2A2926" font-weight="700" text-anchor="start">₦830,541,245</text>
+<rect x="16.0" y="380.0" width="728.0" height="96.0" rx="10" fill="#C9A867" stroke="#8A6A1F" stroke-width="1.6"/>
+<text xml:space="preserve" x="32.0" y="410.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">DIVIDE ( top, bottom ) = 125,676,475 ÷ 830,541,245</text>
+<text xml:space="preserve" x="32.0" y="452.0" font-size="28" fill="#2A2926" font-weight="700" text-anchor="start">15.1%</text>
+<text xml:space="preserve" x="140.0" y="452.0" font-size="13.5" fill="#2A2926" font-weight="400" text-anchor="start">CALCULATE changed the filters before the measure ran.</text>
+</g></svg>

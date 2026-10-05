@@ -1,54 +1,87 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 440" width="1160" height="440" role="img" aria-label="How filter context works. In a matrix with region in rows and year in columns, the highlighted cell is Lagos in 2026. Its filter context is region = Lagos (from the row), Year = 2026 (from the column) and anything set by slicers. Power BI keeps only the orders matching all of those filters, then evaluates the measure Revenue = SUM(orders[revenue]) over them: 152,768,595 naira. The same measure in every other cell gets a different set of filters.">
-<title>Filter context: each cell of a visual evaluates the measure over only the rows that match its row, column and slicer filters.</title>
-<defs><marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
-<rect width="1160" height="440" fill="#FBF8F2"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 560" width="760" height="560" role="img" aria-label="How filter context works. In a matrix with region in rows and year in columns, the highlighted cell is Lagos in 2026. Its filter context is region = Lagos and Year = 2026. Power BI keeps only the 715 orders matching both, then evaluates Revenue = SUM(orders[revenue]) over them: 152,768,595 naira.">
+<title>Filter context: each cell evaluates the measure over only the rows that match its filters.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="560" fill="#FBF8F2"/>
 <g font-family="Inter, 'Segoe UI', Arial, sans-serif">
-  <text x="40" y="36" font-size="15" font-weight="700" fill="#2A2926">1 · A matrix visual</text>
-  <rect x="40" y="52" width="380" height="250" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
-  <g font-size="13.5" fill="#2A2926">
-    <text x="58" y="82" font-weight="700">Region</text><text x="290" y="82" font-weight="700" text-anchor="end" fill="#2F6B3F">2025</text><text x="402" y="82" font-weight="700" text-anchor="end" fill="#2F6B3F">2026</text>
-    <line x1="40" x2="420" y1="94" y2="94" stroke="#EDE6D8"/>
-    <rect x="41" y="98" width="378" height="32" fill="#F3EBD8"/>
-    <text x="58" y="119" font-weight="700" fill="#2F5D8A">Lagos</text><text x="290" y="119" text-anchor="end">258.4m</text>
-    <rect x="312" y="101" width="100" height="26" rx="5" fill="#C9A867" stroke="#8A6A1F"/><text x="402" y="119" text-anchor="end" font-weight="700">152.8m</text>
-    <text x="58" y="153">North Central</text><text x="290" y="153" text-anchor="end">50.4m</text><text x="402" y="153" text-anchor="end">27.2m</text>
-    <text x="58" y="183">North West</text><text x="290" y="183" text-anchor="end">64.9m</text><text x="402" y="183" text-anchor="end">16.6m</text>
-    <text x="58" y="213">South East</text><text x="290" y="213" text-anchor="end">40.9m</text><text x="402" y="213" text-anchor="end">19.4m</text>
-    <text x="58" y="243">South South</text><text x="290" y="243" text-anchor="end">45.3m</text><text x="402" y="243" text-anchor="end">23.1m</text>
-    <text x="58" y="273">South West</text><text x="290" y="273" text-anchor="end">79.8m</text><text x="402" y="273" text-anchor="end">51.7m</text>
-  </g>
-  <text x="40" y="330" font-size="13" fill="#5E5A52">Every cell runs the same measure:</text>
-  <text x="40" y="352" font-family="'JetBrains Mono', Consolas, monospace" font-size="13" fill="#2A2926">Revenue = SUM ( orders[revenue] )</text>
-
-  <text x="470" y="36" font-size="15" font-weight="700" fill="#2A2926">2 · The highlighted cell's filters</text>
-  <g font-size="13.5">
-    <rect x="470" y="60" width="250" height="40" rx="8" fill="#E6EEF6"/><text x="486" y="85" fill="#2F5D8A"><tspan font-weight="700">customers[region]</tspan> = Lagos</text>
-    <text x="728" y="85" font-size="12" fill="#5E5A52">from the row</text>
-    <rect x="470" y="110" width="250" height="40" rx="8" fill="#E5F0E8"/><text x="486" y="135" fill="#2F6B3F"><tspan font-weight="700">Date[Year]</tspan> = 2026</text>
-    <text x="728" y="135" font-size="12" fill="#5E5A52">from the column</text>
-    <rect x="470" y="160" width="250" height="40" rx="8" fill="#EEEAF5"/><text x="486" y="185" fill="#5C4F80"><tspan font-weight="700">Slicers, page filters</tspan>: none</text>
-    <text x="728" y="185" font-size="12" fill="#5E5A52">from the page</text>
-  </g>
-  <path d="M422,114 C444,114 448,80 466,80" stroke="#8A6A1F" stroke-width="2" fill="none" marker-end="url(#g)"/>
-  <path d="M422,118 C446,118 446,130 466,130" stroke="#8A6A1F" stroke-width="2" fill="none" marker-end="url(#g)"/>
-
-  <text x="470" y="244" font-size="15" font-weight="700" fill="#2A2926">3 · Only matching orders are kept</text>
-  <rect x="470" y="258" width="300" height="120" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
-  <g font-size="12.5" fill="#2A2926">
-    <rect x="471" y="266" width="298" height="22" fill="#FBF3E2"/><text x="486" y="282">Lagos · 2026 · ₦196,840 ✓</text>
-    <text x="486" y="306" fill="#A9A396">North West · 2025 · ₦86,400 ✗</text>
-    <rect x="471" y="314" width="298" height="22" fill="#FBF3E2"/><text x="486" y="330">Lagos · 2026 · ₦139,200 ✓</text>
-    <text x="486" y="354" fill="#A9A396">Lagos · 2025 · ₦260,400 ✗</text>
-    <text x="486" y="372" fill="#5E5A52">… all 4,266 lines checked</text>
-  </g>
-  <path d="M600,204 L600,226" stroke="#8A6A1F" stroke-width="2" marker-end="url(#g)"/>
-
-  <text x="820" y="244" font-size="15" font-weight="700" fill="#2A2926">4 · The measure runs on them</text>
-  <rect x="820" y="258" width="300" height="120" rx="10" fill="#C9A867" stroke="#8A6A1F" stroke-width="1.5"/>
-  <text x="840" y="290" font-size="13" fill="#2A2926">SUM of revenue over 715 lines</text>
-  <text x="840" y="328" font-size="26" font-weight="700" fill="#2A2926">₦152,768,595</text>
-  <text x="840" y="358" font-size="12.5" fill="#2A2926">shown as 152.8m in the cell</text>
-  <path d="M774,318 L814,318" stroke="#8A6A1F" stroke-width="2" marker-end="url(#g)"/>
-  <text x="470" y="420" font-size="13" fill="#8A6A1F" font-weight="700">The measure has no fixed answer: each cell brings its own filters. That set of filters is the filter context.</text>
-</g>
-</svg>
+<text xml:space="preserve" x="16.0" y="28.0" font-size="15" fill="#2A2926" font-weight="700" text-anchor="start">1 · A matrix visual</text>
+<rect x="16.0" y="38.0" width="330.0" height="196.0" rx="8" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<path d="M17,66 L17,46 Q17,39 24,39 L338,39 Q345,39 345,46 L345,66 Z" fill="#EFE4CC"/>
+<text xml:space="preserve" x="26.0" y="56.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="start">Region</text>
+<text xml:space="preserve" x="246.0" y="56.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="end">2025</text>
+<text xml:space="preserve" x="336.0" y="56.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="end">2026</text>
+<line x1="16.0" y1="66.0" x2="346.0" y2="66.0" stroke="#EDE6D8" stroke-width="1"/>
+<rect x="257.0" y="67.0" width="88.0" height="26.0" rx="2" fill="#C9A867"/>
+<text xml:space="preserve" x="26.0" y="84.5" font-size="13" fill="#2F5D8A" font-weight="400" text-anchor="start">Lagos</text>
+<text xml:space="preserve" x="246.0" y="84.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="end">258.4m</text>
+<text xml:space="preserve" x="336.0" y="84.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="end">152.8m</text>
+<line x1="16.0" y1="94.0" x2="346.0" y2="94.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="112.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">North Central</text>
+<text xml:space="preserve" x="246.0" y="112.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="end">50.4m</text>
+<text xml:space="preserve" x="336.0" y="112.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="end">27.2m</text>
+<line x1="16.0" y1="122.0" x2="346.0" y2="122.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="140.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">North West</text>
+<text xml:space="preserve" x="246.0" y="140.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="end">64.9m</text>
+<text xml:space="preserve" x="336.0" y="140.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="end">16.6m</text>
+<line x1="16.0" y1="150.0" x2="346.0" y2="150.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="168.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">South East</text>
+<text xml:space="preserve" x="246.0" y="168.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="end">40.9m</text>
+<text xml:space="preserve" x="336.0" y="168.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="end">19.4m</text>
+<line x1="16.0" y1="178.0" x2="346.0" y2="178.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="196.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">South South</text>
+<text xml:space="preserve" x="246.0" y="196.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="end">45.3m</text>
+<text xml:space="preserve" x="336.0" y="196.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="end">23.1m</text>
+<line x1="16.0" y1="206.0" x2="346.0" y2="206.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="224.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">South West</text>
+<text xml:space="preserve" x="246.0" y="224.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="end">79.8m</text>
+<text xml:space="preserve" x="336.0" y="224.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="end">51.7m</text>
+<text xml:space="preserve" x="16.0" y="252.0" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">Every cell runs the same measure:</text>
+<text xml:space="preserve" x="16.0" y="274.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">Revenue = SUM ( orders[revenue] )</text>
+<text xml:space="preserve" x="380.0" y="28.0" font-size="15" fill="#2A2926" font-weight="700" text-anchor="start">2 · The highlighted cell's filters</text>
+<rect x="380.0" y="42.0" width="250.0" height="36.0" rx="6" fill="#E6EEF6"/>
+<text xml:space="preserve" x="392.0" y="65.0" font-size="13.5" fill="#2F5D8A" font-weight="700" text-anchor="start">customers[region] = Lagos</text>
+<text xml:space="preserve" x="640.0" y="65.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">from the row</text>
+<rect x="380.0" y="86.0" width="250.0" height="36.0" rx="6" fill="#E5F0E8"/>
+<text xml:space="preserve" x="392.0" y="109.0" font-size="13.5" fill="#2F6B3F" font-weight="700" text-anchor="start">Date[Year] = 2026</text>
+<text xml:space="preserve" x="640.0" y="109.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">from the column</text>
+<rect x="380.0" y="130.0" width="250.0" height="36.0" rx="6" fill="#EEEAF5"/>
+<text xml:space="preserve" x="392.0" y="153.0" font-size="13.5" fill="#5C4F80" font-weight="700" text-anchor="start">Slicers, page filters: none</text>
+<text xml:space="preserve" x="640.0" y="153.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">from the page</text>
+<path d="M346.0,80.0 L374.0,60.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<path d="M346.0,84.0 L374.0,104.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<text xml:space="preserve" x="16.0" y="330.0" font-size="15" fill="#2A2926" font-weight="700" text-anchor="start">3 · Only matching orders are kept</text>
+<rect x="16.0" y="340.0" width="360.0" height="135.0" rx="8" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<path d="M17,367 L17,348 Q17,341 24,341 L368,341 Q375,341 375,348 L375,367 Z" fill="#EFE4CC"/>
+<text xml:space="preserve" x="26.0" y="358.0" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="start">region</text>
+<text xml:space="preserve" x="156.0" y="358.0" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="start">year</text>
+<text xml:space="preserve" x="306.0" y="358.0" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="end">revenue</text>
+<text xml:space="preserve" x="346.0" y="358.0" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="middle">kept?</text>
+<rect x="18.0" y="368.0" width="356.0" height="25.0" rx="3" fill="#F3EBD8"/>
+<text xml:space="preserve" x="26.0" y="385.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">Lagos</text>
+<text xml:space="preserve" x="156.0" y="385.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">2026</text>
+<text xml:space="preserve" x="306.0" y="385.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="end">196,840</text>
+<text xml:space="preserve" x="346.0" y="385.0" font-size="13" fill="#2F6B3F" font-weight="400" text-anchor="middle">✓</text>
+<line x1="16.0" y1="394.0" x2="376.0" y2="394.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="412.0" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">North West</text>
+<text xml:space="preserve" x="156.0" y="412.0" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">2025</text>
+<text xml:space="preserve" x="306.0" y="412.0" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="end">86,400</text>
+<text xml:space="preserve" x="346.0" y="412.0" font-size="13" fill="#9B2C1F" font-weight="400" text-anchor="middle">✗</text>
+<rect x="18.0" y="422.0" width="356.0" height="25.0" rx="3" fill="#F3EBD8"/>
+<text xml:space="preserve" x="26.0" y="439.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">Lagos</text>
+<text xml:space="preserve" x="156.0" y="439.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">2026</text>
+<text xml:space="preserve" x="306.0" y="439.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="end">139,200</text>
+<text xml:space="preserve" x="346.0" y="439.0" font-size="13" fill="#2F6B3F" font-weight="400" text-anchor="middle">✓</text>
+<line x1="16.0" y1="448.0" x2="376.0" y2="448.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="466.0" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">Lagos</text>
+<text xml:space="preserve" x="156.0" y="466.0" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">2025</text>
+<text xml:space="preserve" x="306.0" y="466.0" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="end">260,400</text>
+<text xml:space="preserve" x="346.0" y="466.0" font-size="13" fill="#9B2C1F" font-weight="400" text-anchor="middle">✗</text>
+<text xml:space="preserve" x="16.0" y="492.0" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">… all 4,266 order lines are checked.</text>
+<text xml:space="preserve" x="420.0" y="330.0" font-size="15" fill="#2A2926" font-weight="700" text-anchor="start">4 · The measure runs on them</text>
+<rect x="420.0" y="340.0" width="324.0" height="136.0" rx="10" fill="#C9A867" stroke="#8A6A1F" stroke-width="1.6"/>
+<text xml:space="preserve" x="440.0" y="370.0" font-size="13.5" fill="#2A2926" font-weight="400" text-anchor="start">SUM of revenue over 715 lines</text>
+<text xml:space="preserve" x="440.0" y="414.0" font-size="28" fill="#2A2926" font-weight="700" text-anchor="start">₦152,768,595</text>
+<text xml:space="preserve" x="440.0" y="452.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">shown as 152.8m in the cell</text>
+<path d="M386.0,410.0 L414.0,410.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<text xml:space="preserve" x="16.0" y="530.0" font-size="13.5" fill="#8A6A1F" font-weight="700" text-anchor="start">A measure has no fixed answer: each cell brings its own filters. That set of filters is the filter</text>
+<text xml:space="preserve" x="16.0" y="549.6" font-size="13.5" fill="#8A6A1F" font-weight="700" text-anchor="start">context.</text>
+</g></svg>

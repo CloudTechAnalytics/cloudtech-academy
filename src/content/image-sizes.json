@@ -1,39 +1,39 @@
 {
  "/images/courses/daf/analysis-cycle.svg": [
-  1160,
-  350
- ],
- "/images/courses/daf/bi-pipeline.svg": [
-  1160,
-  380
- ],
- "/images/courses/daf/column-types.svg": [
-  1160,
-  360
- ],
- "/images/courses/daf/four-kinds.svg": [
-  1160,
-  430
- ],
- "/images/courses/daf/kolanut-erd.svg": [
-  1160,
-  420
- ],
- "/images/courses/daf/kpi-tree.svg": [
-  1160,
+  760,
   470
  ],
+ "/images/courses/daf/bi-pipeline.svg": [
+  760,
+  560
+ ],
+ "/images/courses/daf/column-types.svg": [
+  760,
+  470
+ ],
+ "/images/courses/daf/four-kinds.svg": [
+  760,
+  470
+ ],
+ "/images/courses/daf/kolanut-erd.svg": [
+  760,
+  470
+ ],
+ "/images/courses/daf/kpi-tree.svg": [
+  760,
+  450
+ ],
  "/images/courses/daf/mean-median.svg": [
-  1160,
+  760,
   420
  ],
  "/images/courses/daf/region-mapping.svg": [
-  1160,
-  652
+  760,
+  681
  ],
  "/images/courses/daf/weak-strong-chart.svg": [
-  1160,
-  460
+  760,
+  720
  ],
  "/images/courses/dax/context-transition.svg": [
   760,
@@ -48,8 +48,8 @@
   380
  ],
  "/images/courses/excel/chart-choice.svg": [
-  1160,
-  520
+  760,
+  664
  ],
  "/images/courses/excel/chart.webp": [
   1310,
@@ -80,16 +80,16 @@
   660
  ],
  "/images/courses/excel/pivot-areas.svg": [
-  1160,
-  470
+  760,
+  600
  ],
  "/images/courses/excel/pivot-table.webp": [
   1426,
   713
  ],
  "/images/courses/excel/relative-absolute.svg": [
-  1160,
-  430
+  760,
+  560
  ],
  "/images/courses/excel/remove-duplicates.webp": [
   820,
@@ -104,52 +104,52 @@
   220
  ],
  "/images/courses/excel/sumifs-anatomy.svg": [
-  1160,
-  470
+  760,
+  600
  ],
  "/images/courses/excel/sumifs.webp": [
   900,
   420
  ],
  "/images/courses/excel/xlookup-flow.svg": [
-  1160,
-  440
+  760,
+  560
  ],
  "/images/courses/excel/xlookup.webp": [
   1060,
   713
  ],
  "/images/courses/modelling/cardinality.svg": [
-  1180,
-  560
+  760,
+  700
  ],
  "/images/courses/modelling/design-steps.svg": [
-  1100,
-  250
+  760,
+  344
  ],
  "/images/courses/modelling/entity-anatomy.svg": [
-  1060,
-  470
+  760,
+  440
  ],
  "/images/courses/modelling/model-levels.svg": [
-  1180,
-  470
+  760,
+  676
  ],
  "/images/courses/modelling/normalisation.svg": [
-  1180,
-  640
+  760,
+  560
  ],
  "/images/courses/modelling/slowly-changing-dimensions.svg": [
-  1100,
-  470
+  760,
+  560
  ],
  "/images/courses/modelling/star-schema.svg": [
-  1100,
+  760,
   640
  ],
  "/images/courses/modelling/star-vs-snowflake.svg": [
-  1100,
-  400
+  760,
+  520
  ],
  "/images/courses/powerbi/added-custom.webp": [
   1920,
@@ -160,8 +160,8 @@
   893
  ],
  "/images/courses/powerbi/calculate-removefilters.svg": [
-  1160,
-  400
+  760,
+  500
  ],
  "/images/courses/powerbi/csv-preview.webp": [
   880,
@@ -176,16 +176,16 @@
   560
  ],
  "/images/courses/powerbi/filter-context.svg": [
-  1160,
-  440
+  760,
+  560
  ],
  "/images/courses/powerbi/get-data.webp": [
   1920,
   1032
  ],
  "/images/courses/powerbi/merge-append.svg": [
-  1160,
-  400
+  760,
+  600
  ],
  "/images/courses/powerbi/model-view.webp": [
   1360,
@@ -200,8 +200,8 @@
   702
  ],
  "/images/courses/powerbi/page-layout.svg": [
-  1160,
-  520
+  760,
+  640
  ],
  "/images/courses/powerbi/power-query-editor.webp": [
   1920,
@@ -216,8 +216,8 @@
   750
  ],
  "/images/courses/powerbi/star-schema.svg": [
-  1160,
-  470
+  760,
+  500
  ],
  "/images/courses/powerbi/table-view.webp": [
   1920,
@@ -228,20 +228,20 @@
   420
  ],
  "/images/courses/sql/group-by.svg": [
-  1160,
-  470
+  760,
+  380
  ],
  "/images/courses/sql/harbourline-erd.svg": [
-  1180,
-  700
+  760,
+  640
  ],
  "/images/courses/sql/joins.svg": [
-  1160,
-  560
+  760,
+  570
  ],
  "/images/courses/sql/mysql-workbench-layout.svg": [
-  1100,
-  640
+  760,
+  560
  ],
  "/images/courses/sql/ssms-object-explorer.webp": [
   330,
@@ -252,12 +252,12 @@
   863
  ],
  "/images/courses/sql/where-filter.svg": [
-  1100,
-  430
+  760,
+  300
  ],
  "/images/courses/sql/window-vs-group.svg": [
-  1160,
-  430
+  760,
+  460
  ],
  "/images/courses/statistics/box-plot.svg": [
   760,

@@ -1,49 +1,62 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 350" width="1160" height="350" role="img" aria-label="The six steps of an analysis, in order: Ask, Collect, Clean, Analyse, Share, Act. An arrow from Act loops back to Ask, because every decision raises the next question. Each step has a Kolanut example underneath.">
-<title>The six steps of an analysis: Ask, Collect, Clean, Analyse, Share, Act, with a loop back from Act to Ask.</title>
-<defs><marker id="b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
-<rect width="1160" height="350" fill="#FBF8F2"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 470" width="760" height="470" role="img" aria-label="The six steps of an analysis, in order: Ask, Collect, Clean, Analyse, Share, Act. An arrow from Act loops back to Ask, because every decision raises the next question. Each step has a Kolanut example underneath.">
+<title>The six steps of an analysis, with a loop back from Act to Ask.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="470" fill="#FBF8F2"/>
 <g font-family="Inter, 'Segoe UI', Arial, sans-serif">
-  <g font-size="12.5" fill="#5E5A52">
-  <rect x="40" y="70" width="160" height="165" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
-  <rect x="226" y="70" width="160" height="165" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
-  <rect x="412" y="70" width="160" height="165" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
-  <rect x="598" y="70" width="160" height="165" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
-  <rect x="784" y="70" width="160" height="165" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
-  <rect x="970" y="70" width="160" height="165" rx="10" fill="#F3EBD8" stroke="#B38A3E" stroke-width="1.5"/>
-  </g>
-  <g fill="#B38A3E" font-size="13" font-weight="700">
-    <circle cx="66" cy="98" r="14"/><circle cx="252" cy="98" r="14"/><circle cx="438" cy="98" r="14"/><circle cx="624" cy="98" r="14"/><circle cx="810" cy="98" r="14"/><circle cx="996" cy="98" r="14" fill="#8A6A1F"/>
-  </g>
-  <g fill="#FFFFFF" font-size="13" font-weight="700" text-anchor="middle">
-    <text x="66" y="103">1</text><text x="252" y="103">2</text><text x="438" y="103">3</text><text x="624" y="103">4</text><text x="810" y="103">5</text><text x="996" y="103">6</text>
-  </g>
-  <g font-size="17" font-weight="700" fill="#2A2926">
-    <text x="88" y="104">Ask</text><text x="274" y="104">Collect</text><text x="460" y="104">Clean</text><text x="646" y="104">Analyse</text><text x="832" y="104">Share</text><text x="1018" y="104">Act</text>
-  </g>
-  <g font-size="12.5" fill="#2A2926">
-    <text x="56" y="140">Agree a question</text><text x="56" y="158">someone will act on</text>
-    <text x="56" y="196" fill="#5E5A52">"Did H1 revenue</text><text x="56" y="214" fill="#5E5A52">grow, and where?"</text>
-
-    <text x="242" y="140">Find the data that</text><text x="242" y="158">can answer it</text>
-    <text x="242" y="196" fill="#5E5A52">orders.csv and</text><text x="242" y="214" fill="#5E5A52">customers.csv</text>
-
-    <text x="428" y="140">Fix what would</text><text x="428" y="158">mislead you</text>
-    <text x="428" y="196" fill="#5E5A52">23 spellings of</text><text x="428" y="214" fill="#5E5A52">6 regions → 6</text>
-
-    <text x="614" y="140">Summarise, compare,</text><text x="614" y="158">find the exceptions</text>
-    <text x="614" y="196" fill="#5E5A52">+19.1% overall;</text><text x="614" y="214" fill="#5E5A52">North West −46.6%</text>
-
-    <text x="800" y="140">Make the point clear</text><text x="800" y="158">in a minute</text>
-    <text x="800" y="196" fill="#5E5A52">One chart, one</text><text x="800" y="214" fill="#5E5A52">headline sentence</text>
-
-    <text x="986" y="140">Someone decides;</text><text x="986" y="158">check it worked</text>
-    <text x="986" y="196" fill="#5E5A52">Call North West's</text><text x="986" y="214" fill="#5E5A52">five biggest shops</text>
-  </g>
-  <g stroke="#8A6A1F" stroke-width="2" fill="none" marker-end="url(#b)">
-    <path d="M202,152 L222,152"/><path d="M388,152 L408,152"/><path d="M574,152 L594,152"/><path d="M760,152 L780,152"/><path d="M946,152 L966,152"/>
-    <path d="M1050,237 C1050,292 120,292 120,241" stroke-dasharray="6 5"/>
-  </g>
-  <text x="585" y="326" font-size="13" fill="#8A6A1F" text-anchor="middle" font-weight="700">Every decision raises the next question</text>
-  <text x="40" y="44" font-size="15" font-weight="700" fill="#2A2926">The analysis cycle, with Kolanut's half-year review as the example</text>
-</g>
-</svg>
+<rect x="16.0" y="16.0" width="220.0" height="172.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<circle cx="42.0" cy="46.0" r="12" fill="#8A6A1F"/>
+<text xml:space="preserve" x="42.0" y="50.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
+<text xml:space="preserve" x="62.0" y="52.0" font-size="17" fill="#2A2926" font-weight="700" text-anchor="start">Ask</text>
+<text xml:space="preserve" x="34.0" y="86.0" font-size="13.5" fill="#2A2926" font-weight="400" text-anchor="start">Agree a question someone</text>
+<text xml:space="preserve" x="34.0" y="105.6" font-size="13.5" fill="#2A2926" font-weight="400" text-anchor="start">will act on.</text>
+<text xml:space="preserve" x="34.0" y="146.0" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">"Did H1 revenue grow, and</text>
+<text xml:space="preserve" x="34.0" y="164.8" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">where?"</text>
+<rect x="270.0" y="16.0" width="220.0" height="172.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<circle cx="296.0" cy="46.0" r="12" fill="#8A6A1F"/>
+<text xml:space="preserve" x="296.0" y="50.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
+<text xml:space="preserve" x="316.0" y="52.0" font-size="17" fill="#2A2926" font-weight="700" text-anchor="start">Collect</text>
+<text xml:space="preserve" x="288.0" y="86.0" font-size="13.5" fill="#2A2926" font-weight="400" text-anchor="start">Find the data that can</text>
+<text xml:space="preserve" x="288.0" y="105.6" font-size="13.5" fill="#2A2926" font-weight="400" text-anchor="start">answer it.</text>
+<text xml:space="preserve" x="288.0" y="146.0" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">orders.csv and</text>
+<text xml:space="preserve" x="288.0" y="164.8" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">customers.csv</text>
+<rect x="524.0" y="16.0" width="220.0" height="172.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<circle cx="550.0" cy="46.0" r="12" fill="#8A6A1F"/>
+<text xml:space="preserve" x="550.0" y="50.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
+<text xml:space="preserve" x="570.0" y="52.0" font-size="17" fill="#2A2926" font-weight="700" text-anchor="start">Clean</text>
+<text xml:space="preserve" x="542.0" y="86.0" font-size="13.5" fill="#2A2926" font-weight="400" text-anchor="start">Fix what would mislead</text>
+<text xml:space="preserve" x="542.0" y="105.6" font-size="13.5" fill="#2A2926" font-weight="400" text-anchor="start">you.</text>
+<text xml:space="preserve" x="542.0" y="146.0" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">23 spellings of 6 regions →</text>
+<text xml:space="preserve" x="542.0" y="164.8" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">6</text>
+<rect x="524.0" y="220.0" width="220.0" height="172.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<circle cx="550.0" cy="250.0" r="12" fill="#8A6A1F"/>
+<text xml:space="preserve" x="550.0" y="254.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">4</text>
+<text xml:space="preserve" x="570.0" y="256.0" font-size="17" fill="#2A2926" font-weight="700" text-anchor="start">Analyse</text>
+<text xml:space="preserve" x="542.0" y="290.0" font-size="13.5" fill="#2A2926" font-weight="400" text-anchor="start">Summarise, compare, find</text>
+<text xml:space="preserve" x="542.0" y="309.6" font-size="13.5" fill="#2A2926" font-weight="400" text-anchor="start">the exceptions.</text>
+<text xml:space="preserve" x="542.0" y="350.0" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">+19.1% overall; North West</text>
+<text xml:space="preserve" x="542.0" y="368.9" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">−46.6%</text>
+<rect x="270.0" y="220.0" width="220.0" height="172.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<circle cx="296.0" cy="250.0" r="12" fill="#8A6A1F"/>
+<text xml:space="preserve" x="296.0" y="254.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">5</text>
+<text xml:space="preserve" x="316.0" y="256.0" font-size="17" fill="#2A2926" font-weight="700" text-anchor="start">Share</text>
+<text xml:space="preserve" x="288.0" y="290.0" font-size="13.5" fill="#2A2926" font-weight="400" text-anchor="start">Make the point clear in a</text>
+<text xml:space="preserve" x="288.0" y="309.6" font-size="13.5" fill="#2A2926" font-weight="400" text-anchor="start">minute.</text>
+<text xml:space="preserve" x="288.0" y="350.0" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">One chart, one headline</text>
+<text xml:space="preserve" x="288.0" y="368.9" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">sentence</text>
+<rect x="16.0" y="220.0" width="220.0" height="172.0" rx="10" fill="#F3EBD8" stroke="#B38A3E" stroke-width="1.5"/>
+<circle cx="42.0" cy="250.0" r="12" fill="#8A6A1F"/>
+<text xml:space="preserve" x="42.0" y="254.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">6</text>
+<text xml:space="preserve" x="62.0" y="256.0" font-size="17" fill="#2A2926" font-weight="700" text-anchor="start">Act</text>
+<text xml:space="preserve" x="34.0" y="290.0" font-size="13.5" fill="#2A2926" font-weight="400" text-anchor="start">Someone decides; check it</text>
+<text xml:space="preserve" x="34.0" y="309.6" font-size="13.5" fill="#2A2926" font-weight="400" text-anchor="start">worked.</text>
+<text xml:space="preserve" x="34.0" y="350.0" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">Call North West's five</text>
+<text xml:space="preserve" x="34.0" y="368.9" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">biggest shops</text>
+<path d="M238.0,102.0 L266.0,102.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<path d="M492.0,102.0 L520.0,102.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<path d="M634.0,190.0 L634.0,216.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<path d="M520.0,306.0 L492.0,306.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<path d="M266.0,306.0 L238.0,306.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<path d="M126,218 L126,192" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)" stroke-dasharray="6 4"/>
+<text xml:space="preserve" x="140.0" y="210.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">every decision raises the next question</text>
+<text xml:space="preserve" x="16.0" y="430.0" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">Kolanut's half-year review as the example. Most of the value is decided in step 1 and step 6.</text>
+</g></svg>

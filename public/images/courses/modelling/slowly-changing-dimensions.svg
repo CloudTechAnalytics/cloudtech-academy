@@ -1,43 +1,51 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 470" width="1100" height="470" role="img" aria-label="Slowly changing dimensions: type 1 overwrites a customer's region, losing history; type 2 adds a new row with valid-from and valid-to dates, keeping history.">
-<title>Slowly changing dimensions: type 1 overwrites a customer's region, losing history; type 2 adds a new row with valid-from and valid-to dates, keeping history.</title>
-<rect width="1100" height="470" fill="#FBF8F2"/>
-<text x="30" y="40" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="16" font-weight="700" fill="#1F1F1F" text-anchor="start" xml:space="preserve">Peace Provisions moves from Kano (North West) to Abuja (North Central) on 1 April 2026</text>
-<text x="30" y="88" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="700" fill="#B4452F" text-anchor="start" xml:space="preserve">Type 1: overwrite (history lost)</text>
-<rect x="30" y="100" width="450" height="64" rx="8" fill="#fff" stroke="#CFC4B2" stroke-width="1.5"/>
-<rect x="30" y="100" width="450" height="34" rx="8" fill="#2B2A28"/>
-<text x="38" y="122" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="700" fill="#fff" text-anchor="start" xml:space="preserve">key</text>
-<text x="38" y="155" font-family="'JetBrains Mono', Consolas, 'Courier New', monospace" font-size="12.5" font-weight="400" fill="#1F1F1F" text-anchor="start" xml:space="preserve">13</text>
-<text x="98" y="122" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="700" fill="#fff" text-anchor="start" xml:space="preserve">customer_id</text>
-<text x="98" y="155" font-family="'JetBrains Mono', Consolas, 'Courier New', monospace" font-size="12.5" font-weight="400" fill="#1F1F1F" text-anchor="start" xml:space="preserve">13</text>
-<text x="198" y="122" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="700" fill="#fff" text-anchor="start" xml:space="preserve">name</text>
-<text x="198" y="155" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#1F1F1F" text-anchor="start" xml:space="preserve">Peace Provisions</text>
-<text x="358" y="122" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="700" fill="#fff" text-anchor="start" xml:space="preserve">region</text>
-<text x="358" y="155" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#1F1F1F" text-anchor="start" xml:space="preserve">North Central</text>
-<text x="30" y="190" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13" font-weight="400" fill="#6B665C" text-anchor="start" xml:space="preserve">Every past order now reports as North Central.</text>
-<text x="30" y="248" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="700" fill="#2F7D55" text-anchor="start" xml:space="preserve">Type 2: add a row (history kept)</text>
-<rect x="30" y="260" width="750" height="94" rx="8" fill="#fff" stroke="#CFC4B2" stroke-width="1.5"/>
-<rect x="30" y="260" width="750" height="34" rx="8" fill="#2B2A28"/>
-<text x="38" y="282" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="700" fill="#fff" text-anchor="start" xml:space="preserve">key</text>
-<text x="38" y="315" font-family="'JetBrains Mono', Consolas, 'Courier New', monospace" font-size="12.5" font-weight="400" fill="#1F1F1F" text-anchor="start" xml:space="preserve">13</text>
-<text x="38" y="345" font-family="'JetBrains Mono', Consolas, 'Courier New', monospace" font-size="12.5" font-weight="400" fill="#1F1F1F" text-anchor="start" xml:space="preserve">91</text>
-<text x="98" y="282" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="700" fill="#fff" text-anchor="start" xml:space="preserve">customer_id</text>
-<text x="98" y="315" font-family="'JetBrains Mono', Consolas, 'Courier New', monospace" font-size="12.5" font-weight="400" fill="#1F1F1F" text-anchor="start" xml:space="preserve">13</text>
-<text x="98" y="345" font-family="'JetBrains Mono', Consolas, 'Courier New', monospace" font-size="12.5" font-weight="400" fill="#1F1F1F" text-anchor="start" xml:space="preserve">13</text>
-<text x="198" y="282" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="700" fill="#fff" text-anchor="start" xml:space="preserve">name</text>
-<text x="198" y="315" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#1F1F1F" text-anchor="start" xml:space="preserve">Peace Provisions</text>
-<text x="198" y="345" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#1F1F1F" text-anchor="start" xml:space="preserve">Peace Provisions</text>
-<text x="358" y="282" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="700" fill="#fff" text-anchor="start" xml:space="preserve">region</text>
-<text x="358" y="315" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#1F1F1F" text-anchor="start" xml:space="preserve">North West</text>
-<text x="358" y="345" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#1F1F1F" text-anchor="start" xml:space="preserve">North Central</text>
-<text x="488" y="282" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="700" fill="#fff" text-anchor="start" xml:space="preserve">valid_from</text>
-<text x="488" y="315" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#1F1F1F" text-anchor="start" xml:space="preserve">2022-11-17</text>
-<text x="488" y="345" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#1F1F1F" text-anchor="start" xml:space="preserve">2026-04-01</text>
-<text x="598" y="282" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="700" fill="#fff" text-anchor="start" xml:space="preserve">valid_to</text>
-<text x="598" y="315" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#1F1F1F" text-anchor="start" xml:space="preserve">2026-03-31</text>
-<text x="598" y="345" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#1F1F1F" text-anchor="start" xml:space="preserve"></text>
-<text x="708" y="282" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="700" fill="#fff" text-anchor="start" xml:space="preserve">current</text>
-<text x="708" y="315" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#1F1F1F" text-anchor="start" xml:space="preserve">No</text>
-<text x="708" y="345" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#1F1F1F" text-anchor="start" xml:space="preserve">Yes</text>
-<text x="30" y="400" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13" font-weight="400" fill="#6B665C" text-anchor="start" xml:space="preserve">Orders before April point to key 13 (North West); orders after point to key 91 (North Central).</text>
-<text x="30" y="422" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13" font-weight="400" fill="#6B665C" text-anchor="start" xml:space="preserve">customer_id is the business key; key is the surrogate key the fact table uses.</text>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 560" width="760" height="560" role="img" aria-label="Slowly changing dimensions: type 1 overwrites a customer's region, losing history; type 2 adds a new row with valid-from and valid-to dates, keeping history.">
+<title>Type 1 overwrites; type 2 adds a row, so old orders keep their old region.</title>
+
+<rect width="760" height="560" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="12.0" width="728.0" height="46.0" rx="10" fill="#EFE4CC" stroke="#B38A3E" stroke-width="1.5"/>
+<text xml:space="preserve" x="32.0" y="41.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="start">Peace Provisions moves from Kano (North West) to Abuja (North Central) on 1 April 2026</text>
+<text xml:space="preserve" x="16.0" y="92.0" font-size="15" fill="#9B2C1F" font-weight="700" text-anchor="start">Type 1: overwrite (history lost)</text>
+<rect x="16.0" y="102.0" width="490.0" height="52.0" rx="8" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<path d="M17,128 L17,110 Q17,103 24,103 L498,103 Q505,103 505,110 L505,128 Z" fill="#EFE4CC"/>
+<text xml:space="preserve" x="26.0" y="119.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="start">key</text>
+<text xml:space="preserve" x="86.0" y="119.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="start">customer_id</text>
+<text xml:space="preserve" x="196.0" y="119.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="start">name</text>
+<text xml:space="preserve" x="376.0" y="119.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="start">region</text>
+<line x1="16.0" y1="128.0" x2="506.0" y2="128.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="145.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">13</text>
+<text xml:space="preserve" x="86.0" y="145.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">13</text>
+<text xml:space="preserve" x="196.0" y="145.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">Peace Provisions</text>
+<text xml:space="preserve" x="376.0" y="145.5" font-size="13" fill="#9B2C1F" font-weight="400" text-anchor="start">North Central</text>
+<text xml:space="preserve" x="16.0" y="182.0" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">Every past order now reports as North Central.</text>
+<text xml:space="preserve" x="16.0" y="228.0" font-size="15" fill="#2F6B3F" font-weight="700" text-anchor="start">Type 2: add a row (history kept)</text>
+<rect x="16.0" y="238.0" width="590.0" height="78.0" rx="8" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<path d="M17,264 L17,246 Q17,239 24,239 L598,239 Q605,239 605,246 L605,264 Z" fill="#EFE4CC"/>
+<text xml:space="preserve" x="26.0" y="255.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="start">key</text>
+<text xml:space="preserve" x="82.0" y="255.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="start">cust.</text>
+<text xml:space="preserve" x="146.0" y="255.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="start">region</text>
+<text xml:space="preserve" x="286.0" y="255.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="start">valid_from</text>
+<text xml:space="preserve" x="406.0" y="255.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="start">valid_to</text>
+<text xml:space="preserve" x="526.0" y="255.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="start">current</text>
+<line x1="16.0" y1="264.0" x2="606.0" y2="264.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="281.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">13</text>
+<text xml:space="preserve" x="82.0" y="281.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">13</text>
+<text xml:space="preserve" x="146.0" y="281.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">North West</text>
+<text xml:space="preserve" x="286.0" y="281.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">2022-11-17</text>
+<text xml:space="preserve" x="406.0" y="281.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">2026-03-31</text>
+<text xml:space="preserve" x="526.0" y="281.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">No</text>
+<rect x="18.0" y="291.0" width="586.0" height="24.0" rx="3" fill="#E5F0E8"/>
+<text xml:space="preserve" x="26.0" y="307.5" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">91</text>
+<text xml:space="preserve" x="82.0" y="307.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">13</text>
+<text xml:space="preserve" x="146.0" y="307.5" font-size="13" fill="#2F6B3F" font-weight="400" text-anchor="start">North Central</text>
+<text xml:space="preserve" x="286.0" y="307.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">2026-04-01</text>
+<text xml:space="preserve" x="406.0" y="307.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start"></text>
+<text xml:space="preserve" x="526.0" y="307.5" font-size="13" fill="#2F6B3F" font-weight="400" text-anchor="start">Yes</text>
+<text xml:space="preserve" x="16.0" y="350.0" font-size="13.5" fill="#2A2926" font-weight="400" text-anchor="start">Orders before April point to key 13 (North West); orders after point to key 91 (North Central). Both</text>
+<text xml:space="preserve" x="16.0" y="369.6" font-size="13.5" fill="#2A2926" font-weight="400" text-anchor="start">rows are Peace Provisions.</text>
+<rect x="16.0" y="410.0" width="728.0" height="120.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="32.0" y="438.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Two kinds of key</text>
+<text xml:space="preserve" x="32.0" y="464.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">customer_id is the business key: the customer's ID in the order system.</text>
+<text xml:space="preserve" x="32.0" y="484.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">key is the surrogate key the fact table uses. Type 2 needs it, because</text>
+<text xml:space="preserve" x="32.0" y="504.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">customer 13 now has two rows.</text>
+</g></svg>

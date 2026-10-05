@@ -1,38 +1,41 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 250" width="1100" height="250" role="img" aria-label="Five steps of designing a data model: list the questions, identify entities, define attributes and keys, connect relationships, then check the grain and test with data.">
-<title>Five steps of designing a data model: list the questions, identify entities, define attributes and keys, connect relationships, then check the grain and test with data.</title>
-<rect width="1100" height="250" fill="#FBF8F2"/>
-<rect x="20" y="40" width="196" height="170" rx="14" fill="#fff" stroke="#D9CFBF" stroke-width="1.5"/>
-<circle cx="54" cy="76" r="18" fill="#B38A3E"/>
-<text x="54" y="82" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="16" font-weight="700" fill="#fff" text-anchor="middle" xml:space="preserve">1</text>
-<text x="38" y="124" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="16" font-weight="700" fill="#1F1F1F" text-anchor="start" xml:space="preserve">Questions</text>
-<text x="38" y="150" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#6B665C" text-anchor="start" xml:space="preserve">What must the data</text>
-<text x="38" y="169" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#6B665C" text-anchor="start" xml:space="preserve">answer?</text>
-<path d="M218,125 L234,125" fill="none" stroke="#B38A3E" stroke-width="2" stroke-linejoin="round"/>
-<rect x="236" y="40" width="196" height="170" rx="14" fill="#fff" stroke="#D9CFBF" stroke-width="1.5"/>
-<circle cx="270" cy="76" r="18" fill="#B38A3E"/>
-<text x="270" y="82" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="16" font-weight="700" fill="#fff" text-anchor="middle" xml:space="preserve">2</text>
-<text x="254" y="124" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="16" font-weight="700" fill="#1F1F1F" text-anchor="start" xml:space="preserve">Entities</text>
-<text x="254" y="150" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#6B665C" text-anchor="start" xml:space="preserve">Which things are</text>
-<text x="254" y="169" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#6B665C" text-anchor="start" xml:space="preserve">involved?</text>
-<path d="M434,125 L450,125" fill="none" stroke="#B38A3E" stroke-width="2" stroke-linejoin="round"/>
-<rect x="452" y="40" width="196" height="170" rx="14" fill="#fff" stroke="#D9CFBF" stroke-width="1.5"/>
-<circle cx="486" cy="76" r="18" fill="#B38A3E"/>
-<text x="486" y="82" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="16" font-weight="700" fill="#fff" text-anchor="middle" xml:space="preserve">3</text>
-<text x="470" y="124" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="16" font-weight="700" fill="#1F1F1F" text-anchor="start" xml:space="preserve">Attributes &amp; keys</text>
-<text x="470" y="150" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#6B665C" text-anchor="start" xml:space="preserve">What do we store; what</text>
-<text x="470" y="169" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#6B665C" text-anchor="start" xml:space="preserve">identifies each row?</text>
-<path d="M650,125 L666,125" fill="none" stroke="#B38A3E" stroke-width="2" stroke-linejoin="round"/>
-<rect x="668" y="40" width="196" height="170" rx="14" fill="#fff" stroke="#D9CFBF" stroke-width="1.5"/>
-<circle cx="702" cy="76" r="18" fill="#B38A3E"/>
-<text x="702" y="82" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="16" font-weight="700" fill="#fff" text-anchor="middle" xml:space="preserve">4</text>
-<text x="686" y="124" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="16" font-weight="700" fill="#1F1F1F" text-anchor="start" xml:space="preserve">Relationships</text>
-<text x="686" y="150" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#6B665C" text-anchor="start" xml:space="preserve">How do entities connect,</text>
-<text x="686" y="169" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#6B665C" text-anchor="start" xml:space="preserve">and how many?</text>
-<path d="M866,125 L882,125" fill="none" stroke="#B38A3E" stroke-width="2" stroke-linejoin="round"/>
-<rect x="884" y="40" width="196" height="170" rx="14" fill="#fff" stroke="#D9CFBF" stroke-width="1.5"/>
-<circle cx="918" cy="76" r="18" fill="#B38A3E"/>
-<text x="918" y="82" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="16" font-weight="700" fill="#fff" text-anchor="middle" xml:space="preserve">5</text>
-<text x="902" y="124" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="16" font-weight="700" fill="#1F1F1F" text-anchor="start" xml:space="preserve">Test</text>
-<text x="902" y="150" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#6B665C" text-anchor="start" xml:space="preserve">Check the grain and</text>
-<text x="902" y="169" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#6B665C" text-anchor="start" xml:space="preserve">query real data</text>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 344" width="760" height="344" role="img" aria-label="Five steps of designing a data model: list the questions, identify entities, define attributes and keys, connect relationships, then check the grain and test with data.">
+<title>The five steps of designing a data model.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="344" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="16.0" width="220.0" height="130.0" rx="10" fill="#F3EBD8" stroke="#B38A3E" stroke-width="1.6"/>
+<circle cx="42.0" cy="46.0" r="12" fill="#8A6A1F"/>
+<text xml:space="preserve" x="42.0" y="50.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
+<text xml:space="preserve" x="62.0" y="51.0" font-size="15" fill="#2A2926" font-weight="700" text-anchor="start">Questions</text>
+<text xml:space="preserve" x="36.0" y="86.0" font-size="13.5" fill="#5E5A52" font-weight="400" text-anchor="start">What must the data</text>
+<text xml:space="preserve" x="36.0" y="105.6" font-size="13.5" fill="#5E5A52" font-weight="400" text-anchor="start">answer?</text>
+<rect x="270.0" y="16.0" width="220.0" height="130.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.6"/>
+<circle cx="296.0" cy="46.0" r="12" fill="#8A6A1F"/>
+<text xml:space="preserve" x="296.0" y="50.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
+<text xml:space="preserve" x="316.0" y="51.0" font-size="15" fill="#2A2926" font-weight="700" text-anchor="start">Entities</text>
+<text xml:space="preserve" x="290.0" y="86.0" font-size="13.5" fill="#5E5A52" font-weight="400" text-anchor="start">Which things are</text>
+<text xml:space="preserve" x="290.0" y="105.6" font-size="13.5" fill="#5E5A52" font-weight="400" text-anchor="start">involved?</text>
+<rect x="524.0" y="16.0" width="220.0" height="130.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.6"/>
+<circle cx="550.0" cy="46.0" r="12" fill="#8A6A1F"/>
+<text xml:space="preserve" x="550.0" y="50.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
+<text xml:space="preserve" x="570.0" y="51.0" font-size="15" fill="#2A2926" font-weight="700" text-anchor="start">Attributes &amp; keys</text>
+<text xml:space="preserve" x="544.0" y="86.0" font-size="13.5" fill="#5E5A52" font-weight="400" text-anchor="start">What do we store; what</text>
+<text xml:space="preserve" x="544.0" y="105.6" font-size="13.5" fill="#5E5A52" font-weight="400" text-anchor="start">identifies each row?</text>
+<rect x="143.0" y="172.0" width="220.0" height="130.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.6"/>
+<circle cx="169.0" cy="202.0" r="12" fill="#8A6A1F"/>
+<text xml:space="preserve" x="169.0" y="206.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">4</text>
+<text xml:space="preserve" x="189.0" y="207.0" font-size="15" fill="#2A2926" font-weight="700" text-anchor="start">Relationships</text>
+<text xml:space="preserve" x="163.0" y="242.0" font-size="13.5" fill="#5E5A52" font-weight="400" text-anchor="start">How do entities connect,</text>
+<text xml:space="preserve" x="163.0" y="261.6" font-size="13.5" fill="#5E5A52" font-weight="400" text-anchor="start">and how many?</text>
+<rect x="397.0" y="172.0" width="220.0" height="130.0" rx="10" fill="#F3EBD8" stroke="#B38A3E" stroke-width="1.6"/>
+<circle cx="423.0" cy="202.0" r="12" fill="#8A6A1F"/>
+<text xml:space="preserve" x="423.0" y="206.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">5</text>
+<text xml:space="preserve" x="443.0" y="207.0" font-size="15" fill="#2A2926" font-weight="700" text-anchor="start">Test</text>
+<text xml:space="preserve" x="417.0" y="242.0" font-size="13.5" fill="#5E5A52" font-weight="400" text-anchor="start">Check the grain and</text>
+<text xml:space="preserve" x="417.0" y="261.6" font-size="13.5" fill="#5E5A52" font-weight="400" text-anchor="start">query real data.</text>
+<path d="M238.0,81.0 L266.0,81.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<path d="M492.0,81.0 L520.0,81.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<path d="M634.0,148.0 L300.0,170.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<path d="M365.0,237.0 L393.0,237.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<text xml:space="preserve" x="16.0" y="332.0" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">Steps 1 and 5 are what separate a good model from a pretty diagram.</text>
+</g></svg>

@@ -1,74 +1,66 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 400" width="1100" height="400" role="img" aria-label="Star versus snowflake: in a snowflake, a dimension is split further, here products point to a separate categories table.">
-<title>Star versus snowflake: in a snowflake, a dimension is split further, here products point to a separate categories table.</title>
-<rect width="1100" height="400" fill="#FBF8F2"/>
-<text x="30" y="40" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="16" font-weight="700" fill="#1F1F1F" text-anchor="start" xml:space="preserve">Star: category is a column on the product dimension</text>
-<rect x="30" y="60" width="200" height="100" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
-<path d="M30,70 a10,10 0 0 1 10,-10 h180 a10,10 0 0 1 10,10 v28 h-200 z" fill="#8C6A2C"/>
-<text x="44" y="85" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="16" font-weight="700" fill="#FFFFFF" text-anchor="start" xml:space="preserve">fact_order_lines</text>
-<rect x="40" y="108.0" width="18" height="18" rx="4" fill="#5B7C99"/>
-<text x="49.0" y="121.0" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" xml:space="preserve">FK</text>
-<text x="88" y="122.0" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#1F1F1F" text-anchor="start" xml:space="preserve">product_key</text>
-<rect x="31" y="130.0" width="198" height="26" fill="#FAF6EE"/>
-<text x="88" y="148.0" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#1F1F1F" text-anchor="start" xml:space="preserve">revenue</text>
-<rect x="300" y="60" width="210" height="126" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
-<path d="M300,70 a10,10 0 0 1 10,-10 h190 a10,10 0 0 1 10,10 v28 h-210 z" fill="#2B2A28"/>
-<text x="314" y="85" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="16" font-weight="700" fill="#FFFFFF" text-anchor="start" xml:space="preserve">dim_product</text>
-<rect x="310" y="108.0" width="18" height="18" rx="4" fill="#B38A3E"/>
-<text x="319.0" y="121.0" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" xml:space="preserve">PK</text>
-<text x="358" y="122.0" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13.5" font-weight="600" fill="#1F1F1F" text-anchor="start" xml:space="preserve">product_key</text>
-<rect x="301" y="130.0" width="208" height="26" fill="#FAF6EE"/>
-<text x="358" y="148.0" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#1F1F1F" text-anchor="start" xml:space="preserve">product_name</text>
-<text x="358" y="174.0" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#1F1F1F" text-anchor="start" xml:space="preserve">category</text>
-<path d="M300,117.0 L230,117.0" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
-<path d="M292,109.0 L292,125.0" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
-<path d="M286,109.0 L286,125.0" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
-<path d="M230,126.0 L246,117.0 L230,108.0" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
-<path d="M230,117.0 L246,117.0" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
-<path d="M252,125.0 L252,109.0" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
-<text x="30" y="240" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="16" font-weight="700" fill="#1F1F1F" text-anchor="start" xml:space="preserve">Snowflake: category moved to its own table</text>
-<rect x="30" y="260" width="200" height="100" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
-<path d="M30,270 a10,10 0 0 1 10,-10 h180 a10,10 0 0 1 10,10 v28 h-200 z" fill="#8C6A2C"/>
-<text x="44" y="285" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="16" font-weight="700" fill="#FFFFFF" text-anchor="start" xml:space="preserve">fact_order_lines</text>
-<rect x="40" y="308.0" width="18" height="18" rx="4" fill="#5B7C99"/>
-<text x="49.0" y="321.0" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" xml:space="preserve">FK</text>
-<text x="88" y="322.0" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#1F1F1F" text-anchor="start" xml:space="preserve">product_key</text>
-<rect x="31" y="330.0" width="198" height="26" fill="#FAF6EE"/>
-<text x="88" y="348.0" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#1F1F1F" text-anchor="start" xml:space="preserve">revenue</text>
-<rect x="300" y="260" width="210" height="126" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
-<path d="M300,270 a10,10 0 0 1 10,-10 h190 a10,10 0 0 1 10,10 v28 h-210 z" fill="#2B2A28"/>
-<text x="314" y="285" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="16" font-weight="700" fill="#FFFFFF" text-anchor="start" xml:space="preserve">dim_product</text>
-<rect x="310" y="308.0" width="18" height="18" rx="4" fill="#B38A3E"/>
-<text x="319.0" y="321.0" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" xml:space="preserve">PK</text>
-<text x="358" y="322.0" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13.5" font-weight="600" fill="#1F1F1F" text-anchor="start" xml:space="preserve">product_key</text>
-<rect x="301" y="330.0" width="208" height="26" fill="#FAF6EE"/>
-<text x="358" y="348.0" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#1F1F1F" text-anchor="start" xml:space="preserve">product_name</text>
-<rect x="310" y="360.0" width="18" height="18" rx="4" fill="#5B7C99"/>
-<text x="319.0" y="373.0" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" xml:space="preserve">FK</text>
-<text x="358" y="374.0" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#1F1F1F" text-anchor="start" xml:space="preserve">category_key</text>
-<rect x="580" y="260" width="200" height="100" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
-<path d="M580,270 a10,10 0 0 1 10,-10 h180 a10,10 0 0 1 10,10 v28 h-200 z" fill="#2B2A28"/>
-<text x="594" y="285" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="16" font-weight="700" fill="#FFFFFF" text-anchor="start" xml:space="preserve">dim_category</text>
-<rect x="590" y="308.0" width="18" height="18" rx="4" fill="#B38A3E"/>
-<text x="599.0" y="321.0" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" xml:space="preserve">PK</text>
-<text x="638" y="322.0" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13.5" font-weight="600" fill="#1F1F1F" text-anchor="start" xml:space="preserve">category_key</text>
-<rect x="581" y="330.0" width="198" height="26" fill="#FAF6EE"/>
-<text x="638" y="348.0" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#1F1F1F" text-anchor="start" xml:space="preserve">category</text>
-<path d="M300,317.0 L230,317.0" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
-<path d="M292,309.0 L292,325.0" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
-<path d="M286,309.0 L286,325.0" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
-<path d="M230,326.0 L246,317.0 L230,308.0" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
-<path d="M230,317.0 L246,317.0" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
-<path d="M252,325.0 L252,309.0" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
-<path d="M580,317.0 L545,317.0 L545,369.0 L510,369.0" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
-<path d="M572,309.0 L572,325.0" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
-<path d="M566,309.0 L566,325.0" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
-<path d="M510,378.0 L526,369.0 L510,360.0" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
-<path d="M510,369.0 L526,369.0" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
-<path d="M532,377.0 L532,361.0" fill="none" stroke="#1F1F1F" stroke-width="1.8" stroke-linejoin="round"/>
-<text x="820" y="90" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="14" font-weight="700" fill="#2F7D55" text-anchor="start" xml:space="preserve">Fewer tables, simpler</text>
-<text x="820" y="110" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13" font-weight="400" fill="#6B665C" text-anchor="start" xml:space="preserve">filters, faster reports.</text>
-<text x="820" y="130" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13" font-weight="400" fill="#6B665C" text-anchor="start" xml:space="preserve">Preferred in Power BI.</text>
-<text x="820" y="300" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="14" font-weight="700" fill="#8C6A2C" text-anchor="start" xml:space="preserve">Less repetition, but an</text>
-<text x="820" y="320" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13" font-weight="400" fill="#6B665C" text-anchor="start" xml:space="preserve">extra join for every</text>
-<text x="820" y="340" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13" font-weight="400" fill="#6B665C" text-anchor="start" xml:space="preserve">category filter.</text>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 520" width="760" height="520" role="img" aria-label="Star versus snowflake: in a snowflake, a dimension is split further, here products point to a separate categories table.">
+<title>A snowflake splits a dimension into further tables.</title>
+
+<rect width="760" height="520" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="28.0" font-size="15" fill="#2A2926" font-weight="700" text-anchor="start">Star: category is a column on the product dimension</text>
+<rect x="16.0" y="44.0" width="200.0" height="94.0" rx="10" fill="#FFFFFF" stroke="#8A6A1F" stroke-width="1.5"/>
+<path d="M17.0,82.0 L17.0,54.0 Q17.0,45.0 26.0,45.0 L206.0,45.0 Q215.0,45.0 215.0,54.0 L215.0,82.0 Z" fill="#C9A867"/>
+<text xml:space="preserve" x="28.0" y="69.0" font-size="15" fill="#2A2926" font-weight="700" text-anchor="start">fact_order_lines</text>
+<rect x="22.0" y="88.0" width="188.0" height="20.0" rx="4" fill="#E6EEF6"/>
+<text xml:space="preserve" x="28.0" y="102.5" font-size="11" fill="#2F5D8A" font-weight="700" text-anchor="start">FK</text>
+<text xml:space="preserve" x="54.0" y="102.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">product_key</text>
+<text xml:space="preserve" x="28.0" y="126.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">revenue</text>
+<rect x="276.0" y="44.0" width="200.0" height="118.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<path d="M277.0,82.0 L277.0,54.0 Q277.0,45.0 286.0,45.0 L466.0,45.0 Q475.0,45.0 475.0,54.0 L475.0,82.0 Z" fill="#F3EBD8"/>
+<text xml:space="preserve" x="288.0" y="69.0" font-size="15" fill="#2A2926" font-weight="700" text-anchor="start">dim_product</text>
+<rect x="282.0" y="88.0" width="188.0" height="20.0" rx="4" fill="#FBF3E2"/>
+<text xml:space="preserve" x="288.0" y="102.5" font-size="11" fill="#8A6A1F" font-weight="700" text-anchor="start">PK</text>
+<text xml:space="preserve" x="314.0" y="102.5" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">product_key</text>
+<text xml:space="preserve" x="288.0" y="126.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">product_name</text>
+<text xml:space="preserve" x="288.0" y="150.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">category</text>
+<path d="M216,98.0 L276,98.0" fill="none" stroke="#8A6A1F" stroke-width="1.6"/>
+<path d="M268.0,91.0 L268.0,105.0 M263.0,91.0 L263.0,105.0" fill="none" stroke="#8A6A1F" stroke-width="1.8"/>
+<path d="M216.0,106.0 L228.0,98.0 L216.0,90.0" fill="none" stroke="#8A6A1F" stroke-width="1.8"/>
+<circle cx="238.0" cy="98.0" r="5" fill="#FFFFFF" stroke="#8A6A1F" stroke-width="1.6"/>
+<text xml:space="preserve" x="506.0" y="74.0" font-size="13.5" fill="#2F6B3F" font-weight="700" text-anchor="start">Fewer tables, simpler</text>
+<text xml:space="preserve" x="506.0" y="93.6" font-size="13.5" fill="#2F6B3F" font-weight="700" text-anchor="start">filters, faster reports.</text>
+<text xml:space="preserve" x="506.0" y="113.2" font-size="13.5" fill="#2F6B3F" font-weight="700" text-anchor="start">Preferred in Power BI.</text>
+<line x1="16.0" y1="214.0" x2="744.0" y2="214.0" stroke="#EDE6D8" stroke-width="1.5"/>
+<text xml:space="preserve" x="16.0" y="250.0" font-size="15" fill="#2A2926" font-weight="700" text-anchor="start">Snowflake: category moved to its own table</text>
+<rect x="16.0" y="266.0" width="200.0" height="94.0" rx="10" fill="#FFFFFF" stroke="#8A6A1F" stroke-width="1.5"/>
+<path d="M17.0,304.0 L17.0,276.0 Q17.0,267.0 26.0,267.0 L206.0,267.0 Q215.0,267.0 215.0,276.0 L215.0,304.0 Z" fill="#C9A867"/>
+<text xml:space="preserve" x="28.0" y="291.0" font-size="15" fill="#2A2926" font-weight="700" text-anchor="start">fact_order_lines</text>
+<rect x="22.0" y="310.0" width="188.0" height="20.0" rx="4" fill="#E6EEF6"/>
+<text xml:space="preserve" x="28.0" y="324.5" font-size="11" fill="#2F5D8A" font-weight="700" text-anchor="start">FK</text>
+<text xml:space="preserve" x="54.0" y="324.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">product_key</text>
+<text xml:space="preserve" x="28.0" y="348.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">revenue</text>
+<rect x="276.0" y="266.0" width="200.0" height="118.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<path d="M277.0,304.0 L277.0,276.0 Q277.0,267.0 286.0,267.0 L466.0,267.0 Q475.0,267.0 475.0,276.0 L475.0,304.0 Z" fill="#F3EBD8"/>
+<text xml:space="preserve" x="288.0" y="291.0" font-size="15" fill="#2A2926" font-weight="700" text-anchor="start">dim_product</text>
+<rect x="282.0" y="310.0" width="188.0" height="20.0" rx="4" fill="#FBF3E2"/>
+<text xml:space="preserve" x="288.0" y="324.5" font-size="11" fill="#8A6A1F" font-weight="700" text-anchor="start">PK</text>
+<text xml:space="preserve" x="314.0" y="324.5" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">product_key</text>
+<text xml:space="preserve" x="288.0" y="348.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">product_name</text>
+<rect x="282.0" y="358.0" width="188.0" height="20.0" rx="4" fill="#E6EEF6"/>
+<text xml:space="preserve" x="288.0" y="372.5" font-size="11" fill="#2F5D8A" font-weight="700" text-anchor="start">FK</text>
+<text xml:space="preserve" x="314.0" y="372.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">category_key</text>
+<rect x="544.0" y="390.0" width="200.0" height="94.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<path d="M545.0,428.0 L545.0,400.0 Q545.0,391.0 554.0,391.0 L734.0,391.0 Q743.0,391.0 743.0,400.0 L743.0,428.0 Z" fill="#F3EBD8"/>
+<text xml:space="preserve" x="556.0" y="415.0" font-size="15" fill="#2A2926" font-weight="700" text-anchor="start">dim_category</text>
+<rect x="550.0" y="434.0" width="188.0" height="20.0" rx="4" fill="#FBF3E2"/>
+<text xml:space="preserve" x="556.0" y="448.5" font-size="11" fill="#8A6A1F" font-weight="700" text-anchor="start">PK</text>
+<text xml:space="preserve" x="582.0" y="448.5" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">category_key</text>
+<text xml:space="preserve" x="556.0" y="472.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">category</text>
+<path d="M216,320.0 L276,320.0" fill="none" stroke="#8A6A1F" stroke-width="1.6"/>
+<path d="M268.0,313.0 L268.0,327.0 M263.0,313.0 L263.0,327.0" fill="none" stroke="#8A6A1F" stroke-width="1.8"/>
+<path d="M216.0,328.0 L228.0,320.0 L216.0,312.0" fill="none" stroke="#8A6A1F" stroke-width="1.8"/>
+<circle cx="238.0" cy="320.0" r="5" fill="#FFFFFF" stroke="#8A6A1F" stroke-width="1.6"/>
+<path d="M476,368.0 C520,368.0 500,444.0 544,444.0" fill="none" stroke="#8A6A1F" stroke-width="1.6"/>
+<path d="M536.0,437.0 L536.0,451.0 M531.0,437.0 L531.0,451.0" fill="none" stroke="#8A6A1F" stroke-width="1.8"/>
+<path d="M476.0,376.0 L488.0,368.0 L476.0,360.0" fill="none" stroke="#8A6A1F" stroke-width="1.8"/>
+<circle cx="498.0" cy="368.0" r="5" fill="#FFFFFF" stroke="#8A6A1F" stroke-width="1.6"/>
+<text xml:space="preserve" x="506.0" y="296.0" font-size="13.5" fill="#9B2C1F" font-weight="700" text-anchor="start">Less repetition, but an</text>
+<text xml:space="preserve" x="506.0" y="315.6" font-size="13.5" fill="#9B2C1F" font-weight="700" text-anchor="start">extra join for every</text>
+<text xml:space="preserve" x="506.0" y="335.1" font-size="13.5" fill="#9B2C1F" font-weight="700" text-anchor="start">category filter.</text>
+</g></svg>
