@@ -14,21 +14,42 @@ Every one of those is **split, apply, combine**: split the rows into groups (by 
 
 ## The concept
 
-**The pattern**
+### The pattern
 
 ```python
 orders.groupby("product_id")["revenue"].sum()
+```
+
+```text
+product_id
+1     59804940.0
+2     15375160.0
+3     74837880.0
+4     74594380.0
+5     34168995.0
+6     32751300.0
+7     21029160.0
+8     37727020.0
+9     78372810.0
+10    43396020.0
+11    70241610.0
+12    52758600.0
+13    71586900.0
+14    63334275.0
+15    44217180.0
+16    56345015.0
+Name: revenue, dtype: float64
 ```
 
 Read it left to right: take `orders`, **group by** `product_id`, take the `revenue` column, and **sum** it within each group. The result is a Series with one row per product.
 
 Common calculations: `.sum()`, `.mean()`, `.median()`, `.min()`, `.max()`, `.count()` (non-empty values), `.nunique()` (distinct values) and `.size()` (rows per group, including blanks).
 
-**Sorting and the top N**
+### Sorting and the top N
 
 Add `.sort_values(ascending=False)` to rank the groups, and `.head(5)` for the top five. `.idxmax()` gives the label of the largest group directly.
 
-**Several measures at once: named aggregation**
+### Several measures at once: named aggregation
 
 ```python
 orders.groupby("product_id").agg(
@@ -38,22 +59,51 @@ orders.groupby("product_id").agg(
 )
 ```
 
+```text
+revenue  lines  avg_quantity
+product_id
+1           59804940.0    308     14.538961
+2           15375160.0    323     13.120743
+3           74837880.0    282     14.326241
+4           74594380.0    322     13.723602
+5           34168995.0    269     14.111524
+6           32751300.0    283     13.837456
+7           21029160.0    246     14.256098
+8           37727020.0    269     13.308550
+9           78372810.0    258     14.244186
+10          43396020.0    226     13.491150
+11          70241610.0    272     13.580882
+12          52758600.0    250     13.596000
+13          71586900.0    237     13.333333
+14          63334275.0    253     13.237154
+15          44217180.0    224     13.745536
+16          56345015.0    244     13.844262
+```
+
 Each line is `new_name=(column, calculation)`. You get a tidy table with exactly the columns you named.
 
-**Grouping by more than one column**
+### Grouping by more than one column
 
 `orders.groupby(["year", "discount_pct"])["revenue"].sum()` gives one row per combination. Add `.unstack()` to turn the second level into columns, which reads like a pivot table.
 
-**Back to an ordinary table: `reset_index()`**
+### Back to an ordinary table: `reset_index()`
 
 The group labels become the result's **index**. `.reset_index()` turns them back into a normal column, which you'll want before merging, charting or saving.
 
-**Shares of a total**
+### Shares of a total
 
 Divide each group by the total: `by_product / by_product.sum()`. To put each row's group total back on every row, use `transform`:
 
 ```python
 orders["product_total"] = orders.groupby("product_id")["revenue"].transform("sum")
+orders[["product_id", "revenue", "product_total"]].head(3)
+```
+
+```text
+product_id   revenue  product_total
+0           3  260400.0     74837880.0
+1           1   92400.0     59804940.0
+2           2   14400.0     15375160.0
 ```
 
 That's useful for "what share of its product's revenue is this line?"

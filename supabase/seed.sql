@@ -30716,7 +30716,7 @@ This course teaches the Python an analyst actually uses: enough of the language 
 
 ## The concept
 
-**Where you'll write Python: Google Colab**
+### Where you'll write Python: Google Colab
 
 Colab is a free notebook that runs in your browser on Google's computers. Nothing to install, and pandas and the charting libraries are already there. Open **colab.research.google.com**, sign in with a Google account and choose **New notebook**.
 
@@ -30727,7 +30727,7 @@ A **notebook** is a list of **cells**:
 
 Cells share memory: a variable created in one cell is available in every cell you run afterwards. If you restart the notebook (**Runtime → Restart session**) that memory is wiped, and you run the cells again from the top. **Runtime → Run all** does that in one go.
 
-**Values and variables**
+### Values and variables
 
 A **variable** is a name for a value. You create it with `=`:
 
@@ -30735,11 +30735,16 @@ A **variable** is a name for a value. You create it with `=`:
 quantity = 14
 unit_price = 18600
 customer = "Ada Superstore"
+quantity * unit_price
+```
+
+```text
+260400
 ```
 
 Names use lowercase letters, numbers and underscores, and can't start with a number. Choose names that say what the value is: `unit_price`, not `x`.
 
-**The four types you'll meet most**
+### The four types you'll meet most
 
 | Type | Example | What it's for |
 | :-- | :-- | :-- |
@@ -30750,11 +30755,11 @@ Names use lowercase letters, numbers and underscores, and can't start with a num
 
 `type(value)` tells you which one you have. Types matter because they decide what you can do: `"14" * 2` gives `"1414"` (text repeated), while `14 * 2` gives `28`. Most "my numbers won't add up" problems in data work are really type problems.
 
-**Maths**
+### Maths
 
 `+ - * /` work as you'd expect. `**` is "to the power of", `//` divides and drops the remainder, `%` gives the remainder, and `round(x, 2)` rounds to 2 decimal places. Brackets control the order, exactly as in a spreadsheet formula.
 
-**f-strings: putting numbers into sentences**
+### f-strings: putting numbers into sentences
 
 Put an `f` before the quotes and anything inside `{ }` is worked out and inserted. After a colon you can say how to format it: `:,` adds thousands separators, `:.1f` shows one decimal place, `:.1%` shows a percentage.
 
@@ -30762,6 +30767,11 @@ Put an `f` before the quotes and anything inside `{ }` is worked out and inserte
 revenue = 247380.0
 print(f"Revenue: ₦{revenue:,.0f}")
 print(f"Discount rate: {0.05:.0%}")
+```
+
+```text
+Revenue: ₦247,380
+Discount rate: 5%
 ```
 
 That prints `Revenue: ₦247,380` and `Discount rate: 5%`.
@@ -30910,10 +30920,15 @@ Before you can use pandas well, you need the four ideas it's built on: **lists**
 
 ## The concept
 
-**Lists: values in order**
+### Lists: values in order
 
 ```python
 daily_sales = [412500, 389000, 455250, 501300, 298700, 610400, 352900]
+sum(daily_sales)
+```
+
+```text
+3020050
 ```
 
 - `len(daily_sales)` is how many values there are (7).
@@ -30922,7 +30937,7 @@ daily_sales = [412500, 389000, 455250, 501300, 298700, 610400, 352900]
 - `daily_sales[1:3]` is a **slice**: positions 1 and 2 (the end position isn't included).
 - `daily_sales.append(480000)` adds a value to the end.
 
-**Dictionaries: values by name**
+### Dictionaries: values by name
 
 A dictionary maps **keys** to **values**. It's how you'd store one row of data, or a lookup table:
 
@@ -30931,18 +30946,32 @@ category_of = {1: "Beverages", 5: "Snacks", 9: "Household", 13: "Personal care"}
 category_of[9]
 ```
 
+```text
+'Household'
+```
+
 That returns `'Household'`. Add or change an entry with `category_of[2] = "Beverages"`. Ask for a key that isn't there and you get a `KeyError`; `category_of.get(99, "Unknown")` returns a default instead.
 
-**Loops: do it for each one**
+### Loops: do it for each one
 
 ```python
 for amount in daily_sales:
     print(amount)
 ```
 
+```text
+412500
+389000
+455250
+501300
+298700
+610400
+352900
+```
+
 The indented lines run once for each value. Indentation (4 spaces, which Colab adds for you) is how Python knows which lines belong to the loop.
 
-**Decisions: if, elif, else**
+### Decisions: if, elif, else
 
 ```python
 amount = 610400
@@ -30954,14 +30983,23 @@ else:
     print("OK")
 ```
 
+```text
+Needs a second signature
+```
+
 Comparisons give `True` or `False`: `==` (equal), `!=` (not equal), `<`, `<=`, `>`, `>=`. Combine them with `and`, `or` and `not`.
 
-**Functions: name a calculation once, use it everywhere**
+### Functions: name a calculation once, use it everywhere
 
 ```python
 def line_revenue(quantity, unit_price, discount_pct=0):
     """Revenue of one order line after its discount."""
     return quantity * unit_price * (1 - discount_pct / 100)
+line_revenue(14, 18600)
+```
+
+```text
+260400.0
 ```
 
 `def` starts a function, the names in brackets are its **parameters**, and `return` sends the answer back. `discount_pct=0` is a **default**: leave it out and it's 0. Now `line_revenue(14, 18600, 5)` gives `247380.0` and `line_revenue(10, 9900)` gives `99000.0`.
@@ -31123,7 +31161,7 @@ That question comes first on every analysis. How many rows? Which columns, and w
 
 ## The concept
 
-**pandas and the DataFrame**
+### pandas and the DataFrame
 
 **pandas** is the Python library for tables. Its main object is the **DataFrame**: rows and named columns, like a sheet in Excel. Each column is a **Series**, one column of values that all share a type. Everyone imports pandas with the short name `pd`:
 
@@ -31131,7 +31169,7 @@ That question comes first on every analysis. How many rows? Which columns, and w
 import pandas as pd
 ```
 
-**Loading a CSV**
+### Loading a CSV
 
 `pd.read_csv()` reads a file from a web address or from your computer:
 
@@ -31140,12 +31178,17 @@ base = "https://academy.cloudtechanalytics.com/datasets/sales/"
 orders = pd.read_csv(base + "orders.csv")
 customers = pd.read_csv(base + "customers.csv")
 products = pd.read_csv(base + "products.csv")
+orders.shape
+```
+
+```text
+(4266, 7)
 ```
 
 > [!TIP]
 > To use a file from your own computer in Colab, click the folder icon on the left, upload the file, then `pd.read_csv("orders.csv")`. Uploaded files disappear when the session ends; for work you keep, put files in Google Drive.
 
-**The first questions, in code**
+### The first questions, in code
 
 | Question | Code | Gives you |
 | :-- | :-- | :-- |
@@ -31157,14 +31200,14 @@ products = pd.read_csv(base + "products.csv")
 | How often does each value appear? | `orders["discount_pct"].value_counts()` | Each value and its count |
 | How many different values? | `orders["customer_id"].nunique()` | One number |
 
-**Selecting columns**
+### Selecting columns
 
 - One column, as a Series: `orders["quantity"]`.
 - Several columns, as a DataFrame: `orders[["order_date", "quantity"]]`. Note the **double** brackets: the inner pair is a list of names.
 
 Series have their own methods: `.sum()`, `.mean()`, `.min()`, `.max()`, `.median()`, `.count()`.
 
-**Types in pandas**
+### Types in pandas
 
 `info()` shows types with pandas names: `int64` (whole numbers), `float64` (decimals), `object` (usually text), `datetime64` (dates), `bool`. A date column that shows as `object` is being treated as text: it'll sort, but you can't take the month out of it or do date maths. You'll fix that in lesson 5.
 
@@ -31338,7 +31381,7 @@ values ('pyan-m04', 'python-for-data-analytics', 'Filtering and Sorting', 4, nul
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('python-for-data-analytics:filtering-and-sorting', 'python-for-data-analytics', 'pyan-m04', 'filtering-and-sorting', 'Filtering and sorting rows', 'Keep only the rows you need with boolean conditions, combine conditions with & and |, use isin, between and text matching, and sort or pick the top rows.', 20, $md$
+values ('python-for-data-analytics:filtering-and-sorting', 'python-for-data-analytics', 'pyan-m04', 'filtering-and-sorting', 'Filtering and sorting rows', 'Keep only the rows you need with boolean conditions, combine conditions with & and |, use isin, between and text matching, and sort or pick the top rows.', 30, $md$
 ## The problem
 
 The finance manager has three quick requests for Bisi:
@@ -31349,19 +31392,39 @@ Each one means **keeping only the rows that meet a condition**, and sometimes pu
 
 ## The concept
 
-**A condition gives a True/False for every row**
+### A condition gives a True/False for every row
 
 ```python
 orders["discount_pct"] == 10
+```
+
+```text
+0       False
+1       False
+2       False
+3       False
+4       False
+        ...
+4261    False
+4262    False
+4263    False
+4264    False
+4265    False
+Name: discount_pct, Length: 4266, dtype: bool
 ```
 
 That doesn't filter anything yet: it returns a Series of 4,266 `True`/`False` values, one per row. It's called a **boolean mask**. Put the mask inside square brackets and pandas keeps the `True` rows:
 
 ```python
 big_discounts = orders[orders["discount_pct"] == 10]
+len(big_discounts)
 ```
 
-**Combining conditions**
+```text
+525
+```
+
+### Combining conditions
 
 | Meaning | pandas | Note |
 | :-- | :-- | :-- |
@@ -31375,12 +31438,29 @@ Each condition needs its **own brackets**, because `&` and `|` are worked out be
 orders[(orders["discount_pct"] == 10) & (orders["quantity"] > 25)]
 ```
 
+```text
+order_id  order_date  customer_id  product_id  quantity  unit_price  discount_pct
+88       10089  2025-01-14           57           2        28        3600            10
+96       10097  2025-01-15           55          15        27       14400            10
+119      10120  2025-01-18           55           3        26       18600            10
+152      10153  2025-01-23           62           9        29       21600            10
+154      10155  2025-01-24           27           1        26       13200            10
+...        ...         ...          ...         ...       ...         ...           ...
+4087     14088  2026-06-06           32           9        30       23300            10
+4132     14133  2026-06-13           27           4        30       18800            10
+4152     14153  2026-06-16           52           6        27        9200            10
+4171     14172  2026-06-18           32          10        26       15600            10
+4255     14256  2026-06-29           32          15        26       15600            10
+
+[95 rows x 7 columns]
+```
+
 Without the inner brackets you get a confusing error about "truth value of a Series is ambiguous". When you see it, check your brackets.
 
 > [!WARNING]
 > Python's words `and` and `or` don't work on whole columns. Use `&` and `|` with pandas.
 
-**Shortcuts for common conditions**
+### Shortcuts for common conditions
 
 - One of several values: `customers["region"].isin(["Lagos", "South West"])`
 - A range, ends included: `orders["quantity"].between(10, 20)`
@@ -31389,17 +31469,17 @@ Without the inner brackets you get a confusing error about "truth value of a Ser
 
 Dates stored as text in `YYYY-MM-DD` form compare correctly as text, so `orders["order_date"] >= "2026-06-01"` works even before you convert dates (lesson 5).
 
-**Choosing rows and columns together: `.loc`**
+### Choosing rows and columns together: `.loc`
 
 `orders.loc[mask, ["order_id", "quantity"]]` keeps the rows where the mask is True and only the columns you list. It's the clearest way to say "these rows, these columns", and the safe way to change values in a filtered part of a table.
 
-**Sorting**
+### Sorting
 
 - `orders.sort_values("quantity", ascending=False)`: largest first.
 - Several columns: `sort_values(["region", "credit_limit"], ascending=[True, False])`.
 - `orders.nlargest(5, "quantity")` and `nsmallest` are shortcuts for "sort and take the top 5".
 
-**Counting what's left**
+### Counting what's left
 
 `len(df)` is the number of rows. Because `True` counts as 1, `mask.sum()` counts the matching rows without making a new table.
 
@@ -31608,18 +31688,34 @@ In Excel you'd write a formula in the first row and drag it down 4,266 rows. In 
 
 ## The concept
 
-**Column arithmetic works on every row at once**
+### Column arithmetic works on every row at once
 
 ```python
 orders["revenue"] = orders["quantity"] * orders["unit_price"] * (1 - orders["discount_pct"] / 100)
+orders[["quantity", "unit_price", "discount_pct", "revenue"]].head(3)
+```
+
+```text
+quantity  unit_price  discount_pct   revenue
+0        14       18600             0  260400.0
+1         7       13200             0   92400.0
+2         4        3600             0   14400.0
 ```
 
 There's no loop: pandas multiplies the columns row by row for you. This is called **vectorised** code, and it's both shorter and far faster than looping over rows yourself. Assigning to a name that doesn't exist yet (`orders["revenue"]`) creates the column; assigning to one that exists replaces it.
 
-**Text to dates: `pd.to_datetime`**
+### Text to dates: `pd.to_datetime`
 
 ```python
 orders["order_date"] = pd.to_datetime(orders["order_date"])
+orders["order_date"].head(3)
+```
+
+```text
+0   2025-01-01
+1   2025-01-01
+2   2025-01-01
+Name: order_date, dtype: datetime64[ns]
 ```
 
 After this, `orders.info()` shows `datetime64[ns]`, and the **`.dt` accessor** gives you the parts of each date:
@@ -31635,20 +31731,25 @@ After this, `orders.info()` shows `datetime64[ns]`, and the **`.dt` accessor** g
 
 Dates written day-first, like `14/03/2026`, need `pd.to_datetime(col, dayfirst=True)`. Dates in other layouts need a `format`, such as `format="%d-%b-%Y"` for `14-Mar-2026`. Always check a few converted dates against the original text: a day/month mix-up is silent and expensive.
 
-**Real dates filter by real ranges**
+### Real dates filter by real ranges
 
 ```python
 q1_2026 = orders[(orders["order_date"] >= "2026-01-01") & (orders["order_date"] < "2026-04-01")]
+len(q1_2026)
+```
+
+```text
+695
 ```
 
 Using `< "2026-04-01"` rather than `<= "2026-03-31"` is a good habit: it still works when timestamps include a time of day.
 
-**Categories from conditions**
+### Categories from conditions
 
 - Two outcomes: `np.where(condition, value_if_true, value_if_false)`, from the **numpy** library (imported as `np`), which pandas is built on.
 - Several bands: `pd.cut(column, bins=[...], labels=[...])`. With `bins=[0, 9, 19, 30]`, a value goes in the band whose range includes it: 1–9, 10–19 or 20–30. By default the left edge is excluded and the right edge included.
 
-**Tidy number columns**
+### Tidy number columns
 
 - `.round(2)` rounds; `.astype(int)` converts to whole numbers.
 - Money is often stored in whole naira. If a column of whole numbers shows as `float64`, a missing value is usually the reason.
@@ -31868,15 +31969,20 @@ Count Lagos customers in this file without cleaning it and you get the wrong ans
 
 ## The concept
 
-**Load everything as text first**
+### Load everything as text first
 
 ```python
 raw = pd.read_csv("https://academy.cloudtechanalytics.com/datasets/cleaning/customer_list_raw.csv", dtype=str)
+raw.shape
+```
+
+```text
+(102, 7)
 ```
 
 `dtype=str` stops pandas guessing types on a messy file. Without it, a phone column of digits becomes numbers and loses its leading `0`, and a column with one text value in it silently becomes text anyway. Load as text, then convert each column deliberately.
 
-**Text methods: `.str`**
+### Text methods: `.str`
 
 Every text column has a `.str` accessor with the cleaning tools you need:
 
@@ -31891,36 +31997,63 @@ Every text column has a `.str` accessor with the cleaning tools you need:
 
 Chain them: `raw["Customer Name"].str.strip().str.title()`.
 
-**Standardise categories with a mapping**
+### Standardise categories with a mapping
 
 Bring every variant to one form (lower case, no hyphens), then map the abbreviations with a dictionary:
 
 ```python
 REGIONS = {"sw": "south west", "se": "south east", "ss": "south south", "nw": "north west", "nc": "north central"}
 region = raw["Region"].str.strip().str.lower().str.replace("-", " ").replace(REGIONS).str.title()
+region.value_counts()
+```
+
+```text
+Region
+Lagos            34
+South East       19
+North West       14
+South West       13
+North Central    11
+South South      11
+Name: count, dtype: int64
 ```
 
 Then **check**: `region.value_counts()` should show exactly the six regions you expect. Any extra value is a spelling you haven't handled.
 
-**Numbers stored as text**
+### Numbers stored as text
 
 `pd.to_numeric` converts text to numbers. Remove the symbols first; blanks become `NaN` (Not a Number), pandas' marker for a missing value. Adding `errors="coerce"` turns anything else that won't convert into `NaN` too, instead of stopping with an error: useful, but check how many you lost.
 
-**Mixed date layouts**
+### Mixed date layouts
 
 ```python
 pd.to_datetime(raw["Date Joined"], format="mixed", dayfirst=True)
 ```
 
+```text
+0     2023-10-22
+1     2022-04-21
+2     2023-07-11
+3     2023-04-21
+4     2022-09-01
+         ...
+97    2026-04-25
+98    2025-12-04
+99    2025-07-29
+100   2026-02-18
+101   2026-01-09
+Name: Date Joined, Length: 102, dtype: datetime64[ns]
+```
+
 `format="mixed"` works the layout out for each value; `dayfirst=True` reads `03/01/2023` as 3 January, as Nigerian systems write it.
 
-**Missing values**
+### Missing values
 
 - Find them: `df.isna().sum()` counts blanks per column.
 - Decide what a blank **means** before you touch it. A missing credit limit isn't a zero limit: filling it with 0 would quietly understate every total and average. Usually you leave it as `NaN` (pandas skips it in `sum` and `mean`) and report it.
 - `fillna(value)` fills blanks; `dropna(subset=[...])` drops rows with blanks in the columns you name. Use them only when you can explain why.
 
-**Duplicates**
+### Duplicates
 
 - `df.duplicated(subset=["customer_name"]).sum()` counts repeats of a key.
 - `df.drop_duplicates(subset=["customer_name"])` keeps the first copy of each.
@@ -32109,21 +32242,42 @@ Every one of those is **split, apply, combine**: split the rows into groups (by 
 
 ## The concept
 
-**The pattern**
+### The pattern
 
 ```python
 orders.groupby("product_id")["revenue"].sum()
+```
+
+```text
+product_id
+1     59804940.0
+2     15375160.0
+3     74837880.0
+4     74594380.0
+5     34168995.0
+6     32751300.0
+7     21029160.0
+8     37727020.0
+9     78372810.0
+10    43396020.0
+11    70241610.0
+12    52758600.0
+13    71586900.0
+14    63334275.0
+15    44217180.0
+16    56345015.0
+Name: revenue, dtype: float64
 ```
 
 Read it left to right: take `orders`, **group by** `product_id`, take the `revenue` column, and **sum** it within each group. The result is a Series with one row per product.
 
 Common calculations: `.sum()`, `.mean()`, `.median()`, `.min()`, `.max()`, `.count()` (non-empty values), `.nunique()` (distinct values) and `.size()` (rows per group, including blanks).
 
-**Sorting and the top N**
+### Sorting and the top N
 
 Add `.sort_values(ascending=False)` to rank the groups, and `.head(5)` for the top five. `.idxmax()` gives the label of the largest group directly.
 
-**Several measures at once: named aggregation**
+### Several measures at once: named aggregation
 
 ```python
 orders.groupby("product_id").agg(
@@ -32133,22 +32287,51 @@ orders.groupby("product_id").agg(
 )
 ```
 
+```text
+revenue  lines  avg_quantity
+product_id
+1           59804940.0    308     14.538961
+2           15375160.0    323     13.120743
+3           74837880.0    282     14.326241
+4           74594380.0    322     13.723602
+5           34168995.0    269     14.111524
+6           32751300.0    283     13.837456
+7           21029160.0    246     14.256098
+8           37727020.0    269     13.308550
+9           78372810.0    258     14.244186
+10          43396020.0    226     13.491150
+11          70241610.0    272     13.580882
+12          52758600.0    250     13.596000
+13          71586900.0    237     13.333333
+14          63334275.0    253     13.237154
+15          44217180.0    224     13.745536
+16          56345015.0    244     13.844262
+```
+
 Each line is `new_name=(column, calculation)`. You get a tidy table with exactly the columns you named.
 
-**Grouping by more than one column**
+### Grouping by more than one column
 
 `orders.groupby(["year", "discount_pct"])["revenue"].sum()` gives one row per combination. Add `.unstack()` to turn the second level into columns, which reads like a pivot table.
 
-**Back to an ordinary table: `reset_index()`**
+### Back to an ordinary table: `reset_index()`
 
 The group labels become the result's **index**. `.reset_index()` turns them back into a normal column, which you'll want before merging, charting or saving.
 
-**Shares of a total**
+### Shares of a total
 
 Divide each group by the total: `by_product / by_product.sum()`. To put each row's group total back on every row, use `transform`:
 
 ```python
 orders["product_total"] = orders.groupby("product_id")["revenue"].transform("sum")
+orders[["product_id", "revenue", "product_total"]].head(3)
+```
+
+```text
+product_id   revenue  product_total
+0           3  260400.0     74837880.0
+1           1   92400.0     59804940.0
+2           2   14400.0     15375160.0
 ```
 
 That's useful for "what share of its product's revenue is this line?"
@@ -32375,7 +32558,7 @@ values ('pyan-m08', 'python-for-data-analytics', 'Merging Tables', 8, null, null
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('python-for-data-analytics:merging-tables', 'python-for-data-analytics', 'pyan-m08', 'merging-tables', 'Merging tables', 'Combine tables on a shared key with merge, choose between inner and left joins, catch row explosions with validate, find records with no match, and stack tables with concat.', 20, $md$
+values ('python-for-data-analytics:merging-tables', 'python-for-data-analytics', 'pyan-m08', 'merging-tables', 'Merging tables', 'Combine tables on a shared key with merge, choose between inner and left joins, catch row explosions with validate, find records with no match, and stack tables with concat.', 30, $md$
 ## The problem
 
 Kolanut's orders only hold IDs. The sales director's questions are about **names**:
@@ -32386,10 +32569,15 @@ Region, rep and channel live in `customers.csv`; category lives in `products.csv
 
 ## The concept
 
-**`merge`: match rows on a key**
+### `merge`: match rows on a key
 
 ```python
 orders_full = orders.merge(customers, on="customer_id", how="left")
+orders_full.shape
+```
+
+```text
+(4266, 15)
 ```
 
 - `on` is the column both tables share. If the names differ, use `left_on="cust_id", right_on="customer_id"`.
@@ -32404,7 +32592,7 @@ orders_full = orders.merge(customers, on="customer_id", how="left")
 
 For "add customer details to every order", use `how="left"`: an order should never disappear just because its customer is missing from the lookup table. You want to **see** that problem as a blank, not lose the order silently.
 
-**Check the row count, every time**
+### Check the row count, every time
 
 A left merge onto a lookup table should leave the number of rows **unchanged**. If `orders` has 4,266 rows and `orders_full` has more, the lookup table has duplicate keys, and every duplicated customer's orders are now counted twice. Your revenue total will be wrong with no error message.
 
@@ -32414,20 +32602,42 @@ A left merge onto a lookup table should leave the number of rows **unchanged**. 
 orders.merge(customers, on="customer_id", how="left", validate="many_to_one")
 ```
 
+```text
+order_id  order_date  customer_id  product_id  quantity  unit_price  discount_pct   revenue              customer_name      channel       region      city      sales_rep joined_date  credit_limit
+0        10001  2025-01-01           27           3        14       18600             0  260400.0      Alhaji Musa Wholesale    Wholesale        Lagos      Yaba   Tolu Adeyemi  2023-06-10       3100000
+1        10002  2025-01-01           56           1         7       13200             0   92400.0          Yakubu Superstore  Supermarket        Lagos   Ikorodu  Chidi Okonkwo  2022-12-31        850000
+2        10003  2025-01-01           37           2         4        3600             0   14400.0  Hajia Amina Mini Mart Uyo        Kiosk  South South       Uyo     Ebi Tamuno  2024-11-23        500000
+3        10004  2025-01-01           26           7        28        6000             5  159600.0          Chuks Trading Co.    Wholesale   South West  Abeokuta    Funke Alabi  2024-10-30       4250000
+4        10005  2025-01-01           27           8        19       10500             5  189525.0      Alhaji Musa Wholesale    Wholesale        Lagos      Yaba   Tolu Adeyemi  2023-06-10       3100000
+...        ...         ...          ...         ...       ...         ...           ...       ...                        ...          ...          ...       ...            ...         ...           ...
+4261     14262  2026-06-30           68           7        18        6600             5  112860.0   Divine Trading Co. Ikeja    Wholesale        Lagos     Ikeja  Chidi Okonkwo  2023-04-20       3400000
+4262     14263  2026-06-30           47           7        22        6600             0  145200.0              Ada Wholesale    Wholesale   South East     Nnewi     Ikenna Obi  2022-04-07       4950000
+4263     14264  2026-06-30           35          14        17       20700             5  334305.0          Divine Superstore  Supermarket        Lagos   Ikorodu   Tolu Adeyemi  2024-09-05       1150000
+4264     14265  2026-06-30           84          16        17       18100             0  307700.0         Olumide Superstore  Supermarket        Lagos     Lekki  Chidi Okonkwo  2025-04-12       1950000
+4265     14266  2026-06-30           52          11        12       20700             5  235980.0       Madam Titi Wholesale    Wholesale        Lagos     Ikeja  Chidi Okonkwo  2023-05-14       3450000
+
+[4266 rows x 15 columns]
+```
+
 "Many orders to one customer". If a customer_id appears twice in `customers`, pandas stops with a `MergeError` instead of doubling your numbers.
 
-**Finding records with no match**
+### Finding records with no match
 
 `indicator=True` adds a `_merge` column saying where each row came from: `both`, `left_only` or `right_only`.
 
 ```python
 check = customers.merge(orders[["customer_id"]].drop_duplicates(), on="customer_id", how="left", indicator=True)
 no_orders = check[check["_merge"] == "left_only"]
+len(no_orders)
+```
+
+```text
+0
 ```
 
 That's the pandas version of SQL's `LEFT JOIN … WHERE … IS NULL`: customers who never ordered.
 
-**Stacking tables: `concat`**
+### Stacking tables: `concat`
 
 Merging adds **columns** by matching keys. Stacking adds **rows**: for example monthly files with the same columns.
 
@@ -32623,34 +32833,54 @@ Raw monthly totals don't answer that well: months have different numbers of trad
 
 ## The concept
 
-**`pivot_table`: rows × columns × a value**
+### `pivot_table`: rows × columns × a value
 
 ```python
 pd.pivot_table(full, index="region", columns="year", values="revenue", aggfunc="sum")
 ```
 
+```text
+year                  2025         2026
+region
+Lagos          258393705.0  152768595.0
+North Central   50374935.0   27165785.0
+North West      64934505.0   16646820.0
+South East      40948980.0   19367705.0
+South South     45314580.0   23088650.0
+South West      79844085.0   51692900.0
+```
+
 One row per region, one column per year, revenue summed in each cell. It's a `groupby` on two columns followed by `unstack()`, written in one readable call. Add `margins=True` for totals, and `fill_value=0` where a combination has no rows.
 
-**`pd.crosstab`: counts of two categories**
+### `pd.crosstab`: counts of two categories
 
 `pd.crosstab(full["region"], full["channel"])` counts rows for each region and channel. `normalize="index"` turns each row into shares that add up to 1.
 
-**Time series: one row per period**
+### Time series: one row per period
 
 Turn dates into periods, then group:
 
 ```python
 monthly = orders.groupby(orders["order_date"].dt.to_period("M"))["revenue"].sum()
+monthly.head(3)
 ```
 
-**Measuring change**
+```text
+order_date
+2025-01    37088460.0
+2025-02    36138690.0
+2025-03    46282170.0
+Freq: M, Name: revenue, dtype: float64
+```
+
+### Measuring change
 
 - `.pct_change()` gives each period's change from the one before: `0.05` means 5% up.
 - `.pct_change(12)` on monthly data compares each month with the **same month a year earlier**, which removes seasonal effects like December's spike. That's **year-on-year (YoY)**.
 - `.diff()` gives the change in naira rather than in percent.
 - `.rolling(3).mean()` averages each month with the two before it: a **3-month rolling average**. It smooths out one-off spikes so you can see the direction.
 
-**Compare like with like**
+### Compare like with like
 
 The data covers January 2025 to June 2026. Comparing 2026 with 2025 as whole years compares 6 months with 12. Compare **H1 2025** (January–June) with **H1 2026** instead.
 
@@ -32822,7 +33052,7 @@ A chart earns its place when it makes one point obvious. This lesson covers the 
 
 ## The concept
 
-**pandas draws with matplotlib**
+### pandas draws with matplotlib
 
 Every Series and DataFrame has a `.plot()` method that uses **matplotlib**, Python's main charting library, underneath. You import its plotting part as `plt` to adjust the chart:
 
@@ -32830,7 +33060,7 @@ Every Series and DataFrame has a `.plot()` method that uses **matplotlib**, Pyth
 import matplotlib.pyplot as plt
 ```
 
-**Pick the chart for the question**
+### Pick the chart for the question
 
 | Question | Chart | pandas |
 | :-- | :-- | :-- |
@@ -32843,18 +33073,18 @@ Horizontal bars (`barh`) are easier to read when the labels are long, like regio
 
 Avoid pie charts for more than three or four slices, and avoid 3D charts entirely. People can't compare angles or perspective accurately; they can compare bar lengths.
 
-**Make it readable**
+### Make it readable
 
 - `ax = series.plot(...)` returns the chart's **axes**. You use it to set the title and labels: `ax.set_title(...)`, `ax.set_xlabel(...)`, `ax.set_ylabel(...)`.
 - Large naira values: divide by 1,000,000 before plotting and label the axis "₦ millions". `1e6` is Python's shorthand for 1,000,000.
 - Bar charts start at zero. A bar axis that starts at ₦15m makes a small difference look huge.
 - `figsize=(8, 4)` sets the size in inches; wide and short suits time series.
 
-**Titles that state the finding**
+### Titles that state the finding
 
 "Revenue by region" describes the chart. "North West revenue fell 47% while South West grew 79%" tells the reader what to take away. That second kind, an **action title**, is the most useful habit in this lesson.
 
-**Saving**
+### Saving
 
 `plt.savefig("revenue_trend.png", dpi=200, bbox_inches="tight")` saves the current chart. Call it **before** `plt.show()`. `bbox_inches="tight"` stops the labels being cut off.
 
@@ -33048,7 +33278,7 @@ That's a real business question, and like most, it isn't one you can answer with
 
 ## The concept
 
-**1. Turn the question into answerable questions**
+### 1. Turn the question into answerable questions
 
 "Why are we losing people?" becomes:
 
@@ -33059,19 +33289,19 @@ That's a real business question, and like most, it isn't one you can answer with
 
 Each of these maps to a filter, a groupby or a comparison you already know.
 
-**2. Check the data before trusting it**
+### 2. Check the data before trusting it
 
 Before analysing, confirm the data means what you think it means. Does every `Resigned` employee have an `exit_date`, and does nobody `Active` have one? Are the dates real dates? Any duplicates? Five minutes of checks protects every number that follows.
 
-**3. Analyse: rates, not counts**
+### 3. Analyse: rates, not counts
 
 Use rates to compare groups of different sizes, compare like with like, and keep a note of how many people are behind each figure.
 
-**4. Test the obvious explanation**
+### 4. Test the obvious explanation
 
 Everyone will assume pay. Check it directly. An analysis that rules out the obvious explanation is often more valuable than one that confirms it.
 
-**5. Write the finding, with the caveat**
+### 5. Write the finding, with the caveat
 
 A finding has three parts: **what** you found (with a number), **so what** it means, and **now what** you recommend. Then the honest limit: here, only 11 people have left in seven years. Patterns in 11 people are worth acting on, but not worth over-claiming.
 
@@ -33279,7 +33509,7 @@ This lesson sets up the project and gets you started on it. The project itself i
 
 ## The concept
 
-**Customer health: recency, frequency, value**
+### Customer health: recency, frequency, value
 
 A simple, widely used way to judge customers is **RFM**:
 
@@ -33289,15 +33519,15 @@ A simple, widely used way to judge customers is **RFM**:
 
 Each is one `groupby` on the orders. Together they say who's healthy and who's slipping.
 
-**Change per customer**
+### Change per customer
 
 The same H1-against-H1 comparison you made for regions in lesson 9 works per customer: a pivot table of revenue by customer and year, plus a `change` column. Sorting by `change` lists the biggest fallers first. Merging in customer details shows **who** they are and where.
 
-**Explaining a total with its parts**
+### Explaining a total with its parts
 
 When a region falls, ask how much of the fall comes from its biggest movers. If two customers account for most of it, the fix is two phone calls, not a regional strategy.
 
-**A notebook someone else can follow**
+### A notebook someone else can follow
 
 Structure the project notebook the way a reader thinks:
 

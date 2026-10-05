@@ -1,6 +1,6 @@
 ---
 title: Merging tables
-minutes: 20
+minutes: 30
 summary: Combine tables on a shared key with merge, choose between inner and left joins, catch row explosions with validate, find records with no match, and stack tables with concat.
 ---
 
@@ -14,10 +14,15 @@ Region, rep and channel live in `customers.csv`; category lives in `products.csv
 
 ## The concept
 
-**`merge`: match rows on a key**
+### `merge`: match rows on a key
 
 ```python
 orders_full = orders.merge(customers, on="customer_id", how="left")
+orders_full.shape
+```
+
+```text
+(4266, 15)
 ```
 
 - `on` is the column both tables share. If the names differ, use `left_on="cust_id", right_on="customer_id"`.
@@ -32,7 +37,7 @@ orders_full = orders.merge(customers, on="customer_id", how="left")
 
 For "add customer details to every order", use `how="left"`: an order should never disappear just because its customer is missing from the lookup table. You want to **see** that problem as a blank, not lose the order silently.
 
-**Check the row count, every time**
+### Check the row count, every time
 
 A left merge onto a lookup table should leave the number of rows **unchanged**. If `orders` has 4,266 rows and `orders_full` has more, the lookup table has duplicate keys, and every duplicated customer's orders are now counted twice. Your revenue total will be wrong with no error message.
 
@@ -42,20 +47,42 @@ A left merge onto a lookup table should leave the number of rows **unchanged**. 
 orders.merge(customers, on="customer_id", how="left", validate="many_to_one")
 ```
 
+```text
+order_id  order_date  customer_id  product_id  quantity  unit_price  discount_pct   revenue              customer_name      channel       region      city      sales_rep joined_date  credit_limit
+0        10001  2025-01-01           27           3        14       18600             0  260400.0      Alhaji Musa Wholesale    Wholesale        Lagos      Yaba   Tolu Adeyemi  2023-06-10       3100000
+1        10002  2025-01-01           56           1         7       13200             0   92400.0          Yakubu Superstore  Supermarket        Lagos   Ikorodu  Chidi Okonkwo  2022-12-31        850000
+2        10003  2025-01-01           37           2         4        3600             0   14400.0  Hajia Amina Mini Mart Uyo        Kiosk  South South       Uyo     Ebi Tamuno  2024-11-23        500000
+3        10004  2025-01-01           26           7        28        6000             5  159600.0          Chuks Trading Co.    Wholesale   South West  Abeokuta    Funke Alabi  2024-10-30       4250000
+4        10005  2025-01-01           27           8        19       10500             5  189525.0      Alhaji Musa Wholesale    Wholesale        Lagos      Yaba   Tolu Adeyemi  2023-06-10       3100000
+...        ...         ...          ...         ...       ...         ...           ...       ...                        ...          ...          ...       ...            ...         ...           ...
+4261     14262  2026-06-30           68           7        18        6600             5  112860.0   Divine Trading Co. Ikeja    Wholesale        Lagos     Ikeja  Chidi Okonkwo  2023-04-20       3400000
+4262     14263  2026-06-30           47           7        22        6600             0  145200.0              Ada Wholesale    Wholesale   South East     Nnewi     Ikenna Obi  2022-04-07       4950000
+4263     14264  2026-06-30           35          14        17       20700             5  334305.0          Divine Superstore  Supermarket        Lagos   Ikorodu   Tolu Adeyemi  2024-09-05       1150000
+4264     14265  2026-06-30           84          16        17       18100             0  307700.0         Olumide Superstore  Supermarket        Lagos     Lekki  Chidi Okonkwo  2025-04-12       1950000
+4265     14266  2026-06-30           52          11        12       20700             5  235980.0       Madam Titi Wholesale    Wholesale        Lagos     Ikeja  Chidi Okonkwo  2023-05-14       3450000
+
+[4266 rows x 15 columns]
+```
+
 "Many orders to one customer". If a customer_id appears twice in `customers`, pandas stops with a `MergeError` instead of doubling your numbers.
 
-**Finding records with no match**
+### Finding records with no match
 
 `indicator=True` adds a `_merge` column saying where each row came from: `both`, `left_only` or `right_only`.
 
 ```python
 check = customers.merge(orders[["customer_id"]].drop_duplicates(), on="customer_id", how="left", indicator=True)
 no_orders = check[check["_merge"] == "left_only"]
+len(no_orders)
+```
+
+```text
+0
 ```
 
 That's the pandas version of SQL's `LEFT JOIN … WHERE … IS NULL`: customers who never ordered.
 
-**Stacking tables: `concat`**
+### Stacking tables: `concat`
 
 Merging adds **columns** by matching keys. Stacking adds **rows**: for example monthly files with the same columns.
 

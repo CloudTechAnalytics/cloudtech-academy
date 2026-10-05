@@ -1,6 +1,6 @@
 ---
 title: Filtering and sorting rows
-minutes: 20
+minutes: 30
 summary: Keep only the rows you need with boolean conditions, combine conditions with & and |, use isin, between and text matching, and sort or pick the top rows.
 ---
 
@@ -14,19 +14,39 @@ Each one means **keeping only the rows that meet a condition**, and sometimes pu
 
 ## The concept
 
-**A condition gives a True/False for every row**
+### A condition gives a True/False for every row
 
 ```python
 orders["discount_pct"] == 10
+```
+
+```text
+0       False
+1       False
+2       False
+3       False
+4       False
+        ...
+4261    False
+4262    False
+4263    False
+4264    False
+4265    False
+Name: discount_pct, Length: 4266, dtype: bool
 ```
 
 That doesn't filter anything yet: it returns a Series of 4,266 `True`/`False` values, one per row. It's called a **boolean mask**. Put the mask inside square brackets and pandas keeps the `True` rows:
 
 ```python
 big_discounts = orders[orders["discount_pct"] == 10]
+len(big_discounts)
 ```
 
-**Combining conditions**
+```text
+525
+```
+
+### Combining conditions
 
 | Meaning | pandas | Note |
 | :-- | :-- | :-- |
@@ -40,12 +60,29 @@ Each condition needs its **own brackets**, because `&` and `|` are worked out be
 orders[(orders["discount_pct"] == 10) & (orders["quantity"] > 25)]
 ```
 
+```text
+order_id  order_date  customer_id  product_id  quantity  unit_price  discount_pct
+88       10089  2025-01-14           57           2        28        3600            10
+96       10097  2025-01-15           55          15        27       14400            10
+119      10120  2025-01-18           55           3        26       18600            10
+152      10153  2025-01-23           62           9        29       21600            10
+154      10155  2025-01-24           27           1        26       13200            10
+...        ...         ...          ...         ...       ...         ...           ...
+4087     14088  2026-06-06           32           9        30       23300            10
+4132     14133  2026-06-13           27           4        30       18800            10
+4152     14153  2026-06-16           52           6        27        9200            10
+4171     14172  2026-06-18           32          10        26       15600            10
+4255     14256  2026-06-29           32          15        26       15600            10
+
+[95 rows x 7 columns]
+```
+
 Without the inner brackets you get a confusing error about "truth value of a Series is ambiguous". When you see it, check your brackets.
 
 > [!WARNING]
 > Python's words `and` and `or` don't work on whole columns. Use `&` and `|` with pandas.
 
-**Shortcuts for common conditions**
+### Shortcuts for common conditions
 
 - One of several values: `customers["region"].isin(["Lagos", "South West"])`
 - A range, ends included: `orders["quantity"].between(10, 20)`
@@ -54,17 +91,17 @@ Without the inner brackets you get a confusing error about "truth value of a Ser
 
 Dates stored as text in `YYYY-MM-DD` form compare correctly as text, so `orders["order_date"] >= "2026-06-01"` works even before you convert dates (lesson 5).
 
-**Choosing rows and columns together: `.loc`**
+### Choosing rows and columns together: `.loc`
 
 `orders.loc[mask, ["order_id", "quantity"]]` keeps the rows where the mask is True and only the columns you list. It's the clearest way to say "these rows, these columns", and the safe way to change values in a filtered part of a table.
 
-**Sorting**
+### Sorting
 
 - `orders.sort_values("quantity", ascending=False)`: largest first.
 - Several columns: `sort_values(["region", "credit_limit"], ascending=[True, False])`.
 - `orders.nlargest(5, "quantity")` and `nsmallest` are shortcuts for "sort and take the top 5".
 
-**Counting what's left**
+### Counting what's left
 
 `len(df)` is the number of rows. Because `True` counts as 1, `mask.sum()` counts the matching rows without making a new table.
 

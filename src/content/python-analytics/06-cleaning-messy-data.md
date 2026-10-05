@@ -19,15 +19,20 @@ Count Lagos customers in this file without cleaning it and you get the wrong ans
 
 ## The concept
 
-**Load everything as text first**
+### Load everything as text first
 
 ```python
 raw = pd.read_csv("https://academy.cloudtechanalytics.com/datasets/cleaning/customer_list_raw.csv", dtype=str)
+raw.shape
+```
+
+```text
+(102, 7)
 ```
 
 `dtype=str` stops pandas guessing types on a messy file. Without it, a phone column of digits becomes numbers and loses its leading `0`, and a column with one text value in it silently becomes text anyway. Load as text, then convert each column deliberately.
 
-**Text methods: `.str`**
+### Text methods: `.str`
 
 Every text column has a `.str` accessor with the cleaning tools you need:
 
@@ -42,36 +47,63 @@ Every text column has a `.str` accessor with the cleaning tools you need:
 
 Chain them: `raw["Customer Name"].str.strip().str.title()`.
 
-**Standardise categories with a mapping**
+### Standardise categories with a mapping
 
 Bring every variant to one form (lower case, no hyphens), then map the abbreviations with a dictionary:
 
 ```python
 REGIONS = {"sw": "south west", "se": "south east", "ss": "south south", "nw": "north west", "nc": "north central"}
 region = raw["Region"].str.strip().str.lower().str.replace("-", " ").replace(REGIONS).str.title()
+region.value_counts()
+```
+
+```text
+Region
+Lagos            34
+South East       19
+North West       14
+South West       13
+North Central    11
+South South      11
+Name: count, dtype: int64
 ```
 
 Then **check**: `region.value_counts()` should show exactly the six regions you expect. Any extra value is a spelling you haven't handled.
 
-**Numbers stored as text**
+### Numbers stored as text
 
 `pd.to_numeric` converts text to numbers. Remove the symbols first; blanks become `NaN` (Not a Number), pandas' marker for a missing value. Adding `errors="coerce"` turns anything else that won't convert into `NaN` too, instead of stopping with an error: useful, but check how many you lost.
 
-**Mixed date layouts**
+### Mixed date layouts
 
 ```python
 pd.to_datetime(raw["Date Joined"], format="mixed", dayfirst=True)
 ```
 
+```text
+0     2023-10-22
+1     2022-04-21
+2     2023-07-11
+3     2023-04-21
+4     2022-09-01
+         ...
+97    2026-04-25
+98    2025-12-04
+99    2025-07-29
+100   2026-02-18
+101   2026-01-09
+Name: Date Joined, Length: 102, dtype: datetime64[ns]
+```
+
 `format="mixed"` works the layout out for each value; `dayfirst=True` reads `03/01/2023` as 3 January, as Nigerian systems write it.
 
-**Missing values**
+### Missing values
 
 - Find them: `df.isna().sum()` counts blanks per column.
 - Decide what a blank **means** before you touch it. A missing credit limit isn't a zero limit: filling it with 0 would quietly understate every total and average. Usually you leave it as `NaN` (pandas skips it in `sum` and `mean`) and report it.
 - `fillna(value)` fills blanks; `dropna(subset=[...])` drops rows with blanks in the columns you name. Use them only when you can explain why.
 
-**Duplicates**
+### Duplicates
 
 - `df.duplicated(subset=["customer_name"]).sum()` counts repeats of a key.
 - `df.drop_duplicates(subset=["customer_name"])` keeps the first copy of each.

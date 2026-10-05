@@ -146,7 +146,11 @@ async function execute(py: Pyodide, code: string, ns: Pyodide, onOutput?: (text:
   try {
     const quiet = { messageCallback: () => {} };
     await py.loadPackagesFromImports(code, quiet);
-    if (/\bpandas\b|\bpd\./.test(code)) await py.runPythonAsync("_patch_pandas()");
+    if (/\bpandas\b|\bpd\./.test(code)) {
+      // A snippet may use pd without importing it (the lesson's Example imports it), so load it here.
+      await py.loadPackage("pandas", quiet);
+      await py.runPythonAsync("_patch_pandas()");
+    }
     if (/matplotlib|\.plot\(|\bplt\./.test(code)) {
       await py.loadPackage("matplotlib", quiet);
       await py.runPythonAsync("_patch_matplotlib()");
@@ -160,20 +164,35 @@ async function execute(py: Pyodide, code: string, ns: Pyodide, onOutput?: (text:
   }
 }
 
+/** A short snippet in "The concept" often uses data that the lesson's Example loads further down. */
+const isNameError = (error: string | null) => !!error && /\bNameError\b/.test(error);
+
 /**
  * Run block `index` of a lesson. Earlier blocks that haven't run yet are run first, quietly,
  * so a learner can start with any example. `blocks` is every runnable block in the lesson.
+ *
+ * Like scripts/test-python.py: an earlier block that fails only because a name isn't defined
+ * yet is skipped for now, and if the chosen block itself hits an undefined name, the later
+ * blocks are run quietly (they usually load the data) and it's tried once more.
  */
 export async function runBlock(key: string, blocks: string[], index: number, code: string, onOutput?: (text: string) => void): Promise<RunResult> {
   const py = await loadPython();
   const s = await session(key);
-  for (let i = 0; i < index; i++) {
-    if (s.ran.has(i)) continue;
+  const runQuietly = async (i: number) => {
+    if (s.ran.has(i)) return null;
     const r = await execute(py, blocks[i], s.ns);
-    if (r.error) return { output: "", images: [], error: `An earlier example in this lesson didn't run, so this one can't either:\n\n${r.error}` };
-    s.ran.add(i);
+    if (!r.error) s.ran.add(i);
+    return r.error;
+  };
+  for (let i = 0; i < index; i++) {
+    const error = await runQuietly(i);
+    if (error && !isNameError(error)) return { output: "", images: [], error: `An earlier example in this lesson didn't run, so this one can't either:\n\n${error}` };
   }
-  const result = await execute(py, code, s.ns, onOutput);
+  let result = await execute(py, code, s.ns, onOutput);
+  if (isNameError(result.error) && index < blocks.length - 1) {
+    for (let i = index + 1; i < blocks.length; i++) await runQuietly(i);
+    result = await execute(py, code, s.ns, onOutput);
+  }
   if (!result.error) s.ran.add(index);
   return result;
 }
