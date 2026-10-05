@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 330" width="760" height="330" role="img" aria-label="The data is split once: about 80 percent becomes the training set, which the model learns from, and 20 percent the test set, which is kept aside and used once at the end. Every model, including a simple baseline such as predicting the median rent, is scored on the same test set, and a model is only worth using if it clearly beats the baseline.">
+<title>Split once, train on one part, score everything once on the held-out test set.</title>
+
+<rect width="760" height="330" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="28.0" font-size="15" fill="#2A2926" font-weight="700" text-anchor="start">All listings, shuffled with a fixed random_state</text>
+<rect x="16.0" y="42.0" width="576.0" height="46.0" rx="6" fill="#DCC594"/>
+<text xml:space="preserve" x="304.0" y="71.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="middle">Training set: about 80%</text>
+<rect x="596.0" y="42.0" width="148.0" height="46.0" rx="6" fill="#2F5D8A"/>
+<text xml:space="preserve" x="670.0" y="71.0" font-size="14" fill="#FFFFFF" font-weight="700" text-anchor="middle">Test set: 20%</text>
+<text xml:space="preserve" x="304.0" y="108.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="middle">the model learns from these</text>
+<text xml:space="preserve" x="670.0" y="108.0" font-size="12.5" fill="#2F5D8A" font-weight="700" text-anchor="middle">kept aside, used once</text>
+<rect x="16.0" y="132.0" width="350.0" height="150.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="32.0" y="160.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Baseline (no machine learning)</text>
+<text xml:space="preserve" x="32.0" y="188.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">Predict the median rent for every listing,</text>
+<text xml:space="preserve" x="32.0" y="206.8" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">or the median for the listing's area.</text>
+<text xml:space="preserve" x="32.0" y="250.0" font-size="13" fill="#2F5D8A" font-weight="700" text-anchor="start">Scored on the test set: error A</text>
+<rect x="394.0" y="132.0" width="350.0" height="150.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="410.0" y="160.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Model</text>
+<text xml:space="preserve" x="410.0" y="188.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">Learns from the training set,</text>
+<text xml:space="preserve" x="410.0" y="206.8" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">then predicts the test listings.</text>
+<text xml:space="preserve" x="410.0" y="250.0" font-size="13" fill="#2F5D8A" font-weight="700" text-anchor="start">Scored on the same test set: error B</text>
+<text xml:space="preserve" x="16.0" y="308.0" font-size="13.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Use the model only if error B is clearly smaller than error A.</text>
+</g></svg>

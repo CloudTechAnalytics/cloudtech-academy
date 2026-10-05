@@ -12,7 +12,7 @@ This is what a junior data scientist's first real project looks like. The modell
 
 ## The concept
 
-**The project, step by step**
+### The project, step by step
 
 | Step | Deliverable | Lesson |
 | :-- | :-- | :-- |
@@ -25,7 +25,7 @@ This is what a junior data scientist's first real project looks like. The modell
 | Explain and check | permutation importance, reasons for declines, fairness checks | 9 |
 | Deploy | a pipeline, a scored example, a model card, a monitoring plan | 10 |
 
-**What makes it responsible**
+### What makes it responsible
 
 - No leakage: every feature exists on the day of the application.
 - No protected characteristics, and proxies tested and removed if they add nothing.

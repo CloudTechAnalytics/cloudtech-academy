@@ -12,7 +12,7 @@ The only honest test of a model is on data it **didn't** learn from. And "₦800
 
 ## The concept
 
-**Train and test sets**
+### Train and test sets
 
 Split the data before you do anything else with the model:
 
@@ -21,7 +21,7 @@ Split the data before you do anything else with the model:
 
 `train_test_split` from scikit-learn shuffles the rows and splits them. Set `random_state` to a fixed number so the split, and therefore your results, are the same every time.
 
-**Error measures for regression**
+### Error measures for regression
 
 | Measure | What it is | Use when |
 | :-- | :-- | :-- |
@@ -29,7 +29,7 @@ Split the data before you do anything else with the model:
 | **RMSE** (root mean squared error) | like MAE but punishes big errors more | big misses are especially costly |
 | **R²** | share of the variation explained, from 0 to 1 | comparing models on the same data |
 
-**Baselines**
+### Baselines
 
 A **baseline** is the best you can do without machine learning, using a simple rule:
 
@@ -37,6 +37,8 @@ A **baseline** is the best you can do without machine learning, using a simple r
 - or a slightly smarter rule: predict the median rent **for that area**.
 
 A model is only useful if it clearly beats the baseline. If it doesn't, the extra complexity isn't worth it.
+
+![A bar split into a training set of about 80 percent and a test set of 20 percent. Below, a baseline box and a model box, both scored on the same test set.](/images/courses/ml/train-test-baseline.svg "Split once; score the baseline and every model on the same held-out test set.")
 
 ## Example
 

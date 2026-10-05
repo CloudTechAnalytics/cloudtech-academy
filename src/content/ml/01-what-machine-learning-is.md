@@ -12,11 +12,11 @@ That's the kind of problem **machine learning** (ML) is for: when you have many 
 
 ## The concept
 
-**What a model learns**
+### What a model learns
 
 A machine learning model learns a function from **features** (the inputs, such as area, bedrooms, size) to a **target** (the answer, such as rent), from examples where both are known. It then predicts the target for new cases where only the features are known.
 
-**Two kinds of supervised learning**
+### Two kinds of supervised learning
 
 | Type | Target | Examples |
 | :-- | :-- | :-- |
@@ -25,7 +25,7 @@ A machine learning model learns a function from **features** (the inputs, such a
 
 Both are **supervised**: the training data includes the right answers. **Unsupervised** learning (such as grouping customers into segments) has no target; this course focuses on supervised learning, which is where most business value is.
 
-**The workflow**
+### The workflow
 
 1. **Frame** the question: what will be predicted, for whom, and what decision will it change?
 2. **Prepare** the data: clean it, handle gaps, turn categories into numbers.
@@ -35,7 +35,9 @@ Both are **supervised**: the training data includes the right answers. **Unsuper
 6. **Evaluate** honestly, with the right measure for the decision.
 7. **Explain and deploy** responsibly, and keep monitoring.
 
-**When not to use machine learning**
+![Seven numbered steps: frame, prepare, split, baseline, train, evaluate, deploy, with a dashed loop from deploy back to frame. Baseline and evaluate are highlighted.](/images/courses/ml/workflow.svg "The workflow. The highlighted steps are the ones most often skipped.")
+
+### When not to use machine learning
 
 - When a simple rule works ("loans over ₦5m need a manager's approval").
 - When you have too few examples, or none with known answers.

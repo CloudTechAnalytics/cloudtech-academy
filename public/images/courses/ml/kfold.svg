@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 380" width="760" height="380" role="img" aria-label="Five-fold cross-validation. The training data is split into five folds. In each of five rounds, the model is trained on four folds and scored on the remaining one, so each fold is used once for scoring. The five scores are averaged. The test set stays aside throughout.">
+<title>5-fold cross-validation: every training row is used for both fitting and checking.</title>
+
+<rect width="760" height="380" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="28.0" font-size="15" fill="#2A2926" font-weight="700" text-anchor="start">Training data, in five folds</text>
+<text xml:space="preserve" x="744.0" y="28.0" font-size="13" fill="#2F5D8A" font-weight="700" text-anchor="end">test set</text>
+<text xml:space="preserve" x="16.0" y="70.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">Round 1</text>
+<rect x="100.0" y="46.0" width="94.0" height="34.0" rx="4" fill="#B38A3E"/>
+<text xml:space="preserve" x="147.0" y="68.0" font-size="12.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">score</text>
+<rect x="200.0" y="46.0" width="94.0" height="34.0" rx="4" fill="#DCC594"/>
+<text xml:space="preserve" x="247.0" y="68.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="middle">train</text>
+<rect x="300.0" y="46.0" width="94.0" height="34.0" rx="4" fill="#DCC594"/>
+<text xml:space="preserve" x="347.0" y="68.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="middle">train</text>
+<rect x="400.0" y="46.0" width="94.0" height="34.0" rx="4" fill="#DCC594"/>
+<text xml:space="preserve" x="447.0" y="68.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="middle">train</text>
+<rect x="500.0" y="46.0" width="94.0" height="34.0" rx="4" fill="#DCC594"/>
+<text xml:space="preserve" x="547.0" y="68.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="middle">train</text>
+<text xml:space="preserve" x="612.0" y="68.0" font-size="13" fill="#8A6A1F" font-weight="700" text-anchor="start">error 1</text>
+<rect x="690.0" y="46.0" width="54.0" height="34.0" rx="4" fill="#E6EEF6"/>
+<text xml:space="preserve" x="16.0" y="120.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">Round 2</text>
+<rect x="100.0" y="96.0" width="94.0" height="34.0" rx="4" fill="#DCC594"/>
+<text xml:space="preserve" x="147.0" y="118.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="middle">train</text>
+<rect x="200.0" y="96.0" width="94.0" height="34.0" rx="4" fill="#B38A3E"/>
+<text xml:space="preserve" x="247.0" y="118.0" font-size="12.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">score</text>
+<rect x="300.0" y="96.0" width="94.0" height="34.0" rx="4" fill="#DCC594"/>
+<text xml:space="preserve" x="347.0" y="118.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="middle">train</text>
+<rect x="400.0" y="96.0" width="94.0" height="34.0" rx="4" fill="#DCC594"/>
+<text xml:space="preserve" x="447.0" y="118.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="middle">train</text>
+<rect x="500.0" y="96.0" width="94.0" height="34.0" rx="4" fill="#DCC594"/>
+<text xml:space="preserve" x="547.0" y="118.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="middle">train</text>
+<text xml:space="preserve" x="612.0" y="118.0" font-size="13" fill="#8A6A1F" font-weight="700" text-anchor="start">error 2</text>
+<rect x="690.0" y="96.0" width="54.0" height="34.0" rx="4" fill="#E6EEF6"/>
+<text xml:space="preserve" x="16.0" y="170.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">Round 3</text>
+<rect x="100.0" y="146.0" width="94.0" height="34.0" rx="4" fill="#DCC594"/>
+<text xml:space="preserve" x="147.0" y="168.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="middle">train</text>
+<rect x="200.0" y="146.0" width="94.0" height="34.0" rx="4" fill="#DCC594"/>
+<text xml:space="preserve" x="247.0" y="168.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="middle">train</text>
+<rect x="300.0" y="146.0" width="94.0" height="34.0" rx="4" fill="#B38A3E"/>
+<text xml:space="preserve" x="347.0" y="168.0" font-size="12.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">score</text>
+<rect x="400.0" y="146.0" width="94.0" height="34.0" rx="4" fill="#DCC594"/>
+<text xml:space="preserve" x="447.0" y="168.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="middle">train</text>
+<rect x="500.0" y="146.0" width="94.0" height="34.0" rx="4" fill="#DCC594"/>
+<text xml:space="preserve" x="547.0" y="168.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="middle">train</text>
+<text xml:space="preserve" x="612.0" y="168.0" font-size="13" fill="#8A6A1F" font-weight="700" text-anchor="start">error 3</text>
+<rect x="690.0" y="146.0" width="54.0" height="34.0" rx="4" fill="#E6EEF6"/>
+<text xml:space="preserve" x="16.0" y="220.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">Round 4</text>
+<rect x="100.0" y="196.0" width="94.0" height="34.0" rx="4" fill="#DCC594"/>
+<text xml:space="preserve" x="147.0" y="218.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="middle">train</text>
+<rect x="200.0" y="196.0" width="94.0" height="34.0" rx="4" fill="#DCC594"/>
+<text xml:space="preserve" x="247.0" y="218.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="middle">train</text>
+<rect x="300.0" y="196.0" width="94.0" height="34.0" rx="4" fill="#DCC594"/>
+<text xml:space="preserve" x="347.0" y="218.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="middle">train</text>
+<rect x="400.0" y="196.0" width="94.0" height="34.0" rx="4" fill="#B38A3E"/>
+<text xml:space="preserve" x="447.0" y="218.0" font-size="12.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">score</text>
+<rect x="500.0" y="196.0" width="94.0" height="34.0" rx="4" fill="#DCC594"/>
+<text xml:space="preserve" x="547.0" y="218.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="middle">train</text>
+<text xml:space="preserve" x="612.0" y="218.0" font-size="13" fill="#8A6A1F" font-weight="700" text-anchor="start">error 4</text>
+<rect x="690.0" y="196.0" width="54.0" height="34.0" rx="4" fill="#E6EEF6"/>
+<text xml:space="preserve" x="16.0" y="270.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">Round 5</text>
+<rect x="100.0" y="246.0" width="94.0" height="34.0" rx="4" fill="#DCC594"/>
+<text xml:space="preserve" x="147.0" y="268.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="middle">train</text>
+<rect x="200.0" y="246.0" width="94.0" height="34.0" rx="4" fill="#DCC594"/>
+<text xml:space="preserve" x="247.0" y="268.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="middle">train</text>
+<rect x="300.0" y="246.0" width="94.0" height="34.0" rx="4" fill="#DCC594"/>
+<text xml:space="preserve" x="347.0" y="268.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="middle">train</text>
+<rect x="400.0" y="246.0" width="94.0" height="34.0" rx="4" fill="#DCC594"/>
+<text xml:space="preserve" x="447.0" y="268.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="middle">train</text>
+<rect x="500.0" y="246.0" width="94.0" height="34.0" rx="4" fill="#B38A3E"/>
+<text xml:space="preserve" x="547.0" y="268.0" font-size="12.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">score</text>
+<text xml:space="preserve" x="612.0" y="268.0" font-size="13" fill="#8A6A1F" font-weight="700" text-anchor="start">error 5</text>
+<rect x="690.0" y="246.0" width="54.0" height="34.0" rx="4" fill="#E6EEF6"/>
+<text xml:space="preserve" x="16.0" y="316.0" font-size="13.5" fill="#2A2926" font-weight="400" text-anchor="start">Average the five errors to compare settings (such as max_depth). Then retrain on all the training</text>
+<text xml:space="preserve" x="16.0" y="335.6" font-size="13.5" fill="#2A2926" font-weight="400" text-anchor="start">data with the best setting, and score the test set once.</text>
+</g></svg>

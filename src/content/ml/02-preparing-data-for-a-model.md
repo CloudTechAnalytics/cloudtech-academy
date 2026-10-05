@@ -12,11 +12,11 @@ Data preparation usually takes more time than modelling, and it decides most of 
 
 ## The concept
 
-**Features and target**
+### Features and target
 
 Put the features in a table called `X` and the target in a column called `y`. Leave out anything that identifies a row (`listing_id`) or that you wouldn't know at the moment of prediction.
 
-**Missing values**
+### Missing values
 
 | Option | When |
 | :-- | :-- |
@@ -24,15 +24,15 @@ Put the features in a table called `X` and the target in a column called `y`. Le
 | Fill (impute) with a typical value | the column matters; use a group median (for size: the median for that property type and number of bedrooms) |
 | Add a "was missing" flag | the fact that it's missing may itself be informative |
 
-**Outliers: errors or real?**
+### Outliers: errors or real?
 
 Compare each value with similar rows, not with the whole column. A ₦54m flat is normal in Ikoyi and impossible in Kubwa. Here, a listing whose rent is more than **4 times** the median for its area, type and bedrooms is a likely typo. Check a few by eye, remove the confirmed errors, and **write down the rule**.
 
-**Categories to numbers: one-hot encoding**
+### Categories to numbers: one-hot encoding
 
 `pd.get_dummies` turns a text column into one 0/1 column per category (`area_Yaba`, `area_Ikoyi`, and so on). With `drop_first=True`, one category is left out as the reference, since it's implied when all the others are 0.
 
-**Leakage: the silent killer**
+### Leakage: the silent killer
 
 **Leakage** is information in the features that wouldn't be available when you make a real prediction, or that's derived from the target. A model with leakage scores brilliantly in testing and fails in use. Examples: "days in arrears" when predicting default (it's only known after default starts); "final sale price" when predicting the asking rent. Always ask of each feature: **would I know this at the moment I need the prediction?**
 

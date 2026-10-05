@@ -38054,11 +38054,11 @@ That's the kind of problem **machine learning** (ML) is for: when you have many 
 
 ## The concept
 
-**What a model learns**
+### What a model learns
 
 A machine learning model learns a function from **features** (the inputs, such as area, bedrooms, size) to a **target** (the answer, such as rent), from examples where both are known. It then predicts the target for new cases where only the features are known.
 
-**Two kinds of supervised learning**
+### Two kinds of supervised learning
 
 | Type | Target | Examples |
 | :-- | :-- | :-- |
@@ -38067,7 +38067,7 @@ A machine learning model learns a function from **features** (the inputs, such a
 
 Both are **supervised**: the training data includes the right answers. **Unsupervised** learning (such as grouping customers into segments) has no target; this course focuses on supervised learning, which is where most business value is.
 
-**The workflow**
+### The workflow
 
 1. **Frame** the question: what will be predicted, for whom, and what decision will it change?
 2. **Prepare** the data: clean it, handle gaps, turn categories into numbers.
@@ -38077,7 +38077,9 @@ Both are **supervised**: the training data includes the right answers. **Unsuper
 6. **Evaluate** honestly, with the right measure for the decision.
 7. **Explain and deploy** responsibly, and keep monitoring.
 
-**When not to use machine learning**
+![Seven numbered steps: frame, prepare, split, baseline, train, evaluate, deploy, with a dashed loop from deploy back to frame. Baseline and evaluate are highlighted.](/images/courses/ml/workflow.svg "The workflow. The highlighted steps are the ones most often skipped.")
+
+### When not to use machine learning
 
 - When a simple rule works ("loans over ₦5m need a manager's approval").
 - When you have too few examples, or none with known answers.
@@ -38224,11 +38226,11 @@ Data preparation usually takes more time than modelling, and it decides most of 
 
 ## The concept
 
-**Features and target**
+### Features and target
 
 Put the features in a table called `X` and the target in a column called `y`. Leave out anything that identifies a row (`listing_id`) or that you wouldn't know at the moment of prediction.
 
-**Missing values**
+### Missing values
 
 | Option | When |
 | :-- | :-- |
@@ -38236,15 +38238,15 @@ Put the features in a table called `X` and the target in a column called `y`. Le
 | Fill (impute) with a typical value | the column matters; use a group median (for size: the median for that property type and number of bedrooms) |
 | Add a "was missing" flag | the fact that it's missing may itself be informative |
 
-**Outliers: errors or real?**
+### Outliers: errors or real?
 
 Compare each value with similar rows, not with the whole column. A ₦54m flat is normal in Ikoyi and impossible in Kubwa. Here, a listing whose rent is more than **4 times** the median for its area, type and bedrooms is a likely typo. Check a few by eye, remove the confirmed errors, and **write down the rule**.
 
-**Categories to numbers: one-hot encoding**
+### Categories to numbers: one-hot encoding
 
 `pd.get_dummies` turns a text column into one 0/1 column per category (`area_Yaba`, `area_Ikoyi`, and so on). With `drop_first=True`, one category is left out as the reference, since it's implied when all the others are 0.
 
-**Leakage: the silent killer**
+### Leakage: the silent killer
 
 **Leakage** is information in the features that wouldn't be available when you make a real prediction, or that's derived from the target. A model with leakage scores brilliantly in testing and fails in use. Examples: "days in arrears" when predicting default (it's only known after default starts); "final sale price" when predicting the asking rent. Always ask of each feature: **would I know this at the moment I need the prediction?**
 
@@ -38402,7 +38404,7 @@ The only honest test of a model is on data it **didn't** learn from. And "₦800
 
 ## The concept
 
-**Train and test sets**
+### Train and test sets
 
 Split the data before you do anything else with the model:
 
@@ -38411,7 +38413,7 @@ Split the data before you do anything else with the model:
 
 `train_test_split` from scikit-learn shuffles the rows and splits them. Set `random_state` to a fixed number so the split, and therefore your results, are the same every time.
 
-**Error measures for regression**
+### Error measures for regression
 
 | Measure | What it is | Use when |
 | :-- | :-- | :-- |
@@ -38419,7 +38421,7 @@ Split the data before you do anything else with the model:
 | **RMSE** (root mean squared error) | like MAE but punishes big errors more | big misses are especially costly |
 | **R²** | share of the variation explained, from 0 to 1 | comparing models on the same data |
 
-**Baselines**
+### Baselines
 
 A **baseline** is the best you can do without machine learning, using a simple rule:
 
@@ -38427,6 +38429,8 @@ A **baseline** is the best you can do without machine learning, using a simple r
 - or a slightly smarter rule: predict the median rent **for that area**.
 
 A model is only useful if it clearly beats the baseline. If it doesn't, the extra complexity isn't worth it.
+
+![A bar split into a training set of about 80 percent and a test set of 20 percent. Below, a baseline box and a model box, both scored on the same test set.](/images/courses/ml/train-test-baseline.svg "Split once; score the baseline and every model on the same held-out test set.")
 
 ## Example
 
@@ -38550,7 +38554,7 @@ The property company wants more than a number. Landlords ask: "How much more cou
 
 ## The concept
 
-**What linear regression learns**
+### What linear regression learns
 
 It predicts the target as a weighted sum of the features:
 
@@ -38558,15 +38562,15 @@ It predicts the target as a weighted sum of the features:
 
 Training finds the weights (the **coefficients**) that make the predictions as close as possible to the real rents in the training data.
 
-**The flaw: prices multiply, they don't add**
+### The flaw: prices multiply, they don't add
 
 A linear model says being serviced adds a fixed amount, say ₦1.5m, everywhere. But in reality it adds a **percentage**: about the same proportion in Kubwa as in Ikoyi, so many more naira in Ikoyi. Prices, salaries and sales usually behave like this.
 
-**The fix: model the log of the target**
+### The fix: model the log of the target
 
 Train on `np.log(rent)` and convert predictions back with `np.exp`. On the log scale, percentage effects become additive, which is exactly what a linear model can learn. A coefficient `c` then means: this feature multiplies rent by `exp(c)`, a change of `(exp(c) − 1) × 100` percent.
 
-**Reading the error**
+### Reading the error
 
 Use the same test set and the same measure (MAE) as the baselines, so the comparison is fair. Add R² to see how much of the variation the model explains.
 
@@ -38729,11 +38733,11 @@ But they bring a new danger. A tree can grow until it has a rule for every singl
 
 ## The concept
 
-**Decision trees**
+### Decision trees
 
 A decision tree asks a sequence of yes/no questions ("Is it in Ikoyi?", "Is the size over 120 m²?") and predicts the average rent of the training listings that end up in each final group (**leaf**). It handles interactions and doesn't need log transforms or scaling.
 
-**Overfitting and underfitting**
+### Overfitting and underfitting
 
 | | Training error | Test error | Cause |
 | :-- | :-- | :-- | :-- |
@@ -38743,11 +38747,13 @@ A decision tree asks a sequence of yes/no questions ("Is it in Ikoyi?", "Is the 
 
 The tell-tale sign of overfitting is a big **gap** between training and test error. Control it by limiting the tree: `max_depth` (how many questions deep), or `min_samples_leaf` (smallest group allowed).
 
-**Random forests**
+![Two curves against model complexity: training error falls steadily; test error falls to a minimum, then rises. The gap between them at high complexity is marked as overfitting.](/images/courses/ml/overfitting.svg "Underfitting on the left, overfitting on the right. The gap between the lines is the warning sign.")
+
+### Random forests
 
 A random forest grows hundreds of trees, each on a random sample of the rows and features, and averages their predictions. Individual trees overfit in different ways; averaging cancels much of it out. Forests are among the most reliable general-purpose models.
 
-**Feature importance**
+### Feature importance
 
 Forests report how much each feature contributed to their splits. It's a useful first look at what matters, but it favours features with many distinct values (like size). Lesson 9 shows a more reliable method.
 
@@ -38909,11 +38915,11 @@ The test set must be used **once**, at the end. So how do you choose settings li
 
 ## The concept
 
-**Hyperparameters**
+### Hyperparameters
 
 Settings you choose before training, rather than ones the model learns: a tree's `max_depth`, a forest's number of trees, `min_samples_leaf`. Choosing them is called **tuning**.
 
-**k-fold cross-validation**
+### k-fold cross-validation
 
 1. Split the **training** data into k parts (folds), often 5.
 2. Train on 4 folds and measure the error on the 5th.
@@ -38922,11 +38928,13 @@ Settings you choose before training, rather than ones the model learns: a tree's
 
 Every training row is used for both learning and checking, and the average over 5 folds is far more stable than one split. Use it to compare settings, pick the best, then retrain on all the training data and score the **test set once**.
 
-**Grid search**
+![Five rounds of five folds. In each round a different fold is scored and the other four are used for training; the test set sits apart, unused.](/images/courses/ml/kfold.svg "5-fold cross-validation. The test set stays out of it.")
+
+### Grid search
 
 `GridSearchCV` automates this: give it a model, a list of settings to try and a scoring measure, and it cross-validates every combination and reports the best.
 
-**The three-way discipline**
+### The three-way discipline
 
 | Data | Used for |
 | :-- | :-- |
@@ -39079,17 +39087,19 @@ A data scientist builds one and reports **88.6% accuracy**. The credit manager i
 
 ## The concept
 
-**Classification**
+### Classification
 
 The target is a category: here `defaulted`, 1 or 0. Classifiers usually predict a **probability** ("this loan has a 31% chance of default"), which you then turn into a decision with a **threshold** (flag if the probability is above 0.25).
 
-**Logistic regression**
+### Logistic regression
 
 The classification version of linear regression. It combines the features into a score, like linear regression, then squeezes that score into a probability between 0 and 1 with the S-shaped logistic function. It's fast, robust and explainable, and in credit scoring it's still the industry standard.
 
+![An S-shaped curve rising from 0 to 1 as the risk score increases, with a dashed threshold at 0.5: approve below it, flag as likely default above it.](/images/courses/ml/sigmoid.svg "The logistic function turns a score into a probability; the threshold turns it into a decision.")
+
 Logistic regression works best when the numeric features are on similar scales, so put a **StandardScaler** in front of it in a **pipeline**: one object that scales the data and then fits the model, in the right order, every time.
 
-**Imbalanced classes**
+### Imbalanced classes
 
 When one outcome is rare (defaults, fraud, rare diseases):
 
@@ -39249,24 +39259,26 @@ Set the line low and the bank declines many borrowers who would have repaid, los
 
 ## The concept
 
-**The confusion matrix**
+### The confusion matrix
 
 | | Predicted: repays | Predicted: defaults |
 | :-- | :-- | :-- |
 | **Actually repays** | true negative (TN) | false positive (FP): a good borrower turned away |
 | **Actually defaults** | false negative (FN): a default we lent to | true positive (TP): a default caught |
 
-**Measures from it**
+### Measures from it
 
 - **Recall** (sensitivity) = TP ÷ (TP + FN): of all the defaults, how many did we catch?
 - **Precision** = TP ÷ (TP + FP): of the loans we flagged, how many really defaulted?
 - Lowering the threshold raises recall and lowers precision. There's always a trade-off.
 
-**AUC: ranking quality, independent of threshold**
+![A two-by-two confusion matrix: true negatives (good loan approved), false positives (good borrower turned away), false negatives (default we lent to), true positives (default caught). Beside it, an illustration of recall rising and precision falling as the threshold is lowered.](/images/courses/ml/confusion-threshold.svg "The confusion matrix, and the trade-off the threshold controls.")
+
+### AUC: ranking quality, independent of threshold
 
 The **ROC AUC** measures how well the model ranks risky loans above safe ones, across all thresholds: 0.5 is random guessing, 1.0 is perfect. Credit scoring models typically score 0.70 to 0.85. Use it to compare models; use the threshold analysis to make the decision.
 
-**Choosing the threshold from costs**
+### Choosing the threshold from costs
 
 For each possible threshold, simulate the decision on the test set:
 
@@ -39471,23 +39483,23 @@ A model that can't answer these shouldn't be making decisions about people's liv
 
 ## The concept
 
-**Global explanations: what drives the model overall?**
+### Global explanations: what drives the model overall?
 
 - **Coefficients** (for logistic regression on scaled features): the sign says which way a feature pushes the risk, and the size says how strongly, per standard deviation.
 - **Permutation importance**: shuffle one feature's values in the test set and measure how much the model's AUC drops. A big drop means the model relies on that feature. It works for any model and doesn't favour features with many values.
 
-**Local explanations: why this applicant?**
+### Local explanations: why this applicant?
 
 For one application, list the features that pushed its probability up most (for logistic regression, each feature's scaled value × its coefficient). Turn the top two or three into plain reasons: "loan large relative to revenue", "late payments on previous loans".
 
-**Fairness**
+### Fairness
 
 - Don't use **protected characteristics** (sex, religion, ethnicity) as features. This dataset doesn't contain them.
 - Watch for **proxies**: features that stand in for a protected group. In Nigeria, **region** can be a proxy for ethnicity or religion.
 - Ask whether a feature reflects **behaviour** the borrower controls (late payments, the loan's size compared with revenue) or **who they are** (where they live). Prefer behaviour.
 - Test it: does dropping the feature lose real predictive power? If not, drop it.
 
-**Monitoring: models age**
+### Monitoring: models age
 
 The world changes: interest rates, the economy, the bank's own lending policy. Track, monthly:
 
@@ -39665,7 +39677,7 @@ Getting from "a model in a notebook" to "a model the business uses" is where man
 
 ## The concept
 
-**A full pipeline**
+### A full pipeline
 
 Until now, you've one-hot encoded with `pd.get_dummies` before training. That's fragile: a new application has one row, so `get_dummies` can't create the same columns. A scikit-learn **ColumnTransformer** does the preparation inside the model:
 
@@ -39675,15 +39687,15 @@ Until now, you've one-hot encoded with `pd.get_dummies` before training. That's 
 
 Fit the whole pipeline on the training data, and it takes **raw** rows, exactly like the CSV, from then on.
 
-**Scoring and reasons**
+### Scoring and reasons
 
 For each new application, return the probability, the decision at the agreed threshold, and the top reasons. Reasons matter as much as the score: they're what a credit officer can act on and explain.
 
-**Saving and loading**
+### Saving and loading
 
 `joblib.dump(pipeline, "default_model.joblib")` saves the fitted pipeline to a file; `joblib.load` brings it back, ready to score. Record the date, the data used and the scikit-learn version alongside it.
 
-**A model card**
+### A model card
 
 A one-page description of the model: purpose, intended users, data, features (and those deliberately excluded), performance, threshold and its business basis, known limitations, fairness checks, monitoring plan, owner and review date.
 
@@ -39849,7 +39861,7 @@ This is what a junior data scientist's first real project looks like. The modell
 
 ## The concept
 
-**The project, step by step**
+### The project, step by step
 
 | Step | Deliverable | Lesson |
 | :-- | :-- | :-- |
@@ -39862,7 +39874,7 @@ This is what a junior data scientist's first real project looks like. The modell
 | Explain and check | permutation importance, reasons for declines, fairness checks | 9 |
 | Deploy | a pipeline, a scored example, a model card, a monitoring plan | 10 |
 
-**What makes it responsible**
+### What makes it responsible
 
 - No leakage: every feature exists on the day of the application.
 - No protected characteristics, and proxies tested and removed if they add nothing.

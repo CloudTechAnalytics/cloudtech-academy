@@ -163,6 +163,30 @@
   1060,
   713
  ],
+ "/images/courses/ml/confusion-threshold.svg": [
+  760,
+  470
+ ],
+ "/images/courses/ml/kfold.svg": [
+  760,
+  380
+ ],
+ "/images/courses/ml/overfitting.svg": [
+  760,
+  400
+ ],
+ "/images/courses/ml/sigmoid.svg": [
+  760,
+  380
+ ],
+ "/images/courses/ml/train-test-baseline.svg": [
+  760,
+  330
+ ],
+ "/images/courses/ml/workflow.svg": [
+  760,
+  430
+ ],
  "/images/courses/modelling/cardinality.svg": [
   760,
   700

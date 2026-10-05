@@ -12,17 +12,19 @@ A data scientist builds one and reports **88.6% accuracy**. The credit manager i
 
 ## The concept
 
-**Classification**
+### Classification
 
 The target is a category: here `defaulted`, 1 or 0. Classifiers usually predict a **probability** ("this loan has a 31% chance of default"), which you then turn into a decision with a **threshold** (flag if the probability is above 0.25).
 
-**Logistic regression**
+### Logistic regression
 
 The classification version of linear regression. It combines the features into a score, like linear regression, then squeezes that score into a probability between 0 and 1 with the S-shaped logistic function. It's fast, robust and explainable, and in credit scoring it's still the industry standard.
 
+![An S-shaped curve rising from 0 to 1 as the risk score increases, with a dashed threshold at 0.5: approve below it, flag as likely default above it.](/images/courses/ml/sigmoid.svg "The logistic function turns a score into a probability; the threshold turns it into a decision.")
+
 Logistic regression works best when the numeric features are on similar scales, so put a **StandardScaler** in front of it in a **pipeline**: one object that scales the data and then fits the model, in the right order, every time.
 
-**Imbalanced classes**
+### Imbalanced classes
 
 When one outcome is rare (defaults, fraud, rare diseases):
 
