@@ -12,7 +12,7 @@ That can work, but only if the judge agrees with people often enough, on the gra
 
 ## The concept
 
-**Three layers of evaluation**
+### Three layers of evaluation
 
 | Layer | What it checks | Cost |
 | :-- | :-- | :-- |
@@ -22,13 +22,13 @@ That can work, but only if the judge agrees with people often enough, on the gra
 
 Use the cheap layers on everything and humans on a sample. Check the judge against the human sample regularly.
 
-**Checking a judge**
+### Checking a judge
 
 - **Agreement**: share of answers where the judge's grade matches the human grade.
 - **Agreement on what matters**: does the judge catch the answers people graded Incorrect, or as wrongly answering? A judge that's 90% in agreement but misses most bad answers is useless.
 - **Direction of errors**: is it too lenient (grading partly correct answers as correct) or too harsh?
 
-**Improving a judge**
+### Improving a judge
 
 Give it the source article and a clear rubric with examples of each grade; ask for the reason before the grade; use a strong model; and keep re-checking it against fresh human grades.
 

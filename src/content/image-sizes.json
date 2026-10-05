@@ -223,6 +223,30 @@
   760,
   400
  ],
+ "/images/courses/genai/embeddings.svg": [
+  760,
+  420
+ ],
+ "/images/courses/genai/injection-layers.svg": [
+  760,
+  400
+ ],
+ "/images/courses/genai/next-token.svg": [
+  760,
+  400
+ ],
+ "/images/courses/genai/rag.svg": [
+  760,
+  380
+ ],
+ "/images/courses/genai/request-anatomy.svg": [
+  760,
+  400
+ ],
+ "/images/courses/genai/validation.svg": [
+  760,
+  366
+ ],
  "/images/courses/ml/confusion-threshold.svg": [
   760,
   470

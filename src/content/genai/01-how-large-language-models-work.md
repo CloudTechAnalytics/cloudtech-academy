@@ -12,11 +12,11 @@ That isn't a bug in one product. It follows from how large language models (LLMs
 
 ## The concept
 
-**Next-token prediction**
+### Next-token prediction
 
 An LLM is trained on enormous amounts of text to do one thing: given the text so far, predict a likely next **token** (a word or part of a word). Generating an answer means repeating that step: predict a token, add it, predict the next. Everything else (following instructions, writing code, summarising) emerges from doing that very well, followed by extra training to make the model helpful and safe.
 
-**Tokens**
+### Tokens
 
 Models read and write tokens, not words. In English, a token is roughly **4 characters** or **three-quarters of a word** on average. Tokens matter because:
 
@@ -24,15 +24,17 @@ Models read and write tokens, not words. In English, a token is roughly **4 char
 - every model has a **context window**: the maximum number of tokens it can consider at once (your instructions, any documents, the conversation and its answer);
 - longer inputs are slower and cost more.
 
-**Why confident mistakes happen**
+### Why confident mistakes happen
 
 The model produces a **plausible** continuation, not a **checked** one. If it doesn't know Paystream's fees, the most plausible text is still a confident sentence about fees. This is called **hallucination**, and the main defences are:
+
+![The text 'Your transfer was reversed because the' with candidate next tokens and illustrative probabilities: recipient 41%, account 23%, bank 14%, network 9%, daily 5%, others 8%.](/images/courses/genai/next-token.svg "One token at a time, each picked from a probability for every possible next token.")
 
 - give the model the facts in its input (retrieval, lesson 7);
 - tell it to say when it doesn't know;
 - check its outputs (lessons 5 and 8).
 
-**Temperature**
+### Temperature
 
 A setting that controls how random the token choices are. Low temperature (near 0) gives more consistent, predictable outputs, which is what you want for classification and factual answers. Higher temperature gives more varied text.
 

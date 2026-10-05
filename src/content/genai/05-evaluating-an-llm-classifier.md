@@ -12,21 +12,21 @@ That last suggestion often surprises people, and it's exactly why you measure. A
 
 ## The concept
 
-**A labelled test set is non-negotiable**
+### A labelled test set is non-negotiable
 
 You can't judge an LLM feature without examples where the right answer is known. Build one early: a few hundred real inputs, labelled by people who know the business. Use it for every prompt and model change.
 
-**Measures**
+### Measures
 
 - **Accuracy**: share of tickets classified correctly.
 - **Per-category recall**: of the tickets that really are fraud, how many did the model call fraud? For high-stakes categories, this matters more than overall accuracy.
 - **Confusion**: which categories get mixed up with which.
 
-**The baseline: TF-IDF and logistic regression**
+### The baseline: TF-IDF and logistic regression
 
 **TF-IDF** turns each text into numbers by weighting the words it contains (common words like "the" count little; distinctive words like "reversal" count a lot). A logistic regression trained on those numbers is a fast, cheap text classifier. Train it on part of the labelled tickets and test it on the rest, alongside the LLMs on the same tickets.
 
-**When each wins**
+### When each wins
 
 | Approach | Strengths | Weaknesses |
 | :-- | :-- | :-- |
