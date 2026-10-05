@@ -16,6 +16,8 @@ Browser uploads are fine for small things. For real projects, **GitHub Desktop**
 
 To get changes made on GitHub (or by a teammate), click **Fetch origin**, then **Pull origin**.
 
+![Your computer and GitHub: edit and commit locally, push to GitHub, pull to bring changes back; below, the parts of a good README and how to make a profile a portfolio](/images/courses/git/workflow-readme.svg "Edit, commit, push; pull to bring changes back. A README is the front page.")
+
 ## The command-line version
 
 You'll see these commands in tutorials. They do the same thing:

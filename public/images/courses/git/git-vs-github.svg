@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 430" width="760" height="430" role="img" aria-label="The problem Git solves and the difference between Git and GitHub. Without version control, a folder fills up with project.py, project_final.py, project_final_v2.py and project_final_v2_REALLY_final.py, and nobody knows which is current. With Git there is one copy of the files and a history of commits, each with a message, such as Add login page, Fix date format, Add sales chart. Git is a tool that runs on your computer and tracks changes. GitHub is a website that stores Git projects online, for backup, sharing and collaboration.">
+<title>Git keeps one project and a history of commits; GitHub keeps a copy online.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="430" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="16.0" width="356.0" height="184.0" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.4"/>
+<text xml:space="preserve" x="32.0" y="42.0" font-size="14" fill="#9B2C1F" font-weight="700" text-anchor="start">✗ Without version control</text>
+<rect x="32.0" y="58.0" width="250.0" height="22.0" rx="4" fill="#FFFFFF"/>
+<text xml:space="preserve" x="40.0" y="74.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">project.py</text>
+<rect x="32.0" y="86.0" width="250.0" height="22.0" rx="4" fill="#FFFFFF"/>
+<text xml:space="preserve" x="40.0" y="102.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">project_final.py</text>
+<rect x="32.0" y="114.0" width="250.0" height="22.0" rx="4" fill="#FFFFFF"/>
+<text xml:space="preserve" x="40.0" y="130.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">project_final_v2.py</text>
+<rect x="32.0" y="142.0" width="320.0" height="22.0" rx="4" fill="#FFFFFF"/>
+<text xml:space="preserve" x="40.0" y="158.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">project_final_v2_REALLY_final.py</text>
+<text xml:space="preserve" x="32.0" y="188.0" font-size="12" fill="#9B2C1F" font-weight="700" text-anchor="start">Which one is current?</text>
+<rect x="388.0" y="16.0" width="356.0" height="184.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.4"/>
+<text xml:space="preserve" x="404.0" y="42.0" font-size="14" fill="#2F6B3F" font-weight="700" text-anchor="start">✓ With Git</text>
+<text xml:space="preserve" x="404.0" y="66.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">one project.py, and its history:</text>
+<circle cx="412.0" cy="90.0" r="6" fill="#2F6B3F" stroke="#FFFFFF" stroke-width="1.5"/>
+<line x1="412.0" y1="96.0" x2="412.0" y2="116.0" stroke="#2F6B3F" stroke-width="2"/>
+<text xml:space="preserve" x="428.0" y="95.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">Add sales chart</text>
+<text xml:space="preserve" x="728.0" y="95.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="end">today</text>
+<circle cx="412.0" cy="122.0" r="6" fill="#2F6B3F" stroke="#FFFFFF" stroke-width="1.5"/>
+<line x1="412.0" y1="128.0" x2="412.0" y2="148.0" stroke="#2F6B3F" stroke-width="2"/>
+<text xml:space="preserve" x="428.0" y="127.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">Fix date format</text>
+<text xml:space="preserve" x="728.0" y="127.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="end">yesterday</text>
+<circle cx="412.0" cy="154.0" r="6" fill="#2F6B3F" stroke="#FFFFFF" stroke-width="1.5"/>
+<text xml:space="preserve" x="428.0" y="159.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">Add login page</text>
+<text xml:space="preserve" x="728.0" y="159.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="end">last week</text>
+<text xml:space="preserve" x="16.0" y="222.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Git and GitHub: related, not the same</text>
+<rect x="16.0" y="236.0" width="270.0" height="100.0" rx="10" fill="#FFFFFF" stroke="#2F5D8A" stroke-width="1.5"/>
+<text xml:space="preserve" x="32.0" y="262.0" font-size="15" fill="#2F5D8A" font-weight="700" text-anchor="start">Git</text>
+<text xml:space="preserve" x="32.0" y="284.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">a tool that tracks changes</text>
+<text xml:space="preserve" x="32.0" y="304.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">runs on your computer</text>
+<text xml:space="preserve" x="32.0" y="322.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">history and versions</text>
+<rect x="474.0" y="236.0" width="270.0" height="100.0" rx="10" fill="#FFFFFF" stroke="#B38A3E" stroke-width="1.5"/>
+<text xml:space="preserve" x="490.0" y="262.0" font-size="15" fill="#8A6A1F" font-weight="700" text-anchor="start">GitHub</text>
+<text xml:space="preserve" x="490.0" y="284.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">a website for Git projects</text>
+<text xml:space="preserve" x="490.0" y="304.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">lives in the cloud: github.com</text>
+<text xml:space="preserve" x="490.0" y="322.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">backup, sharing, showing your work</text>
+<path d="M288.0,276.0 L470.0,276.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<path d="M470.0,296.0 L288.0,296.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<text xml:space="preserve" x="379.0" y="270.0" font-size="11.5" fill="#8A6A1F" font-weight="700" text-anchor="middle">push</text>
+<text xml:space="preserve" x="379.0" y="314.0" font-size="11.5" fill="#8A6A1F" font-weight="700" text-anchor="middle">pull</text>
+<text xml:space="preserve" x="16.0" y="372.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">A project tracked by Git is a repository (repo). Public repos are your portfolio: employers look at them.</text>
+<text xml:space="preserve" x="16.0" y="396.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">Commit = a saved snapshot with a message.   Push = send commits to GitHub.   Pull = bring the latest down.</text>
+</g></svg>

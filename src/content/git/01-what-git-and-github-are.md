@@ -29,6 +29,8 @@ They're related but different:
 
 A project tracked by Git is called a **repository** (or **repo**). When you put it on GitHub, anyone you allow (or everyone, if it's public) can see it.
 
+![Without version control a folder fills with project_final_v2_REALLY_final.py; with Git there is one project and a history of commits. Git is a tool on your computer; GitHub is a website that stores Git projects online, with push and pull between them](/images/courses/git/git-vs-github.svg "Git keeps one project and a history of commits; GitHub keeps a copy online.")
+
 ## Why students should care
 
 - **Employers look at GitHub.** For data, software and web roles, a GitHub profile with real projects is a portfolio.

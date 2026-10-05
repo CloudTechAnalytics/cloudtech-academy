@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 430" width="760" height="430" role="img" aria-label="The working cycle between your computer and GitHub. Make changes in your project folder; the tool lists what changed; commit with a message; push to send commits to GitHub; pull to bring changes from GitHub or a teammate to your computer. The same steps in GitHub Desktop are Commit to main, Push origin and Pull origin; on the command line they are git add, git commit, git push and git pull. A good README has a title, a short summary, what you did, key findings, tools, and a link to see it.">
+<title>Edit, commit, push; pull to bring changes back. A README is the front page.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="430" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="20.0" width="250.0" height="150.0" rx="10" fill="#FFFFFF" stroke="#2F5D8A" stroke-width="1.5"/>
+<text xml:space="preserve" x="32.0" y="46.0" font-size="14" fill="#2F5D8A" font-weight="700" text-anchor="start">Your computer</text>
+<rect x="32.0" y="60.0" width="218.0" height="28.0" rx="5" fill="#F3EBD8"/>
+<text xml:space="preserve" x="42.0" y="79.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">1  edit files in the folder</text>
+<rect x="32.0" y="94.0" width="218.0" height="28.0" rx="5" fill="#F3EBD8"/>
+<text xml:space="preserve" x="42.0" y="113.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">2  commit: "Add sales chart"</text>
+<rect x="32.0" y="128.0" width="218.0" height="28.0" rx="5" fill="#F2EFE8"/>
+<text xml:space="preserve" x="42.0" y="147.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">Git tracks the history</text>
+<rect x="494.0" y="20.0" width="250.0" height="150.0" rx="10" fill="#FFFFFF" stroke="#B38A3E" stroke-width="1.5"/>
+<text xml:space="preserve" x="510.0" y="46.0" font-size="14" fill="#8A6A1F" font-weight="700" text-anchor="start">GitHub (online)</text>
+<rect x="510.0" y="60.0" width="218.0" height="28.0" rx="5" fill="#F2EFE8"/>
+<text xml:space="preserve" x="520.0" y="79.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">your repository, backed up</text>
+<rect x="510.0" y="94.0" width="218.0" height="28.0" rx="5" fill="#F2EFE8"/>
+<text xml:space="preserve" x="520.0" y="113.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">teammates and employers see it</text>
+<rect x="510.0" y="128.0" width="218.0" height="28.0" rx="5" fill="#F2EFE8"/>
+<text xml:space="preserve" x="520.0" y="147.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">README is the front page</text>
+<path d="M268.0,70.0 L490.0,70.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<text xml:space="preserve" x="379.0" y="62.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="middle">3  push</text>
+<path d="M490.0,130.0 L268.0,130.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<text xml:space="preserve" x="379.0" y="148.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="middle">pull / fetch</text>
+<text xml:space="preserve" x="16.0" y="200.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">In GitHub Desktop: Commit to main → Push origin → Fetch origin, Pull origin.</text>
+<text xml:space="preserve" x="16.0" y="220.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">On the command line: git add . → git commit -m "…" → git push → git pull.</text>
+<text xml:space="preserve" x="16.0" y="252.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">A README that sells the project</text>
+<rect x="16.0" y="264.0" width="356.0" height="150.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="30.0" y="298.0" font-size="12" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace"># Sales Analysis</text>
+<text xml:space="preserve" x="168.0" y="298.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">title: what and who for</text>
+<text xml:space="preserve" x="30.0" y="324.0" font-size="12" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">summary</text>
+<text xml:space="preserve" x="168.0" y="324.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">one or two lines on the question</text>
+<text xml:space="preserve" x="30.0" y="350.0" font-size="12" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">## What I did</text>
+<text xml:space="preserve" x="168.0" y="350.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">steps, in plain words</text>
+<text xml:space="preserve" x="30.0" y="376.0" font-size="12" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">## Key findings</text>
+<text xml:space="preserve" x="168.0" y="376.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">three or four results with numbers</text>
+<text xml:space="preserve" x="30.0" y="402.0" font-size="12" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">## Tools</text>
+<text xml:space="preserve" x="168.0" y="402.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">Excel, SQL, Python…</text>
+<rect x="388.0" y="264.0" width="356.0" height="150.0" rx="10" fill="#F3EBD8" stroke="#B38A3E" stroke-width="1.4"/>
+<text xml:space="preserve" x="404.0" y="290.0" font-size="13.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Make your profile a portfolio</text>
+<text xml:space="preserve" x="404.0" y="316.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Pin your best repositories</text>
+<text xml:space="preserve" x="404.0" y="338.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Write a clear README for each</text>
+<text xml:space="preserve" x="404.0" y="360.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Use a real photo and a short bio</text>
+<text xml:space="preserve" x="404.0" y="382.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Link it from your CV and LinkedIn</text>
+</g></svg>

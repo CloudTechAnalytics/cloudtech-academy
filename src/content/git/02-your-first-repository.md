@@ -41,6 +41,8 @@ Start with a verb (Add, Fix, Update, Remove) and keep it under about 60 characte
 
 Click **Commits** (near the top of the file list, with a clock icon) to see every change, who made it and when. Click any commit to see exactly what changed: removed lines in red, added lines in green.
 
+![Edit a file, commit with a message, then see the history; a commit view shows a removed line in red and an added line in green, with a warning never to commit passwords or API keys](/images/courses/git/commit-diff.svg "Edit, commit with a message, and the history shows exactly what changed.")
+
 > [!NOTE]
 > Never upload passwords, API keys or other people's personal data to a repository, even a private one. If you do by mistake, deleting the file isn't enough, because it stays in the history. Change the password or key straight away.
 

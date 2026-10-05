@@ -3267,6 +3267,8 @@ They're related but different:
 
 A project tracked by Git is called a **repository** (or **repo**). When you put it on GitHub, anyone you allow (or everyone, if it's public) can see it.
 
+![Without version control a folder fills with project_final_v2_REALLY_final.py; with Git there is one project and a history of commits. Git is a tool on your computer; GitHub is a website that stores Git projects online, with push and pull between them](/images/courses/git/git-vs-github.svg "Git keeps one project and a history of commits; GitHub keeps a copy online.")
+
 ## Why students should care
 
 - **Employers look at GitHub.** For data, software and web roles, a GitHub profile with real projects is a portfolio.
@@ -3377,6 +3379,8 @@ Start with a verb (Add, Fix, Update, Remove) and keep it under about 60 characte
 
 Click **Commits** (near the top of the file list, with a clock icon) to see every change, who made it and when. Click any commit to see exactly what changed: removed lines in red, added lines in green.
 
+![Edit a file, commit with a message, then see the history; a commit view shows a removed line in red and an added line in green, with a warning never to commit passwords or API keys](/images/courses/git/commit-diff.svg "Edit, commit with a message, and the history shows exactly what changed.")
+
 > [!NOTE]
 > Never upload passwords, API keys or other people's personal data to a repository, even a private one. If you do by mistake, deleting the file isn't enough, because it stays in the history. Change the password or key straight away.
 
@@ -3455,6 +3459,8 @@ Browser uploads are fine for small things. For real projects, **GitHub Desktop**
 5. Click **Publish repository** the first time, then **Push origin** after each new commit.
 
 To get changes made on GitHub (or by a teammate), click **Fetch origin**, then **Pull origin**.
+
+![Your computer and GitHub: edit and commit locally, push to GitHub, pull to bring changes back; below, the parts of a good README and how to make a profile a portfolio](/images/courses/git/workflow-readme.svg "Edit, commit, push; pull to bring changes back. A README is the front page.")
 
 ## The command-line version
 
