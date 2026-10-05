@@ -20,6 +20,7 @@ const Projects = lazy(() => import("@/pages/Projects"));
 const ProjectDetail = lazy(() => import("@/pages/ProjectDetail"));
 const Certificates = lazy(() => import("@/pages/Certificates"));
 const Verify = lazy(() => import("@/pages/Verify"));
+const VerifySearch = lazy(() => import("@/pages/Verify").then((m) => ({ default: m.VerifySearch })));
 const About = lazy(() => import("@/pages/About"));
 const SignIn = lazy(() => import("@/pages/auth/SignIn"));
 const SignUp = lazy(() => import("@/pages/auth/SignUp"));
@@ -39,6 +40,10 @@ const AdminAssessment = lazy(() => import("@/pages/admin/AdminAssessment"));
 const AdminStudents = lazy(() => import("@/pages/admin/AdminStudents").then((m) => ({ default: m.AdminStudents })));
 const AdminStudent = lazy(() => import("@/pages/admin/AdminStudents").then((m) => ({ default: m.AdminStudent })));
 const AdminCertificates = lazy(() => import("@/pages/admin/AdminCertificates"));
+const AdminCertificatePayments = lazy(() => import("@/pages/admin/AdminCertificates").then((m) => ({ default: m.AdminCertificatePayments })));
+const AdminCertificateIssue = lazy(() => import("@/pages/admin/AdminCertificateForm").then((m) => ({ default: m.AdminCertificateIssue })));
+const AdminCertificateEdit = lazy(() => import("@/pages/admin/AdminCertificateForm").then((m) => ({ default: m.AdminCertificateEdit })));
+const AdminCertificateDetail = lazy(() => import("@/pages/admin/AdminCertificateDetail"));
 const AdminCredentials = lazy(() => import("@/pages/admin/AdminCredentials"));
 const AdminSubmissions = lazy(() => import("@/pages/admin/AdminSubmissions"));
 const AdminPracticeProjects = lazy(() => import("@/pages/admin/AdminPracticeProjects"));
@@ -67,6 +72,7 @@ export function AppRoutes() {
           <Route path="projects" element={<Projects />} />
           <Route path="projects/:slug" element={<ProjectDetail />} />
           <Route path="certificates" element={<Certificates />} />
+          <Route path="verify" element={<VerifySearch />} />
           <Route path="verify/:credentialId" element={<Verify />} />
           <Route path="about" element={<About />} />
           <Route path="sign-in" element={<SignIn />} />
@@ -89,6 +95,11 @@ export function AppRoutes() {
             <Route path="practice" element={<AdminPracticeProjects />} />
             <Route path="credentials" element={<AdminCredentials />} />
             <Route path="certificates" element={<AdminCertificates />} />
+            <Route path="certificates/payments" element={<AdminCertificatePayments />} />
+            <Route path="certificates/new" element={<AdminCertificateIssue mode="new" />} />
+            <Route path="certificates/:certificateId" element={<AdminCertificateDetail />} />
+            <Route path="certificates/:certificateId/edit" element={<AdminCertificateEdit />} />
+            <Route path="certificates/:certificateId/reissue" element={<AdminCertificateIssue mode="reissue" />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Route>

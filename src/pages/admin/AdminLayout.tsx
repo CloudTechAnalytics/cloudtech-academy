@@ -12,7 +12,7 @@ const LINKS = [
   { to: "/admin/submissions", label: "Course projects", icon: FolderCheck },
   { to: "/admin/practice", label: "Practice projects", icon: FolderKanban },
   { to: "/admin/credentials", label: "Badges & credentials", icon: BadgeCheck },
-  { to: "/admin/certificates", label: "Certificates & payments", icon: Award },
+  { to: "/admin/certificates", label: "Certificates", icon: Award },
 ];
 
 export default function AdminLayout() {

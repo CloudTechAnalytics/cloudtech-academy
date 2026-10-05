@@ -7,7 +7,7 @@
 import { BUNDLED_ASSESSMENTS, BUNDLED_COURSES, BUNDLED_PROJECTS } from "@/content";
 import type { AssessmentDef, Course } from "@/content/types";
 import { requiredExerciseIds } from "../lesson-format";
-import { certificateNumber, eligibility, moduleTaskIds, newCredentialId } from "../certificates";
+import { certificateNumber, eligibility, matchesCertificate, moduleTaskIds, newCredentialId } from "../certificates";
 import { isStale } from "../inactivity";
 import { requiredCourses, TRACKS } from "@/content/tracks";
 import { PROFILE_SLUG_RE, SLUG_HELP } from "../profile";
@@ -18,8 +18,14 @@ import {
   BackendError,
   type AttemptResult,
   type Backend,
+  type AdminCertificate,
   type Certificate,
+  type CertificateEvent,
+  type CertificateEventAction,
+  type CertificateInput,
   type CertificateOrder,
+  type CertificateTemplate,
+  type PublicCertificate,
   type CertificatePrice,
   type Credential,
   type PracticeSubmission,
@@ -42,6 +48,7 @@ type Store = {
   orders: CertificateOrder[];
   certificates: Certificate[];
   certificateSeq: number;
+  certificateEvents: CertificateEvent[];
   prices: CertificatePrice[] | null; // admin edits (null = defaults)
   courses: Course[] | null; // admin edits (null = bundled content)
   assessments: AssessmentDef[] | null;
@@ -69,6 +76,7 @@ const empty = (): Store => ({
   orders: [],
   certificates: [],
   certificateSeq: 0,
+  certificateEvents: [],
   prices: null,
   courses: null,
   assessments: null,
@@ -141,24 +149,143 @@ function publicCredential(s: Store, c: Credential): PublicCredential {
 
 /** Issues the certificate for a paid or granted order (the caller saves). */
 function issueCertificate(s: Store, order: CertificateOrder): Certificate {
-  const existing = s.certificates.find((c) => c.userId === order.userId && c.courseId === order.courseId && c.status === "valid");
+  const existing = s.certificates.find((c) => c.userId === order.userId && c.courseId === order.courseId && c.status === "valid" && c.source === "course");
   if (existing) return existing;
   const cred = s.credentials.find((c) => c.credentialId === order.credentialId)!;
   s.certificateSeq += 1;
   const cert: Certificate = {
-    id: uid(),
+    ...blankCertificate(),
     certificateId: certificateNumber(s.certificateSeq),
+    source: "course",
     credentialId: cred.credentialId,
     userId: order.userId,
     courseId: order.courseId,
     recipientName: cred.recipientName,
     courseTitle: cred.courseTitle,
-    issuedAt: now(),
-    status: "valid",
-    revokedReason: null,
+    certificateTitle: "Certificate of Completion",
+    completionDate: cred.issuedAt.slice(0, 10),
   };
   s.certificates.push(cert);
+  logEvent(s, cert.certificateId, "issued", null, { order: order.id, payment: order.status });
   return cert;
+}
+
+const DEMO_TEMPLATES: CertificateTemplate[] = [
+  { id: "signature", name: "CloudTech Signature", description: "Dark brand panel, gold seal and QR code. For professional training, bootcamps and workshops.", active: true },
+  { id: "classic", name: "CloudTech Classic", description: "The original Academy course certificate: cream and gold, centred.", active: true },
+];
+
+function blankCertificate(): Certificate {
+  const t = now();
+  return {
+    id: uid(),
+    certificateId: "",
+    source: "manual",
+    credentialId: null,
+    userId: null,
+    courseId: null,
+    recipientName: "",
+    recipientEmail: null,
+    certificateTitle: null,
+    courseTitle: "",
+    trainingType: "academy_course",
+    certificateType: "completion",
+    instructorName: null,
+    description: null,
+    startDate: null,
+    completionDate: null,
+    issuedAt: t,
+    grade: null,
+    duration: null,
+    templateId: "classic",
+    status: "valid",
+    revokedAt: null,
+    revokedReason: null,
+    replacedCertificateId: null,
+    updatedAt: t,
+  };
+}
+
+/** Certificates saved by an older demo version lack the newer fields. */
+const normalise = (c: Certificate): Certificate => ({ ...blankCertificate(), ...c, source: c.source ?? "course" });
+
+function logEvent(s: Store, certificateId: string, action: CertificateEventAction, actor: User | null, details: Record<string, unknown> = {}) {
+  s.certificateEvents.push({
+    id: s.certificateEvents.length + 1,
+    certificateId,
+    action,
+    actorName: actor ? actor.fullName.trim() || actor.email : "System",
+    details,
+    createdAt: now(),
+  });
+}
+
+const blank = (v: string) => v.trim() || null;
+
+/** The same checks the database makes. Returns the certificate's printed and linked fields. */
+function certificateFields(s: Store, i: CertificateInput): Partial<Certificate> {
+  const name = i.recipientName.trim();
+  if (name.length < 2) throw new BackendError("Enter the recipient's full name.");
+  if (!i.certificateTitle.trim()) throw new BackendError("Enter the certificate title.");
+  if (!i.programmeName.trim()) throw new BackendError("Enter the course or programme name.");
+  const email = i.recipientEmail.trim().toLowerCase();
+  if (email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) throw new BackendError("That email address doesn't look right.");
+  if (!i.completionDate) throw new BackendError("Enter the training completion date.");
+  if (i.startDate && i.startDate > i.completionDate) throw new BackendError("The start date must be on or before the completion date.");
+  const issue = i.issueDate || new Date().toISOString().slice(0, 10);
+  if (issue < i.completionDate) throw new BackendError("The issue date can't be before the completion date.");
+  if (!DEMO_TEMPLATES.some((t) => t.id === i.templateId)) throw new BackendError("Choose a certificate template.");
+  if (i.userId && !s.users.some((u) => u.id === i.userId)) throw new BackendError("That Academy account wasn't found.");
+  return {
+    recipientName: name,
+    recipientEmail: email || null,
+    userId: i.userId || null,
+    courseId: i.courseId || null,
+    certificateTitle: i.certificateTitle.trim(),
+    courseTitle: i.programmeName.trim(),
+    trainingType: i.trainingType,
+    certificateType: i.certificateType,
+    instructorName: blank(i.instructorName),
+    description: blank(i.description),
+    startDate: i.startDate || null,
+    completionDate: i.completionDate,
+    issuedAt: `${issue}T12:00:00.000Z`,
+    grade: blank(i.grade),
+    duration: blank(i.duration),
+    templateId: i.templateId,
+  };
+}
+
+function publicCertificate(s: Store, c: Certificate): PublicCertificate {
+  const n = normalise(c);
+  return {
+    certificateId: n.certificateId,
+    credentialId: n.credentialId,
+    recipientName: n.recipientName,
+    certificateTitle: n.certificateTitle,
+    courseTitle: n.courseTitle,
+    trainingType: n.trainingType,
+    certificateType: n.certificateType,
+    instructorName: n.instructorName,
+    description: n.description,
+    startDate: n.startDate,
+    completionDate: n.completionDate,
+    issuedAt: n.issuedAt,
+    grade: n.grade,
+    duration: n.duration,
+    templateId: n.templateId,
+    status: n.status,
+    revokedAt: n.revokedAt,
+    replacedBy: s.certificates.find((x) => x.replacedCertificateId === n.certificateId)?.certificateId ?? null,
+  };
+}
+
+function adminCertificate(s: Store, c: Certificate): AdminCertificate {
+  return {
+    ...normalise(c),
+    issuedBy: s.certificateEvents.find((e) => e.certificateId === c.certificateId && e.action === "issued")?.actorName ?? null,
+    replacedBy: s.certificates.find((x) => x.replacedCertificateId === c.certificateId)?.certificateId ?? null,
+  };
 }
 
 export function createDemoBackend(): Backend {
@@ -660,17 +787,25 @@ export function createDemoBackend(): Backend {
     },
     async listMyCertificates() {
       const u = current();
-      return u ? load().certificates.filter((c) => c.userId === u.id) : [];
+      return u ? load().certificates.filter((c) => c.userId === u.id).map(normalise) : [];
     },
     async getMyCertificate(certificateId) {
       const u = current();
-      return u ? (load().certificates.find((c) => c.userId === u.id && c.certificateId === certificateId) ?? null) : null;
+      const c = u ? load().certificates.find((x) => x.userId === u.id && x.certificateId === certificateId) : undefined;
+      return c ? normalise(c) : null;
     },
     async verifyCertificate(certificateId) {
-      const c = load().certificates.find((x) => x.certificateId === certificateId.trim().toUpperCase());
-      return c
-        ? { certificateId: c.certificateId, credentialId: c.credentialId, recipientName: c.recipientName, courseTitle: c.courseTitle, issuedAt: c.issuedAt, status: c.status }
-        : null;
+      const s = load();
+      const c = s.certificates.find((x) => x.certificateId === certificateId.trim().toUpperCase());
+      return c ? publicCertificate(s, c) : null;
+    },
+    async recordCertificateDownload(certificateId) {
+      const u = requireUser();
+      const s = load();
+      const c = s.certificates.find((x) => x.certificateId === certificateId && (u.role === "admin" || x.userId === u.id));
+      if (!c) throw new BackendError("Certificate not found.");
+      logEvent(s, c.certificateId, "downloaded", u, { by: u.role === "admin" ? "admin" : "recipient" });
+      save(s);
     },
 
     admin: {
@@ -784,15 +919,100 @@ export function createDemoBackend(): Backend {
       },
       async listCertificates(search) {
         requireAdmin();
-        const q = (search ?? "").trim().toLowerCase();
-        return load().certificates.filter((c) => !q || c.certificateId.toLowerCase().includes(q) || c.recipientName.toLowerCase().includes(q));
+        const s = load();
+        return s.certificates
+          .map((c) => adminCertificate(s, c))
+          .filter((c) => matchesCertificate(c, search))
+          .sort((a, b) => b.issuedAt.localeCompare(a.issuedAt) || b.certificateId.localeCompare(a.certificateId));
       },
-      async revokeCertificate(id, reason) {
+      async getCertificate(certificateId) {
         requireAdmin();
         const s = load();
-        const c = s.certificates.find((x) => x.id === id);
-        if (c) Object.assign(c, { status: "revoked", revokedReason: reason });
+        const c = s.certificates.find((x) => x.certificateId === certificateId.trim().toUpperCase());
+        return c ? adminCertificate(s, c) : null;
+      },
+      async issueCertificate(input) {
+        const u = requireAdmin();
+        const s = load();
+        const fields = certificateFields(s, input);
+        s.certificateSeq += 1;
+        const cert: Certificate = { ...blankCertificate(), ...fields, certificateId: certificateNumber(s.certificateSeq), source: "manual" };
+        s.certificates.push(cert);
+        logEvent(s, cert.certificateId, "issued", u, { recipient: cert.recipientName, title: cert.certificateTitle, training_type: cert.trainingType });
         save(s);
+        return cert;
+      },
+      async updateCertificate(certificateId, edit) {
+        const u = requireAdmin();
+        const s = load();
+        const c = s.certificates.find((x) => x.certificateId === certificateId);
+        if (!c) throw new BackendError("Certificate not found.");
+        if (c.status === "replaced") throw new BackendError("This certificate was replaced. Edit the replacement instead.");
+        const email = edit.recipientEmail.trim().toLowerCase() || null;
+        if (email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) throw new BackendError("That email address doesn't look right.");
+        const next = {
+          recipientEmail: email,
+          userId: c.source === "course" ? c.userId : edit.userId || null,
+          courseId: c.source === "course" ? c.courseId : edit.courseId || null,
+          templateId: edit.templateId,
+        };
+        const changes: Record<string, unknown> = {};
+        if (next.recipientEmail !== (c.recipientEmail ?? null)) changes.recipient_email = [c.recipientEmail ?? null, next.recipientEmail];
+        if (next.userId !== (c.userId ?? null)) changes.linked_account = [!!c.userId, !!next.userId];
+        if (next.courseId !== (c.courseId ?? null)) changes.course = [c.courseId ?? null, next.courseId];
+        if (next.templateId !== c.templateId) changes.template = [c.templateId, next.templateId];
+        if (Object.keys(changes).length) {
+          Object.assign(c, next, { updatedAt: now() });
+          logEvent(s, c.certificateId, "edited", u, changes);
+          save(s);
+        }
+        return normalise(c);
+      },
+      async reissueCertificate(certificateId, input, reason) {
+        const u = requireAdmin();
+        if (!reason.trim()) throw new BackendError("Say why the certificate is being reissued.");
+        const s = load();
+        const old = s.certificates.find((x) => x.certificateId === certificateId);
+        if (!old) throw new BackendError("Certificate not found.");
+        if (old.status === "replaced") throw new BackendError("This certificate was already replaced.");
+        const fields = certificateFields(s, input);
+        s.certificateSeq += 1;
+        const o = normalise(old);
+        const cert: Certificate = {
+          ...blankCertificate(),
+          ...fields,
+          certificateId: certificateNumber(s.certificateSeq),
+          source: o.source,
+          credentialId: o.credentialId,
+          userId: o.source === "course" ? o.userId : fields.userId ?? null,
+          courseId: o.source === "course" ? o.courseId : fields.courseId ?? null,
+          replacedCertificateId: o.certificateId,
+        };
+        Object.assign(old, { status: "replaced", updatedAt: now() });
+        s.certificates.push(cert);
+        logEvent(s, old.certificateId, "reissued", u, { replaced_by: cert.certificateId, reason: reason.trim() });
+        logEvent(s, cert.certificateId, "issued", u, { replaces: old.certificateId, reason: reason.trim() });
+        save(s);
+        return cert;
+      },
+      async revokeCertificate(certificateId, reason) {
+        const u = requireAdmin();
+        const s = load();
+        const c = s.certificates.find((x) => x.certificateId === certificateId && x.status === "valid");
+        if (!c) throw new BackendError("Only an active certificate can be revoked.");
+        Object.assign(c, { status: "revoked", revokedAt: now(), revokedReason: reason.trim() || null, updatedAt: now() });
+        logEvent(s, c.certificateId, "revoked", u, { reason: reason.trim() || null });
+        save(s);
+      },
+      async listCertificateEvents(certificateId) {
+        requireAdmin();
+        return load()
+          .certificateEvents.filter((e) => !certificateId || e.certificateId === certificateId)
+          .sort((a, b) => b.id - a.id);
+      },
+      async listCertificateTemplates() {
+        requireAdmin();
+        return DEMO_TEMPLATES;
       },
       async listOrders() {
         requireAdmin();
@@ -805,7 +1025,7 @@ export function createDemoBackend(): Backend {
               learnerName: u?.fullName ?? "Unknown",
               learnerEmail: u?.email ?? "",
               courseTitle: courses(s).find((c) => c.id === o.courseId)?.title ?? o.courseId,
-              certificateId: s.certificates.find((c) => c.userId === o.userId && c.courseId === o.courseId && c.status === "valid")?.certificateId ?? null,
+              certificateId: s.certificates.find((c) => c.userId === o.userId && c.courseId === o.courseId && c.status === "valid" && c.source !== "manual")?.certificateId ?? null,
             };
           })
           .sort((a, b) => b.createdAt.localeCompare(a.createdAt));

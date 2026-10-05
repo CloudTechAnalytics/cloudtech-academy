@@ -10,16 +10,16 @@ import { CertificateArtwork, type CertificateData } from "@/components/Certifica
 import { BadgeArtwork } from "@/components/BadgeArtwork";
 import { badgeIcon } from "@/components/BadgeIcon";
 import { formatMoney } from "@/lib/currency";
-import { verifyUrl } from "@/lib/certificates";
+import { isCertificateId, verifyUrl } from "@/lib/certificates";
 import { SITE } from "@/lib/site";
 
 const SAMPLE_CERTIFICATE: CertificateData = {
   recipientName: "Your Name",
   courseTitle: "AI Productivity Fundamentals",
   issuedAt: "2026-09-30T09:00:00Z",
-  certificateId: "CTA-CERT-2026-000124",
+  certificateId: "CTA-2026-000124",
   credentialId: "CTA-AIPF-8F72K",
-  verifyUrl: verifyUrl(SITE.url, "CTA-CERT-2026-000124"),
+  verifyUrl: verifyUrl(SITE.url, "CTA-2026-000124"),
 };
 
 const SAMPLE_BADGES = [
@@ -29,7 +29,7 @@ const SAMPLE_BADGES = [
   { kind: "course_completion" as const, badgeName: "AI Productivity Fundamentals", code: "AIPF" },
 ];
 
-export function VerifyForm() {
+export function VerifyForm({ title = "Verify a certificate or badge" }: { title?: string }) {
   const navigate = useNavigate();
   const [id, setId] = useState("");
   const [error, setError] = useState<string | undefined>();
@@ -39,33 +39,30 @@ export function VerifyForm() {
       noValidate
       onSubmit={(e) => {
         e.preventDefault();
-        const clean = id.trim().toUpperCase();
-        if (/^CTA-CERT-\d{4}-\d{6}$/.test(clean)) {
-          setError(undefined);
-          return navigate(`/verify/${clean}`);
-        }
-        if (/^CTA-[A-Z0-9]{2,8}-[2-9A-HJ-NP-Z]{5}$/.test(clean)) {
-          setError(undefined);
-          return navigate(`/credentials/${clean}`);
-        }
-        setError("Enter the full ID, for example CTA-CERT-2026-000124 (certificate) or CTA-PROMPT-8F72K (badge).");
+        const clean = id.trim().toUpperCase().replace(/\s+/g, "");
+        if (!clean) return setError("Enter the certificate ID, for example CTA-2026-000184.");
+        setError(undefined);
+        // Badge IDs (CTA-PROMPT-8F72K) have their own page; everything else is checked as a certificate.
+        if (!isCertificateId(clean) && /^CTA-[A-Z0-9]{2,8}-[2-9A-HJ-NP-Z]{5}$/.test(clean)) return navigate(`/credentials/${clean}`);
+        return navigate(`/verify/${encodeURIComponent(clean)}`);
       }}
     >
-      <h2 className="font-serif text-[1.4rem]">Verify a certificate or badge</h2>
+      <h2 className="font-serif text-[1.4rem]">{title}</h2>
       <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-start">
         <div className="flex-1">
           <TextField
-            label="Certificate or credential ID"
+            label="Certificate ID"
             value={id}
             onChange={(e) => setId(e.target.value)}
-            placeholder="CTA-CERT-2026-000124"
+            placeholder="Enter Certificate ID, e.g. CTA-2026-000184"
+            hint="Badge IDs such as CTA-PROMPT-8F72K work here too."
             error={error}
             autoCapitalize="characters"
             spellCheck={false}
           />
         </div>
         <Button type="submit" className="sm:mt-7">
-          Verify
+          Verify Certificate
         </Button>
       </div>
     </form>

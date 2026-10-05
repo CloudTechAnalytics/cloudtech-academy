@@ -7,7 +7,7 @@ import { useCourses } from "@/lib/data";
 import { getBackend, type AttemptResult, type Certificate, type Credential, type Enrollment, type PracticeSubmission, type Progress } from "@/lib/backend";
 import { findProject } from "@/content/projects";
 import { ProjectCover } from "@/components/ProjectCover";
-import { eligibility } from "@/lib/certificates";
+import { certificateName, eligibility } from "@/lib/certificates";
 import { credentialBadge, credentialKindLabel } from "@/lib/badges";
 import { formatDate } from "@/lib/format";
 import { Button, ButtonLink } from "@/components/Button";
@@ -338,10 +338,11 @@ function DashboardInner() {
             {certs.map((c) => (
               <li key={c.id} className="flex flex-col gap-2 p-5 sm:flex-row sm:items-center sm:justify-between">
                 <div>
-                  <p className="font-medium">{c.courseTitle}</p>
+                  <p className="font-medium">{certificateName(c)}</p>
                   <p className="text-[0.8125rem] text-muted">
                     {c.certificateId} · Issued {formatDate(c.issuedAt)}
                     {c.status === "revoked" && <span className="ml-2 font-semibold text-danger">Revoked</span>}
+                    {c.status === "replaced" && <span className="ml-2 font-semibold">Replaced</span>}
                   </p>
                 </div>
                 <div className="flex gap-4">
@@ -376,7 +377,17 @@ function DashboardInner() {
               </thead>
               <tbody>
                 {[
-                  ...certs.map((c) => ({ key: c.id, name: `${c.courseTitle}: official certificate`, type: "Certificate", date: c.issuedAt, id: c.certificateId, href: `/verify/${c.certificateId}`, status: c.status })),
+                  ...certs
+                    .filter((c) => c.status !== "replaced")
+                    .map((c) => ({
+                      key: c.id,
+                      name: c.source === "manual" ? certificateName(c) : `${c.courseTitle}: official certificate`,
+                      type: "Certificate",
+                      date: c.issuedAt,
+                      id: c.certificateId,
+                      href: `/verify/${c.certificateId}`,
+                      status: c.status === "valid" ? ("valid" as const) : ("revoked" as const),
+                    })),
                   ...credentials.map((c) => ({
                     key: c.id,
                     name: c.badgeName,

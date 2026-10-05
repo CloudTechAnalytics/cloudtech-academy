@@ -1,14 +1,16 @@
 /**
  * Supabase backend. Tables, row-level security and the grading/certificate functions
- * are defined in supabase/migrations/0001_academy.sql.
+ * are defined in supabase/migrations (certificate management in 0007_certificate_management.sql).
  */
 import { createClient, type SupabaseClient, type User as SbUser } from "@supabase/supabase-js";
 import type { AssessmentDef, Course, Lesson, Module, ProjectDef } from "@/content/types";
 import { requiredExerciseIds } from "../lesson-format";
+import { certificatePayload, matchesCertificate } from "../certificates";
 import {
   BackendError,
   type AttemptResult,
   type Backend,
+  type AdminCertificate,
   type Certificate,
   type CertificateOrder,
   type CertificatePrice,
@@ -16,6 +18,7 @@ import {
   type PracticeResult,
   type PracticeSubmission,
   type ProjectSubmission,
+  type PublicCertificate,
   type PublicProfile,
   type Role,
   type User,
@@ -139,14 +142,52 @@ const toPracticeSubmission = (r: Row): PracticeSubmission => ({
 const toCertificate = (r: Row): Certificate => ({
   id: r.id,
   certificateId: r.certificate_id,
-  credentialId: r.credential_id,
-  userId: r.user_id,
-  courseId: r.course_id,
+  source: r.source ?? "course",
+  credentialId: r.credential_id ?? null,
+  userId: r.user_id ?? null,
+  courseId: r.course_id ?? null,
   recipientName: r.recipient_name,
+  recipientEmail: r.recipient_email ?? null,
+  certificateTitle: r.certificate_title ?? null,
   courseTitle: r.course_title,
+  trainingType: r.training_type ?? "academy_course",
+  certificateType: r.certificate_type ?? "completion",
+  instructorName: r.instructor_name ?? null,
+  description: r.description ?? null,
+  startDate: r.start_date ?? null,
+  completionDate: r.completion_date ?? null,
   issuedAt: r.issued_at,
+  grade: r.grade ?? null,
+  duration: r.duration ?? null,
+  templateId: r.template_id ?? "classic",
   status: r.status,
+  revokedAt: r.revoked_at ?? null,
   revokedReason: r.revoked_reason ?? null,
+  replacedCertificateId: r.replaced_certificate_id ?? null,
+  updatedAt: r.updated_at ?? r.issued_at,
+});
+
+const toAdminCertificate = (r: Row): AdminCertificate => ({ ...toCertificate(r.certificate), issuedBy: r.issued_by || null, replacedBy: r.replaced_by ?? null });
+
+const toPublicCertificate = (r: Row): PublicCertificate => ({
+  certificateId: r.certificate_id,
+  credentialId: r.credential_id ?? null,
+  recipientName: r.recipient_name,
+  certificateTitle: r.certificate_title ?? null,
+  courseTitle: r.course_title,
+  trainingType: r.training_type,
+  certificateType: r.certificate_type,
+  instructorName: r.instructor_name ?? null,
+  description: r.description ?? null,
+  startDate: r.start_date ?? null,
+  completionDate: r.completion_date ?? null,
+  issuedAt: r.issued_at,
+  grade: r.grade ?? null,
+  duration: r.duration ?? null,
+  templateId: r.template_id,
+  status: r.status,
+  revokedAt: r.revoked_at ?? null,
+  replacedBy: r.replaced_by ?? null,
 });
 
 const toOrder = (r: Row): CertificateOrder => ({
@@ -494,9 +535,10 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
     },
     async verifyCertificate(certificateId) {
       const r = (check(await sb.rpc("verify_certificate", { p_certificate_id: certificateId })) as Row[])?.[0];
-      return r
-        ? { certificateId: r.certificate_id, credentialId: r.credential_id, recipientName: r.recipient_name, courseTitle: r.course_title, issuedAt: r.issued_at, status: r.status }
-        : null;
+      return r ? toPublicCertificate(r) : null;
+    },
+    async recordCertificateDownload(certificateId) {
+      check(await sb.rpc("record_certificate_download", { p_certificate_id: certificateId }));
     },
 
     admin: {
@@ -658,20 +700,51 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
         check(await sb.from("credentials").update({ status: "revoked", revoked_at: new Date().toISOString(), revoked_reason: reason }).eq("id", id));
       },
       async listCertificates(search) {
-        let q = sb.from("certificates").select("*").order("issued_at", { ascending: false }).limit(200);
-        const t = search?.trim().replace(/[%,()]/g, "");
-        if (t) q = q.or(`certificate_id.ilike.%${t}%,recipient_name.ilike.%${t}%`);
-        return (check(await q) as Row[]).map(toCertificate);
+        return (check(await sb.rpc("admin_list_certificates")) as Row[]).map(toAdminCertificate).filter((c) => matchesCertificate(c, search));
       },
-      async revokeCertificate(id, reason) {
-        check(await sb.from("certificates").update({ status: "revoked", revoked_at: new Date().toISOString(), revoked_reason: reason }).eq("id", id));
+      async getCertificate(certificateId) {
+        const id = certificateId.trim().toUpperCase();
+        return (await backend.admin.listCertificates()).find((c) => c.certificateId === id) ?? null;
+      },
+      async issueCertificate(input) {
+        return toCertificate(check(await sb.rpc("admin_issue_certificate", { p: certificatePayload(input) })) as Row);
+      },
+      async updateCertificate(certificateId, edit) {
+        const p = { recipientEmail: edit.recipientEmail, userId: edit.userId, courseId: edit.courseId, templateId: edit.templateId };
+        return toCertificate(check(await sb.rpc("admin_update_certificate", { p_certificate_id: certificateId, p })) as Row);
+      },
+      async reissueCertificate(certificateId, input, reason) {
+        return toCertificate(check(await sb.rpc("admin_reissue_certificate", { p_certificate_id: certificateId, p: certificatePayload(input), p_reason: reason })) as Row);
+      },
+      async revokeCertificate(certificateId, reason) {
+        check(await sb.rpc("admin_revoke_certificate", { p_certificate_id: certificateId, p_reason: reason }));
+      },
+      async listCertificateEvents(certificateId) {
+        let q = sb.from("certificate_events").select("*").order("created_at", { ascending: false }).limit(500);
+        if (certificateId) q = q.eq("certificate_id", certificateId.trim().toUpperCase());
+        return (check(await q) as Row[]).map((r) => ({
+          id: r.id,
+          certificateId: r.certificate_id,
+          action: r.action,
+          actorName: r.actor_name,
+          details: r.details ?? {},
+          createdAt: r.created_at,
+        }));
+      },
+      async listCertificateTemplates() {
+        return (check(await sb.from("certificate_templates").select("*").order("position")) as Row[]).map((r) => ({
+          id: r.id,
+          name: r.name,
+          description: r.description,
+          active: r.active,
+        }));
       },
       async listOrders() {
         const [orders, profiles, courses, certs] = await Promise.all([
           sb.from("certificate_orders").select("*").order("created_at", { ascending: false }).limit(300),
           sb.from("profiles").select("id, full_name, email"),
           sb.from("courses").select("id, title"),
-          sb.from("certificates").select("user_id, course_id, certificate_id, status").eq("status", "valid"),
+          sb.from("certificates").select("user_id, course_id, certificate_id, status").eq("status", "valid").eq("source", "course"),
         ]);
         const people = new Map((check(profiles) as Row[]).map((p) => [p.id, p]));
         const titles = new Map((check(courses) as Row[]).map((c) => [c.id, c.title]));

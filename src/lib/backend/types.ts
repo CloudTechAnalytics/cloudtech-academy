@@ -106,22 +106,115 @@ export type PracticeResult = { passed: boolean; correct: number; total: number; 
 
 export type AdminPracticeSubmission = PracticeSubmission & { learnerName: string; learnerEmail: string; projectTitle: string; credentialId: string | null };
 
-/** The optional, paid official certificate for a completed course. */
+/** valid: active. replaced: corrected by a reissue; the replacement is the valid one. */
+export type OfficialCertificateStatus = "valid" | "revoked" | "replaced";
+
+export type TrainingType = "academy_course" | "one_on_one" | "corporate" | "bootcamp" | "workshop" | "private" | "other";
+
+export type CertificateType = "completion" | "participation" | "professional_training" | "achievement" | "workshop";
+
+/**
+ * An official certificate. source "course": the optional, paid certificate for a completed Academy
+ * course. source "manual": issued by an admin for any CloudTech training, with or without an account.
+ */
 export type Certificate = {
   id: string;
   certificateId: string;
-  /** The course completion credential it certifies. */
-  credentialId: string;
-  userId: string;
-  courseId: string;
+  source: "course" | "manual";
+  /** The course completion credential it certifies (course certificates only). */
+  credentialId: string | null;
+  /** The recipient's Academy account, if they have one. */
+  userId: string | null;
+  courseId: string | null;
   recipientName: string;
+  recipientEmail: string | null;
+  /** e.g. "Data Analytics Professional Training". Course certificates may leave it empty. */
+  certificateTitle: string | null;
+  /** The course or programme name. */
   courseTitle: string;
+  trainingType: TrainingType;
+  certificateType: CertificateType;
+  instructorName: string | null;
+  /** Description or skills covered. */
+  description: string | null;
+  /** YYYY-MM-DD */
+  startDate: string | null;
+  completionDate: string | null;
+  /** The issue date (stored as midday UTC on that date). */
   issuedAt: string;
-  status: CertificateStatus;
+  grade: string | null;
+  duration: string | null;
+  templateId: string;
+  status: OfficialCertificateStatus;
+  revokedAt: string | null;
   revokedReason: string | null;
+  /** The certificate this one replaced, when it was reissued. */
+  replacedCertificateId: string | null;
+  updatedAt: string;
 };
 
-export type PublicCertificate = Pick<Certificate, "certificateId" | "credentialId" | "recipientName" | "courseTitle" | "issuedAt" | "status">;
+/** Admin list rows: who issued it (from the audit log) and what replaced it. */
+export type AdminCertificate = Certificate & { issuedBy: string | null; replacedBy: string | null };
+
+/** What anyone can see on the verification page: only what is printed on the certificate, and its status. */
+export type PublicCertificate = Pick<
+  Certificate,
+  | "certificateId"
+  | "credentialId"
+  | "recipientName"
+  | "certificateTitle"
+  | "courseTitle"
+  | "trainingType"
+  | "certificateType"
+  | "instructorName"
+  | "description"
+  | "startDate"
+  | "completionDate"
+  | "issuedAt"
+  | "grade"
+  | "duration"
+  | "templateId"
+  | "status"
+  | "revokedAt"
+> & { replacedBy: string | null };
+
+/** What an admin enters to issue (or reissue) a certificate. The number is assigned by the server. */
+export type CertificateInput = {
+  recipientName: string;
+  recipientEmail: string;
+  /** Optional link to an Academy account. */
+  userId: string;
+  /** Optional link to an Academy course. */
+  courseId: string;
+  certificateTitle: string;
+  programmeName: string;
+  trainingType: TrainingType;
+  certificateType: CertificateType;
+  instructorName: string;
+  description: string;
+  startDate: string;
+  completionDate: string;
+  issueDate: string;
+  grade: string;
+  duration: string;
+  templateId: string;
+};
+
+/** What can change without reissuing: nothing printed on the certificate. */
+export type CertificateEdit = Pick<CertificateInput, "recipientEmail" | "userId" | "courseId" | "templateId">;
+
+export type CertificateEventAction = "created" | "edited" | "issued" | "downloaded" | "revoked" | "reissued";
+
+export type CertificateEvent = {
+  id: number;
+  certificateId: string;
+  action: CertificateEventAction;
+  actorName: string;
+  details: Record<string, unknown>;
+  createdAt: string;
+};
+
+export type CertificateTemplate = { id: string; name: string; description: string; active: boolean };
 
 /** A learner's public skills profile settings. The page lives at /learners/<slug>. */
 export type PublicProfileSettings = { isPublic: boolean; slug: string; headline: string };
@@ -133,7 +226,7 @@ export type PublicProfile = {
   headline: string;
   memberSince: string;
   credentials: PublicCredential[];
-  certificates: PublicCertificate[];
+  certificates: Pick<PublicCertificate, "certificateId" | "credentialId" | "recipientName" | "courseTitle" | "issuedAt" | "status">[];
 };
 
 export type CertificatePrice = { currency: string; amount: number; active: boolean; position: number };
@@ -256,6 +349,8 @@ export interface Backend {
   listMyCertificates(): Promise<Certificate[]>;
   getMyCertificate(certificateId: string): Promise<Certificate | null>;
   verifyCertificate(certificateId: string): Promise<PublicCertificate | null>;
+  /** Records a download in the certificate's audit log (admins, and the certificate's owner). */
+  recordCertificateDownload(certificateId: string): Promise<void>;
 
   /* ---------- admin ---------- */
   admin: {
@@ -271,8 +366,18 @@ export interface Backend {
     getStudent(userId: string): Promise<StudentDetail | null>;
     listCredentials(search?: string): Promise<Credential[]>;
     revokeCredential(id: string, reason: string): Promise<void>;
-    listCertificates(search?: string): Promise<Certificate[]>;
-    revokeCertificate(id: string, reason: string): Promise<void>;
+    /** Every certificate, newest first; filter with the search text (name, email, title or number). */
+    listCertificates(search?: string): Promise<AdminCertificate[]>;
+    getCertificate(certificateId: string): Promise<AdminCertificate | null>;
+    /** Issues a certificate; the server assigns its number. */
+    issueCertificate(input: CertificateInput): Promise<Certificate>;
+    /** Changes what isn't printed: email, linked account and course, template. */
+    updateCertificate(certificateId: string, edit: CertificateEdit): Promise<Certificate>;
+    /** Replaces a certificate with a corrected one under a new number. The original is kept as "replaced". */
+    reissueCertificate(certificateId: string, input: CertificateInput, reason: string): Promise<Certificate>;
+    revokeCertificate(certificateId: string, reason: string): Promise<void>;
+    listCertificateEvents(certificateId?: string): Promise<CertificateEvent[]>;
+    listCertificateTemplates(): Promise<CertificateTemplate[]>;
     listOrders(): Promise<AdminOrder[]>;
     listPracticeSubmissions(): Promise<AdminPracticeSubmission[]>;
     /** Marks the work "Reviewed by CloudTech" (or removes the mark), with an optional note to the learner. */

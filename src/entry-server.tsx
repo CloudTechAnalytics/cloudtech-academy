@@ -24,6 +24,7 @@ export const ROUTES = [
   "/projects",
   ...PRACTICE_PROJECTS.map((p) => `/projects/${p.id}`),
   "/certificates",
+  "/verify",
   "/about",
 ];
 
