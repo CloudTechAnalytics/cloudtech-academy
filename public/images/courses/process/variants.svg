@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 380" width="760" height="380" role="img" aria-label="The four most common variants of Harbourline's clearance process, shown as sequences of activity chips with their case counts: 148 cases with inspection, 118 with no inspection, 78 with a customs review, and 50 with a correction loop before declaring and an inspection.">
+<title>The most common paths through the clearance process.</title>
+
+<rect width="760" height="380" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="28.0" font-size="16" fill="#2A2926" font-weight="700" text-anchor="start">The four most common variants (cases)</text>
+<rect x="16.0" y="52.0" width="52.0" height="46.0" rx="6" fill="#F3EBD8"/>
+<text xml:space="preserve" x="42.0" y="81.0" font-size="15" fill="#2A2926" font-weight="700" text-anchor="middle">148</text>
+<rect x="78.0" y="60.0" width="53.0" height="30.0" rx="15" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<text xml:space="preserve" x="104.5" y="80.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="middle">Check</text>
+<rect x="137.0" y="60.0" width="67.8" height="30.0" rx="15" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<text xml:space="preserve" x="170.9" y="80.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="middle">Declare</text>
+<rect x="210.8" y="60.0" width="60.4" height="30.0" rx="15" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<text xml:space="preserve" x="241.0" y="80.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="middle">Assess</text>
+<rect x="277.2" y="60.0" width="38.2" height="30.0" rx="15" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<text xml:space="preserve" x="296.3" y="80.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="middle">Pay</text>
+<rect x="321.4" y="60.0" width="67.8" height="30.0" rx="15" fill="#EFE4CC" stroke="#8A6A1F" stroke-width="1.2"/>
+<text xml:space="preserve" x="355.3" y="80.0" font-size="12" fill="#8A6A1F" font-weight="700" text-anchor="middle">Inspect</text>
+<rect x="395.2" y="60.0" width="67.8" height="30.0" rx="15" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<text xml:space="preserve" x="429.1" y="80.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="middle">Release</text>
+<rect x="469.0" y="60.0" width="67.8" height="30.0" rx="15" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<text xml:space="preserve" x="502.9" y="80.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="middle">Deliver</text>
+<rect x="16.0" y="124.0" width="52.0" height="46.0" rx="6" fill="#F3EBD8"/>
+<text xml:space="preserve" x="42.0" y="153.0" font-size="15" fill="#2A2926" font-weight="700" text-anchor="middle">118</text>
+<rect x="78.0" y="132.0" width="53.0" height="30.0" rx="15" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<text xml:space="preserve" x="104.5" y="152.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="middle">Check</text>
+<rect x="137.0" y="132.0" width="67.8" height="30.0" rx="15" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<text xml:space="preserve" x="170.9" y="152.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="middle">Declare</text>
+<rect x="210.8" y="132.0" width="60.4" height="30.0" rx="15" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<text xml:space="preserve" x="241.0" y="152.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="middle">Assess</text>
+<rect x="277.2" y="132.0" width="38.2" height="30.0" rx="15" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<text xml:space="preserve" x="296.3" y="152.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="middle">Pay</text>
+<rect x="321.4" y="132.0" width="67.8" height="30.0" rx="15" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<text xml:space="preserve" x="355.3" y="152.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="middle">Release</text>
+<rect x="395.2" y="132.0" width="67.8" height="30.0" rx="15" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<text xml:space="preserve" x="429.1" y="152.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="middle">Deliver</text>
+<rect x="16.0" y="196.0" width="52.0" height="46.0" rx="6" fill="#F3EBD8"/>
+<text xml:space="preserve" x="42.0" y="225.0" font-size="15" fill="#2A2926" font-weight="700" text-anchor="middle">78</text>
+<rect x="78.0" y="204.0" width="53.0" height="30.0" rx="15" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<text xml:space="preserve" x="104.5" y="224.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="middle">Check</text>
+<rect x="137.0" y="204.0" width="67.8" height="30.0" rx="15" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<text xml:space="preserve" x="170.9" y="224.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="middle">Declare</text>
+<rect x="210.8" y="204.0" width="60.4" height="30.0" rx="15" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<text xml:space="preserve" x="241.0" y="224.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="middle">Assess</text>
+<rect x="277.2" y="204.0" width="38.2" height="30.0" rx="15" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<text xml:space="preserve" x="296.3" y="224.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="middle">Pay</text>
+<rect x="321.4" y="204.0" width="60.4" height="30.0" rx="15" fill="#EFE4CC" stroke="#8A6A1F" stroke-width="1.2"/>
+<text xml:space="preserve" x="351.6" y="224.0" font-size="12" fill="#8A6A1F" font-weight="700" text-anchor="middle">Review</text>
+<rect x="387.8" y="204.0" width="67.8" height="30.0" rx="15" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<text xml:space="preserve" x="421.7" y="224.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="middle">Release</text>
+<rect x="461.6" y="204.0" width="67.8" height="30.0" rx="15" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<text xml:space="preserve" x="495.5" y="224.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="middle">Deliver</text>
+<rect x="16.0" y="268.0" width="52.0" height="46.0" rx="6" fill="#F3EBD8"/>
+<text xml:space="preserve" x="42.0" y="297.0" font-size="15" fill="#2A2926" font-weight="700" text-anchor="middle">50</text>
+<rect x="78.0" y="276.0" width="53.0" height="30.0" rx="15" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<text xml:space="preserve" x="104.5" y="296.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="middle">Check</text>
+<rect x="137.0" y="276.0" width="67.8" height="30.0" rx="15" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.2"/>
+<text xml:space="preserve" x="170.9" y="296.0" font-size="12" fill="#9B2C1F" font-weight="700" text-anchor="middle">Correct</text>
+<rect x="210.8" y="276.0" width="75.2" height="30.0" rx="15" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.2"/>
+<text xml:space="preserve" x="248.4" y="296.0" font-size="12" fill="#9B2C1F" font-weight="700" text-anchor="middle">Re-check</text>
+<rect x="292.0" y="276.0" width="67.8" height="30.0" rx="15" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<text xml:space="preserve" x="325.9" y="296.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="middle">Declare</text>
+<rect x="365.8" y="276.0" width="60.4" height="30.0" rx="15" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<text xml:space="preserve" x="396.0" y="296.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="middle">Assess</text>
+<rect x="432.2" y="276.0" width="38.2" height="30.0" rx="15" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<text xml:space="preserve" x="451.3" y="296.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="middle">Pay</text>
+<rect x="476.4" y="276.0" width="67.8" height="30.0" rx="15" fill="#EFE4CC" stroke="#8A6A1F" stroke-width="1.2"/>
+<text xml:space="preserve" x="510.3" y="296.0" font-size="12" fill="#8A6A1F" font-weight="700" text-anchor="middle">Inspect</text>
+<rect x="550.2" y="276.0" width="67.8" height="30.0" rx="15" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<text xml:space="preserve" x="584.1" y="296.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="middle">Release</text>
+<rect x="624.0" y="276.0" width="67.8" height="30.0" rx="15" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<text xml:space="preserve" x="657.9" y="296.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="middle">Deliver</text>
+<text xml:space="preserve" x="16.0" y="352.0" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">Red chips are rework. A 'simple' process has several common paths; the correction loop is one of the main</text>
+<text xml:space="preserve" x="16.0" y="370.9" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">ones, not a rare exception.</text>
+</g></svg>

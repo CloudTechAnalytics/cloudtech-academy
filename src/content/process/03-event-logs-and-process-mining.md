@@ -12,7 +12,7 @@ Using those records to discover and measure a process is called **process mining
 
 ## The concept
 
-**An event log**
+### An event log
 
 Every process-mining analysis starts from a table with at least three columns:
 
@@ -23,7 +23,7 @@ Every process-mining analysis starts from a table with at least three columns:
 | **Timestamp(s)**: when it started and ended | `2026-02-11 09:00`, `2026-02-11 10:00` |
 | Optional: **resource** or team, and case attributes | `Documentation`, importer type, channel |
 
-**What you can derive**
+### What you can derive
 
 - **Variants**: the distinct paths cases take. List each case's activities in time order and count the distinct sequences. A "simple" process often has dozens of variants.
 - **Rework**: activities that repeat or exist only to fix something (*Request corrected documents*, *Re-check documents*).
@@ -31,7 +31,7 @@ Every process-mining analysis starts from a table with at least three columns:
 - **Waiting time**: the start of an activity minus the end of the previous one in the same case. Sort by case, then by start time, and take the previous row's end (`LAG` in SQL, `shift` in pandas, a formula referencing the row above in Excel).
 - **Lead time**: last end − first start (or, for Harbourline, release − arrival).
 
-**Cautions**
+### Cautions
 
 - Logs record only what systems record. A phone call chasing a customer may leave no trace.
 - Timestamps can be when something was **entered**, not when it happened. Check a few cases with the people involved.
@@ -49,6 +49,8 @@ The most common variants of Harbourline's clearance process:
 | Check → **Request correction → Re-check** → Declare → Assess → Pay → Inspect → Release → Deliver | 50 |
 
 There are 9 variants in all. The rework variants (with a correction loop, sometimes two) aren't rare exceptions: together they're a large share of the work.
+
+![Four rows of activity chips with case counts: 148 cases go Check, Declare, Assess, Pay, Inspect, Release, Deliver; 118 skip Inspect; 78 have Review instead; 50 have Correct and Re-check after Check, then Inspect.](/images/courses/process/variants.svg "The four most common variants. The correction loop is a main path, not an exception.")
 
 ## Walkthrough
 

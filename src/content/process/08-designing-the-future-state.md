@@ -12,7 +12,7 @@ A good future state attacks the **root causes** at the **constraints**, with a s
 
 ## The concept
 
-**Lean design patterns**
+### Lean design patterns
 
 | Pattern | Idea | For Harbourline's clearance |
 | :-- | :-- | :-- |
@@ -23,11 +23,11 @@ A good future state attacks the **root causes** at the **constraints**, with a s
 | **Level the flow** | avoid peaks that overload the bottleneck | ask customs for inspection slots as soon as the channel is known |
 | **Pull, not push** | start the next step when it can actually proceed | send the duty notice the moment assessment arrives, with a payment reference |
 
-**Future-state targets**
+### Future-state targets
 
 For each change, state the measure it should move and by how much, for example: "documents complete on arrival rises from 66% to 85%". Targets should be ambitious but grounded in your analysis: you know how long complete files take, so you can estimate what more complete files would save.
 
-**Estimating the benefit**
+### Estimating the benefit
 
 Convert time into money with the cost the customer feels:
 

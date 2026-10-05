@@ -12,11 +12,11 @@ Lean calls this **waste**: anything that uses time, money or effort without addi
 
 ## The concept
 
-**Value-adding or not?**
+### Value-adding or not?
 
 A step **adds value** when the customer would willingly pay for it, it changes the item in a way the customer cares about, and it's done right first time. Checking documents is arguably necessary (customs requires it), but **re-checking** them because they were wrong is pure waste. Steps that are needed but add no value (regulatory checks, for example) are "necessary non-value-adding": minimise them, don't pretend they're value.
 
-**The eight wastes (DOWNTIME)**
+### The eight wastes (DOWNTIME)
 
 | Waste | In an office or service process | At Harbourline |
 | :-- | :-- | :-- |
@@ -29,7 +29,7 @@ A step **adds value** when the customer would willingly pay for it, it changes t
 | **M**otion | unnecessary movement or searching | searching inboxes for the latest version of a document |
 | **E**xtra processing | doing more than the customer needs | re-typing data from PDFs into the customs portal |
 
-**Evidence, not opinion**
+### Evidence, not opinion
 
 For each waste, find evidence: a number from the data, an observation, or a quote. Then size it in time or money, so the team fixes the biggest waste first rather than the most annoying one.
 

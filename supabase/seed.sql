@@ -36671,7 +36671,7 @@ That's the central insight of **Lean**, and this course teaches you to find wher
 
 ## The concept
 
-**Lean and Six Sigma in one paragraph each**
+### Lean and Six Sigma in one paragraph each
 
 **Lean** (from Toyota's production system) is about **flow**: delivering value to the customer with as little waste, waiting and effort as possible. Its tools include value stream maps, the eight wastes and pull systems.
 
@@ -36679,7 +36679,7 @@ That's the central insight of **Lean**, and this course teaches you to find wher
 
 Most organisations blend the two ("Lean Six Sigma"). You don't need a belt to use them; a BA who can map a process, measure it from data and find root causes is already doing the core work.
 
-**The improvement cycle**
+### The improvement cycle
 
 | DMAIC | What you do | Lesson |
 | :-- | :-- | :-- |
@@ -36689,7 +36689,7 @@ Most organisations blend the two ("Lean Six Sigma"). You don't need a belt to us
 | **Improve** | design and pilot a better process | 8, 9 |
 | **Control** | make the improvement stick | 9 |
 
-**Measures customers feel**
+### Measures customers feel
 
 Frame the problem around what the customer experiences, not internal activity:
 
@@ -36812,7 +36812,7 @@ In Business Analysis Fundamentals you drew simple swimlane diagrams. When a proc
 
 ## The concept
 
-**The core BPMN elements**
+### The core BPMN elements
 
 | Element | Symbol | Use |
 | :-- | :-- | :-- |
@@ -36829,7 +36829,7 @@ In Business Analysis Fundamentals you drew simple swimlane diagrams. When a proc
 | **Pool** | large box | one organisation (Harbourline, the customer, customs) |
 | **Lane** | strip inside a pool | a role or team within it |
 
-**Rules that keep models readable**
+### Rules that keep models readable
 
 - Label every gateway as a question ("Documents complete?") and every outgoing path with an answer ("Yes", "No").
 - Use **message flows** between pools, never sequence flows: one organisation can't control another's steps.
@@ -36856,6 +36856,8 @@ The clearance process, as a BA would describe the BPMN model in words:
 8. **Task** (Haulage lane): deliver to customer → **end event**: container delivered.
 
 The loop at step 3 is the part none of the three old diagrams showed. It's also where much of the delay turns out to be.
+
+![A BPMN diagram with a Customer pool, a Harbourline pool with Documentation, Customs broker, Terminal and Haulage lanes, and a Customs pool. Vessel arrives, check documents, gateway: complete? No leads to request corrected documents, a message event for documents received, re-check, and a dashed rework loop back to the gateway. Yes leads to submit declaration, a message event for duty assessed and payment confirmed, a channel gateway, release and gate-out, deliver to customer, and the end event. Dashed message flows run to the Customer and Customs pools.](/images/courses/process/bpmn-clearance.svg "The clearance process in BPMN. The rework loop at the top is the part the old diagrams left out.")
 
 ## Walkthrough
 
@@ -36945,7 +36947,7 @@ Using those records to discover and measure a process is called **process mining
 
 ## The concept
 
-**An event log**
+### An event log
 
 Every process-mining analysis starts from a table with at least three columns:
 
@@ -36956,7 +36958,7 @@ Every process-mining analysis starts from a table with at least three columns:
 | **Timestamp(s)**: when it started and ended | `2026-02-11 09:00`, `2026-02-11 10:00` |
 | Optional: **resource** or team, and case attributes | `Documentation`, importer type, channel |
 
-**What you can derive**
+### What you can derive
 
 - **Variants**: the distinct paths cases take. List each case's activities in time order and count the distinct sequences. A "simple" process often has dozens of variants.
 - **Rework**: activities that repeat or exist only to fix something (*Request corrected documents*, *Re-check documents*).
@@ -36964,7 +36966,7 @@ Every process-mining analysis starts from a table with at least three columns:
 - **Waiting time**: the start of an activity minus the end of the previous one in the same case. Sort by case, then by start time, and take the previous row's end (`LAG` in SQL, `shift` in pandas, a formula referencing the row above in Excel).
 - **Lead time**: last end − first start (or, for Harbourline, release − arrival).
 
-**Cautions**
+### Cautions
 
 - Logs record only what systems record. A phone call chasing a customer may leave no trace.
 - Timestamps can be when something was **entered**, not when it happened. Check a few cases with the people involved.
@@ -36982,6 +36984,8 @@ The most common variants of Harbourline's clearance process:
 | Check → **Request correction → Re-check** → Declare → Assess → Pay → Inspect → Release → Deliver | 50 |
 
 There are 9 variants in all. The rework variants (with a correction loop, sometimes two) aren't rare exceptions: together they're a large share of the work.
+
+![Four rows of activity chips with case counts: 148 cases go Check, Declare, Assess, Pay, Inspect, Release, Deliver; 118 skip Inspect; 78 have Review instead; 50 have Correct and Re-check after Check, then Inspect.](/images/courses/process/variants.svg "The four most common variants. The correction loop is a main path, not an exception.")
 
 ## Walkthrough
 
@@ -37096,7 +37100,7 @@ A **value stream map** (VSM) puts the two side by side for every step: how long 
 
 ## The concept
 
-**What a value stream map shows**
+### What a value stream map shows
 
 A VSM follows one item (a container) from trigger to customer, step by step, and records for each step:
 
@@ -37109,7 +37113,7 @@ A VSM follows one item (a container) from trigger to customer, step by step, and
 
 Underneath, a **timeline** alternates waits and work, and totals them.
 
-**Three numbers that summarise the stream**
+### Three numbers that summarise the stream
 
 - **Lead time** = total time from start to finish (all waits + all process time).
 - **Total process time** = the sum of process times.
@@ -37117,7 +37121,7 @@ Underneath, a **timeline** alternates waits and work, and totals them.
 
 In office and service processes, flow efficiency of **5% to 15%** is common. Below 5% means the item spends almost its whole life waiting.
 
-**Rolled %C&A**
+### Rolled %C&A
 
 Multiply the %C&A of the steps together to see how often an item goes through the whole stream without any correction. Three steps at 90% each give 0.9 × 0.9 × 0.9 = 73% right first time.
 
@@ -37136,6 +37140,8 @@ Harbourline's clearance value stream, before the pilot (averages per clearance, 
 | Release and gate-out | Terminal | 27.2 | 1.5 |
 
 The first step's %C&A is about 66%: only 66% of clearances have complete documents on arrival. Every other clearance takes the correction loop, which on its own adds about three days.
+
+![For each step, a long pale bar for the wait before it and a short dark bar for the hands-on time: check documents waits 22.1 hours and takes 2; the correction loop waits about 72 and takes 1.5; customs declaration 18.2 and 1.5; duty assessment 30.5 and 1; confirm duty payment 46.1 and 0.5; physical inspection 42.1 and 3; release 27.2 and 1.5.](/images/courses/process/vsm-timeline.svg "Waiting against working at each step. The pale bars are where the improvement is.")
 
 ## Walkthrough
 
@@ -37238,11 +37244,11 @@ Lean calls this **waste**: anything that uses time, money or effort without addi
 
 ## The concept
 
-**Value-adding or not?**
+### Value-adding or not?
 
 A step **adds value** when the customer would willingly pay for it, it changes the item in a way the customer cares about, and it's done right first time. Checking documents is arguably necessary (customs requires it), but **re-checking** them because they were wrong is pure waste. Steps that are needed but add no value (regulatory checks, for example) are "necessary non-value-adding": minimise them, don't pretend they're value.
 
-**The eight wastes (DOWNTIME)**
+### The eight wastes (DOWNTIME)
 
 | Waste | In an office or service process | At Harbourline |
 | :-- | :-- | :-- |
@@ -37255,7 +37261,7 @@ A step **adds value** when the customer would willingly pay for it, it changes t
 | **M**otion | unnecessary movement or searching | searching inboxes for the latest version of a document |
 | **E**xtra processing | doing more than the customer needs | re-typing data from PDFs into the customs portal |
 
-**Evidence, not opinion**
+### Evidence, not opinion
 
 For each waste, find evidence: a number from the data, an observation, or a quote. Then size it in time or money, so the team fixes the biggest waste first rather than the most annoying one.
 
@@ -37348,7 +37354,7 @@ Probably none of them. A process can only move as fast as its slowest point, its
 
 ## The concept
 
-**The theory of constraints in five steps**
+### The theory of constraints in five steps
 
 1. **Identify** the constraint: where does work pile up? Where are the longest waits?
 2. **Exploit** it: make sure the constraint never wastes time (no idle inspection slots, no files arriving incomplete).
@@ -37356,13 +37362,13 @@ Probably none of them. A process can only move as fast as its slowest point, its
 4. **Elevate** it: if it's still the limit, add capacity there (more inspection slots, earlier booking).
 5. **Repeat**: once it's no longer the constraint, something else will be. Find it.
 
-**Signs of a bottleneck in data**
+### Signs of a bottleneck in data
 
 - The longest average **wait** sits just before it.
 - Waits before it get longer when more work arrives at once.
 - Cases that skip it finish much faster.
 
-**Little's law**
+### Little's law
 
 For a stable process, over time:
 
@@ -37381,6 +37387,8 @@ Harbourline's clearances, before the pilot, by customs channel:
 | Red | physical inspection | 9.3 |
 
 Red cases spend about 1.7 days longer at port than Green ones, and the wait before physical inspection (42 hours on average) grows when several Red containers arrive in the same few days. The customs inspection queue behaves like a bottleneck for the 4 in 10 containers that go through it. But look back at the value stream: the waits for **corrected documents** and **duty payment** are as long or longer, and they affect every channel. There's more than one constraint, and some of them sit with Harbourline's own customers.
+
+![Bars of average days at port: Green, no inspection, 7.6; Yellow, document review, 8.7; Red, physical inspection, 9.3.](/images/courses/process/days-by-channel.svg "Inspection adds time, but even Green containers spend 7.6 days at port.")
 
 ## Walkthrough
 
@@ -37480,7 +37488,7 @@ The clearing team's answer is "customers are careless". That's a symptom with a 
 
 ## The concept
 
-**The fishbone (Ishikawa) diagram**
+### The fishbone (Ishikawa) diagram
 
 Write the problem at the "head" and brainstorm causes along six "bones":
 
@@ -37495,6 +37503,8 @@ Write the problem at the "head" and brainstorm causes along six "bones":
 
 The fishbone generates candidate causes. Data and five whys test them.
 
+![A fishbone diagram with the problem, documents incomplete on arrival, at the head, and six bones: People (customers don't know what's needed), Process (checked only on arrival; no checklist), Policy (NAFDAC and SONCAP permits; rules change), Materials (permits most often missing), Systems (sent by email; versions mixed up), Measurement (nobody tracks it by customer).](/images/courses/process/fishbone.svg "Harbourline's fishbone: candidate causes, before the data tests them.")
+
 **Five whys**, applied:
 
 1. Why are documents incomplete? *The permit is missing.*
@@ -37505,7 +37515,7 @@ The fishbone generates candidate causes. Data and five whys test them.
 
 Root cause: **documents are checked too late for problems to be fixed before arrival.** That's something Harbourline controls.
 
-**Pareto analysis: rate versus count**
+### Pareto analysis: rate versus count
 
 Sort the causes (or customer groups) by how many problems they cause, and look at the cumulative share. Usually a few account for most. But compare two measures:
 
@@ -37628,7 +37638,7 @@ A good future state attacks the **root causes** at the **constraints**, with a s
 
 ## The concept
 
-**Lean design patterns**
+### Lean design patterns
 
 | Pattern | Idea | For Harbourline's clearance |
 | :-- | :-- | :-- |
@@ -37639,11 +37649,11 @@ A good future state attacks the **root causes** at the **constraints**, with a s
 | **Level the flow** | avoid peaks that overload the bottleneck | ask customs for inspection slots as soon as the channel is known |
 | **Pull, not push** | start the next step when it can actually proceed | send the duty notice the moment assessment arrives, with a payment reference |
 
-**Future-state targets**
+### Future-state targets
 
 For each change, state the measure it should move and by how much, for example: "documents complete on arrival rises from 66% to 85%". Targets should be ambitious but grounded in your analysis: you know how long complete files take, so you can estimate what more complete files would save.
 
-**Estimating the benefit**
+### Estimating the benefit
 
 Convert time into money with the cost the customer feels:
 
@@ -37756,18 +37766,18 @@ The tempting answer is to compare the average before and after and declare victo
 
 ## The concept
 
-**PDCA**
+### PDCA
 
 **Plan** the change and its measures. **Do** it on a small scale. **Check** the results against the target. **Act**: adopt it, adapt it or drop it, then plan the next cycle. PDCA is the small-scale version of DMAIC, repeated.
 
-**Judging a pilot fairly**
+### Judging a pilot fairly
 
 - **Plot a run chart**: the measure week by week, with the change date marked. A real improvement shows as a sustained shift, not one good week.
 - **Compare like with like**: check that the mix is similar before and after (here, the share of Red-channel clearances and importer types). If the pilot period happened to get easier cases, the averages flatter it.
 - **Check measures the change shouldn't affect**: if they also improved, something else is going on (a quieter port, a new customs procedure).
 - **Compare with a group not in the pilot** if you can. Harbourline put every customer in the pilot, which makes the run chart and the mix checks more important.
 
-**Sustain: the control plan**
+### Sustain: the control plan
 
 | Control | Harbourline example |
 | :-- | :-- |
@@ -37905,7 +37915,7 @@ The data already hints at the answer. During the pilot, the wait for **duty paym
 
 ## The concept
 
-**The A3 report**
+### The A3 report
 
 Lean organisations summarise an improvement on one sheet of A3 paper, so the whole story fits on one page and anyone can follow the reasoning. Its sections follow PDCA:
 

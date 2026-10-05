@@ -12,7 +12,7 @@ The data already hints at the answer. During the pilot, the wait for **duty paym
 
 ## The concept
 
-**The A3 report**
+### The A3 report
 
 Lean organisations summarise an improvement on one sheet of A3 paper, so the whole story fits on one page and anyone can follow the reasoning. Its sections follow PDCA:
 

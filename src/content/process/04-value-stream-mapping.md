@@ -12,7 +12,7 @@ A **value stream map** (VSM) puts the two side by side for every step: how long 
 
 ## The concept
 
-**What a value stream map shows**
+### What a value stream map shows
 
 A VSM follows one item (a container) from trigger to customer, step by step, and records for each step:
 
@@ -25,7 +25,7 @@ A VSM follows one item (a container) from trigger to customer, step by step, and
 
 Underneath, a **timeline** alternates waits and work, and totals them.
 
-**Three numbers that summarise the stream**
+### Three numbers that summarise the stream
 
 - **Lead time** = total time from start to finish (all waits + all process time).
 - **Total process time** = the sum of process times.
@@ -33,7 +33,7 @@ Underneath, a **timeline** alternates waits and work, and totals them.
 
 In office and service processes, flow efficiency of **5% to 15%** is common. Below 5% means the item spends almost its whole life waiting.
 
-**Rolled %C&A**
+### Rolled %C&A
 
 Multiply the %C&A of the steps together to see how often an item goes through the whole stream without any correction. Three steps at 90% each give 0.9 × 0.9 × 0.9 = 73% right first time.
 
@@ -52,6 +52,8 @@ Harbourline's clearance value stream, before the pilot (averages per clearance, 
 | Release and gate-out | Terminal | 27.2 | 1.5 |
 
 The first step's %C&A is about 66%: only 66% of clearances have complete documents on arrival. Every other clearance takes the correction loop, which on its own adds about three days.
+
+![For each step, a long pale bar for the wait before it and a short dark bar for the hands-on time: check documents waits 22.1 hours and takes 2; the correction loop waits about 72 and takes 1.5; customs declaration 18.2 and 1.5; duty assessment 30.5 and 1; confirm duty payment 46.1 and 0.5; physical inspection 42.1 and 3; release 27.2 and 1.5.](/images/courses/process/vsm-timeline.svg "Waiting against working at each step. The pale bars are where the improvement is.")
 
 ## Walkthrough
 

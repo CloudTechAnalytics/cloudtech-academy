@@ -12,18 +12,18 @@ The tempting answer is to compare the average before and after and declare victo
 
 ## The concept
 
-**PDCA**
+### PDCA
 
 **Plan** the change and its measures. **Do** it on a small scale. **Check** the results against the target. **Act**: adopt it, adapt it or drop it, then plan the next cycle. PDCA is the small-scale version of DMAIC, repeated.
 
-**Judging a pilot fairly**
+### Judging a pilot fairly
 
 - **Plot a run chart**: the measure week by week, with the change date marked. A real improvement shows as a sustained shift, not one good week.
 - **Compare like with like**: check that the mix is similar before and after (here, the share of Red-channel clearances and importer types). If the pilot period happened to get easier cases, the averages flatter it.
 - **Check measures the change shouldn't affect**: if they also improved, something else is going on (a quieter port, a new customs procedure).
 - **Compare with a group not in the pilot** if you can. Harbourline put every customer in the pilot, which makes the run chart and the mix checks more important.
 
-**Sustain: the control plan**
+### Sustain: the control plan
 
 | Control | Harbourline example |
 | :-- | :-- |
