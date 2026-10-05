@@ -366,6 +366,8 @@ export interface Backend {
     getStudent(userId: string): Promise<StudentDetail | null>;
     listCredentials(search?: string): Promise<Credential[]>;
     revokeCredential(id: string, reason: string): Promise<void>;
+    /** Permanently deletes a badge. Blocked while an official certificate was issued from it. The deletion is logged. */
+    deleteCredential(credentialId: string, reason: string): Promise<void>;
     /** Every certificate, newest first; filter with the search text (name, email, title or number). */
     listCertificates(search?: string): Promise<AdminCertificate[]>;
     getCertificate(certificateId: string): Promise<AdminCertificate | null>;
@@ -376,6 +378,8 @@ export interface Backend {
     /** Replaces a certificate with a corrected one under a new number. The original is kept as "replaced". */
     reissueCertificate(certificateId: string, input: CertificateInput, reason: string): Promise<Certificate>;
     revokeCertificate(certificateId: string, reason: string): Promise<void>;
+    /** Permanently deletes a certificate and its activity log. Its public page then says "not found". The deletion is logged. */
+    deleteCertificate(certificateId: string, reason: string): Promise<void>;
     listCertificateEvents(certificateId?: string): Promise<CertificateEvent[]>;
     listCertificateTemplates(): Promise<CertificateTemplate[]>;
     listOrders(): Promise<AdminOrder[]>;

@@ -696,6 +696,9 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
         if (t) q = q.or(`credential_id.ilike.%${t}%,recipient_name.ilike.%${t}%,badge_name.ilike.%${t}%`);
         return (check(await q) as Row[]).map(toCredential);
       },
+      async deleteCredential(credentialId, reason) {
+        check(await sb.rpc("admin_delete_credential", { p_credential_id: credentialId, p_reason: reason }));
+      },
       async revokeCredential(id, reason) {
         check(await sb.from("credentials").update({ status: "revoked", revoked_at: new Date().toISOString(), revoked_reason: reason }).eq("id", id));
       },
@@ -715,6 +718,9 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
       },
       async reissueCertificate(certificateId, input, reason) {
         return toCertificate(check(await sb.rpc("admin_reissue_certificate", { p_certificate_id: certificateId, p: certificatePayload(input), p_reason: reason })) as Row);
+      },
+      async deleteCertificate(certificateId, reason) {
+        check(await sb.rpc("admin_delete_certificate", { p_certificate_id: certificateId, p_reason: reason }));
       },
       async revokeCertificate(certificateId, reason) {
         check(await sb.rpc("admin_revoke_certificate", { p_certificate_id: certificateId, p_reason: reason }));

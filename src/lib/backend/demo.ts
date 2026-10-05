@@ -910,6 +910,18 @@ export function createDemoBackend(): Backend {
           .credentials.filter((c) => !q || c.credentialId.toLowerCase().includes(q) || c.recipientName.toLowerCase().includes(q) || c.badgeName.toLowerCase().includes(q))
           .sort((a, b) => b.issuedAt.localeCompare(a.issuedAt));
       },
+      async deleteCredential(credentialId, _reason) {
+        requireAdmin();
+        const s = load();
+        const c = s.credentials.find((x) => x.credentialId === credentialId.trim().toUpperCase());
+        if (!c) throw new BackendError("Badge not found.");
+        if (s.certificates.some((x) => x.credentialId === c.credentialId)) throw new BackendError("An official certificate was issued from this credential. Delete that certificate first.");
+        if (s.orders.some((o) => o.credentialId === c.credentialId && (o.status === "paid" || o.status === "granted")))
+          throw new BackendError("This credential has a paid or granted certificate order, which is kept as a payment record.");
+        s.orders = s.orders.filter((o) => o.credentialId !== c.credentialId);
+        s.credentials = s.credentials.filter((x) => x.id !== c.id);
+        save(s);
+      },
       async revokeCredential(id, reason) {
         requireAdmin();
         const s = load();
@@ -994,6 +1006,15 @@ export function createDemoBackend(): Backend {
         logEvent(s, cert.certificateId, "issued", u, { replaces: old.certificateId, reason: reason.trim() });
         save(s);
         return cert;
+      },
+      async deleteCertificate(certificateId, _reason) {
+        requireAdmin();
+        const s = load();
+        const c = s.certificates.find((x) => x.certificateId === certificateId.trim().toUpperCase());
+        if (!c) throw new BackendError("Certificate not found.");
+        s.certificates = s.certificates.filter((x) => x.id !== c.id).map((x) => (x.replacedCertificateId === c.certificateId ? { ...x, replacedCertificateId: null } : x));
+        s.certificateEvents = s.certificateEvents.filter((e) => e.certificateId !== c.certificateId);
+        save(s);
       },
       async revokeCertificate(certificateId, reason) {
         const u = requireAdmin();

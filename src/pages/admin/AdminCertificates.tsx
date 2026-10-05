@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
-import { Link, NavLink } from "react-router";
-import { Award, Ban, Copy, Download, Eye, Mail, MoreHorizontal, Pencil, Plus, RefreshCw } from "lucide-react";
+import { Link, NavLink, useLocation } from "react-router";
+import { Award, Ban, Copy, Download, Eye, Mail, MoreHorizontal, Pencil, Plus, RefreshCw, Trash2 } from "lucide-react";
 import { getBackend, type AdminCertificate, type AdminOrder, type CertificatePrice } from "@/lib/backend";
 import { PageLoading } from "@/lib/auth";
 import { formatDate } from "@/lib/format";
@@ -21,7 +21,7 @@ import { Button, ButtonLink, buttonClass } from "@/components/Button";
 import { Alert, TextField } from "@/components/Form";
 import { AdminHeading } from "./AdminLayout";
 import { useAdminData } from "./useAdmin";
-import { certificateLink, copyText, RevokeDialog, STATUS_LABEL, StatusChip, useCertificateDownload } from "./certificate-shared";
+import { certificateLink, copyText, DeleteCertificateDialog, RevokeDialog, STATUS_LABEL, StatusChip, useCertificateDownload } from "./certificate-shared";
 
 const STATUS: Record<AdminOrder["status"], string> = {
   pending: "Awaiting payment",
@@ -333,7 +333,7 @@ function Filter({ label, value, onChange, options }: { label: string; value: str
 }
 
 /** Row actions in a small menu. <details> keeps it keyboard-accessible without extra code. */
-function Actions({ c, onDownload, onCopy, onRevoke }: { c: AdminCertificate; onDownload: () => void; onCopy: () => void; onRevoke: () => void }) {
+function Actions({ c, onDownload, onCopy, onRevoke, onDelete }: { c: AdminCertificate; onDownload: () => void; onCopy: () => void; onRevoke: () => void; onDelete: () => void }) {
   const ref = useRef<HTMLDetailsElement>(null);
   const close = () => ref.current?.removeAttribute("open");
   const item = "flex w-full items-center gap-2 px-3.5 py-2 text-left text-[0.875rem] hover:bg-sand";
@@ -371,6 +371,9 @@ function Actions({ c, onDownload, onCopy, onRevoke }: { c: AdminCertificate; onD
             <Ban aria-hidden className="h-4 w-4" /> Revoke
           </button>
         )}
+        <button type="button" className={`${item} border-t border-line text-danger`} onClick={() => (close(), onDelete())}>
+          <Trash2 aria-hidden className="h-4 w-4" /> Delete
+        </button>
       </div>
     </details>
   );
@@ -391,8 +394,12 @@ export default function AdminCertificates() {
   const [type, setType] = useState("");
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
-  const [msg, setMsg] = useState<{ tone: "success" | "error"; text: string } | null>(null);
+  const deletedId = (useLocation().state as { deleted?: string } | null)?.deleted;
+  const [msg, setMsg] = useState<{ tone: "success" | "error"; text: string } | null>(
+    deletedId ? { tone: "success", text: `${deletedId} deleted. Its verification page now says "Certificate Not Found".` } : null,
+  );
   const [revoking, setRevoking] = useState<AdminCertificate | null>(null);
+  const [deleting, setDeleting] = useState<AdminCertificate | null>(null);
   const onError = useCallback((text: string) => setMsg({ tone: "error", text }), []);
   const { download, hidden } = useCertificateDownload(onError);
 
@@ -548,6 +555,7 @@ export default function AdminCertificates() {
                         )
                       }
                       onRevoke={() => setRevoking(c)}
+                      onDelete={() => setDeleting(c)}
                     />
                   </td>
                 </tr>
@@ -561,6 +569,14 @@ export default function AdminCertificates() {
         onClose={() => setRevoking(null)}
         onRevoked={() => {
           setMsg({ tone: "success", text: `${revoking?.certificateId} revoked. Its verification page now shows it as revoked.` });
+          void reload();
+        }}
+      />
+      <DeleteCertificateDialog
+        cert={deleting}
+        onClose={() => setDeleting(null)}
+        onDeleted={(id) => {
+          setMsg({ tone: "success", text: `${id} deleted. Its verification page now says "Certificate Not Found".` });
           void reload();
         }}
       />

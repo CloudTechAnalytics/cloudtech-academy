@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState, type ReactNode } from "react";
-import { Link, useLocation, useParams } from "react-router";
-import { Ban, Copy, Download, ExternalLink, Pencil, RefreshCw } from "lucide-react";
+import { Link, useLocation, useNavigate, useParams } from "react-router";
+import { Ban, Copy, Download, ExternalLink, Pencil, RefreshCw, Trash2 } from "lucide-react";
 import { getBackend, type AdminCertificate, type CertificateEvent, type StudentSummary } from "@/lib/backend";
 import { PageLoading } from "@/lib/auth";
 import { formatDate } from "@/lib/format";
@@ -9,7 +9,7 @@ import { CertificateDocument, renderOf } from "@/components/CertificateDocument"
 import { Alert } from "@/components/Form";
 import { Button, ButtonLink, buttonClass } from "@/components/Button";
 import { AdminHeading } from "./AdminLayout";
-import { certificateLink, copyText, RevokeDialog, StatusChip, useCertificateDownload } from "./certificate-shared";
+import { certificateLink, copyText, DeleteCertificateDialog, RevokeDialog, StatusChip, useCertificateDownload } from "./certificate-shared";
 
 const ACTION_LABEL: Record<CertificateEvent["action"], string> = {
   created: "Created",
@@ -52,6 +52,8 @@ export default function AdminCertificateDetail() {
   const [account, setAccount] = useState<StudentSummary | null>(null);
   const [msg, setMsg] = useState<{ tone: "success" | "error"; text: string } | null>((location.state as { saved?: boolean } | null)?.saved ? { tone: "success", text: "Changes saved." } : null);
   const [revoking, setRevoking] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+  const navigate = useNavigate();
   const onError = useCallback((text: string) => setMsg({ tone: "error", text }), []);
   const downloader = useCertificateDownload(onError);
 
@@ -127,6 +129,9 @@ export default function AdminCertificateDetail() {
             <Ban aria-hidden className="h-4 w-4" /> Revoke
           </Button>
         )}
+        <Button variant="danger" onClick={() => setDeleting(true)}>
+          <Trash2 aria-hidden className="h-4 w-4" /> Delete
+        </Button>
       </div>
 
       <div className="mt-4 space-y-3" aria-live="polite">
@@ -233,6 +238,11 @@ export default function AdminCertificateDetail() {
           setMsg({ tone: "success", text: "Certificate revoked. Its verification page now shows it as revoked." });
           void load();
         }}
+      />
+      <DeleteCertificateDialog
+        cert={deleting ? cert : null}
+        onClose={() => setDeleting(false)}
+        onDeleted={(id) => navigate("/admin/certificates", { state: { deleted: id } })}
       />
       {downloader.hidden}
     </div>

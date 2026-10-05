@@ -5,6 +5,7 @@ import { SITE } from "@/lib/site";
 import { CertificateDocument, renderOf } from "@/components/CertificateDocument";
 import { downloadCertificatePdf } from "@/components/CertificateArtwork";
 import { Modal } from "@/components/Modal";
+import { DeleteDialog } from "@/components/DeleteDialog";
 import { Alert, TextArea } from "@/components/Form";
 import { Button } from "@/components/Button";
 
@@ -124,5 +125,35 @@ export function RevokeDialog({ cert, onClose, onRevoked }: { cert: Certificate |
         </>
       )}
     </Modal>
+  );
+}
+
+/** Permanently deletes a certificate. Its public page then says "not found"; the deletion is logged. */
+export function DeleteCertificateDialog({ cert, onClose, onDeleted }: { cert: Certificate | null; onClose: () => void; onDeleted: (certificateId: string) => void }) {
+  return (
+    <DeleteDialog
+      open={!!cert}
+      title="Delete this certificate?"
+      confirmWord={cert?.certificateId ?? ""}
+      onClose={onClose}
+      onDelete={async (reason) => {
+        if (!cert) return;
+        await (await getBackend()).admin.deleteCertificate(cert.certificateId, reason);
+        onDeleted(cert.certificateId);
+      }}
+    >
+      {cert && (
+        <>
+          <p>
+            This permanently deletes <strong>{certificateName(cert)}</strong> for <strong>{cert.recipientName}</strong> (
+            <span className="font-mono text-[0.875rem]">{cert.certificateId}</span>), including its activity history.
+          </p>
+          <p className="text-[0.875rem] text-muted">
+            Anyone who checks the ID or scans the QR code will see "Certificate Not Found". The number is never reused. To keep a record that it existed, revoke it
+            instead. This can't be undone.
+          </p>
+        </>
+      )}
+    </DeleteDialog>
   );
 }
