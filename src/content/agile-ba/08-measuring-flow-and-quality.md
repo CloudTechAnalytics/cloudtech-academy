@@ -12,7 +12,7 @@ The retrospective after sprint 6 is coming up. The scrum master asks the BA to b
 
 ## The concept
 
-**Flow and quality measures**
+### Flow and quality measures
 
 | Measure | Definition | Tells you |
 | :-- | :-- | :-- |
@@ -22,11 +22,13 @@ The retrospective after sprint 6 is coming up. The scrum master asks the BA to b
 | **Commitment reliability** | points done ÷ points committed, per sprint | how predictable sprint planning is |
 | **Escaped and found bugs** | bugs logged per sprint, and how long they take to fix | quality |
 
-**Little's law**
+### Little's law
 
 For a steady team, **average cycle time = average WIP ÷ throughput**. Starting more work at once doesn't finish more; it makes everything take longer. That's why many teams set a WIP limit, such as "no more than three stories in progress".
 
-**Use measures for learning, never for ranking**
+![Two teams that each finish one item a day. Team A has 3 items in progress, so each takes about 3 days; Team B has 6, so each takes about 6 days.](/images/courses/agile-ba/littles-law.svg "Little's law: same output, more work in progress, longer waits.")
+
+### Use measures for learning, never for ranking
 
 These measures describe the **system** the team works in, not individuals. Compare a team with its own past, never with another team, and never use velocity or cycle time to judge people. The moment numbers are used to blame, people game them: stories get split to inflate throughput, or estimates creep up to inflate velocity.
 

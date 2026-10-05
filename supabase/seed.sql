@@ -35336,7 +35336,7 @@ You've been hired as the team's business analyst. On your first day the develope
 
 ## The concept
 
-**What agile means**
+### What agile means
 
 Agile is a way of building things in small, usable increments, getting feedback early, and changing the plan as you learn. The Agile Manifesto (2001) values:
 
@@ -35347,7 +35347,7 @@ Agile is a way of building things in small, usable increments, getting feedback 
 
 The things on the right still matter; the things on the left matter more.
 
-**Scrum in one table**
+### Scrum in one table
 
 Scrum is the most widely used agile framework. Work happens in **sprints** of usually two weeks, each producing a usable increment.
 
@@ -35363,9 +35363,11 @@ Scrum is the most widely used agile framework. Work happens in **sprints** of us
 | **Sprint review** | the team shows what it built; stakeholders give feedback |
 | **Retrospective** | the team improves how it works |
 
+![The Scrum cycle: product backlog, sprint planning, a two-week sprint with a daily scrum, then sprint review and retrospective, with feedback looping back into the backlog. Green labels mark the BA's touchpoints: refinement, explaining stories, answering questions and checking work, and recording feedback.](/images/courses/agile-ba/scrum-cycle.svg "One sprint, and where the business analyst spends time in it.")
+
 Scrum has no "business analyst" role. A BA is usually one of the developers in the broad sense, or works closely with the product owner, and sometimes is the product owner.
 
-**What the BA does in an agile team**
+### What the BA does in an agile team
 
 - **Understands the problem and the users** before and during delivery.
 - **Shapes the backlog**: story maps, user stories, splitting, acceptance criteria.
@@ -35478,20 +35480,20 @@ Without a clear answer to "what is this product **for**?", every request looks e
 
 ## The concept
 
-**A product vision**
+### A product vision
 
 One or two sentences describing who the product is for, the problem it solves and why it's better than the alternative. A common template:
 
 > **For** [target users] **who** [need or problem], **the** [product] **is a** [type of product] **that** [key benefit]. **Unlike** [current alternative], **our product** [main difference].
 
-**Outputs versus outcomes**
+### Outputs versus outcomes
 
 - An **output** is something the team ships: "a reorder button".
 - An **outcome** is a change in behaviour that matters to the business: "kiosks order every 10 days instead of every 22".
 
 Teams that measure outputs celebrate shipping features nobody uses. Teams that measure outcomes keep asking whether the features work. A good product goal is an outcome, with a number and a date.
 
-**Choosing outcome measures**
+### Choosing outcome measures
 
 | Measure | Why it matters for the kiosk app |
 | :-- | :-- |
@@ -35599,19 +35601,21 @@ A flat backlog hides gaps. A **story map** shows the user's whole journey left t
 
 ## The concept
 
-**The parts of a story map**
+### The parts of a story map
 
 1. **The backbone**: the big steps a user goes through, left to right, in the order they happen. For a kiosk owner: *Sign up → Find products → Build an order → Pay → Track delivery → Reorder*.
 2. **The stories**: under each step, the user stories that support it, most essential at the top.
 3. **Release slices**: horizontal lines across the map. Everything above the first line is the first release.
 
-**The walking skeleton**
+### The walking skeleton
 
 The thinnest possible version of the whole journey: the one most basic story under **every** step of the backbone. It's ugly, but someone can use it from start to finish. Building it first proves the journey works and gives you something real to test with users.
 
-**Slice by outcome, not by component**
+### Slice by outcome, not by component
 
 A good first slice lets a real user complete the job. A bad slice is "all of sign-up, perfectly", which leaves nobody able to order. Slicing the map horizontally, across every step, is what keeps each release usable.
+
+![A story map: six backbone steps across the top, stories stacked under each, with a dashed line for the walking skeleton under the first row and another for the pilot release.](/images/courses/agile-ba/story-map.svg "Read across, not down: each slice is a complete journey.")
 
 ## Example
 
@@ -35711,11 +35715,13 @@ Big stories are where agile teams get into trouble. They're hard to estimate, th
 
 ## The concept
 
-**What a good split looks like**
+### What a good split looks like
 
 Each slice must still be a **user story**: valuable to a user on its own, and testable. Splitting by technical layer ("build the database", "build the screen") produces tasks, not stories, and nothing usable until all of them are done.
 
-**Splitting patterns**
+![Left: three horizontal layers, build the screen, logic and data for card payments, none usable alone. Right: three vertical slices through all layers: pay by debit card, clear message when payment fails, save card for next time.](/images/courses/agile-ba/vertical-slices.svg "Split vertically through every layer, so each slice is a story a user can try.")
+
+### Splitting patterns
 
 | Pattern | Split by | Kiosk app example |
 | :-- | :-- | :-- |
@@ -35727,7 +35733,7 @@ Each slice must still be a **user story**: valuable to a user on its own, and te
 | **Simple then complex** | the simplest version first | "Search products" → by name / by brand and category / with spelling mistakes |
 | **Spike** | a short time-boxed investigation, when the unknowns are too big to split | "Choose SMS provider" |
 
-**How small?**
+### How small?
 
 Small enough that several fit in one sprint, typically 1 to 3 days of work each. If a story is more than about a quarter of the team's sprint, split it.
 
@@ -35826,11 +35832,11 @@ None of that is a coding problem. It's what happens when stories reach a sprint 
 
 ## The concept
 
-**Backlog refinement**
+### Backlog refinement
 
 A regular session (often an hour or two a week) where the product owner, BA and developers look at the next items in the backlog and make them ready: clarify, split, add acceptance criteria and estimate. Aim to keep about **two sprints' worth** of work refined ahead.
 
-**The three amigos**
+### The three amigos
 
 Before a story is ready, three perspectives look at it together for 15 minutes:
 
@@ -35840,7 +35846,7 @@ Before a story is ready, three perspectives look at it together for 15 minutes:
 
 Most misunderstandings ("transfers can arrive the next day") surface in that conversation, when they cost nothing to fix.
 
-**Definition of ready (DoR)**
+### Definition of ready (DoR)
 
 The checklist a story must pass before the team takes it into a sprint, for example:
 
@@ -35851,7 +35857,7 @@ The checklist a story must pass before the team takes it into a sprint, for exam
 - dependencies known (data, other teams, decisions);
 - open questions answered.
 
-**Definition of done (DoD)**
+### Definition of done (DoD)
 
 The checklist every item must pass before it counts as done, for example:
 
@@ -35964,15 +35970,15 @@ With two sprints to go before the Surulere pilot, the kiosk app still has 11 sto
 
 ## The concept
 
-**Story points: relative estimates**
+### Story points: relative estimates
 
 Instead of estimating hours, agile teams compare items with each other: "Is this bigger or smaller than 'Log in with PIN'?" Story points (often on a Fibonacci-like scale: 1, 2, 3, 5, 8, 13) capture size, complexity and uncertainty together. They're relative and team-specific: one team's 5 isn't another's.
 
-**Planning poker**
+### Planning poker
 
 Each developer privately picks a card, everyone shows at once, and the highest and lowest explain their reasoning. The conversation is the point: a 2 and a 13 on the same story means someone knows something the others don't. Then the team estimates again.
 
-**Cost of delay and WSJF**
+### Cost of delay and WSJF
 
 **Cost of delay** asks: what do we lose for every sprint this item isn't done? A simple version scores three things from 1 to 20 (relative to each other):
 
@@ -36094,17 +36100,17 @@ The team has finished six sprints. A quick glance at the board suggests yes: mos
 
 ## The concept
 
-**Velocity**
+### Velocity
 
 **Velocity** is the number of story points a team completes per sprint, counting only items that meet the definition of done. Use the **average of recent sprints**, and look at the range too: velocity varies from sprint to sprint.
 
-**Forecasting a release**
+### Forecasting a release
 
 > Sprints needed = remaining points ÷ average velocity
 
 Give it as a **range**, using the team's lowest and highest recent velocities, not a single date: "between 2.2 and 3 sprints". Remember that bugs and unplanned work also use capacity even when they carry no points.
 
-**The burn-up chart**
+### The burn-up chart
 
 A burn-up chart has two lines over the sprints:
 
@@ -36113,7 +36119,9 @@ A burn-up chart has two lines over the sprints:
 
 The release is finished where the two lines meet. If scope keeps rising as fast as work is done, the lines never meet. A burn-down chart hides that; a burn-up chart makes it obvious, which is why BAs prefer it for conversations with stakeholders.
 
-**Options when the date is at risk**
+![A burn-up chart over eight sprints: done rises to 116 points by sprint 6; scope rises from 128 to 167; a shaded forecast range ends between 148 and 164 at sprint 8, below the scope line. A dotted line marks the original 128-point plan.](/images/courses/agile-ba/burn-up.svg "The kiosk app's burn-up: the team is on pace for the original plan, not for the grown scope.")
+
+### Options when the date is at risk
 
 There are only three levers, and the product owner chooses between them with stakeholders:
 
@@ -36252,7 +36260,7 @@ The retrospective after sprint 6 is coming up. The scrum master asks the BA to b
 
 ## The concept
 
-**Flow and quality measures**
+### Flow and quality measures
 
 | Measure | Definition | Tells you |
 | :-- | :-- | :-- |
@@ -36262,11 +36270,13 @@ The retrospective after sprint 6 is coming up. The scrum master asks the BA to b
 | **Commitment reliability** | points done ÷ points committed, per sprint | how predictable sprint planning is |
 | **Escaped and found bugs** | bugs logged per sprint, and how long they take to fix | quality |
 
-**Little's law**
+### Little's law
 
 For a steady team, **average cycle time = average WIP ÷ throughput**. Starting more work at once doesn't finish more; it makes everything take longer. That's why many teams set a WIP limit, such as "no more than three stories in progress".
 
-**Use measures for learning, never for ranking**
+![Two teams that each finish one item a day. Team A has 3 items in progress, so each takes about 3 days; Team B has 6, so each takes about 6 days.](/images/courses/agile-ba/littles-law.svg "Little's law: same output, more work in progress, longer waits.")
+
+### Use measures for learning, never for ranking
 
 These measures describe the **system** the team works in, not individuals. Compare a team with its own past, never with another team, and never use velocity or cycle time to judge people. The moment numbers are used to blame, people game them: stories get split to inflate throughput, or estimates creep up to inflate velocity.
 
@@ -36397,7 +36407,7 @@ A pilot is an experiment. It needs a question, success criteria agreed **before*
 
 ## The concept
 
-**Sprint reviews that produce feedback**
+### Sprint reviews that produce feedback
 
 A sprint review isn't a presentation; it's a working session to inspect the increment and adapt the backlog. To make it useful:
 
@@ -36406,7 +36416,7 @@ A sprint review isn't a presentation; it's a working session to inspect the incr
 - Ask **specific questions**: "Would you use reorder instead of calling your rep? What would stop you?"
 - Turn feedback into **backlog items** before people leave the room.
 
-**Designing a pilot**
+### Designing a pilot
 
 | Part | Kiosk app pilot |
 | :-- | :-- |
@@ -36418,7 +36428,7 @@ A sprint review isn't a presentation; it's a working session to inspect the incr
 
 The **comparison group** matters. If kiosks everywhere order more in the pilot weeks (say, before a holiday), a rise in the pilot group proves nothing about the app.
 
-**Validated learning**
+### Validated learning
 
 Treat every release as a test of an assumption: "kiosk owners will reorder in the app if it takes under a minute". Measure, learn, and adjust the backlog. Sometimes the right outcome of a pilot is to stop, and that's a success if it saves the money a full rollout would have cost.
 
@@ -36525,7 +36535,7 @@ You're the team's BA. Before sprint 1, the managing director wants to see how yo
 
 ## The concept
 
-**The agile delivery pack**
+### The agile delivery pack
 
 | Part | What it contains | Lesson |
 | :-- | :-- | :-- |
@@ -36538,7 +36548,7 @@ You're the team's BA. Before sprint 1, the managing director wants to see how yo
 | Measures | flow and quality measures the team will track | 8 |
 | Pilot plan | question, comparison, success criteria, decision rule | 9 |
 
-**Sizing the need from the data**
+### Sizing the need from the data
 
 The logistics dataset tells you how many notifications the service would send, and to whom. That shapes the stories: a service sending three messages a month can be manual; one sending thirty a month needs automating, and needs to work for the account managers who'll handle the replies.
 

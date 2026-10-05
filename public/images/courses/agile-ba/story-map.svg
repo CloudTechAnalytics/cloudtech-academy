@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 470" width="760" height="470" role="img" aria-label="Part of the kiosk app's story map. The backbone runs left to right: sign up, find products, build an order, pay, track delivery, reorder. Under each step are its stories, most essential at the top. Two horizontal lines cut release slices: the walking skeleton, which gives a complete basic journey, and the pilot release.">
+<title>The kiosk app's story map, with the walking skeleton and pilot slices.</title>
+
+<rect width="760" height="470" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="16.0" width="115.0" height="46.0" rx="6" fill="#C9A867" stroke="#8A6A1F" stroke-width="1.4"/>
+<text xml:space="preserve" x="24.0" y="36.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">Sign up</text>
+<rect x="137.0" y="16.0" width="115.0" height="46.0" rx="6" fill="#C9A867" stroke="#8A6A1F" stroke-width="1.4"/>
+<text xml:space="preserve" x="145.0" y="36.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">Find products</text>
+<rect x="258.0" y="16.0" width="115.0" height="46.0" rx="6" fill="#C9A867" stroke="#8A6A1F" stroke-width="1.4"/>
+<text xml:space="preserve" x="266.0" y="36.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">Build an order</text>
+<rect x="379.0" y="16.0" width="115.0" height="46.0" rx="6" fill="#C9A867" stroke="#8A6A1F" stroke-width="1.4"/>
+<text xml:space="preserve" x="387.0" y="36.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">Pay</text>
+<rect x="500.0" y="16.0" width="115.0" height="46.0" rx="6" fill="#C9A867" stroke="#8A6A1F" stroke-width="1.4"/>
+<text xml:space="preserve" x="508.0" y="36.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">Track delivery</text>
+<rect x="621.0" y="16.0" width="115.0" height="46.0" rx="6" fill="#C9A867" stroke="#8A6A1F" stroke-width="1.4"/>
+<text xml:space="preserve" x="629.0" y="36.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">Reorder</text>
+<rect x="16.0" y="74.0" width="115.0" height="46.0" rx="6" fill="#F3EBD8" stroke="#B38A3E" stroke-width="1.2"/>
+<text xml:space="preserve" x="24.0" y="93.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Register with</text>
+<text xml:space="preserve" x="24.0" y="110.4" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">phone</text>
+<rect x="137.0" y="74.0" width="115.0" height="46.0" rx="6" fill="#F3EBD8" stroke="#B38A3E" stroke-width="1.2"/>
+<text xml:space="preserve" x="145.0" y="93.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">List by</text>
+<text xml:space="preserve" x="145.0" y="110.4" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">category</text>
+<rect x="258.0" y="74.0" width="115.0" height="46.0" rx="6" fill="#F3EBD8" stroke="#B38A3E" stroke-width="1.2"/>
+<text xml:space="preserve" x="266.0" y="93.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Add and remove</text>
+<text xml:space="preserve" x="266.0" y="110.4" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">items</text>
+<rect x="379.0" y="74.0" width="115.0" height="46.0" rx="6" fill="#F3EBD8" stroke="#B38A3E" stroke-width="1.2"/>
+<text xml:space="preserve" x="387.0" y="93.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Pay on delivery</text>
+<rect x="500.0" y="74.0" width="115.0" height="46.0" rx="6" fill="#F3EBD8" stroke="#B38A3E" stroke-width="1.2"/>
+<text xml:space="preserve" x="508.0" y="93.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Order status</text>
+<text xml:space="preserve" x="508.0" y="110.4" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">list</text>
+<rect x="621.0" y="74.0" width="115.0" height="46.0" rx="6" fill="#F3EBD8" stroke="#B38A3E" stroke-width="1.2"/>
+<text xml:space="preserve" x="629.0" y="93.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Reorder last</text>
+<text xml:space="preserve" x="629.0" y="110.4" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">basket</text>
+<rect x="16.0" y="158.0" width="115.0" height="46.0" rx="6" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<text xml:space="preserve" x="24.0" y="177.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Verify phone by</text>
+<text xml:space="preserve" x="24.0" y="194.4" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">SMS</text>
+<rect x="137.0" y="158.0" width="115.0" height="46.0" rx="6" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<text xml:space="preserve" x="145.0" y="177.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Show current</text>
+<text xml:space="preserve" x="145.0" y="194.4" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">price</text>
+<rect x="258.0" y="158.0" width="115.0" height="46.0" rx="6" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<text xml:space="preserve" x="266.0" y="177.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Minimum order</text>
+<text xml:space="preserve" x="266.0" y="194.4" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">value</text>
+<rect x="379.0" y="158.0" width="115.0" height="46.0" rx="6" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<text xml:space="preserve" x="387.0" y="177.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Pay by transfer</text>
+<rect x="500.0" y="158.0" width="115.0" height="46.0" rx="6" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<text xml:space="preserve" x="508.0" y="177.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Delivery day</text>
+<text xml:space="preserve" x="508.0" y="194.4" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">reminder</text>
+<rect x="621.0" y="158.0" width="115.0" height="46.0" rx="6" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<text xml:space="preserve" x="629.0" y="177.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Favourite</text>
+<text xml:space="preserve" x="629.0" y="194.4" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">products</text>
+<rect x="16.0" y="214.0" width="115.0" height="46.0" rx="6" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<text xml:space="preserve" x="24.0" y="233.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Log in with PIN</text>
+<rect x="137.0" y="214.0" width="115.0" height="46.0" rx="6" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<text xml:space="preserve" x="145.0" y="233.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Search products</text>
+<rect x="258.0" y="214.0" width="115.0" height="46.0" rx="6" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<text xml:space="preserve" x="266.0" y="233.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Choose delivery</text>
+<text xml:space="preserve" x="266.0" y="250.4" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">day</text>
+<rect x="379.0" y="214.0" width="115.0" height="46.0" rx="6" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<text xml:space="preserve" x="387.0" y="233.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Confirm</text>
+<text xml:space="preserve" x="387.0" y="250.4" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">transfer</text>
+<rect x="500.0" y="214.0" width="115.0" height="46.0" rx="6" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<text xml:space="preserve" x="508.0" y="233.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Cancel before</text>
+<text xml:space="preserve" x="508.0" y="250.4" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">dispatch</text>
+<rect x="16.0" y="298.0" width="115.0" height="46.0" rx="6" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<text xml:space="preserve" x="24.0" y="317.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Language</text>
+<text xml:space="preserve" x="24.0" y="334.4" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">options</text>
+<rect x="137.0" y="298.0" width="115.0" height="46.0" rx="6" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<text xml:space="preserve" x="145.0" y="317.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Promotions</text>
+<text xml:space="preserve" x="145.0" y="334.4" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">banner</text>
+<rect x="258.0" y="298.0" width="115.0" height="46.0" rx="6" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<text xml:space="preserve" x="266.0" y="317.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Save basket</text>
+<rect x="379.0" y="298.0" width="115.0" height="46.0" rx="6" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<text xml:space="preserve" x="387.0" y="317.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Pay by card</text>
+<rect x="500.0" y="298.0" width="115.0" height="46.0" rx="6" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<text xml:space="preserve" x="508.0" y="317.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Delivery photo</text>
+<line x1="16.0" y1="136.0" x2="744.0" y2="136.0" stroke="#2F6B3F" stroke-width="2" stroke-dasharray="8 5"/>
+<rect x="16.0" y="124.0" width="305.0" height="22.0" rx="6" fill="#2F6B3F"/>
+<text xml:space="preserve" x="24.0" y="139.3" font-size="12" fill="#FFFFFF" font-weight="700" text-anchor="start">Walking skeleton: a complete, basic journey</text>
+<line x1="16.0" y1="276.0" x2="744.0" y2="276.0" stroke="#2F5D8A" stroke-width="2" stroke-dasharray="8 5"/>
+<rect x="16.0" y="264.0" width="103.4" height="22.0" rx="6" fill="#2F5D8A"/>
+<text xml:space="preserve" x="24.0" y="279.3" font-size="12" fill="#FFFFFF" font-weight="700" text-anchor="start">Pilot release</text>
+<text xml:space="preserve" x="16.0" y="380.0" font-size="13.5" fill="#2A2926" font-weight="400" text-anchor="start">Read across, not down: everything above the first line lets a kiosk owner register, find products,</text>
+<text xml:space="preserve" x="16.0" y="399.6" font-size="13.5" fill="#2A2926" font-weight="400" text-anchor="start">order, pay, track and reorder. Below the second line can wait for pilot feedback.</text>
+</g></svg>

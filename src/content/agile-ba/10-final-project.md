@@ -12,7 +12,7 @@ You're the team's BA. Before sprint 1, the managing director wants to see how yo
 
 ## The concept
 
-**The agile delivery pack**
+### The agile delivery pack
 
 | Part | What it contains | Lesson |
 | :-- | :-- | :-- |
@@ -25,7 +25,7 @@ You're the team's BA. Before sprint 1, the managing director wants to see how yo
 | Measures | flow and quality measures the team will track | 8 |
 | Pilot plan | question, comparison, success criteria, decision rule | 9 |
 
-**Sizing the need from the data**
+### Sizing the need from the data
 
 The logistics dataset tells you how many notifications the service would send, and to whom. That shapes the stories: a service sending three messages a month can be manual; one sending thirty a month needs automating, and needs to work for the account managers who'll handle the replies.
 

@@ -12,7 +12,7 @@ A pilot is an experiment. It needs a question, success criteria agreed **before*
 
 ## The concept
 
-**Sprint reviews that produce feedback**
+### Sprint reviews that produce feedback
 
 A sprint review isn't a presentation; it's a working session to inspect the increment and adapt the backlog. To make it useful:
 
@@ -21,7 +21,7 @@ A sprint review isn't a presentation; it's a working session to inspect the incr
 - Ask **specific questions**: "Would you use reorder instead of calling your rep? What would stop you?"
 - Turn feedback into **backlog items** before people leave the room.
 
-**Designing a pilot**
+### Designing a pilot
 
 | Part | Kiosk app pilot |
 | :-- | :-- |
@@ -33,7 +33,7 @@ A sprint review isn't a presentation; it's a working session to inspect the incr
 
 The **comparison group** matters. If kiosks everywhere order more in the pilot weeks (say, before a holiday), a rise in the pilot group proves nothing about the app.
 
-**Validated learning**
+### Validated learning
 
 Treat every release as a test of an assumption: "kiosk owners will reorder in the app if it takes under a minute". Measure, learn, and adjust the backlog. Sometimes the right outcome of a pilot is to stop, and that's a success if it saves the money a full rollout would have cost.
 

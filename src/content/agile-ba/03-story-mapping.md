@@ -12,19 +12,21 @@ A flat backlog hides gaps. A **story map** shows the user's whole journey left t
 
 ## The concept
 
-**The parts of a story map**
+### The parts of a story map
 
 1. **The backbone**: the big steps a user goes through, left to right, in the order they happen. For a kiosk owner: *Sign up → Find products → Build an order → Pay → Track delivery → Reorder*.
 2. **The stories**: under each step, the user stories that support it, most essential at the top.
 3. **Release slices**: horizontal lines across the map. Everything above the first line is the first release.
 
-**The walking skeleton**
+### The walking skeleton
 
 The thinnest possible version of the whole journey: the one most basic story under **every** step of the backbone. It's ugly, but someone can use it from start to finish. Building it first proves the journey works and gives you something real to test with users.
 
-**Slice by outcome, not by component**
+### Slice by outcome, not by component
 
 A good first slice lets a real user complete the job. A bad slice is "all of sign-up, perfectly", which leaves nobody able to order. Slicing the map horizontally, across every step, is what keeps each release usable.
+
+![A story map: six backbone steps across the top, stories stacked under each, with a dashed line for the walking skeleton under the first row and another for the pilot release.](/images/courses/agile-ba/story-map.svg "Read across, not down: each slice is a complete journey.")
 
 ## Example
 

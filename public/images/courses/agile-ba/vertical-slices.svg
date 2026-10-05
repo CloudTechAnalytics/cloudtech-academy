@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 340" width="760" height="340" role="img" aria-label="Splitting by technical layer versus by user value. On the left, a feature is cut horizontally into layers: screen, logic, database. No layer is usable alone. On the right, the same feature is cut vertically into thin stories that each go through every layer: pay by debit card, clear message when payment fails, save card for next time. Each slice is usable and testable on its own.">
+<title>Split stories vertically through every layer, not horizontally by layer.</title>
+
+<rect width="760" height="340" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="28.0" font-size="15" fill="#9B2C1F" font-weight="700" text-anchor="start">✗ Horizontal: by layer (tasks)</text>
+<rect x="16.0" y="44.0" width="330.0" height="64.0" rx="8" fill="#FFFFFF" stroke="#9B2C1F" stroke-width="1.4"/>
+<text xml:space="preserve" x="32.0" y="82.0" font-size="13.5" fill="#2A2926" font-weight="400" text-anchor="start">Build the screen for card payments</text>
+<rect x="16.0" y="118.0" width="330.0" height="64.0" rx="8" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.4"/>
+<text xml:space="preserve" x="32.0" y="156.0" font-size="13.5" fill="#2A2926" font-weight="400" text-anchor="start">Build the logic for card payments</text>
+<rect x="16.0" y="192.0" width="330.0" height="64.0" rx="8" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.4"/>
+<text xml:space="preserve" x="32.0" y="230.0" font-size="13.5" fill="#2A2926" font-weight="400" text-anchor="start">Build the data for card payments</text>
+<text xml:space="preserve" x="16.0" y="290.0" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">Nothing works until all three are done. No user</text>
+<text xml:space="preserve" x="16.0" y="308.9" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">can try it after sprint 1.</text>
+<text xml:space="preserve" x="400.0" y="28.0" font-size="15" fill="#2F6B3F" font-weight="700" text-anchor="start">✓ Vertical: by user value (stories)</text>
+<text xml:space="preserve" x="392.0" y="82.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="end">Screen</text>
+<line x1="400.0" y1="44.0" x2="744.0" y2="44.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="392.0" y="156.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="end">Logic</text>
+<line x1="400.0" y1="118.0" x2="744.0" y2="118.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="392.0" y="230.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="end">Data</text>
+<line x1="400.0" y1="192.0" x2="744.0" y2="192.0" stroke="#EDE6D8" stroke-width="1"/>
+<rect x="404.0" y="44.0" width="106.0" height="216.0" rx="8" fill="#B38A3E"/>
+<text xml:space="preserve" x="414.0" y="70.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">Pay by debit</text>
+<text xml:space="preserve" x="414.0" y="88.8" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">card</text>
+<text xml:space="preserve" x="414.0" y="248.0" font-size="11.5" fill="#4A4436" font-weight="400" text-anchor="start">happy path</text>
+<rect x="518.0" y="44.0" width="106.0" height="216.0" rx="8" fill="#C9A867"/>
+<text xml:space="preserve" x="528.0" y="70.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">Clear message</text>
+<text xml:space="preserve" x="528.0" y="88.8" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">when payment</text>
+<text xml:space="preserve" x="528.0" y="107.7" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">fails</text>
+<text xml:space="preserve" x="528.0" y="248.0" font-size="11.5" fill="#4A4436" font-weight="400" text-anchor="start">unhappy path</text>
+<rect x="632.0" y="44.0" width="106.0" height="216.0" rx="8" fill="#DCC594"/>
+<text xml:space="preserve" x="642.0" y="70.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">Save card for</text>
+<text xml:space="preserve" x="642.0" y="88.8" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">next time</text>
+<text xml:space="preserve" x="642.0" y="248.0" font-size="11.5" fill="#4A4436" font-weight="400" text-anchor="start">simple → complex</text>
+<text xml:space="preserve" x="400.0" y="290.0" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">Each slice cuts through every layer, so each one</text>
+<text xml:space="preserve" x="400.0" y="308.9" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">is usable and testable on its own. Slice 1 alone</text>
+<text xml:space="preserve" x="400.0" y="327.7" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">is useful in the pilot.</text>
+</g></svg>

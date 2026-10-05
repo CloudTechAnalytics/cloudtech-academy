@@ -12,17 +12,17 @@ The team has finished six sprints. A quick glance at the board suggests yes: mos
 
 ## The concept
 
-**Velocity**
+### Velocity
 
 **Velocity** is the number of story points a team completes per sprint, counting only items that meet the definition of done. Use the **average of recent sprints**, and look at the range too: velocity varies from sprint to sprint.
 
-**Forecasting a release**
+### Forecasting a release
 
 > Sprints needed = remaining points ÷ average velocity
 
 Give it as a **range**, using the team's lowest and highest recent velocities, not a single date: "between 2.2 and 3 sprints". Remember that bugs and unplanned work also use capacity even when they carry no points.
 
-**The burn-up chart**
+### The burn-up chart
 
 A burn-up chart has two lines over the sprints:
 
@@ -31,7 +31,9 @@ A burn-up chart has two lines over the sprints:
 
 The release is finished where the two lines meet. If scope keeps rising as fast as work is done, the lines never meet. A burn-down chart hides that; a burn-up chart makes it obvious, which is why BAs prefer it for conversations with stakeholders.
 
-**Options when the date is at risk**
+![A burn-up chart over eight sprints: done rises to 116 points by sprint 6; scope rises from 128 to 167; a shaded forecast range ends between 148 and 164 at sprint 8, below the scope line. A dotted line marks the original 128-point plan.](/images/courses/agile-ba/burn-up.svg "The kiosk app's burn-up: the team is on pace for the original plan, not for the grown scope.")
+
+### Options when the date is at risk
 
 There are only three levers, and the product owner chooses between them with stakeholders:
 
