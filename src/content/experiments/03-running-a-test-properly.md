@@ -14,19 +14,21 @@ Meanwhile, the growth team checks every test's dashboard each morning and stops 
 
 ## The concept
 
-**Sample ratio mismatch (SRM)**
+### Sample ratio mismatch (SRM)
 
 If you intended a 50/50 split, the number of users in each variant should be close to 50/50, within the range chance allows. A **chi-square test** of the counts against the intended split gives a p-value. If p is very small (say below 0.001), the split is broken. **Don't analyse the results**: find and fix the cause first (a bug that drops users, a redirect that fails on some phones, bots in one variant).
 
-**Peeking**
+### Peeking
 
 A p-value below 0.05 means a 5% false-alarm rate **if you look once, at the planned end**. If you look every day and stop the first time p < 0.05, you get many chances for random noise to cross the line, and the real false-alarm rate rises far above 5%.
 
-**An A/A test**
+![The daily p-value of a simulated A/A test with no real difference, over 28 days. It dips below 0.05 on day 2, then wanders between about 0.15 and 1, ending at 0.65 on the planned last day.](/images/courses/experiments/peeking.svg "Peeking at a test with no real effect: stop on day 2 and you'd have shipped a false winner.")
+
+### An A/A test
 
 Two identical variants. Any "significant" difference is a false alarm by definition. Simulating many A/A tests is a powerful way to see what your process really does.
 
-**The rules**
+### The rules
 
 - Fix the sample size and duration in advance, and analyse once at the end.
 - If you must monitor, use a method designed for it (sequential testing), or only stop early for harm on a guardrail.

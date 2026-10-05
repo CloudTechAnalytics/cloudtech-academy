@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 400" width="760" height="400" role="img" aria-label="A simulated A/A test: both variants are identical, so there is no real difference. The p-value, recalculated every day for 28 days, wanders up and down and dips below 0.05 on day 2, purely by chance. Stopping the first time it dips would declare a false winner. At the planned end, day 28, the p-value is well above 0.05.">
+<title>Peeking: in an A/A test with no real difference, the daily p-value still dips below 0.05.</title>
+
+<rect width="760" height="400" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<line x1="60.0" y1="320.0" x2="720.0" y2="320.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="52.0" y="324.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="end">0</text>
+<line x1="60.0" y1="307.0" x2="720.0" y2="307.0" stroke="#9B2C1F" stroke-width="1.6" stroke-dasharray="5 4"/>
+<text xml:space="preserve" x="52.0" y="311.0" font-size="12" fill="#9B2C1F" font-weight="400" text-anchor="end">0.05</text>
+<line x1="60.0" y1="255.0" x2="720.0" y2="255.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="52.0" y="259.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="end">0.25</text>
+<line x1="60.0" y1="190.0" x2="720.0" y2="190.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="52.0" y="194.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="end">0.5</text>
+<line x1="60.0" y1="125.0" x2="720.0" y2="125.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="52.0" y="129.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="end">0.75</text>
+<line x1="60.0" y1="60.0" x2="720.0" y2="60.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="52.0" y="64.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="end">1</text>
+<path d="M60.0,170.9 L84.4,308.7 L108.9,222.9 L133.3,273.9 L157.8,191.8 L182.2,194.1 L206.7,60.0 L231.1,124.6 L255.6,155.4 L280.0,220.9 L304.4,258.6 L328.9,255.9 L353.3,272.6 L377.8,251.4 L402.2,249.5 L426.7,276.4 L451.1,258.7 L475.6,250.5 L500.0,189.6 L524.4,196.5 L548.9,138.4 L573.3,151.1 L597.8,194.6 L622.2,144.0 L646.7,121.7 L671.1,88.8 L695.6,70.6 L720.0,151.0" fill="none" stroke="#2F5D8A" stroke-width="2.4"/>
+<circle cx="84.4" cy="308.7" r="5" fill="#9B2C1F"/>
+<text xml:space="preserve" x="94.4" y="299.0" font-size="12.5" fill="#9B2C1F" font-weight="700" text-anchor="start">day 2: p &lt; 0.05, a false winner</text>
+<circle cx="720.0" cy="151.0" r="5" fill="#2F6B3F"/>
+<text xml:space="preserve" x="712.0" y="141.0" font-size="12.5" fill="#2F6B3F" font-weight="700" text-anchor="end">planned end: p = 0.65</text>
+<text xml:space="preserve" x="60.0" y="338.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="middle">day 1</text>
+<text xml:space="preserve" x="206.7" y="338.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="middle">day 7</text>
+<text xml:space="preserve" x="377.8" y="338.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="middle">day 14</text>
+<text xml:space="preserve" x="548.9" y="338.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="middle">day 21</text>
+<text xml:space="preserve" x="720.0" y="338.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="middle">day 28</text>
+<text xml:space="preserve" x="16.0" y="32.0" font-size="15" fill="#2A2926" font-weight="700" text-anchor="start">Daily p-value in a simulated A/A test (no real difference)</text>
+<text xml:space="preserve" x="16.0" y="384.0" font-size="13" fill="#8A6A1F" font-weight="700" text-anchor="start">Look every day and stop at the first dip, and the real false-alarm rate is far above 5%.</text>
+</g></svg>

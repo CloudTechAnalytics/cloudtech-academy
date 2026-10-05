@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 330" width="760" height="330" role="img" aria-label="Three illustrative test results, each an estimated difference with its 95 percent confidence interval. In the first, the whole interval is above zero: a clear improvement. In the second, the interval crosses zero: the result is inconclusive, and the true effect could be positive or negative. In the third, the whole interval is below zero: the change made things worse.">
+<title>Reading a confidence interval against zero.</title>
+
+<rect width="760" height="330" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<line x1="470.0" y1="40.0" x2="470.0" y2="270.0" stroke="#2A2926" stroke-width="1.6"/>
+<text xml:space="preserve" x="470.0" y="290.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="middle">0: no difference</text>
+<text xml:space="preserve" x="230.0" y="290.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="middle">-6 pts</text>
+<text xml:space="preserve" x="350.0" y="290.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="middle">-3 pts</text>
+<text xml:space="preserve" x="590.0" y="290.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="middle">+3 pts</text>
+<text xml:space="preserve" x="710.0" y="290.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="middle">+6 pts</text>
+<text xml:space="preserve" x="16.0" y="75.0" font-size="14" fill="#2F6B3F" font-weight="700" text-anchor="start">Clear improvement</text>
+<text xml:space="preserve" x="16.0" y="94.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">whole interval above 0</text>
+<line x1="530.0" y1="70.0" x2="730.0" y2="70.0" stroke="#2F6B3F" stroke-width="4"/>
+<line x1="530.0" y1="62.0" x2="530.0" y2="78.0" stroke="#2F6B3F" stroke-width="2"/>
+<line x1="730.0" y1="62.0" x2="730.0" y2="78.0" stroke="#2F6B3F" stroke-width="2"/>
+<circle cx="630.0" cy="70.0" r="6" fill="#2F6B3F"/>
+<text xml:space="preserve" x="16.0" y="149.0" font-size="14" fill="#8A6A1F" font-weight="700" text-anchor="start">Inconclusive</text>
+<text xml:space="preserve" x="16.0" y="168.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">interval crosses 0</text>
+<line x1="398.0" y1="144.0" x2="622.0" y2="144.0" stroke="#8A6A1F" stroke-width="4"/>
+<line x1="398.0" y1="136.0" x2="398.0" y2="152.0" stroke="#8A6A1F" stroke-width="2"/>
+<line x1="622.0" y1="136.0" x2="622.0" y2="152.0" stroke="#8A6A1F" stroke-width="2"/>
+<circle cx="510.0" cy="144.0" r="6" fill="#8A6A1F"/>
+<text xml:space="preserve" x="16.0" y="223.0" font-size="14" fill="#9B2C1F" font-weight="700" text-anchor="start">Made it worse</text>
+<text xml:space="preserve" x="16.0" y="242.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">whole interval below 0</text>
+<line x1="238.0" y1="218.0" x2="422.0" y2="218.0" stroke="#9B2C1F" stroke-width="4"/>
+<line x1="238.0" y1="210.0" x2="238.0" y2="226.0" stroke="#9B2C1F" stroke-width="2"/>
+<line x1="422.0" y1="210.0" x2="422.0" y2="226.0" stroke="#9B2C1F" stroke-width="2"/>
+<circle cx="330.0" cy="218.0" r="6" fill="#9B2C1F"/>
+<text xml:space="preserve" x="16.0" y="320.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">Illustrative results. Report the interval, not just the p-value: it shows the size of the effect too.</text>
+</g></svg>

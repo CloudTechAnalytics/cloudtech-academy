@@ -12,7 +12,7 @@ Your final project is that review, plus a properly designed next experiment. The
 
 ## The concept
 
-**A review checklist for every experiment**
+### A review checklist for every experiment
 
 | Check | Question |
 | :-- | :-- |
@@ -23,7 +23,7 @@ Your final project is that review, plus a properly designed next experiment. The
 | **Segments** | Planned, with a mechanism, and corrected for multiple comparisons? |
 | **Decision** | Guardrails valued? Next step clear? |
 
-**What each test can support**
+### What each test can support
 
 - **Onboarding**: a clean randomised test with a clear effect. Ready to decide.
 - **Banner**: broken split and a novelty effect. Not trustworthy; rerun.

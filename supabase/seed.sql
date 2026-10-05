@@ -41518,15 +41518,17 @@ The same trap catches almost every "before and after" or "users who did X versus
 
 ## The concept
 
-**Correlation isn't causation, for a specific reason**
+### Correlation isn't causation, for a specific reason
 
 When people **choose** a treatment (a feature, a channel, a plan), the choosers differ from the non-choosers: more engaged, richer, more urban. Those differences, not the treatment, may explain the outcome. They're called **confounders**.
 
-**Randomisation breaks the link**
+### Randomisation breaks the link
 
 If a coin decides who sees the new signup flow (B) and who sees the old one (A), then on average the two groups are the same in every way, seen and unseen. Any difference in outcomes beyond chance is caused by the flow. That's why A/B tests are the gold standard.
 
-**The pieces of an A/B test**
+![Left: when users choose, the choosers are mostly highly engaged and the non-choosers mostly not. Right: when a coin decides, both groups have the same mix of engaged and less engaged users.](/images/courses/experiments/randomisation.svg "Self-selection mixes who chose with what worked. Randomisation separates them.")
+
+### The pieces of an A/B test
 
 | Piece | Paystream's onboarding test |
 | :-- | :-- |
@@ -41679,19 +41681,19 @@ Most failed experiments fail at the design stage: no clear metric, no idea what 
 
 ## The concept
 
-**The hypothesis**
+### The hypothesis
 
 Write it before the test starts: *"Showing a KYC reminder on day 2 will increase 7-day KYC completion, because many users abandon at the ID-photo step."* It names the change, the metric, the direction and the reason.
 
-**One primary metric, plus guardrails**
+### One primary metric, plus guardrails
 
 Choose **one** primary metric to decide the test. Others are secondary (to understand it) or guardrails (that mustn't get worse). Deciding with several metrics after the fact invites picking whichever one happens to look good.
 
-**Minimum detectable effect (MDE)**
+### Minimum detectable effect (MDE)
 
 The smallest improvement worth acting on, a business judgement. If a 1-point rise in KYC wouldn't justify the work, there's no point designing a test to detect it.
 
-**Significance, power and sample size**
+### Significance, power and sample size
 
 - **Significance level (α)**, usually 5%: the false-alarm rate you accept (declaring an effect when there's none).
 - **Power**, usually 80%: the chance of detecting the effect if it's really the size of your MDE.
@@ -41701,7 +41703,7 @@ The smallest improvement worth acting on, a business judgement. If a 1-point ris
 
 with z₁₋α/₂ = 1.96 for α = 5% and z_power = 0.84 for 80% power.
 
-**Duration**
+### Duration
 
 Divide by the users you get per day, and round **up to whole weeks**, so every weekday and weekend is equally represented. Never stop early because results look good (lesson 3 shows why).
 
@@ -41843,19 +41845,21 @@ Meanwhile, the growth team checks every test's dashboard each morning and stops 
 
 ## The concept
 
-**Sample ratio mismatch (SRM)**
+### Sample ratio mismatch (SRM)
 
 If you intended a 50/50 split, the number of users in each variant should be close to 50/50, within the range chance allows. A **chi-square test** of the counts against the intended split gives a p-value. If p is very small (say below 0.001), the split is broken. **Don't analyse the results**: find and fix the cause first (a bug that drops users, a redirect that fails on some phones, bots in one variant).
 
-**Peeking**
+### Peeking
 
 A p-value below 0.05 means a 5% false-alarm rate **if you look once, at the planned end**. If you look every day and stop the first time p < 0.05, you get many chances for random noise to cross the line, and the real false-alarm rate rises far above 5%.
 
-**An A/A test**
+![The daily p-value of a simulated A/A test with no real difference, over 28 days. It dips below 0.05 on day 2, then wanders between about 0.15 and 1, ending at 0.65 on the planned last day.](/images/courses/experiments/peeking.svg "Peeking at a test with no real effect: stop on day 2 and you'd have shipped a false winner.")
+
+### An A/A test
 
 Two identical variants. Any "significant" difference is a false alarm by definition. Simulating many A/A tests is a powerful way to see what your process really does.
 
-**The rules**
+### The rules
 
 - Fix the sample size and duration in advance, and analyse once at the end.
 - If you must monitor, use a method designed for it (sequential testing), or only stop early for harm on a guardrail.
@@ -41993,7 +41997,7 @@ The onboarding test has finished: 12,000 users, randomisation checked. Now the h
 
 ## The concept
 
-**The two-proportion z-test**
+### The two-proportion z-test
 
 For conversion rates p_A and p_B from n_A and n_B users:
 
@@ -42003,13 +42007,15 @@ For conversion rates p_A and p_B from n_A and n_B users:
 
 A p-value below 0.05 means a difference this large would be rare if the flows were really the same.
 
-**Report the effect, not just the p-value**
+### Report the effect, not just the p-value
 
 - **Absolute difference**: p_B − p_A, in percentage points.
 - **Confidence interval** for it: difference ± 1.96 × √[p_A(1 − p_A)/n_A + p_B(1 − p_B)/n_B]. It gives the range of effects consistent with the data.
+
+![Three estimated differences with 95% confidence intervals against a zero line: a clear improvement entirely above zero, an inconclusive result crossing zero, and a harmful change entirely below zero.](/images/courses/experiments/confidence-intervals.svg "Read the interval against zero, illustrated.")
 - **Relative lift**: (p_B − p_A) ÷ p_A.
 
-**Translate it**
+### Translate it
 
 "+4.5 points" means little to a director. "About 45 more verified customers per 1,000 signups, around 5,800 more a year at current signup rates" means a lot.
 
@@ -42152,11 +42158,11 @@ Value is tricky. Most new users move small amounts, and a handful move very larg
 
 ## The concept
 
-**Welch's t-test**
+### Welch's t-test
 
 For a numeric metric (transactions, value), compare the two means with `stats.ttest_ind(b, a, equal_var=False)`. "Welch" means it doesn't assume the two groups have the same spread, which is the safer default. With thousands of users per group, the t-test works even when the data are skewed, because averages of many values are close to normally distributed.
 
-**Skewed metrics**
+### Skewed metrics
 
 For money, look at more than the mean:
 
@@ -42164,7 +42170,7 @@ For money, look at more than the mean:
 - the share of the total from the top 1% of users;
 - a **winsorised** or capped mean (capping values above, say, the 99th percentile), to check that a few extreme users aren't driving the result.
 
-**The bootstrap**
+### The bootstrap
 
 A general way to get a confidence interval for any statistic:
 
@@ -42297,19 +42303,21 @@ Both are classic ways to over-read an experiment. Segment results are noisy, and
 
 ## The concept
 
-**Segments: look, but carefully**
+### Segments: look, but carefully
 
 - Each segment has fewer users, so its estimate is much noisier than the overall one.
 - "Significant here, not there" doesn't mean the effect **differs** between segments. Compare the segments' effects directly, or look at whether their confidence intervals overlap.
 - Trust a segment difference when it was **planned in advance**, is large, and has a **mechanism** (a reason it should differ).
 
-**Multiple comparisons**
+### Multiple comparisons
 
 Test 10 segments at α = 5% and, even with no real differences, you'd expect about one false alarm by chance. The simplest correction is **Bonferroni**: with m tests, use α ÷ m (here 0.05 ÷ 10 = 0.005) for each.
 
-**Novelty effects**
+### Novelty effects
 
-Existing users often click on something just because it's new. The effect fades as they get used to it. Plot the effect **by week**: if it shrinks towards zero, judge the change on the later weeks, or run the test longer. (Its mirror image, a **primacy** effect, is when users first resist a change and then adapt.)
+Existing users often click on something just because it's new. The effect fades as they get used to it. Plot the effect **by week**: if it shrinks towards zero, judge the change on the later weeks, or run the test longer.
+
+![Bars of a banner's effect on clicks by week, illustrated: +9% in week 1, +5% in week 2, +2.6% in week 3 and +1.6% in week 4.](/images/courses/experiments/novelty.svg "A novelty effect, illustrated: the lift fades as users get used to the change.") (Its mirror image, a **primacy** effect, is when users first resist a change and then adapt.)
 
 ## Example
 
@@ -42481,18 +42489,18 @@ Both are right, and that's the point of guardrails. An experiment that only look
 
 ## The concept
 
-**Primary metric and guardrails, together**
+### Primary metric and guardrails, together
 
 Report every pre-agreed metric with its effect and confidence interval. A change that improves the primary metric but significantly harms a guardrail isn't a win; it's a trade-off to decide.
 
-**Put both sides in naira**
+### Put both sides in naira
 
 - The gain: extra fee revenue per user per month.
 - The cost: users lost, each worth their future revenue (fees, interest on balances, other products) over a horizon such as a year.
 
 Short tests measure the gain fully but the cost only partly: churn keeps accumulating long after four weeks. A decision based only on the test window favours changes that harvest revenue and pay for it later.
 
-**Decision options**
+### Decision options
 
 Not just "ship" or "don't": a smaller increase (₦15 or ₦20), the higher fee only for large transfers, or a further test that measures retention over longer.
 
@@ -42656,7 +42664,7 @@ Weekly active users in the three agent states rose by about 6%. But a before-and
 
 ## The concept
 
-**Difference-in-differences (DiD)**
+### Difference-in-differences (DiD)
 
 Compare the **change** in the treated group with the **change** in a comparison group over the same period:
 
@@ -42664,11 +42672,13 @@ Compare the **change** in the treated group with the **change** in a comparison 
 
 or, in percentages, the treated group's growth minus the comparison group's growth. The comparison group's change stands in for what would have happened to the treated states without the agents.
 
-**The parallel-trends assumption**
+![Lines for a comparison group and a treated group before and after a change. A dashed line shows the treated group's path without the change, parallel to the comparison group; the effect is the gap between the treated group's actual value and that line.](/images/courses/experiments/did.svg "Difference-in-differences, illustrated.")
+
+### The parallel-trends assumption
 
 DiD only works if, without the treatment, both groups would have moved in parallel. You can't check that directly, but you can check that they **did** move in parallel **before** the change. If their pre-period trends differ, the estimate is suspect.
 
-**Other options when you can't randomise**
+### Other options when you can't randomise
 
 - A **staggered rollout**: launch in different places at different times, which gives several before-and-after comparisons.
 - **Holdouts**: keep a random set of places or users without the change for a while.
@@ -42818,7 +42828,7 @@ Your final project is that review, plus a properly designed next experiment. The
 
 ## The concept
 
-**A review checklist for every experiment**
+### A review checklist for every experiment
 
 | Check | Question |
 | :-- | :-- |
@@ -42829,7 +42839,7 @@ Your final project is that review, plus a properly designed next experiment. The
 | **Segments** | Planned, with a mechanism, and corrected for multiple comparisons? |
 | **Decision** | Guardrails valued? Next step clear? |
 
-**What each test can support**
+### What each test can support
 
 - **Onboarding**: a clean randomised test with a clear effect. Ready to decide.
 - **Banner**: broken split and a novelty effect. Not trustworthy; rerun.
