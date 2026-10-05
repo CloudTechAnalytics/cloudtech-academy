@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 400" width="760" height="400" role="img" aria-label="From a name to a page. The browser asks DNS for app.tallybook.example and gets an A record with an IP address, cached for the TTL. It then sends an HTTP request to that address, and the server replies with a status code: 2xx success, 3xx redirect, 4xx a problem with the request, 5xx a problem on the server.">
+<title>DNS turns a name into an address; HTTP status codes say how the request went.</title>
+<defs><marker id="a2F5D8A" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2F5D8A"/></marker><marker id="a2F6B3F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2F6B3F"/></marker></defs>
+<rect width="760" height="400" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="30.0" width="160.0" height="70.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="96.0" y="62.0" font-size="15" fill="#2A2926" font-weight="700" text-anchor="middle">Browser</text>
+<text xml:space="preserve" x="96.0" y="84.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">app.tallybook…</text>
+<rect x="300.0" y="30.0" width="200.0" height="70.0" rx="10" fill="#FFFFFF" stroke="#2F5D8A" stroke-width="1.5"/>
+<text xml:space="preserve" x="400.0" y="62.0" font-size="15" fill="#2F5D8A" font-weight="700" text-anchor="middle">DNS</text>
+<text xml:space="preserve" x="400.0" y="84.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">A → 196.43.12.10, TTL 300</text>
+<path d="M178,52 L296,52" fill="none" stroke="#2F5D8A" stroke-width="1.8" marker-end="url(#a2F5D8A)"/>
+<path d="M296,80 L180,80" fill="none" stroke="#2F5D8A" stroke-width="1.8" marker-end="url(#a2F5D8A)"/>
+<text xml:space="preserve" x="238.0" y="46.0" font-size="12" fill="#2F5D8A" font-weight="700" text-anchor="middle">1 name?</text>
+<text xml:space="preserve" x="238.0" y="96.0" font-size="12" fill="#2F5D8A" font-weight="700" text-anchor="middle">2 address</text>
+<rect x="584.0" y="30.0" width="160.0" height="70.0" rx="10" fill="#FFFFFF" stroke="#2F6B3F" stroke-width="1.5"/>
+<text xml:space="preserve" x="664.0" y="62.0" font-size="15" fill="#2F6B3F" font-weight="700" text-anchor="middle">Server</text>
+<text xml:space="preserve" x="664.0" y="84.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">196.43.12.10:443</text>
+<path d="M96,102 C96,140 664,140 664,104" fill="none" stroke="#2F6B3F" stroke-width="1.8" marker-end="url(#a2F6B3F)"/>
+<text xml:space="preserve" x="380.0" y="150.0" font-size="12.5" fill="#2F6B3F" font-weight="700" text-anchor="middle">3 HTTP request: GET /api/invoices</text>
+<rect x="16.0" y="184.0" width="176.0" height="110.0" rx="10" fill="#FFFFFF" stroke="#2F6B3F" stroke-width="1.6"/>
+<text xml:space="preserve" x="32.0" y="216.0" font-size="20" fill="#2F6B3F" font-weight="700" text-anchor="start">2xx</text>
+<text xml:space="preserve" x="86.0" y="214.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="start">success</text>
+<text xml:space="preserve" x="32.0" y="246.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">200 OK, 201 Created</text>
+<rect x="200.0" y="184.0" width="176.0" height="110.0" rx="10" fill="#FFFFFF" stroke="#2F5D8A" stroke-width="1.6"/>
+<text xml:space="preserve" x="216.0" y="216.0" font-size="20" fill="#2F5D8A" font-weight="700" text-anchor="start">3xx</text>
+<text xml:space="preserve" x="270.0" y="214.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="start">redirect</text>
+<text xml:space="preserve" x="216.0" y="246.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">301 moved, 304 not</text>
+<text xml:space="preserve" x="216.0" y="264.1" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">modified</text>
+<rect x="384.0" y="184.0" width="176.0" height="110.0" rx="10" fill="#FFFFFF" stroke="#8A6A1F" stroke-width="1.6"/>
+<text xml:space="preserve" x="400.0" y="216.0" font-size="20" fill="#8A6A1F" font-weight="700" text-anchor="start">4xx</text>
+<text xml:space="preserve" x="454.0" y="214.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="start">client problem</text>
+<text xml:space="preserve" x="400.0" y="246.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">401, 403, 404, 429</text>
+<rect x="568.0" y="184.0" width="176.0" height="110.0" rx="10" fill="#FFFFFF" stroke="#9B2C1F" stroke-width="1.6"/>
+<text xml:space="preserve" x="584.0" y="216.0" font-size="20" fill="#9B2C1F" font-weight="700" text-anchor="start">5xx</text>
+<text xml:space="preserve" x="638.0" y="214.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="start">server problem</text>
+<text xml:space="preserve" x="584.0" y="246.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">500, 502, 503, 504</text>
+<text xml:space="preserve" x="16.0" y="330.0" font-size="13" fill="#8A6A1F" font-weight="700" text-anchor="start">4 The status code tells you who to look at: 4xx usually the caller, 5xx the server.</text>
+<text xml:space="preserve" x="16.0" y="356.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">Lower the TTL a day before moving a service; remove DNS records when you remove what they point to.</text>
+</g></svg>

@@ -12,7 +12,7 @@ Read them now, and you'll find two problems that had nothing to do with month-en
 
 ## The concept
 
-**Processes**
+### Processes
 
 Every running program is a **process** with an ID (PID), an owner, and a share of CPU and memory. `ps aux` lists them all; `top` (or `htop`) shows them live.
 
@@ -26,7 +26,7 @@ Every running program is a **process** with an ID (PID), an owner, and a share o
 
 `kill PID` asks a process to stop; `kill -9 PID` forces it. Services are usually managed with `systemctl` (`systemctl restart nginx`).
 
-**Disk**
+### Disk
 
 - `df -h` shows each filesystem's size, used and available space, in human units.
 - `du -sh folder/*` shows how big each item in a folder is. `sort -h` sorts human sizes (`48K` < `640M` < `2.9G`).

@@ -12,7 +12,7 @@ Tallybook's DNS zone is in `tallybook.example.zone`. Reading it carefully turns 
 
 ## The concept
 
-**DNS records**
+### DNS records
 
 | Type | Maps | Example |
 | :-- | :-- | :-- |
@@ -24,11 +24,11 @@ Tallybook's DNS zone is in `tallybook.example.zone`. Reading it carefully turns 
 
 **TTL** (time to live) says how long others may cache an answer, in seconds. Before moving a service, lower the TTL a day ahead so the change spreads quickly.
 
-**Dangling records**
+### Dangling records
 
 A CNAME pointing to a cloud resource that has been deleted is **dangling**. If an attacker can create a resource with that name on the same cloud service, they control your subdomain. Remove records when you remove what they point to.
 
-**HTTP**
+### HTTP
 
 A request has a **method** (GET reads, POST creates or sends, PUT and PATCH update, DELETE removes), a path, and headers. The response has a **status code**:
 
@@ -38,6 +38,9 @@ A request has a **method** (GET reads, POST creates or sends, PUT and PATCH upda
 | 3xx | go elsewhere, or use your cached copy | 301 Moved, 304 Not Modified |
 | 4xx | **the client's** mistake | 401 not logged in, 403 forbidden, 404 not found |
 | 5xx | **the server's** failure | 502 bad gateway, 504 gateway timeout |
+
+
+![The browser asks DNS for app.tallybook.example and gets an A record with an IP and a TTL; it then sends an HTTP request to the server. Below, the four classes of status code: 2xx success, 3xx redirect, 4xx client problem, 5xx server problem.](/images/courses/linux/dns-http.svg "From a name to a response, and what each class of status code means.")
 
 ## Example
 

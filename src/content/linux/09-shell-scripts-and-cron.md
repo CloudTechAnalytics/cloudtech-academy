@@ -14,7 +14,7 @@ Engineers automate checks like these with **shell scripts**, run on a schedule b
 
 **A script** is a file of commands. The first line, `#!/bin/bash`, says which program runs it. Make it executable with `chmod +x script.sh` and run it with `./script.sh`.
 
-**Building blocks**
+### Building blocks
 
 | Feature | Example |
 | :-- | :-- |
@@ -24,7 +24,7 @@ Engineers automate checks like these with **shell scripts**, run on a schedule b
 | Conditions | `if [ "$ERRORS" -gt 10 ]; then ... fi` (`-gt` greater than, `-lt` less than) |
 | Exit codes | `exit 0` means OK, anything else means a problem; monitoring tools rely on them |
 
-**cron**
+### cron
 
 A cron line has five time fields then the command:
 
@@ -35,6 +35,9 @@ A cron line has five time fields then the command:
 ```
 
 The first runs every 5 minutes; the second at 03:00 every day. `crontab -l` lists a user's jobs, and reviewing them is part of every security check (lesson 6's intruder added one).
+
+
+![The cron line 0 3 * * * decoded into minute 0, hour 3, any day of month, any month, any day of week, then the command; plus patterns for every 5 minutes, weekdays at 09:00, and 02:30 on the first of each month.](/images/courses/linux/cron.svg "Reading a cron line.")
 
 ## Example
 

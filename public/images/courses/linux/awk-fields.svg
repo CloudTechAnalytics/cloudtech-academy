@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 330" width="760" height="330" role="img" aria-label="An nginx access log line split into fields the way awk sees them, by spaces. $1 is the client IP, $4 the date and time, $6 the method with a quote, $7 the path, $9 the status code, $10 the response size in bytes, and $NF the last field, the response time in seconds.">
+<title>How awk numbers the fields of an access log line.</title>
+
+<rect width="760" height="330" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="50.0" width="122.4" height="30.0" rx="5" fill="#F3EBD8"/>
+<text xml:space="preserve" x="77.2" y="70.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">102.67.233.152</text>
+<text xml:space="preserve" x="77.2" y="100.0" font-size="13" fill="#2F5D8A" font-weight="700" text-anchor="middle">$1</text>
+<rect x="144.4" y="50.0" width="23.6" height="30.0" rx="5" fill="#FFFFFF"/>
+<text xml:space="preserve" x="156.2" y="70.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">-</text>
+<text xml:space="preserve" x="156.2" y="100.0" font-size="13" fill="#5E5A52" font-weight="700" text-anchor="middle">$2</text>
+<rect x="174.0" y="50.0" width="23.6" height="30.0" rx="5" fill="#FFFFFF"/>
+<text xml:space="preserve" x="185.8" y="70.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">-</text>
+<text xml:space="preserve" x="185.8" y="100.0" font-size="13" fill="#5E5A52" font-weight="700" text-anchor="middle">$3</text>
+<rect x="203.6" y="50.0" width="175.6" height="30.0" rx="5" fill="#F3EBD8"/>
+<text xml:space="preserve" x="291.4" y="70.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">[31/Aug/2026:00:02:44</text>
+<text xml:space="preserve" x="291.4" y="100.0" font-size="13" fill="#2F6B3F" font-weight="700" text-anchor="middle">$4</text>
+<rect x="385.2" y="50.0" width="61.6" height="30.0" rx="5" fill="#FFFFFF"/>
+<text xml:space="preserve" x="416.0" y="70.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">+0000]</text>
+<text xml:space="preserve" x="416.0" y="100.0" font-size="13" fill="#5E5A52" font-weight="700" text-anchor="middle">$5</text>
+<rect x="452.8" y="50.0" width="46.4" height="30.0" rx="5" fill="#F3EBD8"/>
+<text xml:space="preserve" x="476.0" y="70.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">"GET</text>
+<text xml:space="preserve" x="476.0" y="100.0" font-size="13" fill="#8A6A1F" font-weight="700" text-anchor="middle">$6</text>
+<rect x="505.2" y="50.0" width="114.8" height="30.0" rx="5" fill="#F3EBD8"/>
+<text xml:space="preserve" x="562.6" y="70.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">/api/invoices</text>
+<text xml:space="preserve" x="562.6" y="100.0" font-size="13" fill="#8A6A1F" font-weight="700" text-anchor="middle">$7</text>
+<rect x="626.0" y="50.0" width="84.4" height="30.0" rx="5" fill="#FFFFFF"/>
+<text xml:space="preserve" x="668.2" y="70.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">HTTP/1.1"</text>
+<text xml:space="preserve" x="668.2" y="100.0" font-size="13" fill="#5E5A52" font-weight="700" text-anchor="middle">$8</text>
+<rect x="16.0" y="140.0" width="38.8" height="30.0" rx="5" fill="#F3EBD8"/>
+<text xml:space="preserve" x="35.4" y="160.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">200</text>
+<text xml:space="preserve" x="35.4" y="190.0" font-size="13" fill="#9B2C1F" font-weight="700" text-anchor="middle">$9</text>
+<rect x="60.8" y="140.0" width="46.4" height="30.0" rx="5" fill="#F3EBD8"/>
+<text xml:space="preserve" x="84.0" y="160.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">6118</text>
+<text xml:space="preserve" x="84.0" y="190.0" font-size="13" fill="#5C4F80" font-weight="700" text-anchor="middle">$10</text>
+<rect x="113.2" y="140.0" width="99.6" height="30.0" rx="5" fill="#FFFFFF"/>
+<text xml:space="preserve" x="163.0" y="160.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">user agent…</text>
+<text xml:space="preserve" x="163.0" y="190.0" font-size="13" fill="#5E5A52" font-weight="700" text-anchor="middle">…</text>
+<rect x="218.8" y="140.0" width="54.0" height="30.0" rx="5" fill="#F3EBD8"/>
+<text xml:space="preserve" x="245.8" y="160.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">0.235</text>
+<text xml:space="preserve" x="245.8" y="190.0" font-size="13" fill="#2F5D8A" font-weight="700" text-anchor="middle">$NF</text>
+<text xml:space="preserve" x="16.0" y="30.0" font-size="15" fill="#2A2926" font-weight="700" text-anchor="start">One line of access.log, split on spaces</text>
+<rect x="16.0" y="214.0" width="728.0" height="100.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="32.0" y="240.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">$9 is the status code; $NF (the last field) is the response time in seconds.</text>
+<text xml:space="preserve" x="32.0" y="264.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">substr($4, 14, 5) takes the hour and minute: 00:02.</text>
+<text xml:space="preserve" x="32.0" y="288.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">awk '$9 &gt;= 500' access.log prints only the server errors.</text>
+</g></svg>

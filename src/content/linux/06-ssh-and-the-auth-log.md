@@ -12,7 +12,7 @@ Every login attempt to a Linux server is recorded in the **authentication log**.
 
 ## The concept
 
-**SSH**
+### SSH
 
 Secure Shell: how engineers log in to remote servers (`ssh deploy@server`). Two ways to prove who you are:
 
@@ -21,11 +21,11 @@ Secure Shell: how engineers log in to remote servers (`ssh deploy@server`). Two 
 | **Password** | type a secret | can be guessed by trying many passwords |
 | **Key pair** | a private key on your laptop matches a public key on the server | practically impossible to guess |
 
-**Brute-force attacks**
+### Brute-force attacks
 
 Internet-wide bots try common usernames (`root`, `admin`, `ubuntu`) and passwords on every server with SSH open to the world, all day long. With password login allowed, any account with a weak password is eventually found.
 
-**Hardening SSH**
+### Hardening SSH
 
 - Allow keys only (`PasswordAuthentication no`).
 - Don't allow `root` to log in (`PermitRootLogin no`).
@@ -33,7 +33,7 @@ Internet-wide bots try common usernames (`root`, `admin`, `ubuntu`) and password
 - Use a tool like **fail2ban** to block addresses after repeated failures.
 - Remove accounts that aren't needed.
 
-**The auth log**
+### The auth log
 
 Lines like `Failed password for root from 45.155.205.233`, `Accepted publickey for deploy from 10.0.2.15`, plus `sudo` (commands run as root) and `CRON` (scheduled jobs).
 

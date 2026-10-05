@@ -12,7 +12,7 @@ Linux tools are built for exactly this. Each does one small job on text, and you
 
 ## The concept
 
-**grep: find lines**
+### grep: find lines
 
 | Command | Finds |
 | :-- | :-- |
@@ -24,11 +24,13 @@ Linux tools are built for exactly this. Each does one small job on text, and you
 
 Be precise: `grep 504` also matches a response of 504 bytes. Searching for `" 504 "`, with the spaces, is safer.
 
-**Pipes**
+### Pipes
 
 `command1 | command2` sends the output of the first into the second. Small tools chain into an answer.
 
-**Counting and ranking**
+![The pipeline awk '{print $1}' access.log | sort | uniq -c | sort -rn | head -3, with sample output after each stage: IPs, sorted IPs, counted IPs, counts ranked, top three.](/images/courses/linux/pipeline.svg "A pipeline, stage by stage. Sample lines.")
+
+### Counting and ranking
 
 | Command | Does |
 | :-- | :-- |

@@ -12,7 +12,7 @@ Firewall rules are short and easy to get wrong. Each one says: allow traffic of 
 
 ## The concept
 
-**IP addresses**
+### IP addresses
 
 An IPv4 address is four numbers from 0 to 255: `196.43.12.10`. Some ranges are **private**, used only inside networks and not reachable from the internet:
 
@@ -22,11 +22,13 @@ An IPv4 address is four numbers from 0 to 255: `196.43.12.10`. Some ranges are *
 | 172.16.0.0 to 172.31.255.255 | 172.16.0.0/12 |
 | 192.168.0.0 to 192.168.255.255 | 192.168.0.0/16 |
 
-**CIDR blocks**
+### CIDR blocks
 
 `10.0.2.0/24` means "the first 24 bits are fixed": 10.0.2.0 to 10.0.2.255, 256 addresses. `/28` is 16 addresses; `/16` is 65,536. **`0.0.0.0/0` means every address on the internet.**
 
-**Ports and protocols**
+![Rows of 32 bits for /28, /24, /16 and /0, fixed bits in blue and free bits in gold: 16, 256 and 65,536 addresses, and every address for 0.0.0.0/0.](/images/courses/linux/cidr.svg "Fewer fixed bits, bigger block. 0.0.0.0/0 is the whole internet.")
+
+### Ports and protocols
 
 A server runs many services; a **port** number says which one. **TCP** is used for most connections; **UDP** for DNS lookups and streaming.
 
@@ -39,7 +41,7 @@ A server runs many services; a **port** number says which one. **TCP** is used f
 | 3000, 8080 | common app and admin ports |
 | 53 | DNS |
 
-**The rule of thumb**
+### The rule of thumb
 
 Only the public website (80 and 443) should be open to `0.0.0.0/0`. Everything else should come from known networks: the office, the VPN, other servers.
 

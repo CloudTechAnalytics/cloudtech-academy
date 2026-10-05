@@ -51002,7 +51002,7 @@ In this course you investigate what happened on Tallybook's web server, prod-web
 
 ## The concept
 
-**The shell**
+### The shell
 
 A program that reads commands you type and runs them. On most Linux servers it's **bash**. A command is a program name followed by **arguments**:
 
@@ -51012,11 +51012,11 @@ wc -l access.log
 
 `wc` is the program (word count), `-l` is an **option** (count lines), and `access.log` is the file.
 
-**Running commands in Google Colab**
+### Running commands in Google Colab
 
 Colab notebooks run on a Linux machine. Start a cell with `%%bash` and the whole cell runs as shell commands. Files you download stay in the notebook's folder (`/content`) until the session ends. Every shell example in this course is written as a Colab cell, ready to paste.
 
-**First commands**
+### First commands
 
 | Command | What it does |
 | :-- | :-- |
@@ -51155,7 +51155,7 @@ Linux tools are built for exactly this. Each does one small job on text, and you
 
 ## The concept
 
-**grep: find lines**
+### grep: find lines
 
 | Command | Finds |
 | :-- | :-- |
@@ -51167,11 +51167,13 @@ Linux tools are built for exactly this. Each does one small job on text, and you
 
 Be precise: `grep 504` also matches a response of 504 bytes. Searching for `" 504 "`, with the spaces, is safer.
 
-**Pipes**
+### Pipes
 
 `command1 | command2` sends the output of the first into the second. Small tools chain into an answer.
 
-**Counting and ranking**
+![The pipeline awk '{print $1}' access.log | sort | uniq -c | sort -rn | head -3, with sample output after each stage: IPs, sorted IPs, counted IPs, counts ranked, top three.](/images/courses/linux/pipeline.svg "A pipeline, stage by stage. Sample lines.")
+
+### Counting and ranking
 
 | Command | Does |
 | :-- | :-- |
@@ -51339,6 +51341,8 @@ Tallybook's status page said the app was down for 55 minutes on the morning of 3
 
 `substr(s, start, length)` takes part of a field. In the access log, `$4` looks like `[31/Aug/2026:09:41:07`, so `substr($4, 14, 5)` is the hour and minute, `09:41`.
 
+![An access log line split on spaces with field numbers: $1 client IP, $4 date and time, $6 method, $7 path, $9 status code, $10 bytes, and $NF the response time.](/images/courses/linux/awk-fields.svg "How awk numbers the fields of an access log line.")
+
 ## Example
 
 When were the first and last server errors?
@@ -51480,7 +51484,7 @@ Here's the listing of Tallybook's app folder, `/srv/tallybook`, taken with `ls -
 
 ## The concept
 
-**Reading a permission string**
+### Reading a permission string
 
 `-rw-r--r--` is ten characters:
 
@@ -51493,9 +51497,11 @@ Here's the listing of Tallybook's app folder, `/srv/tallybook`, taken with `ls -
 
 `r` read, `w` write, `x` execute (for a directory, `x` means you can enter it).
 
-**Numbers**
+### Numbers
 
 Each set of three is a digit: r = 4, w = 2, x = 1, added. `rw-` = 6, `r--` = 4, `rwx` = 7. So `-rw-r--r--` is **644** and `-rw-------` is **600**.
+
+![The string -rwxr-x--- decoded: type file; owner rwx is 4+2+1 = 7; group r-x is 4+0+1 = 5; others --- is 0; so 750.](/images/courses/linux/permissions.svg "Decoding a permission string into its number.")
 
 | Typical setting | Use |
 | :-- | :-- |
@@ -51505,7 +51511,7 @@ Each set of three is a digit: r = 4, w = 2, x = 1, added. `rw-` = 6, `r--` = 4, 
 | 755 | programs and folders anyone may run or enter |
 | 777 | **anyone can change it**: almost never right |
 
-**Changing them**
+### Changing them
 
 `chmod 600 .env` sets permissions; `chown tallybook:tallybook file` sets the owner and group. On a real server you'd fix things with these; here you'll find what needs fixing.
 
@@ -51656,7 +51662,7 @@ Read them now, and you'll find two problems that had nothing to do with month-en
 
 ## The concept
 
-**Processes**
+### Processes
 
 Every running program is a **process** with an ID (PID), an owner, and a share of CPU and memory. `ps aux` lists them all; `top` (or `htop`) shows them live.
 
@@ -51670,7 +51676,7 @@ Every running program is a **process** with an ID (PID), an owner, and a share o
 
 `kill PID` asks a process to stop; `kill -9 PID` forces it. Services are usually managed with `systemctl` (`systemctl restart nginx`).
 
-**Disk**
+### Disk
 
 - `df -h` shows each filesystem's size, used and available space, in human units.
 - `du -sh folder/*` shows how big each item in a folder is. `sort -h` sorts human sizes (`48K` < `640M` < `2.9G`).
@@ -51813,7 +51819,7 @@ Every login attempt to a Linux server is recorded in the **authentication log**.
 
 ## The concept
 
-**SSH**
+### SSH
 
 Secure Shell: how engineers log in to remote servers (`ssh deploy@server`). Two ways to prove who you are:
 
@@ -51822,11 +51828,11 @@ Secure Shell: how engineers log in to remote servers (`ssh deploy@server`). Two 
 | **Password** | type a secret | can be guessed by trying many passwords |
 | **Key pair** | a private key on your laptop matches a public key on the server | practically impossible to guess |
 
-**Brute-force attacks**
+### Brute-force attacks
 
 Internet-wide bots try common usernames (`root`, `admin`, `ubuntu`) and passwords on every server with SSH open to the world, all day long. With password login allowed, any account with a weak password is eventually found.
 
-**Hardening SSH**
+### Hardening SSH
 
 - Allow keys only (`PasswordAuthentication no`).
 - Don't allow `root` to log in (`PermitRootLogin no`).
@@ -51834,7 +51840,7 @@ Internet-wide bots try common usernames (`root`, `admin`, `ubuntu`) and password
 - Use a tool like **fail2ban** to block addresses after repeated failures.
 - Remove accounts that aren't needed.
 
-**The auth log**
+### The auth log
 
 Lines like `Failed password for root from 45.155.205.233`, `Accepted publickey for deploy from 10.0.2.15`, plus `sudo` (commands run as root) and `CRON` (scheduled jobs).
 
@@ -51987,7 +51993,7 @@ Firewall rules are short and easy to get wrong. Each one says: allow traffic of 
 
 ## The concept
 
-**IP addresses**
+### IP addresses
 
 An IPv4 address is four numbers from 0 to 255: `196.43.12.10`. Some ranges are **private**, used only inside networks and not reachable from the internet:
 
@@ -51997,11 +52003,13 @@ An IPv4 address is four numbers from 0 to 255: `196.43.12.10`. Some ranges are *
 | 172.16.0.0 to 172.31.255.255 | 172.16.0.0/12 |
 | 192.168.0.0 to 192.168.255.255 | 192.168.0.0/16 |
 
-**CIDR blocks**
+### CIDR blocks
 
 `10.0.2.0/24` means "the first 24 bits are fixed": 10.0.2.0 to 10.0.2.255, 256 addresses. `/28` is 16 addresses; `/16` is 65,536. **`0.0.0.0/0` means every address on the internet.**
 
-**Ports and protocols**
+![Rows of 32 bits for /28, /24, /16 and /0, fixed bits in blue and free bits in gold: 16, 256 and 65,536 addresses, and every address for 0.0.0.0/0.](/images/courses/linux/cidr.svg "Fewer fixed bits, bigger block. 0.0.0.0/0 is the whole internet.")
+
+### Ports and protocols
 
 A server runs many services; a **port** number says which one. **TCP** is used for most connections; **UDP** for DNS lookups and streaming.
 
@@ -52014,7 +52022,7 @@ A server runs many services; a **port** number says which one. **TCP** is used f
 | 3000, 8080 | common app and admin ports |
 | 53 | DNS |
 
-**The rule of thumb**
+### The rule of thumb
 
 Only the public website (80 and 443) should be open to `0.0.0.0/0`. Everything else should come from known networks: the office, the VPN, other servers.
 
@@ -52180,7 +52188,7 @@ Tallybook's DNS zone is in `tallybook.example.zone`. Reading it carefully turns 
 
 ## The concept
 
-**DNS records**
+### DNS records
 
 | Type | Maps | Example |
 | :-- | :-- | :-- |
@@ -52192,11 +52200,11 @@ Tallybook's DNS zone is in `tallybook.example.zone`. Reading it carefully turns 
 
 **TTL** (time to live) says how long others may cache an answer, in seconds. Before moving a service, lower the TTL a day ahead so the change spreads quickly.
 
-**Dangling records**
+### Dangling records
 
 A CNAME pointing to a cloud resource that has been deleted is **dangling**. If an attacker can create a resource with that name on the same cloud service, they control your subdomain. Remove records when you remove what they point to.
 
-**HTTP**
+### HTTP
 
 A request has a **method** (GET reads, POST creates or sends, PUT and PATCH update, DELETE removes), a path, and headers. The response has a **status code**:
 
@@ -52206,6 +52214,9 @@ A request has a **method** (GET reads, POST creates or sends, PUT and PATCH upda
 | 3xx | go elsewhere, or use your cached copy | 301 Moved, 304 Not Modified |
 | 4xx | **the client's** mistake | 401 not logged in, 403 forbidden, 404 not found |
 | 5xx | **the server's** failure | 502 bad gateway, 504 gateway timeout |
+
+
+![The browser asks DNS for app.tallybook.example and gets an A record with an IP and a TTL; it then sends an HTTP request to the server. Below, the four classes of status code: 2xx success, 3xx redirect, 4xx client problem, 5xx server problem.](/images/courses/linux/dns-http.svg "From a name to a response, and what each class of status code means.")
 
 ## Example
 
@@ -52371,7 +52382,7 @@ Engineers automate checks like these with **shell scripts**, run on a schedule b
 
 **A script** is a file of commands. The first line, `#!/bin/bash`, says which program runs it. Make it executable with `chmod +x script.sh` and run it with `./script.sh`.
 
-**Building blocks**
+### Building blocks
 
 | Feature | Example |
 | :-- | :-- |
@@ -52381,7 +52392,7 @@ Engineers automate checks like these with **shell scripts**, run on a schedule b
 | Conditions | `if [ "$ERRORS" -gt 10 ]; then ... fi` (`-gt` greater than, `-lt` less than) |
 | Exit codes | `exit 0` means OK, anything else means a problem; monitoring tools rely on them |
 
-**cron**
+### cron
 
 A cron line has five time fields then the command:
 
@@ -52392,6 +52403,9 @@ A cron line has five time fields then the command:
 ```
 
 The first runs every 5 minutes; the second at 03:00 every day. `crontab -l` lists a user's jobs, and reviewing them is part of every security check (lesson 6's intruder added one).
+
+
+![The cron line 0 3 * * * decoded into minute 0, hour 3, any day of month, any month, any day of week, then the command; plus patterns for every 5 minutes, weekdays at 09:00, and 02:30 on the first of each month.](/images/courses/linux/cron.svg "Reading a cron line.")
 
 ## Example
 
@@ -52531,7 +52545,7 @@ Tallybook's CTO has asked for a written investigation of prod-web-01, the server
 
 ## The concept
 
-**An investigation report**
+### An investigation report
 
 | Section | Contents | From |
 | :-- | :-- | :-- |
@@ -52542,7 +52556,7 @@ Tallybook's CTO has asked for a written investigation of prod-web-01, the server
 | **Fixes** | done now, and to do, with owners | lessons 4 to 8 |
 | **Detection** | the check that would have caught each problem | lesson 9 |
 
-**Separate facts from conclusions**
+### Separate facts from conclusions
 
 "The log shows a password login for `backup` from 194.26.29.120 at 02:14:51 on 30 August" is a fact. "The attacker installed the miner" is a conclusion, supported by the facts that the miner runs as `backup` and started after that login. Good reports make the difference clear.
 
