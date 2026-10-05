@@ -2515,6 +2515,8 @@ Then add **synonyms**, the other words experts use for the same thing: *unemploy
 
 Five focused searches, each using what the last one taught her. That's the skill.
 
+![A search refined in five steps from a whole question, to keywords, to the experts' own phrases, to an official site, to Google Scholar, with the kind of result each returns](/images/courses/research/refine-search.svg "Five focused searches, each using what the last one taught you.")
+
 ## Search operators
 
 Operators are short codes you type into Google's search box to control the results:
@@ -2527,6 +2529,8 @@ Operators are short codes you type into Google's search box to control the resul
 | `-` | Leave this word out | `python -snake` |
 | `OR` | Either word (in capitals) | `SME OR "small business"` |
 | `after:` / `before:` | Pages dated after or before | `fintech Nigeria after:2023-01-01` |
+
+![Six Google search operators with examples, and a combined search that finds PDF reports from Nigerian government websites](/images/courses/research/operators.svg "Six operators, and how they combine.")
 
 Combine them: `"mobile money" Nigeria site:.gov.ng filetype:pdf` finds PDF reports on mobile money from Nigerian government websites.
 
@@ -2623,6 +2627,8 @@ A peer-reviewed journal article, a government statistics report and a viral What
 | Peer-reviewed journal articles, academic books | Reputable newspapers; well-known organisations' reports | Anonymous blogs, social media posts |
 | Official statistics (NBS, CBN, WHO, World Bank) | Wikipedia (good for an overview and for its references) | Sites selling something, clickbait sites |
 
+![Sources grouped as usually strong, use with care and usually avoid, followed by the five checks: who, where, when, why and what evidence](/images/courses/research/source-strength.svg "How strong is this source? Five checks decide.")
+
 "Use with care" doesn't mean "don't use". A good newspaper report is fine for recent events, but for a statistic, cite the original source the newspaper used.
 
 ## Five checks for any source
@@ -2644,6 +2650,8 @@ Professional fact-checkers don't decide whether a website is trustworthy by read
 - Find the **original** source of a statistic, not a page repeating it.
 
 A handy habit is **SIFT**: **S**top; **I**nvestigate the source; **F**ind better coverage; **T**race claims to the original.
+
+![SIFT: stop, investigate the source, find better coverage, and trace the claim to the original](/images/courses/research/sift.svg "SIFT: Stop, Investigate, Find better coverage, Trace.")
 
 ## Trace a claim: a worked example
 
@@ -2762,6 +2770,8 @@ Here's a passage from a source. (It's a made-up example for practice.)
 
 It has a citation, but it's the original sentence with three words swapped. That's called **patchwriting**, and most universities treat it as plagiarism. Fix it by closing the source, writing the idea from memory in your own way, then checking it against the original.
 
+![A source sentence used four ways: as a quote, a paraphrase, a summary, and the dishonest patchwriting version with a few words swapped](/images/courses/research/quote-paraphrase.svg "Quote, paraphrase, summarise, and the trap of patchwriting.")
+
 ## APA style, the essentials
 
 Your department names a referencing style. **APA** (7th edition) and **Harvard** are common in Nigerian universities and look similar. Both have two parts: an **in-text citation** where you use the source, and a **reference list** at the end.
@@ -2792,6 +2802,8 @@ Okafor, N., & Bello, M. (2021). Digital payments and informal traders in
 ```
 
 Details matter: initials not first names, the year in brackets, the volume followed by the issue in brackets with no space, and the page range. In the real thing the journal name and volume are in *italics*. Always follow the exact guide your department gives you.
+
+![How an in-text citation points to one reference-list entry, with each part of the entry labelled: authors, year, title, journal, issue and pages, DOI](/images/courses/research/apa-anatomy.svg "Every in-text citation points to one reference-list entry.")
 
 ## Let a tool do the formatting
 

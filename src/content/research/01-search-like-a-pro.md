@@ -27,6 +27,8 @@ Then add **synonyms**, the other words experts use for the same thing: *unemploy
 
 Five focused searches, each using what the last one taught her. That's the skill.
 
+![A search refined in five steps from a whole question, to keywords, to the experts' own phrases, to an official site, to Google Scholar, with the kind of result each returns](/images/courses/research/refine-search.svg "Five focused searches, each using what the last one taught you.")
+
 ## Search operators
 
 Operators are short codes you type into Google's search box to control the results:
@@ -39,6 +41,8 @@ Operators are short codes you type into Google's search box to control the resul
 | `-` | Leave this word out | `python -snake` |
 | `OR` | Either word (in capitals) | `SME OR "small business"` |
 | `after:` / `before:` | Pages dated after or before | `fintech Nigeria after:2023-01-01` |
+
+![Six Google search operators with examples, and a combined search that finds PDF reports from Nigerian government websites](/images/courses/research/operators.svg "Six operators, and how they combine.")
 
 Combine them: `"mobile money" Nigeria site:.gov.ng filetype:pdf` finds PDF reports on mobile money from Nigerian government websites.
 

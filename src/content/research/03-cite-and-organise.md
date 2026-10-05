@@ -34,6 +34,8 @@ Here's a passage from a source. (It's a made-up example for practice.)
 
 It has a citation, but it's the original sentence with three words swapped. That's called **patchwriting**, and most universities treat it as plagiarism. Fix it by closing the source, writing the idea from memory in your own way, then checking it against the original.
 
+![A source sentence used four ways: as a quote, a paraphrase, a summary, and the dishonest patchwriting version with a few words swapped](/images/courses/research/quote-paraphrase.svg "Quote, paraphrase, summarise, and the trap of patchwriting.")
+
 ## APA style, the essentials
 
 Your department names a referencing style. **APA** (7th edition) and **Harvard** are common in Nigerian universities and look similar. Both have two parts: an **in-text citation** where you use the source, and a **reference list** at the end.
@@ -64,6 +66,8 @@ Okafor, N., & Bello, M. (2021). Digital payments and informal traders in
 ```
 
 Details matter: initials not first names, the year in brackets, the volume followed by the issue in brackets with no space, and the page range. In the real thing the journal name and volume are in *italics*. Always follow the exact guide your department gives you.
+
+![How an in-text citation points to one reference-list entry, with each part of the entry labelled: authors, year, title, journal, issue and pages, DOI](/images/courses/research/apa-anatomy.svg "Every in-text citation points to one reference-list entry.")
 
 ## Let a tool do the formatting
 
