@@ -31,6 +31,8 @@ This makes every `<h1>` blue and 40 pixels tall. Common selectors:
 | `.card` | Anything with `class="card"` | `<div class="card">` |
 | `#contact` | The one element with `id="contact"` | `<section id="contact">` |
 
+![A CSS rule h1 with color and font-size, labelled selector, property and value, with the resulting blue heading; and three common selectors: an element, a class and an id](/images/courses/web/css-rule.svg "A rule is a selector plus property: value declarations.")
+
 ## A clean starting style
 
 Paste this into `style.css`:
@@ -90,6 +92,8 @@ Every element is a box. From the inside out:
 ```
 
 Cards sit in a row on wide screens and wrap onto new lines on phones.
+
+![Four cards in one row on a wide screen and stacked one per row on a phone, from the same flexbox CSS with flex-wrap and a gap](/images/courses/web/flexbox.svg "Flexbox: a row of cards on wide screens that wraps on phones.")
 
 > [!TIP]
 > Right-click any part of a page in Chrome and choose **Inspect** to see its HTML and CSS. You can change values there to test ideas before editing your file.

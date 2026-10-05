@@ -3589,6 +3589,8 @@ Every website is built from three languages that work together:
 
 Your browser reads these files and draws the page. You only need a text editor and a browser to start.
 
+![index.html, style.css and script.js feed into the browser, which draws the page; below, a minimal HTML file with its head (the title) and body (everything visible)](/images/courses/web/three-languages.svg "HTML, CSS and JavaScript files come together in the browser to draw the page.")
+
 ## Set up
 
 Use a free code editor. **Visual Studio Code** (code.visualstudio.com) is the most popular. On a phone or a borrowed computer, **CodePen** (codepen.io) works in the browser.
@@ -3722,6 +3724,8 @@ This makes every `<h1>` blue and 40 pixels tall. Common selectors:
 | `.card` | Anything with `class="card"` | `<div class="card">` |
 | `#contact` | The one element with `id="contact"` | `<section id="contact">` |
 
+![A CSS rule h1 with color and font-size, labelled selector, property and value, with the resulting blue heading; and three common selectors: an element, a class and an id](/images/courses/web/css-rule.svg "A rule is a selector plus property: value declarations.")
+
 ## A clean starting style
 
 Paste this into `style.css`:
@@ -3781,6 +3785,8 @@ Every element is a box. From the inside out:
 ```
 
 Cards sit in a row on wide screens and wrap onto new lines on phones.
+
+![Four cards in one row on a wide screen and stacked one per row on a phone, from the same flexbox CSS with flex-wrap and a gap](/images/courses/web/flexbox.svg "Flexbox: a row of cards on wide screens that wraps on phones.")
 
 > [!TIP]
 > Right-click any part of a page in Chrome and choose **Inspect** to see its HTML and CSS. You can change values there to test ideas before editing your file.
@@ -3915,6 +3921,8 @@ body.dark {
 
 Click the button: the page switches between light and dark. This is the pattern behind most interaction: **find an element**, **listen for an event**, **change something**.
 
+![Three steps: find the button with querySelector, listen for a click with addEventListener, change the page by toggling a dark class; the CSS rule body.dark then switches the page from light to dark](/images/courses/web/js-pattern.svg "Find an element, listen for an event, change something.")
+
 > [!NOTE]
 > If nothing happens, open the Console. A red error usually names the file and line with the problem. Typos in `querySelector` names are the most common cause.
 
@@ -4015,6 +4023,8 @@ You need a free GitHub account (see the Git & GitHub course).
 4. Wait a minute or two, then open `https://your-username.github.io`.
 
 Your site is live. Every time you commit a change, it updates within a few minutes.
+
+![A folder is uploaded to a public GitHub repository, GitHub Pages deploys it from the main branch, and the site goes live; a checklist for before sharing: phone, links, images and the Console](/images/courses/web/publish.svg "Folder to repository to live site: every commit updates it.")
 
 > [!TIP]
 > Any other public repository can be published the same way. Its address will be `https://your-username.github.io/repository-name`.

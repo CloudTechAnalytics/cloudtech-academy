@@ -40,6 +40,8 @@ You need a free GitHub account (see the Git & GitHub course).
 
 Your site is live. Every time you commit a change, it updates within a few minutes.
 
+![A folder is uploaded to a public GitHub repository, GitHub Pages deploys it from the main branch, and the site goes live; a checklist for before sharing: phone, links, images and the Console](/images/courses/web/publish.svg "Folder to repository to live site: every commit updates it.")
+
 > [!TIP]
 > Any other public repository can be published the same way. Its address will be `https://your-username.github.io/repository-name`.
 

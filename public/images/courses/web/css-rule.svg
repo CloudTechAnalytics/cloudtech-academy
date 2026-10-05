@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 380" width="760" height="380" role="img" aria-label="How a CSS rule works. A rule has a selector, which says what to style, and declarations in curly braces, each a property and a value ending in a semicolon. The rule h1 { color: #1d4ed8; font-size: 40px; } makes every h1 blue and 40 pixels tall. Common selectors: an element name like p styles every paragraph; a class selector like .tip styles anything with class tip; an id selector like #contact styles the one element with that id.">
+<title>A rule is a selector plus property: value declarations.</title>
+
+<rect width="760" height="380" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="20.0" width="300.0" height="134.0" rx="8" fill="#2A2926" stroke="#2A2926" stroke-width="1"/>
+<text xml:space="preserve" x="28.0" y="44.0" font-size="15" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">h1 {</text>
+<text xml:space="preserve" x="28.0" y="72.0" font-size="15" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">  color: #1d4ed8;</text>
+<text xml:space="preserve" x="28.0" y="100.0" font-size="15" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">  font-size: 40px;</text>
+<text xml:space="preserve" x="28.0" y="128.0" font-size="15" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">}</text>
+<rect x="16.0" y="160.0" width="14.0" height="14.0" rx="3" fill="#2F5D8A"/>
+<text xml:space="preserve" x="38.0" y="172.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">h1</text>
+<text xml:space="preserve" x="130.0" y="172.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">selector: what to style</text>
+<rect x="16.0" y="182.0" width="14.0" height="14.0" rx="3" fill="#B38A3E"/>
+<text xml:space="preserve" x="38.0" y="194.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">color</text>
+<text xml:space="preserve" x="130.0" y="194.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">property: what to change</text>
+<rect x="16.0" y="204.0" width="14.0" height="14.0" rx="3" fill="#2F6B3F"/>
+<text xml:space="preserve" x="38.0" y="216.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">#1d4ed8</text>
+<text xml:space="preserve" x="130.0" y="216.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">value: how</text>
+<text xml:space="preserve" x="16.0" y="246.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">Each declaration ends with a semicolon.</text>
+<rect x="340.0" y="20.0" width="404.0" height="112.0" rx="10" fill="#FFFFFF" stroke="#B38A3E" stroke-width="1.5"/>
+<text xml:space="preserve" x="356.0" y="46.0" font-size="13" fill="#8A6A1F" font-weight="700" text-anchor="start">Result</text>
+<text xml:space="preserve" x="356.0" y="98.0" font-size="30" fill="#1d4ed8" font-weight="700" text-anchor="start">Heading in blue</text>
+<text xml:space="preserve" x="16.0" y="272.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Common selectors</text>
+<rect x="16.0" y="284.0" width="232.0" height="80.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="30.0" y="312.0" font-size="15" fill="#2F5D8A" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">p</text>
+<text xml:space="preserve" x="30.0" y="334.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">every &lt;p&gt;</text>
+<text xml:space="preserve" x="30.0" y="352.0" font-size="10.5" fill="#5E5A52" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">p { line-height: 1.6; }</text>
+<rect x="264.0" y="284.0" width="232.0" height="80.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="278.0" y="312.0" font-size="15" fill="#2F5D8A" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">.tip</text>
+<text xml:space="preserve" x="278.0" y="334.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">anything with class="tip"</text>
+<text xml:space="preserve" x="278.0" y="352.0" font-size="10.5" fill="#5E5A52" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">&lt;div class="tip"&gt;</text>
+<rect x="512.0" y="284.0" width="232.0" height="80.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="526.0" y="312.0" font-size="15" fill="#2F5D8A" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">#contact</text>
+<text xml:space="preserve" x="526.0" y="334.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">the one element with id="contact"</text>
+<text xml:space="preserve" x="526.0" y="352.0" font-size="10.5" fill="#5E5A52" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">&lt;section id="contact"&gt;</text>
+</g></svg>

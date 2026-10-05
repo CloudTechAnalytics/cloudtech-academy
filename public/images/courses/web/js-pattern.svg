@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 400" width="760" height="400" role="img" aria-label="The pattern behind most interaction, using the dark-mode button. Find an element with querySelector; listen for an event with addEventListener; change something, here toggling a class on the body. The CSS rule body.dark then applies, and the page switches between light and dark. If nothing happens, open the Console: a red error usually names the file and line.">
+<title>Find an element, listen for an event, change something.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="400" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="18.0" width="728.0" height="52.0" rx="8" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.4"/>
+<text xml:space="preserve" x="30.0" y="50.0" font-size="13.5" fill="#2F5D8A" font-weight="700" text-anchor="start">1  Find</text>
+<text xml:space="preserve" x="150.0" y="50.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">const button = document.querySelector("#theme-btn");</text>
+<rect x="16.0" y="80.0" width="728.0" height="52.0" rx="8" fill="#F3EBD8" stroke="#8A6A1F" stroke-width="1.4"/>
+<text xml:space="preserve" x="30.0" y="112.0" font-size="13.5" fill="#8A6A1F" font-weight="700" text-anchor="start">2  Listen</text>
+<text xml:space="preserve" x="150.0" y="112.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">button.addEventListener("click", function () {</text>
+<rect x="16.0" y="142.0" width="728.0" height="52.0" rx="8" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.4"/>
+<text xml:space="preserve" x="30.0" y="174.0" font-size="13.5" fill="#2F6B3F" font-weight="700" text-anchor="start">3  Change</text>
+<text xml:space="preserve" x="150.0" y="174.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">  document.body.classList.toggle("dark");  });</text>
+<text xml:space="preserve" x="16.0" y="222.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Then the CSS decides how it looks</text>
+<rect x="16.0" y="234.0" width="300.0" height="102.0" rx="8" fill="#2A2926" stroke="#2A2926" stroke-width="1"/>
+<text xml:space="preserve" x="28.0" y="258.0" font-size="12" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">body.dark {</text>
+<text xml:space="preserve" x="28.0" y="278.0" font-size="12" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">  background: #111827;</text>
+<text xml:space="preserve" x="28.0" y="298.0" font-size="12" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">  color: #f9fafb;</text>
+<text xml:space="preserve" x="28.0" y="318.0" font-size="12" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">}</text>
+<rect x="360.0" y="234.0" width="170.0" height="96.0" rx="8" fill="#FFFFFF" stroke="#2A2926" stroke-width="1.5"/>
+<text xml:space="preserve" x="374.0" y="262.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">My page</text>
+<rect x="374.0" y="276.0" width="90.0" height="28.0" rx="5" fill="#B38A3E"/>
+<text xml:space="preserve" x="419.0" y="295.0" font-size="11.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">Dark mode</text>
+<text xml:space="preserve" x="445.0" y="320.0" font-size="10.5" fill="#5E5A52" font-weight="400" text-anchor="middle">no class</text>
+<rect x="560.0" y="234.0" width="170.0" height="96.0" rx="8" fill="#111827" stroke="#2A2926" stroke-width="1.5"/>
+<text xml:space="preserve" x="574.0" y="262.0" font-size="14" fill="#F9FAFB" font-weight="700" text-anchor="start">My page</text>
+<rect x="574.0" y="276.0" width="90.0" height="28.0" rx="5" fill="#B38A3E"/>
+<text xml:space="preserve" x="619.0" y="295.0" font-size="11.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">Dark mode</text>
+<text xml:space="preserve" x="645.0" y="320.0" font-size="10.5" fill="#5E5A52" font-weight="400" text-anchor="middle">class dark on</text>
+<path d="M532.0,282.0 L556.0,282.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<text xml:space="preserve" x="16.0" y="362.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Each click toggles the class: on, off, on, off.</text>
+<text xml:space="preserve" x="16.0" y="384.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">No change? Open the Console (F12). A red error names the file and line; typos in querySelector names are the usual cause.</text>
+</g></svg>

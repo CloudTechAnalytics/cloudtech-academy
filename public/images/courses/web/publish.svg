@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 400" width="760" height="400" role="img" aria-label="Publishing a site with GitHub Pages. Your my-website folder is uploaded to a new public repository named your-username.github.io. In Settings, Pages, choose Deploy from a branch, main, root. After a minute or two the site is live at https://your-username.github.io, and every commit updates it. Before sharing, check it on your phone, click every link, and look for red errors in the Console.">
+<title>Folder to repository to live site: every commit updates it.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="400" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="20.0" width="170.0" height="100.0" rx="8" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="28.0" y="46.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">my-website folder</text>
+<text xml:space="preserve" x="28.0" y="66.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">index.html, style.css,</text>
+<text xml:space="preserve" x="28.0" y="82.7" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">script.js, images</text>
+<path d="M188.0,70.0 L198.0,70.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="200.0" y="20.0" width="170.0" height="100.0" rx="8" fill="#F3EBD8" stroke="#B38A3E" stroke-width="1.5"/>
+<text xml:space="preserve" x="212.0" y="46.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">GitHub repository</text>
+<text xml:space="preserve" x="212.0" y="66.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">public, named</text>
+<text xml:space="preserve" x="212.0" y="82.7" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">your-username.github.io</text>
+<path d="M372.0,70.0 L382.0,70.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="384.0" y="20.0" width="170.0" height="100.0" rx="8" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.5"/>
+<text xml:space="preserve" x="396.0" y="46.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">Settings → Pages</text>
+<text xml:space="preserve" x="396.0" y="66.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">deploy from main, /</text>
+<text xml:space="preserve" x="396.0" y="82.7" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">(root)</text>
+<path d="M556.0,70.0 L566.0,70.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="568.0" y="20.0" width="170.0" height="100.0" rx="8" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.5"/>
+<text xml:space="preserve" x="580.0" y="46.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">Live website</text>
+<text xml:space="preserve" x="580.0" y="66.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">your-username.github.io</text>
+<text xml:space="preserve" x="16.0" y="150.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Every commit updates the site within a few minutes.</text>
+<text xml:space="preserve" x="16.0" y="190.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Check before you share</text>
+<rect x="16.0" y="204.0" width="356.0" height="62.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="30.0" y="230.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">☐  On your phone</text>
+<text xml:space="preserve" x="56.0" y="250.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">open the site and scroll</text>
+<rect x="388.0" y="204.0" width="356.0" height="62.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="402.0" y="230.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">☐  Every link</text>
+<text xml:space="preserve" x="428.0" y="250.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">click each one</text>
+<rect x="16.0" y="278.0" width="356.0" height="62.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="30.0" y="304.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">☐  Every image</text>
+<text xml:space="preserve" x="56.0" y="324.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">broken ones are usually a file-name mismatch</text>
+<rect x="388.0" y="278.0" width="356.0" height="62.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="402.0" y="304.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">☐  The Console</text>
+<text xml:space="preserve" x="428.0" y="324.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">F12: no red errors</text>
+<text xml:space="preserve" x="16.0" y="372.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">Other free options: Netlify (drag the folder onto the page) and Vercel (publishes on every push).</text>
+</g></svg>

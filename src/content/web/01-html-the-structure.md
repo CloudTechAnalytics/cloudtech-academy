@@ -16,6 +16,8 @@ Every website is built from three languages that work together:
 
 Your browser reads these files and draws the page. You only need a text editor and a browser to start.
 
+![index.html, style.css and script.js feed into the browser, which draws the page; below, a minimal HTML file with its head (the title) and body (everything visible)](/images/courses/web/three-languages.svg "HTML, CSS and JavaScript files come together in the browser to draw the page.")
+
 ## Set up
 
 Use a free code editor. **Visual Studio Code** (code.visualstudio.com) is the most popular. On a phone or a borrowed computer, **CodePen** (codepen.io) works in the browser.

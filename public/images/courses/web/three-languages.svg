@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 476" width="760" height="476" role="img" aria-label="How a web page is built. Your browser asks for index.html. The HTML file lists the other files it needs: style.css and script.js. The browser fetches them and draws the page. The three languages have different jobs: HTML is the structure, like the walls and rooms of a house; CSS is the style, like paint and furniture; JavaScript is the behaviour, like lights and switches. A minimal HTML file has a head, which holds the title shown in the browser tab, and a body, which holds everything visible.">
+<title>HTML, CSS and JavaScript files come together in the browser to draw the page.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="476" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="20.0" width="250.0" height="64.0" rx="8" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.5"/>
+<text xml:space="preserve" x="30.0" y="46.0" font-size="14" fill="#2F5D8A" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">index.html</text>
+<text xml:space="preserve" x="30.0" y="66.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">structure and content: the walls and rooms</text>
+<path d="M268.0,52.0 L330.0,122.0" fill="none" stroke="#8A6A1F" stroke-width="1.8" marker-end="url(#a8A6A1F)"/>
+<rect x="16.0" y="96.0" width="250.0" height="64.0" rx="8" fill="#EEEAF5" stroke="#5C4F80" stroke-width="1.5"/>
+<text xml:space="preserve" x="30.0" y="122.0" font-size="14" fill="#5C4F80" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">style.css</text>
+<text xml:space="preserve" x="30.0" y="142.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">style and layout: the paint and furniture</text>
+<path d="M268.0,128.0 L330.0,122.0" fill="none" stroke="#8A6A1F" stroke-width="1.8" marker-end="url(#a8A6A1F)"/>
+<rect x="16.0" y="172.0" width="250.0" height="64.0" rx="8" fill="#F3EBD8" stroke="#B38A3E" stroke-width="1.5"/>
+<text xml:space="preserve" x="30.0" y="198.0" font-size="14" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">script.js</text>
+<text xml:space="preserve" x="30.0" y="218.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">behaviour: the lights and switches</text>
+<path d="M268.0,204.0 L330.0,122.0" fill="none" stroke="#8A6A1F" stroke-width="1.8" marker-end="url(#a8A6A1F)"/>
+<rect x="334.0" y="20.0" width="410.0" height="224.0" rx="10" fill="#FFFFFF" stroke="#2A2926" stroke-width="2"/>
+<rect x="334.0" y="20.0" width="410.0" height="30.0" rx="0" fill="#EDE8DD"/>
+<circle cx="352.0" cy="35.0" r="4" fill="#9B2C1F"/>
+<circle cx="366.0" cy="35.0" r="4" fill="#B38A3E"/>
+<circle cx="380.0" cy="35.0" r="4" fill="#2F6B3F"/>
+<text xml:space="preserve" x="400.0" y="39.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">My First Page</text>
+<text xml:space="preserve" x="356.0" y="90.0" font-size="24" fill="#2A2926" font-weight="700" text-anchor="start">Hello, I'm Ada</text>
+<text xml:space="preserve" x="356.0" y="114.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">I'm learning to build websites.</text>
+<rect x="356.0" y="130.0" width="110.0" height="34.0" rx="6" fill="#B38A3E"/>
+<text xml:space="preserve" x="411.0" y="152.0" font-size="12.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">Dark mode</text>
+<text xml:space="preserve" x="356.0" y="196.0" font-size="12" fill="#8A6A1F" font-weight="700" text-anchor="start">The browser reads all three files</text>
+<text xml:space="preserve" x="356.0" y="214.0" font-size="12" fill="#8A6A1F" font-weight="700" text-anchor="start">and draws the page.</text>
+<text xml:space="preserve" x="16.0" y="262.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">The tags you'll use most</text>
+<rect x="16.0" y="274.0" width="356.0" height="182.0" rx="8" fill="#2A2926" stroke="#2A2926" stroke-width="1"/>
+<text xml:space="preserve" x="28.0" y="298.0" font-size="11" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">&lt;!DOCTYPE html&gt;</text>
+<text xml:space="preserve" x="28.0" y="314.0" font-size="11" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">&lt;html&gt;</text>
+<text xml:space="preserve" x="28.0" y="330.0" font-size="11" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">  &lt;head&gt;</text>
+<text xml:space="preserve" x="28.0" y="346.0" font-size="11" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">    &lt;title&gt;My First Page&lt;/title&gt;</text>
+<text xml:space="preserve" x="28.0" y="362.0" font-size="11" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">  &lt;/head&gt;</text>
+<text xml:space="preserve" x="28.0" y="378.0" font-size="11" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">  &lt;body&gt;</text>
+<text xml:space="preserve" x="28.0" y="394.0" font-size="11" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">    &lt;h1&gt;Hello&lt;/h1&gt;</text>
+<text xml:space="preserve" x="28.0" y="410.0" font-size="11" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">    &lt;p&gt;…&lt;/p&gt;</text>
+<text xml:space="preserve" x="28.0" y="426.0" font-size="11" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">  &lt;/body&gt;</text>
+<text xml:space="preserve" x="28.0" y="442.0" font-size="11" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">&lt;/html&gt;</text>
+<rect x="388.0" y="274.0" width="356.0" height="150.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="402.0" y="298.0" font-size="12.5" fill="#2F5D8A" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">&lt;head&gt;</text>
+<text xml:space="preserve" x="402.0" y="316.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">about the page: the title in the browser tab.</text>
+<text xml:space="preserve" x="402.0" y="360.0" font-size="12.5" fill="#2F6B3F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">&lt;body&gt;</text>
+<text xml:space="preserve" x="402.0" y="378.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">everything visible: headings, paragraphs, links,</text>
+<text xml:space="preserve" x="402.0" y="395.4" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">images, lists.</text>
+</g></svg>

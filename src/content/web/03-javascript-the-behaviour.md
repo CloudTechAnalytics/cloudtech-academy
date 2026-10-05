@@ -80,6 +80,8 @@ body.dark {
 
 Click the button: the page switches between light and dark. This is the pattern behind most interaction: **find an element**, **listen for an event**, **change something**.
 
+![Three steps: find the button with querySelector, listen for a click with addEventListener, change the page by toggling a dark class; the CSS rule body.dark then switches the page from light to dark](/images/courses/web/js-pattern.svg "Find an element, listen for an event, change something.")
+
 > [!NOTE]
 > If nothing happens, open the Console. A red error usually names the file and line with the problem. Typos in `querySelector` names are the most common cause.
 
