@@ -1,16 +1,15 @@
 import { ConnectSection } from "@/components/CommunityWidgets";
 import { Link } from "react-router";
-import { ArrowRight, Award, BookOpen, CheckCircle2, FolderKanban, PencilLine } from "lucide-react";
+import { ArrowRight, Award, BookOpen, Bot, CheckCircle2, Code2, FolderKanban, GraduationCap, LineChart, PencilLine, type LucideIcon } from "lucide-react";
 import { useSeo } from "@/lib/seo";
-import { useCourses, useProgrammes } from "@/lib/data";
+import { useCourses } from "@/lib/data";
 import { ButtonLink } from "@/components/Button";
 import { CourseCard } from "@/components/CourseCard";
-import { TrackCard } from "@/components/TrackCard";
 import { Reveal } from "@/components/Reveal";
 import { webSiteJsonLd } from "@/lib/schema";
 import { isPaid } from "@/lib/commerce";
 
-/** Courses we suggest to someone arriving with no experience. */
+/** Courses we suggest to someone arriving with no experience. All are free. */
 const STARTING_COURSES = [
   "data-analytics-foundations",
   "sql-for-data-analysis",
@@ -27,53 +26,54 @@ const STEPS = [
   { icon: FolderKanban, title: "Build and certify", body: "Finish a real project and earn a certificate anyone can verify." },
 ];
 
-/** The hero's picture: a Professional Certificate and the badges and progress that lead to it, drawn in code. */
+/** What a visitor might want, each pointing at a free course to start with. */
+const GOALS: { icon: LucideIcon; title: string; body: string; course: string; cta: string }[] = [
+  { icon: LineChart, title: "Work with data", body: "Spreadsheets, SQL and dashboards: the skills behind almost every analyst job.", course: "data-analytics-foundations", cta: "Start with data basics" },
+  { icon: Code2, title: "Learn to code", body: "Python, Git and your first website, from the very first line.", course: "python-for-beginners", cta: "Start with Python" },
+  { icon: Bot, title: "Use AI at work", body: "Prompting, ChatGPT and Claude, used well and with your own judgement.", course: "ai-productivity-fundamentals", cta: "Start with AI tools" },
+  { icon: GraduationCap, title: "Get ready for work", body: "A CV that gets read, a LinkedIn profile, and your first internship.", course: "career-essentials", cta: "Start with your CV" },
+];
+
+/** The hero's picture: a lesson in progress, the practice check and a badge earned, drawn in code. */
 function HeroVisual() {
-  const programmes = ["Data Analysis", "Business Analysis", "Data Science", "AI Engineering", "Cloud & DevOps"];
   return (
     <div aria-hidden className="relative mx-auto w-full max-w-[34rem] pb-10 lg:pb-0">
-      <div className="relative overflow-hidden rounded-[2rem] bg-[#1E1D1B] p-6 pb-10 shadow-[0_40px_80px_-40px_rgba(23,23,23,0.7)] sm:p-9 sm:pb-12">
+      <div className="relative overflow-hidden rounded-[2rem] bg-[#1E1D1B] p-6 pb-8 shadow-[0_40px_80px_-40px_rgba(23,23,23,0.7)] sm:p-8 sm:pb-10">
         <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-[#C9A45C]/30 blur-3xl" />
         <div className="pointer-events-none absolute -bottom-28 -left-16 h-64 w-64 rounded-full bg-[#C9A45C]/15 blur-3xl" />
-        <p className="relative text-[0.6875rem] font-semibold uppercase tracking-[0.28em] text-[#C9A45C]">Professional Programme</p>
-        <div className="relative mt-4 flex flex-wrap gap-2">
-          {programmes.map((p, i) => (
-            <span
-              key={p}
-              className={`rounded-full px-3 py-1.5 text-[0.75rem] font-medium ${i === 0 ? "bg-[#C9A45C] text-[#1E1D1B]" : "border border-white/15 bg-white/5 text-[#E6DECB]"}`}
-            >
-              {p}
-            </span>
-          ))}
+        <div className="relative flex items-center justify-between">
+          <p className="text-[0.6875rem] font-semibold uppercase tracking-[0.28em] text-[#C9A45C]">Lesson 3 of 8</p>
+          <p className="text-[0.75rem] text-[#E6DECB]/70">12 min</p>
         </div>
-        <div className="relative mt-7 -rotate-2 overflow-hidden rounded-xl bg-white shadow-[0_30px_60px_-30px_rgba(0,0,0,0.8)]">
-          <div className="flex">
-            <div className="w-5 shrink-0 bg-[#1E1D1B] sm:w-6" style={{ backgroundImage: "linear-gradient(180deg,#C9A45C,#1E1D1B 60%)" }} />
-            <div className="min-w-0 flex-1 p-5 sm:p-6">
-              <p className="text-[0.625rem] font-semibold uppercase tracking-[0.26em] text-[#8A6A1F]">Professional Certificate</p>
-              <p className="mt-3 text-[0.6875rem] text-[#6B665C]">This is to certify that</p>
-              <p className="font-serif text-[1.6rem] leading-tight text-[#1E1D1B]">Your Name Here</p>
-              <p className="mt-1 text-[0.6875rem] text-[#6B665C]">has completed the professional programme</p>
-              <p className="font-serif text-[1.15rem] text-[#8A6A1F]">Data Analysis</p>
-              <div className="mt-4 flex items-end justify-between">
-                <span className="font-mono text-[0.625rem] text-[#6B665C]">CTA-2026-000124</span>
-                <span className="grid h-12 w-12 grid-cols-5 gap-px rounded bg-white p-1 ring-1 ring-[#E4D9C3]">
-                  {Array.from({ length: 25 }, (_, i) => (
-                    <span key={i} className={[0, 1, 4, 5, 6, 9, 10, 12, 14, 15, 18, 20, 21, 22, 24].includes(i) ? "bg-[#1E1D1B]" : "bg-transparent"} />
-                  ))}
-                </span>
-              </div>
-            </div>
+        <p className="relative mt-3 font-serif text-[1.6rem] leading-tight text-white sm:text-[1.9rem]">Filter your data with WHERE</p>
+        <div className="relative mt-3 h-1.5 overflow-hidden rounded-full bg-white/10">
+          <div className="h-full w-[38%] rounded-full bg-[#C9A45C]" />
+        </div>
+        <div className="relative mt-6 overflow-hidden rounded-xl border border-white/10 bg-black/30">
+          <div className="flex items-center justify-between border-b border-white/10 px-4 py-2 text-[0.6875rem] text-[#E6DECB]/70">
+            <span>Practice</span>
+            <span className="rounded bg-[#C9A45C] px-2 py-0.5 font-semibold text-[#1E1D1B]">Run and check</span>
           </div>
+          <pre className="overflow-hidden px-4 py-3 font-mono text-[0.75rem] leading-relaxed text-[#E6DECB]">{"SELECT customer, total\nFROM orders\nWHERE total > 50000\nORDER BY total DESC;"}</pre>
+          <p className="flex items-center gap-2 border-t border-white/10 bg-[#1f3a2a] px-4 py-2.5 text-[0.75rem] font-medium text-[#8fd6a8]">
+            <CheckCircle2 className="h-4 w-4" /> Correct. Your result matches.
+          </p>
         </div>
+        <ul className="relative mt-5 grid grid-cols-3 gap-2 text-center text-[0.6875rem] text-[#E6DECB]/80">
+          {["Learn it", "Try it", "Get a badge"].map((t, i) => (
+            <li key={t} className={`rounded-lg border px-2 py-2 ${i < 2 ? "border-[#C9A45C]/40 bg-[#C9A45C]/10 text-[#E8CF96]" : "border-white/10 bg-white/5"}`}>
+              {t}
+            </li>
+          ))}
+        </ul>
       </div>
-      <div className="absolute -bottom-3 left-3 w-56 rounded-xl border border-line bg-paper p-4 shadow-[0_20px_40px_-24px_rgba(23,32,51,0.45)] sm:-left-6 lg:-bottom-6">
+      <div className="absolute -bottom-3 left-3 w-52 rounded-xl border border-line bg-paper p-4 shadow-[0_20px_40px_-24px_rgba(23,32,51,0.45)] sm:-left-6 lg:-bottom-6">
         <div className="flex items-center justify-between text-[0.75rem]">
-          <span className="font-medium text-muted">Programme progress</span>
-          <span className="font-semibold text-ink">62%</span>
+          <span className="font-medium text-muted">Your progress</span>
+          <span className="font-semibold text-ink">38%</span>
         </div>
         <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-sand">
-          <div className="h-full w-[62%] rounded-full bg-brass" />
+          <div className="h-full w-[38%] rounded-full bg-brass" />
         </div>
       </div>
       <div className="absolute -top-4 right-3 hidden items-center gap-2.5 rounded-xl border border-line bg-paper px-3.5 py-2.5 shadow-[0_20px_40px_-24px_rgba(23,32,51,0.45)] sm:-right-5 sm:flex">
@@ -84,9 +84,6 @@ function HeroVisual() {
           <span className="block text-subtle">Badge earned</span>
           <span className="block font-semibold text-ink">SQL Querying</span>
         </span>
-      </div>
-      <div className="absolute -right-2 bottom-14 hidden items-center gap-2 rounded-full border border-line bg-paper px-3 py-2 text-[0.75rem] font-semibold text-success shadow-[0_20px_40px_-24px_rgba(23,32,51,0.45)] sm:flex lg:-right-6">
-        <CheckCircle2 className="h-4 w-4" /> Verified
       </div>
     </div>
   );
@@ -113,14 +110,12 @@ function SectionHeading({ id, kicker, title, intro, link }: { id: string; kicker
 
 export default function Home() {
   useSeo({
-    title: "CloudTech Academy | Learn Data, Analytics & Technology",
-    description:
-      "Practical, self-paced courses in data, analytics and technology from CloudTech Analytics. Learn, practise, build and earn CloudTech certificates.",
+    title: "CloudTech Academy | Learn Data, Analytics & Technology for Free",
+    description: "Free, practical courses in data, analytics, AI and technology from CloudTech Analytics. Learn step by step, practise in your browser, earn badges and build projects.",
     jsonLd: webSiteJsonLd(),
   });
-  const courses = useCourses();
-  const programmes = useProgrammes();
-  const professional = programmes.filter((t) => isPaid(t));
+  const all = useCourses();
+  const courses = all.filter((c) => !isPaid(c));
   const lessons = courses.reduce((n, c) => n + c.modules.reduce((m, mod) => m + mod.lessons.length, 0), 0);
   const starters = STARTING_COURSES.map((id) => courses.find((c) => c.id === id)).filter((c) => c !== undefined);
 
@@ -129,24 +124,29 @@ export default function Home() {
       <section className="border-b border-line bg-paper" style={{ backgroundImage: "radial-gradient(60rem 28rem at 85% -10%, rgba(201,164,92,0.16), transparent 60%)" }}>
         <div className="container-page grid items-center gap-14 py-16 sm:py-20 lg:grid-cols-2 lg:py-24">
           <Reveal>
-            <p className="inline-flex items-center gap-2 rounded-full bg-brass-pale px-3 py-1 text-[0.8125rem] font-semibold text-brass-dark">
-              Free courses in data and technology
-            </p>
-            <h1 className="mt-5 font-serif text-[2.5rem] leading-[1.1] tracking-[-0.025em] sm:text-[3.25rem]">
-              Learn the skills businesses <span className="text-brass-accent">actually use.</span>
+            <p className="inline-flex items-center gap-2 rounded-full bg-brass-pale px-3 py-1 text-[0.8125rem] font-semibold text-brass-dark">Free courses in data, AI and technology</p>
+            <h1 className="mt-5 font-serif text-[2.5rem] leading-[1.08] tracking-[-0.025em] sm:text-[3.4rem]">
+              Learn a skill that gets you <span className="text-brass-accent">noticed.</span> Start free today.
             </h1>
             <p className="mt-5 max-w-xl text-[1.0625rem] leading-relaxed text-muted sm:text-[1.125rem]">
-              Step-by-step courses in data, analytics and technology. Learn each idea, practise it on real-looking company data, and build projects you can
-              show an employer.
+              Short, clear lessons you can finish in an evening. Practise in your browser, get instant feedback, and earn badges you can show on your CV and LinkedIn. No experience
+              needed, and nothing to install.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <ButtonLink to="/sign-up" arrow>
                 Start learning free
               </ButtonLink>
-              <ButtonLink to="/programmes" variant="secondary">
-                Explore professional programmes
+              <ButtonLink to="/courses" variant="secondary">
+                Browse free courses
               </ButtonLink>
             </div>
+            <ul className="mt-7 flex flex-wrap gap-x-5 gap-y-2 text-[0.875rem] text-muted">
+              {["Free to start", "Learn at your own pace", "Badges you can share"].map((t) => (
+                <li key={t} className="flex items-center gap-1.5">
+                  <CheckCircle2 aria-hidden className="h-4 w-4 text-brass-dark" /> {t}
+                </li>
+              ))}
+            </ul>
           </Reveal>
           <Reveal delay={120}>
             <HeroVisual />
@@ -157,10 +157,10 @@ export default function Home() {
       <section aria-label="The Academy in numbers" className="border-b border-line">
         <dl className="container-page grid grid-cols-2 gap-6 py-8 sm:grid-cols-4">
           {[
-            [String(courses.length), "courses"],
+            [String(courses.length), "free courses"],
             [String(lessons), "lessons"],
-            [String(professional.length), "professional programmes"],
-            ["Free", "to learn"],
+            ["Instant", "feedback on practice"],
+            ["Free", "badge for every module"],
           ].map(([n, label]) => (
             <div key={label} className="text-center sm:text-left">
               <dt className="sr-only">{label}</dt>
@@ -171,54 +171,30 @@ export default function Home() {
         </dl>
       </section>
 
-      <section aria-labelledby="go-further-title" className="border-b border-line bg-paper py-16 sm:py-20">
+      <section aria-labelledby="goals-title" className="py-16 sm:py-20">
         <div className="container-page">
-          <SectionHeading
-            id="go-further-title"
-            kicker="Free and professional"
-            title="Start Learning. Then Go Further."
-            intro="Begin with free courses that teach a real skill. When you are ready to build a career, join a professional programme with projects, assessments, a capstone and support."
-          />
-          <ul className="mt-10 grid gap-5 md:grid-cols-3">
-            {[
-              { title: "Free courses", line: "Learn a skill", body: "Short, genuinely useful courses on one skill at a time. Sign up, learn at your pace and earn a badge. Free, always." },
-              { title: "Professional programmes", line: "Build a career", body: "Complete, structured programmes with projects, assessments, a capstone and a professional certificate when you meet the requirements." },
-              { title: "Community", line: "Connect and grow", body: "Meet other learners, join events and keep going together with the CloudTech community." },
-            ].map((c, i) => (
-              <Reveal as="li" key={c.title} delay={i * 60} className="rounded-2xl border border-line bg-ivory p-6">
-                <p className="text-[0.8125rem] font-semibold uppercase tracking-[0.12em] text-brass-dark">{c.line}</p>
-                <p className="mt-2 font-serif text-[1.35rem]">{c.title}</p>
-                <p className="mt-2 text-[0.9375rem] leading-relaxed text-muted">{c.body}</p>
-              </Reveal>
-            ))}
-          </ul>
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <ButtonLink to="/courses?access=free" arrow>
-              Explore Free Courses
-            </ButtonLink>
-            <ButtonLink to="/courses?access=professional" variant="secondary">
-              Explore Professional Programmes
-            </ButtonLink>
-          </div>
-          <p className="mt-6 text-[0.9375rem] text-muted">Free courses help people start learning. Professional programmes help people become professionals. CloudTech: Build technology. Build people. Solve real problems.</p>
-        </div>
-      </section>
-
-      <section aria-labelledby="tracks-title" className="py-16 sm:py-20">
-        <div className="container-page">
-          <SectionHeading
-            id="tracks-title"
-            kicker="Professional programmes"
-            title="Free courses help you start. Programmes help you become a professional."
-            intro="Each programme is a complete, structured route: the full curriculum, practical projects, assessments, a capstone and a professional certificate. The free courses inside stay free, so you can begin before you enroll."
-            link={{ to: "/programmes", label: "Compare all programmes" }}
-          />
+          <SectionHeading id="goals-title" kicker="Where do you want to start?" title="Pick what you want to get better at" intro="Choose a goal and open a free course that fits. You can change your mind any time." />
           <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {professional.map((t, i) => (
-              <Reveal as="li" key={t.id} delay={(i % 4) * 60} className="h-full">
-                <TrackCard track={t} courses={courses} />
-              </Reveal>
-            ))}
+            {GOALS.map((g, i) => {
+              const c = courses.find((x) => x.id === g.course);
+              return (
+                <Reveal as="li" key={g.title} delay={(i % 4) * 60} className="h-full">
+                  <Link
+                    to={c ? `/courses/${c.slug}` : "/courses"}
+                    className="group flex h-full flex-col rounded-2xl border border-line bg-paper p-6 transition-[border-color,box-shadow] duration-200 hover:border-brass/60 hover:shadow-[0_12px_32px_-20px_rgba(23,32,51,0.35)]"
+                  >
+                    <span className="grid h-11 w-11 place-items-center rounded-xl bg-brass-pale text-brass-dark">
+                      <g.icon aria-hidden className="h-5 w-5" />
+                    </span>
+                    <h3 className="mt-4 font-serif text-[1.25rem] leading-snug text-ink">{g.title}</h3>
+                    <p className="mt-1.5 text-[0.9375rem] leading-relaxed text-muted">{g.body}</p>
+                    <span className="mt-auto inline-flex items-center gap-1.5 pt-5 text-[0.875rem] font-semibold text-brass-dark">
+                      {g.cta} <ArrowRight aria-hidden className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                    </span>
+                  </Link>
+                </Reveal>
+              );
+            })}
           </ul>
         </div>
       </section>
@@ -249,8 +225,8 @@ export default function Home() {
             id="courses-title"
             kicker="Start here"
             title="Good first courses"
-            intro="New to data or technology? These courses assume no experience."
-            link={{ to: "/courses", label: `Browse all ${courses.length} courses` }}
+            intro="New to data or technology? These free courses assume no experience."
+            link={{ to: "/courses", label: `Browse all ${courses.length} free courses` }}
           />
           <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
             {starters.map((c, i) => (
@@ -270,8 +246,8 @@ export default function Home() {
               Write real queries in your browser
             </h2>
             <p className="mt-4 text-[1.0625rem] leading-relaxed text-muted">
-              The SQL course comes with a practice database for a logistics company: thousands of shipments, customers and payments. Run your query and
-              find out straight away whether your answer is right. Nothing to install.
+              The SQL course comes with a practice database for a logistics company: thousands of shipments, customers and payments. Run your query and find out straight away
+              whether your answer is right. Nothing to install.
             </p>
             <ButtonLink to="/learn/sql-for-data-analysis/introduction-to-databases" variant="secondary" arrow className="mt-7">
               Try the first lesson
@@ -302,9 +278,7 @@ export default function Home() {
               <h2 id="students-title" className="mt-2 font-serif text-[1.85rem] leading-tight sm:text-[2.25rem]">
                 Student Starter
               </h2>
-              <p className="mt-3 max-w-xl text-[1.0625rem] leading-relaxed text-muted">
-                Short courses for school, internships and your first job, each with its own badge for your skills profile.
-              </p>
+              <p className="mt-3 max-w-xl text-[1.0625rem] leading-relaxed text-muted">Short courses for school, internships and your first job, each with its own badge for your skills profile.</p>
               <ButtonLink to="/students" arrow className="mt-6">
                 See the Student Starter
               </ButtonLink>
@@ -329,16 +303,13 @@ export default function Home() {
               <h2 id="cta-title" className="font-serif text-[1.85rem] leading-tight text-cream sm:text-[2.1rem]">
                 Your next skill starts here
               </h2>
-              <p className="mt-2 max-w-xl text-[1.0625rem] leading-relaxed text-cream/75">Every course is free to read. Sign up to save your progress and earn badges.</p>
+              <p className="mt-2 max-w-xl text-[1.0625rem] leading-relaxed text-cream/75">Create a free account to save your progress and earn badges. It takes a minute.</p>
             </div>
             <div className="flex flex-col gap-3 sm:flex-row">
               <ButtonLink to="/sign-up" arrow>
                 Start learning free
               </ButtonLink>
-              <Link
-                to="/courses"
-                className="inline-flex items-center justify-center rounded-lg border border-cream/25 px-5 py-3 text-[0.9375rem] font-semibold text-cream hover:bg-cream/10"
-              >
+              <Link to="/courses" className="inline-flex items-center justify-center rounded-lg border border-cream/25 px-5 py-3 text-[0.9375rem] font-semibold text-cream hover:bg-cream/10">
                 Browse courses
               </Link>
             </div>
