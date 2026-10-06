@@ -1111,20 +1111,24 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
         );
       },
       async emailSetup() {
-        const s = check(await sb.from("email_settings").select("enabled, reply_to, smtp_user").eq("id", 1).single()) as Row;
-        let configured = false;
-        let from: string | null = null;
-        let provider: EmailSetup["provider"] = null;
+        const s = check(await sb.from("email_settings").select("enabled, reply_to").eq("id", 1).single()) as Row;
+        const st = ((check(await sb.rpc("admin_email_status")) as Row[]) ?? [])[0];
+        // A Gmail account saved in the dashboard counts as connected straight away; the function only adds the Resend case.
+        let configured = !!(st?.smtp_user && st?.has_password);
+        let provider: EmailSetup["provider"] = configured ? "gmail" : null;
+        let from: string | null = configured ? (st.smtp_user as string) : null;
         try {
           const { data } = await sb.functions.invoke("process-emails", { body: { check: true } });
           const d = data as { configured?: boolean; from?: string | null; provider?: EmailSetup["provider"] } | null;
-          configured = !!d?.configured;
-          from = d?.from ?? null;
-          provider = d?.provider ?? null;
+          if (d?.configured) {
+            configured = true;
+            from = d.from ?? from;
+            provider = d.provider ?? provider;
+          }
         } catch {
-          // The function isn't deployed yet: shown as "not set up".
+          // The function can't be reached: the saved Gmail details still count.
         }
-        return { enabled: s.enabled, replyTo: s.reply_to ?? null, configured, from, provider, smtpUser: s.smtp_user ?? null } satisfies EmailSetup;
+        return { enabled: s.enabled, replyTo: s.reply_to ?? null, configured, from, provider, smtpUser: (st?.smtp_user as string | null) ?? null } satisfies EmailSetup;
       },
       async saveEmailSettings(s) {
         check(await sb.from("email_settings").update({ enabled: s.enabled, reply_to: s.replyTo?.trim() || null }).eq("id", 1));
