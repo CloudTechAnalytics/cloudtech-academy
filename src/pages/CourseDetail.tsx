@@ -14,6 +14,9 @@ import { ProgressBar } from "@/components/ProgressBar";
 import { PageLoading } from "@/lib/auth";
 import NotFound from "./NotFound";
 import { LEVELS } from "@/content/tracks";
+import { isPaid } from "@/lib/commerce";
+import { ProfessionalCourseView } from "./ProfessionalCourse";
+import { RecommendedNext } from "@/components/RecommendedNext";
 
 export default function CourseDetail() {
   const { slug } = useParams();
@@ -23,13 +26,15 @@ export default function CourseDetail() {
   const [starting, setStarting] = useState(false);
 
   useSeo({
-    title: course ? `${course.title} | Free Course | CloudTech Academy` : "Course not found | CloudTech Academy",
+    title: course ? `${course.title} | ${isPaid(course) ? "Professional Programme" : "Free Course"} | CloudTech Academy` : "Course not found | CloudTech Academy",
     description: course ? course.summary : "This course doesn't exist.",
     noindex: !course,
     jsonLd: course ? [courseJsonLd(course), breadcrumbs([["Home", "/"], ["Courses", "/courses"], [course.title, `/courses/${course.slug}`]])] : undefined,
   });
 
   if (!course) return loading ? <PageLoading /> : <NotFound />;
+
+  if (isPaid(course)) return <ProfessionalCourseView course={course} learner={learner} />;
 
   const short = course.format === "short";
   const lessons = publishedLessons(course);
@@ -106,10 +111,11 @@ export default function CourseDetail() {
                       <Button variant="secondary" onClick={() => void start()} loading={starting} className="mt-2 w-full">
                         Review the course
                       </Button>
+                      <RecommendedNext course={course} />
                     </>
                   ) : (
                     <Button onClick={() => void start()} loading={starting} className="w-full">
-                      {enrolled ? "Continue learning" : "Start learning — Free"}
+                      {enrolled ? "Continue learning" : "Start Learning Free"}
                     </Button>
                   )}
                   {!learner.signedIn && (

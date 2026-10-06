@@ -12,6 +12,10 @@ import {
   type Backend,
   type AcademyEvent,
   type AdminCertificate,
+  type AdminCourseOrder,
+  type AdminEnrollment,
+  type CourseOrder,
+  type CourseStats,
   type Certificate,
   type CertificateOrder,
   type CertificatePrice,
@@ -163,6 +167,28 @@ const toCourse = (r: Row): Course => ({
   levelLabel: r.level_label,
   estimatedHours: r.estimated_hours ?? undefined,
   isFree: r.is_free,
+  courseType: r.course_type ?? "free",
+  access: r.access_type ?? "free",
+  price: r.price === null || r.price === undefined ? null : Number(r.price),
+  currency: r.currency ?? "NGN",
+  discountPrice: r.discount_price === null || r.discount_price === undefined ? null : Number(r.discount_price),
+  discountActive: r.discount_active ?? false,
+  paymentStatus: r.payment_status ?? "active",
+  deliveryType: r.delivery_type ?? "self_paced",
+  enrollmentStatus: r.enrollment_status ?? "open",
+  enrollmentStart: r.enrollment_start ?? null,
+  enrollmentEnd: r.enrollment_end ?? null,
+  communityAccess: r.community_access ?? false,
+  instructorSupport: r.instructor_support ?? false,
+  durationLabel: r.duration_label ?? undefined,
+  publishedAt: r.published_at ?? null,
+  overview: r.overview ?? undefined,
+  audience: r.audience ?? [],
+  outcomes: r.outcomes ?? [],
+  included: r.included ?? [],
+  projectPreviews: r.project_previews ?? [],
+  instructor: r.instructor_name ? { name: r.instructor_name, title: r.instructor_title ?? "", bio: r.instructor_bio ?? "" } : undefined,
+  professionalOutcome: r.professional_outcome ?? undefined,
   status: r.status,
   published: r.published,
   position: r.position,
@@ -297,6 +323,17 @@ const toOrder = (r: Row): CertificateOrder => ({
   paidAt: r.paid_at ?? null,
 });
 
+const toCourseOrder = (r: Row): CourseOrder => ({
+  id: r.id,
+  courseId: r.course_id,
+  currency: r.currency,
+  listAmount: Number(r.list_amount),
+  amount: Number(r.amount),
+  status: r.status,
+  createdAt: r.created_at,
+  paidAt: r.paid_at ?? null,
+});
+
 const toPrice = (r: Row): CertificatePrice => ({ kind: r.kind ?? "course", currency: r.currency, amount: Number(r.amount), active: r.active, position: r.position });
 
 const toAttempt = (r: Row): AttemptResult => ({
@@ -352,6 +389,18 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
     cached = { id: u.id, user };
     return user;
   }
+  /** Lesson text for a course, from the database function that checks the caller may read it. */
+  async function loadBodies(courseId: string): Promise<Map<string, string>> {
+    const { data, error } = await sb.rpc("get_course_bodies", { p_course_id: courseId });
+    if (!error) return new Map(((data ?? []) as Row[]).map((r) => [r.lesson_id as string, r.body_md as string]));
+    // Before the access migration has been applied, the table could still be read directly.
+    if (error.code === "PGRST202" || error.code === "42883") {
+      const direct = await sb.from("lessons").select("id, body_md").eq("course_id", courseId);
+      if (!direct.error) return new Map(((direct.data ?? []) as Row[]).map((r) => [r.id as string, r.body_md as string]));
+    }
+    return new Map();
+  }
+
   async function requireUserId() {
     const { data } = await sb.auth.getSession();
     const id = data.session?.user.id;
@@ -425,10 +474,15 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
       return (check(await q) as Row[]).map(toCourse);
     },
     async getCourse(slug, opts) {
-      let q = sb.from("courses").select("*, course_modules(*, lessons(*))").eq("slug", slug);
+      let q = sb.from("courses").select(`*, course_modules(*, lessons(${LESSON_LIST_COLUMNS}))`).eq("slug", slug);
       if (!opts?.includeUnpublished) q = q.eq("published", true);
       const row = check(await q.maybeSingle()) as Row | null;
-      return row ? toCourse(row) : null;
+      if (!row) return null;
+      const course = toCourse(row);
+      // Lesson text comes only from get_course_bodies, which the database answers only for free courses, enrolled learners and admins.
+      const bodies = await loadBodies(course.id);
+      for (const m of course.modules) for (const l of m.lessons) l.body = bodies.get(l.id) ?? "";
+      return course;
     },
     async getAssessment(courseId, moduleId) {
       let q = sb.from("assessments").select("*, assessment_questions(id, prompt, options, position)").eq("course_id", courseId);
@@ -460,11 +514,15 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
         completedAt: r.completed_at,
         lastLessonId: r.last_lesson_id,
         lastActiveAt: r.last_active_at ?? r.enrolled_at,
+        source: r.source ?? "free",
       }));
     },
     async enroll(courseId) {
       const id = await requireUserId();
-      check(await sb.from("enrollments").upsert({ user_id: id, course_id: courseId }, { onConflict: "user_id,course_id", ignoreDuplicates: true }));
+      // Paid courses can't be self-enrolled: an enrolment that already exists is left alone, and the database refuses a new one.
+      const have = check(await sb.from("enrollments").select("course_id").eq("user_id", id).eq("course_id", courseId).maybeSingle()) as Row | null;
+      if (have) return;
+      check(await sb.from("enrollments").insert({ user_id: id, course_id: courseId }));
     },
     async setLastLesson(courseId, lessonId) {
       const { data } = await sb.auth.getSession();
@@ -602,6 +660,26 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
       const { data, error } = await sb.functions.invoke("certificate-verify", { body: { reference } });
       if (error) throw new BackendError(await functionError(error, "Couldn't confirm the payment."));
       return toCertificate((data as { certificate: Row }).certificate);
+    },
+    async startCourseOrder(courseId) {
+      return toCourseOrder(check(await sb.rpc("start_course_order", { p_course_id: courseId })) as Row);
+    },
+    async listMyCourseOrders() {
+      const { data } = await sb.auth.getSession();
+      if (!data.session) return [];
+      return (check(await sb.from("course_orders").select("*").eq("user_id", data.session.user.id).order("created_at", { ascending: false })) as Row[]).map(toCourseOrder);
+    },
+    async startCourseCheckout(orderId, returnUrl) {
+      const { data, error } = await sb.functions.invoke("certificate-checkout", { body: { orderId, returnUrl, kind: "course" } });
+      if (error) throw new BackendError(await functionError(error, "Couldn't start the payment."));
+      return (data as { url: string }).url;
+    },
+    async confirmCoursePayment(reference) {
+      const { data, error } = await sb.functions.invoke("certificate-verify", { body: { reference } });
+      if (error) throw new BackendError(await functionError(error, "Couldn't confirm the payment."));
+      const courseId = (data as { courseId?: string }).courseId;
+      if (!courseId) throw new BackendError("That payment isn't for a course.");
+      return courseId;
     },
     async listCertificatePrices(kind = "course") {
       return (check(await sb.from("certificate_prices").select("*").eq("kind", kind).eq("active", true).order("position")) as Row[]).map(toPrice);
@@ -767,7 +845,29 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
             level: c.level,
             level_label: c.levelLabel,
             estimated_hours: c.estimatedHours ?? null,
-            is_free: c.isFree,
+            course_type: c.courseType ?? "free",
+            access_type: c.access ?? "free",
+            price: c.price ?? null,
+            currency: c.currency ?? "NGN",
+            discount_price: c.discountPrice ?? null,
+            discount_active: c.discountActive ?? false,
+            payment_status: c.paymentStatus ?? "active",
+            delivery_type: c.deliveryType ?? "self_paced",
+            enrollment_status: c.enrollmentStatus ?? "open",
+            enrollment_start: c.enrollmentStart || null,
+            enrollment_end: c.enrollmentEnd || null,
+            community_access: c.communityAccess ?? false,
+            instructor_support: c.instructorSupport ?? false,
+            duration_label: c.durationLabel?.trim() || null,
+            overview: c.overview?.trim() || null,
+            audience: c.audience ?? [],
+            outcomes: c.outcomes ?? [],
+            included: c.included ?? [],
+            project_previews: c.projectPreviews ?? [],
+            instructor_name: c.instructor?.name?.trim() || null,
+            instructor_title: c.instructor?.title?.trim() || null,
+            instructor_bio: c.instructor?.bio?.trim() || null,
+            professional_outcome: c.professionalOutcome?.trim() || null,
             status: c.status,
             published: c.published,
             position: c.position,
@@ -803,22 +903,89 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
         for (const [i, id] of ids.entries()) check(await sb.from("course_modules").update({ position: i + 1 }).eq("id", id));
       },
       async saveLesson(l) {
+        // An upsert needs read access to the whole table, which learners no longer have, so admins save through a function.
         check(
-          await sb.from("lessons").upsert({
-            id: l.id,
-            course_id: l.courseId,
-            module_id: l.moduleId,
-            slug: l.slug,
-            title: l.title,
-            summary: l.summary,
-            minutes: l.minutes,
-            body_md: l.body,
-            required: l.required,
-            published: l.published,
-            position: l.position,
-            required_exercises: requiredExerciseIds(l.body),
+          await sb.rpc("admin_save_lesson", {
+            p_lesson: {
+              id: l.id,
+              course_id: l.courseId,
+              module_id: l.moduleId,
+              slug: l.slug,
+              title: l.title,
+              summary: l.summary,
+              minutes: l.minutes,
+              body_md: l.body,
+              required: l.required,
+              published: l.published,
+              position: l.position,
+              required_exercises: requiredExerciseIds(l.body),
+            },
           }),
         );
+      },
+      async listCourseStats() {
+        return (check(await sb.rpc("admin_course_stats")) as Row[]).map(
+          (r): CourseStats => ({
+            courseId: r.course_id,
+            title: r.title,
+            courseType: r.course_type,
+            accessType: r.access_type,
+            published: r.published,
+            price: r.price === null ? null : Number(r.price),
+            currency: r.currency,
+            enrollments: r.enrollments,
+            freeEnrollments: r.free_enrollments,
+            paidEnrollments: r.paid_enrollments,
+            grantedEnrollments: r.granted_enrollments,
+            completions: r.completions,
+            revenue: Object.fromEntries(Object.entries((r.revenue ?? {}) as Record<string, number>).map(([k, v]) => [k, Number(v)])),
+            converted: r.converted,
+          }),
+        );
+      },
+      async listCourseEnrollments(courseId) {
+        return (check(await sb.rpc("admin_list_enrollments", { p_course_id: courseId ?? null })) as Row[]).map(
+          (r): AdminEnrollment => ({
+            userId: r.user_id,
+            fullName: r.full_name ?? "Unknown",
+            email: r.email ?? "",
+            courseId: r.course_id,
+            courseTitle: r.course_title,
+            source: r.source,
+            enrolledAt: r.enrolled_at,
+            completedAt: r.completed_at ?? null,
+            amount: r.amount === null ? null : Number(r.amount),
+            currency: r.currency ?? null,
+            orderStatus: r.order_status ?? null,
+          }),
+        );
+      },
+      async listCourseOrders() {
+        const [orders, profiles, courses] = await Promise.all([
+          sb.from("course_orders").select("*").order("created_at", { ascending: false }).limit(500),
+          sb.from("profiles").select("id, full_name, email"),
+          sb.from("courses").select("id, title"),
+        ]);
+        const people = new Map((check(profiles) as Row[]).map((p) => [p.id, p]));
+        const titles = new Map((check(courses) as Row[]).map((c) => [c.id, c.title]));
+        return (check(orders) as Row[]).map(
+          (r): AdminCourseOrder => ({
+            ...toCourseOrder(r),
+            userId: r.user_id,
+            studentName: people.get(r.user_id)?.full_name ?? "Unknown",
+            studentEmail: people.get(r.user_id)?.email ?? "",
+            courseTitle: titles.get(r.course_id) ?? r.course_id,
+            provider: r.provider ?? null,
+            providerRef: r.provider_ref ?? null,
+            note: r.note ?? null,
+          }),
+        );
+      },
+      async grantCourseAccess(userId, courseId, note) {
+        check(await sb.rpc("admin_grant_course_access", { p_user: userId, p_course_id: courseId, p_note: note }));
+      },
+      async revokeCourseAccess(userId, courseId, reason) {
+        check(await sb.rpc("admin_revoke_course_access", { p_user: userId, p_course_id: courseId, p_reason: reason }));
       },
       async deleteLesson(id) {
         check(await sb.from("lessons").delete().eq("id", id));

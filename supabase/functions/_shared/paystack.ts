@@ -59,16 +59,21 @@ const orderIdOf = (t: PaystackTransaction) => {
 };
 
 /**
- * Issues the certificate for a successful Paystack transaction, after checking it matches the
- * order exactly (amount and currency). Safe to call more than once for the same payment.
+ * Completes the order a successful Paystack transaction was for, after checking it matches exactly (amount and
+ * currency): issues the certificate for a certificate order, or enrols the learner for a course order.
+ * Safe to call more than once for the same payment.
  */
 export async function settle(t: PaystackTransaction, expectUserId?: string) {
   if (t.status !== "success") return { ok: false as const, error: "The payment wasn't successful." };
   const orderId = orderIdOf(t);
-  if (!orderId) return { ok: false as const, error: "This payment isn't for a certificate order." };
+  if (!orderId) return { ok: false as const, error: "This payment isn't for an order." };
   const db = admin();
   const { data: order } = await db.from("certificate_orders").select("*").eq("id", orderId).maybeSingle();
-  if (!order) return { ok: false as const, error: "Order not found." };
+  if (!order) {
+    const { data: courseOrder } = await db.from("course_orders").select("*").eq("id", orderId).maybeSingle();
+    if (!courseOrder) return { ok: false as const, error: "Order not found." };
+    return settleCourse(db, courseOrder, t, expectUserId);
+  }
   if (expectUserId && order.user_id !== expectUserId) return { ok: false as const, error: "This order belongs to another account." };
   if (t.currency !== order.currency || t.amount !== minorUnits(order.amount)) {
     return { ok: false as const, error: "The amount paid doesn't match the order." };
@@ -76,9 +81,20 @@ export async function settle(t: PaystackTransaction, expectUserId?: string) {
   if (order.status === "granted") {
     const target = order.track_id ? { track_id: order.track_id, source: "programme" } : { course_id: order.course_id, source: "course" };
     const { data: cert } = await db.from("certificates").select("*").eq("user_id", order.user_id).match(target).eq("status", "valid").maybeSingle();
-    return { ok: true as const, certificate: cert };
+    return { ok: true as const, certificate: cert, courseId: null as string | null };
   }
   const { data: cert, error } = await db.rpc("complete_certificate_order", { p_order_id: order.id, p_provider: "paystack", p_reference: t.reference });
   if (error) return { ok: false as const, error: error.message };
-  return { ok: true as const, certificate: cert };
+  return { ok: true as const, certificate: cert, courseId: null as string | null };
+}
+
+// deno-lint-ignore no-explicit-any
+async function settleCourse(db: SupabaseClient, order: any, t: PaystackTransaction, expectUserId?: string) {
+  if (expectUserId && order.user_id !== expectUserId) return { ok: false as const, error: "This order belongs to another account." };
+  if (t.currency !== order.currency || t.amount !== minorUnits(order.amount)) {
+    return { ok: false as const, error: "The amount paid doesn't match the order." };
+  }
+  const { error } = await db.rpc("complete_course_order", { p_order_id: order.id, p_provider: "paystack", p_reference: t.reference });
+  if (error) return { ok: false as const, error: error.message };
+  return { ok: true as const, certificate: null, courseId: order.course_id as string };
 }

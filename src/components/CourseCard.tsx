@@ -6,6 +6,7 @@ import { durationLabel } from "@/lib/format";
 import { badgeCount, courseMinutes } from "@/lib/certificates";
 import { ProgressBar } from "./ProgressBar";
 import { LEVELS } from "@/content/tracks";
+import { DELIVERY_LABEL, coursePrice, formatPrice, isPaid, isProfessional } from "@/lib/commerce";
 
 export function Badge({ children, tone = "neutral" }: { children: string; tone?: "neutral" | "free" | "soon" | "success" }) {
   const tones = {
@@ -22,10 +23,13 @@ export function CourseCard({ course, progress }: { course: Course; progress?: nu
   const short = course.format === "short";
   const moduleCount = course.modules.length;
   const badges = badgeCount(course);
+  const paid = isPaid(course);
+  const price = paid ? coursePrice(course) : null;
   return (
     <article className="group relative flex h-full flex-col rounded-2xl border border-line bg-paper p-6 transition-[border-color,box-shadow] duration-200 hover:border-brass/60 hover:shadow-[0_12px_32px_-20px_rgba(23,32,51,0.35)]">
       <div className="flex flex-wrap items-center gap-2">
-        <Badge tone={available ? "free" : "soon"}>{available ? "Free" : "Coming soon"}</Badge>
+        <Badge tone={available ? (paid ? "neutral" : "free") : "soon"}>{!available ? "Coming soon" : paid ? (isProfessional(course) ? "Professional" : "Paid") : "Free"}</Badge>
+        {paid && course.deliveryType && course.deliveryType !== "self_paced" && <Badge tone="neutral">{DELIVERY_LABEL[course.deliveryType].split(":")[0]}</Badge>}
         <span className="text-[0.8125rem] text-subtle">{categoryName(course.categoryId)}</span>
       </div>
       <h3 className="mt-3 font-serif text-[1.2rem] leading-snug text-ink">
@@ -66,8 +70,22 @@ export function CourseCard({ course, progress }: { course: Course; progress?: nu
         {progress !== undefined && available ? (
           <ProgressBar value={progress} label={`${course.title} progress`} />
         ) : (
-          <span className="inline-flex items-center gap-1.5 text-[0.875rem] font-semibold text-brass-dark">
-            View course <ArrowRight aria-hidden className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+          <span className="flex items-center justify-between gap-3 text-[0.875rem] font-semibold text-brass-dark">
+            {paid ? (
+              <span className="text-ink">
+                {price ? (
+                  <>
+                    {formatPrice(price.amount, price.currency)}
+                    {price.discounted && <s className="ml-2 font-normal text-subtle">{formatPrice(price.listAmount, price.currency)}</s>}
+                  </>
+                ) : (
+                  "Paid"
+                )}
+              </span>
+            ) : (
+              <span className="text-ink">FREE</span>
+            )}
+            <span className="inline-flex items-center gap-1.5">View course <ArrowRight aria-hidden className="h-4 w-4 transition-transform group-hover:translate-x-0.5" /></span>
           </span>
         )}
       </div>

@@ -12,6 +12,11 @@ import NotFound from "../NotFound";
 import { AdminHeading } from "./AdminLayout";
 import { courseInput, randomId, useAdminCourse } from "./useAdmin";
 import { LEVELS, type Level } from "@/content/tracks";
+import { BUNDLED_COURSES } from "@/content";
+
+const lines = (v: string) => v.split("\n");
+const clean = (xs: string[] | undefined) => (xs ?? []).map((x) => x.trim()).filter(Boolean);
+const localInput = (iso: string | null | undefined) => (iso ? new Date(new Date(iso).getTime() - new Date(iso).getTimezoneOffset() * 60000).toISOString().slice(0, 16) : "");
 
 const selectCls = "mt-1.5 block w-full rounded-lg border border-line-strong bg-paper px-3 py-2.5 text-[1rem]";
 
@@ -37,9 +42,16 @@ function Details({ course, onSaved }: { course: Course; onSaved: () => Promise<u
     if (c.title.trim().length < 3) return setMsg({ tone: "error", text: "The title is too short." });
     const score = c.certificate.passingScore;
     if (!Number.isInteger(score) || score < 1 || score > 100) return setMsg({ tone: "error", text: "The pass mark must be a whole number from 1 to 100." });
+    const paid = (c.access ?? "free") === "paid";
+    if ((c.courseType ?? "free") === "professional" && !paid) return setMsg({ tone: "error", text: "A professional course is always paid. Set Access to Paid." });
+    if (paid && !(c.price && c.price > 0)) return setMsg({ tone: "error", text: "A paid course needs a price above zero." });
+    if (c.discountPrice != null && (c.discountPrice <= 0 || (c.price != null && c.discountPrice >= c.price))) return setMsg({ tone: "error", text: "The discount price must be above zero and below the price." });
+    if (c.enrollmentStart && c.enrollmentEnd && new Date(c.enrollmentEnd) <= new Date(c.enrollmentStart)) return setMsg({ tone: "error", text: "Enrolment must end after it starts." });
     setBusy(true);
     try {
-      await (await getBackend()).admin.saveCourse(courseInput(c));
+      await (await getBackend()).admin.saveCourse(
+        courseInput({ ...c, audience: clean(c.audience), outcomes: clean(c.outcomes), included: clean(c.included), projectPreviews: (c.projectPreviews ?? []).filter((p) => p.title.trim()) }),
+      );
       await onSaved();
       setMsg({ tone: "success", text: "Saved." });
     } catch (e) {
@@ -135,6 +147,125 @@ function Details({ course, onSaved }: { course: Course; onSaved: () => Promise<u
         onChange={(e) => set("prerequisites", e.target.value.split("\n"))}
         onBlur={() => set("prerequisites", c.prerequisites.map((s) => s.trim()).filter(Boolean))}
       />
+
+      <fieldset className="space-y-4 rounded-xl border border-brass/40 p-4">
+        <legend className="px-1 text-[0.875rem] font-semibold">Access and pricing</legend>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <div>
+            <label className="text-[0.875rem] font-medium" htmlFor="ctype">
+              Course type
+            </label>
+            <select
+              id="ctype"
+              className={selectCls}
+              value={c.courseType ?? "free"}
+              onChange={(e) => {
+                const t = e.target.value as "free" | "professional";
+                setC((x) => ({ ...x, courseType: t, access: t === "professional" ? "paid" : x.access }));
+              }}
+            >
+              <option value="free">Free course (a short, useful skill)</option>
+              <option value="professional">Professional programme (complete and paid)</option>
+            </select>
+          </div>
+          <div>
+            <label className="text-[0.875rem] font-medium" htmlFor="access">
+              Access
+            </label>
+            <select id="access" className={selectCls} value={c.access ?? "free"} disabled={c.courseType === "professional"} onChange={(e) => set("access", e.target.value as "free" | "paid")}>
+              <option value="free">Free</option>
+              <option value="paid">Paid</option>
+            </select>
+            <p className="mt-1 text-[0.8125rem] text-muted">Access, not the course name, decides who can open the lessons.</p>
+          </div>
+          <div>
+            <label className="text-[0.875rem] font-medium" htmlFor="delivery">
+              Delivery
+            </label>
+            <select id="delivery" className={selectCls} value={c.deliveryType ?? "self_paced"} onChange={(e) => set("deliveryType", e.target.value as NonNullable<Course["deliveryType"]>)}>
+              <option value="self_paced">Self-paced</option>
+              <option value="instructor_led">Instructor-led</option>
+              <option value="hybrid">Hybrid</option>
+            </select>
+          </div>
+          <TextField label="Duration (shown to learners)" value={c.durationLabel ?? ""} onChange={(e) => set("durationLabel", e.target.value || undefined)} hint="For example 12 weeks." />
+        </div>
+
+        {(c.access ?? "free") === "paid" && (
+          <>
+            <div className="grid gap-4 sm:grid-cols-3">
+              <TextField label="Price" type="number" min={0} value={c.price ?? ""} onChange={(e) => set("price", e.target.value ? Number(e.target.value) : null)} />
+              <TextField label="Currency" value={c.currency ?? "NGN"} maxLength={3} onChange={(e) => set("currency", e.target.value.toUpperCase())} hint="NGN for naira." />
+              <TextField label="Discount price" type="number" min={0} value={c.discountPrice ?? ""} onChange={(e) => set("discountPrice", e.target.value ? Number(e.target.value) : null)} />
+            </div>
+            <div className="flex flex-wrap gap-x-8 gap-y-3">
+              <Check label="Discount is available now" checked={!!c.discountActive} onChange={(v) => set("discountActive", v)} />
+              <Check label="Payments are paused" checked={c.paymentStatus === "paused"} onChange={(v) => set("paymentStatus", v ? "paused" : "active")} />
+            </div>
+            <div className="grid gap-4 sm:grid-cols-3">
+              <div>
+                <label className="text-[0.875rem] font-medium" htmlFor="enrol">
+                  Enrolment
+                </label>
+                <select id="enrol" className={selectCls} value={c.enrollmentStatus ?? "open"} onChange={(e) => set("enrollmentStatus", e.target.value as "open" | "closed")}>
+                  <option value="open">Open</option>
+                  <option value="closed">Closed</option>
+                </select>
+              </div>
+              <TextField label="Enrolment opens" type="datetime-local" value={localInput(c.enrollmentStart)} onChange={(e) => set("enrollmentStart", e.target.value ? new Date(e.target.value).toISOString() : null)} />
+              <TextField label="Enrolment closes" type="datetime-local" value={localInput(c.enrollmentEnd)} onChange={(e) => set("enrollmentEnd", e.target.value ? new Date(e.target.value).toISOString() : null)} />
+            </div>
+            {BUNDLED_COURSES.some((b) => b.id === c.id) && (
+              <Alert tone="info">
+                This course ships with the site. Switching it to paid locks its lessons in the database straight away, but its text is still inside the public site files until a
+                developer adds its folder to protected-courses.json and the site is redeployed.
+              </Alert>
+            )}
+          </>
+        )}
+
+        <div className="flex flex-wrap gap-x-8 gap-y-3">
+          <Check label="Instructor support is included" checked={!!c.instructorSupport} onChange={(v) => set("instructorSupport", v)} />
+          <Check label="Community access is included" checked={!!c.communityAccess} onChange={(v) => set("communityAccess", v)} />
+        </div>
+        <p className="text-[0.8125rem] text-muted">Certificates follow the completion rules below. Paying never awards a certificate by itself.</p>
+
+        {(c.courseType ?? "free") === "professional" && (
+          <div className="space-y-4 border-t border-line pt-4">
+            <p className="text-[0.875rem] font-semibold">Sales page</p>
+            <TextArea label="Programme overview" rows={4} value={c.overview ?? ""} onChange={(e) => set("overview", e.target.value || undefined)} />
+            <TextArea label="Who it is for (one per line)" rows={3} value={(c.audience ?? []).join("\n")} onChange={(e) => set("audience", lines(e.target.value))} />
+            <TextArea label="What you will learn (one per line)" rows={4} value={(c.outcomes ?? []).join("\n")} onChange={(e) => set("outcomes", lines(e.target.value))} />
+            <TextArea
+              label="Also included (one per line)"
+              rows={3}
+              value={(c.included ?? []).join("\n")}
+              onChange={(e) => set("included", lines(e.target.value))}
+            />
+            <p className="-mt-2 text-[0.8125rem] text-muted">Only list what you really provide. Modules, project, assessment, certificate, support and community are added automatically from the settings.</p>
+            <TextArea
+              label="Projects (one per line: Title | what the learner builds)"
+              rows={3}
+              value={(c.projectPreviews ?? []).map((p) => (p.summary ? `${p.title} | ${p.summary}` : p.title)).join("\n")}
+              onChange={(e) =>
+                set(
+                  "projectPreviews",
+                  lines(e.target.value).map((l) => {
+                    const [title, ...rest] = l.split("|");
+                    return { title, summary: rest.join("|").trim() };
+                  }),
+                )
+              }
+            />
+            <div className="grid gap-4 sm:grid-cols-2">
+              <TextField label="Instructor name" value={c.instructor?.name ?? ""} onChange={(e) => set("instructor", { name: e.target.value, title: c.instructor?.title ?? "", bio: c.instructor?.bio ?? "" })} />
+              <TextField label="Instructor title" value={c.instructor?.title ?? ""} onChange={(e) => set("instructor", { name: c.instructor?.name ?? "", title: e.target.value, bio: c.instructor?.bio ?? "" })} />
+            </div>
+            <TextArea label="Instructor bio" rows={2} value={c.instructor?.bio ?? ""} onChange={(e) => set("instructor", { name: c.instructor?.name ?? "", title: c.instructor?.title ?? "", bio: e.target.value })} />
+            <TextArea label="Professional outcome" rows={2} value={c.professionalOutcome ?? ""} onChange={(e) => set("professionalOutcome", e.target.value || undefined)} />
+          </div>
+        )}
+      </fieldset>
 
       <fieldset className="space-y-3 rounded-xl border border-line p-4">
         <legend className="px-1 text-[0.875rem] font-semibold">Completion rules</legend>

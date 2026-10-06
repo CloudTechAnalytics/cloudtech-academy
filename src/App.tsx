@@ -11,6 +11,7 @@ const Learn = lazy(() => import("@/pages/Learn"));
 const Assessment = lazy(() => import("@/pages/Assessment"));
 const Project = lazy(() => import("@/pages/Project"));
 const CourseComplete = lazy(() => import("@/pages/CourseComplete"));
+const CoursePurchase = lazy(() => import("@/pages/CoursePurchase"));
 const CertificatePurchase = lazy(() => import("@/pages/CertificatePurchase"));
 const ProgrammeCertificate = lazy(() => import("@/pages/ProgrammeCertificate"));
 const CredentialView = lazy(() => import("@/pages/CredentialView"));
@@ -61,6 +62,9 @@ const AdminCertificateIssue = lazy(() => import("@/pages/admin/AdminCertificateF
 const AdminCertificateEdit = lazy(() => import("@/pages/admin/AdminCertificateForm").then((m) => ({ default: m.AdminCertificateEdit })));
 const AdminCertificateDetail = lazy(() => import("@/pages/admin/AdminCertificateDetail"));
 const AdminCredentials = lazy(() => import("@/pages/admin/AdminCredentials"));
+const AdminEnrollments = lazy(() => import("@/pages/admin/AdminProgrammes").then((m) => ({ default: m.AdminEnrollments })));
+const AdminPayments = lazy(() => import("@/pages/admin/AdminProgrammes").then((m) => ({ default: m.AdminPayments })));
+const AdminAnalytics = lazy(() => import("@/pages/admin/AdminProgrammes").then((m) => ({ default: m.AdminAnalytics })));
 const AdminSubmissions = lazy(() => import("@/pages/admin/AdminSubmissions"));
 const AdminPracticeProjects = lazy(() => import("@/pages/admin/AdminPracticeProjects"));
 
@@ -78,6 +82,7 @@ export function AppRoutes() {
           <Route path="courses/:slug/project" element={<Project />} />
           <Route path="courses/:slug/modules/:moduleId/check" element={<Assessment />} />
           <Route path="courses/:slug/complete" element={<CourseComplete />} />
+          <Route path="courses/:slug/enroll" element={<CoursePurchase />} />
           <Route path="courses/:slug/certificate" element={<CertificatePurchase />} />
           <Route path="credentials/:credentialId" element={<CredentialView />} />
           <Route path="learn/:course/:lesson" element={<Learn />} />
@@ -107,6 +112,9 @@ export function AppRoutes() {
           <Route path="dashboard/certificates/:certificateId" element={<CertificateView />} />
           <Route path="profile" element={<Profile />} />
           <Route path="admin" element={<AdminLayout />}>
+            <Route path="enrollments" element={<AdminEnrollments />} />
+            <Route path="payments" element={<AdminPayments />} />
+            <Route path="analytics" element={<AdminAnalytics />} />
             <Route index element={<AdminOverview />} />
             <Route path="courses" element={<AdminCourses />} />
             <Route path="courses/:slug" element={<AdminCourseEditor />} />

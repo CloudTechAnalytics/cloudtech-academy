@@ -8,6 +8,7 @@ import { useAuth } from "@/lib/auth";
 import { getBackend, type Certificate, type Credential, type Enrollment } from "@/lib/backend";
 import { courseMinutes } from "@/lib/certificates";
 import { durationLabel } from "@/lib/format";
+import { isPaid, priceLabel } from "@/lib/commerce";
 import { capstoneOf, LEVELS, programmeCertificateAvailable, requiredCourses, TRACKS, type Track, type TrackItem } from "@/content/tracks";
 import { PRACTICE_PROJECTS } from "@/content/projects";
 import type { Course } from "@/content/types";
@@ -23,18 +24,18 @@ const courseLength = (c: Course) => (c.format === "short" ? durationLabel(course
 export function TracksList() {
   const courses = useCourses();
   useSeo({
-    title: "Professional Programmes | CloudTech Academy",
+    title: "Learning Paths | CloudTech Academy",
     description: "Complete routes from no experience to job-ready: courses in order, a capstone project, and an official Professional Certificate for the whole programme.",
-    jsonLd: breadcrumbs([["Professional Programmes", "/programmes"]]),
+    jsonLd: breadcrumbs([["Learning Paths", "/programmes"]]),
   });
   return (
     <>
       <section className="border-b border-line">
         <div className="container-page max-w-5xl py-16 sm:py-20">
-          <p className="kicker">Professional programmes</p>
+          <p className="kicker">Learning paths</p>
           <h1 className="mt-4 font-serif text-[2.6rem] leading-[1.05] tracking-[-0.015em] sm:text-[3.4rem]">Learn skills. Build projects. Earn credentials.</h1>
           <p className="mt-5 max-w-2xl text-[1.125rem] leading-relaxed text-muted">
-            A programme is a whole career route: the right courses in the right order, ending in a capstone project. Finish it and you earn a free programme badge, then
+            A learning path is a whole career route: the right courses in the right order, ending in a capstone project. Finish it and you earn a free programme badge, then
             can claim one official Professional Certificate that covers everything you learned, verifiable by anyone.
           </p>
           <ol className="mt-10 grid gap-3 sm:grid-cols-4">
@@ -102,7 +103,8 @@ function ItemCard({ item, courses, mine }: { item: TrackItem; courses: Course[];
   return (
     <div className={`rounded-2xl border p-5 ${done ? "border-success/40 bg-success-bg/40" : "border-line bg-paper"}`}>
       <div className="flex flex-wrap items-center gap-2">
-        <Badge tone={c.format === "short" ? "neutral" : "free"}>{c.format === "short" ? "Short course" : c.level === 4 ? "Capstone" : "Professional course"}</Badge>
+        <Badge tone={c.format === "short" ? "neutral" : "free"}>{c.format === "short" ? "Short course" : c.level === 4 ? "Capstone" : "Full course"}</Badge>
+        <Badge tone={isPaid(c) ? "neutral" : "free"}>{priceLabel(c).toUpperCase() === "FREE" ? "Free" : `Professional · ${priceLabel(c)}`}</Badge>
         <span className="text-[0.8125rem] text-muted">Level {c.level} · {LEVELS[c.level].name}</span>
         {item.required === false && <span className="text-[0.8125rem] text-muted">· Optional</span>}
       </div>
@@ -194,12 +196,12 @@ export function TrackDetail() {
   const [error, setError] = useState<string | null>(null);
 
   useSeo({
-    title: track ? `${track.programmeTitle ?? track.title} | Professional Programmes | CloudTech Academy` : "Programme not found | CloudTech Academy",
+    title: track ? `${track.programmeTitle ?? track.title} | Learning Paths | CloudTech Academy` : "Programme not found | CloudTech Academy",
     description: track?.summary ?? "",
     noindex: !track,
     jsonLd: track
       ? breadcrumbs([
-          ["Professional Programmes", "/programmes"],
+          ["Learning Paths", "/programmes"],
           [track.title, `/programmes/${track.slug}`],
         ])
       : undefined,
@@ -254,9 +256,9 @@ export function TrackDetail() {
       <section className="border-b border-line">
         <div className="container-page max-w-5xl py-16 sm:py-20">
           <Link to="/programmes" className="text-[0.875rem] text-muted hover:text-ink">
-            ← Professional programmes
+            ← Learning paths
           </Link>
-          <p className="kicker mt-6">Professional Programme · {track.outcome}</p>
+          <p className="kicker mt-6">Learning Path · {track.outcome}</p>
           <h1 className="mt-3 font-serif text-[2.6rem] leading-[1.05] tracking-[-0.015em] sm:text-[3.4rem]">{track.programmeTitle ?? track.title}</h1>
           <p className="mt-5 max-w-3xl text-[1.125rem] leading-relaxed text-muted">{track.summary}</p>
           <div className="mt-8 grid gap-6 md:grid-cols-[1.4fr_1fr]">

@@ -142,7 +142,7 @@ export default function Home() {
                 Start learning free
               </ButtonLink>
               <ButtonLink to="/programmes" variant="secondary">
-                Explore professional programmes
+                Explore learning paths
               </ButtonLink>
             </div>
           </Reveal>
@@ -157,7 +157,7 @@ export default function Home() {
           {[
             [String(courses.length), "courses"],
             [String(lessons), "lessons"],
-            [String(TRACKS.length), "professional programmes"],
+            [String(TRACKS.length), "learning paths"],
             ["Free", "to learn"],
           ].map(([n, label]) => (
             <div key={label} className="text-center sm:text-left">
@@ -169,14 +169,47 @@ export default function Home() {
         </dl>
       </section>
 
+      <section aria-labelledby="go-further-title" className="border-b border-line bg-paper py-16 sm:py-20">
+        <div className="container-page">
+          <SectionHeading
+            id="go-further-title"
+            kicker="Free and professional"
+            title="Start Learning. Then Go Further."
+            intro="Begin with free courses that teach a real skill. When you are ready to build a career, join a professional programme with projects, assessments, a capstone and support."
+          />
+          <ul className="mt-10 grid gap-5 md:grid-cols-3">
+            {[
+              { title: "Free courses", line: "Learn a skill", body: "Short, genuinely useful courses on one skill at a time. Sign up, learn at your pace and earn a badge. Free, always." },
+              { title: "Professional programmes", line: "Build a career", body: "Complete, structured programmes with projects, assessments, a capstone and a professional certificate when you meet the requirements." },
+              { title: "Community", line: "Connect and grow", body: "Meet other learners, join events and keep going together with the CloudTech community." },
+            ].map((c, i) => (
+              <Reveal as="li" key={c.title} delay={i * 60} className="rounded-2xl border border-line bg-ivory p-6">
+                <p className="text-[0.8125rem] font-semibold uppercase tracking-[0.12em] text-brass-dark">{c.line}</p>
+                <p className="mt-2 font-serif text-[1.35rem]">{c.title}</p>
+                <p className="mt-2 text-[0.9375rem] leading-relaxed text-muted">{c.body}</p>
+              </Reveal>
+            ))}
+          </ul>
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <ButtonLink to="/courses?access=free" arrow>
+              Explore Free Courses
+            </ButtonLink>
+            <ButtonLink to="/courses?access=professional" variant="secondary">
+              Explore Professional Programmes
+            </ButtonLink>
+          </div>
+          <p className="mt-6 text-[0.9375rem] text-muted">CloudTech: Build technology. Build people. Solve real problems.</p>
+        </div>
+      </section>
+
       <section aria-labelledby="tracks-title" className="py-16 sm:py-20">
         <div className="container-page">
           <SectionHeading
             id="tracks-title"
-            kicker="Professional programmes"
+            kicker="Learning paths"
             title="Choose a career, earn the certificate"
-            intro="Each programme is a complete route: the right courses in order, a capstone project, and one official Professional Certificate for the whole thing."
-            link={{ to: "/programmes", label: "Compare all programmes" }}
+            intro="Each learning path is a complete route: the right courses in order, a capstone project, and one official Professional Certificate for the whole thing. Start with the free steps, and go deeper with a professional programme when you are ready."
+            link={{ to: "/programmes", label: "Compare all learning paths" }}
           />
           <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {TRACKS.map((t, i) => (

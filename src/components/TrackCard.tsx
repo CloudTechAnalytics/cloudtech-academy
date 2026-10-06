@@ -42,7 +42,7 @@ export function TrackCard({ track, courses }: { track: Track; courses: Course[] 
       <span className="grid h-11 w-11 place-items-center rounded-xl bg-brass-pale text-brass-dark">
         <Icon aria-hidden className="h-5 w-5" />
       </span>
-      <p className="mt-4 text-[0.75rem] font-semibold uppercase tracking-wide text-brass-dark">Professional Programme</p>
+      <p className="mt-4 text-[0.75rem] font-semibold uppercase tracking-wide text-brass-dark">Learning Path</p>
       <h3 className="mt-1 font-serif text-[1.25rem] leading-snug text-ink">{track.programmeTitle ?? track.title}</h3>
       <p className="mt-1.5 text-[0.9375rem] leading-relaxed text-muted">{track.outcome}.</p>
       <ul className="mt-4 flex flex-wrap gap-1.5 text-[0.75rem] font-medium text-ink-soft">
@@ -51,7 +51,7 @@ export function TrackCard({ track, courses }: { track: Track; courses: Course[] 
         {stats.capstone && <li className="rounded-full bg-sand px-2.5 py-1">Capstone project</li>}
       </ul>
       <span className="mt-auto inline-flex items-center gap-1.5 pt-5 text-[0.875rem] font-semibold text-brass-dark">
-        View programme <ArrowRight aria-hidden className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+        View learning path <ArrowRight aria-hidden className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
       </span>
     </Link>
   );

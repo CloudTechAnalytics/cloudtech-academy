@@ -9,6 +9,7 @@ import type { AssessmentDef, Course } from "@/content/types";
 import { requiredExerciseIds } from "../lesson-format";
 import { certificateNumber, eligibility, matchesCertificate, moduleTaskIds, newCredentialId } from "../certificates";
 import { isStale } from "../inactivity";
+import { enrolmentState as enrolmentOf, isPaid } from "../commerce";
 import { programmeCertificateAvailable, requiredCourses, TRACKS } from "@/content/tracks";
 import { PROFILE_SLUG_RE, SLUG_HELP } from "../profile";
 import { PRACTICE_PROJECTS } from "@/content/projects";
@@ -26,7 +27,11 @@ import {
   type EventRegistration,
   type EventStatus,
   type AdminCertificate,
+  type AdminCourseOrder,
+  type AdminEnrollment,
   type Certificate,
+  type CourseOrder,
+  type CourseStats,
   type CertificateEvent,
   type CertificateEventAction,
   type CertificateInput,
@@ -53,6 +58,7 @@ type Store = {
   submissions: ProjectSubmission[];
   credentials: Credential[];
   orders: CertificateOrder[];
+  courseOrders: (CourseOrder & { userId: string; provider: string | null; providerRef: string | null; note: string | null })[];
   certificates: Certificate[];
   certificateSeq: number;
   certificateEvents: CertificateEvent[];
@@ -87,6 +93,7 @@ const empty = (): Store => ({
   submissions: [],
   credentials: [],
   orders: [],
+  courseOrders: [],
   certificates: [],
   certificateSeq: 0,
   certificateEvents: [],
@@ -393,6 +400,18 @@ export function createDemoBackend(): Backend {
     save(s);
   };
   const key = (userId: string, courseId: string) => `${userId}|${courseId}`;
+  /** The same rule the database enforces: free courses are open; paid ones need an enrolment (or an admin). */
+  const accessTo = (s: Store, userId: string | null, courseId: string) => {
+    const c = courses(s).find((x) => x.id === courseId);
+    if (!c) return false;
+    if (!isPaid(c)) return true;
+    if (!userId) return false;
+    if (s.users.find((x) => x.id === userId)?.role === "admin") return true;
+    return (s.enrollments[userId] ?? []).some((e) => e.courseId === courseId);
+  };
+  const requireAccess = (s: Store, userId: string, courseId: string | undefined) => {
+    if (courseId && !accessTo(s, userId, courseId)) throw new BackendError("This course is for enrolled learners. Enrol to continue.");
+  };
   /** A module's check when moduleId is given, otherwise the course's final assessment. */
   const findAssessment = (courseId: string, moduleId?: string) =>
     assessments().find((a) => a.courseId === courseId && (moduleId ? a.kind === "module" && a.moduleId === moduleId : a.kind !== "module"));
@@ -529,8 +548,12 @@ export function createDemoBackend(): Backend {
       return courses().filter((c) => opts?.includeUnpublished || c.published);
     },
     async getCourse(slug, opts) {
-      const c = courses().find((x) => x.slug === slug);
-      return c && (opts?.includeUnpublished || c.published) ? c : null;
+      const s = load();
+      const c = courses(s).find((x) => x.slug === slug);
+      if (!c || !(opts?.includeUnpublished || c.published)) return null;
+      // Like the database, hand out lesson text only to people who have access.
+      if (accessTo(s, current()?.id ?? null, c.id)) return c;
+      return { ...c, modules: c.modules.map((m) => ({ ...m, lessons: m.lessons.map((l) => ({ ...l, body: "" })) })) };
     },
     async getAssessment(courseId, moduleId) {
       const a = findAssessment(courseId, moduleId);
@@ -552,13 +575,16 @@ export function createDemoBackend(): Backend {
     async listEnrollments() {
       const u = current();
       // Enrollments saved before activity was tracked count as active from when they started.
-      return u ? (load().enrollments[u.id] ?? []).map((e) => ({ ...e, lastActiveAt: e.lastActiveAt ?? e.enrolledAt })) : [];
+      return u ? (load().enrollments[u.id] ?? []).map((e) => ({ ...e, lastActiveAt: e.lastActiveAt ?? e.enrolledAt, source: e.source ?? "free" })) : [];
     },
     async enroll(courseId) {
       const u = requireUser();
       const s = load();
       const list = (s.enrollments[u.id] ??= []);
-      if (!list.some((e) => e.courseId === courseId)) list.push({ courseId, enrolledAt: now(), completedAt: null, lastLessonId: null, lastActiveAt: now() });
+      if (list.some((e) => e.courseId === courseId)) return;
+      const course = courses(s).find((c) => c.id === courseId);
+      if (course && isPaid(course)) throw new BackendError("This course is paid. Enrol with payment to start it.");
+      list.push({ courseId, enrolledAt: now(), completedAt: null, lastLessonId: null, lastActiveAt: now(), source: "free" });
       save(s);
     },
     async setLastLesson(courseId, lessonId) {
@@ -575,6 +601,8 @@ export function createDemoBackend(): Backend {
     async removeCourse(courseId) {
       const u = requireUser();
       const s = load();
+      if ((s.enrollments[u.id] ?? []).some((e) => e.courseId === courseId && (e.source ?? "free") !== "free"))
+        throw new BackendError("A course you enrolled in with payment stays in My Learning. Contact support if you need it removed.");
       if (!courseCompleted(s, u.id, courseId)) clearCourseProgress(s, u.id, courseId);
       s.enrollments[u.id] = (s.enrollments[u.id] ?? []).filter((e) => e.courseId !== courseId);
       save(s);
@@ -585,7 +613,7 @@ export function createDemoBackend(): Backend {
       const s = load();
       const reset: string[] = [];
       for (const e of s.enrollments[u.id] ?? []) {
-        if (!isStale(e.lastActiveAt ?? e.enrolledAt) || courseCompleted(s, u.id, e.courseId)) continue;
+        if ((e.source ?? "free") !== "free" || !isStale(e.lastActiveAt ?? e.enrolledAt) || courseCompleted(s, u.id, e.courseId)) continue;
         const k = key(u.id, e.courseId);
         const hadProgress = !!(s.lessons[k]?.length || s.exercises[k]?.length || (s.attempts[u.id] ?? []).some((t) => assessmentCourse(s, t.assessmentId) === e.courseId));
         clearCourseProgress(s, u.id, e.courseId);
@@ -604,6 +632,7 @@ export function createDemoBackend(): Backend {
       const u = requireUser();
       await backend.enroll(courseId);
       const s = load();
+      requireAccess(s, u.id, courseId);
       const set = new Set(s.lessons[key(u.id, courseId)] ?? []);
       if (done) set.add(lessonId);
       else set.delete(lessonId);
@@ -616,6 +645,7 @@ export function createDemoBackend(): Backend {
       const u = requireUser();
       await backend.enroll(courseId);
       const s = load();
+      requireAccess(s, u.id, courseId);
       const set = new Set(s.exercises[key(u.id, courseId)] ?? []);
       set.add(exerciseId);
       s.exercises[key(u.id, courseId)] = [...set];
@@ -627,6 +657,7 @@ export function createDemoBackend(): Backend {
       const u = requireUser();
       const a = assessments().find((x) => x.id === assessmentId);
       if (!a) throw new BackendError("Assessment not found.");
+      requireAccess(load(), u.id, a.courseId);
       const correct = a.questions.filter((q) => answers[q.id] === q.answer).length;
       const score = Math.round((correct / a.questions.length) * 100);
       const result = { id: uid(), assessmentId, score, passed: score >= a.passingScore, correct, total: a.questions.length, submittedAt: now() };
@@ -650,6 +681,7 @@ export function createDemoBackend(): Backend {
     async submitProject(projectId, { content, url }) {
       const u = requireUser();
       const s = load();
+      requireAccess(s, u.id, BUNDLED_PROJECTS.find((p) => p.id === projectId)?.courseId);
       let sub = s.submissions.find((x) => x.userId === u.id && x.projectId === projectId);
       if (sub) Object.assign(sub, { content, url, status: "submitted", submittedAt: now() });
       else {
@@ -886,6 +918,44 @@ export function createDemoBackend(): Backend {
       const u = current();
       return u ? load().orders.filter((o) => o.userId === u.id) : [];
     },
+    async startCourseOrder(courseId) {
+      const u = requireUser();
+      const s = load();
+      const course = courses(s).find((c) => c.id === courseId && c.published);
+      if (!course) throw new BackendError("Course not found.");
+      if (!isPaid(course)) throw new BackendError("This course is free: you can start it without paying.");
+      const state = enrolmentOf(course);
+      if (state !== "open") throw new BackendError(state === "paused" ? "Payments for this course are paused. Please try again soon." : "Enrolment for this course is not open right now.");
+      if ((s.enrollments[u.id] ?? []).some((e) => e.courseId === courseId)) throw new BackendError("You are already enrolled in this course.");
+      const price = course.price ?? 0;
+      const charge = course.discountActive && course.discountPrice != null && course.discountPrice < price ? course.discountPrice : price;
+      let order = s.courseOrders.find((o) => o.userId === u.id && o.courseId === courseId && o.status === "pending");
+      if (order) Object.assign(order, { currency: course.currency ?? "NGN", listAmount: price, amount: charge });
+      else {
+        order = { id: uid(), userId: u.id, courseId, currency: course.currency ?? "NGN", listAmount: price, amount: charge, status: "pending", provider: null, providerRef: null, note: null, createdAt: now(), paidAt: null };
+        s.courseOrders.push(order);
+      }
+      save(s);
+      const { userId: _u, provider: _p, providerRef: _r, note: _n, ...pub } = order;
+      void [_u, _p, _r, _n];
+      return pub;
+    },
+    async listMyCourseOrders() {
+      const u = current();
+      return u ? load().courseOrders.filter((o) => o.userId === u.id).map(({ userId: _u, provider: _p, providerRef: _r, note: _n, ...pub }) => (void [_u, _p, _r, _n], pub)) : [];
+    },
+    async simulateCoursePayment(orderId) {
+      const u = requireUser();
+      const s = load();
+      const order = s.courseOrders.find((o) => o.id === orderId && o.userId === u.id);
+      if (!order) throw new BackendError("Order not found.");
+      Object.assign(order, { status: "paid", provider: "demo", providerRef: `demo-${order.id.slice(0, 8)}`, paidAt: now() });
+      const list = (s.enrollments[u.id] ??= []);
+      const have = list.find((e) => e.courseId === order.courseId);
+      if (have) have.source = have.source === "free" ? "purchase" : have.source;
+      else list.push({ courseId: order.courseId, enrolledAt: now(), completedAt: null, lastLessonId: null, lastActiveAt: now(), source: "purchase" });
+      save(s);
+    },
     async simulatePayment(orderId) {
       const u = requireUser();
       const s = load();
@@ -1119,6 +1189,97 @@ export function createDemoBackend(): Backend {
           if (i >= 0) list[i] = { ...list[i], ...input };
           else list.push({ ...input, modules: [] });
         });
+      },
+      async listCourseStats() {
+        requireAdmin();
+        const s = load();
+        const all = Object.entries(s.enrollments).flatMap(([userId, list]) => list.map((e) => ({ ...e, userId, source: e.source ?? "free" })));
+        return courses(s).map((c): CourseStats => {
+          const mine = all.filter((e) => e.courseId === c.id);
+          const revenue: Record<string, number> = {};
+          for (const o of s.courseOrders) if (o.courseId === c.id && o.status === "paid") revenue[o.currency] = (revenue[o.currency] ?? 0) + o.amount;
+          const paidBefore = (userId: string, at: string) =>
+            all.some((f) => f.userId === userId && f.source === "purchase" && f.enrolledAt > at);
+          const freeBefore = (userId: string, at: string) =>
+            all.some((f) => f.userId === userId && f.enrolledAt < at && !isPaid(courses(s).find((x) => x.id === f.courseId) ?? c));
+          return {
+            courseId: c.id,
+            title: c.title,
+            courseType: c.courseType ?? "free",
+            accessType: isPaid(c) ? "paid" : "free",
+            published: c.published,
+            price: c.price ?? null,
+            currency: c.currency ?? "NGN",
+            enrollments: mine.length,
+            freeEnrollments: mine.filter((e) => e.source === "free").length,
+            paidEnrollments: mine.filter((e) => e.source === "purchase").length,
+            grantedEnrollments: mine.filter((e) => e.source === "granted").length,
+            completions: mine.filter((e) => courseCompleted(s, e.userId, c.id)).length,
+            revenue,
+            converted: isPaid(c) ? mine.filter((e) => e.source === "purchase" && freeBefore(e.userId, e.enrolledAt)).length : new Set(mine.filter((e) => paidBefore(e.userId, e.enrolledAt)).map((e) => e.userId)).size,
+          };
+        });
+      },
+      async listCourseEnrollments(courseId) {
+        requireAdmin();
+        const s = load();
+        const out: AdminEnrollment[] = [];
+        for (const [userId, list] of Object.entries(s.enrollments)) {
+          const u = s.users.find((x) => x.id === userId);
+          for (const e of list) {
+            if (courseId && e.courseId !== courseId) continue;
+            const order = s.courseOrders.find((o) => o.userId === userId && o.courseId === e.courseId && (o.status === "paid" || o.status === "granted"));
+            out.push({
+              userId,
+              fullName: u?.fullName ?? "Unknown",
+              email: u?.email ?? "",
+              courseId: e.courseId,
+              courseTitle: courses(s).find((c) => c.id === e.courseId)?.title ?? e.courseId,
+              source: e.source ?? "free",
+              enrolledAt: e.enrolledAt,
+              completedAt: courseCompleted(s, userId, e.courseId) ? (e.completedAt ?? e.enrolledAt) : null,
+              amount: order ? order.amount : null,
+              currency: order ? order.currency : null,
+              orderStatus: order ? order.status : null,
+            });
+          }
+        }
+        return out.sort((a, b) => b.enrolledAt.localeCompare(a.enrolledAt));
+      },
+      async listCourseOrders() {
+        requireAdmin();
+        const s = load();
+        return s.courseOrders
+          .map((o): AdminCourseOrder => {
+            const u = s.users.find((x) => x.id === o.userId);
+            return { ...o, studentName: u?.fullName ?? "Unknown", studentEmail: u?.email ?? "", courseTitle: courses(s).find((c) => c.id === o.courseId)?.title ?? o.courseId };
+          })
+          .sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+      },
+      async grantCourseAccess(userId, courseId, note) {
+        requireAdmin();
+        const s = load();
+        const course = courses(s).find((c) => c.id === courseId);
+        if (!course) throw new BackendError("Course not found.");
+        if (!s.users.some((u) => u.id === userId)) throw new BackendError("Student not found.");
+        let order = s.courseOrders.find((o) => o.userId === userId && o.courseId === courseId && o.status === "pending");
+        if (order) Object.assign(order, { status: "granted", note: note.trim() || null, paidAt: now() });
+        else {
+          order = { id: uid(), userId, courseId, currency: course.currency ?? "NGN", listAmount: course.price ?? 0, amount: 0, status: "granted", provider: null, providerRef: null, note: note.trim() || null, createdAt: now(), paidAt: now() };
+          s.courseOrders.push(order);
+        }
+        const list = (s.enrollments[userId] ??= []);
+        const have = list.find((e) => e.courseId === courseId);
+        if (have) have.source = have.source === "free" && !isPaid(course) ? "free" : "granted";
+        else list.push({ courseId, enrolledAt: now(), completedAt: null, lastLessonId: null, lastActiveAt: now(), source: isPaid(course) ? "granted" : "free" });
+        save(s);
+      },
+      async revokeCourseAccess(userId, courseId, reason) {
+        requireAdmin();
+        const s = load();
+        s.enrollments[userId] = (s.enrollments[userId] ?? []).filter((e) => e.courseId !== courseId);
+        for (const o of s.courseOrders) if (o.userId === userId && o.courseId === courseId && (o.status === "pending" || o.status === "granted")) Object.assign(o, { status: "cancelled", note: reason.trim() || o.note });
+        save(s);
       },
       async saveModule(input) {
         requireAdmin();

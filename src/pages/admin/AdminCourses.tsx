@@ -1,3 +1,4 @@
+import { isPaid, priceLabel } from "@/lib/commerce";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { getBackend } from "@/lib/backend";
@@ -49,6 +50,8 @@ export default function AdminCourses() {
         level: 1,
         levelLabel: "Beginner",
         isFree: true,
+        courseType: "free",
+        access: "free",
         status: "coming_soon",
         skills: [],
         prerequisites: [],
@@ -102,6 +105,7 @@ export default function AdminCourses() {
             <tr>
               <th>Course</th>
               <th>Status</th>
+              <th>Access</th>
               <th>Lessons</th>
               <th>Visibility</th>
               <th>
@@ -120,6 +124,10 @@ export default function AdminCourses() {
                 </td>
                 <td>
                   <Badge tone={c.status === "available" ? "free" : "soon"}>{c.status === "available" ? "Available" : "Coming soon"}</Badge>
+                </td>
+                <td>
+                  <Badge tone={isPaid(c) ? "neutral" : "free"}>{isPaid(c) ? (c.courseType === "professional" ? "Professional" : "Paid") : "Free"}</Badge>
+                  {isPaid(c) && <span className="block text-[0.75rem] text-muted">{priceLabel(c)}</span>}
                 </td>
                 <td>{c.modules.flatMap((m) => m.lessons).length}</td>
                 <td>{c.published ? "Published" : "Draft"}</td>

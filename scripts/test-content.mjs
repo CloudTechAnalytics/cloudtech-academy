@@ -43,6 +43,10 @@ const SHORT = [
   "freelancing",
 ];
 const COURSES = [...FULL, ...SHORT];
+// Folders whose lesson text is withheld from the public site (paid courses) must be real course folders.
+for (const f of JSON.parse(fs.readFileSync("src/content/protected-courses.json", "utf8")).folders) {
+  if (!COURSES.includes(f)) throw new Error(`protected-courses.json lists "${f}", which is not a course folder.`);
+}
 const SECTIONS = ["## The problem", "## The concept", "## Example", "## Walkthrough", "## Practice", "## Check your understanding"];
 /** A long, awkward answer for timing task patterns: bullets, stars, hashes, colons, digits and long lines. */
 const STRESS_TEXT = Array.from({ length: 120 }, (_, i) => `${i % 3 ? "-" : "*"} line ${i}: #tag${i} word word "quote ${i}" 12,${i}00 | x ${"filler ".repeat(i % 7)}`).join("\n") + "\n" + "a ".repeat(3000);

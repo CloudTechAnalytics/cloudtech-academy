@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Link } from "react-router";
+import { Link, useSearchParams } from "react-router";
 import { Briefcase, GraduationCap, Search, Timer } from "lucide-react";
 import type { Course } from "@/content/types";
 import { useSeo } from "@/lib/seo";
@@ -8,10 +8,17 @@ import { CATEGORIES } from "@/content";
 import { CourseCard } from "@/components/CourseCard";
 import { breadcrumbs } from "@/lib/schema";
 import { LEVELS } from "@/content/tracks";
+import { isPaid } from "@/lib/commerce";
+
+const ACCESS = [
+  { id: "", label: "All" },
+  { id: "free", label: "Free" },
+  { id: "professional", label: "Professional" },
+];
 
 const TYPES = [
   { id: "", label: "All types" },
-  { id: "full", label: "Professional courses" },
+  { id: "full", label: "Full courses" },
   { id: "short", label: "Short courses" },
 ];
 
@@ -19,11 +26,11 @@ const TYPES = [
 const KINDS = [
   {
     Icon: Briefcase,
-    title: "Professional courses",
+    title: "Full courses",
     time: "6 to 14 hours each",
     body: "In-depth training for a job skill, with practice on realistic data, a final assessment and a project.",
     href: "#professional",
-    cta: "See professional courses",
+    cta: "See full courses",
   },
   {
     Icon: Timer,
@@ -78,6 +85,9 @@ export default function Courses() {
   const [category, setCategory] = useState("");
   const [level, setLevel] = useState("");
   const [type, setType] = useState("");
+  const [params, setParams] = useSearchParams();
+  const access = ACCESS.some((a) => a.id === params.get("access")) ? (params.get("access") as string) : "";
+  const setAccess = (id: string) => setParams(id ? { access: id } : {}, { replace: true });
 
   const results = useMemo(() => {
     const term = q.trim().toLowerCase();
@@ -86,9 +96,10 @@ export default function Courses() {
         (!category || c.categoryId === category) &&
         (!level || c.level === Number(level)) &&
         (!type || (type === "short") === (c.format === "short")) &&
+        (!access || (access === "professional") === isPaid(c)) &&
         (!term || [c.title, c.summary, ...c.skills].some((s) => s.toLowerCase().includes(term))),
     );
-  }, [courses, q, category, level, type]);
+  }, [courses, q, category, level, type, access]);
   const professional = results.filter((c) => c.format !== "short");
   const short = results.filter((c) => c.format === "short");
 
@@ -102,8 +113,8 @@ export default function Courses() {
         <div className="container-page py-14 sm:py-16">
           <h1 className="font-serif text-[2.6rem] leading-tight sm:text-[3.2rem]">Courses</h1>
           <p className="mt-4 max-w-2xl text-[1.0625rem] leading-relaxed text-muted">
-            Every course is free and self-paced. There are two kinds: professional courses for an in-depth job skill, and short courses for a quick
-            practical skill. Both end with a free badge and an optional certificate.
+            Free courses teach a skill. Professional programmes help you build a career. Start with a free course, then go further when you are
+            ready: nothing is locked behind a sign-up wall, and every free course ends with a badge and an optional certificate.
           </p>
           <ul className="mt-8 grid gap-4 md:grid-cols-3">
             {KINDS.map(({ Icon, title, time, body, href, cta }) => (
@@ -128,6 +139,20 @@ export default function Courses() {
       </section>
 
       <div className="container-page py-10 sm:py-12">
+        <div role="tablist" aria-label="Course access" className="mb-6 inline-flex rounded-full border border-line-strong bg-paper p-1">
+          {ACCESS.map((a) => (
+            <button
+              key={a.id}
+              type="button"
+              role="tab"
+              aria-selected={access === a.id}
+              onClick={() => setAccess(a.id)}
+              className={`rounded-full px-4 py-1.5 text-[0.875rem] font-semibold ${access === a.id ? "bg-ink text-paper" : "text-muted hover:text-ink"}`}
+            >
+              {a.id === "" ? "All courses" : a.id === "free" ? "Free courses" : "Professional programmes"}
+            </button>
+          ))}
+        </div>
         <form role="search" onSubmit={(e) => e.preventDefault()} className="grid gap-4 sm:grid-cols-2 lg:grid-cols-[1fr_12rem_12rem_12rem]">
           <div>
             <label htmlFor="course-search" className="text-[0.875rem] font-medium">
@@ -191,7 +216,7 @@ export default function Courses() {
           <div className="mt-4 space-y-12">
             <CourseGroup
               id="professional"
-              title="Professional courses"
+              title="Full courses"
               intro="In-depth courses for a job skill, with hands-on practice, a final assessment and a portfolio project."
               courses={professional}
             />
@@ -199,7 +224,8 @@ export default function Courses() {
           </div>
         ) : (
           <div className="mt-4 rounded-2xl border border-dashed border-line-strong p-10 text-center">
-            <p className="font-serif text-[1.3rem]">No courses match those filters yet.</p>
+            <p className="font-serif text-[1.3rem]">{access === "professional" && !q && !category && !level && !type ? "Professional programmes are coming soon." : "No courses match those filters yet."}</p>
+            {access === "professional" && !q && !category && !level && !type && <p className="mt-2 text-muted">Start with a free course while you wait.</p>}
             <button
               type="button"
               className="mt-3 text-[0.9rem] font-semibold text-brass-dark hover:text-brass-deeper"
@@ -208,6 +234,7 @@ export default function Courses() {
                 setCategory("");
                 setLevel("");
                 setType("");
+                setAccess("");
               }}
             >
               Clear filters

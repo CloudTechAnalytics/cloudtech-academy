@@ -51,7 +51,45 @@ export type ModuleDef = {
   skills?: string[];
 };
 
-export type CourseDef = {
+/** A free course teaches one skill or an introduction. A professional course is a complete, structured, paid programme. */
+export type CourseType = "free" | "professional";
+export type AccessType = "free" | "paid";
+export type DeliveryType = "self_paced" | "instructor_led" | "hybrid";
+
+/** What a professional course's sales page shows. Everything here is optional: a page shows only what an admin filled in. */
+export type CourseSalesFields = {
+  /** What the course is: free (default) or a professional programme. A professional course is always paid. */
+  courseType?: CourseType;
+  /** Free (default) or paid. Paid courses' lessons are locked until the learner pays or an admin grants access. */
+  access?: AccessType;
+  price?: number | null;
+  currency?: string;
+  discountPrice?: number | null;
+  discountActive?: boolean;
+  /** "paused" stops new payments without hiding the course. */
+  paymentStatus?: "active" | "paused";
+  deliveryType?: DeliveryType;
+  enrollmentStatus?: "open" | "closed";
+  /** ISO date-times; empty means no limit. */
+  enrollmentStart?: string | null;
+  enrollmentEnd?: string | null;
+  /** Shown only when the course really includes them. */
+  communityAccess?: boolean;
+  instructorSupport?: boolean;
+  /** e.g. "12 weeks" or "40 hours". */
+  durationLabel?: string;
+  publishedAt?: string | null;
+  overview?: string;
+  audience?: string[];
+  outcomes?: string[];
+  /** What's included, one line each. Only list what CloudTech actually provides. */
+  included?: string[];
+  projectPreviews?: { title: string; summary: string }[];
+  instructor?: { name: string; title: string; bio: string };
+  professionalOutcome?: string;
+};
+
+export type CourseDef = CourseSalesFields & {
   id: string;
   /** "short": modules of 15–30 minutes, each with a check and a badge. "full": longer lessons with practice. Default "full". */
   format?: "full" | "short";

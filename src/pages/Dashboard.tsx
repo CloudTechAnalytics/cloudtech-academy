@@ -19,6 +19,7 @@ import { ShareMenu } from "@/components/ShareMenu";
 import { DashboardConnect, StartingSoonBanner } from "@/components/CommunityWidgets";
 import { useEvents, useMyRegistrations } from "@/lib/event-data";
 import { publishedLessons } from "@/lib/certificates";
+import { enrolmentState, isPaid } from "@/lib/commerce";
 
 type Row = { enrollment: Enrollment; progress: Progress; attempts: AttemptResult[] };
 
@@ -98,14 +99,18 @@ function DashboardInner() {
       const resume = lessons.find((l) => l.id === r.enrollment.lastLessonId) ?? lessons.find((l) => !r.progress.completedLessons.includes(l.id)) ?? lessons[0];
       // Warn only when there's something to lose: done lessons, tasks or assessment attempts.
       const hasProgress = r.progress.completedLessons.length > 0 || r.progress.completedExercises.length > 0 || r.attempts.length > 0;
-      const resetsIn = !completion && hasProgress ? daysUntilReset(r.enrollment.lastActiveAt) : null;
-      return { course, percent: completion ? 100 : status.percent, completion, resume, resetsIn };
+      // The 14-day restart applies to free courses only; a programme you paid for never resets.
+      const resetsIn = !completion && hasProgress && r.enrollment.source === "free" ? daysUntilReset(r.enrollment.lastActiveAt) : null;
+      return { course, percent: completion ? 100 : status.percent, completion, resume, resetsIn, source: r.enrollment.source };
     })
     .filter((x) => x !== null);
   const inProgress = learning.filter((l) => !l.completion);
   const completed = learning.filter((l) => l.completion);
   const enrolledIds = new Set(learning.map((a) => a.course.id));
-  const suggestions = courses.filter((c) => !enrolledIds.has(c.id)).slice(0, 3);
+  // Free courses first, with one open professional programme offered as a gentle next step once the learner has started something.
+  const notStarted = courses.filter((c) => !enrolledIds.has(c.id));
+  const nextProgramme = learning.length ? notStarted.find((c) => isPaid(c) && enrolmentState(c) === "open") : undefined;
+  const suggestions = [...notStarted.filter((c) => !isPaid(c)).slice(0, nextProgramme ? 2 : 3), ...(nextProgramme ? [nextProgramme] : [])];
   const opened = valid.find((c) => c.credentialId === open);
 
   return (
@@ -161,27 +166,32 @@ function DashboardInner() {
           </div>
         ) : (
           <ul className="mt-5 grid gap-4 lg:grid-cols-2">
-            {[...inProgress, ...completed].map(({ course, percent, completion, resume, resetsIn }) => (
+            {[...inProgress, ...completed].map(({ course, percent, completion, resume, resetsIn, source }) => (
               <li key={course.id} className="flex flex-col rounded-2xl border border-line bg-paper p-6">
                 <div className="flex items-start justify-between gap-3">
                   <Link to={`/courses/${course.slug}`} className="font-serif text-[1.35rem] leading-snug hover:text-brass-dark">
                     {course.title}
                   </Link>
                   <div className="flex shrink-0 items-center gap-2">
+                    {source !== "free" && (
+                      <span className="rounded-full border border-brass/50 bg-brass-pale/50 px-2.5 py-0.5 text-[0.75rem] font-medium text-brass-dark">Professional</span>
+                    )}
                     {completion && (
                       <span className="inline-flex items-center gap-1 rounded-full border border-success/40 bg-success-bg px-2.5 py-0.5 text-[0.75rem] font-medium text-success">
                         <CheckCircle2 aria-hidden className="h-3.5 w-3.5" /> Completed
                       </span>
                     )}
-                    <button
-                      type="button"
-                      onClick={() => setConfirming(course.id)}
-                      aria-label={`Remove ${course.title} from My Learning`}
-                      title="Remove from My Learning"
-                      className="flex h-8 w-8 items-center justify-center rounded-lg text-muted hover:bg-sand hover:text-ink"
-                    >
-                      <X aria-hidden className="h-4 w-4" />
-                    </button>
+                    {source === "free" && (
+                      <button
+                        type="button"
+                        onClick={() => setConfirming(course.id)}
+                        aria-label={`Remove ${course.title} from My Learning`}
+                        title="Remove from My Learning"
+                        className="flex h-8 w-8 items-center justify-center rounded-lg text-muted hover:bg-sand hover:text-ink"
+                      >
+                        <X aria-hidden className="h-4 w-4" />
+                      </button>
+                    )}
                   </div>
                 </div>
                 {confirming === course.id && (
@@ -433,7 +443,7 @@ function DashboardInner() {
       {suggestions.length > 0 && (
         <section className="mt-14" aria-labelledby="more">
           <h2 id="more" className="font-serif text-[1.7rem]">
-            {learning.length ? "What to learn next" : "Courses"}
+            {learning.length ? "Continue Your Learning" : "Courses"}
           </h2>
           <div className="mt-5 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
             {suggestions.map((c) => (

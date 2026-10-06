@@ -1,6 +1,6 @@
 import { Suspense, type ReactNode } from "react";
 import { NavLink, Outlet } from "react-router";
-import { Award, BadgeCheck, BookOpen, CalendarDays, FolderCheck, FolderKanban, LayoutGrid, MessageCircle, Settings, Users } from "lucide-react";
+import { Award, BadgeCheck, BarChart3, BookOpen, CreditCard, UserPlus, CalendarDays, FolderCheck, FolderKanban, LayoutGrid, MessageCircle, Settings, Users } from "lucide-react";
 import { useSeo } from "@/lib/seo";
 import { PageLoading, RequireAuth } from "@/lib/auth";
 import { IS_LIVE } from "@/lib/backend";
@@ -9,10 +9,13 @@ const LINKS = [
   { to: "/admin", label: "Overview", icon: LayoutGrid, end: true },
   { to: "/admin/courses", label: "Courses", icon: BookOpen },
   { to: "/admin/students", label: "Students", icon: Users },
+  { to: "/admin/enrollments", label: "Enrollments", icon: UserPlus },
   { to: "/admin/submissions", label: "Course projects", icon: FolderCheck },
   { to: "/admin/practice", label: "Practice projects", icon: FolderKanban },
   { to: "/admin/credentials", label: "Badges & credentials", icon: BadgeCheck },
   { to: "/admin/certificates", label: "Certificates", icon: Award },
+  { to: "/admin/payments", label: "Payments", icon: CreditCard },
+  { to: "/admin/analytics", label: "Analytics", icon: BarChart3 },
   { to: "/admin/events", label: "Events", icon: CalendarDays },
   { to: "/admin/community", label: "Community", icon: MessageCircle },
   { to: "/admin/settings", label: "Settings", icon: Settings },

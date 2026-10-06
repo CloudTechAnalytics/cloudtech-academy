@@ -13,6 +13,8 @@ import { pathToFileURL } from "node:url";
 const root = process.cwd();
 const outDir = path.join(root, "node_modules", ".seed");
 
+// The seed must carry every lesson in full, including those the public site build withholds (see vite.config.ts).
+process.env.CT_SEED = "1";
 await build({
   logLevel: "warn",
   build: { ssr: "scripts/seed-entry.ts", outDir, emptyOutDir: true, copyPublicDir: false },

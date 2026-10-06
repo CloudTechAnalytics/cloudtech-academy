@@ -16,6 +16,65 @@ export type Enrollment = {
   lastLessonId: string | null;
   /** Last time the learner opened a lesson, completed something or took an assessment in this course. */
   lastActiveAt: string;
+  /** How they got in: free enrolment, a payment, or an admin granting access. Paid courses are only reachable by the last two. */
+  source: "free" | "purchase" | "granted";
+};
+
+/** A learner's order for a paid course. */
+export type CourseOrder = {
+  id: string;
+  courseId: string;
+  currency: string;
+  /** The price when the order was made. */
+  listAmount: number;
+  /** What is charged, after any discount. */
+  amount: number;
+  status: "pending" | "paid" | "granted" | "failed" | "cancelled";
+  createdAt: string;
+  paidAt: string | null;
+};
+
+export type AdminCourseOrder = CourseOrder & {
+  userId: string;
+  studentName: string;
+  studentEmail: string;
+  courseTitle: string;
+  provider: string | null;
+  providerRef: string | null;
+  note: string | null;
+};
+
+export type AdminEnrollment = {
+  userId: string;
+  fullName: string;
+  email: string;
+  courseId: string;
+  courseTitle: string;
+  source: "free" | "purchase" | "granted";
+  enrolledAt: string;
+  completedAt: string | null;
+  amount: number | null;
+  currency: string | null;
+  orderStatus: string | null;
+};
+
+export type CourseStats = {
+  courseId: string;
+  title: string;
+  courseType: "free" | "professional";
+  accessType: "free" | "paid";
+  published: boolean;
+  price: number | null;
+  currency: string;
+  enrollments: number;
+  freeEnrollments: number;
+  paidEnrollments: number;
+  grantedEnrollments: number;
+  completions: number;
+  /** Revenue from paid orders, by currency. */
+  revenue: Record<string, number>;
+  /** For a paid course: buyers who had taken a free course first. For a free course: learners who later bought a paid course. */
+  converted: number;
 };
 
 export type Progress = {
@@ -429,6 +488,17 @@ export interface Backend {
   getSubmission(projectId: string): Promise<ProjectSubmission | null>;
   submitProject(projectId: string, input: { content: string; url: string }): Promise<ProjectSubmission>;
 
+  /* ---------- buying a course ---------- */
+  /** Starts (or refreshes) the learner's pending order for a paid course, at today's price. */
+  startCourseOrder(courseId: string): Promise<CourseOrder>;
+  listMyCourseOrders(): Promise<CourseOrder[]>;
+  /** Demo mode only: stands in for a successful payment, and enrols the learner. */
+  simulateCoursePayment?(orderId: string): Promise<void>;
+  /** Online payment: the provider's payment page for a pending course order. */
+  startCourseCheckout?(orderId: string, returnUrl: string): Promise<string>;
+  /** Online payment: confirms a payment on the server after the learner returns, and enrols them. Returns the course id. */
+  confirmCoursePayment?(reference: string): Promise<string>;
+
   /* ---------- credentials (free) ---------- */
   /** Awards (or returns) a module's badge. The server checks the module check was passed. */
   claimModuleBadge(moduleId: string): Promise<Credential>;
@@ -506,6 +576,14 @@ export interface Backend {
     /** Uploads a cover or speaker image (PNG, JPEG or WebP, up to 2 MB) and returns its public URL. */
     uploadEventImage(file: File): Promise<string>;
     saveCourse(course: CourseInput): Promise<void>;
+    /** One row per course: enrolments by source, completions, revenue and conversion. */
+    listCourseStats(): Promise<CourseStats[]>;
+    listCourseEnrollments(courseId?: string): Promise<AdminEnrollment[]>;
+    listCourseOrders(): Promise<AdminCourseOrder[]>;
+    /** Gives a student access to a course without a payment (e.g. after a bank transfer, or a scholarship). */
+    grantCourseAccess(userId: string, courseId: string, note: string): Promise<void>;
+    /** Removes a student's access to a course. */
+    revokeCourseAccess(userId: string, courseId: string, reason: string): Promise<void>;
     saveModule(module: ModuleInput): Promise<void>;
     deleteModule(moduleId: string): Promise<void>;
     reorderModules(courseId: string, moduleIds: string[]): Promise<void>;

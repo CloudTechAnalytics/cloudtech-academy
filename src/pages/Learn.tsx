@@ -13,6 +13,7 @@ import { LessonSidebar } from "@/components/LessonSidebar";
 import { colabUrl, hasNotebook } from "@/lib/python/colab";
 import { ProgressBar } from "@/components/ProgressBar";
 import { Button, ButtonLink } from "@/components/Button";
+import { isPaid } from "@/lib/commerce";
 import NotFound from "./NotFound";
 
 function CurriculumDrawer({ open, onClose, children }: { open: boolean; onClose: () => void; children: ReactNode }) {
@@ -81,6 +82,8 @@ export default function Learn() {
   // Signed-in learners are enrolled automatically and their place is remembered.
   useEffect(() => {
     if (!course || !lesson || !learner.signedIn || learner.loading) return;
+    // Paid courses are never self-enrolled: access comes from a payment or an admin.
+    if (isPaid(course) && !learner.enrollment) return;
     void (async () => {
       const b = await getBackend();
       if (!learner.enrollment) await b.enroll(course.id);
@@ -96,6 +99,24 @@ export default function Learn() {
   const completedExercises = useMemo(() => [...new Set([...learner.progress.completedExercises, ...localExercises])], [learner.progress.completedExercises, localExercises]);
 
   if (!course || !lesson) return loading ? <PageLoading /> : <NotFound />;
+
+  // A paid course's lessons only open for enrolled learners (and admins). The database enforces this too:
+  // without access it sends no lesson text at all, so this screen is the friendly face of that rule.
+  if (isPaid(course) && !learner.enrollment && !lesson.body) {
+    if (learner.loading) return <PageLoading />;
+    return (
+      <div className="container-page max-w-2xl py-16 sm:py-24">
+        <Lock aria-hidden className="h-8 w-8 text-brass-dark" />
+        <h1 className="mt-4 font-serif text-[2.2rem] leading-tight">This lesson is part of a Professional Programme</h1>
+        <p className="mt-3 text-[1.0625rem] leading-relaxed text-muted">
+          {course.title} unlocks as soon as you enroll. Have a look at what's inside, and enroll when you're ready.
+        </p>
+        <ButtonLink to={`/courses/${course.slug}`} className="mt-6">
+          See the programme
+        </ButtonLink>
+      </div>
+    );
+  }
 
   const done = completedLessons.includes(lesson.id);
   const requiredLeft = lesson.requiredExercises.filter((id) => !completedExercises.includes(id)).length;

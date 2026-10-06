@@ -7,6 +7,7 @@ import { getBackend, type Credential } from "@/lib/backend";
 import { PageLoading, RequireAuth } from "@/lib/auth";
 import { credentialBadge } from "@/lib/badges";
 import { ButtonLink } from "@/components/Button";
+import { RecommendedNext } from "@/components/RecommendedNext";
 import { Alert } from "@/components/Form";
 import { BadgeArtwork } from "@/components/BadgeArtwork";
 import { ShareMenu } from "@/components/ShareMenu";
@@ -113,6 +114,7 @@ function Inner() {
           {!learner.certificate && (
             <p className="mt-3 text-[0.8125rem] text-muted">The official PDF certificate is optional. Your badge and credential are already yours.</p>
           )}
+          <RecommendedNext course={course} className="mt-8" />
         </div>
       </div>
     </div>
