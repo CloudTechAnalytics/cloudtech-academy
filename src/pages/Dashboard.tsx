@@ -178,7 +178,7 @@ function DashboardInner() {
         {learning.length === 0 ? (
           <div className="mt-5 rounded-2xl border border-dashed border-line-strong p-8 text-center">
             <p className="text-[1.0625rem]">You haven't started a course yet.</p>
-            <p className="mt-1 text-muted">Open any lesson and you're enrolled automatically. It's free.</p>
+            <p className="mt-1 text-muted">Pick a course and confirm to enrol. It's free.</p>
             <div className="mt-5">
               <ButtonLink to="/courses" arrow>
                 Browse courses

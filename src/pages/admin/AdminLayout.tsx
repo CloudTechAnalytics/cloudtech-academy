@@ -1,6 +1,6 @@
 import { Suspense, type ReactNode } from "react";
 import { NavLink, Outlet } from "react-router";
-import { Award, BadgeCheck, BarChart3, BookOpen, Layers, CreditCard, UserPlus, CalendarDays, FolderCheck, FolderKanban, LayoutGrid, MessageCircle, Settings, Users } from "lucide-react";
+import { Award, BadgeCheck, BarChart3, BookOpen, Layers, Mail, CreditCard, UserPlus, CalendarDays, FolderCheck, FolderKanban, LayoutGrid, MessageCircle, Settings, Users } from "lucide-react";
 import { useSeo } from "@/lib/seo";
 import { PageLoading, RequireAuth } from "@/lib/auth";
 import { IS_LIVE } from "@/lib/backend";
@@ -17,6 +17,7 @@ const LINKS = [
   { to: "/admin/certificates", label: "Certificates", icon: Award },
   { to: "/admin/payments", label: "Payments", icon: CreditCard },
   { to: "/admin/analytics", label: "Analytics", icon: BarChart3 },
+  { to: "/admin/emails", label: "Emails", icon: Mail },
   { to: "/admin/events", label: "Events", icon: CalendarDays },
   { to: "/admin/community", label: "Community", icon: MessageCircle },
   { to: "/admin/settings", label: "Settings", icon: Settings },

@@ -20,6 +20,9 @@ import {
   type PaymentAccount,
   type OrderPayment,
   type AdminPayment,
+  type EmailTemplate,
+  type EmailLogEntry,
+  type EmailSetup,
   type ProgrammeStats,
   type AdminProgrammeEnrollment,
   type Certificate,
@@ -1095,6 +1098,48 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
             })
             .eq("id", trackId),
         );
+      },
+      async listEmailTemplates() {
+        return (check(await sb.from("email_templates").select("*").order("key", { ascending: false })) as Row[]).map((r): EmailTemplate => ({ key: r.key, label: r.label, subject: r.subject, body: r.body, enabled: r.enabled }));
+      },
+      async saveEmailTemplate(t) {
+        check(await sb.from("email_templates").update({ subject: t.subject.trim(), body: t.body, enabled: t.enabled, updated_at: new Date().toISOString() }).eq("key", t.key));
+      },
+      async listEmailLog() {
+        return (check(await sb.from("email_outbox").select("*").order("created_at", { ascending: false }).limit(200)) as Row[]).map(
+          (r): EmailLogEntry => ({ id: r.id, toEmail: r.to_email, toName: r.to_name ?? null, template: r.template ?? null, subject: r.subject, body: r.body, status: r.status, error: r.error ?? null, createdAt: r.created_at, sentAt: r.sent_at ?? null }),
+        );
+      },
+      async emailSetup() {
+        const s = check(await sb.from("email_settings").select("enabled, reply_to").eq("id", 1).single()) as Row;
+        let configured = false;
+        let from: string | null = null;
+        try {
+          const { data } = await sb.functions.invoke("process-emails", { body: { check: true } });
+          configured = !!(data as { configured?: boolean } | null)?.configured;
+          from = (data as { from?: string | null } | null)?.from ?? null;
+        } catch {
+          // The function isn't deployed yet: shown as "not set up".
+        }
+        return { enabled: s.enabled, replyTo: s.reply_to ?? null, configured, from } satisfies EmailSetup;
+      },
+      async saveEmailSettings(s) {
+        check(await sb.from("email_settings").update({ enabled: s.enabled, reply_to: s.replyTo?.trim() || null }).eq("id", 1));
+      },
+      async sendMessage(userIds, subject, body) {
+        return check(await sb.rpc("admin_send_message", { p_user_ids: userIds, p_subject: subject, p_body: body })) as number;
+      },
+      async retryEmails() {
+        return check(await sb.rpc("admin_retry_emails")) as number;
+      },
+      async sendQueuedEmails() {
+        const { data, error } = await sb.functions.invoke("process-emails", { body: {} });
+        if (error) throw new BackendError(await functionError(error, "Couldn't send the emails."));
+        const d = data as { configured: boolean; sent?: number; failed?: number };
+        return { configured: d.configured, sent: d.sent ?? 0, failed: d.failed ?? 0 };
+      },
+      async deleteStudent(userId) {
+        check(await sb.rpc("admin_delete_student", { p_user: userId }));
       },
       async listPayments() {
         return (check(await sb.rpc("admin_list_payments")) as Row[]).map(

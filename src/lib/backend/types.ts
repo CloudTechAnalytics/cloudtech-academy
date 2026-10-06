@@ -81,6 +81,32 @@ export type OrderPayment = {
   createdAt: string;
 };
 
+/** The two emails the Academy sends by itself. Admins edit the wording; {{name}}, {{course}} and {{link}} are filled in. */
+export type EmailTemplate = { key: "welcome" | "enrolment"; label: string; subject: string; body: string; enabled: boolean };
+
+export type EmailLogEntry = {
+  id: string;
+  toEmail: string;
+  toName: string | null;
+  /** "welcome", "enrolment" or "message" (written by an admin). */
+  template: string | null;
+  subject: string;
+  body: string;
+  status: "queued" | "sent" | "failed" | "skipped";
+  error: string | null;
+  createdAt: string;
+  sentAt: string | null;
+};
+
+export type EmailSetup = {
+  /** Master switch: when off, nothing is queued or sent. */
+  enabled: boolean;
+  replyTo: string | null;
+  /** True once the mail provider's key and sender address are set on the server. */
+  configured: boolean;
+  from: string | null;
+};
+
 export type ManualOrder = { order: CourseOrder; payments: OrderPayment[] };
 
 export type AdminPayment = OrderPayment & {
@@ -707,6 +733,19 @@ export interface Backend {
     /** One row per course: enrolments by source, completions, revenue and conversion. */
     listCourseStats(): Promise<CourseStats[]>;
     saveProgramme(trackId: string, sales: CourseSalesFields): Promise<void>;
+    listEmailTemplates(): Promise<EmailTemplate[]>;
+    saveEmailTemplate(t: EmailTemplate): Promise<void>;
+    listEmailLog(): Promise<EmailLogEntry[]>;
+    emailSetup(): Promise<EmailSetup>;
+    saveEmailSettings(s: { enabled: boolean; replyTo: string | null }): Promise<void>;
+    /** Sends the admin's own message to the chosen students. Returns how many were queued. */
+    sendMessage(userIds: string[], subject: string, body: string): Promise<number>;
+    /** Puts failed emails back in the queue and sends. Returns how many. */
+    retryEmails(): Promise<number>;
+    /** Sends whatever is queued now. */
+    sendQueuedEmails(): Promise<{ configured: boolean; sent: number; failed: number }>;
+    /** Removes a student and their learning data. Refused while they hold certificates. */
+    deleteStudent(userId: string): Promise<void>;
     listPayments(): Promise<AdminPayment[]>;
     confirmPayment(paymentId: string, note: string): Promise<void>;
     rejectPayment(paymentId: string, reason: string): Promise<void>;

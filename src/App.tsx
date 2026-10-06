@@ -68,6 +68,7 @@ const AdminPayments = lazy(() => import("@/pages/admin/AdminPayments"));
 const AdminAnalytics = lazy(() => import("@/pages/admin/AdminProgrammes").then((m) => ({ default: m.AdminAnalytics })));
 const AdminProgrammes = lazy(() => import("@/pages/admin/AdminProgrammeEditor").then((m) => ({ default: m.AdminProgrammes })));
 const AdminProgrammeEditor = lazy(() => import("@/pages/admin/AdminProgrammeEditor").then((m) => ({ default: m.AdminProgrammeEditor })));
+const AdminEmails = lazy(() => import("@/pages/admin/AdminEmails"));
 const AdminSubmissions = lazy(() => import("@/pages/admin/AdminSubmissions"));
 const AdminPracticeProjects = lazy(() => import("@/pages/admin/AdminPracticeProjects"));
 
@@ -118,6 +119,7 @@ export function AppRoutes() {
           <Route path="admin" element={<AdminLayout />}>
             <Route path="programmes" element={<AdminProgrammes />} />
             <Route path="programmes/:slug" element={<AdminProgrammeEditor />} />
+            <Route path="emails" element={<AdminEmails />} />
             <Route path="enrollments" element={<AdminEnrollments />} />
             <Route path="payments" element={<AdminPayments />} />
             <Route path="analytics" element={<AdminAnalytics />} />

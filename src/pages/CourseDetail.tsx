@@ -17,6 +17,7 @@ import { LEVELS } from "@/content/tracks";
 import { isPaid } from "@/lib/commerce";
 import { ProfessionalCourseView } from "./ProfessionalCourse";
 import { RecommendedNext } from "@/components/RecommendedNext";
+import { EnrolDialog } from "@/components/EnrolDialog";
 
 export default function CourseDetail() {
   const { slug } = useParams();
@@ -24,6 +25,7 @@ export default function CourseDetail() {
   const learner = useLearner(course);
   const navigate = useNavigate();
   const [starting, setStarting] = useState(false);
+  const [asking, setAsking] = useState(false);
 
   useSeo({
     title: course ? `${course.title} | ${isPaid(course) ? "Professional Programme" : "Free Course"} | CloudTech Academy` : "Course not found | CloudTech Academy",
@@ -45,12 +47,20 @@ export default function CourseDetail() {
   const badges = badgeCount(course);
   const eligible = !!learner.eligibility?.eligible;
 
+  // Signed-in learners who aren't enrolled are asked first, so nobody enrols by accident. Visitors can just read.
   const start = async () => {
+    if (!first) return;
+    if (learner.signedIn && !enrolled) return setAsking(true);
+    navigate(`/learn/${course.slug}/${(enrolled ? resume : first).slug}`);
+  };
+  const confirmEnrol = async () => {
     if (!first) return;
     setStarting(true);
     try {
-      if (learner.signedIn) await (await getBackend()).enroll(course.id);
-      navigate(`/learn/${course.slug}/${(enrolled ? resume : first).slug}`);
+      await (await getBackend()).enroll(course.id);
+      await learner.reload();
+      setAsking(false);
+      navigate(`/learn/${course.slug}/${first.slug}`);
     } finally {
       setStarting(false);
     }
@@ -66,6 +76,7 @@ export default function CourseDetail() {
 
   return (
     <>
+      <EnrolDialog course={course} open={asking} onClose={() => setAsking(false)} onConfirm={confirmEnrol} />
       <section className="border-b border-line">
         <div className="container-page grid gap-10 py-14 sm:py-16 lg:grid-cols-12 lg:py-20">
           <div className="lg:col-span-7">

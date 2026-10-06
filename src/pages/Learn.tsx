@@ -14,6 +14,7 @@ import { colabUrl, hasNotebook } from "@/lib/python/colab";
 import { ProgressBar } from "@/components/ProgressBar";
 import { Button, ButtonLink } from "@/components/Button";
 import { isPaid } from "@/lib/commerce";
+import { EnrolDialog } from "@/components/EnrolDialog";
 import NotFound from "./NotFound";
 
 function CurriculumDrawer({ open, onClose, children }: { open: boolean; onClose: () => void; children: ReactNode }) {
@@ -56,6 +57,7 @@ export default function Learn() {
   const [localDone, setLocalDone] = useState<string[]>([]);
   const [localExercises, setLocalExercises] = useState<string[]>([]);
   const [message, setMessage] = useState<string | null>(null);
+  const [asking, setAsking] = useState(false);
 
   const lessons = course ? publishedLessons(course) : [];
   const index = lessons.findIndex((l) => l.slug === lessonSlug);
@@ -79,15 +81,11 @@ export default function Learn() {
         : undefined,
   });
 
-  // Signed-in learners are enrolled automatically and their place is remembered.
+  // Learners are never enrolled just by opening a lesson: they confirm first. Once enrolled, their place is remembered.
   useEffect(() => {
-    if (!course || !lesson || !learner.signedIn || learner.loading) return;
-    // Paid courses are never self-enrolled: access comes from a payment or an admin.
-    if (isPaid(course) && !learner.enrollment) return;
+    if (!course || !lesson || !learner.signedIn || learner.loading || !learner.enrollment) return;
     void (async () => {
-      const b = await getBackend();
-      if (!learner.enrollment) await b.enroll(course.id);
-      await b.setLastLesson(course.id, lesson.id);
+      await (await getBackend()).setLastLesson(course.id, lesson.id);
     })().catch(() => {});
   }, [course, lesson, learner.signedIn, learner.loading, learner.enrollment]);
 
@@ -123,9 +121,17 @@ export default function Learn() {
   const percent = lessons.length ? Math.round((lessons.filter((l) => completedLessons.includes(l.id)).length / lessons.length) * 100) : 0;
   const sections = lessonSections(lesson.body);
 
+  // Signed in but not enrolled: they can read and try things, but nothing is saved until they choose to enrol.
+  const notEnrolled = learner.signedIn && !learner.loading && !learner.enrollment && !isPaid(course);
+  const confirmEnrol = async () => {
+    await (await getBackend()).enroll(course.id);
+    await learner.reload();
+    setAsking(false);
+  };
+
   const onExerciseSolved = async (exerciseId: string) => {
     setLocalExercises((x) => [...x, exerciseId]);
-    if (!learner.signedIn) return;
+    if (!learner.signedIn || !learner.enrollment) return;
     try {
       await (await getBackend()).recordExercise(course.id, lesson.id, exerciseId);
     } catch (e) {
@@ -134,6 +140,7 @@ export default function Learn() {
   };
 
   const toggleComplete = async () => {
+    if (notEnrolled) return setAsking(true);
     setSaving(true);
     setMessage(null);
     try {
@@ -159,6 +166,16 @@ export default function Learn() {
   const sidebar = <LessonSidebar course={course} currentLessonId={lesson.id} completed={completedLessons} />;
 
   return (
+    <>
+      <EnrolDialog course={course} open={asking} onClose={() => setAsking(false)} onConfirm={confirmEnrol} />
+      {notEnrolled && (
+        <div className="border-b border-brass/30 bg-brass-pale/40">
+          <div className="container-page flex flex-wrap items-center justify-between gap-3 py-3">
+            <p className="text-[0.9375rem]">You are reading without being enrolled. Enrol to save your progress and earn badges.</p>
+            <Button onClick={() => setAsking(true)}>Enrol in this course</Button>
+          </div>
+        </div>
+      )}
     <div className="container-page grid gap-8 py-6 lg:grid-cols-[16rem_minmax(0,1fr)] lg:py-10 xl:grid-cols-[16rem_minmax(0,1fr)_13rem]">
       {/* Curriculum */}
       <aside className="hidden lg:block">
@@ -338,5 +355,6 @@ export default function Learn() {
         </div>
       </aside>
     </div>
+    </>
   );
 }

@@ -37,6 +37,9 @@ import {
   type PaymentSettings,
   type OrderPayment,
   type AdminPayment,
+  type EmailTemplate,
+  type EmailLogEntry,
+  type EmailSetup,
   type ProgrammeStats,
   type AdminProgrammeEnrollment,
   type CertificateEvent,
@@ -69,6 +72,9 @@ type Store = {
   /** Programmes learners hold, and what admins changed about each programme's sales settings. */
   programmes: { userId: string; trackId: string; source: "purchase" | "granted"; enrolledAt: string }[];
   orderPayments: (OrderPayment & { userId: string; proofName?: string | null })[];
+  emails: EmailLogEntry[];
+  emailTemplates: EmailTemplate[] | null;
+  emailSettings: { enabled: boolean; replyTo: string | null } | null;
   paymentAccounts: PaymentAccount[] | null;
   paymentSettings: PaymentSettings | null;
   programmeSales: Record<string, CourseSalesFields> | null;
@@ -109,6 +115,9 @@ const empty = (): Store => ({
   courseOrders: [],
   programmes: [],
   orderPayments: [],
+  emails: [],
+  emailTemplates: null,
+  emailSettings: null,
   paymentAccounts: null,
   paymentSettings: null,
   programmeSales: null,
@@ -428,6 +437,21 @@ export function createDemoBackend(): Backend {
     if (s.programmes.some((p) => p.userId === userId && programmeCourseIds(programmeOf(s, p.trackId)!).includes(courseId))) return true;
     return (s.enrollments[userId] ?? []).some((e) => e.courseId === courseId);
   };
+  const DEFAULT_TEMPLATES: EmailTemplate[] = [
+    { key: "welcome", label: "Welcome email (when someone signs up)", subject: "Welcome to CloudTech Academy, {{name}}", body: "Hi {{name}},\n\nWelcome to CloudTech Academy. We are glad you are here.\n\nYour account is ready. Pick a free course and start with your first lesson today:\n{{link}}\n\nHappy learning,\nCloudTech Academy", enabled: true },
+    { key: "enrolment", label: "Enrolment email (when someone enrols)", subject: "You are enrolled in {{course}}", body: "Hi {{name}},\n\nYou are now enrolled in {{course}}.\n\nContinue learning here:\n{{link}}\n\nCloudTech Academy", enabled: true },
+  ];
+  const templatesOf = (s: Store) => s.emailTemplates ?? DEFAULT_TEMPLATES;
+  const emailsOn = (s: Store) => s.emailSettings?.enabled ?? true;
+  const fill = (text: string, vars: Record<string, string>) => Object.entries(vars).reduce((t, [k, v]) => t.split(`{{${k}}}`).join(v), text);
+  /** Demo mode has no mail server: emails are written to the log and marked as sent so the Emails page can be explored. */
+  const queueEmail = (s: Store, userId: string, template: "welcome" | "enrolment", vars: Record<string, string>) => {
+    const t = templatesOf(s).find((x) => x.key === template);
+    const u = s.users.find((x) => x.id === userId);
+    if (!t || !t.enabled || !u || !emailsOn(s)) return;
+    const v = { name: u.fullName.trim().split(/\s+/)[0] || "there", full_name: u.fullName, site: "https://academy.cloudtechanalytics.com", ...vars };
+    s.emails.push({ id: uid(), toEmail: u.email, toName: u.fullName, template, subject: fill(t.subject, v), body: fill(t.body, v), status: "sent", error: null, createdAt: now(), sentAt: now() });
+  };
   const DEFAULT_ACCOUNTS: PaymentAccount[] = [
     { id: "acc-demo", label: "Bank transfer", bankName: "Demo Bank", accountName: "CloudTech Analytics", accountNumber: "0123456789", instructions: "Use your payment reference as the transfer narration.", currency: "NGN", active: true, position: 1 },
   ];
@@ -484,7 +508,11 @@ export function createDemoBackend(): Backend {
   };
   /** Opens a programme for a learner: the programme itself and every paid course it contains. */
   const openProgramme = (s: Store, userId: string, trackId: string, source: "purchase" | "granted") => {
-    if (!s.programmes.some((p) => p.userId === userId && p.trackId === trackId)) s.programmes.push({ userId, trackId, source, enrolledAt: now() });
+    if (!s.programmes.some((p) => p.userId === userId && p.trackId === trackId)) {
+      s.programmes.push({ userId, trackId, source, enrolledAt: now() });
+      const t = programmeOf(s, trackId)!;
+      queueEmail(s, userId, "enrolment", { course: `the Professional Programme in ${t.programmeTitle ?? t.title}`, link: `https://academy.cloudtechanalytics.com/programmes/${t.slug}` });
+    }
     const list = (s.enrollments[userId] ??= []);
     for (const courseId of programmeCourseIds(programmeOf(s, trackId)!)) {
       const course = courses(s).find((c) => c.id === courseId);
@@ -543,6 +571,7 @@ export function createDemoBackend(): Backend {
       const user: StoredUser = { id: uid(), email: e, fullName: fullName.trim(), role: import.meta.env.DEV && !s.users.length ? "admin" : "student", salt, passwordHash: await hash(password, salt), joinedAt: now() };
       s.users.push(user);
       s.sessionUserId = user.id;
+      queueEmail(s, user.id, "welcome", { link: "https://academy.cloudtechanalytics.com/courses" });
       save(s);
       notify();
       return { needsConfirmation: false };
@@ -670,6 +699,7 @@ export function createDemoBackend(): Backend {
       const course = courses(s).find((c) => c.id === courseId);
       if (course && isPaid(course)) throw new BackendError("This course is paid. Enrol with payment to start it.");
       list.push({ courseId, enrolledAt: now(), completedAt: null, lastLessonId: null, lastActiveAt: now(), source: "free" });
+      if (course) queueEmail(s, u.id, "enrolment", { course: course.title, link: `https://academy.cloudtechanalytics.com/courses/${course.slug}` });
       save(s);
     },
     async setLastLesson(courseId, lessonId) {
@@ -1465,6 +1495,77 @@ export function createDemoBackend(): Backend {
         const s = load();
         if (!TRACKS.some((t) => t.id === trackId)) throw new BackendError("Programme not found.");
         s.programmeSales = { ...(s.programmeSales ?? {}), [trackId]: sales };
+        save(s);
+      },
+      async listEmailTemplates() {
+        requireAdmin();
+        return templatesOf(load());
+      },
+      async saveEmailTemplate(t) {
+        requireAdmin();
+        const s = load();
+        s.emailTemplates = templatesOf(s).map((x) => (x.key === t.key ? { ...x, subject: t.subject.trim(), body: t.body, enabled: t.enabled } : x));
+        save(s);
+      },
+      async listEmailLog() {
+        requireAdmin();
+        return [...load().emails].sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+      },
+      async emailSetup() {
+        requireAdmin();
+        const s = load();
+        return { enabled: emailsOn(s), replyTo: s.emailSettings?.replyTo ?? null, configured: false, from: null } satisfies EmailSetup;
+      },
+      async saveEmailSettings(v) {
+        requireAdmin();
+        const s = load();
+        s.emailSettings = v;
+        save(s);
+      },
+      async sendMessage(userIds, subject, body) {
+        requireAdmin();
+        const s = load();
+        if (subject.trim().length < 2) throw new BackendError("Write a subject.");
+        if (body.trim().length < 2) throw new BackendError("Write a message.");
+        if (!userIds.length) throw new BackendError("Choose who to send it to.");
+        let n = 0;
+        for (const id of userIds) {
+          const u = s.users.find((x) => x.id === id);
+          if (!u) continue;
+          const v = { name: u.fullName.trim().split(/\s+/)[0] || "there" };
+          s.emails.push({ id: uid(), toEmail: u.email, toName: u.fullName, template: "message", subject: fill(subject, v), body: fill(body, v), status: "sent", error: null, createdAt: now(), sentAt: now() });
+          n++;
+        }
+        save(s);
+        return n;
+      },
+      async retryEmails() {
+        requireAdmin();
+        return 0;
+      },
+      async sendQueuedEmails() {
+        requireAdmin();
+        return { configured: false, sent: 0, failed: 0 };
+      },
+      async deleteStudent(userId) {
+        requireAdmin();
+        const s = load();
+        const u = s.users.find((x) => x.id === userId);
+        if (!u) throw new BackendError("Student not found.");
+        if (u.role === "admin") throw new BackendError("Admins cannot be removed here.");
+        const held = s.certificates.filter((c) => c.userId === userId).length;
+        if (held) throw new BackendError(`This student holds ${held} certificate(s), which must stay verifiable. Delete or revoke them first, then remove the student.`);
+        s.users = s.users.filter((x) => x.id !== userId);
+        delete s.enrollments[userId];
+        for (const map of [s.lessons, s.exercises, s.attempts] as Record<string, unknown>[]) for (const k of Object.keys(map)) if (k === userId || k.startsWith(`${userId}|`)) delete map[k];
+        s.submissions = s.submissions.filter((x) => (x as { userId?: string }).userId !== userId);
+        s.credentials = s.credentials.filter((c) => c.userId !== userId);
+        s.orders = s.orders.filter((o) => o.userId !== userId);
+        const orderIds = new Set(s.courseOrders.filter((o) => o.userId === userId).map((o) => o.id));
+        s.courseOrders = s.courseOrders.filter((o) => o.userId !== userId);
+        s.orderPayments = s.orderPayments.filter((p) => !orderIds.has(p.orderId));
+        s.programmes = s.programmes.filter((p) => p.userId !== userId);
+        s.registrations = s.registrations.filter((r) => (r as { userId?: string }).userId !== userId);
         save(s);
       },
       async listPayments() {
