@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 430" width="760" height="430" role="img" aria-label="Building a business case. Options always include doing nothing as the baseline. Benefits are traced as a chain from a process change to customer or staff behaviour to money. Use contribution, not premium or revenue. Net present value discounts future net benefits to today's money; payback is when the cumulative benefit covers the cost. Correlation between slow service and lost customers is not proof of cause.">
+<title>Options, traceable benefits, contribution, NPV and payback.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="430" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="26.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Options always include doing nothing</text>
+<rect x="16.0" y="40.0" width="232.0" height="82.0" rx="10" fill="#FFFFFF" stroke="#5E5A52" stroke-width="1.5"/>
+<text xml:space="preserve" x="30.0" y="66.0" font-size="14" fill="#5E5A52" font-weight="700" text-anchor="start">Do nothing</text>
+<text xml:space="preserve" x="30.0" y="88.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">Baseline. Not free: slow service</text>
+<text xml:space="preserve" x="30.0" y="102.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">keeps costing customers.</text>
+<rect x="264.0" y="40.0" width="232.0" height="82.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.5"/>
+<text xml:space="preserve" x="278.0" y="66.0" font-size="14" fill="#2F6B3F" font-weight="700" text-anchor="start">Fix the process</text>
+<text xml:space="preserve" x="278.0" y="88.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">Cheaper, faster to deliver, uses</text>
+<text xml:space="preserve" x="278.0" y="102.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">what the pilot proved.</text>
+<rect x="512.0" y="40.0" width="232.0" height="82.0" rx="10" fill="#EEEAF5" stroke="#5C4F80" stroke-width="1.5"/>
+<text xml:space="preserve" x="526.0" y="66.0" font-size="14" fill="#5C4F80" font-weight="700" text-anchor="start">Buy a new system</text>
+<text xml:space="preserve" x="526.0" y="88.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">Large cost, long delivery,</text>
+<text xml:space="preserve" x="526.0" y="102.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">supplier's estimate of benefit.</text>
+<text xml:space="preserve" x="16.0" y="154.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Trace every benefit to money</text>
+<rect x="16.0" y="168.0" width="232.0" height="64.0" rx="10" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.5"/>
+<text xml:space="preserve" x="30.0" y="192.0" font-size="13" fill="#2F5D8A" font-weight="700" text-anchor="start">Process change</text>
+<text xml:space="preserve" x="30.0" y="212.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">e.g. address checklist</text>
+<path d="M250.0,200.0 L262.0,200.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="264.0" y="168.0" width="232.0" height="64.0" rx="10" fill="#F3EBD8" stroke="#B38A3E" stroke-width="1.5"/>
+<text xml:space="preserve" x="278.0" y="192.0" font-size="13" fill="#8A6A1F" font-weight="700" text-anchor="start">What people do</text>
+<text xml:space="preserve" x="278.0" y="212.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">fewer failed deliveries;</text>
+<text xml:space="preserve" x="278.0" y="226.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">customers rebook</text>
+<path d="M498.0,200.0 L510.0,200.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="512.0" y="168.0" width="232.0" height="64.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.5"/>
+<text xml:space="preserve" x="526.0" y="192.0" font-size="13" fill="#2F6B3F" font-weight="700" text-anchor="start">Money</text>
+<text xml:space="preserve" x="526.0" y="212.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">repeat orders, fewer redeliveries</text>
+<text xml:space="preserve" x="16.0" y="264.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Count contribution, not revenue</text>
+<text xml:space="preserve" x="16.0" y="284.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">A repeat customer brings revenue, but part of it pays future costs. Use what's left.</text>
+<text xml:space="preserve" x="16.0" y="322.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Judge it over time</text>
+<rect x="16.0" y="336.0" width="358.0" height="70.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.4"/>
+<text xml:space="preserve" x="30.0" y="360.0" font-size="11" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">NPV = −cost today + Σ net benefit ÷ (1 + rate)^year</text>
+<text xml:space="preserve" x="30.0" y="384.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">Benefits later are worth less than benefits now.</text>
+<rect x="386.0" y="336.0" width="358.0" height="70.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.4"/>
+<text xml:space="preserve" x="400.0" y="360.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">Payback</text>
+<text xml:space="preserve" x="400.0" y="384.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">How long until cumulative benefit covers the cost.</text>
+</g></svg>

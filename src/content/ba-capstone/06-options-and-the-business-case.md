@@ -10,11 +10,11 @@ Three options are on the table, in `options.csv`. The head of IT is pushing the 
 
 ## The concept
 
-**Options always include doing nothing**
+### Options always include doing nothing
 
 "Do nothing" is the baseline the others are measured against. It isn't free: slow claims keep costing renewals.
 
-**Benefits you can trace**
+### Benefits you can trace
 
 Each benefit should follow a chain: a change in the process → a change in what customers or staff do → money. Here:
 
@@ -22,17 +22,19 @@ Each benefit should follow a chain: a change in the process → a change in what
 - **Inspections avoided.** Windscreen claims no longer need a physical inspection.
 - **Document chasing avoided.** Fewer requests means less staff time.
 
-**Count contribution, not premium**
+### Count contribution, not premium
 
 A renewed policy brings in premium, but much of that premium pays future claims and costs. Use the **contribution** (what's left), which Shieldline's finance team puts at 35% of premium.
 
-**NPV and payback**
+### NPV and payback
 
 Net present value discounts future net benefits to today's money: NPV = −cost today + Σ net benefit ÷ (1 + rate)^year. Shieldline uses 15% and a three-year horizon. Payback is the time until the cumulative net benefit covers the up-front cost.
 
-**Correlation isn't proof**
+### Correlation isn't proof
 
 Customers with slow claims renew less. Some of that gap could be about the claims themselves (bigger, more stressful accidents take longer). Say so, and use the pilot's measured changes rather than the most optimistic figure.
+
+![Options including doing nothing, benefits traced from process change to money, contribution not revenue, NPV and payback](/images/courses/ba-capstone/business-case.svg "Options, traceable benefits, contribution, NPV and payback.")
 
 ## Example
 

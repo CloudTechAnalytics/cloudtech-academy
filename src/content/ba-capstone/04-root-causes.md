@@ -10,11 +10,11 @@ You now know where the time goes. Next is **why**. Each stakeholder has a theory
 
 ## The concept
 
-**A Pareto view of the delay**
+### A Pareto view of the delay
 
 Group the waits into stages and rank them. Fixing the biggest stage first gives the most benefit.
 
-**Five whys**
+### Five whys
 
 Keep asking why until you reach something the business controls. For documents, for example:
 
@@ -24,7 +24,9 @@ Keep asking why until you reach something the business controls. For documents, 
 4. Why from agents? Agents fill paper forms with no checklist, and post them to the branch.
 5. Why no checklist? Agents are paid on sales, and nobody owns claims quality in the agency channel.
 
-**Evidence for every cause**
+![A Pareto chart of delay by stage with invented numbers, and a five-whys chain ending in a cause the business controls](/images/courses/ba-capstone/root-causes.svg "Rank the delay by stage, then ask why five times.")
+
+### Evidence for every cause
 
 Each cause needs a number from the data, and ideally a quote from an interview that explains it. Numbers show **that** something happens; people explain **why**.
 

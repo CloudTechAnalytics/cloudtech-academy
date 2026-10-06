@@ -10,11 +10,11 @@ The board meets in a week. Its members won't read 40 slides. They need one short
 
 ## The concept
 
-**Answer first**
+### Answer first
 
 Start with the decision you're asking for, in one sentence, then the reasons. The board can stop reading at any point and still know what you recommend.
 
-**The shape of a decision paper**
+### The shape of a decision paper
 
 | Section | Content | From |
 | :-- | :-- | :-- |
@@ -26,11 +26,13 @@ Start with the decision you're asking for, in one sentence, then the reasons. Th
 | Conditions and risks | UAT fixes, controls, the audit, Port Harcourt's capacity | lesson 7 |
 | Measures | KPIs, baselines and targets, and when you'll report | lesson 7 |
 
-**One chart that carries the argument**
+![The seven sections of a decision paper, one chart that carries the argument, and answers prepared for each stakeholder's hardest question](/images/courses/ba-capstone/decision-paper.svg "Answer first; one chart; answers ready for each stakeholder.")
+
+### One chart that carries the argument
 
 Choose the chart that makes the case on its own. Here it's monthly days to settle for Lagos against the other regions: the lines run together for nine months, then Lagos drops when the pilot starts.
 
-**Prepare for the hard questions**
+### Prepare for the hard questions
 
 Every stakeholder from lesson 1 will read the paper through their own concern. The head of IT will ask why not the new system, the finance controller about fraud, and the agency manager about agents' workload. Write each likely question with a short, evidenced answer.
 

@@ -66900,7 +66900,7 @@ Notice what the brief contains: a symptom ("too long"), two consequences (custom
 
 ## The concept
 
-**The arc of a BA project**
+### The arc of a BA project
 
 | Stage | Output | Lesson |
 | :-- | :-- | :-- |
@@ -66913,17 +66913,19 @@ Notice what the brief contains: a symptom ("too long"), two consequences (custom
 | 7. Requirements and readiness | User stories, acceptance criteria, test results and a go/no-go | 7 |
 | 8. Present | A decision paper the board can approve | 8 |
 
+![The eight stages of a business analysis project, and a typical brief taken apart into symptom, consequences, experiment and proposed solution](/images/courses/ba-capstone/ba-arc.svg "Eight stages, and what a typical brief is made of.")
+
 Use the tools you know: SQL, Excel or Power BI. The lessons show SQL, which answers every question here; the same steps work as pivot tables or DAX measures.
 
-**A problem statement, not a solution**
+### A problem statement, not a solution
 
 A good problem statement says **who** is affected, **what** happens, **how much** (with a number), and **why it matters** to the business. It doesn't name a solution: "We need a new claims system" is a solution, and it closes off the options before you know the cause.
 
-**Scope**
+### Scope
 
 Say what's in and what's out. In: motor claims from submission to payment, the five regions, July 2025 to June 2026. Out: underwriting and pricing, non-motor products, and choosing a system vendor.
 
-**Definitions before numbers**
+### Definitions before numbers
 
 | Term | Definition |
 | :-- | :-- |
@@ -66934,7 +66936,9 @@ Say what's in and what's out. In: motor claims from submission to payment, the f
 
 Write these down before you calculate anything. Without them, two analysts get two different "average days" from the same data and the board stops trusting both.
 
-**Stakeholders**
+![A four-part problem statement, in and out of scope, definitions written first, and an influence and interest grid for stakeholders](/images/courses/ba-capstone/problem-scope.svg "Problem statement, scope, definitions and stakeholders.")
+
+### Stakeholders
 
 Plot each stakeholder by **influence** and **interest**. Manage closely those high on both, keep satisfied those with high influence but less interest, and keep informed those with high interest but little influence.
 
@@ -67075,15 +67079,17 @@ Everyone at Shieldline has a theory. The agency manager blames the claims desk; 
 
 ## The concept
 
-**Cut the headline by every dimension you have**
+### Cut the headline by every dimension you have
 
 Average days to settle is 25.2. Break it down by **channel** (how the claim came in), **region** and **claim type**. Look for the groups that stand out and the ones that don't.
 
-**Look at every outcome, not just the happy one**
+![An invented headline average cut by channel and by depot, every outcome including failures, and customers' own words](/images/courses/ba-capstone/slice-metric.svg "Cut the headline by every dimension, and look at every outcome.")
+
+### Look at every outcome, not just the happy one
 
 Paid claims are only part of the story. Claims that are **withdrawn** (closed because the customer stopped responding) are a failure the average hides.
 
-**Customers' own words**
+### Customers' own words
 
 Complaints tell you what customers experience, which isn't always what the business measures. A claim "in progress" in the system can feel like silence to the customer.
 
@@ -67269,21 +67275,23 @@ Shieldline's procedure manual shows a neat claims process: register, check, insp
 
 ## The concept
 
-**An event log**
+### An event log
 
 Each row is one step: a **case** (the claim), an **activity**, a **timestamp** and who did it (the **team**). Order the rows by case and time and you have each claim's path.
 
-**Variants**
+### Variants
 
 A variant is one distinct path through the process. The most common variant is the "happy path". How many claims follow it, and what the other variants have in common, tells you where the process breaks.
 
-**Rework**
+### Rework
 
 A loop back to an earlier step, here *Documents requested → Documents received → Documents checked*, repeated. Every loop adds days and work.
 
-**Waiting time versus working time**
+### Waiting time versus working time
 
 The gap between two steps is mostly **waiting**: the claim sits in a queue. Most of a slow process is waiting, not work. Find the longest gaps.
+
+![An event log with one row per step, counted variants of the process, and a bar showing waiting versus working time](/images/courses/ba-capstone/event-log.svg "Event log, variants, rework and waiting time.")
 
 ## Example
 
@@ -67453,11 +67461,11 @@ You now know where the time goes. Next is **why**. Each stakeholder has a theory
 
 ## The concept
 
-**A Pareto view of the delay**
+### A Pareto view of the delay
 
 Group the waits into stages and rank them. Fixing the biggest stage first gives the most benefit.
 
-**Five whys**
+### Five whys
 
 Keep asking why until you reach something the business controls. For documents, for example:
 
@@ -67467,7 +67475,9 @@ Keep asking why until you reach something the business controls. For documents, 
 4. Why from agents? Agents fill paper forms with no checklist, and post them to the branch.
 5. Why no checklist? Agents are paid on sales, and nobody owns claims quality in the agency channel.
 
-**Evidence for every cause**
+![A Pareto chart of delay by stage with invented numbers, and a five-whys chain ending in a cause the business controls](/images/courses/ba-capstone/root-causes.svg "Rank the delay by stage, then ask why five times.")
+
+### Evidence for every cause
 
 Each cause needs a number from the data, and ideally a quote from an interview that explains it. Numbers show **that** something happens; people explain **why**.
 
@@ -67693,21 +67703,23 @@ The Lagos claims manager says claims are "much faster". The head of IT says Apri
 
 ## The concept
 
-**Before and after isn't enough**
+### Before and after isn't enough
 
 Comparing Lagos in April to June with Lagos before mixes the pilot's effect with anything else that changed at the same time. April brings the rainy season, more accidents and busier assessors **everywhere**.
 
-**A comparison group**
+### A comparison group
 
 The other four regions didn't get the changes but did get the season. Their change over the same period shows what would probably have happened in Lagos without the pilot.
 
-**Difference in differences**
+### Difference in differences
 
 (Lagos after − Lagos before) − (others after − others before). The second bracket removes whatever affected everyone. It assumes Lagos and the other regions would otherwise have moved together, so check that they were similar before.
 
-**Check what it mustn't harm**
+### Check what it mustn't harm
 
 A faster process that rejects good claims or approves bad ones isn't a success. Look at rejection rates and the controls.
+
+![Difference in differences with invented numbers: the pilot group's change minus the comparison group's change gives the effect, removing the season](/images/courses/ba-capstone/did.svg "Subtract the comparison group's change to remove the season.")
 
 ## Example
 
@@ -67880,11 +67892,11 @@ Three options are on the table, in `options.csv`. The head of IT is pushing the 
 
 ## The concept
 
-**Options always include doing nothing**
+### Options always include doing nothing
 
 "Do nothing" is the baseline the others are measured against. It isn't free: slow claims keep costing renewals.
 
-**Benefits you can trace**
+### Benefits you can trace
 
 Each benefit should follow a chain: a change in the process → a change in what customers or staff do → money. Here:
 
@@ -67892,17 +67904,19 @@ Each benefit should follow a chain: a change in the process → a change in what
 - **Inspections avoided.** Windscreen claims no longer need a physical inspection.
 - **Document chasing avoided.** Fewer requests means less staff time.
 
-**Count contribution, not premium**
+### Count contribution, not premium
 
 A renewed policy brings in premium, but much of that premium pays future claims and costs. Use the **contribution** (what's left), which Shieldline's finance team puts at 35% of premium.
 
-**NPV and payback**
+### NPV and payback
 
 Net present value discounts future net benefits to today's money: NPV = −cost today + Σ net benefit ÷ (1 + rate)^year. Shieldline uses 15% and a three-year horizon. Payback is the time until the cumulative net benefit covers the up-front cost.
 
-**Correlation isn't proof**
+### Correlation isn't proof
 
 Customers with slow claims renew less. Some of that gap could be about the claims themselves (bigger, more stressful accidents take longer). Say so, and use the pilot's measured changes rather than the most optimistic figure.
+
+![Options including doing nothing, benefits traced from process change to money, contribution not revenue, NPV and payback](/images/courses/ba-capstone/business-case.svg "Options, traceable benefits, contribution, NPV and payback.")
 
 ## Example
 
@@ -68095,7 +68109,7 @@ The Lagos pilot was run with workarounds: a checklist app built quickly, and ass
 
 ## The concept
 
-**From cause to requirement**
+### From cause to requirement
 
 Every requirement should trace back to a root cause, so nobody builds something that doesn't solve a real problem:
 
@@ -68107,7 +68121,7 @@ Every requirement should trace back to a root cause, so nobody builds something 
 | Customers not knowing what's happening | SMS updates at each stage, naming anything missing |
 | No way to see if it's working | A daily dashboard of days to settle by region |
 
-**Business rules and controls**
+### Business rules and controls
 
 The finance controller's worry is fair: if assessors can approve payments, who checks them? Write the controls as rules:
 
@@ -68116,17 +68130,19 @@ The finance controller's worry is fair: if assessors can approve payments, who c
 - If a claim's amount changes **after** approval, the approval is cancelled and the claim goes back for approval.
 - Finance receives a weekly report of every assessor approval, and audits a sample.
 
-**User stories and acceptance criteria**
+### User stories and acceptance criteria
 
 *As a [role], I want [capability], so that [benefit].* Then acceptance criteria in *Given / When / Then* form, including the cases that **must fail**, which is where the controls live.
 
-**Measures**
+### Measures
 
 Define the KPIs before rollout, exactly: days to settle (paid claims, `closed_at − submitted_at`), % of claims with documents requested, % paid within 30 days, withdrawals, complaints per 100 claims, and assessor approvals audited. Each needs a baseline and a target.
 
-**Go or no-go**
+### Go or no-go
 
 Agree the exit criteria before testing: for example, **no open critical or major defects**, and minor ones only with a workaround and a fix date.
+
+![Requirements traced to root causes, business rules and a user story with a test that must fail, and go, conditional go and no-go criteria](/images/courses/ba-capstone/requirements-trace.svg "Root cause to requirement to rule to test to go/no-go.")
 
 ## Example
 
@@ -68269,11 +68285,11 @@ The board meets in a week. Its members won't read 40 slides. They need one short
 
 ## The concept
 
-**Answer first**
+### Answer first
 
 Start with the decision you're asking for, in one sentence, then the reasons. The board can stop reading at any point and still know what you recommend.
 
-**The shape of a decision paper**
+### The shape of a decision paper
 
 | Section | Content | From |
 | :-- | :-- | :-- |
@@ -68285,11 +68301,13 @@ Start with the decision you're asking for, in one sentence, then the reasons. Th
 | Conditions and risks | UAT fixes, controls, the audit, Port Harcourt's capacity | lesson 7 |
 | Measures | KPIs, baselines and targets, and when you'll report | lesson 7 |
 
-**One chart that carries the argument**
+![The seven sections of a decision paper, one chart that carries the argument, and answers prepared for each stakeholder's hardest question](/images/courses/ba-capstone/decision-paper.svg "Answer first; one chart; answers ready for each stakeholder.")
+
+### One chart that carries the argument
 
 Choose the chart that makes the case on its own. Here it's monthly days to settle for Lagos against the other regions: the lines run together for nine months, then Lagos drops when the pilot starts.
 
-**Prepare for the hard questions**
+### Prepare for the hard questions
 
 Every stakeholder from lesson 1 will read the paper through their own concern. The head of IT will ask why not the new system, the finance controller about fraud, and the agency manager about agents' workload. Write each likely question with a short, evidenced answer.
 

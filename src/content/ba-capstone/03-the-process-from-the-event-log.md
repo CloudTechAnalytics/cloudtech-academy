@@ -10,21 +10,23 @@ Shieldline's procedure manual shows a neat claims process: register, check, insp
 
 ## The concept
 
-**An event log**
+### An event log
 
 Each row is one step: a **case** (the claim), an **activity**, a **timestamp** and who did it (the **team**). Order the rows by case and time and you have each claim's path.
 
-**Variants**
+### Variants
 
 A variant is one distinct path through the process. The most common variant is the "happy path". How many claims follow it, and what the other variants have in common, tells you where the process breaks.
 
-**Rework**
+### Rework
 
 A loop back to an earlier step, here *Documents requested → Documents received → Documents checked*, repeated. Every loop adds days and work.
 
-**Waiting time versus working time**
+### Waiting time versus working time
 
 The gap between two steps is mostly **waiting**: the claim sits in a queue. Most of a slow process is waiting, not work. Find the longest gaps.
+
+![An event log with one row per step, counted variants of the process, and a bar showing waiting versus working time](/images/courses/ba-capstone/event-log.svg "Event log, variants, rework and waiting time.")
 
 ## Example
 

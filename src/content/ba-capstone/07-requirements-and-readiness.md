@@ -10,7 +10,7 @@ The Lagos pilot was run with workarounds: a checklist app built quickly, and ass
 
 ## The concept
 
-**From cause to requirement**
+### From cause to requirement
 
 Every requirement should trace back to a root cause, so nobody builds something that doesn't solve a real problem:
 
@@ -22,7 +22,7 @@ Every requirement should trace back to a root cause, so nobody builds something 
 | Customers not knowing what's happening | SMS updates at each stage, naming anything missing |
 | No way to see if it's working | A daily dashboard of days to settle by region |
 
-**Business rules and controls**
+### Business rules and controls
 
 The finance controller's worry is fair: if assessors can approve payments, who checks them? Write the controls as rules:
 
@@ -31,17 +31,19 @@ The finance controller's worry is fair: if assessors can approve payments, who c
 - If a claim's amount changes **after** approval, the approval is cancelled and the claim goes back for approval.
 - Finance receives a weekly report of every assessor approval, and audits a sample.
 
-**User stories and acceptance criteria**
+### User stories and acceptance criteria
 
 *As a [role], I want [capability], so that [benefit].* Then acceptance criteria in *Given / When / Then* form, including the cases that **must fail**, which is where the controls live.
 
-**Measures**
+### Measures
 
 Define the KPIs before rollout, exactly: days to settle (paid claims, `closed_at − submitted_at`), % of claims with documents requested, % paid within 30 days, withdrawals, complaints per 100 claims, and assessor approvals audited. Each needs a baseline and a target.
 
-**Go or no-go**
+### Go or no-go
 
 Agree the exit criteria before testing: for example, **no open critical or major defects**, and minor ones only with a workaround and a fix date.
+
+![Requirements traced to root causes, business rules and a user story with a test that must fail, and go, conditional go and no-go criteria](/images/courses/ba-capstone/requirements-trace.svg "Root cause to requirement to rule to test to go/no-go.")
 
 ## Example
 
