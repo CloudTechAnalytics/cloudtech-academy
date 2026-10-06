@@ -9083,6 +9083,8 @@ A good offer answers four questions:
 
 Write it in one sentence: *"I design three Instagram flyers for small food businesses, delivered in 3 days with two rounds of changes."*
 
+![Four questions (what they get, for whom, how fast, what is included) combine into one clear sentence offer](/images/courses/freelancing/offer-builder.svg "Four answers make one clear offer.")
+
 ## Build samples before your first client
 
 Clients want to see work. If you don't have clients yet:
@@ -9090,6 +9092,8 @@ Clients want to see work. If you don't have clients yet:
 - Make **3–5 sample pieces** for imaginary or real local businesses (don't use their real logos without permission; say they're concept pieces).
 - **Redesign** something you see: a poor flyer, a messy spreadsheet.
 - Do **one or two jobs** for someone you know, in exchange for a testimonial.
+
+![How a freelancer grows: samples, first jobs for people you know, reviews, higher prices and repeat clients, with reviews and referrals feeding the next job](/images/courses/freelancing/growth-loop.svg "Samples lead to first jobs, reviews, higher prices and repeat clients.")
 
 > [!TIP]
 > Put your samples on a simple portfolio page (see the Build Your Student Portfolio course). One link does the selling for you.
@@ -9158,6 +9162,8 @@ Platforms take a fee (often around 10–20%), and competition is high. Your firs
 - **Local businesses:** shops, restaurants and salons that need flyers, social posts or spreadsheets.
 - **Social media:** post your samples on Instagram, X, LinkedIn and your WhatsApp status with a clear call to action.
 
+![Freelance platforms compared with direct clients, and the parts of a profile that wins work](/images/courses/freelancing/find-clients.svg "Platforms reach far; direct clients are often easier at first.")
+
 ## A profile that wins work
 
 On any platform:
@@ -9174,6 +9180,8 @@ On any platform:
 - For direct clients, ask for **50% upfront** and 50% on delivery, or 100% upfront for small jobs.
 - For foreign payments, use the platform's withdrawal options or services such as Payoneer, then withdraw to your Nigerian bank account. Compare fees and exchange rates.
 - Keep a simple **record** in Google Sheets: client, job, amount, date paid.
+
+![A direct job with 50 percent upfront and 50 percent on delivery, platform and foreign payment tips, and warning signs of scam clients](/images/courses/freelancing/get-paid.svg "Take part payment upfront, keep platform payments on the platform, and spot scam clients.")
 
 > [!WARNING]
 > Scammers pose as clients too. Never pay to "unlock" a job, never share your bank login or OTP, and be wary of cheques or "overpayments" where you're asked to send money back.
@@ -9243,6 +9251,8 @@ Three simple ways to set a price:
 | **Per hour** | Your hourly rate × hours | Ongoing or unclear work |
 | **Packages** | Basic, Standard, Premium | Fiverr gigs and repeat clients |
 
+![Three ways to price (per project, per hour, packages) and an invented three-tier package example for spreadsheet cleaning](/images/courses/freelancing/pricing.svg "Per project, per hour, or packages.")
+
 To find a starting point:
 
 1. Look at what others with similar samples charge on platforms and locally.
@@ -9276,6 +9286,8 @@ Tosin
 3. **Plan:** what you'll deliver and when.
 4. **Price and next step.**
 
+![A short proposal with four labelled parts: show you read the brief, proof, plan, and price with next step](/images/courses/freelancing/proposal.svg "A proposal is short and about the client.")
+
 ## Agree the scope in writing
 
 Before you start, confirm in a message or email:
@@ -9284,6 +9296,8 @@ Before you start, confirm in a message or email:
 - The deadline.
 - How many **rounds of changes** are included.
 - The price and payment terms.
+
+![Four things to confirm in writing before you start, and what to do when a change request is within scope or outside it](/images/courses/freelancing/scope.svg "Agree scope in writing; price anything outside it.")
 
 This prevents "just one more small change" turning into ten.
 
@@ -9388,6 +9402,8 @@ Reviews and referrals are how freelancers grow.
 - On platforms, politely ask for a review once they're happy: *"I'm glad you like it! If you have a moment, a review would really help my business."*
 - For direct clients, ask for a **short testimonial** you can put on your portfolio.
 - Offer a small discount on their **next** job, or check in a month later: *"Do you need flyers for next month's promo?"*
+
+![What to do while you work, when you deliver and after the job to earn reviews and repeat clients](/images/courses/freelancing/deliver-reviews.svg "Communicate, deliver cleanly, then ask for the review.")
 
 ## Balance it with school
 

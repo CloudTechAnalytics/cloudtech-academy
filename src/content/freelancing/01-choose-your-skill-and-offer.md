@@ -36,6 +36,8 @@ A good offer answers four questions:
 
 Write it in one sentence: *"I design three Instagram flyers for small food businesses, delivered in 3 days with two rounds of changes."*
 
+![Four questions (what they get, for whom, how fast, what is included) combine into one clear sentence offer](/images/courses/freelancing/offer-builder.svg "Four answers make one clear offer.")
+
 ## Build samples before your first client
 
 Clients want to see work. If you don't have clients yet:
@@ -43,6 +45,8 @@ Clients want to see work. If you don't have clients yet:
 - Make **3–5 sample pieces** for imaginary or real local businesses (don't use their real logos without permission; say they're concept pieces).
 - **Redesign** something you see: a poor flyer, a messy spreadsheet.
 - Do **one or two jobs** for someone you know, in exchange for a testimonial.
+
+![How a freelancer grows: samples, first jobs for people you know, reviews, higher prices and repeat clients, with reviews and referrals feeding the next job](/images/courses/freelancing/growth-loop.svg "Samples lead to first jobs, reviews, higher prices and repeat clients.")
 
 > [!TIP]
 > Put your samples on a simple portfolio page (see the Build Your Student Portfolio course). One link does the selling for you.

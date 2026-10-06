@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 400" width="760" height="400" role="img" aria-label="Three ways to price: per project for a defined result, per hour for ongoing or unclear work, and packages with Basic, Standard and Premium tiers. The example package: Basic cleans one spreadsheet for 5,000 naira, Standard cleans three for 12,000, Premium cleans three and adds a dashboard in 24 hours for 25,000. Start slightly lower, then raise prices every few jobs.">
+<title>Per project, per hour, or packages.</title>
+
+<rect width="760" height="400" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="26.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Three ways to price</text>
+<rect x="16.0" y="40.0" width="232.0" height="92.0" rx="10" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.5"/>
+<text xml:space="preserve" x="30.0" y="66.0" font-size="14.5" fill="#2F5D8A" font-weight="700" text-anchor="start">Per project</text>
+<text xml:space="preserve" x="30.0" y="88.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Fixed price for a defined result</text>
+<text xml:space="preserve" x="30.0" y="112.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">Good for: Most beginner work</text>
+<rect x="264.0" y="40.0" width="232.0" height="92.0" rx="10" fill="#F3EBD8" stroke="#B38A3E" stroke-width="1.5"/>
+<text xml:space="preserve" x="278.0" y="66.0" font-size="14.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Per hour</text>
+<text xml:space="preserve" x="278.0" y="88.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Hourly rate × hours</text>
+<text xml:space="preserve" x="278.0" y="112.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">Good for: Ongoing or unclear work</text>
+<rect x="512.0" y="40.0" width="232.0" height="92.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.5"/>
+<text xml:space="preserve" x="526.0" y="66.0" font-size="14.5" fill="#2F6B3F" font-weight="700" text-anchor="start">Packages</text>
+<text xml:space="preserve" x="526.0" y="88.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Basic, Standard, Premium</text>
+<text xml:space="preserve" x="526.0" y="112.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">Good for: Platform gigs; repeat clients</text>
+<text xml:space="preserve" x="16.0" y="166.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">A package example (invented): spreadsheet cleaning</text>
+<rect x="16.0" y="180.0" width="232.0" height="154.0" rx="10" fill="#FFFFFF" stroke="#5E5A52" stroke-width="1.4"/>
+<text xml:space="preserve" x="30.0" y="206.0" font-size="14.5" fill="#5E5A52" font-weight="700" text-anchor="start">Basic</text>
+<text xml:space="preserve" x="234.0" y="206.0" font-size="15" fill="#2A2926" font-weight="700" text-anchor="end">₦5,000</text>
+<text xml:space="preserve" x="30.0" y="232.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">✓  1 spreadsheet</text>
+<text xml:space="preserve" x="30.0" y="256.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">✓  2 days</text>
+<rect x="264.0" y="180.0" width="232.0" height="154.0" rx="10" fill="#F3EBD8" stroke="#8A6A1F" stroke-width="2.2"/>
+<text xml:space="preserve" x="278.0" y="206.0" font-size="14.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Standard</text>
+<text xml:space="preserve" x="482.0" y="206.0" font-size="15" fill="#2A2926" font-weight="700" text-anchor="end">₦12,000</text>
+<text xml:space="preserve" x="278.0" y="232.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">✓  3 spreadsheets</text>
+<text xml:space="preserve" x="278.0" y="256.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">✓  3 days</text>
+<text xml:space="preserve" x="278.0" y="280.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">✓  1 round of changes</text>
+<rect x="512.0" y="180.0" width="232.0" height="154.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.4"/>
+<text xml:space="preserve" x="526.0" y="206.0" font-size="14.5" fill="#2F6B3F" font-weight="700" text-anchor="start">Premium</text>
+<text xml:space="preserve" x="730.0" y="206.0" font-size="15" fill="#2A2926" font-weight="700" text-anchor="end">₦25,000</text>
+<text xml:space="preserve" x="526.0" y="232.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">✓  3 spreadsheets</text>
+<text xml:space="preserve" x="526.0" y="256.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">✓  plus a dashboard</text>
+<text xml:space="preserve" x="526.0" y="280.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">✓  24-hour turnaround</text>
+<text xml:space="preserve" x="16.0" y="366.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Estimate your time honestly, including changes and messages.</text>
+<text xml:space="preserve" x="16.0" y="388.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">Start slightly lower while you build reviews, then raise prices every few jobs.</text>
+</g></svg>

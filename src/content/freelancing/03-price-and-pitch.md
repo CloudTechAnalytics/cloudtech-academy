@@ -14,6 +14,8 @@ Three simple ways to set a price:
 | **Per hour** | Your hourly rate × hours | Ongoing or unclear work |
 | **Packages** | Basic, Standard, Premium | Fiverr gigs and repeat clients |
 
+![Three ways to price (per project, per hour, packages) and an invented three-tier package example for spreadsheet cleaning](/images/courses/freelancing/pricing.svg "Per project, per hour, or packages.")
+
 To find a starting point:
 
 1. Look at what others with similar samples charge on platforms and locally.
@@ -47,6 +49,8 @@ Tosin
 3. **Plan:** what you'll deliver and when.
 4. **Price and next step.**
 
+![A short proposal with four labelled parts: show you read the brief, proof, plan, and price with next step](/images/courses/freelancing/proposal.svg "A proposal is short and about the client.")
+
 ## Agree the scope in writing
 
 Before you start, confirm in a message or email:
@@ -55,6 +59,8 @@ Before you start, confirm in a message or email:
 - The deadline.
 - How many **rounds of changes** are included.
 - The price and payment terms.
+
+![Four things to confirm in writing before you start, and what to do when a change request is within scope or outside it](/images/courses/freelancing/scope.svg "Agree scope in writing; price anything outside it.")
 
 This prevents "just one more small change" turning into ten.
 

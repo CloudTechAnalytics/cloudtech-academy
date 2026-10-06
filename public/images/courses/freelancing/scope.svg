@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 400" width="760" height="400" role="img" aria-label="Agree the scope in writing before you start: what you deliver and in what format, the deadline, how many rounds of changes are included, and the price and payment terms. Then handle requests: a change within the agreed rounds is done promptly; a change outside scope gets a polite explanation and a price.">
+<title>Agree scope in writing; price anything outside it.</title>
+<defs><marker id="a9B2C1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#9B2C1F"/></marker><marker id="a2F6B3F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2F6B3F"/></marker></defs>
+<rect width="760" height="400" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="28.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Confirm four things in a message before you start</text>
+<rect x="16.0" y="42.0" width="166.0" height="80.0" rx="10" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.5"/>
+<text xml:space="preserve" x="28.0" y="68.0" font-size="13" fill="#2F5D8A" font-weight="700" text-anchor="start">Deliverables</text>
+<text xml:space="preserve" x="28.0" y="90.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">What, in which format</text>
+<rect x="202.0" y="42.0" width="166.0" height="80.0" rx="10" fill="#F3EBD8" stroke="#B38A3E" stroke-width="1.5"/>
+<text xml:space="preserve" x="214.0" y="68.0" font-size="13" fill="#8A6A1F" font-weight="700" text-anchor="start">Deadline</text>
+<text xml:space="preserve" x="214.0" y="90.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">A date, not 'soon'</text>
+<rect x="388.0" y="42.0" width="166.0" height="80.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.5"/>
+<text xml:space="preserve" x="400.0" y="68.0" font-size="13" fill="#2F6B3F" font-weight="700" text-anchor="start">Rounds of changes</text>
+<text xml:space="preserve" x="400.0" y="90.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">How many are included</text>
+<rect x="574.0" y="42.0" width="166.0" height="80.0" rx="10" fill="#EEEAF5" stroke="#5C4F80" stroke-width="1.5"/>
+<text xml:space="preserve" x="586.0" y="68.0" font-size="13" fill="#5C4F80" font-weight="700" text-anchor="start">Price and payment</text>
+<text xml:space="preserve" x="586.0" y="90.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Amount, when it's due</text>
+<text xml:space="preserve" x="16.0" y="166.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">When the client asks for a change</text>
+<rect x="280.0" y="180.0" width="200.0" height="46.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="380.0" y="208.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="middle">Is it within the agreed scope?</text>
+<path d="M300.0,228.0 L180.0,262.0" fill="none" stroke="#2F6B3F" stroke-width="2" marker-end="url(#a2F6B3F)"/>
+<path d="M460.0,228.0 L580.0,262.0" fill="none" stroke="#9B2C1F" stroke-width="2" marker-end="url(#a9B2C1F)"/>
+<rect x="16.0" y="266.0" width="340.0" height="90.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.6"/>
+<text xml:space="preserve" x="30.0" y="292.0" font-size="14" fill="#2F6B3F" font-weight="700" text-anchor="start">Yes, within the rounds</text>
+<text xml:space="preserve" x="30.0" y="314.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Do it promptly and cheerfully.</text>
+<rect x="404.0" y="266.0" width="340.0" height="90.0" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.6"/>
+<text xml:space="preserve" x="418.0" y="292.0" font-size="14" fill="#9B2C1F" font-weight="700" text-anchor="start">No, it's extra</text>
+<text xml:space="preserve" x="418.0" y="314.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Explain politely and offer a price: "A fourth</text>
+<text xml:space="preserve" x="418.0" y="330.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">flyer would be ₦5,000 extra."</text>
+<text xml:space="preserve" x="16.0" y="386.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">This stops "just one more small change" turning into ten.</text>
+</g></svg>

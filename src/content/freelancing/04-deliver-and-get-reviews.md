@@ -35,6 +35,8 @@ Reviews and referrals are how freelancers grow.
 - For direct clients, ask for a **short testimonial** you can put on your portfolio.
 - Offer a small discount on their **next** job, or check in a month later: *"Do you need flyers for next month's promo?"*
 
+![What to do while you work, when you deliver and after the job to earn reviews and repeat clients](/images/courses/freelancing/deliver-reviews.svg "Communicate, deliver cleanly, then ask for the review.")
+
 ## Balance it with school
 
 - Set **fixed hours** for freelance work, and protect exam periods.

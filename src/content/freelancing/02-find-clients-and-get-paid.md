@@ -22,6 +22,8 @@ Platforms take a fee (often around 10–20%), and competition is high. Your firs
 - **Local businesses:** shops, restaurants and salons that need flyers, social posts or spreadsheets.
 - **Social media:** post your samples on Instagram, X, LinkedIn and your WhatsApp status with a clear call to action.
 
+![Freelance platforms compared with direct clients, and the parts of a profile that wins work](/images/courses/freelancing/find-clients.svg "Platforms reach far; direct clients are often easier at first.")
+
 ## A profile that wins work
 
 On any platform:
@@ -38,6 +40,8 @@ On any platform:
 - For direct clients, ask for **50% upfront** and 50% on delivery, or 100% upfront for small jobs.
 - For foreign payments, use the platform's withdrawal options or services such as Payoneer, then withdraw to your Nigerian bank account. Compare fees and exchange rates.
 - Keep a simple **record** in Google Sheets: client, job, amount, date paid.
+
+![A direct job with 50 percent upfront and 50 percent on delivery, platform and foreign payment tips, and warning signs of scam clients](/images/courses/freelancing/get-paid.svg "Take part payment upfront, keep platform payments on the platform, and spot scam clients.")
 
 > [!WARNING]
 > Scammers pose as clients too. Never pay to "unlock" a job, never share your bank login or OTP, and be wary of cheques or "overpayments" where you're asked to send money back.
