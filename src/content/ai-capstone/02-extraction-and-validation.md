@@ -10,7 +10,7 @@ The model's output goes straight into Shieldline's claims system. A missing brac
 
 ## The concept
 
-**Validate everything**
+### Validate everything
 
 | Field | Check |
 | :-- | :-- |
@@ -20,17 +20,19 @@ The model's output goes straight into Shieldline's claims system. A missing brac
 | `vehicle_reg` | Standard Nigerian format, `ABC 123 DE`, or null |
 | `injuries`, `police_report`, `needs_human` | True or false |
 
-**Repair only what's safe**
+### Repair only what's safe
 
 A plate written `FKJ471KT` can be safely rewritten as `FKJ 471 KT`. A claim type the model made up can't be repaired; the message goes to a person.
 
-**Grounding checks in code**
+### Grounding checks in code
 
 If the model returns a plate number, it should appear in the customer's message. You can check that with no gold labels at all, so the check works in production too.
 
-**Measure by field and by group**
+### Measure by field and by group
 
 Overall accuracy hides which fields fail and for whom. Measure each field, and compare English with Pidgin.
+
+![Field checks on a model's output, what is safe to repair and what must go to a person, a grounding check, and measuring by field and group](/images/courses/ai-capstone/validation.svg "Validate everything; repair only what is safe; ground what you can.")
 
 ## Example
 

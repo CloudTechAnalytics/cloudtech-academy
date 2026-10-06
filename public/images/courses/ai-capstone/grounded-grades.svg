@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 440" width="760" height="440" role="img" aria-label="Grading grounded answers. Correct means right and supported by the policy; partly correct means right but incomplete; wrong contradicts the policy; unsupported states something the policy does not say, which is the most dangerous because it sounds confident. Split graded answers by whether retrieval found the right section. Before an LLM judge replaces people, compare its grades with human grades, especially on the grades that matter most.">
+<title>Four grades, retrieval versus answer, and checking the judge.</title>
+
+<rect width="760" height="440" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="26.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Four grades</text>
+<rect x="16.0" y="40.0" width="170.0" height="86.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.4"/>
+<text xml:space="preserve" x="28.0" y="66.0" font-size="14" fill="#2F6B3F" font-weight="700" text-anchor="start">Correct</text>
+<text xml:space="preserve" x="28.0" y="88.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">Right, and supported by</text>
+<text xml:space="preserve" x="28.0" y="102.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">the policy</text>
+<rect x="202.0" y="40.0" width="170.0" height="86.0" rx="10" fill="#F3EBD8" stroke="#8A6A1F" stroke-width="1.4"/>
+<text xml:space="preserve" x="214.0" y="66.0" font-size="14" fill="#8A6A1F" font-weight="700" text-anchor="start">Partly correct</text>
+<text xml:space="preserve" x="214.0" y="88.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">Right but incomplete</text>
+<rect x="388.0" y="40.0" width="170.0" height="86.0" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.4"/>
+<text xml:space="preserve" x="400.0" y="66.0" font-size="14" fill="#9B2C1F" font-weight="700" text-anchor="start">Wrong</text>
+<text xml:space="preserve" x="400.0" y="88.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">Contradicts the policy</text>
+<rect x="574.0" y="40.0" width="170.0" height="86.0" rx="10" fill="#F0CFC9" stroke="#9B2C1F" stroke-width="2"/>
+<text xml:space="preserve" x="586.0" y="66.0" font-size="14" fill="#9B2C1F" font-weight="700" text-anchor="start">Unsupported</text>
+<text xml:space="preserve" x="586.0" y="88.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">Not in the policy: made</text>
+<text xml:space="preserve" x="586.0" y="102.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">up, even if plausible</text>
+<text xml:space="preserve" x="16.0" y="148.0" font-size="12.5" fill="#9B2C1F" font-weight="700" text-anchor="start">Most dangerous: confident, and untraceable to anything.</text>
+<text xml:space="preserve" x="16.0" y="184.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Did retrieval find the right section?</text>
+<rect x="16.0" y="198.0" width="358.0" height="88.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.4"/>
+<text xml:space="preserve" x="30.0" y="222.0" font-size="13" fill="#2F6B3F" font-weight="700" text-anchor="start">Retrieval hit</text>
+<text xml:space="preserve" x="30.0" y="244.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Most answers correct → the model is fine here.</text>
+<text xml:space="preserve" x="30.0" y="264.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">Bad answers? Look at the prompt.</text>
+<rect x="386.0" y="198.0" width="358.0" height="88.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.4"/>
+<text xml:space="preserve" x="400.0" y="222.0" font-size="13" fill="#9B2C1F" font-weight="700" text-anchor="start">Retrieval miss</text>
+<text xml:space="preserve" x="400.0" y="244.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Most bad answers come from here.</text>
+<text xml:space="preserve" x="400.0" y="264.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">Fix retrieval first.</text>
+<text xml:space="preserve" x="16.0" y="316.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Judge the judge before it replaces people</text>
+<rect x="16.0" y="330.0" width="728.0" height="88.0" rx="10" fill="#F3EBD8" stroke="#8A6A1F" stroke-width="1.4"/>
+<text xml:space="preserve" x="30.0" y="354.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">Compare the LLM judge's grades with human grades on the same answers.</text>
+<text xml:space="preserve" x="30.0" y="376.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Overall agreement is not enough: look hardest at the grades that matter most.</text>
+<text xml:space="preserve" x="30.0" y="396.0" font-size="12" fill="#9B2C1F" font-weight="700" text-anchor="start">A judge that calls unsupported answers "correct" is worse than no judge.</text>
+</g></svg>

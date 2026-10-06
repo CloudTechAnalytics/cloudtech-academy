@@ -83,6 +83,42 @@
   760,
   340
  ],
+ "/images/courses/ai-capstone/cost-latency.svg": [
+  760,
+  420
+ ],
+ "/images/courses/ai-capstone/escalation.svg": [
+  760,
+  400
+ ],
+ "/images/courses/ai-capstone/grounded-grades.svg": [
+  760,
+  440
+ ],
+ "/images/courses/ai-capstone/model-reads-code-decides.svg": [
+  760,
+  440
+ ],
+ "/images/courses/ai-capstone/monitoring-control.svg": [
+  760,
+  440
+ ],
+ "/images/courses/ai-capstone/red-team.svg": [
+  760,
+  456
+ ],
+ "/images/courses/ai-capstone/release-gate.svg": [
+  760,
+  400
+ ],
+ "/images/courses/ai-capstone/retrieval.svg": [
+  760,
+  400
+ ],
+ "/images/courses/ai-capstone/validation.svg": [
+  760,
+  456
+ ],
  "/images/courses/ai-productivity/check-before-use.svg": [
   760,
   416

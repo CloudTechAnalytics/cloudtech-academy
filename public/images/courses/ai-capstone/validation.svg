@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 456" width="760" height="456" role="img" aria-label="Validating a model's output before it reaches other systems. Check that the whole output parses as JSON, each field is of an allowed type, dates are real and not in the future, identifiers match their format, and flags are true or false. Repair only what is safe, such as spacing in a plate number; send anything invented to a person. A grounding check confirms a returned identifier appears in the customer's message. Measure each field and each language group.">
+<title>Validate everything; repair only what is safe; ground what you can.</title>
+
+<rect width="760" height="456" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="26.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Check every field (invented example: a meter fault report)</text>
+<rect x="16.0" y="38.0" width="728.0" height="168.0" rx="8" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<path d="M17,66 L17,46 Q17,39 24,39 L736,39 Q743,39 743,46 L743,66 Z" fill="#EFE4CC"/>
+<text xml:space="preserve" x="26.0" y="56.5" font-size="12.0" fill="#5E5A52" font-weight="700" text-anchor="start">Field</text>
+<text xml:space="preserve" x="286.0" y="56.5" font-size="12.0" fill="#5E5A52" font-weight="700" text-anchor="start">Check</text>
+<line x1="16.0" y1="66.0" x2="744.0" y2="66.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="84.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Whole output</text>
+<text xml:space="preserve" x="286.0" y="84.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Parses as JSON</text>
+<line x1="16.0" y1="94.0" x2="744.0" y2="94.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="112.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">fault_type</text>
+<text xml:space="preserve" x="286.0" y="112.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">One of the four allowed values</text>
+<line x1="16.0" y1="122.0" x2="744.0" y2="122.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="140.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">reported_date</text>
+<text xml:space="preserve" x="286.0" y="140.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">A real date, not in the future</text>
+<line x1="16.0" y1="150.0" x2="744.0" y2="150.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="168.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">meter_no</text>
+<text xml:space="preserve" x="286.0" y="168.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Matches the format, or null</text>
+<line x1="16.0" y1="178.0" x2="744.0" y2="178.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="196.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">injury, fire_risk, needs_human</text>
+<text xml:space="preserve" x="286.0" y="196.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">True or false</text>
+<text xml:space="preserve" x="16.0" y="228.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Repair or escalate?</text>
+<rect x="16.0" y="242.0" width="358.0" height="78.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.5"/>
+<text xml:space="preserve" x="30.0" y="266.0" font-size="13.5" fill="#2F6B3F" font-weight="700" text-anchor="start">Safe to repair</text>
+<text xml:space="preserve" x="30.0" y="288.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">"0412345678" → "04-1234-5678"</text>
+<text xml:space="preserve" x="30.0" y="308.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">Same content, standard format.</text>
+<rect x="386.0" y="242.0" width="358.0" height="78.0" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.5"/>
+<text xml:space="preserve" x="400.0" y="266.0" font-size="13.5" fill="#9B2C1F" font-weight="700" text-anchor="start">Not repairable</text>
+<text xml:space="preserve" x="400.0" y="288.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">A fault type the model made up.</text>
+<text xml:space="preserve" x="400.0" y="308.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">Send it to a person.</text>
+<text xml:space="preserve" x="16.0" y="346.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Two more habits</text>
+<rect x="16.0" y="360.0" width="358.0" height="78.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.4"/>
+<text xml:space="preserve" x="30.0" y="384.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">Grounding check, in code</text>
+<text xml:space="preserve" x="30.0" y="404.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">If it returns a meter number, that number must appear</text>
+<text xml:space="preserve" x="30.0" y="418.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">in the customer's message. Works in production, no</text>
+<text xml:space="preserve" x="30.0" y="432.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">labels needed.</text>
+<rect x="386.0" y="360.0" width="358.0" height="78.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.4"/>
+<text xml:space="preserve" x="400.0" y="384.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">Measure by field and by group</text>
+<text xml:space="preserve" x="400.0" y="404.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">Overall accuracy hides which fields fail and for whom.</text>
+<text xml:space="preserve" x="400.0" y="418.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">Compare English with Pidgin.</text>
+</g></svg>

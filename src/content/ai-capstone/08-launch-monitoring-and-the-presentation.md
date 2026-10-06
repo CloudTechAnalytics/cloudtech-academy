@@ -12,11 +12,11 @@ summary: Watch the assistant's first four weeks in production with control limit
 
 ## The concept
 
-**Control limits from a stable period**
+### Control limits from a stable period
 
 Use the first two weeks as the baseline. For each metric, set an upper limit at the baseline mean plus three standard deviations. A day above it is very unlikely to be normal variation: investigate.
 
-**Leading and lagging signals**
+### Leading and lagging signals
 
 | Signal | Arrives | Shows |
 | :-- | :-- | :-- |
@@ -27,9 +27,11 @@ Use the first two weeks as the baseline. For each metric, set an upper limit at 
 
 The audit is the most important, because invalid JSON can stay low while valid-looking extractions are wrong. But it's also the noisiest, because each day's audit is small.
 
-**From alert to cause**
+### From alert to cause
 
 When a limit is breached, ask what changed on that day: a release, a new channel, a new kind of customer. Then compare the affected and unaffected messages.
+
+![A metric with a control limit at baseline mean plus three standard deviations, signals that arrive at different speeds, and the steps from alert to cause](/images/courses/ai-capstone/monitoring-control.svg "Control limits from a stable period, and from alert to cause.")
 
 ## Example
 

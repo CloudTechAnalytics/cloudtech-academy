@@ -19,7 +19,7 @@ The team has already run three configurations over 600 real messages and recorde
 
 ## The concept
 
-**The model reads; code decides**
+### The model reads; code decides
 
 An LLM is good at reading messy text, including Pidgin, and at writing a clear reply from a source. It is not reliable at enforcing rules. So split the work:
 
@@ -29,11 +29,13 @@ An LLM is good at reading messy text, including Pidgin, and at writing a clear r
 | Answer questions **from retrieved policy text** | Decide which documents are needed, from the policy table |
 | Suggest whether a person is needed | Escalate by rule: injuries, theft, large amounts, anger, or any output that fails validation |
 
-**What it must never do**
+![The model reads and extracts while code validates and decides; a four-step flow from message to reply or person, and the things the assistant must never do](/images/courses/ai-capstone/model-reads-code-decides.svg "The model reads; code decides.")
+
+### What it must never do
 
 Approve, reject or promise payment for a claim; quote an amount Shieldline will pay; reveal anything about another customer; or answer from memory when the policy doesn't say.
 
-**The test data**
+### The test data
 
 `messages.csv` holds 600 messages with **gold** labels (what a claims officer extracted) and the recorded outputs of three configurations:
 

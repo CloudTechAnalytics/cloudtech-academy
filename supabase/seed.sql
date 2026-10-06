@@ -70184,7 +70184,7 @@ The team has already run three configurations over 600 real messages and recorde
 
 ## The concept
 
-**The model reads; code decides**
+### The model reads; code decides
 
 An LLM is good at reading messy text, including Pidgin, and at writing a clear reply from a source. It is not reliable at enforcing rules. So split the work:
 
@@ -70194,11 +70194,13 @@ An LLM is good at reading messy text, including Pidgin, and at writing a clear r
 | Answer questions **from retrieved policy text** | Decide which documents are needed, from the policy table |
 | Suggest whether a person is needed | Escalate by rule: injuries, theft, large amounts, anger, or any output that fails validation |
 
-**What it must never do**
+![The model reads and extracts while code validates and decides; a four-step flow from message to reply or person, and the things the assistant must never do](/images/courses/ai-capstone/model-reads-code-decides.svg "The model reads; code decides.")
+
+### What it must never do
 
 Approve, reject or promise payment for a claim; quote an amount Shieldline will pay; reveal anything about another customer; or answer from memory when the policy doesn't say.
 
-**The test data**
+### The test data
 
 `messages.csv` holds 600 messages with **gold** labels (what a claims officer extracted) and the recorded outputs of three configurations:
 
@@ -70358,7 +70360,7 @@ The model's output goes straight into Shieldline's claims system. A missing brac
 
 ## The concept
 
-**Validate everything**
+### Validate everything
 
 | Field | Check |
 | :-- | :-- |
@@ -70368,17 +70370,19 @@ The model's output goes straight into Shieldline's claims system. A missing brac
 | `vehicle_reg` | Standard Nigerian format, `ABC 123 DE`, or null |
 | `injuries`, `police_report`, `needs_human` | True or false |
 
-**Repair only what's safe**
+### Repair only what's safe
 
 A plate written `FKJ471KT` can be safely rewritten as `FKJ 471 KT`. A claim type the model made up can't be repaired; the message goes to a person.
 
-**Grounding checks in code**
+### Grounding checks in code
 
 If the model returns a plate number, it should appear in the customer's message. You can check that with no gold labels at all, so the check works in production too.
 
-**Measure by field and by group**
+### Measure by field and by group
 
 Overall accuracy hides which fields fail and for whom. Measure each field, and compare English with Pidgin.
+
+![Field checks on a model's output, what is safe to repair and what must go to a person, a grounding check, and measuring by field and group](/images/courses/ai-capstone/validation.svg "Validate everything; repair only what is safe; ground what you can.")
 
 ## Example
 
@@ -70583,7 +70587,7 @@ The same goes for documents. The policy says exactly what each claim type needs,
 
 ## The concept
 
-**Two signals, combined**
+### Two signals, combined
 
 - **Rules in code**: escalate if the extraction says injuries, the claim is theft, the message mentions ₦5m or more, or the wording is angry. Rules are predictable and testable.
 - **The model's flag**: catches cases the rules don't describe.
@@ -70591,11 +70595,13 @@ The same goes for documents. The policy says exactly what each claim type needs,
 
 Escalate if **any** of them fires. Measure **recall** (of messages that needed a person, the share escalated) first. Then check the cost: the share of all messages escalated.
 
-**Record the reason**
+### Record the reason
 
 Every escalation should carry its reasons ("injuries", "theft"). The person who picks it up knows why, and you can later see which rule fires most.
 
-**The checklist from the policy**
+![Three signals combined with OR (rules in code, the model's flag, fail-safe) that hand a case to a person, measured by recall first and then cost](/images/courses/ai-capstone/escalation.svg "Escalate if any signal fires; record why.")
+
+### The checklist from the policy
 
 Sections S05 to S07 of the policy list the documents for each claim type. Put them in a table in code. The only thing the message itself proves is whether photos were attached. Mentioning a police report isn't the same as sending it.
 
@@ -70805,21 +70811,23 @@ If retrieval brings back the wrong sections, even a perfect model can only guess
 
 ## The concept
 
-**A labelled question set**
+### A labelled question set
 
 `questions.csv` holds 80 real customer questions, 20 of them in Pidgin. A claims officer marked the policy section that answers each one (`gold_section_id`). The production retriever's top three sections are recorded in `retrieved_ids`.
 
-**Hit at 3**
+### Hit at 3
 
 The share of questions where the gold section is among the three retrieved. The model sees those three sections, so a hit means it at least has the answer in front of it.
 
-**A keyword baseline**
+### A keyword baseline
 
 TF-IDF with cosine similarity needs no model and no API. If the production retriever, which uses embeddings, can't beat it clearly, it isn't earning its cost.
 
-**Find the failures**
+### Find the failures
 
 Read the questions retrieval misses. Patterns in the misses, such as a language, a topic or a way of asking, tell you what to fix.
+
+![A question goes to a retriever, the top three sections go to the model; hit at three on an invented example; beating a keyword baseline and reading the misses](/images/courses/ai-capstone/retrieval.svg "Measure retrieval on its own, before judging the answers.")
 
 ## Example
 
@@ -70989,7 +70997,7 @@ A wrong answer about insurance is costly. A customer told "yes, you can use your
 
 ## The concept
 
-**Grades**
+### Grades
 
 | Grade | Meaning |
 | :-- | :-- |
@@ -71000,13 +71008,15 @@ A wrong answer about insurance is costly. A customer told "yes, you can use your
 
 Unsupported answers are the most dangerous kind. They sound confident and can't be traced to anything.
 
-**Answer quality depends on retrieval**
+### Answer quality depends on retrieval
 
 Split the graded answers by whether retrieval found the right section. If most bad answers come from retrieval misses, fix retrieval first.
 
-**Judging the judge**
+### Judging the judge
 
 Before an LLM judge replaces people, compare its grades with human grades on the same answers. Look at overall agreement, but especially at agreement on the grades that matter most. A judge that calls unsupported answers "Correct" is worse than useless for safety.
+
+![Four answer grades with unsupported as the most dangerous, splitting results by retrieval hit or miss, and checking the judge against human grades](/images/courses/ai-capstone/grounded-grades.svg "Four grades, retrieval versus answer, and checking the judge.")
 
 ## Example
 
@@ -71171,17 +71181,19 @@ The red team ran 120 attacks against both. A guardrail also has a cost, though: 
 
 ## The concept
 
-**Red-teaming**
+### Red-teaming
 
 Write attacks by category, run them against each version, and record the outcome: **Blocked** by the guardrail, **Refused** by the model, or **Attack succeeded**. Report the success rate by category, because one weak category is enough.
 
-**Defence in depth**
+### Defence in depth
 
 The guardrail is one layer. The model's instructions are another. Code is the strongest: an assistant that has no tool to approve claims can't be talked into approving one, whatever the message says.
 
-**False positives, and who pays them**
+### False positives, and who pays them
 
 Run the guardrail on genuine messages and count how many it wrongly flags. Then split by group. A keyword filter that trips on Pidgin words, or on anger, blocks exactly the customers who most need a person.
+
+![Three layers of defence, an invented table of attack outcomes by category, and genuine customers wrongly blocked by language group](/images/courses/ai-capstone/red-team.svg "Attack it, layer the defence, and count who the guardrail blocks by mistake.")
 
 ## Example
 
@@ -71334,7 +71346,7 @@ The head of claims needs a yes or no: which configuration goes live? Each team m
 
 ## The concept
 
-**Cost per message**
+### Cost per message
 
 Cost = input tokens × input price + output tokens × output price. The `large_v2` prompt is longer (schema and examples), so it costs more per message than `large_v1` with the same model. For this course, use these illustrative prices in US dollars per million tokens, at ₦1,550 to the dollar, and a volume of 14,000 messages a month:
 
@@ -71343,11 +71355,13 @@ Cost = input tokens × input price + output tokens × output price. The `large_v
 | Small | $0.15 | $0.60 |
 | Large | $2.50 | $10.00 |
 
+![Cost per message as tokens times price with invented round numbers, a longer prompt costing more, and why the 95th percentile of latency matters more than the average](/images/courses/ai-capstone/cost-latency.svg "Cost per message, and why p95 beats the average.")
+
 **Latency: the 95th percentile**
 
 Averages hide the slow replies customers notice. The **p95** is the time within which 95% of replies arrive.
 
-**The release gate**
+### The release gate
 
 | Requirement | Threshold |
 | :-- | :-- |
@@ -71357,6 +71371,8 @@ Averages hide the slow replies customers notice. The **p95** is the time within 
 | Escalation recall (rules, flag and fail-safe) | at least 99% |
 | p95 latency | at most 4 seconds |
 | Monthly cost | at most ₦150,000 |
+
+![A release gate with invented thresholds and two made-up candidates, each failing at least one requirement](/images/courses/ai-capstone/release-gate.svg "Thresholds first; every requirement must pass.")
 
 The guardrail requirements (attack success at most 2%, false positives at most 5% in every language) were checked in lesson 6, and v2 passes them.
 
@@ -71559,11 +71575,11 @@ values ('ai-engineer-capstone:launch-monitoring-and-the-presentation', 'ai-engin
 
 ## The concept
 
-**Control limits from a stable period**
+### Control limits from a stable period
 
 Use the first two weeks as the baseline. For each metric, set an upper limit at the baseline mean plus three standard deviations. A day above it is very unlikely to be normal variation: investigate.
 
-**Leading and lagging signals**
+### Leading and lagging signals
 
 | Signal | Arrives | Shows |
 | :-- | :-- | :-- |
@@ -71574,9 +71590,11 @@ Use the first two weeks as the baseline. For each metric, set an upper limit at 
 
 The audit is the most important, because invalid JSON can stay low while valid-looking extractions are wrong. But it's also the noisiest, because each day's audit is small.
 
-**From alert to cause**
+### From alert to cause
 
 When a limit is breached, ask what changed on that day: a release, a new channel, a new kind of customer. Then compare the affected and unaffected messages.
+
+![A metric with a control limit at baseline mean plus three standard deviations, signals that arrive at different speeds, and the steps from alert to cause](/images/courses/ai-capstone/monitoring-control.svg "Control limits from a stable period, and from alert to cause.")
 
 ## Example
 

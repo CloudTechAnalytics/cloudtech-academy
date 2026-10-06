@@ -12,21 +12,23 @@ If retrieval brings back the wrong sections, even a perfect model can only guess
 
 ## The concept
 
-**A labelled question set**
+### A labelled question set
 
 `questions.csv` holds 80 real customer questions, 20 of them in Pidgin. A claims officer marked the policy section that answers each one (`gold_section_id`). The production retriever's top three sections are recorded in `retrieved_ids`.
 
-**Hit at 3**
+### Hit at 3
 
 The share of questions where the gold section is among the three retrieved. The model sees those three sections, so a hit means it at least has the answer in front of it.
 
-**A keyword baseline**
+### A keyword baseline
 
 TF-IDF with cosine similarity needs no model and no API. If the production retriever, which uses embeddings, can't beat it clearly, it isn't earning its cost.
 
-**Find the failures**
+### Find the failures
 
 Read the questions retrieval misses. Patterns in the misses, such as a language, a topic or a way of asking, tell you what to fix.
+
+![A question goes to a retriever, the top three sections go to the model; hit at three on an invented example; beating a keyword baseline and reading the misses](/images/courses/ai-capstone/retrieval.svg "Measure retrieval on its own, before judging the answers.")
 
 ## Example
 

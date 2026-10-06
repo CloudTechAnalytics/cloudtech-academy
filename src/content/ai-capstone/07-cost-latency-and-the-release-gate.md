@@ -10,7 +10,7 @@ The head of claims needs a yes or no: which configuration goes live? Each team m
 
 ## The concept
 
-**Cost per message**
+### Cost per message
 
 Cost = input tokens × input price + output tokens × output price. The `large_v2` prompt is longer (schema and examples), so it costs more per message than `large_v1` with the same model. For this course, use these illustrative prices in US dollars per million tokens, at ₦1,550 to the dollar, and a volume of 14,000 messages a month:
 
@@ -19,11 +19,13 @@ Cost = input tokens × input price + output tokens × output price. The `large_v
 | Small | $0.15 | $0.60 |
 | Large | $2.50 | $10.00 |
 
+![Cost per message as tokens times price with invented round numbers, a longer prompt costing more, and why the 95th percentile of latency matters more than the average](/images/courses/ai-capstone/cost-latency.svg "Cost per message, and why p95 beats the average.")
+
 **Latency: the 95th percentile**
 
 Averages hide the slow replies customers notice. The **p95** is the time within which 95% of replies arrive.
 
-**The release gate**
+### The release gate
 
 | Requirement | Threshold |
 | :-- | :-- |
@@ -33,6 +35,8 @@ Averages hide the slow replies customers notice. The **p95** is the time within 
 | Escalation recall (rules, flag and fail-safe) | at least 99% |
 | p95 latency | at most 4 seconds |
 | Monthly cost | at most ₦150,000 |
+
+![A release gate with invented thresholds and two made-up candidates, each failing at least one requirement](/images/courses/ai-capstone/release-gate.svg "Thresholds first; every requirement must pass.")
 
 The guardrail requirements (attack success at most 2%, false positives at most 5% in every language) were checked in lesson 6, and v2 passes them.
 

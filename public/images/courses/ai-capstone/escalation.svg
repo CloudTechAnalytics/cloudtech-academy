@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 400" width="760" height="400" role="img" aria-label="Escalation as the combination of three signals: rules in code, the model's own flag, and a fail-safe when output fails validation. If any one fires, a person takes over. Measure recall first, the share of cases that needed a person and were escalated, then the cost, the share of all messages escalated. Record the reason for every escalation.">
+<title>Escalate if any signal fires; record why.</title>
+<defs><marker id="a5E5A52" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#5E5A52"/></marker></defs>
+<rect width="760" height="400" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="26.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Three signals, combined with OR</text>
+<rect x="16.0" y="40.0" width="420.0" height="60.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.5"/>
+<text xml:space="preserve" x="30.0" y="64.0" font-size="13.5" fill="#2F6B3F" font-weight="700" text-anchor="start">Rules in code</text>
+<text xml:space="preserve" x="30.0" y="84.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">Injury, fire risk, big amounts, anger. Testable.</text>
+<line x1="436.0" y1="70.0" x2="468.0" y2="70.0" stroke="#2F6B3F" stroke-width="1.8"/>
+<rect x="16.0" y="108.0" width="420.0" height="60.0" rx="10" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.5"/>
+<text xml:space="preserve" x="30.0" y="132.0" font-size="13.5" fill="#2F5D8A" font-weight="700" text-anchor="start">The model's flag</text>
+<text xml:space="preserve" x="30.0" y="152.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">Catches cases the rules don't describe.</text>
+<line x1="436.0" y1="138.0" x2="468.0" y2="138.0" stroke="#2F5D8A" stroke-width="1.8"/>
+<rect x="16.0" y="176.0" width="420.0" height="60.0" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.5"/>
+<text xml:space="preserve" x="30.0" y="200.0" font-size="13.5" fill="#9B2C1F" font-weight="700" text-anchor="start">Fail-safe</text>
+<text xml:space="preserve" x="30.0" y="220.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">Output failed validation? Escalate.</text>
+<line x1="436.0" y1="206.0" x2="468.0" y2="206.0" stroke="#9B2C1F" stroke-width="1.8"/>
+<path d="M468,70 L468,206" fill="none" stroke="#5E5A52" stroke-width="1.8"/>
+<path d="M468.0,146.0 L498.0,146.0" fill="none" stroke="#5E5A52" stroke-width="2" marker-end="url(#a5E5A52)"/>
+<rect x="502.0" y="110.0" width="242.0" height="72.0" rx="12" fill="#8A6A1F" stroke="#8A6A1F" stroke-width="1"/>
+<text xml:space="preserve" x="623.0" y="140.0" font-size="15" fill="#FFFFFF" font-weight="700" text-anchor="middle">ANY fires</text>
+<text xml:space="preserve" x="623.0" y="162.0" font-size="12.5" fill="#F3EBD8" font-weight="400" text-anchor="middle">→ a person takes over</text>
+<text xml:space="preserve" x="16.0" y="264.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Measure in this order</text>
+<rect x="16.0" y="278.0" width="358.0" height="66.0" rx="10" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.5"/>
+<text xml:space="preserve" x="30.0" y="302.0" font-size="13.5" fill="#2F5D8A" font-weight="700" text-anchor="start">1  Recall first</text>
+<text xml:space="preserve" x="30.0" y="324.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">Of messages that needed a person, how many reached one?</text>
+<rect x="386.0" y="278.0" width="358.0" height="66.0" rx="10" fill="#F3EBD8" stroke="#8A6A1F" stroke-width="1.5"/>
+<text xml:space="preserve" x="400.0" y="302.0" font-size="13.5" fill="#8A6A1F" font-weight="700" text-anchor="start">2  Then the cost</text>
+<text xml:space="preserve" x="400.0" y="324.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">What share of all messages is escalated?</text>
+<rect x="16.0" y="358.0" width="728.0" height="32.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.3"/>
+<text xml:space="preserve" x="30.0" y="379.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">Every escalation carries its reasons ("injury", "fire risk") so the person knows why.</text>
+</g></svg>

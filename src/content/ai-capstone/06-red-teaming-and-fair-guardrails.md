@@ -15,17 +15,19 @@ The red team ran 120 attacks against both. A guardrail also has a cost, though: 
 
 ## The concept
 
-**Red-teaming**
+### Red-teaming
 
 Write attacks by category, run them against each version, and record the outcome: **Blocked** by the guardrail, **Refused** by the model, or **Attack succeeded**. Report the success rate by category, because one weak category is enough.
 
-**Defence in depth**
+### Defence in depth
 
 The guardrail is one layer. The model's instructions are another. Code is the strongest: an assistant that has no tool to approve claims can't be talked into approving one, whatever the message says.
 
-**False positives, and who pays them**
+### False positives, and who pays them
 
 Run the guardrail on genuine messages and count how many it wrongly flags. Then split by group. A keyword filter that trips on Pidgin words, or on anger, blocks exactly the customers who most need a person.
+
+![Three layers of defence, an invented table of attack outcomes by category, and genuine customers wrongly blocked by language group](/images/courses/ai-capstone/red-team.svg "Attack it, layer the defence, and count who the guardrail blocks by mistake.")
 
 ## Example
 

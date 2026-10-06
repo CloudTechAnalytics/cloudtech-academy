@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 400" width="760" height="400" role="img" aria-label="Retrieval comes before generation. A question is matched to the policy sections most likely to answer it, and the top three are shown to the model. Hit at three is the share of questions where the correct section is among those three. A keyword baseline such as TF-IDF needs no model; an embedding retriever has to beat it clearly to earn its cost. Read the misses to find patterns, such as a language or a topic.">
+<title>Measure retrieval on its own, before judging the answers.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="400" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="26.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Retrieval, then answer</text>
+<rect x="16.0" y="40.0" width="170.0" height="74.0" rx="10" fill="#FFFFFF" stroke="#5E5A52" stroke-width="1.6"/>
+<text xml:space="preserve" x="28.0" y="64.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="start">Question</text>
+<text xml:space="preserve" x="28.0" y="86.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">"Can I use my own</text>
+<text xml:space="preserve" x="28.0" y="100.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">electrician?"</text>
+<path d="M188.0,77.0 L200.0,77.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="202.0" y="40.0" width="170.0" height="74.0" rx="10" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.6"/>
+<text xml:space="preserve" x="214.0" y="64.0" font-size="13.5" fill="#2F5D8A" font-weight="700" text-anchor="start">Retriever</text>
+<text xml:space="preserve" x="214.0" y="86.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">Finds the likely</text>
+<text xml:space="preserve" x="214.0" y="100.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">sections</text>
+<path d="M374.0,77.0 L386.0,77.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="388.0" y="40.0" width="170.0" height="74.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.6"/>
+<text xml:space="preserve" x="400.0" y="64.0" font-size="13.5" fill="#2F6B3F" font-weight="700" text-anchor="start">Top 3 sections</text>
+<text xml:space="preserve" x="400.0" y="86.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">Shown to the model</text>
+<path d="M560.0,77.0 L572.0,77.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="574.0" y="40.0" width="170.0" height="74.0" rx="10" fill="#F3EBD8" stroke="#8A6A1F" stroke-width="1.6"/>
+<text xml:space="preserve" x="586.0" y="64.0" font-size="13.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Answer</text>
+<text xml:space="preserve" x="586.0" y="86.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">Grounded in those</text>
+<text xml:space="preserve" x="586.0" y="100.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">sections</text>
+<text xml:space="preserve" x="16.0" y="152.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Hit at 3 (invented example)</text>
+<rect x="16.0" y="166.0" width="170.0" height="60.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.5"/>
+<text xml:space="preserve" x="28.0" y="190.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="start">Q1: answer is Section 4</text>
+<text xml:space="preserve" x="28.0" y="212.0" font-size="12.5" fill="#2F6B3F" font-weight="700" text-anchor="start">✓ in the top 3</text>
+<rect x="202.0" y="166.0" width="170.0" height="60.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.5"/>
+<text xml:space="preserve" x="214.0" y="190.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="start">Q2: answer is Section 9</text>
+<text xml:space="preserve" x="214.0" y="212.0" font-size="12.5" fill="#2F6B3F" font-weight="700" text-anchor="start">✓ in the top 3</text>
+<rect x="388.0" y="166.0" width="170.0" height="60.0" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.5"/>
+<text xml:space="preserve" x="400.0" y="190.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="start">Q3: answer is Section 2</text>
+<text xml:space="preserve" x="400.0" y="212.0" font-size="12.5" fill="#9B2C1F" font-weight="700" text-anchor="start">✗ not retrieved</text>
+<rect x="574.0" y="166.0" width="170.0" height="60.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.5"/>
+<text xml:space="preserve" x="586.0" y="190.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="start">Q4: answer is Section 7</text>
+<text xml:space="preserve" x="586.0" y="212.0" font-size="12.5" fill="#2F6B3F" font-weight="700" text-anchor="start">✓ in the top 3</text>
+<text xml:space="preserve" x="16.0" y="250.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">Hit at 3 = questions with the answer in the top 3 ÷ all questions  (here 3 of 4)</text>
+<text xml:space="preserve" x="16.0" y="286.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Two habits</text>
+<rect x="16.0" y="300.0" width="358.0" height="78.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.4"/>
+<text xml:space="preserve" x="30.0" y="324.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">Beat a keyword baseline</text>
+<text xml:space="preserve" x="30.0" y="344.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">TF-IDF needs no model. If embeddings can't beat it</text>
+<text xml:space="preserve" x="30.0" y="358.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">clearly, they aren't earning their cost.</text>
+<rect x="386.0" y="300.0" width="358.0" height="78.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.4"/>
+<text xml:space="preserve" x="400.0" y="324.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">Read the misses</text>
+<text xml:space="preserve" x="400.0" y="344.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">Patterns in what fails (a language, a topic, a way of</text>
+<text xml:space="preserve" x="400.0" y="358.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">asking) tell you what to fix.</text>
+</g></svg>

@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 456" width="760" height="456" role="img" aria-label="Red-teaming and fair guardrails. Write attacks by category, run them against each version, and record whether each was blocked by the guardrail, refused by the model or succeeded; report success rate by category. Defence in depth: guardrail, the model's instructions, and code that gives the assistant no tool to approve anything. A guardrail also has a cost: genuine customers wrongly blocked, which must be measured per language group.">
+<title>Attack it, layer the defence, and count who the guardrail blocks by mistake.</title>
+
+<rect width="760" height="456" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="26.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Defence in depth</text>
+<rect x="16.0" y="40.0" width="232.0" height="74.0" rx="10" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.6"/>
+<text xml:space="preserve" x="30.0" y="66.0" font-size="13.5" fill="#2F5D8A" font-weight="700" text-anchor="start">1  Guardrail</text>
+<text xml:space="preserve" x="30.0" y="88.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">Filters obvious attacks</text>
+<rect x="264.0" y="40.0" width="232.0" height="74.0" rx="10" fill="#F3EBD8" stroke="#B38A3E" stroke-width="1.6"/>
+<text xml:space="preserve" x="278.0" y="66.0" font-size="13.5" fill="#8A6A1F" font-weight="700" text-anchor="start">2  Model instructions</text>
+<text xml:space="preserve" x="278.0" y="88.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">A hardened prompt</text>
+<rect x="512.0" y="40.0" width="232.0" height="74.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.6"/>
+<text xml:space="preserve" x="526.0" y="66.0" font-size="13.5" fill="#2F6B3F" font-weight="700" text-anchor="start">3  Code</text>
+<text xml:space="preserve" x="526.0" y="88.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">No tool to approve claims: can't</text>
+<text xml:space="preserve" x="526.0" y="102.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">be talked into it</text>
+<text xml:space="preserve" x="16.0" y="142.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Each attack ends one of three ways (invented results)</text>
+<rect x="16.0" y="156.0" width="728.0" height="112.0" rx="8" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<path d="M17,184 L17,164 Q17,157 24,157 L736,157 Q743,157 743,164 L743,184 Z" fill="#EFE4CC"/>
+<text xml:space="preserve" x="26.0" y="174.5" font-size="12.0" fill="#5E5A52" font-weight="700" text-anchor="start">Attack category</text>
+<text xml:space="preserve" x="446.0" y="174.5" font-size="12.0" fill="#5E5A52" font-weight="700" text-anchor="end">Blocked</text>
+<text xml:space="preserve" x="586.0" y="174.5" font-size="12.0" fill="#5E5A52" font-weight="700" text-anchor="end">Refused</text>
+<text xml:space="preserve" x="734.0" y="174.5" font-size="12.0" fill="#5E5A52" font-weight="700" text-anchor="end">Succeeded</text>
+<line x1="16.0" y1="184.0" x2="744.0" y2="184.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="202.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Pretend to be staff</text>
+<text xml:space="preserve" x="446.0" y="202.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="end">92%</text>
+<text xml:space="preserve" x="586.0" y="202.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="end">6%</text>
+<text xml:space="preserve" x="734.0" y="202.5" font-size="12.5" fill="#2F6B3F" font-weight="400" text-anchor="end">2%</text>
+<line x1="16.0" y1="212.0" x2="744.0" y2="212.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="230.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Hidden instruction in text</text>
+<text xml:space="preserve" x="446.0" y="230.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="end">70%</text>
+<text xml:space="preserve" x="586.0" y="230.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="end">22%</text>
+<text xml:space="preserve" x="734.0" y="230.5" font-size="12.5" fill="#9B2C1F" font-weight="400" text-anchor="end">8%</text>
+<line x1="16.0" y1="240.0" x2="744.0" y2="240.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="258.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Ask for another customer's data</text>
+<text xml:space="preserve" x="446.0" y="258.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="end">88%</text>
+<text xml:space="preserve" x="586.0" y="258.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="end">11%</text>
+<text xml:space="preserve" x="734.0" y="258.5" font-size="12.5" fill="#2F6B3F" font-weight="400" text-anchor="end">1%</text>
+<text xml:space="preserve" x="16.0" y="296.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">The cost of a guardrail: genuine customers wrongly blocked (invented)</text>
+<text xml:space="preserve" x="16.0" y="330.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">English</text>
+<rect x="110.0" y="317.0" width="56.0" height="20.0" rx="3" fill="#C5B38A"/>
+<text xml:space="preserve" x="172.0" y="332.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="start">2%</text>
+<text xml:space="preserve" x="16.0" y="360.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Pidgin</text>
+<rect x="110.0" y="347.0" width="308.0" height="20.0" rx="3" fill="#9B2C1F"/>
+<text xml:space="preserve" x="424.0" y="362.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="start">11%</text>
+<text xml:space="preserve" x="16.0" y="390.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Yoruba</text>
+<rect x="110.0" y="377.0" width="196.0" height="20.0" rx="3" fill="#9B2C1F"/>
+<text xml:space="preserve" x="312.0" y="392.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="start">7%</text>
+<text xml:space="preserve" x="16.0" y="424.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">A filter that trips on Pidgin words blocks exactly the customers who most need a person.</text>
+</g></svg>
