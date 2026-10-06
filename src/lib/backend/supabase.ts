@@ -1111,20 +1111,29 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
         );
       },
       async emailSetup() {
-        const s = check(await sb.from("email_settings").select("enabled, reply_to").eq("id", 1).single()) as Row;
+        const s = check(await sb.from("email_settings").select("enabled, reply_to, smtp_user").eq("id", 1).single()) as Row;
         let configured = false;
         let from: string | null = null;
+        let provider: EmailSetup["provider"] = null;
         try {
           const { data } = await sb.functions.invoke("process-emails", { body: { check: true } });
-          configured = !!(data as { configured?: boolean } | null)?.configured;
-          from = (data as { from?: string | null } | null)?.from ?? null;
+          const d = data as { configured?: boolean; from?: string | null; provider?: EmailSetup["provider"] } | null;
+          configured = !!d?.configured;
+          from = d?.from ?? null;
+          provider = d?.provider ?? null;
         } catch {
           // The function isn't deployed yet: shown as "not set up".
         }
-        return { enabled: s.enabled, replyTo: s.reply_to ?? null, configured, from } satisfies EmailSetup;
+        return { enabled: s.enabled, replyTo: s.reply_to ?? null, configured, from, provider, smtpUser: s.smtp_user ?? null } satisfies EmailSetup;
       },
       async saveEmailSettings(s) {
         check(await sb.from("email_settings").update({ enabled: s.enabled, reply_to: s.replyTo?.trim() || null }).eq("id", 1));
+      },
+      async saveEmailCredentials(gmail, appPassword) {
+        check(await sb.rpc("admin_save_email_credentials", { p_user: gmail, p_pass: appPassword }));
+      },
+      async clearEmailCredentials() {
+        check(await sb.rpc("admin_clear_email_credentials"));
       },
       async sendMessage(userIds, subject, body) {
         return check(await sb.rpc("admin_send_message", { p_user_ids: userIds, p_subject: subject, p_body: body })) as number;

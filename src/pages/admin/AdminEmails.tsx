@@ -81,6 +81,58 @@ function TemplateCard({ t, onSaved, note }: { t: EmailTemplate; onSaved: () => P
   );
 }
 
+/** Connect sending with a Gmail address and an app password. The password is saved but never shown again. */
+function ConnectGmail({ smtpUser, connected, onChanged, note }: { smtpUser: string | null; connected: boolean; onChanged: () => Promise<unknown>; note: (m: Msg) => void }) {
+  const [gmail, setGmail] = useState(smtpUser ?? "");
+  const [pass, setPass] = useState("");
+  const [busy, setBusy] = useState(false);
+  const run = async (fn: () => Promise<void>, ok: string) => {
+    setBusy(true);
+    try {
+      await fn();
+      setPass("");
+      await onChanged();
+      note({ tone: "success", text: ok });
+    } catch (e) {
+      note({ tone: "error", text: e instanceof Error ? e.message : "That didn't work." });
+    }
+    setBusy(false);
+  };
+  return (
+    <div className="mt-5 rounded-xl border border-line-strong bg-sand/40 p-4">
+      <p className="font-semibold">{connected ? "Sending from Gmail" : "Connect with Gmail"}</p>
+      <ol className="mt-2 list-decimal space-y-1 pl-5 text-[0.875rem] text-muted">
+        <li>Turn on 2-Step Verification for the Gmail account you want to send from.</li>
+        <li>
+          Open <span className="font-mono">myaccount.google.com/apppasswords</span>, create an app password called "CloudTech Academy", and copy the 16 letters.
+        </li>
+        <li>Paste your Gmail address and that app password here. Use the app password, not your normal Gmail password.</li>
+      </ol>
+      <div className="mt-3 grid gap-3 sm:grid-cols-2">
+        <label className="text-[0.875rem] font-medium">
+          Gmail address
+          <input className={field} type="email" value={gmail} onChange={(e) => setGmail(e.target.value)} placeholder="you@gmail.com" autoComplete="off" />
+        </label>
+        <label className="text-[0.875rem] font-medium">
+          App password
+          <input className={field} type="password" value={pass} onChange={(e) => setPass(e.target.value)} placeholder={smtpUser ? "Saved. Leave empty to keep it." : "xxxx xxxx xxxx xxxx"} autoComplete="new-password" />
+        </label>
+      </div>
+      <div className="mt-3 flex flex-wrap gap-3">
+        <Button loading={busy} onClick={() => void run(async () => (await getBackend()).admin.saveEmailCredentials(gmail, pass), "Saved. Press Send waiting to send the queued emails.")}>
+          Save and connect
+        </Button>
+        {smtpUser && (
+          <Button variant="secondary" disabled={busy} onClick={() => void run(async () => (await getBackend()).admin.clearEmailCredentials(), "Disconnected.")}>
+            Disconnect
+          </Button>
+        )}
+      </div>
+      <p className="mt-2 text-[0.8125rem] text-muted">Gmail sends about 500 emails a day, which is plenty for welcome and enrolment emails. Emails show your Gmail address as the sender.</p>
+    </div>
+  );
+}
+
 /** Admin → Emails: the welcome and enrolment emails, messages to students, and a log of everything sent. */
 export default function AdminEmails() {
   const { data, error, reload } = useAdminData(async () => {
@@ -133,7 +185,7 @@ export default function AdminEmails() {
             <p className="mt-1 max-w-2xl text-[0.9375rem] text-muted">
               {setup.configured
                 ? `Emails go out from ${setup.from}.`
-                : "Emails are saved and wait in the queue. They go out as soon as the mail provider is connected (the RESEND_API_KEY and EMAIL_FROM secrets on the server)."}
+                : "Emails are saved and wait in the queue. They go out as soon as you connect an email account below."}
             </p>
           </div>
           <label className="flex items-center gap-2.5 text-[0.9375rem]">
@@ -147,6 +199,7 @@ export default function AdminEmails() {
             Send emails
           </label>
         </div>
+        {setup.provider !== "resend" && <ConnectGmail smtpUser={setup.smtpUser} connected={setup.provider === "gmail"} onChanged={reload} note={setMsg} />}
         <div className="mt-4 flex flex-wrap items-end gap-3">
           <label className="min-w-[16rem] flex-1 text-[0.875rem] font-medium">
             Replies go to (optional)

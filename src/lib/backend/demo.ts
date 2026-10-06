@@ -1514,13 +1514,20 @@ export function createDemoBackend(): Backend {
       async emailSetup() {
         requireAdmin();
         const s = load();
-        return { enabled: emailsOn(s), replyTo: s.emailSettings?.replyTo ?? null, configured: false, from: null } satisfies EmailSetup;
+        return { enabled: emailsOn(s), replyTo: s.emailSettings?.replyTo ?? null, configured: false, from: null, provider: null, smtpUser: null } satisfies EmailSetup;
       },
       async saveEmailSettings(v) {
         requireAdmin();
         const s = load();
         s.emailSettings = v;
         save(s);
+      },
+      async saveEmailCredentials() {
+        requireAdmin();
+        throw new BackendError("Demo mode has no mail server, so nothing can be connected here.");
+      },
+      async clearEmailCredentials() {
+        requireAdmin();
       },
       async sendMessage(userIds, subject, body) {
         requireAdmin();

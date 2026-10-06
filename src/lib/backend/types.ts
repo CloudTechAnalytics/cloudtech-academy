@@ -105,6 +105,10 @@ export type EmailSetup = {
   /** True once the mail provider's key and sender address are set on the server. */
   configured: boolean;
   from: string | null;
+  /** How mail is sent: through Gmail (entered in the dashboard) or Resend (server secrets). */
+  provider: "gmail" | "resend" | null;
+  /** The Gmail address saved in the dashboard, if any. The app password is never sent back. */
+  smtpUser: string | null;
 };
 
 export type ManualOrder = { order: CourseOrder; payments: OrderPayment[] };
@@ -738,6 +742,9 @@ export interface Backend {
     listEmailLog(): Promise<EmailLogEntry[]>;
     emailSetup(): Promise<EmailSetup>;
     saveEmailSettings(s: { enabled: boolean; replyTo: string | null }): Promise<void>;
+    /** Connects email through a Gmail address and an app password. Leave the password empty to keep the saved one. */
+    saveEmailCredentials(gmail: string, appPassword: string): Promise<void>;
+    clearEmailCredentials(): Promise<void>;
     /** Sends the admin's own message to the chosen students. Returns how many were queued. */
     sendMessage(userIds: string[], subject: string, body: string): Promise<number>;
     /** Puts failed emails back in the queue and sends. Returns how many. */

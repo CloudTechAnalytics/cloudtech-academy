@@ -1,10 +1,12 @@
 // Sends the queued emails (email_outbox) through Resend.
 //
-// Secrets (Supabase → Edge Functions → Secrets):
-//   RESEND_API_KEY  re_…                                    from resend.com
-//   EMAIL_FROM      CloudTech Academy <academy@yourdomain>   an address on a domain verified in Resend
+// Two ways to connect, either is enough:
+//   1. Gmail: an admin enters the Gmail address and an app password on the Admin → Emails page (stored in email_settings).
+//   2. Resend: secrets RESEND_API_KEY (re_…) and EMAIL_FROM (an address on a domain verified in Resend).
+// Resend is used when both of its secrets are set; otherwise Gmail.
 // Called by the database after it queues an email (header x-email-secret), and by admins from the Emails page.
 import { admin, cors, json, requestUser } from "../_shared/paystack.ts";
+import { SMTPClient } from "https://deno.land/x/denomailer@1.6.0/mod.ts";
 
 const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
@@ -35,17 +37,22 @@ Deno.serve(async (req) => {
     }
     if (!allowed) return json({ error: "Not allowed." }, 401);
 
+    const { data: cfg } = await db.from("email_settings").select("enabled, from_name, reply_to, smtp_user, smtp_pass").eq("id", 1).maybeSingle();
     const key = Deno.env.get("RESEND_API_KEY");
-    const from = Deno.env.get("EMAIL_FROM");
-    const configured = !!key && !!from;
+    const resendFrom = Deno.env.get("EMAIL_FROM");
+    const useResend = !!key && !!resendFrom;
+    const useGmail = !useResend && !!cfg?.smtp_user && !!cfg?.smtp_pass;
+    const configured = useResend || useGmail;
+    const from = useResend ? resendFrom! : useGmail ? `${cfg!.from_name || "CloudTech Academy"} <${cfg!.smtp_user}>` : null;
     const body = await req.json().catch(() => ({}));
-    if (body?.check) return json({ configured, from: configured ? from : null });
+    if (body?.check) return json({ configured, from, provider: useResend ? "resend" : useGmail ? "gmail" : null });
     if (!configured) return json({ configured: false, sent: 0, failed: 0 });
-
-    const { data: settings } = await db.from("email_settings").select("enabled, from_name, reply_to").eq("id", 1).maybeSingle();
-    if (settings && !settings.enabled) return json({ configured, sent: 0, failed: 0, paused: true });
+    if (cfg && !cfg.enabled) return json({ configured, sent: 0, failed: 0, paused: true });
 
     const { data: rows } = await db.from("email_outbox").select("*").eq("status", "queued").order("created_at").limit(25);
+    const smtp = useGmail
+      ? new SMTPClient({ connection: { hostname: "smtp.gmail.com", port: 465, tls: true, auth: { username: cfg!.smtp_user, password: cfg!.smtp_pass } } })
+      : null;
     let sent = 0;
     let failed = 0;
     for (const r of rows ?? []) {
@@ -53,18 +60,27 @@ Deno.serve(async (req) => {
       const { data: claimed } = await db.from("email_outbox").update({ status: "skipped" }).eq("id", r.id).eq("status", "queued").select("id");
       if (!claimed?.length) continue;
       try {
-        const res = await fetch("https://api.resend.com/emails", {
-          method: "POST",
-          headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
-          body: JSON.stringify({ from, to: [r.to_email], subject: r.subject, text: r.body, html: html(r.body), ...(settings?.reply_to ? { reply_to: settings.reply_to } : {}) }),
-        });
-        if (!res.ok) throw new Error(`${res.status} ${(await res.text()).slice(0, 300)}`);
+        if (smtp) {
+          await smtp.send({ from: from!, to: r.to_email, subject: r.subject, content: r.body, html: html(r.body), ...(cfg?.reply_to ? { replyTo: cfg.reply_to } : {}) });
+        } else {
+          const res = await fetch("https://api.resend.com/emails", {
+            method: "POST",
+            headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
+            body: JSON.stringify({ from, to: [r.to_email], subject: r.subject, text: r.body, html: html(r.body), ...(cfg?.reply_to ? { reply_to: cfg.reply_to } : {}) }),
+          });
+          if (!res.ok) throw new Error(`${res.status} ${(await res.text()).slice(0, 300)}`);
+        }
         await db.from("email_outbox").update({ status: "sent", sent_at: new Date().toISOString(), error: null }).eq("id", r.id);
         sent++;
       } catch (e) {
         await db.from("email_outbox").update({ status: "failed", error: e instanceof Error ? e.message : String(e) }).eq("id", r.id);
         failed++;
       }
+    }
+    try {
+      await smtp?.close();
+    } catch {
+      // Already closed.
     }
     return json({ configured, sent, failed, more: (rows?.length ?? 0) === 25 });
   } catch (e) {
