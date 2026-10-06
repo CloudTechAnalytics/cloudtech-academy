@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 430" width="760" height="430" role="img" aria-label="How to check what an assistant tells you. For a calculation, ask it to show its working and recheck the one number you will act on with a calculator or spreadsheet; month-on-month change is this month divided by last month, minus one, times a hundred. For a web answer, open each source link and ask three questions: is it the real organisation, does the page actually say that, and is it current.">
+<title>Check the number; check the source.</title>
+
+<rect width="760" height="430" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="28.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Check a number</text>
+<rect x="16.0" y="42.0" width="728.0" height="102.0" rx="10" fill="#FFFFFF" stroke="#2F5D8A" stroke-width="1.5"/>
+<text xml:space="preserve" x="30.0" y="70.0" font-size="12" fill="#2F5D8A" font-weight="700" text-anchor="start">Ask:</text>
+<text xml:space="preserve" x="70.0" y="70.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">"Show the calculation for each month."</text>
+<text xml:space="preserve" x="30.0" y="98.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Then recheck the one figure you'll act on.</text>
+<rect x="30.0" y="108.0" width="700.0" height="28.0" rx="6" fill="#E6EEF6"/>
+<text xml:space="preserve" x="44.0" y="127.0" font-size="12.5" fill="#2F5D8A" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">change % = (this month ÷ last month − 1) × 100</text>
+<text xml:space="preserve" x="16.0" y="184.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Check a source (3 questions)</text>
+<rect x="16.0" y="198.0" width="232.0" height="150.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.5"/>
+<circle cx="40.0" cy="224.0" r="12" fill="#2F6B3F"/>
+<text xml:space="preserve" x="40.0" y="228.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
+<text xml:space="preserve" x="60.0" y="229.0" font-size="14" fill="#2F6B3F" font-weight="700" text-anchor="start">Real?</text>
+<text xml:space="preserve" x="30.0" y="258.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Is it the organisation it claims</text>
+<text xml:space="preserve" x="30.0" y="274.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">to be? An official fee should</text>
+<text xml:space="preserve" x="30.0" y="290.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">come from the official site, not</text>
+<text xml:space="preserve" x="30.0" y="306.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">a blog quoting it.</text>
+<rect x="264.0" y="198.0" width="232.0" height="150.0" rx="10" fill="#F3EBD8" stroke="#B38A3E" stroke-width="1.5"/>
+<circle cx="288.0" cy="224.0" r="12" fill="#B38A3E"/>
+<text xml:space="preserve" x="288.0" y="228.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
+<text xml:space="preserve" x="308.0" y="229.0" font-size="14" fill="#8A6A1F" font-weight="700" text-anchor="start">Says that?</text>
+<text xml:space="preserve" x="278.0" y="258.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Does the page actually say what</text>
+<text xml:space="preserve" x="278.0" y="274.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">the answer says? Real pages are</text>
+<text xml:space="preserve" x="278.0" y="290.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">sometimes cited for claims they</text>
+<text xml:space="preserve" x="278.0" y="306.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">don't make.</text>
+<rect x="512.0" y="198.0" width="232.0" height="150.0" rx="10" fill="#EEEAF5" stroke="#5C4F80" stroke-width="1.5"/>
+<circle cx="536.0" cy="224.0" r="12" fill="#5C4F80"/>
+<text xml:space="preserve" x="536.0" y="228.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
+<text xml:space="preserve" x="556.0" y="229.0" font-size="14" fill="#5C4F80" font-weight="700" text-anchor="start">Current?</text>
+<text xml:space="preserve" x="526.0" y="258.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Is it recent? A page from years</text>
+<text xml:space="preserve" x="526.0" y="274.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">ago may have old fees and rules.</text>
+<text xml:space="preserve" x="16.0" y="380.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Then ask the assistant to search the web, so it shows its sources as links to open.</text>
+<text xml:space="preserve" x="16.0" y="402.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">Custom instructions can tell it to say so when it isn't sure instead of guessing.</text>
+</g></svg>

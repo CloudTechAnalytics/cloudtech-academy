@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 400" width="760" height="400" role="img" aria-label="Three everyday jobs for an AI assistant like Claude: reading for you by summarising and answering questions about a document, rewriting for a particular reader, and working with context through a project that holds knowledge files and instructions so every new chat starts informed.">
+<title>Read, rewrite, and keep your context in a project.</title>
+
+<rect width="760" height="400" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="28.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Three everyday jobs</text>
+<rect x="16.0" y="42.0" width="232.0" height="112.0" rx="10" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.5"/>
+<text xml:space="preserve" x="30.0" y="68.0" font-size="14.5" fill="#2F5D8A" font-weight="700" text-anchor="start">Read for you</text>
+<text xml:space="preserve" x="30.0" y="92.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Summarise a long document, find</text>
+<text xml:space="preserve" x="30.0" y="108.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">what matters, answer questions</text>
+<text xml:space="preserve" x="30.0" y="124.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">about it.</text>
+<rect x="264.0" y="42.0" width="232.0" height="112.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.5"/>
+<text xml:space="preserve" x="278.0" y="68.0" font-size="14.5" fill="#2F6B3F" font-weight="700" text-anchor="start">Rewrite</text>
+<text xml:space="preserve" x="278.0" y="92.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Same meaning, different reader:</text>
+<text xml:space="preserve" x="278.0" y="108.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">clearer, shorter, more formal.</text>
+<rect x="512.0" y="42.0" width="232.0" height="112.0" rx="10" fill="#EEEAF5" stroke="#5C4F80" stroke-width="1.5"/>
+<text xml:space="preserve" x="526.0" y="68.0" font-size="14.5" fill="#5C4F80" font-weight="700" text-anchor="start">Work with context</text>
+<text xml:space="preserve" x="526.0" y="92.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Keep your background and files</text>
+<text xml:space="preserve" x="526.0" y="108.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">in a project.</text>
+<text xml:space="preserve" x="16.0" y="188.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Inside a project</text>
+<rect x="16.0" y="200.0" width="728.0" height="156.0" rx="10" fill="#FFFFFF" stroke="#5C4F80" stroke-width="1.8"/>
+<rect x="30.0" y="214.0" width="330.0" height="130.0" rx="10" fill="#F3EBD8" stroke="#8A6A1F" stroke-width="1.2"/>
+<text xml:space="preserve" x="44.0" y="240.0" font-size="13.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Knowledge files</text>
+<text xml:space="preserve" x="44.0" y="264.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">• Price list</text>
+<text xml:space="preserve" x="44.0" y="284.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">• Policies</text>
+<text xml:space="preserve" x="44.0" y="304.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">• Style guide</text>
+<text xml:space="preserve" x="44.0" y="328.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">It can always refer to these.</text>
+<rect x="380.0" y="214.0" width="350.0" height="130.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.2"/>
+<text xml:space="preserve" x="394.0" y="240.0" font-size="13.5" fill="#2F6B3F" font-weight="700" text-anchor="start">Instructions</text>
+<text xml:space="preserve" x="394.0" y="264.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">• Warm and simple English</text>
+<text xml:space="preserve" x="394.0" y="284.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">• Use the price list only</text>
+<text xml:space="preserve" x="394.0" y="304.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">• Ask if you're unsure</text>
+<text xml:space="preserve" x="394.0" y="328.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">It follows these in every chat.</text>
+<text xml:space="preserve" x="16.0" y="384.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Every new chat in the project starts informed, so you stop repeating yourself.</text>
+</g></svg>

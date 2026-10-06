@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 380" width="760" height="380" role="img" aria-label="Improve the draft rather than starting again. The first answer is a draft; reply with what to change and the assistant remembers the conversation. Useful follow-ups: shorter, less formal, that's wrong so fix it, give me three versions, explain it as if I'm new. Show one example when you want a particular style.">
+<title>Treat the first answer as a draft and reply with changes.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="380" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="20.0" width="440.0" height="240.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.6"/>
+<rect x="30.0" y="34.0" width="412.0" height="44.0" rx="8" fill="#E6EEF6"/>
+<text xml:space="preserve" x="42.0" y="50.0" font-size="11.5" fill="#2F5D8A" font-weight="700" text-anchor="start">You</text>
+<text xml:space="preserve" x="42.0" y="66.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Write a short note asking my tutor for a deadline extension.</text>
+<rect x="30.0" y="96.0" width="412.0" height="38.0" rx="8" fill="#F3EBD8"/>
+<text xml:space="preserve" x="42.0" y="112.0" font-size="11.5" fill="#8A6A1F" font-weight="700" text-anchor="start">AI</text>
+<text xml:space="preserve" x="42.0" y="128.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Dear Dr Musa, I am writing to formally request…</text>
+<rect x="30.0" y="150.0" width="412.0" height="44.0" rx="8" fill="#E6EEF6"/>
+<text xml:space="preserve" x="42.0" y="166.0" font-size="11.5" fill="#2F5D8A" font-weight="700" text-anchor="start">You</text>
+<text xml:space="preserve" x="42.0" y="182.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Less formal, and mention my lab report is already half done.</text>
+<rect x="30.0" y="212.0" width="412.0" height="38.0" rx="8" fill="#F3EBD8"/>
+<text xml:space="preserve" x="42.0" y="228.0" font-size="11.5" fill="#8A6A1F" font-weight="700" text-anchor="start">AI</text>
+<text xml:space="preserve" x="42.0" y="244.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Hi Dr Musa, could I have until Friday? My lab report is half done…</text>
+<text xml:space="preserve" x="476.0" y="38.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Follow-ups to keep handy</text>
+<rect x="476.0" y="52.0" width="268.0" height="28.0" rx="6" fill="#F3EBD8"/>
+<text xml:space="preserve" x="488.0" y="71.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Shorter: three sentences at most.</text>
+<rect x="476.0" y="86.0" width="268.0" height="28.0" rx="6" fill="#F3EBD8"/>
+<text xml:space="preserve" x="488.0" y="105.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Less formal. It's for a colleague.</text>
+<rect x="476.0" y="120.0" width="268.0" height="28.0" rx="6" fill="#F3EBD8"/>
+<text xml:space="preserve" x="488.0" y="139.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">That's wrong: fix it.</text>
+<rect x="476.0" y="154.0" width="268.0" height="28.0" rx="6" fill="#F3EBD8"/>
+<text xml:space="preserve" x="488.0" y="173.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Give me three versions.</text>
+<rect x="476.0" y="188.0" width="268.0" height="28.0" rx="6" fill="#F3EBD8"/>
+<text xml:space="preserve" x="488.0" y="207.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Explain it as if I'm new to this.</text>
+<text xml:space="preserve" x="16.0" y="296.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Want a particular style? Show, don't describe.</text>
+<rect x="16.0" y="308.0" width="360.0" height="56.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.4"/>
+<text xml:space="preserve" x="30.0" y="332.0" font-size="12.5" fill="#2F6B3F" font-weight="700" text-anchor="start">Paste one example you like</text>
+<text xml:space="preserve" x="30.0" y="351.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">"Write more in exactly this style and length."</text>
+<path d="M380.0,336.0 L400.0,336.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="404.0" y="308.0" width="340.0" height="56.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.4"/>
+<text xml:space="preserve" x="418.0" y="332.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">It copies length, rhythm and ending</text>
+<text xml:space="preserve" x="418.0" y="351.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">Works for emails, posts and descriptions.</text>
+</g></svg>

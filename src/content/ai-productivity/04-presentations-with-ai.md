@@ -19,6 +19,8 @@ For example:
 
 That's your presentation in miniature. Every slide either supports it or gets cut.
 
+![Plan a presentation in three steps: write the message (who, what, why), ask for an outline in a story shape, then edit it hard](/images/courses/ai-productivity/presentation-plan.svg "Message first, then outline, then edit hard.")
+
 ## Get an outline, then edit it hard
 
 Give an AI assistant (ChatGPT, Claude, Gemini or Copilot) your three sentences and the facts it can't know, and ask for an **outline**, not finished slides:
@@ -88,6 +90,8 @@ What changed:
 - **Short lines**, about 8 words or fewer each, and 3 to 5 of them.
 - **One big number** the room can remember.
 - **The detail moves to your speaker notes**, where you say it out loud.
+
+![A crowded document-style slide rewritten with a headline that states the point, short bullets, one big number, and detail moved to speaker notes](/images/courses/ai-productivity/slide-rewrite.svg "A headline that states the point, short lines, detail in the notes.")
 
 AI is good at exactly this kind of tightening:
 

@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 400" width="760" height="400" role="img" aria-label="Planning a presentation. First write three sentences: who is listening, what you want them to do or believe, and why they should care. Then ask AI for an outline in a story shape such as problem, cost of doing nothing, solution, cost and next step, and edit it hard: check every number, cut what the audience does not need, and add what only you know.">
+<title>Message first, then outline, then edit hard.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="400" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="28.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">1  Start with the message</text>
+<rect x="16.0" y="42.0" width="232.0" height="64.0" rx="10" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.4"/>
+<text xml:space="preserve" x="30.0" y="68.0" font-size="15" fill="#2F5D8A" font-weight="700" text-anchor="start">Who</text>
+<text xml:space="preserve" x="30.0" y="90.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">is listening?</text>
+<rect x="264.0" y="42.0" width="232.0" height="64.0" rx="10" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.4"/>
+<text xml:space="preserve" x="278.0" y="68.0" font-size="15" fill="#2F5D8A" font-weight="700" text-anchor="start">What</text>
+<text xml:space="preserve" x="278.0" y="90.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">should they do or believe?</text>
+<rect x="512.0" y="42.0" width="232.0" height="64.0" rx="10" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.4"/>
+<text xml:space="preserve" x="526.0" y="68.0" font-size="15" fill="#2F5D8A" font-weight="700" text-anchor="start">Why</text>
+<text xml:space="preserve" x="526.0" y="90.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">should they care?</text>
+<text xml:space="preserve" x="16.0" y="142.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">2  Ask for an outline in a story shape</text>
+<rect x="16.0" y="156.0" width="136.0" height="50.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.4"/>
+<text xml:space="preserve" x="84.0" y="186.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="middle">Problem</text>
+<path d="M154.0,181.0 L162.0,181.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="164.0" y="156.0" width="136.0" height="50.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.4"/>
+<text xml:space="preserve" x="232.0" y="186.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="middle">If we wait</text>
+<path d="M302.0,181.0 L310.0,181.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="312.0" y="156.0" width="136.0" height="50.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.4"/>
+<text xml:space="preserve" x="380.0" y="186.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="middle">Solution</text>
+<path d="M450.0,181.0 L458.0,181.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="460.0" y="156.0" width="136.0" height="50.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.4"/>
+<text xml:space="preserve" x="528.0" y="186.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="middle">Cost</text>
+<path d="M598.0,181.0 L606.0,181.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="608.0" y="156.0" width="136.0" height="50.0" rx="10" fill="#F3EBD8" stroke="#8A6A1F" stroke-width="1.4"/>
+<text xml:space="preserve" x="676.0" y="186.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="middle">Next step</text>
+<text xml:space="preserve" x="16.0" y="246.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">3  Edit it hard, as the person who knows the room</text>
+<rect x="16.0" y="260.0" width="232.0" height="84.0" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.5"/>
+<text xml:space="preserve" x="30.0" y="286.0" font-size="13.5" fill="#9B2C1F" font-weight="700" text-anchor="start">Check every number</text>
+<text xml:space="preserve" x="30.0" y="308.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">AI can slip on sums.</text>
+<rect x="264.0" y="260.0" width="232.0" height="84.0" rx="10" fill="#F3EBD8" stroke="#8A6A1F" stroke-width="1.5"/>
+<text xml:space="preserve" x="278.0" y="286.0" font-size="13.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Cut or merge</text>
+<text xml:space="preserve" x="278.0" y="308.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Anything the audience doesn't</text>
+<text xml:space="preserve" x="278.0" y="323.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">need.</text>
+<rect x="512.0" y="260.0" width="232.0" height="84.0" rx="10" fill="#EEEAF5" stroke="#5C4F80" stroke-width="1.5"/>
+<text xml:space="preserve" x="526.0" y="286.0" font-size="13.5" fill="#5C4F80" font-weight="700" text-anchor="start">Add what it can't know</text>
+<text xml:space="preserve" x="526.0" y="308.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">The question you know they'll</text>
+<text xml:space="preserve" x="526.0" y="323.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">ask.</text>
+<text xml:space="preserve" x="16.0" y="380.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Every slide either supports the message or gets cut.</text>
+</g></svg>

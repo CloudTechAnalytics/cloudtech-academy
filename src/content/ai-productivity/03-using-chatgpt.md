@@ -87,6 +87,8 @@ according to the CAC [1]. You'll also need a valid means of ID [2].
 
 Source 1 is a blog from 2021 quoting a fee: not good enough for a fee. Source 2 is the official site, so you'd open it and check both the fee and the ID requirement there, and trust the official page if they disagree.
 
+![How to check a number (ask for the working, recheck the key figure) and a source (is it real, does it say that, is it current)](/images/courses/ai-productivity/verify.svg "Check the number; check the source.")
+
 ## Make it yours: personalisation
 
 In ChatGPT's settings, under **Personalisation** (or **Customise ChatGPT**), you can tell it about yourself and how you want answers written. These **custom instructions** apply to new chats, so you don't repeat them.

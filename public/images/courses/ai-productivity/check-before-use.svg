@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 416" width="760" height="416" role="img" aria-label="Three kinds of AI error to check before you use an answer: wrong numbers, because language models predict text rather than always calculating; invented facts and sources, such as realistic studies that do not exist; and out-of-date information such as fees and laws. Also never paste passwords, bank details, payslips or confidential documents into an AI tool unless your organisation has approved it.">
+<title>Three errors to catch, and what never to paste.</title>
+
+<rect width="760" height="416" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="28.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">AI sounds sure even when it's wrong</text>
+<rect x="16.0" y="42.0" width="232.0" height="158.0" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.5"/>
+<text xml:space="preserve" x="30.0" y="68.0" font-size="13.5" fill="#9B2C1F" font-weight="700" text-anchor="start">Wrong numbers</text>
+<text xml:space="preserve" x="30.0" y="92.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">It predicts text; it doesn't</text>
+<text xml:space="preserve" x="30.0" y="108.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">always calculate.</text>
+<line x1="30.0" y1="136.0" x2="234.0" y2="136.0" stroke="#9B2C1F" stroke-width="1"/>
+<text xml:space="preserve" x="30.0" y="154.0" font-size="12" fill="#9B2C1F" font-weight="700" text-anchor="start">So:</text>
+<text xml:space="preserve" x="30.0" y="172.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Check the one figure you'll act</text>
+<text xml:space="preserve" x="30.0" y="187.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">on with a calculator.</text>
+<rect x="264.0" y="42.0" width="232.0" height="158.0" rx="10" fill="#F3EBD8" stroke="#8A6A1F" stroke-width="1.5"/>
+<text xml:space="preserve" x="278.0" y="68.0" font-size="13.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Invented facts and sources</text>
+<text xml:space="preserve" x="278.0" y="92.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Convincing titles, authors and</text>
+<text xml:space="preserve" x="278.0" y="108.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">years that don't exist.</text>
+<line x1="278.0" y1="136.0" x2="482.0" y2="136.0" stroke="#8A6A1F" stroke-width="1"/>
+<text xml:space="preserve" x="278.0" y="154.0" font-size="12" fill="#8A6A1F" font-weight="700" text-anchor="start">So:</text>
+<text xml:space="preserve" x="278.0" y="172.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Find the source yourself before</text>
+<text xml:space="preserve" x="278.0" y="187.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">you cite it.</text>
+<rect x="512.0" y="42.0" width="232.0" height="158.0" rx="10" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.5"/>
+<text xml:space="preserve" x="526.0" y="68.0" font-size="13.5" fill="#2F5D8A" font-weight="700" text-anchor="start">Out-of-date information</text>
+<text xml:space="preserve" x="526.0" y="92.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Fees, laws and requirements</text>
+<text xml:space="preserve" x="526.0" y="108.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">change.</text>
+<line x1="526.0" y1="136.0" x2="730.0" y2="136.0" stroke="#2F5D8A" stroke-width="1"/>
+<text xml:space="preserve" x="526.0" y="154.0" font-size="12" fill="#2F5D8A" font-weight="700" text-anchor="start">So:</text>
+<text xml:space="preserve" x="526.0" y="172.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Check the organisation's own</text>
+<text xml:space="preserve" x="526.0" y="187.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">website.</text>
+<rect x="16.0" y="222.0" width="728.0" height="156.0" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.6"/>
+<text xml:space="preserve" x="30.0" y="248.0" font-size="14" fill="#9B2C1F" font-weight="700" text-anchor="start">Never paste these into an AI tool</text>
+<rect x="30.0" y="262.0" width="181.3" height="26.0" rx="6" fill="#FFFFFF"/>
+<text xml:space="preserve" x="40.0" y="279.3" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Customers' phone numbers</text>
+<rect x="221.3" y="262.0" width="80.5" height="26.0" rx="6" fill="#FFFFFF"/>
+<text xml:space="preserve" x="231.3" y="279.3" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Passwords</text>
+<rect x="311.8" y="262.0" width="100.6" height="26.0" rx="6" fill="#FFFFFF"/>
+<text xml:space="preserve" x="321.8" y="279.3" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Bank details</text>
+<rect x="422.4" y="262.0" width="73.8" height="26.0" rx="6" fill="#FFFFFF"/>
+<text xml:space="preserve" x="432.4" y="279.3" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Payslips</text>
+<rect x="30.0" y="298.0" width="221.6" height="26.0" rx="6" fill="#FFFFFF"/>
+<text xml:space="preserve" x="40.0" y="315.3" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Confidential company documents</text>
+<rect x="261.6" y="298.0" width="248.5" height="26.0" rx="6" fill="#FFFFFF"/>
+<text xml:space="preserve" x="271.6" y="315.3" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Other people's private information</text>
+<text xml:space="preserve" x="30.0" y="356.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">Unless your organisation has approved that tool for that kind of information.</text>
+<text xml:space="preserve" x="16.0" y="402.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Treat every answer as a draft from a fast assistant who is sometimes confidently wrong.</text>
+</g></svg>

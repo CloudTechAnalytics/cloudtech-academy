@@ -15,6 +15,8 @@ People use Claude for all kinds of things, but three everyday jobs stand out:
 2. **Rewriting:** turning rough or technical text into something clear for a particular reader.
 3. **Working with context:** keeping your business's background, files and preferences in a **project**, so every new chat starts informed.
 
+![Three everyday jobs for an AI assistant (read, rewrite, work with context), and what a project holds: knowledge files and instructions](/images/courses/ai-productivity/claude-jobs.svg "Read, rewrite, and keep your context in a project.")
+
 This module practises all three on realistic material. Features and button names change over time; if something on your screen looks slightly different, look for the nearest match.
 
 ## Read a document with Claude
@@ -83,6 +85,8 @@ A good summary looks something like this:
 
 **Then check it.** Claude is a strong reader, but it can misread, round, or slip a detail in from what's "usual" rather than what's written. For anything you'll act on, especially numbers, dates and obligations, find the clause and read it yourself. Asking for clause numbers, as the second prompt does, makes this quick.
 
+![Five steps for using an assistant on a long document: paste, summarise, extract, ask for risks, and always check against the original](/images/courses/ai-productivity/read-document.svg "Summarise, extract, question, and then check against the source.")
+
 > [!WARNING]
 > Don't upload confidential documents (customer data, payslips, contracts under a confidentiality clause) unless your organisation has approved the tool for that kind of information. For practice, use public documents or ones like this.
 
@@ -108,6 +112,8 @@ message and we'll sort it out.
 ```
 
 Other useful rewrites: "half the length, same points", "more formal, for a bank", or **"don't rewrite it, tell me what's unclear"**, which is the best way to improve your own writing rather than handing it over.
+
+![A technical note rewritten for customers, and other useful rewrites such as shorter, more formal or simpler](/images/courses/ai-productivity/rewrite-reader.svg "Same facts, different reader.")
 
 ## Keep your context in a project
 

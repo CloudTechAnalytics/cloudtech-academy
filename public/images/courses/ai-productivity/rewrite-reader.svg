@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 340" width="760" height="340" role="img" aria-label="Rewriting for a different reader: the same message can be rewritten for a customer, a manager or a bank by saying who will read it and what they need to do. Example: a technical note about a server outage becomes a short, friendly apology for customers saying what happens next.">
+<title>Same facts, different reader.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="340" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="28.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Tell it who will read it and what they should do</text>
+<rect x="16.0" y="42.0" width="350.0" height="150.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="30.0" y="66.0" font-size="12" fill="#5E5A52" font-weight="700" text-anchor="start">Original (for engineers)</text>
+<text xml:space="preserve" x="30.0" y="90.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">"Database migration caused 3 minutes of</text>
+<text xml:space="preserve" x="30.0" y="107.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">read-only mode at 09:10. Writes were queued and</text>
+<text xml:space="preserve" x="30.0" y="124.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">replayed automatically."</text>
+<path d="M370.0,117.0 L392.0,117.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="396.0" y="42.0" width="348.0" height="150.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.5"/>
+<text xml:space="preserve" x="410.0" y="66.0" font-size="12" fill="#2F6B3F" font-weight="700" text-anchor="start">Rewritten for customers</text>
+<text xml:space="preserve" x="410.0" y="90.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">"At 9:10 this morning, our site was slow to save</text>
+<text xml:space="preserve" x="410.0" y="107.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">changes for 3 minutes. Nothing was lost, and</text>
+<text xml:space="preserve" x="410.0" y="124.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">everything saved itself afterwards. Sorry for</text>
+<text xml:space="preserve" x="410.0" y="141.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">the wait."</text>
+<text xml:space="preserve" x="16.0" y="226.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Other useful rewrites</text>
+<rect x="16.0" y="240.0" width="360.0" height="36.0" rx="6" fill="#F3EBD8"/>
+<text xml:space="preserve" x="30.0" y="263.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Half the length, same points</text>
+<rect x="384.0" y="240.0" width="360.0" height="36.0" rx="6" fill="#F3EBD8"/>
+<text xml:space="preserve" x="398.0" y="263.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">More formal, for a bank</text>
+<rect x="16.0" y="284.0" width="360.0" height="36.0" rx="6" fill="#F3EBD8"/>
+<text xml:space="preserve" x="30.0" y="307.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Simpler, for a new starter</text>
+<rect x="384.0" y="284.0" width="360.0" height="36.0" rx="6" fill="#F3EBD8"/>
+<text xml:space="preserve" x="398.0" y="307.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">"Don't rewrite it: tell me what's unclear"</text>
+</g></svg>

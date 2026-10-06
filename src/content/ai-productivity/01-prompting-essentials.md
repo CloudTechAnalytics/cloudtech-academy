@@ -63,6 +63,8 @@ Most weak answers are fixed by checking that your prompt has these four parts:
 | **Details** | The facts it can't know, and any limits | "₦150,000 deposit, 80 guests, 12 → 19 July, deposit still stands" |
 | **Format** | Length, layout, tone | "Short, warm, under 60 words, no 'valued customer'" |
 
+![The four parts of a prompt: context, task, details and format, with an example for a laundry business](/images/courses/ai-productivity/prompt-parts.svg "Context, task, details, format.")
+
 A quick test: **if you gave this job to a new assistant on their first day, what would they need to know?** Tell the AI the same things.
 
 > [!TIP]
@@ -122,6 +124,8 @@ Useful follow-ups to keep in your pocket:
 - "Give me three different versions to choose from."
 - "Explain it as if I'm new to the topic."
 
+![A chat where the first draft is improved with a follow-up, a list of useful follow-ups, and how showing one example gets a particular style](/images/courses/ai-productivity/iterate.svg "Treat the first answer as a draft and reply with changes.")
+
 ## Check before you use it
 
 AI assistants write fluently even when they're wrong, so mistakes don't look like mistakes. Three kinds of error to watch for:
@@ -131,6 +135,8 @@ AI assistants write fluently even when they're wrong, so mistakes don't look lik
 3. **Out-of-date information.** Prices, laws, fees and requirements change. For anything official, check the organisation's own website.
 
 And protect people's information: don't paste customers' phone numbers, passwords, bank details, payslips or confidential company documents into an AI tool unless your organisation has approved that tool for it.
+
+![Three AI errors to check (wrong numbers, invented sources, out-of-date information) and the kinds of information never to paste into an AI tool](/images/courses/ai-productivity/check-before-use.svg "Three errors to catch, and what never to paste.")
 
 ## Try it
 

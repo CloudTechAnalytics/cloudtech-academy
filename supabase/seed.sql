@@ -133,6 +133,8 @@ Most weak answers are fixed by checking that your prompt has these four parts:
 | **Details** | The facts it can't know, and any limits | "₦150,000 deposit, 80 guests, 12 → 19 July, deposit still stands" |
 | **Format** | Length, layout, tone | "Short, warm, under 60 words, no 'valued customer'" |
 
+![The four parts of a prompt: context, task, details and format, with an example for a laundry business](/images/courses/ai-productivity/prompt-parts.svg "Context, task, details, format.")
+
 A quick test: **if you gave this job to a new assistant on their first day, what would they need to know?** Tell the AI the same things.
 
 > [!TIP]
@@ -192,6 +194,8 @@ Useful follow-ups to keep in your pocket:
 - "Give me three different versions to choose from."
 - "Explain it as if I'm new to the topic."
 
+![A chat where the first draft is improved with a follow-up, a list of useful follow-ups, and how showing one example gets a particular style](/images/courses/ai-productivity/iterate.svg "Treat the first answer as a draft and reply with changes.")
+
 ## Check before you use it
 
 AI assistants write fluently even when they're wrong, so mistakes don't look like mistakes. Three kinds of error to watch for:
@@ -201,6 +205,8 @@ AI assistants write fluently even when they're wrong, so mistakes don't look lik
 3. **Out-of-date information.** Prices, laws, fees and requirements change. For anything official, check the organisation's own website.
 
 And protect people's information: don't paste customers' phone numbers, passwords, bank details, payslips or confidential company documents into an AI tool unless your organisation has approved that tool for it.
+
+![Three AI errors to check (wrong numbers, invented sources, out-of-date information) and the kinds of information never to paste into an AI tool](/images/courses/ai-productivity/check-before-use.svg "Three errors to catch, and what never to paste.")
 
 ## Try it
 
@@ -301,6 +307,8 @@ People use Claude for all kinds of things, but three everyday jobs stand out:
 2. **Rewriting:** turning rough or technical text into something clear for a particular reader.
 3. **Working with context:** keeping your business's background, files and preferences in a **project**, so every new chat starts informed.
 
+![Three everyday jobs for an AI assistant (read, rewrite, work with context), and what a project holds: knowledge files and instructions](/images/courses/ai-productivity/claude-jobs.svg "Read, rewrite, and keep your context in a project.")
+
 This module practises all three on realistic material. Features and button names change over time; if something on your screen looks slightly different, look for the nearest match.
 
 ## Read a document with Claude
@@ -369,6 +377,8 @@ A good summary looks something like this:
 
 **Then check it.** Claude is a strong reader, but it can misread, round, or slip a detail in from what's "usual" rather than what's written. For anything you'll act on, especially numbers, dates and obligations, find the clause and read it yourself. Asking for clause numbers, as the second prompt does, makes this quick.
 
+![Five steps for using an assistant on a long document: paste, summarise, extract, ask for risks, and always check against the original](/images/courses/ai-productivity/read-document.svg "Summarise, extract, question, and then check against the source.")
+
 > [!WARNING]
 > Don't upload confidential documents (customer data, payslips, contracts under a confidentiality clause) unless your organisation has approved the tool for that kind of information. For practice, use public documents or ones like this.
 
@@ -394,6 +404,8 @@ message and we'll sort it out.
 ```
 
 Other useful rewrites: "half the length, same points", "more formal, for a bank", or **"don't rewrite it, tell me what's unclear"**, which is the best way to improve your own writing rather than handing it over.
+
+![A technical note rewritten for customers, and other useful rewrites such as shorter, more formal or simpler](/images/courses/ai-productivity/rewrite-reader.svg "Same facts, different reader.")
 
 ## Keep your context in a project
 
@@ -565,6 +577,8 @@ according to the CAC [1]. You'll also need a valid means of ID [2].
 
 Source 1 is a blog from 2021 quoting a fee: not good enough for a fee. Source 2 is the official site, so you'd open it and check both the fee and the ID requirement there, and trust the official page if they disagree.
 
+![How to check a number (ask for the working, recheck the key figure) and a source (is it real, does it say that, is it current)](/images/courses/ai-productivity/verify.svg "Check the number; check the source.")
+
 ## Make it yours: personalisation
 
 In ChatGPT's settings, under **Personalisation** (or **Customise ChatGPT**), you can tell it about yourself and how you want answers written. These **custom instructions** apply to new chats, so you don't repeat them.
@@ -684,6 +698,8 @@ For example:
 
 That's your presentation in miniature. Every slide either supports it or gets cut.
 
+![Plan a presentation in three steps: write the message (who, what, why), ask for an outline in a story shape, then edit it hard](/images/courses/ai-productivity/presentation-plan.svg "Message first, then outline, then edit hard.")
+
 ## Get an outline, then edit it hard
 
 Give an AI assistant (ChatGPT, Claude, Gemini or Copilot) your three sentences and the facts it can't know, and ask for an **outline**, not finished slides:
@@ -753,6 +769,8 @@ What changed:
 - **Short lines**, about 8 words or fewer each, and 3 to 5 of them.
 - **One big number** the room can remember.
 - **The detail moves to your speaker notes**, where you say it out loud.
+
+![A crowded document-style slide rewritten with a headline that states the point, short bullets, one big number, and detail moved to speaker notes](/images/courses/ai-productivity/slide-rewrite.svg "A headline that states the point, short lines, detail in the notes.")
 
 AI is good at exactly this kind of tightening:
 
