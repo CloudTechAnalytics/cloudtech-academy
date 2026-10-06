@@ -2,13 +2,13 @@ import { ConnectSection } from "@/components/CommunityWidgets";
 import { Link } from "react-router";
 import { ArrowRight, Award, BookOpen, CheckCircle2, FolderKanban, PencilLine } from "lucide-react";
 import { useSeo } from "@/lib/seo";
-import { useCourses } from "@/lib/data";
+import { useCourses, useProgrammes } from "@/lib/data";
 import { ButtonLink } from "@/components/Button";
 import { CourseCard } from "@/components/CourseCard";
 import { TrackCard } from "@/components/TrackCard";
 import { Reveal } from "@/components/Reveal";
 import { webSiteJsonLd } from "@/lib/schema";
-import { TRACKS } from "@/content/tracks";
+import { isPaid } from "@/lib/commerce";
 
 /** Courses we suggest to someone arriving with no experience. */
 const STARTING_COURSES = [
@@ -119,6 +119,8 @@ export default function Home() {
     jsonLd: webSiteJsonLd(),
   });
   const courses = useCourses();
+  const programmes = useProgrammes();
+  const professional = programmes.filter((t) => isPaid(t));
   const lessons = courses.reduce((n, c) => n + c.modules.reduce((m, mod) => m + mod.lessons.length, 0), 0);
   const starters = STARTING_COURSES.map((id) => courses.find((c) => c.id === id)).filter((c) => c !== undefined);
 
@@ -142,7 +144,7 @@ export default function Home() {
                 Start learning free
               </ButtonLink>
               <ButtonLink to="/programmes" variant="secondary">
-                Explore learning paths
+                Explore professional programmes
               </ButtonLink>
             </div>
           </Reveal>
@@ -157,7 +159,7 @@ export default function Home() {
           {[
             [String(courses.length), "courses"],
             [String(lessons), "lessons"],
-            [String(TRACKS.length), "learning paths"],
+            [String(professional.length), "professional programmes"],
             ["Free", "to learn"],
           ].map(([n, label]) => (
             <div key={label} className="text-center sm:text-left">
@@ -198,7 +200,7 @@ export default function Home() {
               Explore Professional Programmes
             </ButtonLink>
           </div>
-          <p className="mt-6 text-[0.9375rem] text-muted">CloudTech: Build technology. Build people. Solve real problems.</p>
+          <p className="mt-6 text-[0.9375rem] text-muted">Free courses help people start learning. Professional programmes help people become professionals. CloudTech: Build technology. Build people. Solve real problems.</p>
         </div>
       </section>
 
@@ -206,13 +208,13 @@ export default function Home() {
         <div className="container-page">
           <SectionHeading
             id="tracks-title"
-            kicker="Learning paths"
-            title="Choose a career, earn the certificate"
-            intro="Each learning path is a complete route: the right courses in order, a capstone project, and one official Professional Certificate for the whole thing. Start with the free steps, and go deeper with a professional programme when you are ready."
-            link={{ to: "/programmes", label: "Compare all learning paths" }}
+            kicker="Professional programmes"
+            title="Free courses help you start. Programmes help you become a professional."
+            intro="Each programme is a complete, structured route: the full curriculum, practical projects, assessments, a capstone and a professional certificate. The free courses inside stay free, so you can begin before you enroll."
+            link={{ to: "/programmes", label: "Compare all programmes" }}
           />
           <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {TRACKS.map((t, i) => (
+            {professional.map((t, i) => (
               <Reveal as="li" key={t.id} delay={(i % 4) * 60} className="h-full">
                 <TrackCard track={t} courses={courses} />
               </Reveal>

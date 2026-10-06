@@ -141,7 +141,7 @@ const shortRules: CertificateRules = {
   passingScore: 60,
 };
 
-export const COURSES: CourseDef[] = [
+const ALL_COURSES: CourseDef[] = [
   {
     id: "ai-productivity-fundamentals",
     slug: "ai-productivity-fundamentals",
@@ -1955,5 +1955,24 @@ export const COURSES: CourseDef[] = [
     ].map(([title, slug], i) => ({ id: `pmc-m${String(i + 1).padStart(2, "0")}`, title, lessons: [slug] })),
   },
 ];
+/**
+ * Courses that only exist inside a Professional Programme. Their lessons are paid: a learner reaches them by enrolling in a
+ * programme that includes them, and individual enrolment is closed. Every other course is free and stays open to everyone,
+ * including the free introductions that also appear inside a programme. Admins can change any of this in the dashboard;
+ * these are the starting values the seed writes once.
+ */
+export const PROGRAMME_ONLY_COURSES = new Set([
+  "advanced-sql", "data-modelling", "power-bi-dax", "python-for-data-analytics", "data-analyst-capstone",
+  "agile-business-analysis", "process-improvement-bpmn-lean", "business-analyst-capstone",
+  "machine-learning-fundamentals", "feature-engineering-model-evaluation", "experimentation-ab-testing", "time-series-forecasting", "data-scientist-capstone",
+  "generative-ai-engineering", "ai-agents-tool-use", "llm-evaluation-safety-production", "software-engineering-with-python", "databases-and-apis-for-developers", "ai-engineer-capstone",
+  "terraform-infrastructure-as-code", "cicd-and-containers", "observability-site-reliability", "cloud-devops-capstone",
+  "web-development-with-javascript", "software-developer-capstone",
+]);
+
+export const COURSES: CourseDef[] = ALL_COURSES.map((c) =>
+  PROGRAMME_ONLY_COURSES.has(c.id) ? { ...c, isFree: false, access: "paid", courseType: "professional", enrollmentStatus: "closed" } : c,
+);
+
 export const findCourseDef = (slug: string | undefined) => COURSES.find((c) => c.slug === slug);
 export const categoryName = (id: string) => CATEGORIES.find((c) => c.id === id)?.name ?? id;

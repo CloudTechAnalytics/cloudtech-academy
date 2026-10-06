@@ -18,7 +18,7 @@ export const SITE = {
 export const NAV_LINKS = [
   { to: "/courses", label: "Courses" },
   { to: "/students", label: "Students" },
-  { to: "/programmes", label: "Learning Paths" },
+  { to: "/programmes", label: "Programmes" },
   { to: "/projects", label: "Projects" },
   { to: "/events", label: "Events" },
   { to: "/certificates", label: "Certificates" },

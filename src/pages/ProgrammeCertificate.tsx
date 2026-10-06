@@ -29,6 +29,8 @@ function Inner() {
   const auth = useAuth();
   const [badge, setBadge] = useState<Credential | null | undefined>(undefined);
   const [held, setHeld] = useState<Certificate | null | undefined>(undefined);
+  /** True when the learner holds this programme as a paid enrolment, which includes the certificate. */
+  const [included, setIncluded] = useState(false);
   const [prices, setPrices] = useState<CertificatePrice[] | null>(null);
   const [currency, setCurrency] = useState(guessCurrency);
   const [order, setOrder] = useState<CertificateOrder | null>(null);
@@ -48,7 +50,8 @@ function Inner() {
     void getBackend().then(async (b) => {
       setPaymentsEnabled(b.paymentsEnabled);
       setSimulated(!!b.simulatePayment);
-      const [list, creds, certs] = await Promise.all([b.listCertificatePrices("programme"), b.listMyCredentials(), b.listMyCertificates()]);
+      const [list, creds, certs, mine, sales] = await Promise.all([b.listCertificatePrices("programme"), b.listMyCredentials(), b.listMyCertificates(), b.listMyProgrammes(), b.listProgrammeSales()]);
+      setIncluded(!!track && mine.some((m) => m.trackId === track.id) && sales[track.id]?.access === "paid");
       setPrices(list);
       setBadge(creds.find((c) => c.kind === "track_completion" && c.trackId === track?.id && c.status === "valid") ?? null);
       setHeld(certs.find((c) => c.source === "programme" && c.trackId === track?.id && c.status === "valid") ?? null);
@@ -132,6 +135,17 @@ function Inner() {
     state: certificate ? "valid" : "preview",
   };
 
+  const claimIncluded = async () => {
+    setBusy(true);
+    setError(null);
+    try {
+      setIssued(await (await getBackend()).claimProgrammeCertificate(track.id));
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Couldn't issue the certificate.");
+    }
+    setBusy(false);
+  };
+
   const startOrder = async (pay = currency) => {
     setBusy(true);
     setError(null);
@@ -179,7 +193,7 @@ function Inner() {
           {certificate ? (
             <>
               <p className="flex items-center gap-2 font-semibold text-success">
-                <CheckCircle2 aria-hidden className="h-5 w-5" /> {issued ? "Payment successful" : "You have the official certificate"}
+                <CheckCircle2 aria-hidden className="h-5 w-5" /> {issued ? (included ? "Certificate issued" : "Payment successful") : "You have the official certificate"}
               </p>
               <h1 className="mt-3 font-serif text-[2.2rem] leading-tight">Your official certificate is ready.</h1>
               <p className="mt-3 text-muted">
@@ -259,6 +273,15 @@ function Inner() {
                 ))}
               </ul>
 
+              {included ? (
+                <div className="mt-6 rounded-2xl border border-line-strong bg-paper p-5">
+                  <p className="font-serif text-[1.5rem] leading-tight">Included with your enrolment</p>
+                  <p className="mt-1 text-[0.9375rem] text-muted">The Professional Certificate is part of the programme you enrolled in. There is nothing more to pay.</p>
+                  <Button onClick={() => void claimIncluded()} loading={busy} className="mt-4 w-full">
+                    Claim your Professional Certificate
+                  </Button>
+                </div>
+              ) : (
               <div className="mt-6 rounded-2xl border border-line-strong bg-paper p-5">
                 <div className="flex flex-wrap items-center justify-between gap-3">
                   <p className="font-serif text-[2rem] leading-none">{price ? formatMoney(price.amount, price.currency) : "—"}</p>
@@ -289,6 +312,7 @@ function Inner() {
                   </p>
                 )}
               </div>
+              )}
               <p className="mt-4 text-[0.8125rem] text-muted">
                 Not now? That's fine: your programme badge and{" "}
                 <Link to={`/credentials/${completion.credentialId}`} className="font-medium text-brass-dark">

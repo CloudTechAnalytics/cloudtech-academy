@@ -9,7 +9,8 @@ import type { AssessmentDef, Course } from "@/content/types";
 import { requiredExerciseIds } from "../lesson-format";
 import { certificateNumber, eligibility, matchesCertificate, moduleTaskIds, newCredentialId } from "../certificates";
 import { isStale } from "../inactivity";
-import { enrolmentState as enrolmentOf, isPaid } from "../commerce";
+import { enrolmentState as enrolmentOf, isPaid, programmeCourseIds, salesOf, withSales } from "../commerce";
+import type { CourseSalesFields } from "@/content/catalog";
 import { programmeCertificateAvailable, requiredCourses, TRACKS } from "@/content/tracks";
 import { PROFILE_SLUG_RE, SLUG_HELP } from "../profile";
 import { PRACTICE_PROJECTS } from "@/content/projects";
@@ -32,6 +33,8 @@ import {
   type Certificate,
   type CourseOrder,
   type CourseStats,
+  type ProgrammeStats,
+  type AdminProgrammeEnrollment,
   type CertificateEvent,
   type CertificateEventAction,
   type CertificateInput,
@@ -59,6 +62,9 @@ type Store = {
   credentials: Credential[];
   orders: CertificateOrder[];
   courseOrders: (CourseOrder & { userId: string; provider: string | null; providerRef: string | null; note: string | null })[];
+  /** Programmes learners hold, and what admins changed about each programme's sales settings. */
+  programmes: { userId: string; trackId: string; source: "purchase" | "granted"; enrolledAt: string }[];
+  programmeSales: Record<string, CourseSalesFields> | null;
   certificates: Certificate[];
   certificateSeq: number;
   certificateEvents: CertificateEvent[];
@@ -94,6 +100,8 @@ const empty = (): Store => ({
   credentials: [],
   orders: [],
   courseOrders: [],
+  programmes: [],
+  programmeSales: null,
   certificates: [],
   certificateSeq: 0,
   certificateEvents: [],
@@ -407,7 +415,25 @@ export function createDemoBackend(): Backend {
     if (!isPaid(c)) return true;
     if (!userId) return false;
     if (s.users.find((x) => x.id === userId)?.role === "admin") return true;
+    if (s.programmes.some((p) => p.userId === userId && programmeCourseIds(programmeOf(s, p.trackId)!).includes(courseId))) return true;
     return (s.enrollments[userId] ?? []).some((e) => e.courseId === courseId);
+  };
+  /** A programme with the admin's edits applied. */
+  const programmeOf = (s: Store, trackId: string) => {
+    const t = TRACKS.find((x) => x.id === trackId);
+    return t ? withSales(t, s.programmeSales?.[trackId]) : undefined;
+  };
+  /** Opens a programme for a learner: the programme itself and every paid course it contains. */
+  const openProgramme = (s: Store, userId: string, trackId: string, source: "purchase" | "granted") => {
+    if (!s.programmes.some((p) => p.userId === userId && p.trackId === trackId)) s.programmes.push({ userId, trackId, source, enrolledAt: now() });
+    const list = (s.enrollments[userId] ??= []);
+    for (const courseId of programmeCourseIds(programmeOf(s, trackId)!)) {
+      const course = courses(s).find((c) => c.id === courseId);
+      if (!course || !isPaid(course)) continue;
+      const have = list.find((e) => e.courseId === courseId);
+      if (have) have.source = have.source === "free" ? source : have.source;
+      else list.push({ courseId, enrolledAt: now(), completedAt: null, lastLessonId: null, lastActiveAt: now(), source });
+    }
   };
   const requireAccess = (s: Store, userId: string, courseId: string | undefined) => {
     if (courseId && !accessTo(s, userId, courseId)) throw new BackendError("This course is for enrolled learners. Enrol to continue.");
@@ -932,7 +958,7 @@ export function createDemoBackend(): Backend {
       let order = s.courseOrders.find((o) => o.userId === u.id && o.courseId === courseId && o.status === "pending");
       if (order) Object.assign(order, { currency: course.currency ?? "NGN", listAmount: price, amount: charge });
       else {
-        order = { id: uid(), userId: u.id, courseId, currency: course.currency ?? "NGN", listAmount: price, amount: charge, status: "pending", provider: null, providerRef: null, note: null, createdAt: now(), paidAt: null };
+        order = { id: uid(), userId: u.id, courseId, trackId: null, currency: course.currency ?? "NGN", listAmount: price, amount: charge, status: "pending", provider: null, providerRef: null, note: null, createdAt: now(), paidAt: null };
         s.courseOrders.push(order);
       }
       save(s);
@@ -950,11 +976,61 @@ export function createDemoBackend(): Backend {
       const order = s.courseOrders.find((o) => o.id === orderId && o.userId === u.id);
       if (!order) throw new BackendError("Order not found.");
       Object.assign(order, { status: "paid", provider: "demo", providerRef: `demo-${order.id.slice(0, 8)}`, paidAt: now() });
-      const list = (s.enrollments[u.id] ??= []);
-      const have = list.find((e) => e.courseId === order.courseId);
-      if (have) have.source = have.source === "free" ? "purchase" : have.source;
-      else list.push({ courseId: order.courseId, enrolledAt: now(), completedAt: null, lastLessonId: null, lastActiveAt: now(), source: "purchase" });
+      if (order.trackId) openProgramme(s, u.id, order.trackId, "purchase");
+      else {
+        const list = (s.enrollments[u.id] ??= []);
+        const have = list.find((e) => e.courseId === order.courseId);
+        if (have) have.source = have.source === "free" ? "purchase" : have.source;
+        else list.push({ courseId: order.courseId!, enrolledAt: now(), completedAt: null, lastLessonId: null, lastActiveAt: now(), source: "purchase" });
+      }
       save(s);
+    },
+    async listProgrammeSales() {
+      const s = load();
+      return Object.fromEntries(TRACKS.map((t) => [t.id, salesOf(programmeOf(s, t.id)!)]));
+    },
+    async listMyProgrammes() {
+      const u = current();
+      return u ? load().programmes.filter((p) => p.userId === u.id).map(({ trackId, enrolledAt, source }) => ({ trackId, enrolledAt, source })) : [];
+    },
+    async startProgrammePurchase(trackId) {
+      const u = requireUser();
+      const s = load();
+      const track = programmeOf(s, trackId);
+      if (!track) throw new BackendError("Programme not found.");
+      if (!isPaid(track)) throw new BackendError("This programme is free.");
+      const state = enrolmentOf({ enrollmentStatus: track.enrollmentStatus, enrollmentStart: track.enrollmentStart, enrollmentEnd: track.enrollmentEnd, paymentStatus: track.paymentStatus });
+      if (!track.price || state !== "open") throw new BackendError(state === "paused" ? "Payments for this programme are paused. Please try again soon." : "Enrolment for this programme is not open right now.");
+      if (s.programmes.some((p) => p.userId === u.id && p.trackId === trackId)) throw new BackendError("You are already enrolled in this programme.");
+      const price = track.price;
+      const charge = track.discountActive && track.discountPrice != null && track.discountPrice < price ? track.discountPrice : price;
+      let order = s.courseOrders.find((o) => o.userId === u.id && o.trackId === trackId && o.status === "pending");
+      if (order) Object.assign(order, { currency: track.currency ?? "NGN", listAmount: price, amount: charge });
+      else {
+        order = { id: uid(), userId: u.id, courseId: null, trackId, currency: track.currency ?? "NGN", listAmount: price, amount: charge, status: "pending", provider: null, providerRef: null, note: null, createdAt: now(), paidAt: null };
+        s.courseOrders.push(order);
+      }
+      save(s);
+      const { userId: _u, provider: _p, providerRef: _r, note: _n, ...pub } = order;
+      void [_u, _p, _r, _n];
+      return pub;
+    },
+    async claimProgrammeCertificate(trackId) {
+      const u = requireUser();
+      const s = load();
+      const track = TRACKS.find((t) => t.id === trackId);
+      if (!track || !programmeCertificateAvailable(track)) throw new BackendError("The certificate for this programme isn't available yet.");
+      if (!s.programmes.some((p) => p.userId === u.id && p.trackId === trackId)) throw new BackendError("The certificate is included for learners enrolled in this programme.");
+      const cred = s.credentials.find((c) => c.userId === u.id && c.trackId === trackId && c.kind === "track_completion" && c.status === "valid");
+      if (!cred) throw new BackendError("Complete every required course and the capstone first, then claim your programme badge.");
+      const order: CertificateOrder = {
+        id: uid(), userId: u.id, courseId: null, trackId, credentialId: cred.credentialId, currency: "NGN", amount: 0, status: "granted",
+        provider: null, providerRef: null, note: "Included with programme enrolment", createdAt: now(), paidAt: now(),
+      };
+      s.orders.push(order);
+      const cert = issueCertificate(s, order);
+      save(s);
+      return cert;
     },
     async simulatePayment(orderId) {
       const u = requireUser();
@@ -1246,13 +1322,104 @@ export function createDemoBackend(): Backend {
         }
         return out.sort((a, b) => b.enrolledAt.localeCompare(a.enrolledAt));
       },
+      async saveProgramme(trackId, sales) {
+        requireAdmin();
+        const s = load();
+        if (!TRACKS.some((t) => t.id === trackId)) throw new BackendError("Programme not found.");
+        s.programmeSales = { ...(s.programmeSales ?? {}), [trackId]: sales };
+        save(s);
+      },
+      async listProgrammeStats() {
+        requireAdmin();
+        const s = load();
+        return TRACKS.map((t) => programmeOf(s, t.id)!)
+          .filter((t) => isPaid(t))
+          .map((t): ProgrammeStats => {
+            const mine = s.programmes.filter((p) => p.trackId === t.id);
+            const revenue: Record<string, number> = {};
+            for (const o of s.courseOrders) if (o.trackId === t.id && o.status === "paid") revenue[o.currency] = (revenue[o.currency] ?? 0) + o.amount;
+            return {
+              trackId: t.id,
+              title: t.programmeTitle ?? t.title,
+              published: true,
+              price: t.price ?? null,
+              currency: t.currency ?? "NGN",
+              enrollments: mine.length,
+              paidEnrollments: mine.filter((p) => p.source === "purchase").length,
+              grantedEnrollments: mine.filter((p) => p.source === "granted").length,
+              completions: mine.filter((p) => s.credentials.some((c) => c.userId === p.userId && c.trackId === t.id && c.kind === "track_completion" && c.status === "valid")).length,
+              revenue,
+              converted: mine.filter((p) => p.source === "purchase" && Object.values(s.enrollments[p.userId] ?? []).some((e) => e.source === "free" && e.enrolledAt < p.enrolledAt)).length,
+            };
+          });
+      },
+      async listProgrammeEnrollments(trackId) {
+        requireAdmin();
+        const s = load();
+        return s.programmes
+          .filter((p) => !trackId || p.trackId === trackId)
+          .map((p): AdminProgrammeEnrollment => {
+            const u = s.users.find((x) => x.id === p.userId);
+            const t = TRACKS.find((x) => x.id === p.trackId)!;
+            const order = s.courseOrders.find((o) => o.userId === p.userId && o.trackId === p.trackId && (o.status === "paid" || o.status === "granted"));
+            const done = s.credentials.find((c) => c.userId === p.userId && c.trackId === p.trackId && c.kind === "track_completion" && c.status === "valid");
+            return {
+              userId: p.userId,
+              fullName: u?.fullName ?? "Unknown",
+              email: u?.email ?? "",
+              trackId: p.trackId,
+              trackTitle: t.programmeTitle ?? t.title,
+              source: p.source,
+              enrolledAt: p.enrolledAt,
+              completedAt: done?.issuedAt ?? null,
+              amount: order ? order.amount : null,
+              currency: order ? order.currency : null,
+              orderStatus: order ? order.status : null,
+            };
+          })
+          .sort((a, b) => b.enrolledAt.localeCompare(a.enrolledAt));
+      },
+      async grantProgrammeAccess(userId, trackId, note) {
+        requireAdmin();
+        const s = load();
+        const track = programmeOf(s, trackId);
+        if (!track) throw new BackendError("Programme not found.");
+        if (!s.users.some((u) => u.id === userId)) throw new BackendError("Student not found.");
+        let order = s.courseOrders.find((o) => o.userId === userId && o.trackId === trackId && o.status === "pending");
+        if (order) Object.assign(order, { status: "granted", note: note.trim() || null, paidAt: now() });
+        else {
+          order = { id: uid(), userId, courseId: null, trackId, currency: track.currency ?? "NGN", listAmount: track.price ?? 0, amount: 0, status: "granted", provider: null, providerRef: null, note: note.trim() || null, createdAt: now(), paidAt: now() };
+          s.courseOrders.push(order);
+        }
+        openProgramme(s, userId, trackId, "granted");
+        save(s);
+      },
+      async revokeProgrammeAccess(userId, trackId, reason) {
+        requireAdmin();
+        const s = load();
+        s.programmes = s.programmes.filter((p) => !(p.userId === userId && p.trackId === trackId));
+        const keep = new Set(s.programmes.filter((p) => p.userId === userId).flatMap((p) => programmeCourseIds(programmeOf(s, p.trackId)!)));
+        const closing = new Set(programmeCourseIds(programmeOf(s, trackId)!));
+        s.enrollments[userId] = (s.enrollments[userId] ?? []).filter((e) => {
+          const c = courses(s).find((x) => x.id === e.courseId);
+          return !(closing.has(e.courseId) && c && isPaid(c) && e.source !== "free" && !keep.has(e.courseId));
+        });
+        for (const o of s.courseOrders) if (o.userId === userId && o.trackId === trackId && (o.status === "pending" || o.status === "granted")) Object.assign(o, { status: "cancelled", note: reason.trim() || o.note });
+        save(s);
+      },
       async listCourseOrders() {
         requireAdmin();
         const s = load();
         return s.courseOrders
           .map((o): AdminCourseOrder => {
             const u = s.users.find((x) => x.id === o.userId);
-            return { ...o, studentName: u?.fullName ?? "Unknown", studentEmail: u?.email ?? "", courseTitle: courses(s).find((c) => c.id === o.courseId)?.title ?? o.courseId };
+            const t = TRACKS.find((x) => x.id === o.trackId);
+            return {
+              ...o,
+              studentName: u?.fullName ?? "Unknown",
+              studentEmail: u?.email ?? "",
+              courseTitle: t ? (t.programmeTitle ?? t.title) : (courses(s).find((c) => c.id === o.courseId)?.title ?? o.courseId ?? ""),
+            };
           })
           .sort((a, b) => b.createdAt.localeCompare(a.createdAt));
       },
@@ -1265,7 +1432,7 @@ export function createDemoBackend(): Backend {
         let order = s.courseOrders.find((o) => o.userId === userId && o.courseId === courseId && o.status === "pending");
         if (order) Object.assign(order, { status: "granted", note: note.trim() || null, paidAt: now() });
         else {
-          order = { id: uid(), userId, courseId, currency: course.currency ?? "NGN", listAmount: course.price ?? 0, amount: 0, status: "granted", provider: null, providerRef: null, note: note.trim() || null, createdAt: now(), paidAt: now() };
+          order = { id: uid(), userId, courseId, trackId: null, currency: course.currency ?? "NGN", listAmount: course.price ?? 0, amount: 0, status: "granted", provider: null, providerRef: null, note: note.trim() || null, createdAt: now(), paidAt: now() };
           s.courseOrders.push(order);
         }
         const list = (s.enrollments[userId] ??= []);

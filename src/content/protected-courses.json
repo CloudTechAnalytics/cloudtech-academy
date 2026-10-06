@@ -1,3 +1,29 @@
 {
-  "folders": []
+  "folders": [
+    "advanced-sql",
+    "agents",
+    "agile-ba",
+    "ai-capstone",
+    "ba-capstone",
+    "capstone",
+    "cicd",
+    "dax",
+    "dbapi",
+    "devops-capstone",
+    "ds-capstone",
+    "experiments",
+    "features",
+    "forecasting",
+    "genai",
+    "llmops",
+    "ml",
+    "modelling",
+    "observability",
+    "process",
+    "python-analytics",
+    "swe",
+    "swe-capstone",
+    "terraform",
+    "webjs"
+  ]
 }

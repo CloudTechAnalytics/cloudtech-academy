@@ -1,3 +1,4 @@
+import type { CourseSalesFields } from "@/content/catalog";
 import type { AssessmentDef, AssessmentPublic, Course, Lesson, Module, ProjectDef } from "@/content/types";
 
 export type Role = "student" | "admin";
@@ -20,10 +21,11 @@ export type Enrollment = {
   source: "free" | "purchase" | "granted";
 };
 
-/** A learner's order for a paid course. */
+/** A learner's order for a paid course or, when trackId is set, for a Professional Programme. */
 export type CourseOrder = {
   id: string;
-  courseId: string;
+  courseId: string | null;
+  trackId: string | null;
   currency: string;
   /** The price when the order was made. */
   listAmount: number;
@@ -42,6 +44,42 @@ export type AdminCourseOrder = CourseOrder & {
   provider: string | null;
   providerRef: string | null;
   note: string | null;
+};
+
+/** Someone's place in a Professional Programme. */
+export type ProgrammeEnrollment = {
+  trackId: string;
+  enrolledAt: string;
+  source: "purchase" | "granted";
+};
+
+export type AdminProgrammeEnrollment = {
+  userId: string;
+  fullName: string;
+  email: string;
+  trackId: string;
+  trackTitle: string;
+  source: "purchase" | "granted";
+  enrolledAt: string;
+  completedAt: string | null;
+  amount: number | null;
+  currency: string | null;
+  orderStatus: string | null;
+};
+
+export type ProgrammeStats = {
+  trackId: string;
+  title: string;
+  published: boolean;
+  price: number | null;
+  currency: string;
+  enrollments: number;
+  paidEnrollments: number;
+  grantedEnrollments: number;
+  completions: number;
+  revenue: Record<string, number>;
+  /** Buyers who had taken a free course before buying. */
+  converted: number;
 };
 
 export type AdminEnrollment = {
@@ -496,8 +534,18 @@ export interface Backend {
   simulateCoursePayment?(orderId: string): Promise<void>;
   /** Online payment: the provider's payment page for a pending course order. */
   startCourseCheckout?(orderId: string, returnUrl: string): Promise<string>;
-  /** Online payment: confirms a payment on the server after the learner returns, and enrols them. Returns the course id. */
-  confirmCoursePayment?(reference: string): Promise<string>;
+  /** Online payment: confirms a payment on the server after the learner returns, and enrols them. Returns what was bought. */
+  confirmCoursePayment?(reference: string): Promise<{ courseId: string | null; trackId: string | null }>;
+
+  /* ---------- Professional Programmes ---------- */
+  /** What admins have set for each programme: access, price, discount, delivery, enrolment window and sales content. Keyed by track id. */
+  listProgrammeSales(): Promise<Record<string, CourseSalesFields>>;
+  /** The programmes the signed-in learner holds. */
+  listMyProgrammes(): Promise<ProgrammeEnrollment[]>;
+  /** Starts (or refreshes) the learner's pending order for a programme, at today's price. */
+  startProgrammePurchase(trackId: string): Promise<CourseOrder>;
+  /** The official programme certificate, included for programme holders who have earned the programme badge. */
+  claimProgrammeCertificate(trackId: string): Promise<Certificate>;
 
   /* ---------- credentials (free) ---------- */
   /** Awards (or returns) a module's badge. The server checks the module check was passed. */
@@ -578,6 +626,11 @@ export interface Backend {
     saveCourse(course: CourseInput): Promise<void>;
     /** One row per course: enrolments by source, completions, revenue and conversion. */
     listCourseStats(): Promise<CourseStats[]>;
+    saveProgramme(trackId: string, sales: CourseSalesFields): Promise<void>;
+    listProgrammeStats(): Promise<ProgrammeStats[]>;
+    listProgrammeEnrollments(trackId?: string): Promise<AdminProgrammeEnrollment[]>;
+    grantProgrammeAccess(userId: string, trackId: string, note: string): Promise<void>;
+    revokeProgrammeAccess(userId: string, trackId: string, reason: string): Promise<void>;
     listCourseEnrollments(courseId?: string): Promise<AdminEnrollment[]>;
     listCourseOrders(): Promise<AdminCourseOrder[]>;
     /** Gives a student access to a course without a payment (e.g. after a bank transfer, or a scholarship). */

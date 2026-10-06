@@ -1,8 +1,30 @@
 import type { Course } from "@/content/types";
-import type { DeliveryType } from "@/content/catalog";
+import type { CourseSalesFields, DeliveryType } from "@/content/catalog";
+import type { Track } from "@/content/tracks";
+
+const SALES_KEYS: (keyof CourseSalesFields)[] = [
+  "courseType", "access", "price", "currency", "discountPrice", "discountActive", "paymentStatus", "deliveryType", "enrollmentStatus", "enrollmentStart",
+  "enrollmentEnd", "communityAccess", "instructorSupport", "durationLabel", "publishedAt", "overview", "audience", "outcomes", "included", "projectPreviews",
+  "instructor", "professionalOutcome",
+];
+
+/** A programme with what admins have set in the database laid over the site's built-in defaults. */
+export function withSales(track: Track, saved: CourseSalesFields | undefined): Track {
+  if (!saved) return track;
+  const set = Object.fromEntries(SALES_KEYS.filter((k) => saved[k] !== undefined).map((k) => [k, saved[k]]));
+  return { ...track, ...set };
+}
+
+/** Just the commercial fields of a programme, as admins edit them. */
+export function salesOf(track: Track): CourseSalesFields {
+  return Object.fromEntries(SALES_KEYS.filter((k) => track[k] !== undefined).map((k) => [k, track[k]])) as CourseSalesFields;
+}
+
+/** The courses a programme contains, required or not. */
+export const programmeCourseIds = (track: Track) => track.stages.flatMap((s) => s.items).flatMap((i) => (i.kind === "course" ? [i.courseId] : []));
 
 /** Free and professional courses, and what a learner pays. The database enforces access; this only describes it. */
-export const isPaid = (c: Pick<Course, "access" | "isFree">) => (c.access ? c.access === "paid" : !c.isFree);
+export const isPaid = (c: { access?: "free" | "paid"; isFree?: boolean }) => (c.access ? c.access === "paid" : c.isFree === false);
 export const isProfessional = (c: Pick<Course, "courseType">) => c.courseType === "professional";
 
 export type CoursePrice = {

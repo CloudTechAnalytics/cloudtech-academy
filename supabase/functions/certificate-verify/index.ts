@@ -13,7 +13,7 @@ Deno.serve(async (req) => {
     if (!t) return json({ error: "We couldn't find that payment with Paystack." }, 404);
     const result = await settle(t, user.id);
     if (!result.ok) return json({ error: result.error }, 400);
-    return json(result.courseId ? { courseId: result.courseId } : { certificate: result.certificate });
+    return json(result.courseId || result.trackId ? { courseId: result.courseId, trackId: result.trackId } : { certificate: result.certificate });
   } catch (e) {
     return json({ error: e instanceof Error ? e.message : "Couldn't confirm the payment." }, 500);
   }

@@ -3,6 +3,7 @@
  * are defined in supabase/migrations (certificate management in 0007_certificate_management.sql).
  */
 import { createClient, type SupabaseClient, type User as SbUser } from "@supabase/supabase-js";
+import type { CourseSalesFields } from "@/content/catalog";
 import type { AssessmentDef, Course, Lesson, Module, ProjectDef } from "@/content/types";
 import { requiredExerciseIds } from "../lesson-format";
 import { certificatePayload, matchesCertificate } from "../certificates";
@@ -16,6 +17,8 @@ import {
   type AdminEnrollment,
   type CourseOrder,
   type CourseStats,
+  type ProgrammeStats,
+  type AdminProgrammeEnrollment,
   type Certificate,
   type CertificateOrder,
   type CertificatePrice,
@@ -323,9 +326,34 @@ const toOrder = (r: Row): CertificateOrder => ({
   paidAt: r.paid_at ?? null,
 });
 
+/** The commercial fields of a track row, in the shape the course pages use. */
+const toSales = (r: Row): CourseSalesFields => ({
+  access: r.access_type ?? "free",
+  courseType: r.access_type === "paid" ? "professional" : "free",
+  price: r.price === null || r.price === undefined ? null : Number(r.price),
+  currency: r.currency ?? "NGN",
+  discountPrice: r.discount_price === null || r.discount_price === undefined ? null : Number(r.discount_price),
+  discountActive: r.discount_active ?? false,
+  paymentStatus: r.payment_status ?? "active",
+  deliveryType: r.delivery_type ?? "self_paced",
+  enrollmentStatus: r.enrollment_status ?? "open",
+  enrollmentStart: r.enrollment_start ?? null,
+  enrollmentEnd: r.enrollment_end ?? null,
+  communityAccess: r.community_access ?? false,
+  instructorSupport: r.instructor_support ?? false,
+  durationLabel: r.duration_label ?? undefined,
+  overview: r.overview ?? undefined,
+  audience: r.audience ?? [],
+  included: r.included ?? [],
+  projectPreviews: r.project_previews ?? [],
+  instructor: r.instructor_name ? { name: r.instructor_name, title: r.instructor_title ?? "", bio: r.instructor_bio ?? "" } : undefined,
+  professionalOutcome: r.professional_outcome ?? undefined,
+});
+
 const toCourseOrder = (r: Row): CourseOrder => ({
   id: r.id,
-  courseId: r.course_id,
+  courseId: r.course_id ?? null,
+  trackId: r.track_id ?? null,
   currency: r.currency,
   listAmount: Number(r.list_amount),
   amount: Number(r.amount),
@@ -677,9 +705,28 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
     async confirmCoursePayment(reference) {
       const { data, error } = await sb.functions.invoke("certificate-verify", { body: { reference } });
       if (error) throw new BackendError(await functionError(error, "Couldn't confirm the payment."));
-      const courseId = (data as { courseId?: string }).courseId;
-      if (!courseId) throw new BackendError("That payment isn't for a course.");
-      return courseId;
+      const d = data as { courseId?: string | null; trackId?: string | null };
+      if (!d.courseId && !d.trackId) throw new BackendError("That payment isn't for a course or programme.");
+      return { courseId: d.courseId ?? null, trackId: d.trackId ?? null };
+    },
+    async listProgrammeSales() {
+      // Tolerates a database that hasn't had the programme migration yet: the site's built-in defaults apply.
+      const { data, error } = await sb.from("tracks").select("*");
+      if (error) return {};
+      return Object.fromEntries((data as Row[]).filter((r) => r.access_type !== undefined).map((r) => [r.id as string, toSales(r)]));
+    },
+    async listMyProgrammes() {
+      const { data } = await sb.auth.getSession();
+      if (!data.session) return [];
+      const res = await sb.from("programme_enrollments").select("*").eq("user_id", data.session.user.id);
+      if (res.error) return [];
+      return (res.data as Row[]).map((r) => ({ trackId: r.track_id, enrolledAt: r.enrolled_at, source: r.source }));
+    },
+    async startProgrammePurchase(trackId) {
+      return toCourseOrder(check(await sb.rpc("start_programme_purchase", { p_track_id: trackId })) as Row);
+    },
+    async claimProgrammeCertificate(trackId) {
+      return toCertificate(check(await sb.rpc("claim_programme_certificate", { p_track_id: trackId })) as Row);
     },
     async listCertificatePrices(kind = "course") {
       return (check(await sb.from("certificate_prices").select("*").eq("kind", kind).eq("active", true).order("position")) as Row[]).map(toPrice);
@@ -943,6 +990,77 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
           }),
         );
       },
+      async saveProgramme(trackId, c) {
+        check(
+          await sb
+            .from("tracks")
+            .update({
+              access_type: c.access ?? "free",
+              price: c.price ?? null,
+              currency: c.currency ?? "NGN",
+              discount_price: c.discountPrice ?? null,
+              discount_active: c.discountActive ?? false,
+              payment_status: c.paymentStatus ?? "active",
+              delivery_type: c.deliveryType ?? "self_paced",
+              enrollment_status: c.enrollmentStatus ?? "open",
+              enrollment_start: c.enrollmentStart || null,
+              enrollment_end: c.enrollmentEnd || null,
+              community_access: c.communityAccess ?? false,
+              instructor_support: c.instructorSupport ?? false,
+              duration_label: c.durationLabel?.trim() || null,
+              overview: c.overview?.trim() || null,
+              audience: c.audience ?? [],
+              included: c.included ?? [],
+              project_previews: c.projectPreviews ?? [],
+              instructor_name: c.instructor?.name?.trim() || null,
+              instructor_title: c.instructor?.title?.trim() || null,
+              instructor_bio: c.instructor?.bio?.trim() || null,
+              professional_outcome: c.professionalOutcome?.trim() || null,
+              commerce_seeded: true,
+            })
+            .eq("id", trackId),
+        );
+      },
+      async listProgrammeStats() {
+        return (check(await sb.rpc("admin_programme_stats")) as Row[]).map(
+          (r): ProgrammeStats => ({
+            trackId: r.track_id,
+            title: r.title,
+            published: r.published,
+            price: r.price === null ? null : Number(r.price),
+            currency: r.currency,
+            enrollments: r.enrollments,
+            paidEnrollments: r.paid_enrollments,
+            grantedEnrollments: r.granted_enrollments,
+            completions: r.completions,
+            revenue: Object.fromEntries(Object.entries((r.revenue ?? {}) as Record<string, number>).map(([k, v]) => [k, Number(v)])),
+            converted: r.converted,
+          }),
+        );
+      },
+      async listProgrammeEnrollments(trackId) {
+        return (check(await sb.rpc("admin_list_programme_enrollments", { p_track_id: trackId ?? null })) as Row[]).map(
+          (r): AdminProgrammeEnrollment => ({
+            userId: r.user_id,
+            fullName: r.full_name ?? "Unknown",
+            email: r.email ?? "",
+            trackId: r.track_id,
+            trackTitle: r.track_title,
+            source: r.source,
+            enrolledAt: r.enrolled_at,
+            completedAt: r.completed_at ?? null,
+            amount: r.amount === null ? null : Number(r.amount),
+            currency: r.currency ?? null,
+            orderStatus: r.order_status ?? null,
+          }),
+        );
+      },
+      async grantProgrammeAccess(userId, trackId, note) {
+        check(await sb.rpc("admin_grant_programme_access", { p_user: userId, p_track_id: trackId, p_note: note }));
+      },
+      async revokeProgrammeAccess(userId, trackId, reason) {
+        check(await sb.rpc("admin_revoke_programme_access", { p_user: userId, p_track_id: trackId, p_reason: reason }));
+      },
       async listCourseEnrollments(courseId) {
         return (check(await sb.rpc("admin_list_enrollments", { p_course_id: courseId ?? null })) as Row[]).map(
           (r): AdminEnrollment => ({
@@ -961,20 +1079,22 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
         );
       },
       async listCourseOrders() {
-        const [orders, profiles, courses] = await Promise.all([
+        const [orders, profiles, courses, tracks] = await Promise.all([
           sb.from("course_orders").select("*").order("created_at", { ascending: false }).limit(500),
           sb.from("profiles").select("id, full_name, email"),
           sb.from("courses").select("id, title"),
+          sb.from("tracks").select("id, title, programme_title"),
         ]);
         const people = new Map((check(profiles) as Row[]).map((p) => [p.id, p]));
         const titles = new Map((check(courses) as Row[]).map((c) => [c.id, c.title]));
+        for (const t of check(tracks) as Row[]) titles.set(t.id, t.programme_title ?? t.title);
         return (check(orders) as Row[]).map(
           (r): AdminCourseOrder => ({
             ...toCourseOrder(r),
             userId: r.user_id,
             studentName: people.get(r.user_id)?.full_name ?? "Unknown",
             studentEmail: people.get(r.user_id)?.email ?? "",
-            courseTitle: titles.get(r.course_id) ?? r.course_id,
+            courseTitle: titles.get(r.course_id ?? r.track_id) ?? r.course_id ?? r.track_id,
             provider: r.provider ?? null,
             providerRef: r.provider_ref ?? null,
             note: r.note ?? null,

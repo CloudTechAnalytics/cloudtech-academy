@@ -31,6 +31,47 @@ const doc = (s) => {
 const arr = (xs) => (xs.length ? `array[${xs.map(str).join(", ")}]::text[]` : "'{}'::text[]");
 const bool = (b) => (b ? "true" : "false");
 const num = (n) => (n === undefined || n === null ? "null" : String(Number(n)));
+const ts = (v) => (v ? `${str(v)}::timestamptz` : "null");
+const json = (v) => `${str(JSON.stringify(v ?? []))}::jsonb`;
+
+/**
+ * Starting commercial settings (access, price, delivery, sales content) for a course or a programme. They are written once,
+ * while commerce_seeded is false, and never again: after that admins own them, so re-running the seed can't undo a price
+ * or an access change made in the dashboard.
+ */
+function commerceColumns(x, isTrack) {
+  const cols = {
+    access_type: str(x.access ?? "free"),
+    price: num(x.price),
+    currency: str(x.currency ?? "NGN"),
+    discount_price: num(x.discountPrice),
+    discount_active: bool(x.discountActive),
+    payment_status: str(x.paymentStatus ?? "active"),
+    delivery_type: str(x.deliveryType ?? "self_paced"),
+    enrollment_status: str(x.enrollmentStatus ?? "open"),
+    enrollment_start: ts(x.enrollmentStart),
+    enrollment_end: ts(x.enrollmentEnd),
+    community_access: bool(x.communityAccess),
+    instructor_support: bool(x.instructorSupport),
+    duration_label: x.durationLabel ? str(x.durationLabel) : "null",
+    overview: x.overview ? str(x.overview) : "null",
+    audience: arr(x.audience ?? []),
+    included: arr(x.included ?? []),
+    project_previews: json(x.projectPreviews),
+    instructor_name: x.instructor?.name ? str(x.instructor.name) : "null",
+    instructor_title: x.instructor?.title ? str(x.instructor.title) : "null",
+    instructor_bio: x.instructor?.bio ? str(x.instructor.bio) : "null",
+    professional_outcome: x.professionalOutcome ? str(x.professionalOutcome) : "null",
+    commerce_seeded: "true",
+  };
+  if (!isTrack) {
+    cols.course_type = str(x.courseType ?? "free");
+    cols.outcomes = arr(x.outcomes ?? []);
+  }
+  return cols;
+}
+const commerceUpdate = (table, id, x, isTrack) =>
+  `update public.${table} set ${Object.entries(commerceColumns(x, isTrack)).map(([k, v]) => `${k} = ${v}`).join(", ")} where id = ${str(id)} and not commerce_seeded;\n`;
 
 function upsert(table, row, key = "id") {
   const cols = Object.keys(row);
@@ -75,6 +116,7 @@ for (const c of BUNDLED_COURSES) {
       position: num(c.position),
     }),
   );
+  out.push(commerceUpdate("courses", c.id, c, false));
   for (const m of c.modules) {
     out.push(
       upsert("course_modules", {
@@ -147,6 +189,7 @@ for (const p of BUNDLED_PROJECTS) {
 TRACKS.forEach((t, i) => {
   out.push(`\n-- Track: ${t.title}`);
   out.push(upsert("tracks", { id: str(t.id), slug: str(t.slug), title: str(t.title), summary: str(t.summary), badge_name: str(t.badge), badge_code: str(t.badgeCode), skills: arr(t.skills), position: num(i + 1), published: "true", programme_title: t.programmeTitle ? str(t.programmeTitle) : "null", certificate_enabled: programmeCertificateAvailable(t) ? "true" : "false" }));
+  out.push(commerceUpdate("tracks", t.id, t, true));
   // The track's course list is replaced each time, so courses moved or removed in the file don't linger.
   out.push(`delete from public.track_courses where track_id = ${str(t.id)};\n`);
   let pos = 0;

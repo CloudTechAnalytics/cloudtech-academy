@@ -11,6 +11,7 @@ const Learn = lazy(() => import("@/pages/Learn"));
 const Assessment = lazy(() => import("@/pages/Assessment"));
 const Project = lazy(() => import("@/pages/Project"));
 const CourseComplete = lazy(() => import("@/pages/CourseComplete"));
+const ProgrammePurchase = lazy(() => import("@/pages/ProgrammePurchase"));
 const CoursePurchase = lazy(() => import("@/pages/CoursePurchase"));
 const CertificatePurchase = lazy(() => import("@/pages/CertificatePurchase"));
 const ProgrammeCertificate = lazy(() => import("@/pages/ProgrammeCertificate"));
@@ -65,6 +66,8 @@ const AdminCredentials = lazy(() => import("@/pages/admin/AdminCredentials"));
 const AdminEnrollments = lazy(() => import("@/pages/admin/AdminProgrammes").then((m) => ({ default: m.AdminEnrollments })));
 const AdminPayments = lazy(() => import("@/pages/admin/AdminProgrammes").then((m) => ({ default: m.AdminPayments })));
 const AdminAnalytics = lazy(() => import("@/pages/admin/AdminProgrammes").then((m) => ({ default: m.AdminAnalytics })));
+const AdminProgrammes = lazy(() => import("@/pages/admin/AdminProgrammeEditor").then((m) => ({ default: m.AdminProgrammes })));
+const AdminProgrammeEditor = lazy(() => import("@/pages/admin/AdminProgrammeEditor").then((m) => ({ default: m.AdminProgrammeEditor })));
 const AdminSubmissions = lazy(() => import("@/pages/admin/AdminSubmissions"));
 const AdminPracticeProjects = lazy(() => import("@/pages/admin/AdminPracticeProjects"));
 
@@ -88,6 +91,7 @@ export function AppRoutes() {
           <Route path="learn/:course/:lesson" element={<Learn />} />
           <Route path="programmes" element={<TracksList />} />
           <Route path="programmes/:slug" element={<TrackDetail />} />
+          <Route path="programmes/:slug/enroll" element={<ProgrammePurchase />} />
           <Route path="programmes/:slug/certificate" element={<ProgrammeCertificate />} />
           <Route path="tracks" element={<Navigate to="/programmes" replace />} />
           <Route path="tracks/:slug" element={<TrackRedirect />} />
@@ -112,6 +116,8 @@ export function AppRoutes() {
           <Route path="dashboard/certificates/:certificateId" element={<CertificateView />} />
           <Route path="profile" element={<Profile />} />
           <Route path="admin" element={<AdminLayout />}>
+            <Route path="programmes" element={<AdminProgrammes />} />
+            <Route path="programmes/:slug" element={<AdminProgrammeEditor />} />
             <Route path="enrollments" element={<AdminEnrollments />} />
             <Route path="payments" element={<AdminPayments />} />
             <Route path="analytics" element={<AdminAnalytics />} />

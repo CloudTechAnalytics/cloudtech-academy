@@ -81,11 +81,11 @@ export async function settle(t: PaystackTransaction, expectUserId?: string) {
   if (order.status === "granted") {
     const target = order.track_id ? { track_id: order.track_id, source: "programme" } : { course_id: order.course_id, source: "course" };
     const { data: cert } = await db.from("certificates").select("*").eq("user_id", order.user_id).match(target).eq("status", "valid").maybeSingle();
-    return { ok: true as const, certificate: cert, courseId: null as string | null };
+    return { ok: true as const, certificate: cert, courseId: null as string | null, trackId: null as string | null };
   }
   const { data: cert, error } = await db.rpc("complete_certificate_order", { p_order_id: order.id, p_provider: "paystack", p_reference: t.reference });
   if (error) return { ok: false as const, error: error.message };
-  return { ok: true as const, certificate: cert, courseId: null as string | null };
+  return { ok: true as const, certificate: cert, courseId: null as string | null, trackId: null as string | null };
 }
 
 // deno-lint-ignore no-explicit-any
@@ -96,5 +96,5 @@ async function settleCourse(db: SupabaseClient, order: any, t: PaystackTransacti
   }
   const { error } = await db.rpc("complete_course_order", { p_order_id: order.id, p_provider: "paystack", p_reference: t.reference });
   if (error) return { ok: false as const, error: error.message };
-  return { ok: true as const, certificate: null, courseId: order.course_id as string };
+  return { ok: true as const, certificate: null, courseId: (order.course_id ?? null) as string | null, trackId: (order.track_id ?? null) as string | null };
 }

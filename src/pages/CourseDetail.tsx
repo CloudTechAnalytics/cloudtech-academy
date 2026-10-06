@@ -262,6 +262,7 @@ export default function CourseDetail() {
               <p className="mt-3 text-[0.9375rem] text-ink/85">{course.projectTitle}</p>
             </section>
           )}
+          <RecommendedNext course={course} intro />
           {course.certificate.enabled && (
             <section aria-labelledby="cred-title" className="rounded-xl border border-line bg-paper p-5">
               <h2 id="cred-title" className="font-serif text-[1.3rem]">

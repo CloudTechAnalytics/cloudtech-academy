@@ -20,12 +20,15 @@ import { DashboardConnect, StartingSoonBanner } from "@/components/CommunityWidg
 import { useEvents, useMyRegistrations } from "@/lib/event-data";
 import { publishedLessons } from "@/lib/certificates";
 import { enrolmentState, isPaid } from "@/lib/commerce";
+import { useMyProgrammes, useProgrammes } from "@/lib/data";
 
 type Row = { enrollment: Enrollment; progress: Progress; attempts: AttemptResult[] };
 
 function DashboardInner() {
   const auth = useAuth();
   const courses = useCourses();
+  const programmes = useProgrammes();
+  const { held: heldProgrammes } = useMyProgrammes();
   const [rows, setRows] = useState<Row[] | null>(null);
   const [credentials, setCredentials] = useState<Credential[]>([]);
   const [certs, setCerts] = useState<Certificate[]>([]);
@@ -88,6 +91,7 @@ function DashboardInner() {
 
   const firstName = auth.user.fullName.split(" ")[0] || "there";
   const valid = credentials.filter((c) => c.status === "valid");
+  const myProgrammes = programmes.filter((t) => heldProgrammes?.includes(t.id));
   const learning = rows
     .map((r) => {
       const course = courses.find((c) => c.id === r.enrollment.courseId);
@@ -152,6 +156,21 @@ function DashboardInner() {
             {resetIds.map((id) => courses.find((c) => c.id === id)?.title ?? id).join(", ")} {resetIds.length === 1 ? "has" : "have"} started over after{" "}
             {RESET_AFTER_DAYS} days without activity. Your badges are still yours.
           </p>
+        )}
+        {myProgrammes.length > 0 && (
+          <ul className="mt-5 grid gap-4 lg:grid-cols-2">
+            {myProgrammes.map((t) => (
+              <li key={t.id} className="flex items-center justify-between gap-4 rounded-2xl border border-brass/40 bg-brass-pale/40 p-5">
+                <div>
+                  <p className="text-[0.75rem] font-semibold uppercase tracking-wide text-brass-dark">Professional Programme</p>
+                  <p className="font-serif text-[1.3rem] leading-snug">{t.programmeName ?? t.title}</p>
+                </div>
+                <ButtonLink to={`/programmes/${t.slug}`} variant="secondary">
+                  Open programme
+                </ButtonLink>
+              </li>
+            ))}
+          </ul>
         )}
         {removeError && <p className="mt-4 rounded-lg border border-danger/40 bg-danger/10 px-4 py-3 text-[0.9375rem]">{removeError}</p>}
         {learning.length === 0 ? (

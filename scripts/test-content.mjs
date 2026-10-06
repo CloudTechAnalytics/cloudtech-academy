@@ -43,6 +43,17 @@ const SHORT = [
   "freelancing",
 ];
 const COURSES = [...FULL, ...SHORT];
+// The folders withheld from the public site must be exactly the programme-only (paid) courses in the catalogue.
+{
+  const { PROGRAMME_ONLY_COURSES } = await import("../src/content/catalog.ts");
+  const dirs = fs.readFileSync("src/content/index.ts", "utf8");
+  const folderOf = (id) => [...dirs.matchAll(/^\s*"?([\w-]+)"?: "([\w-]+)",$/gm)].find((m) => m[2] === id)?.[1];
+  const want = [...PROGRAMME_ONLY_COURSES].map(folderOf).sort();
+  const have = [...JSON.parse(fs.readFileSync("src/content/protected-courses.json", "utf8")).folders].sort();
+  if (JSON.stringify(want) !== JSON.stringify(have)) throw new Error(`protected-courses.json must list exactly the paid course folders.
+expected: ${want.join(", ")}
+found:    ${have.join(", ")}`);
+}
 // Folders whose lesson text is withheld from the public site (paid courses) must be real course folders.
 for (const f of JSON.parse(fs.readFileSync("src/content/protected-courses.json", "utf8")).folders) {
   if (!COURSES.includes(f)) throw new Error(`protected-courses.json lists "${f}", which is not a course folder.`);

@@ -1,11 +1,11 @@
 import { Link } from "react-router";
 import { Award, BookOpen, CheckCircle2, Clock, FolderKanban, GraduationCap, Lock, MessageCircle, Target, Users, UserCheck } from "lucide-react";
 import type { Course } from "@/content/types";
-import type { useLearner } from "@/lib/data";
+import { useProgrammes, type useLearner } from "@/lib/data";
 import { categoryName } from "@/content";
 import { badgeCount, publishedLessons } from "@/lib/certificates";
 import { durationLabel } from "@/lib/format";
-import { DELIVERY_LABEL, ENROLMENT_MESSAGE, coursePrice, enrolmentState, formatPrice } from "@/lib/commerce";
+import { DELIVERY_LABEL, ENROLMENT_MESSAGE, coursePrice, enrolmentState, formatPrice, isPaid, programmeCourseIds } from "@/lib/commerce";
 import { Badge } from "@/components/CourseCard";
 import { ButtonLink } from "@/components/Button";
 import { ProgressBar } from "@/components/ProgressBar";
@@ -37,6 +37,8 @@ function Heading({ id, children }: { id: string; children: string }) {
 /** The premium sales page for a paid course. The lessons themselves stay locked until the learner has access. */
 export function ProfessionalCourseView({ course, learner }: { course: Course; learner: ReturnType<typeof useLearner> }) {
   const lessons = publishedLessons(course);
+  const programmes = useProgrammes();
+  const parents = programmes.filter((t) => isPaid(t) && programmeCourseIds(t).includes(course.id));
   const enrolled = !!learner.enrollment;
   const resume = lessons.find((l) => l.id === learner.enrollment?.lastLessonId) ?? lessons.find((l) => !learner.progress.completedLessons.includes(l.id)) ?? lessons[0];
   const price = coursePrice(course);
@@ -47,14 +49,30 @@ export function ProfessionalCourseView({ course, learner }: { course: Course; le
   const enrollTo = learner.signedIn ? `/courses/${course.slug}/enroll` : `/sign-up?next=${encodeURIComponent(`/courses/${course.slug}/enroll`)}`;
   const priceText = price ? formatPrice(price.amount, price.currency) : "";
 
-  const buy =
+  // A course that is only sold inside a programme has no price of its own: point to the programmes that include it.
+  const bundled = parents.length > 0 && (!price || state !== "open");
+  const buy = bundled ? (
+    <div className="space-y-3">
+      <p className="text-[0.9375rem] text-muted">This professional course is part of {parents.length === 1 ? "a Professional Programme" : "these Professional Programmes"}. Enrolling in a programme opens every professional course in it.</p>
+      {parents.map((t) => {
+        const p = coursePrice(t);
+        return (
+          <ButtonLink key={t.id} to={`/programmes/${t.slug}`} className="w-full" arrow>
+            {t.programmeName ?? t.title}
+            {p ? ` · ${formatPrice(p.amount, p.currency)}` : ""}
+          </ButtonLink>
+        );
+      })}
+    </div>
+  ) : (
     state === "open" ? (
       <ButtonLink to={enrollTo} className="w-full">
         {price ? `Enroll Now — ${priceText}` : "Enroll Now"}
       </ButtonLink>
     ) : (
       <p className="rounded-lg border border-line-strong bg-sand px-4 py-3 text-center text-[0.9375rem] text-muted">{ENROLMENT_MESSAGE[state]}</p>
-    );
+    )
+  );
 
   const facts = [
     { icon: Clock, label: hours },
@@ -70,7 +88,7 @@ export function ProfessionalCourseView({ course, learner }: { course: Course; le
         <div className="container-page grid gap-10 py-14 sm:py-16 lg:grid-cols-12 lg:py-20">
           <div className="lg:col-span-7">
             <nav aria-label="Breadcrumb" className="text-[0.8125rem] text-ivory/70">
-              <Link to="/courses?access=professional" className="hover:text-ivory">
+              <Link to="/programmes" className="hover:text-ivory">
                 Professional Programmes
               </Link>{" "}
               / {categoryName(course.categoryId)}
@@ -107,7 +125,7 @@ export function ProfessionalCourseView({ course, learner }: { course: Course; le
                 </>
               ) : (
                 <>
-                  {price ? (
+                  {price && !bundled ? (
                     <div>
                       <p className="flex flex-wrap items-baseline gap-3">
                         <span className="font-serif text-[2.4rem] leading-none">{priceText}</span>
@@ -116,10 +134,10 @@ export function ProfessionalCourseView({ course, learner }: { course: Course; le
                       <p className="mt-1 text-[0.8125rem] text-muted">One-off payment. Lessons unlock the moment your payment is confirmed.</p>
                     </div>
                   ) : (
-                    <p className="font-serif text-[1.4rem]">Professional Programme</p>
+                    <p className="font-serif text-[1.4rem]">{bundled ? "Included in a Professional Programme" : "Professional Programme"}</p>
                   )}
                   <div className="mt-5">{buy}</div>
-                  {!learner.signedIn && state === "open" && <p className="mt-3 text-center text-[0.8125rem] text-muted">You'll create a free account first, then pay.</p>}
+                  {!learner.signedIn && state === "open" && !bundled && <p className="mt-3 text-center text-[0.8125rem] text-muted">You'll create a free account first, then pay.</p>}
                 </>
               )}
               {included.length > 0 && (
@@ -293,7 +311,7 @@ export function ProfessionalCourseView({ course, learner }: { course: Course; le
               </ul>
             </section>
           )}
-          {!enrolled && state === "open" && (
+          {!enrolled && (state === "open" || bundled) && (
             <div className="rounded-xl border border-line-strong bg-paper p-5">
               <p className="font-serif text-[1.2rem]">Ready to build your career?</p>
               <div className="mt-4">{buy}</div>

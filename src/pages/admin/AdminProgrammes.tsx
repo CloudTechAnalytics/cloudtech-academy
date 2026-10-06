@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { Link } from "react-router";
-import { getBackend, type AdminCourseOrder, type AdminEnrollment, type CourseStats } from "@/lib/backend";
+import { getBackend, type AdminCourseOrder, type AdminEnrollment } from "@/lib/backend";
+import { TRACKS } from "@/content/tracks";
 import { PageLoading } from "@/lib/auth";
 import { formatDate } from "@/lib/format";
 import { formatPrice } from "@/lib/commerce";
@@ -22,8 +23,15 @@ const money = (by: Record<string, number>) => {
 export function AdminEnrollments() {
   const { data, error, reload } = useAdminData(async () => {
     const b = await getBackend();
-    const [rows, courses, students] = await Promise.all([b.admin.listCourseEnrollments(), b.listCourses({ includeUnpublished: true }), b.admin.listStudents()]);
-    return { rows, courses, students };
+    const [rows, courses, students, programmeRows, sales] = await Promise.all([
+      b.admin.listCourseEnrollments(),
+      b.listCourses({ includeUnpublished: true }),
+      b.admin.listStudents(),
+      b.admin.listProgrammeEnrollments(),
+      b.listProgrammeSales(),
+    ]);
+    const programmes = TRACKS.filter((t) => (sales[t.id]?.access ?? t.access) === "paid");
+    return { rows, courses, students, programmeRows, programmes };
   });
   const [course, setCourse] = useState("");
   const [source, setSource] = useState("");
@@ -67,10 +75,14 @@ export function AdminEnrollments() {
           if (!grantUser || !grantCourse) return;
           const note = window.prompt("Add a note for the record, e.g. a bank transfer reference or scholarship:", "Granted by admin");
           if (note === null) return;
-          void run("Access granted. The learner can open the lessons now.", async () => (await getBackend()).admin.grantCourseAccess(grantUser, grantCourse, note));
+          void run("Access granted. The learner can open the lessons now.", async () =>
+            grantCourse.startsWith("track:")
+              ? (await getBackend()).admin.grantProgrammeAccess(grantUser, grantCourse.slice(6), note)
+              : (await getBackend()).admin.grantCourseAccess(grantUser, grantCourse, note),
+          );
         }}
       >
-        <h2 className="font-serif text-[1.25rem]">Grant access to a paid course</h2>
+        <h2 className="font-serif text-[1.25rem]">Grant access to a programme or paid course</h2>
         <p className="mt-1 text-[0.875rem] text-muted">For bank transfers, scholarships or corrections. It enrols the learner without a card payment.</p>
         <div className="mt-4 flex flex-wrap items-end gap-3">
           <label className="text-[0.875rem] font-medium">
@@ -85,21 +97,30 @@ export function AdminEnrollments() {
             </select>
           </label>
           <label className="text-[0.875rem] font-medium">
-            Course
+            Programme or course
             <select className={`${selectCls} mt-1.5 block`} value={grantCourse} onChange={(e) => setGrantCourse(e.target.value)}>
               <option value="">Choose…</option>
-              {paidCourses.map((c) => (
-                <option key={c.id} value={c.id}>
-                  {c.title}
-                </option>
-              ))}
+              <optgroup label="Professional programmes">
+                {data.programmes.map((t) => (
+                  <option key={t.id} value={`track:${t.id}`}>
+                    {t.programmeName ?? t.title}
+                  </option>
+                ))}
+              </optgroup>
+              <optgroup label="Paid courses">
+                {paidCourses.map((c) => (
+                  <option key={c.id} value={c.id}>
+                    {c.title}
+                  </option>
+                ))}
+              </optgroup>
             </select>
           </label>
           <Button type="submit" loading={busy} disabled={!grantUser || !grantCourse}>
             Grant access
           </Button>
         </div>
-        {paidCourses.length === 0 && <p className="mt-3 text-[0.8125rem] text-muted">No course is paid yet. Set a course's access to Paid in Courses first.</p>}
+        {paidCourses.length === 0 && data.programmes.length === 0 && <p className="mt-3 text-[0.8125rem] text-muted">Nothing is paid yet. Set a programme's access to Paid in Programmes first.</p>}
       </form>
 
       <div className="mb-4 flex flex-wrap gap-3">
@@ -172,6 +193,62 @@ export function AdminEnrollments() {
               <tr>
                 <td colSpan={6} className="py-8 text-center text-muted">
                   No enrolments match.
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+
+      <h2 className="mb-3 mt-10 font-serif text-[1.4rem]">Programme enrolments</h2>
+      <div className="table-scroll rounded-2xl border border-line bg-paper">
+        <table>
+          <thead>
+            <tr>
+              <th>Learner</th>
+              <th>Programme</th>
+              <th>How</th>
+              <th>Enrolled</th>
+              <th>Completed</th>
+              <th>
+                <span className="sr-only">Actions</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.programmeRows.map((r) => (
+              <tr key={`${r.userId}:${r.trackId}`}>
+                <td>
+                  {r.fullName}
+                  <span className="block text-[0.75rem] text-muted">{r.email}</span>
+                </td>
+                <td>{r.trackTitle}</td>
+                <td>
+                  {SOURCE[r.source]}
+                  {r.source === "purchase" && r.amount !== null && <span className="block text-[0.75rem] text-muted">{formatPrice(r.amount, r.currency ?? "NGN")}</span>}
+                </td>
+                <td>{formatDate(r.enrolledAt)}</td>
+                <td>{r.completedAt ? formatDate(r.completedAt) : "—"}</td>
+                <td className="whitespace-nowrap text-right">
+                  <button
+                    type="button"
+                    disabled={busy}
+                    className="text-[0.8125rem] font-semibold text-danger disabled:opacity-50"
+                    onClick={() => {
+                      const reason = window.prompt(`Take back access to ${r.trackTitle} for ${r.fullName}? Their progress is kept. Reason:`, "");
+                      if (reason === null) return;
+                      void run("Programme access revoked.", async () => (await getBackend()).admin.revokeProgrammeAccess(r.userId, r.trackId, reason));
+                    }}
+                  >
+                    Revoke
+                  </button>
+                </td>
+              </tr>
+            ))}
+            {data.programmeRows.length === 0 && (
+              <tr>
+                <td colSpan={6} className="py-8 text-center text-muted">
+                  No programme enrolments yet.
                 </td>
               </tr>
             )}
@@ -269,20 +346,32 @@ const pct = (n: number, d: number) => (d ? `${Math.round((n / d) * 100)}%` : "�
 
 /** Enrolments, revenue, completion and free-to-paid conversion, per course. */
 export function AdminAnalytics() {
-  const { data, error } = useAdminData(async () => (await getBackend()).admin.listCourseStats());
+  const { data: all, error } = useAdminData(async () => {
+    const b = await getBackend();
+    const [courses, programmes] = await Promise.all([b.admin.listCourseStats(), b.admin.listProgrammeStats()]);
+    return { courses, programmes };
+  });
   if (error) return <Alert tone="error">{error}</Alert>;
-  if (!data) return <PageLoading />;
+  if (!all) return <PageLoading />;
+  const data = all.courses;
+  const programmes = all.programmes;
 
-  const sum = (f: (c: CourseStats) => number) => data.reduce((n, c) => n + f(c), 0);
-  const total = sum((c) => c.enrollments);
   const free = data.filter((c) => c.accessType === "free");
-  const paid = data.filter((c) => c.accessType === "paid");
   const revenue: Record<string, number> = {};
   for (const c of data) for (const [cur, v] of Object.entries(c.revenue)) revenue[cur] = (revenue[cur] ?? 0) + v;
+  for (const p of programmes) for (const [cur, v] of Object.entries(p.revenue)) revenue[cur] = (revenue[cur] ?? 0) + v;
   const freeLearners = free.reduce((n, c) => n + c.enrollments, 0);
-  const converted = paid.reduce((n, c) => n + c.converted, 0);
-  const paidEnrolments = paid.reduce((n, c) => n + c.paidEnrollments + c.grantedEnrollments, 0);
-  const popular = [...data].sort((a, b) => b.enrollments - a.enrollments).slice(0, 5);
+  // Programme holders are counted once, as programme enrolments, not once per course they unlocked.
+  const converted = programmes.reduce((n, p) => n + p.converted, 0);
+  const paidEnrolments = programmes.reduce((n, p) => n + p.enrollments, 0);
+  const total = freeLearners + paidEnrolments;
+  const finished = free.reduce((n, c) => n + c.completions, 0) + programmes.reduce((n, p) => n + p.completions, 0);
+  const popular = [
+    ...free.map((c) => ({ id: c.courseId, title: c.title, enrollments: c.enrollments })),
+    ...programmes.map((p) => ({ id: p.trackId, title: p.title, enrollments: p.enrollments })),
+  ]
+    .sort((a, b) => b.enrollments - a.enrollments)
+    .slice(0, 5);
 
   return (
     <>
@@ -293,8 +382,8 @@ export function AdminAnalytics() {
           ["Free enrolments", String(freeLearners)],
           ["Paid enrolments", String(paidEnrolments)],
           ["Revenue", money(revenue)],
-          ["Completion rate", pct(sum((c) => c.completions), total)],
-          ["Free to paid conversion", paid.length ? `${converted} of ${paidEnrolments} buyers` : "No paid course yet"],
+          ["Completion rate", pct(finished, total)],
+          ["Free to paid conversion", programmes.length ? `${converted} of ${paidEnrolments} programme learners` : "No paid programme yet"],
         ].map(([label, value]) => (
           <div key={label} className="rounded-2xl border border-line bg-paper p-5">
             <dt className="text-[0.875rem] text-muted">{label}</dt>
@@ -302,12 +391,52 @@ export function AdminAnalytics() {
           </div>
         ))}
       </dl>
-      <p className="mt-3 text-[0.8125rem] text-muted">Conversion counts buyers of a paid course who had already taken a free course.</p>
+      <p className="mt-3 text-[0.8125rem] text-muted">Conversion counts programme buyers who had already taken a free course. Programme completion means the programme badge was earned.</p>
+
+      <h2 className="mt-10 font-serif text-[1.4rem]">Professional programmes</h2>
+      <div className="table-scroll mt-3 rounded-2xl border border-line bg-paper">
+        <table>
+          <thead>
+            <tr>
+              <th>Programme</th>
+              <th>Price</th>
+              <th>Enrolled</th>
+              <th>Completed</th>
+              <th>Completion</th>
+              <th>Revenue</th>
+            </tr>
+          </thead>
+          <tbody>
+            {programmes.map((p) => (
+              <tr key={p.trackId}>
+                <td>{p.title}</td>
+                <td>{p.price ? formatPrice(p.price, p.currency) : "Not set"}</td>
+                <td>
+                  {p.enrollments}
+                  <span className="block text-[0.75rem] text-muted">
+                    {p.paidEnrollments} paid · {p.grantedEnrollments} granted
+                  </span>
+                </td>
+                <td>{p.completions}</td>
+                <td>{pct(p.completions, p.enrollments)}</td>
+                <td>{money(p.revenue)}</td>
+              </tr>
+            ))}
+            {programmes.length === 0 && (
+              <tr>
+                <td colSpan={6} className="py-8 text-center text-muted">
+                  No paid programme yet.
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
 
       <h2 className="mt-10 font-serif text-[1.4rem]">Most popular</h2>
       <ol className="mt-3 space-y-1.5 text-[0.9375rem]">
         {popular.map((c, i) => (
-          <li key={c.courseId}>
+          <li key={c.id}>
             {i + 1}. {c.title} <span className="text-muted">· {c.enrollments} enrolled</span>
           </li>
         ))}

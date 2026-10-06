@@ -109,10 +109,10 @@ export default function Learn() {
         <Lock aria-hidden className="h-8 w-8 text-brass-dark" />
         <h1 className="mt-4 font-serif text-[2.2rem] leading-tight">This lesson is part of a Professional Programme</h1>
         <p className="mt-3 text-[1.0625rem] leading-relaxed text-muted">
-          {course.title} unlocks as soon as you enroll. Have a look at what's inside, and enroll when you're ready.
+          {course.title} unlocks as soon as you enroll in a programme that includes it. Have a look at what's inside, and enroll when you're ready.
         </p>
         <ButtonLink to={`/courses/${course.slug}`} className="mt-6">
-          See the programme
+          See where this course fits
         </ButtonLink>
       </div>
     );

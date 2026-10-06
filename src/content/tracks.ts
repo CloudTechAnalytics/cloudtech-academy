@@ -8,6 +8,8 @@
  * Learners who already hold a track badge keep it when a track grows.
  */
 
+import type { CourseSalesFields } from "./catalog";
+
 export type Level = 1 | 2 | 3 | 4;
 
 /** The four levels every course sits at. */
@@ -25,7 +27,7 @@ export type TrackItem =
 
 export type TrackStage = { title: string; summary: string; items: TrackItem[] };
 
-export type Track = {
+export type Track = CourseSalesFields & {
   id: string;
   slug: string;
   title: string;
@@ -35,6 +37,8 @@ export type Track = {
    * skills tracks and earn the free track badge only.
    */
   programmeTitle?: string;
+  /** The programme's name when it is sold, e.g. "Professional Data Analytics". */
+  programmeName?: string;
   /** The job or goal, as the learner would say it. */
   outcome: string;
   summary: string;
@@ -52,11 +56,25 @@ export const TRACKS: Track[] = [
     slug: "data-analyst",
     title: "Become a Data Analyst",
     programmeTitle: "Data Analysis",
+    programmeName: "Professional Data Analytics",
     outcome: "Get job-ready as a junior data analyst",
     summary:
       "The route we recommend from no experience to a junior data analyst role. Learn how analysis works, then the tools teams use every day (Excel, SQL, Power BI and Python) on realistic company data. Build portfolio projects that answer real business questions, and finish with your CV, LinkedIn and interview preparation.",
     badge: "CloudTech Data Analyst",
     badgeCode: "DATAANALYST",
+    access: "paid",
+    courseType: "professional",
+    price: 250000,
+    currency: "NGN",
+    deliveryType: "hybrid",
+    enrollmentStatus: "open",
+    durationLabel: "3 months",
+    communityAccess: true,
+    instructorSupport: true,
+    overview: "Professional Data Analytics takes you from spreadsheets to dashboards and Python in one structured programme. You work through ten courses in order on realistic company data, build projects as you go, and finish with an end-to-end capstone that turns a raw till export into a reviewed dashboard and a board-ready summary.",
+    audience: ["Beginners who want a career in data analytics", "Excel users ready to move into SQL, Power BI and Python", "Graduates and career changers who need a job-ready portfolio"],
+    included: ["Live classes, online or in person, in small batches of 15 to 25", "Recorded sessions for revision", "Job assistance"],
+    projectPreviews: [{ title: "Data Analyst Capstone", summary: "From a raw till export to a reviewed dashboard and a board-ready executive summary." }],
     skills: [
       "Spreadsheet analysis in Excel",
       "Statistics: averages, spread, confidence intervals and tests",
@@ -71,9 +89,10 @@ export const TRACKS: Track[] = [
         title: "Foundation",
         summary: "How analysis works, and the spreadsheet skills every analyst uses.",
         items: [
-          { kind: "course", courseId: "data-analytics-foundations", why: "How analysis works: questions, data types, cleaning and telling the story." },
+          { kind: "course", courseId: "data-analytics-foundations", why: "How analysis works: questions, data types, cleaning and telling the story.", required: false },
           { kind: "course", courseId: "excel-for-data-analysis", why: "The tool almost every business already uses, from formulas to pivot tables." },
           { kind: "course", courseId: "statistics-for-data-analysis", why: "Averages, spread, outliers, confidence intervals and tests: telling a finding from noise." },
+          { kind: "course", courseId: "business-analysis-fundamentals", why: "Problems, stakeholders and requirements: the business side of every analysis." },
         ],
       },
       {
@@ -109,7 +128,7 @@ export const TRACKS: Track[] = [
         title: "Career",
         summary: "Turn your skills into applications that get interviews.",
         items: [
-          { kind: "course", courseId: "career-essentials", why: "An ATS-friendly CV and a LinkedIn profile recruiters can find." },
+          { kind: "course", courseId: "career-essentials", why: "An ATS-friendly CV and a LinkedIn profile recruiters can find.", required: false },
           { kind: "course", courseId: "build-your-student-portfolio", why: "One link that shows your projects.", required: false },
           { kind: "course", courseId: "get-your-first-internship", why: "Find, apply for and interview for your first role.", required: false },
         ],
@@ -121,11 +140,25 @@ export const TRACKS: Track[] = [
     slug: "business-analyst",
     title: "Become a Business Analyst",
     programmeTitle: "Business Analysis",
+    programmeName: "Professional Business Analysis",
     outcome: "Get job-ready as a junior business analyst",
     summary:
       "The route from no experience to a junior business analyst role. Learn to turn requests into the right changes: understand the problem, map the process, write requirements and user stories, and make the business case. Back it up with the data skills employers now expect from BAs (Excel, SQL and Power BI), then present yourself for the job.",
     badge: "CloudTech Business Analyst",
     badgeCode: "BUSANALYST",
+    access: "paid",
+    courseType: "professional",
+    price: 250000,
+    currency: "NGN",
+    deliveryType: "hybrid",
+    enrollmentStatus: "open",
+    durationLabel: "3 months",
+    communityAccess: true,
+    instructorSupport: true,
+    overview: "Professional Business Analysis teaches you to find the real problem, write requirements people can build from, work in agile teams and improve processes with evidence. Case studies run through every course, and the capstone takes a vague complaint to a board-ready decision paper.",
+    audience: ["People moving into business analysis", "Project, operations or customer-service staff who work with change", "Graduates who want a structured route into the role"],
+    included: ["Live classes, online or in person, in small batches of 15 to 25", "Recorded sessions for revision", "Case studies", "Career support"],
+    projectPreviews: [{ title: "Business Analyst Capstone", summary: "From a vague complaint about slow claims to a board-ready decision paper." }],
     skills: [
       "Problem statements and stakeholder analysis",
       "Process mapping in BPMN, and Lean process improvement",
@@ -140,17 +173,16 @@ export const TRACKS: Track[] = [
         summary: "What business analysts do, and the data basics every BA needs.",
         items: [
           { kind: "course", courseId: "business-analysis-fundamentals", why: "Problems, stakeholders, processes, requirements, user stories and business cases, on a real firm's data." },
-          { kind: "course", courseId: "data-analytics-foundations", why: "How to ask a good question of data and read the answer critically." },
-          { kind: "course", courseId: "excel-for-data-analysis", why: "Measure the current state and build a business case in a spreadsheet." },
+          { kind: "course", courseId: "data-analytics-foundations", why: "How to ask a good question of data and read the answer critically.", required: false },
+          { kind: "course", courseId: "excel-for-data-analysis", why: "Measure the current state and build a business case in a spreadsheet.", required: false },
         ],
       },
       {
         title: "Core",
         summary: "Get your own numbers from systems, and understand how data is structured.",
         items: [
-          { kind: "course", courseId: "sql-for-data-analysis", why: "Answer your own questions from a database instead of waiting for a report." },
-          { kind: "course", courseId: "data-modelling", why: "Read and specify the data behind a system: entities, keys and relationships." },
-          { kind: "course", courseId: "power-bi-fundamentals", why: "Specify, and build, the reports that prove a change worked." },
+          { kind: "course", courseId: "sql-for-data-analysis", why: "Answer your own questions from a database instead of waiting for a report.", required: false },
+          { kind: "course", courseId: "power-bi-fundamentals", why: "Specify, and build, the reports that prove a change worked.", required: false },
         ],
       },
       {
@@ -174,7 +206,7 @@ export const TRACKS: Track[] = [
         title: "Career",
         summary: "Turn your skills into applications that get interviews.",
         items: [
-          { kind: "course", courseId: "career-essentials", why: "An ATS-friendly CV and a LinkedIn profile recruiters can find." },
+          { kind: "course", courseId: "career-essentials", why: "An ATS-friendly CV and a LinkedIn profile recruiters can find.", required: false },
           { kind: "course", courseId: "build-your-student-portfolio", why: "One link that shows your analysis packs and projects.", required: false },
           { kind: "course", courseId: "get-your-first-internship", why: "Find, apply for and interview for your first role.", required: false },
         ],
@@ -186,11 +218,25 @@ export const TRACKS: Track[] = [
     slug: "data-scientist",
     title: "Become a Data Scientist",
     programmeTitle: "Data Science",
+    programmeName: "Professional Data Science",
     outcome: "Get job-ready as a junior data scientist",
     summary:
       "The route to a junior data scientist role. Build the analyst's foundations (statistics, SQL and Python), then learn to build, test and explain machine learning models on realistic Nigerian business data, and to use them responsibly. Data science jobs ask for more than models: they ask for clean data, honest evaluation and results a business can act on, which is what this track teaches.",
     badge: "CloudTech Data Scientist",
     badgeCode: "DATASCIENTIST",
+    access: "paid",
+    courseType: "professional",
+    price: 350000,
+    currency: "NGN",
+    deliveryType: "hybrid",
+    enrollmentStatus: "open",
+    durationLabel: "4 months",
+    communityAccess: true,
+    instructorSupport: true,
+    overview: "Professional Data Science builds on analytics: Python and statistics first, then machine learning, honest model evaluation, experiments and forecasting. The capstone takes a vague request all the way to a trial-tested decision policy with fairness checks.",
+    audience: ["Analysts who want to move into data science", "Graduates in a quantitative subject", "Developers who want to work with data and models"],
+    included: ["Live classes, online or in person, in small batches of 15 to 25", "Recorded sessions for revision", "Job assistance"],
+    projectPreviews: [{ title: "Data Scientist Capstone", summary: "From a vague request to a trial-tested calling policy, with fairness checks." }],
     skills: [
       "Statistics: distributions, confidence intervals and tests",
       "Data wrangling in SQL and pandas",
@@ -206,7 +252,7 @@ export const TRACKS: Track[] = [
         items: [
           { kind: "course", courseId: "statistics-for-data-analysis", why: "Distributions, sampling, confidence intervals and tests: the language of uncertainty." },
           { kind: "course", courseId: "python-for-data-analytics", why: "pandas for loading, cleaning, reshaping and exploring data." },
-          { kind: "course", courseId: "sql-for-data-analysis", why: "Get your own data out of databases." },
+          { kind: "course", courseId: "sql-for-data-analysis", why: "Get your own data out of databases.", required: false },
         ],
       },
       {
@@ -214,7 +260,6 @@ export const TRACKS: Track[] = [
         summary: "Build and evaluate models properly.",
         items: [
           { kind: "course", courseId: "machine-learning-fundamentals", why: "Regression and classification with scikit-learn, from baselines to cost-based thresholds and model cards." },
-          { kind: "course", courseId: "advanced-sql", why: "Window functions, cohorts and data quality checks for building features.", required: false },
           { kind: "course", courseId: "feature-engineering-model-evaluation", why: "Point-in-time features, time-based validation, calibration, lift and drift, on a mobile wallet's churn." },
         ],
       },
@@ -239,7 +284,7 @@ export const TRACKS: Track[] = [
         title: "Career",
         summary: "Turn your skills into applications that get interviews.",
         items: [
-          { kind: "course", courseId: "career-essentials", why: "An ATS-friendly CV and a LinkedIn profile recruiters can find." },
+          { kind: "course", courseId: "career-essentials", why: "An ATS-friendly CV and a LinkedIn profile recruiters can find.", required: false },
           { kind: "course", courseId: "build-your-student-portfolio", why: "One link that shows your notebooks and model cards.", required: false },
         ],
       },
@@ -250,11 +295,25 @@ export const TRACKS: Track[] = [
     slug: "ai-engineer",
     title: "Become an AI Engineer",
     programmeTitle: "AI Engineering",
+    programmeName: "Professional AI Engineering",
     outcome: "Build AI features a business can trust",
     summary:
       "The route to building with generative AI professionally, not just using chatbots. Learn the Python and machine learning foundations, then build LLM features properly: prompts as specifications, validated outputs, retrieval with citations, evaluation against human labels, and the privacy, safety and cost controls that decide whether a feature can launch.",
     badge: "CloudTech AI Engineer",
     badgeCode: "AIENGINEER",
+    access: "paid",
+    courseType: "professional",
+    price: 450000,
+    currency: "NGN",
+    deliveryType: "hybrid",
+    enrollmentStatus: "open",
+    durationLabel: "6 months",
+    communityAccess: true,
+    instructorSupport: true,
+    overview: "Professional AI Engineering is for people who build with large language models. You learn generative AI engineering, agents and tool use, evaluation and safety, and the software engineering, databases and APIs that production AI needs. The capstone builds, evaluates, gates and monitors a real WhatsApp claims assistant.",
+    audience: ["Developers who want to build AI products", "Data professionals moving into AI engineering", "Learners who already code in Python"],
+    included: ["Live classes, online or in person, in small batches of 15 to 25", "Recorded sessions for revision", "1-on-1 mentorship and cloud GPU access", "Job assistance"],
+    projectPreviews: [{ title: "AI Engineer Capstone", summary: "Build, evaluate, gate and monitor an insurer's WhatsApp claims assistant, in English and Pidgin." }],
     skills: [
       "Python and pandas for AI work",
       "Machine learning evaluation: splits, recall and baselines",
@@ -268,9 +327,8 @@ export const TRACKS: Track[] = [
         title: "Foundation",
         summary: "The Python and machine learning every AI engineer relies on.",
         items: [
-          { kind: "course", courseId: "python-for-data-analytics", why: "pandas for loading, cleaning and exploring the data AI features run on." },
           { kind: "course", courseId: "statistics-for-data-analysis", why: "Sampling and uncertainty, for reading evaluation results honestly.", required: false },
-          { kind: "course", courseId: "machine-learning-fundamentals", why: "Train and test splits, baselines, recall and cost-based decisions." },
+          { kind: "course", courseId: "python-for-beginners", why: "Python from the first line, if you are new to code.", required: false },
         ],
       },
       {
@@ -278,7 +336,8 @@ export const TRACKS: Track[] = [
         summary: "Build LLM features properly.",
         items: [
           { kind: "course", courseId: "generative-ai-engineering", why: "Prompts, validation, retrieval, evaluation, safety and cost, on a mobile wallet's support assistant." },
-          { kind: "course", courseId: "feature-engineering-model-evaluation", why: "Calibration, drift and monitoring: the habits that keep models working after launch.", required: false },
+          { kind: "course", courseId: "software-engineering-with-python", why: "Tests, debugging, validation, code review and an API: the engineering habits AI products need." },
+          { kind: "course", courseId: "databases-and-apis-for-developers", why: "Schemas, constraints, transactions and a tested REST API for the data your AI features use." },
         ],
       },
       {
@@ -300,7 +359,7 @@ export const TRACKS: Track[] = [
         title: "Career",
         summary: "Turn your skills into applications that get interviews.",
         items: [
-          { kind: "course", courseId: "career-essentials", why: "An ATS-friendly CV and a LinkedIn profile recruiters can find." },
+          { kind: "course", courseId: "career-essentials", why: "An ATS-friendly CV and a LinkedIn profile recruiters can find.", required: false },
           { kind: "course", courseId: "build-your-student-portfolio", why: "One link that shows your notebooks and evaluation reports.", required: false },
         ],
       },
@@ -311,11 +370,24 @@ export const TRACKS: Track[] = [
     slug: "cloud-devops-engineer",
     title: "Become a Cloud & DevOps Engineer",
     programmeTitle: "Cloud & DevOps Engineering",
+    programmeName: "Professional Cloud & DevOps Engineering",
     outcome: "Run cloud systems that are affordable, reliable and secure",
     summary:
       "The route to cloud and DevOps roles. Start by understanding what a cloud estate costs, how reliable it is and who can access it, using a real company's account data, then learn to build and ship infrastructure as code, automate testing and deployment, and keep systems running. Employers hire cloud engineers who can explain a bill and prevent an outage, not just launch servers.",
     badge: "CloudTech Cloud & DevOps Engineer",
     badgeCode: "CLOUDDEVOPS",
+    access: "paid",
+    courseType: "professional",
+    price: null,
+    currency: "NGN",
+    deliveryType: "self_paced",
+    enrollmentStatus: "closed",
+    communityAccess: false,
+    instructorSupport: false,
+    overview: "Professional Cloud & DevOps Engineering covers cloud cost and reliability, Linux and networking, infrastructure as code with Terraform, CI/CD and containers, and observability. The capstone prepares an online business for a big sale: postmortem, plan review, capacity, alerts, cost and a game day.",
+    audience: ["Learners moving into cloud or DevOps roles", "Developers who want to own how their software runs", "IT support staff growing into engineering"],
+    included: [],
+    projectPreviews: [{ title: "Cloud & DevOps Capstone", summary: "Postmortem, plan review, capacity, alerts, cost and a game day, for an online business before a sale." }],
     skills: [
       "Cloud services, regions and shared responsibility",
       "Cost analysis, rightsizing and pricing models",
@@ -329,8 +401,8 @@ export const TRACKS: Track[] = [
         title: "Foundation",
         summary: "The cloud itself, and enough code to analyse it.",
         items: [
-          { kind: "course", courseId: "python-for-data-analytics", why: "pandas for analysing bills, utilisation and logs." },
           { kind: "course", courseId: "linux-networking-basics", why: "The command line, permissions, processes, SSH, ports, DNS and HTTP, learned by investigating a real-looking server." },
+          { kind: "course", courseId: "python-for-beginners", why: "Python for the scripts and automation you will write.", required: false },
         ],
       },
       {
@@ -346,7 +418,6 @@ export const TRACKS: Track[] = [
         title: "Specialist",
         summary: "Keep systems running in production.",
         items: [
-          { kind: "course", courseId: "llm-evaluation-safety-production", why: "Release gates, control-limit alerts and blameless postmortems, applied to a live service.", required: false },
           { kind: "course", courseId: "observability-site-reliability", why: "Metrics, logs and traces to find a real cause; SLOs, burn-rate alerts, capacity and toil to prevent the next outage." },
         ],
       },
@@ -361,7 +432,7 @@ export const TRACKS: Track[] = [
         title: "Career",
         summary: "Turn your skills into applications that get interviews.",
         items: [
-          { kind: "course", courseId: "career-essentials", why: "An ATS-friendly CV and a LinkedIn profile recruiters can find." },
+          { kind: "course", courseId: "career-essentials", why: "An ATS-friendly CV and a LinkedIn profile recruiters can find.", required: false },
           { kind: "course", courseId: "build-your-student-portfolio", why: "One link that shows your cloud reviews and infrastructure code.", required: false },
         ],
       },
@@ -372,11 +443,24 @@ export const TRACKS: Track[] = [
     slug: "software-developer",
     title: "Become a Software Developer",
     programmeTitle: "Software Development",
+    programmeName: "Professional Software Development",
     outcome: "Write software that's correct, tested and safe to change",
     summary:
       "The route to junior developer roles. Start with Python and Git, then learn what turns code into software: tests, debugging, validation, version control, code review and APIs, by rebuilding a real company's invoicing code. Then go further into the web, databases and delivery. Employers hire developers who can show tested, well-reviewed code, and that's what this track builds.",
     badge: "CloudTech Software Developer",
     badgeCode: "SOFTWAREDEV",
+    access: "paid",
+    courseType: "professional",
+    price: null,
+    currency: "NGN",
+    deliveryType: "self_paced",
+    enrollmentStatus: "closed",
+    communityAccess: false,
+    instructorSupport: false,
+    overview: "Professional Software Development takes you from Python and Git to testing, databases and APIs, and JavaScript for the web. The capstone is a real engineering task: six bug reports, a risky pull request and a release, on a Flask and SQL application.",
+    audience: ["Beginners who want to become developers", "Self-taught coders who want professional habits", "Career changers building a developer portfolio"],
+    included: [],
+    projectPreviews: [{ title: "Software Developer Capstone", summary: "Six bug reports, a risky pull request and a release, on a Flask and SQL application." }],
     skills: [
       "Python functions, modules and packages",
       "Automated testing with pytest",
@@ -392,7 +476,7 @@ export const TRACKS: Track[] = [
         items: [
           { kind: "course", courseId: "python-for-beginners", why: "Python from the first line: variables, lists, loops and functions." },
           { kind: "course", courseId: "git-and-github-for-beginners", why: "Version control and GitHub, so your work is saved, shared and visible." },
-          { kind: "course", courseId: "web-development-for-beginners", why: "HTML, CSS and a first website published with GitHub Pages.", required: false },
+          { kind: "course", courseId: "web-development-for-beginners", why: "HTML, CSS and a first website published with GitHub Pages." },
           { kind: "course", courseId: "linux-networking-basics", why: "The command line, files, processes and HTTP that every server runs on.", required: false },
         ],
       },
@@ -410,7 +494,6 @@ export const TRACKS: Track[] = [
         items: [
           { kind: "course", courseId: "web-development-with-javascript", why: "An accessible, responsive payment page with exact money, validation, fetch and tests." },
           { kind: "course", courseId: "databases-and-apis-for-developers", why: "Schemas, constraints, transactions, migrations and a tested REST API, on a real company's invoicing data." },
-          { kind: "course", courseId: "cicd-and-containers", why: "Containers, pipelines and safe releases for the code you write.", required: false },
         ],
       },
       {
@@ -424,7 +507,7 @@ export const TRACKS: Track[] = [
         title: "Career",
         summary: "Turn your skills into applications that get interviews.",
         items: [
-          { kind: "course", courseId: "career-essentials", why: "An ATS-friendly CV and a LinkedIn profile recruiters can find." },
+          { kind: "course", courseId: "career-essentials", why: "An ATS-friendly CV and a LinkedIn profile recruiters can find.", required: false },
           { kind: "course", courseId: "build-your-student-portfolio", why: "One link that shows your repositories, tests and projects.", required: false },
         ],
       },
@@ -454,7 +537,6 @@ export const TRACKS: Track[] = [
         summary: "The tools every project manager uses daily.",
         items: [
           { kind: "course", courseId: "excel-for-data-analysis", why: "Budgets, trackers and status data in spreadsheets." },
-          { kind: "course", courseId: "python-for-data-analytics", why: "pandas for schedules, earned value and simulations at any size.", required: false },
         ],
       },
       {
@@ -463,14 +545,12 @@ export const TRACKS: Track[] = [
         items: [
           { kind: "course", courseId: "project-management-fundamentals", why: "Scope, estimates, the critical path, simulation, earned value, risk and change control on a depot launch." },
           { kind: "course", courseId: "business-analysis-fundamentals", why: "Requirements and stakeholders: what the project must deliver and for whom." },
-          { kind: "course", courseId: "agile-business-analysis", why: "Backlogs, user stories and sprints for projects delivered iteratively." },
         ],
       },
       {
         title: "Specialist",
         summary: "Go further into delivery and products.",
         items: [
-          { kind: "course", courseId: "process-improvement-bpmn-lean", why: "Map and improve the processes projects change.", required: false },
           { kind: "course", courseId: "product-management-fundamentals", why: "Outcomes, user evidence, funnels, RICE, roadmaps and honest launch measurement for a mobile wallet." },
         ],
       },
