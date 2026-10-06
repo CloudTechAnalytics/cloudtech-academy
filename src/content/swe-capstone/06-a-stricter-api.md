@@ -10,7 +10,7 @@ The mobile team's report (ISSUE-106) is about one case: a missing order gives a 
 
 ## The concept
 
-**Status codes that mean something**
+### Status codes that mean something
 
 | Code | When |
 | :-- | :-- |
@@ -20,15 +20,17 @@ The mobile team's report (ISSUE-106) is about one case: a missing order gives a 
 | 422 Unprocessable | The request is well formed, but the rules refuse it, such as outside the return window |
 | 500 | Only for bugs. A client should never be able to cause one |
 
-**Validate before you use**
+![Validation in order (malformed, exists, allowed, do it) with the status code for each, a table of what each code means, and the Python boolean trap](/images/courses/swe-capstone/status-codes.svg "400, 404, 422, 201, and 500 only for bugs.")
+
+### Validate before you use
 
 Check each field's presence, type and range, and that it makes sense for **this** order, before doing any work. Return the first problem with a message the app can show or log.
 
-**Booleans are integers in Python**
+### Booleans are integers in Python
 
 `isinstance(True, int)` is `True`. A quantity check that only tests for `int` accepts `true`. Exclude `bool` explicitly.
 
-**Test every path**
+### Test every path
 
 One test per status code, and a parametrised test for the different ways a request can be bad.
 

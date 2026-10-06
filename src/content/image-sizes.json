@@ -1315,6 +1315,38 @@
   760,
   340
  ],
+ "/images/courses/swe-capstone/idempotency.svg": [
+  760,
+  450
+ ],
+ "/images/courses/swe-capstone/money-and-window.svg": [
+  760,
+  430
+ ],
+ "/images/courses/swe-capstone/pr-review.svg": [
+  760,
+  420
+ ],
+ "/images/courses/swe-capstone/read-and-triage.svg": [
+  760,
+  430
+ ],
+ "/images/courses/swe-capstone/reproduce-first.svg": [
+  760,
+  456
+ ],
+ "/images/courses/swe-capstone/ship-it.svg": [
+  760,
+  420
+ ],
+ "/images/courses/swe-capstone/sql-injection.svg": [
+  760,
+  440
+ ],
+ "/images/courses/swe-capstone/status-codes.svg": [
+  760,
+  440
+ ],
  "/images/courses/swe/api-flow.svg": [
   760,
   420

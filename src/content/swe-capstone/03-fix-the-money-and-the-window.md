@@ -10,21 +10,23 @@ You have failing tests for the kobo that goes missing and for customers refused 
 
 ## The concept
 
-**Money in whole kobo**
+### Money in whole kobo
 
 Keep amounts as integers in the smallest unit (kobo) from end to end. When a calculation creates fractions, such as a 10% fee, use `Decimal` and round **once**, explicitly, with the rule the business uses: here, halves round up (`ROUND_HALF_UP`).
 
-**Why floats fail**
+### Why floats fail
 
 `2499.99 * 100` is `249998.99999999997` in floating point, and `int()` cuts it to 249,998. Floats can't represent most decimal fractions exactly.
 
-**Write rules as the policy states them**
+### Write rules as the policy states them
 
 The website says returns are allowed **within 14 days** of delivery, which includes day 14. Write `<= 14`, name the constant, and say it in the docstring.
 
-**Small, focused changes**
+### Small, focused changes
 
 Change only what the bugs need. A diff that's easy to review is easier to trust.
+
+![Why floats lose a unit of money, keeping amounts as whole smallest units, writing the rule as the policy states it, and keeping fixes small](/images/courses/swe-capstone/money-and-window.svg "Integers for money; round once; write the rule as the policy states it.")
 
 ## Example
 

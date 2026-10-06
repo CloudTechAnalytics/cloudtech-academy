@@ -14,11 +14,11 @@ Every lesson starts from the original code in a **new Colab notebook**, so each 
 
 ## The concept
 
-**Read before you change**
+### Read before you change
 
 Find the entry points (the API in `app.py`), the rules (`refunds.py`) and the data access (`db.py`, `schema.sql`). Run the tests. Passing tests only prove what they test.
 
-**Triage by harm**
+### Triage by harm
 
 | Priority | Kind of bug | Why |
 | :-- | :-- | :-- |
@@ -27,7 +27,9 @@ Find the entry points (the API in `app.py`), the rules (`refunds.py`) and the da
 | 3 | Customers wrongly refused or confused | Unfair, and generates complaints |
 | 4 | Errors with no lasting harm | Fix, but after the above |
 
-**Every bug gets a test**
+![Four things to read before changing someone else's code, bugs triaged by harm from security down to harmless errors, and the rule that every bug gets a test](/images/courses/swe-capstone/read-and-triage.svg "Read first, triage by harm, and give every bug a test.")
+
+### Every bug gets a test
 
 For each bug: reproduce it with a failing test, fix it, and keep the test so it can't come back.
 

@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 456" width="760" height="456" role="img" aria-label="Turn a bug report into a failing test before touching the code. A good reproduction test uses the reporter's own example, states the correct answer worked out by hand in a comment, tests one thing and is named after the rule. Add the boundary next to the bug: for an off-by-one error test both sides of the line.">
+<title>Story, failing test, fix, passing test; and test both sides of the boundary.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="456" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="26.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">From a story to a test that fails today</text>
+<rect x="16.0" y="40.0" width="170.0" height="90.0" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.5"/>
+<text xml:space="preserve" x="28.0" y="64.0" font-size="13.5" fill="#9B2C1F" font-weight="700" text-anchor="start">Bug report</text>
+<text xml:space="preserve" x="28.0" y="86.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">"I booked day 7 and was</text>
+<text xml:space="preserve" x="28.0" y="100.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">refused"</text>
+<path d="M188.0,85.0 L200.0,85.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="202.0" y="40.0" width="170.0" height="90.0" rx="10" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.5"/>
+<text xml:space="preserve" x="214.0" y="64.0" font-size="13.5" fill="#2F5D8A" font-weight="700" text-anchor="start">Failing test</text>
+<text xml:space="preserve" x="214.0" y="86.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">Same example; correct</text>
+<text xml:space="preserve" x="214.0" y="100.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">answer worked out by</text>
+<text xml:space="preserve" x="214.0" y="114.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">hand</text>
+<path d="M374.0,85.0 L386.0,85.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="388.0" y="40.0" width="170.0" height="90.0" rx="10" fill="#F3EBD8" stroke="#B38A3E" stroke-width="1.5"/>
+<text xml:space="preserve" x="400.0" y="64.0" font-size="13.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Fix the code</text>
+<text xml:space="preserve" x="400.0" y="86.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">Small, focused change</text>
+<path d="M560.0,85.0 L572.0,85.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="574.0" y="40.0" width="170.0" height="90.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.5"/>
+<text xml:space="preserve" x="586.0" y="64.0" font-size="13.5" fill="#2F6B3F" font-weight="700" text-anchor="start">Test passes</text>
+<text xml:space="preserve" x="586.0" y="86.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">Keep it forever</text>
+<text xml:space="preserve" x="16.0" y="164.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">What a good reproduction test looks like</text>
+<rect x="16.0" y="178.0" width="440.0" height="122.0" rx="8" fill="#2A2926" stroke="#2A2926" stroke-width="1"/>
+<text xml:space="preserve" x="28.0" y="202.0" font-size="11.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">def test_cancel_on_day_7_is_allowed():</text>
+<text xml:space="preserve" x="28.0" y="222.0" font-size="11.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">    # Booked 1 June, cancelled 8 June: 7 days.</text>
+<text xml:space="preserve" x="28.0" y="242.0" font-size="11.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">    # Rule: up to 7 days is allowed, so refund.</text>
+<text xml:space="preserve" x="28.0" y="262.0" font-size="11.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">    order = booking(placed="2026-06-01")</text>
+<text xml:space="preserve" x="28.0" y="282.0" font-size="11.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">    assert can_cancel(order, today="2026-06-08")</text>
+<text xml:space="preserve" x="480.0" y="204.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">✓  Uses the reporter's own example</text>
+<text xml:space="preserve" x="480.0" y="232.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">✓  Right answer worked out by hand</text>
+<text xml:space="preserve" x="480.0" y="260.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">✓  Tests one thing</text>
+<text xml:space="preserve" x="480.0" y="288.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">✓  Named after the rule</text>
+<text xml:space="preserve" x="16.0" y="340.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Add the boundary next to the bug</text>
+<line x1="60.0" y1="390.0" x2="700.0" y2="390.0" stroke="#CFC4B2" stroke-width="3"/>
+<circle cx="200.0" cy="390.0" r="9" fill="#2F6B3F"/>
+<text xml:space="preserve" x="200.0" y="370.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="middle">Day 6</text>
+<text xml:space="preserve" x="200.0" y="416.0" font-size="11.5" fill="#2F6B3F" font-weight="700" text-anchor="middle">allowed</text>
+<circle cx="330.0" cy="390.0" r="9" fill="#2F6B3F"/>
+<text xml:space="preserve" x="330.0" y="370.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="middle">Day 7</text>
+<text xml:space="preserve" x="330.0" y="416.0" font-size="11.5" fill="#2F6B3F" font-weight="700" text-anchor="middle">allowed</text>
+<circle cx="460.0" cy="390.0" r="9" fill="#9B2C1F"/>
+<text xml:space="preserve" x="460.0" y="370.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="middle">Day 8</text>
+<text xml:space="preserve" x="460.0" y="416.0" font-size="11.5" fill="#9B2C1F" font-weight="700" text-anchor="middle">refused</text>
+<circle cx="590.0" cy="390.0" r="9" fill="#9B2C1F"/>
+<text xml:space="preserve" x="590.0" y="370.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="middle">Day 9</text>
+<text xml:space="preserve" x="590.0" y="416.0" font-size="11.5" fill="#9B2C1F" font-weight="700" text-anchor="middle">refused</text>
+<line x1="395.0" y1="358.0" x2="395.0" y2="424.0" stroke="#8A6A1F" stroke-width="1.6" stroke-dasharray="4 3"/>
+<text xml:space="preserve" x="395.0" y="442.0" font-size="11.5" fill="#8A6A1F" font-weight="700" text-anchor="middle">the line: test both sides</text>
+</g></svg>

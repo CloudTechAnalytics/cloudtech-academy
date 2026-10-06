@@ -10,17 +10,19 @@ A bug report is a story: "the customer expected ₦3,999.99". Before you touch t
 
 ## The concept
 
-**A good reproduction test**
+### A good reproduction test
 
 - Uses the **reporter's own example**: the order, the amounts, the dates.
 - States the **right** answer, worked out by hand in a comment, not copied from the code.
 - Tests **one** thing, and is named after the rule ("a return on day 14 is allowed").
 
-**Add the boundary next to the bug**
+### Add the boundary next to the bug
 
 For an off-by-one bug, test both sides: day 14 (allowed) and day 15 (refused). For a rounding bug, test an amount that rounds up and one that rounds down.
 
-**Running only the failures**
+![A bug report turned into a failing test, fixed, and kept; what a good reproduction test looks like, and testing both sides of a boundary](/images/courses/swe-capstone/reproduce-first.svg "Story, failing test, fix, passing test; and test both sides of the boundary.")
+
+### Running only the failures
 
 `python -m pytest --tb=no -rf` hides the tracebacks and lists each failure in one line, which is handy when you have several.
 

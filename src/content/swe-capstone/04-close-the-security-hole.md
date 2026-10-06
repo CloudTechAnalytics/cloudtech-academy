@@ -10,7 +10,7 @@ ISSUE-104: typing `' OR '1'='1` into the support tool's email search returns eve
 
 ## The concept
 
-**SQL injection**
+### SQL injection
 
 The query is built by pasting the user's text into SQL:
 
@@ -24,9 +24,11 @@ If the text contains a quote, it ends the string early, and whatever follows bec
 
 Pass values separately from the SQL, with placeholders (`?` in SQLite). The database treats a parameter as a value, never as SQL, whatever it contains. This is the only reliable fix.
 
-**Defence in depth**
+### Defence in depth
 
 Checking that an email looks like an email, giving the service a database user with only the permissions it needs, and logging odd searches are all useful **extra** layers. None of them replaces parameters.
+
+![A query with pasted input compared with a parameterised one, and the layers of defence in depth](/images/courses/swe-capstone/sql-injection.svg "Never paste input into SQL: pass it as a parameter.")
 
 ## Example
 

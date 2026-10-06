@@ -12,21 +12,23 @@ A review is the last point where a problem is cheap to fix. It's also a conversa
 
 ## The concept
 
-**Two passes**
+### Two passes
 
 1. **Automated**: patterns a script can spot in the added lines, such as secrets in code, bare `except`, floats for money, and changes with no tests.
 2. **Reading**: what the change does and whether it should, including the rules it skips, how it fails, and who can use it.
 
-**What a good review comment says**
+### What a good review comment says
 
 - **Where**: the line.
 - **What's wrong**, and **why it matters**, in terms of harm.
 - **A suggestion**: what to do instead.
 - **How serious**: must fix before merging, or a suggestion.
 
-**Review the change, not the person**
+### Review the change, not the person
 
 "This swallows every error, so a failed refund reports success" is useful. "Did you even test this?" isn't.
+
+![Two review passes, automated and reading, and the parts of a good review comment with an example](/images/courses/swe-capstone/pr-review.svg "Two passes, and a comment with where, what, why, fix, severity.")
 
 ## Example
 

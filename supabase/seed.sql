@@ -73293,11 +73293,11 @@ Every lesson starts from the original code in a **new Colab notebook**, so each 
 
 ## The concept
 
-**Read before you change**
+### Read before you change
 
 Find the entry points (the API in `app.py`), the rules (`refunds.py`) and the data access (`db.py`, `schema.sql`). Run the tests. Passing tests only prove what they test.
 
-**Triage by harm**
+### Triage by harm
 
 | Priority | Kind of bug | Why |
 | :-- | :-- | :-- |
@@ -73306,7 +73306,9 @@ Find the entry points (the API in `app.py`), the rules (`refunds.py`) and the da
 | 3 | Customers wrongly refused or confused | Unfair, and generates complaints |
 | 4 | Errors with no lasting harm | Fix, but after the above |
 
-**Every bug gets a test**
+![Four things to read before changing someone else's code, bugs triaged by harm from security down to harmless errors, and the rule that every bug gets a test](/images/courses/swe-capstone/read-and-triage.svg "Read first, triage by harm, and give every bug a test.")
+
+### Every bug gets a test
 
 For each bug: reproduce it with a failing test, fix it, and keep the test so it can't come back.
 
@@ -73482,17 +73484,19 @@ A bug report is a story: "the customer expected ₦3,999.99". Before you touch t
 
 ## The concept
 
-**A good reproduction test**
+### A good reproduction test
 
 - Uses the **reporter's own example**: the order, the amounts, the dates.
 - States the **right** answer, worked out by hand in a comment, not copied from the code.
 - Tests **one** thing, and is named after the rule ("a return on day 14 is allowed").
 
-**Add the boundary next to the bug**
+### Add the boundary next to the bug
 
 For an off-by-one bug, test both sides: day 14 (allowed) and day 15 (refused). For a rounding bug, test an amount that rounds up and one that rounds down.
 
-**Running only the failures**
+![A bug report turned into a failing test, fixed, and kept; what a good reproduction test looks like, and testing both sides of a boundary](/images/courses/swe-capstone/reproduce-first.svg "Story, failing test, fix, passing test; and test both sides of the boundary.")
+
+### Running only the failures
 
 `python -m pytest --tb=no -rf` hides the tracebacks and lists each failure in one line, which is handy when you have several.
 
@@ -73684,21 +73688,23 @@ You have failing tests for the kobo that goes missing and for customers refused 
 
 ## The concept
 
-**Money in whole kobo**
+### Money in whole kobo
 
 Keep amounts as integers in the smallest unit (kobo) from end to end. When a calculation creates fractions, such as a 10% fee, use `Decimal` and round **once**, explicitly, with the rule the business uses: here, halves round up (`ROUND_HALF_UP`).
 
-**Why floats fail**
+### Why floats fail
 
 `2499.99 * 100` is `249998.99999999997` in floating point, and `int()` cuts it to 249,998. Floats can't represent most decimal fractions exactly.
 
-**Write rules as the policy states them**
+### Write rules as the policy states them
 
 The website says returns are allowed **within 14 days** of delivery, which includes day 14. Write `<= 14`, name the constant, and say it in the docstring.
 
-**Small, focused changes**
+### Small, focused changes
 
 Change only what the bugs need. A diff that's easy to review is easier to trust.
+
+![Why floats lose a unit of money, keeping amounts as whole smallest units, writing the rule as the policy states it, and keeping fixes small](/images/courses/swe-capstone/money-and-window.svg "Integers for money; round once; write the rule as the policy states it.")
 
 ## Example
 
@@ -73909,7 +73915,7 @@ ISSUE-104: typing `' OR '1'='1` into the support tool's email search returns eve
 
 ## The concept
 
-**SQL injection**
+### SQL injection
 
 The query is built by pasting the user's text into SQL:
 
@@ -73923,9 +73929,11 @@ If the text contains a quote, it ends the string early, and whatever follows bec
 
 Pass values separately from the SQL, with placeholders (`?` in SQLite). The database treats a parameter as a value, never as SQL, whatever it contains. This is the only reliable fix.
 
-**Defence in depth**
+### Defence in depth
 
 Checking that an email looks like an email, giving the service a database user with only the permissions it needs, and logging odd searches are all useful **extra** layers. None of them replaces parameters.
+
+![A query with pasted input compared with a parameterised one, and the layers of defence in depth](/images/courses/swe-capstone/sql-injection.svg "Never paste input into SQL: pass it as a parameter.")
 
 ## Example
 
@@ -74094,22 +74102,24 @@ Neither can be fixed inside `refund_amount`, which only ever sees one request. T
 
 ## The concept
 
-**Idempotency keys**
+### Idempotency keys
 
 The app sends a unique `request_id` with each refund request and reuses it when it retries. The service stores it, and a **unique index** makes a second insert with the same key impossible. A repeated request gets the **original** answer back, not a new refund. This is how payment APIs handle retries.
 
-**Rules that span requests**
+### Rules that span requests
 
 - The delivery fee is refunded **once** per order.
 - The total refunded can never exceed what the customer **paid**.
 
-**Check and write in one transaction**
+### Check and write in one transaction
 
 Reading "how much has been refunded" and then writing a new refund must happen as one unit. Otherwise two requests can both read the old total, both pass the check, and both write. `BEGIN IMMEDIATE` takes SQLite's write lock before the check.
 
-**A migration, not an edit**
+### A migration, not an edit
 
 The live database already has a `refunds` table. Add the new columns and index with a migration script that can run on it, rather than editing `schema.sql` and starting again.
+
+![An idempotency key with a unique index prevents a double record, a race between two requests versus one transaction, rules across requests, and a migration](/images/courses/swe-capstone/idempotency.svg "Idempotency keys, one transaction for check and write, and a migration.")
 
 ## Example
 
@@ -74328,7 +74338,7 @@ The mobile team's report (ISSUE-106) is about one case: a missing order gives a 
 
 ## The concept
 
-**Status codes that mean something**
+### Status codes that mean something
 
 | Code | When |
 | :-- | :-- |
@@ -74338,15 +74348,17 @@ The mobile team's report (ISSUE-106) is about one case: a missing order gives a 
 | 422 Unprocessable | The request is well formed, but the rules refuse it, such as outside the return window |
 | 500 | Only for bugs. A client should never be able to cause one |
 
-**Validate before you use**
+![Validation in order (malformed, exists, allowed, do it) with the status code for each, a table of what each code means, and the Python boolean trap](/images/courses/swe-capstone/status-codes.svg "400, 404, 422, 201, and 500 only for bugs.")
+
+### Validate before you use
 
 Check each field's presence, type and range, and that it makes sense for **this** order, before doing any work. Return the first problem with a message the app can show or log.
 
-**Booleans are integers in Python**
+### Booleans are integers in Python
 
 `isinstance(True, int)` is `True`. A quantity check that only tests for `int` accepts `true`. Exclude `bool` explicitly.
 
-**Test every path**
+### Test every path
 
 One test per status code, and a parametrised test for the different ways a request can be bad.
 
@@ -74578,21 +74590,23 @@ A review is the last point where a problem is cheap to fix. It's also a conversa
 
 ## The concept
 
-**Two passes**
+### Two passes
 
 1. **Automated**: patterns a script can spot in the added lines, such as secrets in code, bare `except`, floats for money, and changes with no tests.
 2. **Reading**: what the change does and whether it should, including the rules it skips, how it fails, and who can use it.
 
-**What a good review comment says**
+### What a good review comment says
 
 - **Where**: the line.
 - **What's wrong**, and **why it matters**, in terms of harm.
 - **A suggestion**: what to do instead.
 - **How serious**: must fix before merging, or a suggestion.
 
-**Review the change, not the person**
+### Review the change, not the person
 
 "This swallows every error, so a failed refund reports success" is useful. "Did you even test this?" isn't.
+
+![Two review passes, automated and reading, and the parts of a good review comment with an example](/images/courses/swe-capstone/pr-review.svg "Two passes, and a comment with where, what, why, fix, severity.")
 
 ## Example
 
@@ -74756,17 +74770,19 @@ Fixes on your laptop help nobody. To reach customers, each fix goes through the 
 
 ## The concept
 
-**Branch, commit, merge**
+### Branch, commit, merge
 
 Work on a branch named after the change (`fix/return-window`). Commit in small steps, each with a message saying why. Merge into `main` when CI and review pass.
 
-**CI runs the tests on every push**
+### CI runs the tests on every push
 
 A workflow file in `.github/workflows/` tells GitHub Actions to install the dependencies and run `pytest` on every push and pull request. Make the tests a **required check**, so nothing merges red.
 
-**Versions and release notes**
+### Versions and release notes
 
 Tag each release (`v1.1.0`). With semantic versioning, fixes bump the last number, new features the middle one, and breaking changes the first. Release notes are for people outside the team: what changed for them, in their words.
+
+![The path from a branch through commits, pull request, CI, review and merge to a tag, and what the three numbers of a semantic version mean](/images/courses/swe-capstone/ship-it.svg "Branch, pull request, CI, review, merge, tag.")
 
 ## Example
 
