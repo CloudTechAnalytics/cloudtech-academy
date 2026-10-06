@@ -87,6 +87,12 @@ export type CourseSalesFields = {
   projectPreviews?: { title: string; summary: string }[];
   instructor?: { name: string; title: string; bio: string };
   professionalOutcome?: string;
+  /** Programmes only: learners may pay in two parts. The first part opens the programme; the second falls due later. */
+  allowInstalments?: boolean;
+  /** Share of the price paid in the first part, in percent (10 to 90). */
+  firstPercent?: number;
+  /** Days after the first part is confirmed that the second part falls due. */
+  secondDueDays?: number;
 };
 
 export type CourseDef = CourseSalesFields & {

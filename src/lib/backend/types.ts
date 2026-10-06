@@ -31,9 +31,78 @@ export type CourseOrder = {
   listAmount: number;
   /** What is charged, after any discount. */
   amount: number;
-  status: "pending" | "paid" | "granted" | "failed" | "cancelled";
+  status: "pending" | "partial" | "paid" | "granted" | "failed" | "cancelled";
   createdAt: string;
   paidAt: string | null;
+};
+
+/** A place a learner can pay into: bank transfer details or another method. Admins manage these. */
+export type PaymentAccount = {
+  id: string;
+  label: string;
+  bankName: string | null;
+  accountName: string | null;
+  accountNumber: string | null;
+  instructions: string | null;
+  currency: string;
+  active: boolean;
+  position: number;
+};
+
+export type PaymentSettings = {
+  /** "manual": learners pay into the Academy's account and an admin confirms. "paystack": card payment. */
+  mode: "manual" | "paystack";
+  /** Whether a receipt must be uploaded with each payment. */
+  proofRequired: boolean;
+  instructions: string | null;
+};
+
+export type PaymentStatus = "pending" | "submitted" | "confirmed" | "rejected";
+
+/** One payment toward an order: the whole price, or one of two parts. */
+export type OrderPayment = {
+  id: string;
+  orderId: string;
+  part: 1 | 2;
+  amount: number;
+  currency: string;
+  /** When this part falls due. Set for the second part once the first is confirmed. */
+  dueAt: string | null;
+  status: PaymentStatus;
+  accountLabel: string | null;
+  reference: string;
+  payerName: string | null;
+  paidOn: string | null;
+  proofPath: string | null;
+  note: string | null;
+  rejectedReason: string | null;
+  source: "student" | "admin";
+  confirmedAt: string | null;
+  createdAt: string;
+};
+
+export type ManualOrder = { order: CourseOrder; payments: OrderPayment[] };
+
+export type AdminPayment = OrderPayment & {
+  userId: string;
+  fullName: string;
+  email: string;
+  courseId: string | null;
+  trackId: string | null;
+  targetTitle: string;
+  orderStatus: CourseOrder["status"];
+  orderAmount: number;
+};
+
+export type RegisterPaymentInput = {
+  userId: string;
+  kind: "course" | "programme";
+  targetId: string;
+  amount: number;
+  method: string;
+  reference: string;
+  note: string;
+  paidOn: string;
 };
 
 export type AdminCourseOrder = CourseOrder & {
@@ -537,6 +606,17 @@ export interface Backend {
   /** Online payment: confirms a payment on the server after the learner returns, and enrols them. Returns what was bought. */
   confirmCoursePayment?(reference: string): Promise<{ courseId: string | null; trackId: string | null }>;
 
+  /* ---------- manual payments ---------- */
+  getPaymentSettings(): Promise<PaymentSettings>;
+  /** The accounts a learner can pay into (active ones). */
+  listPaymentAccounts(): Promise<PaymentAccount[]>;
+  /** Starts the learner's order for a course or programme and its payment parts. plan "two_part" is for programmes that allow instalments. */
+  startManualOrder(kind: "course" | "programme", id: string, plan: "full" | "two_part"): Promise<ManualOrder>;
+  /** The learner's orders that have payments, newest first. */
+  listMyManualOrders(): Promise<ManualOrder[]>;
+  /** Tells the Academy a part has been paid: which account, who paid, when, and a receipt. An admin confirms it. */
+  submitPayment(input: { paymentId: string; accountId: string; payerName: string; paidOn: string; note: string; proof?: File | null }): Promise<void>;
+
   /* ---------- Professional Programmes ---------- */
   /** What admins have set for each programme: access, price, discount, delivery, enrolment window and sales content. Keyed by track id. */
   listProgrammeSales(): Promise<Record<string, CourseSalesFields>>;
@@ -627,6 +707,18 @@ export interface Backend {
     /** One row per course: enrolments by source, completions, revenue and conversion. */
     listCourseStats(): Promise<CourseStats[]>;
     saveProgramme(trackId: string, sales: CourseSalesFields): Promise<void>;
+    listPayments(): Promise<AdminPayment[]>;
+    confirmPayment(paymentId: string, note: string): Promise<void>;
+    rejectPayment(paymentId: string, reason: string): Promise<void>;
+    registerPayment(input: RegisterPaymentInput): Promise<void>;
+    updatePayment(paymentId: string, patch: { amount: number; status: PaymentStatus; method: string; note: string; paidOn: string | null }): Promise<void>;
+    deletePayment(paymentId: string): Promise<void>;
+    listAllPaymentAccounts(): Promise<PaymentAccount[]>;
+    savePaymentAccount(account: Omit<PaymentAccount, "id" | "position"> & { id?: string }): Promise<void>;
+    deletePaymentAccount(id: string): Promise<void>;
+    savePaymentSettings(settings: PaymentSettings): Promise<void>;
+    /** A short-lived link to a receipt, or null when there is none to open. */
+    proofUrl(path: string): Promise<string | null>;
     listProgrammeStats(): Promise<ProgrammeStats[]>;
     listProgrammeEnrollments(trackId?: string): Promise<AdminProgrammeEnrollment[]>;
     grantProgrammeAccess(userId: string, trackId: string, note: string): Promise<void>;

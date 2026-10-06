@@ -21,6 +21,7 @@ import { useEvents, useMyRegistrations } from "@/lib/event-data";
 import { publishedLessons } from "@/lib/certificates";
 import { enrolmentState, isPaid } from "@/lib/commerce";
 import { useMyProgrammes, useProgrammes } from "@/lib/data";
+import { PaymentReminders } from "@/components/PaymentReminders";
 
 type Row = { enrollment: Enrollment; progress: Progress; attempts: AttemptResult[] };
 
@@ -143,6 +144,7 @@ function DashboardInner() {
 
       <StartingSoonBanner events={events ?? []} registrations={registrations} />
       <DashboardConnect events={events ?? []} registrations={registrations} />
+      <PaymentReminders />
 
       <section className="mt-12" aria-labelledby="my-learning">
         <h2 id="my-learning" className="font-serif text-[1.7rem]">

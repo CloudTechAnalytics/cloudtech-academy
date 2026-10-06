@@ -17,6 +17,9 @@ import {
   type AdminEnrollment,
   type CourseOrder,
   type CourseStats,
+  type PaymentAccount,
+  type OrderPayment,
+  type AdminPayment,
   type ProgrammeStats,
   type AdminProgrammeEnrollment,
   type Certificate,
@@ -348,6 +351,41 @@ const toSales = (r: Row): CourseSalesFields => ({
   projectPreviews: r.project_previews ?? [],
   instructor: r.instructor_name ? { name: r.instructor_name, title: r.instructor_title ?? "", bio: r.instructor_bio ?? "" } : undefined,
   professionalOutcome: r.professional_outcome ?? undefined,
+  allowInstalments: r.instalments_enabled ?? false,
+  firstPercent: r.first_percent ?? 50,
+  secondDueDays: r.second_due_days ?? 30,
+});
+
+const toAccount = (r: Row): PaymentAccount => ({
+  id: r.id,
+  label: r.label,
+  bankName: r.bank_name ?? null,
+  accountName: r.account_name ?? null,
+  accountNumber: r.account_number ?? null,
+  instructions: r.instructions ?? null,
+  currency: r.currency ?? "NGN",
+  active: r.active ?? true,
+  position: r.position ?? 0,
+});
+
+const toPayment = (r: Row): OrderPayment => ({
+  id: r.id,
+  orderId: r.order_id,
+  part: r.part,
+  amount: Number(r.amount),
+  currency: r.currency,
+  dueAt: r.due_at ?? null,
+  status: r.status,
+  accountLabel: r.account_label ?? null,
+  reference: r.reference,
+  payerName: r.payer_name ?? null,
+  paidOn: r.paid_on ?? null,
+  proofPath: r.proof_path ?? null,
+  note: r.note ?? null,
+  rejectedReason: r.rejected_reason ?? null,
+  source: r.source ?? "student",
+  confirmedAt: r.confirmed_at ?? null,
+  createdAt: r.created_at,
 });
 
 const toCourseOrder = (r: Row): CourseOrder => ({
@@ -709,6 +747,40 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
       if (!d.courseId && !d.trackId) throw new BackendError("That payment isn't for a course or programme.");
       return { courseId: d.courseId ?? null, trackId: d.trackId ?? null };
     },
+    async getPaymentSettings() {
+      const { data, error } = await sb.from("payment_settings").select("*").eq("id", 1).maybeSingle();
+      // A database without the manual-payment migration keeps taking card payments.
+      if (error || !data) return { mode: "paystack", proofRequired: true, instructions: null };
+      return { mode: data.mode, proofRequired: data.proof_required, instructions: data.instructions ?? null };
+    },
+    async listPaymentAccounts() {
+      return (check(await sb.from("payment_accounts").select("*").eq("active", true).order("position").order("created_at")) as Row[]).map(toAccount);
+    },
+    async startManualOrder(kind, id, plan) {
+      const orderId = check(await sb.rpc("start_manual_order", { p_kind: kind, p_id: id, p_plan: plan })) as string;
+      const order = check(await sb.from("course_orders").select("*").eq("id", orderId).single()) as Row;
+      const payments = check(await sb.from("order_payments").select("*").eq("order_id", orderId).order("part")) as Row[];
+      return { order: toCourseOrder(order), payments: payments.map(toPayment) };
+    },
+    async listMyManualOrders() {
+      const { data } = await sb.auth.getSession();
+      if (!data.session) return [];
+      const payments = (check(await sb.from("order_payments").select("*").eq("user_id", data.session.user.id).order("part")) as Row[]).map(toPayment);
+      if (!payments.length) return [];
+      const orders = check(await sb.from("course_orders").select("*").in("id", [...new Set(payments.map((p) => p.orderId))]).order("created_at", { ascending: false })) as Row[];
+      return orders.map((o) => ({ order: toCourseOrder(o), payments: payments.filter((p) => p.orderId === o.id) }));
+    },
+    async submitPayment({ paymentId, accountId, payerName, paidOn, note, proof }) {
+      const uid = await requireUserId();
+      let path: string | null = null;
+      if (proof) {
+        if (proof.size > 5 * 1024 * 1024) throw new BackendError("The receipt must be 5 MB or smaller.");
+        path = `${uid}/${paymentId}-${Date.now()}-${proof.name.replace(/[^A-Za-z0-9._-]/g, "_")}`;
+        const up = await sb.storage.from("payment-proofs").upload(path, proof, { contentType: proof.type || undefined });
+        if (up.error) throw new BackendError(up.error.message);
+      }
+      check(await sb.rpc("submit_payment", { p_payment_id: paymentId, p_account_id: accountId, p_payer_name: payerName, p_paid_on: paidOn || null, p_proof_path: path, p_note: note }));
+    },
     async listProgrammeSales() {
       // Tolerates a database that hasn't had the programme migration yet: the site's built-in defaults apply.
       const { data, error } = await sb.from("tracks").select("*");
@@ -1016,10 +1088,68 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
               instructor_title: c.instructor?.title?.trim() || null,
               instructor_bio: c.instructor?.bio?.trim() || null,
               professional_outcome: c.professionalOutcome?.trim() || null,
+              instalments_enabled: c.allowInstalments ?? false,
+              first_percent: c.firstPercent ?? 50,
+              second_due_days: c.secondDueDays ?? 30,
               commerce_seeded: true,
             })
             .eq("id", trackId),
         );
+      },
+      async listPayments() {
+        return (check(await sb.rpc("admin_list_payments")) as Row[]).map(
+          (r): AdminPayment => ({
+            ...toPayment({ ...r, id: r.id }),
+            userId: r.user_id,
+            fullName: r.full_name ?? "Unknown",
+            email: r.email ?? "",
+            courseId: r.course_id ?? null,
+            trackId: r.track_id ?? null,
+            targetTitle: r.target_title ?? "",
+            orderStatus: r.order_status,
+            orderAmount: Number(r.order_amount),
+          }),
+        );
+      },
+      async confirmPayment(paymentId, note) {
+        check(await sb.rpc("admin_confirm_payment", { p_payment_id: paymentId, p_note: note }));
+      },
+      async rejectPayment(paymentId, reason) {
+        check(await sb.rpc("admin_reject_payment", { p_payment_id: paymentId, p_reason: reason }));
+      },
+      async registerPayment(i) {
+        check(
+          await sb.rpc("admin_register_payment", {
+            p_user: i.userId, p_kind: i.kind, p_id: i.targetId, p_amount: i.amount, p_method: i.method, p_reference: i.reference, p_note: i.note, p_paid_on: i.paidOn || null,
+          }),
+        );
+      },
+      async updatePayment(paymentId, p) {
+        check(await sb.rpc("admin_update_payment", { p_payment_id: paymentId, p_amount: p.amount, p_status: p.status, p_method: p.method, p_note: p.note, p_paid_on: p.paidOn }));
+      },
+      async deletePayment(paymentId) {
+        const row = (check(await sb.from("order_payments").select("proof_path").eq("id", paymentId).maybeSingle()) as Row | null) ?? null;
+        check(await sb.rpc("admin_delete_payment", { p_payment_id: paymentId }));
+        // The receipt file can only be removed through the storage API.
+        if (row?.proof_path) await sb.storage.from("payment-proofs").remove([row.proof_path]);
+      },
+      async listAllPaymentAccounts() {
+        return (check(await sb.from("payment_accounts").select("*").order("position").order("created_at")) as Row[]).map(toAccount);
+      },
+      async savePaymentAccount(a) {
+        const row = { label: a.label.trim(), bank_name: a.bankName?.trim() || null, account_name: a.accountName?.trim() || null, account_number: a.accountNumber?.trim() || null, instructions: a.instructions?.trim() || null, currency: a.currency || "NGN", active: a.active };
+        if (a.id) check(await sb.from("payment_accounts").update(row).eq("id", a.id));
+        else check(await sb.from("payment_accounts").insert(row));
+      },
+      async deletePaymentAccount(id) {
+        check(await sb.from("payment_accounts").delete().eq("id", id));
+      },
+      async savePaymentSettings(s) {
+        check(await sb.from("payment_settings").update({ mode: s.mode, proof_required: s.proofRequired, instructions: s.instructions?.trim() || null }).eq("id", 1));
+      },
+      async proofUrl(path) {
+        const { data } = await sb.storage.from("payment-proofs").createSignedUrl(path, 300);
+        return data?.signedUrl ?? null;
       },
       async listProgrammeStats() {
         return (check(await sb.rpc("admin_programme_stats")) as Row[]).map(

@@ -11,7 +11,7 @@ import { AdminHeading } from "./AdminLayout";
 import { useAdminData } from "./useAdmin";
 
 const SOURCE: Record<AdminEnrollment["source"], string> = { free: "Free", purchase: "Paid", granted: "Granted by admin" };
-const ORDER_STATUS: Record<AdminCourseOrder["status"], string> = { pending: "Awaiting payment", paid: "Paid", granted: "Granted", failed: "Failed", cancelled: "Cancelled" };
+const ORDER_STATUS: Record<AdminCourseOrder["status"], string> = { pending: "Awaiting payment", partial: "Part paid", paid: "Paid", granted: "Granted", failed: "Failed", cancelled: "Cancelled" };
 const selectCls = "rounded-lg border border-line-strong bg-paper px-3 py-2 text-[0.9375rem]";
 
 const money = (by: Record<string, number>) => {
@@ -259,8 +259,8 @@ export function AdminEnrollments() {
   );
 }
 
-/** Course payments: what was ordered, what was paid, and the provider reference for reconciling. */
-export function AdminPayments() {
+/** Card payments through Paystack, kept for when card payment is switched on: what was ordered, what was paid, and the provider reference. */
+export function AdminCardOrders() {
   const { data, error } = useAdminData(async () => (await getBackend()).admin.listCourseOrders());
   const [status, setStatus] = useState("");
   if (error) return <Alert tone="error">{error}</Alert>;
@@ -271,7 +271,7 @@ export function AdminPayments() {
   for (const o of paid) revenue[o.currency] = (revenue[o.currency] ?? 0) + o.amount;
   return (
     <>
-      <AdminHeading title="Payments" />
+      <h2 className="mb-4 font-serif text-[1.5rem]">Card payments (Paystack)</h2>
       <dl className="mb-6 grid gap-4 sm:grid-cols-3">
         {[
           ["Revenue (paid orders)", money(revenue)],

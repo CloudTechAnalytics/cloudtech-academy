@@ -5,7 +5,7 @@ import type { Track } from "@/content/tracks";
 const SALES_KEYS: (keyof CourseSalesFields)[] = [
   "courseType", "access", "price", "currency", "discountPrice", "discountActive", "paymentStatus", "deliveryType", "enrollmentStatus", "enrollmentStart",
   "enrollmentEnd", "communityAccess", "instructorSupport", "durationLabel", "publishedAt", "overview", "audience", "outcomes", "included", "projectPreviews",
-  "instructor", "professionalOutcome",
+  "instructor", "professionalOutcome", "allowInstalments", "firstPercent", "secondDueDays",
 ];
 
 /** A programme with what admins have set in the database laid over the site's built-in defaults. */

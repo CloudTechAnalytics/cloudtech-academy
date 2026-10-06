@@ -33,6 +33,10 @@ import {
   type Certificate,
   type CourseOrder,
   type CourseStats,
+  type PaymentAccount,
+  type PaymentSettings,
+  type OrderPayment,
+  type AdminPayment,
   type ProgrammeStats,
   type AdminProgrammeEnrollment,
   type CertificateEvent,
@@ -64,6 +68,9 @@ type Store = {
   courseOrders: (CourseOrder & { userId: string; provider: string | null; providerRef: string | null; note: string | null })[];
   /** Programmes learners hold, and what admins changed about each programme's sales settings. */
   programmes: { userId: string; trackId: string; source: "purchase" | "granted"; enrolledAt: string }[];
+  orderPayments: (OrderPayment & { userId: string; proofName?: string | null })[];
+  paymentAccounts: PaymentAccount[] | null;
+  paymentSettings: PaymentSettings | null;
   programmeSales: Record<string, CourseSalesFields> | null;
   certificates: Certificate[];
   certificateSeq: number;
@@ -101,6 +108,9 @@ const empty = (): Store => ({
   orders: [],
   courseOrders: [],
   programmes: [],
+  orderPayments: [],
+  paymentAccounts: null,
+  paymentSettings: null,
   programmeSales: null,
   certificates: [],
   certificateSeq: 0,
@@ -417,6 +427,55 @@ export function createDemoBackend(): Backend {
     if (s.users.find((x) => x.id === userId)?.role === "admin") return true;
     if (s.programmes.some((p) => p.userId === userId && programmeCourseIds(programmeOf(s, p.trackId)!).includes(courseId))) return true;
     return (s.enrollments[userId] ?? []).some((e) => e.courseId === courseId);
+  };
+  const DEFAULT_ACCOUNTS: PaymentAccount[] = [
+    { id: "acc-demo", label: "Bank transfer", bankName: "Demo Bank", accountName: "CloudTech Analytics", accountNumber: "0123456789", instructions: "Use your payment reference as the transfer narration.", currency: "NGN", active: true, position: 1 },
+  ];
+  const accountsOf = (s: Store) => s.paymentAccounts ?? DEFAULT_ACCOUNTS;
+  const settingsOf = (s: Store): PaymentSettings => s.paymentSettings ?? { mode: "manual", proofRequired: true, instructions: null };
+  const reference = (s: Store) => {
+    let r: string;
+    do r = `PAY-${now().slice(2, 4)}${now().slice(5, 7)}-${uid().replace(/-/g, "").slice(0, 6).toUpperCase()}`;
+    while (s.orderPayments.some((p) => p.reference === r));
+    return r;
+  };
+  const stripPayment = ({ userId: _u, proofName: _n, ...pub }: OrderPayment & { userId: string; proofName?: string | null }) => (void [_u, _n], pub as OrderPayment);
+  const publicOrder = ({ userId: _u, provider: _p, providerRef: _r, note: _n, ...pub }: Store["courseOrders"][number]) => (void [_u, _p, _r, _n], pub);
+  const openForOrder = (s: Store, o: Store["courseOrders"][number]) => {
+    if (o.trackId) openProgramme(s, o.userId, o.trackId, "purchase");
+    else {
+      const list = (s.enrollments[o.userId] ??= []);
+      const have = list.find((e) => e.courseId === o.courseId);
+      if (have) have.source = have.source === "free" ? "purchase" : have.source;
+      else list.push({ courseId: o.courseId!, enrolledAt: now(), completedAt: null, lastLessonId: null, lastActiveAt: now(), source: "purchase" });
+    }
+  };
+  const closeForOrder = (s: Store, o: Store["courseOrders"][number]) => {
+    if (o.trackId) {
+      s.programmes = s.programmes.filter((p) => !(p.userId === o.userId && p.trackId === o.trackId));
+      const keep = new Set(s.programmes.filter((p) => p.userId === o.userId).flatMap((p) => programmeCourseIds(programmeOf(s, p.trackId)!)));
+      const closing = new Set(programmeCourseIds(programmeOf(s, o.trackId)!));
+      s.enrollments[o.userId] = (s.enrollments[o.userId] ?? []).filter((e) => {
+        const c = courses(s).find((x) => x.id === e.courseId);
+        return !(closing.has(e.courseId) && c && isPaid(c) && e.source === "purchase" && !keep.has(e.courseId));
+      });
+    } else s.enrollments[o.userId] = (s.enrollments[o.userId] ?? []).filter((e) => !(e.courseId === o.courseId && e.source === "purchase"));
+  };
+  /** An order follows its confirmed payments: partial, then paid; access opens with the first money and closes when none is left. */
+  const recomputeOrder = (s: Store, orderId: string) => {
+    const o = s.courseOrders.find((x) => x.id === orderId);
+    if (!o) return;
+    const confirmed = s.orderPayments.filter((p) => p.orderId === orderId && p.status === "confirmed");
+    const sum = confirmed.reduce((n, p) => n + p.amount, 0);
+    if (confirmed.length) {
+      o.status = sum >= o.amount ? "paid" : "partial";
+      o.paidAt = o.status === "paid" ? (o.paidAt ?? now()) : null;
+      openForOrder(s, o);
+    } else if (o.status === "paid" || o.status === "partial") {
+      o.status = "pending";
+      o.paidAt = null;
+      closeForOrder(s, o);
+    }
   };
   /** A programme with the admin's edits applied. */
   const programmeOf = (s: Store, trackId: string) => {
@@ -993,6 +1052,85 @@ export function createDemoBackend(): Backend {
       const u = current();
       return u ? load().programmes.filter((p) => p.userId === u.id).map(({ trackId, enrolledAt, source }) => ({ trackId, enrolledAt, source })) : [];
     },
+    async getPaymentSettings() {
+      return settingsOf(load());
+    },
+    async listPaymentAccounts() {
+      return accountsOf(load()).filter((a) => a.active);
+    },
+    async startManualOrder(kind, id, plan) {
+      const u = requireUser();
+      const s = load();
+      let sales: CourseSalesFields;
+      let price: number;
+      if (kind === "programme") {
+        const track = programmeOf(s, id);
+        if (!track) throw new BackendError("Programme not found.");
+        if (!isPaid(track)) throw new BackendError("This programme is free.");
+        const state = enrolmentOf({ enrollmentStatus: track.enrollmentStatus, enrollmentStart: track.enrollmentStart, enrollmentEnd: track.enrollmentEnd, paymentStatus: track.paymentStatus });
+        if (!track.price || state !== "open") throw new BackendError(state === "paused" ? "Payments for this programme are paused. Please try again soon." : "Enrolment for this programme is not open right now.");
+        if (s.programmes.some((p) => p.userId === u.id && p.trackId === id)) throw new BackendError("You are already enrolled in this programme.");
+        if (plan === "two_part" && !track.allowInstalments) throw new BackendError("This programme is paid in one payment.");
+        sales = track;
+        price = track.price;
+      } else {
+        const course = courses(s).find((c) => c.id === id && c.published);
+        if (!course) throw new BackendError("Course not found.");
+        if (!isPaid(course)) throw new BackendError("This course is free: you can start it without paying.");
+        const state = enrolmentOf(course);
+        if (!course.price || state !== "open") throw new BackendError("Enrolment for this course is not open right now.");
+        if ((s.enrollments[u.id] ?? []).some((e) => e.courseId === id)) throw new BackendError("You are already enrolled in this course.");
+        if (plan === "two_part") throw new BackendError("Courses are paid in one payment.");
+        sales = course;
+        price = course.price;
+      }
+      const charge = sales.discountActive && sales.discountPrice != null && sales.discountPrice < price ? sales.discountPrice : price;
+      const cur = sales.currency ?? "NGN";
+      let order = s.courseOrders.find((o) => o.userId === u.id && (o.status === "pending" || o.status === "partial") && (kind === "programme" ? o.trackId === id : o.courseId === id));
+      if (order) {
+        const has = s.orderPayments.some((p) => p.orderId === order!.id && (p.status === "submitted" || p.status === "confirmed"));
+        if (order.status === "partial" || has) return { order: publicOrder(order), payments: s.orderPayments.filter((p) => p.orderId === order!.id).map(stripPayment) };
+        s.orderPayments = s.orderPayments.filter((p) => p.orderId !== order!.id);
+        Object.assign(order, { currency: cur, listAmount: price, amount: charge });
+      } else {
+        order = { id: uid(), userId: u.id, courseId: kind === "course" ? id : null, trackId: kind === "programme" ? id : null, currency: cur, listAmount: price, amount: charge, status: "pending", provider: "manual", providerRef: null, note: null, createdAt: now(), paidAt: null };
+        s.courseOrders.push(order);
+      }
+      const part = (n: 1 | 2, amount: number): Store["orderPayments"][number] => ({
+        id: uid(), orderId: order!.id, userId: u.id, part: n, amount, currency: cur, dueAt: null, status: "pending", accountLabel: null, reference: reference(s), payerName: null, paidOn: null,
+        proofPath: null, note: null, rejectedReason: null, source: "student", confirmedAt: null, createdAt: now(),
+      });
+      if (plan === "full") s.orderPayments.push(part(1, charge));
+      else {
+        const first = Math.round(((charge * (sales.firstPercent ?? 50)) / 100) * 100) / 100;
+        s.orderPayments.push(part(1, first), part(2, Math.round((charge - first) * 100) / 100));
+      }
+      save(s);
+      return { order: publicOrder(order), payments: s.orderPayments.filter((p) => p.orderId === order!.id).map(stripPayment) };
+    },
+    async listMyManualOrders() {
+      const u = current();
+      if (!u) return [];
+      const s = load();
+      return s.courseOrders
+        .filter((o) => o.userId === u.id && s.orderPayments.some((p) => p.orderId === o.id))
+        .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+        .map((o) => ({ order: publicOrder(o), payments: s.orderPayments.filter((p) => p.orderId === o.id).map(stripPayment) }));
+    },
+    async submitPayment({ paymentId, accountId, payerName, paidOn, note, proof }) {
+      const u = requireUser();
+      const s = load();
+      const p = s.orderPayments.find((x) => x.id === paymentId && x.userId === u.id);
+      if (!p) throw new BackendError("Payment not found.");
+      if (p.status !== "pending" && p.status !== "rejected") throw new BackendError("This payment has already been sent for confirmation.");
+      if (p.part === 2 && !s.orderPayments.some((x) => x.orderId === p.orderId && x.part === 1 && x.status === "confirmed")) throw new BackendError("The first payment must be confirmed before the second.");
+      const account = accountsOf(s).find((a) => a.id === accountId && a.active);
+      if (!account) throw new BackendError("Choose a payment method.");
+      if (settingsOf(s).proofRequired && !proof) throw new BackendError("Upload your receipt or a screenshot of the payment.");
+      if (payerName.trim().length < 2) throw new BackendError("Enter the name on the account you paid from.");
+      Object.assign(p, { status: "submitted", accountLabel: account.label, payerName: payerName.trim(), paidOn: paidOn || now().slice(0, 10), note: note.trim() || null, rejectedReason: null, proofPath: proof ? `demo:${proof.name}` : null });
+      save(s);
+    },
     async startProgrammePurchase(trackId) {
       const u = requireUser();
       const s = load();
@@ -1329,6 +1467,121 @@ export function createDemoBackend(): Backend {
         s.programmeSales = { ...(s.programmeSales ?? {}), [trackId]: sales };
         save(s);
       },
+      async listPayments() {
+        requireAdmin();
+        const s = load();
+        return s.orderPayments
+          .map((p): AdminPayment => {
+            const o = s.courseOrders.find((x) => x.id === p.orderId)!;
+            const u = s.users.find((x) => x.id === p.userId);
+            const t = TRACKS.find((x) => x.id === o.trackId);
+            return {
+              ...stripPayment(p),
+              userId: p.userId,
+              fullName: u?.fullName ?? "Unknown",
+              email: u?.email ?? "",
+              courseId: o.courseId,
+              trackId: o.trackId,
+              targetTitle: t ? (t.programmeName ?? t.title) : (courses(s).find((c) => c.id === o.courseId)?.title ?? ""),
+              orderStatus: o.status,
+              orderAmount: o.amount,
+            };
+          })
+          .sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+      },
+      async confirmPayment(paymentId, note) {
+        requireAdmin();
+        const s = load();
+        const p = s.orderPayments.find((x) => x.id === paymentId);
+        if (!p) throw new BackendError("Payment not found.");
+        const o = s.courseOrders.find((x) => x.id === p.orderId)!;
+        Object.assign(p, { status: "confirmed", confirmedAt: now(), rejectedReason: null, note: note.trim() || p.note });
+        if (p.part === 1) {
+          const days = (o.trackId ? programmeOf(s, o.trackId)?.secondDueDays : undefined) ?? 30;
+          for (const q of s.orderPayments) if (q.orderId === p.orderId && q.part === 2 && !q.dueAt) q.dueAt = new Date(Date.now() + days * 864e5).toISOString();
+        }
+        recomputeOrder(s, p.orderId);
+        save(s);
+      },
+      async rejectPayment(paymentId, reason) {
+        requireAdmin();
+        const s = load();
+        const p = s.orderPayments.find((x) => x.id === paymentId);
+        if (!p) throw new BackendError("Payment not found.");
+        Object.assign(p, { status: "rejected", rejectedReason: reason.trim() || null });
+        recomputeOrder(s, p.orderId);
+        save(s);
+      },
+      async registerPayment(i) {
+        requireAdmin();
+        const s = load();
+        if (!s.users.some((u) => u.id === i.userId)) throw new BackendError("Student not found.");
+        if (!(i.amount > 0)) throw new BackendError("Enter the amount received.");
+        let order = s.courseOrders.find((o) => o.userId === i.userId && (o.status === "pending" || o.status === "partial") && (i.kind === "programme" ? o.trackId === i.targetId : o.courseId === i.targetId));
+        if (!order) {
+          const t = i.kind === "programme" ? programmeOf(s, i.targetId) : courses(s).find((c) => c.id === i.targetId);
+          if (!t) throw new BackendError(i.kind === "programme" ? "Programme not found." : "Course not found.");
+          const price = t.price ?? i.amount;
+          const charge = t.price == null ? i.amount : t.discountActive && t.discountPrice != null && t.discountPrice < t.price ? t.discountPrice : t.price;
+          order = { id: uid(), userId: i.userId, courseId: i.kind === "course" ? i.targetId : null, trackId: i.kind === "programme" ? i.targetId : null, currency: t.currency ?? "NGN", listAmount: price, amount: charge, status: "pending", provider: "manual", providerRef: null, note: null, createdAt: now(), paidAt: null };
+          s.courseOrders.push(order);
+        }
+        const n = s.orderPayments.filter((p) => p.orderId === order!.id).length;
+        s.orderPayments.push({
+          id: uid(), orderId: order.id, userId: i.userId, part: Math.min(n + 1, 2) as 1 | 2, amount: i.amount, currency: order.currency, dueAt: null, status: "confirmed", accountLabel: i.method.trim() || null,
+          reference: i.reference.trim() || reference(s), payerName: null, paidOn: i.paidOn || now().slice(0, 10), proofPath: null, note: i.note.trim() || null, rejectedReason: null, source: "admin", confirmedAt: now(), createdAt: now(),
+        });
+        recomputeOrder(s, order.id);
+        save(s);
+      },
+      async updatePayment(paymentId, patch) {
+        requireAdmin();
+        const s = load();
+        const p = s.orderPayments.find((x) => x.id === paymentId);
+        if (!p) throw new BackendError("Payment not found.");
+        Object.assign(p, { amount: patch.amount, status: patch.status, accountLabel: patch.method.trim() || null, note: patch.note.trim() || null, paidOn: patch.paidOn, confirmedAt: patch.status === "confirmed" ? (p.confirmedAt ?? now()) : null });
+        recomputeOrder(s, p.orderId);
+        save(s);
+      },
+      async deletePayment(paymentId) {
+        requireAdmin();
+        const s = load();
+        const p = s.orderPayments.find((x) => x.id === paymentId);
+        if (!p) throw new BackendError("Payment not found.");
+        s.orderPayments = s.orderPayments.filter((x) => x.id !== paymentId);
+        recomputeOrder(s, p.orderId);
+        save(s);
+      },
+      async listAllPaymentAccounts() {
+        requireAdmin();
+        return accountsOf(load());
+      },
+      async savePaymentAccount(a) {
+        requireAdmin();
+        const s = load();
+        const list = [...accountsOf(s)];
+        const row = { label: a.label.trim(), bankName: a.bankName?.trim() || null, accountName: a.accountName?.trim() || null, accountNumber: a.accountNumber?.trim() || null, instructions: a.instructions?.trim() || null, currency: a.currency || "NGN", active: a.active };
+        const have = a.id ? list.find((x) => x.id === a.id) : undefined;
+        if (have) Object.assign(have, row);
+        else list.push({ id: uid(), position: list.length + 1, ...row });
+        s.paymentAccounts = list;
+        save(s);
+      },
+      async deletePaymentAccount(id) {
+        requireAdmin();
+        const s = load();
+        s.paymentAccounts = accountsOf(s).filter((a) => a.id !== id);
+        save(s);
+      },
+      async savePaymentSettings(settings) {
+        requireAdmin();
+        const s = load();
+        s.paymentSettings = settings;
+        save(s);
+      },
+      async proofUrl() {
+        return null;
+      },
       async listProgrammeStats() {
         requireAdmin();
         const s = load();
@@ -1337,7 +1590,12 @@ export function createDemoBackend(): Backend {
           .map((t): ProgrammeStats => {
             const mine = s.programmes.filter((p) => p.trackId === t.id);
             const revenue: Record<string, number> = {};
-            for (const o of s.courseOrders) if (o.trackId === t.id && o.status === "paid") revenue[o.currency] = (revenue[o.currency] ?? 0) + o.amount;
+            for (const o of s.courseOrders) {
+              if (o.trackId !== t.id) continue;
+              const mine = s.orderPayments.filter((p) => p.orderId === o.id);
+              const got = mine.length ? mine.filter((p) => p.status === "confirmed").reduce((n, p) => n + p.amount, 0) : o.status === "paid" ? o.amount : 0;
+              if (got > 0) revenue[o.currency] = (revenue[o.currency] ?? 0) + got;
+            }
             return {
               trackId: t.id,
               title: t.programmeTitle ?? t.title,

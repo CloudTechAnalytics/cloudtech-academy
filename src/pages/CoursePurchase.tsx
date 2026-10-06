@@ -9,6 +9,7 @@ import { ENROLMENT_MESSAGE, coursePrice, enrolmentState, formatPrice, isPaid } f
 import { SITE, whatsappLink } from "@/lib/site";
 import { Button, ButtonLink, buttonClass } from "@/components/Button";
 import { Alert } from "@/components/Form";
+import { ManualCheckout } from "@/components/ManualCheckout";
 import { publishedLessons } from "@/lib/certificates";
 import { whatsIncluded } from "./ProfessionalCourse";
 import NotFound from "./NotFound";
@@ -25,11 +26,15 @@ function Inner() {
   const [confirming, setConfirming] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [online, setOnline] = useState(true);
+  const [mode, setMode] = useState<"manual" | "paystack" | null>(null);
 
   useSeo({ title: course ? `Enroll | ${course.title}` : "Enroll", description: "Enroll in a professional programme", noindex: true });
 
   useEffect(() => {
-    void getBackend().then((b) => setOnline(b.paymentsEnabled));
+    void getBackend().then(async (b) => {
+      setOnline(b.paymentsEnabled);
+      setMode((await b.getPaymentSettings()).mode);
+    });
   }, []);
 
   // Back from Paystack: ?reference=… The server checks the payment before access is granted.
@@ -52,7 +57,7 @@ function Inner() {
   }, []);
 
   if (!course) return loading ? <PageLoading /> : <NotFound />;
-  if (learner.loading) return <PageLoading />;
+  if (learner.loading || mode === null) return <PageLoading />;
   if (confirming) return <PageLoading label="Confirming your payment…" />;
   if (!isPaid(course)) return <NotFound />;
 
@@ -134,7 +139,9 @@ function Inner() {
         </div>
 
         <div className="rounded-2xl border border-line-strong bg-paper p-6 shadow-[0_30px_60px_-45px_rgba(23,23,23,0.45)]">
-          {manual ? (
+          {mode === "manual" && price ? (
+            <ManualCheckout kind="course" id={course.id} title={course.title} price={price} instalments={null} openTo={start} openLabel="Start learning" />
+          ) : manual ? (
             <>
               <p className="kicker">Order {order.id.slice(0, 8).toUpperCase()}</p>
               <h2 className="mt-2 font-serif text-[1.6rem]">Complete your payment</h2>

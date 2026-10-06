@@ -9,6 +9,7 @@ import { ENROLMENT_MESSAGE, DELIVERY_LABEL, coursePrice, enrolmentState, formatP
 import { SITE, whatsappLink } from "@/lib/site";
 import { Button, ButtonLink, buttonClass } from "@/components/Button";
 import { Alert } from "@/components/Form";
+import { ManualCheckout } from "@/components/ManualCheckout";
 import { capstoneOf, programmeCertificateAvailable } from "@/content/tracks";
 import NotFound from "./NotFound";
 
@@ -26,11 +27,16 @@ function Inner() {
   const [confirming, setConfirming] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [online, setOnline] = useState(true);
+  /** "manual": pay into the Academy's account and wait for an admin to confirm. null until known. */
+  const [mode, setMode] = useState<"manual" | "paystack" | null>(null);
 
   useSeo({ title: course ? `Enroll | ${course.programmeName ?? course.title}` : "Enroll", description: "Enroll in a professional programme", noindex: true });
 
   useEffect(() => {
-    void getBackend().then((b) => setOnline(b.paymentsEnabled));
+    void getBackend().then(async (b) => {
+      setOnline(b.paymentsEnabled);
+      setMode((await b.getPaymentSettings()).mode);
+    });
   }, []);
 
   // Back from Paystack: ?reference=… The server checks the payment before access is granted.
@@ -53,7 +59,7 @@ function Inner() {
   }, []);
 
   if (!course) return <NotFound />;
-  if (holdLoading) return <PageLoading />;
+  if (holdLoading || mode === null) return <PageLoading />;
   if (confirming) return <PageLoading label="Confirming your payment…" />;
   if (!isPaid(course)) return <NotFound />;
 
@@ -93,6 +99,11 @@ function Inner() {
             My Learning
           </ButtonLink>
         </div>
+        {mode === "manual" && (
+          <div className="mt-8 rounded-2xl border border-line-strong bg-paper p-6">
+            <ManualCheckout kind="programme" id={course.id} title={name} price={price ?? { amount: 0, listAmount: 0, discounted: false, currency: "NGN" }} instalments={null} openTo={start} openLabel="Open the programme" onlyExisting />
+          </div>
+        )}
       </div>
     );
 
@@ -146,7 +157,17 @@ function Inner() {
         </div>
 
         <div className="rounded-2xl border border-line-strong bg-paper p-6 shadow-[0_30px_60px_-45px_rgba(23,23,23,0.45)]">
-          {manual ? (
+          {mode === "manual" && price ? (
+            <ManualCheckout
+              kind="programme"
+              id={course.id}
+              title={name}
+              price={price}
+              instalments={course.allowInstalments ? { firstPercent: course.firstPercent ?? 50, secondDueDays: course.secondDueDays ?? 30 } : null}
+              openTo={start}
+              openLabel="Open the programme"
+            />
+          ) : manual ? (
             <>
               <p className="kicker">Order {order.id.slice(0, 8).toUpperCase()}</p>
               <h2 className="mt-2 font-serif text-[1.6rem]">Complete your payment</h2>

@@ -179,6 +179,15 @@ export function AdminProgrammeEditor() {
               <TextField label="Enrolment opens" type="datetime-local" value={localInput(c.enrollmentStart)} onChange={(e) => set("enrollmentStart", e.target.value ? new Date(e.target.value).toISOString() : null)} />
               <TextField label="Enrolment closes" type="datetime-local" value={localInput(c.enrollmentEnd)} onChange={(e) => set("enrollmentEnd", e.target.value ? new Date(e.target.value).toISOString() : null)} />
             </div>
+            <div className="space-y-3 rounded-xl border border-line p-4">
+              <Check label="Learners can pay in two parts" checked={!!c.allowInstalments} onChange={(v) => set("allowInstalments", v)} />
+              {c.allowInstalments && (
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <TextField label="First part (percent of the price)" type="number" min={10} max={90} value={c.firstPercent ?? 50} onChange={(e) => set("firstPercent", Number(e.target.value) || 50)} hint="The programme opens when this part is confirmed." />
+                  <TextField label="Second part due after (days)" type="number" min={1} max={365} value={c.secondDueDays ?? 30} onChange={(e) => set("secondDueDays", Number(e.target.value) || 30)} hint="Counted from when the first part is confirmed." />
+                </div>
+              )}
+            </div>
             <Alert tone="info">
               Changing which courses a programme contains happens in the site's content. Learners who already enrolled keep access to everything in the programme.
             </Alert>

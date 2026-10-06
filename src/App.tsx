@@ -64,7 +64,7 @@ const AdminCertificateEdit = lazy(() => import("@/pages/admin/AdminCertificateFo
 const AdminCertificateDetail = lazy(() => import("@/pages/admin/AdminCertificateDetail"));
 const AdminCredentials = lazy(() => import("@/pages/admin/AdminCredentials"));
 const AdminEnrollments = lazy(() => import("@/pages/admin/AdminProgrammes").then((m) => ({ default: m.AdminEnrollments })));
-const AdminPayments = lazy(() => import("@/pages/admin/AdminProgrammes").then((m) => ({ default: m.AdminPayments })));
+const AdminPayments = lazy(() => import("@/pages/admin/AdminPayments"));
 const AdminAnalytics = lazy(() => import("@/pages/admin/AdminProgrammes").then((m) => ({ default: m.AdminAnalytics })));
 const AdminProgrammes = lazy(() => import("@/pages/admin/AdminProgrammeEditor").then((m) => ({ default: m.AdminProgrammes })));
 const AdminProgrammeEditor = lazy(() => import("@/pages/admin/AdminProgrammeEditor").then((m) => ({ default: m.AdminProgrammeEditor })));
