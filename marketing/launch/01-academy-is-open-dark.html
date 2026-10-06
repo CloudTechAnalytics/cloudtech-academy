@@ -1,0 +1,33 @@
+<!doctype html><html><head><meta charset='utf-8'><style>
+@font-face { font-family: PF; src: url('file:///C:/Users/user/OneDrive/Documents/cloudtech-academy/dist/assets/playfair-display-latin-700-normal-CuDiGg7c.woff2'); font-weight: 700; }
+@font-face { font-family: PF; src: url('file:///C:/Users/user/OneDrive/Documents/cloudtech-academy/dist/assets/playfair-display-latin-600-normal-CZLGqjJe.woff2'); font-weight: 600; }
+@font-face { font-family: IN; src: url('file:///C:/Users/user/OneDrive/Documents/cloudtech-academy/dist/assets/inter-latin-wght-normal-Dx4kXJAl.woff2'); font-weight: 100 900; }
+:root { --ink:#1E1D1B; --gold:#B38A3E; --gold2:#C9A45C; --dark:#8A6A1F; --pale:#F3EBD8; --cream:#FBF8F2; --sand:#EFE4CC; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 1080px; height: 1350px; overflow: hidden; }
+body { font-family: IN, 'Segoe UI', Arial, sans-serif; color: var(--ink); background: var(--cream); position: relative; }
+.serif { font-family: PF, Georgia, serif; font-weight: 700; letter-spacing: -0.01em; font-variant-numeric: lining-nums; }
+.pad { position: absolute; inset: 0; padding: 84px; display: flex; flex-direction: column; }
+.logo { display: flex; align-items: center; gap: 18px; }
+.logo svg { width: 64px; height: 64px; }
+.logo .w { font-family: PF, serif; font-weight: 700; font-size: 38px; line-height: 1; }
+.logo .s { font-size: 15px; letter-spacing: 0.34em; color: var(--dark); font-weight: 600; margin-top: 6px; }
+.url { display: inline-block; border-radius: 999px; padding: 24px 46px; font-weight: 700; font-size: 34px; letter-spacing: 0.01em; }
+.pill { display: inline-block; border-radius: 999px; padding: 12px 24px; font-weight: 600; font-size: 24px; }
+.kick { font-size: 22px; letter-spacing: 0.3em; font-weight: 700; text-transform: uppercase; }
+.grid-bg { position: absolute; inset: 0; background-image: linear-gradient(rgba(179,138,62,.10) 1px, transparent 1px), linear-gradient(90deg, rgba(179,138,62,.10) 1px, transparent 1px); background-size: 90px 90px; }
+</style></head>
+<body style="background:#1E1D1B">
+<div style="position:absolute;inset:0;background:radial-gradient(900px 700px at 80% 0%, rgba(201,164,92,.28), transparent 60%), radial-gradient(700px 700px at 0% 100%, rgba(201,164,92,.16), transparent 60%)"></div>
+<div class="pad" style="color:#fff">
+  <div class="logo"><svg viewBox="0 0 682 682" width="64" height="64"><rect width="170" height="170" rx="30" fill="#C9A45C"/><g fill="#4A4640"><rect x="256" width="170" height="170" rx="30"/><rect x="512" width="170" height="170" rx="30"/><rect y="256" width="170" height="170" rx="30"/><rect y="512" width="170" height="170" rx="30"/><rect x="256" y="256" width="426" height="426" rx="44"/></g></svg><div><div class="w" style="color:#FFFFFF">CloudTech</div><div class="s" style="color:#C9A45C">ACADEMY</div></div></div>
+  <div style="margin-top:auto">
+    <div class="kick" style="color:#C9A45C">Now open · Free to start</div>
+    <div class="serif" style="font-size:150px;line-height:.98;margin-top:28px">The Academy<br><span style="color:#C9A45C">is open.</span></div>
+    <div style="font-size:38px;line-height:1.4;margin-top:36px;color:#E6DECB;max-width:800px">Practical courses in data, analytics and technology. Learn it, build it, and prove it.</div>
+    <div style="margin-top:54px;display:flex;gap:18px;flex-wrap:wrap">
+      <span class="pill" style="background:#2E2C28;color:#E6DECB;border:2px solid #4A4640">Learn</span><span class="pill" style="background:#2E2C28;color:#E6DECB;border:2px solid #4A4640">Build</span><span class="pill" style="background:#C9A45C;color:#1E1D1B">Earn</span>
+    </div>
+  </div>
+  <div style="margin-top:64px"><span class="url" style="background:#C9A45C;color:#1E1D1B">academy.cloudtechanalytics.com</span></div>
+</div></body></html>
