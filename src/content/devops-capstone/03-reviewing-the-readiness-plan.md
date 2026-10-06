@@ -12,7 +12,7 @@ A plan review is where infrastructure mistakes are cheapest to catch. Read what 
 
 ## The concept
 
-**Actions in a plan**
+### Actions in a plan
 
 | Actions | Meaning |
 | :-- | :-- |
@@ -23,7 +23,7 @@ A plan review is where infrastructure mistakes are cheapest to catch. Read what 
 
 Some attribute changes can't be made in place, so Terraform replaces the resource. Renaming a database's `identifier` is one of them.
 
-**Policy as code**
+### Policy as code
 
 Write the rules once, in code, and run them on every plan:
 
@@ -31,6 +31,8 @@ Write the rules once, in code, and run them on every plan:
 - No security group may open a database port to the internet (`0.0.0.0/0`).
 - No bucket may be made public.
 - Every resource created or updated needs an `owner` tag.
+
+![The four Terraform plan actions with replace highlighted as dangerous for a database, and four policy-as-code rules that run on every plan](/images/courses/devops-capstone/terraform-plan.svg "Read what the plan will do, and let policy as code stop the dangerous ones.")
 
 ## Example
 

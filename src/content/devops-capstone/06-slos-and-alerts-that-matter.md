@@ -10,21 +10,23 @@ Last year, customers complained on social media at about 09:30, and the team onl
 
 ## The concept
 
-**An SLO and its error budget**
+### An SLO and its error budget
 
 The checkout SLO: **99.5% of checkout requests succeed over 30 days**. The error budget is the 0.5% allowed to fail. At normal traffic of about 25 requests a second, that's a fixed number of failed requests per month.
 
-**Burn rate**
+### Burn rate
 
 Burn rate = current error rate ÷ 0.5%. A burn rate of 1 uses the budget exactly over 30 days; 14.4 uses 2% of it in an hour.
 
-**Multi-window alerts**
+### Multi-window alerts
 
 A common page fires when the burn rate is at least 14.4 over the last **hour** and over the last **5 minutes**. The long window avoids paging on blips; the short one makes the alert stop soon after recovery. But a long window also **delays** the alert at the start of an incident. Replay alerts against real incidents to see when they would have fired.
 
-**Alerts that matter**
+### Alerts that matter
 
 An alert should be actionable, urgent and real. Measure each alert's history: how often it fires, the share that needed action, and how long people took to respond. Remove or fix the rest.
+
+![An invented SLO and error budget, burn rates of 1, 6 and 14, a multi-window alert with a long and a short window, and three tests for an alert](/images/courses/devops-capstone/slo-burn.svg "SLO, error budget, burn rate, and alerts that matter.")
 
 ## Example
 

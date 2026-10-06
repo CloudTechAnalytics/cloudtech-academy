@@ -471,6 +471,38 @@
   760,
   340
  ],
+ "/images/courses/devops-capstone/capacity.svg": [
+  760,
+  440
+ ],
+ "/images/courses/devops-capstone/cost.svg": [
+  760,
+  420
+ ],
+ "/images/courses/devops-capstone/dora-freeze.svg": [
+  760,
+  446
+ ],
+ "/images/courses/devops-capstone/game-day.svg": [
+  760,
+  440
+ ],
+ "/images/courses/devops-capstone/inventory.svg": [
+  760,
+  450
+ ],
+ "/images/courses/devops-capstone/outage-review.svg": [
+  760,
+  400
+ ],
+ "/images/courses/devops-capstone/slo-burn.svg": [
+  760,
+  440
+ ],
+ "/images/courses/devops-capstone/terraform-plan.svg": [
+  760,
+  420
+ ],
  "/images/courses/digital/backup-sharing.svg": [
   760,
   400

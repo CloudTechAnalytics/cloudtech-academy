@@ -71765,19 +71765,19 @@ The company is **Kasuwa**, the online shop from the Data Scientist Capstone. Its
 
 ## The concept
 
-**Start with an inventory**
+### Start with an inventory
 
 You can't secure, scale or cost what you don't know exists. List every resource, its environment, who owns it, how it's managed and what it costs.
 
-**Managed by Terraform, or by hand?**
+### Managed by Terraform, or by hand?
 
 Resources created by hand (in the console or during an incident) aren't reviewed, aren't reproducible and drift silently. Anything that matters in production should be in Terraform.
 
-**Ownership and safety**
+### Ownership and safety
 
 Every resource needs an owner, a team that's answerable for it. And anything public or unencrypted needs a reason.
 
-**The plan for the eight weeks**
+### The plan for the eight weeks
 
 | Area | Question | Lesson |
 | :-- | :-- | :-- |
@@ -71789,6 +71789,8 @@ Every resource needs an owner, a team that's answerable for it. And anything pub
 | Reliability | Will we know before customers do? | 6 |
 | Cost | What can we stop paying for? | 7 |
 | Game day | Are we ready? | 8 |
+
+![An invented resource inventory with owner, how it is managed and cost, flagging hand-made and ownerless resources, three questions to ask of each, and the plan for the weeks before the event](/images/courses/devops-capstone/inventory.svg "Inventory first: owner, how it's managed, cost, and risk flags.")
 
 ## Example
 
@@ -71939,21 +71941,23 @@ You have per-minute metrics for checkout from 08:00 to 14:00 on sale day (`sale_
 
 ## The concept
 
-**Impact first**
+### Impact first
 
 When did it start and end, and how many requests failed? Use a clear definition: here, a minute is **bad** if more than 5% of requests failed.
 
-**Look for what changed just before**
+### Look for what changed just before
 
 Plot the metrics around the start. Something crosses a line: traffic, instances, connections, latency.
 
-**Read the errors**
+### Read the errors
 
 The logs say what failed. If one message dominates the bad minutes, it points at the cause.
 
-**Cause, not trigger**
+### Cause, not trigger
 
 Traffic was the **trigger**: it was always going to rise. The **cause** is why the system couldn't handle it. Postmortems that stop at "traffic was high" lead to the wrong fix.
+
+![An invented incident with bad minutes marked on a request chart, defining a bad minute first, and the difference between the trigger (traffic) and the cause (why the system could not cope)](/images/courses/devops-capstone/outage-review.svg "Impact first; then what crossed a line; then trigger versus cause.")
 
 ## Example
 
@@ -72136,7 +72140,7 @@ A plan review is where infrastructure mistakes are cheapest to catch. Read what 
 
 ## The concept
 
-**Actions in a plan**
+### Actions in a plan
 
 | Actions | Meaning |
 | :-- | :-- |
@@ -72147,7 +72151,7 @@ A plan review is where infrastructure mistakes are cheapest to catch. Read what 
 
 Some attribute changes can't be made in place, so Terraform replaces the resource. Renaming a database's `identifier` is one of them.
 
-**Policy as code**
+### Policy as code
 
 Write the rules once, in code, and run them on every plan:
 
@@ -72155,6 +72159,8 @@ Write the rules once, in code, and run them on every plan:
 - No security group may open a database port to the internet (`0.0.0.0/0`).
 - No bucket may be made public.
 - Every resource created or updated needs an `owner` tag.
+
+![The four Terraform plan actions with replace highlighted as dangerous for a database, and four policy-as-code rules that run on every plan](/images/courses/devops-capstone/terraform-plan.svg "Read what the plan will do, and let policy as code stop the dangerous ones.")
 
 ## Example
 
@@ -72331,7 +72337,7 @@ values ('cloud-devops-capstone:delivery-and-the-change-freeze', 'cloud-devops-ca
 
 ## The concept
 
-**The four DORA measures**
+### The four DORA measures
 
 | Measure | Question |
 | :-- | :-- |
@@ -72340,13 +72346,15 @@ values ('cloud-devops-capstone:delivery-and-the-change-freeze', 'cloud-devops-ca
 | Change failure rate | What share of deploys cause a failure (rolled back or hotfixed)? |
 | Time to restore | When a deploy fails, how long until service is restored? |
 
-**What makes a deploy risky?**
+### What makes a deploy risky?
 
 Compare failure rates by the deploy's features: whether the change had automated tests, how big it was, when it was deployed. Small groups give noisy rates, so count the deploys behind each one.
 
-**A freeze with evidence**
+### A freeze with evidence
 
 A freeze is a trade-off. It removes deploy risk during the sale, but changes pile up and land together afterwards. A short freeze around the sale, with rules that cut risk in the weeks before, usually beats a long one.
+
+![The four DORA measures, invented failure rates by deploy type, and what a freeze removes and what it costs](/images/courses/devops-capstone/dora-freeze.svg "Measure delivery, find what makes deploys risky, and freeze with evidence.")
 
 ## Example
 
@@ -72507,17 +72515,19 @@ Marketing expects this year's sale to bring **1.6 times** last year's peak traff
 
 ## The concept
 
-**A capacity target**
+### A capacity target
 
 Target = last year's peak × expected growth × **headroom**. Headroom (here 30%) covers forecast error, uneven traffic within a minute, and losing an instance or two at the worst moment.
 
-**Find the limiting resource**
+### Find the limiting resource
 
 Each configuration hits a different wall: app instances, database connections or database CPU. Adding more of something that isn't the limit does nothing, as last year showed.
 
-**Little's law**
+### Little's law
 
 Average number of things in a system = arrival rate × time each spends there. For a database: connections busy at once = queries per second × seconds per query. It tells you how many connections you actually need, and it's usually far fewer than 20 per instance.
+
+![A capacity target formula with invented numbers, which resource is the limiting wall in two configurations, and Little's law for busy connections](/images/courses/devops-capstone/capacity.svg "Target = last peak × growth × headroom; find the limiting resource.")
 
 ## Example
 
@@ -72697,21 +72707,23 @@ Last year, customers complained on social media at about 09:30, and the team onl
 
 ## The concept
 
-**An SLO and its error budget**
+### An SLO and its error budget
 
 The checkout SLO: **99.5% of checkout requests succeed over 30 days**. The error budget is the 0.5% allowed to fail. At normal traffic of about 25 requests a second, that's a fixed number of failed requests per month.
 
-**Burn rate**
+### Burn rate
 
 Burn rate = current error rate ÷ 0.5%. A burn rate of 1 uses the budget exactly over 30 days; 14.4 uses 2% of it in an hour.
 
-**Multi-window alerts**
+### Multi-window alerts
 
 A common page fires when the burn rate is at least 14.4 over the last **hour** and over the last **5 minutes**. The long window avoids paging on blips; the short one makes the alert stop soon after recovery. But a long window also **delays** the alert at the start of an incident. Replay alerts against real incidents to see when they would have fired.
 
-**Alerts that matter**
+### Alerts that matter
 
 An alert should be actionable, urgent and real. Measure each alert's history: how often it fires, the share that needed action, and how long people took to respond. Remove or fix the rest.
+
+![An invented SLO and error budget, burn rates of 1, 6 and 14, a multi-window alert with a long and a short window, and three tests for an alert](/images/courses/devops-capstone/slo-burn.svg "SLO, error budget, burn rate, and alerts that matter.")
 
 ## Example
 
@@ -72891,18 +72903,20 @@ The finance director has noticed the cloud bill creeping up and worries the sale
 
 ## The concept
 
-**Waste first**
+### Waste first
 
 - **Idle resources**: machines that do nearly nothing, especially with no owner. Confirm with the team, snapshot if in doubt, then delete.
 - **Always-on non-production**: staging used during working hours but paid for around the clock. Schedule it to run only when needed.
 
-**Don't cut resilience**
+### Don't cut resilience
 
 A standby replica at 12% CPU isn't waste. It's there for the bad day. Low use isn't the same as no value.
 
-**Price the change, and the peak**
+### Price the change, and the peak
 
 Compare the monthly cost of the readiness changes with the savings. Price the sale's extra capacity per hour: autoscaling means you pay for 30 instances only while you need them.
+
+![Where to find savings (waste, not resilience) and pricing a change and the peak, with invented monthly figures](/images/courses/devops-capstone/cost.svg "Waste first, never resilience; price the change and the peak.")
 
 ## Example
 
@@ -73069,17 +73083,19 @@ Three weeks before the sale, the team ran a **game day**: a planned morning of b
 
 ## The concept
 
-**A game day**
+### A game day
 
 Each drill has a scenario, a success criterion and, where it matters, a target time, such as a **recovery time objective** (RTO) for restoring the database. Record what actually happened, including the surprises.
 
-**Pass, fail and what it teaches**
+### Pass, fail and what it teaches
 
 A failed drill is a success for the game day: you found the problem before the sale did. Each failure becomes an action with an owner and a date, then a re-test.
 
-**Go, no-go, or go with conditions**
+### Go, no-go, or go with conditions
 
 A readiness decision lists what's done, what's open, and the conditions that must be met by a date. "Go if the backup restore passes a re-test by 20 November" is more useful than a vague "mostly ready".
+
+![An invented game day drill that missed its target time, the fail, action, re-test, pass loop, and go, go with conditions and no-go decisions](/images/courses/devops-capstone/game-day.svg "Drill, record, fix and re-test; then go, no-go or go with conditions.")
 
 ## Example
 

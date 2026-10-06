@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 420" width="760" height="420" role="img" aria-label="Reading a Terraform plan. The actions are create for a new resource, update for an in-place change, delete, and delete then create, which is a replacement: for a database that means the data is gone unless restored. Some attribute changes cannot be made in place, such as renaming a database identifier. Policy as code runs rules on every plan: no production database deleted or replaced, no database port open to the internet, no public buckets, an owner tag on everything.">
+<title>Read what the plan will do, and let policy as code stop the dangerous ones.</title>
+
+<rect width="760" height="420" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="26.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">The four actions in a plan</text>
+<rect x="16.0" y="40.0" width="170.0" height="66.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.4"/>
+<text xml:space="preserve" x="28.0" y="66.0" font-size="14" fill="#2F6B3F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">+ create</text>
+<text xml:space="preserve" x="28.0" y="90.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">A new resource</text>
+<rect x="202.0" y="40.0" width="170.0" height="66.0" rx="10" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.4"/>
+<text xml:space="preserve" x="214.0" y="66.0" font-size="14" fill="#2F5D8A" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">~ update</text>
+<text xml:space="preserve" x="214.0" y="90.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Changed in place</text>
+<rect x="388.0" y="40.0" width="170.0" height="66.0" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.4"/>
+<text xml:space="preserve" x="400.0" y="66.0" font-size="14" fill="#9B2C1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">- delete</text>
+<text xml:space="preserve" x="400.0" y="90.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Destroyed</text>
+<rect x="574.0" y="40.0" width="170.0" height="66.0" rx="10" fill="#F0CFC9" stroke="#9B2C1F" stroke-width="2"/>
+<text xml:space="preserve" x="586.0" y="66.0" font-size="14" fill="#9B2C1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">-/+ replace</text>
+<text xml:space="preserve" x="586.0" y="90.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Destroyed, then rebuilt</text>
+<rect x="16.0" y="122.0" width="728.0" height="70.0" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.6"/>
+<text xml:space="preserve" x="30.0" y="148.0" font-size="13.5" fill="#9B2C1F" font-weight="700" text-anchor="start">A replaced database loses its data unless it is restored</text>
+<text xml:space="preserve" x="30.0" y="172.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Renaming an identifier can't be done in place, so Terraform destroys and recreates. Read the plan, not the PR title.</text>
+<text xml:space="preserve" x="16.0" y="224.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Policy as code: write the rules once, run them on every plan</text>
+<rect x="16.0" y="238.0" width="360.0" height="66.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.4"/>
+<text xml:space="preserve" x="30.0" y="264.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">✓  No production database deleted or replaced</text>
+<text xml:space="preserve" x="46.0" y="284.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">and every database has deletion protection</text>
+<rect x="384.0" y="238.0" width="360.0" height="66.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.4"/>
+<text xml:space="preserve" x="398.0" y="264.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">✓  No database port open to the internet</text>
+<text xml:space="preserve" x="414.0" y="284.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">no 0.0.0.0/0 on a database security group</text>
+<rect x="16.0" y="314.0" width="360.0" height="66.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.4"/>
+<text xml:space="preserve" x="30.0" y="340.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">✓  No bucket made public</text>
+<rect x="384.0" y="314.0" width="360.0" height="66.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.4"/>
+<text xml:space="preserve" x="398.0" y="340.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">✓  Every created or updated resource has an owner tag</text>
+<text xml:space="preserve" x="16.0" y="410.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">A failing rule blocks the merge. A review can miss a replace; the policy cannot.</text>
+</g></svg>

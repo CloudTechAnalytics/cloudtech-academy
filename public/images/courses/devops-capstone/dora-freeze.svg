@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 446" width="760" height="446" role="img" aria-label="Delivery measures and a freeze with evidence. The four DORA measures are deployment frequency, lead time for changes, change failure rate and time to restore. To find what makes a deploy risky, compare failure rates by features such as automated tests, size and timing, noting how many deploys are behind each rate. A freeze removes deploy risk during the event but piles changes up and lands them together afterwards; a short freeze with rules before it is often better.">
+<title>Measure delivery, find what makes deploys risky, and freeze with evidence.</title>
+
+<rect width="760" height="446" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="26.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Four measures of delivery</text>
+<rect x="16.0" y="40.0" width="170.0" height="66.0" rx="10" fill="#FFFFFF" stroke="#2F5D8A" stroke-width="1.5"/>
+<text xml:space="preserve" x="28.0" y="62.0" font-size="12.5" fill="#2F5D8A" font-weight="700" text-anchor="start">Deployment frequency</text>
+<text xml:space="preserve" x="28.0" y="96.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">How often do we ship?</text>
+<rect x="202.0" y="40.0" width="170.0" height="66.0" rx="10" fill="#FFFFFF" stroke="#2F5D8A" stroke-width="1.5"/>
+<text xml:space="preserve" x="214.0" y="62.0" font-size="12.5" fill="#2F5D8A" font-weight="700" text-anchor="start">Lead time for changes</text>
+<text xml:space="preserve" x="214.0" y="96.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">Ready to live: how long?</text>
+<rect x="388.0" y="40.0" width="170.0" height="66.0" rx="10" fill="#FFFFFF" stroke="#2F5D8A" stroke-width="1.5"/>
+<text xml:space="preserve" x="400.0" y="62.0" font-size="12.5" fill="#2F5D8A" font-weight="700" text-anchor="start">Change failure rate</text>
+<text xml:space="preserve" x="400.0" y="96.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">Share of deploys that fail</text>
+<rect x="574.0" y="40.0" width="170.0" height="66.0" rx="10" fill="#FFFFFF" stroke="#2F5D8A" stroke-width="1.5"/>
+<text xml:space="preserve" x="586.0" y="62.0" font-size="12.5" fill="#2F5D8A" font-weight="700" text-anchor="start">Time to restore</text>
+<text xml:space="preserve" x="586.0" y="96.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">How long to recover?</text>
+<text xml:space="preserve" x="16.0" y="142.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">What makes a deploy risky? (invented numbers)</text>
+<rect x="16.0" y="156.0" width="728.0" height="140.0" rx="8" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<path d="M17,184 L17,164 Q17,157 24,157 L736,157 Q743,157 743,164 L743,184 Z" fill="#EFE4CC"/>
+<text xml:space="preserve" x="26.0" y="174.5" font-size="12.0" fill="#5E5A52" font-weight="700" text-anchor="start">Group</text>
+<text xml:space="preserve" x="526.0" y="174.5" font-size="12.0" fill="#5E5A52" font-weight="700" text-anchor="end">Deploys</text>
+<text xml:space="preserve" x="734.0" y="174.5" font-size="12.0" fill="#5E5A52" font-weight="700" text-anchor="end">Failed</text>
+<line x1="16.0" y1="184.0" x2="744.0" y2="184.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="202.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">With automated tests</text>
+<text xml:space="preserve" x="526.0" y="202.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="end">310</text>
+<text xml:space="preserve" x="734.0" y="202.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="end">3%</text>
+<line x1="16.0" y1="212.0" x2="744.0" y2="212.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="230.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">No automated tests</text>
+<text xml:space="preserve" x="526.0" y="230.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="end">40</text>
+<text xml:space="preserve" x="734.0" y="230.5" font-size="12.5" fill="#9B2C1F" font-weight="400" text-anchor="end">20%</text>
+<line x1="16.0" y1="240.0" x2="744.0" y2="240.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="258.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Small change (&lt; 100 lines)</text>
+<text xml:space="preserve" x="526.0" y="258.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="end">290</text>
+<text xml:space="preserve" x="734.0" y="258.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="end">4%</text>
+<line x1="16.0" y1="268.0" x2="744.0" y2="268.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="286.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Large change (&gt; 500 lines)</text>
+<text xml:space="preserve" x="526.0" y="286.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="end">35</text>
+<text xml:space="preserve" x="734.0" y="286.5" font-size="12.5" fill="#9B2C1F" font-weight="400" text-anchor="end">18%</text>
+<text xml:space="preserve" x="16.0" y="316.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">Count the deploys behind each rate: small groups make noisy percentages.</text>
+<text xml:space="preserve" x="16.0" y="348.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">A freeze is a trade-off</text>
+<rect x="16.0" y="362.0" width="358.0" height="64.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.4"/>
+<text xml:space="preserve" x="30.0" y="386.0" font-size="13" fill="#2F6B3F" font-weight="700" text-anchor="start">Removes</text>
+<text xml:space="preserve" x="30.0" y="408.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Deploy risk during the event.</text>
+<rect x="386.0" y="362.0" width="358.0" height="64.0" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.4"/>
+<text xml:space="preserve" x="400.0" y="386.0" font-size="13" fill="#9B2C1F" font-weight="700" text-anchor="start">Costs</text>
+<text xml:space="preserve" x="400.0" y="408.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Changes pile up, then land together afterwards.</text>
+</g></svg>

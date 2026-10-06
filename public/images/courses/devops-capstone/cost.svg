@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 420" width="760" height="420" role="img" aria-label="Cost before and during an event. Cut waste first: idle resources with no owner, after confirming with the team and taking a snapshot if in doubt, and always-on non-production environments that can be scheduled. Do not cut resilience: a standby replica with low use is there for the bad day. Price the readiness changes monthly and the event's extra capacity per hour, because autoscaling means paying for extra instances only while needed.">
+<title>Waste first, never resilience; price the change and the peak.</title>
+
+<rect width="760" height="420" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="26.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Where to look for savings</text>
+<rect x="16.0" y="40.0" width="358.0" height="128.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.5"/>
+<text xml:space="preserve" x="30.0" y="66.0" font-size="14" fill="#2F6B3F" font-weight="700" text-anchor="start">Waste: stop paying</text>
+<text xml:space="preserve" x="30.0" y="92.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">• Idle machines with no owner</text>
+<text xml:space="preserve" x="30.0" y="112.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">   (confirm, snapshot if unsure, delete)</text>
+<text xml:space="preserve" x="30.0" y="132.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">• Staging running 24 hours a day</text>
+<text xml:space="preserve" x="30.0" y="152.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">   (schedule it for working hours)</text>
+<rect x="386.0" y="40.0" width="358.0" height="128.0" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.5"/>
+<text xml:space="preserve" x="400.0" y="66.0" font-size="14" fill="#9B2C1F" font-weight="700" text-anchor="start">Resilience: don't cut</text>
+<text xml:space="preserve" x="400.0" y="92.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">A standby replica at 10% CPU isn't waste: it is</text>
+<text xml:space="preserve" x="400.0" y="108.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">there for the bad day.</text>
+<text xml:space="preserve" x="400.0" y="148.0" font-size="12" fill="#9B2C1F" font-weight="700" text-anchor="start">Low use is not the same as no value.</text>
+<text xml:space="preserve" x="16.0" y="208.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Price the change, and the peak (invented numbers)</text>
+<rect x="16.0" y="222.0" width="728.0" height="112.0" rx="8" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<path d="M17,250 L17,230 Q17,223 24,223 L736,223 Q743,223 743,230 L743,250 Z" fill="#EFE4CC"/>
+<text xml:space="preserve" x="26.0" y="240.5" font-size="12.0" fill="#5E5A52" font-weight="700" text-anchor="start">Monthly</text>
+<text xml:space="preserve" x="734.0" y="240.5" font-size="12.0" fill="#5E5A52" font-weight="700" text-anchor="end">Amount</text>
+<line x1="16.0" y1="250.0" x2="744.0" y2="250.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="268.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Bigger database + pooler</text>
+<text xml:space="preserve" x="734.0" y="268.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="end">+ ₦90k / month</text>
+<line x1="16.0" y1="278.0" x2="744.0" y2="278.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="296.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Savings from waste</text>
+<text xml:space="preserve" x="734.0" y="296.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="end">− ₦140k / month</text>
+<rect x="18.0" y="307.0" width="724.0" height="26.0" rx="3" fill="#F3EBD8"/>
+<text xml:space="preserve" x="26.0" y="324.5" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">Net change</text>
+<text xml:space="preserve" x="734.0" y="324.5" font-size="12.5" fill="#2F6B3F" font-weight="400" text-anchor="end">− ₦50k / month</text>
+<rect x="16.0" y="350.0" width="728.0" height="56.0" rx="10" fill="#F3EBD8" stroke="#8A6A1F" stroke-width="1.3"/>
+<text xml:space="preserve" x="30.0" y="374.0" font-size="13" fill="#8A6A1F" font-weight="700" text-anchor="start">The event itself: price it per hour.</text>
+<text xml:space="preserve" x="30.0" y="396.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Autoscaling pays for 30 instances only while you need them.</text>
+</g></svg>

@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 450" width="760" height="450" role="img" aria-label="Start with an inventory: every resource with its environment, owner, how it is managed and what it costs. Flag anything created by hand, anything with no owner, and anything public or unencrypted without a reason. The invented example is a festival ticketing site preparing for a big ticket drop.">
+<title>Inventory first: owner, how it's managed, cost, and risk flags.</title>
+
+<rect width="760" height="450" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="26.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">You can't secure, scale or cost what you don't know exists (invented example)</text>
+<rect x="16.0" y="38.0" width="728.0" height="168.0" rx="8" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<path d="M17,66 L17,46 Q17,39 24,39 L736,39 Q743,39 743,46 L743,66 Z" fill="#EFE4CC"/>
+<text xml:space="preserve" x="26.0" y="56.5" font-size="12.0" fill="#5E5A52" font-weight="700" text-anchor="start">Resource</text>
+<text xml:space="preserve" x="206.0" y="56.5" font-size="12.0" fill="#5E5A52" font-weight="700" text-anchor="start">Env</text>
+<text xml:space="preserve" x="296.0" y="56.5" font-size="12.0" fill="#5E5A52" font-weight="700" text-anchor="start">Owner</text>
+<text xml:space="preserve" x="446.0" y="56.5" font-size="12.0" fill="#5E5A52" font-weight="700" text-anchor="start">Managed by</text>
+<text xml:space="preserve" x="734.0" y="56.5" font-size="12.0" fill="#5E5A52" font-weight="700" text-anchor="end">Cost / mo</text>
+<line x1="16.0" y1="66.0" x2="744.0" y2="66.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="84.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">web-fleet</text>
+<text xml:space="preserve" x="206.0" y="84.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">prod</text>
+<text xml:space="preserve" x="296.0" y="84.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Web team</text>
+<text xml:space="preserve" x="446.0" y="84.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Terraform</text>
+<text xml:space="preserve" x="734.0" y="84.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="end">₦420k</text>
+<line x1="16.0" y1="94.0" x2="744.0" y2="94.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="112.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">orders-db</text>
+<text xml:space="preserve" x="206.0" y="112.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">prod</text>
+<text xml:space="preserve" x="296.0" y="112.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Data team</text>
+<text xml:space="preserve" x="446.0" y="112.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Terraform</text>
+<text xml:space="preserve" x="734.0" y="112.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="end">₦310k</text>
+<line x1="16.0" y1="122.0" x2="744.0" y2="122.0" stroke="#EDE6D8" stroke-width="1"/>
+<rect x="287.0" y="123.0" width="148.0" height="26.0" rx="2" fill="#F6E3E0"/>
+<rect x="437.0" y="123.0" width="168.0" height="26.0" rx="2" fill="#F6E3E0"/>
+<text xml:space="preserve" x="26.0" y="140.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">queue-temp</text>
+<text xml:space="preserve" x="206.0" y="140.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">prod</text>
+<text xml:space="preserve" x="296.0" y="140.5" font-size="12.5" fill="#9B2C1F" font-weight="400" text-anchor="start">none</text>
+<text xml:space="preserve" x="446.0" y="140.5" font-size="12.5" fill="#9B2C1F" font-weight="400" text-anchor="start">by hand</text>
+<text xml:space="preserve" x="734.0" y="140.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="end">₦40k</text>
+<line x1="16.0" y1="150.0" x2="744.0" y2="150.0" stroke="#EDE6D8" stroke-width="1"/>
+<rect x="437.0" y="151.0" width="168.0" height="26.0" rx="2" fill="#F6E3E0"/>
+<text xml:space="preserve" x="26.0" y="168.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">uploads-bucket</text>
+<text xml:space="preserve" x="206.0" y="168.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">prod</text>
+<text xml:space="preserve" x="296.0" y="168.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Web team</text>
+<text xml:space="preserve" x="446.0" y="168.5" font-size="12.5" fill="#9B2C1F" font-weight="400" text-anchor="start">by hand</text>
+<text xml:space="preserve" x="734.0" y="168.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="end">₦8k</text>
+<line x1="16.0" y1="178.0" x2="744.0" y2="178.0" stroke="#EDE6D8" stroke-width="1"/>
+<rect x="287.0" y="179.0" width="148.0" height="26.0" rx="2" fill="#F6E3E0"/>
+<rect x="437.0" y="179.0" width="168.0" height="26.0" rx="2" fill="#F6E3E0"/>
+<text xml:space="preserve" x="26.0" y="196.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">report-vm-3</text>
+<text xml:space="preserve" x="206.0" y="196.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">dev</text>
+<text xml:space="preserve" x="296.0" y="196.5" font-size="12.5" fill="#9B2C1F" font-weight="400" text-anchor="start">none</text>
+<text xml:space="preserve" x="446.0" y="196.5" font-size="12.5" fill="#9B2C1F" font-weight="400" text-anchor="start">by hand</text>
+<text xml:space="preserve" x="734.0" y="196.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="end">₦65k</text>
+<text xml:space="preserve" x="16.0" y="234.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Three questions per resource</text>
+<rect x="16.0" y="248.0" width="232.0" height="88.0" rx="10" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.5"/>
+<text xml:space="preserve" x="30.0" y="274.0" font-size="13.5" fill="#2F5D8A" font-weight="700" text-anchor="start">Is it in Terraform?</text>
+<text xml:space="preserve" x="30.0" y="296.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">By hand = not reviewed, not</text>
+<text xml:space="preserve" x="30.0" y="310.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">reproducible, drifts silently.</text>
+<rect x="264.0" y="248.0" width="232.0" height="88.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.5"/>
+<text xml:space="preserve" x="278.0" y="274.0" font-size="13.5" fill="#2F6B3F" font-weight="700" text-anchor="start">Who owns it?</text>
+<text xml:space="preserve" x="278.0" y="296.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">A team answerable for it. No</text>
+<text xml:space="preserve" x="278.0" y="310.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">owner = nobody fixes it.</text>
+<rect x="512.0" y="248.0" width="232.0" height="88.0" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.5"/>
+<text xml:space="preserve" x="526.0" y="274.0" font-size="13.5" fill="#9B2C1F" font-weight="700" text-anchor="start">Is it exposed?</text>
+<text xml:space="preserve" x="526.0" y="296.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">Public or unencrypted needs a</text>
+<text xml:space="preserve" x="526.0" y="310.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">reason.</text>
+<text xml:space="preserve" x="16.0" y="368.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">The plan for the weeks before the event</text>
+<rect x="16.0" y="382.0" width="172.0" height="26.0" rx="6" fill="#F3EBD8"/>
+<text xml:space="preserve" x="26.0" y="400.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="start">1  Inventory</text>
+<rect x="202.0" y="382.0" width="172.0" height="26.0" rx="6" fill="#F3EBD8"/>
+<text xml:space="preserve" x="212.0" y="400.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="start">2  Incident review</text>
+<rect x="388.0" y="382.0" width="172.0" height="26.0" rx="6" fill="#F3EBD8"/>
+<text xml:space="preserve" x="398.0" y="400.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="start">3  IaC change</text>
+<rect x="574.0" y="382.0" width="172.0" height="26.0" rx="6" fill="#F3EBD8"/>
+<text xml:space="preserve" x="584.0" y="400.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="start">4  Delivery</text>
+<rect x="16.0" y="414.0" width="172.0" height="26.0" rx="6" fill="#F3EBD8"/>
+<text xml:space="preserve" x="26.0" y="432.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="start">5  Capacity</text>
+<rect x="202.0" y="414.0" width="172.0" height="26.0" rx="6" fill="#F3EBD8"/>
+<text xml:space="preserve" x="212.0" y="432.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="start">6  Reliability</text>
+<rect x="388.0" y="414.0" width="172.0" height="26.0" rx="6" fill="#F3EBD8"/>
+<text xml:space="preserve" x="398.0" y="432.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="start">7  Cost</text>
+<rect x="574.0" y="414.0" width="172.0" height="26.0" rx="6" fill="#F3EBD8"/>
+<text xml:space="preserve" x="584.0" y="432.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="start">8  Game day</text>
+</g></svg>
