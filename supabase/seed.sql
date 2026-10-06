@@ -8602,6 +8602,8 @@ Many Nigerian university and polytechnic programmes require **SIWES** (Students 
 
 Even if SIWES isn't required, the same approach works for any internship.
 
+![A placement timeline: start looking two to three months before, get documents ready before day one, do real work and fill the logbook during, and keep the gains afterwards](/images/courses/internship/placement-timeline.svg "Start early, and keep the logbook weekly.")
+
 ## What employers look for in students
 
 They don't expect experience. They look for:
@@ -8623,6 +8625,8 @@ Before you apply anywhere, have these ready in one Drive folder:
 3. **LinkedIn profile** with a photo and headline.
 4. **Portfolio link**, even with one or two projects.
 5. **Documents** schools and employers often ask for: student ID, school letter, transcript or result slip, and passport photo.
+
+![What employers look for in students and how to show each quality, and the five documents to keep ready in one folder](/images/courses/internship/employers-kit.svg "What employers look for, and the five documents to have ready.")
 
 > [!TIP]
 > Save your CV as a PDF named `CV-Firstname-Lastname.pdf`. Recruiters see hundreds of files called `CV.pdf`.
@@ -8676,6 +8680,8 @@ values ('get-your-first-internship:find-opportunities', 'get-your-first-internsh
 | **Your school** | Career services, SIWES coordinator, departmental notice boards and WhatsApp groups |
 | **Your network** | Lecturers, alumni, family friends, older students who've done placements |
 
+![Five places to find internships: LinkedIn Jobs, job boards, company career pages, your school and your network, plus asking directly by email](/images/courses/internship/where-to-look.svg "Five places to look, plus asking directly.")
+
 ## Ask directly
 
 Many small and medium businesses never advertise internships but will take a keen student. A short, polite email works:
@@ -8718,6 +8724,8 @@ Scammers target students. Walk away if:
 - The pay is **far too high** for a student role, or the job is vague ("data entry, ₦300,000 weekly").
 
 Check the company: look it up on its official website and LinkedIn, and search its name plus "scam".
+
+![Six warning signs of a fake internship offer, and how to check a company before replying](/images/courses/internship/fake-offers.svg "Six signs an internship offer is fake.")
 
 > [!WARNING]
 > Never pay money to get an internship or job, and never share your BVN, PIN or OTP.
@@ -8825,6 +8833,8 @@ Efosa Igbinedion
 2. **One or two examples** that match what they need.
 3. **Thanks** and a clear close.
 
+![Tailor a CV in four steps, and write a cover letter in three paragraphs: why this role, proof, and thanks with a clear close](/images/courses/internship/tailor-cover.svg "Tailor the CV in four steps; keep the cover letter to three paragraphs.")
+
 > [!TIP]
 > AI tools can help you draft and polish, but always rewrite in your own voice and check every claim is true. Recruiters notice generic, AI-sounding letters.
 
@@ -8835,6 +8845,8 @@ Use a simple Google Sheet:
 | Company | Role | Link | Date applied | Status | Follow-up date | Notes |
 | :-- | :-- | :-- | :-- | :-- | :-- | :-- |
 | Kolanut Foods | Data Analyst Intern | … | 2026-10-02 | Applied | 2026-10-16 | Referred by Tolu |
+
+![A status for each application from saved to applied, interview and offer or rejected, one example row in the tracking sheet, and a follow-up after about two weeks](/images/courses/internship/tracker.svg "A status for every application, and a follow-up date.")
 
 Add a **Status** dropdown: Saved, Applied, Interview, Offer, Rejected.
 
@@ -8932,6 +8944,8 @@ For "tell me about a time…" questions, use **STAR**:
 
 > **Example:** "In my second year, our departmental dinner had 40% fewer sign-ups than planned two weeks before the date (**S**). As publicity lead, I had to fill the tickets (**T**). I designed Canva posters, set up a Google Form and asked each class rep to share it in their WhatsApp groups (**A**). We sold out three days before the event (**R**)."
 
+![The STAR method with an example: situation, task, action and result for a student who filled a club meeting](/images/courses/internship/star.svg "STAR: Situation, Task, Action, Result.")
+
 ## Online interviews
 
 - Test the link, camera and microphone the day before.
@@ -8945,6 +8959,8 @@ For "tell me about a time…" questions, use **STAR**:
 - "What would a typical day look like for an intern?"
 - "What would success look like at the end of the internship?"
 - "Who would I be working with most closely?"
+
+![What to do before, during and after an internship interview, and three good questions to ask the employer](/images/courses/internship/interview-journey.svg "Before, during and after the interview.")
 
 ## After the interview
 

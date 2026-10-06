@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 380" width="760" height="380" role="img" aria-label="Five places to find internships: LinkedIn Jobs with the Remote filter, Nigerian job boards, company career pages, your school's career service and notice boards, and your network of lecturers, alumni and older students. Many small businesses never advertise, so asking directly by email also works.">
+<title>Five places to look, plus asking directly.</title>
+
+<rect width="760" height="380" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="284.0" y="150.0" width="192.0" height="80.0" rx="14" fill="#8A6A1F" stroke="#8A6A1F" stroke-width="1"/>
+<text xml:space="preserve" x="380.0" y="186.0" font-size="17" fill="#FFFFFF" font-weight="700" text-anchor="middle">You</text>
+<text xml:space="preserve" x="380.0" y="208.0" font-size="12.5" fill="#F3EBD8" font-weight="400" text-anchor="middle">internship search</text>
+<rect x="16.0" y="20.0" width="200.0" height="84.0" rx="10" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.5"/>
+<text xml:space="preserve" x="28.0" y="48.0" font-size="13.5" fill="#2F5D8A" font-weight="700" text-anchor="start">LinkedIn Jobs</text>
+<text xml:space="preserve" x="28.0" y="70.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Search 'intern'; filter by</text>
+<text xml:space="preserve" x="28.0" y="85.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Remote</text>
+<line x1="216.0" y1="62.0" x2="284.0" y2="190.0" stroke="#CFC4B2" stroke-width="1.6"/>
+<rect x="544.0" y="20.0" width="200.0" height="84.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.5"/>
+<text xml:space="preserve" x="556.0" y="48.0" font-size="13.5" fill="#2F6B3F" font-weight="700" text-anchor="start">Job boards</text>
+<text xml:space="preserve" x="556.0" y="70.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Jobberman, MyJobMag,</text>
+<text xml:space="preserve" x="556.0" y="85.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">HotNigerianJobs</text>
+<line x1="544.0" y1="62.0" x2="476.0" y2="190.0" stroke="#CFC4B2" stroke-width="1.6"/>
+<rect x="16.0" y="150.0" width="200.0" height="84.0" rx="10" fill="#F3EBD8" stroke="#8A6A1F" stroke-width="1.5"/>
+<text xml:space="preserve" x="28.0" y="178.0" font-size="13.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Company pages</text>
+<text xml:space="preserve" x="28.0" y="200.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Banks, consultancies, tech,</text>
+<text xml:space="preserve" x="28.0" y="215.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">FMCG</text>
+<line x1="216.0" y1="192.0" x2="284.0" y2="190.0" stroke="#CFC4B2" stroke-width="1.6"/>
+<rect x="544.0" y="150.0" width="200.0" height="84.0" rx="10" fill="#EEEAF5" stroke="#5C4F80" stroke-width="1.5"/>
+<text xml:space="preserve" x="556.0" y="178.0" font-size="13.5" fill="#5C4F80" font-weight="700" text-anchor="start">Your school</text>
+<text xml:space="preserve" x="556.0" y="200.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Career services, SIWES</text>
+<text xml:space="preserve" x="556.0" y="215.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">coordinator, notice boards</text>
+<line x1="544.0" y1="192.0" x2="476.0" y2="190.0" stroke="#CFC4B2" stroke-width="1.6"/>
+<rect x="16.0" y="280.0" width="200.0" height="84.0" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.5"/>
+<text xml:space="preserve" x="28.0" y="308.0" font-size="13.5" fill="#9B2C1F" font-weight="700" text-anchor="start">Your network</text>
+<text xml:space="preserve" x="28.0" y="330.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Lecturers, alumni, older</text>
+<text xml:space="preserve" x="28.0" y="345.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">students</text>
+<line x1="216.0" y1="322.0" x2="284.0" y2="190.0" stroke="#CFC4B2" stroke-width="1.6"/>
+<rect x="544.0" y="280.0" width="200.0" height="84.0" rx="10" fill="#FFFFFF" stroke="#2F6B3F" stroke-width="1.8"/>
+<text xml:space="preserve" x="556.0" y="308.0" font-size="13.5" fill="#2F6B3F" font-weight="700" text-anchor="start">Ask directly</text>
+<text xml:space="preserve" x="556.0" y="330.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Small firms rarely</text>
+<text xml:space="preserve" x="556.0" y="345.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">advertise. Email politely.</text>
+</g></svg>

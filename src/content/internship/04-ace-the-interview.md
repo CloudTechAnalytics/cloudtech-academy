@@ -32,6 +32,8 @@ For "tell me about a time…" questions, use **STAR**:
 
 > **Example:** "In my second year, our departmental dinner had 40% fewer sign-ups than planned two weeks before the date (**S**). As publicity lead, I had to fill the tickets (**T**). I designed Canva posters, set up a Google Form and asked each class rep to share it in their WhatsApp groups (**A**). We sold out three days before the event (**R**)."
 
+![The STAR method with an example: situation, task, action and result for a student who filled a club meeting](/images/courses/internship/star.svg "STAR: Situation, Task, Action, Result.")
+
 ## Online interviews
 
 - Test the link, camera and microphone the day before.
@@ -45,6 +47,8 @@ For "tell me about a time…" questions, use **STAR**:
 - "What would a typical day look like for an intern?"
 - "What would success look like at the end of the internship?"
 - "Who would I be working with most closely?"
+
+![What to do before, during and after an internship interview, and three good questions to ask the employer](/images/courses/internship/interview-journey.svg "Before, during and after the interview.")
 
 ## After the interview
 
