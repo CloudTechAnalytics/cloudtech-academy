@@ -1,4 +1,5 @@
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
+import { Check, FileText, MoreHorizontal, Pencil, Trash2, X } from "lucide-react";
 import { getBackend, type AdminPayment, type PaymentAccount, type PaymentSettings, type PaymentStatus } from "@/lib/backend";
 import { PageLoading } from "@/lib/auth";
 import { formatDate } from "@/lib/format";
@@ -21,6 +22,63 @@ function Chip({ p }: { p: AdminPayment }) {
   const late = overdue(p);
   const cls = late || p.status === "rejected" ? "border-danger/40 bg-danger/10 text-danger" : p.status === "confirmed" ? "border-success/40 bg-success-bg text-success" : p.status === "submitted" ? "border-brass/50 bg-brass-pale/50 text-brass-dark" : "border-line-strong bg-sand text-muted";
   return <span className={`inline-flex whitespace-nowrap rounded-full border px-2.5 py-0.5 text-[0.75rem] font-medium ${cls}`}>{late ? "Overdue" : STATUS[p.status]}</span>;
+}
+
+/** Row actions in a small menu, so the table stays narrow. <details> keeps it keyboard-accessible. */
+function PaymentActions({
+  p,
+  busy,
+  onReceipt,
+  onConfirm,
+  onReject,
+  onEdit,
+  onDelete,
+}: {
+  p: AdminPayment;
+  busy: boolean;
+  onReceipt: () => void;
+  onConfirm: () => void;
+  onReject: () => void;
+  onEdit: () => void;
+  onDelete: () => void;
+}) {
+  const ref = useRef<HTMLDetailsElement>(null);
+  const run = (fn: () => void) => () => {
+    ref.current?.removeAttribute("open");
+    fn();
+  };
+  const item = "flex w-full items-center gap-2 px-3.5 py-2 text-left text-[0.875rem] hover:bg-sand disabled:opacity-50";
+  return (
+    <details ref={ref} className="relative inline-block text-left">
+      <summary title="Actions" className="inline-flex cursor-pointer list-none items-center rounded-lg border border-line-strong p-2 hover:border-ink/40 [&::-webkit-details-marker]:hidden">
+        <MoreHorizontal aria-hidden className="h-4 w-4" />
+        <span className="sr-only">Actions for {p.reference}</span>
+      </summary>
+      <div className="absolute right-0 z-20 mt-1 w-48 overflow-hidden rounded-xl border border-line bg-paper py-1 shadow-[0_16px_40px_-20px_rgba(23,23,23,0.45)]">
+        {p.proofPath && (
+          <button type="button" className={item} onClick={run(onReceipt)}>
+            <FileText aria-hidden className="h-4 w-4" /> View receipt
+          </button>
+        )}
+        {p.status !== "confirmed" && (
+          <button type="button" disabled={busy} className={`${item} text-success`} onClick={run(onConfirm)}>
+            <Check aria-hidden className="h-4 w-4" /> Confirm
+          </button>
+        )}
+        {p.status === "submitted" && (
+          <button type="button" disabled={busy} className={`${item} text-danger`} onClick={run(onReject)}>
+            <X aria-hidden className="h-4 w-4" /> Reject
+          </button>
+        )}
+        <button type="button" className={item} onClick={run(onEdit)}>
+          <Pencil aria-hidden className="h-4 w-4" /> Edit
+        </button>
+        <button type="button" disabled={busy} className={`${item} border-t border-line text-danger`} onClick={run(onDelete)}>
+          <Trash2 aria-hidden className="h-4 w-4" /> Delete
+        </button>
+      </div>
+    </details>
+  );
 }
 
 /** Payment accounts and how payments are taken: the settings learners see when they pay. */
@@ -268,7 +326,7 @@ export default function AdminPayments() {
         <p className="text-[0.875rem] text-muted">{rows.length} payments</p>
       </div>
 
-      <div className="table-scroll rounded-2xl border border-line bg-paper">
+      <div className="table-scroll rounded-2xl border border-line bg-paper lg:overflow-visible">
         <table>
           <thead>
             <tr>
@@ -277,7 +335,7 @@ export default function AdminPayments() {
               <th>Amount</th>
               <th>Paid with</th>
               <th>Status</th>
-              <th>
+              <th className="w-12">
                 <span className="sr-only">Actions</span>
               </th>
             </tr>
@@ -299,9 +357,9 @@ export default function AdminPayments() {
                     {formatPrice(p.amount, p.currency)}
                     {p.dueAt && p.status !== "confirmed" && <span className="block text-[0.75rem] text-muted">Due {formatDate(p.dueAt)}</span>}
                   </td>
-                  <td>
+                  <td className="max-w-[14rem]">
                     {p.accountLabel ?? "—"}
-                    <span className="block font-mono text-[0.75rem] text-muted">{p.reference}</span>
+                    <span className="block break-all font-mono text-[0.75rem] text-muted">{p.reference}</span>
                     {p.payerName && <span className="block text-[0.75rem] text-muted">From {p.payerName}{p.paidOn ? `, ${formatDate(p.paidOn)}` : ""}</span>}
                     {p.note && <span className="block text-[0.75rem] text-muted">{p.note}</span>}
                     {p.rejectedReason && <span className="block text-[0.75rem] text-danger">Rejected: {p.rejectedReason}</span>}
@@ -310,51 +368,25 @@ export default function AdminPayments() {
                     <Chip p={p} />
                     <span className="mt-1 block text-[0.75rem] text-muted">{p.source === "admin" ? "Recorded by admin" : ""}</span>
                   </td>
-                  <td className="whitespace-nowrap text-right text-[0.8125rem] font-semibold">
-                    {p.proofPath && (
-                      <button type="button" className="mr-3 text-brass-dark" onClick={() => void openProof(p.proofPath!)}>
-                        Receipt
-                      </button>
-                    )}
-                    {p.status !== "confirmed" && (
-                      <button type="button" disabled={busy} className="mr-3 text-success disabled:opacity-50" onClick={() => void act("Payment confirmed.", async () => (await getBackend()).admin.confirmPayment(p.id, ""))}>
-                        Confirm
-                      </button>
-                    )}
-                    {p.status === "submitted" && (
-                      <button
-                        type="button"
-                        disabled={busy}
-                        className="mr-3 text-danger disabled:opacity-50"
-                        onClick={() => {
-                          const reason = window.prompt("Why can't you accept this payment? The learner will see this.", "We couldn't find the payment");
-                          if (reason !== null) void act("Payment rejected.", async () => (await getBackend()).admin.rejectPayment(p.id, reason));
-                        }}
-                      >
-                        Reject
-                      </button>
-                    )}
-                    <button
-                      type="button"
-                      className="mr-3 text-ink"
-                      onClick={() => {
+                  <td className="text-right">
+                    <PaymentActions
+                      p={p}
+                      busy={busy}
+                      onReceipt={() => void openProof(p.proofPath!)}
+                      onConfirm={() => void act("Payment confirmed.", async () => (await getBackend()).admin.confirmPayment(p.id, ""))}
+                      onReject={() => {
+                        const reason = window.prompt("Why can't you accept this payment? The learner will see this.", "We couldn't find the payment");
+                        if (reason !== null) void act("Payment rejected.", async () => (await getBackend()).admin.rejectPayment(p.id, reason));
+                      }}
+                      onEdit={() => {
                         setEditing(p);
                         setEdit({ amount: String(p.amount), status: p.status, method: p.accountLabel ?? "", note: p.note ?? "", paidOn: p.paidOn ?? "" });
                       }}
-                    >
-                      Edit
-                    </button>
-                    <button
-                      type="button"
-                      disabled={busy}
-                      className="text-danger disabled:opacity-50"
-                      onClick={() => {
+                      onDelete={() => {
                         if (window.confirm(`Delete this ${formatPrice(p.amount, p.currency)} payment from ${p.fullName}?${p.status === "confirmed" ? " If no confirmed payment is left on the order, the access it opened is closed." : ""}`))
                           void act("Payment deleted.", async () => (await getBackend()).admin.deletePayment(p.id));
                       }}
-                    >
-                      Delete
-                    </button>
+                    />
                   </td>
                 </tr>
               );
