@@ -24,13 +24,14 @@ export const paystackKey = () => {
 export const admin = (): SupabaseClient =>
   createClient(Deno.env.get("SUPABASE_URL")!, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!, { auth: { persistSession: false } });
 
-/** The signed-in learner making the request, from their access token. */
+/**
+ * The signed-in user making the request, from their access token. The token is checked by the auth server directly, which
+ * works however the project's keys are set up (a client built on the anon key can fail to read newer tokens).
+ */
 export async function requestUser(req: Request) {
-  const client = createClient(Deno.env.get("SUPABASE_URL")!, Deno.env.get("SUPABASE_ANON_KEY")!, {
-    global: { headers: { Authorization: req.headers.get("Authorization") ?? "" } },
-    auth: { persistSession: false },
-  });
-  const { data } = await client.auth.getUser();
+  const token = (req.headers.get("Authorization") ?? "").replace(/^Bearer\s+/i, "").trim();
+  if (!token) return null;
+  const { data } = await admin().auth.getUser(token);
   return data.user;
 }
 

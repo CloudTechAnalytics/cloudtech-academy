@@ -147,6 +147,7 @@ export default function AdminEmails() {
   const [body, setBody] = useState("");
   const [replyTo, setReplyTo] = useState<string | null>(null);
   const [show, setShow] = useState("");
+  const [picked, setPicked] = useState<Set<string>>(new Set());
 
   if (error) return <Alert tone="error">{error}</Alert>;
   if (!data) return <PageLoading />;
@@ -155,6 +156,24 @@ export default function AdminEmails() {
   const queued = log.filter((l) => l.status === "queued").length;
   const failed = log.filter((l) => l.status === "failed").length;
   const rows = log.filter((l) => !show || l.status === show);
+  const allShown = rows.length > 0 && rows.every((r) => picked.has(r.id));
+  const togglePick = (id: string) =>
+    setPicked((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  const remove = (ids: string[], what: string) => {
+    if (!ids.length || !window.confirm(`Delete ${what} from the log? Emails already sent can't be recalled, and waiting emails won't be sent.`)) return;
+    void act(
+      () => `${ids.length} ${ids.length === 1 ? "entry" : "entries"} deleted.`,
+      async () => {
+        await (await getBackend()).admin.deleteEmails(ids);
+        setPicked(new Set());
+      },
+    );
+  };
 
   const act = async (okText: (n?: number) => string, fn: () => Promise<number | void>) => {
     setBusy(true);
@@ -286,6 +305,13 @@ export default function AdminEmails() {
 
       <div className="mb-3 mt-12 flex flex-wrap items-center justify-between gap-3">
         <h2 className="font-serif text-[1.5rem]">Email log</h2>
+        <div className="flex flex-wrap items-center gap-3">
+          <Button variant="secondary" disabled={busy || picked.size === 0} onClick={() => remove([...picked], picked.size === 1 ? "this entry" : `${picked.size} entries`)}>
+            Delete selected{picked.size ? ` (${picked.size})` : ""}
+          </Button>
+          <Button variant="secondary" disabled={busy || !log.some((l) => l.status === "sent")} onClick={() => remove(log.filter((l) => l.status === "sent").map((l) => l.id), "all sent emails")}>
+            Clear sent
+          </Button>
         <select aria-label="Status" className="rounded-lg border border-line-strong bg-paper px-3 py-2 text-[0.9375rem]" value={show} onChange={(e) => setShow(e.target.value)}>
           <option value="">All</option>
           {Object.entries(STATUS).map(([k, v]) => (
@@ -294,20 +320,36 @@ export default function AdminEmails() {
             </option>
           ))}
         </select>
+        </div>
       </div>
       <div className="table-scroll rounded-2xl border border-line bg-paper">
         <table>
           <thead>
             <tr>
+              <th className="w-10">
+                <input
+                  type="checkbox"
+                  aria-label="Select everything shown"
+                  checked={allShown}
+                  onChange={() => setPicked(allShown ? new Set() : new Set(rows.map((r) => r.id)))}
+                  className="h-4 w-4 accent-[var(--color-brass-dark)]"
+                />
+              </th>
               <th>To</th>
               <th>Email</th>
               <th>Status</th>
               <th>Date</th>
+              <th>
+                <span className="sr-only">Actions</span>
+              </th>
             </tr>
           </thead>
           <tbody>
             {rows.map((l) => (
               <tr key={l.id}>
+                <td>
+                  <input type="checkbox" aria-label={`Select ${l.subject}`} checked={picked.has(l.id)} onChange={() => togglePick(l.id)} className="h-4 w-4 accent-[var(--color-brass-dark)]" />
+                </td>
                 <td>
                   {l.toName ?? "—"}
                   <span className="block text-[0.75rem] text-muted">{l.toEmail}</span>
@@ -319,11 +361,16 @@ export default function AdminEmails() {
                 </td>
                 <td>{STATUS[l.status]}</td>
                 <td className="whitespace-nowrap">{formatDate(l.sentAt ?? l.createdAt)}</td>
+                <td className="text-right">
+                  <button type="button" disabled={busy} className="text-[0.8125rem] font-semibold text-danger disabled:opacity-50" onClick={() => remove([l.id], "this entry")}>
+                    Delete
+                  </button>
+                </td>
               </tr>
             ))}
             {rows.length === 0 && (
               <tr>
-                <td colSpan={4} className="py-8 text-center text-muted">
+                <td colSpan={6} className="py-8 text-center text-muted">
                   No emails yet.
                 </td>
               </tr>

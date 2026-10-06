@@ -1110,6 +1110,9 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
           (r): EmailLogEntry => ({ id: r.id, toEmail: r.to_email, toName: r.to_name ?? null, template: r.template ?? null, subject: r.subject, body: r.body, status: r.status, error: r.error ?? null, createdAt: r.created_at, sentAt: r.sent_at ?? null }),
         );
       },
+      async deleteEmails(ids) {
+        if (ids.length) check(await sb.from("email_outbox").delete().in("id", ids));
+      },
       async emailSetup() {
         const s = check(await sb.from("email_settings").select("enabled, reply_to").eq("id", 1).single()) as Row;
         const st = ((check(await sb.rpc("admin_email_status")) as Row[]) ?? [])[0];

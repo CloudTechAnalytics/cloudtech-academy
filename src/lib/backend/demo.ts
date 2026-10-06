@@ -1511,6 +1511,12 @@ export function createDemoBackend(): Backend {
         requireAdmin();
         return [...load().emails].sort((a, b) => b.createdAt.localeCompare(a.createdAt));
       },
+      async deleteEmails(ids) {
+        requireAdmin();
+        const s = load();
+        s.emails = s.emails.filter((e) => !ids.includes(e.id));
+        save(s);
+      },
       async emailSetup() {
         requireAdmin();
         const s = load();

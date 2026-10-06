@@ -740,6 +740,8 @@ export interface Backend {
     listEmailTemplates(): Promise<EmailTemplate[]>;
     saveEmailTemplate(t: EmailTemplate): Promise<void>;
     listEmailLog(): Promise<EmailLogEntry[]>;
+    /** Deletes entries from the email log. Emails already sent can't be recalled. */
+    deleteEmails(ids: string[]): Promise<void>;
     emailSetup(): Promise<EmailSetup>;
     saveEmailSettings(s: { enabled: boolean; replyTo: string | null }): Promise<void>;
     /** Connects email through a Gmail address and an app password. Leave the password empty to keep the saved one. */
