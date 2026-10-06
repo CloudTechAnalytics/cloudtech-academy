@@ -522,7 +522,7 @@ export default function AdminPayments() {
       <AccountsAndSettings accounts={data.accounts} settings={data.settings} reload={reload} note={setMsg} />
 
       <div className="mt-14">
-        <AdminCardOrders />
+        <AdminCardOrders onDeleted={reload} />
       </div>
     </>
   );

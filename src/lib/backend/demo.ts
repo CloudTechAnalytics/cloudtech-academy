@@ -1665,6 +1665,16 @@ export function createDemoBackend(): Backend {
         for (const o of s.courseOrders) if (o.userId === userId && o.trackId === trackId && (o.status === "pending" || o.status === "granted")) Object.assign(o, { status: "cancelled", note: reason.trim() || o.note });
         save(s);
       },
+      async deleteCourseOrder(orderId) {
+        requireAdmin();
+        const s = load();
+        const o = s.courseOrders.find((x) => x.id === orderId);
+        if (!o) throw new BackendError("Order not found.");
+        closeForOrder(s, o);
+        s.orderPayments = s.orderPayments.filter((p) => p.orderId !== orderId);
+        s.courseOrders = s.courseOrders.filter((x) => x.id !== orderId);
+        save(s);
+      },
       async listCourseOrders() {
         requireAdmin();
         const s = load();

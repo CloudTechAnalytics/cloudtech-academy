@@ -725,6 +725,8 @@ export interface Backend {
     revokeProgrammeAccess(userId: string, trackId: string, reason: string): Promise<void>;
     listCourseEnrollments(courseId?: string): Promise<AdminEnrollment[]>;
     listCourseOrders(): Promise<AdminCourseOrder[]>;
+    /** Deletes an order and its payment parts, closing any access the order opened. */
+    deleteCourseOrder(orderId: string): Promise<void>;
     /** Gives a student access to a course without a payment (e.g. after a bank transfer, or a scholarship). */
     grantCourseAccess(userId: string, courseId: string, note: string): Promise<void>;
     /** Removes a student's access to a course. */

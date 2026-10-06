@@ -1208,6 +1208,9 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
           }),
         );
       },
+      async deleteCourseOrder(orderId) {
+        check(await sb.rpc("admin_delete_order", { p_order_id: orderId }));
+      },
       async listCourseOrders() {
         const [orders, profiles, courses, tracks] = await Promise.all([
           sb.from("course_orders").select("*").order("created_at", { ascending: false }).limit(500),

@@ -260,9 +260,11 @@ export function AdminEnrollments() {
 }
 
 /** Card payments through Paystack, kept for when card payment is switched on: what was ordered, what was paid, and the provider reference. */
-export function AdminCardOrders() {
-  const { data, error } = useAdminData(async () => (await getBackend()).admin.listCourseOrders());
+export function AdminCardOrders({ onDeleted }: { onDeleted?: () => unknown } = {}) {
+  const { data, error, reload } = useAdminData(async () => (await getBackend()).admin.listCourseOrders());
   const [status, setStatus] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [msg, setMsg] = useState<string | null>(null);
   if (error) return <Alert tone="error">{error}</Alert>;
   if (!data) return <PageLoading />;
   const rows = data.filter((o) => !status || o.status === status);
@@ -291,6 +293,11 @@ export function AdminCardOrders() {
         </Link>
         .
       </p>
+      {msg && (
+        <div className="mb-4" aria-live="polite">
+          <Alert tone="error">{msg}</Alert>
+        </div>
+      )}
       <select aria-label="Status" className={`${selectCls} mb-4`} value={status} onChange={(e) => setStatus(e.target.value)}>
         <option value="">All statuses</option>
         {Object.entries(ORDER_STATUS).map(([k, v]) => (
@@ -309,6 +316,9 @@ export function AdminCardOrders() {
               <th>Status</th>
               <th>Date</th>
               <th>Reference</th>
+              <th>
+                <span className="sr-only">Actions</span>
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -326,11 +336,31 @@ export function AdminCardOrders() {
                 <td>{ORDER_STATUS[o.status]}</td>
                 <td>{formatDate(o.paidAt ?? o.createdAt)}</td>
                 <td className="font-mono text-[0.75rem]">{o.providerRef ?? o.note ?? o.id.slice(0, 8).toUpperCase()}</td>
+                <td className="whitespace-nowrap text-right">
+                  <button
+                    type="button"
+                    disabled={busy}
+                    className="text-[0.8125rem] font-semibold text-danger disabled:opacity-50"
+                    onClick={() => {
+                      const opens = o.status === "paid" || o.status === "partial" || o.status === "granted";
+                      if (!window.confirm(`Delete this ${formatPrice(o.amount, o.currency)} order from ${o.studentName}?${opens ? " Access it opened is closed, and its payments are deleted too." : ""}`)) return;
+                      setBusy(true);
+                      setMsg(null);
+                      void getBackend()
+                        .then((b) => b.admin.deleteCourseOrder(o.id))
+                        .then(() => Promise.all([reload(), onDeleted?.()]))
+                        .catch((e) => setMsg(e instanceof Error ? e.message : "Couldn't delete the order."))
+                        .finally(() => setBusy(false));
+                    }}
+                  >
+                    Delete
+                  </button>
+                </td>
               </tr>
             ))}
             {rows.length === 0 && (
               <tr>
-                <td colSpan={6} className="py-8 text-center text-muted">
+                <td colSpan={7} className="py-8 text-center text-muted">
                   No payments yet.
                 </td>
               </tr>
