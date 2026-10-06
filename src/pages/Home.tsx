@@ -27,64 +27,56 @@ const STEPS = [
   { icon: FolderKanban, title: "Build and certify", body: "Finish a real project and earn a certificate anyone can verify." },
 ];
 
-/** The hero's picture: a lesson as it looks in the Academy, drawn in code rather than a stock photo. */
-function HeroMockup() {
+/** The hero's picture: a Professional Certificate and the badges and progress that lead to it, drawn in code. */
+function HeroVisual() {
+  const programmes = ["Data Analysis", "Business Analysis", "Data Science", "AI Engineering", "Cloud & DevOps"];
   return (
-    <div aria-hidden className="relative mx-auto w-full max-w-[34rem] pb-8 lg:pb-0">
-      <div className="overflow-hidden rounded-2xl border border-line bg-paper shadow-[0_32px_64px_-36px_rgba(23,32,51,0.45)]">
-        <div className="flex items-center gap-2 border-b border-line px-4 py-3">
-          <span className="h-2.5 w-2.5 rounded-full bg-line-strong" />
-          <span className="h-2.5 w-2.5 rounded-full bg-line-strong" />
-          <span className="h-2.5 w-2.5 rounded-full bg-line-strong" />
-          <span className="ml-3 text-[0.75rem] font-medium text-subtle">SQL for Data Analysis · Lesson 7</span>
+    <div aria-hidden className="relative mx-auto w-full max-w-[34rem] pb-10 lg:pb-0">
+      <div className="relative overflow-hidden rounded-[2rem] bg-[#1E1D1B] p-6 pb-10 shadow-[0_40px_80px_-40px_rgba(23,23,23,0.7)] sm:p-9 sm:pb-12">
+        <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-[#C9A45C]/30 blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-28 -left-16 h-64 w-64 rounded-full bg-[#C9A45C]/15 blur-3xl" />
+        <p className="relative text-[0.6875rem] font-semibold uppercase tracking-[0.28em] text-[#C9A45C]">Professional Programme</p>
+        <div className="relative mt-4 flex flex-wrap gap-2">
+          {programmes.map((p, i) => (
+            <span
+              key={p}
+              className={`rounded-full px-3 py-1.5 text-[0.75rem] font-medium ${i === 0 ? "bg-[#C9A45C] text-[#1E1D1B]" : "border border-white/15 bg-white/5 text-[#E6DECB]"}`}
+            >
+              {p}
+            </span>
+          ))}
         </div>
-        <div className="p-5 sm:p-6">
-          <p className="font-serif text-[1.15rem] text-ink">Aggregate functions</p>
-          <p className="mt-1.5 text-[0.875rem] leading-relaxed text-muted">
-            <code className="rounded bg-sand px-1 font-mono text-[0.8rem] text-ink">SUM</code> adds up a column for each group. Try it on the shipments table:
-          </p>
-          <pre className="code-block mt-4 text-[0.8rem]">
-            <code>
-              <span className="text-brass-light">SELECT</span> customer, <span className="text-brass-light">SUM</span>(containers){"\n"}
-              <span className="text-brass-light">FROM</span> shipments{"\n"}
-              <span className="text-brass-light">GROUP BY</span> customer;
-            </code>
-          </pre>
-          <table className="mt-4 w-full text-left text-[0.8rem]">
-            <thead>
-              <tr className="border-b border-line text-subtle">
-                <th className="py-1.5 font-medium">customer</th>
-                <th className="py-1.5 text-right font-medium">containers</th>
-              </tr>
-            </thead>
-            <tbody className="text-ink-soft">
-              {[
-                ["Oakridge Packaging", "412"],
-                ["Lagoon Foods", "287"],
-                ["Delta Steelworks", "241"],
-              ].map(([c, n]) => (
-                <tr key={c} className="border-b border-line last:border-0">
-                  <td className="py-1.5">{c}</td>
-                  <td className="py-1.5 text-right tabular-nums">{n}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <p className="mt-4 flex items-center gap-2 rounded-lg bg-success-bg px-3 py-2 text-[0.8125rem] font-medium text-success">
-            <CheckCircle2 className="h-4 w-4" /> Correct. Your result matches the expected answer.
-          </p>
+        <div className="relative mt-7 -rotate-2 overflow-hidden rounded-xl bg-white shadow-[0_30px_60px_-30px_rgba(0,0,0,0.8)]">
+          <div className="flex">
+            <div className="w-5 shrink-0 bg-[#1E1D1B] sm:w-6" style={{ backgroundImage: "linear-gradient(180deg,#C9A45C,#1E1D1B 60%)" }} />
+            <div className="min-w-0 flex-1 p-5 sm:p-6">
+              <p className="text-[0.625rem] font-semibold uppercase tracking-[0.26em] text-[#8A6A1F]">Professional Certificate</p>
+              <p className="mt-3 text-[0.6875rem] text-[#6B665C]">This is to certify that</p>
+              <p className="font-serif text-[1.6rem] leading-tight text-[#1E1D1B]">Your Name Here</p>
+              <p className="mt-1 text-[0.6875rem] text-[#6B665C]">has completed the professional programme</p>
+              <p className="font-serif text-[1.15rem] text-[#8A6A1F]">Data Analysis</p>
+              <div className="mt-4 flex items-end justify-between">
+                <span className="font-mono text-[0.625rem] text-[#6B665C]">CTA-2026-000124</span>
+                <span className="grid h-12 w-12 grid-cols-5 gap-px rounded bg-white p-1 ring-1 ring-[#E4D9C3]">
+                  {Array.from({ length: 25 }, (_, i) => (
+                    <span key={i} className={[0, 1, 4, 5, 6, 9, 10, 12, 14, 15, 18, 20, 21, 22, 24].includes(i) ? "bg-[#1E1D1B]" : "bg-transparent"} />
+                  ))}
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      <div className="absolute -bottom-2 left-3 w-56 rounded-xl border border-line bg-paper p-4 shadow-[0_20px_40px_-24px_rgba(23,32,51,0.45)] sm:-left-6 lg:-bottom-8">
+      <div className="absolute -bottom-3 left-3 w-56 rounded-xl border border-line bg-paper p-4 shadow-[0_20px_40px_-24px_rgba(23,32,51,0.45)] sm:-left-6 lg:-bottom-6">
         <div className="flex items-center justify-between text-[0.75rem]">
-          <span className="font-medium text-muted">Course progress</span>
-          <span className="font-semibold text-ink">38%</span>
+          <span className="font-medium text-muted">Programme progress</span>
+          <span className="font-semibold text-ink">62%</span>
         </div>
         <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-sand">
-          <div className="h-full w-[38%] rounded-full bg-brass" />
+          <div className="h-full w-[62%] rounded-full bg-brass" />
         </div>
       </div>
-      <div className="absolute -top-4 right-3 flex items-center gap-2.5 rounded-xl border border-line bg-paper px-3.5 py-2.5 shadow-[0_20px_40px_-24px_rgba(23,32,51,0.45)] sm:-right-5">
+      <div className="absolute -top-4 right-3 hidden items-center gap-2.5 rounded-xl border border-line bg-paper px-3.5 py-2.5 shadow-[0_20px_40px_-24px_rgba(23,32,51,0.45)] sm:-right-5 sm:flex">
         <span className="grid h-8 w-8 place-items-center rounded-lg bg-brass-pale text-brass-dark">
           <Award className="h-4 w-4" />
         </span>
@@ -92,6 +84,9 @@ function HeroMockup() {
           <span className="block text-subtle">Badge earned</span>
           <span className="block font-semibold text-ink">SQL Querying</span>
         </span>
+      </div>
+      <div className="absolute -right-2 bottom-14 hidden items-center gap-2 rounded-full border border-line bg-paper px-3 py-2 text-[0.75rem] font-semibold text-success shadow-[0_20px_40px_-24px_rgba(23,32,51,0.45)] sm:flex lg:-right-6">
+        <CheckCircle2 className="h-4 w-4" /> Verified
       </div>
     </div>
   );
@@ -129,7 +124,7 @@ export default function Home() {
 
   return (
     <>
-      <section className="border-b border-line bg-paper">
+      <section className="border-b border-line bg-paper" style={{ backgroundImage: "radial-gradient(60rem 28rem at 85% -10%, rgba(201,164,92,0.16), transparent 60%)" }}>
         <div className="container-page grid items-center gap-14 py-16 sm:py-20 lg:grid-cols-2 lg:py-24">
           <Reveal>
             <p className="inline-flex items-center gap-2 rounded-full bg-brass-pale px-3 py-1 text-[0.8125rem] font-semibold text-brass-dark">
@@ -152,7 +147,7 @@ export default function Home() {
             </div>
           </Reveal>
           <Reveal delay={120}>
-            <HeroMockup />
+            <HeroVisual />
           </Reveal>
         </div>
       </section>
