@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 400" width="760" height="400" role="img" aria-label="Backing up and sharing. Files kept only on a laptop are lost if it is stolen or damaged; keeping the School folder inside a cloud app such as Google Drive for desktop or OneDrive syncs a copy online automatically. When sharing, pick specific people rather than anyone with the link, give Viewer access unless someone must edit, and remove access when the project ends.">
+<title>Keep a copy online automatically, and share with the least access needed.</title>
+<defs><marker id="a2F6B3F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2F6B3F"/></marker></defs>
+<rect width="760" height="400" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="26.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">One copy is no copy</text>
+<rect x="16.0" y="38.0" width="190.0" height="100.0" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.5"/>
+<text xml:space="preserve" x="30.0" y="64.0" font-size="13.5" fill="#9B2C1F" font-weight="700" text-anchor="start">Only on the laptop</text>
+<text xml:space="preserve" x="30.0" y="88.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Stolen or dropped:</text>
+<text xml:space="preserve" x="30.0" y="106.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="start">everything is gone.</text>
+<rect x="260.0" y="38.0" width="484.0" height="100.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.5"/>
+<text xml:space="preserve" x="274.0" y="64.0" font-size="13.5" fill="#2F6B3F" font-weight="700" text-anchor="start">School folder inside the cloud app</text>
+<rect x="274.0" y="76.0" width="130.0" height="50.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<text xml:space="preserve" x="339.0" y="106.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="middle">Laptop</text>
+<line x1="406.0" y1="94.0" x2="468.0" y2="94.0" stroke="#2F6B3F" stroke-width="2"/>
+<path d="M408.0,90.0 L466.0,90.0" fill="none" stroke="#2F6B3F" stroke-width="2" marker-end="url(#a2F6B3F)"/>
+<path d="M466.0,106.0 L408.0,106.0" fill="none" stroke="#2F6B3F" stroke-width="2" marker-end="url(#a2F6B3F)"/>
+<rect x="470.0" y="76.0" width="130.0" height="50.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<text xml:space="preserve" x="535.0" y="106.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="middle">Drive / OneDrive</text>
+<text xml:space="preserve" x="612.0" y="98.0" font-size="12" fill="#2F6B3F" font-weight="700" text-anchor="start">syncs automatically</text>
+<text xml:space="preserve" x="16.0" y="178.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Share with the least access that works</text>
+<rect x="16.0" y="192.0" width="232.0" height="78.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.5"/>
+<text xml:space="preserve" x="30.0" y="218.0" font-size="14" fill="#2F6B3F" font-weight="700" text-anchor="start">Viewer</text>
+<text xml:space="preserve" x="30.0" y="240.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Can read. Use this by default.</text>
+<rect x="264.0" y="192.0" width="232.0" height="78.0" rx="10" fill="#F3EBD8" stroke="#8A6A1F" stroke-width="1.5"/>
+<text xml:space="preserve" x="278.0" y="218.0" font-size="14" fill="#8A6A1F" font-weight="700" text-anchor="start">Commenter</text>
+<text xml:space="preserve" x="278.0" y="240.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Can suggest and comment.</text>
+<rect x="512.0" y="192.0" width="232.0" height="78.0" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.5"/>
+<text xml:space="preserve" x="526.0" y="218.0" font-size="14" fill="#9B2C1F" font-weight="700" text-anchor="start">Editor</text>
+<text xml:space="preserve" x="526.0" y="240.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Can change the file. Only who</text>
+<text xml:space="preserve" x="526.0" y="256.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">needs it.</text>
+<rect x="16.0" y="288.0" width="358.0" height="82.0" rx="10" fill="#FFFFFF" stroke="#2F6B3F" stroke-width="1.5"/>
+<text xml:space="preserve" x="30.0" y="312.0" font-size="13.5" fill="#2F6B3F" font-weight="700" text-anchor="start">✓  Specific people</text>
+<text xml:space="preserve" x="30.0" y="336.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">Named accounts only</text>
+<text xml:space="preserve" x="30.0" y="354.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">You know who can open it.</text>
+<rect x="386.0" y="288.0" width="358.0" height="82.0" rx="10" fill="#FFFFFF" stroke="#9B2C1F" stroke-width="1.5"/>
+<text xml:space="preserve" x="400.0" y="312.0" font-size="13.5" fill="#9B2C1F" font-weight="700" text-anchor="start">!  Anyone with the link</text>
+<text xml:space="preserve" x="400.0" y="336.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">Anyone who gets the link can open it,</text>
+<text xml:space="preserve" x="400.0" y="354.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">including people you forwarded it to.</text>
+<text xml:space="preserve" x="16.0" y="392.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Share a link instead of attaching big files, and remove access when the project ends.</text>
+</g></svg>

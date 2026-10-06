@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 380" width="760" height="380" role="img" aria-label="Why two-step verification helps. With only a password, someone who steals or guesses it gets in. With two-step verification, they also need a code from your phone, so a stolen password alone is not enough. Never share a verification code with anyone.">
+<title>A stolen password isn't enough when a code from your phone is also needed.</title>
+<defs><marker id="a9B2C1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#9B2C1F"/></marker><marker id="a2F6B3F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2F6B3F"/></marker></defs>
+<rect width="760" height="380" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="20.0" width="358.0" height="190.0" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.6"/>
+<text xml:space="preserve" x="30.0" y="46.0" font-size="15" fill="#9B2C1F" font-weight="700" text-anchor="start">Password only</text>
+<rect x="30.0" y="60.0" width="150.0" height="44.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<text xml:space="preserve" x="105.0" y="88.0" font-size="11.5" fill="#2A2926" font-weight="700" text-anchor="middle">Attacker has password</text>
+<path d="M184.0,82.0 L222.0,82.0" fill="none" stroke="#9B2C1F" stroke-width="2" marker-end="url(#a9B2C1F)"/>
+<rect x="226.0" y="60.0" width="134.0" height="44.0" rx="10" fill="#E8C7C2" stroke="#9B2C1F" stroke-width="1.5"/>
+<text xml:space="preserve" x="293.0" y="88.0" font-size="13" fill="#9B2C1F" font-weight="700" text-anchor="middle">Account open</text>
+<text xml:space="preserve" x="30.0" y="140.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">One reused or guessed password</text>
+<text xml:space="preserve" x="30.0" y="160.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">is enough.</text>
+<rect x="386.0" y="20.0" width="358.0" height="190.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.6"/>
+<text xml:space="preserve" x="400.0" y="46.0" font-size="15" fill="#2F6B3F" font-weight="700" text-anchor="start">Password + code from your phone</text>
+<rect x="400.0" y="60.0" width="100.0" height="44.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<text xml:space="preserve" x="450.0" y="88.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="middle">Password ✓</text>
+<path d="M504.0,82.0 L520.0,82.0" fill="none" stroke="#2F6B3F" stroke-width="2" marker-end="url(#a2F6B3F)"/>
+<rect x="524.0" y="60.0" width="100.0" height="44.0" rx="10" fill="#FFFFFF" stroke="#9B2C1F" stroke-width="1.6"/>
+<text xml:space="preserve" x="574.0" y="88.0" font-size="12.5" fill="#9B2C1F" font-weight="700" text-anchor="middle">Code ✗</text>
+<path d="M628.0,82.0 L644.0,82.0" fill="none" stroke="#2F6B3F" stroke-width="2" marker-end="url(#a2F6B3F)"/>
+<rect x="648.0" y="60.0" width="84.0" height="44.0" rx="10" fill="#FFFFFF" stroke="#2F6B3F" stroke-width="1.2"/>
+<text xml:space="preserve" x="690.0" y="88.0" font-size="12.5" fill="#2F6B3F" font-weight="700" text-anchor="middle">Blocked</text>
+<text xml:space="preserve" x="400.0" y="140.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">The attacker doesn't have your phone,</text>
+<text xml:space="preserve" x="400.0" y="160.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">so the stolen password is useless.</text>
+<text xml:space="preserve" x="16.0" y="246.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Turn it on in this order</text>
+<rect x="16.0" y="260.0" width="232.0" height="70.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.4"/>
+<circle cx="40.0" cy="286.0" r="12" fill="#8A6A1F"/>
+<text xml:space="preserve" x="40.0" y="290.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
+<text xml:space="preserve" x="62.0" y="291.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="start">Email first</text>
+<text xml:space="preserve" x="30.0" y="316.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">It resets every other account</text>
+<rect x="264.0" y="260.0" width="232.0" height="70.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.4"/>
+<circle cx="288.0" cy="286.0" r="12" fill="#8A6A1F"/>
+<text xml:space="preserve" x="288.0" y="290.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
+<text xml:space="preserve" x="310.0" y="291.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="start">Social and chat</text>
+<text xml:space="preserve" x="278.0" y="316.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">WhatsApp, Instagram, LinkedIn</text>
+<rect x="512.0" y="260.0" width="232.0" height="70.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.4"/>
+<circle cx="536.0" cy="286.0" r="12" fill="#8A6A1F"/>
+<text xml:space="preserve" x="536.0" y="290.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
+<text xml:space="preserve" x="558.0" y="291.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="start">Money</text>
+<text xml:space="preserve" x="526.0" y="316.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">Bank and payment apps</text>
+<rect x="16.0" y="344.0" width="728.0" height="28.0" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.2"/>
+<text xml:space="preserve" x="30.0" y="363.0" font-size="12.5" fill="#9B2C1F" font-weight="700" text-anchor="start">Never tell anyone your code, even someone who says they're from your bank, WhatsApp or school.</text>
+</g></svg>

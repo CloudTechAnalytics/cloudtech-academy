@@ -8164,6 +8164,8 @@ A good file name tells you what it is without opening it:
 | `final final.pdf` | `CV-Amaka-Obi-2026-03.pdf` |
 | `IMG_2045.jpg` | `STA211-lecture-5-board.jpg` |
 
+![A shallow folder tree for school and personal files, and how a good file name is built with the course code first and dates written year-month-day, with weak names rewritten as strong ones](/images/courses/digital/folders-names.svg "A shallow folder tree, and file names that sort themselves.")
+
 Tips: put the course code first so files sort together, use dates as `YYYY-MM-DD` so they sort in order, and avoid spaces and symbols in files you'll upload.
 
 ## Back up to the cloud
@@ -8177,6 +8179,8 @@ If your laptop is stolen or your phone falls in water, anything that's only on t
 | **Dropbox** | 2 GB | Simple syncing |
 
 Install the desktop app (**Google Drive for desktop** or **OneDrive**) and keep your `School` folder inside it. It then backs up automatically.
+
+![Files only on a laptop are lost if it is stolen; keeping the School folder inside a cloud app syncs a copy automatically; share with specific people and the least access that works](/images/courses/digital/backup-sharing.svg "Keep a copy online automatically, and share with the least access needed.")
 
 > [!TIP]
 > Many universities give students a Microsoft 365 or Google Workspace account with much more storage. Check with your ICT unit.
@@ -8242,6 +8246,8 @@ values ('digital-skills-for-students:google-workspace-for-students', 'digital-sk
 ## One account, many tools
 
 A free Google account gives you **Docs** (writing), **Sheets** (spreadsheets), **Slides** (presentations), **Forms** (surveys), **Calendar** and **Drive**. They work in any browser, save automatically and are built for working together.
+
+![Six Google tools and what students use them for: Docs, Sheets, Slides, Forms, Calendar and Drive; and how a Form's answers flow into a Sheet](/images/courses/digital/workspace-map.svg "One account, six tools, each for a student job.")
 
 ## Google Docs: write together
 
@@ -8346,6 +8352,8 @@ If your school gives you a student email, use it for anything to do with school.
 4. **The point:** what you need, in one or two short paragraphs.
 5. **Closing:** thank them and say what happens next.
 6. **Sign-off and signature:** "Kind regards," then your full name and details.
+
+![A professional email with six numbered parts: subject, greeting, who you are, the point, closing, and sign-off](/images/courses/digital/email-anatomy.svg "The six parts of a professional email.")
 
 ## An example
 
@@ -8459,6 +8467,8 @@ Most accounts are hacked because of weak or reused passwords.
 
 Turn it on for your **email** first (email resets every other account), then WhatsApp, Instagram, LinkedIn and your bank app.
 
+![With only a password a thief gets in; with two-step verification they also need a code from your phone; turn it on for email first, then social apps, then money](/images/courses/digital/two-step.svg "A stolen password isn't enough when a code from your phone is also needed.")
+
 > [!WARNING]
 > Never share a verification code (OTP) with anyone, even someone claiming to be from your bank, WhatsApp or school. No genuine organisation will ask for it.
 
@@ -8471,6 +8481,8 @@ Turn it on for your **email** first (email resets every other account), then Wha
 - **Odd links:** hover over (or long-press) a link to see where it really goes. `unilag-portal.xyz` isn't your school.
 - **Requests for codes, PINs or passwords.**
 - **Messages from friends asking for money** out of the blue. Their account may be hacked. Call them to check.
+
+![A fake text message with its warning signs marked: urgency, an odd link, a prize that asks for payment, and a request for a code; hovering over the link reveals a lookalike address](/images/courses/digital/phishing.svg "A fake message, with its warning signs marked.")
 
 When in doubt, don't click. Go to the website yourself or contact the organisation using details you already trust.
 

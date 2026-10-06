@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 470" width="760" height="470" role="img" aria-label="The parts of a professional email: a specific subject, a greeting, an opening line saying who you are, the point in one or two short paragraphs with the request, a closing that thanks the person and says what happens next, and a sign-off with full name and details.">
+<title>Six parts of a professional email.</title>
+
+<rect width="760" height="470" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="14.0" width="460.0" height="440.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.6"/>
+<rect x="17.0" y="15.0" width="458.0" height="28.0" rx="0" fill="#EFE4CC"/>
+<text xml:space="preserve" x="30.0" y="34.0" font-size="12" fill="#5E5A52" font-weight="700" text-anchor="start">New message</text>
+<text xml:space="preserve" x="30.0" y="66.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">Subject:</text>
+<text xml:space="preserve" x="88.0" y="66.0" font-size="11.5" fill="#2A2926" font-weight="700" text-anchor="start">BIO 101 – Request to retake Test 1 (Matric 22/0188)</text>
+<line x1="30.0" y1="76.0" x2="462.0" y2="76.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="30.0" y="104.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">Dear Mrs Okon,</text>
+<text xml:space="preserve" x="30.0" y="134.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">I'm Tunde Bakare, a 100 level Biology student</text>
+<text xml:space="preserve" x="30.0" y="152.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">in your BIO 101 class.</text>
+<text xml:space="preserve" x="30.0" y="190.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">I missed Test 1 on Monday because I was at the</text>
+<text xml:space="preserve" x="30.0" y="208.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">health centre. My medical note is attached.</text>
+<text xml:space="preserve" x="30.0" y="232.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">Could I please retake it this week?</text>
+<text xml:space="preserve" x="30.0" y="276.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Thank you for considering my request. I'm free</text>
+<text xml:space="preserve" x="30.0" y="294.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">on any afternoon.</text>
+<text xml:space="preserve" x="30.0" y="336.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Kind regards,</text>
+<text xml:space="preserve" x="30.0" y="360.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">Tunde Bakare</text>
+<text xml:space="preserve" x="30.0" y="378.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">100 Level, Biology · 22/0188</text>
+<text xml:space="preserve" x="30.0" y="396.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">0803 000 0000</text>
+<line x1="476.0" y1="56.0" x2="500.0" y2="56.0" stroke="#2F5D8A" stroke-width="1.5"/>
+<circle cx="514.0" cy="56.0" r="12" fill="#2F5D8A"/>
+<text xml:space="preserve" x="514.0" y="60.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
+<text xml:space="preserve" x="534.0" y="61.0" font-size="13" fill="#2F5D8A" font-weight="700" text-anchor="start">Subject</text>
+<text xml:space="preserve" x="534.0" y="78.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">Specific, so they know before</text>
+<text xml:space="preserve" x="534.0" y="92.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">opening.</text>
+<line x1="476.0" y1="110.0" x2="500.0" y2="110.0" stroke="#B38A3E" stroke-width="1.5"/>
+<circle cx="514.0" cy="110.0" r="12" fill="#B38A3E"/>
+<text xml:space="preserve" x="514.0" y="114.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
+<text xml:space="preserve" x="534.0" y="115.0" font-size="13" fill="#B38A3E" font-weight="700" text-anchor="start">Greeting</text>
+<text xml:space="preserve" x="534.0" y="132.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">Dear Dr / Mrs and the surname.</text>
+<line x1="476.0" y1="152.0" x2="500.0" y2="152.0" stroke="#2F6B3F" stroke-width="1.5"/>
+<circle cx="514.0" cy="152.0" r="12" fill="#2F6B3F"/>
+<text xml:space="preserve" x="514.0" y="156.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
+<text xml:space="preserve" x="534.0" y="157.0" font-size="13" fill="#2F6B3F" font-weight="700" text-anchor="start">Who you are</text>
+<text xml:space="preserve" x="534.0" y="174.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">If they may not know you.</text>
+<line x1="476.0" y1="220.0" x2="500.0" y2="220.0" stroke="#5C4F80" stroke-width="1.5"/>
+<circle cx="514.0" cy="220.0" r="12" fill="#5C4F80"/>
+<text xml:space="preserve" x="514.0" y="224.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">4</text>
+<text xml:space="preserve" x="534.0" y="225.0" font-size="13" fill="#5C4F80" font-weight="700" text-anchor="start">The point</text>
+<text xml:space="preserve" x="534.0" y="242.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">What you need, in one or two short</text>
+<text xml:space="preserve" x="534.0" y="256.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">paragraphs.</text>
+<line x1="476.0" y1="285.0" x2="500.0" y2="285.0" stroke="#9B2C1F" stroke-width="1.5"/>
+<circle cx="514.0" cy="285.0" r="12" fill="#9B2C1F"/>
+<text xml:space="preserve" x="514.0" y="289.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">5</text>
+<text xml:space="preserve" x="534.0" y="290.0" font-size="13" fill="#9B2C1F" font-weight="700" text-anchor="start">Closing</text>
+<text xml:space="preserve" x="534.0" y="307.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">Thank them; say what happens next.</text>
+<line x1="476.0" y1="366.0" x2="500.0" y2="366.0" stroke="#8A6A1F" stroke-width="1.5"/>
+<circle cx="514.0" cy="366.0" r="12" fill="#8A6A1F"/>
+<text xml:space="preserve" x="514.0" y="370.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">6</text>
+<text xml:space="preserve" x="534.0" y="371.0" font-size="13" fill="#8A6A1F" font-weight="700" text-anchor="start">Sign-off</text>
+<text xml:space="preserve" x="534.0" y="388.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">Full name and details.</text>
+</g></svg>
