@@ -1,4 +1,5 @@
 import { useMemo, useRef, useState } from "react";
+import { MenuPanel } from "@/components/MenuPanel";
 import { Check, FileText, MoreHorizontal, Pencil, Trash2, X } from "lucide-react";
 import { getBackend, type AdminPayment, type PaymentAccount, type PaymentSettings, type PaymentStatus } from "@/lib/backend";
 import { PageLoading } from "@/lib/auth";
@@ -54,7 +55,7 @@ function PaymentActions({
         <MoreHorizontal aria-hidden className="h-4 w-4" />
         <span className="sr-only">Actions for {p.reference}</span>
       </summary>
-      <div className="absolute right-0 z-20 mt-1 w-48 overflow-hidden rounded-xl border border-line bg-paper py-1 shadow-[0_16px_40px_-20px_rgba(23,23,23,0.45)]">
+      <MenuPanel className="w-48">
         {p.proofPath && (
           <button type="button" className={item} onClick={run(onReceipt)}>
             <FileText aria-hidden className="h-4 w-4" /> View receipt
@@ -76,7 +77,7 @@ function PaymentActions({
         <button type="button" disabled={busy} className={`${item} border-t border-line text-danger`} onClick={run(onDelete)}>
           <Trash2 aria-hidden className="h-4 w-4" /> Delete
         </button>
-      </div>
+      </MenuPanel>
     </details>
   );
 }
@@ -326,7 +327,7 @@ export default function AdminPayments() {
         <p className="text-[0.875rem] text-muted">{rows.length} payments</p>
       </div>
 
-      <div className="table-scroll rounded-2xl border border-line bg-paper lg:overflow-visible">
+      <div className="table-scroll rounded-2xl border border-line bg-paper">
         <table>
           <thead>
             <tr>

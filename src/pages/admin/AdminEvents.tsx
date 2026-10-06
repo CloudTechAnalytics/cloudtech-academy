@@ -1,4 +1,5 @@
 import { useMemo, useRef, useState } from "react";
+import { MenuPanel } from "@/components/MenuPanel";
 import { Link } from "react-router";
 import { Ban, CalendarDays, Copy, ExternalLink, Eye, EyeOff, MoreHorizontal, Pencil, Plus, Trash2, Users, CheckCheck } from "lucide-react";
 import { getBackend, type AcademyEvent, type EventStatus } from "@/lib/backend";
@@ -47,7 +48,7 @@ function Row({ event, onChange, onCancel, onDelete }: { event: AcademyEvent; onC
         <MoreHorizontal aria-hidden className="h-4 w-4" />
         <span className="sr-only">Actions for {event.title}</span>
       </summary>
-      <div className="absolute right-0 z-20 mt-1 w-60 overflow-hidden rounded-xl border border-line bg-paper py-1 shadow-[0_16px_40px_-20px_rgba(23,23,23,0.45)]">
+      <MenuPanel className="w-60">
         <Link to={`/admin/events/${event.id}`} className={item}>
           <Pencil aria-hidden className="h-4 w-4" /> Edit
         </Link>
@@ -94,7 +95,7 @@ function Row({ event, onChange, onCancel, onDelete }: { event: AcademyEvent; onC
         <button type="button" className={`${item} border-t border-line text-danger`} onClick={() => (close(), onDelete())}>
           <Trash2 aria-hidden className="h-4 w-4" /> Delete
         </button>
-      </div>
+      </MenuPanel>
     </details>
   );
 }

@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
+import { MenuPanel } from "@/components/MenuPanel";
 import { Link, NavLink, useLocation } from "react-router";
 import { Award, Ban, Copy, Download, Eye, Mail, MoreHorizontal, Pencil, Plus, RefreshCw, Trash2 } from "lucide-react";
 import { getBackend, type AdminCertificate, type AdminOrder, type CertificateKind, type CertificatePrice } from "@/lib/backend";
@@ -363,7 +364,7 @@ function Actions({ c, onDownload, onCopy, onRevoke, onDelete }: { c: AdminCertif
         <MoreHorizontal aria-hidden className="h-4 w-4" />
         <span className="sr-only">Actions for {c.certificateId}</span>
       </summary>
-      <div className="absolute right-0 z-20 mt-1 w-56 overflow-hidden rounded-xl border border-line bg-paper py-1 shadow-[0_16px_40px_-20px_rgba(23,23,23,0.45)]">
+      <MenuPanel className="w-56">
         <Link to={`/admin/certificates/${c.certificateId}`} className={item}>
           <Eye aria-hidden className="h-4 w-4" /> View
         </Link>
@@ -391,7 +392,7 @@ function Actions({ c, onDownload, onCopy, onRevoke, onDelete }: { c: AdminCertif
         <button type="button" className={`${item} border-t border-line text-danger`} onClick={() => (close(), onDelete())}>
           <Trash2 aria-hidden className="h-4 w-4" /> Delete
         </button>
-      </div>
+      </MenuPanel>
     </details>
   );
 }
