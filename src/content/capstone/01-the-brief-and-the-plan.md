@@ -16,7 +16,7 @@ The data comes straight from the stores' tills, with all the problems that impli
 
 ## The concept
 
-**Every analysis project follows the same arc**
+### Every analysis project follows the same arc
 
 | Stage | Output | Lesson |
 | :-- | :-- | :-- |
@@ -28,9 +28,11 @@ The data comes straight from the stores' tills, with all the problems that impli
 | 6. Dashboard and story | A report and an executive summary | 6 |
 | 7. Review and present | A checked, presented, published piece of work | 7 |
 
+![The seven stages of an analysis project, each with its output, and the project folders raw, clean, analysis and report](/images/courses/capstone/analysis-arc.svg "Seven stages, each with an output; raw files are never edited.")
+
 Use whichever tools you like: Excel, Power BI, SQL or Python, or a mix. The lessons show the key steps in more than one. What's assessed is the quality of the answers, not the tool.
 
-**A plan starts from the questions, not the data**
+### A plan starts from the questions, not the data
 
 Turn the brief into specific questions you can answer with numbers:
 
@@ -40,7 +42,7 @@ Turn the brief into specific questions you can answer with numbers:
 4. Are the store targets fair and achievable?
 5. Where is money being left on the table (stock-outs, returns, missed add-on sales)?
 
-**Definitions before numbers**
+### Definitions before numbers
 
 Write these down before you calculate anything, because every number depends on them:
 
@@ -49,9 +51,11 @@ Write these down before you calculate anything, because every number depends on 
 - **Like for like** = stores open for the whole of both periods being compared.
 - **The analysis period** = 1 January 2025 to 30 June 2026. "H1" means January to June.
 
-**Deliverables**
+### Deliverables
 
 Agree what you'll hand over: a cleaned dataset with a cleaning log, a dashboard of two or three pages, a one-page executive summary with three recommendations, and your working (queries, workbook or notebook) so someone can check it.
+
+![Turning an owner's worry into specific questions, writing definitions before numbers, and agreeing deliverables, using an invented pharmacy chain](/images/courses/capstone/plan-questions.svg "Questions first, then definitions, then deliverables.")
 
 ## Example
 

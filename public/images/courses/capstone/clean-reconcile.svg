@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 380" width="760" height="380" role="img" aria-label="A repeatable cleaning pipeline with reconciliation, using invented counts: raw rows, remove exact duplicates, exclude test rows, take the store from the ID, convert dates, calculate net sales, giving a clean table. Row counts at every step must add up. The order matters: duplicates before totals, test rows before checks, dates before month filters.">
+<title>Clean in a fixed order, and reconcile the row counts at each step.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="380" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="28.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Invented example: counts at each step</text>
+<rect x="16.0" y="42.0" width="166.0" height="80.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.6"/>
+<text xml:space="preserve" x="28.0" y="66.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">Raw file</text>
+<text xml:space="preserve" x="28.0" y="106.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">12,400 rows</text>
+<path d="M184.0,82.0 L200.0,82.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="202.0" y="42.0" width="166.0" height="80.0" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.6"/>
+<text xml:space="preserve" x="214.0" y="66.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">Remove exact</text>
+<text xml:space="preserve" x="214.0" y="81.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">duplicates</text>
+<text xml:space="preserve" x="214.0" y="106.0" font-size="14" fill="#9B2C1F" font-weight="700" text-anchor="start">− 250</text>
+<path d="M370.0,82.0 L386.0,82.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="388.0" y="42.0" width="166.0" height="80.0" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.6"/>
+<text xml:space="preserve" x="400.0" y="66.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">Exclude test rows</text>
+<text xml:space="preserve" x="400.0" y="106.0" font-size="14" fill="#9B2C1F" font-weight="700" text-anchor="start">− 10</text>
+<path d="M556.0,82.0 L572.0,82.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="574.0" y="42.0" width="166.0" height="80.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.6"/>
+<text xml:space="preserve" x="586.0" y="66.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">Clean table</text>
+<text xml:space="preserve" x="586.0" y="106.0" font-size="14" fill="#2F6B3F" font-weight="700" text-anchor="start">12,140 rows</text>
+<text xml:space="preserve" x="16.0" y="154.0" font-size="12.5" fill="#2F6B3F" font-weight="700" text-anchor="start">12,400 − 250 − 10 = 12,140  ✓  If it doesn't add up, a step did something you didn't intend.</text>
+<text xml:space="preserve" x="16.0" y="190.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Then, in this order</text>
+<rect x="16.0" y="204.0" width="170.0" height="62.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.4"/>
+<circle cx="38.0" cy="228.0" r="12" fill="#8A6A1F"/>
+<text xml:space="preserve" x="38.0" y="232.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
+<text xml:space="preserve" x="56.0" y="233.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">Store from the ID</text>
+<text xml:space="preserve" x="28.0" y="254.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">first 3 characters</text>
+<rect x="202.0" y="204.0" width="170.0" height="62.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.4"/>
+<circle cx="224.0" cy="228.0" r="12" fill="#8A6A1F"/>
+<text xml:space="preserve" x="224.0" y="232.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
+<text xml:space="preserve" x="242.0" y="233.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">Real dates</text>
+<text xml:space="preserve" x="214.0" y="254.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">day-first dates read right</text>
+<rect x="388.0" y="204.0" width="170.0" height="62.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.4"/>
+<circle cx="410.0" cy="228.0" r="12" fill="#8A6A1F"/>
+<text xml:space="preserve" x="410.0" y="232.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
+<text xml:space="preserve" x="428.0" y="233.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">Net sales</text>
+<text xml:space="preserve" x="400.0" y="254.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">qty × price − discount</text>
+<rect x="574.0" y="204.0" width="170.0" height="62.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.4"/>
+<circle cx="596.0" cy="228.0" r="12" fill="#8A6A1F"/>
+<text xml:space="preserve" x="596.0" y="232.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">4</text>
+<text xml:space="preserve" x="614.0" y="233.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">Keep raw columns</text>
+<text xml:space="preserve" x="586.0" y="254.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">drop only what you replaced</text>
+<rect x="16.0" y="286.0" width="728.0" height="70.0" rx="10" fill="#F3EBD8" stroke="#8A6A1F" stroke-width="1.4"/>
+<text xml:space="preserve" x="30.0" y="310.0" font-size="13" fill="#8A6A1F" font-weight="700" text-anchor="start">Why the order matters</text>
+<text xml:space="preserve" x="30.0" y="332.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Duplicates before totals  ·  test rows before checks  ·  dates before month filters</text>
+<text xml:space="preserve" x="16.0" y="376.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Repeatable, documented, reconciled: next month's file should clean with one click.</text>
+</g></svg>

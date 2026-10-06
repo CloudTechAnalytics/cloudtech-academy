@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 430" width="760" height="430" role="img" aria-label="Grain traps in a model. A table of costs with a new price from a date, joined on product alone, matches each sale to two cost rows and doubles every total; the fix is a range lookup picking the cost in force on the sale date. A monthly target joined onto sale lines repeats the target on every line; the fix is to total sales to store and month first. Always check the row count does not change.">
+<title>Check the grain: a join must not change the number of rows.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="430" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="26.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Trap 1: a cost that changes over time (invented example)</text>
+<rect x="16.0" y="38.0" width="340.0" height="130.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.4"/>
+<text xml:space="preserve" x="28.0" y="60.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">Sale: kettle, 14 March</text>
+<text xml:space="preserve" x="28.0" y="84.0" font-size="12" fill="#9B2C1F" font-weight="700" text-anchor="start">Join on product only →</text>
+<text xml:space="preserve" x="28.0" y="106.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">matches cost rows: Jan 2025 and Jan 2026</text>
+<text xml:space="preserve" x="28.0" y="128.0" font-size="12" fill="#9B2C1F" font-weight="700" text-anchor="start">1,000 lines become 2,000. Totals double.</text>
+<text xml:space="preserve" x="28.0" y="150.0" font-size="14" fill="#9B2C1F" font-weight="700" text-anchor="start">✗</text>
+<path d="M360.0,103.0 L384.0,103.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="388.0" y="38.0" width="356.0" height="130.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.4"/>
+<text xml:space="preserve" x="400.0" y="60.0" font-size="12.5" fill="#2F6B3F" font-weight="700" text-anchor="start">Range lookup instead</text>
+<text xml:space="preserve" x="400.0" y="84.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Take the cost whose start date is the</text>
+<text xml:space="preserve" x="400.0" y="102.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">latest one on or before the sale date.</text>
+<text xml:space="preserve" x="400.0" y="128.0" font-size="12.5" fill="#2F6B3F" font-weight="700" text-anchor="start">1,000 lines stay 1,000.  ✓</text>
+<text xml:space="preserve" x="16.0" y="206.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Trap 2: targets are one number per shop per month</text>
+<rect x="16.0" y="218.0" width="340.0" height="130.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.4"/>
+<text xml:space="preserve" x="28.0" y="240.0" font-size="12" fill="#9B2C1F" font-weight="700" text-anchor="start">Join targets to sale lines →</text>
+<text xml:space="preserve" x="28.0" y="262.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">each target repeats on every line</text>
+<text xml:space="preserve" x="28.0" y="284.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">one month's target appears hundreds of times</text>
+<text xml:space="preserve" x="28.0" y="306.0" font-size="12" fill="#9B2C1F" font-weight="700" text-anchor="start">so a shop's target is wildly overstated.  ✗</text>
+<path d="M360.0,283.0 L384.0,283.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="388.0" y="218.0" width="356.0" height="130.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.4"/>
+<text xml:space="preserve" x="400.0" y="240.0" font-size="12.5" fill="#2F6B3F" font-weight="700" text-anchor="start">Aggregate first</text>
+<text xml:space="preserve" x="400.0" y="264.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Total sales to shop and month, then</text>
+<text xml:space="preserve" x="400.0" y="282.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">compare with the target at that grain.</text>
+<text xml:space="preserve" x="400.0" y="308.0" font-size="12.5" fill="#2F6B3F" font-weight="700" text-anchor="start">One row against one row.  ✓</text>
+<rect x="16.0" y="372.0" width="728.0" height="40.0" rx="10" fill="#F3EBD8" stroke="#8A6A1F" stroke-width="1.3"/>
+<text xml:space="preserve" x="30.0" y="397.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">Test after every join: does the row count stay the same, and does the total still match?</text>
+</g></svg>

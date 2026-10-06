@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 380" width="760" height="380" role="img" aria-label="The one-page executive summary, in order: the answer first in one or two sentences; three key findings each with a number; three recommendations each linked to a finding; and caveats about what the data cannot tell you and the assumptions behind any estimate. Read it aloud and cut every sentence without a fact or recommendation.">
+<title>Answer first, three findings, three recommendations, caveats.</title>
+
+<rect width="760" height="380" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="28.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">One page, in this order</text>
+<rect x="16.0" y="42.0" width="728.0" height="64.0" rx="10" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.5"/>
+<circle cx="40.0" cy="74.0" r="12" fill="#2F5D8A"/>
+<text xml:space="preserve" x="40.0" y="78.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
+<text xml:space="preserve" x="64.0" y="70.0" font-size="14" fill="#2F5D8A" font-weight="700" text-anchor="start">The answer, first</text>
+<text xml:space="preserve" x="64.0" y="90.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">One or two sentences answering the main question. Put the uncomfortable part in.</text>
+<rect x="16.0" y="114.0" width="728.0" height="64.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.5"/>
+<circle cx="40.0" cy="146.0" r="12" fill="#2F6B3F"/>
+<text xml:space="preserve" x="40.0" y="150.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
+<text xml:space="preserve" x="64.0" y="142.0" font-size="14" fill="#2F6B3F" font-weight="700" text-anchor="start">Three findings</text>
+<text xml:space="preserve" x="64.0" y="162.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Each with its number.</text>
+<rect x="16.0" y="186.0" width="728.0" height="64.0" rx="10" fill="#F3EBD8" stroke="#B38A3E" stroke-width="1.5"/>
+<circle cx="40.0" cy="218.0" r="12" fill="#8A6A1F"/>
+<text xml:space="preserve" x="40.0" y="222.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
+<text xml:space="preserve" x="64.0" y="214.0" font-size="14" fill="#8A6A1F" font-weight="700" text-anchor="start">Three recommendations</text>
+<text xml:space="preserve" x="64.0" y="234.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Each linked to a finding; specific enough to act on.</text>
+<rect x="16.0" y="258.0" width="728.0" height="64.0" rx="10" fill="#EEEAF5" stroke="#5C4F80" stroke-width="1.5"/>
+<circle cx="40.0" cy="290.0" r="12" fill="#5C4F80"/>
+<text xml:space="preserve" x="40.0" y="294.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">4</text>
+<text xml:space="preserve" x="64.0" y="286.0" font-size="14" fill="#5C4F80" font-weight="700" text-anchor="start">Caveats</text>
+<text xml:space="preserve" x="64.0" y="306.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">What the data can't tell you; the assumptions behind any estimate.</text>
+<text xml:space="preserve" x="16.0" y="346.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Read it aloud. Cut every sentence that doesn't contain a fact or a recommendation.</text>
+<text xml:space="preserve" x="16.0" y="368.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">Compare: "This report presents an analysis of…" says nothing yet.</text>
+</g></svg>

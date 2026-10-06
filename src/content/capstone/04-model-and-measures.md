@@ -14,9 +14,11 @@ Two traps wait between a clean sales table and a correct profit figure.
 
 Both are **grain** problems, and both are invisible unless you check. This lesson builds the model that avoids them.
 
+![Two join traps with invented numbers: a changing cost matched on product alone doubles the rows, and a monthly target joined to sale lines repeats; the fixes are a range lookup and aggregating first](/images/courses/capstone/grain-traps.svg "Check the grain: a join must not change the number of rows.")
+
 ## The concept
 
-**The star schema**
+### The star schema
 
 | Table | Grain | Key | Role |
 | :-- | :-- | :-- | :-- |
@@ -26,7 +28,9 @@ Both are **grain** problems, and both are invisible unless you check. This lesso
 | `Date` | one day | `Date` | dimension |
 | `targets` | one store per month | `store_id` + `month` | a second fact, at a coarser grain |
 
-**Looking up a cost that changes over time**
+![A star schema: a sales fact at the grain of one till line linked to store, product and date dimensions, and a targets fact at the grain of one store per month](/images/courses/capstone/star-schema.svg "Facts at their own grain, dimensions around them.")
+
+### Looking up a cost that changes over time
 
 Each sale needs the cost whose `effective_from` is the latest one **on or before** the sale date. That's a "range lookup":
 
@@ -61,7 +65,7 @@ Whichever you use, check that the row count **doesn't change** after the lookup.
 
 Total the sales to store and month, then compare with the targets. In Power BI, relate `targets` to `stores` (via `store_id`) and to `Date` (via a month-start date column you add to `targets`), and write `Target = SUM ( targets[net_sales_target] )`. The measure only makes sense at month level or above. On a single day it would show the whole month's target.
 
-**The core measures**
+### The core measures
 
 ```dax
 Net Sales = SUM ( sales_clean[net_sales] )

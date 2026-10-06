@@ -12,7 +12,7 @@ Before you calculate a single total, imagine the board meeting. A director asks,
 
 ## The concept
 
-**A profiling checklist**
+### A profiling checklist
 
 For each file, and each column in it:
 
@@ -26,7 +26,9 @@ For each file, and each column in it:
 | Blanks | How many missing values per column? | gaps to explain |
 | Relationships | Does every code match a row in its lookup file? | orphans, test data |
 
-**The same checks in each tool**
+![Seven profiling checks and what each finds, and the three decisions every problem gets: fix it, exclude it or keep it](/images/courses/capstone/profiling-checks.svg "Seven checks, then a decision for every problem.")
+
+### The same checks in each tool
 
 | Check | Excel / Power BI | SQL | pandas |
 | :-- | :-- | :-- | :-- |
@@ -37,7 +39,7 @@ For each file, and each column in it:
 
 In Power Query, turn on **View → Column quality, Column distribution and Column profile**, and set profiling to **the entire data set** (bottom-left of the window). By default it only profiles the first 1,000 rows, and most of Voltline's problems are further down.
 
-**Every problem gets a decision**
+### Every problem gets a decision
 
 For each problem, record what you found, how many rows it affects and what you decided. Some problems you fix. Some you exclude. Some aren't problems at all (returns are real business events, not errors). That record, the **data quality log**, is what lets you answer the director's question.
 

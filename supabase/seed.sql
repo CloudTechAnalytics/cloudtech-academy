@@ -65781,7 +65781,7 @@ The data comes straight from the stores' tills, with all the problems that impli
 
 ## The concept
 
-**Every analysis project follows the same arc**
+### Every analysis project follows the same arc
 
 | Stage | Output | Lesson |
 | :-- | :-- | :-- |
@@ -65793,9 +65793,11 @@ The data comes straight from the stores' tills, with all the problems that impli
 | 6. Dashboard and story | A report and an executive summary | 6 |
 | 7. Review and present | A checked, presented, published piece of work | 7 |
 
+![The seven stages of an analysis project, each with its output, and the project folders raw, clean, analysis and report](/images/courses/capstone/analysis-arc.svg "Seven stages, each with an output; raw files are never edited.")
+
 Use whichever tools you like: Excel, Power BI, SQL or Python, or a mix. The lessons show the key steps in more than one. What's assessed is the quality of the answers, not the tool.
 
-**A plan starts from the questions, not the data**
+### A plan starts from the questions, not the data
 
 Turn the brief into specific questions you can answer with numbers:
 
@@ -65805,7 +65807,7 @@ Turn the brief into specific questions you can answer with numbers:
 4. Are the store targets fair and achievable?
 5. Where is money being left on the table (stock-outs, returns, missed add-on sales)?
 
-**Definitions before numbers**
+### Definitions before numbers
 
 Write these down before you calculate anything, because every number depends on them:
 
@@ -65814,9 +65816,11 @@ Write these down before you calculate anything, because every number depends on 
 - **Like for like** = stores open for the whole of both periods being compared.
 - **The analysis period** = 1 January 2025 to 30 June 2026. "H1" means January to June.
 
-**Deliverables**
+### Deliverables
 
 Agree what you'll hand over: a cleaned dataset with a cleaning log, a dashboard of two or three pages, a one-page executive summary with three recommendations, and your working (queries, workbook or notebook) so someone can check it.
+
+![Turning an owner's worry into specific questions, writing definitions before numbers, and agreeing deliverables, using an invented pharmacy chain](/images/courses/capstone/plan-questions.svg "Questions first, then definitions, then deliverables.")
 
 ## Example
 
@@ -65940,7 +65944,7 @@ Before you calculate a single total, imagine the board meeting. A director asks,
 
 ## The concept
 
-**A profiling checklist**
+### A profiling checklist
 
 For each file, and each column in it:
 
@@ -65954,7 +65958,9 @@ For each file, and each column in it:
 | Blanks | How many missing values per column? | gaps to explain |
 | Relationships | Does every code match a row in its lookup file? | orphans, test data |
 
-**The same checks in each tool**
+![Seven profiling checks and what each finds, and the three decisions every problem gets: fix it, exclude it or keep it](/images/courses/capstone/profiling-checks.svg "Seven checks, then a decision for every problem.")
+
+### The same checks in each tool
 
 | Check | Excel / Power BI | SQL | pandas |
 | :-- | :-- | :-- | :-- |
@@ -65965,7 +65971,7 @@ For each file, and each column in it:
 
 In Power Query, turn on **View → Column quality, Column distribution and Column profile**, and set profiling to **the entire data set** (bottom-left of the window). By default it only profiles the first 1,000 rows, and most of Voltline's problems are further down.
 
-**Every problem gets a decision**
+### Every problem gets a decision
 
 For each problem, record what you found, how many rows it affects and what you decided. Some problems you fix. Some you exclude. Some aren't problems at all (returns are real business events, not errors). That record, the **data quality log**, is what lets you answer the director's question.
 
@@ -66103,7 +66109,7 @@ The goal is a cleaning process that's **repeatable** (rerun it on new data with 
 
 ## The concept
 
-**The cleaning steps for Voltline**
+### The cleaning steps for Voltline
 
 1. **Remove exact duplicate rows** (Surulere's double upload).
 2. **Exclude test transactions** (`product_code = 'TEST'`).
@@ -66114,9 +66120,11 @@ The goal is a cleaning process that's **repeatable** (rerun it on new data with 
 
 **The order matters.** Remove duplicates *before* you calculate anything. Exclude test rows *before* you check the totals. And convert dates *before* you filter by month.
 
-**Reconcile**
+### Reconcile
 
 Write down the row counts at every step: raw rows, minus duplicates, minus test rows, equals clean rows. If the counts don't add up, a step did something you didn't intend. It's the cleaning equivalent of balancing a bank statement.
+
+![An invented cleaning pipeline with row counts at each step that must add up, then the order of the remaining steps and why the order matters](/images/courses/capstone/clean-reconcile.svg "Clean in a fixed order, and reconcile the row counts at each step.")
 
 ## Example
 
@@ -66266,9 +66274,11 @@ Two traps wait between a clean sales table and a correct profit figure.
 
 Both are **grain** problems, and both are invisible unless you check. This lesson builds the model that avoids them.
 
+![Two join traps with invented numbers: a changing cost matched on product alone doubles the rows, and a monthly target joined to sale lines repeats; the fixes are a range lookup and aggregating first](/images/courses/capstone/grain-traps.svg "Check the grain: a join must not change the number of rows.")
+
 ## The concept
 
-**The star schema**
+### The star schema
 
 | Table | Grain | Key | Role |
 | :-- | :-- | :-- | :-- |
@@ -66278,7 +66288,9 @@ Both are **grain** problems, and both are invisible unless you check. This lesso
 | `Date` | one day | `Date` | dimension |
 | `targets` | one store per month | `store_id` + `month` | a second fact, at a coarser grain |
 
-**Looking up a cost that changes over time**
+![A star schema: a sales fact at the grain of one till line linked to store, product and date dimensions, and a targets fact at the grain of one store per month](/images/courses/capstone/star-schema.svg "Facts at their own grain, dimensions around them.")
+
+### Looking up a cost that changes over time
 
 Each sale needs the cost whose `effective_from` is the latest one **on or before** the sale date. That's a "range lookup":
 
@@ -66313,7 +66325,7 @@ Whichever you use, check that the row count **doesn't change** after the lookup.
 
 Total the sales to store and month, then compare with the targets. In Power BI, relate `targets` to `stores` (via `store_id`) and to `Date` (via a month-start date column you add to `targets`), and write `Target = SUM ( targets[net_sales_target] )`. The measure only makes sense at month level or above. On a single day it would show the whole month's target.
 
-**The core measures**
+### The core measures
 
 ```dax
 Net Sales = SUM ( sales_clean[net_sales] )
@@ -66433,18 +66445,20 @@ This lesson works through the plan from lesson 1. For each question you'll get a
 
 ## The concept
 
-**Decompose the headline**
+### Decompose the headline
 
 Revenue growth = price + new stores + everything else (volume and mix in the existing stores). Separate them:
 
 - **New stores**: compare like for like, leaving out stores not open in both periods (Lekki).
 - **Price**: compare the like-for-like growth with the 18% price rise. Whatever's left is real change in volume or mix.
 
-**Compare like with like, then look inside**
+![An invented example splitting growth from 100 to 130 into a price rise, a new shop and real change in volume and mix](/images/courses/capstone/growth-waterfall.svg "A headline number is several stories: price, new shops, and real change.")
+
+### Compare like with like, then look inside
 
 For each store, compare January to June 2026 with January to June 2025: sales, transactions and average transaction value. When something changes sharply, find the **date** it changed. A step change on a particular date usually has a specific cause.
 
-**Look for money left on the table**
+### Look for money left on the table
 
 | Leak | Measure |
 | :-- | :-- |
@@ -66452,7 +66466,7 @@ For each store, compare January to June 2026 with January to June 2025: sales, t
 | Returns | **Return rate**: units returned ÷ units sold, by product |
 | Stock-outs | **Lost sales estimate**: normal daily sales × days out of stock × price |
 
-**Every estimate needs its assumptions**
+### Every estimate needs its assumptions
 
 A lost-sales figure is an estimate, not a fact. Say how you made it: which period you took as "normal", how many days, which price, and what you ignored (customers who bought a different model instead, for example). An estimate with clear assumptions is useful; one without them isn't trusted.
 
@@ -66601,7 +66615,7 @@ There's one more question in the brief you haven't answered yet: "Do our targets
 
 ## The concept
 
-**Structure the report like an argument**
+### Structure the report like an argument
 
 | Page | Purpose | Contents |
 | :-- | :-- | :-- |
@@ -66610,7 +66624,9 @@ There's one more question in the brief you haven't answered yet: "Do our targets
 | 3. Products | where the profit is | sales and gross profit by category, return rates |
 | 4. Opportunities | money left on the table | attach rate by store, stock-out estimates |
 
-**Titles that say the finding**
+![A four-page report (overview, stores, products, opportunities) and the difference between a label title and a title that states the finding](/images/courses/capstone/dashboard-pages.svg "Four pages, and titles that say the finding.")
+
+### Titles that say the finding
 
 A chart titled "Net sales by store" makes the reader work out the message. "Port Harcourt is the only store to shrink, down 27% in transactions since February" tells them, and the chart becomes the proof. Write every title as a sentence with the finding in it.
 
@@ -66618,7 +66634,7 @@ A chart titled "Net sales by store" makes the reader work out the message. "Port
 
 Before you judge a store against its target, judge the target. Lekki's target was set at ₦52m a month **from its first month**, the level of a mature store. Of course it "failed" for its first six months: no new store starts at full speed. Judged on its trajectory, Lekki is a success: it beat ₦52m in April, May and June 2026. A report that just says "Lekki: 55% of target" in 2025 would be accurate and badly misleading.
 
-**The executive summary**
+### The executive summary
 
 One page, in this order:
 
@@ -66626,6 +66642,8 @@ One page, in this order:
 2. **Three key findings**, each with its number.
 3. **Three recommendations**, each linked to a finding, specific enough to act on.
 4. **Caveats**: what the data can't tell you, and any estimate's assumptions.
+
+![The one-page executive summary: answer first, three findings, three recommendations, caveats](/images/courses/capstone/executive-summary.svg "Answer first, three findings, three recommendations, caveats.")
 
 ## Example
 
@@ -66740,7 +66758,7 @@ First, **it hasn't been checked**. Every analyst makes mistakes; good ones catch
 
 ## The concept
 
-**Review your own work like a stranger**
+### Review your own work like a stranger
 
 Leave it for a day, then check:
 
@@ -66754,11 +66772,11 @@ Leave it for a day, then check:
 
 Then ask someone else to read the executive summary and tell you, in their own words, the three main messages. If they can't, the summary isn't finished.
 
-**Prepare for the questions you'll be asked**
+### Prepare for the questions you'll be asked
 
 Boards ask predictable questions: "How do you know?", "Compared with what?", "What would you do?" and "What could make this wrong?" Write down the three hardest questions you expect and your answer to each, with the number you'll point to.
 
-**Publish it for your portfolio**
+### Publish it for your portfolio
 
 A portfolio entry is a short case study, not the full report:
 
@@ -66767,6 +66785,8 @@ A portfolio entry is a short case study, not the full report:
 3. **What you did**: the tools and the main steps.
 4. **What you found**: two or three findings with numbers.
 5. **Links**: the report (PDF or Power BI link), and your code or workbook.
+
+![A review checklist, a ten-minute talk split into one, six and three minutes, four hard board questions, and the five parts of a portfolio case study](/images/courses/capstone/review-present-publish.svg "Review, rehearse, then publish a short case study.")
 
 Publish it on GitHub (a README with screenshots), a portfolio site, or a LinkedIn post linking to them. The Build Your Student Portfolio course covers the details.
 

@@ -12,18 +12,20 @@ This lesson works through the plan from lesson 1. For each question you'll get a
 
 ## The concept
 
-**Decompose the headline**
+### Decompose the headline
 
 Revenue growth = price + new stores + everything else (volume and mix in the existing stores). Separate them:
 
 - **New stores**: compare like for like, leaving out stores not open in both periods (Lekki).
 - **Price**: compare the like-for-like growth with the 18% price rise. Whatever's left is real change in volume or mix.
 
-**Compare like with like, then look inside**
+![An invented example splitting growth from 100 to 130 into a price rise, a new shop and real change in volume and mix](/images/courses/capstone/growth-waterfall.svg "A headline number is several stories: price, new shops, and real change.")
+
+### Compare like with like, then look inside
 
 For each store, compare January to June 2026 with January to June 2025: sales, transactions and average transaction value. When something changes sharply, find the **date** it changed. A step change on a particular date usually has a specific cause.
 
-**Look for money left on the table**
+### Look for money left on the table
 
 | Leak | Measure |
 | :-- | :-- |
@@ -31,7 +33,7 @@ For each store, compare January to June 2026 with January to June 2025: sales, t
 | Returns | **Return rate**: units returned ÷ units sold, by product |
 | Stock-outs | **Lost sales estimate**: normal daily sales × days out of stock × price |
 
-**Every estimate needs its assumptions**
+### Every estimate needs its assumptions
 
 A lost-sales figure is an estimate, not a fact. Say how you made it: which period you took as "normal", how many days, which price, and what you ignored (customers who bought a different model instead, for example). An estimate with clear assumptions is useful; one without them isn't trusted.
 
