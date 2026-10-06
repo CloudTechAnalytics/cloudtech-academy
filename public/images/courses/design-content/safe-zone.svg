@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 430" width="760" height="430" role="img" aria-label="Where to place text on a tall vertical video. Keep headline text away from the very top, where status information sits, and away from the bottom and right edge, where app buttons, captions and the account name cover the picture. Keep important words in the safe middle area.">
+<title>Keep text out of the edges the app covers.</title>
+
+<rect width="760" height="430" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="30.0" y="20.0" width="220.0" height="390.0" rx="22" fill="#2A2926"/>
+<rect x="40.0" y="30.0" width="200.0" height="370.0" rx="14" fill="#3A3732"/>
+<rect x="40.0" y="30.0" width="200.0" height="42.0" rx="14" fill="#9B2C1F" fill-opacity="0.35"/>
+<text xml:space="preserve" x="140.0" y="56.0" font-size="10.5" fill="#F4A59A" font-weight="400" text-anchor="middle">status bar and top controls</text>
+<rect x="40.0" y="330.0" width="200.0" height="70.0" rx="14" fill="#9B2C1F" fill-opacity="0.35"/>
+<text xml:space="preserve" x="140.0" y="358.0" font-size="10.5" fill="#F4A59A" font-weight="400" text-anchor="middle">caption and account name</text>
+<rect x="204.0" y="150.0" width="36.0" height="170.0" rx="4" fill="#9B2C1F" fill-opacity="0.35"/>
+<text xml:space="preserve" x="222.0" y="240.0" font-size="10" fill="#F4A59A" font-weight="400" text-anchor="middle">buttons</text>
+<rect x="52.0" y="120.0" width="142.0" height="100.0" rx="8" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.8"/>
+<text xml:space="preserve" x="123.0" y="160.0" font-size="13" fill="#2F6B3F" font-weight="700" text-anchor="middle">Headline text</text>
+<text xml:space="preserve" x="123.0" y="180.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="middle">safe middle area</text>
+<text xml:space="preserve" x="290.0" y="44.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Where things go</text>
+<rect x="290.0" y="64.0" width="5.0" height="52.0" rx="2" fill="#2F6B3F"/>
+<text xml:space="preserve" x="306.0" y="84.0" font-size="13.5" fill="#2F6B3F" font-weight="700" text-anchor="start">Headline</text>
+<text xml:space="preserve" x="306.0" y="104.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">Short, in the safe middle, in a clear font.</text>
+<rect x="290.0" y="130.0" width="5.0" height="52.0" rx="2" fill="#9B2C1F"/>
+<text xml:space="preserve" x="306.0" y="150.0" font-size="13.5" fill="#9B2C1F" font-weight="700" text-anchor="start">Away from the bottom and right</text>
+<text xml:space="preserve" x="306.0" y="170.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">Apps put captions and buttons there.</text>
+<rect x="290.0" y="196.0" width="5.0" height="52.0" rx="2" fill="#2F5D8A"/>
+<text xml:space="preserve" x="306.0" y="216.0" font-size="13.5" fill="#2F5D8A" font-weight="700" text-anchor="start">Words on screen carry it</text>
+<text xml:space="preserve" x="306.0" y="236.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">Many people watch with the sound off.</text>
+<rect x="290.0" y="262.0" width="5.0" height="52.0" rx="2" fill="#5C4F80"/>
+<text xml:space="preserve" x="306.0" y="282.0" font-size="13.5" fill="#5C4F80" font-weight="700" text-anchor="start">Auto-captions</text>
+<text xml:space="preserve" x="306.0" y="302.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">Great time saver, but proofread every one.</text>
+<rect x="290.0" y="340.0" width="454.0" height="70.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.4"/>
+<text xml:space="preserve" x="304.0" y="364.0" font-size="12" fill="#5E5A52" font-weight="700" text-anchor="start">Format</text>
+<text xml:space="preserve" x="304.0" y="386.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">9:16 tall for Reels, TikTok, Shorts and status.   16:9 wide for normal YouTube.</text>
+</g></svg>

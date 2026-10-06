@@ -17,6 +17,8 @@ For **Glow by Ada**, a small hair salon in Wuse, Abuja, whose customers are most
 
 Notice that only one of the three is "selling". People follow accounts that are useful or interesting; the bookings come from trust.
 
+![Three content themes (show the work, help the customer, build trust) with an example post for each; only one is selling](/images/courses/design-content/content-pillars.svg "Three themes, and only one of them is selling.")
+
 If you're stuck, ask AI, and give it your real business and customers:
 
 ```text
@@ -52,6 +54,8 @@ Now **edit it like the owner**:
 - **Remove what you can't actually make.** No camera stand for a time-lapse? Swap it for a photo carousel of the steps.
 - **Add real dates:** your promotions, public holidays, paydays (end of month is when bookings rise).
 - **Check you have the material:** permission from a customer to post her photo and review.
+
+![A two-week content calendar with three posts a week across the three themes, and three edits to make: remove what you can't make, add real dates, check your material](/images/courses/design-content/content-calendar.svg "Plan two weeks, then edit the AI's calendar like the owner.")
 
 Put the final plan where you'll see it: a spreadsheet, a notebook, your phone calendar.
 
@@ -94,11 +98,15 @@ What a good caption has:
 - **A call to action**: book, reply, save, share, visit, with how.
 - **A few specific hashtags** (3 to 5 your customers actually search), not 15 generic ones.
 
+![A post with its caption labelled: a hook, one idea, a call to action and three to five hashtags](/images/courses/design-content/caption-anatomy.svg "Hook, one idea, call to action, a few specific hashtags.")
+
 Read every caption before posting. Change anything that doesn't sound like you, and never post a price, promise or claim you haven't checked.
 
 ## One idea, many platforms
 
 A good idea can feed several platforms, each in its own style:
+
+![One idea turned into an Instagram caption, a reel or TikTok, a WhatsApp status and a LinkedIn post](/images/courses/design-content/one-idea-many.svg "One idea, four formats.")
 
 ```text
 Take this tip: "Sleep with a satin scarf to keep braids neat longer."

@@ -17,6 +17,8 @@ On the home page, search for what you want to make, and Canva opens a blank page
 | A story, Reel cover or WhatsApp status | "Instagram story" | 1080 × 1920 pixels (tall) |
 | A printed flyer | "Flyer" | A4 or A5 |
 
+![Canvas sizes for a square post, a tall story and a printed flyer, the three export formats PNG, JPG and PDF Print, and sharing a view link](/images/courses/design-content/canva-sizes.svg "Pick the size first; export in the right format.")
+
 Pick a **template** and click it to open it in the editor. Starting from a template isn't cheating; it gives you a layout that already works, and you'll change everything that matters.
 
 ## What goes wrong: a flyer, before and after
@@ -39,6 +41,8 @@ It's hard to read, nothing stands out, and it looks rushed. Every problem is one
 | **Alignment** | Things line up along invisible lines | Left, centred and right all mixed | Align everything left (or everything centred). Drag until Canva's pink guide lines appear |
 | **Space** | Empty space around things lets the eye rest | One wall of text, nothing left out | Cut the text to essentials; keep a margin from every edge |
 | **Few fonts** | One or two fonts at most | Five | One bold font for the headline, one plain font for everything else |
+
+![A flyer before and after: a busy photo with thin text and many fonts, then a clean layout with a dark panel, left alignment, space, two fonts and the headline biggest](/images/courses/design-content/canva-rules.svg "Contrast, alignment, space, few fonts.")
 
 And one more decision above all four: **what should people see first?** Make that the biggest thing.
 

@@ -881,6 +881,8 @@ For **Glow by Ada**, a small hair salon in Wuse, Abuja, whose customers are most
 
 Notice that only one of the three is "selling". People follow accounts that are useful or interesting; the bookings come from trust.
 
+![Three content themes (show the work, help the customer, build trust) with an example post for each; only one is selling](/images/courses/design-content/content-pillars.svg "Three themes, and only one of them is selling.")
+
 If you're stuck, ask AI, and give it your real business and customers:
 
 ```text
@@ -916,6 +918,8 @@ Now **edit it like the owner**:
 - **Remove what you can't actually make.** No camera stand for a time-lapse? Swap it for a photo carousel of the steps.
 - **Add real dates:** your promotions, public holidays, paydays (end of month is when bookings rise).
 - **Check you have the material:** permission from a customer to post her photo and review.
+
+![A two-week content calendar with three posts a week across the three themes, and three edits to make: remove what you can't make, add real dates, check your material](/images/courses/design-content/content-calendar.svg "Plan two weeks, then edit the AI's calendar like the owner.")
 
 Put the final plan where you'll see it: a spreadsheet, a notebook, your phone calendar.
 
@@ -958,11 +962,15 @@ What a good caption has:
 - **A call to action**: book, reply, save, share, visit, with how.
 - **A few specific hashtags** (3 to 5 your customers actually search), not 15 generic ones.
 
+![A post with its caption labelled: a hook, one idea, a call to action and three to five hashtags](/images/courses/design-content/caption-anatomy.svg "Hook, one idea, call to action, a few specific hashtags.")
+
 Read every caption before posting. Change anything that doesn't sound like you, and never post a price, promise or claim you haven't checked.
 
 ## One idea, many platforms
 
 A good idea can feed several platforms, each in its own style:
+
+![One idea turned into an Instagram caption, a reel or TikTok, a WhatsApp status and a LinkedIn post](/images/courses/design-content/one-idea-many.svg "One idea, four formats.")
 
 ```text
 Take this tip: "Sleep with a satin scarf to keep braids neat longer."
@@ -1054,6 +1062,8 @@ On the home page, search for what you want to make, and Canva opens a blank page
 | A story, Reel cover or WhatsApp status | "Instagram story" | 1080 × 1920 pixels (tall) |
 | A printed flyer | "Flyer" | A4 or A5 |
 
+![Canvas sizes for a square post, a tall story and a printed flyer, the three export formats PNG, JPG and PDF Print, and sharing a view link](/images/courses/design-content/canva-sizes.svg "Pick the size first; export in the right format.")
+
 Pick a **template** and click it to open it in the editor. Starting from a template isn't cheating; it gives you a layout that already works, and you'll change everything that matters.
 
 ## What goes wrong: a flyer, before and after
@@ -1076,6 +1086,8 @@ It's hard to read, nothing stands out, and it looks rushed. Every problem is one
 | **Alignment** | Things line up along invisible lines | Left, centred and right all mixed | Align everything left (or everything centred). Drag until Canva's pink guide lines appear |
 | **Space** | Empty space around things lets the eye rest | One wall of text, nothing left out | Cut the text to essentials; keep a margin from every edge |
 | **Few fonts** | One or two fonts at most | Five | One bold font for the headline, one plain font for everything else |
+
+![A flyer before and after: a busy photo with thin text and many fonts, then a clean layout with a dark panel, left alignment, space, two fonts and the headline biggest](/images/courses/design-content/canva-rules.svg "Contrast, alignment, space, few fonts.")
 
 And one more decision above all four: **what should people see first?** Make that the biggest thing.
 
@@ -1201,6 +1213,8 @@ For a small food business in Ikeja:
 
 Notice the order: **the result first**, then how, then proof, then the action. Most people decide in the first two seconds whether to keep watching, so a logo or "Hi guys, welcome back" in the opening seconds loses them.
 
+![A 15-second shot list on a timeline: result first, then how, then proof, then the action](/images/courses/design-content/shot-list.svg "Result first, then how, then proof, then the action.")
+
 ## Set up the project
 
 **CapCut** is a free video editor for phone and computer, with a browser version too. Menu names differ slightly between versions and devices; if a button here looks different, look for the nearest match.
@@ -1226,6 +1240,8 @@ Many people watch with the sound off, so words on screen carry the message.
 - **Headline text:** **Text → Add text**. Keep it short ("Feeds 4 for ₦8,000"), in a clear font, and away from the very bottom and right edge, where app buttons and captions cover it.
 - **Automatic captions:** under **Captions** (or **Text → Auto captions**), CapCut listens to the speech and writes subtitles. They're a huge time saver, and they're often wrong on names, places and Nigerian words. **Read every line.**
 
+![A tall phone video frame with the top, bottom and right edges marked as covered by the app, and the middle marked as the safe area for headline text](/images/courses/design-content/safe-zone.svg "Keep text out of the edges the app covers.")
+
 Here's what auto-captions produced for a 10-second voiceover:
 
 ```text
@@ -1246,6 +1262,8 @@ The speaker said **jollof**, **₦8,000**, **Ikeja** and **WhatsApp**. Left unco
 > Popular songs are usually copyrighted. On a business page, a video with unlicensed music can be muted or removed. Use music licensed for commercial use (CapCut marks some as such, and platforms have business-safe libraries), or record a voiceover.
 
 **Export:**
+
+![Six steps for a short video: plan, set up, cut, words, sound and export, with two checks before exporting](/images/courses/design-content/capcut-workflow.svg "Plan, set up, cut, caption, sound, export.")
 
 1. Watch the whole video twice: once with sound, once **muted**. Does it still make sense muted?
 2. Tap **Export** (often an arrow at the top). Choose **1080p** and **30 fps**: good quality without a huge file.

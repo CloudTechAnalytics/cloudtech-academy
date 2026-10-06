@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 430" width="760" height="430" role="img" aria-label="Four design rules shown on a tutoring flyer. Before: a busy photo with thin text on top, five fonts, text mixed left, centre and right, and a logo as big as the headline. After: a plain panel behind the text for contrast, everything aligned left, a margin and empty space, two fonts, and the headline biggest.">
+<title>Contrast, alignment, space, few fonts.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="430" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="20.0" width="230.0" height="296.0" rx="10" fill="#FFFFFF" stroke="#9B2C1F" stroke-width="1.6"/>
+<rect x="26.0" y="30.0" width="210.0" height="130.0" rx="4" fill="#C8BBA6"/>
+<rect x="26.0" y="80.0" width="210.0" height="8.0" rx="0" fill="#B8A98E"/>
+<rect x="26.0" y="110.0" width="210.0" height="8.0" rx="0" fill="#B8A98E"/>
+<text xml:space="preserve" x="40.0" y="62.0" font-size="13" fill="#F7F1E3" font-weight="400" text-anchor="start" font-style="italic">Maths Tutoring</text>
+<text xml:space="preserve" x="120.0" y="92.0" font-size="12" fill="#F7F1E3" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">Form 4–6!!</text>
+<text xml:space="preserve" x="60.0" y="124.0" font-size="10" fill="#F7F1E3" font-weight="700" text-anchor="start">Sat 9am Ikeja</text>
+<text xml:space="preserve" x="170.0" y="146.0" font-size="14" fill="#F7F1E3" font-weight="400" text-anchor="start" font-style="italic">₦6,000</text>
+<circle cx="210.0" cy="52.0" r="16" fill="#A8998A"/>
+<text xml:space="preserve" x="40.0" y="190.0" font-size="9.5" fill="#5E5A52" font-weight="400" text-anchor="start">Small groups, experienced teacher, past questions,</text>
+<text xml:space="preserve" x="62.0" y="206.0" font-size="9.5" fill="#5E5A52" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">WAEC and JAMB, free first class</text>
+<text xml:space="preserve" x="30.0" y="226.0" font-size="11" fill="#9B2C1F" font-weight="700" text-anchor="start" font-style="italic">CALL 0803 555 0100 NOW</text>
+<text xml:space="preserve" x="150.0" y="252.0" font-size="9.5" fill="#5E5A52" font-weight="400" text-anchor="start">Ikeja, Lagos</text>
+<text xml:space="preserve" x="24.0" y="290.0" font-size="11.5" fill="#9B2C1F" font-weight="700" text-anchor="start">Hard to read. Nothing stands out.</text>
+<path d="M250.0,168.0 L268.0,168.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="272.0" y="20.0" width="230.0" height="296.0" rx="10" fill="#FFFFFF" stroke="#2F6B3F" stroke-width="1.6"/>
+<rect x="282.0" y="30.0" width="210.0" height="96.0" rx="4" fill="#C8BBA6"/>
+<text xml:space="preserve" x="387.0" y="84.0" font-size="11" fill="#9A8F7C" font-weight="400" text-anchor="middle">photo, top half</text>
+<rect x="282.0" y="126.0" width="210.0" height="180.0" rx="0" fill="#2A2926"/>
+<text xml:space="preserve" x="298.0" y="160.0" font-size="17" fill="#FFFFFF" font-weight="700" text-anchor="start">Pass maths in</text>
+<text xml:space="preserve" x="298.0" y="182.0" font-size="17" fill="#FFFFFF" font-weight="700" text-anchor="start">one term</text>
+<text xml:space="preserve" x="298.0" y="214.0" font-size="12" fill="#F3EBD8" font-weight="400" text-anchor="start">Sat 9am · Ikeja</text>
+<text xml:space="preserve" x="298.0" y="234.0" font-size="12" fill="#F3EBD8" font-weight="400" text-anchor="start">₦6,000 · small groups</text>
+<text xml:space="preserve" x="298.0" y="254.0" font-size="12" fill="#F3EBD8" font-weight="400" text-anchor="start">Form 4–6</text>
+<rect x="298.0" y="270.0" width="176.0" height="26.0" rx="5" fill="#B38A3E"/>
+<text xml:space="preserve" x="386.0" y="288.0" font-size="11" fill="#FFFFFF" font-weight="700" text-anchor="middle">WhatsApp 0803 555 0100</text>
+<text xml:space="preserve" x="530.0" y="36.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">The fixes</text>
+<rect x="530.0" y="62.0" width="5.0" height="40.0" rx="2" fill="#2F5D8A"/>
+<text xml:space="preserve" x="546.0" y="78.0" font-size="13" fill="#2F5D8A" font-weight="700" text-anchor="start">Contrast</text>
+<text xml:space="preserve" x="546.0" y="96.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">Dark panel behind the text</text>
+<rect x="530.0" y="112.0" width="5.0" height="40.0" rx="2" fill="#2F6B3F"/>
+<text xml:space="preserve" x="546.0" y="128.0" font-size="13" fill="#2F6B3F" font-weight="700" text-anchor="start">Alignment</text>
+<text xml:space="preserve" x="546.0" y="146.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">Everything left-aligned</text>
+<rect x="530.0" y="162.0" width="5.0" height="40.0" rx="2" fill="#8A6A1F"/>
+<text xml:space="preserve" x="546.0" y="178.0" font-size="13" fill="#8A6A1F" font-weight="700" text-anchor="start">Space</text>
+<text xml:space="preserve" x="546.0" y="196.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">Few words; a margin all round</text>
+<rect x="530.0" y="212.0" width="5.0" height="40.0" rx="2" fill="#5C4F80"/>
+<text xml:space="preserve" x="546.0" y="228.0" font-size="13" fill="#5C4F80" font-weight="700" text-anchor="start">Few fonts</text>
+<text xml:space="preserve" x="546.0" y="246.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">One bold, one plain</text>
+<rect x="530.0" y="262.0" width="5.0" height="40.0" rx="2" fill="#9B2C1F"/>
+<text xml:space="preserve" x="546.0" y="278.0" font-size="13" fill="#9B2C1F" font-weight="700" text-anchor="start">First look</text>
+<text xml:space="preserve" x="546.0" y="296.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">The headline is biggest</text>
+<text xml:space="preserve" x="16.0" y="350.0" font-size="13" fill="#8A6A1F" font-weight="700" text-anchor="start">Same information, far fewer words, readable in three seconds.</text>
+<text xml:space="preserve" x="16.0" y="374.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">Check it small: zoom out to phone-feed size. Can you read the headline?</text>
+</g></svg>
