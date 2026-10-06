@@ -5389,6 +5389,653 @@
    }
   }
  },
+ "lab": {
+  "zipBytes": 4499,
+  "files": {
+   "changes": {
+    "rows": 6,
+    "bytes": 637,
+    "columns": [
+     {
+      "name": "change_id",
+      "type": "text",
+      "missing": 0,
+      "distinct": 6
+     },
+     {
+      "name": "requested_week",
+      "type": "number",
+      "missing": 0,
+      "distinct": 2,
+      "min": 9,
+      "max": 10
+     },
+     {
+      "name": "description",
+      "type": "text",
+      "missing": 0,
+      "distinct": 6
+     },
+     {
+      "name": "requested_by",
+      "type": "text",
+      "missing": 0,
+      "distinct": 6
+     },
+     {
+      "name": "affects_task",
+      "type": "text",
+      "missing": 2,
+      "distinct": 3
+     },
+     {
+      "name": "extra_days",
+      "type": "number",
+      "missing": 0,
+      "distinct": 5,
+      "min": -9,
+      "max": 14
+     },
+     {
+      "name": "extra_cost_ngn",
+      "type": "number",
+      "missing": 0,
+      "distinct": 6,
+      "min": 2100000,
+      "max": 16000000
+     },
+     {
+      "name": "decision",
+      "type": "text",
+      "missing": 0,
+      "distinct": 1
+     }
+    ],
+    "preview": [
+     [
+      "CR1",
+      "9",
+      "Add a molecular testing room with its own air handling",
+      "Medical director",
+      "B2",
+      "14",
+      "16000000",
+      "pending"
+     ],
+     [
+      "CR2",
+      "9",
+      "Hire 3 more phlebotomists for longer collection hours",
+      "Operations",
+      "",
+      "0",
+      "2100000",
+      "pending"
+     ],
+     [
+      "CR3",
+      "10",
+      "Pay the contractor for weekend working on the fit-out",
+      "Project manager",
+      "B2",
+      "-5",
+      "3200000",
+      "pending"
+     ],
+     [
+      "CR4",
+      "10",
+      "Upgrade the information system to include a patient portal",
+      "IT",
+      "C4",
+      "6",
+      "4800000",
+      "pending"
+     ],
+     [
+      "CR5",
+      "10",
+      "Ship the analysers by air instead of sea",
+      "Procurement",
+      "B4",
+      "-9",
+      "5500000",
+      "pending"
+     ],
+     [
+      "CR6",
+      "10",
+      "Add a home-collection van and route software",
+      "Sales",
+      "",
+      "0",
+      "3600000",
+      "pending"
+     ]
+    ]
+   },
+   "options": {
+    "rows": 6,
+    "bytes": 1041,
+    "columns": [
+     {
+      "name": "option_id",
+      "type": "text",
+      "missing": 0,
+      "distinct": 6
+     },
+     {
+      "name": "option",
+      "type": "text",
+      "missing": 0,
+      "distinct": 6
+     },
+     {
+      "name": "description",
+      "type": "text",
+      "missing": 0,
+      "distinct": 6
+     },
+     {
+      "name": "extra_cost_ngn",
+      "type": "number",
+      "missing": 0,
+      "distinct": 6,
+      "min": 0,
+      "max": 16000000
+     },
+     {
+      "name": "days_saved",
+      "type": "number",
+      "missing": 0,
+      "distinct": 6,
+      "min": -14,
+      "max": 9
+     },
+     {
+      "name": "notes",
+      "type": "text",
+      "missing": 0,
+      "distinct": 6
+     }
+    ],
+    "preview": [
+     [
+      "O1",
+      "Carry on as planned",
+      "Keep the plan and the current resources. No extra cost.",
+      "0",
+      "0",
+      "No change to the forecast date."
+     ],
+     [
+      "O2",
+      "Fly the analysers in",
+      "Pay for air freight and priority customs clearance of the analysers (CR5).",
+      "5500000",
+      "9",
+      "Applies to the analyser import (B4). Risk of damage in transit remains."
+     ],
+     [
+      "O3",
+      "Weekend working on the fit-out",
+      "Pay the contractor for weekend shifts on the fit-out (CR3).",
+      "3200000",
+      "5",
+      "Applies to the fit-out (B2). Helps only if the fit-out is on the critical path."
+     ],
+     [
+      "O4",
+      "Start reagent stocking early",
+      "Stock reagents while the analysers are being installed instead of after.",
+      "450000",
+      "4",
+      "Overlaps E2 with B5. Reagents must be stored cold from delivery."
+     ],
+     [
+      "O5",
+      "Open with a reduced test menu",
+      "Open with the 60% most requested tests, validating the rest after opening.",
+      "1200000",
+      "6",
+      "Shortens validation (F1). Needs the medical director's agreement."
+     ],
+     [
+      "O6",
+      "Add a molecular testing room first",
+      "Build the molecular room before opening (CR1).",
+      "16000000",
+      "-14",
+      "Adds 14 days. Not a recovery option."
+     ]
+    ]
+   },
+   "risks": {
+    "rows": 13,
+    "bytes": 1554,
+    "columns": [
+     {
+      "name": "risk_id",
+      "type": "text",
+      "missing": 0,
+      "distinct": 13
+     },
+     {
+      "name": "description",
+      "type": "text",
+      "missing": 0,
+      "distinct": 13
+     },
+     {
+      "name": "probability",
+      "type": "number",
+      "missing": 0,
+      "distinct": 10,
+      "min": 0.05,
+      "max": 0.7
+     },
+     {
+      "name": "impact_ngn",
+      "type": "number",
+      "missing": 0,
+      "distinct": 12,
+      "min": 800000,
+      "max": 14000000
+     },
+     {
+      "name": "impact_days",
+      "type": "number",
+      "missing": 0,
+      "distinct": 8,
+      "min": 0,
+      "max": 25
+     },
+     {
+      "name": "owner",
+      "type": "text",
+      "missing": 0,
+      "distinct": 8
+     },
+     {
+      "name": "response",
+      "type": "text",
+      "missing": 0,
+      "distinct": 13
+     },
+     {
+      "name": "status",
+      "type": "text",
+      "missing": 0,
+      "distinct": 2
+     }
+    ],
+    "preview": [
+     [
+      "R01",
+      "Customs holds the analysers longer than expected",
+      "0.5",
+      "5000000",
+      "12",
+      "Procurement",
+      "Hire a clearing agent; pre-file the paperwork",
+      "open"
+     ],
+     [
+      "R02",
+      "Naira weakens further, raising imported equipment costs",
+      "0.5",
+      "7000000",
+      "0",
+      "Finance",
+      "Buy dollars forward for the remaining imports",
+      "open"
+     ],
+     [
+      "R03",
+      "Analysers damaged in transit",
+      "0.08",
+      "14000000",
+      "25",
+      "Procurement",
+      "Insure the shipment; inspect at the port",
+      "open"
+     ],
+     [
+      "R04",
+      "Accreditation inspector finds a major non-conformance",
+      "0.3",
+      "3000000",
+      "15",
+      "Regulatory",
+      "Pre-inspection by a consultant",
+      "open"
+     ],
+     [
+      "R05",
+      "Shortlisted scientists decline offers",
+      "0.3",
+      "900000",
+      "10",
+      "HR",
+      "Keep a reserve list of candidates",
+      "open"
+     ],
+     [
+      "R06",
+      "Grid power too unreliable for the analysers",
+      "0.7",
+      "2500000",
+      "0",
+      "Facilities",
+      "Backup power and cold storage (task B6)",
+      "open"
+     ]
+    ]
+   },
+   "stakeholders": {
+    "rows": 8,
+    "bytes": 1249,
+    "columns": [
+     {
+      "name": "stakeholder",
+      "type": "text",
+      "missing": 0,
+      "distinct": 8
+     },
+     {
+      "name": "group",
+      "type": "text",
+      "missing": 0,
+      "distinct": 4
+     },
+     {
+      "name": "influence",
+      "type": "text",
+      "missing": 0,
+      "distinct": 3
+     },
+     {
+      "name": "interest",
+      "type": "text",
+      "missing": 0,
+      "distinct": 3
+     },
+     {
+      "name": "concern",
+      "type": "text",
+      "missing": 0,
+      "distinct": 8
+     },
+     {
+      "name": "quote",
+      "type": "text",
+      "missing": 0,
+      "distinct": 8
+     }
+    ],
+    "preview": [
+     [
+      "Managing director (sponsor)",
+      "Medlink",
+      "High",
+      "High",
+      "The ministry date",
+      "I promised the commissioner an opening on 1 March. I need to know now whether I can keep that promise."
+     ],
+     [
+      "State commissioner for health",
+      "Government",
+      "High",
+      "Medium",
+      "Public access to testing",
+      "The state has been waiting two years for a lab like this. A date given in public is a date kept."
+     ],
+     [
+      "Medical director",
+      "Medlink",
+      "Medium",
+      "High",
+      "Test menu and quality",
+      "I will not open a lab that can't run the full menu. People's treatment depends on these results."
+     ],
+     [
+      "Chief financial officer",
+      "Medlink",
+      "High",
+      "Medium",
+      "Budget",
+      "The budget was approved once. Every extra naira has to be explained, and I will not be surprised again."
+     ],
+     [
+      "Licensing office",
+      "Regulator",
+      "High",
+      "Low",
+      "Compliance",
+      "We inspect when the paperwork is complete, not when you would like us to."
+     ],
+     [
+      "Head of procurement",
+      "Medlink",
+      "Medium",
+      "High",
+      "Import costs",
+      "The analysers are stuck in clearance and the naira moved against us. I can only do so much from here."
+     ]
+    ]
+   },
+   "tasks": {
+    "rows": 23,
+    "bytes": 1744,
+    "columns": [
+     {
+      "name": "task_id",
+      "type": "text",
+      "missing": 0,
+      "distinct": 23
+     },
+     {
+      "name": "name",
+      "type": "text",
+      "missing": 0,
+      "distinct": 23
+     },
+     {
+      "name": "phase",
+      "type": "text",
+      "missing": 0,
+      "distinct": 7
+     },
+     {
+      "name": "owner",
+      "type": "text",
+      "missing": 0,
+      "distinct": 9
+     },
+     {
+      "name": "optimistic_days",
+      "type": "number",
+      "missing": 0,
+      "distinct": 9,
+      "min": 1,
+      "max": 22
+     },
+     {
+      "name": "likely_days",
+      "type": "number",
+      "missing": 0,
+      "distinct": 11,
+      "min": 1,
+      "max": 28
+     },
+     {
+      "name": "pessimistic_days",
+      "type": "number",
+      "missing": 0,
+      "distinct": 11,
+      "min": 2,
+      "max": 45
+     },
+     {
+      "name": "predecessors",
+      "type": "text",
+      "missing": 1,
+      "distinct": 15
+     },
+     {
+      "name": "daily_cost_ngn",
+      "type": "number",
+      "missing": 0,
+      "distinct": 21,
+      "min": 90000,
+      "max": 900000
+     }
+    ],
+    "preview": [
+     [
+      "A1",
+      "Approve business case and charter",
+      "Initiation",
+      "Board",
+      "2",
+      "3",
+      "5",
+      "",
+      "150000"
+     ],
+     [
+      "A2",
+      "Sign lease for the premises",
+      "Initiation",
+      "Operations",
+      "6",
+      "8",
+      "12",
+      "A1",
+      "200000"
+     ],
+     [
+      "A3",
+      "Obtain the facility licence",
+      "Initiation",
+      "Regulatory",
+      "15",
+      "22",
+      "45",
+      "A2",
+      "120000"
+     ],
+     [
+      "B1",
+      "Design the lab layout and clean areas",
+      "Facilities",
+      "Facilities",
+      "6",
+      "8",
+      "12",
+      "A2",
+      "260000"
+     ],
+     [
+      "B2",
+      "Fit-out: floors, power and air handling",
+      "Facilities",
+      "Contractor",
+      "22",
+      "28",
+      "45",
+      "B1",
+      "900000"
+     ],
+     [
+      "B3",
+      "Order the analysers",
+      "Equipment",
+      "Procurement",
+      "4",
+      "6",
+      "10",
+      "B1",
+      "110000"
+     ]
+    ]
+   },
+   "weekly_status": {
+    "rows": 101,
+    "bytes": 1712,
+    "columns": [
+     {
+      "name": "week",
+      "type": "number",
+      "missing": 0,
+      "distinct": 10,
+      "min": 1,
+      "max": 10
+     },
+     {
+      "name": "task_id",
+      "type": "text",
+      "missing": 0,
+      "distinct": 13
+     },
+     {
+      "name": "percent_complete",
+      "type": "number",
+      "missing": 0,
+      "distinct": 34,
+      "min": 7,
+      "max": 100
+     },
+     {
+      "name": "actual_cost_ngn",
+      "type": "number",
+      "missing": 0,
+      "distinct": 47,
+      "min": 177000,
+      "max": 28620000
+     }
+    ],
+    "preview": [
+     [
+      "1",
+      "A1",
+      "100",
+      "457000"
+     ],
+     [
+      "1",
+      "A2",
+      "25",
+      "393000"
+     ],
+     [
+      "1",
+      "C1",
+      "25",
+      "389000"
+     ],
+     [
+      "1",
+      "D1",
+      "7",
+      "177000"
+     ],
+     [
+      "2",
+      "A1",
+      "100",
+      "457000"
+     ],
+     [
+      "2",
+      "A2",
+      "88",
+      "1375000"
+     ]
+    ]
+   }
+  }
+ },
  "legal": {
   "zipBytes": 12870,
   "files": {

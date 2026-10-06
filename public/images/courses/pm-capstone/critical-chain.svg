@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 420" width="760" height="420" role="img" aria-label="A small invented network of seven tasks showing the forward pass, backward pass and float. The longest chain, A then B then D then F, has zero float and is critical; task C has some float and task E has more. Delaying a task on the critical chain delays the project; delaying a task with float does not, until the float is used up.">
+<title>The longest chain is critical; the rest has float.</title>
+<defs><marker id="a5E5A52" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#5E5A52"/></marker><marker id="a2F6B3F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2F6B3F"/></marker></defs>
+<rect width="760" height="420" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="26.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Seven tasks (invented): days in brackets</text>
+<rect x="16.0" y="60.0" width="120.0" height="70.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="2"/>
+<text xml:space="preserve" x="28.0" y="88.0" font-size="14" fill="#2F6B3F" font-weight="700" text-anchor="start">A  (4)</text>
+<text xml:space="preserve" x="28.0" y="112.0" font-size="12" fill="#2F6B3F" font-weight="700" text-anchor="start">float 0</text>
+<rect x="176.0" y="60.0" width="120.0" height="70.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="2"/>
+<text xml:space="preserve" x="188.0" y="88.0" font-size="14" fill="#2F6B3F" font-weight="700" text-anchor="start">B  (8)</text>
+<text xml:space="preserve" x="188.0" y="112.0" font-size="12" fill="#2F6B3F" font-weight="700" text-anchor="start">float 0</text>
+<rect x="336.0" y="60.0" width="120.0" height="70.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="2"/>
+<text xml:space="preserve" x="348.0" y="88.0" font-size="14" fill="#2F6B3F" font-weight="700" text-anchor="start">D  (10)</text>
+<text xml:space="preserve" x="348.0" y="112.0" font-size="12" fill="#2F6B3F" font-weight="700" text-anchor="start">float 0</text>
+<rect x="496.0" y="60.0" width="120.0" height="70.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="2"/>
+<text xml:space="preserve" x="508.0" y="88.0" font-size="14" fill="#2F6B3F" font-weight="700" text-anchor="start">F  (6)</text>
+<text xml:space="preserve" x="508.0" y="112.0" font-size="12" fill="#2F6B3F" font-weight="700" text-anchor="start">float 0</text>
+<rect x="176.0" y="170.0" width="120.0" height="70.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.4"/>
+<text xml:space="preserve" x="188.0" y="198.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">C  (5)</text>
+<text xml:space="preserve" x="188.0" y="222.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">float 6 (shared)</text>
+<rect x="336.0" y="170.0" width="120.0" height="70.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.4"/>
+<text xml:space="preserve" x="348.0" y="198.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">E  (4)</text>
+<text xml:space="preserve" x="348.0" y="222.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">float 6 (shared)</text>
+<rect x="496.0" y="170.0" width="120.0" height="70.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.4"/>
+<text xml:space="preserve" x="508.0" y="198.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">G  (3)</text>
+<text xml:space="preserve" x="508.0" y="222.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">float 6 (shared)</text>
+<path d="M138.0,95.0 L174.0,95.0" fill="none" stroke="#2F6B3F" stroke-width="2.4" marker-end="url(#a2F6B3F)"/>
+<path d="M298.0,95.0 L334.0,95.0" fill="none" stroke="#2F6B3F" stroke-width="2.4" marker-end="url(#a2F6B3F)"/>
+<path d="M458.0,95.0 L494.0,95.0" fill="none" stroke="#2F6B3F" stroke-width="2.4" marker-end="url(#a2F6B3F)"/>
+<path d="M138.0,120.0 L174.0,180.0" fill="none" stroke="#5E5A52" stroke-width="1.6" marker-end="url(#a5E5A52)"/>
+<path d="M298.0,230.0 L334.0,180.0" fill="none" stroke="#5E5A52" stroke-width="1.6" marker-end="url(#a5E5A52)"/>
+<path d="M458.0,230.0 L494.0,180.0" fill="none" stroke="#5E5A52" stroke-width="1.6" marker-end="url(#a5E5A52)"/>
+<path d="M556.0,168.0 L556.0,132.0" fill="none" stroke="#5E5A52" stroke-width="1.6" marker-end="url(#a5E5A52)"/>
+<rect x="640.0" y="60.0" width="104.0" height="70.0" rx="10" fill="#F3EBD8" stroke="#8A6A1F" stroke-width="1.3"/>
+<text xml:space="preserve" x="692.0" y="88.0" font-size="11.5" fill="#8A6A1F" font-weight="700" text-anchor="middle">Length</text>
+<text xml:space="preserve" x="692.0" y="112.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="middle">28 days</text>
+<text xml:space="preserve" x="16.0" y="270.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Forward pass, backward pass, float</text>
+<rect x="16.0" y="284.0" width="232.0" height="76.0" rx="10" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.5"/>
+<text xml:space="preserve" x="30.0" y="308.0" font-size="13.5" fill="#2F5D8A" font-weight="700" text-anchor="start">Forward pass</text>
+<text xml:space="preserve" x="30.0" y="328.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">Earliest start = latest</text>
+<text xml:space="preserve" x="30.0" y="342.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">earliest-finish of the</text>
+<text xml:space="preserve" x="30.0" y="356.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">predecessors.</text>
+<rect x="264.0" y="284.0" width="232.0" height="76.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.5"/>
+<text xml:space="preserve" x="278.0" y="308.0" font-size="13.5" fill="#2F6B3F" font-weight="700" text-anchor="start">Backward pass</text>
+<text xml:space="preserve" x="278.0" y="328.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">Latest finish = earliest</text>
+<text xml:space="preserve" x="278.0" y="342.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">latest-start of the successors.</text>
+<rect x="512.0" y="284.0" width="232.0" height="76.0" rx="10" fill="#F3EBD8" stroke="#8A6A1F" stroke-width="1.5"/>
+<text xml:space="preserve" x="526.0" y="308.0" font-size="13.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Float</text>
+<text xml:space="preserve" x="526.0" y="328.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">Latest start − earliest start.</text>
+<text xml:space="preserve" x="526.0" y="342.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">Zero means critical.</text>
+<text xml:space="preserve" x="16.0" y="394.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">C, E and G share the same 6 days of float: using it on one uses it for all three.</text>
+</g></svg>

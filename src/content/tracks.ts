@@ -475,6 +475,13 @@ export const TRACKS: Track[] = [
         ],
       },
       {
+        title: "Projects",
+        summary: "Take over a project in trouble and bring it back.",
+        items: [
+          { kind: "course", courseId: "project-manager-capstone", why: "A laboratory opening in week 10: honest dates, earned value, risks, change requests and a decision paper." },
+        ],
+      },
+      {
         title: "Career",
         summary: "Turn your skills into applications that get interviews.",
         items: [

@@ -1,0 +1,14 @@
+risk_id,description,probability,impact_ngn,impact_days,owner,response,status
+R01,Customs holds the analysers longer than expected,0.5,5000000,12,Procurement,Hire a clearing agent; pre-file the paperwork,open
+R02,"Naira weakens further, raising imported equipment costs",0.5,7000000,0,Finance,Buy dollars forward for the remaining imports,open
+R03,Analysers damaged in transit,0.08,14000000,25,Procurement,Insure the shipment; inspect at the port,open
+R04,Accreditation inspector finds a major non-conformance,0.3,3000000,15,Regulatory,Pre-inspection by a consultant,open
+R05,Shortlisted scientists decline offers,0.3,900000,10,HR,Keep a reserve list of candidates,open
+R06,Grid power too unreliable for the analysers,0.7,2500000,0,Facilities,Backup power and cold storage (task B6),open
+R07,Rainy season slows the fit-out,0.25,1800000,8,Contractor,Do the indoor work first,open
+R08,Information system will not connect to the analysers,0.3,1200000,6,IT,Vendor support during testing,open
+R09,Reagent supplier cannot deliver on time,0.2,1500000,7,Procurement,Second supplier on standby,open
+R10,"Opening misses the ministry's date, with public criticism",0.35,10000000,0,Sponsor,Protect the critical path; decide changes quickly,open
+R11,Theft from the site during fit-out,0.12,2500000,0,Facilities,Guards from day one of fit-out,open
+R12,Laboratory director leaves during the project,0.05,1600000,15,HR,Retention bonus at opening,open
+R13,Licence conditions change mid-application,0.15,800000,10,Regulatory,Weekly contact with the licensing office,closed

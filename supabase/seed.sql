@@ -74970,6 +74970,1985 @@ $md$, true, true, 8, array['sdc-08-p1', 'sdc-08-t1']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 
+-- Course: Project Manager Capstone: Rescue the Opening
+insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
+values ('project-manager-capstone', 'full', null, 'project-manager-capstone', 'PMC', 'Project Manager Capstone: Rescue the Opening', 'Take over a laboratory opening in week 10: write the charter, find the real critical path and the chance of the promised date, measure earned value, forecast the finish and the cost, price the risks, judge six change requests and write the decision paper that recovers the opening.', 'The capstone of the Project Manager track. Medlink Diagnostics is opening a diagnostic laboratory in Port Harcourt, and its managing director has promised the state commissioner an opening date in public. In week 10 you inherit the project: the analysers are stuck in customs, the naira has moved against the budget, and six change requests are on the desk. You''ll write the charter and map the stakeholders, check the plan and find that its approved budget was built on likely rather than expected durations, build the critical path and discover the promise had one working day of cushion, simulate the plan to find the real chance of the date, measure earned value at week 10, and forecast the finish and the cost from the remaining work. Then you''ll price the risk register, test six change requests against the schedule (one really saves nine days, another saves none), measure six recovery options and combine the ones that work, and write the one-page decision paper that leads with a recommendation and a trigger. Every number comes from running the code.', 'project-management', 'intermediate', 4, 'Career project', 10, true, 'available', true, array['Charters, scope and stakeholder strategy', 'PERT estimates and budget gaps', 'Critical path and float', 'Monte Carlo schedule risk', 'Earned value management', 'Forecasting dates and costs from progress', 'Risk registers, EMV and critical-chain risk', 'Change request analysis', 'Recovery options and decision papers']::text[], array['Project Management Fundamentals, which teaches each technique used here', 'Python for Data Analytics, or comfort with pandas']::text[], 'Medlink Diagnostics: recovering a laboratory opening', true, true, true, true, false, 60, 48)
+on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level = excluded.level, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('pmc-m01', 'project-manager-capstone', 'The Brief and the Charter', 1, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('project-manager-capstone:the-brief-and-the-charter', 'project-manager-capstone', 'pmc-m01', 'the-brief-and-the-charter', 'The brief and the charter', 'Meet Medlink Diagnostics, whose laboratory opening is in trouble, turn a sponsor''s worry into a charter with scope, success criteria and constraints, and map the stakeholders you''ll have to bring along.', 40, $md$
+## The problem
+
+This is the capstone of the Project Manager track. There are no new techniques here. You'll do what a project manager is hired to do when a project is in trouble: find out where it really stands, say how late and how dear it will be, weigh the changes and recovery options on the table, and give the sponsor a decision they can act on.
+
+The company is **Medlink Diagnostics**, a private laboratory group. It is opening a diagnostic laboratory in Port Harcourt, and its managing director has made a public promise. You've been brought in as project manager at the end of week 10. This is the email you find:
+
+> "We told the state commissioner that the laboratory would open on **Monday 8 March 2027**. We are in week 10. The analysers are stuck in customs, the naira has moved against us, and I keep being asked for extras: a molecular room, a patient portal, a home-collection van. I don't know whether the date is safe, what it will cost, or which of these requests I should say yes to. I need a plan I can take to the board."
+
+Notice what the email contains: a promised date, a feeling that something is wrong, and a pile of requests. It doesn't contain a status, a forecast or a decision. Your job is to produce all three, with evidence.
+
+You have the project's own records: the task plan, ten weeks of progress and spending, the risk register, six change requests, eight stakeholders' views and six recovery options. All of it is fictional.
+
+## The concept
+
+### The arc of the project
+
+| Stage | Output | Lesson |
+| :-- | :-- | :-- |
+| Brief and charter | Objective, scope, constraints, stakeholders | 1 |
+| Scope, WBS and estimates | A checked plan with honest durations and cost | 2 |
+| The critical path | The baseline schedule and what decides the date | 3 |
+| Schedule risk | The probability of the promised date | 4 |
+| Where are we now | Earned value at week 10 | 5 |
+| The forecast | Likely finish date and cost | 6 |
+| Risks and change requests | Reserves, and which changes to accept | 7 |
+| Recovery and the decision paper | A recommended recovery, reported to the sponsor | 8 |
+
+Use Python, Excel or a mix. The lessons show Python because it handles the schedule and the simulation cleanly; every number can be reproduced in a spreadsheet.
+
+### A charter says what the project is for
+
+A project charter is short, and it's agreed by the sponsor. It answers:
+
+- **Objective:** what the project will deliver, in one sentence a stakeholder could repeat.
+- **Success criteria:** how anyone will know it worked, with numbers and a date.
+- **Scope:** what is in, and, just as important, what is out.
+- **Constraints:** the date, the budget, the rules that can't bend.
+- **Key stakeholders and the sponsor's authority:** who decides what.
+
+Without it, every request sounds reasonable, and nobody can say no.
+
+> [!NOTE]
+> A charter isn't a promise that everything will go to plan. It's the agreed definition of "done" that you measure change against. When a request arrives, you ask: does it serve the objective, and what does it do to the date and the budget?
+
+### Stakeholders: who can help, who can block
+
+Plot each stakeholder by **influence** and **interest**. Manage closely those high on both, keep satisfied those with high influence but less interest, keep informed those with high interest but less influence, and watch the rest. Then record what each one **cares about**, because it tells you how to talk to them. The licensing office cares about complete paperwork, not about your date.
+
+![An invented charter in five lines for a school science lab and an influence and interest grid with how to engage each stakeholder](/images/courses/pm-capstone/charter-stakeholders.svg "Charter and stakeholder grid (invented example: a school science lab).")
+
+## Example
+
+Open the project's tasks and stakeholders:
+
+```python
+import numpy as np
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/lab/"
+tasks = pd.read_csv(base + "tasks.csv").fillna({"predecessors": ""})
+stakeholders = pd.read_csv(base + "stakeholders.csv")
+
+print(len(tasks), "tasks in", tasks["phase"].nunique(), "phases")
+print(tasks.groupby("phase")["task_id"].count().to_string())
+```
+
+```text
+23 tasks in 7 phases
+phase
+Equipment     3
+Facilities    3
+Initiation    3
+Launch        4
+Operations    2
+People        3
+Systems       5
+```
+
+The plan has **23 tasks in 7 phases**. Each task has an owner, three duration estimates (optimistic, likely and pessimistic), its predecessors and a daily cost. The approved budget is the likely duration times the daily cost, added up:
+
+```python
+tasks["budget_ngn"] = tasks["likely_days"] * tasks["daily_cost_ngn"]
+print(f"Approved budget (BAC): ₦{tasks['budget_ngn'].sum():,.0f}")
+```
+
+```text
+Approved budget (BAC): ₦90,750,000
+```
+
+Now the stakeholders, by influence and interest:
+
+```python
+print(stakeholders.groupby(["influence", "interest"])["stakeholder"].apply(lambda s: "; ".join(s)).to_string())
+```
+
+```text
+influence  interest
+High       High                              Managing director (sponsor)
+           Low                                          Licensing office
+           Medium      State commissioner for health; Chief financial...
+Low        Medium                                Local community leaders
+Medium     High        Medical director; Head of procurement; Laborat...
+```
+
+The managing director and the commissioner don't sit in the same box. The sponsor is high on both; the commissioner has high influence but only medium interest in the details, so a short, regular, public-facing update suits them better than a weekly project call.
+
+## Walkthrough
+
+1. Load the six files (`tasks`, `weekly_status`, `risks`, `changes`, `stakeholders` and `options`) and note each one's grain: one row per task, per task per week, per risk, per change request, per stakeholder, per option.
+2. Check the task list: every task has an owner, and every predecessor named exists as a task.
+3. Calculate the approved budget.
+4. Group the stakeholders by influence and interest, and read each one's quote.
+5. Write the charter and the stakeholder strategy (the tasks below).
+
+## Practice
+
+```answer
+{
+  "id": "pmc-01-p1",
+  "prompt": "What is the **approved budget** (the sum of likely days × daily cost over all tasks), in naira?",
+  "answer": 90750000,
+  "format": "naira",
+  "dataset": "lab",
+  "files": ["tasks"],
+  "pyVerify": "int((tasks['likely_days'] * tasks['daily_cost_ngn']).sum())",
+  "hint": "Multiply, then add up. The example already printed it.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "pmc-01-p2",
+  "prompt": "How many stakeholders are **high on both influence and interest**?",
+  "answer": 1,
+  "format": "number",
+  "dataset": "lab",
+  "files": ["stakeholders"],
+  "pyVerify": "int(((stakeholders['influence'] == 'High') & (stakeholders['interest'] == 'High')).sum())",
+  "hint": "Count the rows where both columns say High.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "pmc-01-t1",
+  "prompt": "Write the project's **charter** (80 to 180 words): the **objective**, the **success criteria** (a date and the budget), what is **in scope** and **out of scope**, and the main **constraints**. Don't mention any solution to the delay; you haven't earned one yet.",
+  "minutes": 12,
+  "rows": 9,
+  "placeholder": "Objective: ...",
+  "rules": [
+    { "label": "States an objective (open a laboratory)", "pattern": "objective|open(ing)? (the|a) (diagnostic )?lab" },
+    { "label": "Gives the date", "pattern": "8 March|March 2027|8/3|2027-03-08" },
+    { "label": "Gives the budget", "pattern": "90[.,]?75|₦?\\s?90\\.75|90,750,000|₦90" },
+    { "label": "Says what is in scope", "pattern": "in scope|includes?|covers?" },
+    { "label": "Says what is out of scope", "pattern": "out of scope|excludes?|not included|not part" },
+    { "label": "Names a constraint", "pattern": "constraint|fixed|cannot|must|licen[cs]e|accredit" },
+    { "label": "Between 80 and 180 words", "minWords": 80, "maxWords": 180 }
+  ],
+  "sample": "Objective: open Medlink's diagnostic laboratory in Port Harcourt, ready to run its full test menu to an accredited standard. Success criteria: the laboratory opens on Monday 8 March 2027, within the approved budget of ₦90.75 million, with accreditation passed. In scope: the premises, fit-out, analysers and their installation, the laboratory information system, hiring and training the staff, reagent supply and the trial run. Out of scope: a second site, molecular testing, a patient portal, and home collection; these need their own business cases. Constraints: the date was promised publicly to the state commissioner, the facility licence and accreditation inspection are controlled by the regulator and cannot be hurried, and the analysers are imported. Any change that moves the date or the budget needs the sponsor's decision.",
+  "note": "The out-of-scope list matters most here: the requests in the sponsor's email are exactly the things a charter should have kept out, or put through change control. A good charter makes \"no, or not yet\" easy to say.",
+  "hint": "Objective, success criteria (date and budget), in, out, constraints.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "pmc-01-t2",
+  "prompt": "Write a **stakeholder strategy** (60 to 150 words) for three of them: the managing director, the licensing office and the medical director. For each, say how you'll **engage** them and what you'll **give** them, based on what they care about.",
+  "minutes": 10,
+  "rows": 8,
+  "placeholder": "Managing director: ...",
+  "rules": [
+    { "label": "Covers the managing director / sponsor", "pattern": "managing director|sponsor" },
+    { "label": "Covers the licensing office", "pattern": "licensing" },
+    { "label": "Covers the medical director", "pattern": "medical director" },
+    { "label": "Says how often or how to engage", "pattern": "weekly|fortnight|monthly|regular|meeting|update|call|brief" },
+    { "label": "Ties it to what they care about", "pattern": "date|paperwork|complete|menu|quality|decision|concern|care" },
+    { "label": "Between 60 and 150 words", "minWords": 60, "maxWords": 150 }
+  ],
+  "sample": "Managing director (sponsor): a short weekly update with one page on status, the forecast date and the decisions I need from them, because they need to know whether the promise is safe. Licensing office: I'll keep the paperwork complete and early, send it with a checklist and ask for the earliest inspection slot, because they care about complete paperwork rather than our deadline. Medical director: I'll show them what any recovery option does to the test menu before I propose it, and ask them to approve any reduced-menu opening, because they won't open a lab that can't run the full menu.",
+  "note": "Same project, three different conversations. Engagement follows what each person cares about, not how senior they are.",
+  "hint": "What does each one care about? Give them that.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "The sponsor's email lists a molecular room, a patient portal and a home-collection van. Before saying yes or no, what should you do?",
+    "options": ["Accept them all to keep everyone happy", "Check them against the charter and put each through change control, with its effect on date and cost", "Reject them all", "Ask the board to choose"],
+    "answer": 1,
+    "explanation": "The charter is the yardstick; change control is the process."
+  },
+  {
+    "prompt": "Which is the best success criterion?",
+    "options": ["A great laboratory", "Open on 8 March 2027, within ₦90.75m, with accreditation passed", "As soon as possible", "When the staff are ready"],
+    "answer": 1,
+    "explanation": "A date, a budget and a test anyone can check."
+  },
+  {
+    "prompt": "The licensing office is high influence but low interest in your project. How should you manage them?",
+    "options": ["Ignore them", "Keep them satisfied: complete, early paperwork and a clear point of contact", "Invite them to every meeting", "Pressure them to inspect early"],
+    "answer": 1,
+    "explanation": "High influence means their decisions can stop you; keep them satisfied without burdening them."
+  }
+]
+```
+$md$, true, true, 1, array['pmc-01-p1', 'pmc-01-p2', 'pmc-01-t1', 'pmc-01-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('pmc-m02', 'project-manager-capstone', 'Scope, WBS and Estimates', 2, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('project-manager-capstone:scope-wbs-and-estimates', 'project-manager-capstone', 'pmc-m02', 'scope-wbs-and-estimates', 'Scope, WBS and estimates', 'Check the plan you''ve inherited for gaps, turn three-point estimates into honest expected durations and costs with PERT, and see why the approved budget was never as safe as it looked.', 30, $md$
+## The problem
+
+The plan you've inherited has 23 tasks, and the approved budget is the likely duration times the daily cost, added up. But "likely" is the single most probable duration, not the average. Most tasks can overrun far more than they can underrun: a licence that "usually takes 22 days" can take 45, and it can't take 5. Budgets and dates built from likely values are optimistic by design.
+
+Before you test the plan against reality, check it's a plan at all: every task owned, every dependency real, nothing missing. Then replace likely values with expected ones.
+
+## The concept
+
+### A work breakdown structure you can check
+
+A **work breakdown structure (WBS)** divides the project into phases and tasks so that everything in scope appears once and nothing outside it appears at all. Here the phases are Initiation, Facilities, Equipment, Systems, People, Operations and Launch. Check:
+
+- **Every task has one owner**, a team answerable for it.
+- **Every predecessor named exists**, and no task depends on itself or on a later task.
+- **Every deliverable in the charter has a task**: licence, premises, analysers, system, staff, reagents, accreditation, opening.
+- **Nothing is in the plan that isn't in scope.** A task that has crept in is a change that skipped change control.
+
+### Three-point estimates and PERT
+
+Each task has an **optimistic** (O), **likely** (M) and **pessimistic** (P) duration. The PERT approximation gives:
+
+- **Expected duration** = (O + 4M + P) ÷ 6
+- **Standard deviation** = (P − O) ÷ 6
+
+Because P is usually further from M than O is, the expected duration is longer than the likely one. The more skewed a task, the bigger the gap. Where estimates are skewed, a plan built on likely values is a plan with no room for the way the world works.
+
+![A triangular estimate for one invented task with optimistic, likely and pessimistic values and the expected duration above the likely one, and what that means for a plan built from likely values](/images/courses/pm-capstone/skewed-estimates.svg "Likely is the most probable value; expected is the average.")
+
+### Cost follows duration
+
+Here each task costs a fixed amount per working day, so the expected cost of a task is its expected duration times its daily cost. Add them up and compare with the approved budget. The difference is the first thing a sponsor should know: it's the money the plan needs but doesn't contain.
+
+## Example
+
+Check the plan's integrity first:
+
+```python
+import numpy as np
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/lab/"
+tasks = pd.read_csv(base + "tasks.csv").fillna({"predecessors": ""})
+
+ids = set(tasks["task_id"])
+unknown = [p for ps in tasks["predecessors"] for p in ps.split(";") if p and p not in ids]
+print("Unknown predecessors:", unknown)
+print("Tasks without an owner:", int(tasks["owner"].isna().sum()))
+print("Tasks per owner:")
+print(tasks["owner"].value_counts().to_string())
+```
+
+```text
+Unknown predecessors: []
+Tasks without an owner: 0
+Tasks per owner:
+owner
+IT             5
+Operations     4
+Procurement    3
+Contractor     3
+HR             2
+Laboratory     2
+Regulatory     2
+Board          1
+Facilities     1
+```
+
+No gaps. Now the expected durations and costs:
+
+```python
+tasks["expected_days"] = (tasks["optimistic_days"] + 4 * tasks["likely_days"] + tasks["pessimistic_days"]) / 6
+tasks["sd_days"] = (tasks["pessimistic_days"] - tasks["optimistic_days"]) / 6
+tasks["likely_cost"] = tasks["likely_days"] * tasks["daily_cost_ngn"]
+tasks["expected_cost"] = tasks["expected_days"] * tasks["daily_cost_ngn"]
+
+view = tasks[["task_id", "likely_days", "expected_days", "sd_days"]].round(1)
+print(view.sort_values("sd_days", ascending=False).head(5).to_string(index=False))
+print()
+print(f"Approved budget (likely):  ₦{tasks['likely_cost'].sum():,.0f}")
+print(f"Expected cost (PERT):      ₦{tasks['expected_cost'].sum():,.0f}")
+print(f"Gap:                       ₦{tasks['expected_cost'].sum() - tasks['likely_cost'].sum():,.0f}")
+```
+
+```text
+task_id  likely_days  expected_days  sd_days
+     A3           22           24.7      5.0
+     B4           25           27.2      4.5
+     B2           28           29.8      3.8
+     D1           22           23.0      3.3
+     D2           20           20.8      2.5
+
+Approved budget (likely):  ₦90,750,000
+Expected cost (PERT):      ₦96,304,167
+Gap:                       ₦5,554,167
+```
+
+The budget was set on the most likely case. Expected cost is about **₦5.6m higher**, before a single risk has been counted. A sponsor who approved ₦90.75m was approving a number that has less than an even chance of being enough.
+
+The most skewed tasks are the ones controlled by other people: the facility licence (up to 45 days), importing the analysers (up to 45) and the accreditation inspection (up to 20). Those are also the ones you can't speed up by working harder.
+
+## Walkthrough
+
+1. Check the plan: unknown predecessors, missing owners, tasks per owner.
+2. Calculate expected duration and standard deviation for every task.
+3. Calculate the expected cost, and compare it with the approved budget.
+4. Find the tasks where the pessimistic estimate is at least **twice** the likely one. These are the plan's soft spots.
+5. Write up what the sponsor should be told about the budget (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "pmc-02-p1",
+  "prompt": "What is the project's **expected cost** (PERT expected days × daily cost, summed over all tasks), rounded to the nearest naira?",
+  "answer": 96304167,
+  "format": "naira",
+  "dataset": "lab",
+  "files": ["tasks"],
+  "pyVerify": "int(round(((tasks['optimistic_days'] + 4 * tasks['likely_days'] + tasks['pessimistic_days']) / 6 * tasks['daily_cost_ngn']).sum()))",
+  "hint": "The second line of the example's last cell.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "pmc-02-p2",
+  "prompt": "How many tasks have a **pessimistic** duration of at least **twice** the likely duration?",
+  "answer": 3,
+  "format": "number",
+  "dataset": "lab",
+  "files": ["tasks"],
+  "pyVerify": "int((tasks['pessimistic_days'] >= 2 * tasks['likely_days']).sum())",
+  "hint": "Compare the two columns for each task and count.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "pmc-02-p3",
+  "prompt": "Which task has the **biggest gap** between its expected and likely duration? Type its ID.",
+  "answer": "A3",
+  "format": "text",
+  "accept": ["a3"],
+  "dataset": "lab",
+  "files": ["tasks"],
+  "pyVerify": "(tasks.assign(gap=(tasks['optimistic_days'] + 4 * tasks['likely_days'] + tasks['pessimistic_days']) / 6 - tasks['likely_days']).sort_values('gap', ascending=False)['task_id'].iloc[0])",
+  "hint": "Add a gap column, then sort.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "pmc-02-t1",
+  "prompt": "Write a **note to the chief financial officer** (60 to 150 words) about the budget: say what the approved budget is based on, what the **expected** cost is and the **gap**, which tasks are the **soft spots** and why, and what you'll do about it.",
+  "minutes": 10,
+  "rows": 8,
+  "placeholder": "The approved budget of ...",
+  "rules": [
+    { "label": "States the approved budget", "pattern": "90[.,]?75|90,750,000" },
+    { "label": "States the expected cost", "pattern": "96[.,]?3|96,304" },
+    { "label": "States the gap (about 5.5 or 5.6 million)", "pattern": "5[.,][5-6]|5,55|5,5[0-9]{2},|gap|difference|shortfall" },
+    { "label": "Says the budget was based on likely values", "pattern": "likely|most probable|single|optimistic" },
+    { "label": "Names a soft-spot task or activity", "pattern": "licen[cs]e|import|analyser|accreditation|inspection" },
+    { "label": "Says what you'll do (reserve, decision, track)", "pattern": "reserve|contingen|monitor|track|decision|ask|approve" },
+    { "label": "Between 60 and 150 words", "minWords": 60, "maxWords": 150 }
+  ],
+  "sample": "The approved budget of ₦90.75 million was built from each task's most likely duration. Because the risks on this project are mostly on the upside (a task can run long far more than it can run short), the expected cost is ₦96.3 million, about ₦5.6 million more, before any risk is counted. The soft spots are the tasks that other people control: the facility licence, importing the analysers and the accreditation inspection, where the pessimistic estimate is at least twice the likely one. I'll report against the budget but flag that a reserve is needed, track those three tasks weekly, and bring you a proposed reserve once I've worked out the schedule risk and the risk register.",
+  "note": "You've given the CFO what they asked for in the stakeholder email: no surprises. Being early about a gap is much cheaper than explaining it later.",
+  "hint": "Approved, expected, gap, soft spots, next step.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "A task has estimates 4, 6 and 14 days (optimistic, likely, pessimistic). What is its PERT expected duration?",
+    "options": ["6 days", "7 days", "8 days", "9 days"],
+    "answer": 1,
+    "explanation": "(4 + 4 × 6 + 14) ÷ 6 = 42 ÷ 6 = 7 days."
+  },
+  {
+    "prompt": "Why is expected cost higher than a budget built from likely durations?",
+    "options": ["PERT adds a margin for error", "Pessimistic estimates are further from the likely one than optimistic ones, so the average is higher", "Daily costs rise over time", "The estimates are wrong"],
+    "answer": 1,
+    "explanation": "Overruns can be much larger than underruns, so the likely value is below the average."
+  },
+  {
+    "prompt": "Which of these is a WBS problem?",
+    "options": ["A task with a long duration", "A charter deliverable with no task, or a task nobody owns", "A critical task", "A task with a high daily cost"],
+    "answer": 1,
+    "explanation": "A WBS must cover the scope completely, once, with an owner for each piece."
+  }
+]
+```
+$md$, true, true, 2, array['pmc-02-p1', 'pmc-02-p2', 'pmc-02-p3', 'pmc-02-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('pmc-m03', 'project-manager-capstone', 'The Critical Path', 3, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('project-manager-capstone:the-critical-path', 'project-manager-capstone', 'pmc-m03', 'the-critical-path', 'The critical path', 'Build the baseline schedule with the critical path method, find the 11 tasks that decide the opening date and the ones with room to slip, and see how little cushion the promised date really had.', 30, $md$
+## The problem
+
+Twenty-three tasks, each owner pushing to finish theirs. But they don't all matter equally for the opening date. Hiring staff can slip by weeks without delaying anything; one day lost importing the analysers delays the opening by one day. A project manager who treats every task alike spends effort in the wrong places, and a sponsor who hears "everything is a priority" learns nothing.
+
+The managing director promised **Monday 8 March 2027**. Before you ask how late the project is, you need to know where the plan itself put the finish. Was the promised date ever safe?
+
+## The concept
+
+### The critical path method
+
+1. **Forward pass.** A task's **earliest start** is the latest earliest-finish of everything it depends on. Earliest finish = earliest start + duration. The project's length is the last earliest finish.
+2. **Backward pass.** Working back from the end, a task's **latest finish** is the earliest latest-start of the tasks that depend on it.
+3. **Float** (slack) = latest start − earliest start: how long a task can slip without delaying the end.
+4. The **critical path** is the chain of tasks with zero float. Any delay on it delays the project.
+
+Durations are in working days. Convert to dates with a working calendar (Monday to Friday here; a real plan would also remove public holidays).
+
+![A small invented network of seven tasks showing the critical chain with zero float and a side chain whose three tasks share six days of float](/images/courses/pm-capstone/critical-chain.svg "The longest chain is critical; the rest has float.")
+
+### Float is not free time
+
+A task with float can slip, but it uses up the float, and other tasks may share the same float. Two tasks with 8 days of float each, in the same chain, don't give you 16.
+
+> [!TIP]
+> The critical path isn't fixed. A delay on a task with float doesn't change the path until it uses all its float; a delay or an acceleration on the critical path can make another path critical. Recompute whenever something changes.
+
+## Example
+
+A scheduling function you'll reuse in later lessons:
+
+```python
+import numpy as np
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/lab/"
+tasks = pd.read_csv(base + "tasks.csv").fillna({"predecessors": ""})
+START = np.datetime64("2026-11-02")     # a Monday
+PROMISE = np.datetime64("2027-03-08")   # the date promised to the commissioner
+
+def schedule(tasks, durations):
+    preds = {t: [p for p in ps.split(";") if p] for t, ps in zip(tasks["task_id"], tasks["predecessors"])}
+    es, ef = {}, {}
+    for t in tasks["task_id"]:                       # tasks are listed after their predecessors
+        es[t] = max((ef[p] for p in preds[t]), default=0)
+        ef[t] = es[t] + durations[t]
+    end = max(ef.values())
+    ls, lf = {}, {}
+    for t in reversed(list(tasks["task_id"])):
+        successors = [s for s in tasks["task_id"] if t in preds[s]]
+        lf[t] = min((ls[s] for s in successors), default=end)
+        ls[t] = lf[t] - durations[t]
+    out = pd.DataFrame({"es": es, "ef": ef, "ls": ls, "lf": lf})
+    out["float"] = out["ls"] - out["es"]
+    return out, end
+
+def finish_date(days):
+    return np.busday_offset(START, int(np.ceil(days)) - 1, roll="forward")
+
+likely = dict(zip(tasks["task_id"], tasks["likely_days"]))
+plan, end = schedule(tasks, likely)
+print("Project length:", end, "working days, opening on", finish_date(end))
+print("Critical path:", " -> ".join(plan.index[plan["float"] == 0]))
+```
+
+```text
+Project length: 90 working days, opening on 2027-03-05
+Critical path: A1 -> A2 -> B1 -> B3 -> B4 -> B5 -> E2 -> F1 -> F2 -> F3 -> F4
+```
+
+The baseline finishes on **Friday 5 March 2027**: day 90. The promise is for Monday 8 March, day 91. The plan left **one working day** of cushion, and that was before anything went wrong.
+
+```python
+promise_day = int(np.busday_count(START, PROMISE)) + 1
+print("Promised date is working day", promise_day, "- cushion:", promise_day - end, "working day(s)")
+
+view = plan[["es", "ef", "float"]].copy()
+view["name"] = tasks.set_index("task_id")["name"]
+print(view.sort_values("float").head(14).to_string())
+```
+
+```text
+Promised date is working day 91 - cushion: 1 working day(s)
+    es  ef  float                                         name
+A1   0   3      0            Approve business case and charter
+A2   3  11      0                  Sign lease for the premises
+B1  11  19      0        Design the lab layout and clean areas
+B3  19  25      0                          Order the analysers
+B5  50  57      0          Install and calibrate the analysers
+B4  25  50      0               Import and clear the analysers
+E2  57  63      0               Stock reagents and consumables
+F1  63  75      0  Validate the methods and run quality checks
+F2  75  83      0   Pass the external accreditation inspection
+F3  83  89      0              Trial run with sample specimens
+F4  89  90      0                                  Opening day
+B2  19  47      3      Fit-out: floors, power and air handling
+B6  47  55      8        Install backup power and cold storage
+C5  57  63     12           Test the system with the analysers
+```
+
+Eleven tasks have zero float. Look at what they are: the premises, the layout, ordering and importing the analysers, installing them, stocking reagents, validating the methods, the inspection, the trial run and the opening. The long-lead imported equipment runs the whole project, not the fit-out, which has 3 days of float, and not hiring, which has 30.
+
+## Walkthrough
+
+1. Define `schedule()` and `finish_date()`.
+2. Build the baseline from likely durations. Note the length and the finish date.
+3. Compare the finish with the promised date, in working days.
+4. List the zero-float tasks, and read each one's owner.
+5. Look at the tasks with the most float. Which owners are working hardest on things that don't matter this month?
+6. Write the baseline schedule note (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "pmc-03-p1",
+  "prompt": "On what date does the **baseline** schedule finish? Type it as YYYY-MM-DD.",
+  "answer": "2027-03-05",
+  "format": "text",
+  "accept": ["5 march 2027", "2027-03-05", "05/03/2027", "5/3/2027"],
+  "dataset": "lab",
+  "files": ["tasks"],
+  "pyVerify": "str(finish_date(end))",
+  "hint": "The example's first output.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "pmc-03-p2",
+  "prompt": "How many tasks are on the **critical path** (zero float)?",
+  "answer": 11,
+  "format": "number",
+  "dataset": "lab",
+  "files": ["tasks"],
+  "pyVerify": "int((plan['float'] == 0).sum())",
+  "hint": "Count the tasks with float equal to zero.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "pmc-03-p3",
+  "prompt": "How many days of **float** does task **D1** (hire the laboratory director) have?",
+  "answer": 30,
+  "format": "number",
+  "dataset": "lab",
+  "files": ["tasks"],
+  "pyVerify": "int(plan.loc['D1', 'float'])",
+  "hint": "Look at the row for D1 in the schedule.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "pmc-03-t1",
+  "prompt": "Write the **baseline schedule note** for the sponsor (60 to 150 words): the **baseline finish date**, how it compares with the **promised date**, which kind of tasks are **critical** and which have the **most float**, and what that means for where you'll spend your attention.",
+  "minutes": 10,
+  "rows": 8,
+  "placeholder": "On likely durations the project finishes on ...",
+  "rules": [
+    { "label": "Gives the baseline finish (5 March)", "pattern": "5 March|2027-03-05|05/03|day 90|90 (working )?days" },
+    { "label": "Compares with the promised date (8 March)", "pattern": "8 March|2027-03-08|promised|promise|commissioner" },
+    { "label": "Says the cushion is tiny (one day)", "pattern": "one (working )?day|single (working )?day|1 (working )?day|no (real )?(cushion|buffer|slack)|barely|tiny" },
+    { "label": "Names critical activities (analysers, installation, inspection...)", "pattern": "analyser|import|install|inspection|accreditation|valid" },
+    { "label": "Names a high-float activity (hiring, systems)", "pattern": "hir|director|system|float" },
+    { "label": "Says where attention goes (critical path)", "pattern": "critical path|attention|focus|watch|prioriti" },
+    { "label": "Between 60 and 150 words", "minWords": 60, "maxWords": 150 }
+  ],
+  "sample": "On the likely durations the project finishes on Friday 5 March 2027, working day 90. The promised opening is Monday 8 March, working day 91, so the plan had a single working day of cushion before anything went wrong. Eleven tasks are on the critical path, and they are the long-lead chain that starts with the premises and the analyser order and runs through importing and installing the analysers, stocking reagents, validating methods, the accreditation inspection and the trial run. Hiring the laboratory director has 30 days of float, and most of the systems work has 40 or more. So I'll focus on the analyser import and the regulator-controlled steps, and I won't spend management time chasing tasks that can slip safely.",
+  "note": "\"Eleven tasks decide the date\" is a more useful message than \"23 tasks, all important\". It tells people where to look, and where not to worry.",
+  "hint": "Baseline, promise, cushion, critical tasks, high float, focus.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "A task has 12 days of float. It slips by 10 days. What happens to the project's finish date?",
+    "options": ["It slips 10 days", "It doesn't change, but the task now has only 2 days of float", "It slips 2 days", "The task becomes critical"],
+    "answer": 1,
+    "explanation": "Float absorbs the delay, but it's used up."
+  },
+  {
+    "prompt": "The plan finishes one working day before the promised date. What's the most honest description?",
+    "options": ["Safe: we're ahead of the promise", "Almost no cushion: any slip on the critical path misses the date", "Impossible to say", "Comfortable, because durations are estimates"],
+    "answer": 1,
+    "explanation": "On likely durations there's a one-day buffer, which is within the noise of any estimate."
+  },
+  {
+    "prompt": "Why isn't the fit-out (B2) on the critical path, even though it's the longest and costliest construction task?",
+    "options": ["It's cheap", "The analysers' import takes longer, so the fit-out has float", "It's outsourced", "It starts early"],
+    "answer": 1,
+    "explanation": "Criticality depends on the longest chain, not on a task's size or cost."
+  }
+]
+```
+$md$, true, true, 3, array['pmc-03-p1', 'pmc-03-p2', 'pmc-03-p3', 'pmc-03-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('pmc-m04', 'project-manager-capstone', 'How Sure Are We?', 4, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('project-manager-capstone:how-sure-are-we', 'project-manager-capstone', 'pmc-m04', 'how-sure-are-we', 'How sure are we?', 'Run a Monte Carlo simulation over the plan''s three-point estimates, find the real chance of the promised date, and turn P50 and P80 dates into a reserve the sponsor can decide on.', 30, $md$
+## The problem
+
+The baseline said **Friday 5 March**, one working day before the promise. But that date is a single path through a plan whose tasks vary a great deal. Some tasks overrun far more than they underrun, and when several paths run in parallel, the project finishes when the **slowest** one does. That makes the real finish later than any single estimate suggests.
+
+The managing director doesn't need a date. They need to know **how likely** the promised date is, and what date they could commit to if they wanted to be reasonably sure. Both come from simulation.
+
+## The concept
+
+### Monte Carlo simulation
+
+For each of thousands of **runs**, draw a duration for every task from a distribution shaped by its three estimates (a triangular distribution: minimum, most likely, maximum), run the schedule, and record the finish. After 10,000 runs you have 10,000 possible finish days. The spread tells you how uncertain the plan is.
+
+From the results you can read:
+
+- **The chance of meeting a date:** the share of runs that finish by it.
+- **P50:** the day half the runs beat. A coin toss.
+- **P80:** the day 80% of runs beat. A date you could commit to with reasonable confidence.
+- **The reserve:** the gap between the baseline and P80, which is the schedule contingency the plan needs and doesn't have.
+
+### Why the simulated finish is later than the plan
+
+Take two parallel paths of equal length. Each has a 50% chance of finishing on time. The project is on time only when **both** do: about 25%. A project with many near-critical paths loses more still. This is the "merge bias" of project networks, and it's why a plan built on likely durations is almost always optimistic.
+
+![A histogram of invented simulated finish days with the baseline, the promise, the median and the P80 date marked](/images/courses/pm-capstone/cushion-percentiles.svg "Baseline, promise, median and P80 on one line.")
+
+> [!WARNING]
+> A simulation is only as good as its inputs. It doesn't know about a customs strike, and it assumes tasks vary independently. It's a way of taking your own estimates seriously, not a forecast of events nobody has thought of. That's what the risk register (lesson 7) is for.
+
+## Example
+
+Reload the plan, then simulate. This version draws all the durations at once and works through the tasks in order, so 10,000 runs take a moment:
+
+```python
+import numpy as np
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/lab/"
+tasks = pd.read_csv(base + "tasks.csv").fillna({"predecessors": ""})
+START = np.datetime64("2026-11-02")
+PROMISE_DAY = 91                         # Monday 8 March 2027 is working day 91
+
+ids = list(tasks["task_id"])
+index = {t: i for i, t in enumerate(ids)}
+
+def simulate(tasks, runs=10_000, seed=42):
+    rng = np.random.default_rng(seed)
+    d = rng.triangular(tasks["optimistic_days"].values, tasks["likely_days"].values,
+                       tasks["pessimistic_days"].values, size=(runs, len(ids)))
+    ef = np.zeros((runs, len(ids)))
+    for i, ps in enumerate(tasks["predecessors"]):
+        pred = [index[p] for p in ps.split(";") if p]
+        start = ef[:, pred].max(axis=1) if pred else 0
+        ef[:, i] = start + d[:, i]
+    return ef.max(axis=1)
+
+finish = simulate(tasks)
+print(f"Mean finish: day {finish.mean():.1f}")
+print(f"Chance of finishing by day {PROMISE_DAY}: {(finish <= PROMISE_DAY).mean():.1%}")
+for p in (50, 80, 90):
+    print(f"P{p}: day {np.percentile(finish, p):.1f}")
+```
+
+```text
+Mean finish: day 103.6
+Chance of finishing by day 91: 2.8%
+P50: day 103.4
+P80: day 109.6
+P90: day 112.9
+```
+
+On the plan's own estimates, the chance of making the promised date was **under 3%**. The date was never likely, and it was promised before the plan was simulated. Convert the P50 and P80 days to dates:
+
+```python
+def finish_date(days):
+    return np.busday_offset(START, int(np.ceil(days)) - 1, roll="forward")
+
+print("Baseline:", finish_date(90))
+print("P50:     ", finish_date(np.percentile(finish, 50)))
+print("P80:     ", finish_date(np.percentile(finish, 80)))
+print("Reserve needed for P80:", int(np.ceil(np.percentile(finish, 80))) - 90, "working days")
+```
+
+```text
+Baseline: 2027-03-05
+P50:      2027-03-25
+P80:      2027-04-02
+Reserve needed for P80: 20 working days
+```
+
+A date the sponsor could commit to with 80% confidence is **Friday 2 April**, about 20 working days after the baseline. And this is the plan from **before** week 10. Nothing in this lesson knows yet that the analysers are stuck in customs. That's lesson 5.
+
+## Walkthrough
+
+1. Define `simulate()` and run it for 10,000 runs with seed 42.
+2. Calculate the probability of finishing by day 91.
+3. Calculate P50, P80 and P90, and convert them to dates.
+4. Calculate the reserve in working days between the baseline (day 90) and P80.
+5. Plot the finish days as a histogram with the baseline, the promise and P80 marked (optional, but sponsors remember pictures).
+6. Write the schedule risk note (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "pmc-04-p1",
+  "prompt": "In the simulation, what is the chance of finishing by the **promised date** (day 91)? As a percentage, whole number.",
+  "answer": 3,
+  "format": "percent",
+  "dataset": "lab",
+  "files": ["tasks"],
+  "pyVerify": "round((finish <= PROMISE_DAY).mean() * 100)",
+  "hint": "The second line printed.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "pmc-04-p2",
+  "prompt": "What is the **P80** finish, rounded up to a whole working day?",
+  "answer": 110,
+  "format": "number",
+  "dataset": "lab",
+  "files": ["tasks"],
+  "pyVerify": "int(np.ceil(np.percentile(finish, 80)))",
+  "hint": "Round the P80 line up.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "pmc-04-p3",
+  "prompt": "On what date is the **P50** finish? Type it as YYYY-MM-DD.",
+  "answer": "2027-03-25",
+  "format": "text",
+  "accept": ["25 march 2027", "2027-03-25", "25/03/2027", "25/3/2027"],
+  "dataset": "lab",
+  "files": ["tasks"],
+  "pyVerify": "str(finish_date(np.percentile(finish, 50)))",
+  "hint": "The P50 line of the last cell.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "pmc-04-t1",
+  "prompt": "Write the **schedule risk note** for the sponsor (70 to 160 words): the **chance** of making the promised date, the **P50** and **P80** dates, the **reserve** the plan needs, why a single date is misleading, and what you'd ask them to decide.",
+  "minutes": 10,
+  "rows": 9,
+  "placeholder": "On the plan's own estimates ...",
+  "rules": [
+    { "label": "Gives the chance of the promised date (about 3%)", "pattern": "\\b3\\s?%|three per ?cent|under 3|about 3|less than 3|2\\.8" },
+    { "label": "Gives the P50 date (25 March)", "pattern": "25 March|2027-03-25|P50|median|50%" },
+    { "label": "Gives the P80 date (2 April)", "pattern": "2 April|2027-04-02|P80|80%" },
+    { "label": "States the reserve (about 20 days)", "pattern": "reserve|contingen|buffer|20 (working )?days|four weeks|20 days" },
+    { "label": "Says a single date misleads (uncertainty, many paths)", "pattern": "single|one date|uncertain|range|merge|parallel|paths|probab" },
+    { "label": "Asks for a decision", "pattern": "decide|decision|agree|approve|commit|move the date|announce" },
+    { "label": "Between 70 and 160 words", "minWords": 70, "maxWords": 160 }
+  ],
+  "sample": "On the plan's own estimates, the chance of opening by Monday 8 March is about 3%. The baseline of 5 March is a single path through a plan with many parallel paths, and the project finishes when the slowest of them does, so the real finish is later than any one estimate suggests. The median (P50) is 25 March; the date we could commit to with 80% confidence (P80) is Friday 2 April, about 20 working days after the baseline, and the plan has no reserve for it. This is before accounting for the analysers' delay, which I'll cover next. I'd ask you to agree that we stop treating 8 March as a plan and start deciding what to protect: a date, the full test menu or the budget.",
+  "note": "Notice that the note says what the simulation can't see. Honest numbers come with their limits.",
+  "hint": "Chance, P50, P80, reserve, why, decision.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "A simulation says P80 is day 110. What does that mean?",
+    "options": ["The project will finish on day 110", "80% of simulated runs finished by day 110", "There's an 80% chance of finishing on day 110 exactly", "The project is 80% done by day 110"],
+    "answer": 1,
+    "explanation": "P80 is the day 80% of runs beat."
+  },
+  {
+    "prompt": "Why is the simulated finish usually later than the baseline built from likely durations?",
+    "options": ["Simulations are pessimistic", "Overruns are bigger than underruns, and with parallel paths the project waits for the slowest one", "The simulation adds a margin", "Random numbers are biased"],
+    "answer": 1,
+    "explanation": "Skewed estimates plus merging paths push the average finish later."
+  },
+  {
+    "prompt": "What can't a simulation of three-point estimates tell you?",
+    "options": ["The chance of meeting a date", "The effect of an event that isn't in the estimates, like a customs strike", "The P80 date", "Which date to quote"],
+    "answer": 1,
+    "explanation": "It only models the variation in the estimates; named risks belong in the risk register."
+  }
+]
+```
+$md$, true, true, 4, array['pmc-04-p1', 'pmc-04-p2', 'pmc-04-p3', 'pmc-04-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('pmc-m05', 'project-manager-capstone', 'Where Are We Now?', 5, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('project-manager-capstone:where-are-we-now', 'project-manager-capstone', 'pmc-m05', 'where-are-we-now', 'Where are we now?', 'Measure the project at the end of week 10 with earned value: what was planned, what has been earned and what has been spent, and which tasks explain the gap.', 35, $md$
+## The problem
+
+The simulation said the plan was optimistic. Now look at what actually happened. The project is ten weeks in, and the sponsor's question is the oldest one in project management: **are we on schedule and on budget?** "Mostly" isn't an answer. "People are working hard" isn't an answer. "Behind, and over" might be, but only with numbers.
+
+**Earned value management (EVM)** answers it with three figures in the same unit, naira: how much work was *planned* by now, how much has been *done*, and how much has been *spent*. The difference between them is what you manage.
+
+## The concept
+
+### The three measures
+
+| Measure | Meaning | How |
+| :-- | :-- | :-- |
+| **PV** (planned value) | Budgeted cost of the work **planned** to be done by now | From the baseline schedule |
+| **EV** (earned value) | Budgeted cost of the work **actually done** | % complete × each task's budget |
+| **AC** (actual cost) | What has really been **spent** | From the project's accounts |
+
+And the variances and indices that follow from them:
+
+- **Schedule variance** SV = EV − PV (negative: behind). **SPI** = EV ÷ PV (below 1: behind).
+- **Cost variance** CV = EV − AC (negative: over budget). **CPI** = EV ÷ AC (below 1: over budget).
+- **BAC** (budget at completion) is the approved total budget.
+
+![Planned value, earned value and actual cost curves for an invented project at week 10, showing it behind schedule and over budget, with SPI and CPI](/images/courses/pm-capstone/earned-value-curves.svg "PV, EV and AC: behind and over budget.")
+
+EV is the key. It values progress at the **budgeted** price, so it doesn't matter how much was spent: a task that is 60% done has earned 60% of its budget, whatever it cost to get there.
+
+### Two traps
+
+- **Percent complete is a judgement.** "90% done" can stay 90% for weeks. Prefer measurable steps ("racking installed", "licence granted") to percentages where you can.
+- **Spend isn't progress.** An overspend with little progress is a cost problem, not a pace problem. A project that has spent 77% of its budget on 58% of its work is in trouble, even if the spending looks "on schedule".
+
+> [!NOTE]
+> SPI in naira terms mixes tasks of very different sizes. It says how much budgeted work is done against plan, not how many days late the project is. The finish date comes from the schedule (lesson 6), not from SPI.
+
+## Example
+
+Load the plan and the weekly status, then rebuild the baseline schedule (the same function as lesson 3):
+
+```python
+import numpy as np
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/lab/"
+tasks = pd.read_csv(base + "tasks.csv").fillna({"predecessors": ""})
+status = pd.read_csv(base + "weekly_status.csv")
+
+def schedule(tasks, durations):
+    preds = {t: [p for p in ps.split(";") if p] for t, ps in zip(tasks["task_id"], tasks["predecessors"])}
+    es, ef = {}, {}
+    for t in tasks["task_id"]:
+        es[t] = max((ef[p] for p in preds[t]), default=0)
+        ef[t] = es[t] + durations[t]
+    end = max(ef.values())
+    ls, lf = {}, {}
+    for t in reversed(list(tasks["task_id"])):
+        successors = [s for s in tasks["task_id"] if t in preds[s]]
+        lf[t] = min((ls[s] for s in successors), default=end)
+        ls[t] = lf[t] - durations[t]
+    out = pd.DataFrame({"es": es, "ef": ef, "ls": ls, "lf": lf})
+    out["float"] = out["ls"] - out["es"]
+    return out, end
+
+tasks["budget"] = tasks["likely_days"] * tasks["daily_cost_ngn"]
+plan, end = schedule(tasks, dict(zip(tasks["task_id"], tasks["likely_days"])))
+BAC = tasks["budget"].sum()
+print(f"BAC: ₦{BAC:,.0f}")
+```
+
+```text
+BAC: ₦90,750,000
+```
+
+Planned value at the end of week 10 (working day 50) is the budget of the work the baseline schedule says should be done by then:
+
+```python
+def earned_value(week):
+    day = week * 5
+    # planned: the share of each task's baseline duration that has elapsed by now
+    elapsed = (np.minimum(day, plan["ef"]) - plan["es"]).clip(lower=0)
+    pv = (elapsed / tasks.set_index("task_id")["likely_days"] * tasks.set_index("task_id")["budget"]).sum()
+    now = status[status["week"] == week].merge(tasks[["task_id", "budget"]], on="task_id")
+    ev = (now["percent_complete"] / 100 * now["budget"]).sum()
+    ac = now["actual_cost_ngn"].sum()
+    return pv, ev, ac
+
+pv, ev, ac = earned_value(10)
+print(f"PV ₦{pv:,.0f}   EV ₦{ev:,.0f}   AC ₦{ac:,.0f}")
+print(f"SV ₦{ev - pv:,.0f}   CV ₦{ev - ac:,.0f}")
+print(f"SPI {ev / pv:.2f}   CPI {ev / ac:.2f}")
+```
+
+```text
+PV ₦60,910,000   EV ₦52,675,000   AC ₦69,849,000
+SV ₦-8,235,000   CV ₦-17,174,000
+SPI 0.86   CPI 0.75
+```
+
+At the end of week 10, ₦60.9m of work should have been done and ₦52.7m has been. That's a **schedule index of 0.86**: 14% less work done than planned. But ₦69.8m has been spent to earn ₦52.7m of work: a **cost index of 0.75**. The project is behind **and** costs a third more than planned for the work it has done, which is a harder problem than either alone.
+
+The trend matters as much as the snapshot:
+
+```python
+trend = pd.DataFrame([(w, *earned_value(w)) for w in range(2, 11, 2)], columns=["week", "PV", "EV", "AC"])
+trend["SPI"] = (trend["EV"] / trend["PV"]).round(2)
+trend["CPI"] = (trend["EV"] / trend["AC"]).round(2)
+print(trend[["week", "SPI", "CPI"]].to_string(index=False))
+```
+
+```text
+week  SPI  CPI
+    2 0.96 0.96
+    4 0.87 0.80
+    6 0.87 0.79
+    8 0.87 0.77
+   10 0.86 0.75
+```
+
+Both indices are drifting down, and they haven't levelled off. Which tasks explain it?
+
+```python
+now = status[status["week"] == 10].merge(tasks[["task_id", "name", "budget"]], on="task_id")
+now["earned"] = now["percent_complete"] / 100 * now["budget"]
+now["cost_variance"] = now["earned"] - now["actual_cost_ngn"]
+print(now.sort_values("cost_variance")[["task_id", "name", "percent_complete", "cost_variance"]].head(4).to_string(index=False))
+```
+
+```text
+task_id                                       name  percent_complete  cost_variance
+     B4             Import and clear the analysers                63     -7497000.0
+     B2    Fit-out: floors, power and air handling                97     -4176000.0
+     C2 Buy computers, scanners and label printers               100     -3100000.0
+     A3                Obtain the facility licence               100     -1423000.0
+```
+
+Three tasks account for most of the overspend: importing the analysers (naira costs and customs), the fit-out and the computers. The analyser import is also the critical task, and only 63% done at the point where the plan expected it to be finished.
+
+## Walkthrough
+
+1. Rebuild the baseline schedule and calculate BAC.
+2. Calculate PV, EV and AC at week 10 using the `earned_value()` function.
+3. Calculate SV, CV, SPI and CPI.
+4. Calculate the same for weeks 2, 4, 6, 8 and 10 and look at the trend.
+5. Find the tasks with the largest cost variance.
+6. Write the status summary (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "pmc-05-p1",
+  "prompt": "What is the **earned value (EV)** at the end of week 10, in naira?",
+  "answer": 52675000,
+  "format": "naira",
+  "dataset": "lab",
+  "files": ["tasks", "weekly_status"],
+  "pyVerify": "int(round(ev))",
+  "hint": "The first line of the earned value cell.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "pmc-05-p2",
+  "prompt": "What is the **SPI** at the end of week 10? Two decimal places.",
+  "answer": 0.86,
+  "format": "number",
+  "dataset": "lab",
+  "files": ["tasks", "weekly_status"],
+  "pyVerify": "round(ev / pv, 2)",
+  "hint": "EV divided by PV.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "pmc-05-p3",
+  "prompt": "What is the **CPI** at the end of week 10? Two decimal places.",
+  "answer": 0.75,
+  "format": "number",
+  "dataset": "lab",
+  "files": ["tasks", "weekly_status"],
+  "pyVerify": "round(ev / ac, 2)",
+  "hint": "EV divided by AC.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "pmc-05-p4",
+  "prompt": "Which task has the **largest cost overrun** (the most negative cost variance) at week 10? Type its ID.",
+  "answer": "B4",
+  "format": "text",
+  "accept": ["b4"],
+  "dataset": "lab",
+  "files": ["tasks", "weekly_status"],
+  "pyVerify": "now.sort_values('cost_variance')['task_id'].iloc[0]",
+  "hint": "The first row of the last cell.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "pmc-05-t1",
+  "prompt": "Write the **week 10 status summary** (70 to 160 words) for the sponsor: **PV, EV and AC**, what **SPI** and **CPI** say, the **trend**, and the **tasks** that explain it. Lead with the answer.",
+  "minutes": 12,
+  "rows": 9,
+  "placeholder": "At the end of week 10 the project is ...",
+  "rules": [
+    { "label": "Leads with behind schedule and over budget", "pattern": "behind|late|over budget|overspen|over cost" },
+    { "label": "Gives EV (about 52.7 million)", "pattern": "52[.,]?7|52,675" },
+    { "label": "Gives AC (about 69.8 or 69.9 million)", "pattern": "69[.,]?8|69,849" },
+    { "label": "Gives SPI (0.86)", "pattern": "0\\.86|SPI" },
+    { "label": "Gives CPI (0.75)", "pattern": "0\\.75|CPI" },
+    { "label": "Mentions the trend", "pattern": "trend|falling|worse|declin|drift|deteriorat|week" },
+    { "label": "Names a task that explains it (analysers/import/fit-out/computers)", "pattern": "analyser|import|fit-out|computers|B4|B2|C2" },
+    { "label": "Between 70 and 160 words", "minWords": 70, "maxWords": 160 }
+  ],
+  "sample": "At the end of week 10 the project is behind schedule and over budget. Work worth ₦60.9 million was planned (PV) and ₦52.7 million has been earned (EV), so the schedule index (SPI) is 0.86. We have spent ₦69.8 million (AC) to earn that, so the cost index (CPI) is 0.75: each naira of budgeted work is costing about ₦1.33. Both indices have been falling since week 2 and haven't levelled off. Most of the overspend sits in three tasks: importing the analysers, which is 63% done and is the critical task; the fit-out; and the computers, bought at higher naira prices. I'll turn this into a forecast next, because the sponsor needs a date and a cost, not an index.",
+  "note": "The status leads with the verdict, supports it with the numbers, and points at the tasks. The next question, always, is \"so what will it finish at?\"",
+  "hint": "Verdict first. Then PV/EV/AC, SPI/CPI, trend and causes.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "A task with a ₦10m budget is 60% complete and has cost ₦8m. What is its earned value?",
+    "options": ["₦8m", "₦6m", "₦10m", "₦4m"],
+    "answer": 1,
+    "explanation": "EV = % complete × budget = 0.6 × ₦10m = ₦6m, regardless of what was spent."
+  },
+  {
+    "prompt": "SPI is 0.86 and CPI is 0.75. What is the best description?",
+    "options": ["Ahead of schedule, under budget", "Behind schedule and over budget", "On schedule, over budget", "Behind schedule, under budget"],
+    "answer": 1,
+    "explanation": "Both indices are below 1: less work done than planned, and more spent than earned."
+  },
+  {
+    "prompt": "Why use earned value rather than comparing spend with the budget?",
+    "options": ["It's simpler", "Spending less than budget could mean being efficient or just behind: EV measures what the money bought", "It's required by law", "It ignores cost"],
+    "answer": 1,
+    "explanation": "Spend against budget confuses cost with progress; EV separates them."
+  }
+]
+```
+$md$, true, true, 5, array['pmc-05-p1', 'pmc-05-p2', 'pmc-05-p3', 'pmc-05-p4', 'pmc-05-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('pmc-m06', 'project-manager-capstone', 'The Forecast', 6, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('project-manager-capstone:the-forecast', 'project-manager-capstone', 'pmc-m06', 'the-forecast', 'The forecast', 'Turn week 10''s progress into a forecast of the finish cost and the opening date, using the remaining work rather than a hopeful guess, and give the sponsor a range with a stated basis.', 35, $md$
+## The problem
+
+You know where the project stands: behind, and over budget. The sponsor's next question is "so what will it finish at?" There are two tempting answers, and both are wrong. One is to say "we'll catch up", which assumes the problems of the past ten weeks will vanish. The other is to extrapolate a single index across the whole project, which assumes everything will go as badly as the worst part has.
+
+A good forecast starts from **what's left to do**, says how fast it's likely to go, and gives a range. For cost, EVM supplies standard estimates at completion. For the date, you re-run the schedule on the remaining work.
+
+## The concept
+
+### Forecasting the cost: estimate at completion (EAC)
+
+Three common versions, each with an assumption:
+
+| EAC | Formula | Assumes |
+| :-- | :-- | :-- |
+| **Typical** | BAC ÷ CPI | The rest of the project costs as much per unit of work as so far |
+| **Atypical** | AC + (BAC − EV) | The overrun so far was a one-off; the remaining work costs what was budgeted |
+| **Re-estimate** | AC + a new bottom-up estimate of the work remaining | You know more now and have redone the estimate |
+
+The **estimate to complete** is ETC = EAC − AC, and the **variance at completion** is VAC = BAC − EAC (negative: over budget at the end). When CPI has been stable or falling, the typical EAC is the safer planning figure. The atypical one is the best case.
+
+### Forecasting the date: remaining work, re-scheduled
+
+SPI isn't a date. To forecast the finish:
+
+1. Mark each finished task as done (zero remaining duration).
+2. For tasks in progress, estimate the **remaining** duration, either at the **planned rate** (the remaining percentage of the likely duration) or at the **rate actually achieved so far** (elapsed days ÷ percent done × percent left).
+3. Leave tasks not started at their likely duration.
+4. Run the critical path on what's left, and add the result to today's date (day 50).
+
+The planned-rate forecast is the **hopeful** end of the range. The current-rate forecast is the **realistic** one when a task has genuinely been slower than planned.
+
+![An invented cost forecast two ways and a date forecast at the planned and the current rate, reported as a range with its basis](/images/courses/pm-capstone/forecast-range.svg "Two cost forecasts and two date forecasts, each with its assumption.")
+
+> [!TIP]
+> Always give a forecast as a **range with its basis**: "19 to 26 March, depending on whether the analyser clearance speeds up." A single date invites a promise; a range with a reason invites a decision.
+
+## Example
+
+Set up, with the schedule function from lesson 3:
+
+```python
+import numpy as np
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/lab/"
+tasks = pd.read_csv(base + "tasks.csv").fillna({"predecessors": ""})
+status = pd.read_csv(base + "weekly_status.csv")
+START = np.datetime64("2026-11-02")
+PROMISE_DAY = 91
+
+def schedule(tasks, durations):
+    preds = {t: [p for p in ps.split(";") if p] for t, ps in zip(tasks["task_id"], tasks["predecessors"])}
+    es, ef = {}, {}
+    for t in tasks["task_id"]:
+        es[t] = max((ef[p] for p in preds[t]), default=0)
+        ef[t] = es[t] + durations[t]
+    end = max(ef.values())
+    ls, lf = {}, {}
+    for t in reversed(list(tasks["task_id"])):
+        successors = [s for s in tasks["task_id"] if t in preds[s]]
+        lf[t] = min((ls[s] for s in successors), default=end)
+        ls[t] = lf[t] - durations[t]
+    out = pd.DataFrame({"es": es, "ef": ef, "ls": ls, "lf": lf})
+    out["float"] = (out["ls"] - out["es"]).round(6)      # rounded: fractional durations leave tiny crumbs
+    return out, end
+
+def finish_date(days):
+    return np.busday_offset(START, int(np.ceil(days)) - 1, roll="forward")
+
+tasks["budget"] = tasks["likely_days"] * tasks["daily_cost_ngn"]
+BAC = tasks["budget"].sum()
+now = status[status["week"] == 10].set_index("task_id")
+EV = (now["percent_complete"] / 100 * tasks.set_index("task_id").loc[now.index, "budget"]).sum()
+AC = now["actual_cost_ngn"].sum()
+CPI = EV / AC
+```
+
+The cost forecasts first:
+
+```python
+typical = BAC / CPI
+atypical = AC + (BAC - EV)
+print(f"BAC:                ₦{BAC:,.0f}")
+print(f"Typical EAC (BAC/CPI): ₦{typical:,.0f}   over by ₦{typical - BAC:,.0f} ({typical / BAC - 1:.0%})")
+print(f"Atypical EAC:          ₦{atypical:,.0f}   over by ₦{atypical - BAC:,.0f} ({atypical / BAC - 1:.0%})")
+```
+
+```text
+BAC:                ₦90,750,000
+Typical EAC (BAC/CPI): ₦120,337,860   over by ₦29,587,860 (33%)
+Atypical EAC:          ₦107,924,000   over by ₦17,174,000 (19%)
+```
+
+Even the hopeful case is **₦17m over budget** because the overrun already happened. If the remaining work costs as much per unit as the work so far, the project finishes **₦29.6m over**, a third more than the sponsor approved. Neither includes a naira of the changes the sponsor is being asked to consider.
+
+Now the date. Work out each task's **remaining duration** at the two rates, then reschedule what's left:
+
+```python
+first_week = status.groupby("task_id")["week"].min()
+
+def remaining(rate):
+    rem = {}
+    for t, likely in zip(tasks["task_id"], tasks["likely_days"]):
+        if t not in now.index:
+            rem[t] = likely                                   # not started
+            continue
+        pc = now.loc[t, "percent_complete"] / 100
+        elapsed = 5 * (10 - first_week[t] + 1)                  # days since it started reporting
+        if pc >= 1:
+            rem[t] = 0
+        elif rate == "plan":
+            rem[t] = likely * (1 - pc)                          # the rest at the planned pace
+        else:
+            rem[t] = elapsed * (1 - pc) / pc                    # the rest at the pace achieved so far
+    return rem
+
+for rate in ("plan", "current"):
+    left, remaining_days = schedule(tasks, remaining(rate))
+    finish_day = 50 + remaining_days
+    print(f"At the {rate} rate: {remaining_days:.1f} days of work left, opening on {finish_date(finish_day)}"
+          f" ({int(np.ceil(finish_day)) - PROMISE_DAY} working days after the promise)")
+```
+
+```text
+At the plan rate: 49.2 days of work left, opening on 2027-03-19 (9 working days after the promise)
+At the current rate: 54.7 days of work left, opening on 2027-03-26 (14 working days after the promise)
+```
+
+Whichever rate you take, the promised date is **gone**: the opening is somewhere between Friday 19 March and Friday 26 March, **9 to 14 working days after** the promise. The critical chain is unchanged (analyser import, installation, reagents, validation, inspection, trial run), and it starts with the one task that is behind.
+
+```python
+left, _ = schedule(tasks, remaining("current"))
+print("Critical now:", " -> ".join(left.index[(left["float"] == 0) & (left["ef"] > left["es"])]))
+```
+
+```text
+Critical now: B4 -> B5 -> E2 -> F1 -> F2 -> F3 -> F4
+```
+
+## Walkthrough
+
+1. Set up the schedule function, BAC, EV, AC and CPI as in lesson 5.
+2. Calculate the typical and atypical EAC, and the variance at completion for each.
+3. Calculate each task's remaining duration at the **planned** rate.
+4. Re-run the schedule on the remaining durations, and add the result to day 50.
+5. Repeat at the **current** rate.
+6. Compare each forecast with the promised day.
+7. Write the forecast for the sponsor (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "pmc-06-p1",
+  "prompt": "What is the **typical EAC** (BAC ÷ CPI), rounded to the nearest naira?",
+  "answer": 120337860,
+  "format": "naira",
+  "dataset": "lab",
+  "files": ["tasks", "weekly_status"],
+  "pyVerify": "int(round(typical))",
+  "hint": "The second line of the cost cell.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "pmc-06-p2",
+  "prompt": "If the remaining work goes at the **planned rate**, on what date does the project finish? Type it as YYYY-MM-DD.",
+  "answer": "2027-03-19",
+  "format": "text",
+  "accept": ["19 march 2027", "2027-03-19", "19/03/2027", "19/3/2027"],
+  "dataset": "lab",
+  "files": ["tasks", "weekly_status"],
+  "pyVerify": "str(finish_date(50 + schedule(tasks, remaining('plan'))[1]))",
+  "hint": "The first line of the date cell.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "pmc-06-p3",
+  "prompt": "At the **current rate**, how many working days **after the promised day** does the project finish?",
+  "answer": 14,
+  "format": "number",
+  "dataset": "lab",
+  "files": ["tasks", "weekly_status"],
+  "pyVerify": "int(np.ceil(50 + schedule(tasks, remaining('current'))[1])) - PROMISE_DAY",
+  "hint": "The number in brackets on the second line.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "pmc-06-t1",
+  "prompt": "Write the **forecast** for the sponsor (80 to 170 words): the **opening date range** and its basis, the **cost forecast** with the assumption behind each version, how far the promised date is **missed**, and what you'd **not** want them to assume.",
+  "minutes": 12,
+  "rows": 9,
+  "placeholder": "Starting from week 10's progress ...",
+  "rules": [
+    { "label": "Gives a date range (19 to 26 March)", "pattern": "19 March|2027-03-19" },
+    { "label": "Gives the upper date (26 March)", "pattern": "26 March|2027-03-26" },
+    { "label": "Says the promised date is missed", "pattern": "miss|late|after the promise|not (be )?(open|ready) (by|on) 8 March|cannot (open|meet)|won't (open|meet)" },
+    { "label": "Gives a cost forecast (107.9 or 120.3 million)", "pattern": "107[.,]?9|120[.,]?3|107,9|120,3" },
+    { "label": "States an assumption (rate, one-off, CPI)", "pattern": "assum|if the|at the (planned|current)|one-off|CPI" },
+    { "label": "Says what not to assume (catch up, no changes)", "pattern": "catch up|recover|assum|not include|excludes|before (any )?changes|without (any )?changes" },
+    { "label": "Between 80 and 170 words", "minWords": 80, "maxWords": 170 }
+  ],
+  "sample": "Starting from week 10's progress and rescheduling only the work that's left, the laboratory opens between Friday 19 March and Friday 26 March: 9 to 14 working days after the promised 8 March. The earlier date assumes the remaining analyser import goes at its planned pace; the later one assumes it continues at the pace achieved so far. For cost, if the rest of the project costs as budgeted, we finish about ₦17 million over, at ₦107.9 million; if it costs as much per unit of work as so far (CPI 0.75), we finish at ₦120.3 million, about ₦29.6 million over. Neither includes any of the pending change requests. I'd ask you not to assume we'll catch up: the critical chain starts with the analysers, and nothing in the progress so far suggests it will speed up unaided.",
+  "note": "A range, a basis, and a warning against the hopeful reading. This is the paragraph a sponsor will quote, so every word in it must be defensible.",
+  "hint": "Date range and basis, cost range and assumptions, what to avoid assuming.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "CPI is 0.75 and BAC is ₦100m. What is the typical EAC?",
+    "options": ["₦75m", "₦100m", "About ₦133m", "₦125m"],
+    "answer": 2,
+    "explanation": "BAC ÷ CPI = 100 ÷ 0.75 ≈ 133."
+  },
+  {
+    "prompt": "Why shouldn't the forecast date come from SPI?",
+    "options": ["SPI is inaccurate", "SPI is in money terms and ignores the critical path; the date comes from rescheduling the remaining work", "SPI is always above 1", "Dates can't be forecast"],
+    "answer": 1,
+    "explanation": "A late task on the critical path matters more than the average progress across all tasks."
+  },
+  {
+    "prompt": "Which is the most honest way to report the forecast?",
+    "options": ["\"We'll open on 19 March\"", "\"19 to 26 March, depending on whether the analyser clearance speeds up\"", "\"As soon as possible\"", "\"On 8 March, as promised\""],
+    "answer": 1,
+    "explanation": "A range with its basis is defensible and shows what would change it."
+  }
+]
+```
+$md$, true, true, 6, array['pmc-06-p1', 'pmc-06-p2', 'pmc-06-p3', 'pmc-06-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('pmc-m07', 'project-manager-capstone', 'Risks and Change Requests', 7, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('project-manager-capstone:risks-and-change-requests', 'project-manager-capstone', 'pmc-m07', 'risks-and-change-requests', 'Risks and change requests', 'Put a price and a delay on the risk register, find which risks actually sit on the critical chain, and judge six change requests by what they do to the forecast, not by what the request says.', 35, $md$
+## The problem
+
+Two piles of paper have landed on the sponsor's desk. One is the **risk register**: thirteen things that might go wrong, each with a probability and an impact. The other is **six change requests** raised in weeks 9 and 10, each with a number of "extra days" and an extra cost. The sponsor wants to know how much reserve to hold, and which requests to approve.
+
+Both are easy to get wrong. A risk register is often read as a list of worries; it should be read as a **budget** and a **schedule allowance**. And the extra days on a change request are rarely the days it adds to the project: that depends on where in the plan the change lands.
+
+## The concept
+
+### Risk: expected monetary value and expected delay
+
+For each open risk:
+
+- **EMV** (expected monetary value) = probability × cost impact.
+- **Expected delay** = probability × delay in working days.
+
+Add the EMVs for the **cost contingency** the project should hold. The expected delay of risks that sit on the **critical chain** is the **schedule contingency**. A risk on a task with float costs money if it happens but may not delay the opening at all.
+
+Contingency isn't padding. It's an honest figure, held by the sponsor and released against named risks.
+
+### Responses
+
+For each risk the owner chooses a response: **avoid** it, **reduce** it (cheaper insurance, a second supplier), **transfer** it (insurance, a contract), or **accept** it knowingly. A response is worth buying when it costs less than the EMV it removes.
+
+### Change requests
+
+A change request is a proposal to alter scope, time or cost. Every change goes through the same check:
+
+1. **Does it serve the charter's objective?** If not, it needs its own business case.
+2. **What does it do to the date?** Re-run the forecast schedule with the change applied. The days on the request are not the days added: if the affected task has float, it may add nothing; if it's on the critical chain, it adds all of it.
+3. **What does it cost, and who pays?**
+4. **Decide:** approve, reject, or defer with a condition, and record it.
+
+![Two requests each claiming five days: one on the critical chain moves the finish, one on a task with float does not; and the four steps for handling a change request](/images/courses/pm-capstone/change-effect.svg "Days on the form are not days added: float decides.")
+
+> [!NOTE]
+> A change that *saves* time only helps if it's applied to the **critical** chain. Paying the contractor for weekend shifts on a task that isn't critical saves nothing, however many days the request claims.
+
+## Example
+
+Set up the schedule function and the remaining-work durations from lesson 6. The `float` is rounded before testing for zero, because fractional remaining durations leave tiny floating-point crumbs:
+
+```python
+import numpy as np
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/lab/"
+tasks = pd.read_csv(base + "tasks.csv").fillna({"predecessors": ""})
+status = pd.read_csv(base + "weekly_status.csv")
+risks = pd.read_csv(base + "risks.csv")
+changes = pd.read_csv(base + "changes.csv").fillna({"affects_task": ""})
+
+def schedule(tasks, durations):
+    preds = {t: [p for p in ps.split(";") if p] for t, ps in zip(tasks["task_id"], tasks["predecessors"])}
+    es, ef = {}, {}
+    for t in tasks["task_id"]:
+        es[t] = max((ef[p] for p in preds[t]), default=0)
+        ef[t] = es[t] + durations[t]
+    end = max(ef.values())
+    ls, lf = {}, {}
+    for t in reversed(list(tasks["task_id"])):
+        successors = [s for s in tasks["task_id"] if t in preds[s]]
+        lf[t] = min((ls[s] for s in successors), default=end)
+        ls[t] = lf[t] - durations[t]
+    out = pd.DataFrame({"es": es, "ef": ef, "ls": ls, "lf": lf})
+    out["float"] = (out["ls"] - out["es"]).round(6)
+    return out, end
+
+now = status[status["week"] == 10].set_index("task_id")
+first_week = status.groupby("task_id")["week"].min()
+
+def remaining():
+    rem = {}
+    for t, likely in zip(tasks["task_id"], tasks["likely_days"]):
+        if t not in now.index:
+            rem[t] = likely
+            continue
+        pc = now.loc[t, "percent_complete"] / 100
+        elapsed = 5 * (10 - first_week[t] + 1)
+        rem[t] = 0 if pc >= 1 else elapsed * (1 - pc) / pc      # the pace achieved so far
+    return rem
+
+rem = remaining()
+left, work_left = schedule(tasks, rem)
+print(f"Forecast: day {50 + work_left:.1f}")
+print("Critical chain:", " -> ".join(left.index[(left["float"] == 0) & (left["ef"] > left["es"])]))
+```
+
+```text
+Forecast: day 104.7
+Critical chain: B4 -> B5 -> E2 -> F1 -> F2 -> F3 -> F4
+```
+
+The critical chain now starts at the analyser import. Now price the risk register:
+
+```python
+open_risks = risks[risks["status"] == "open"].copy()
+open_risks["emv"] = open_risks["probability"] * open_risks["impact_ngn"]
+open_risks["expected_days"] = open_risks["probability"] * open_risks["impact_days"]
+print(f"Open risks: {len(open_risks)}")
+print(f"Cost contingency (total EMV): ₦{open_risks['emv'].sum():,.0f}")
+print(open_risks.sort_values("emv", ascending=False)[["risk_id", "description", "emv"]].head(4).to_string(index=False))
+```
+
+```text
+Open risks: 12
+Cost contingency (total EMV): ₦15,030,000
+risk_id                                               description       emv
+    R02   Naira weakens further, raising imported equipment costs 3500000.0
+    R10 Opening misses the ministry's date, with public criticism 3500000.0
+    R01          Customs holds the analysers longer than expected 2500000.0
+    R06               Grid power too unreliable for the analysers 1750000.0
+```
+
+Thirteen risks, but only twelve are open (one has been closed). The total EMV is **₦15m**, which is the cost contingency the project should hold on top of the forecast. The two biggest items are the naira (a cost risk with no delay) and missing the date (a reputational one).
+
+Which of the delay risks are on the critical chain? Link each to the task it threatens:
+
+```python
+task_of = {"R01": "B4", "R03": "B5", "R04": "F2", "R05": "D2", "R07": "B2", "R08": "C5", "R09": "E2", "R12": "D1"}
+on_chain = set(left.index[(left["float"] == 0) & (left["ef"] > left["es"])])
+open_risks["task"] = open_risks["risk_id"].map(task_of)
+open_risks["critical"] = open_risks["task"].isin(on_chain)
+delay = open_risks[open_risks["critical"]]
+print(delay[["risk_id", "task", "expected_days"]].to_string(index=False))
+print(f"Expected delay on the critical chain: {delay['expected_days'].sum():.1f} working days")
+print(f"Expected delay on tasks with float:  {open_risks[~open_risks['critical']]['expected_days'].sum():.1f} working days (absorbed by float)")
+```
+
+```text
+risk_id task  expected_days
+    R01   B4            6.0
+    R03   B5            2.0
+    R04   F2            4.5
+    R09   E2            1.4
+Expected delay on the critical chain: 13.9 working days
+Expected delay on tasks with float:  7.5 working days (absorbed by float)
+```
+
+Of about 21 days of expected delay in the register, only **13.9** sit on the critical chain. The rest are on tasks with float: they'll cost money if they happen but they mostly won't move the opening. That's the schedule contingency, and it's on top of the forecast.
+
+Now the change requests. Apply each one to the remaining-work schedule and see what it does to the finish:
+
+```python
+rows = []
+for _, c in changes.iterrows():
+    r = dict(rem)
+    if c["affects_task"]:
+        r[c["affects_task"]] = max(0, r[c["affects_task"]] + c["extra_days"])
+    _, w = schedule(tasks, r)
+    rows.append((c["change_id"], c["description"][:44], c["extra_days"], round(w - work_left, 2), c["extra_cost_ngn"]))
+print(pd.DataFrame(rows, columns=["id", "request", "days_on_form", "change_to_finish", "extra_cost_ngn"]).to_string(index=False))
+```
+
+```text
+id                                      request  days_on_form  change_to_finish  extra_cost_ngn
+CR1 Add a molecular testing room with its own ai            14              0.25        16000000
+CR2 Hire 3 more phlebotomists for longer collect             0              0.00         2100000
+CR3 Pay the contractor for weekend working on th            -5              0.00         3200000
+CR4 Upgrade the information system to include a              6              0.00         4800000
+CR5     Ship the analysers by air instead of sea            -9             -9.00         5500000
+CR6 Add a home-collection van and route software             0              0.00         3600000
+```
+
+Look at the column the request forms don't show. **CR5** (ship the analysers by air) really does pull the finish in by 9 days, because it lands on the critical task. **CR3** (weekend working on the fit-out) claims 5 days and delivers none: the fit-out is nearly finished and isn't on the critical chain. **CR1** (the molecular room) claims 14 extra days, but because the fit-out has float it adds a quarter of a day to the forecast. That doesn't make it cheap: it costs ₦16m, and the model doesn't know the new room also needs its own installation and validation. **CR2, CR4 and CR6** don't touch the critical chain at all and are about money and scope, not time.
+
+## Walkthrough
+
+1. Set up the schedule, the remaining durations and the baseline forecast.
+2. Calculate EMV and expected delay for every open risk, and the total EMV.
+3. Link each delay risk to its task, and find which sit on the critical chain.
+4. Calculate the expected delay on the critical chain.
+5. Apply each change request to the remaining-work schedule and record its effect on the finish.
+6. For each request, decide: approve, reject or defer, with a reason.
+7. Write the decision note (the task below).
+
+## Practice
+
+```answer
+{
+  "id": "pmc-07-p1",
+  "prompt": "What is the **total EMV** of the open risks (probability × cost impact, summed), in naira?",
+  "answer": 15030000,
+  "format": "naira",
+  "dataset": "lab",
+  "files": ["risks"],
+  "pyVerify": "int(round(open_risks['emv'].sum()))",
+  "hint": "The cost contingency line.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "pmc-07-p2",
+  "prompt": "What is the **expected delay on the critical chain** from the open risks, in working days? One decimal place.",
+  "answer": 13.9,
+  "format": "number",
+  "dataset": "lab",
+  "files": ["tasks", "weekly_status", "risks"],
+  "pyVerify": "round(delay['expected_days'].sum(), 1)",
+  "hint": "The first of the last two lines.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "pmc-07-p3",
+  "prompt": "How many working days **earlier** does the project finish if **CR5** (air freight) is approved?",
+  "answer": 9,
+  "format": "number",
+  "dataset": "lab",
+  "files": ["tasks", "weekly_status", "changes"],
+  "pyVerify": "int(round(-(schedule(tasks, {**rem, 'B4': rem['B4'] - 9})[1] - work_left)))",
+  "hint": "The change_to_finish column for CR5, without the minus sign.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "pmc-07-p4",
+  "prompt": "How many of the six change requests move the finish date by **at least one working day**, either way?",
+  "answer": 1,
+  "format": "number",
+  "dataset": "lab",
+  "files": ["tasks", "weekly_status", "changes"],
+  "pyVerify": "sum(abs(schedule(tasks, {**rem, **({c['affects_task']: max(0, rem[c['affects_task']] + c['extra_days'])} if c['affects_task'] else {})})[1] - work_left) >= 1 for _, c in changes.iterrows())",
+  "hint": "Look at the change_to_finish column. Count the ones whose absolute value is 1 or more.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "pmc-07-t1",
+  "prompt": "Write the **decision note on the six change requests** (90 to 200 words). For each (CR1 to CR6) say **approve, reject or defer** with a one-line reason based on its effect on the **date**, its **cost** and the **charter**. State which one you recommend approving.",
+  "minutes": 14,
+  "rows": 10,
+  "placeholder": "CR1 (molecular room): ...",
+  "rules": [
+    { "label": "Covers CR1", "pattern": "CR1|molecular" },
+    { "label": "Covers CR3 and says it doesn't help the date", "pattern": "CR3|weekend" },
+    { "label": "Covers CR5 and recommends it", "pattern": "CR5|air freight|by air" },
+    { "label": "Covers CR2, CR4 or CR6", "pattern": "CR2|CR4|CR6|phlebotom|portal|van|home.collection" },
+    { "label": "Uses approve/reject/defer language", "pattern": "approve|reject|defer|decline|accept" },
+    { "label": "Refers to the critical chain or the date", "pattern": "critical|date|float|saves|days" },
+    { "label": "Refers to the cost or the charter", "pattern": "cost|₦|charter|scope|business case" },
+    { "label": "Between 90 and 200 words", "minWords": 90, "maxWords": 200 }
+  ],
+  "sample": "CR5 (air freight for the analysers): approve. It lands on the critical task and pulls the forecast in by 9 working days for ₦5.5 million. CR3 (weekend working on the fit-out): reject. The fit-out is nearly done and isn't critical, so it would cost ₦3.2 million and save nothing. CR1 (molecular room): defer. It adds ₦16 million and a new installation and validation the plan doesn't contain; it isn't in the charter and needs its own business case. CR4 (patient portal): defer; it isn't on the critical chain, costs ₦4.8 million and isn't part of the opening objective. CR2 (more phlebotomists) and CR6 (home-collection van): defer to operations and sales; they cost money but don't affect the opening, and should be decided after we know the real cost of recovery.",
+  "note": "One request does what it claims, one doesn't, and four don't belong in the opening at all. That's the value of testing each request against the schedule instead of trusting the form.",
+  "hint": "Effect on the date, cost, charter: then approve, reject or defer.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "A risk has a 20% chance of costing ₦5m. What is its EMV?",
+    "options": ["₦5m", "₦1m", "₦0.2m", "₦25m"],
+    "answer": 1,
+    "explanation": "0.2 × ₦5m = ₦1m."
+  },
+  {
+    "prompt": "A change request claims to add 14 days to a task with 20 days of float. What does it do to the finish date?",
+    "options": ["Adds 14 days", "Nothing: the float absorbs it, though it uses most of the float", "Adds 6 days", "Removes 6 days"],
+    "answer": 1,
+    "explanation": "A delay no longer than the float doesn't move the finish, but it uses up the safety margin."
+  },
+  {
+    "prompt": "Weekend working is proposed for a task that is not on the critical chain. What will it do for the opening date?",
+    "options": ["Bring it forward by the days saved", "Nothing, because the critical chain decides the date", "Make the task critical", "Delay it"],
+    "answer": 1,
+    "explanation": "Speeding up a task with float doesn't shorten the project."
+  }
+]
+```
+$md$, true, true, 7, array['pmc-07-p1', 'pmc-07-p2', 'pmc-07-p3', 'pmc-07-p4', 'pmc-07-t1']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills)
+values ('pmc-m08', 'project-manager-capstone', 'Recovery and the Decision Paper', 8, null, null, '{}'::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('project-manager-capstone:recovery-and-the-decision-paper', 'project-manager-capstone', 'pmc-m08', 'recovery-and-the-decision-paper', 'Recovery and the decision paper', 'Test six recovery options against the forecast, find the combinations that bring the opening back, choose with the sponsor''s priorities in mind, and write the one-page paper that asks for the decisions you need.', 65, $md$
+## The problem
+
+You now have a status (behind and over budget), a forecast (19 to 26 March, over by ₦17m to ₦30m), a priced risk register and a view of six change requests. The sponsor has one more question: **what should we do?** Six recovery options are on the table, and they interact. Some save days on the critical chain; some save none; some can be combined; one needs the medical director's agreement and changes what the laboratory opens with.
+
+A recovery plan isn't "work harder". It's a short list of actions, each with a cost and a measured effect on the date, plus a clear account of what the sponsor must decide and by when.
+
+## The concept
+
+### Three ways to recover time
+
+| Technique | What it means | Here |
+| :-- | :-- | :-- |
+| **Crashing** | Pay more to shorten a task | Air freight for the analysers; weekend shifts |
+| **Fast-tracking** | Do things in parallel that were planned in sequence | Stock reagents while the analysers are installed |
+| **Reducing scope** | Do less, or defer part of it | Open with the most-requested tests; validate the rest after opening |
+
+All of them cost something: money, risk, or quality. And all of them only help on the **critical chain**.
+
+### Choosing
+
+Compare options on:
+
+1. **Days saved** on the forecast, measured by re-running the schedule, not read from the proposal.
+2. **Extra cost.**
+3. **What it puts at risk:** quality, safety, the full test menu, the regulator's trust.
+4. **Whether the sponsor's priorities allow it.** Here the managing director wants the date; the medical director won't open without the full menu; the CFO won't be surprised again.
+
+![Three ways to recover time, invented options compared by claimed and really saved days, and a trigger agreed in advance](/images/courses/pm-capstone/recovery-options.svg "Test each option; combine; hold one back behind a trigger.")
+
+Where no combination is safe, say so, and say what you'd do if the next problem arrives. A **trigger** ("if clearance isn't complete by 20 January, we use the reduced menu") turns a worry into a plan.
+
+### The decision paper
+
+One page for the sponsor, in this order:
+
+1. **The answer:** status, forecast and what you recommend, in two sentences.
+2. **What you need decided, and by when.**
+3. **Evidence:** the three numbers that matter (forecast date, cost, risk).
+4. **Options considered**, with cost and days saved, and why the others were rejected.
+5. **Risks and triggers.**
+6. **What you'll report next, and when.**
+
+![The six parts of a one-page decision paper for a sponsor](/images/courses/pm-capstone/decision-paper.svg "Recommendation first; decisions with dates; three numbers; options; trigger.")
+
+> [!NOTE]
+> A good decision paper leads with the decision, and makes the unpopular parts impossible to miss: the date is gone, the budget is higher, and one of the sponsor's own requests should wait.
+
+## Example
+
+Set up the forecast as in lesson 6, then apply each recovery option to the remaining-work schedule:
+
+```python
+import itertools
+import numpy as np
+import pandas as pd
+
+base = "https://academy.cloudtechanalytics.com/datasets/lab/"
+tasks = pd.read_csv(base + "tasks.csv").fillna({"predecessors": ""})
+status = pd.read_csv(base + "weekly_status.csv")
+options = pd.read_csv(base + "options.csv")
+START = np.datetime64("2026-11-02")
+PROMISE_DAY = 91
+
+def schedule(tasks, durations):
+    preds = {t: [p for p in ps.split(";") if p] for t, ps in zip(tasks["task_id"], tasks["predecessors"])}
+    ef = {}
+    for t in tasks["task_id"]:
+        ef[t] = max((ef[p] for p in preds[t]), default=0) + durations[t]
+    return max(ef.values())
+
+def finish_date(days):
+    return np.busday_offset(START, int(np.ceil(days)) - 1, roll="forward")
+
+tasks["budget"] = tasks["likely_days"] * tasks["daily_cost_ngn"]
+now = status[status["week"] == 10].set_index("task_id")
+first_week = status.groupby("task_id")["week"].min()
+BAC = tasks["budget"].sum()
+EV = (now["percent_complete"] / 100 * tasks.set_index("task_id").loc[now.index, "budget"]).sum()
+AC = now["actual_cost_ngn"].sum()
+typical = BAC / (EV / AC)
+
+rem = {}
+for t, likely in zip(tasks["task_id"], tasks["likely_days"]):
+    if t not in now.index:
+        rem[t] = likely
+        continue
+    pc = now.loc[t, "percent_complete"] / 100
+    elapsed = 5 * (10 - first_week[t] + 1)
+    rem[t] = 0 if pc >= 1 else elapsed * (1 - pc) / pc        # the pace achieved so far
+
+forecast = 50 + schedule(tasks, rem)
+print(f"Forecast with no action: day {forecast:.1f}, {finish_date(forecast)}")
+print(options[["option_id", "option", "extra_cost_ngn", "days_saved"]].to_string(index=False))
+```
+
+```text
+Forecast with no action: day 104.7, 2027-03-26
+option_id                             option  extra_cost_ngn  days_saved
+       O1                Carry on as planned               0           0
+       O2               Fly the analysers in         5500000           9
+       O3     Weekend working on the fit-out         3200000           5
+       O4       Start reagent stocking early          450000           4
+       O5      Open with a reduced test menu         1200000           6
+       O6 Add a molecular testing room first        16000000         -14
+```
+
+An option's "days saved" is what the proposer claims, and it only counts if it lands on the critical chain. Link each option to the task it changes, apply it, and **measure**:
+
+```python
+applies_to = {"O2": "B4", "O3": "B2", "O4": "E2", "O5": "F1"}      # O1 changes nothing; O6 adds scope
+
+def finish_with(chosen):
+    r = dict(rem)
+    for o in chosen:
+        days = int(options.loc[options["option_id"] == o, "days_saved"].iloc[0])
+        t = applies_to[o]
+        r[t] = max(0, r[t] - days)
+    return 50 + schedule(tasks, r)
+
+for o in applies_to:
+    gain = forecast - finish_with([o])
+    print(f"{o}: claims {int(options.loc[options['option_id'] == o, 'days_saved'].iloc[0])} days, really saves {gain:.1f}")
+```
+
+```text
+O2: claims 9 days, really saves 9.0
+O3: claims 5 days, really saves 0.0
+O4: claims 4 days, really saves 4.0
+O5: claims 6 days, really saves 6.0
+```
+
+**O3**, weekend shifts on the fit-out, claims 5 days and saves none, as in lesson 7. The other three are real. Now try every combination of the four recovery options:
+
+```python
+cost = dict(zip(options["option_id"], options["extra_cost_ngn"]))
+rows = []
+for n in range(0, 5):
+    for combo in itertools.combinations(applies_to, n):
+        end = finish_with(combo)
+        rows.append((" + ".join(combo) or "none", round(end, 1), str(finish_date(end)), sum(cost[o] for o in combo)))
+table = pd.DataFrame(rows, columns=["options", "finish_day", "date", "extra_cost_ngn"]).sort_values(["finish_day", "extra_cost_ngn"])
+print(table.drop_duplicates("finish_day").head(6).to_string(index=False))   # the cheapest way to each finish day
+```
+
+```text
+options  finish_day       date  extra_cost_ngn
+O2 + O4 + O5        85.7 2027-03-01         7150000
+     O2 + O5        89.7 2027-03-05         6700000
+     O2 + O4        91.7 2027-03-09         5950000
+     O4 + O5        94.7 2027-03-12         1650000
+          O2        95.7 2027-03-15         5500000
+          O5        98.7 2027-03-18         1200000
+```
+
+The cheapest way to meet the promised day (91) is **O2 + O5**: air freight and a reduced opening menu, for ₦6.7m, opening on 5 March. Adding **O4** takes it back to 1 March, for ₦0.45m more. **O2 + O4** alone, with the full test menu, opens on **Tuesday 9 March**, one working day after the promise, for ₦5.95m.
+
+That's the real decision. Meeting the promise to the day needs the reduced menu, which the medical director has said he won't accept without a clinical case; the full menu costs one day, and the sponsor has to decide whether to take that to the commissioner.
+
+And none of those dates includes the risk register. The expected delay on the critical chain is 13.9 days (lesson 7), so a plan that opens on 9 March with no allowance is a plan with perhaps a 20% chance of doing so. The honest recommendation has three parts:
+
+1. **Approve O2 and O4 now.** They keep the full menu, cost ₦5.95m, and bring the forecast to 9 March.
+2. **Keep O5 as a trigger, not a plan.** If the analysers have not cleared customs by a named date, use the reduced menu to protect the opening, with the medical director's agreement settled in advance.
+3. **Tell the commissioner now** that the opening will be in the week of 8 March, with a realistic range, instead of letting the date go quietly wrong.
+
+The cost position follows:
+
+```python
+chosen = ["O2", "O4"]
+extra = sum(cost[o] for o in chosen)
+atypical = AC + (BAC - EV)
+print(f"Approved budget:           ₦{BAC:,.0f}")
+print(f"Forecast with recovery:    ₦{atypical + extra:,.0f} to ₦{typical + extra:,.0f}")
+print(f"Opening with recovery:     {finish_date(finish_with(chosen))}")
+```
+
+```text
+Approved budget:           ₦90,750,000
+Forecast with recovery:    ₦113,874,000 to ₦126,287,860
+Opening with recovery:     2027-03-09
+```
+
+## Walkthrough
+
+1. Rebuild the forecast with no action and note its day and date.
+2. Link each recovery option to the task it changes, and **measure** its real effect.
+3. Try every combination, and list finish date and cost.
+4. Mark which combinations meet the promised day, and what each one puts at risk.
+5. Choose, with reasons, and name a **trigger** for the option you're holding back.
+6. Calculate the revised cost range.
+7. Write the decision paper (the first task below), and the answers to the sponsor's hardest questions (the second).
+
+## Practice
+
+```answer
+{
+  "id": "pmc-08-p1",
+  "prompt": "If **O2 and O4** are both approved, on what date does the project finish? Type it as YYYY-MM-DD.",
+  "answer": "2027-03-09",
+  "format": "text",
+  "accept": ["9 march 2027", "2027-03-09", "09/03/2027", "9/3/2027"],
+  "dataset": "lab",
+  "files": ["tasks", "weekly_status", "options"],
+  "pyVerify": "str(finish_date(finish_with(['O2', 'O4'])))",
+  "hint": "The second row of the combination table, or the last cell.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "pmc-08-p2",
+  "prompt": "What is the **cheapest combination** of the four recovery options (O2 to O5) that finishes **by the promised day** (day 91)? Give its **extra cost** in naira.",
+  "answer": 6700000,
+  "format": "naira",
+  "dataset": "lab",
+  "files": ["tasks", "weekly_status", "options"],
+  "pyVerify": "min(sum(cost[o] for o in combo) for n in range(5) for combo in itertools.combinations(applies_to, n) if finish_with(combo) <= PROMISE_DAY)",
+  "hint": "From the table: the cheapest row that finishes on or before day 91.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "pmc-08-p3",
+  "prompt": "How many of the four recovery options O2 to O5 **actually shorten the finish** when applied alone?",
+  "answer": 3,
+  "format": "number",
+  "dataset": "lab",
+  "files": ["tasks", "weekly_status", "options"],
+  "pyVerify": "sum(forecast - finish_with([o]) > 0.5 for o in applies_to)",
+  "hint": "One option claims days but saves none.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "pmc-08-p4",
+  "prompt": "With **O2 and O4** approved, what is the **upper end of the cost forecast** (typical EAC plus the options' cost), to the nearest naira?",
+  "answer": 126287860,
+  "format": "naira",
+  "dataset": "lab",
+  "files": ["tasks", "weekly_status", "options"],
+  "pyVerify": "int(round(typical + extra))",
+  "hint": "The second figure on the 'Forecast with recovery' line.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "pmc-08-t1",
+  "prompt": "Write the **decision paper** for the sponsor (150 to 280 words), in this order: the **answer and recommendation** first, the **decisions you need** and when, the **evidence** (forecast date, cost and risk), the **options** considered and why the others were rejected, and the **trigger** for the contingency plan.",
+  "minutes": 20,
+  "rows": 14,
+  "placeholder": "Recommendation: ...",
+  "rules": [
+    { "label": "Leads with a recommendation", "pattern": "recommend|approve|decision" },
+    { "label": "Says the promised date will be missed or at risk", "pattern": "8 March|promised|promise|miss|late|one (working )?day" },
+    { "label": "Recommends O2 (air freight)", "pattern": "O2|air freight|by air|fly" },
+    { "label": "Recommends O4 (reagents early)", "pattern": "O4|reagent" },
+    { "label": "Gives the forecast date (9 March)", "pattern": "9 March|2027-03-09" },
+    { "label": "Gives a cost (₦5.95m, 113.9 or 126.3m)", "pattern": "5[.,]95|113[.,]9|126[.,]3|₦\\s?126|₦\\s?113" },
+    { "label": "Rejects or holds back an option (weekend working, molecular room, reduced menu)", "pattern": "O3|weekend|O6|molecular|O5|reduced (test )?menu|reject|hold" },
+    { "label": "Names a trigger", "pattern": "trigger|if the analysers|by [0-9]+ (January|February)|if .* (not|hasn't|has not)" },
+    { "label": "Between 150 and 280 words", "minWords": 150, "maxWords": 280 }
+  ],
+  "sample": "Recommendation: approve air freight for the analysers (O2) and starting reagent stocking early (O4), for ₦5.95 million. Decisions needed this week: approval of both, an agreed message to the commissioner, and the medical director's position on a reduced menu as a contingency. Evidence: with no action the laboratory opens between 19 and 26 March, 9 to 14 working days after the promise of Monday 8 March. With O2 and O4 the forecast is Tuesday 9 March, one working day late, with the full test menu. The cost forecast is ₦113.9 to ₦126.3 million against an approved ₦90.75 million, because costs are running at a CPI of 0.75. Options considered: weekend working on the fit-out (O3) saves nothing because the fit-out isn't critical; the molecular room (O6) adds 14 days and ₦16 million and belongs in a separate business case; opening with a reduced menu (O5) would meet 5 March but compromises the full menu and needs clinical agreement. Risks: the expected delay on the critical chain is about 14 days. Trigger: if the analysers have not cleared customs by 20 January, we use O5 to protect the opening. Next report: Friday, with the clearance status.",
+  "note": "A paper like this can be read in two minutes and still be acted on: the answer, the asks, three numbers, the options and the trigger.",
+  "hint": "Recommendation, decisions, evidence, options, trigger.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "pmc-08-t2",
+  "prompt": "Write the answers to the sponsor's **three hardest questions** (100 to 200 words in all): \"Why can't we just keep 8 March?\", \"Why not approve the weekend working?\" and \"Why shouldn't I add the molecular room now?\"",
+  "minutes": 12,
+  "rows": 10,
+  "placeholder": "Why can't we keep 8 March? ...",
+  "rules": [
+    { "label": "Answers the 8 March question (critical chain, no cushion, probability)", "pattern": "critical|cushion|probab|chance|analyser|customs" },
+    { "label": "Answers the weekend working question (not critical, saves nothing)", "pattern": "weekend|fit-out|not critical|saves? (no|nothing)|float" },
+    { "label": "Answers the molecular room question (cost, days, scope, business case)", "pattern": "molecular|16 million|₦16|14 days|business case|charter|scope" },
+    { "label": "Uses a number from the analysis", "pattern": "\\d" },
+    { "label": "Between 100 and 200 words", "minWords": 100, "maxWords": 200 }
+  ],
+  "sample": "Why can't we keep 8 March? The chain that decides the date runs through the analysers' import, installation, reagents, validation and the inspection, and the plan had one working day of cushion before the analysers slipped. Even with air freight and early stocking we're a day late, and on the plan's own estimates the chance of 8 March was about 3%. Why not approve weekend working? The fit-out is nearly finished and isn't on the critical chain, so ₦3.2 million would buy no days: the analysers' clearance is what's holding the opening. Why not add the molecular room now? It costs ₦16 million, adds an installation and validation the plan doesn't contain, and isn't part of the charter. It deserves its own business case after we open, not a place on the critical path before it.",
+  "note": "Each answer uses a number and the logic of the schedule. That's what makes a firm \"no\" credible rather than stubborn.",
+  "hint": "Three questions, three answers, each with a fact.",
+  "required": true
+}
+```
+
+## Check your understanding
+
+```quiz
+[
+  {
+    "prompt": "A recovery option claims to save 5 days on a task that is not on the critical chain. How many days will it really save the project?",
+    "options": ["5", "Probably none", "2 or 3", "It depends on the cost"],
+    "answer": 1,
+    "explanation": "Only changes to the critical chain shorten the finish date."
+  },
+  {
+    "prompt": "Reducing scope to open on time needs the medical director's agreement in advance. Why is a trigger useful?",
+    "options": ["It avoids the decision", "It decides in advance what will happen if a named problem arrives, so nobody has to improvise under pressure", "It hides the risk", "It lets you change the date"],
+    "answer": 1,
+    "explanation": "A trigger turns a worry into an agreed plan."
+  },
+  {
+    "prompt": "Which opening line best starts a decision paper?",
+    "options": ["\"This paper summarises the project's history.\"", "\"I recommend approving two recovery actions for ₦5.95m; the laboratory then opens on 9 March, one working day late.\"", "\"The team has worked very hard.\"", "\"There are many risks.\""],
+    "answer": 1,
+    "explanation": "Lead with the recommendation and the number the sponsor most needs."
+  }
+]
+```
+$md$, true, true, 8, array['pmc-08-p1', 'pmc-08-p2', 'pmc-08-p3', 'pmc-08-p4', 'pmc-08-t1', 'pmc-08-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+
 -- Assessment: SQL for Data Analysis: final assessment
 insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
 values ('sql-for-data-analysis-final', 'sql-for-data-analysis', 'final', null, 'SQL for Data Analysis: final assessment', 60, true)
@@ -76305,6 +78284,132 @@ on conflict (id) do update set assessment_id = excluded.assessment_id, position 
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
 values ('bacq12', 1, 'Answer first.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Project Manager Capstone: final assessment
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('project-manager-capstone-final', 'project-manager-capstone', 'final', null, 'Project Manager Capstone: final assessment', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmcq01', 'project-manager-capstone-final', 1, 'A sponsor emails that a promised date is in danger and lists three extra requests. What should the project manager produce first?', '["A new plan with all the requests included","A status, a forecast and a recommendation backed by evidence","A list of reasons the team is working hard","A request for more staff"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmcq01', 1, 'The sponsor needs to know where the project stands, where it''s heading and what to decide.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmcq02', 'project-manager-capstone-final', 2, 'Which is the best success criterion in a charter?', '["A successful launch","Open on a stated date, within the approved budget, with the licence and inspection passed","As soon as possible","When everyone is happy"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmcq02', 1, 'A date, a budget and a test anyone can check.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmcq03', 'project-manager-capstone-final', 3, 'A stakeholder has high influence but low interest in the project''s details. How should you manage them?', '["Ignore them","Keep them satisfied: short, regular, relevant updates and early notice of anything that affects them","Add them to every meeting","Ask them to do more work"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmcq03', 1, 'High influence means they can stop or help the project; low interest means they don''t want the detail.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmcq04', 'project-manager-capstone-final', 4, 'A task has estimates 6, 9 and 18 days (optimistic, likely, pessimistic). What is its PERT expected duration?', '["9","10","11","12"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmcq04', 1, '(6 + 4 × 9 + 18) ÷ 6 = 60 ÷ 6 = 10 days.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmcq05', 'project-manager-capstone-final', 5, 'Why is a budget built from every task''s ''likely'' duration usually too low?', '["Daily costs are underestimated","Overruns are bigger than underruns, so the average is above the most likely value","Likely values are always wrong","Projects always add scope"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmcq05', 1, 'Skewed estimates mean the expected value exceeds the mode.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmcq06', 'project-manager-capstone-final', 6, 'A plan finishes one working day before a promised date. What is the honest description?', '["Safe","Almost no cushion: any slip on the critical path misses the date","Comfortable, because estimates are cautious","Ahead of schedule"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmcq06', 1, 'A one-day buffer is well inside the noise of any estimate.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmcq07', 'project-manager-capstone-final', 7, 'A simulation shows a 4% chance of meeting the promised date and a P80 date three weeks later. What should the sponsor take from it?', '["The date is safe","The date was never likely; a date with 80% confidence is three weeks later","The simulation is broken","P80 is the date the project will finish"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmcq07', 1, 'The probability and the P80 together say how unlikely the date is, and what is safer to promise.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmcq08', 'project-manager-capstone-final', 8, 'A task with a ₦20m budget is 40% complete and has cost ₦12m. What is its earned value?', '["₦12m","₦8m","₦20m","₦4m"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmcq08', 1, 'EV = 40% × ₦20m = ₦8m, whatever was spent.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmcq09', 'project-manager-capstone-final', 9, 'SPI is 0.9 and CPI is 0.7. What is the best summary?', '["Ahead and under budget","Behind schedule, and costing much more than planned for the work done","On schedule","Under budget but late"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmcq09', 1, 'Both below 1; the cost index is the worse of the two.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmcq10', 'project-manager-capstone-final', 10, 'BAC is ₦200m and CPI is 0.8. What is the typical estimate at completion?', '["₦160m","₦200m","₦250m","₦280m"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmcq10', 2, 'BAC ÷ CPI = 200 ÷ 0.8 = 250.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmcq11', 'project-manager-capstone-final', 11, 'Why should a date forecast come from re-scheduling the remaining work rather than from SPI?', '["SPI is wrong","SPI is in money terms; the finish date depends on the critical chain of the remaining tasks","SPI can''t be calculated","Dates are never forecast"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmcq11', 1, 'A late task on the critical chain matters more than average progress.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmcq12', 'project-manager-capstone-final', 12, 'A risk has a 30% chance of costing ₦8m and a 30% chance of causing 10 days'' delay on a task with 25 days of float. Which statement is right?', '["The EMV is ₦2.4m, and the delay probably doesn''t move the finish","The EMV is ₦8m","The delay adds 3 days to the finish","Neither matters"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmcq12', 0, 'EMV = 0.3 × ₦8m = ₦2.4m; a delay shorter than the float is absorbed.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmcq13', 'project-manager-capstone-final', 13, 'A change request claims to save 6 days by paying for weekend work on a task that isn''t on the critical chain. What will it do for the finish date?', '["Save 6 days","Almost certainly nothing","Save 3 days","Delay it"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmcq13', 1, 'Only shortening the critical chain shortens the project.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmcq14', 'project-manager-capstone-final', 14, 'One recovery option meets the promised date but opens the laboratory with a reduced test menu, which the medical director opposes. What is the best approach?', '["Do it anyway","Choose the full-menu option, say plainly that it is a day late, and keep the reduced menu as an agreed trigger if the critical task slips again","Reject all options","Hide the trade-off"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmcq14', 1, 'Recovery options trade money, time and quality. The sponsor and the people affected should choose with open eyes, with a trigger agreed in advance.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmcq15', 'project-manager-capstone-final', 15, 'Which is the best opening line of a decision paper?', '["\"This paper reviews the project''s history.\"","\"I recommend approving two actions costing ₦5.95m; the laboratory then opens on 9 March, one working day late.\"","\"The team has worked hard under difficult conditions.\"","\"Many risks remain.\""]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmcq15', 1, 'Lead with the recommendation and the numbers the sponsor needs.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 
@@ -82609,6 +84714,16 @@ In the text box, paste your **decision paper's executive summary**, then a short
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
 
 
+-- Project: Medlink Diagnostics: recovering a laboratory opening
+insert into public.projects (id, course_id, title, summary, brief_md, tasks, datasets, rubric, required)
+values ('pmc-medlink-laboratory-recovery', 'project-manager-capstone', 'Medlink Diagnostics: recovering a laboratory opening', 'A complete recovery review for a sponsor whose public opening date is in danger: a charter and stakeholder strategy, honest estimates, the critical path, the real chance of the date, earned value at week 10, a forecast, a priced risk register, a decision on six change requests, a recovery plan and a one-page decision paper.', $md$Medlink Diagnostics is ten weeks into opening a laboratory in Port Harcourt, and its managing director promised the state commissioner an opening on Monday 8 March 2027. The analysers are stuck in customs, costs are running over, and six change requests have arrived. Give the sponsor the review they need to decide.
+
+Work in Google Colab or your own tools with the lab dataset (https://academy.cloudtechanalytics.com/datasets/lab/: tasks.csv, weekly_status.csv, risks.csv, changes.csv, stakeholders.csv and options.csv). Submit a link to your notebook or folder (shared so anyone with the link can view), containing your analysis and your decision paper.
+
+In the text box, paste your **decision paper** (one page), then a short note for each task below saying where to find it and the key number.$md$, array['Charter and stakeholders: the objective, success criteria, scope in and out, constraints, and a strategy for the key stakeholders based on influence, interest and what each cares about.', 'Estimates: a checked work breakdown, PERT expected durations and costs, and the gap between the approved budget and the expected cost.', 'Schedule: the baseline critical path and finish, the float on the main non-critical tasks, and the cushion to the promised date.', 'Schedule risk: a Monte Carlo simulation with the chance of the promised date, the P50 and P80 dates and the reserve the plan needs.', 'Status at week 10: PV, EV and AC, SPI and CPI, the trend, and the tasks that explain the variances.', 'Forecast: the opening date range from the remaining work and the cost forecast with its assumptions, with a RAG status.', 'Risks and changes: EMV and expected delay on the critical chain, the effect of each change request on the forecast, and a decision on each.', 'Recovery and the decision paper: recovery options tested against the schedule, a recommendation with a trigger, the revised cost range, and a one-page paper that leads with the decision.']::text[], array['lab']::text[], array['The charter defines success and scope clearly, and the stakeholder strategy follows what each stakeholder cares about.', 'The estimates are checked and the budget gap is explained honestly.', 'The schedule and critical path are correct, and the cushion to the promised date is stated.', 'Dates are given with probabilities, not as single promises.', 'Earned value is calculated correctly and the causes of variance are traced to tasks.', 'The forecast starts from the remaining work, gives a range and states its assumptions.', 'Risks are priced, change requests are judged by their effect on the critical chain, and recovery options are measured rather than taken from the proposal.', 'The decision paper leads with the recommendation, names the decisions needed and the trigger, and makes the unwelcome facts impossible to miss.']::text[], true)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
+
+
 -- Project: Kasuwa: who to call before dispatch
 insert into public.projects (id, course_id, title, summary, brief_md, tasks, datasets, rubric, required)
 values ('dsc-kasuwa-failed-deliveries', 'data-scientist-capstone', 'Kasuwa: who to call before dispatch', 'An end-to-end data science project on an online shop''s failed pay-on-delivery orders: framing, a leakage audit, point-in-time features, time-based validation, calibration, a randomised trial turned into a calling policy, fairness checks, a model card and a monitoring plan.', $md$Kasuwa's leadership wants to cut failed pay-on-delivery deliveries without wasting money on calls. Build the model, use the April trial to decide whom to call, check it's fair, and plan how to keep it working.
@@ -82963,7 +85078,7 @@ on conflict (track_id, course_id) do update set track_id = excluded.track_id, co
 
 -- Track: Become a Project Manager
 insert into public.tracks (id, slug, title, summary, badge_name, badge_code, skills, position, published, programme_title, certificate_enabled)
-values ('project-manager', 'project-manager', 'Become a Project Manager', 'The route to project coordinator and junior project manager roles. Learn to plan a project properly, give honest dates and budgets, measure progress with earned value, manage risks and changes, and report to sponsors so they can decide. Add business analysis and Agile delivery, and the data skills to back every status report with numbers.', 'CloudTech Project Manager', 'PROJECTMGR', array['Charters, scope and work breakdown', 'Estimating, scheduling and the critical path', 'Schedule risk and honest dates', 'Earned value and forecasting', 'Risk and change management', 'Status reporting to sponsors']::text[], 7, true, 'Project Management', false)
+values ('project-manager', 'project-manager', 'Become a Project Manager', 'The route to project coordinator and junior project manager roles. Learn to plan a project properly, give honest dates and budgets, measure progress with earned value, manage risks and changes, and report to sponsors so they can decide. Add business analysis and Agile delivery, and the data skills to back every status report with numbers.', 'CloudTech Project Manager', 'PROJECTMGR', array['Charters, scope and work breakdown', 'Estimating, scheduling and the critical path', 'Schedule risk and honest dates', 'Earned value and forecasting', 'Risk and change management', 'Status reporting to sponsors']::text[], 7, true, 'Project Management', true)
 on conflict (id) do update set slug = excluded.slug, title = excluded.title, summary = excluded.summary, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, position = excluded.position, published = excluded.published, programme_title = excluded.programme_title, certificate_enabled = excluded.certificate_enabled;
 
 delete from public.track_courses where track_id = 'project-manager';
@@ -82997,11 +85112,15 @@ values ('project-manager', 'product-management-fundamentals', 'Specialist', true
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 insert into public.track_courses (track_id, course_id, stage, required, position)
-values ('project-manager', 'career-essentials', 'Career', true, 8)
+values ('project-manager', 'project-manager-capstone', 'Projects', true, 8)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 insert into public.track_courses (track_id, course_id, stage, required, position)
-values ('project-manager', 'build-your-student-portfolio', 'Career', false, 9)
+values ('project-manager', 'career-essentials', 'Career', true, 9)
+on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
+
+insert into public.track_courses (track_id, course_id, stage, required, position)
+values ('project-manager', 'build-your-student-portfolio', 'Career', false, 10)
 on conflict (track_id, course_id) do update set track_id = excluded.track_id, course_id = excluded.course_id, stage = excluded.stage, required = excluded.required, position = excluded.position;
 
 

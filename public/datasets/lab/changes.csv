@@ -1,0 +1,7 @@
+change_id,requested_week,description,requested_by,affects_task,extra_days,extra_cost_ngn,decision
+CR1,9,Add a molecular testing room with its own air handling,Medical director,B2,14,16000000,pending
+CR2,9,Hire 3 more phlebotomists for longer collection hours,Operations,,0,2100000,pending
+CR3,10,Pay the contractor for weekend working on the fit-out,Project manager,B2,-5,3200000,pending
+CR4,10,Upgrade the information system to include a patient portal,IT,C4,6,4800000,pending
+CR5,10,Ship the analysers by air instead of sea,Procurement,B4,-9,5500000,pending
+CR6,10,Add a home-collection van and route software,Sales,,0,3600000,pending

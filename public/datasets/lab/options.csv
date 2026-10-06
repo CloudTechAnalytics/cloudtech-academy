@@ -1,0 +1,7 @@
+option_id,option,description,extra_cost_ngn,days_saved,notes
+O1,Carry on as planned,Keep the plan and the current resources. No extra cost.,0,0,No change to the forecast date.
+O2,Fly the analysers in,Pay for air freight and priority customs clearance of the analysers (CR5).,5500000,9,Applies to the analyser import (B4). Risk of damage in transit remains.
+O3,Weekend working on the fit-out,Pay the contractor for weekend shifts on the fit-out (CR3).,3200000,5,Applies to the fit-out (B2). Helps only if the fit-out is on the critical path.
+O4,Start reagent stocking early,Stock reagents while the analysers are being installed instead of after.,450000,4,Overlaps E2 with B5. Reagents must be stored cold from delivery.
+O5,Open with a reduced test menu,"Open with the 60% most requested tests, validating the rest after opening.",1200000,6,Shortens validation (F1). Needs the medical director's agreement.
+O6,Add a molecular testing room first,Build the molecular room before opening (CR1).,16000000,-14,Adds 14 days. Not a recovery option.

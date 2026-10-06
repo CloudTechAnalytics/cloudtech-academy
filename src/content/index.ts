@@ -38,6 +38,8 @@ import { DAX_ASSESSMENT } from "./dax/assessment";
 import { DAX_PROJECT } from "./dax/project";
 import { CAP_ASSESSMENT } from "./capstone/assessment";
 import { CAP_PROJECT } from "./capstone/project";
+import { PMC_ASSESSMENT } from "./pm-capstone/assessment";
+import { PMC_PROJECT } from "./pm-capstone/project";
 import { BAC_ASSESSMENT } from "./ba-capstone/assessment";
 import { BAC_PROJECT } from "./ba-capstone/project";
 import { DSC_ASSESSMENT } from "./ds-capstone/assessment";
@@ -103,6 +105,7 @@ const COURSE_DIRS: Record<string, string> = {
   dax: "power-bi-dax",
   capstone: "data-analyst-capstone",
   "ba-capstone": "business-analyst-capstone",
+  "pm-capstone": "project-manager-capstone",
   "ds-capstone": "data-scientist-capstone",
   "ai-capstone": "ai-engineer-capstone",
   "devops-capstone": "cloud-devops-capstone",
@@ -201,6 +204,7 @@ export const BUNDLED_ASSESSMENTS: AssessmentDef[] = [
   DAX_ASSESSMENT,
   CAP_ASSESSMENT,
   BAC_ASSESSMENT,
+  PMC_ASSESSMENT,
   DSC_ASSESSMENT,
   AIC_ASSESSMENT,
   CDC_ASSESSMENT,
@@ -239,6 +243,6 @@ export const BUNDLED_ASSESSMENTS: AssessmentDef[] = [
   ...INTERN_ASSESSMENTS,
   ...FREEL_ASSESSMENTS,
 ].map((a) => ({ ...a, kind: a.kind ?? "final" }));
-export const BUNDLED_PROJECTS: ProjectDef[] = [SQL_PROJECT, DAF_PROJECT, XLS_PROJECT, PBI_PROJECT, DMO_PROJECT, PYAN_PROJECT, STAT_PROJECT, ASQL_PROJECT, DAX_PROJECT, CAP_PROJECT, BA_PROJECT, ABA_PROJECT, PIL_PROJECT, ML_PROJECT, FEM_PROJECT, ABT_PROJECT, TSF_PROJECT, GAI_PROJECT, AGT_PROJECT, OPS_PROJECT, CLD_PROJECT, LNX_PROJECT, IAC_PROJECT, CICD_PROJECT, SRE_PROJECT, SWE_PROJECT, DBA_PROJECT, WJS_PROJECT, PMF_PROJECT, PDM_PROJECT, BAC_PROJECT, DSC_PROJECT, AIC_PROJECT, CDC_PROJECT, SDC_PROJECT];
+export const BUNDLED_PROJECTS: ProjectDef[] = [SQL_PROJECT, DAF_PROJECT, XLS_PROJECT, PBI_PROJECT, DMO_PROJECT, PYAN_PROJECT, STAT_PROJECT, ASQL_PROJECT, DAX_PROJECT, CAP_PROJECT, BA_PROJECT, ABA_PROJECT, PIL_PROJECT, ML_PROJECT, FEM_PROJECT, ABT_PROJECT, TSF_PROJECT, GAI_PROJECT, AGT_PROJECT, OPS_PROJECT, CLD_PROJECT, LNX_PROJECT, IAC_PROJECT, CICD_PROJECT, SRE_PROJECT, SWE_PROJECT, DBA_PROJECT, WJS_PROJECT, PMF_PROJECT, PDM_PROJECT, BAC_PROJECT, PMC_PROJECT, DSC_PROJECT, AIC_PROJECT, CDC_PROJECT, SDC_PROJECT];
 
 export { CATEGORIES, categoryName } from "./catalog";
