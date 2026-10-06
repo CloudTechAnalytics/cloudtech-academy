@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 340" width="760" height="340" role="img" aria-label="The order of a final presentation for a data science project: lead with the decision and its value, then the evidence from the model, the trial and the policy, then the safeguards of fairness, monitoring and a holdout group, and finally the ask.">
+<title>Decision and value first, then evidence, safeguards, and the ask.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="340" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="28.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Lead with the answer, not the model</text>
+<rect x="16.0" y="44.0" width="172.0" height="150.0" rx="10" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.6"/>
+<circle cx="40.0" cy="72.0" r="12" fill="#2F5D8A"/>
+<text xml:space="preserve" x="40.0" y="76.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
+<text xml:space="preserve" x="60.0" y="70.0" font-size="13.5" fill="#2F5D8A" font-weight="700" text-anchor="start">Decision and</text>
+<text xml:space="preserve" x="60.0" y="86.0" font-size="13.5" fill="#2F5D8A" font-weight="700" text-anchor="start">value</text>
+<text xml:space="preserve" x="28.0" y="118.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">What we should do, and</text>
+<text xml:space="preserve" x="28.0" y="134.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">what it's worth in</text>
+<text xml:space="preserve" x="28.0" y="150.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">naira.</text>
+<path d="M190.0,119.0 L200.0,119.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="202.0" y="44.0" width="172.0" height="150.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.6"/>
+<circle cx="226.0" cy="72.0" r="12" fill="#2F6B3F"/>
+<text xml:space="preserve" x="226.0" y="76.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
+<text xml:space="preserve" x="246.0" y="70.0" font-size="13.5" fill="#2F6B3F" font-weight="700" text-anchor="start">Evidence</text>
+<text xml:space="preserve" x="214.0" y="118.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">The model, the trial,</text>
+<text xml:space="preserve" x="214.0" y="134.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">and the policy that</text>
+<text xml:space="preserve" x="214.0" y="150.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">follows.</text>
+<path d="M376.0,119.0 L386.0,119.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="388.0" y="44.0" width="172.0" height="150.0" rx="10" fill="#F3EBD8" stroke="#B38A3E" stroke-width="1.6"/>
+<circle cx="412.0" cy="72.0" r="12" fill="#8A6A1F"/>
+<text xml:space="preserve" x="412.0" y="76.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
+<text xml:space="preserve" x="432.0" y="70.0" font-size="13.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Safeguards</text>
+<text xml:space="preserve" x="400.0" y="118.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Fairness checks,</text>
+<text xml:space="preserve" x="400.0" y="134.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">monitoring, a holdout</text>
+<text xml:space="preserve" x="400.0" y="150.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">group.</text>
+<path d="M562.0,119.0 L572.0,119.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="574.0" y="44.0" width="172.0" height="150.0" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.6"/>
+<circle cx="598.0" cy="72.0" r="12" fill="#9B2C1F"/>
+<text xml:space="preserve" x="598.0" y="76.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">4</text>
+<text xml:space="preserve" x="618.0" y="70.0" font-size="13.5" fill="#9B2C1F" font-weight="700" text-anchor="start">The ask</text>
+<text xml:space="preserve" x="586.0" y="118.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">What you need approved,</text>
+<text xml:space="preserve" x="586.0" y="134.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">and by when.</text>
+<text xml:space="preserve" x="16.0" y="232.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">For the room</text>
+<rect x="16.0" y="246.0" width="232.0" height="44.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.3"/>
+<text xml:space="preserve" x="28.0" y="273.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">One chart for the value</text>
+<rect x="264.0" y="246.0" width="232.0" height="44.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.3"/>
+<text xml:space="preserve" x="276.0" y="273.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">Say what could go wrong</text>
+<rect x="512.0" y="246.0" width="232.0" height="44.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.3"/>
+<text xml:space="preserve" x="524.0" y="273.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">Plain words for the ask</text>
+</g></svg>

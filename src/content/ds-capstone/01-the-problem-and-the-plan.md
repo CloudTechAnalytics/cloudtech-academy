@@ -18,21 +18,23 @@ The head of operations has sent this:
 
 ## The concept
 
-**Start from the decision**
+### Start from the decision
 
 A model is only useful if it changes a decision. Here the decision is: **for each pay-on-delivery order, at checkout, should we phone the customer to confirm before dispatch?** A call costs about **₦250** of agent time. Blocking orders, or demanding a deposit, would be harsher decisions with more risk of losing good customers, so start with the gentlest one.
 
-**The target and the prediction moment**
+### The target and the prediction moment
 
 - **Unit**: one pay-on-delivery order that was dispatched (cancelled orders never reach a rider).
 - **Target**: `failed` = 1 if the delivery failed.
 - **Prediction moment**: checkout. Every feature must be something Kasuwa knew **at that moment**. This rule matters more than any choice of algorithm.
 
-**A metric in naira**
+### A metric in naira
 
 AUC tells you how well the model ranks orders. The business cares about **net naira saved**: failures prevented × ₦6,500, minus calls × ₦250. You'll need both, and the second needs evidence of what a call actually prevents. That's what the April trial is for.
 
-**The arc of the project**
+![Framing a problem: the decision, the unit, the target, the prediction moment and a metric in naira, shown with an invented clinic booking example](/images/courses/ds-capstone/frame-problem.svg "Decision, unit, target, prediction moment, and a metric in naira.")
+
+### The arc of the project
 
 | Stage | Lesson |
 | :-- | :-- |

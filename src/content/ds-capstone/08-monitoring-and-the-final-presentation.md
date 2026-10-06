@@ -10,7 +10,7 @@ A model is at its best on the day it's tested. After that, the world moves: new 
 
 ## The concept
 
-**What to monitor**
+### What to monitor
 
 | Check | How | Why |
 | :-- | :-- | :-- |
@@ -19,17 +19,21 @@ A model is at its best on the day it's tested. After that, the world moves: new 
 | New categories | Share of orders from cities, devices or channels unseen in training | Catches blind spots, like Kaduna |
 | The call's effect | Keep a small random group uncalled, and compare | Catches calls losing their effect |
 
-**Outcomes arrive late**
+![Four monitoring checks, the population stability index and its thresholds, and a timeline showing that outcomes arrive late](/images/courses/ds-capstone/monitoring.svg "Four checks, a drift number, and a reminder that outcomes arrive late.")
+
+### Outcomes arrive late
 
 A delivery's outcome is known days after checkout. Score drift can be checked the same day; calibration needs a lag.
 
-**PSI**
+### PSI
 
 Bin the validation scores into tenths. For new scores, PSI = Σ (new share − old share) × ln(new share ÷ old share) across the bins. As a rule of thumb, under 0.1 is stable, 0.1 to 0.25 is worth a look, and over 0.25 means a real shift.
 
-**The final presentation**
+### The final presentation
 
 Lead with the decision and its value, then the evidence (model, trial, policy), then the safeguards (fairness, monitoring, holdout), then the ask.
+
+![The order of a final presentation: decision and value, evidence, safeguards, then the ask](/images/courses/ds-capstone/final-presentation.svg "Decision and value first, then evidence, safeguards, and the ask.")
 
 ## Example
 

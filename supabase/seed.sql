@@ -68455,21 +68455,23 @@ The head of operations has sent this:
 
 ## The concept
 
-**Start from the decision**
+### Start from the decision
 
 A model is only useful if it changes a decision. Here the decision is: **for each pay-on-delivery order, at checkout, should we phone the customer to confirm before dispatch?** A call costs about **₦250** of agent time. Blocking orders, or demanding a deposit, would be harsher decisions with more risk of losing good customers, so start with the gentlest one.
 
-**The target and the prediction moment**
+### The target and the prediction moment
 
 - **Unit**: one pay-on-delivery order that was dispatched (cancelled orders never reach a rider).
 - **Target**: `failed` = 1 if the delivery failed.
 - **Prediction moment**: checkout. Every feature must be something Kasuwa knew **at that moment**. This rule matters more than any choice of algorithm.
 
-**A metric in naira**
+### A metric in naira
 
 AUC tells you how well the model ranks orders. The business cares about **net naira saved**: failures prevented × ₦6,500, minus calls × ₦250. You'll need both, and the second needs evidence of what a call actually prevents. That's what the April trial is for.
 
-**The arc of the project**
+![Framing a problem: the decision, the unit, the target, the prediction moment and a metric in naira, shown with an invented clinic booking example](/images/courses/ds-capstone/frame-problem.svg "Decision, unit, target, prediction moment, and a metric in naira.")
+
+### The arc of the project
 
 | Stage | Lesson |
 | :-- | :-- |
@@ -68624,20 +68626,22 @@ The data was exported for you by an engineer who didn't know what you'd use it f
 
 ## The concept
 
-**Known at checkout, or known later?**
+### Known at checkout, or known later?
 
 | Known at checkout | Known later |
 | :-- | :-- |
 | City, device, category, basket value, promo code, payment method, promised days, address | Status, failure reason, delivery attempts, resolved time |
 | The customer's signup details and **past** orders | The customer's **lifetime** totals as of June 2026 |
 
+![A timeline with the prediction moment in the middle: information known before it is allowed, information known after it is a leak](/images/courses/ds-capstone/prediction-moment.svg "Allowed before the line; leaks after it.")
+
 The trial's `call_group` is a special case. It was assigned after checkout and it **changes** the outcome. Never use it as a feature; it matters for evaluation (lesson 4) and for the trial (lesson 6).
 
-**Leaks hide in plain sight**
+### Leaks hide in plain sight
 
 `delivery_attempts` is the classic leak. Failed orders always have two or three attempts, so it predicts failure almost perfectly, but you only know it once the delivery has happened. `lifetime_failed_deliveries` in `customers.csv` is subtler: it includes failures that happened **after** the order you're predicting.
 
-**Explore with a question**
+### Explore with a question
 
 For each feature you'll use, look at the failure rate by its values. You're looking for strong patterns, odd values and anything that changes over time.
 
@@ -68822,19 +68826,21 @@ A customer's past is the best clue to their next order. Customers who refused pa
 
 ## The concept
 
-**Point in time**
+### Point in time
 
 For each order, a history feature must use only events that happened **before** the order time. For failures, the event is when the delivery **failed** (`resolved_at`), not when the earlier order was placed.
 
-**The shortcut and why it's wrong**
+### The shortcut and why it's wrong
 
 The usual pandas idiom, a cumulative sum of earlier orders' outcomes, counts the outcome of every earlier order, including ones still out for delivery. It's a small leak, but it's systematic: it's always in the direction that makes the model look better.
 
-**`merge_asof`**
+![One patient's timeline showing that a point-in-time feature counts only outcomes known at booking, while the cumulative-sum shortcut leaks a later result](/images/courses/ds-capstone/point-in-time.svg "Count only what was known at the time, not what was booked earlier.")
+
+### `merge_asof`
 
 `pd.merge_asof` joins each order to the most recent row of another table **at or before** its time, per customer. With a running count of failures timed by `resolved_at`, it gives the number of failures known at checkout. `allow_exact_matches=False` makes it strictly before.
 
-**The features**
+### The features
 
 | Feature | Meaning |
 | :-- | :-- |
@@ -69044,7 +69050,7 @@ There's a second trap. From April 2026, half of pay-on-delivery orders got a con
 
 ## The concept
 
-**Train, validate, test by time**
+### Train, validate, test by time
 
 | Set | Orders | Used for |
 | :-- | :-- | :-- |
@@ -69054,15 +69060,17 @@ There's a second trap. From April 2026, half of pay-on-delivery orders got a con
 
 Touch the test set once, at the end. If you keep checking it while you tune, it stops being a test.
 
-**Why only the No-call group?**
+![A timeline split into train, validate and test by time, and why the test set uses only the randomly assigned no-call group](/images/courses/ds-capstone/time-split.svg "Train on the past, validate on the next stretch, test once on untouched data.")
+
+### Why only the No-call group?
 
 The model predicts what happens **without** intervention. The No-call group was chosen at random, so it's a fair sample of all orders, untouched by calls. The Call group's outcomes were changed by the call, so they can't test the model. In lesson 6 they're exactly what you need, to measure the call's effect.
 
-**Start with a baseline**
+### Start with a baseline
 
 A simple rule, such as "longer delivery promises are riskier", shows how much the model really adds. Then compare logistic regression with gradient boosting. The more complex model has to earn its place.
 
-**Two ranking measures**
+### Two ranking measures
 
 - **AUC**: the chance that a random failed order is scored above a random delivered one.
 - **Average precision**: how well the top of the ranking is concentrated with failures, which suits a decision about whom to call.
@@ -69257,11 +69265,13 @@ Operations will use the model in two ways. They'll **rank** orders, to call the 
 
 ## The concept
 
-**Calibration**
+### Calibration
 
 Group orders by predicted risk and compare the average prediction with the actual failure rate in each group. If they match, the model is calibrated. Logistic regression is often well calibrated on data like its training data. It drifts when the world changes.
 
-**Brier score**
+![A calibration plot with points near the diagonal, Brier score compared with a no-skill guess, and recall at the top 20 percent](/images/courses/ds-capstone/calibration.svg "Do predicted risks match what really happens?")
+
+### Brier score
 
 The average squared gap between predicted probability and outcome (0 or 1). Lower is better. Compare it with the Brier score of predicting the overall failure rate for everyone.
 
@@ -69269,7 +69279,7 @@ The average squared gap between predicted probability and outcome (0 or 1). Lowe
 
 If the call centre can only make so many calls, the question is how many failures the riskiest orders contain. **Recall at the top 20%** is the share of all failures found by calling the riskiest fifth of orders.
 
-**The missing piece**
+### The missing piece
 
 If a call prevented **every** failure it reached, the break-even risk would be ₦250 ÷ ₦6,500 = **3.8%**, and you'd call almost everyone. But a call doesn't turn every doubtful customer into a happy one. To set a threshold, you need to know how much a call actually **reduces** the risk, and that needs the trial.
 
@@ -69472,19 +69482,21 @@ From April to June 2026, Kasuwa phoned a random half of pay-on-delivery customer
 
 ## The concept
 
-**A randomised trial measures the effect**
+### A randomised trial measures the effect
 
 Because calls were assigned at random, the Call and No-call groups are alike in everything except the call. The difference in their failure rates is the call's effect: **failures prevented per call**.
 
-**Effects differ by risk**
+### Effects differ by risk
 
 A call can't prevent a failure that was never going to happen. So the effect should be bigger for riskier orders. Because the risk score uses only information from checkout, before the call, you can split the trial by risk band and compare Call with No call **within** each band. The randomisation still holds inside each band.
 
-**Value per call**
+### Value per call
 
 Value per call = failures prevented per call × ₦6,500 − ₦250. Call the orders where that's positive. The **threshold** is the risk level above which calls pay for themselves.
 
-**Noise**
+![Value per call by risk band using invented numbers: negative for low-risk bands, positive and rising for higher ones, with a threshold on the plateau](/images/courses/ds-capstone/value-per-call.svg "Value per call by risk band, and a threshold on the plateau.")
+
+### Noise
 
 Each band has a few thousand orders at most, so each estimate has an error of a few points. When several thresholds give similar values, don't chase the highest. Pick a sensible point on the plateau, and say it's an estimate.
 
@@ -69707,25 +69719,27 @@ The model will decide which customers get a phone call. That's a light-touch act
 
 ## The concept
 
-**Check performance by group**
+### Check performance by group
 
 For each city, compare the actual failure rate with the average prediction (calibration), the AUC (ranking within the city), and the share of orders the policy would call. A model can be accurate overall and wrong for one group.
 
-**Unseen groups**
+### Unseen groups
 
 Kaduna launched in April 2026, after the training period. The model has never seen a Kaduna order. With `handle_unknown="ignore"`, it treats Kaduna as if it had no city effect at all, which may be badly wrong.
 
-**Permutation importance**
+### Permutation importance
 
 Shuffle one feature at a time in the validation data and see how much the AUC drops. A large drop means the model relies on that feature. It's fairer than the importance built into tree models, and it works for any model.
 
-**Location as a proxy**
+### Location as a proxy
 
 City is a legitimate predictor, because delivery distances and promised days differ. But in Nigeria a city can also stand in for ethnicity or religion. For a call, using city is probably acceptable: the customer gets a helpful check, not a penalty. For a deposit or a refusal, it would need a much harder look. Test what the model loses without it.
 
-**A model card**
+### A model card
 
 A short document saying what the model is for, its data, its performance overall and by group, its limits, and when it must be reviewed.
+
+![A table checking performance by group including a group unseen in training, how permutation importance and location proxies work, and the five parts of a model card](/images/courses/ds-capstone/fairness-card.svg "Check each group, explain the model, write a model card.")
 
 ## Example
 
@@ -69953,7 +69967,7 @@ A model is at its best on the day it's tested. After that, the world moves: new 
 
 ## The concept
 
-**What to monitor**
+### What to monitor
 
 | Check | How | Why |
 | :-- | :-- | :-- |
@@ -69962,17 +69976,21 @@ A model is at its best on the day it's tested. After that, the world moves: new 
 | New categories | Share of orders from cities, devices or channels unseen in training | Catches blind spots, like Kaduna |
 | The call's effect | Keep a small random group uncalled, and compare | Catches calls losing their effect |
 
-**Outcomes arrive late**
+![Four monitoring checks, the population stability index and its thresholds, and a timeline showing that outcomes arrive late](/images/courses/ds-capstone/monitoring.svg "Four checks, a drift number, and a reminder that outcomes arrive late.")
+
+### Outcomes arrive late
 
 A delivery's outcome is known days after checkout. Score drift can be checked the same day; calibration needs a lag.
 
-**PSI**
+### PSI
 
 Bin the validation scores into tenths. For new scores, PSI = Σ (new share − old share) × ln(new share ÷ old share) across the bins. As a rule of thumb, under 0.1 is stable, 0.1 to 0.25 is worth a look, and over 0.25 means a real shift.
 
-**The final presentation**
+### The final presentation
 
 Lead with the decision and its value, then the evidence (model, trial, policy), then the safeguards (fairness, monitoring, holdout), then the ask.
+
+![The order of a final presentation: decision and value, evidence, safeguards, then the ask](/images/courses/ds-capstone/final-presentation.svg "Decision and value first, then evidence, safeguards, and the ask.")
 
 ## Example
 

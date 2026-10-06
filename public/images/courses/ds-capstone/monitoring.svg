@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 442" width="760" height="442" role="img" aria-label="Monitoring a model after launch: check calibration monthly on orders that were not called, check score drift with the population stability index, watch for new categories not seen in training, and keep a small random uncalled group to see whether the calls keep working. Outcomes arrive late, so drift can be checked at once while calibration needs a lag. PSI is the sum over bins of the new share minus the old share times the log of their ratio.">
+<title>Four checks, a drift number, and a reminder that outcomes arrive late.</title>
+
+<rect width="760" height="442" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="26.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">What to watch after launch</text>
+<rect x="16.0" y="38.0" width="728.0" height="140.0" rx="8" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<path d="M17,66 L17,46 Q17,39 24,39 L736,39 Q743,39 743,46 L743,66 Z" fill="#EFE4CC"/>
+<text xml:space="preserve" x="26.0" y="56.5" font-size="11.5" fill="#5E5A52" font-weight="700" text-anchor="start">Check</text>
+<text xml:space="preserve" x="186.0" y="56.5" font-size="11.5" fill="#5E5A52" font-weight="700" text-anchor="start">How</text>
+<text xml:space="preserve" x="546.0" y="56.5" font-size="11.5" fill="#5E5A52" font-weight="700" text-anchor="start">Catches</text>
+<line x1="16.0" y1="66.0" x2="744.0" y2="66.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="84.5" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Calibration</text>
+<text xml:space="preserve" x="186.0" y="84.5" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Predicted vs actual, monthly, on bookings not called</text>
+<text xml:space="preserve" x="546.0" y="84.5" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">The model going wrong</text>
+<line x1="16.0" y1="94.0" x2="744.0" y2="94.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="112.5" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Score drift (PSI)</text>
+<text xml:space="preserve" x="186.0" y="112.5" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">New score shares vs validation</text>
+<text xml:space="preserve" x="546.0" y="112.5" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Change in who books</text>
+<line x1="16.0" y1="122.0" x2="744.0" y2="122.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="140.5" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">New categories</text>
+<text xml:space="preserve" x="186.0" y="140.5" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Share of unseen cities, devices, channels</text>
+<text xml:space="preserve" x="546.0" y="140.5" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Blind spots</text>
+<line x1="16.0" y1="150.0" x2="744.0" y2="150.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="168.5" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">The call's effect</text>
+<text xml:space="preserve" x="186.0" y="168.5" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Keep a small random group uncalled</text>
+<text xml:space="preserve" x="546.0" y="168.5" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Calls losing their effect</text>
+<text xml:space="preserve" x="16.0" y="204.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">PSI: has the population of scores shifted?</text>
+<rect x="16.0" y="218.0" width="728.0" height="40.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.4"/>
+<text xml:space="preserve" x="30.0" y="244.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">PSI = Σ (new share − old share) × ln(new share ÷ old share), over score bins</text>
+<rect x="16.0" y="270.0" width="232.0" height="52.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.4"/>
+<text xml:space="preserve" x="30.0" y="294.0" font-size="13.5" fill="#2F6B3F" font-weight="700" text-anchor="start">Under 0.1</text>
+<text xml:space="preserve" x="30.0" y="312.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Stable</text>
+<rect x="264.0" y="270.0" width="232.0" height="52.0" rx="10" fill="#F3EBD8" stroke="#8A6A1F" stroke-width="1.4"/>
+<text xml:space="preserve" x="278.0" y="294.0" font-size="13.5" fill="#8A6A1F" font-weight="700" text-anchor="start">0.1 to 0.25</text>
+<text xml:space="preserve" x="278.0" y="312.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Worth a look</text>
+<rect x="512.0" y="270.0" width="232.0" height="52.0" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.4"/>
+<text xml:space="preserve" x="526.0" y="294.0" font-size="13.5" fill="#9B2C1F" font-weight="700" text-anchor="start">Over 0.25</text>
+<text xml:space="preserve" x="526.0" y="312.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Investigate</text>
+<text xml:space="preserve" x="16.0" y="354.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Outcomes arrive late</text>
+<rect x="16.0" y="370.0" width="140.0" height="26.0" rx="4" fill="#2F5D8A"/>
+<text xml:space="preserve" x="86.0" y="388.0" font-size="11.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">Booking day</text>
+<rect x="160.0" y="370.0" width="420.0" height="26.0" rx="4" fill="#D8CFBF"/>
+<text xml:space="preserve" x="370.0" y="388.0" font-size="11.5" fill="#2A2926" font-weight="700" text-anchor="middle">waiting for the appointment to happen</text>
+<rect x="584.0" y="370.0" width="160.0" height="26.0" rx="4" fill="#2F6B3F"/>
+<text xml:space="preserve" x="664.0" y="388.0" font-size="11.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">Outcome known</text>
+<text xml:space="preserve" x="16.0" y="422.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Drift can be checked on the same day; calibration needs a lag.</text>
+</g></svg>

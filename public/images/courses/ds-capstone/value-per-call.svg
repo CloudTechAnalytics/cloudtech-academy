@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 440" width="760" height="440" role="img" aria-label="Deciding who to call using a randomised trial. Because calls were assigned at random, the difference in no-show rates between the call and no-call groups is the call's effect. The effect is larger for riskier bookings. Value per call is no-shows prevented per call times the cost of a no-show, minus the call cost. Call where this is positive, but pick a sensible threshold on the plateau instead of chasing noisy peaks.">
+<title>Value per call by risk band, and a threshold on the plateau.</title>
+
+<rect width="760" height="440" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="26.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Value per call = prevented × 2,000 − 100 (invented example)</text>
+<rect x="16.0" y="40.0" width="728.0" height="54.0" rx="10" fill="#F3EBD8" stroke="#8A6A1F" stroke-width="1.4"/>
+<text xml:space="preserve" x="30.0" y="62.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Random assignment makes the two groups alike in everything except the call,</text>
+<text xml:space="preserve" x="30.0" y="82.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">so the gap in their no-show rates is the call's effect.</text>
+<line x1="50.0" y1="320.0" x2="490.0" y2="320.0" stroke="#CFC4B2" stroke-width="1.6"/>
+<line x1="50.0" y1="120.0" x2="50.0" y2="320.0" stroke="#CFC4B2" stroke-width="1.6"/>
+<line x1="50.0" y1="260.0" x2="490.0" y2="260.0" stroke="#8A6A1F" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text xml:space="preserve" x="496.0" y="264.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">0</text>
+<rect x="64.0" y="260.0" width="38.0" height="54.0" rx="3" fill="#9B2C1F"/>
+<text xml:space="preserve" x="83.0" y="338.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="middle">1</text>
+<rect x="117.0" y="260.0" width="38.0" height="40.5" rx="3" fill="#9B2C1F"/>
+<text xml:space="preserve" x="136.0" y="338.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="middle">2</text>
+<rect x="170.0" y="260.0" width="38.0" height="18.0" rx="3" fill="#9B2C1F"/>
+<text xml:space="preserve" x="189.0" y="338.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="middle">3</text>
+<rect x="223.0" y="255.5" width="38.0" height="4.5" rx="3" fill="#2F6B3F"/>
+<text xml:space="preserve" x="242.0" y="338.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="middle">4</text>
+<rect x="276.0" y="224.0" width="38.0" height="36.0" rx="3" fill="#2F6B3F"/>
+<text xml:space="preserve" x="295.0" y="338.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="middle">5</text>
+<rect x="329.0" y="192.5" width="38.0" height="67.5" rx="3" fill="#2F6B3F"/>
+<text xml:space="preserve" x="348.0" y="338.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="middle">6</text>
+<rect x="382.0" y="161.0" width="38.0" height="99.0" rx="3" fill="#2F6B3F"/>
+<text xml:space="preserve" x="401.0" y="338.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="middle">7</text>
+<rect x="435.0" y="152.0" width="38.0" height="108.0" rx="3" fill="#2F6B3F"/>
+<text xml:space="preserve" x="454.0" y="338.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="middle">8</text>
+<text xml:space="preserve" x="270.0" y="358.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="middle">Risk band (low → high)</text>
+<text xml:space="preserve" x="44.0" y="132.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="end">Value</text>
+<rect x="219.0" y="126.0" width="271.0" height="194.0" rx="6" fill="#2F6B3F" fill-opacity="0.08"/>
+<text xml:space="preserve" x="283.0" y="140.0" font-size="12" fill="#2F6B3F" font-weight="700" text-anchor="start">worth calling</text>
+<rect x="512.0" y="120.0" width="232.0" height="200.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.4"/>
+<text xml:space="preserve" x="526.0" y="146.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="start">Reading it</text>
+<text xml:space="preserve" x="526.0" y="170.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">Low-risk bookings: a call</text>
+<text xml:space="preserve" x="526.0" y="188.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">can't prevent what was</text>
+<text xml:space="preserve" x="526.0" y="206.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">never going to happen.</text>
+<text xml:space="preserve" x="526.0" y="224.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start"></text>
+<text xml:space="preserve" x="526.0" y="242.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">Estimates are noisy: pick</text>
+<text xml:space="preserve" x="526.0" y="260.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">a sensible point on the</text>
+<text xml:space="preserve" x="526.0" y="278.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">plateau, and say why.</text>
+<text xml:space="preserve" x="16.0" y="400.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">The threshold is the risk level above which calls pay for themselves.</text>
+</g></svg>

@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 410" width="760" height="410" role="img" aria-label="Calibration compares predicted risk with the actual failure rate in groups of orders. A calibrated model's points sit on the diagonal. Brier score is the average squared gap between predicted probability and outcome, compared with predicting the overall rate for everyone. Recall at the top 20 percent is the share of all failures found by calling the riskiest fifth.">
+<title>Do predicted risks match what really happens?</title>
+
+<rect width="760" height="410" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="26.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Calibration (invented example)</text>
+<rect x="50.0" y="44.0" width="260.0" height="260.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.4"/>
+<line x1="50.0" y1="304.0" x2="310.0" y2="44.0" stroke="#CFC4B2" stroke-width="1.5" stroke-dasharray="5 4"/>
+<circle cx="63.0" cy="288.4" r="5" fill="#2F6B3F"/>
+<circle cx="89.0" cy="270.2" r="5" fill="#2F6B3F"/>
+<circle cx="122.8" cy="226.0" r="5" fill="#2F6B3F"/>
+<circle cx="159.2" cy="200.0" r="5" fill="#2F6B3F"/>
+<circle cx="206.0" cy="161.0" r="5" fill="#2F6B3F"/>
+<circle cx="258.0" cy="122.0" r="5" fill="#2F6B3F"/>
+<text xml:space="preserve" x="180.0" y="326.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="middle">Predicted risk →</text>
+<text xml:space="preserve" x="44.0" y="56.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="end">Actual</text>
+<text xml:space="preserve" x="70.0" y="68.0" font-size="11" fill="#2F6B3F" font-weight="700" text-anchor="start">On the diagonal = calibrated</text>
+<rect x="350.0" y="44.0" width="394.0" height="80.0" rx="10" fill="#F3EBD8" stroke="#8A6A1F" stroke-width="1.4"/>
+<text xml:space="preserve" x="364.0" y="70.0" font-size="13.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Brier score</text>
+<text xml:space="preserve" x="364.0" y="92.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">Average squared gap between the predicted</text>
+<text xml:space="preserve" x="364.0" y="108.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">probability and the 0 or 1 outcome. Lower is better.</text>
+<rect x="350.0" y="136.0" width="394.0" height="80.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.4"/>
+<text xml:space="preserve" x="364.0" y="162.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">Compare with a no-skill guess</text>
+<text xml:space="preserve" x="364.0" y="184.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">Predict the overall rate for everyone, and</text>
+<text xml:space="preserve" x="364.0" y="200.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">see how much better the model does.</text>
+<rect x="350.0" y="228.0" width="394.0" height="76.0" rx="10" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.4"/>
+<text xml:space="preserve" x="364.0" y="254.0" font-size="13.5" fill="#2F5D8A" font-weight="700" text-anchor="start">Recall at the top 20%</text>
+<text xml:space="preserve" x="364.0" y="276.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">Call only the riskiest fifth: what share of all</text>
+<text xml:space="preserve" x="364.0" y="292.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">no-shows does that fifth contain?</text>
+<rect x="16.0" y="336.0" width="728.0" height="60.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.4"/>
+<text xml:space="preserve" x="30.0" y="360.0" font-size="13" fill="#2F6B3F" font-weight="700" text-anchor="start">Ranking and reading the number are different jobs.</text>
+<text xml:space="preserve" x="30.0" y="382.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">A model can rank well but give probabilities you shouldn't read as a percentage.</text>
+</g></svg>

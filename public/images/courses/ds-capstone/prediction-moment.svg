@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 420" width="760" height="420" role="img" aria-label="What is known at the prediction moment. Features known at booking, such as clinic, day booked, and the patient's past appointments, are allowed. Information recorded after the appointment, such as the visit outcome, reminders sent or totals calculated at the end of the year, is a leak. A leak makes the model look brilliant in testing and useless in real use. The group assigned a call after booking changes the outcome and must never be a feature.">
+<title>Allowed before the line; leaks after it.</title>
+
+<rect width="760" height="420" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="26.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">The prediction moment splits what you may use from what you may not</text>
+<line x1="40.0" y1="130.0" x2="720.0" y2="130.0" stroke="#CFC4B2" stroke-width="3"/>
+<circle cx="360.0" cy="130.0" r="12" fill="#8A6A1F" stroke="#FFFFFF" stroke-width="3"/>
+<text xml:space="preserve" x="360.0" y="100.0" font-size="13" fill="#8A6A1F" font-weight="700" text-anchor="middle">Prediction moment: booking</text>
+<text xml:space="preserve" x="60.0" y="118.0" font-size="11.5" fill="#5E5A52" font-weight="700" text-anchor="start">Past</text>
+<text xml:space="preserve" x="660.0" y="118.0" font-size="11.5" fill="#5E5A52" font-weight="700" text-anchor="start">Future</text>
+<rect x="16.0" y="156.0" width="350.0" height="150.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.6"/>
+<text xml:space="preserve" x="30.0" y="182.0" font-size="13.5" fill="#2F6B3F" font-weight="700" text-anchor="start">Known at booking: allowed</text>
+<text xml:space="preserve" x="30.0" y="208.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">✓  Clinic, day, time slot, lead time</text>
+<text xml:space="preserve" x="30.0" y="230.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">✓  Patient's age band, signup channel</text>
+<text xml:space="preserve" x="30.0" y="252.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">✓  Their past appointments (as known then)</text>
+<text xml:space="preserve" x="30.0" y="274.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">✓  Booking channel, payment method</text>
+<rect x="378.0" y="156.0" width="366.0" height="150.0" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.6"/>
+<text xml:space="preserve" x="392.0" y="182.0" font-size="13.5" fill="#9B2C1F" font-weight="700" text-anchor="start">Known later: a leak</text>
+<text xml:space="preserve" x="392.0" y="208.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">✗  Visit status, reason for no-show</text>
+<text xml:space="preserve" x="392.0" y="230.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">✗  Number of reminders actually sent</text>
+<text xml:space="preserve" x="392.0" y="252.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">✗  Patient's lifetime totals at year end</text>
+<text xml:space="preserve" x="392.0" y="274.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">✗  The call group (assigned after booking)</text>
+<rect x="16.0" y="326.0" width="728.0" height="80.0" rx="10" fill="#F3EBD8" stroke="#8A6A1F" stroke-width="1.4"/>
+<text xml:space="preserve" x="30.0" y="352.0" font-size="13.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Why leaks are dangerous</text>
+<text xml:space="preserve" x="30.0" y="376.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">A leaked column makes test scores look brilliant, then the model fails in real use.</text>
+<text xml:space="preserve" x="30.0" y="396.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">Always ask of each column: did we know this at the moment we must decide?</text>
+</g></svg>

@@ -10,20 +10,22 @@ The data was exported for you by an engineer who didn't know what you'd use it f
 
 ## The concept
 
-**Known at checkout, or known later?**
+### Known at checkout, or known later?
 
 | Known at checkout | Known later |
 | :-- | :-- |
 | City, device, category, basket value, promo code, payment method, promised days, address | Status, failure reason, delivery attempts, resolved time |
 | The customer's signup details and **past** orders | The customer's **lifetime** totals as of June 2026 |
 
+![A timeline with the prediction moment in the middle: information known before it is allowed, information known after it is a leak](/images/courses/ds-capstone/prediction-moment.svg "Allowed before the line; leaks after it.")
+
 The trial's `call_group` is a special case. It was assigned after checkout and it **changes** the outcome. Never use it as a feature; it matters for evaluation (lesson 4) and for the trial (lesson 6).
 
-**Leaks hide in plain sight**
+### Leaks hide in plain sight
 
 `delivery_attempts` is the classic leak. Failed orders always have two or three attempts, so it predicts failure almost perfectly, but you only know it once the delivery has happened. `lifetime_failed_deliveries` in `customers.csv` is subtler: it includes failures that happened **after** the order you're predicting.
 
-**Explore with a question**
+### Explore with a question
 
 For each feature you'll use, look at the failure rate by its values. You're looking for strong patterns, odd values and anything that changes over time.
 
