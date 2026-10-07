@@ -77245,58 +77245,1649 @@ on conflict (id) do update set course_id = excluded.course_id, title = excluded.
 
 -- Course: Import, Export & Mini Importation
 insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
-values ('import-export-mini-importation', 'full', null, 'import-export-mini-importation', 'IEMI', 'Import, Export & Mini Importation', 'Research products, find and verify suppliers, ship internationally, clear customs, work out your landed cost and build a profitable import or export business.', 'Learn how to research products, identify and evaluate suppliers, negotiate purchases, understand international shipping, calculate landed costs, understand import documentation and develop a practical import/export business.', 'trade-logistics', 'beginner', 2, 'Beginner to Intermediate', null, false, 'coming_soon', true, array['Product research and market validation', 'Supplier sourcing and verification', 'Negotiation, MOQ and samples', 'International shipping and freight', 'Import documentation and customs', 'Landed cost and pricing']::text[], array['No experience needed', 'Basic arithmetic and spreadsheet use']::text[], 'Your import or export business plan', true, true, true, true, false, 60, 53)
+values ('import-export-mini-importation', 'short', 'Import & Export Practitioner', 'import-export-mini-importation', 'IEMI', 'Import, Export & Mini Importation', 'Research products, find and verify suppliers, ship internationally, clear customs, work out your landed cost and build a profitable import or export business.', 'Learn how to research products, identify and evaluate suppliers, negotiate purchases, understand international shipping, calculate landed costs, understand import documentation and develop a practical import/export business.', 'trade-logistics', 'beginner', 2, 'Beginner to Intermediate', 7, false, 'available', true, array['Product research and market validation', 'Supplier sourcing and verification', 'Negotiation, MOQ and samples', 'International shipping and freight', 'Import documentation and customs', 'Landed cost and pricing']::text[], array['No experience needed', 'Basic arithmetic and spreadsheet use']::text[], 'Your import or export business plan', true, true, true, true, false, 60, 53)
 on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level = excluded.level, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
 
-update public.courses set access_type = 'paid', price = 75000, currency = 'NGN', discount_price = null, discount_active = false, payment_status = 'active', delivery_type = 'self_paced', enrollment_status = 'closed', enrollment_start = null, enrollment_end = null, community_access = false, instructor_support = false, duration_label = '3 months', overview = 'Importing and exporting can be very profitable, and very expensive when done wrong. This course walks you through the whole process in order, from choosing a product and testing the market, through finding and verifying suppliers, negotiating, shipping, documents and customs, to calculating your true costs and selling at a profit. It covers Nigerian import procedures and the basics of exporting, and ends with a complete import or export business project.', audience = array['People starting a mini importation business', 'Small traders who want to import directly', 'Business owners who want to export', 'Anyone working in or moving into trade, shipping or sourcing']::text[], included = '{}'::text[], project_previews = '[{"title":"Your import or export business plan","summary":"A complete plan: product, supplier shortlist, shipping route, documents, landed cost and pricing, and how you will sell."}]'::jsonb, instructor_name = null, instructor_title = null, instructor_bio = null, professional_outcome = null, commerce_seeded = true, course_type = 'professional', outcomes = array['Choose products with real demand and margin', 'Find, check and compare suppliers on Alibaba and other platforms', 'Negotiate prices, order quantities and samples', 'Choose between air and sea freight and work with freight forwarders', 'Prepare import documents and understand HS codes and customs', 'Calculate landed cost, price your goods and plan your profit', 'Understand export basics and find international buyers']::text[], difficulty_max = 'intermediate', duration_weeks = 12, thumbnail = null, faqs = '[{"q":"How long does the course take?","a":"Plan for 3 months. It is self-paced, so you can study around work or school, and your progress is saved as you go."},{"q":"Do I need any experience?","a":"No experience is needed. It starts with the basics and builds up to more advanced practice."},{"q":"Will I get a certificate?","a":"Yes, when you complete the lessons, pass the assessments and submit the final project. Paying for the course does not award the certificate on its own."},{"q":"How do I pay?","a":"You pay once, by bank transfer to the Academy account, and send your receipt. The course opens as soon as the payment is confirmed."},{"q":"Does this course help me import into Nigeria?","a":"Yes. It covers Nigerian import procedures as well as general international trade, so you learn what applies when your goods arrive."},{"q":"Do I need money to start importing?","a":"Not to take the course. It shows you how to test a product and work out costs before you commit money, so you buy with the numbers in front of you."}]'::jsonb, discount_label = null, discount_start = null, discount_end = null where id = 'import-export-mini-importation' and not commerce_seeded;
+update public.courses set access_type = 'paid', price = 75000, currency = 'NGN', discount_price = null, discount_active = false, payment_status = 'active', delivery_type = 'self_paced', enrollment_status = 'open', enrollment_start = null, enrollment_end = null, community_access = false, instructor_support = false, duration_label = '3 months', overview = 'Importing and exporting can be very profitable, and very expensive when done wrong. This course walks you through the whole process in order, from choosing a product and testing the market, through finding and verifying suppliers, negotiating, shipping, documents and customs, to calculating your true costs and selling at a profit. It covers Nigerian import procedures and the basics of exporting, and ends with a complete import or export business project.', audience = array['People starting a mini importation business', 'Small traders who want to import directly', 'Business owners who want to export', 'Anyone working in or moving into trade, shipping or sourcing']::text[], included = '{}'::text[], project_previews = '[{"title":"Your import or export business plan","summary":"A complete plan: product, supplier shortlist, shipping route, documents, landed cost and pricing, and how you will sell."}]'::jsonb, instructor_name = null, instructor_title = null, instructor_bio = null, professional_outcome = null, commerce_seeded = true, course_type = 'professional', outcomes = array['Choose products with real demand and margin', 'Find, check and compare suppliers on Alibaba and other platforms', 'Negotiate prices, order quantities and samples', 'Choose between air and sea freight and work with freight forwarders', 'Prepare import documents and understand HS codes and customs', 'Calculate landed cost, price your goods and plan your profit', 'Understand export basics and find international buyers']::text[], difficulty_max = 'intermediate', duration_weeks = 12, thumbnail = null, faqs = '[{"q":"How long does the course take?","a":"Plan for 3 months. It is self-paced, so you can study around work or school, and your progress is saved as you go."},{"q":"Do I need any experience?","a":"No experience is needed. It starts with the basics and builds up to more advanced practice."},{"q":"Will I get a certificate?","a":"Yes, when you complete the lessons, pass the assessments and submit the final project. Paying for the course does not award the certificate on its own."},{"q":"How do I pay?","a":"You pay once, by bank transfer to the Academy account, and send your receipt. The course opens as soon as the payment is confirmed."},{"q":"Does this course help me import into Nigeria?","a":"Yes. It covers Nigerian import procedures as well as general international trade, so you learn what applies when your goods arrive."},{"q":"Do I need money to start importing?","a":"Not to take the course. It shows you how to test a product and work out costs before you commit money, so you buy with the numbers in front of you."}]'::jsonb, discount_label = null, discount_start = null, discount_end = null where id = 'import-export-mini-importation' and not commerce_seeded;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('iemi-m01', 'import-export-mini-importation', 'Import and export fundamentals', 1, null, null, '{}'::text[], array['What importing and exporting are', 'Mini importation versus full trade', 'Who is involved: buyers, suppliers, forwarders, customs', 'Trade terms (Incoterms) in plain language', 'Risks and how to manage them']::text[])
+values ('iemi-m01', 'import-export-mini-importation', 'Import and export fundamentals', 1, 'Trade Fundamentals', 'FUNDS', array['Explain imports, exports and mini importation', 'Name the parties in a shipment', 'Read basic Incoterms', 'List the main risks and how to reduce them']::text[], array['What importing and exporting are', 'Mini importation versus full trade', 'Who is involved: buyers, suppliers, forwarders, customs', 'Trade terms (Incoterms) in plain language', 'Risks and how to manage them']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('iemi-m02', 'import-export-mini-importation', 'Product research and market validation', 2, null, null, '{}'::text[], array['Finding product ideas', 'Checking demand and competition', 'Estimating margin before you buy', 'Testing the market with small orders', 'Avoiding restricted and risky products']::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('import-export-mini-importation:import-and-export-fundamentals', 'import-export-mini-importation', 'iemi-m01', 'import-and-export-fundamentals', 'Import and Export Fundamentals', 'Understand what importing and exporting are, how mini importation differs from full trade, who is involved in a shipment, what the main trade terms mean and which risks to plan for.', 25, $md$
+## What importing and exporting are
+
+**Importing** means buying goods from another country and bringing them in. **Exporting** means selling goods you make or buy locally to a buyer in another country. Every international sale is an import for one side and an export for the other: when a supplier in Guangzhou sells phone cases to a trader in Lagos, it is an export for China and an import for Nigeria.
+
+The reason people trade across borders is simple: a product can cost far less, or be far better, where it is made. Your job as an importer is to turn that gap into profit **after** you have paid for everything that sits between the factory and your customer. That is the thread of this whole course: *the price on the supplier's page is never your real cost.*
+
+## Mini importation versus full trade
+
+**Mini importation** is the small-scale version: you buy small quantities, often a few cartons or a few hundred units, and bring them in by air cargo, sea consolidation (sharing a container with other importers) or a courier. You usually resell to shops, online customers or friends.
+
+**Full trade** means a full container or large shipments, often of one product, with more paperwork, bigger money at risk and usually a registered company.
+
+| | Mini importation | Full trade |
+| :-- | :-- | :-- |
+| **Order size** | A few cartons to a few hundred units | Whole containers |
+| **Shipping** | Air cargo, courier, shared (LCL) sea freight | Full container (FCL) |
+| **Money at risk** | Hundreds of thousands of naira | Millions |
+| **Paperwork** | Still required, often handled by a forwarder | Fully managed with agents and banks |
+| **Best for** | Learning, testing products, building a customer base | Proven products with steady demand |
+
+Mini importation is not a way around the rules. The goods still pass through customs, still carry duty where it applies, and some products are restricted. Doing it properly is what lets you grow.
+
+## Who is involved in a shipment
+
+A single order passes through several hands. Know each one, because each takes a fee or a risk:
+
+- **The supplier or manufacturer** makes or sells the goods.
+- **The buyer (you)** orders, pays and sells.
+- **The freight forwarder** arranges the transport: books space, collects from the supplier, handles shipping documents.
+- **The carrier** (airline or shipping line) physically moves the goods.
+- **The clearing agent** (also called a customs broker) deals with customs on arrival and gets the goods released.
+- **Customs** checks the declaration, collects duty and taxes, and releases the goods.
+- **Your bank** moves the money and, for many imports, helps you register the transaction.
+- **Your customer** is where the money finally comes from.
+
+## Trade terms (Incoterms) in plain language
+
+Incoterms are standard terms, published by the International Chamber of Commerce, that say **who pays for what and who carries the risk at each stage**. You will see them on quotes, so you must read them. The current version is Incoterms 2020.
+
+| Term | Plain meaning |
+| :-- | :-- |
+| **EXW** (Ex Works) | The goods are ready at the seller's door. You arrange and pay for everything from there, including getting them out of the supplier's country. |
+| **FOB** (Free On Board) | The seller delivers the goods on to the ship at the named port and clears them for export. From that point the cost and risk are yours. Sea freight only. |
+| **CIF** (Cost, Insurance and Freight) | The seller pays the freight and basic insurance to your destination port, but risk passes to you once the goods are on board. Sea freight only. |
+| **DAP** (Delivered at Place) | The seller delivers to a named place and carries the transport risk. You handle import clearance, duty and taxes. |
+| **DDP** (Delivered Duty Paid) | The seller delivers to you with import duty and taxes paid. Simple for you, but check the price carefully, as duties are built into it. |
+
+The word that matters in each is the **named place**, such as "FOB Shenzhen". Two quotes with different terms cannot be compared until you add the missing costs to the cheaper-looking one.
+
+> [!NOTE]
+> Small suppliers quote many ways. When a quote just says "price", ask in writing: "Is this EXW, FOB or delivered, and to where?"
+
+## Risks and how to manage them
+
+| Risk | What it looks like | How to reduce it |
+| :-- | :-- | :-- |
+| **Supplier fraud or poor quality** | Money paid, nothing arrives, or goods are not as shown | Verify the supplier, order a sample, use protected payment |
+| **Delays** | Goods stuck at port, missed selling season | Add buffer time, use a reliable forwarder |
+| **Damage or loss** | Broken or missing cartons | Good packaging, insurance |
+| **Duties and charges you did not expect** | A bill at the port larger than planned | Work out landed cost before ordering |
+| **Exchange rate moves** | The dollar rises between order and payment | Add a margin, pay promptly, order often in smaller amounts |
+| **Restricted or banned items** | Goods held or seized | Check the rules before you order |
+
+A safe habit: **start small, test, then grow.** The first order is tuition.
+
+## Try it
+
+```task
+{
+  "id": "iemi-m01-t1",
+  "prompt": "Tunde in Lagos wants to buy 300 phone cases from a supplier in Guangzhou, China, and resell them. Write one line for **each** party involved in the shipment (supplier, freight forwarder, clearing agent, customs, bank), saying what that party does for this order.",
+  "minutes": 10,
+  "rows": 7,
+  "placeholder": "Supplier: ...\nFreight forwarder: ...",
+  "rules": [
+    { "label": "Names the supplier and what they do", "pattern": "supplier|manufacturer|factory" },
+    { "label": "Names the freight forwarder and what they do", "pattern": "forwarder|freight" },
+    { "label": "Names the clearing agent", "pattern": "clearing agent|customs broker|clearing" },
+    { "label": "Names customs and its role (duty, checking, release)", "pattern": "customs[^\\n]*(duty|tax|check|release|inspect|declar)" },
+    { "label": "Names the bank or payment route", "pattern": "bank|payment|transfer" },
+    { "label": "At least five lines", "minLines": 5 }
+  ],
+  "sample": "Supplier: the factory in Guangzhou that makes the cases, packs them and prepares the invoice.\nFreight forwarder: books air or sea space, collects the cartons and sends the shipping documents.\nClearing agent: handles the paperwork at the Lagos port or airport and gets the goods released for Tunde.\nCustoms: checks the declaration, collects import duty and taxes and releases the goods.\nBank: moves the payment to the supplier and records the transaction for Tunde.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "iemi-m01-t2",
+  "prompt": "Tunde's supplier offers three quotes for the same 300 cases: **EXW Guangzhou**, **FOB Shenzhen** and **DAP Lagos**. In 40 to 100 words, say which you would choose for a first small order and why. Mention who pays for transport and who carries the risk.",
+  "minutes": 10,
+  "rows": 6,
+  "placeholder": "I would choose ... because ...",
+  "rules": [
+    { "label": "Chooses one of EXW, FOB or DAP", "pattern": "\\b(exw|ex works|fob|dap)\\b" },
+    { "label": "Says who pays for transport or freight", "pattern": "freight|shipping|transport|pays?" },
+    { "label": "Talks about risk", "pattern": "risk" },
+    { "label": "Gives a reason", "pattern": "because|since|so that|so i|as it" },
+    { "label": "Between 40 and 100 words", "minWords": 40, "maxWords": 105 }
+  ],
+  "sample": "I would choose DAP Lagos for a first small order because the supplier pays for the transport and carries the risk until the cases reach the named place in Lagos, so a lost carton is their problem and not mine. I would still have to clear the goods and pay duty and taxes, so I would add those to my costs before comparing it with the EXW and FOB quotes. Once I know a good forwarder and trust the supplier, I may move to FOB to save money.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "iemi-m01-t3",
+  "prompt": "List **three risks** in Tunde's first import and, after each, one concrete way he can reduce it. One risk per line, in the form \"Risk: ... - Fix: ...\".",
+  "minutes": 8,
+  "rows": 5,
+  "placeholder": "Risk: ... - Fix: ...",
+  "rules": [
+    { "label": "Three lines", "minLines": 3 },
+    { "label": "Every line has a risk and a fix", "pattern": "risk[^\\n]*fix", "perLine": true },
+    { "label": "Mentions real risks (fraud, delay, damage, duty, exchange rate, quality)", "pattern": "fraud|scam|delay|damage|duty|exchange|quality|lost|restricted" }
+  ],
+  "sample": "Risk: the supplier takes the money and never ships - Fix: verify the company and pay through a protected method.\nRisk: the cases arrive damaged or poor quality - Fix: order a sample first and pack in strong cartons with insurance.\nRisk: duty and charges at the port are higher than planned - Fix: work out the landed cost before ordering.",
+  "required": false
+}
+```
+
+Next lesson: how to choose a product that will really sell.
+$md$, true, true, 1, array['iemi-m01-t1', 'iemi-m01-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('iemi-m03', 'import-export-mini-importation', 'Supplier sourcing', 3, null, null, '{}'::text[], array['Where to find suppliers', 'Alibaba and international supplier platforms', 'Reading a supplier profile', 'Comparing suppliers fairly', 'Trade shows and agents']::text[])
+values ('iemi-m02', 'import-export-mini-importation', 'Product research and market validation', 2, 'Product Researcher', 'PRODUCT', array['Find and shortlist product ideas', 'Check demand and competition', 'Estimate margin before buying', 'Plan a small test order']::text[], array['Finding product ideas', 'Checking demand and competition', 'Estimating margin before you buy', 'Testing the market with small orders', 'Avoiding restricted and risky products']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('iemi-m04', 'import-export-mini-importation', 'Supplier verification', 4, null, null, '{}'::text[], array['Spotting scams and unreliable suppliers', 'Checking company details and certificates', 'Trade assurance and safe payment methods', 'Factory audits and inspections', 'Red flags checklist']::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('import-export-mini-importation:product-research-and-market-validation', 'import-export-mini-importation', 'iemi-m02', 'product-research-and-market-validation', 'Product Research and Market Validation', 'Find product ideas, check real demand and competition, estimate your margin before you buy, test the market with a small order and avoid restricted or risky products.', 25, $md$
+## Start with the customer, not the supplier
+
+Most failed imports start with "I found something cheap". Successful ones start with "people already want this and cannot get it at a good price". The cheapest product on a supplier site is only a good idea if someone will pay more for it in your market.
+
+Ask three questions of every idea:
+
+1. **Is there demand?** Are people already buying this, repeatedly?
+2. **Is there a gap?** Is it overpriced, hard to find, low quality or poorly presented locally?
+3. **Is there margin?** After every cost, is the profit worth the effort and the risk?
+
+## Finding product ideas
+
+- **Look at what sells now.** Visit markets, shops and online stores such as Jumia, Jiji and Instagram sellers. Note what is always out of stock and what gets many comments asking "price?".
+- **Listen to complaints.** "I can never find a good X" is a product idea.
+- **Check a marketplace's best sellers** and filter by what Nigerians search for.
+- **Use free tools.** Google Trends shows whether interest is rising, steady or seasonal.
+- **Think about your own access.** Products you understand, or customers you can reach, give you a head start.
+
+Good beginner products are **small, light, durable and in constant demand**: phone accessories, beauty tools, kitchen items, stationery, baby items. Heavy, fragile or bulky goods eat your margin in freight and breakage.
+
+## Checking demand and competition
+
+For your shortlist, collect evidence, not feelings:
+
+- **Search it** on Jumia, Jiji, Instagram and Google. How many sellers? What are they charging?
+- **Read the reviews** of competitors. Repeated complaints are your opportunity.
+- **Note the range of prices**: lowest, typical and highest. You will fit in somewhere.
+- **Ask ten possible customers** what they would pay and what worries them.
+
+Many sellers at similar prices means the market is proven but crowded. Few sellers and many questions may mean a gap, or may mean nobody wants it. Test, do not guess.
+
+## Estimating margin before you buy
+
+Do a rough sum first. **Margin** is profit as a percentage of the selling price:
+
+*Profit = selling price - total cost per unit*, and *margin % = profit ÷ selling price × 100.*
+
+Example: a power bank costs ₦6,500 to land in Lagos and sells for ₦10,000. Profit is ₦3,500. Margin is 3,500 ÷ 10,000 = **35%**.
+
+Then be honest about what the rough sum leaves out: the supplier's price is only one part of cost. Module 9 builds a full landed cost calculator; for now use a safe shortcut and treat the **real cost as about 1.5 to 2 times the supplier's unit price** until you have the true figures. If it still leaves a healthy margin after that, keep the idea.
+
+> [!TIP]
+> Be wary of a margin that only works at the supplier's lowest price. Work it out at a normal price, and again with the dollar 10% higher.
+
+## Testing the market with small orders
+
+You do not need to prove an idea with a large order. Before committing:
+
+- **Pre-sell.** Post the product with photos from the supplier (say they are sample photos) and collect names and deposits from real buyers.
+- **Order a sample** (module 5), sell a few and see how people react.
+- **Place a small first order**, just enough to learn. A few dozen units tells you a lot.
+
+Decide in advance what success looks like. For example: "If I sell 20 of 30 units in three weeks at ₦9,000, I reorder."
+
+## Avoiding restricted and risky products
+
+Some goods cannot come in freely. Rules change, so **check the current position with the Nigeria Customs Service, the Standards Organisation of Nigeria (SON) or NAFDAC before you order**. As a guide:
+
+- **Banned or restricted items**: some goods are prohibited from import. Others need a permit.
+- **Regulated products**: food, drinks, medicines, cosmetics and supplements generally need NAFDAC approval to be sold. Electrical items and many manufactured goods are expected to meet SON standards.
+- **Brand protection**: fake branded goods ("replicas") can be seized and bring legal trouble. Sell your own brand or genuinely authorised products.
+- **Hard-to-ship goods**: batteries, liquids and aerosols have shipping restrictions, especially by air.
+
+A quick check now is far cheaper than goods stuck at the port.
+
+## Try it
+
+```task
+{
+  "id": "iemi-m02-t1",
+  "prompt": "Pick a product you might import (for example a power bank, ring light or kitchen blender). Write a **demand check** with at least four lines: where you looked, how many sellers you found, the lowest, typical and highest price in naira, and one complaint you saw in reviews.",
+  "minutes": 15,
+  "rows": 7,
+  "placeholder": "Product: ...\nWhere I looked: ...\nPrices: ...",
+  "rules": [
+    { "label": "Names the product", "pattern": "product" },
+    { "label": "Says where you looked (Jumia, Jiji, Instagram, Google, market)", "pattern": "jumia|jiji|instagram|google|market|shop|konga|facebook" },
+    { "label": "Gives prices in naira", "pattern": "₦\\s?\\d|\\bngn\\b|naira|\\d{3,}" },
+    { "label": "Mentions sellers or competition", "pattern": "seller|competitor|competition|vendor|shops?" },
+    { "label": "Mentions a complaint or review", "pattern": "complain|review|problem|issue|wish|comment" },
+    { "label": "At least four lines", "minLines": 4 }
+  ],
+  "sample": "Product: 20,000mAh power bank\nWhere I looked: Jumia, Jiji and three Instagram sellers\nSellers and competition: about 25 sellers on Jumia, lowest price ₦8,500, typical ₦12,000, highest ₦20,000 for known brands\nReview complaint: many reviews say the cheap ones lose their charge in a month and the stated capacity is not real",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "iemi-m02-t2",
+  "prompt": "A power bank lands in Lagos at **₦6,500** per unit and you can sell it for **₦10,000**. Work out the profit per unit and the margin as a percentage of the selling price. Then say what the margin would be if the real cost turned out to be **₦8,000**.",
+  "minutes": 8,
+  "rows": 5,
+  "placeholder": "Profit = ...\nMargin = ...",
+  "rules": [
+    { "label": "Profit of ₦3,500", "pattern": "3,?500" },
+    { "label": "Margin of 35%", "pattern": "\\b35\\s?%|35 percent|35 per cent" },
+    { "label": "Profit of ₦2,000 at the higher cost", "pattern": "2,?000" },
+    { "label": "Margin of 20% at the higher cost", "pattern": "\\b20\\s?%|20 percent|20 per cent" }
+  ],
+  "sample": "Profit = 10,000 - 6,500 = ₦3,500 per unit.\nMargin = 3,500 / 10,000 = 35%.\nIf the cost is ₦8,000: profit = 10,000 - 8,000 = ₦2,000, margin = 2,000 / 10,000 = 20%.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "iemi-m02-t3",
+  "prompt": "Describe a **small test order** for your product in 40 to 90 words: how many units, how you will sell them, how long you will give it, and what result means you reorder.",
+  "minutes": 8,
+  "rows": 5,
+  "placeholder": "I will order ... units and sell them by ...",
+  "rules": [
+    { "label": "Says how many units", "pattern": "\\b\\d+\\s*(units?|pieces?|pcs|items?)|\\b\\d+\\b" },
+    { "label": "Says how you will sell", "pattern": "instagram|whatsapp|jumia|jiji|shop|friends|market|online|pre-?sell" },
+    { "label": "Gives a time window", "pattern": "\\d+\\s*(days?|weeks?|months?)" },
+    { "label": "States a success measure for reordering", "pattern": "reorder|re-order|order again|repeat" },
+    { "label": "Between 40 and 90 words", "minWords": 40, "maxWords": 95 }
+  ],
+  "sample": "I will order 30 units of the power bank and sell them on Instagram and WhatsApp, starting with ten pre-sold to people who already asked me for the price. I will give it 3 weeks. If I sell at least 20 units at ₦10,000 or more and hear no major complaints about quality, I will reorder a larger batch. If fewer than 10 sell, I will change the product or price before spending any more money.",
+  "required": false
+}
+```
+
+Next lesson: where suppliers are and how to read what they show you.
+$md$, true, true, 2, array['iemi-m02-t1', 'iemi-m02-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('iemi-m05', 'import-export-mini-importation', 'Negotiation, MOQ and samples', 5, null, null, '{}'::text[], array['How to negotiate with suppliers', 'Minimum order quantity (MOQ)', 'Ordering and evaluating samples', 'Payment terms and deposits', 'Writing a clear purchase order']::text[])
+values ('iemi-m03', 'import-export-mini-importation', 'Supplier sourcing', 3, 'Supplier Sourcing', 'SOURCE', array['Find suppliers on platforms and in person', 'Read a supplier profile', 'Write a clear enquiry', 'Compare quotes on the same terms']::text[], array['Where to find suppliers', 'Alibaba and international supplier platforms', 'Reading a supplier profile', 'Comparing suppliers fairly', 'Trade shows and agents']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('iemi-m06', 'import-export-mini-importation', 'International shipping', 6, null, null, '{}'::text[], array['Air freight versus sea freight', 'LCL, FCL and courier options', 'Working with freight forwarders', 'Packaging, labelling and insurance', 'Transit times and tracking']::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('import-export-mini-importation:supplier-sourcing', 'import-export-mini-importation', 'iemi-m03', 'supplier-sourcing', 'Supplier Sourcing', 'Know where to find suppliers, read a supplier profile on Alibaba and other platforms, compare suppliers fairly and use trade shows and sourcing agents.', 30, $md$
+## Where suppliers are
+
+You can find suppliers in several places. Each suits a different situation:
+
+| Source | What it is | Good for | Watch out for |
+| :-- | :-- | :-- | :-- |
+| **Alibaba.com** | Large B2B marketplace, mainly Chinese suppliers | Wholesale orders, customisation, many categories | Many middlemen posing as factories |
+| **1688.com** | Chinese domestic wholesale site | Lowest factory prices | Chinese language, needs an agent |
+| **AliExpress** | Retail platform from the same group | Very small test orders | Higher unit prices |
+| **Made-in-China, Global Sources** | Other B2B platforms | Verified exporters, electronics | Smaller catalogues |
+| **Local wholesale markets abroad** | Physical markets in Guangzhou, Yiwu, Istanbul, Dubai | Seeing and touching goods | Travel cost, language |
+| **Trade fairs** | The Canton Fair in Guangzhou and similar events | Meeting many factories at once | Travel and time |
+| **Sourcing agents** | A person or company who finds and checks suppliers for a fee | Beginners, language gap, checking factories | Agents' own commission and honesty |
+
+For a first mini import, **Alibaba plus a small sample order** is the usual starting point. Treat it as a directory, not a guarantee: the platform lists suppliers, but it does not make every one honest or good.
+
+## Reading a supplier profile
+
+Open the supplier's company profile, not just the product page. Look for:
+
+- **Business type.** "Manufacturer" or "Trading company"? A factory usually offers lower prices and customisation. A trading company can still be a good choice for mixed small orders, but price it knowing there is a margin inside.
+- **Years on the platform and verification badges.** Longer history and independently checked status are good signs, not proof.
+- **Products listed.** A true factory focuses on a line of goods. A profile selling electronics, shoes and furniture is probably a trader.
+- **Response rate and time.** Fast, clear replies are a good sign.
+- **Transaction history and reviews.** Look for repeat buyers, and for sellers who have shipped to countries like Nigeria.
+- **Photos.** Real factory and production photos, not only polished studio pictures.
+- **Minimum order quantity (MOQ).** Can you afford it? Is it open to negotiation?
+
+> [!TIP]
+> Message three to five suppliers for every product. One supplier's price means little. Several tell you what the real market price and quality range is.
+
+## Contacting suppliers
+
+Send a short, specific first message. Vague messages get vague answers.
+
+*"Hello, I am planning to import 300 units of [product, model number]. Please send: the unit price at 300, 500 and 1,000 units; MOQ; the price for a sample; production time; your packaging and carton size and weight; and a quote on FOB Shenzhen terms. We will ship to Lagos, Nigeria. Thank you."*
+
+Notice what this does: it states a quantity, asks for price tiers, asks about samples and time, names the shipping terms and the destination. A serious supplier will answer the questions; one who ignores them and just says "pls order" is a warning sign.
+
+## Comparing suppliers fairly
+
+Compare like with like, in a table:
+
+| Supplier | Unit price | Terms | MOQ | Sample cost | Lead time | Notes |
+| :-- | :-- | :-- | :-- | :-- | :-- | :-- |
+| A | $2.80 | FOB | 200 | $15 | 12 days | Factory, 8 years, good replies |
+| B | $2.40 | EXW | 500 | $20 | 20 days | Trader, unclear photos |
+| C | $3.10 | FOB | 100 | $10 | 10 days | Factory, ships to Nigeria often |
+
+The lowest price (B) is not the best deal once you add that it is EXW (you pay more for transport inside China), needs a bigger order and is slower. **Adjust every quote to the same terms before ranking.**
+
+## Trade shows and agents
+
+A trade fair lets you meet factories, touch products and negotiate in person. It is costly, so for a beginner a **sourcing agent** may be cheaper: they visit factories, collect samples, check quality and consolidate orders. Agree their fee (commonly a percentage of the order or a fixed fee) in writing, and verify the agent as carefully as you verify a supplier.
+
+## Try it
+
+```task
+{
+  "id": "iemi-m03-t1",
+  "prompt": "Write your **first message** to a supplier for a product you might import. In 50 to 120 words, state the product, the quantity, ask for price tiers, MOQ, a sample price, lead time and shipping terms, and say it is going to Lagos.",
+  "minutes": 12,
+  "rows": 8,
+  "placeholder": "Hello, I am planning to import ...",
+  "rules": [
+    { "label": "Says the quantity", "pattern": "\\b\\d+\\s*(units?|pieces?|pcs)|\\b\\d{2,}\\b" },
+    { "label": "Asks for the price or price tiers", "pattern": "price|tier|quote|cost" },
+    { "label": "Asks about MOQ or minimum order", "pattern": "moq|minimum order" },
+    { "label": "Asks about a sample", "pattern": "sample" },
+    { "label": "Asks about lead time or production time", "pattern": "lead time|production time|how long|days" },
+    { "label": "Mentions shipping terms (FOB, EXW, CIF, DAP)", "pattern": "\\b(fob|exw|cif|dap|ddp)\\b" },
+    { "label": "Mentions the destination", "pattern": "lagos|nigeria" },
+    { "label": "Between 50 and 120 words", "minWords": 50, "maxWords": 125 }
+  ],
+  "sample": "Hello, I am planning to import 300 units of your 20,000mAh power bank, model PB-20. Please send your unit price at 300, 500 and 1,000 units, your MOQ, the price of a sample and how long a sample takes to arrive. I would also like the production lead time for 300 units, the carton size and weight, and a quote on FOB Shenzhen terms. The goods will be shipped to Lagos, Nigeria. Please also tell me whether the product has a CE or similar certificate and what warranty you give. Thank you, I look forward to your reply.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "iemi-m03-t2",
+  "prompt": "Three suppliers quote for 500 units. **A**: $2.80 FOB, MOQ 200, sample $15. **B**: $2.40 EXW, MOQ 500, sample $20, a trading company with unclear photos. **C**: $3.10 FOB, MOQ 100, sample $10, a factory that ships often to Nigeria. In 50 to 110 words, rank them and explain your first choice. Mention why B's lower price may mislead.",
+  "minutes": 12,
+  "rows": 7,
+  "placeholder": "My ranking is ...",
+  "rules": [
+    { "label": "Ranks the three suppliers (mentions A, B and C)", "pattern": "\\bA\\b[\\s\\S]*\\bB\\b[\\s\\S]*\\bC\\b|supplier a[\\s\\S]*supplier b[\\s\\S]*supplier c" },
+    { "label": "Explains that EXW costs extra or terms differ", "pattern": "exw[^.]*(extra|more|add|cost|transport|inside|china)|different terms|same terms" },
+    { "label": "Mentions factory versus trader or the photos", "pattern": "factory|trading company|trader|photos?" },
+    { "label": "Gives a reason", "pattern": "because|since|so that|therefore" },
+    { "label": "Between 50 and 110 words", "minWords": 50, "maxWords": 115 }
+  ],
+  "sample": "My ranking is A first, C second and B last. A and C are both factories quoting FOB, so I can compare them directly, and A is cheaper at $2.80. C is slightly dearer but has the lowest MOQ and already ships to Nigeria, so it is a good back-up. B looks cheapest at $2.40, but it is EXW, so I would pay extra to move the goods inside China, it needs a bigger order, and it is a trading company with unclear photos. Once I add transport and the risk, B is not really cheaper, so I would order samples from A and C because they are the safer choices.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "iemi-m03-t3",
+  "prompt": "Make a **supplier comparison table** for one product, with at least three suppliers. Use one line each in the form \"Supplier - unit price - terms - MOQ - lead time - notes\".",
+  "minutes": 12,
+  "rows": 6,
+  "placeholder": "Supplier A - $2.80 - FOB - 200 - 12 days - factory, 8 years",
+  "rules": [
+    { "label": "At least three suppliers", "minLines": 3 },
+    { "label": "Every line has a price", "pattern": "[$₦¥]\\s?\\d|\\d+(\\.\\d+)?\\s?(usd|ngn|rmb|dollars)", "perLine": true },
+    { "label": "Every line states terms (FOB, EXW, CIF, DAP)", "pattern": "\\b(fob|exw|cif|dap|ddp)\\b", "perLine": true },
+    { "label": "Every line has a lead time", "pattern": "days?|weeks?", "perLine": true }
+  ],
+  "sample": "Supplier A - $2.80 - FOB - MOQ 200 - 12 days - factory, 8 years, good replies\nSupplier B - $2.40 - EXW - MOQ 500 - 20 days - trading company, unclear photos\nSupplier C - $3.10 - FOB - MOQ 100 - 10 days - factory, ships often to Nigeria",
+  "required": false
+}
+```
+
+Next lesson: how to tell a genuine supplier from a scam.
+$md$, true, true, 3, array['iemi-m03-t1', 'iemi-m03-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('iemi-m07', 'import-export-mini-importation', 'Import documentation and customs', 7, null, null, '{}'::text[], array['Commercial invoice, packing list and bill of lading or airway bill', 'HS codes and why they matter', 'Duties, taxes and valuation', 'How customs clearance works', 'Common delays and how to avoid them']::text[])
+values ('iemi-m04', 'import-export-mini-importation', 'Supplier verification', 4, 'Supplier Verification', 'VERIFY', array['Spot supplier scams', 'Check company details and certificates', 'Choose safe payment methods', 'Use audits and inspections']::text[], array['Spotting scams and unreliable suppliers', 'Checking company details and certificates', 'Trade assurance and safe payment methods', 'Factory audits and inspections', 'Red flags checklist']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('iemi-m08', 'import-export-mini-importation', 'Nigerian import procedures', 8, null, null, '{}'::text[], array['Who regulates imports into Nigeria', 'Registration, permits and restricted items', 'Clearing through the ports and airports', 'Working with licensed clearing agents', 'Compliance and record keeping']::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('import-export-mini-importation:supplier-verification', 'import-export-mini-importation', 'iemi-m04', 'supplier-verification', 'Supplier Verification', 'Spot scams and unreliable suppliers, check company details and certificates, use safe payment methods, understand factory audits and inspections, and apply a red flags checklist.', 25, $md$
+## Why verification matters
+
+International supplier fraud is common, and most victims are first-time buyers sending money to a stranger. The pattern is usually the same: a convincing page, a low price, pressure to pay quickly by a method you cannot reverse, then silence. A day spent verifying costs nothing compared with a lost order.
+
+Verification means proving **three things** before you pay anything meaningful:
+
+1. **The company exists** and is what it says it is.
+2. **It can make or supply** the product at the quality you need.
+3. **It has a record** of delivering, ideally to buyers like you.
+
+## Common scams
+
+- **The fake supplier.** A page or website copied from a real factory, with a different bank account.
+- **The changed bank details.** After weeks of normal emails, the "accountant" sends a new account number. The email has been hijacked.
+- **The bait price.** A price far below every other supplier, "limited time", with payment required in full first.
+- **The sample trap.** A good sample, followed by poor bulk goods that do not match.
+- **The trader pretending to be a factory.** Not illegal, but you pay a margin and have no control of production.
+- **The empty shipment.** A real shipment with the wrong goods, or a forged bill of lading.
+- **The forged documents.** Fake business licences, test reports and certificates.
+
+## Checking company details
+
+Ask for, and check, these:
+
+- **A business licence.** In China this carries a unified social credit code you can check against official listings or through a verification service. Ask for a clear copy and compare the company name, address and registered scope with the website and invoice.
+- **A company website and email on its own domain.** A free email address (such as Gmail) for a large "factory" is a warning, not proof of fraud.
+- **A phone number and a video call.** Ask to see the factory floor, the stock and the production line live, not on a recorded clip. A real supplier will accept this.
+- **Platform status.** On Alibaba look for verified supplier status and years of trading, and check the reviews and transaction record, remembering that a badge is a start, not proof.
+- **Name matches everywhere.** The account holder on the bank details must match the company on the licence and the invoice.
+- **Certificates.** Ask for relevant quality certificates (for example CE for electronics, ISO 9001 for the factory), and where possible check them with the issuing body rather than trusting a PDF.
+- **References.** Ask for the contact of a buyer in a similar market, or search for reviews of the company by name.
+- **A reverse image search.** Search the supplier's photos. If they appear on other companies' pages, they are stolen.
+
+## Safe payment methods
+
+How you pay is your biggest protection.
+
+| Method | Protection | Notes |
+| :-- | :-- | :-- |
+| **Alibaba Trade Assurance** | The platform holds protection against non-delivery or goods not matching the agreed terms | Only covers orders paid through the platform and agreed on the order page. Keep all talk on the platform. |
+| **Escrow services** | A third party holds the money until you confirm | Use known services, never one the supplier invents |
+| **Bank transfer (T/T)** | None once sent | The usual method. Pay a deposit (often 30%) and the balance after inspection or on documents. |
+| **Letter of credit** | Strong; the bank pays only when the documents match | Costly and slower, suited to large orders |
+| **Payment to a person's personal account** | None | A red flag for a company |
+| **Gift cards, crypto or cash to an agent** | None | Do not |
+
+Never pay the full amount first to a supplier you have not verified. Pay the deposit to the **company** account named on the invoice, and confirm any bank detail change by phone using a number you already trust.
+
+## Factory audits and inspections
+
+For larger orders, hire an independent **inspection company** (such as SGS, Bureau Veritas or Intertek, or a local inspection service) to visit the factory. There are two common services:
+
+- **Factory audit.** Checks the factory's size, staff, machines, quality systems and capacity.
+- **Pre-shipment inspection.** An inspector checks a sample of the finished goods against your specification **before** you pay the balance and before shipping. They report quantity, quality, packing and labelling, often with photos.
+
+For a small first order you may skip the audit, but a pre-shipment check or even a friend in the supplier's city who can look is cheap protection.
+
+## The red flags checklist
+
+Stop and look harder if you see **any** of these:
+
+- The price is far below everyone else's.
+- They push you to pay quickly or in full, or to leave the platform.
+- They refuse a live video call or a sample.
+- The bank account is personal, or in a country or name that does not match.
+- The business licence is blurred, missing, or the name does not match.
+- The contact details keep changing, or the replies are vague and copy-pasted.
+- Photos look stolen or too perfect.
+- They say they have "no MOQ" for everything and a "special price just for you".
+
+## Try it
+
+```task
+{
+  "id": "iemi-m04-t1",
+  "prompt": "Write a **verification checklist** of at least seven things you will check about a supplier before paying a deposit. One check per line, each beginning with a verb (for example \"Ask for ...\", \"Check ...\").",
+  "minutes": 12,
+  "rows": 9,
+  "placeholder": "Ask for the business licence ...\nCheck ...",
+  "rules": [
+    { "label": "At least seven checks", "minLines": 7 },
+    { "label": "Mentions the business licence or registration", "pattern": "licen[cs]e|registration|registered" },
+    { "label": "Mentions a video call or factory visit", "pattern": "video|call|visit|live" },
+    { "label": "Mentions the bank account name matching", "pattern": "bank|account" },
+    { "label": "Mentions samples or certificates or reviews", "pattern": "sample|certificate|review|reference" },
+    { "label": "Mentions a safe payment method", "pattern": "trade assurance|escrow|letter of credit|deposit|protected" }
+  ],
+  "sample": "Ask for a copy of the business licence and compare its name and address with the website.\nCheck that the bank account name matches the company on the licence and invoice.\nRequest a live video call and ask them to show the factory floor.\nCheck the supplier's years on the platform, reviews and transaction history.\nAsk for quality certificates and check them with the issuing body.\nOrder a sample before any bulk order.\nPay only a deposit through Trade Assurance or another protected method, never the full amount first.\nRun a reverse image search on the supplier's photos.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "iemi-m04-t2",
+  "prompt": "A supplier you have emailed for weeks suddenly sends new bank details and asks you to pay the $3,000 balance there \"because the old account has a problem\". In 40 to 100 words, say what you will do before paying.",
+  "minutes": 8,
+  "rows": 6,
+  "placeholder": "Before I pay ...",
+  "rules": [
+    { "label": "Says to verify by phone or another trusted channel", "pattern": "phone|call|video|verify|confirm" },
+    { "label": "Refers to a trusted or known contact (not just the email)", "pattern": "known|trusted|already|original|previous|official|other channel|platform" },
+    { "label": "Does not pay straight away", "pattern": "not pay|won't pay|will not|hold|before (i )?pay|wait|do not pay|don't pay" },
+    { "label": "Mentions that the email may be hacked or a scam", "pattern": "hack|scam|fraud|fake|compromis" },
+    { "label": "Between 40 and 100 words", "minWords": 40, "maxWords": 105 }
+  ],
+  "sample": "I will not pay yet. A sudden change of bank details is a classic sign that the supplier's email has been hacked or that someone is committing fraud. I will phone the supplier on the number from their official business profile, not the one in the email, and confirm in a video call that the account is really theirs. I will also check that the account name matches the company on the licence and invoice. If they cannot confirm clearly, I will keep paying only to the original account.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "iemi-m04-t3",
+  "prompt": "Explain in 30 to 80 words the difference between a **factory audit** and a **pre-shipment inspection**, and when you would pay for each.",
+  "minutes": 6,
+  "rows": 5,
+  "placeholder": "A factory audit ...",
+  "rules": [
+    { "label": "Explains a factory audit (capacity, systems, the factory itself)", "pattern": "audit[^.]*(factory|capacity|systems?|machines|staff|quality)" },
+    { "label": "Explains a pre-shipment inspection (finished goods, before shipping or balance)", "pattern": "(pre-?shipment|inspection)[^.]*(finished|goods|before|balance|quantity|sample)" },
+    { "label": "Says when to use them", "pattern": "when|larger|big|before (i )?pay|before ship|new supplier" },
+    { "label": "Between 30 and 80 words", "minWords": 30, "maxWords": 85 }
+  ],
+  "sample": "A factory audit checks the factory itself: its size, staff, machines, capacity and quality systems. I would pay for one before a large order with a new supplier. A pre-shipment inspection checks the finished goods against my specification, including quantity, quality and packing, before I pay the balance and before shipping. I would use it on almost every sizeable order.",
+  "required": false
+}
+```
+
+Next lesson: negotiating, MOQ, samples and writing a purchase order.
+$md$, true, true, 4, array['iemi-m04-t1', 'iemi-m04-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('iemi-m09', 'import-export-mini-importation', 'Landed cost, pricing and profit', 9, null, null, '{}'::text[], array['What goes into landed cost', 'Product cost, freight, insurance, duty and handling', 'Exchange rates and payment charges', 'Setting a selling price and margin', 'A landed cost calculator you can reuse']::text[])
+values ('iemi-m05', 'import-export-mini-importation', 'Negotiation, MOQ and samples', 5, 'Negotiator', 'NEGOT', array['Negotiate price and terms', 'Handle minimum order quantities', 'Order and judge samples', 'Write a purchase order']::text[], array['How to negotiate with suppliers', 'Minimum order quantity (MOQ)', 'Ordering and evaluating samples', 'Payment terms and deposits', 'Writing a clear purchase order']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('iemi-m10', 'import-export-mini-importation', 'Selling imported products', 10, null, null, '{}'::text[], array['Where and how to sell', 'Wholesale versus retail', 'Stock, cash flow and reordering', 'Marketing imported goods', 'Growing from one product to many']::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('import-export-mini-importation:negotiation-moq-and-samples', 'import-export-mini-importation', 'iemi-m05', 'negotiation-moq-and-samples', 'Negotiation, MOQ and Samples', 'Negotiate prices and terms with suppliers, handle minimum order quantities, order and judge samples, agree payment terms and deposits, and write a clear purchase order.', 25, $md$
+## Negotiation starts before you ask for a discount
+
+Good negotiation is not haggling. It is showing a supplier that you are serious, prepared and worth keeping, then asking for terms that work for both sides. Suppliers receive hundreds of vague enquiries. The buyer who is specific, polite and quick to reply gets the better offer.
+
+Before you negotiate, know:
+
+- **Your target price**, worked backwards from the selling price you found in module 2.
+- **Your walk-away price** above which the deal no longer makes sense.
+- **Two or three other quotes**, so you know what is normal.
+- **What matters besides price**: quality, lead time, packaging, payment terms and the supplier's willingness to grow with you.
+
+## Negotiation tactics that work
+
+- **Ask for tier pricing.** "What is your price at 300, 500 and 1,000 units?" The drop between tiers shows how much room there is.
+- **Show your plan to reorder.** "If this first order goes well we plan to order every month." A repeat buyer is worth a lower price.
+- **Be specific about what you want.** Quote the exact model, material and packaging. Vague specs lead to vague prices and later disputes.
+- **Bundle.** Combine models, colours or sizes in one order to meet a higher volume tier.
+- **Trade, don't just push.** Offer a faster deposit or a larger quantity in exchange for a better price or free packaging.
+- **Negotiate other things.** Free or discounted samples, free custom packing, a better payment schedule, a longer warranty, shorter lead time.
+- **Be polite and patient.** Pressure often makes suppliers cut quality instead of price.
+- **Never accept the first price.** A reasonable counter-offer, usually a modest reduction, is normal and expected.
+
+> [!NOTE]
+> Be careful with very low final prices. A supplier who drops a price a long way too easily may be cutting corners elsewhere: thinner material, cheaper parts, fewer checks.
+
+## Minimum order quantity (MOQ)
+
+The **MOQ** is the smallest order a supplier will accept. It exists because setting up production costs the same whether they make 50 or 5,000.
+
+If the MOQ is higher than you want:
+
+- Ask whether a **smaller trial order** is possible at a slightly higher price.
+- Ask whether you can **mix models or colours** to reach it.
+- Look for a supplier with a lower MOQ, even at a higher price. For a first test, a higher unit price is usually cheaper than money tied up in unsold stock.
+- Buy from a **trading company or stock supplier**, who sells from stock in small quantities.
+- Share an order with another buyer, only if you trust them and settle the money clearly.
+
+Never buy more than you can sell just to get a bigger discount. A 10% discount on stock you cannot sell is a 100% loss.
+
+## Ordering and evaluating samples
+
+A sample is the cheapest insurance in importing. Order one before any bulk purchase.
+
+1. **Ask what the sample costs** and whether it is refunded against the bulk order. Many suppliers charge for the sample and the courier.
+2. **Specify exactly what you want**, so the sample matches the order you will place.
+3. **Test it as a customer would.** Use it, drop it, wash it, charge it, whatever real use involves.
+4. **Check against your list:** material, size, finish, packaging, labelling, smell, safety, any certificates.
+5. **Photograph and weigh it** so you can compare the bulk delivery against the sample.
+6. **Keep the sample.** If the bulk goods are worse, it is your evidence.
+
+Remember that a sample can be better than the bulk goods. Agree in writing that the bulk will match the sample, and inspect before the final payment.
+
+## Payment terms and deposits
+
+Most suppliers want a **deposit to begin production**, often around 30%, with the balance paid before shipping or against the shipping documents. Common arrangements:
+
+| Terms | What it means | Protection for you |
+| :-- | :-- | :-- |
+| **30% deposit, 70% before shipment** | The usual split for manufactured goods | You can inspect before paying the balance |
+| **30% deposit, 70% against copy of the bill of lading** | You pay after goods are loaded | You get proof of shipment |
+| **100% in advance** | Common for small orders and samples | Little: use Trade Assurance or escrow |
+| **Letter of credit** | Bank pays on correct documents | Strong, but costly |
+
+Never agree to pay the **whole** amount to an unverified supplier. Agree the payment schedule in writing, along with what happens if the goods are late or faulty.
+
+## Writing a clear purchase order
+
+A **purchase order (PO)** is your written instruction to buy. It prevents the arguments that come from "I thought you meant...". Include:
+
+- Your company name and address, and the supplier's.
+- PO number and date.
+- Product description, model number, colour, size and a photo or specification.
+- Quantity and unit price, and the total, with currency.
+- Shipping terms (for example FOB Shenzhen) and the destination.
+- Packaging and labelling requirements.
+- Production lead time and delivery date.
+- Payment terms and bank details (confirmed separately).
+- Quality requirements, and what happens if the goods do not match the sample.
+- Signatures or written confirmation from the supplier.
+
+## Try it
+
+```task
+{
+  "id": "iemi-m05-t1",
+  "prompt": "A supplier quotes **$3.00** a unit for 300 power banks, with an MOQ of 500. Write the **message** you would send to negotiate, in 60 to 130 words. Ask for a lower MOQ or tier pricing, mention reorders, and ask about the sample price.",
+  "minutes": 12,
+  "rows": 8,
+  "placeholder": "Thank you for your quote. ...",
+  "rules": [
+    { "label": "Thanks or greets politely", "pattern": "thank|hello|hi |dear|appreciate" },
+    { "label": "Raises the MOQ or a smaller first order", "pattern": "moq|minimum|smaller|trial|first order" },
+    { "label": "Asks for tier pricing or a better price", "pattern": "tier|better price|discount|best price|lower price|price at" },
+    { "label": "Mentions repeat orders", "pattern": "reorder|re-order|repeat|every month|regular|long-?term|future orders" },
+    { "label": "Asks about a sample", "pattern": "sample" },
+    { "label": "Between 60 and 130 words", "minWords": 60, "maxWords": 135 }
+  ],
+  "sample": "Thank you for your quote of $3.00 a unit. We are a new importer in Lagos and would like to start with a trial order of 300 units, which is below your MOQ of 500. Would you accept 300 at a slightly higher price, or can you give me tier pricing for 300, 500 and 1,000 units? If the first order sells well, we plan to reorder every month, so I am looking for a long-term supplier. Please also tell me the price of a sample and whether it is refunded against the bulk order.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "iemi-m05-t2",
+  "prompt": "Write a **sample evaluation checklist** with at least six things you will check when your power bank sample arrives. One check per line.",
+  "minutes": 10,
+  "rows": 8,
+  "placeholder": "Check the real capacity ...",
+  "rules": [
+    { "label": "At least six checks", "minLines": 6 },
+    { "label": "Checks performance (capacity, charge, battery, works)", "pattern": "capacity|charge|battery|power|works?|test" },
+    { "label": "Checks build quality (material, finish, weight, size)", "pattern": "material|finish|weight|size|build|quality|strong|durable" },
+    { "label": "Checks packaging or labelling", "pattern": "packag|label|box|print" },
+    { "label": "Checks safety or certificates", "pattern": "safe|certificate|ce\\b|heat|overheat|standard" },
+    { "label": "Keeps or photographs the sample as a record", "pattern": "keep|photograph|photo|record|compare" }
+  ],
+  "sample": "Test the real capacity by charging a phone fully and counting charges.\nCheck that it charges at the speed claimed and does not overheat.\nCheck the build quality, material, finish and weight against the specification.\nCheck the size matches the listing.\nCheck the packaging and labelling are neat and have the correct information.\nCheck for a safety certificate such as CE and a clear warranty.\nPhotograph and weigh the sample, and keep it to compare with the bulk goods.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "iemi-m05-t3",
+  "prompt": "Write a short **purchase order** for 300 power banks. Put one detail per line: PO number, buyer, supplier, product and model, quantity, unit price in dollars, total, shipping terms, lead time, payment terms and packaging.",
+  "minutes": 12,
+  "rows": 12,
+  "placeholder": "PO number: ...\nBuyer: ...",
+  "rules": [
+    { "label": "At least ten lines", "minLines": 10 },
+    { "label": "Has a PO number", "pattern": "po\\s*(number|no)|purchase order" },
+    { "label": "Names buyer and supplier", "pattern": "buyer[\\s\\S]*supplier|supplier[\\s\\S]*buyer" },
+    { "label": "States quantity and a dollar unit price", "pattern": "300[\\s\\S]*\\$\\s?\\d|\\$\\s?\\d[\\s\\S]*300" },
+    { "label": "States shipping terms", "pattern": "\\b(fob|exw|cif|dap)\\b" },
+    { "label": "States payment terms", "pattern": "deposit|payment|balance|30\\s?%" },
+    { "label": "States lead time", "pattern": "lead time|days|delivery" }
+  ],
+  "sample": "PO number: TUN-2026-001\nBuyer: Tunde Trading, Lagos, Nigeria\nSupplier: Shenzhen Brightcell Electronics Co. Ltd\nProduct: 20,000mAh power bank, model PB-20, black\nQuantity: 300 units\nUnit price: $3.00\nTotal: $900\nShipping terms: FOB Shenzhen, to be shipped to Lagos, Nigeria\nLead time: 12 days after deposit\nPayment terms: 30% deposit, 70% balance after inspection and before shipment\nPackaging: individual colour box, 20 units per carton, labelled with the model and quantity",
+  "required": false
+}
+```
+
+Next lesson: how goods travel and what the options cost.
+$md$, true, true, 5, array['iemi-m05-t1', 'iemi-m05-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('iemi-m11', 'import-export-mini-importation', 'Export fundamentals and finding buyers', 11, null, null, '{}'::text[], array['Export basics and what sells abroad', 'Export documents and rules', 'Finding international buyers', 'Pricing and payment terms for export', 'Shipping to the buyer']::text[])
+values ('iemi-m06', 'import-export-mini-importation', 'International shipping', 6, 'Shipping Planner', 'SHIP', array['Choose between air and sea', 'Work out chargeable weight and CBM', 'Choose a freight forwarder', 'Pack, label and insure goods']::text[], array['Air freight versus sea freight', 'LCL, FCL and courier options', 'Working with freight forwarders', 'Packaging, labelling and insurance', 'Transit times and tracking']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('import-export-mini-importation:international-shipping', 'import-export-mini-importation', 'iemi-m06', 'international-shipping', 'International Shipping', 'Compare air and sea freight, understand LCL, FCL and courier options, work with freight forwarders, pack, label and insure goods, and plan for transit times and tracking.', 25, $md$
+## Air or sea?
+
+The two main ways to bring goods to Nigeria are **air freight** and **sea freight**. The right choice depends on weight, size, value, urgency and budget.
+
+| | Air freight | Sea freight |
+| :-- | :-- | :-- |
+| **Speed** | Roughly a week or two door to door | Often several weeks, commonly over a month from China |
+| **Cost** | Higher per kilogram | Much lower per unit of cargo |
+| **Best for** | Small, light, high-value or urgent goods and samples | Heavy, bulky or large orders |
+| **Charged by** | Weight (kilograms) | Volume (cubic metres) for shared loads, or per container |
+| **Risks** | Fewer handling steps, lower damage risk | Longer exposure, more handling, port delays |
+
+For a first mini import of light goods, **air cargo** is often practical. As volumes grow, **sea freight** brings the cost per unit down. Times and prices change often, so always get a current quote.
+
+## How air freight is charged
+
+Airlines charge for the **greater of the actual weight and the volumetric weight**. Large, light boxes take up space, so space is charged too.
+
+*Volumetric weight (kg) = length × width × height (cm) ÷ 6,000*
+
+Example: one carton is 60 × 40 × 50 cm and weighs 15 kg.
+- Volumetric weight = 60 × 40 × 50 ÷ 6,000 = 120,000 ÷ 6,000 = **20 kg**.
+- Actual weight is 15 kg, so the **chargeable weight is 20 kg**.
+
+Some carriers and forwarders use slightly different divisors, so always confirm how a quote is calculated.
+
+## LCL, FCL and courier
+
+- **FCL (Full Container Load).** You rent a whole container: commonly a 20-foot or a 40-foot. It makes sense when your cargo fills most of it. You pay a flat price per container for the route.
+- **LCL (Less than Container Load).** Your cartons share a container with other importers. You pay by cubic metre (CBM) or by weight, whichever the forwarder charges higher. It suits mini importation by sea.
+- **Courier / express.** DHL, FedEx, UPS and similar services collect and deliver, with simple tracking and clearance handled for you. It is the fastest and simplest for samples and very small orders, and the most expensive per kilogram.
+
+**CBM** (cubic metre) is length × width × height in **metres**. A carton of 60 × 40 × 50 cm is 0.6 × 0.4 × 0.5 = **0.12 CBM**.
+
+## Working with a freight forwarder
+
+A **freight forwarder** arranges the movement for you: collects from the supplier, books space, prepares the shipping documents and often arranges clearance and delivery. For a beginner, a good forwarder is the most valuable person in the chain.
+
+When choosing one:
+
+- **Ask for a full quote** showing every charge, from pick-up to delivery, and in which currency.
+- **Check they have experience on your route** and with your type of goods.
+- **Ask for references** or check reviews from other importers. Beware of anyone who quotes far below the rest.
+- **Ask about their agent in Nigeria** and who handles clearing.
+- **Agree transit time, storage terms and liability** in writing.
+- **Check how they communicate**: you need updates and tracking.
+
+Many forwarders in Guangzhou and Yiwu also consolidate goods from several suppliers into one shipment, which helps if you buy from more than one factory.
+
+## Packaging, labelling and insurance
+
+- **Pack for the journey.** Cartons are stacked, dropped and sometimes get wet. Use strong cartons, protect fragile goods and seal them well.
+- **Label clearly.** Each carton should show your name or mark, the product, the quantity, the carton number ("3 of 12") and the destination. Clear marks make a shortage easy to spot.
+- **Check size and weight limits** for air cargo and courier.
+- **Mind restricted goods.** Batteries, liquids, aerosols and powders can have shipping limits, especially by air. Ask your forwarder before you order.
+- **Insure it.** Standard carrier liability is low. **Cargo insurance** usually costs a small percentage of the goods' value and covers loss or damage in transit. For anything worth risking, buy it.
+
+> [!TIP]
+> Take photos of the packed cartons before they leave, and of the cartons when they arrive. If there is damage, those photos are your claim.
+
+## Transit times and tracking
+
+Total time includes more than the flight or voyage:
+
+*Production → pick-up → export clearance → main transport → arrival → clearing → delivery to you.*
+
+Add time for each stage, and a buffer for delays: holidays such as Chinese New Year, port congestion, weather and inspections. Ask your forwarder for the **tracking number** (air waybill or container/bill of lading number) and check it regularly. Plan stock around the longest realistic time, not the shortest quoted one.
+
+## Try it
+
+```task
+{
+  "id": "iemi-m06-t1",
+  "prompt": "You are shipping **10 cartons by air**. Each carton is **60 × 40 × 50 cm** and weighs **15 kg**. Work out the volumetric weight of one carton, the total chargeable weight, and the cost if the forwarder charges **$6 per kg**.",
+  "minutes": 10,
+  "rows": 6,
+  "placeholder": "Volumetric weight per carton = ...",
+  "rules": [
+    { "label": "Volumetric weight of 20 kg per carton", "pattern": "\\b20\\s?kg|=\\s?20\\b" },
+    { "label": "Chargeable weight of 200 kg in total", "pattern": "\\b200\\s?kg|=\\s?200\\b" },
+    { "label": "Cost of $1,200", "pattern": "1,?200" },
+    { "label": "Says the greater of actual or volumetric weight is used", "pattern": "greater|higher|bigger|more than|volumetric" }
+  ],
+  "sample": "Volumetric weight per carton = 60 x 40 x 50 / 6,000 = 20 kg. The actual weight is 15 kg, so the greater, 20 kg, is chargeable per carton.\nTotal chargeable weight = 10 x 20 = 200 kg.\nCost = 200 kg x $6 = $1,200.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "iemi-m06-t2",
+  "prompt": "Chioma will import 40 cartons of kitchen items, about 0.12 CBM each. A forwarder quotes LCL sea freight at **$95 per CBM**. Calculate the total CBM and the freight cost, then say in one or two sentences whether LCL sea or air is likely better if the goods are heavy and not urgent.",
+  "minutes": 10,
+  "rows": 6,
+  "placeholder": "Total CBM = ...",
+  "rules": [
+    { "label": "Total of 4.8 CBM", "pattern": "4\\.8" },
+    { "label": "Freight cost of $456", "pattern": "456" },
+    { "label": "Recommends sea freight for heavy, non-urgent goods", "pattern": "sea|lcl" },
+    { "label": "Gives a reason (cheaper, weight, volume, not urgent)", "pattern": "cheaper|lower|cost|heavy|not urgent|volume" }
+  ],
+  "sample": "Total CBM = 40 x 0.12 = 4.8 CBM.\nFreight cost = 4.8 x $95 = $456.\nSea freight (LCL) is better here because the goods are heavy and not urgent, and sea is much cheaper than air for heavy cargo.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "iemi-m06-t3",
+  "prompt": "Write **five questions** you would ask a freight forwarder before choosing them. One question per line, each ending in a question mark.",
+  "minutes": 8,
+  "rows": 7,
+  "placeholder": "Does your quote include ...?",
+  "rules": [
+    { "label": "Five questions", "minLines": 5 },
+    { "label": "Every line is a question", "pattern": "\\?\\s*$", "perLine": true },
+    { "label": "Asks about charges or the full quote", "pattern": "charge|fee|quote|cost|include" },
+    { "label": "Asks about transit time or tracking", "pattern": "transit|how long|days|tracking|track" },
+    { "label": "Asks about clearing, delivery, insurance or liability", "pattern": "clear|deliver|insur|liab|damage|lost" }
+  ],
+  "sample": "Does your quote include every charge from the supplier's door to my warehouse?\nWhat is the transit time and how often do delays happen on this route?\nCan I track the shipment, and how often will you update me?\nDo you handle clearing in Nigeria or work with a licensed agent there?\nWhat insurance can you arrange and who pays if goods are lost or damaged?",
+  "required": false
+}
+```
+
+Next lesson: the documents customs expects and how duty is worked out.
+$md$, true, true, 6, array['iemi-m06-t1', 'iemi-m06-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('iemi-m12', 'import-export-mini-importation', 'Final project: your import or export business', 12, null, null, '{}'::text[], array['Choosing your product and market', 'Building the supplier and shipping plan', 'Calculating costs and price', 'Presenting your business plan']::text[])
+values ('iemi-m07', 'import-export-mini-importation', 'Import documentation and customs', 7, 'Customs & Documents', 'CUSTOMS', array['Read the main shipping documents', 'Understand HS codes', 'Calculate duty and VAT', 'Avoid common clearance delays']::text[], array['Commercial invoice, packing list and bill of lading or airway bill', 'HS codes and why they matter', 'Duties, taxes and valuation', 'How customs clearance works', 'Common delays and how to avoid them']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('import-export-mini-importation:import-documentation-and-customs', 'import-export-mini-importation', 'iemi-m07', 'import-documentation-and-customs', 'Import Documentation and Customs', 'Know the main shipping documents, understand HS codes, calculate duties, taxes and customs value, follow how clearance works and avoid common delays.', 25, $md$
+## The documents behind every shipment
+
+Customs does not clear goods on trust. It clears them on documents that agree with each other and with the goods. The most important are:
+
+| Document | What it is | Who issues it |
+| :-- | :-- | :-- |
+| **Commercial invoice** | The bill: seller, buyer, description, quantity, unit price, total, currency, shipping terms | The supplier |
+| **Packing list** | What is in each carton: counts, weights, dimensions | The supplier |
+| **Bill of lading (B/L)** | For sea freight: the receipt for the goods, the contract of carriage and the document of title | The shipping line or forwarder |
+| **Air waybill (AWB)** | For air freight: the contract and receipt for the cargo (not a document of title) | The airline or forwarder |
+| **Certificate of origin** | Says where the goods were made | A chamber of commerce or authority |
+| **Insurance certificate** | Proof of cargo insurance | The insurer |
+| **Quality or product certificates** | For example SON, NAFDAC or safety certificates, where they apply | The relevant body |
+| **Form M** (Nigeria) | The import declaration made before shipment, through your bank | You, through an authorised bank |
+
+**All the documents must match.** Name, address, quantities, weights, descriptions and values should agree. A mismatch is the most common cause of delay and fines.
+
+> [!WARNING]
+> Never agree to understate the value or change the description on an invoice to reduce duty. Under-declaring is an offence. It can bring seizure, penalties and a record that makes every future shipment harder.
+
+## HS codes and why they matter
+
+The **Harmonized System (HS)** is the international way of classifying goods. Every product has a code. The first six digits are the same worldwide, and countries add more digits for their own tariff. Your HS code decides:
+
+- **The duty rate** you pay.
+- **Whether the goods are restricted** or need a permit.
+- **Statistics and checks** by customs.
+
+Examples of goods and their chapters: mobile phone accessories, kitchen appliances and clothing each fall under different chapters with different rates. Choosing the wrong code can mean paying too much, too little (and being fined) or having the goods held. Ask your forwarder or clearing agent to confirm the HS code against the Nigerian tariff before you order, and quote it on the invoice.
+
+## Duties, taxes and customs value
+
+When goods enter Nigeria you generally pay:
+
+- **Import duty**, set by the tariff for the HS code, as a percentage of the customs value. Under the ECOWAS Common External Tariff, standard ad valorem rates are set in bands, commonly 0%, 5%, 10%, 20% and 35%, depending on the product.
+- **Value Added Tax (VAT)**, currently 7.5%, charged on the customs value plus duty and other import charges.
+- **Other levies and fees**, small percentage charges and processing fees that apply to many imports. Rates and rules change, so get a current figure from your clearing agent.
+
+**Customs value** is usually the **CIF value**: the cost of the goods plus insurance and freight to the Nigerian port. Customs converts it to naira at its own exchange rate, not necessarily the bank rate you paid at.
+
+Worked example (ignoring small levies):
+- CIF value: ₦2,000,000
+- Duty at 10%: ₦200,000
+- VAT at 7.5% on (₦2,000,000 + ₦200,000 = ₦2,200,000): ₦165,000
+- **Total duty and VAT: ₦365,000**
+
+That is 18% of the CIF value in this example: a cost you must include before you price the product.
+
+## How customs clearance works
+
+At a high level, for a typical import:
+
+1. **Before shipment**, you open the import declaration (Form M in Nigeria) with the correct goods, values and supplier details.
+2. The supplier ships and sends the documents.
+3. **On arrival**, your clearing agent submits the declaration with the documents.
+4. Customs **assesses** the declaration: classification, value, duty and taxes.
+5. You (through the agent) **pay duty, taxes and port charges**.
+6. Customs may **examine** the goods. A physical inspection can be full or partial.
+7. Customs **releases** the goods, the terminal releases them, and they are collected by truck or delivered.
+
+Port and terminal charges, plus storage if goods stay beyond the free period, are separate from duty and tax. The next lesson covers the Nigerian specifics.
+
+## Common delays and how to avoid them
+
+- **Mismatched documents.** Check every invoice, packing list and bill of lading before shipment.
+- **Wrong HS code or description.** Use a precise description ("rechargeable 20,000mAh lithium power bank") and not just "electronics".
+- **Under-declared or unrealistic values.** Customs compares invoices against known prices.
+- **Missing permits or certificates.** Check requirements before ordering.
+- **Late payment of duties or charges.** Storage and container delay fees add up daily.
+- **Slow agent response.** Choose a clearing agent who communicates and has a good record.
+- **Holidays and port congestion.** Build time into your plan.
+
+## Try it
+
+```task
+{
+  "id": "iemi-m07-t1",
+  "prompt": "The CIF value of a shipment is **₦3,000,000**. The duty rate is **20%** and VAT is **7.5%** on the CIF value plus duty. Work out the duty, the VAT and the total duty and VAT. Ignore other levies.",
+  "minutes": 10,
+  "rows": 6,
+  "placeholder": "Duty = ...",
+  "rules": [
+    { "label": "Duty of ₦600,000", "pattern": "600,?000" },
+    { "label": "VAT base of ₦3,600,000 (CIF plus duty)", "pattern": "3,?600,?000" },
+    { "label": "VAT of ₦270,000", "pattern": "270,?000" },
+    { "label": "Total of ₦870,000", "pattern": "870,?000" }
+  ],
+  "sample": "Duty = 20% of 3,000,000 = ₦600,000.\nVAT is charged on CIF plus duty = 3,000,000 + 600,000 = ₦3,600,000.\nVAT = 7.5% of 3,600,000 = ₦270,000.\nTotal duty and VAT = 600,000 + 270,000 = ₦870,000.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "iemi-m07-t2",
+  "prompt": "Check these documents for a shipment. The **invoice** says 300 power banks, 20 per carton. The **packing list** says 14 cartons. The **bill of lading** says 15 cartons and describes the goods as \"electronics\". List **every problem** you can see and say how you would fix it. One problem per line.",
+  "minutes": 10,
+  "rows": 7,
+  "placeholder": "Problem: ... - Fix: ...",
+  "rules": [
+    { "label": "Spots the carton count mismatch (300 / 20 = 15 cartons, packing list says 14)", "pattern": "14|15|carton" },
+    { "label": "Spots the vague description (\"electronics\")", "pattern": "electronics|description|vague|specific" },
+    { "label": "Suggests correcting the documents", "pattern": "correct|amend|fix|match|update|reissue|ask the supplier|ask the forwarder" },
+    { "label": "At least two lines", "minLines": 2 }
+  ],
+  "sample": "Problem: 300 power banks at 20 per carton is 15 cartons, but the packing list says 14 cartons - Fix: ask the supplier to check the count and correct the packing list so all documents match.\nProblem: the bill of lading calls the goods \"electronics\", which is too vague and may cause the wrong HS code or an inspection - Fix: ask the forwarder to amend it to a specific description such as rechargeable power banks, matching the invoice.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "iemi-m07-t3",
+  "prompt": "In 30 to 80 words, explain why you should never ask a supplier to write a lower value on the invoice to reduce duty.",
+  "minutes": 6,
+  "rows": 5,
+  "placeholder": "Under-declaring is ...",
+  "rules": [
+    { "label": "Says it is illegal or an offence", "pattern": "illegal|offence|offense|crime|fraud|unlawful" },
+    { "label": "Mentions penalties, seizure or fines", "pattern": "penalt|fine|seiz|confiscat|prosecut" },
+    { "label": "Mentions the effect on future shipments or reputation", "pattern": "future|reputation|record|trust|blacklist|every shipment" },
+    { "label": "Between 30 and 80 words", "minWords": 30, "maxWords": 85 }
+  ],
+  "sample": "Under-declaring the value is an offence. Customs compares invoices with known prices, and if it finds a false value the goods can be seized and I can face fines and penalties. It also damages my record and reputation, so every future shipment is checked more closely and delayed. The saving on duty is small compared with the risk of losing the whole shipment, so I always declare the true value.",
+  "required": false
+}
+```
+
+Next lesson: the Nigerian rules, agencies and agents.
+$md$, true, true, 7, array['iemi-m07-t1', 'iemi-m07-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
+values ('iemi-m08', 'import-export-mini-importation', 'Nigerian import procedures', 8, 'Nigerian Import Procedures', 'NIGERIA', array['Know who regulates imports', 'Understand Form M and PAAR', 'Work with licensed clearing agents', 'Keep shipment records']::text[], array['Who regulates imports into Nigeria', 'Registration, permits and restricted items', 'Clearing through the ports and airports', 'Working with licensed clearing agents', 'Compliance and record keeping']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('import-export-mini-importation:nigerian-import-procedures', 'import-export-mini-importation', 'iemi-m08', 'nigerian-import-procedures', 'Nigerian Import Procedures', 'Know who regulates imports into Nigeria, what registration and permits you need, how clearance through ports and airports works, how to work with licensed clearing agents and how to keep records.', 25, $md$
+> [!NOTE]
+> Nigerian import rules, rates, fees and procedures change from time to time, and some of the systems named here are updated or replaced. This lesson teaches you the structure and the right questions. **Always confirm the current requirement with the Nigeria Customs Service, the relevant agency or a licensed clearing agent before you ship.**
+
+## Who regulates imports into Nigeria
+
+Several bodies have a say over what comes in:
+
+| Body | Role |
+| :-- | :-- |
+| **Nigeria Customs Service** | Assesses and collects duty and taxes, enforces the import prohibitions, examines and releases goods |
+| **Standards Organisation of Nigeria (SON)** | Product standards and conformity for many manufactured and imported goods |
+| **NAFDAC** | Food, drinks, drugs, cosmetics, medical devices and chemicals: registration and approval before sale |
+| **Nigerian Agricultural Quarantine Service (NAQS)** | Plant and animal products: inspection and permits |
+| **Nigerian Communications Commission (NCC)** | Type approval for telecom and some electronic equipment |
+| **Central Bank of Nigeria and authorised dealer banks** | Foreign exchange, and handling the Form M and payment |
+| **Corporate Affairs Commission (CAC)** | Registers your business or company |
+| **The federal tax authority and your state tax office** | Tax registration and tax on your profits |
+
+Each agency cares about its own area. A single shipment of cosmetics, for example, can involve Customs, NAFDAC and SON requirements.
+
+## Registration and permits
+
+Before importing commercially you usually need:
+
+- **A registered business.** A registered business name or company with the CAC, with a Tax Identification Number (TIN). Operating as a registered business makes banking, clearing and trust much easier.
+- **A bank account** in the business's name with a bank that handles foreign transactions.
+- **Form M.** The import declaration is raised before the goods ship, through an authorised bank on the national trade platform. It lists the goods, HS code, value, supplier, terms and port of entry. Errors on it are costly, so give your bank accurate details from the supplier's proforma invoice.
+- **A Pre-Arrival Assessment Report (PAAR).** After the Form M and documents are submitted, Customs issues a PAAR, which is a Customs assessment of the shipment that your clearing agent needs to clear the goods.
+- **Product approvals** such as SON conformity or NAFDAC registration where your product needs them.
+
+**Mini importation does not exempt you.** Small commercial quantities for resale still need correct declarations. Ask your agent or forwarder what applies to your shipment size and goods.
+
+## Restricted and prohibited items
+
+Nigeria has a list of goods that cannot be imported at all, and others that need special permission. The lists change, so check the current Customs notices. Types of goods that commonly face restrictions include certain used goods, some food and animal products, narcotics, counterfeit and unsafe goods, and weapons. Do not rely on a supplier or a friend who says "it's fine": a seized shipment is a total loss and can have legal consequences.
+
+## Clearing through ports and airports
+
+Goods arrive at a **seaport** (such as Apapa, Tin Can Island, Lekki Deep Sea Port or Onne) or an **airport**. At each, clearance follows the same general path from the last lesson, with local costs on top:
+
+- **Shipping line or terminal charges** for handling and release.
+- **Storage and demurrage.** Free days are limited. After them, storage at the terminal and **demurrage** (charges on the shipping line's container) accrue every day. A few days' delay can add up to a lot.
+- **Customs examination** and any agreed examination costs.
+- **Transport** from the port to your warehouse.
+- **Agency fees** for your clearing agent.
+
+Some goods are examined on arrival. Be present or reachable, and give your agent every document they ask for, promptly.
+
+## Working with licensed clearing agents
+
+A **licensed clearing agent** (customs agent or broker) is authorised to deal with Customs on your behalf. A good one saves money and delays; a bad one costs both.
+
+Choose carefully:
+
+- **Check the licence.** Ask for their Customs licence and confirm it independently.
+- **Ask for references** from other importers of similar goods.
+- **Get a written fee quote** showing agency fees separately from duty, port charges and other costs.
+- **Give accurate documents and descriptions**, and the HS code you agreed. Do not ask the agent to "reduce" anything improperly.
+- **Insist on official receipts** for duty and charges paid. Duty is paid to Customs through official channels, never in cash to individuals.
+- **Agree who is responsible** if goods are delayed or penalties arise from the agent's error.
+- **Stay involved.** Ask for updates at each stage.
+
+> [!WARNING]
+> If someone offers to "settle" officials or make a problem disappear for cash, refuse. It is bribery, it exposes you to prosecution, and it makes you a target for more demands.
+
+## Compliance and record keeping
+
+Keep a file for **every** shipment, in paper and digital copies:
+
+- Proforma and commercial invoices, packing list, bill of lading or air waybill
+- Form M, PAAR and assessment notices
+- Duty and tax receipts, port and agent invoices
+- Insurance certificate and any approvals
+- Payment proofs and bank advices
+- Photos of the goods on arrival, and notes of any damage
+
+Records protect you if Customs or the tax authority asks questions later, let you work out true landed costs and make it easy to repeat what worked. Keep them for several years.
+
+## Try it
+
+```task
+{
+  "id": "iemi-m08-t1",
+  "prompt": "Tunde will import **cosmetic creams** for resale. Name **four** Nigerian bodies or documents he must think about before he ships, and say in a few words why for each. One per line.",
+  "minutes": 12,
+  "rows": 7,
+  "placeholder": "NAFDAC: ...\nCustoms: ...",
+  "rules": [
+    { "label": "Four lines", "minLines": 4 },
+    { "label": "Mentions NAFDAC (cosmetics need registration)", "pattern": "nafdac" },
+    { "label": "Mentions Customs", "pattern": "customs" },
+    { "label": "Mentions Form M or PAAR or the bank", "pattern": "form m|paar|bank" },
+    { "label": "Mentions CAC, business registration or TIN", "pattern": "cac|registration|registered|tin\\b|tax" }
+  ],
+  "sample": "NAFDAC: cosmetics generally need NAFDAC registration or approval before they can be sold, so I must check this before ordering.\nNigeria Customs Service: assesses the goods, collects duty and taxes and releases them.\nForm M and my bank: the import declaration must be raised through an authorised bank before the goods ship.\nCAC and tax registration: I should import as a registered business with a TIN so my bank, agent and records are in order.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "iemi-m08-t2",
+  "prompt": "Write a **checklist of six questions** to ask a clearing agent before you hire them. One question per line, each ending with a question mark.",
+  "minutes": 10,
+  "rows": 8,
+  "placeholder": "Are you licensed ...?",
+  "rules": [
+    { "label": "Six questions", "minLines": 6 },
+    { "label": "Every line is a question", "pattern": "\\?\\s*$", "perLine": true },
+    { "label": "Asks about their licence", "pattern": "licen[cs]" },
+    { "label": "Asks about fees or charges in writing", "pattern": "fee|charge|cost|quote|writing" },
+    { "label": "Asks about references or experience", "pattern": "reference|experience|other importers|clients?" },
+    { "label": "Asks about receipts or documents", "pattern": "receipt|document|official" }
+  ],
+  "sample": "Are you a licensed customs agent, and can I see your licence?\nHave you cleared goods like mine before, and can I speak to other importers you have served?\nCan you give me a written quote that separates your agency fee from duty and port charges?\nWill you give me official receipts for every payment to Customs and the terminal?\nWhat documents do you need from me, and by when?\nHow will you update me and who is responsible if there is a delay caused by your error?",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "iemi-m08-t3",
+  "prompt": "List **eight documents** you will keep in the file for each shipment. One per line.",
+  "minutes": 6,
+  "rows": 8,
+  "placeholder": "Commercial invoice\nPacking list",
+  "rules": [
+    { "label": "Eight lines", "minLines": 8 },
+    { "label": "Includes invoice and packing list", "pattern": "invoice[\\s\\S]*packing|packing[\\s\\S]*invoice" },
+    { "label": "Includes bill of lading or air waybill", "pattern": "bill of lading|air ?waybill|awb|b/l" },
+    { "label": "Includes Form M or PAAR", "pattern": "form m|paar" },
+    { "label": "Includes receipts for duty or charges", "pattern": "receipt|duty|assessment" }
+  ],
+  "sample": "Proforma invoice\nCommercial invoice\nPacking list\nBill of lading or air waybill\nForm M\nPAAR and assessment notice\nDuty, tax and port charge receipts\nInsurance certificate and payment proofs",
+  "required": false
+}
+```
+
+Next lesson: pulling every cost together into a landed cost and a price.
+$md$, true, true, 8, array['iemi-m08-t1', 'iemi-m08-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
+values ('iemi-m09', 'import-export-mini-importation', 'Landed cost, pricing and profit', 9, 'Landed Cost & Pricing', 'LANDED', array['Build a landed cost', 'Allow for exchange rates and charges', 'Set price for a target margin', 'Reuse a landed cost calculator']::text[], array['What goes into landed cost', 'Product cost, freight, insurance, duty and handling', 'Exchange rates and payment charges', 'Setting a selling price and margin', 'A landed cost calculator you can reuse']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('import-export-mini-importation:landed-cost-pricing-and-profit', 'import-export-mini-importation', 'iemi-m09', 'landed-cost-pricing-and-profit', 'Landed Cost, Pricing and Profit', 'Add up every cost between the supplier and your shelf, allow for exchange rates and payment charges, set a selling price and margin, and build a landed cost calculator you can reuse.', 25, $md$
+## What landed cost is
+
+**Landed cost** is the total cost of getting one unit of a product from the supplier to your warehouse, ready to sell. It is the number that decides whether an import makes money. The supplier's unit price is only the start.
+
+Importers lose money when they price from the supplier's quote. They add a margin to $3.00 and discover later that the real cost was twice that. A landed cost calculator prevents that mistake.
+
+## What goes into landed cost
+
+| Cost | What it is |
+| :-- | :-- |
+| **Product cost** | Unit price × quantity (with samples and any tooling or branding) |
+| **International freight** | Air, sea, courier or the forwarder's door-to-port price |
+| **Insurance** | Cargo insurance on the shipment |
+| **Duty** | Import duty on the customs value (CIF) |
+| **VAT** | On customs value plus duty (some businesses can recover it; confirm with your accountant) |
+| **Other levies and charges** | Small customs and processing charges |
+| **Clearing agent fees** | Their service charge |
+| **Port or terminal charges** | Handling, release, storage if goods stay beyond free days |
+| **Local transport** | Port to warehouse, and onward delivery if you pay for it |
+| **Bank and payment charges** | Transfer fees, Form M fees, FX margin charged by the bank |
+| **Losses** | Damaged, missing or unsellable goods |
+
+Add the last item as an allowance, for example 2% to 5% of product cost, until you have real data.
+
+## Exchange rates and payment charges
+
+You pay the supplier in dollars (or another currency) and sell in naira. If the dollar rises between your order and your payment, your cost in naira rises with it. Protect yourself by:
+
+- **Pricing with a margin for movement.** Use a rate slightly worse than today's.
+- **Paying promptly** after you agree the deal rather than waiting.
+- **Ordering smaller and more often** if the currency is unstable, so you reprice more frequently.
+- **Checking the rate your bank actually uses**, and any fees it adds. The rate on the internet is not the rate you get.
+
+Customs also uses its own exchange rate for valuing goods, which can differ from the one your bank used.
+
+## A worked example
+
+Tunde orders 300 power banks.
+
+| Item | Amount |
+| :-- | :-- |
+| Product cost: 300 × $3.00 | $900 |
+| Air freight | $150 |
+| Insurance | $10 |
+| **CIF value** | **$1,060** |
+| CIF in naira at ₦1,500 to $1 | ₦1,590,000 |
+| Duty at 20% | ₦318,000 |
+| VAT at 7.5% on (₦1,590,000 + ₦318,000 = ₦1,908,000) | ₦143,100 |
+| Clearing agent and port charges | ₦120,000 |
+| Local transport | ₦30,000 |
+| Bank and payment charges | ₦25,000 |
+| **Total landed cost** | **₦2,226,100** |
+| **Per unit (÷ 300)** | **₦7,420** |
+
+The supplier's price was $3.00, about ₦4,500 at ₦1,500. The real cost to Tunde is ₦7,420, about **65% higher.** That gap is why this lesson exists.
+
+## Setting a selling price and margin
+
+Start from the cost and the profit you need, then check the market.
+
+- **Markup** is profit as a percentage of **cost**.
+- **Margin** is profit as a percentage of the **selling price**.
+
+They are different. A product costing ₦6,000 sold at ₦10,000 has a profit of ₦4,000. The markup is 4,000 ÷ 6,000 = 66.7% and the margin is 4,000 ÷ 10,000 = 40%.
+
+To reach a target margin, divide the cost by (1 minus the margin):
+
+*Selling price = landed cost ÷ (1 − target margin)*
+
+For a cost of ₦7,420 and a 35% target margin: 7,420 ÷ 0.65 = **₦11,415.** Then compare it with competitors' prices. If the market pays less, you must lower cost, change the product or accept a smaller margin. If the market pays more, you may price higher.
+
+Remember the costs still ahead: marketing, packaging, delivery, staff and your own time. A 35% gross margin is not a 35% profit once those are paid.
+
+## A calculator you can reuse
+
+Build one spreadsheet with an input column and formulas, and reuse it for every product:
+
+1. Inputs: quantity, unit price, freight, insurance, exchange rate, duty rate, VAT rate, agent and port charges, transport, bank charges, loss allowance.
+2. Formulas: CIF = product + freight + insurance; naira CIF = CIF × rate; duty = naira CIF × duty rate; VAT = (naira CIF + duty) × VAT rate; total; unit cost.
+3. Outputs: landed cost per unit, selling price for your target margin, and profit for the batch.
+4. A second copy with the dollar **10% higher**, so you can see the effect.
+
+## Try it
+
+```task
+{
+  "id": "iemi-m09-t1",
+  "prompt": "Calculate the **total landed cost** and the **cost per unit** for 200 units. Product cost $4.00 a unit, freight $120, insurance $8, exchange rate ₦1,500 to $1, duty 10%, VAT 7.5% on CIF plus duty, clearing and port charges ₦90,000, local transport ₦20,000, bank charges ₦15,000. Show each step.",
+  "minutes": 15,
+  "rows": 12,
+  "placeholder": "Product cost = ...\nCIF = ...",
+  "rules": [
+    { "label": "Product cost of $800", "pattern": "\\$?\\s?800\\b" },
+    { "label": "CIF of $928 or ₦1,392,000", "pattern": "928|1,?392,?000" },
+    { "label": "Duty of ₦139,200", "pattern": "139,?200" },
+    { "label": "VAT of ₦114,840", "pattern": "114,?840" },
+    { "label": "Total landed cost of ₦1,771,040", "pattern": "1,?771,?040" },
+    { "label": "Cost per unit of about ₦8,855", "pattern": "8,?85[0-9]|8,?856" }
+  ],
+  "sample": "Product cost = 200 x $4.00 = $800.\nCIF = 800 + 120 + 8 = $928.\nCIF in naira = 928 x 1,500 = ₦1,392,000.\nDuty at 10% = ₦139,200.\nVAT = 7.5% of (1,392,000 + 139,200 = 1,531,200) = ₦114,840.\nOther costs = 90,000 + 20,000 + 15,000 = ₦125,000.\nTotal landed cost = 1,392,000 + 139,200 + 114,840 + 125,000 = ₦1,771,040.\nCost per unit = 1,771,040 / 200 = ₦8,855.2, about ₦8,855.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "iemi-m09-t2",
+  "prompt": "A product has a landed cost of **₦6,000** per unit. (a) What selling price gives a **40% margin**? (b) What is the profit per unit? (c) What is the **markup** on cost at that price? Show the formula you used for (a).",
+  "minutes": 8,
+  "rows": 6,
+  "placeholder": "Selling price = ...",
+  "rules": [
+    { "label": "Selling price of ₦10,000", "pattern": "10,?000" },
+    { "label": "Profit of ₦4,000", "pattern": "4,?000" },
+    { "label": "Markup of about 66.7% (or 67%)", "pattern": "66\\.?7|\\b67\\s?%|66\\.6" },
+    { "label": "Uses cost divided by (1 minus margin)", "pattern": "0\\.6|1\\s?-\\s?0\\.4|1\\s?-\\s?40" }
+  ],
+  "sample": "(a) Selling price = cost / (1 - margin) = 6,000 / (1 - 0.40) = 6,000 / 0.6 = ₦10,000.\n(b) Profit = 10,000 - 6,000 = ₦4,000 per unit.\n(c) Markup = 4,000 / 6,000 = 66.7% of cost.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "iemi-m09-t3",
+  "prompt": "Your product cost is $900 and the exchange rate moves from ₦1,500 to ₦1,650 to the dollar. Work out the product cost in naira at each rate, the increase in naira and the percentage increase. Then write one sentence about how you protect your price from this.",
+  "minutes": 8,
+  "rows": 6,
+  "placeholder": "At ₦1,500 = ...",
+  "rules": [
+    { "label": "₦1,350,000 at the old rate", "pattern": "1,?350,?000" },
+    { "label": "₦1,485,000 at the new rate", "pattern": "1,?485,?000" },
+    { "label": "Increase of ₦135,000", "pattern": "135,?000" },
+    { "label": "Increase of 10%", "pattern": "\\b10\\s?%|10 percent" },
+    { "label": "Says how to protect the price (margin buffer, pay promptly, reprice, order smaller)", "pattern": "buffer|margin|promptly|reprice|smaller|often|allow" }
+  ],
+  "sample": "At ₦1,500: 900 x 1,500 = ₦1,350,000.\nAt ₦1,650: 900 x 1,650 = ₦1,485,000.\nIncrease = ₦135,000, which is 10%.\nI protect my price by pricing with a buffer for exchange rate movement, paying the supplier promptly and ordering smaller batches more often so I can reprice.",
+  "required": false
+}
+```
+
+Next lesson: selling what you have imported.
+$md$, true, true, 9, array['iemi-m09-t1', 'iemi-m09-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
+values ('iemi-m10', 'import-export-mini-importation', 'Selling imported products', 10, 'Selling Imports', 'SELL', array['Choose sales channels', 'Compare wholesale and retail', 'Plan stock and cash flow', 'Market imported goods']::text[], array['Where and how to sell', 'Wholesale versus retail', 'Stock, cash flow and reordering', 'Marketing imported goods', 'Growing from one product to many']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('import-export-mini-importation:selling-imported-products', 'import-export-mini-importation', 'iemi-m10', 'selling-imported-products', 'Selling Imported Products', 'Choose where and how to sell, compare wholesale and retail, manage stock and cash flow, market imported goods and grow from one product to many.', 25, $md$
+## Selling is half the business
+
+An import is only profit once the goods are sold and the money is in your account. Many importers put all their effort into sourcing and shipping, then sit on stock. Plan how you will sell **before** the goods arrive.
+
+## Where and how to sell
+
+| Channel | Strengths | Watch out for |
+| :-- | :-- | :-- |
+| **Instagram, Facebook, WhatsApp and TikTok** | Cheap to start, direct customer contact, strong for visual products | You must post consistently and answer fast |
+| **Online marketplaces (Jumia, Jiji and others)** | Existing traffic and trust | Commission, competition, listing rules |
+| **Your own shop or stall** | Customers see and touch the product | Rent, time, location |
+| **Market traders and retailers (wholesale)** | Large, repeat orders | Lower price per unit, credit risk |
+| **Corporate and bulk buyers** | Big orders, invoices | Slow payment, formal requirements |
+| **Your own website** | Control and brand | Needs traffic and setup |
+
+Start with the channels you can reach this week, usually social media and people you know, and add more as you learn what works.
+
+## Wholesale versus retail
+
+- **Retail** sells one or a few units to the end customer at a higher price. Margins are higher but selling takes more effort and volume is lower.
+- **Wholesale** sells many units to a shop or trader at a lower price. The margin per unit is smaller, but you move stock quickly and free your money to reorder.
+
+Example: landed cost ₦7,420. Retail at ₦12,000 gives ₦4,580 profit a unit. Wholesale at ₦9,500 for 10 or more gives ₦2,080 a unit. If you sell 10 units to one wholesaler you make ₦20,800 in a day. To make the same at retail you need to sell about five units, which may take a week of messages. Most importers use both: retail to earn well, wholesale to turn stock into cash.
+
+## Stock, cash flow and reordering
+
+Cash flow is where small importers fail. You pay the supplier first, wait weeks for the goods and then wait again to sell them. Your money is tied up all that time.
+
+- **Know your sales rate.** Units sold per week or month.
+- **Know your lead time.** From the day you order to the day stock is ready to sell.
+- **Set a reorder point.** *Reorder point = monthly sales × (lead time in months + safety months).* If you sell 60 a month, lead time is 2 months and you want a 1-month safety buffer, reorder when stock falls to 60 × 3 = **180 units**.
+- **Don't spend all your cash on one order.** Keep money for freight, duty and emergencies.
+- **Track what has not sold.** Slow stock ties up money; discount it and move on.
+- **Reinvest profit in what sells.** Don't spend profit on the next order until you have counted it.
+
+A simple monthly record of money in, money out and stock in hand tells you more than guessing.
+
+## Marketing imported goods
+
+- **Show the product clearly.** Good photos and short videos, in use, are your best salespeople.
+- **Say what the customer gets,** not only what the product is: "A power bank that charges your phone four times, lasts a week."
+- **Be honest about quality and delivery time.** Complaints travel faster than praise.
+- **Make it easy to buy.** A clear price, a WhatsApp link and a fast reply.
+- **Use proof.** Customer photos, reviews and short testimonials.
+- **Offer something for repeat buyers:** a small discount, a bundle or a referral reward.
+- **Handle after-sales properly.** A replacement or refund policy builds trust that lets you charge more.
+
+## Growing from one product to many
+
+Once a product sells steadily:
+
+1. **Reorder and test a better price,** a better supplier or better packaging.
+2. **Add related products** your customers ask for, such as cases and cables with power banks.
+3. **Build your brand:** a name, logo and consistent look, and eventually your own label with the supplier.
+4. **Negotiate better terms** as your volume grows: lower unit prices, longer payment terms, priority production.
+5. **Improve logistics:** move more volume to sea, buy from several suppliers, keep a small warehouse.
+6. **Add channels,** and staff to answer messages and pack orders.
+
+Add one new thing at a time and keep the winners funded.
+
+## Try it
+
+```task
+{
+  "id": "iemi-m10-t1",
+  "prompt": "You sell about **60 units a month**. Your lead time from order to stock is **2 months** and you want a **1-month safety buffer**. Work out your **reorder point**. Then say in one sentence what happens if you wait until stock reaches zero.",
+  "minutes": 8,
+  "rows": 5,
+  "placeholder": "Reorder point = ...",
+  "rules": [
+    { "label": "Reorder point of 180 units", "pattern": "\\b180\\b" },
+    { "label": "Shows the calculation (60 x 3 or 60 x (2 + 1))", "pattern": "60\\s?[x×*]\\s?(3|\\(2\\s?\\+\\s?1\\))" },
+    { "label": "Says what happens at zero (stock-out, lost sales, waiting)", "pattern": "stock-?out|run out|lost sales|no stock|miss|wait|empty|zero" }
+  ],
+  "sample": "Reorder point = monthly sales x (lead time + safety months) = 60 x (2 + 1) = 60 x 3 = 180 units.\nIf I wait until stock reaches zero, I will run out for about two months while the new order arrives and lose sales and customers.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "iemi-m10-t2",
+  "prompt": "Write a **product listing** (a post or marketplace description) for the product you chose, in 50 to 110 words. Include what the customer gets, the price in naira, how delivery works and a clear call to action.",
+  "minutes": 12,
+  "rows": 8,
+  "placeholder": "20,000mAh power bank ...",
+  "rules": [
+    { "label": "States a price in naira", "pattern": "₦\\s?\\d|\\bngn\\b|naira" },
+    { "label": "Says what the customer gets (benefit or feature)", "pattern": "charge|lasts?|fast|strong|durable|save|get|enjoy|never|keeps?" },
+    { "label": "Explains delivery", "pattern": "deliver|dispatch|shipping|pickup|pick-up|within lagos|nationwide" },
+    { "label": "Has a call to action", "pattern": "order|dm|whatsapp|message|call|buy|click|contact" },
+    { "label": "Between 50 and 110 words", "minWords": 50, "maxWords": 115 }
+  ],
+  "sample": "Never run out of battery again. This 20,000mAh power bank charges a phone up to four times, with fast charging and two USB ports, in a strong black case. It is tested before sale and comes with a 3-month replacement guarantee. Price: ₦12,000 each, or ₦9,500 each when you buy 10 or more for your shop. Delivery within Lagos in 24 to 48 hours and to other states by courier in 3 to 5 days. To order, send us a WhatsApp message with your name, address and quantity, and we will confirm your order the same day.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "iemi-m10-t3",
+  "prompt": "Choose **two sales channels** for your first 100 units and say for each why you chose it, what it costs you and how many units you expect to sell there. One channel per line.",
+  "minutes": 8,
+  "rows": 5,
+  "placeholder": "Channel: ... - Why: ... - Units: ...",
+  "rules": [
+    { "label": "Two lines", "minLines": 2 },
+    { "label": "Names real channels", "pattern": "instagram|whatsapp|facebook|tiktok|jumia|jiji|shop|market|wholesale|retail|website" },
+    { "label": "Gives a reason in each line", "pattern": "why|because|since|cheap|reach|existing|customers|fast", "perLine": true },
+    { "label": "Gives a number of units in each line", "pattern": "\\b\\d+\\s*(units?|pieces?|pcs)?", "perLine": true }
+  ],
+  "sample": "Channel: Instagram and WhatsApp retail - Why: it costs almost nothing and I already have customers who ask for it - Units: 40 at ₦12,000\nChannel: wholesale to three phone accessory shops - Why: they buy in bulk and turn my stock into cash fast - Units: 60 at ₦9,500",
+  "required": false
+}
+```
+
+Next lesson: exporting from Nigeria and finding buyers abroad.
+$md$, true, true, 10, array['iemi-m10-t1', 'iemi-m10-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
+values ('iemi-m11', 'import-export-mini-importation', 'Export fundamentals and finding buyers', 11, 'Export Basics', 'EXPORT', array['Know export documents and rules', 'Find and check overseas buyers', 'Price an export and choose payment terms', 'Plan shipping to the buyer']::text[], array['Export basics and what sells abroad', 'Export documents and rules', 'Finding international buyers', 'Pricing and payment terms for export', 'Shipping to the buyer']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('import-export-mini-importation:export-fundamentals-and-finding-buyers', 'import-export-mini-importation', 'iemi-m11', 'export-fundamentals-and-finding-buyers', 'Export Fundamentals and Finding Buyers', 'Understand export basics and what sells abroad, the main export documents and rules, how to find and check international buyers, how to price and get paid, and how to ship to the buyer.', 20, $md$
+> [!NOTE]
+> Export rules, agencies, incentives and restricted goods change. This lesson shows the structure and the right questions. **Confirm the current requirements with the Nigerian Export Promotion Council (NEPC), Customs and the agency for your product before you ship.**
+
+## Export basics
+
+**Exporting** means selling goods outside your country. It can earn foreign currency, reach far bigger markets and allow better prices than you can get at home. It also asks more of you: the product must meet the buyer's standard, the paperwork must be right and getting paid across borders needs care.
+
+Exporting is not only for big companies. A small producer can start with a single buyer and a single product.
+
+## What sells abroad
+
+Nigeria exports many raw and processed goods. Commonly traded categories include:
+
+- **Agricultural products:** sesame seeds, cocoa, cashew, ginger, hibiscus flower (zobo), and other crops.
+- **Processed and packaged foods:** such as dried and packaged snacks, spices and sauces, especially for the diaspora.
+- **Beauty and personal care:** shea butter, black soap, natural oils.
+- **Fashion and crafts:** Ankara and other textiles, beads, leather goods, art.
+- **Minerals and other commodities,** which are more regulated.
+
+Buyers pay well for **quality, consistency and reliability**. A smaller volume of well-processed, well-packed goods often sells better than a large amount of untidy ones. Check which of your products are restricted from export in raw form, as some raw materials face export limits to encourage local processing.
+
+## Export documents and rules
+
+The set depends on the goods, but commonly includes:
+
+| Document or step | Purpose |
+| :-- | :-- |
+| **Registration as an exporter** | With NEPC, so you can access export support and be recognised |
+| **Form NXP** | The export declaration, completed through your bank, so the proceeds can be tracked |
+| **Commercial invoice and packing list** | The sale and the contents, as in imports |
+| **Bill of lading or air waybill** | The transport document |
+| **Certificate of origin** | Shows the goods are Nigerian, which can unlock lower duty in the buyer's market |
+| **Phytosanitary certificate** | For plant products, from the agricultural quarantine service, saying they are free of pests |
+| **NAFDAC and quality certificates** | For food, cosmetics and drugs |
+| **Customs examination and clearance** | Goods are inspected and released for export |
+
+The buyer's country has rules too: labelling, residue limits for food and import permits. Ask your buyer early what they need, because a rejected shipment abroad can be a total loss.
+
+## Finding international buyers
+
+- **NEPC and trade support.** Government export agencies publish buyer lists and run trade missions.
+- **B2B platforms.** List your products on international marketplaces with clear photos, specifications, MOQ and certificates.
+- **Trade fairs and exhibitions,** in person or online.
+- **Embassies and trade commissions,** which connect exporters with buyers.
+- **Importers and distributors in the target country.** Search for who already buys your product and message them directly with a short, professional offer.
+- **The diaspora.** For food, fashion and beauty, Nigerians abroad are an eager first market.
+- **Your professional network,** including LinkedIn, to reach buyers and brokers.
+
+A strong first approach is brief: who you are, the product, specification and quality proof, the quantity and price range, your location and how you can send a sample.
+
+**Check the buyer** as carefully as you checked suppliers: company registration, website, references and trading history. Never ship on a promise alone.
+
+## Pricing and payment terms for export
+
+Price your export in the buyer's currency and state the terms. A typical export price covers your product cost, processing, packing, local transport, port and documentation, plus your profit.
+
+*FOB price = total cost to place the goods on the ship + profit.*
+
+Payment terms, from safest to riskiest for you as the seller:
+
+| Term | How it works | Risk for you |
+| :-- | :-- | :-- |
+| **Payment in advance** | The buyer pays before you ship | Lowest, but few new buyers accept it in full |
+| **Letter of credit** | The buyer's bank promises to pay on correct documents | Low, but documents must match exactly |
+| **Documents against payment** | The buyer's bank releases the documents when the buyer pays | Medium |
+| **Part in advance, balance before release** | A deposit then the balance on shipment | Balanced, the common starting point |
+| **Open account / credit** | You ship and the buyer pays later | High: only with a long-trusted buyer |
+
+For a new buyer, ask for a deposit and the balance before the goods or documents are released, or use a letter of credit.
+
+## Shipping to the buyer
+
+Agree the Incoterm in the contract (FOB, CIF or DAP are common), who books the transport and who insures. Use a forwarder with experience on the route. Pack for the journey and the destination's rules, and keep photographs and records. Follow the shipment, tell the buyer the tracking and arrival date, and keep your documents ready for the buyer's customs.
+
+## Try it
+
+```task
+{
+  "id": "iemi-m11-t1",
+  "prompt": "Calculate the **FOB price** and the **price in dollars** for 1 tonne of dried ginger. Buying cost ₦1,400,000; processing and packing ₦200,000; local transport and port ₦150,000; documents and fees ₦50,000. Add a **20% profit on cost**. Exchange rate: ₦1,500 to $1.",
+  "minutes": 10,
+  "rows": 6,
+  "placeholder": "Total cost = ...",
+  "rules": [
+    { "label": "Total cost of ₦1,800,000", "pattern": "1,?800,?000" },
+    { "label": "Profit of ₦360,000", "pattern": "360,?000" },
+    { "label": "FOB price of ₦2,160,000", "pattern": "2,?160,?000" },
+    { "label": "Price of $1,440", "pattern": "1,?440" }
+  ],
+  "sample": "Total cost = 1,400,000 + 200,000 + 150,000 + 50,000 = ₦1,800,000.\nProfit at 20% = 0.20 x 1,800,000 = ₦360,000.\nFOB price = 1,800,000 + 360,000 = ₦2,160,000 per tonne.\nIn dollars = 2,160,000 / 1,500 = $1,440 per tonne.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "iemi-m11-t2",
+  "prompt": "A new buyer abroad asks you to ship 2 tonnes of sesame **on credit**, paying 60 days after arrival. In 40 to 100 words, say what you would propose instead and why.",
+  "minutes": 8,
+  "rows": 6,
+  "placeholder": "I would propose ...",
+  "rules": [
+    { "label": "Proposes a safer term (deposit, letter of credit, documents against payment, balance before release)", "pattern": "deposit|letter of credit|\\blc\\b|against payment|in advance|balance before|advance" },
+    { "label": "Explains the risk of credit with a new buyer", "pattern": "risk|trust|unpaid|not paid|new buyer|unknown|default" },
+    { "label": "Mentions checking the buyer", "pattern": "check|verify|reference|history|registered" },
+    { "label": "Between 40 and 100 words", "minWords": 40, "maxWords": 105 }
+  ],
+  "sample": "I would not ship on 60 days' credit to a new buyer because the risk of not being paid is too high and I cannot easily recover money from abroad. I would propose a deposit of about 30% with the balance paid before the goods or documents are released, or a letter of credit confirmed by a bank. I would also check the buyer's company registration, references and trading history before agreeing. After a few successful orders, I could consider giving credit on small amounts.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "iemi-m11-t3",
+  "prompt": "Write a **short first message to an overseas buyer** (50 to 110 words) offering a Nigerian product: who you are, the product and specification, a quantity and price range, a sample offer and how to reply.",
+  "minutes": 10,
+  "rows": 8,
+  "placeholder": "Dear ..., I am ...",
+  "rules": [
+    { "label": "Greets and says who you are", "pattern": "dear|hello|hi |i am|we are|my name" },
+    { "label": "Names a product", "pattern": "ginger|sesame|cocoa|cashew|hibiscus|shea|product|seeds|oil|butter|snack" },
+    { "label": "Mentions quantity or price range", "pattern": "\\d+\\s*(tonnes?|tons?|kg|kilograms?|cartons?|units?)|\\$\\s?\\d|price" },
+    { "label": "Offers a sample", "pattern": "sample" },
+    { "label": "Invites a reply", "pattern": "reply|contact|let me know|get in touch|respond|send us|email" },
+    { "label": "Between 50 and 110 words", "minWords": 50, "maxWords": 115 }
+  ],
+  "sample": "Dear Mr Hassan, I am Chioma Eze, an exporter of dried ginger from Kaduna, Nigeria. We supply split, dried ginger with 8% moisture, cleaned and packed in 25kg bags, with a phytosanitary certificate and laboratory test report. We can supply 1 to 10 tonnes a month at around $1,500 to $1,600 per tonne FOB Lagos. I would be glad to send you a free 1kg sample so you can check the quality. Please reply with your specification and the quantity you need, and I will send a full quotation.",
+  "required": false
+}
+```
+
+Next lesson: pulling the whole course together into your own plan.
+$md$, true, true, 11, array['iemi-m11-t1', 'iemi-m11-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
+values ('iemi-m12', 'import-export-mini-importation', 'Final project: your import or export business', 12, 'Trade Business Plan', 'PLAN', array['Plan a complete import or export', 'Cost and price it', 'Stress-test the plan', 'Present it clearly']::text[], array['Choosing your product and market', 'Building the supplier and shipping plan', 'Calculating costs and price', 'Presenting your business plan']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('import-export-mini-importation:final-project-your-trade-business', 'import-export-mini-importation', 'iemi-m12', 'final-project-your-trade-business', 'Final Project - Your Import or Export Business', 'Bring the course together by choosing your product and market, building the supplier and shipping plan, calculating costs and price, and presenting a business plan you can act on.', 55, $md$
+## What you are building
+
+You have learned the whole path: choose a product, find and verify a supplier, negotiate, ship, clear customs, price and sell. In this final module you put it in one plan. The plan should be good enough that you could start the first order from it, and good enough to show a partner, a bank or a mentor.
+
+Pick **one** product and **one** route, either an **import into Nigeria** or an **export from Nigeria**. Be specific: a real product, a real quantity, real numbers. Use today's prices from real suppliers, forwarders and marketplaces. Where you must assume a number, say so.
+
+## Your plan has six parts
+
+1. **Product and market.** The product, who buys it, why they will buy from you, and the evidence of demand and competition.
+2. **Suppliers (or buyers).** A shortlist of at least three suppliers, compared on the same terms, and your verification steps. If you export, your target buyers and how you will check them.
+3. **Order and shipping.** The order quantity, MOQ, sample plan, payment terms, shipping route (air, sea, courier), the forwarder and the documents.
+4. **Compliance and clearance.** The agencies, permits and registrations your product needs, the HS code, and how you will clear it.
+5. **Costs and price.** A full landed cost (or export price) per unit, your selling price, margin and the effect of a weaker naira.
+6. **Selling, cash flow and risks.** Where and how you will sell, your first 90 days, your reorder rule and your top risks with fixes.
+
+## Writing the plan
+
+Write for a reader who knows nothing about your product. Use numbers instead of adjectives ("sold 40 units at ₦12,000" rather than "sold well"). Keep each part short, a few lines each, and put long tables in an appendix or attachment.
+
+> [!TIP]
+> If a number worries you, test it. Change the exchange rate by 10%, the freight by 20% and the selling price down by 10%, and see whether the plan still works. A plan that only works when everything goes right is not a plan.
+
+## Try it
+
+```task
+{
+  "id": "iemi-m12-t1",
+  "prompt": "Describe your **product, market and buyers** in 60 to 140 words. Say what the product is, who will buy it and why, the price range you found in your market, and one competitor.",
+  "minutes": 12,
+  "rows": 8,
+  "placeholder": "My product is ...",
+  "rules": [
+    { "label": "Names the product", "pattern": "product|power bank|blender|ginger|sesame|shea|cases?|ring light|bag|shoes|hair|cream|stationery|[a-z]{4,}" },
+    { "label": "Says who will buy it", "pattern": "customers?|buyers?|shops?|students|women|men|retailers?|traders?|families|offices" },
+    { "label": "Gives a price range in naira or dollars", "pattern": "[₦$]\\s?\\d|\\bngn\\b|naira|dollars" },
+    { "label": "Names a competitor or where competitors sell", "pattern": "competitor|jumia|jiji|instagram|seller|shop|brand|market" },
+    { "label": "Between 60 and 140 words", "minWords": 60, "maxWords": 145 }
+  ],
+  "sample": "My product is a 20,000mAh power bank for people in Lagos who use their phones all day and lose power in traffic or during outages. My buyers are young professionals, students and small shops that resell phone accessories. I found about 25 sellers on Jumia and many on Instagram. Prices range from ₦8,500 for unknown brands to ₦20,000 for known ones, and a typical price is ₦12,000. A main competitor is a seller on Jumia with 300 reviews, but many reviews complain that the capacity is overstated and that it is slow to charge. I will compete by testing every unit and giving a 3-month replacement guarantee.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "iemi-m12-t2",
+  "prompt": "Write your **supplier and shipping plan**: list your three shortlisted suppliers (one line each, with price, terms and MOQ), then your sample plan, payment terms, shipping method and the documents you will need. At least eight lines.",
+  "minutes": 15,
+  "rows": 12,
+  "placeholder": "Supplier A - ...\nSample plan: ...",
+  "rules": [
+    { "label": "At least eight lines", "minLines": 8 },
+    { "label": "Lists suppliers with prices", "pattern": "supplier[\\s\\S]*[$₦]\\s?\\d" },
+    { "label": "States shipping terms", "pattern": "\\b(fob|exw|cif|dap|ddp)\\b" },
+    { "label": "Includes a sample plan", "pattern": "sample" },
+    { "label": "States payment terms", "pattern": "deposit|payment|balance|trade assurance|escrow" },
+    { "label": "States the shipping method", "pattern": "air|sea|lcl|fcl|courier" },
+    { "label": "Lists documents", "pattern": "invoice|packing list|bill of lading|air ?waybill|form m" }
+  ],
+  "sample": "Supplier A - Brightcell, Shenzhen, factory - $3.00 per unit, FOB, MOQ 200, verified by licence and video call\nSupplier B - PowerMax Trading, trader - $2.70, EXW, MOQ 500, not verified\nSupplier C - Zhuo Electronics, factory - $3.20, FOB, MOQ 100, ships to Nigeria often\nSample plan: order one sample from A and C by courier, test capacity, charging speed and safety, keep them for comparison.\nPayment terms: 30% deposit through Trade Assurance and 70% balance after pre-shipment inspection.\nShipping method: air cargo for 300 units, about 200 kg chargeable, with an experienced forwarder in Shenzhen.\nInsurance: cargo insurance on the full invoice value.\nDocuments: commercial invoice, packing list, air waybill, Form M, PAAR and the relevant SON certificate.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "iemi-m12-t3",
+  "prompt": "Write your **landed cost and price** for your first order. One line each: quantity, product cost, freight and insurance, exchange rate, duty and VAT, clearing and port, local transport, bank charges, total landed cost, cost per unit, selling price, margin percentage.",
+  "minutes": 15,
+  "rows": 14,
+  "placeholder": "Quantity: ...\nProduct cost: ...",
+  "rules": [
+    { "label": "At least ten lines", "minLines": 10 },
+    { "label": "Includes quantity and product cost", "pattern": "quantity[\\s\\S]*product cost|product cost[\\s\\S]*quantity" },
+    { "label": "Includes freight and insurance", "pattern": "freight[\\s\\S]*insurance|insurance[\\s\\S]*freight" },
+    { "label": "Includes exchange rate", "pattern": "exchange rate|₦\\s?[\\d,]+\\s?(to|per|/)\\s?\\$" },
+    { "label": "Includes duty and VAT", "pattern": "duty[\\s\\S]*vat|vat[\\s\\S]*duty" },
+    { "label": "Includes total landed cost and cost per unit", "pattern": "total[\\s\\S]*(per unit|unit cost)|(per unit|unit cost)[\\s\\S]*total" },
+    { "label": "Includes selling price and margin", "pattern": "selling price[\\s\\S]*margin|margin[\\s\\S]*selling price" }
+  ],
+  "sample": "Quantity: 300 units\nProduct cost: 300 x $3.00 = $900\nFreight and insurance: $150 + $10 = $160 (air)\nExchange rate: ₦1,500 to $1, so CIF is $1,060 = ₦1,590,000\nDuty at 20%: ₦318,000\nVAT at 7.5% on CIF plus duty: ₦143,100\nClearing and port charges: ₦120,000\nLocal transport: ₦30,000\nBank charges: ₦25,000\nTotal landed cost: ₦2,226,100\nCost per unit: about ₦7,420\nSelling price: ₦11,500 retail and ₦9,500 wholesale\nMargin: about 35% at retail",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "iemi-m12-t4",
+  "prompt": "Write your **first 90 days and your risks**: where you will sell, how many units by when, your reorder rule, and your **three biggest risks**, each with a fix. At least seven lines.",
+  "minutes": 12,
+  "rows": 10,
+  "placeholder": "Month 1: ...\nRisk: ... - Fix: ...",
+  "rules": [
+    { "label": "At least seven lines", "minLines": 7 },
+    { "label": "Says where it will sell", "pattern": "instagram|whatsapp|jumia|jiji|shop|market|wholesale|retail|website|buyers?" },
+    { "label": "Gives a time plan (month, week, days)", "pattern": "month|week|\\d+\\s*days" },
+    { "label": "States a reorder rule", "pattern": "reorder|re-order|order again|repeat" },
+    { "label": "Lists risks with fixes", "pattern": "risk[\\s\\S]*fix" }
+  ],
+  "sample": "Month 1: pre-sell 20 units to my existing Instagram and WhatsApp customers and place the order.\nMonth 2: the goods arrive and clear; sell 40 units at retail and 60 to three wholesale shops.\nMonth 3: sell the remaining units and review the numbers.\nReorder rule: reorder when stock falls to 100 units, which covers lead time plus a one-month buffer.\nRisk: the supplier takes the deposit and does not ship - Fix: verify the company and use Trade Assurance with a 30% deposit.\nRisk: the naira falls before payment - Fix: pay the supplier promptly and price with a 10% buffer.\nRisk: customs delay or document mismatch - Fix: check every document before shipping and use a licensed clearing agent.",
+  "required": true
+}
+```
+
+When you are done, submit your complete plan as your final project.
+$md$, true, true, 12, array['iemi-m12-t1', 'iemi-m12-t2', 'iemi-m12-t3', 'iemi-m12-t4']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 
 -- Course: Procurement & Sourcing
@@ -85183,6 +86774,684 @@ values ('freel-f08', 1, 'Reputation compounds.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 
+-- Assessment: Import and Export Fundamentals: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('iemi-m01-check', 'import-export-mini-importation', 'module', 'iemi-m01', 'Import and Export Fundamentals: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-m01-q1', 'iemi-m01-check', 1, 'A supplier in Guangzhou sells goods to a trader in Lagos. What is this for Nigeria?', '["An export","An import","A re-export","Domestic trade"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-m01-q1', 1, 'Goods coming into a country are its imports; for China the same sale is an export.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-m01-q2', 'iemi-m01-check', 2, 'Which person physically deals with Customs on arrival and gets the goods released for you?', '["The supplier","The clearing agent","The airline pilot","Your customer"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-m01-q2', 1, 'A licensed clearing agent (customs broker) handles the declaration, payment of duty and release.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-m01-q3', 'iemi-m01-check', 3, 'A quote says FOB Shenzhen. What does that mean?', '["The seller delivers to your door in Lagos","The seller puts the goods on board the ship at Shenzhen; cost and risk are yours from then","You collect from the factory gate","The seller pays all duty in Nigeria"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-m01-q3', 1, 'FOB means the seller loads the goods on the vessel at the named port; after that the freight and risk are the buyer''s.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-m01-q4', 'iemi-m01-check', 4, 'Which is the best way to handle the risk of a first import?', '["Order a full container to get the lowest price","Start small, test, then grow","Pay the whole amount upfront to get a discount","Skip the paperwork on small orders"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-m01-q4', 1, 'A small first order limits what you can lose while you learn.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-m01-q5', 'iemi-m01-check', 5, 'Two suppliers quote $2.40 EXW and $2.80 FOB for the same item. Why can''t you say the first is cheaper?', '["EXW is always cheaper","The terms cover different costs, so EXW needs extra transport costs added","FOB means free","Quotes never differ in terms"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-m01-q5', 1, 'Under EXW you pay for getting the goods to the port as well; only after adding those costs can you compare.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Product Research and Market Validation: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('iemi-m02-check', 'import-export-mini-importation', 'module', 'iemi-m02', 'Product Research and Market Validation: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-m02-q1', 'iemi-m02-check', 1, 'What should you start with when choosing a product?', '["The cheapest item on a supplier site","Evidence that customers already want it","What your friend imports","The heaviest product"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-m02-q1', 1, 'Demand first: a cheap product nobody buys is not a bargain.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-m02-q2', 'iemi-m02-check', 2, 'A product lands at ₦6,500 and sells for ₦10,000. What is the margin?', '["15%","35%","54%","65%"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-m02-q2', 1, 'Profit ₦3,500 divided by the selling price ₦10,000 is 35%.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-m02-q3', 'iemi-m02-check', 3, 'Why are small, light and durable products good for beginners?', '["Customs ignores them","Freight and breakage take less of the margin","They never need a supplier","They are always restricted"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-m02-q3', 1, 'Freight is charged by weight and size, and fragile goods are costly to lose.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-m02-q4', 'iemi-m02-check', 4, 'What is the best way to test a new product before a large order?', '["Order a container and see","Pre-sell, order a sample and place a small first order","Ask the supplier if it will sell","Copy a competitor''s price"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-m02-q4', 1, 'Pre-selling and a small order give real evidence at low cost.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-m02-q5', 'iemi-m02-check', 5, 'You plan to import cosmetic creams. What must you check first?', '["Nothing: cosmetics are unregulated","NAFDAC and other approval requirements","Only the colour of the packaging","Only the supplier''s logo"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-m02-q5', 1, 'Cosmetics are regulated products in Nigeria and need approval before sale.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Supplier Sourcing: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('iemi-m03-check', 'import-export-mini-importation', 'module', 'iemi-m03', 'Supplier Sourcing: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-m03-q1', 'iemi-m03-check', 1, 'What is the benefit of contacting three to five suppliers for one product?', '["It annoys suppliers into lowering prices","You learn the real price and quality range","Platforms require it","It removes the need for samples"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-m03-q1', 1, 'Several quotes show what is normal, so you can spot a bargain or a trap.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-m03-q2', 'iemi-m03-check', 2, 'A supplier profile lists electronics, shoes and furniture. What does that suggest?', '["A specialised factory","Probably a trading company","A government agency","A guaranteed bargain"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-m03-q2', 1, 'A true factory usually focuses on one line of goods.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-m03-q3', 'iemi-m03-check', 3, 'Which message gets the most useful reply from a supplier?', '["Price?","One that gives the model, quantity and destination and asks for tier pricing, MOQ, sample price and lead time","Please send your catalogue","I want your lowest price"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-m03-q3', 1, 'Specific questions get specific answers and show you are serious.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-m03-q4', 'iemi-m03-check', 4, 'Supplier B quotes $2.40 EXW and Supplier A quotes $2.80 FOB. How should you compare them?', '["Choose B because it is cheaper","Adjust both to the same terms before ranking","Choose A because the price is higher","Ignore the terms"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-m03-q4', 1, 'Add the missing costs so the quotes cover the same stages.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-m03-q5', 'iemi-m03-check', 5, 'When may a sourcing agent be useful?', '["Never","When you are a beginner with a language gap and need factories checked","Only for orders above a million dollars","To avoid paying any duty"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-m03-q5', 1, 'Agents can find and check suppliers for a fee; verify the agent too.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Supplier Verification: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('iemi-m04-check', 'import-export-mini-importation', 'module', 'iemi-m04', 'Supplier Verification: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-m04-q1', 'iemi-m04-check', 1, 'A supplier refuses a live video call of the factory. What should you conclude?', '["Nothing; calls are unnecessary","It is a red flag; be careful or find another supplier","They are very busy and therefore reliable","The price must be low"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-m04-q1', 1, 'A genuine supplier will usually show their factory live.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-m04-q2', 'iemi-m04-check', 2, 'After weeks of normal emails, the supplier sends new bank details. What do you do?', '["Pay to the new account at once","Confirm by phone on a trusted number before paying anything","Reply and ask them to send it twice","Send half to each account"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-m04-q2', 1, 'A change of bank details is a classic sign of hacking or fraud.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-m04-q3', 'iemi-m04-check', 3, 'Which payment method gives the most protection for a first order on Alibaba?', '["Cash to an agent","Trade Assurance on the platform","Gift cards","A personal account transfer"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-m04-q3', 1, 'Protected payment holds you covered if the order does not arrive or match.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-m04-q4', 'iemi-m04-check', 4, 'What does a pre-shipment inspection check?', '["The factory''s staff numbers","The finished goods against your specification before you pay the balance","Your bank''s rate","The shipping line''s ship"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-m04-q4', 1, 'An inspector checks quantity, quality and packing before the goods leave.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-m04-q5', 'iemi-m04-check', 5, 'A price is far below every other supplier and they want full payment today. What is most likely?', '["A genuine clearance sale","A scam or a very poor product","A special loyalty price","A good deal you must grab"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-m04-q5', 1, 'Bait prices and pressure to pay quickly are common fraud signs.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Negotiation, MOQ and Samples: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('iemi-m05-check', 'import-export-mini-importation', 'module', 'iemi-m05', 'Negotiation, MOQ and Samples: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-m05-q1', 'iemi-m05-check', 1, 'Which request is best when the MOQ is higher than you want?', '["Demand they ignore the MOQ","Ask for a smaller trial order, mixed models or a stock supplier","Accept it and order more than you can sell","Stop replying"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-m05-q1', 1, 'There are several ways to reach a workable first order without over-buying.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-m05-q2', 'iemi-m05-check', 2, 'Why show a supplier your plan to reorder?', '["It has no effect","A repeat buyer is worth a better price","It lets you skip the sample","It removes the MOQ by law"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-m05-q2', 1, 'Suppliers prefer buyers who return.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-m05-q3', 'iemi-m05-check', 3, 'What do you do with a sample when the bulk order arrives?', '["Throw it away","Keep it as the standard to compare the bulk goods against","Resell it first","Give it to the shipping line"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-m05-q3', 1, 'The sample is your evidence if the bulk quality is worse.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-m05-q4', 'iemi-m05-check', 4, 'A common payment arrangement for manufactured goods is:', '["100% a year in advance","About 30% deposit and the balance before shipment or against documents","Nothing until you resell","100% in cash to the agent"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-m05-q4', 1, 'A deposit starts production and the balance is held until the goods are checked or shipped.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-m05-q5', 'iemi-m05-check', 5, 'Why write a purchase order?', '["It is required to open a bank account","It records the product, price, quantity, terms and delivery so there is no later dispute","It replaces the commercial invoice","It avoids duty"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-m05-q5', 1, 'A clear PO prevents arguments about what was agreed.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: International Shipping: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('iemi-m06-check', 'import-export-mini-importation', 'module', 'iemi-m06', 'International Shipping: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-m06-q1', 'iemi-m06-check', 1, 'A carton is 60 × 40 × 50 cm and weighs 15 kg. What is the chargeable air weight (divisor 6,000)?', '["15 kg","20 kg","120 kg","6,000 kg"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-m06-q1', 1, 'Volumetric weight is 120,000 ÷ 6,000 = 20 kg, which is greater than 15 kg actual.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-m06-q2', 'iemi-m06-check', 2, 'Which freight option usually suits heavy, bulky, non-urgent goods?', '["Courier","Sea freight","Air freight","Hand luggage"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-m06-q2', 1, 'Sea freight costs far less per unit of cargo, at the price of time.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-m06-q3', 'iemi-m06-check', 3, 'What does LCL mean?', '["Large Container Load","Less than Container Load: your goods share a container","Low-Cost Logistics","Local Cargo Licence"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-m06-q3', 1, 'LCL shares a container and you pay for your cubic metres.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-m06-q4', 'iemi-m06-check', 4, 'Why buy cargo insurance?', '["It speeds up customs","Carrier liability is low, so loss or damage in transit would otherwise be yours","It is free","It replaces the invoice"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-m06-q4', 1, 'Insurance covers the value of the goods against loss or damage.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-m06-q5', 'iemi-m06-check', 5, 'Which is the best way to plan stock around transit time?', '["Use the shortest quoted time","Use the longest realistic time with a buffer","Ignore delays","Order the day you run out"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-m06-q5', 1, 'Holidays, congestion and inspections regularly add time.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Import Documentation and Customs: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('iemi-m07-check', 'import-export-mini-importation', 'module', 'iemi-m07', 'Import Documentation and Customs: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-m07-q1', 'iemi-m07-check', 1, 'Which document is the receipt and contract of carriage for sea freight?', '["Packing list","Bill of lading","Air waybill","Certificate of origin"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-m07-q1', 1, 'The bill of lading is the sea transport document; the air waybill is its air equivalent.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-m07-q2', 'iemi-m07-check', 2, 'Why does the HS code matter?', '["It sets your selling price","It decides the duty rate and whether the goods are restricted","It names the supplier","It is only for exports"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-m07-q2', 1, 'The code classifies the goods for duty, permits and statistics.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-m07-q3', 'iemi-m07-check', 3, 'CIF value ₦2,000,000, duty 10%, VAT 7.5% on CIF plus duty. What is the total duty and VAT?', '["₦200,000","₦350,000","₦365,000","₦500,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-m07-q3', 2, 'Duty ₦200,000 plus VAT 7.5% of ₦2,200,000 = ₦165,000 gives ₦365,000.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-m07-q4', 'iemi-m07-check', 4, 'What is the most common cause of customs delay?', '["Documents that do not match each other or the goods","A shipment that is too small","Paying duty on time","Using an invoice"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-m07-q4', 0, 'Mismatches in quantities, descriptions or values draw questions and fines.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-m07-q5', 'iemi-m07-check', 5, 'A supplier offers to write half the true value on the invoice to reduce duty. What do you do?', '["Agree; everyone does it","Refuse: under-declaring is an offence that can lead to seizure and penalties","Agree for small orders only","Agree but pay the agent more"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-m07-q5', 1, 'False declarations risk the whole shipment and your record.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Nigerian Import Procedures: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('iemi-m08-check', 'import-export-mini-importation', 'module', 'iemi-m08', 'Nigerian Import Procedures: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-m08-q1', 'iemi-m08-check', 1, 'Which body registers food, drinks, drugs and cosmetics for sale in Nigeria?', '["SON","NAFDAC","NCC","CAC"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-m08-q1', 1, 'NAFDAC regulates and registers these products.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-m08-q2', 'iemi-m08-check', 2, 'When is the Form M raised?', '["After the goods arrive","Before the goods are shipped, through an authorised bank","Only for exports","Never for small orders"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-m08-q2', 1, 'The import declaration is made before shipment, using the supplier''s proforma invoice.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-m08-q3', 'iemi-m08-check', 3, 'What happens if containers stay beyond the free days at the port?', '["Nothing","Storage and demurrage charges build up every day","Duty is refunded","Customs pays the cost"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-m08-q3', 1, 'Delay is expensive; storage and demurrage accrue daily.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-m08-q4', 'iemi-m08-check', 4, 'Someone offers to ''settle'' an official with cash to speed clearance. What do you do?', '["Accept to save time","Refuse; it is bribery and exposes you to prosecution","Pay half","Pay through a friend"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-m08-q4', 1, 'Pay duty only through official channels and keep receipts.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-m08-q5', 'iemi-m08-check', 5, 'Why keep a file of documents for every shipment?', '["To impress the supplier","To answer later questions, work out true costs and repeat what worked","Because the bank deletes records","It replaces insurance"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-m08-q5', 1, 'Records protect you and make the next shipment easier.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Landed Cost, Pricing and Profit: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('iemi-m09-check', 'import-export-mini-importation', 'module', 'iemi-m09', 'Landed Cost, Pricing and Profit: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-m09-q1', 'iemi-m09-check', 1, 'Why must you price from landed cost and not from the supplier''s quote?', '["The quote is always wrong","The quote leaves out freight, duty, VAT, clearing, transport and charges","Customs sets your price","Margins are fixed by law"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-m09-q1', 1, 'Many costs sit between the factory price and your shelf.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-m09-q2', 'iemi-m09-check', 2, 'Landed cost per unit is ₦6,000. What price gives a 40% margin?', '["₦8,400","₦9,000","₦10,000","₦12,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-m09-q2', 2, '6,000 ÷ (1 − 0.40) = ₦10,000. Adding 40% to cost (₦8,400) would only be a 28.6% margin.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-m09-q3', 'iemi-m09-check', 3, 'A product costs ₦6,000 and sells at ₦10,000. What is the markup on cost?', '["40%","50%","66.7%","100%"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-m09-q3', 2, 'Profit ₦4,000 divided by cost ₦6,000 is 66.7%; the margin on price is 40%.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-m09-q4', 'iemi-m09-check', 4, 'The dollar rises from ₦1,500 to ₦1,650 before you pay. What is the effect?', '["No effect","Your naira cost rises by 10%","Your naira cost falls","Duty is cancelled"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-m09-q4', 1, '1,650 ÷ 1,500 is 10% higher, so every dollar of cost costs more naira.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-m09-q5', 'iemi-m09-check', 5, 'What is a good use of a landed cost calculator?', '["Reusing the same formulas for every product and testing a weaker naira","Printing for the customs officer","Setting the supplier''s price","Replacing the invoice"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-m09-q5', 0, 'One calculator with inputs and formulas prevents mistakes and shows the effect of changes.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Selling Imported Products: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('iemi-m10-check', 'import-export-mini-importation', 'module', 'iemi-m10', 'Selling Imported Products: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-m10-q1', 'iemi-m10-check', 1, 'Why is wholesale useful even with a smaller margin?', '["It is more profitable per unit","It turns stock into cash quickly so you can reorder","It avoids tax","It needs no stock"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-m10-q1', 1, 'Faster cash flow lets you keep the business moving.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-m10-q2', 'iemi-m10-check', 2, 'You sell 60 a month, lead time is 2 months and you want a 1-month buffer. When do you reorder?', '["At 60 units","At 120 units","At 180 units","At zero"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-m10-q2', 2, '60 × (2 + 1) = 180 units.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-m10-q3', 'iemi-m10-check', 3, 'What is the best way to use profit?', '["Spend it all straight away","Count it first, then reinvest in what sells","Reinvest in slow stock","Hide it from the records"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-m10-q3', 1, 'Count profit before the next order so you do not spend working capital.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-m10-q4', 'iemi-m10-check', 4, 'Which product listing is strongest?', '["Power bank for sale","A power bank that charges your phone four times, with price, delivery and a clear way to order","Best price ever","Cheap! DM"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-m10-q4', 1, 'Benefits, price, delivery and a call to action turn viewers into buyers.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-m10-q5', 'iemi-m10-check', 5, 'How should you grow from one product to many?', '["Add ten products at once","Add one new thing at a time and keep the winners funded","Stop selling the first product","Copy every competitor"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-m10-q5', 1, 'Focused steps keep cash and quality under control.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Export Fundamentals and Finding Buyers: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('iemi-m11-check', 'import-export-mini-importation', 'module', 'iemi-m11', 'Export Fundamentals and Finding Buyers: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-m11-q1', 'iemi-m11-check', 1, 'Which payment term is riskiest for an exporter shipping to a new buyer?', '["Letter of credit","Open account (pay later)","Deposit plus balance before release","Payment in advance"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-m11-q1', 1, 'Shipping on credit leaves you chasing money abroad.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-m11-q2', 'iemi-m11-check', 2, 'What does a phytosanitary certificate show?', '["The buyer''s credit history","That plant products are free of pests","The exchange rate","The ship''s name"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-m11-q2', 1, 'It is issued for plant products by the agricultural quarantine authority.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-m11-q3', 'iemi-m11-check', 3, 'Total cost per tonne is ₦1,800,000 and you want 20% profit on cost. What is the FOB price?', '["₦1,820,000","₦2,000,000","₦2,160,000","₦3,600,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-m11-q3', 2, '1,800,000 × 1.20 = ₦2,160,000.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-m11-q4', 'iemi-m11-check', 4, 'How should you treat a new overseas buyer?', '["Ship at once on their word","Check their company, references and history before shipping","Ignore them","Ask them to pay in cash at the port"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-m11-q4', 1, 'Verify buyers as carefully as you verify suppliers.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-m11-q5', 'iemi-m11-check', 5, 'What is a safe starting term with a new buyer?', '["Full credit for 90 days","A deposit with the balance before goods or documents are released, or a letter of credit","Nothing in writing","Payment after they resell"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-m11-q5', 1, 'It protects you while the relationship builds.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Final Project: Your Trade Business: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('iemi-m12-check', 'import-export-mini-importation', 'module', 'iemi-m12', 'Final Project: Your Trade Business: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-m12-q1', 'iemi-m12-check', 1, 'Which opening is best for your business plan?', '["A general statement about trade","A specific product, buyer and the evidence of demand","A list of all products you like","Your logo"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-m12-q1', 1, 'Specifics and evidence make a plan believable.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-m12-q2', 'iemi-m12-check', 2, 'What does stress-testing the plan mean?', '["Reading it aloud","Changing the exchange rate, freight and price to see whether it still works","Printing it","Showing it to the supplier"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-m12-q2', 1, 'A plan that only works if everything goes right is fragile.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-m12-q3', 'iemi-m12-check', 3, 'Why include the compliance part?', '["To fill space","Permits, approvals and the HS code decide whether the goods can be cleared and what they cost","Customs requires a plan","Banks ask for pictures"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-m12-q3', 1, 'Compliance problems can stop or seize a shipment.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-m12-q4', 'iemi-m12-check', 4, 'Which statement is best supported with numbers?', '["It will sell well","I expect to sell 40 units at ₦12,000 in 30 days to my existing customers","Everyone wants this","The price is fair"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-m12-q4', 1, 'Numbers let a reader judge the plan.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-m12-q5', 'iemi-m12-check', 5, 'Why list your biggest risks with fixes?', '["To scare the reader","To show you have thought about what could go wrong and how you will respond","Risks do not matter","It is a customs rule"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-m12-q5', 1, 'A plan with answers to its main risks is more credible and safer.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Import, Export & Mini Importation: final assessment
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('import-export-mini-importation-final', 'import-export-mini-importation', 'final', null, 'Import, Export & Mini Importation: final assessment', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-f01', 'import-export-mini-importation-final', 1, 'Which is the best first import for a beginner?', '["A full container of one untested product","A small test order after a sample, with the full landed cost worked out","Whatever is cheapest","Whatever a friend imported last year"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-f01', 1, 'Small, tested and costed limits the loss while you learn.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-f02', 'import-export-mini-importation-final', 2, 'A quote says DAP Lagos. What do you still have to handle?', '["Nothing at all","Import clearance, duty and taxes","Export clearance in China","Loading the ship"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-f02', 1, 'Under DAP the seller delivers to the named place; the buyer clears the goods into the country.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-f03', 'import-export-mini-importation-final', 3, 'Which of these is a typical sign of a supplier scam?', '["A business licence that matches the bank account","A far lower price, pressure to pay in full and a refusal to do a video call","A sample offer","A request to use Trade Assurance"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-f03', 1, 'Bait prices, pressure and refusal to show the factory are classic fraud signs.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-f04', 'import-export-mini-importation-final', 4, 'You are buying 300 units and the supplier''s MOQ is 500. What is a sensible response?', '["Walk away without asking","Ask for a trial order, tier pricing, or a stock supplier","Order 5,000 for the discount","Pay double"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-f04', 1, 'There are options that keep your risk small.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-f05', 'import-export-mini-importation-final', 5, 'Ten cartons, each 60 × 40 × 50 cm and 15 kg, go by air at $6 per kg. What is the freight cost?', '["$900","$1,000","$1,200","$7,200"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-f05', 2, 'Chargeable weight is 20 kg a carton × 10 = 200 kg; 200 × $6 = $1,200.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-f06', 'import-export-mini-importation-final', 6, 'The commercial invoice and bill of lading describe the goods differently. What is the likely result?', '["Faster clearance","Delay, questions and possibly fines until corrected","A lower duty rate","Nothing"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-f06', 1, 'Customs expects documents that agree with each other and with the goods.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-f07', 'import-export-mini-importation-final', 7, 'Which agency''s approval do imported packaged foods and cosmetics generally need for sale in Nigeria?', '["NAFDAC","NCC","CAC","The airline"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-f07', 0, 'NAFDAC registers and regulates these products.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-f08', 'import-export-mini-importation-final', 8, 'CIF ₦3,000,000, duty 20%, VAT 7.5% on CIF plus duty. What is the total duty and VAT?', '["₦600,000","₦825,000","₦870,000","₦900,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-f08', 2, 'Duty ₦600,000 plus VAT 7.5% of ₦3,600,000 = ₦270,000.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-f09', 'import-export-mini-importation-final', 9, 'The landed cost per unit is ₦7,420. Which selling price gives about a 35% margin?', '["₦10,017","₦11,415","₦14,840","₦7,680"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-f09', 1, '7,420 ÷ 0.65 is about ₦11,415.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-f10', 'import-export-mini-importation-final', 10, 'Why can''t you add 40% to cost and call it a 40% margin?', '["You can","Markup is on cost and margin is on price; a 40% markup is only a 28.6% margin","Customs forbids it","Margins are fixed"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-f10', 1, 'A cost of 100 plus 40% sells at 140, and 40 ÷ 140 is 28.6%.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-f11', 'import-export-mini-importation-final', 11, 'A customs officer''s friend offers to ''reduce'' the duty for cash. What do you do?', '["Pay to save money","Refuse and pay only through official channels with receipts","Pay half","Ask a colleague to pay it"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-f11', 1, 'Bribery is an offence and exposes you to more demands and prosecution.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-f12', 'import-export-mini-importation-final', 12, 'You sell 60 units a month, with a 2-month lead time and a 1-month buffer. Where is your reorder point?', '["60","120","180","240"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-f12', 2, '60 × (2 + 1) = 180.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-f13', 'import-export-mini-importation-final', 13, 'A new overseas buyer wants 2 tonnes on 60 days'' credit. What do you do?', '["Agree","Check them and ask for a deposit with the balance before release, or a letter of credit","Ship without papers","Ask them to pay the airline"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-f13', 1, 'Credit with an unknown buyer is the riskiest term.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-f14', 'import-export-mini-importation-final', 14, 'What do you do with your records of a completed shipment?', '["Delete them","Keep a full file of documents, receipts and photos","Give them all to the agent","Keep only the invoice"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-f14', 1, 'Complete records protect you and help you cost the next shipment.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('iemi-f15', 'import-export-mini-importation-final', 15, 'What makes a trade business plan credible?', '["Confident words","Real prices, a verified supplier, a full landed cost, tested assumptions and named risks with fixes","A long document","A famous product"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('iemi-f15', 1, 'Evidence, numbers and tested assumptions matter more than length.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
 -- Project: Harbourline Freight operations review
 insert into public.projects (id, course_id, title, summary, brief_md, tasks, datasets, rubric, required)
 values ('sql-harbourline-review', 'sql-for-data-analysis', 'Harbourline Freight operations review', 'Analyse the operations of a fictional logistics company and report what you find to its leadership team.', $md$Harbourline Freight's leadership team is planning 2027 and has asked for an operations review built from the company database.
@@ -85511,6 +87780,16 @@ insert into public.projects (id, course_id, title, summary, brief_md, tasks, dat
 values ('sdc-kasuwa-refunds-service', 'software-developer-capstone', 'Kasuwa''s refunds service, fixed and shipped', 'Take a real (small) codebase with six reported bugs to a tested, secure release: reproductions, fixes for money, security and integrity bugs, a stricter API, a code review and a CI-checked release.', $md$Kasuwa's refunds service has six open bug reports and a pull request waiting for review. Fix the bugs properly, review the pull request, and ship a release your team could trust.
 
 Start from the starter code (https://academy.cloudtechanalytics.com/datasets/refunds/) in a GitHub repository. Submit a link to the repository: it should contain all your fixes, the tests, the GitHub Actions workflow (passing), a CHANGELOG and your review of PR 42 (as REVIEW.md). In the text box, paste your **pull request description** for the combined fixes, followed by a short note on where each task is.$md$, array['Triage: the six issues in order of harm, with reasons.', 'Reproductions: a failing test for each issue, from the reporter''s example.', 'Money and boundaries: whole kobo with Decimal and half-up rounding, and the 14-day window as the policy states it.', 'Security: parameterised queries everywhere, with tests that attack the search.', 'Integrity: an idempotency key with a unique index, the delivery fee refunded once, refunds capped at what was paid, in one transaction, with a migration.', 'API: validation with 400, 404 and 422 responses, a request_id for retries, tests for every path, and API documentation.', 'Review and release: your review of PR 42, a CI workflow that blocks failing tests, a version tag and release notes.']::text[], array['refunds']::text[], array['Every fix is preceded by a failing test that uses the reported example, and every test still passes at the end.', 'Money stays exact: whole kobo, Decimal, one explicit rounding rule.', 'No SQL is built from user input; the security tests attack the fix.', 'Rules that protect money are enforced in a transaction and backed by a database constraint.', 'The API returns the right status code with a clear message for every bad request, and can''t be made to return a 500.', 'The code review is specific, kind and blocks what must be blocked.', 'The release is shipped through CI with clear commits, a tag and release notes other teams can act on.']::text[], true)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
+
+
+-- Project: Your import or export business plan
+insert into public.projects (id, course_id, title, summary, brief_md, tasks, datasets, rubric, required)
+values ('iemi-business-plan', 'import-export-mini-importation', 'Your import or export business plan', 'A complete plan for one product and one route: product, suppliers, shipping, compliance, landed cost and price, and how you will sell.', $md$Choose one product and one route, either an import into Nigeria or an export from Nigeria, and write the business plan you would use to place the first order.
+
+Use real prices from real suppliers, forwarders and marketplaces, and say where you have had to assume a number. Submit a link to your plan (a shared document, PDF or folder) and paste your **landed cost (or export price) per unit** and your **selling price and margin** below, followed by a short note on where to find each part.
+
+Write for a reader who knows nothing about your product, such as a partner, a bank or a mentor: clear, specific and backed by numbers.$md$, array['Product and market: the product, who buys it and why, the price range you found and at least two competitors, with evidence of demand.', 'Suppliers (or buyers): a shortlist of at least three, compared on the same terms, and the checks you made to verify them.', 'Order and shipping: quantity, MOQ, sample plan, payment terms, shipping method, forwarder and the documents you will need.', 'Compliance and clearance: the agencies, permits and registrations your product needs, its HS code and how you will clear it (or the export documents and rules).', 'Costs and price: a full landed cost (or export price) per unit, the selling price and margin, and the effect of the naira weakening by 10%.', 'Selling plan: channels, how many units you expect to sell and when, and your reorder rule.', 'Cash flow for the first 90 days: money in and out, and how much you need to start.', 'Risks: your three biggest risks, each with a fix.']::text[], '{}'::text[], array['The product is specific, and demand and competition are supported by evidence, not opinion.', 'Suppliers (or buyers) are compared fairly on the same terms and verified with concrete checks.', 'The order, payment terms and shipping method are realistic and protect the buyer from fraud and loss.', 'Compliance is specific to the product: the right agencies, permits, HS code and documents.', 'The landed cost (or export price) includes every cost, with the calculations shown, and the price and margin follow from it.', 'The plan is tested against a weaker naira and higher freight, and still works or is changed.', 'The selling plan, cash flow and risks are practical, with clear numbers and fixes.']::text[], true)
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
 
 
