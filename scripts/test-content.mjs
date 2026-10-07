@@ -41,6 +41,7 @@ const SHORT = [
   "digital",
   "internship",
   "freelancing",
+  "import-export",
 ];
 const COURSES = [...FULL, ...SHORT];
 // The folders withheld from the public site must be exactly the programme-only (paid) courses in the catalogue.
@@ -48,7 +49,10 @@ const COURSES = [...FULL, ...SHORT];
   const { PROGRAMME_ONLY_COURSES } = await import("../src/content/catalog.ts");
   const dirs = fs.readFileSync("src/content/index.ts", "utf8");
   const folderOf = (id) => [...dirs.matchAll(/^\s*"?([\w-]+)"?: "([\w-]+)",$/gm)].find((m) => m[2] === id)?.[1];
-  const want = [...PROGRAMME_ONLY_COURSES].map(folderOf).sort();
+  const { COURSES: ALL } = await import("../src/content/catalog.ts");
+  // Programme-only courses, plus paid courses sold on their own that have lessons: their text is not shipped in the public bundle.
+  const paidWithLessons = ALL.filter((c) => c.access === "paid" && !PROGRAMME_ONLY_COURSES.has(c.id) && c.modules.some((m) => m.lessons.length > 0)).map((c) => c.id);
+  const want = [...PROGRAMME_ONLY_COURSES, ...paidWithLessons].map(folderOf).sort();
   const have = [...JSON.parse(fs.readFileSync("src/content/protected-courses.json", "utf8")).folders].sort();
   if (JSON.stringify(want) !== JSON.stringify(have)) throw new Error(`protected-courses.json must list exactly the paid course folders.
 expected: ${want.join(", ")}
@@ -298,7 +302,11 @@ for (const course of COURSES) {
 
 // Every module with a badge in the catalogue has a module check, and every check points at a module.
 const catalog = fs.readFileSync("src/content/catalog.ts", "utf8");
-const badgeModules = [...catalog.matchAll(/\{ id: "([a-z0-9-]+)", title: [^}]*?badge: "/g)].map((m) => m[1]);
+const badgeModules = [
+  ...[...catalog.matchAll(/\{ id: "([a-z0-9-]+)", title: [^}]*?badge: "/g)].map((m) => m[1]),
+  // Courses defined in business-courses.ts, once their lessons are written.
+  ...(await import("../src/content/business-courses.ts")).BUSINESS_COURSES.flatMap((c) => c.modules.filter((m) => m.badge).map((m) => m.id)),
+];
 const checkedModules = new Set(COURSES.flatMap((c) => (fs.existsSync(path.join(CONTENT, c, "assessment.ts")) ? loadAssessments(path.join(CONTENT, c, "assessment.ts")) : [])).filter((a) => a.kind === "module").map((a) => a.moduleId));
 for (const m of badgeModules) if (!checkedModules.has(m)) fail(`module ${m} has a badge but no module check`);
 for (const m of checkedModules) if (!badgeModules.includes(m)) fail(`module check for ${m}, which has no badge in the catalogue`);

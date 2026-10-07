@@ -33,6 +33,10 @@ type Spec = {
   projectSummary: string;
   modules: ModuleDef[];
   faqs?: { q: string; a: string }[];
+  /** Set once the lessons are written: the course is then a short-format course that can be opened. */
+  opened?: { completionBadge: string; estimatedHours: number };
+  /** For an opened course: each module's lesson, badge and skills. */
+  built?: Record<string, { lesson: string; badge: string; badgeCode: string; skills: string[] }>;
 };
 
 /** Questions every course answers the same way. A course can add its own. */
@@ -61,7 +65,7 @@ function course(s: Spec): CourseDef {
     durationLabel: s.duration,
     durationWeeks: s.weeks,
     isFree: false,
-    status: "coming_soon",
+    status: s.opened ? "available" : "coming_soon",
     skills: s.skills,
     prerequisites: s.prerequisites,
     projectTitle: s.projectTitle,
@@ -70,14 +74,15 @@ function course(s: Spec): CourseDef {
     outcomes: s.outcomes,
     faqs: commonFaqs(s),
     certificate: rules,
-    modules: s.modules,
+    modules: s.built ? s.modules.map((m) => ({ ...m, lessons: [s.built![m.id].lesson], badge: s.built![m.id].badge, badgeCode: s.built![m.id].badgeCode, skills: s.built![m.id].skills })) : s.modules,
+    ...(s.opened ? { format: "short" as const, completionBadge: s.opened.completionBadge, estimatedHours: s.opened.estimatedHours } : {}),
     // Paid, one payment, self-paced. Enrolment stays closed until the course content is ready and an admin opens it.
     courseType: "professional",
     access: "paid",
     price: s.price,
     currency: "NGN",
     deliveryType: "self_paced",
-    enrollmentStatus: "closed",
+    enrollmentStatus: s.opened ? "open" : "closed",
     communityAccess: false,
     instructorSupport: false,
     included: [],
@@ -236,6 +241,21 @@ const SPECS: Spec[] = [
     prerequisites: ["No experience needed", "Basic arithmetic and spreadsheet use"],
     audience: ["People starting a mini importation business", "Small traders who want to import directly", "Business owners who want to export", "Anyone working in or moving into trade, shipping or sourcing"],
     outcomes: ["Choose products with real demand and margin", "Find, check and compare suppliers on Alibaba and other platforms", "Negotiate prices, order quantities and samples", "Choose between air and sea freight and work with freight forwarders", "Prepare import documents and understand HS codes and customs", "Calculate landed cost, price your goods and plan your profit", "Understand export basics and find international buyers"],
+    opened: { completionBadge: "Import & Export Practitioner", estimatedHours: 7 },
+    built: {
+      "iemi-m01": { lesson: "import-and-export-fundamentals", badge: "Trade Fundamentals", badgeCode: "FUNDS", skills: ["Explain imports, exports and mini importation", "Name the parties in a shipment", "Read basic Incoterms", "List the main risks and how to reduce them"] },
+      "iemi-m02": { lesson: "product-research-and-market-validation", badge: "Product Researcher", badgeCode: "PRODUCT", skills: ["Find and shortlist product ideas", "Check demand and competition", "Estimate margin before buying", "Plan a small test order"] },
+      "iemi-m03": { lesson: "supplier-sourcing", badge: "Supplier Sourcing", badgeCode: "SOURCE", skills: ["Find suppliers on platforms and in person", "Read a supplier profile", "Write a clear enquiry", "Compare quotes on the same terms"] },
+      "iemi-m04": { lesson: "supplier-verification", badge: "Supplier Verification", badgeCode: "VERIFY", skills: ["Spot supplier scams", "Check company details and certificates", "Choose safe payment methods", "Use audits and inspections"] },
+      "iemi-m05": { lesson: "negotiation-moq-and-samples", badge: "Negotiator", badgeCode: "NEGOTIATE", skills: ["Negotiate price and terms", "Handle minimum order quantities", "Order and judge samples", "Write a purchase order"] },
+      "iemi-m06": { lesson: "international-shipping", badge: "Shipping Planner", badgeCode: "SHIP", skills: ["Choose between air and sea", "Work out chargeable weight and CBM", "Choose a freight forwarder", "Pack, label and insure goods"] },
+      "iemi-m07": { lesson: "import-documentation-and-customs", badge: "Customs & Documents", badgeCode: "CUSTOMS", skills: ["Read the main shipping documents", "Understand HS codes", "Calculate duty and VAT", "Avoid common clearance delays"] },
+      "iemi-m08": { lesson: "nigerian-import-procedures", badge: "Nigerian Import Procedures", badgeCode: "NIGERIA", skills: ["Know who regulates imports", "Understand Form M and PAAR", "Work with licensed clearing agents", "Keep shipment records"] },
+      "iemi-m09": { lesson: "landed-cost-pricing-and-profit", badge: "Landed Cost & Pricing", badgeCode: "LANDED", skills: ["Build a landed cost", "Allow for exchange rates and charges", "Set price for a target margin", "Reuse a landed cost calculator"] },
+      "iemi-m10": { lesson: "selling-imported-products", badge: "Selling Imports", badgeCode: "SELL", skills: ["Choose sales channels", "Compare wholesale and retail", "Plan stock and cash flow", "Market imported goods"] },
+      "iemi-m11": { lesson: "export-fundamentals-and-finding-buyers", badge: "Export Basics", badgeCode: "EXPORT", skills: ["Know export documents and rules", "Find and check overseas buyers", "Price an export and choose payment terms", "Plan shipping to the buyer"] },
+      "iemi-m12": { lesson: "final-project-your-trade-business", badge: "Trade Business Plan", badgeCode: "PLAN", skills: ["Plan a complete import or export", "Cost and price it", "Stress-test the plan", "Present it clearly"] },
+    },
     projectTitle: "Your import or export business plan",
     projectSummary: "A complete plan: product, supplier shortlist, shipping route, documents, landed cost and pricing, and how you will sell.",
     faqs: [
