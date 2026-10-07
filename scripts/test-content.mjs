@@ -49,6 +49,7 @@ const SHORT = [
   "sales",
   "digital-marketing",
   "ecommerce",
+  "project-management-practice",
 ];
 const COURSES = [...FULL, ...SHORT];
 // The folders withheld from the public site must be exactly the programme-only (paid) courses in the catalogue.

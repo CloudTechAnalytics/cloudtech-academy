@@ -88753,58 +88753,1717 @@ on conflict (id) do update set course_id = excluded.course_id, module_id = exclu
 
 -- Course: Project Management
 insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
-values ('project-management', 'full', null, 'project-management', 'PMGT', 'Project Management', 'Plan, run and finish projects on time and on budget: scope, schedule, cost, risk, people and stakeholders.', 'A complete project management course for beginners and early-career managers. You learn how to start a project, define scope, build a schedule and budget, manage risk, quality and people, work in agile and traditional ways, track progress and close a project well.', 'professional-skills', 'beginner', 2, 'Beginner to Intermediate', null, false, 'coming_soon', true, array['Project initiation and scope', 'Scheduling and the critical path', 'Budgeting and cost control', 'Risk management', 'Stakeholders and communication', 'Agile and traditional methods']::text[], array['No experience needed', 'The free Project Management Fundamentals course is a good start']::text[], 'A complete project plan', true, true, true, true, false, 60, 57)
+values ('project-management', 'short', 'Project Management Practitioner', 'project-management', 'PMGT', 'Project Management', 'Plan, run and finish projects on time and on budget: scope, schedule, cost, risk, people and stakeholders.', 'A complete project management course for beginners and early-career managers. You learn how to start a project, define scope, build a schedule and budget, manage risk, quality and people, work in agile and traditional ways, track progress and close a project well.', 'professional-skills', 'beginner', 2, 'Beginner to Intermediate', 8, false, 'available', true, array['Project initiation and scope', 'Scheduling and the critical path', 'Budgeting and cost control', 'Risk management', 'Stakeholders and communication', 'Agile and traditional methods']::text[], array['No experience needed', 'The free Project Management Fundamentals course is a good start']::text[], 'A complete project plan', true, true, true, true, false, 60, 57)
 on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level = excluded.level, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
 
-update public.courses set access_type = 'paid', price = 100000, currency = 'NGN', discount_price = null, discount_active = false, payment_status = 'active', delivery_type = 'self_paced', enrollment_status = 'closed', enrollment_start = null, enrollment_end = null, community_access = false, instructor_support = false, duration_label = '3 months', overview = 'Good project managers are in demand in every industry. This course teaches the full lifecycle with real tools and templates (charters, work breakdown structures, schedules, risk registers and status reports) and ends with a complete project plan. If you are new to the subject, start with the free Project Management Fundamentals course and continue here.', audience = array['Aspiring and new project managers', 'Team leads and coordinators who run projects', 'Professionals preparing for project roles', 'Business owners who run projects']::text[], included = '{}'::text[], project_previews = '[{"title":"A complete project plan","summary":"A full plan for a real or realistic project: charter, scope, schedule, budget, risks, communication and status reports."}]'::jsonb, instructor_name = null, instructor_title = null, instructor_bio = null, professional_outcome = null, commerce_seeded = true, course_type = 'professional', outcomes = array['Write a project charter and define scope', 'Build a work breakdown structure and schedule', 'Plan a budget and track cost', 'Identify and manage risks', 'Lead teams and communicate with stakeholders', 'Run projects in agile and traditional ways', 'Track progress, report and close a project']::text[], difficulty_max = 'intermediate', duration_weeks = 12, thumbnail = null, faqs = '[{"q":"How long does the course take?","a":"Plan for 3 months. It is self-paced, so you can study around work or school, and your progress is saved as you go."},{"q":"Do I need any experience?","a":"No experience is needed. It starts with the basics and builds up to more advanced practice."},{"q":"Will I get a certificate?","a":"Yes, when you complete the lessons, pass the assessments and submit the final project. Paying for the course does not award the certificate on its own."},{"q":"How do I pay?","a":"You pay once, by bank transfer to the Academy account, and send your receipt. The course opens as soon as the payment is confirmed."}]'::jsonb, discount_label = null, discount_start = null, discount_end = null where id = 'project-management' and not commerce_seeded;
+update public.courses set access_type = 'paid', price = 100000, currency = 'NGN', discount_price = null, discount_active = false, payment_status = 'active', delivery_type = 'self_paced', enrollment_status = 'open', enrollment_start = null, enrollment_end = null, community_access = false, instructor_support = false, duration_label = '3 months', overview = 'Good project managers are in demand in every industry. This course teaches the full lifecycle with real tools and templates (charters, work breakdown structures, schedules, risk registers and status reports) and ends with a complete project plan. If you are new to the subject, start with the free Project Management Fundamentals course and continue here.', audience = array['Aspiring and new project managers', 'Team leads and coordinators who run projects', 'Professionals preparing for project roles', 'Business owners who run projects']::text[], included = '{}'::text[], project_previews = '[{"title":"A complete project plan","summary":"A full plan for a real or realistic project: charter, scope, schedule, budget, risks, communication and status reports."}]'::jsonb, instructor_name = null, instructor_title = null, instructor_bio = null, professional_outcome = null, commerce_seeded = true, course_type = 'professional', outcomes = array['Write a project charter and define scope', 'Build a work breakdown structure and schedule', 'Plan a budget and track cost', 'Identify and manage risks', 'Lead teams and communicate with stakeholders', 'Run projects in agile and traditional ways', 'Track progress, report and close a project']::text[], difficulty_max = 'intermediate', duration_weeks = 12, thumbnail = null, faqs = '[{"q":"How long does the course take?","a":"Plan for 3 months. It is self-paced, so you can study around work or school, and your progress is saved as you go."},{"q":"Do I need any experience?","a":"No experience is needed. It starts with the basics and builds up to more advanced practice."},{"q":"Will I get a certificate?","a":"Yes, when you complete the lessons, pass the assessments and submit the final project. Paying for the course does not award the certificate on its own."},{"q":"How do I pay?","a":"You pay once, by bank transfer to the Academy account, and send your receipt. The course opens as soon as the payment is confirmed."}]'::jsonb, discount_label = null, discount_start = null, discount_end = null where id = 'project-management' and not commerce_seeded;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('pmgt-m01', 'project-management', 'Project management fundamentals', 1, null, null, '{}'::text[], array['What a project is', 'The project lifecycle', 'The project manager''s role', 'Methodologies: traditional, agile and hybrid']::text[])
+values ('pmgt-m01', 'project-management', 'Project management fundamentals', 1, 'PM Fundamentals', 'PMBASICS', array['Tell projects from operations', 'Balance the triple constraint', 'Follow the lifecycle', 'Choose a methodology']::text[], array['What a project is', 'The project lifecycle', 'The project manager''s role', 'Methodologies: traditional, agile and hybrid']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('pmgt-m02', 'project-management', 'Initiating a project', 2, null, null, '{}'::text[], array['Business case and objectives', 'Stakeholder identification', 'The project charter', 'Feasibility and go or no-go']::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('project-management:project-management-fundamentals', 'project-management', 'pmgt-m01', 'project-management-fundamentals', 'Project Management Fundamentals', 'Understand what a project is, the project lifecycle, what a project manager does and how traditional, agile and hybrid approaches differ.', 20, $md$
+## What a project is
+
+A **project** is a temporary effort to create something unique: a product, service, event or result. It has a **start and an end**, a **goal**, and limited **time, money and people.**
+
+Examples: building a house, launching an app, organising a wedding or conference, opening a new shop branch, installing solar panels at a school, running a vaccination campaign, moving an office.
+
+**Operations**, in contrast, are ongoing, repeating work: running the shop every day, processing payroll each month, answering customer calls. Operations keep the business going; projects change it.
+
+| | Project | Operations |
+| :-- | :-- | :-- |
+| **Duration** | Temporary, with an end date | Ongoing |
+| **Output** | Unique result | Repeated products or services |
+| **Uncertainty** | Higher (new work) | Lower (known routine) |
+| **Goal** | Deliver a result and close | Sustain and improve |
+
+Some work is a mix: opening a restaurant is a project; running it afterwards is operations. Knowing the difference matters because projects need **planning, a team and a manager focused on finishing.**
+
+## The triple constraint and quality
+
+Every project is limited by three linked constraints:
+
+- **Scope:** what the project must deliver.
+- **Time (schedule):** when it must be done.
+- **Cost (budget):** what it may spend.
+
+**Quality** and **risk** sit alongside them. The three constraints are connected: change one and you usually affect the others. Add features (scope) and you need more time or money. Cut the deadline and you may need extra people (cost) or fewer features (scope). Cut the budget and quality or scope may suffer.
+
+A manager's job is to **balance** them and to know which matters most. For a wedding the date is fixed (time first). For a government building the budget may be fixed. For a safety system quality is fixed. Ask the sponsor at the start: *"If we must choose, which comes first: scope, time or cost?"*
+
+## The project lifecycle
+
+Projects pass through stages, often described as five **process groups:**
+
+1. **Initiating:** define the project, the business case, objectives and stakeholders; get approval.
+2. **Planning:** define scope, schedule, budget, risks, quality, communication and resources.
+3. **Executing:** do the work, manage the team and deliver.
+4. **Monitoring and controlling:** track progress against the plan, manage risks and changes, and correct course. This runs throughout.
+5. **Closing:** hand over, get acceptance, release resources and capture lessons.
+
+Effort and spending usually rise through planning, peak in execution and fall at closing. Good planning early is cheap; fixing mistakes late is expensive.
+
+## The project manager's role
+
+A **project manager (PM)** is responsible for leading the project to its goals. Typical responsibilities:
+
+- Defining the goals, scope and plan with the sponsor and team.
+- Building and leading the team.
+- Managing schedule, budget and quality.
+- Identifying and managing risks and issues.
+- Communicating with stakeholders.
+- Managing changes and suppliers.
+- Reporting progress and escalating problems.
+- Closing the project properly.
+
+Skills: **leadership, communication, planning, organisation, negotiation, problem solving and integrity.** A PM usually does not do all the technical work; they make sure the right work is done, by the right people, in the right order. They need authority matched to responsibility, and the sponsor's support.
+
+Key people: the **sponsor** (owns the business case, provides funding and authority), the **team**, the **customer or users**, and other **stakeholders.**
+
+## Methodologies: traditional, agile and hybrid
+
+- **Traditional (predictive or "waterfall"):** plan everything up front, then execute in phases (requirements → design → build → test → deliver). Best when requirements are clear and stable and change is costly, such as construction.
+- **Agile:** deliver in short cycles (for example two weeks), get feedback and adapt. Best when requirements are uncertain or change quickly, such as software or marketing campaigns.
+- **Hybrid:** combine them: plan the overall budget and milestones traditionally and use agile cycles for parts of the work.
+
+No single method is best. Choose by asking: *How clear are the requirements? How often will they change? How risky is it? What does the customer want to see, and when?* Module 9 covers agile in more detail.
+
+## Try it
+
+```task
+{
+  "id": "pmgt-m01-t1",
+  "prompt": "Classify each as a **project** or **operations** and give a short reason: (1) opening a new shop branch; (2) running the shop daily; (3) paying staff each month; (4) building a website for a client; (5) answering customer calls. One per line.",
+  "minutes": 8,
+  "rows": 6,
+  "placeholder": "1. Project - ...",
+  "rules": [
+    { "label": "Five lines", "minLines": 5 },
+    { "label": "Uses both words project and operations", "pattern": "project[\\s\\S]*operations|operations[\\s\\S]*project" },
+    { "label": "Gives reasons (temporary, unique, ongoing, repeating)", "pattern": "temporary|unique|ongoing|repeat|end date|routine|one-?off|start and end", "perLine": true }
+  ],
+  "sample": "1. Project - temporary with an end date and a unique result.\n2. Operations - ongoing daily work that repeats.\n3. Operations - a repeating monthly routine.\n4. Project - a unique one-off result with a start and an end.\n5. Operations - ongoing routine work.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "pmgt-m01-t2",
+  "prompt": "A client asks you to **add three new features** to a project but keep the **same deadline and budget**. In 50 to 100 words, explain the triple constraint problem and give two options you could offer.",
+  "minutes": 10,
+  "rows": 7,
+  "placeholder": "Adding features affects ...",
+  "rules": [
+    { "label": "Mentions scope, time and cost", "pattern": "scope[\\s\\S]*(time|schedule)[\\s\\S]*cost|cost[\\s\\S]*(time|schedule)[\\s\\S]*scope" },
+    { "label": "Explains they are linked", "pattern": "linked|connected|affect|trade-?off|balance|one changes|more (time|money)" },
+    { "label": "Offers options (extend time, add budget, drop other features, phase)", "pattern": "extend|more time|add budget|extra budget|more money|drop|remove|phase|later|reduce" },
+    { "label": "Between 50 and 100 words", "minWords": 50, "maxWords": 105 }
+  ],
+  "sample": "Scope, time and cost are linked, so adding three features without changing the deadline or budget puts quality at risk. I would explain the trade-off and offer two options. Option one: keep the budget and deadline but drop or postpone other lower-priority features so the scope stays the same size. Option two: add the features and agree extra time and budget through a formal change request. I would ask the client which of scope, time or cost matters most.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "pmgt-m01-t3",
+  "prompt": "Pick a real project (for example organising a school event, a house move or launching a product) and describe **what happens in each of the five process groups**, one line each.",
+  "minutes": 12,
+  "rows": 8,
+  "placeholder": "Initiating: ...",
+  "rules": [
+    { "label": "Five lines", "minLines": 5 },
+    { "label": "Initiating", "pattern": "initiating" },
+    { "label": "Planning", "pattern": "planning" },
+    { "label": "Executing", "pattern": "executing" },
+    { "label": "Monitoring and controlling", "pattern": "monitoring" },
+    { "label": "Closing", "pattern": "closing" }
+  ],
+  "sample": "Initiating: agree with the principal that we will hold a school fair, with a ₦500,000 budget and a goal of raising ₦2 million.\nPlanning: set the date, list tasks, make a budget, assign teams and plan risks like rain.\nExecuting: book vendors, publicise the fair, set up stalls and run the day.\nMonitoring and controlling: check ticket sales and spending weekly and adjust the plan.\nClosing: count the money, thank volunteers, hand over the report and note lessons for next year.",
+  "required": false
+}
+```
+
+Next lesson: initiating a project.
+$md$, true, true, 1, array['pmgt-m01-t1', 'pmgt-m01-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('pmgt-m03', 'project-management', 'Scope and planning', 3, null, null, '{}'::text[], array['Requirements gathering', 'Scope statement', 'Work breakdown structure', 'Planning documents']::text[])
+values ('pmgt-m02', 'project-management', 'Initiating a project', 2, 'Initiation', 'INITIATE', array['Build a business case', 'Identify stakeholders', 'Write a project charter', 'Make a go or no-go decision']::text[], array['Business case and objectives', 'Stakeholder identification', 'The project charter', 'Feasibility and go or no-go']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('pmgt-m04', 'project-management', 'Schedule management', 4, null, null, '{}'::text[], array['Activities and dependencies', 'Estimating time', 'Critical path method', 'Gantt charts and schedule tools', 'Resource levelling']::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('project-management:initiating-a-project', 'project-management', 'pmgt-m02', 'initiating-a-project', 'Initiating a Project', 'Build a business case and clear objectives, identify stakeholders, write a project charter and decide whether to go ahead.', 25, $md$
+## Business case and objectives
+
+Every project should answer **"Why are we doing this?"** The **business case** explains the problem or opportunity, the options, the expected benefits and costs, and the risks. It helps decide whether the project is worth doing, and later whether it is still worth doing.
+
+A business case usually covers:
+
+- **The problem or opportunity.**
+- **Options,** including **doing nothing.**
+- **Benefits:** money saved or earned, better service, safety, compliance, reputation.
+- **Costs:** one-time and ongoing.
+- **Risks and assumptions.**
+- **A recommendation.**
+
+A simple financial view uses **payback** and **return on investment (ROI).** Example: a project costs **₦6,000,000** and is expected to save **₦2,400,000 a year.**
+
+- Payback = 6,000,000 ÷ 2,400,000 = **2.5 years.**
+- Over 3 years the benefit is 3 × 2,400,000 = ₦7,200,000. ROI = (7,200,000 − 6,000,000) ÷ 6,000,000 = **20%.**
+
+Not every benefit is financial, but the case must be honest about the numbers and assumptions.
+
+**Objectives** state what the project will achieve. Make them **SMART:** specific, measurable, achievable, relevant, time-bound. "Improve customer service" is vague. "Cut average response time from 24 hours to 4 hours by 30 June, within a ₦3 million budget" is clear.
+
+## Stakeholder identification
+
+A **stakeholder** is anyone who is affected by the project or can affect it: sponsor, customers, users, team members, suppliers, managers, regulators, the community.
+
+To identify them:
+
+1. **Brainstorm** with the team and sponsor: who pays, who uses, who decides, who is affected, who could stop it?
+2. **List them** with their role, interests and concerns.
+3. **Assess them,** commonly on a **power and interest grid:**
+
+| | Low interest | High interest |
+| :-- | :-- | :-- |
+| **High power** | Keep satisfied | Manage closely |
+| **Low power** | Monitor | Keep informed |
+
+4. **Plan how to engage** each group (see module 8).
+
+Missing a stakeholder is a classic cause of project trouble: the person you forgot becomes the one who objects at the end. Revisit the list throughout the project.
+
+## The project charter
+
+The **project charter** is a short document that formally **authorises** the project and gives the project manager the authority to use resources. It is usually issued by the sponsor.
+
+A typical charter includes:
+
+- **Project name and purpose / business case summary.**
+- **Objectives and success criteria** (how we will know it worked).
+- **High-level scope** (what is in and what is out).
+- **Key deliverables.**
+- **Summary schedule and milestones.**
+- **Budget summary.**
+- **Key stakeholders.**
+- **Assumptions and constraints.**
+- **Major risks.**
+- **Project manager and authority level.**
+- **Sponsor approval and date.**
+
+Keep it short (one to three pages), clear and agreed. A signed charter prevents later arguments about "what we agreed."
+
+## Feasibility and go or no-go
+
+Before committing, check **feasibility:**
+
+- **Technical:** can it be done with available technology and skills?
+- **Financial:** do the benefits justify the cost?
+- **Schedule:** can it be completed in the time needed?
+- **Operational:** will the organisation be able to use and support the result?
+- **Legal and regulatory:** is it allowed, and what approvals are needed?
+- **Risk:** are the risks acceptable?
+
+Then a **go or no-go decision:** go ahead, change the plan, delay or stop. Stopping a project that does not make sense is a success, because it saves money and effort. Set clear **criteria** in advance (for example "go if payback is under 3 years and risk is acceptable"), and record the decision.
+
+## Try it
+
+```task
+{
+  "id": "pmgt-m02-t1",
+  "prompt": "A project costs **₦6,000,000** and saves **₦2,400,000 a year**. Work out the **payback period** and the **3-year ROI**, and say whether it meets a rule of \"payback under 3 years\".",
+  "minutes": 8,
+  "rows": 7,
+  "placeholder": "Payback = ...",
+  "rules": [
+    { "label": "Payback of 2.5 years", "pattern": "2\\.5" },
+    { "label": "3-year benefit of ₦7,200,000", "pattern": "7,?200,?000" },
+    { "label": "ROI of 20%", "pattern": "\\b20\\s?%" },
+    { "label": "Says yes it meets the rule", "pattern": "meets|yes|under 3|less than 3|passes|satisf" }
+  ],
+  "sample": "Payback = 6,000,000 / 2,400,000 = 2.5 years.\n3-year benefit = 3 x 2,400,000 = ₦7,200,000, so ROI = (7,200,000 - 6,000,000) / 6,000,000 = 20%.\nYes, 2.5 years is under 3, so it meets the rule.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "pmgt-m02-t2",
+  "prompt": "Write a **project charter** for a project of your choice, one item per line: name, purpose, SMART objective, success criteria, scope (in and out), key deliverables, milestones, budget, key stakeholders, major risks and sponsor. At least ten lines.",
+  "minutes": 15,
+  "rows": 12,
+  "placeholder": "Project name: ...\nPurpose: ...",
+  "rules": [
+    { "label": "At least ten lines", "minLines": 10 },
+    { "label": "Project name and purpose", "pattern": "name[\\s\\S]*purpose|purpose[\\s\\S]*name" },
+    { "label": "Objective with a number and date", "pattern": "objective[^\\n]*\\d" },
+    { "label": "Scope in and out", "pattern": "scope|in scope|out of scope|excluded" },
+    { "label": "Deliverables and milestones", "pattern": "deliverables?[\\s\\S]*milestones?|milestones?[\\s\\S]*deliverables?" },
+    { "label": "Budget in naira", "pattern": "budget[^\\n]*₦\\s?\\d" },
+    { "label": "Stakeholders and risks", "pattern": "stakeholders?[\\s\\S]*risks?|risks?[\\s\\S]*stakeholders?" },
+    { "label": "Sponsor", "pattern": "sponsor" }
+  ],
+  "sample": "Project name: School Solar Power\nPurpose: cut the school's diesel bills and give reliable power for classes\nObjective: install a 10 kW solar system and cut diesel spend by 60% by 30 September\nSuccess criteria: system running, diesel use down 60% over three months, no safety incidents\nScope: in - design, supply, installation, staff training; out - rewiring of old classrooms\nKey deliverables: approved design, installed system, training, handover manual\nMilestones: design approved 15 June; equipment delivered 15 July; commissioning 31 August\nBudget: ₦6,000,000\nKey stakeholders: principal, bursar, teachers, installer, parents' association\nMajor risks: late equipment delivery, budget overrun, roof not strong enough\nSponsor: the school proprietor",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "pmgt-m02-t3",
+  "prompt": "List **six stakeholders** for your project and place each on the **power and interest grid** (manage closely, keep satisfied, keep informed or monitor), with a reason. One per line.",
+  "minutes": 10,
+  "rows": 8,
+  "placeholder": "Principal - manage closely - ...",
+  "rules": [
+    { "label": "Six lines", "minLines": 6 },
+    { "label": "Uses grid categories", "pattern": "manage closely|keep satisfied|keep informed|monitor", "min": 5 },
+    { "label": "Gives reasons", "pattern": "because|since|power|interest|decides|pays|affected|uses", "perLine": true }
+  ],
+  "sample": "Proprietor (sponsor) - manage closely - high power and high interest because he funds and approves it\nPrincipal - manage closely - high power and interest because she runs the school\nBursar - keep satisfied - high power over payments but less interested in the details\nTeachers - keep informed - low power but affected daily by the work\nInstaller - manage closely - delivers the work and has high interest\nParents' association - monitor - low power and interest unless costs rise",
+  "required": false
+}
+```
+
+Next lesson: scope and planning.
+$md$, true, true, 2, array['pmgt-m02-t1', 'pmgt-m02-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('pmgt-m05', 'project-management', 'Cost and budget management', 5, null, null, '{}'::text[], array['Estimating cost', 'Building a budget', 'Cost control and contingency', 'Earned value basics']::text[])
+values ('pmgt-m03', 'project-management', 'Scope and planning', 3, 'Scope & Planning', 'SCOPE', array['Gather and prioritise requirements', 'Write a scope statement', 'Build a WBS', 'Assemble the plan']::text[], array['Requirements gathering', 'Scope statement', 'Work breakdown structure', 'Planning documents']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('pmgt-m06', 'project-management', 'Risk management', 6, null, null, '{}'::text[], array['Identifying risks', 'Qualitative and quantitative assessment', 'Risk responses', 'The risk register']::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('project-management:scope-and-planning', 'project-management', 'pmgt-m03', 'scope-and-planning', 'Scope and Planning', 'Gather requirements, write a scope statement, build a work breakdown structure and assemble the planning documents.', 30, $md$
+## Requirements gathering
+
+**Requirements** are the needs and conditions the project must meet. Poor requirements are a leading cause of project failure: the team builds the wrong thing, or builds the right thing badly understood.
+
+How to gather them:
+
+- **Interviews** with sponsors, users and other stakeholders.
+- **Workshops** where groups discuss and agree needs.
+- **Observation:** watch how people work now.
+- **Surveys and questionnaires** for large groups.
+- **Documents:** existing processes, complaints, reports, regulations.
+- **Prototypes or examples** to react to.
+
+Write requirements clearly: each should be **specific, testable and agreed.** *"The system should be fast"* is weak. *"A customer's order confirmation must appear within 3 seconds"* is testable. Record the **source** of each, so you can check it later.
+
+Prioritise with **MoSCoW:**
+
+- **Must have:** essential; the project fails without it.
+- **Should have:** important, but there is a workaround.
+- **Could have:** nice if time and money allow.
+- **Won't have (this time):** agreed out of scope for now.
+
+Prioritising early protects your budget and deadline, because when pressure comes you know what to cut first.
+
+## Scope statement
+
+The **scope statement** describes the project's deliverables and the work needed to produce them, and, just as important, **what is excluded.**
+
+It includes:
+
+- **Project objectives** (briefly).
+- **Deliverables:** the specific outputs.
+- **Acceptance criteria:** how each deliverable will be judged complete.
+- **Exclusions:** what is not included.
+- **Assumptions** and **constraints.**
+
+Example: *In scope: design, supply and installation of a 10 kW solar system and staff training. Out of scope: replacing old classroom wiring, ongoing maintenance after the first year. Acceptance: the system produces at least 40 kWh a day in test, and passes the inspection.*
+
+The exclusions are as valuable as the inclusions. They prevent **scope creep:** the slow addition of "just one more thing" without time or money.
+
+## Work breakdown structure
+
+A **work breakdown structure (WBS)** breaks the project into smaller and smaller pieces of work until each is easy to estimate, assign and track. It is organised by **deliverables** (things), not just activities.
+
+The key rule is the **100% rule:** the WBS must include **all** the work in the scope and nothing outside it. The pieces at each level add up to the whole.
+
+Example for a school fair:
+
+1. **School fair**
+   1.1 Planning
+   1.2 Venue and logistics
+   1.3 Stalls and vendors
+   1.4 Publicity
+   1.5 Programme and entertainment
+   1.6 Finance and tickets
+   1.7 Closing
+
+Each is broken down further. For example, **1.4 Publicity** becomes: 1.4.1 Design posters, 1.4.2 Print posters, 1.4.3 Social media posts, 1.4.4 Invite parents by message.
+
+The lowest level is a **work package:** a piece of work small enough to estimate time and cost and assign to one person or team. A work package typically takes from a few days to a couple of weeks. Add a **WBS dictionary** that describes each work package, its owner, deliverable and criteria.
+
+Why a WBS: you do not forget work, estimates are better, responsibility is clear, and progress is easy to track.
+
+## Planning documents
+
+Together, your planning documents form the **project management plan.** Typical parts:
+
+| Plan | What it covers |
+| :-- | :-- |
+| **Scope management plan** | How scope is defined, verified and changed |
+| **Schedule plan** | Activities, durations, dependencies, milestones |
+| **Cost plan and budget** | Estimates, budget, contingency, tracking |
+| **Quality plan** | Standards, checks and acceptance criteria |
+| **Resource plan** | People, equipment, and when they are needed |
+| **Communication plan** | Who gets what information, when and how |
+| **Risk plan and register** | Risks, responses, owners |
+| **Procurement plan** | What you buy, from whom, how |
+| **Stakeholder plan** | How you engage each stakeholder |
+| **Change control process** | How changes are requested and decided |
+
+For a small project these can be a few pages or a single document with sections. The point is to **think through** each area before starting and to agree it with the sponsor. Review and update the plan as things change; it is a living document. Get a **baseline** approved (the agreed scope, schedule and budget), so you can measure progress against it.
+
+## Try it
+
+```task
+{
+  "id": "pmgt-m03-t1",
+  "prompt": "Write **eight requirements** for a project of your choice and prioritise each with **MoSCoW** (Must, Should, Could, Won't). One per line, each testable.",
+  "minutes": 12,
+  "rows": 10,
+  "placeholder": "Must: ...",
+  "rules": [
+    { "label": "Eight lines", "minLines": 8 },
+    { "label": "Uses MoSCoW labels", "pattern": "must|should|could|won't|wont", "min": 8 },
+    { "label": "Includes at least one Must and one Won't or Could", "pattern": "must[\\s\\S]*(won't|wont|could)|(won't|wont|could)[\\s\\S]*must" },
+    { "label": "Includes numbers or testable measures", "pattern": "\\d+", "min": 3 }
+  ],
+  "sample": "Must: the system produces at least 40 kWh a day in the test.\nMust: installation is completed by 31 August.\nMust: the installer passes the safety inspection.\nShould: a display screen shows live power output in the principal's office.\nShould: 5 staff are trained on basic operation.\nCould: a small battery for the computer lab.\nCould: a plaque and open day for parents.\nWon't: replace old classroom wiring in this phase.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "pmgt-m03-t2",
+  "prompt": "Write a **scope statement** in at least five lines: objective, deliverables, acceptance criteria, **exclusions**, and assumptions or constraints.",
+  "minutes": 12,
+  "rows": 9,
+  "placeholder": "Objective: ...\nDeliverables: ...",
+  "rules": [
+    { "label": "At least five lines", "minLines": 5 },
+    { "label": "Objective", "pattern": "objective" },
+    { "label": "Deliverables", "pattern": "deliverables?" },
+    { "label": "Acceptance criteria", "pattern": "acceptance|accepted when|criteria" },
+    { "label": "Exclusions", "pattern": "exclu|out of scope|not included|will not" },
+    { "label": "Assumptions or constraints", "pattern": "assum|constraint" }
+  ],
+  "sample": "Objective: install a 10 kW solar system at the school and cut diesel spend by 60%.\nDeliverables: approved design, installed system, staff training and a handover manual.\nAcceptance criteria: the system produces at least 40 kWh a day in the test and passes the inspection.\nExclusions: replacing old classroom wiring and maintenance after the first year are out of scope.\nAssumptions: the roof can carry the panels and equipment arrives within 6 weeks.\nConstraints: the budget is ₦6,000,000 and the work must not disturb exams.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "pmgt-m03-t3",
+  "prompt": "Build a **work breakdown structure** for your project: at least **six level-one items**, and break **two of them** into at least three work packages each. Use numbering (1.1, 1.2, 1.1.1 ...).",
+  "minutes": 15,
+  "rows": 14,
+  "placeholder": "1.1 Planning\n1.2 Venue ...\n1.4.1 ...",
+  "rules": [
+    { "label": "At least twelve lines", "minLines": 12 },
+    { "label": "Has level-one numbering (1.1, 1.2 ...)", "pattern": "1\\.1[\\s\\S]*1\\.2[\\s\\S]*1\\.3[\\s\\S]*1\\.4[\\s\\S]*1\\.5[\\s\\S]*1\\.6" },
+    { "label": "Has level-two numbering (1.x.1)", "pattern": "1\\.\\d\\.1[\\s\\S]*1\\.\\d\\.2[\\s\\S]*1\\.\\d\\.3" },
+    { "label": "Includes planning and closing", "pattern": "planning[\\s\\S]*closing|closing[\\s\\S]*planning" }
+  ],
+  "sample": "1.1 Planning\n1.2 Design\n1.3 Procurement\n1.4 Installation\n1.5 Testing and training\n1.6 Closing\n1.2.1 Site survey\n1.2.2 System design\n1.2.3 Design approval\n1.4.1 Mount panels\n1.4.2 Install inverter and batteries\n1.4.3 Wire and connect\n1.4.4 Safety checks",
+  "required": false
+}
+```
+
+Next lesson: schedule management.
+$md$, true, true, 3, array['pmgt-m03-t1', 'pmgt-m03-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('pmgt-m07', 'project-management', 'Quality, procurement and change', 7, null, null, '{}'::text[], array['Quality planning and control', 'Buying for a project', 'Change control', 'Managing scope creep']::text[])
+values ('pmgt-m04', 'project-management', 'Schedule management', 4, 'Scheduling', 'SCHEDULE', array['Sequence activities', 'Estimate durations', 'Find the critical path', 'Level resources']::text[], array['Activities and dependencies', 'Estimating time', 'Critical path method', 'Gantt charts and schedule tools', 'Resource levelling']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('pmgt-m08', 'project-management', 'People, teams and stakeholders', 8, null, null, '{}'::text[], array['Building and leading a team', 'Motivation and conflict', 'Stakeholder engagement', 'Communication planning and meetings']::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('project-management:schedule-management', 'project-management', 'pmgt-m04', 'schedule-management', 'Schedule Management', 'List activities and dependencies, estimate time, find the critical path, use Gantt charts and level resources.', 20, $md$
+## Activities and dependencies
+
+Once you have a work breakdown structure, turn work packages into **activities** and put them in order. A **dependency** is a relationship between activities. The commonest is **finish-to-start:** Activity B cannot start until Activity A finishes (you cannot paint until the walls are plastered).
+
+Other types: **start-to-start** (B can start when A starts), **finish-to-finish** (B cannot finish until A finishes) and **start-to-finish** (rare). Also consider:
+
+- **Mandatory dependencies:** forced by the nature of the work (foundations before walls).
+- **Discretionary dependencies:** chosen by good practice.
+- **External dependencies:** relying on things outside the project (a supplier's delivery, a government approval).
+- **Lead and lag:** a **lag** is a delay (concrete must cure for 3 days); a **lead** is an overlap.
+
+List each activity with an ID, name, duration estimate, predecessors and who is responsible. Include **milestones** (zero-duration markers for key events, such as "design approved").
+
+## Estimating time
+
+Good estimates come from people who will do the work, with historic data where possible.
+
+- **Analogous:** use durations of similar past projects.
+- **Parametric:** use a rate (for example 10 square metres of tiling per person per day).
+- **Bottom-up:** estimate each small activity and add up.
+- **Three-point (PERT):** account for uncertainty with an optimistic (O), most likely (M) and pessimistic (P) estimate.
+
+*Expected duration = (O + 4M + P) ÷ 6.*
+
+Example: O = 4 days, M = 6 days, P = 14 days. Expected = (4 + 24 + 14) ÷ 6 = 42 ÷ 6 = **7 days.** Notice it is longer than the most likely 6, because the pessimistic case is far from the others.
+
+Estimating tips:
+
+- **Include everyone's time:** reviews, waiting, rework.
+- **Account for the real working calendar:** weekends, holidays, rainy seasons, festive periods.
+- **Do not pad secretly.** Add **contingency** openly, at project level.
+- **Revise** as you learn.
+- **Beware optimism.** People tend to underestimate.
+
+## Critical path method
+
+The **critical path** is the **longest sequence** of dependent activities from start to finish. It determines the **shortest possible project duration.** Any delay on a critical-path activity delays the whole project.
+
+Example: Activity A (3 days) must finish first. Then B (4 days) and C (6 days) can run in parallel. Both must finish before D (2 days).
+
+- Path A → B → D = 3 + 4 + 2 = **9 days.**
+- Path A → C → D = 3 + 6 + 2 = **11 days.**
+
+The longest path is **A → C → D = 11 days**, so that is the critical path, and the project takes **11 days.** Activity B is not critical: it has **float** (slack) of 11 − 9 = **2 days**, meaning it can slip up to 2 days without delaying the project.
+
+Why it matters:
+
+- **Focus attention** on critical activities.
+- **Use float** of non-critical tasks to move resources.
+- **To shorten the project,** shorten critical activities (add resources, change method, overlap activities). Shortening a non-critical activity does nothing.
+- **Watch for the critical path changing** if non-critical activities are delayed beyond their float.
+
+## Gantt charts and schedule tools
+
+A **Gantt chart** shows activities as horizontal bars on a timeline, with dependencies and milestones. It is the most common schedule view, easy to read and to share. You can build one in a spreadsheet, a free project tool or specialised software.
+
+A good schedule shows:
+
+- Activities with start and finish dates.
+- Dependencies (arrows).
+- Milestones.
+- The critical path (often coloured).
+- Who is responsible.
+- Progress (shaded part of the bar).
+
+Establish a **schedule baseline** (the approved plan) and compare actual progress against it. Keep the schedule up to date; an out-of-date Gantt chart is worse than none.
+
+## Resource levelling
+
+A schedule that looks right on paper may overload people. If one person is assigned 14 hours of work in a 8-hour day, or a machine is needed in two places at once, the plan will not work.
+
+**Resource levelling** adjusts the schedule so resource demand is realistic. Ways:
+
+- **Delay** non-critical activities (using float) to avoid overload.
+- **Reassign** work to others or add resources.
+- **Extend** an activity's duration if fewer people work on it.
+- **Split** large activities.
+- **Reduce scope** or accept a later finish if resources are limited.
+
+Levelling may extend the project end date, so check the effect and tell the sponsor. Plan for **availability:** leave, training, other commitments and the real productive hours of a working day, usually less than a full day.
+
+## Try it
+
+```task
+{
+  "id": "pmgt-m04-t1",
+  "prompt": "Activities: **A** 3 days (first), **B** 4 days and **C** 6 days (both after A), **D** 2 days (after B and C). Work out the length of each path, the **critical path**, the **project duration** and the **float of B**.",
+  "minutes": 10,
+  "rows": 8,
+  "placeholder": "A-B-D = ...",
+  "rules": [
+    { "label": "Path A-B-D of 9 days", "pattern": "\\b9\\b" },
+    { "label": "Path A-C-D of 11 days", "pattern": "\\b11\\b" },
+    { "label": "Critical path A-C-D", "pattern": "a\\s?[-→>]+\\s?c\\s?[-→>]+\\s?d|a, c, d|a-c-d" },
+    { "label": "Float of B is 2 days", "pattern": "float[^\\n]*\\b2\\b|\\b2 days" }
+  ],
+  "sample": "A-B-D = 3 + 4 + 2 = 9 days.\nA-C-D = 3 + 6 + 2 = 11 days.\nThe longest path is A-C-D, so that is the critical path and the project takes 11 days.\nB has float of 11 - 9 = 2 days, so it can slip 2 days without delaying the project.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "pmgt-m04-t2",
+  "prompt": "An activity has an **optimistic** estimate of **4 days**, a **most likely** of **6** and a **pessimistic** of **14**. Calculate the expected duration using (O + 4M + P) ÷ 6, and say why it is longer than the most likely.",
+  "minutes": 8,
+  "rows": 5,
+  "placeholder": "Expected = ...",
+  "rules": [
+    { "label": "Expected duration of 7 days", "pattern": "\\b7\\b" },
+    { "label": "Shows the formula calculation", "pattern": "4\\s?\\+\\s?24\\s?\\+\\s?14|42\\s?/\\s?6|42\\s?÷\\s?6" },
+    { "label": "Explains the pessimistic case pulls it up", "pattern": "pessimistic|risk|uncertain|far|longer|skew" }
+  ],
+  "sample": "Expected = (4 + 4 x 6 + 14) / 6 = (4 + 24 + 14) / 6 = 42 / 6 = 7 days.\nIt is longer than the most likely 6 days because the pessimistic estimate of 14 is much further from the likely value, which pulls the average up.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "pmgt-m04-t3",
+  "prompt": "Build a **schedule table** for your project with at least **eight activities**. One per line: ID, activity, duration in days, predecessor and owner. Include at least one milestone.",
+  "minutes": 15,
+  "rows": 11,
+  "placeholder": "A - Site survey - 2 days - none - Tunde",
+  "rules": [
+    { "label": "At least eight lines", "minLines": 8 },
+    { "label": "Every line has a duration", "pattern": "\\d+\\s*(days?|d\\b)|milestone|0 days", "min": 8 },
+    { "label": "Lines include predecessors", "pattern": "predecessor|after|none|start|depends|[a-h]\\s*,|\\b[a-h]\\b[^\\n]*\\b[a-h]\\b", "min": 6 },
+    { "label": "Includes a milestone", "pattern": "milestone" }
+  ],
+  "sample": "A - Site survey - 2 days - none - Tunde\nB - System design - 4 days - after A - Ngozi\nC - Design approval - milestone - after B - Principal\nD - Order equipment - 3 days - after C - Bursar\nE - Equipment delivery - 14 days - after D - Supplier\nF - Installation - 6 days - after E - Installer\nG - Testing and inspection - 2 days - after F - Installer\nH - Staff training - 2 days - after G - Ngozi\nI - Handover - milestone - after H - Tunde",
+  "required": false
+}
+```
+
+Next lesson: cost and budget management.
+$md$, true, true, 4, array['pmgt-m04-t1', 'pmgt-m04-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('pmgt-m09', 'project-management', 'Agile and hybrid delivery', 9, null, null, '{}'::text[], array['Agile values and Scrum', 'Backlogs, sprints and reviews', 'Kanban', 'Choosing and mixing approaches']::text[])
+values ('pmgt-m05', 'project-management', 'Cost and budget management', 5, 'Cost Control', 'PMCOST', array['Estimate cost', 'Build a budget with contingency', 'Control spending', 'Use earned value basics']::text[], array['Estimating cost', 'Building a budget', 'Cost control and contingency', 'Earned value basics']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('pmgt-m10', 'project-management', 'Execution, monitoring and reporting', 10, null, null, '{}'::text[], array['Running the plan', 'Tracking progress', 'Status reports and dashboards', 'Corrective action']::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('project-management:cost-and-budget-management', 'project-management', 'pmgt-m05', 'cost-and-budget-management', 'Cost and Budget Management', 'Estimate cost, build a budget with contingency, control spending and use earned value basics to see whether a project is on track.', 20, $md$
+## Estimating cost
+
+A cost estimate predicts what the project's work will cost. Include **all** costs:
+
+- **Labour:** salaries, wages, contractors and consultants, including overheads where relevant.
+- **Materials and equipment:** purchase or hire.
+- **Services and subcontractors.**
+- **Travel, accommodation and logistics.**
+- **Permits, licences and fees.**
+- **Training and communication.**
+- **Software and tools.**
+- **Taxes and duties.**
+- **Risk and contingency.**
+- **Costs after the project:** operation, maintenance and support (often the biggest).
+
+Methods:
+
+- **Analogous:** based on similar past projects (fast, rough).
+- **Parametric:** a rate times quantity (₦ per square metre, ₦ per day).
+- **Bottom-up:** estimate each work package and add them (most accurate, more work).
+- **Three-point:** (O + 4M + P) ÷ 6, as for time.
+- **Vendor quotes:** get written quotes for major items.
+
+Estimates improve as the project becomes clearer. An early estimate may be ±30%; a detailed one ±10%. State your **assumptions** and the **accuracy.** Use **current prices** and allow for inflation and exchange rate movement where inputs are imported.
+
+## Building a budget
+
+A **budget** is the approved estimate, spread over time, with an agreed total. Steps:
+
+1. Estimate the cost of each **work package.**
+2. Add them up for the **base cost.**
+3. Add **contingency** for known risks and uncertainty. A common range is 5% to 15% for simple projects and more for risky ones.
+4. Possibly add a **management reserve,** held by the sponsor for unknown unknowns.
+5. Spread the cost over the schedule to create the **cost baseline** and a cash-flow view.
+6. Get approval.
+
+Example: the base cost is **₦4,500,000.** Contingency at **10%** = ₦450,000. Budget = **₦4,950,000.**
+
+Include a **cash flow forecast:** when money must be paid (deposits, milestones, salaries), because a project can run short of cash even when the total is affordable.
+
+## Cost control and contingency
+
+**Controlling cost** means tracking actual spending against the budget, understanding differences and taking action.
+
+- **Record all commitments and payments** promptly, including purchase orders, not just invoices.
+- **Compare** actual versus planned **regularly** (weekly or monthly).
+- **Investigate variances:** why are we over or under?
+- **Forecast the final cost** based on what has happened, not what you hoped.
+- **Manage changes** through change control (module 7); every change has a cost.
+- **Use contingency only for approved reasons** and record each use. If contingency is used early, the risks ahead are unprotected.
+- **Negotiate and buy well** (see procurement).
+- **Stop the leaks:** rework, waiting, and unnecessary meetings.
+
+Report cost problems **early.** A sponsor can help with a 5% problem; at 50% they cannot.
+
+## Earned value basics
+
+**Earned value management (EVM)** combines scope, schedule and cost in one view. It answers: *Are we getting the value we planned for the money and time spent?*
+
+Three numbers:
+
+- **Planned value (PV):** the budgeted cost of the work **planned** to be done by now.
+- **Earned value (EV):** the budgeted cost of the work **actually completed** by now.
+- **Actual cost (AC):** what we have **actually spent** by now.
+
+Indices:
+
+- **Cost Performance Index (CPI) = EV ÷ AC.** Below 1 means over budget.
+- **Schedule Performance Index (SPI) = EV ÷ PV.** Below 1 means behind schedule.
+- **Cost variance (CV) = EV − AC** and **Schedule variance (SV) = EV − PV.**
+- **Estimate at completion (EAC) = BAC ÷ CPI** (a simple forecast if the current efficiency continues), where **BAC** is the budget at completion.
+
+Example: BAC = **₦1,000,000.** By now, 50% of the work was planned and **40%** is actually done, with **₦500,000** spent.
+
+- PV = 50% × 1,000,000 = **₦500,000.**
+- EV = 40% × 1,000,000 = **₦400,000.**
+- AC = **₦500,000.**
+- CPI = 400,000 ÷ 500,000 = **0.8** (we get ₦0.80 of value for each ₦1 spent).
+- SPI = 400,000 ÷ 500,000 = **0.8** (we are 20% behind schedule).
+- EAC = 1,000,000 ÷ 0.8 = **₦1,250,000**, a forecast overspend of ₦250,000.
+
+This tells the manager something is wrong **before** the money has run out, so corrective action can start. (The advanced Project Manager course in the data and technology programme goes deeper into earned value and forecasting.)
+
+## Try it
+
+```task
+{
+  "id": "pmgt-m05-t1",
+  "prompt": "The base cost is **₦4,500,000** and you add **10% contingency**. Work out the contingency and the total budget. Then say in one sentence how you would decide when contingency can be used.",
+  "minutes": 6,
+  "rows": 5,
+  "placeholder": "Contingency = ...",
+  "rules": [
+    { "label": "Contingency of ₦450,000", "pattern": "450,?000" },
+    { "label": "Budget of ₦4,950,000", "pattern": "4,?950,?000" },
+    { "label": "Contingency used only for approved reasons or risks", "pattern": "approved|approval|risk|sponsor|record|justif|change" }
+  ],
+  "sample": "Contingency = 10% of 4,500,000 = ₦450,000.\nBudget = 4,500,000 + 450,000 = ₦4,950,000.\nContingency would be used only for approved reasons linked to identified risks, with each use recorded and approved by the sponsor.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "pmgt-m05-t2",
+  "prompt": "**BAC ₦1,000,000.** The plan says 50% should be done; actually **40%** is done and **₦500,000** is spent. Calculate **PV, EV, AC, CPI, SPI and EAC**, and say what it means.",
+  "minutes": 12,
+  "rows": 9,
+  "placeholder": "PV = ...",
+  "rules": [
+    { "label": "PV of ₦500,000", "pattern": "pv[^\\n]*500,?000" },
+    { "label": "EV of ₦400,000", "pattern": "ev[^\\n]*400,?000" },
+    { "label": "CPI of 0.8", "pattern": "cpi[^\\n]*0\\.8" },
+    { "label": "SPI of 0.8", "pattern": "spi[^\\n]*0\\.8" },
+    { "label": "EAC of ₦1,250,000", "pattern": "1,?250,?000" },
+    { "label": "Says over budget and behind schedule", "pattern": "over budget|behind|overspend|late|trouble|problem" }
+  ],
+  "sample": "PV = 50% x 1,000,000 = ₦500,000. EV = 40% x 1,000,000 = ₦400,000. AC = ₦500,000.\nCPI = 400,000 / 500,000 = 0.8. SPI = 400,000 / 500,000 = 0.8.\nEAC = 1,000,000 / 0.8 = ₦1,250,000.\nThe project is over budget and behind schedule: it earns ₦0.80 for each ₦1 spent and is 20% behind, so I must act now.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "pmgt-m05-t3",
+  "prompt": "Build a **budget for your project** with at least eight cost lines, each in naira, then the base cost, a contingency percentage and the total. One per line.",
+  "minutes": 15,
+  "rows": 12,
+  "placeholder": "Equipment - ₦...",
+  "rules": [
+    { "label": "At least ten lines", "minLines": 10 },
+    { "label": "At least eight naira amounts", "pattern": "₦\\s?\\d", "min": 8 },
+    { "label": "Base cost total", "pattern": "base cost|subtotal|total (before|base)" },
+    { "label": "Contingency with a percentage", "pattern": "contingency[^\\n]*\\d+\\s?%|\\d+\\s?%[^\\n]*contingency" },
+    { "label": "Total budget", "pattern": "total budget|budget total|total" }
+  ],
+  "sample": "Equipment (panels and inverter) - ₦2,400,000\nBatteries - ₦900,000\nInstallation labour - ₦500,000\nDesign and survey - ₦250,000\nPermits and inspection - ₦150,000\nTransport and logistics - ₦100,000\nStaff training - ₦100,000\nProject management and admin - ₦100,000\nBase cost - ₦4,500,000\nContingency at 10% - ₦450,000\nTotal budget - ₦4,950,000",
+  "required": false
+}
+```
+
+Next lesson: risk management.
+$md$, true, true, 5, array['pmgt-m05-t1', 'pmgt-m05-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('pmgt-m11', 'project-management', 'Closing and learning', 11, null, null, '{}'::text[], array['Handover and acceptance', 'Closing contracts', 'Lessons learned', 'Celebrating and archiving']::text[])
+values ('pmgt-m06', 'project-management', 'Risk management', 6, 'Project Risk', 'PMRISK', array['Identify risks', 'Score risks and calculate EMV', 'Choose responses', 'Keep a risk register']::text[], array['Identifying risks', 'Qualitative and quantitative assessment', 'Risk responses', 'The risk register']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('project-management:risk-management', 'project-management', 'pmgt-m06', 'risk-management', 'Risk Management', 'Identify project risks, assess them qualitatively and quantitatively, choose responses and keep a risk register.', 15, $md$
+## Identifying risks
+
+A **risk** is an uncertain event that, if it happens, affects the project's objectives, usually negatively (a threat) but sometimes positively (an opportunity). Do not confuse a risk with an **issue**, which is a problem that is **already happening.**
+
+Risk management is **proactive:** finding and handling threats before they hurt. It is cheaper to prevent a problem than to fix it.
+
+Ways to identify risks:
+
+- **Brainstorming** with the team and stakeholders.
+- **Checklists** and lessons learned from similar projects.
+- **Interviews** with experts and people who have done similar work.
+- **Reviewing the plan:** each work package, assumption, dependency and constraint hides risks.
+- **SWOT analysis.**
+- **Asking "what if?"** about suppliers, weather, people, approvals, prices and technology.
+
+Common sources: unclear requirements, unrealistic estimates, late supplier delivery, key people leaving, technology problems, regulatory delay, funding changes, weather, security and safety, and stakeholder conflict.
+
+Write each risk clearly in **cause, event and effect** form: *"Because the supplier is overseas (cause), delivery may be delayed by customs (event), which would delay installation by 3 weeks (effect)."*
+
+## Qualitative and quantitative assessment
+
+**Qualitative assessment** ranks risks quickly using **probability** (how likely) and **impact** (how bad), usually scored from 1 (low) to 5 (high). **Risk score = probability × impact**, from 1 to 25.
+
+| Risk | Probability | Impact | Score |
+| :-- | :-- | :-- | :-- |
+| Equipment delayed at customs | 4 | 4 | 16 |
+| Roof not strong enough | 2 | 5 | 10 |
+| Key technician leaves | 2 | 3 | 6 |
+
+Highest scores are managed first. Many teams use a **probability and impact matrix** with colours: red (high), amber (medium), green (low).
+
+**Quantitative assessment** puts numbers on risk, often as **expected monetary value (EMV)** = probability × impact in money.
+
+Example: a 20% chance of a ₦3,000,000 overrun gives EMV = 0.20 × 3,000,000 = **₦600,000.** If a response costs ₦400,000 and removes the risk, it is worth doing (it costs less than the expected loss). If it costs ₦900,000, it is not worth it on cost alone.
+
+EMV helps size **contingency:** add up the EMV of the main risks. More advanced methods, such as simulation, exist for large projects.
+
+## Risk responses
+
+For each significant risk, choose a response:
+
+**For threats:**
+
+- **Avoid:** change the plan so the risk cannot happen (use a local supplier instead of an overseas one).
+- **Mitigate:** reduce the probability or the impact (order early, test the roof, train a backup technician).
+- **Transfer:** pass the risk to someone else (insurance, fixed-price contracts, warranties).
+- **Accept:** do nothing, or prepare a **contingency plan** to use if it happens. Active acceptance includes setting aside time or money.
+
+**For opportunities:**
+
+- **Exploit:** make sure it happens.
+- **Enhance:** increase the probability or benefit.
+- **Share:** partner with someone better able to capture it.
+- **Accept:** take it if it comes.
+
+Also plan **fallbacks:** what you will do if the response fails. Watch for **secondary risks** created by a response (a faster supplier may cost more).
+
+Choose responses that are **proportionate:** cost less than the risk they address, and that someone has the authority to carry out.
+
+## The risk register
+
+The **risk register** is the living record of risks. A good register has, for each risk:
+
+- **ID and description** (cause, event, effect).
+- **Category** and **date raised.**
+- **Probability, impact, score.**
+- **Response strategy** and specific actions.
+- **Owner:** the person responsible for monitoring and acting.
+- **Trigger:** the warning sign that the risk is about to happen.
+- **Status:** open, closed or occurred.
+- **Contingency plan** and cost.
+
+Keep it short and **use it:** review the top risks at every team meeting, add new risks as you learn, close risks that have passed, and report the top risks to the sponsor. A register that is written once and filed is useless.
+
+## Try it
+
+```task
+{
+  "id": "pmgt-m06-t1",
+  "prompt": "Score three risks as probability × impact (1 to 5): (a) **equipment delayed at customs**, probability 4, impact 4; (b) **roof not strong enough**, probability 2, impact 5; (c) **key technician leaves**, probability 2, impact 3. Give each score and say which to manage first.",
+  "minutes": 6,
+  "rows": 6,
+  "placeholder": "(a) 4 x 4 = ...",
+  "rules": [
+    { "label": "Score of 16 for (a)", "pattern": "4\\s?[x×*]\\s?4\\s?=\\s?16|customs[^\\n]*16" },
+    { "label": "Score of 10 for (b)", "pattern": "2\\s?[x×*]\\s?5\\s?=\\s?10|roof[^\\n]*10" },
+    { "label": "Score of 6 for (c)", "pattern": "2\\s?[x×*]\\s?3\\s?=\\s?6|technician[^\\n]*\\b6\\b" },
+    { "label": "Says manage the customs delay first", "pattern": "first|highest|priority|customs" }
+  ],
+  "sample": "(a) Customs delay: 4 x 4 = 16.\n(b) Roof: 2 x 5 = 10.\n(c) Technician leaves: 2 x 3 = 6.\nI would manage the customs delay first because it has the highest score, 16.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "pmgt-m06-t2",
+  "prompt": "There is a **20% chance** of a **₦3,000,000** overrun. Work out the **EMV**. A response that removes the risk costs **₦400,000**. Is it worth doing? What if it cost **₦900,000**?",
+  "minutes": 8,
+  "rows": 6,
+  "placeholder": "EMV = ...",
+  "rules": [
+    { "label": "EMV of ₦600,000", "pattern": "600,?000" },
+    { "label": "Worth doing at ₦400,000", "pattern": "400,?000[^\\n]*(worth|yes|less than)|worth[^\\n]*400,?000|yes" },
+    { "label": "Not worth it at ₦900,000", "pattern": "900,?000[^\\n]*(not|more than|exceeds)|not worth[^\\n]*900,?000" }
+  ],
+  "sample": "EMV = 0.20 x 3,000,000 = ₦600,000.\nA ₦400,000 response is worth doing because it costs less than the expected loss.\nAt ₦900,000 it is not worth it on cost alone, because it costs more than the ₦600,000 expected loss.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "pmgt-m06-t3",
+  "prompt": "Create a **risk register** with four risks for your project. One per line: risk (cause, event, effect), probability and impact, response type (avoid, mitigate, transfer or accept), action and owner.",
+  "minutes": 15,
+  "rows": 10,
+  "placeholder": "R1: Because ..., ... may ..., which would ... - P4 x I4 = 16 - Mitigate - ... - Owner: ...",
+  "rules": [
+    { "label": "Four lines", "minLines": 4 },
+    { "label": "Each line has a score", "pattern": "\\d\\s?[x×*]\\s?\\d\\s?=\\s?\\d+", "perLine": true },
+    { "label": "Uses response types", "pattern": "avoid|mitigate|transfer|accept", "min": 4 },
+    { "label": "Each line has an owner", "pattern": "owner", "perLine": true },
+    { "label": "Uses cause-event-effect wording", "pattern": "because[^\\n]*(may|might|could)[^\\n]*(which|would|so)", "min": 3 }
+  ],
+  "sample": "R1: Because the supplier is overseas, delivery may be delayed at customs, which would delay installation by 3 weeks - 4 x 4 = 16 - Mitigate - order 6 weeks early and agree a customs agent - Owner: Bursar\nR2: Because the roof is old, it may not carry the panels, which would add ₦500,000 for reinforcement - 2 x 5 = 10 - Avoid - commission a structural survey first - Owner: Project manager\nR3: Because only one technician knows the system, he may leave, which would delay commissioning - 2 x 3 = 6 - Mitigate - train a second technician - Owner: Installer\nR4: Because prices change, the exchange rate may rise, which would raise costs by 8% - 3 x 3 = 9 - Transfer - fix the price with the supplier in naira - Owner: Bursar",
+  "required": false
+}
+```
+
+Next lesson: quality, procurement and change.
+$md$, true, true, 6, array['pmgt-m06-t1', 'pmgt-m06-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('pmgt-m12', 'project-management', 'Final project: a complete project plan', 12, null, null, '{}'::text[], array['Choosing your project', 'Building the plan', 'Presenting it', 'Review']::text[])
+values ('pmgt-m07', 'project-management', 'Quality, procurement and change', 7, 'Quality & Change', 'PMQUAL', array['Plan quality', 'Buy for a project', 'Run change control', 'Prevent scope creep']::text[], array['Quality planning and control', 'Buying for a project', 'Change control', 'Managing scope creep']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('project-management:quality-procurement-and-change', 'project-management', 'pmgt-m07', 'quality-procurement-and-change', 'Quality, Procurement and Change', 'Plan and control quality, buy for a project, run change control and manage scope creep.', 25, $md$
+## Quality planning and control
+
+**Quality** means the project's deliverables meet the requirements and are fit for purpose. It is planned in, not inspected in at the end.
+
+**Quality planning:**
+
+- **Define quality standards** and acceptance criteria for each deliverable (what "done" and "good" mean, with measurable tests).
+- **Identify relevant standards and regulations** (safety, building codes, product standards).
+- **Plan quality activities:** reviews, inspections, tests and audits, and who does each.
+- **Set metrics:** defects found, rework hours, test pass rate, customer satisfaction.
+- **Define roles** for quality checking, independent from those who did the work where possible.
+
+**Quality assurance** checks that the **process** is being followed and is capable of producing quality. **Quality control** checks the **results** (the deliverables) against the standard. Use simple tools: checklists, inspections, sampling, test plans, trend charts and a log of defects.
+
+The **cost of quality** has two parts: the cost of getting it right (planning, training, testing) and the cost of getting it wrong (rework, scrap, warranty claims, delays, lost reputation). Preventing defects costs far less than fixing them late, so invest in early reviews and clear requirements.
+
+Keep a **defect log:** what was found, where, severity, who fixes it, and status. Review the causes and fix the process, not only the defect.
+
+## Buying for a project
+
+Many projects buy equipment, materials and services. **Project procurement** needs planning:
+
+1. **Decide what to make and what to buy.** (Make-or-buy, covered in the Procurement & Sourcing course.)
+2. **Define the requirement** in a clear specification or statement of work.
+3. **Choose the procurement method:** quotations, tender or negotiation, by value and policy.
+4. **Select suppliers** using agreed criteria (cost, quality, delivery, experience, references, risk).
+5. **Choose the contract type.**
+6. **Manage the contract:** deliveries, inspection, payment on acceptance, changes and claims.
+7. **Close the contract:** final acceptance, payment, lessons.
+
+Common contract types:
+
+| Type | How it works | Suits |
+| :-- | :-- | :-- |
+| **Fixed-price (lump sum)** | A set price for a defined scope | Clear, stable scope; the buyer has certainty, the seller carries cost risk |
+| **Time and materials** | Pay for hours and materials used | Unclear scope or small work; the buyer carries cost risk, so set a cap |
+| **Cost-plus** | Pay costs plus a fee | Uncertain, complex work; needs strong cost control |
+| **Unit price** | A price per unit of work | Work where quantities vary |
+
+Plan **lead times** (add them to the schedule), **payment milestones** tied to acceptance, and **warranties.** Check a supplier's capacity and references before relying on them for critical items.
+
+## Change control
+
+Almost every project faces change requests: the client wants something new, a problem forces a different approach, a rule changes. **Change control** is the formal process that ensures changes are **considered, approved and recorded**, instead of creeping in.
+
+A typical process:
+
+1. **Request:** someone submits a change request describing the change and the reason.
+2. **Log it** with an ID, date, requester and status.
+3. **Assess the impact:** on scope, schedule, cost, quality, risk and resources. Involve the people who know.
+4. **Decide:** approve, reject or defer, by the person or board with authority (the sponsor or a change control board).
+5. **Communicate** the decision.
+6. **Update the plans and baselines** if approved, and implement.
+7. **Track** to completion.
+
+Example: a client requests an extra feature. The impact assessment says it adds **10 days** and **₦300,000.** The sponsor approves a **₦300,000** increase and a 10-day extension. The budget (₦4,950,000) rises to **₦5,250,000**, the finish date moves by 10 days, and both baselines are updated. If the sponsor refuses extra money, the team might swap the feature for a lower-priority one, or defer it to phase two.
+
+Do not agree to changes informally, even small ones. **Many small, unlogged changes** add up to a big overrun.
+
+## Managing scope creep
+
+**Scope creep** is the uncontrolled growth of scope after the project has begun. It happens through well-meaning "while you are there" requests, vague requirements and weak change control.
+
+How to prevent it:
+
+- **Get clear requirements and a signed scope statement** with exclusions.
+- **Involve stakeholders early,** so changes are not discovered late.
+- **Use change control** for every change, and say "yes, we can, here is what it costs" instead of a flat "no" or a silent "yes".
+- **Prioritise** (MoSCoW) so trade-offs are quick.
+- **Educate the client** on the triple constraint.
+- **Watch for gold-plating:** the team adding extras nobody asked for.
+- **Keep a log** of requests and decisions.
+- **Review scope** with the sponsor at milestones.
+
+Some change is healthy: it keeps the project relevant. The aim is **managed** change, with the cost and impact visible and approved.
+
+## Try it
+
+```task
+{
+  "id": "pmgt-m07-t1",
+  "prompt": "A change request adds **10 days** and **₦300,000** to a project with a budget of **₦4,950,000**. Work out the **new budget**, and write **three options** for the sponsor (approve, trade off, defer) in one line each.",
+  "minutes": 10,
+  "rows": 8,
+  "placeholder": "New budget = ...",
+  "rules": [
+    { "label": "New budget of ₦5,250,000", "pattern": "5,?250,?000" },
+    { "label": "Option to approve with extra time and money", "pattern": "approve" },
+    { "label": "Option to trade off or swap for something else", "pattern": "trade|swap|replace|drop|remove|lower-priority" },
+    { "label": "Option to defer or phase two", "pattern": "defer|later|phase" }
+  ],
+  "sample": "New budget = 4,950,000 + 300,000 = ₦5,250,000, with the finish date moved 10 days.\nApprove: accept the extra ₦300,000 and 10 days and update the baselines.\nTrade off: swap the new feature for a lower-priority one so cost and time do not change.\nDefer: leave the feature for a second phase after the current project is delivered.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "pmgt-m07-t2",
+  "prompt": "Write **acceptance criteria and quality checks** for two deliverables of your project. For each deliverable give at least two measurable acceptance criteria, how you will check them and who checks. At least six lines.",
+  "minutes": 12,
+  "rows": 9,
+  "placeholder": "Deliverable 1: ...\nCriterion: ...",
+  "rules": [
+    { "label": "At least six lines", "minLines": 6 },
+    { "label": "Two deliverables", "pattern": "deliverable 1[\\s\\S]*deliverable 2" },
+    { "label": "Measurable criteria with numbers", "pattern": "criteri[a-z]*[^\\n]*\\d", "min": 3 },
+    { "label": "States how it is checked", "pattern": "test|inspect|check|review|measure" },
+    { "label": "States who checks", "pattern": "by the|inspector|sponsor|tester|reviewer|customer|engineer|who checks|checked by" }
+  ],
+  "sample": "Deliverable 1: installed solar system\nCriterion: produces at least 40 kWh a day in a three-day test - checked by measuring output - checked by the installer's engineer and the school's technician\nCriterion: passes the electrical safety inspection with zero critical findings - inspector's report - checked by the independent inspector\nDeliverable 2: staff training\nCriterion: at least 5 staff complete the session and score 80% on a short practical check - observation and a short test - checked by the project manager\nCriterion: a handover manual of at most 20 pages is delivered - review - checked by the principal",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "pmgt-m07-t3",
+  "prompt": "The client keeps asking for small extras: *\"While you are there, can you also...?\"* In 50 to 100 words, say how you handle it without damaging the relationship.",
+  "minutes": 10,
+  "rows": 7,
+  "placeholder": "I would respond ...",
+  "rules": [
+    { "label": "Mentions change control or a change request", "pattern": "change (request|control)|formal|process|log" },
+    { "label": "Mentions assessing impact on cost, time or scope", "pattern": "impact|cost|time|schedule|price|effect" },
+    { "label": "Positive, offers options (yes, but, trade-off, phase two)", "pattern": "happy to|glad to|we can|option|trade|phase|priorit|decide" },
+    { "label": "Mentions the sponsor or decision maker", "pattern": "sponsor|decision|approve|client decides|approval" },
+    { "label": "Between 50 and 100 words", "minWords": 50, "maxWords": 105 }
+  ],
+  "sample": "I would say we are happy to look at it, and ask them to submit it through the change request process. I would then assess the impact on cost, time and scope and show the client the options: approve it with extra time and money, swap it for a lower-priority item, or leave it for phase two. The sponsor decides, and I record the decision. This keeps the relationship positive and the project under control.",
+  "required": false
+}
+```
+
+Next lesson: people, teams and stakeholders.
+$md$, true, true, 7, array['pmgt-m07-t1', 'pmgt-m07-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
+values ('pmgt-m08', 'project-management', 'People, teams and stakeholders', 8, 'Teams', 'PMTEAM', array['Build a team', 'Handle conflict', 'Engage stakeholders', 'Plan communication and meetings']::text[], array['Building and leading a team', 'Motivation and conflict', 'Stakeholder engagement', 'Communication planning and meetings']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('project-management:people-teams-and-stakeholders', 'project-management', 'pmgt-m08', 'people-teams-and-stakeholders', 'People, Teams and Stakeholders', 'Build and lead a team, motivate people and handle conflict, engage stakeholders and plan communication and meetings.', 30, $md$
+## Building and leading a team
+
+Projects are done by people. A good team has the **right skills, clear roles and a shared goal.**
+
+Building the team:
+
+- **Define roles and responsibilities** clearly. A simple **RACI** chart shows for each task who is **R**esponsible (does it), **A**ccountable (owns the result; one person), **C**onsulted and **I**nformed.
+- **Match skills to tasks.** Identify gaps, and decide whether to train, hire, borrow or outsource.
+- **Set team norms:** how we communicate, meet, make decisions and deal with problems.
+- **Explain the purpose** and each person's contribution.
+
+Teams usually develop through stages (Tuckman's model):
+
+1. **Forming:** polite and uncertain; people need direction.
+2. **Storming:** disagreement over roles and methods; needs leadership and clear rules.
+3. **Norming:** agreement on how to work; trust grows.
+4. **Performing:** effective and self-driven.
+5. **Adjourning:** the project ends; recognise achievements.
+
+A leader adapts: more **directing** at the start, more **coaching** and **delegating** as the team matures. Lead by example, be fair, give clear goals and feedback, remove obstacles and protect the team from unnecessary interference. Treat people with respect, regardless of rank.
+
+## Motivation and conflict
+
+**Motivation:** what moves people to do good work. Money matters, but so do:
+
+- **Purpose:** knowing why the work matters.
+- **Autonomy:** some control over how they do it.
+- **Mastery:** chances to learn and improve.
+- **Recognition:** thanks and credit for good work.
+- **Fairness and safety:** reasonable workloads, fair treatment and a safe space to raise problems.
+- **Clear goals and feedback.**
+
+Ask people what motivates them; do not assume.
+
+**Conflict** is normal on projects: over priorities, resources, methods and personalities. Handled well, it improves decisions; handled badly, it destroys trust. Approaches:
+
+| Approach | Meaning | Use when |
+| :-- | :-- | :-- |
+| **Collaborate / problem-solve** | Work together for a solution both accept | Important issues; the best long-term result |
+| **Compromise** | Each gives something up | Time is short; partial agreement is enough |
+| **Accommodate** | Give way to keep the peace | The issue matters more to the other side |
+| **Compete / force** | Use authority to decide | Emergencies or unpopular necessary decisions |
+| **Avoid / withdraw** | Postpone | Cooling off, or the issue is trivial |
+
+Steps: **meet privately, listen to each side, focus on the issue and not the person, agree facts, identify common goals, generate options and agree actions.** Escalate to the sponsor or a manager only if needed.
+
+## Stakeholder engagement
+
+Using your stakeholder list and the power and interest grid, plan how to engage each group. Describe the **current** engagement level (unaware, resistant, neutral, supportive or leading) and the **desired** one.
+
+Strategies:
+
+- **High power, high interest (manage closely):** involve them in decisions, meet often, seek their views early.
+- **High power, low interest (keep satisfied):** brief, concise updates; consult on key decisions.
+- **Low power, high interest (keep informed):** regular updates, listen to feedback, use them as helpers.
+- **Low power, low interest (monitor):** minimal effort, but watch for changes.
+
+Build **relationships** before you need them. Understand each person's interests and fears. Be honest, deliver on promises, and deal with resistance by listening to the underlying concern. A resistant stakeholder who feels heard may become an ally.
+
+## Communication planning and meetings
+
+Poor communication causes many project failures. A **communication plan** says **who** needs **what** information, **when**, **how** and from **whom.**
+
+| Audience | Information | Frequency | Method | Owner |
+| :-- | :-- | :-- | :-- | :-- |
+| Sponsor | Status, risks, decisions needed | Weekly | Short report and call | PM |
+| Team | Tasks, progress, issues | Daily or twice weekly | Stand-up meeting, chat | PM |
+| Users | What is changing and when | Monthly | Email, demos | PM |
+| Suppliers | Orders, schedule changes | As needed | Email, calls | Purchasing |
+
+Tips:
+
+- **Use the right channel:** urgent issues by phone or in person; decisions and records in writing.
+- **Keep it short, clear and honest.** Do not hide bad news.
+- **Confirm understanding.**
+- **Document important decisions.**
+
+**Effective meetings:**
+
+- Have a **clear purpose** (decide, inform, solve a problem) and only the people needed.
+- Send an **agenda** in advance, with times.
+- **Start and end on time.**
+- **Assign a chair and a note-taker.**
+- Focus on **decisions and actions:** who does what by when.
+- Send **minutes** within a day, listing decisions and actions.
+- **Cancel** meetings that are not needed.
+
+## Try it
+
+```task
+{
+  "id": "pmgt-m08-t1",
+  "prompt": "Build a **communication plan** for your project: at least **five audiences**, one per line, each with what they need, how often, the method and the owner.",
+  "minutes": 12,
+  "rows": 8,
+  "placeholder": "Sponsor - status and risks - weekly - short report - PM",
+  "rules": [
+    { "label": "At least five lines", "minLines": 5 },
+    { "label": "Includes the sponsor and the team", "pattern": "sponsor[\\s\\S]*team|team[\\s\\S]*sponsor" },
+    { "label": "Each line states a frequency", "pattern": "daily|weekly|monthly|twice|as needed|fortnight", "perLine": true },
+    { "label": "Each line states a method", "pattern": "email|call|meeting|report|chat|whatsapp|demo|stand-up|in person", "perLine": true },
+    { "label": "Each line states an owner", "pattern": "pm|project manager|owner|bursar|lead|purchasing|manager", "perLine": true }
+  ],
+  "sample": "Sponsor - status, risks and decisions needed - weekly - short report and call - PM\nTeam - tasks, progress and issues - daily - ten-minute stand-up meeting - PM\nPrincipal and teachers - what is changing and when - monthly - email and a short demo - PM\nSupplier and installer - orders and schedule changes - as needed - email and calls - purchasing lead\nParents' association - progress and costs - monthly - WhatsApp update - bursar",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "pmgt-m08-t2",
+  "prompt": "Two team members **disagree** about who should do a task, and it is affecting the team. In 60 to 120 words, describe the steps you would take to resolve it.",
+  "minutes": 12,
+  "rows": 8,
+  "placeholder": "I would first ...",
+  "rules": [
+    { "label": "Meets privately or listens to each side", "pattern": "privately|listen|each (side|person)|separately|hear" },
+    { "label": "Focuses on the issue, facts or goals", "pattern": "facts|issue|goal|common|not the person|objective|project" },
+    { "label": "Generates options or collaborates", "pattern": "option|agree|together|collaborat|solution|compromise" },
+    { "label": "Agrees actions and follows up", "pattern": "action|follow|check|agree[^\\n]*(who|by when)|document" },
+    { "label": "Between 60 and 120 words", "minWords": 60, "maxWords": 125 }
+  ],
+  "sample": "I would first speak to each person privately and listen to their view without taking sides. Then I would bring them together, focus on the facts and the project goal rather than the people, and ask for options. I would check the RACI chart to see who is responsible and accountable, and we would agree a solution together, such as splitting the task. I would write down who does what by when, and follow up in a few days to check the relationship has improved.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "pmgt-m08-t3",
+  "prompt": "Write the **agenda for a 30-minute weekly project meeting**: at least five items with times, and the output you expect (decisions and actions).",
+  "minutes": 8,
+  "rows": 8,
+  "placeholder": "0-5 min: ...",
+  "rules": [
+    { "label": "At least five lines", "minLines": 5 },
+    { "label": "Includes times", "pattern": "\\d+\\s*(-|to)\\s*\\d+|\\d+\\s*min", "min": 4 },
+    { "label": "Includes progress and risks or issues", "pattern": "progress[\\s\\S]*(risk|issue)|(risk|issue)[\\s\\S]*progress" },
+    { "label": "Includes decisions and actions", "pattern": "decision[\\s\\S]*action|action[\\s\\S]*decision" }
+  ],
+  "sample": "0-5 min: review last week's actions\n5-12 min: progress against the schedule and milestones\n12-18 min: risks and issues needing attention\n18-24 min: decisions needed and change requests\n24-28 min: confirm actions, owners and dates\n28-30 min: any other business and next meeting\nOutput: minutes with decisions and actions sent within a day",
+  "required": false
+}
+```
+
+Next lesson: agile and hybrid delivery.
+$md$, true, true, 8, array['pmgt-m08-t1', 'pmgt-m08-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
+values ('pmgt-m09', 'project-management', 'Agile and hybrid delivery', 9, 'Agile & Hybrid', 'PMAGILE', array['Use Scrum basics', 'Write user stories and forecast with velocity', 'Apply Kanban', 'Choose or mix approaches']::text[], array['Agile values and Scrum', 'Backlogs, sprints and reviews', 'Kanban', 'Choosing and mixing approaches']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('project-management:agile-and-hybrid-delivery', 'project-management', 'pmgt-m09', 'agile-and-hybrid-delivery', 'Agile and Hybrid Delivery', 'Understand agile values and Scrum, use backlogs, sprints and reviews, apply Kanban and choose or mix approaches for your project.', 25, $md$
+## Agile values and Scrum
+
+**Agile** is an approach to delivering projects in **short cycles**, getting feedback and adapting, instead of planning everything in detail first. It began in software but is used for marketing, product development, events and many other fields.
+
+The Agile Manifesto values:
+
+- **Individuals and interactions** over processes and tools.
+- **Working results** over comprehensive documentation.
+- **Customer collaboration** over contract negotiation.
+- **Responding to change** over following a plan.
+
+The things on the right still matter, but the left matters more. Principles include delivering value early and often, welcoming changing requirements, close collaboration with the customer, sustainable pace, simplicity and regular reflection.
+
+**Scrum** is the most popular agile framework. Its parts:
+
+**Roles:**
+
+- **Product Owner:** represents the customer; owns and prioritises the backlog; decides what is most valuable.
+- **Scrum Master:** helps the team follow Scrum, removes obstacles and protects the team.
+- **Development Team:** the people who do the work; self-organising and cross-skilled.
+
+**Events:**
+
+- **Sprint:** a fixed period (commonly one to four weeks) in which a usable piece of work is completed.
+- **Sprint planning:** the team selects what it can deliver in the sprint.
+- **Daily stand-up:** a 15-minute meeting: what I did, what I will do, what blocks me.
+- **Sprint review:** the team shows the finished work to stakeholders and gets feedback.
+- **Sprint retrospective:** the team reflects on how to work better.
+
+**Artifacts:** the **product backlog**, the **sprint backlog** and the **increment** (the working result).
+
+## Backlogs, sprints and reviews
+
+The **product backlog** is a prioritised list of everything that might be needed. Items are often written as **user stories:**
+
+*As a [type of user], I want [goal], so that [benefit].*
+
+Example: *As a parent, I want to pay school fees by transfer, so that I do not have to queue at the bursar's office.*
+
+Each item has **acceptance criteria** (how we will know it is done) and an **estimate,** often in **story points** (a relative measure of size and effort, not hours).
+
+**Sprint planning:** the team pulls the top items it can complete into the sprint backlog, based on its **velocity**, the average story points it completes per sprint.
+
+Example: in the last three sprints the team completed **20, 24 and 22** points. Velocity = (20 + 24 + 22) ÷ 3 = **22 points per sprint.** If the backlog holds **110 points**, the project needs 110 ÷ 22 = **5 sprints.** With two-week sprints, that is **10 weeks.** This is a forecast, and it changes as the backlog and velocity change.
+
+During a sprint: the team works, holds daily stand-ups, avoids adding new work (changes go to the backlog for the next sprint) and keeps the **Definition of Done** (an agreed checklist that every item must meet).
+
+At the **sprint review** stakeholders see working results and give feedback; the Product Owner updates the backlog. At the **retrospective** the team picks one or two improvements for the next sprint.
+
+## Kanban
+
+**Kanban** is a flow-based method that visualises work on a board with columns, such as **To do, In progress, Review, Done.** Each task is a card that moves across.
+
+Key practices:
+
+- **Visualise the work.**
+- **Limit work in progress (WIP):** only a set number of cards may be in a column at once (for example, no more than 3 in Progress). This reduces multitasking and exposes bottlenecks.
+- **Manage flow:** measure **cycle time** (how long a card takes from start to done) and **throughput** (how many finish per week).
+- **Make rules explicit** (what "done" means).
+- **Improve continuously.**
+
+Kanban suits ongoing, unpredictable work such as support requests, maintenance and content production. It has no fixed sprints, so work can be added at any time, subject to WIP limits.
+
+## Choosing and mixing approaches
+
+Choose by the nature of the project:
+
+| Question | Points to predictive (traditional) | Points to agile |
+| :-- | :-- | :-- |
+| Are requirements clear and stable? | Yes | No, they will evolve |
+| Is change expensive? | Yes (construction, regulated work) | No, easy to adjust |
+| Can the customer give frequent feedback? | Rarely | Yes |
+| Is the scope fixed by contract? | Yes | Flexible |
+| Is the technology or market uncertain? | No | Yes |
+
+A **hybrid** approach combines them. For example, a company building a new shop and a mobile app might use a traditional plan for the building (fixed budget and dates) and agile sprints for the app, tied together at key milestones. Another hybrid: plan the whole project with a charter, budget and milestones, but deliver in short iterations with regular reviews.
+
+Whatever you choose, keep the **fundamentals:** a clear goal, a prioritised list of work, regular communication, risk and change management, and honest reporting. Do not adopt a method just because it is fashionable, and do not call it agile if nobody gets feedback.
+
+## Try it
+
+```task
+{
+  "id": "pmgt-m09-t1",
+  "prompt": "A team completed **20, 24 and 22** story points in the last three sprints. The backlog has **110** points and sprints last **two weeks**. Work out the **velocity**, the **number of sprints** and the **time** needed, and say why it is only a forecast.",
+  "minutes": 8,
+  "rows": 7,
+  "placeholder": "Velocity = ...",
+  "rules": [
+    { "label": "Velocity of 22", "pattern": "\\b22\\b" },
+    { "label": "5 sprints", "pattern": "\\b5\\b" },
+    { "label": "10 weeks", "pattern": "\\b10\\s*weeks" },
+    { "label": "Explains it can change (backlog, velocity, changes)", "pattern": "change|vary|forecast|estimate|uncertain|backlog|velocity" }
+  ],
+  "sample": "Velocity = (20 + 24 + 22) / 3 = 22 points a sprint.\nSprints needed = 110 / 22 = 5 sprints.\nTime = 5 x 2 weeks = 10 weeks.\nIt is only a forecast because the backlog will change and the team's velocity will vary from sprint to sprint.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "pmgt-m09-t2",
+  "prompt": "Write **three user stories** for a project of your choice in the form *As a [user], I want [goal], so that [benefit]*, each with **two acceptance criteria**. At least nine lines.",
+  "minutes": 15,
+  "rows": 11,
+  "placeholder": "Story 1: As a ..., I want ..., so that ...\nAcceptance: ...",
+  "rules": [
+    { "label": "At least nine lines", "minLines": 9 },
+    { "label": "Three stories in the standard form", "pattern": "as (an?|the) [^,\\n]+, i want [^,\\n]+, so that", "min": 3 },
+    { "label": "Acceptance criteria", "pattern": "acceptance|criteri", "min": 3 },
+    { "label": "Measurable criteria (numbers or clear tests)", "pattern": "\\d+|within|at least|must|when", "min": 4 }
+  ],
+  "sample": "Story 1: As a parent, I want to pay school fees by transfer, so that I do not have to queue at the bursar's office.\nAcceptance: the parent receives a receipt within 5 minutes of payment.\nAcceptance: the payment shows against the child's account the same day.\nStory 2: As a teacher, I want to see my class list online, so that I can take attendance quickly.\nAcceptance: the list loads in under 3 seconds on a phone.\nAcceptance: attendance can be saved with at most two taps per student.\nStory 3: As the principal, I want a weekly fees report, so that I can follow collections.\nAcceptance: the report is sent every Monday by 8 am.\nAcceptance: it shows total paid, total owing and the ten largest debts.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "pmgt-m09-t3",
+  "prompt": "Decide whether your project suits **traditional, agile or hybrid** delivery. In 60 to 120 words, answer at least three of the choosing questions (clear requirements, cost of change, customer feedback, uncertainty) and give your choice.",
+  "minutes": 10,
+  "rows": 8,
+  "placeholder": "My project suits ...",
+  "rules": [
+    { "label": "States a choice (traditional, agile or hybrid)", "pattern": "traditional|predictive|waterfall|agile|hybrid" },
+    { "label": "Mentions requirements being clear or changing", "pattern": "requirements" },
+    { "label": "Mentions cost of change, customer feedback or uncertainty", "pattern": "cost of change|expensive|feedback|uncertain|stable|changes?" },
+    { "label": "Gives a reason", "pattern": "because|since|so|therefore" },
+    { "label": "Between 60 and 120 words", "minWords": 60, "maxWords": 125 }
+  ],
+  "sample": "My project suits a hybrid approach. The installation of the solar system has clear, stable requirements and changing it later would be expensive, so I will plan it traditionally with a fixed budget and milestones. The monitoring dashboard for the school is different, because the users' needs are uncertain and they can give feedback often, so I will build it in two-week agile sprints with reviews. I chose this because it uses each method where it fits and ties them together at the commissioning milestone.",
+  "required": false
+}
+```
+
+Next lesson: execution, monitoring and reporting.
+$md$, true, true, 9, array['pmgt-m09-t1', 'pmgt-m09-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
+values ('pmgt-m10', 'project-management', 'Execution, monitoring and reporting', 10, 'PM Execution', 'PMEXEC', array['Run the plan', 'Track progress', 'Write status reports', 'Take corrective action']::text[], array['Running the plan', 'Tracking progress', 'Status reports and dashboards', 'Corrective action']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('project-management:execution-monitoring-and-reporting', 'project-management', 'pmgt-m10', 'execution-monitoring-and-reporting', 'Execution, Monitoring and Reporting', 'Run the plan, track progress, write status reports and dashboards and take corrective action.', 30, $md$
+## Running the plan
+
+**Execution** is where the plan becomes results. The manager's job is to get the right work done, by the right people, to the right standard.
+
+Start well with a **kick-off meeting:** introduce the team, state the goal, scope, schedule and roles, review the plan and risks, agree how you will communicate and answer questions. A good start builds commitment.
+
+During execution:
+
+- **Direct and coordinate** the work. Make sure each person knows their tasks, deadlines and standards.
+- **Remove obstacles** quickly: missing information, equipment, approvals, conflicts.
+- **Manage the team:** motivate, coach, give feedback, resolve conflict.
+- **Manage suppliers and contracts.**
+- **Perform quality assurance** and acceptance tests.
+- **Communicate** as planned.
+- **Handle issues, risks and changes** through the agreed processes.
+- **Keep records:** decisions, changes, risks, issues, time and cost.
+
+Be visible, ask questions and listen. Many problems appear first as small remarks. Trust your team, but verify progress with facts, not only assurances.
+
+## Tracking progress
+
+**Monitoring** compares what is actually happening with the plan, on schedule, cost, scope, quality and risk. Do it regularly, weekly for most projects.
+
+Ways to measure progress:
+
+- **Milestones achieved** against plan.
+- **Tasks completed** (done or not done is more reliable than "80% finished").
+- **Percentage complete** for work packages, using clear rules (for example 0%, 50% when started and 100% only when accepted).
+- **Earned value** (CPI and SPI, module 5).
+- **Time and cost spent versus planned.**
+- **Quality measures:** defects, test results.
+- **Issues and risks** open or closed.
+- **Burndown or velocity** in agile projects.
+
+Beware the **"90% done" syndrome,** where a task is reported nearly finished for weeks. Break work into small tasks with clear completion rules, and ask: *"What remains, and how long will that take?"*
+
+Watch **trends,** not only snapshots: slipping a day a week for four weeks is a month's delay waiting to happen.
+
+## Status reports and dashboards
+
+A **status report** tells stakeholders where the project stands. Keep it short, consistent and honest. A good one-page report includes:
+
+1. **Overall status** with a **RAG** colour: **Green** (on track), **Amber** (at risk, with a plan), **Red** (off track, help needed).
+2. **Progress since last report:** milestones and key tasks completed.
+3. **Planned next period.**
+4. **Schedule status** (and key dates).
+5. **Budget status:** spent, forecast final cost, variance.
+6. **Top risks and issues,** with actions and owners.
+7. **Changes** approved or pending.
+8. **Decisions or help needed** from the sponsor.
+
+Example: *Overall: Amber. Schedule: 5 days behind because equipment arrived late; recovery plan: second installation team from 12 June. Budget: ₦2.1m spent of ₦4.95m; forecast ₦4.95m (no variance). Top risk: roof strength, survey due Friday. Decision needed: approve ₦150,000 for the second team.*
+
+A **dashboard** shows the same key numbers visually: a progress bar, a milestone timeline, budget versus actual, a risk summary and RAG indicators. Keep to a few meaningful measures. Update it regularly, and make sure the colours mean what they say. Reporting everything as green until it suddenly turns red destroys trust. **Report bad news early,** with a proposed solution.
+
+## Corrective action
+
+When monitoring shows a gap, act.
+
+1. **Understand the cause,** not just the symptom. Ask "why?" several times.
+2. **Assess impact** on schedule, cost, scope, quality and risk.
+3. **Generate options.** Common ones:
+   - **Schedule:** add resources to critical activities (**crashing**), run tasks in parallel (**fast-tracking**), reduce scope, work overtime, or accept a later date.
+   - **Cost:** reduce scope, renegotiate prices, use cheaper alternatives, improve productivity, use contingency.
+   - **Quality:** extra checks, retraining, fix the process.
+   - **Risk or issue:** apply the response plan; escalate if needed.
+4. **Choose and get approval** if the action changes baselines, using change control.
+5. **Implement,** assign an owner and a date.
+6. **Check the result** and learn.
+
+Example: the schedule shows the critical path **5 days behind.** Options: add a second installation team (₦150,000, saves 4 days), or work Saturdays (₦60,000, saves 2 days). The manager recommends both to recover the time, costing ₦210,000, covered from contingency with sponsor approval.
+
+Always be honest with the sponsor about the situation, the options and your recommendation.
+
+## Try it
+
+```task
+{
+  "id": "pmgt-m10-t1",
+  "prompt": "Write a **one-page status report** (at least eight lines) for your project: overall RAG status, progress, next period, schedule, budget (spent and forecast), top two risks and issues, and a decision needed.",
+  "minutes": 15,
+  "rows": 11,
+  "placeholder": "Overall status: Amber ...",
+  "rules": [
+    { "label": "At least eight lines", "minLines": 8 },
+    { "label": "Overall status with a RAG colour", "pattern": "green|amber|red" },
+    { "label": "Progress and next period", "pattern": "progress[\\s\\S]*next|next[\\s\\S]*progress|completed[\\s\\S]*(next|planned)" },
+    { "label": "Schedule and budget", "pattern": "schedule[\\s\\S]*budget|budget[\\s\\S]*schedule" },
+    { "label": "Naira figures for spend or forecast", "pattern": "₦\\s?\\d" },
+    { "label": "Risks or issues with actions", "pattern": "risk|issue" },
+    { "label": "A decision needed", "pattern": "decision|approve|approval|need" }
+  ],
+  "sample": "Overall status: Amber\nProgress: design approved; equipment ordered; roof survey completed\nNext period: equipment delivery and start of installation\nSchedule: 5 days behind because equipment arrived late; recovery plan is a second installation team from 12 June\nBudget: ₦2.1 million spent of ₦4.95 million; forecast ₦4.95 million with no variance\nTop risk: roof strength; survey results due Friday\nTop issue: customs delay on the inverter; agent chasing release\nDecision needed: approve ₦150,000 for the second installation team",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "pmgt-m10-t2",
+  "prompt": "The critical path is **5 days behind**. Option 1: a second team costs **₦150,000** and saves **4 days**. Option 2: Saturday work costs **₦60,000** and saves **2 days**. Work out the cost per day saved for each, the combined cost and time saved and what you would recommend.",
+  "minutes": 10,
+  "rows": 8,
+  "placeholder": "Option 1 cost per day = ...",
+  "rules": [
+    { "label": "₦37,500 per day for option 1", "pattern": "37,?500" },
+    { "label": "₦30,000 per day for option 2", "pattern": "30,?000" },
+    { "label": "Combined cost of ₦210,000", "pattern": "210,?000" },
+    { "label": "Combined saving of 6 days", "pattern": "\\b6\\s*days" },
+    { "label": "Makes a recommendation", "pattern": "recommend|both|choose|propose" }
+  ],
+  "sample": "Option 1: 150,000 / 4 = ₦37,500 per day saved. Option 2: 60,000 / 2 = ₦30,000 per day saved.\nTogether they cost 150,000 + 60,000 = ₦210,000 and save 6 days, more than the 5 needed.\nI recommend both, funded from contingency with the sponsor's approval, or Option 1 plus a day of Saturday work if I want to spend less.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "pmgt-m10-t3",
+  "prompt": "Explain in 50 to 100 words why you should **report bad news early** to the sponsor, and what you should bring with the bad news.",
+  "minutes": 8,
+  "rows": 6,
+  "placeholder": "Reporting early ...",
+  "rules": [
+    { "label": "Says early reporting gives time to act or more options", "pattern": "time|options|early|sooner|act|help|options" },
+    { "label": "Mentions trust or credibility", "pattern": "trust|credib|surpris|honest" },
+    { "label": "Says to bring facts, impact, options or a recommendation", "pattern": "options|recommend|plan|solution|impact|facts|cause" },
+    { "label": "Between 50 and 100 words", "minWords": 50, "maxWords": 105 }
+  ],
+  "sample": "Reporting bad news early gives the sponsor time and options to help, while a problem reported late is bigger, costlier and harder to fix. It also protects trust, because sponsors dislike surprises and respect honesty. I would bring the facts, the cause, the impact on schedule and cost, two or three options and my recommendation, so the conversation is about solutions and the decision needed, not just the problem.",
+  "required": false
+}
+```
+
+Next lesson: closing and learning.
+$md$, true, true, 10, array['pmgt-m10-t1', 'pmgt-m10-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
+values ('pmgt-m11', 'project-management', 'Closing and learning', 11, 'PM Closing', 'PMCLOSE', array['Gain acceptance and hand over', 'Close contracts', 'Capture lessons learned', 'Archive and celebrate']::text[], array['Handover and acceptance', 'Closing contracts', 'Lessons learned', 'Celebrating and archiving']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('project-management:closing-and-learning', 'project-management', 'pmgt-m11', 'closing-and-learning', 'Closing and Learning', 'Hand over and gain acceptance, close contracts, capture lessons learned and celebrate and archive the project.', 25, $md$
+## Handover and acceptance
+
+A project is not finished when the work is done. It is finished when the result is **accepted** and **handed over** to the people who will use and support it.
+
+**Acceptance.** Compare each deliverable with the **acceptance criteria** agreed in the scope statement. Do this formally:
+
+- **Test and demonstrate** the deliverables, with the customer present.
+- **List any defects** (a "snag list") and fix them, agreeing deadlines for the remaining ones.
+- **Get written sign-off** from the customer or sponsor confirming acceptance.
+
+Do not leave acceptance vague: *"it looks fine"* is not sign-off. If the customer will not sign, find out why and resolve it.
+
+**Handover** moves ownership to the operations team or customer. Make it smooth:
+
+- **Documentation:** user guides, manuals, as-built drawings, warranties, passwords and licences, maintenance schedules and contact lists.
+- **Training** for the people who will operate and support it.
+- **A support arrangement:** who to call, how fast they respond, and warranty or defect period.
+- **A transition plan,** and a short period of extra help after go-live.
+- **Hand over remaining risks and issues** with owners.
+
+Remember the **total life cost:** the project may be a small part of the cost compared with running and maintaining the result. Make sure the handover includes the information needed for that.
+
+## Closing contracts
+
+Close each **contract** (with suppliers, contractors, consultants) properly:
+
+1. **Confirm delivery and acceptance** of everything contracted.
+2. **Resolve open issues,** claims and disputes.
+3. **Settle payments:** pay what is owed, hold back retentions until the defect period ends, and confirm that no more charges are due.
+4. **Obtain documents:** certificates, warranties, completion certificates and final invoices.
+5. **Record supplier performance:** note who delivered well and who did not, for future decisions.
+6. **Return or release** any borrowed equipment, access passes and confidential information.
+7. **Formally notify** the supplier that the contract is closed.
+
+Also close the **project's finances:** reconcile the budget, confirm all costs are recorded, close the project's accounts and report any underspend or overspend with explanations.
+
+## Lessons learned
+
+A **lessons-learned review** captures what the project taught you, so the next one is better. Do it while memories are fresh, with the team and key stakeholders, in a blame-free setting.
+
+Ask:
+
+- **What went well,** and why? What should we repeat?
+- **What did not go well,** and why? What should we change?
+- **What surprised us?**
+- **What would we do differently next time?**
+- **What advice would we give another project manager?**
+
+Use evidence: the plan versus actual schedule and cost, the risk register, the change log, stakeholder feedback. Look at **causes,** not just symptoms: not "we were late" but "we were late because estimates ignored delivery time for imported equipment."
+
+Write **specific, actionable lessons.** For example: *"Order imported equipment at least 8 weeks before installation; include customs time in all estimates."* Store them where future teams will find them, and share the key ones. Lessons that sit in a drawer are lost.
+
+Also do **a review of the benefits:** a few months later, check whether the project achieved the benefits promised in the business case (the diesel savings, for example).
+
+## Celebrating and archiving
+
+- **Recognise people.** Thank the team and key contributors personally and publicly. A celebration, even a simple meal, acknowledges effort and builds morale for the next project.
+- **Release the team** properly: give feedback and references, help them move to new work, return staff to their departments.
+- **Archive the records:** the charter, plans, baselines, changes, risks, decisions, contracts, reports, lessons learned and final report, in an organised, accessible place, for the period that your organisation and the law require.
+- **Write a closure report:** what was delivered, performance against the objectives, schedule, budget, quality, key risks and issues, lessons learned and recommendations.
+- **Formally close the project,** with the sponsor's approval, and communicate it to stakeholders.
+
+A well-closed project leaves a satisfied customer, a happy team, a clear record and knowledge that makes the next project easier.
+
+## Try it
+
+```task
+{
+  "id": "pmgt-m11-t1",
+  "prompt": "Write a **closure checklist** for your project with at least ten items, one per line, covering acceptance, handover, training, contracts and payments, documents, lessons learned, recognition, archiving and the closure report.",
+  "minutes": 12,
+  "rows": 12,
+  "placeholder": "Get written sign-off ...",
+  "rules": [
+    { "label": "At least ten lines", "minLines": 10 },
+    { "label": "Acceptance and sign-off", "pattern": "accept|sign-?off" },
+    { "label": "Handover and training", "pattern": "handover|hand over|training" },
+    { "label": "Contracts and payments", "pattern": "contract|payment|invoice|retention" },
+    { "label": "Documents or warranties", "pattern": "document|manual|warrant" },
+    { "label": "Lessons learned", "pattern": "lessons" },
+    { "label": "Recognition or celebration", "pattern": "thank|celebrat|recogni" },
+    { "label": "Archive and closure report", "pattern": "archive|closure report|final report" }
+  ],
+  "sample": "Test and demonstrate every deliverable against the acceptance criteria\nList and fix all defects on the snag list\nGet written sign-off from the sponsor\nHand over manuals, as-built drawings, warranties and passwords\nTrain the school's technician and the bursar\nAgree the support arrangements and defect period\nConfirm contract delivery, settle payments and hold the retention\nRecord supplier performance\nHold the lessons-learned review\nThank and recognise the team, and release them\nArchive all records and write the closure report",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "pmgt-m11-t2",
+  "prompt": "Write **five specific lessons learned** for a project, one per line, each in the form \"What happened - cause - what to do next time\". Make them actionable, not vague.",
+  "minutes": 12,
+  "rows": 8,
+  "placeholder": "Equipment arrived late - customs time was missing from our estimate - order 8 weeks early next time",
+  "rules": [
+    { "label": "Five lines", "minLines": 5 },
+    { "label": "Each line has the three parts (two dashes)", "pattern": "-[^\\n]+-", "perLine": true },
+    { "label": "Includes a next-time action", "pattern": "next time|in future|always|make sure|should|must|from now|on every project|only for|as soon as", "min": 4 },
+    { "label": "Includes numbers or specifics", "pattern": "\\d+", "min": 3 }
+  ],
+  "sample": "Equipment arrived late - customs time was missing from our estimate - always add 6 weeks for imported items next time\nThe roof needed reinforcing - we surveyed it late - do the structural survey in week 1 in future\nStaff were not trained in time - training was scheduled after commissioning - train staff before handover on every project\nBudget used 10% contingency early - we used it for avoidable rework - approve contingency use only for identified risks\nThe sponsor was surprised by a delay - status reports were green until too late - report amber as soon as 3 days slip",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "pmgt-m11-t3",
+  "prompt": "A customer says the project is \"basically done\" but will not sign the acceptance. In 50 to 100 words, say how you handle it.",
+  "minutes": 8,
+  "rows": 6,
+  "placeholder": "I would ask ...",
+  "rules": [
+    { "label": "Asks why or listens to the concern", "pattern": "ask|why|listen|understand|concern|reason" },
+    { "label": "Refers to acceptance criteria", "pattern": "acceptance criteria|criteria|agreed|scope" },
+    { "label": "Fixes or agrees a snag list with dates", "pattern": "snag|defect|fix|list|date|deadline|resolve" },
+    { "label": "Aims at written sign-off", "pattern": "sign-?off|written|sign" },
+    { "label": "Between 50 and 100 words", "minWords": 50, "maxWords": 105 }
+  ],
+  "sample": "I would ask the customer why they will not sign, and listen to the concern. Then I would go through the acceptance criteria we agreed in the scope statement and check each deliverable against them together. Any real defects go on a snag list with an agreed date to fix, and anything outside the scope goes through change control. Once the criteria are met or the remaining items are agreed, I would ask for written sign-off, so that closure is clear for both sides.",
+  "required": false
+}
+```
+
+Next lesson: your complete project plan.
+$md$, true, true, 11, array['pmgt-m11-t1', 'pmgt-m11-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
+values ('pmgt-m12', 'project-management', 'Final project: a complete project plan', 12, 'PM Project Plan', 'PMPLAN', array['Plan a project end to end', 'Check the parts agree', 'Present to a sponsor', 'Defend the plan']::text[], array['Choosing your project', 'Building the plan', 'Presenting it', 'Review']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('project-management:final-project-a-complete-project-plan', 'project-management', 'pmgt-m12', 'final-project-a-complete-project-plan', 'Final Project: A Complete Project Plan', 'Choose a project, build the plan, present it and review it.', 60, $md$
+## What you are building
+
+You have learned to start, plan, run and close a project. In this final module you produce **a complete project plan** for a real or realistic project and present it as a project manager would to a sponsor.
+
+Choose a project you understand well: an event (a wedding, conference or school fair), a business project (opening a branch, launching a product, moving premises), a community or church project, an IT or marketing project, or a construction or installation job. Make it realistic in size: something that could take between a few weeks and a few months, and cost between a few hundred thousand and several million naira.
+
+Use real prices and durations where you can, and state your assumptions.
+
+## Your plan has eight parts
+
+1. **Charter:** purpose and business case, SMART objectives, success criteria, high-level scope, sponsor and key stakeholders.
+2. **Scope:** requirements prioritised with MoSCoW, a scope statement with exclusions and acceptance criteria, and a work breakdown structure.
+3. **Schedule:** activities, durations, dependencies, milestones and the critical path.
+4. **Budget:** cost estimates by work package, contingency and the total, with a cash flow view.
+5. **Risk:** a risk register with at least five scored risks and responses.
+6. **People and communication:** roles (RACI), stakeholder engagement and a communication plan.
+7. **Quality and change:** acceptance criteria and checks, procurement needs and the change control process.
+8. **Control and closing:** how you will track progress (including a sample status report), and how you will close the project.
+
+## Presenting the plan
+
+Write for the sponsor who must approve it. Open with a **one-page summary:** the goal, what will be delivered, when, for how much, the main risks and the decision you need. Use tables for the schedule, budget and risks. Check that the parts agree with each other: the budget matches the WBS, the schedule matches the milestones, and the risks are reflected in the contingency.
+
+Prepare to answer questions such as: *What if the cost goes up 20%? What happens if the key supplier is late? How will we know early if we are in trouble? What are you not including?* Have honest answers.
+
+> [!TIP]
+> Ask someone who was not involved to read your summary and tell you what they think the project is, what it costs and when it ends. If they cannot say, the summary needs work.
+
+## Try it
+
+```task
+{
+  "id": "pmgt-m12-t1",
+  "prompt": "Write your **project charter summary**, one item per line: project name, purpose and business case, a SMART objective, success criteria, scope (in and out), sponsor, key stakeholders, budget and end date. At least nine lines.",
+  "minutes": 12,
+  "rows": 11,
+  "placeholder": "Project name: ...",
+  "rules": [
+    { "label": "At least nine lines", "minLines": 9 },
+    { "label": "Name and purpose", "pattern": "name[\\s\\S]*purpose|purpose[\\s\\S]*name" },
+    { "label": "SMART objective with a number and date", "pattern": "objective[^\\n]*\\d" },
+    { "label": "Success criteria", "pattern": "success criteria|success" },
+    { "label": "Scope in and out", "pattern": "in scope|out of scope|scope" },
+    { "label": "Sponsor and stakeholders", "pattern": "sponsor[\\s\\S]*stakeholders?|stakeholders?[\\s\\S]*sponsor" },
+    { "label": "Budget in naira and an end date", "pattern": "budget[^\\n]*₦\\s?\\d[\\s\\S]*(end|finish|complete|by )" }
+  ],
+  "sample": "Project name: School Fair 2026\nPurpose and business case: raise ₦2,000,000 for the library fund through a one-day fair; costs ₦500,000\nObjective: raise ₦2 million net of costs and attract 800 visitors on 14 November\nSuccess criteria: ₦2 million raised, 800 visitors, no safety incidents and 90% positive feedback\nScope: in - stalls, entertainment, tickets, publicity and clean-up; out - permanent building work and televised coverage\nSponsor: the principal\nKey stakeholders: parents, teachers, pupils, vendors, the PTA and neighbours\nBudget: ₦500,000 including 10% contingency\nEnd date: closure report by 5 December",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "pmgt-m12-t2",
+  "prompt": "Write your **schedule and critical path**: at least **eight activities** with durations and predecessors, then the **critical path** with its total length and the **float** of one non-critical activity. Show the sums.",
+  "minutes": 15,
+  "rows": 12,
+  "placeholder": "A - ... - 3 days - none\n...\nCritical path: ...",
+  "rules": [
+    { "label": "At least ten lines", "minLines": 10 },
+    { "label": "Activities with durations", "pattern": "\\d+\\s*days?", "min": 8 },
+    { "label": "States the critical path", "pattern": "critical path" },
+    { "label": "States float", "pattern": "float|slack" },
+    { "label": "Shows a sum", "pattern": "=|\\+" }
+  ],
+  "sample": "A - Agree date and venue - 3 days - none\nB - Recruit volunteers - 7 days - after A\nC - Book vendors and entertainment - 10 days - after A\nD - Design and print posters and tickets - 5 days - after A\nE - Publicity and ticket sales - 14 days - after D\nF - Set up stalls and stage - 2 days - after B and C\nG - Run the fair - 1 day - after E and F\nH - Clean up and count the money - 2 days - after G\nPaths: A-C-F-G-H = 3 + 10 + 2 + 1 + 2 = 18 days; A-D-E-G-H = 3 + 5 + 14 + 1 + 2 = 25 days; A-B-F-G-H = 3 + 7 + 2 + 1 + 2 = 15 days\nCritical path: A-D-E-G-H, 25 days in total\nFloat: C has float, since path A-C-F-G-H takes 18 days, so it can slip 25 - 18 = 7 days",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "pmgt-m12-t3",
+  "prompt": "Write your **budget and risk summary**: at least six cost lines in naira, the base cost, contingency (with the percentage) and the total; then **three risks** each with a score (probability × impact) and a response.",
+  "minutes": 15,
+  "rows": 14,
+  "placeholder": "Venue and equipment - ₦...\n...\nRisk: ... - 3 x 4 = 12 - Mitigate - ...",
+  "rules": [
+    { "label": "At least twelve lines", "minLines": 12 },
+    { "label": "At least six naira amounts", "pattern": "₦\\s?\\d", "min": 6 },
+    { "label": "Base cost and contingency percentage", "pattern": "contingency[^\\n]*\\d+\\s?%|\\d+\\s?%[^\\n]*contingency" },
+    { "label": "Total budget", "pattern": "total" },
+    { "label": "Three scored risks", "pattern": "\\d\\s?[x×*]\\s?\\d\\s?=\\s?\\d+", "min": 3 },
+    { "label": "Responses", "pattern": "avoid|mitigate|transfer|accept", "min": 3 }
+  ],
+  "sample": "Venue and equipment hire - ₦120,000\nPublicity and printing - ₦60,000\nEntertainment and sound - ₦100,000\nRefreshments for volunteers - ₦50,000\nSecurity and first aid - ₦60,000\nMiscellaneous and admin - ₦55,000\nBase cost - ₦445,000\nContingency at 10% - ₦44,500\nTotal budget - ₦489,500\nRisk: rain on the day - 3 x 4 = 12 - Mitigate - hire canopies and set a wet-weather plan\nRisk: low ticket sales - 3 x 5 = 15 - Mitigate - pre-sell tickets and publicise early\nRisk: a vendor cancels - 2 x 3 = 6 - Accept - keep a reserve list of vendors",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "pmgt-m12-t4",
+  "prompt": "Write your **people, communication and control plan** in at least seven lines: roles with RACI for three tasks, three audiences with frequency and method, the change control steps, how you track progress and how you close the project.",
+  "minutes": 15,
+  "rows": 12,
+  "placeholder": "RACI - ...\nCommunication - ...",
+  "rules": [
+    { "label": "At least seven lines", "minLines": 7 },
+    { "label": "RACI or roles", "pattern": "raci|responsible|accountable|roles?" },
+    { "label": "Audiences with frequency and method", "pattern": "weekly|daily|monthly[\\s\\S]*(email|meeting|call|whatsapp|report)|(email|meeting|call|whatsapp|report)[\\s\\S]*(weekly|daily|monthly)" },
+    { "label": "Change control", "pattern": "change (request|control)" },
+    { "label": "Tracking progress", "pattern": "track|status report|milestone|rag|dashboard" },
+    { "label": "Closing", "pattern": "clos|handover|lessons|sign-?off" }
+  ],
+  "sample": "RACI for publicity: volunteer lead is responsible, the project manager is accountable, the principal is consulted and parents are informed\nRACI for finance: bursar responsible, project manager accountable, principal consulted\nRACI for set-up: facilities head responsible, project manager accountable, volunteers informed\nCommunication: sponsor weekly by short report and call; team twice weekly in a 15-minute meeting; parents monthly by WhatsApp update\nChange control: submit a change request, assess the impact on cost and time, the principal approves or rejects, and I update the plan\nTracking: weekly RAG status report, milestone checks and a budget versus actual comparison\nClosing: sign-off by the principal, thank the volunteers, hold a lessons-learned meeting and write the closure report",
+  "required": true
+}
+```
+
+When you are done, submit your complete project plan as your final project.
+$md$, true, true, 12, array['pmgt-m12-t1', 'pmgt-m12-t2', 'pmgt-m12-t3', 'pmgt-m12-t4']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 
 -- Course: Human Resources & People Management
@@ -101431,6 +103090,684 @@ values ('ecom-f15', 0, 'Scale proven economics.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 
+-- Assessment: Project Management Fundamentals: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('pmgt-m01-check', 'project-management', 'module', 'pmgt-m01', 'Project Management Fundamentals: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-m01-q1', 'pmgt-m01-check', 1, 'Which is a project rather than operations?', '["Running the shop every day","Opening a new shop branch","Monthly payroll","Answering customer calls"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-m01-q1', 1, 'A project is temporary and creates a unique result.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-m01-q2', 'pmgt-m01-check', 2, 'What are the three constraints of the triple constraint?', '["Scope, time and cost","People, place and price","Risk, quality and speed only","Plan, do and check"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-m01-q2', 0, 'Scope, time and cost are linked.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-m01-q3', 'pmgt-m01-check', 3, 'Which process group runs throughout the project?', '["Initiating","Closing","Monitoring and controlling","Planning only"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-m01-q3', 2, 'Monitoring and controlling continues across the lifecycle.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-m01-q4', 'pmgt-m01-check', 4, 'A method that suits unclear, changing requirements is usually:', '["Traditional","Agile","Neither","No plan"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-m01-q4', 1, 'Agile adapts through short cycles.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-m01-q5', 'pmgt-m01-check', 5, 'A project manager mainly:', '["Does all the technical work","Leads the project to its goals and balances constraints","Only reports","Only buys"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-m01-q5', 1, 'The PM leads and coordinates delivery.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Initiating a Project: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('pmgt-m02-check', 'project-management', 'module', 'pmgt-m02', 'Initiating a Project: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-m02-q1', 'pmgt-m02-check', 1, 'A ₦6,000,000 project saves ₦2,400,000 a year. What is the payback?', '["1.5 years","2 years","2.5 years","3 years"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-m02-q1', 2, '6 ÷ 2.4 = 2.5.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-m02-q2', 'pmgt-m02-check', 2, 'What does the project charter do?', '["Lists the tasks","Formally authorises the project and the project manager''s authority","Closes the project","Records risks only"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-m02-q2', 1, 'The sponsor issues it to authorise the project.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-m02-q3', 'pmgt-m02-check', 3, 'A stakeholder with high power and high interest should be:', '["Monitored","Kept informed","Managed closely","Ignored"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-m02-q3', 2, 'Manage closely.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-m02-q4', 'pmgt-m02-check', 4, 'Which objective is SMART?', '["Improve service","Cut response time from 24 to 4 hours by 30 June within ₦3 million","Be better","Work hard"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-m02-q4', 1, 'It has numbers, a time frame and a limit.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-m02-q5', 'pmgt-m02-check', 5, 'Is stopping a project that does not make sense a failure?', '["Yes","No, it can save money and effort","Only for large projects","Always"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-m02-q5', 1, 'A good no-go decision is a success.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Scope and Planning: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('pmgt-m03-check', 'project-management', 'module', 'pmgt-m03', 'Scope and Planning: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-m03-q1', 'pmgt-m03-check', 1, 'In MoSCoW, ''Won''t'' means:', '["Never ever","Agreed to be out of scope this time","Must do","Optional"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-m03-q1', 1, 'Won''t have this time protects scope.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-m03-q2', 'pmgt-m03-check', 2, 'What is the 100% rule of a WBS?', '["It must have 100 items","It includes all the work in scope and nothing outside it","It must be 100 pages","Each task is 100 hours"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-m03-q2', 1, 'The WBS covers the whole scope.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-m03-q3', 'pmgt-m03-check', 3, 'Why include exclusions in the scope statement?', '["They are optional decoration","They prevent scope creep","They add cost","They are legal text"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-m03-q3', 1, 'Exclusions set boundaries.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-m03-q4', 'pmgt-m03-check', 4, 'A work package is:', '["The whole project","A piece of work small enough to estimate and assign","A contract","A report"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-m03-q4', 1, 'The lowest level of the WBS.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-m03-q5', 'pmgt-m03-check', 5, 'Which requirement is testable?', '["The system should be fast","Order confirmation appears within 3 seconds","Make it nice","Users will love it"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-m03-q5', 1, 'It has a measurable test.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Schedule Management: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('pmgt-m04-check', 'project-management', 'module', 'pmgt-m04', 'Schedule Management: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-m04-q1', 'pmgt-m04-check', 1, 'A 3 days; B 4 and C 6 after A; D 2 after B and C. What is the project duration?', '["9 days","11 days","13 days","15 days"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-m04-q1', 1, 'A-C-D = 3 + 6 + 2 = 11.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-m04-q2', 'pmgt-m04-check', 2, 'In that network, how much float does B have?', '["0 days","2 days","4 days","6 days"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-m04-q2', 1, '11 − 9 = 2.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-m04-q3', 'pmgt-m04-check', 3, 'O = 4, M = 6, P = 14. What is the PERT expected duration?', '["6","7","8","9"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-m04-q3', 1, '(4 + 24 + 14) ÷ 6 = 7.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-m04-q4', 'pmgt-m04-check', 4, 'To shorten the project you should shorten:', '["Any activity","Critical-path activities","Non-critical activities only","Milestones"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-m04-q4', 1, 'Only the critical path sets duration.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-m04-q5', 'pmgt-m04-check', 5, 'What is resource levelling?', '["Making all tasks equal","Adjusting the schedule so demand on people and equipment is realistic","Cutting scope only","Hiring more managers"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-m04-q5', 1, 'It fixes overloads.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Cost and Budget Management: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('pmgt-m05-check', 'project-management', 'module', 'pmgt-m05', 'Cost and Budget Management: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-m05-q1', 'pmgt-m05-check', 1, 'Base cost ₦4,500,000 plus 10% contingency is:', '["₦4,550,000","₦4,950,000","₦5,000,000","₦5,400,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-m05-q1', 1, '4,500,000 × 1.1.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-m05-q2', 'pmgt-m05-check', 2, 'BAC ₦1,000,000. 40% is done and ₦500,000 spent. What is the CPI?', '["0.4","0.8","1.0","1.25"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-m05-q2', 1, 'EV 400,000 ÷ AC 500,000 = 0.8.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-m05-q3', 'pmgt-m05-check', 3, 'With CPI 0.8 and BAC ₦1,000,000, what is the EAC?', '["₦800,000","₦1,000,000","₦1,250,000","₦1,500,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-m05-q3', 2, '1,000,000 ÷ 0.8.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-m05-q4', 'pmgt-m05-check', 4, 'SPI below 1 means:', '["Ahead of schedule","Behind schedule","On budget","Over budget"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-m05-q4', 1, 'Less value earned than planned.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-m05-q5', 'pmgt-m05-check', 5, 'Why report cost problems early?', '["To look busy","Sponsors can help with small problems; large ones are harder to fix","It is a rule only","To save paper"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-m05-q5', 1, 'Early reporting preserves options.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Risk Management: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('pmgt-m06-check', 'project-management', 'module', 'pmgt-m06', 'Risk Management: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-m06-q1', 'pmgt-m06-check', 1, 'What is the difference between a risk and an issue?', '["None","A risk is uncertain future; an issue is a problem already happening","An issue is uncertain","A risk is always positive"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-m06-q1', 1, 'Issues have already occurred.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-m06-q2', 'pmgt-m06-check', 2, 'Probability 4 and impact 4 give a score of:', '["8","12","16","20"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-m06-q2', 2, '4 × 4.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-m06-q3', 'pmgt-m06-check', 3, 'A 20% chance of a ₦3,000,000 overrun has an EMV of:', '["₦300,000","₦600,000","₦900,000","₦3,000,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-m06-q3', 1, '0.2 × 3,000,000.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-m06-q4', 'pmgt-m06-check', 4, 'Buying insurance for a risk is:', '["Avoid","Mitigate","Transfer","Accept"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-m06-q4', 2, 'Insurance transfers the risk.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-m06-q5', 'pmgt-m06-check', 5, 'Why name an owner for each risk?', '["For decoration","So someone monitors it and acts","To blame them","It is optional"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-m06-q5', 1, 'Ownership drives action.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Quality, Procurement and Change: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('pmgt-m07-check', 'project-management', 'module', 'pmgt-m07', 'Quality, Procurement and Change: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-m07-q1', 'pmgt-m07-check', 1, 'What is quality control?', '["Checking the process only","Checking the results against the standard","Writing the plan","Buying materials"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-m07-q1', 1, 'QC inspects deliverables.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-m07-q2', 'pmgt-m07-check', 2, 'Which contract suits a clear, stable scope?', '["Time and materials","Fixed-price","Cost-plus","None"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-m07-q2', 1, 'Fixed-price suits a defined scope.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-m07-q3', 'pmgt-m07-check', 3, 'A change adds ₦300,000 to a ₦4,950,000 budget. What is the new budget?', '["₦5,000,000","₦5,250,000","₦5,300,000","₦5,500,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-m07-q3', 1, '4,950,000 + 300,000.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-m07-q4', 'pmgt-m07-check', 4, 'What is scope creep?', '["Planned growth","Uncontrolled growth of scope after the project starts","A kind of risk response","A report"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-m07-q4', 1, 'Unmanaged additions.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-m07-q5', 'pmgt-m07-check', 5, 'What is the right way to treat small extra requests?', '["Agree informally","Log them and assess impact through change control","Refuse all","Ignore them"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-m07-q5', 1, 'Small unlogged changes add up.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: People, Teams and Stakeholders: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('pmgt-m08-check', 'project-management', 'module', 'pmgt-m08', 'People, Teams and Stakeholders: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-m08-q1', 'pmgt-m08-check', 1, 'In a RACI chart, who owns the result?', '["Responsible","Accountable","Consulted","Informed"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-m08-q1', 1, 'Accountable: one person.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-m08-q2', 'pmgt-m08-check', 2, 'In which team stage is there disagreement about roles?', '["Forming","Storming","Norming","Performing"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-m08-q2', 1, 'Storming.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-m08-q3', 'pmgt-m08-check', 3, 'Which conflict approach works best for important issues?', '["Avoid","Force","Collaborate and problem-solve","Accommodate"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-m08-q3', 2, 'Collaboration gives the best long-term result.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-m08-q4', 'pmgt-m08-check', 4, 'A good communication plan states:', '["Only the date","Who needs what, when, how and from whom","Only the owner","Nothing"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-m08-q4', 1, 'It covers audience, content, frequency, method and owner.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-m08-q5', 'pmgt-m08-check', 5, 'What should meeting minutes list?', '["Every word said","Decisions and actions with owners and dates","Only attendees","Jokes"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-m08-q5', 1, 'Minutes record decisions and actions.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Agile and Hybrid Delivery: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('pmgt-m09-check', 'project-management', 'module', 'pmgt-m09', 'Agile and Hybrid Delivery: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-m09-q1', 'pmgt-m09-check', 1, 'Sprint results 20, 24 and 22 points. What is the velocity?', '["20","22","24","66"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-m09-q1', 1, '66 ÷ 3 = 22.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-m09-q2', 'pmgt-m09-check', 2, 'A 110-point backlog at 22 points a sprint needs:', '["4 sprints","5 sprints","6 sprints","10 sprints"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-m09-q2', 1, '110 ÷ 22 = 5.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-m09-q3', 'pmgt-m09-check', 3, 'Who prioritises the product backlog in Scrum?', '["The Scrum Master","The Product Owner","The Development Team","The sponsor only"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-m09-q3', 1, 'The Product Owner decides value order.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-m09-q4', 'pmgt-m09-check', 4, 'What does a Kanban WIP limit do?', '["Adds work","Limits work in progress to reveal bottlenecks and reduce multitasking","Sets the price","Ends the project"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-m09-q4', 1, 'WIP limits improve flow.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-m09-q5', 'pmgt-m09-check', 5, 'A hybrid approach:', '["Uses no plan","Combines traditional and agile where each fits","Is only for software","Cannot be used"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-m09-q5', 1, 'Mix methods by need.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Execution, Monitoring and Reporting: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('pmgt-m10-check', 'project-management', 'module', 'pmgt-m10', 'Execution, Monitoring and Reporting: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-m10-q1', 'pmgt-m10-check', 1, 'What does an Amber RAG status mean?', '["On track","At risk, with a plan","Off track and failed","Finished"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-m10-q1', 1, 'Amber signals risk with a recovery plan.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-m10-q2', 'pmgt-m10-check', 2, 'What is ''crashing'' the schedule?', '["Cancelling the project","Adding resources to critical activities to shorten them","Delaying work","Cutting quality"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-m10-q2', 1, 'Crashing adds resources to save time.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-m10-q3', 'pmgt-m10-check', 3, 'Option: ₦150,000 saves 4 days. What is the cost per day saved?', '["₦30,000","₦37,500","₦40,000","₦150,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-m10-q3', 1, '150,000 ÷ 4.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-m10-q4', 'pmgt-m10-check', 4, 'Why report bad news early?', '["To avoid work","It gives time and options and protects trust","To worry people","It is optional"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-m10-q4', 1, 'Early reporting preserves options.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-m10-q5', 'pmgt-m10-check', 5, 'The ''90% done'' syndrome is solved by:', '["Ignoring it","Small tasks with clear completion rules","Longer meetings","More reports"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-m10-q5', 1, 'Clear completion rules reveal true progress.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Closing and Learning: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('pmgt-m11-check', 'project-management', 'module', 'pmgt-m11', 'Closing and Learning: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-m11-q1', 'pmgt-m11-check', 1, 'When is a project truly finished?', '["When work is done","When the result is accepted and handed over","When money runs out","When the team is tired"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-m11-q1', 1, 'Acceptance and handover finish a project.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-m11-q2', 'pmgt-m11-check', 2, 'What is a snag list?', '["A list of suppliers","A list of defects to fix before acceptance","A budget","A schedule"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-m11-q2', 1, 'It tracks remaining defects.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-m11-q3', 'pmgt-m11-check', 3, 'A good lessons-learned entry is:', '["We were late","Order imported equipment 8 weeks early because customs time was missing from estimates","Everything was bad","Nothing to report"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-m11-q3', 1, 'Specific and actionable.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-m11-q4', 'pmgt-m11-check', 4, 'Why hold lessons learned in a blame-free setting?', '["To avoid work","People share honestly and the causes are found","It is required by law","To save time"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-m11-q4', 1, 'Blame hides the truth.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-m11-q5', 'pmgt-m11-check', 5, 'Where should closure records go?', '["Deleted","Archived in an organised, accessible place","Left on a laptop","Burned"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-m11-q5', 1, 'Archive for audits and future projects.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Final Project: A Complete Project Plan: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('pmgt-m12-check', 'project-management', 'module', 'pmgt-m12', 'Final Project: A Complete Project Plan: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-m12-q1', 'pmgt-m12-check', 1, 'How should the plan open for the sponsor?', '["With the full WBS","With a one-page summary of goal, deliverables, time, cost, risks and decision needed","With the risk register","With the lessons"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-m12-q1', 1, 'Sponsors need the summary first.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-m12-q2', 'pmgt-m12-check', 2, 'Which check shows the plan hangs together?', '["Budget matches WBS, schedule matches milestones, risks reflected in contingency","It has many pages","It has colours","It has a logo"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-m12-q2', 0, 'Consistency across parts.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-m12-q3', 'pmgt-m12-check', 3, 'Paths A-C-F-G-H = 18 days and A-D-E-G-H = 25 days. What is the float of path A-C-F-G-H?', '["0 days","7 days","18 days","25 days"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-m12-q3', 1, '25 − 18 = 7.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-m12-q4', 'pmgt-m12-check', 4, 'Base cost ₦445,000 plus 10% contingency is:', '["₦489,500","₦490,000","₦500,000","₦534,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-m12-q4', 0, '445,000 × 1.1 = 489,500.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-m12-q5', 'pmgt-m12-check', 5, 'Why prepare for sponsor questions?', '["To avoid work","To give honest, evidence-based answers","To argue","To save time"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-m12-q5', 1, 'Preparation builds credibility.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Project Management: final assessment
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('project-management-final', 'project-management', 'final', null, 'Project Management: final assessment', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-f01', 'project-management-final', 1, 'Which is the best description of a project?', '["Ongoing routine work","A temporary effort to create a unique result","A department","A budget"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-f01', 1, 'Temporary and unique.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-f02', 'project-management-final', 2, 'A project costs ₦6m and saves ₦2.4m a year. What is the 3-year ROI?', '["10%","20%","30%","40%"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-f02', 1, '(7.2 − 6) ÷ 6 = 20%.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-f03', 'project-management-final', 3, 'What does a scope statement''s exclusion list prevent?', '["Cost","Scope creep","Risk","Quality checks"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-f03', 1, 'It sets boundaries.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-f04', 'project-management-final', 4, 'A 3, B 4, C 6 after A, D 2 after B and C: what is the critical path?', '["A-B-D","A-C-D","B-C","A-D"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-f04', 1, 'A-C-D = 11 days.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-f05', 'project-management-final', 5, 'O 4, M 6, P 14 gives a PERT estimate of:', '["6","7","8","10"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-f05', 1, '(4 + 24 + 14) ÷ 6 = 7.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-f06', 'project-management-final', 6, 'Base cost ₦4.5m plus 10% contingency is:', '["₦4.9m","₦4.95m","₦5.0m","₦5.4m"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-f06', 1, '4.5 × 1.1.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-f07', 'project-management-final', 7, 'EV ₦400,000 and AC ₦500,000. What is the CPI?', '["0.8","1.0","1.25","0.4"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-f07', 0, '400 ÷ 500.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-f08', 'project-management-final', 8, 'Which risk response is insurance?', '["Avoid","Mitigate","Transfer","Accept"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-f08', 2, 'Insurance transfers risk.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-f09', 'project-management-final', 9, 'A 20% chance of a ₦3m loss has an EMV of:', '["₦300,000","₦600,000","₦900,000","₦3,000,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-f09', 1, '0.2 × 3m.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-f10', 'project-management-final', 10, 'A change request adds 10 days and ₦300,000. What must happen first?', '["Do it","Assess impact and get approval through change control","Ignore it","Cancel the project"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-f10', 1, 'Use change control.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-f11', 'project-management-final', 11, 'Which meeting practice is best?', '["No agenda","A clear purpose, an agenda, and minutes with decisions and actions","A long chat","No notes"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-f11', 1, 'Effective meetings are structured.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-f12', 'project-management-final', 12, 'Velocity 22 and a backlog of 110 points need how many sprints?', '["4","5","6","10"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-f12', 1, '110 ÷ 22.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-f13', 'project-management-final', 13, 'A project is Amber. What should the report include?', '["Nothing","The cause, the recovery plan and any decision needed","Only good news","A new logo"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-f13', 1, 'Amber needs a plan.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-f14', 'project-management-final', 14, 'The customer will not sign acceptance. What do you do first?', '["Close anyway","Find out why and check against the acceptance criteria","Delete records","Walk away"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-f14', 1, 'Understand the concern and review the criteria.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('pmgt-f15', 'project-management-final', 15, 'Which is a good lessons-learned statement?', '["It was hard","Do the structural survey in week 1 because the roof needed reinforcement late","Nothing went well","Blame the supplier"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('pmgt-f15', 1, 'Specific and actionable.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
 -- Project: Harbourline Freight operations review
 insert into public.projects (id, course_id, title, summary, brief_md, tasks, datasets, rubric, required)
 values ('sql-harbourline-review', 'sql-for-data-analysis', 'Harbourline Freight operations review', 'Analyse the operations of a fictional logistics company and report what you find to its leadership team.', $md$Harbourline Freight's leadership team is planning 2027 and has asked for an operations review built from the company database.
@@ -101839,6 +104176,16 @@ values ('ecom-launch-store', 'ecommerce-online-business', 'Launch an online stor
 Use real prices and costs where you can, and state your assumptions. Submit a link to your plan or your live store (a shared document, PDF, folder or store link) and paste your **niche statement** and your **profit per order** below, with a short note on where to find each part.
 
 Write for a mentor or a lender who will judge whether the business can make money: show the numbers behind every claim.$md$, array['Niche and products: a niche statement and three products with price, cost and supplier.', 'Unit economics: the full cost of one order, contribution before marketing, break-even ROAS and profit per order.', 'The store: model and platform, plus a complete product page for your best product.', 'Payments and checkout: methods, fees, pay-on-delivery rules and a fraud checklist.', 'Fulfilment: stock and reorder point, packaging, courier choice with costs and tracking plan.', 'Policies: delivery, returns and refunds, privacy and a customer service routine.', 'Marketing and a 30-day launch plan with targets, plus the metrics you will track.']::text[], '{}'::text[], array['The niche is specific and the products are backed by demand and a tested supplier.', 'The unit economics include every cost and the profit per order is calculated correctly.', 'The product page is clear, honest and complete, with price, delivery and returns information.', 'Payments and fraud controls are realistic, including confirming payments before shipping.', 'Fulfilment, courier choice and stock planning are practical and costed.', 'Policies are clear and fair, and customer service is planned.', 'The launch plan has measurable targets, and the metrics tracked are the right ones.']::text[], true)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
+
+
+-- Project: A complete project plan
+insert into public.projects (id, course_id, title, summary, brief_md, tasks, datasets, rubric, required)
+values ('pmgt-complete-project-plan', 'project-management', 'A complete project plan', 'A full project plan for a real or realistic project: charter, scope, schedule, budget, risks, people, quality and change, and control and closing.', $md$Choose a project you understand: an event, a business project, a community project, an IT or marketing project or an installation or construction job. Build the complete project plan and be ready to present it to a sponsor.
+
+Use real prices and durations where you can, and state your assumptions. Submit a link to your plan (a shared document, PDF or folder) and paste your **one-page summary** and your **total budget and critical path** below, with a short note on where to find each part.
+
+Write for the sponsor who must approve the plan: open with the summary, make the parts agree with each other and have honest answers for the questions they will ask.$md$, array['Charter: purpose and business case, SMART objectives, success criteria, high-level scope, sponsor and stakeholders.', 'Scope: MoSCoW requirements, a scope statement with exclusions and acceptance criteria, and a work breakdown structure.', 'Schedule: activities, durations, dependencies, milestones, the critical path and float.', 'Budget: cost by work package, contingency and total, with a cash flow view.', 'Risk: a register with at least five scored risks, responses and owners.', 'People and communication: a RACI, stakeholder engagement and a communication plan.', 'Quality and change: acceptance checks, procurement needs and the change control process.', 'Control and closing: how progress is tracked (with a sample status report) and how the project will be closed.']::text[], '{}'::text[], array['The charter is clear, with a SMART objective, success criteria and defined scope boundaries.', 'Scope is prioritised, testable and fully broken down in a WBS that covers all the work.', 'The schedule has correct dependencies, a correctly calculated critical path and realistic durations.', 'The budget covers all costs, includes contingency and agrees with the WBS.', 'Risks are scored, have owners and proportionate responses and are reflected in the contingency.', 'Roles, stakeholder engagement and communication are specific and workable.', 'Quality, change control, progress tracking and closing are planned, and the whole plan is consistent.']::text[], true)
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
 
 
