@@ -78892,58 +78892,1554 @@ on conflict (id) do update set course_id = excluded.course_id, module_id = exclu
 
 -- Course: Procurement & Sourcing
 insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
-values ('procurement-sourcing', 'full', null, 'procurement-sourcing', 'PROC', 'Procurement & Sourcing', 'Buy the right goods and services, from the right suppliers, at the right price: from RFQs and negotiation to purchase orders and supplier management.', 'A practical procurement course for people who buy for a business, an organisation or a project. You learn how to find and evaluate suppliers, run RFQs and tenders, negotiate, raise purchase orders, control cost, manage suppliers and source locally and internationally, ethically.', 'trade-logistics', 'beginner', 2, 'Beginner to Intermediate', null, false, 'coming_soon', true, array['Supplier identification and evaluation', 'RFQ and RFP', 'Negotiation', 'Purchase orders and processes', 'Cost control', 'Supplier relationship management']::text[], array['No experience needed']::text[], 'A practical procurement project', true, true, true, true, false, 60, 54)
+values ('procurement-sourcing', 'short', 'Procurement & Sourcing Practitioner', 'procurement-sourcing', 'PROC', 'Procurement & Sourcing', 'Buy the right goods and services, from the right suppliers, at the right price: from RFQs and negotiation to purchase orders and supplier management.', 'A practical procurement course for people who buy for a business, an organisation or a project. You learn how to find and evaluate suppliers, run RFQs and tenders, negotiate, raise purchase orders, control cost, manage suppliers and source locally and internationally, ethically.', 'trade-logistics', 'beginner', 2, 'Beginner to Intermediate', 7, false, 'available', true, array['Supplier identification and evaluation', 'RFQ and RFP', 'Negotiation', 'Purchase orders and processes', 'Cost control', 'Supplier relationship management']::text[], array['No experience needed']::text[], 'A practical procurement project', true, true, true, true, false, 60, 54)
 on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level = excluded.level, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
 
-update public.courses set access_type = 'paid', price = 75000, currency = 'NGN', discount_price = null, discount_active = false, payment_status = 'active', delivery_type = 'self_paced', enrollment_status = 'closed', enrollment_start = null, enrollment_end = null, community_access = false, instructor_support = false, duration_label = '3 months', overview = 'Procurement quietly decides how much a business spends and how well it runs. This course teaches the full process, from understanding a need to paying the supplier, with templates you can use at work and a practical procurement project to finish.', audience = array['Procurement and purchasing officers', 'Store, admin and operations staff who buy for their company', 'Business owners who want better supplier deals', 'People moving into supply chain roles']::text[], included = '{}'::text[], project_previews = '[{"title":"A practical procurement project","summary":"Source a real or realistic purchase end to end: the need, supplier shortlist, RFQ, evaluation, negotiation and purchase order."}]'::jsonb, instructor_name = null, instructor_title = null, instructor_bio = null, professional_outcome = null, commerce_seeded = true, course_type = 'professional', outcomes = array['Explain how the procurement cycle works', 'Find and evaluate suppliers fairly', 'Write RFQs and RFPs and compare bids', 'Negotiate better prices and terms', 'Raise purchase orders and follow the process', 'Control cost and manage suppliers over time', 'Source locally and internationally with integrity']::text[], difficulty_max = 'intermediate', duration_weeks = 12, thumbnail = null, faqs = '[{"q":"How long does the course take?","a":"Plan for 3 months. It is self-paced, so you can study around work or school, and your progress is saved as you go."},{"q":"Do I need any experience?","a":"No experience is needed. It starts with the basics and builds up to more advanced practice."},{"q":"Will I get a certificate?","a":"Yes, when you complete the lessons, pass the assessments and submit the final project. Paying for the course does not award the certificate on its own."},{"q":"How do I pay?","a":"You pay once, by bank transfer to the Academy account, and send your receipt. The course opens as soon as the payment is confirmed."}]'::jsonb, discount_label = null, discount_start = null, discount_end = null where id = 'procurement-sourcing' and not commerce_seeded;
+update public.courses set access_type = 'paid', price = 75000, currency = 'NGN', discount_price = null, discount_active = false, payment_status = 'active', delivery_type = 'self_paced', enrollment_status = 'open', enrollment_start = null, enrollment_end = null, community_access = false, instructor_support = false, duration_label = '3 months', overview = 'Procurement quietly decides how much a business spends and how well it runs. This course teaches the full process, from understanding a need to paying the supplier, with templates you can use at work and a practical procurement project to finish.', audience = array['Procurement and purchasing officers', 'Store, admin and operations staff who buy for their company', 'Business owners who want better supplier deals', 'People moving into supply chain roles']::text[], included = '{}'::text[], project_previews = '[{"title":"A practical procurement project","summary":"Source a real or realistic purchase end to end: the need, supplier shortlist, RFQ, evaluation, negotiation and purchase order."}]'::jsonb, instructor_name = null, instructor_title = null, instructor_bio = null, professional_outcome = null, commerce_seeded = true, course_type = 'professional', outcomes = array['Explain how the procurement cycle works', 'Find and evaluate suppliers fairly', 'Write RFQs and RFPs and compare bids', 'Negotiate better prices and terms', 'Raise purchase orders and follow the process', 'Control cost and manage suppliers over time', 'Source locally and internationally with integrity']::text[], difficulty_max = 'intermediate', duration_weeks = 12, thumbnail = null, faqs = '[{"q":"How long does the course take?","a":"Plan for 3 months. It is self-paced, so you can study around work or school, and your progress is saved as you go."},{"q":"Do I need any experience?","a":"No experience is needed. It starts with the basics and builds up to more advanced practice."},{"q":"Will I get a certificate?","a":"Yes, when you complete the lessons, pass the assessments and submit the final project. Paying for the course does not award the certificate on its own."},{"q":"How do I pay?","a":"You pay once, by bank transfer to the Academy account, and send your receipt. The course opens as soon as the payment is confirmed."}]'::jsonb, discount_label = null, discount_start = null, discount_end = null where id = 'procurement-sourcing' and not commerce_seeded;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('proc-m01', 'procurement-sourcing', 'Procurement fundamentals', 1, null, null, '{}'::text[], array['What procurement is and why it matters', 'Procurement versus purchasing', 'The procurement cycle', 'Roles and departments']::text[])
+values ('proc-m01', 'procurement-sourcing', 'Procurement fundamentals', 1, 'Procurement Basics', 'PROCBAS', array['Explain procurement and purchasing', 'Follow the procurement cycle', 'Name the roles involved', 'Separate duties']::text[], array['What procurement is and why it matters', 'Procurement versus purchasing', 'The procurement cycle', 'Roles and departments']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('proc-m02', 'procurement-sourcing', 'Supplier identification', 2, null, null, '{}'::text[], array['Understanding the requirement', 'Where to find suppliers', 'Long list to short list', 'Local and international options']::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('procurement-sourcing:procurement-fundamentals', 'procurement-sourcing', 'proc-m01', 'procurement-fundamentals', 'Procurement Fundamentals', 'Understand what procurement is and why it matters, how it differs from purchasing, the steps of the procurement cycle and who does what.', 20, $md$
+## What procurement is
+
+**Procurement** is the whole process of getting the goods and services an organisation needs, from deciding what is needed to paying the supplier and reviewing how it went. A company that buys well spends less, runs smoother and wastes less time on shortages, late deliveries and disputes.
+
+Procurement matters because **buying is usually a business's biggest cost.** A manufacturer or a trader often spends well over half of every naira it earns on bought-in materials, goods and services. A saving of 5% on what you buy often adds more to profit than a 5% rise in sales, because a saving goes straight to the bottom line while extra sales also bring extra costs.
+
+## Procurement versus purchasing
+
+The words are often used as if they mean the same. They do not.
+
+| | Purchasing | Procurement |
+| :-- | :-- | :-- |
+| **Scope** | The transaction: raising the order and paying | The whole process, from need to review |
+| **Focus** | Getting it bought | Getting the best value over time |
+| **Includes** | Orders, invoices, payment | Specifying needs, finding and evaluating suppliers, negotiating, contracts, managing suppliers |
+| **Time horizon** | Today's order | The relationship and the total cost |
+
+Purchasing is one step inside procurement. A purchasing clerk who raises orders quickly is useful. A procurement professional also asks whether we need the item at all, whether the specification is right and whether this supplier is still the best.
+
+## The procurement cycle
+
+Most procurement follows the same steps, whether you buy printer paper or a generator:
+
+1. **Identify the need.** Someone in the business needs something, and says what, how much and by when.
+2. **Specify the requirement.** Describe exactly what is needed: quality, quantity, standard, delivery.
+3. **Find suppliers.** Build a long list, then a short list.
+4. **Evaluate suppliers.** Check they can deliver and compare them fairly.
+5. **Request quotes or bids.** Ask the short list for prices and terms in the same format.
+6. **Negotiate and select.** Agree price, terms and total cost, and choose.
+7. **Order.** Issue an approved purchase order or contract.
+8. **Receive and inspect.** Check the delivery against the order.
+9. **Pay.** Match the invoice to the order and delivery, then pay on the agreed terms.
+10. **Review.** Record how the supplier performed and learn for next time.
+
+A common failure is to jump from step 1 to step 7: someone asks for something and the buyer orders from the usual supplier. Skipping the middle costs money.
+
+## Roles and departments
+
+| Role | What they do in procurement |
+| :-- | :-- |
+| **Requester (user department)** | Says what is needed and why; confirms it is received and right |
+| **Buyer / procurement officer** | Finds suppliers, runs quotes, negotiates, raises orders |
+| **Approver (manager)** | Authorises spending within a limit |
+| **Stores / warehouse** | Receives, inspects and records goods, controls stock |
+| **Finance / accounts** | Checks invoices, pays suppliers, records the cost |
+| **Supplier** | Delivers what was agreed |
+
+Good procurement keeps these roles separate. The person who asks for an item should not also be the only person who chooses the supplier and approves the payment.
+
+## Try it
+
+```task
+{
+  "id": "proc-m01-t1",
+  "prompt": "Put the procurement cycle in order for **Lekki Fresh Foods**, which needs 2,000 plastic crates. Write **eight steps**, one per line, starting with a verb: for example \"Identify ...\", \"Specify ...\". Cover need, specification, suppliers, evaluation, quotes, negotiation, order, receipt and payment.",
+  "minutes": 10,
+  "rows": 10,
+  "placeholder": "1. Identify the need ...\n2. Specify ...",
+  "rules": [
+    { "label": "At least eight steps", "minLines": 8 },
+    { "label": "Includes identifying the need", "pattern": "identif|need|requisition" },
+    { "label": "Includes a specification", "pattern": "specif" },
+    { "label": "Includes finding or shortlisting suppliers", "pattern": "supplier|shortlist|vendor" },
+    { "label": "Includes quotes or bids", "pattern": "quote|rfq|bid|tender" },
+    { "label": "Includes negotiating", "pattern": "negotiat" },
+    { "label": "Includes a purchase order", "pattern": "purchase order|\\bpo\\b|order" },
+    { "label": "Includes receiving or inspecting", "pattern": "receiv|inspect|check the delivery" },
+    { "label": "Includes payment", "pattern": "pay" }
+  ],
+  "sample": "1. Identify the need: the packing team needs 2,000 crates by the end of the month.\n2. Specify the crates: size, strength, colour, food-safe plastic and delivery date.\n3. Find suppliers and build a long list, then a shortlist of three.\n4. Evaluate the suppliers on quality, price, delivery and service.\n5. Request quotes from the shortlist in the same format.\n6. Negotiate price and terms and select the best total value.\n7. Issue an approved purchase order.\n8. Receive and inspect the crates against the order, then match the invoice and pay on the agreed terms.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "proc-m01-t2",
+  "prompt": "In 40 to 90 words, explain the difference between **purchasing** and **procurement** to a new colleague, and say why it matters to the company's profit.",
+  "minutes": 8,
+  "rows": 6,
+  "placeholder": "Purchasing is ...",
+  "rules": [
+    { "label": "Explains purchasing as the transaction (ordering, paying)", "pattern": "purchasing[^.]*(order|transaction|buy|pay)" },
+    { "label": "Explains procurement as the wider process (need to review, suppliers, value)", "pattern": "procurement[^.]*(process|whole|supplier|value|specif|cycle|review)" },
+    { "label": "Links to cost or profit", "pattern": "cost|profit|save|saving|spend" },
+    { "label": "Between 40 and 90 words", "minWords": 40, "maxWords": 95 }
+  ],
+  "sample": "Purchasing is the transaction: raising the order and paying the invoice. Procurement is the whole process around it, from working out what we really need, to specifying it, finding and evaluating suppliers, negotiating, ordering, receiving and reviewing how the supplier performed. It matters to profit because buying is our biggest cost, so better value on what we buy, such as a lower total cost or fewer late deliveries, goes straight to the bottom line.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "proc-m01-t3",
+  "prompt": "A storekeeper at a school says: \"I ask for what we need, choose the supplier, approve the order and sign for the payment.\" In 30 to 80 words, say what is wrong with this and how you would split the roles.",
+  "minutes": 8,
+  "rows": 5,
+  "placeholder": "The risk is ...",
+  "rules": [
+    { "label": "Names the risk (fraud, error, no check, conflict of interest)", "pattern": "fraud|risk|error|conflict|no check|abuse|misuse|control" },
+    { "label": "Says to separate roles or duties", "pattern": "separate|split|different (people|person)|segregat|more than one" },
+    { "label": "Names at least two roles (requester, buyer, approver, finance, stores)", "pattern": "(requester|buyer|approver|manager|finance|accounts|stores)[\\s\\S]*(requester|buyer|approver|manager|finance|accounts|stores)" },
+    { "label": "Between 30 and 80 words", "minWords": 30, "maxWords": 85 }
+  ],
+  "sample": "One person doing every step removes all checks, so a mistake or fraud would go unnoticed and there is a conflict of interest. I would separate the roles: the storekeeper requests, a buyer finds suppliers and gets quotes, a manager approves the order, stores records the delivery and finance checks the invoice and pays. No one person should control the whole process.",
+  "required": false
+}
+```
+
+Next lesson: finding the right suppliers.
+$md$, true, true, 1, array['proc-m01-t1', 'proc-m01-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('proc-m03', 'procurement-sourcing', 'Vendor evaluation', 3, null, null, '{}'::text[], array['Evaluation criteria', 'Scoring suppliers', 'Quality, delivery, price and risk', 'Visits, references and trials']::text[])
+values ('proc-m02', 'procurement-sourcing', 'Supplier identification', 2, 'Supplier Finder', 'FINDSUP', array['Write a specification', 'Find suppliers from several sources', 'Shortlist with must-have criteria', 'Compare local and international options']::text[], array['Understanding the requirement', 'Where to find suppliers', 'Long list to short list', 'Local and international options']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('proc-m04', 'procurement-sourcing', 'RFQ and RFP', 4, null, null, '{}'::text[], array['When to use RFQ, RFP and tenders', 'Writing a clear request', 'Comparing and scoring bids', 'Fairness and documentation']::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('procurement-sourcing:supplier-identification', 'procurement-sourcing', 'proc-m02', 'supplier-identification', 'Supplier Identification', 'Turn a need into a clear specification, find suppliers from the right sources, move from a long list to a short list and weigh local against international options.', 25, $md$
+## Start with the requirement
+
+You cannot find the right supplier until you know exactly what you need. A vague request ("some cleaning supplies") produces vague quotes that cannot be compared. Before you look for anyone, write a **specification**.
+
+A good specification states:
+
+- **What:** the item or service, with model, size, grade or standard.
+- **How much:** quantity, and whether it is a one-off or regular.
+- **Quality:** the standard it must meet (a Nigerian or international standard, a sample, a brand).
+- **When and where:** delivery date, place, and how it will be delivered.
+- **Extras:** packaging, installation, training, warranty, after-sales support.
+- **Budget:** a range you can share internally, not with suppliers.
+
+Ask the requester: what problem does this solve, and is there a cheaper way to solve it? Sometimes the need changes after that question.
+
+> [!TIP]
+> Describe the **result you need**, not just a brand. "Chairs that seat adults for eight hours and cost under ₦25,000" gives you more options than "Model X".
+
+## Where to find suppliers
+
+| Source | Use it for |
+| :-- | :-- |
+| **Existing suppliers and records** | Who already serves you well |
+| **Recommendations from other buyers** | Trusted names with real track records |
+| **Trade associations and chambers of commerce** | Directories of members |
+| **Manufacturers and authorised distributors** | Direct supply, warranty and genuine goods |
+| **Markets and trade fairs** | Seeing goods and meeting several suppliers |
+| **Online directories and marketplaces** | Wide choice; verify before trusting |
+| **Advertising for suppliers** | A public call for expressions of interest, common for larger or public buying |
+| **Search engines and social media** | Quick discovery; verify carefully |
+
+Use several sources. A supplier you find only through one advert or one friend is a risk you cannot judge.
+
+## From a long list to a short list
+
+A **long list** is every supplier that might be able to supply. A **short list** is the few you will ask for a quote.
+
+Narrow the list with simple **must-have** questions, so you do not waste time on suppliers who cannot do the job:
+
+- Do they supply this item or service in the quantity needed?
+- Can they deliver to our location in time?
+- Are they a registered, legitimate business?
+- Do they meet the required standard or have the needed approvals?
+- Can they show recent customers who will confirm they deliver?
+- Are they financially stable enough to complete the order?
+
+Then keep **three to five** suppliers. Fewer than three gives you no comparison. More than five slows you down with little extra benefit.
+
+## Local and international options
+
+| | Local supplier | International supplier |
+| :-- | :-- | :-- |
+| **Lead time** | Short | Longer, with shipping and customs |
+| **Price** | Often higher per unit | Often lower per unit, with more costs added |
+| **Risk** | Easier to visit, inspect and resolve disputes | Distance, currency, delays, documents |
+| **Payment** | Naira, flexible terms | Often foreign currency, advance payment |
+| **Support** | Easier after-sales and returns | Harder |
+
+The right choice depends on volume, urgency and risk. Compare **total cost** (price plus freight, duty, clearing and risk), not just the quoted unit price. Module 11 covers sourcing across borders in more depth.
+
+## Try it
+
+```task
+{
+  "id": "proc-m02-t1",
+  "prompt": "Lekki Fresh Foods needs **2,000 food-safe plastic crates**. Write a short **specification** with one detail per line: item, quantity, size, material, quality standard, delivery date and place, packaging and warranty or after-sales terms.",
+  "minutes": 12,
+  "rows": 10,
+  "placeholder": "Item: ...\nQuantity: ...",
+  "rules": [
+    { "label": "At least seven lines", "minLines": 7 },
+    { "label": "States the item and quantity", "pattern": "item[\\s\\S]*quantity|quantity[\\s\\S]*item" },
+    { "label": "States size or dimensions", "pattern": "size|dimension|litre|cm|mm|capacity" },
+    { "label": "States material or standard", "pattern": "material|food-?safe|standard|grade|hdpe|polypropylene|nafdac|son" },
+    { "label": "States delivery date and place", "pattern": "deliver[\\s\\S]*(date|by|within|lagos|warehouse|site)" },
+    { "label": "States packaging or warranty", "pattern": "packag|warrant|after-?sales|replace" }
+  ],
+  "sample": "Item: food-safe stackable plastic crates with lids\nQuantity: 2,000 units, one delivery\nSize: 60 x 40 x 30 cm, about 50 litres\nMaterial: food-grade polypropylene, no recycled material\nQuality standard: must meet applicable Nigerian food-contact standards and carry load of 30 kg when stacked\nDelivery: to our Lekki warehouse within 21 days of the order\nPackaging: stacked and shrink-wrapped in lots of 50\nWarranty: free replacement of cracked crates within 6 months",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "proc-m02-t2",
+  "prompt": "You found nine possible crate suppliers. List **five must-have questions** you will use to cut the long list down to a short list of three to five. One per line, each ending with a question mark.",
+  "minutes": 8,
+  "rows": 7,
+  "placeholder": "Can they supply 2,000 units ...?",
+  "rules": [
+    { "label": "Five questions", "minLines": 5 },
+    { "label": "Every line is a question", "pattern": "\\?\\s*$", "perLine": true },
+    { "label": "Asks about quantity or capacity", "pattern": "quantity|capacity|2,?000|volume|supply" },
+    { "label": "Asks about delivery time", "pattern": "deliver|time|date|days|lead" },
+    { "label": "Asks about registration, references or track record", "pattern": "registered|register|reference|customers|track record|legitimate|cac" },
+    { "label": "Asks about standard or quality", "pattern": "standard|quality|approval|food|certif" }
+  ],
+  "sample": "Can they supply 2,000 crates in one delivery?\nCan they deliver to our Lekki warehouse within 21 days?\nIs the business registered and legitimate, and can we check it?\nDo the crates meet the food-contact standard we require?\nCan they give two recent customers as references who will confirm they deliver on time?",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "proc-m02-t3",
+  "prompt": "A local supplier quotes ₦3,400 a crate. An overseas supplier quotes ₦2,600 a crate, but freight, duty and clearing would add ₦900,000 for 2,000 crates. Work out the **total cost of each** and say which is cheaper and by how much. Then name one other factor besides price to consider.",
+  "minutes": 8,
+  "rows": 6,
+  "placeholder": "Local total = ...",
+  "rules": [
+    { "label": "Local total of ₦6,800,000", "pattern": "6,?800,?000" },
+    { "label": "Overseas goods of ₦5,200,000", "pattern": "5,?200,?000" },
+    { "label": "Overseas total of ₦6,100,000", "pattern": "6,?100,?000" },
+    { "label": "Overseas is cheaper by ₦700,000", "pattern": "700,?000" },
+    { "label": "Names another factor (lead time, risk, quality, payment, support)", "pattern": "lead time|risk|quality|payment|support|delay|currency|exchange|warranty" }
+  ],
+  "sample": "Local total = 2,000 x 3,400 = ₦6,800,000.\nOverseas goods = 2,000 x 2,600 = ₦5,200,000; plus 900,000 = ₦6,100,000.\nOverseas is cheaper by 6,800,000 - 6,100,000 = ₦700,000.\nBut I would also consider lead time and risk: the overseas order takes longer and exchange rate and delay risks are higher.",
+  "required": false
+}
+```
+
+Next lesson: evaluating suppliers fairly.
+$md$, true, true, 2, array['proc-m02-t1', 'proc-m02-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('proc-m05', 'procurement-sourcing', 'Negotiation', 5, null, null, '{}'::text[], array['Preparing to negotiate', 'Price, terms and total cost', 'Tactics and how to respond to them', 'Win-win agreements']::text[])
+values ('proc-m03', 'procurement-sourcing', 'Vendor evaluation', 3, 'Vendor Evaluator', 'EVALSUP', array['Choose evaluation criteria', 'Score suppliers on a weighted matrix', 'Check references and samples', 'Run a trial order']::text[], array['Evaluation criteria', 'Scoring suppliers', 'Quality, delivery, price and risk', 'Visits, references and trials']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('proc-m06', 'procurement-sourcing', 'Purchase orders and contracts', 6, null, null, '{}'::text[], array['Purchase requisitions and approvals', 'Writing a purchase order', 'Contract basics', 'Delivery, inspection and payment']::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('procurement-sourcing:vendor-evaluation', 'procurement-sourcing', 'proc-m03', 'vendor-evaluation', 'Vendor Evaluation', 'Choose evaluation criteria, score suppliers on a weighted scale across quality, delivery, price and risk, and use visits, references and trials to check the scores.', 25, $md$
+## Why evaluate
+
+The cheapest quote is not always the best supplier. A cheap supplier who delivers late, sends faulty goods or disappears costs far more than the saving. **Vendor evaluation** compares suppliers on several things that matter, using the same method for each, so the choice is fair and you can explain it.
+
+## Choosing the criteria
+
+Pick the criteria that matter for **this** purchase. Common ones:
+
+| Criterion | What to look at |
+| :-- | :-- |
+| **Price** | Unit price and total cost, including delivery and any extras |
+| **Quality** | Meets the specification, defect rate, certifications, samples |
+| **Delivery** | Lead time, reliability, ability to meet your date |
+| **Service and support** | Responsiveness, after-sales, warranty, handling of problems |
+| **Financial stability** | Likely to be in business to complete and support the order |
+| **Capacity** | Able to supply your volume, now and as you grow |
+| **Compliance and reputation** | Registered, tax compliant, approvals, references, ethical practice |
+| **Risk** | Dependence on one source, location, currency exposure |
+
+For a routine item like stationery, price and delivery may dominate. For a safety-critical part, quality and compliance should carry the most weight.
+
+## Weighted scoring
+
+A **scoring matrix** turns judgment into numbers.
+
+1. List the criteria.
+2. Give each a **weight** showing its importance. Weights add to 100%.
+3. Score each supplier on each criterion, for example from 1 (poor) to 10 (excellent).
+4. **Multiply** each score by its weight and add up.
+
+Example weights: price 40%, quality 30%, delivery 20%, service 10%.
+
+| Criterion | Weight | Supplier A score | A weighted | Supplier B score | B weighted |
+| :-- | :-- | :-- | :-- | :-- | :-- |
+| Price | 40% | 8 | 3.2 | 6 | 2.4 |
+| Quality | 30% | 6 | 1.8 | 9 | 2.7 |
+| Delivery | 20% | 7 | 1.4 | 8 | 1.6 |
+| Service | 10% | 9 | 0.9 | 7 | 0.7 |
+| **Total** | 100% | | **7.3** | | **7.4** |
+
+Supplier B scores slightly higher: dearer, but better quality and delivery. The matrix does not decide for you, but it makes you state your priorities and shows when two suppliers are close.
+
+> [!NOTE]
+> Agree the criteria and weights **before** you look at the quotes. Changing them afterwards to favour a supplier you already like is unfair, and a classic sign of bias.
+
+## Quality, delivery, price and risk
+
+- **Quality:** ask for samples, test reports and certificates. Check the defect rate on past orders where you have it.
+- **Delivery:** ask for lead times and check them with references. Ask what happens when a delivery is late.
+- **Price:** compare **total cost**, including delivery, installation, payment terms and what is not included.
+- **Risk:** a supplier who is cheapest and sole source with unclear finances is a risk. Look for backup options.
+
+## Visits, references and trials
+
+Documents show what a supplier says. These show what they do:
+
+- **References.** Call two or three current customers and ask: Does the supplier deliver on time? How are problems handled? Would you buy from them again?
+- **Site visits.** See the premises, stock, equipment and staff. Is it real, organised and big enough?
+- **Samples.** Test them against the specification.
+- **Trial orders.** For a new supplier, start with a small order before committing to a large one.
+- **Financial and legal checks.** Registration, tax compliance and, for large contracts, financial health.
+
+## Try it
+
+```task
+{
+  "id": "proc-m03-t1",
+  "prompt": "Score two suppliers using weights **price 40%, quality 30%, delivery 20%, service 10%**. Supplier X scores 9, 5, 6, 7 (in that order). Supplier Y scores 6, 8, 8, 8. Work out each **weighted total** and say which supplier is better.",
+  "minutes": 10,
+  "rows": 8,
+  "placeholder": "X = ...\nY = ...",
+  "rules": [
+    { "label": "X total of 7.0", "pattern": "7\\.0|\\b7\\b" },
+    { "label": "Y total of 7.2", "pattern": "7\\.2" },
+    { "label": "Says Y is better", "pattern": "\\by\\b[^.]*(better|higher|win|choose|best)|choose y|supplier y" },
+    { "label": "Shows the weighted calculation", "pattern": "0\\.4|40\\s?%" }
+  ],
+  "sample": "X = 9 x 0.4 + 5 x 0.3 + 6 x 0.2 + 7 x 0.1 = 3.6 + 1.5 + 1.2 + 0.7 = 7.0.\nY = 6 x 0.4 + 8 x 0.3 + 8 x 0.2 + 8 x 0.1 = 2.4 + 2.4 + 1.6 + 0.8 = 7.2.\nSupplier Y is better overall, although X is cheaper, because Y is stronger on quality and delivery.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "proc-m03-t2",
+  "prompt": "You are buying **diesel generators** for a hospital. Choose five evaluation criteria, give each a weight (adding to 100%) and say in a few words why. One per line, in the form \"Criterion - weight - why\".",
+  "minutes": 12,
+  "rows": 8,
+  "placeholder": "Reliability - 30% - ...",
+  "rules": [
+    { "label": "Five criteria", "minLines": 5 },
+    { "label": "Every line has a percentage", "pattern": "\\d+\\s?%", "perLine": true },
+    { "label": "Includes quality or reliability", "pattern": "quality|reliab|durab" },
+    { "label": "Includes price or cost", "pattern": "price|cost" },
+    { "label": "Includes service, support or spare parts", "pattern": "service|support|spare|warranty|maintenance" },
+    { "label": "Includes delivery or lead time", "pattern": "deliver|lead time|install" }
+  ],
+  "sample": "Reliability and quality - 30% - a hospital cannot afford power failures\nPrice and running cost - 25% - fuel use and cost over the years matter\nService, spare parts and warranty - 20% - repairs must be fast and local\nDelivery and installation time - 15% - we need power before the new ward opens\nFinancial stability and references - 10% - the supplier must be around to support the machine",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "proc-m03-t3",
+  "prompt": "Write **four questions** you will ask a supplier's reference (a current customer). One per line, each ending with a question mark.",
+  "minutes": 6,
+  "rows": 6,
+  "placeholder": "Does the supplier deliver on time?",
+  "rules": [
+    { "label": "Four questions", "minLines": 4 },
+    { "label": "Every line is a question", "pattern": "\\?\\s*$", "perLine": true },
+    { "label": "Asks about delivery", "pattern": "deliver|on time|late" },
+    { "label": "Asks about quality or problems", "pattern": "quality|problem|issue|complain|fault" },
+    { "label": "Asks whether they would buy again", "pattern": "again|recommend|continue" }
+  ],
+  "sample": "Does the supplier deliver on time and in full?\nHow good is the quality, and how many faulty items have you had?\nWhen something goes wrong, how quickly and fairly do they fix it?\nWould you buy from them again, and would you recommend them?",
+  "required": false
+}
+```
+
+Next lesson: asking for prices with RFQs and RFPs.
+$md$, true, true, 3, array['proc-m03-t1', 'proc-m03-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('proc-m07', 'procurement-sourcing', 'Procurement processes and controls', 7, null, null, '{}'::text[], array['Approval limits and segregation of duties', 'Three-way matching', 'Documentation and audit trails', 'Procurement policies']::text[])
+values ('proc-m04', 'procurement-sourcing', 'RFQ and RFP', 4, 'RFQ & RFP', 'RFQRFP', array['Pick RFQ, RFP or tender', 'Write a clear request', 'Compare bids on total cost', 'Keep the process fair and documented']::text[], array['When to use RFQ, RFP and tenders', 'Writing a clear request', 'Comparing and scoring bids', 'Fairness and documentation']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('proc-m08', 'procurement-sourcing', 'Inventory coordination', 8, null, null, '{}'::text[], array['Stock levels and reorder points', 'Working with stores and warehouse', 'Forecasting demand', 'Avoiding stockouts and overstock']::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('procurement-sourcing:rfq-and-rfp', 'procurement-sourcing', 'proc-m04', 'rfq-and-rfp', 'RFQ and RFP', 'Choose between an RFQ, an RFP and a tender, write a clear request, compare and score bids on total cost and keep the process fair and documented.', 25, $md$
+## Three ways to ask
+
+Once you have a short list, you ask suppliers for offers in writing. Which method to use depends on the size and complexity of the purchase.
+
+| Method | Use it when | What you ask for |
+| :-- | :-- | :-- |
+| **RFQ (Request for Quotation)** | The item is clear and standard, and price is the main difference | A price and terms for exactly what you specify |
+| **RFP (Request for Proposal)** | The need is complex and suppliers may propose different solutions | A proposal explaining how they would meet the need, their approach, team and price |
+| **Tender / formal bidding** | The value is high, or rules (such as for public bodies) require open competition | Sealed bids under fixed rules and deadlines |
+
+Many organisations set **value thresholds**: for example, under a small amount, get one quote; between that and a higher amount, get three written quotes; above it, run a formal tender. Public bodies in Nigeria follow the Public Procurement Act and its thresholds and processes. Your own company should have a policy, and you should follow it.
+
+## Writing a clear request
+
+A weak request leads to quotes you cannot compare. A good RFQ includes:
+
+- **Who you are** and a named contact.
+- **What you need:** the full specification and quantity.
+- **Where and when:** delivery location and date.
+- **What the price must include:** delivery, installation, VAT, packaging.
+- **Terms you expect:** payment terms, warranty, validity of the quote.
+- **How to respond:** deadline, format, who to send it to, and where to ask questions.
+- **How you will decide:** the main criteria, so suppliers know what matters.
+
+A good **RFP** adds the background and the problem, the outcomes you want, what you want in the proposal (approach, timeline, team, references, price breakdown) and the evaluation criteria with weights.
+
+Give **every** supplier the same information at the same time. If one supplier asks a question, share your answer with all.
+
+## Comparing and scoring bids
+
+Do not compare headline prices. Put the bids side by side on the same basis:
+
+| | Supplier A | Supplier B | Supplier C |
+| :-- | :-- | :-- | :-- |
+| Unit price | ₦24,000 | ₦22,500 | ₦23,000 |
+| Quantity | 500 | 500 | 500 |
+| Goods total | ₦12,000,000 | ₦11,250,000 | ₦11,500,000 |
+| Delivery to site | Included | ₦400,000 extra | Included |
+| **Total cost** | **₦12,000,000** | **₦11,650,000** | **₦11,500,000** |
+| Delivery time | 14 days | 30 days | 21 days |
+| Payment terms | 30 days | On delivery | 14 days |
+| Warranty | 12 months | 6 months | 12 months |
+
+Supplier B looked cheapest per unit, but once delivery is added Supplier C is lowest, with a better warranty and shorter delivery. For an RFP, score the **technical** proposal and the **price** separately, then combine with agreed weights. Check each bid is **compliant**: does it meet the specification and the instructions? A very low price from a non-compliant bid is not the best bid.
+
+> [!WARNING]
+> Be careful with bids that are far lower than the others. They can mean a misunderstanding of the specification, poorer quality, or an attempt to win and then raise the price later with "variations".
+
+## Fairness and documentation
+
+- **Treat all suppliers equally:** same information, same deadline, same rules.
+- **Keep bids confidential** until the deadline. Never show one supplier's price to another.
+- **Do not change the criteria** after you have seen the bids.
+- **Declare conflicts of interest** and step back if you have one.
+- **Record everything:** the request, the bids received, the scoring and who decided, and the reason. Keep it for audit.
+- **Tell unsuccessful suppliers politely**, and give brief feedback if they ask.
+
+A decision you can explain and document is a decision you can defend.
+
+## Try it
+
+```task
+{
+  "id": "proc-m04-t1",
+  "prompt": "Compare three bids for 500 chairs. **A**: ₦24,000 each, delivery included. **B**: ₦22,500 each, delivery ₦400,000 extra. **C**: ₦23,000 each, delivery included. Work out the **total cost** of each and say which is lowest.",
+  "minutes": 8,
+  "rows": 6,
+  "placeholder": "A total = ...",
+  "rules": [
+    { "label": "A total of ₦12,000,000", "pattern": "12,?000,?000" },
+    { "label": "B total of ₦11,650,000", "pattern": "11,?650,?000" },
+    { "label": "C total of ₦11,500,000", "pattern": "11,?500,?000" },
+    { "label": "Says C is lowest", "pattern": "\\bc\\b[^.]*(lowest|cheapest|best|least)|lowest[^.]*\\bc\\b" }
+  ],
+  "sample": "A = 500 x 24,000 = ₦12,000,000 (delivery included).\nB = 500 x 22,500 = 11,250,000 + 400,000 delivery = ₦11,650,000.\nC = 500 x 23,000 = ₦11,500,000 (delivery included).\nSupplier C has the lowest total cost, although B has the lowest unit price.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "proc-m04-t2",
+  "prompt": "Write an **RFQ** (a request for quotation) for 500 office chairs. One item per line: your company and contact, the product and specification, quantity, delivery place and date, what the price must include, payment and warranty terms, the deadline and the main criteria for choosing. At least eight lines.",
+  "minutes": 15,
+  "rows": 12,
+  "placeholder": "From: ...\nItem: ...",
+  "rules": [
+    { "label": "At least eight lines", "minLines": 8 },
+    { "label": "Names the company and a contact", "pattern": "contact|from|company|officer|manager" },
+    { "label": "States the item and quantity (500)", "pattern": "500" },
+    { "label": "States delivery place or date", "pattern": "deliver[\\s\\S]*(date|by|within|lagos|site|warehouse)" },
+    { "label": "States what the price includes", "pattern": "include|vat|delivery|installation" },
+    { "label": "States payment or warranty terms", "pattern": "payment|warrant" },
+    { "label": "States a deadline to respond", "pattern": "deadline|by \\d|before|closing|no later" },
+    { "label": "States the criteria for choosing", "pattern": "criteria|evaluat|judged|selected|decide|award" }
+  ],
+  "sample": "From: Greenfield Training Centre, Procurement Office. Contact: Ngozi Okoro, purchasing officer, ngozi@example.com\nItem: 500 ergonomic office chairs with armrests, mesh back, adjustable height, weight rating of 120 kg\nQuantity: 500 units, one delivery\nDelivery: to our Ikeja site within 21 days of the order\nPrice must include: delivery, offloading, VAT and assembly\nPayment terms: please state your terms; we prefer 30 days after delivery and acceptance\nWarranty: minimum 12 months; please state spare parts availability\nDeadline: written quotations to reach us by 5 pm on Friday, 14 days from now\nCriteria: total cost, quality against the specification, delivery time, warranty and supplier references",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "proc-m04-t3",
+  "prompt": "One supplier's bid is **30% lower** than the next lowest. In 40 to 90 words, say what you would check before recommending it.",
+  "minutes": 8,
+  "rows": 6,
+  "placeholder": "Before recommending it, I would ...",
+  "rules": [
+    { "label": "Checks the bid meets the specification (compliance)", "pattern": "specif|compliant|meets|requirements|scope" },
+    { "label": "Checks for hidden costs or extras", "pattern": "hidden|extra|exclud|variation|not included|add" },
+    { "label": "Checks quality, references or ability to deliver", "pattern": "quality|reference|capacity|ability|sample|deliver" },
+    { "label": "Asks the supplier to clarify or confirm", "pattern": "clarif|confirm|ask|explain|check with" },
+    { "label": "Between 40 and 90 words", "minWords": 40, "maxWords": 95 }
+  ],
+  "sample": "Before recommending it, I would check that the bid meets the full specification, because a low price may mean the supplier misunderstood the scope or left something out. I would ask them to clarify and confirm in writing what is included, look for hidden extras or variations that could be added later, test a sample for quality and call references to confirm they can deliver this volume on time. If everything checks out, the saving is real.",
+  "required": false
+}
+```
+
+Next lesson: negotiating better prices and terms.
+$md$, true, true, 4, array['proc-m04-t1', 'proc-m04-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('proc-m09', 'procurement-sourcing', 'Cost control and savings', 9, null, null, '{}'::text[], array['Total cost of ownership', 'Spend analysis', 'Reducing cost without hurting quality', 'Reporting savings']::text[])
+values ('proc-m05', 'procurement-sourcing', 'Negotiation', 5, 'Negotiator', 'NEGOT', array['Prepare a negotiation plan', 'Negotiate total cost and terms', 'Respond to common tactics', 'Confirm agreements in writing']::text[], array['Preparing to negotiate', 'Price, terms and total cost', 'Tactics and how to respond to them', 'Win-win agreements']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('proc-m10', 'procurement-sourcing', 'Supplier relationship management', 10, null, null, '{}'::text[], array['Performance reviews', 'Developing key suppliers', 'Handling disputes and delays', 'Risk and backup suppliers']::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('procurement-sourcing:negotiation', 'procurement-sourcing', 'proc-m05', 'negotiation', 'Negotiation', 'Prepare for a negotiation, look beyond price to total cost and terms, recognise common tactics and respond to them, and aim for agreements that work for both sides.', 25, $md$
+## Negotiation is preparation
+
+Most negotiations are won or lost before the meeting. A buyer who walks in knowing the market, the alternatives and their limits is far stronger than one who improvises.
+
+Before you negotiate, work out:
+
+- **What you need and what is negotiable.** Price, quantity, delivery, payment terms, warranty, packaging, service.
+- **Your target:** the outcome you would be happy with.
+- **Your walk-away point:** the least favourable deal you will accept.
+- **Your alternatives (BATNA: best alternative to a negotiated agreement).** If this deal fails, what is your next best option? The better your alternative, the stronger you are.
+- **The supplier's position:** how much they want your business, their costs, their competition, their deadlines and any pressure they are under.
+- **Market information:** other quotes, past prices paid, price trends.
+- **What you can give:** larger volume, longer contract, faster payment, a referral, flexible delivery.
+
+Write a short plan: opening position, target, walk-away, what you will trade.
+
+## Price, terms and total cost
+
+Price is only one part of what you pay. Negotiate the whole package:
+
+| Item | Ways it changes your cost |
+| :-- | :-- |
+| **Unit price** | Volume discounts, tier pricing |
+| **Payment terms** | 30 or 60 days to pay helps your cash flow; early-payment discounts save money |
+| **Delivery** | Free delivery, delivery schedule, split deliveries |
+| **Warranty and service** | Longer warranty, free installation or training |
+| **Quantity and flexibility** | Call-off orders, price held for the year |
+| **Quality and returns** | Replacement of faulty goods, return of unsold stock |
+| **Price protection** | Fixed price for a period, or a cap on increases |
+
+Example: a 3% volume discount on 400 units at ₦15,000 each. Goods total ₦6,000,000; 3% is ₦180,000; the new total is ₦5,820,000. That is real money, and it did not depend on the supplier cutting their headline price.
+
+Always compare offers on **total cost**, not just the unit price.
+
+## Common tactics and how to respond
+
+| Tactic | What it sounds like | Response |
+| :-- | :-- | :-- |
+| **"This is our final price"** | A hard line early on | Stay calm; ask what could change it (volume, payment, term) |
+| **Deadline pressure** | "Offer ends today" | Slow down; real deals rarely vanish in a day. Ask for the reason |
+| **Good cop, bad cop** | One person is hard, another friendly | Notice it; keep to your plan |
+| **The nibble** | Small extras added at the end | Review the whole deal; trade extras for something |
+| **Silence** | A long pause after an offer | Wait; do not fill the silence by dropping your price |
+| **Anchor** | A very high first number | Do not accept it as a base; make your own offer with reasons |
+| **Competing offers** | "Another buyer will take it" | Ask for evidence; know your alternatives |
+
+Your own good habits: listen more than you talk, ask questions, give reasons for what you ask, never lie, take notes and keep your temper.
+
+## Win-win agreements
+
+The best deals leave both sides willing to continue. A supplier squeezed to a loss will cut quality, deliver late or walk away. Look for trades where each side gives something cheap for them and valuable for the other: you commit to a larger or regular order; they give a better price and priority delivery. Finish by **confirming the agreement in writing**: price, quantity, delivery, payment, warranty and who does what by when.
+
+## Try it
+
+```task
+{
+  "id": "proc-m05-t1",
+  "prompt": "You buy **400 units at ₦15,000**. The supplier offers a **3% volume discount** and **payment in 30 days** instead of on delivery. Work out the goods total before the discount, the discount in naira, and the total after the discount. Then say in one sentence why the payment terms are also valuable.",
+  "minutes": 8,
+  "rows": 6,
+  "placeholder": "Total before discount = ...",
+  "rules": [
+    { "label": "Total before discount of ₦6,000,000", "pattern": "6,?000,?000" },
+    { "label": "Discount of ₦180,000", "pattern": "180,?000" },
+    { "label": "Total after discount of ₦5,820,000", "pattern": "5,?820,?000" },
+    { "label": "Explains the value of longer payment terms (cash flow)", "pattern": "cash ?flow|cash|hold (the )?money|pay later|working capital" }
+  ],
+  "sample": "Total before discount = 400 x 15,000 = ₦6,000,000.\nDiscount at 3% = 0.03 x 6,000,000 = ₦180,000.\nTotal after discount = ₦5,820,000.\nPaying in 30 days helps my cash flow because I keep the money in the business for a month and can sell the goods before I pay.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "proc-m05-t2",
+  "prompt": "Write a **negotiation plan** for buying 500 chairs, one item per line: your target price, your walk-away point, your best alternative, two things you can offer the supplier, and two things you will ask for besides price. At least six lines.",
+  "minutes": 12,
+  "rows": 9,
+  "placeholder": "Target: ...\nWalk-away: ...",
+  "rules": [
+    { "label": "At least six lines", "minLines": 6 },
+    { "label": "States a target", "pattern": "target" },
+    { "label": "States a walk-away point", "pattern": "walk-?away|limit|maximum|will not pay|no more than" },
+    { "label": "States an alternative", "pattern": "alternative|batna|other supplier|second|backup|fall back" },
+    { "label": "States what you can offer", "pattern": "offer|give|volume|regular|repeat|faster payment|longer contract" },
+    { "label": "Asks for terms besides price", "pattern": "warrant|payment terms|delivery|installation|service|30 days" }
+  ],
+  "sample": "Target: ₦22,500 a chair delivered, total ₦11,250,000.\nWalk-away: I will not pay more than ₦24,000 a chair.\nBest alternative: Supplier C quoted ₦23,000 delivered and can supply in 21 days.\nOffer 1: a firm order for 500 now, with a possible 200 more next year.\nOffer 2: payment within 14 days of acceptance.\nAsk 1: free delivery and assembly.\nAsk 2: a 12-month warranty and 30-day payment terms.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "proc-m05-t3",
+  "prompt": "A supplier says: **\"This is our final price, and the offer ends today.\"** Write your reply in 40 to 90 words, staying calm, asking what could change, and not giving in to the pressure.",
+  "minutes": 8,
+  "rows": 6,
+  "placeholder": "Thank you ...",
+  "rules": [
+    { "label": "Polite tone", "pattern": "thank|appreciate|understand" },
+    { "label": "Asks what could change the price (volume, terms, payment, delivery)", "pattern": "what|how|could|would|if we|if i" },
+    { "label": "Mentions volume, terms, payment or a longer contract as ways to move", "pattern": "volume|terms|payment|contract|quantity|repeat|regular|delivery" },
+    { "label": "Does not accept the deadline pressure", "pattern": "time|review|compare|consider|decid|need to|before we" },
+    { "label": "Between 40 and 90 words", "minWords": 40, "maxWords": 95 }
+  ],
+  "sample": "Thank you, I appreciate the offer and I understand your position. I do need to review it against the other quotes before I decide, so I cannot commit today. Could you tell me what could change the price? For example, if we increase the volume, pay within 14 days or sign a 12-month supply agreement, would you improve the unit price or include delivery? If we can find a package that works for both of us, I would be happy to confirm quickly.",
+  "required": false
+}
+```
+
+Next lesson: purchase orders and contracts.
+$md$, true, true, 5, array['proc-m05-t1', 'proc-m05-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('proc-m11', 'procurement-sourcing', 'Local and international sourcing, and ethics', 11, null, null, '{}'::text[], array['Local versus international sourcing', 'Import costs and lead times', 'Conflicts of interest and bribery', 'Sustainable and ethical procurement']::text[])
+values ('proc-m06', 'procurement-sourcing', 'Purchase orders and contracts', 6, 'PO & Contracts', 'POCONT', array['Run requisitions and approvals', 'Write a purchase order', 'Know key contract terms', 'Handle delivery, inspection and payment']::text[], array['Purchase requisitions and approvals', 'Writing a purchase order', 'Contract basics', 'Delivery, inspection and payment']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('procurement-sourcing:purchase-orders-and-contracts', 'procurement-sourcing', 'proc-m06', 'purchase-orders-and-contracts', 'Purchase Orders and Contracts', 'Run a purchase requisition and approval, write a clear purchase order, understand basic contract terms and manage delivery, inspection and payment.', 25, $md$
+## From requisition to order
+
+Buying starts inside the business with a **purchase requisition**: a written request from a department saying what it needs, how much, by when, why and which budget pays. The requisition is checked, and **approved** by someone with the authority to spend that amount. Only then does the buyer raise the **purchase order (PO)**.
+
+This matters because a PO is a commitment. Without approval you can commit the business to spending money it has not agreed, or to buying something nobody needs.
+
+A typical flow:
+
+1. The requester completes a requisition with specification, quantity, date and budget code.
+2. The manager checks the need and the budget, and approves.
+3. Procurement runs quotes or uses an existing agreement, and selects the supplier.
+4. The buyer raises the PO and gets it approved at the right level.
+5. The PO is sent to the supplier, who confirms it.
+
+## Writing a purchase order
+
+A PO is a legal instruction to supply. Make it clear and complete:
+
+- **PO number** (unique) and **date**.
+- **Buyer and supplier** names, addresses and contacts.
+- **Description of each item**: specification, model or part number.
+- **Quantity**, **unit price**, line totals and the **overall total**, with currency.
+- **Tax** (VAT) shown separately.
+- **Delivery** address, date and method, and who pays for transport.
+- **Payment terms** (for example, 30 days after receipt of a correct invoice).
+- **Quality and inspection terms**, and what happens to faulty goods.
+- **Reference to the quote or contract** the price is based on.
+- **Approval**: name and signature of the authorised person.
+
+State the supplier must quote the **PO number** on delivery notes and invoices. This lets you match them later.
+
+## Contract basics
+
+For larger or ongoing purchases, a written **contract** sets out the agreement. Common terms:
+
+| Term | What it covers |
+| :-- | :-- |
+| **Scope** | Exactly what will be supplied, to what specification |
+| **Price and payment** | Prices, what is included, when and how to pay, price changes |
+| **Delivery** | Dates, place, risk and ownership |
+| **Quality and acceptance** | Standards, inspection, rejection of faulty goods |
+| **Warranty** | How long, what is covered, who fixes problems |
+| **Penalties** | Charges for late delivery (liquidated damages) |
+| **Termination** | When either side may end it, and notice |
+| **Disputes** | How they will be resolved (discussion, mediation, arbitration, courts) |
+| **Confidentiality and compliance** | Protection of information, laws, ethics |
+
+For high-value or complex contracts, have a lawyer review the terms. A vague contract favours whoever argues best, and a poor one can leave you without a remedy when things go wrong.
+
+## Delivery, inspection and payment
+
+When goods arrive:
+
+1. **Check the delivery note** against the PO: items, quantities, condition.
+2. **Count and inspect** the goods. Note shortages and damage on the delivery note before signing.
+3. **Record the receipt** in a goods received note (GRN).
+4. **Reject or query** anything wrong, and tell the supplier at once, in writing.
+5. **Pay only for what was properly received** and matches the invoice.
+
+Example: you ordered 200 units at ₦3,500. The supplier delivers 190, and 12 are damaged. You accept 178 good units and pay for those: 178 × ₦3,500 = **₦623,000**. You record 10 short and 12 damaged, and ask the supplier to replace or credit them.
+
+## Try it
+
+```task
+{
+  "id": "proc-m06-t1",
+  "prompt": "You ordered **200 units at ₦3,500**. The supplier delivers **190** and **12 are damaged**. Work out the number of good units you will accept, the amount you will pay for them and the number the supplier still owes. Then say what you do on the day of delivery.",
+  "minutes": 10,
+  "rows": 6,
+  "placeholder": "Good units accepted = ...",
+  "rules": [
+    { "label": "178 good units", "pattern": "178" },
+    { "label": "Payment of ₦623,000", "pattern": "623,?000" },
+    { "label": "10 short (or 22 outstanding in total)", "pattern": "\\b10\\b|\\b22\\b" },
+    { "label": "Says to record or note it on the delivery note or GRN", "pattern": "delivery note|grn|goods received|record|note" },
+    { "label": "Says to tell the supplier or ask for a replacement or credit", "pattern": "supplier|replace|credit|report|inform|tell" }
+  ],
+  "sample": "Good units accepted = 190 - 12 = 178.\nPayment = 178 x 3,500 = ₦623,000.\nThe supplier still owes 10 units not delivered, plus replacement or credit for the 12 damaged (22 units in all).\nOn the day, I count and inspect the goods, note the shortage and damage on the delivery note, record it on the GRN and tell the supplier in writing so they replace or credit the units.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "proc-m06-t2",
+  "prompt": "Write a **purchase order** for 300 reams of A4 paper at ₦4,800 a ream. Put one detail per line: PO number, date, buyer, supplier, item, quantity, unit price, total, delivery place and date, payment terms and approval.",
+  "minutes": 12,
+  "rows": 12,
+  "placeholder": "PO number: ...\nDate: ...",
+  "rules": [
+    { "label": "At least ten lines", "minLines": 10 },
+    { "label": "Has a PO number and date", "pattern": "po (number|no)[\\s\\S]*date|date[\\s\\S]*po (number|no)" },
+    { "label": "Names buyer and supplier", "pattern": "buyer[\\s\\S]*supplier|supplier[\\s\\S]*buyer" },
+    { "label": "States quantity 300 and unit price 4,800", "pattern": "300[\\s\\S]*4,?800|4,?800[\\s\\S]*300" },
+    { "label": "States the total of ₦1,440,000", "pattern": "1,?440,?000" },
+    { "label": "States delivery and payment terms", "pattern": "deliver[\\s\\S]*payment|payment[\\s\\S]*deliver" },
+    { "label": "States who approved it", "pattern": "approv|authoris|authoriz|signed" }
+  ],
+  "sample": "PO number: GTC-2026-0142\nDate: 12 March 2026\nBuyer: Greenfield Training Centre, 14 Allen Avenue, Ikeja, Lagos\nSupplier: Bright Office Supplies Ltd, Yaba, Lagos\nItem: A4 copier paper, 80gsm, white, 500 sheets per ream\nQuantity: 300 reams\nUnit price: ₦4,800\nTotal: ₦1,440,000 plus VAT\nDelivery: to the Ikeja store within 5 working days of this order\nPayment terms: 30 days after receipt of goods and a correct invoice quoting the PO number\nApproved by: Ngozi Okoro, purchasing officer, and the finance manager",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "proc-m06-t3",
+  "prompt": "List **six clauses** you would want in a supply contract for a year of regular deliveries, with a few words on what each covers. One per line.",
+  "minutes": 10,
+  "rows": 8,
+  "placeholder": "Scope: ...",
+  "rules": [
+    { "label": "Six lines", "minLines": 6 },
+    { "label": "Includes price or payment", "pattern": "price|payment" },
+    { "label": "Includes delivery", "pattern": "deliver" },
+    { "label": "Includes quality, acceptance or warranty", "pattern": "quality|accept|warrant|inspect|reject" },
+    { "label": "Includes termination or disputes", "pattern": "terminat|dispute|arbitrat|mediat" },
+    { "label": "Includes penalties or late delivery", "pattern": "penalt|late|liquidated|damages" }
+  ],
+  "sample": "Scope: exactly what is supplied and to what specification.\nPrice and payment: the unit prices, how long they are held and payment within 30 days of a correct invoice.\nDelivery: dates, place and who carries the risk in transit.\nQuality and acceptance: standards, inspection on delivery and replacement of faulty goods.\nPenalties: a charge for each day of late delivery.\nTermination and disputes: notice periods, and how disagreements are resolved, first by discussion and then by arbitration.",
+  "required": false
+}
+```
+
+Next lesson: the processes and controls that keep buying honest.
+$md$, true, true, 6, array['proc-m06-t1', 'proc-m06-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('proc-m12', 'procurement-sourcing', 'Final project: a practical procurement', 12, null, null, '{}'::text[], array['Choosing the purchase', 'Running the process', 'Evaluating and negotiating', 'Presenting your recommendation']::text[])
+values ('proc-m07', 'procurement-sourcing', 'Procurement processes and controls', 7, 'Procurement Controls', 'CONTROL', array['Set approval limits', 'Separate duties', 'Do a three-way match', 'Keep an audit trail']::text[], array['Approval limits and segregation of duties', 'Three-way matching', 'Documentation and audit trails', 'Procurement policies']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('procurement-sourcing:procurement-processes-and-controls', 'procurement-sourcing', 'proc-m07', 'procurement-processes-and-controls', 'Procurement Processes and Controls', 'Set approval limits, separate duties, match purchase orders, receipts and invoices, keep an audit trail and write a procurement policy people can follow.', 25, $md$
+## Why controls exist
+
+Buying involves money and trust, so it attracts mistakes and fraud: paying twice, paying for goods never received, favouring a friend's company, inflated invoices, split orders to avoid approval. **Controls** are the simple rules and checks that make these hard and easy to spot. They are not there because people are assumed to be dishonest. They protect honest staff from suspicion and the business from loss.
+
+## Approval limits
+
+An **approval limit** says who may authorise spending up to what amount. For example:
+
+| Value of purchase | Who approves | Quotes needed |
+| :-- | :-- | :-- |
+| Up to ₦100,000 | Department head | One |
+| ₦100,001 to ₦1,000,000 | Finance manager | Three written |
+| ₦1,000,001 to ₦10,000,000 | Managing director | Three written, formal evaluation |
+| Over ₦10,000,000 | Board | Formal tender |
+
+These numbers are only an example; each organisation sets its own. Two rules go with limits:
+
+- **No splitting.** Dividing one purchase into smaller orders to stay under a limit is a breach of the policy and a warning sign of fraud.
+- **Approval before commitment.** Approve the order before the goods are ordered, not after they arrive.
+
+## Segregation of duties
+
+No single person should control a purchase from start to finish. Keep these functions with different people:
+
+- **Requesting** the purchase
+- **Approving** it
+- **Ordering** from the supplier
+- **Receiving** the goods
+- **Approving the invoice** and **paying** it
+- **Recording** it in the books
+
+If a small team cannot split everything, split the riskiest steps (ordering, receiving and paying) and add a review by a manager.
+
+## Three-way matching
+
+Before paying an invoice, match three documents:
+
+1. The **purchase order** (what we ordered and at what price)
+2. The **goods received note** (what actually arrived)
+3. The **supplier invoice** (what they ask us to pay)
+
+They must agree on item, quantity and price. If they do, pay. If not, investigate before paying.
+
+Example: PO for 100 units at ₦2,000. GRN shows 95 received. The invoice charges for 100 units at ₦2,000 (₦200,000). The match fails. Pay for 95 × ₦2,000 = ₦190,000 only after the supplier corrects the invoice, or deliver the missing 5 units. Do not pay the full amount "because it is nearly right".
+
+## Documentation and audit trails
+
+An **audit trail** lets someone who was not there follow a purchase from request to payment. Keep, for every purchase:
+
+- the requisition and approval
+- the quotes received, the evaluation and the reason for the choice
+- the PO and any contract
+- the delivery note and GRN
+- the invoice and the payment record
+- correspondence about problems and how they were resolved
+
+File these together, on paper or electronically, with controlled access. Keep them for the period your policy and the law require. When an auditor or manager asks "why did we buy this from them?", the file should answer.
+
+## Procurement policies
+
+A **procurement policy** is a short document that tells everyone how buying works. A good one:
+
+- states its purpose and who it applies to
+- sets approval limits and quote requirements
+- explains how suppliers are selected and approved
+- bans conflicts of interest, gifts beyond a small value and split orders
+- sets how emergencies are handled, and what must be documented afterwards
+- names who is responsible and how to report concerns
+- is simple enough that staff actually read it
+
+A policy nobody follows is worse than none, because it gives false comfort. Train staff and review it regularly.
+
+## Try it
+
+```task
+{
+  "id": "proc-m07-t1",
+  "prompt": "Do a **three-way match**. PO: 100 units at ₦2,000. GRN: 95 units received. Invoice: 100 units at ₦2,000 (₦200,000). Say whether they match, what you would pay and what you would do about the difference.",
+  "minutes": 8,
+  "rows": 6,
+  "placeholder": "They do not match because ...",
+  "rules": [
+    { "label": "Says they do not match", "pattern": "not match|do not match|don't match|mismatch|does not agree|differ" },
+    { "label": "Pays ₦190,000 for 95 units", "pattern": "190,?000" },
+    { "label": "Notes the 5 missing units", "pattern": "\\b5\\b|five" },
+    { "label": "Asks for a corrected invoice, credit note or the missing units", "pattern": "corrected|credit note|missing units|deliver the|correct the|query|investigate" }
+  ],
+  "sample": "The documents do not match: the PO and invoice say 100 units but the GRN shows only 95 received. I would not pay the invoice as it stands. I would pay for 95 x 2,000 = ₦190,000 once the supplier issues a corrected invoice or a credit note for the 5 missing units, or they deliver the missing 5 units.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "proc-m07-t2",
+  "prompt": "Read this: *\"Chinedu, the store officer, asks for new tyres, chooses the supplier, signs the order, receives the tyres and signs the payment voucher. Last month three separate orders of ₦95,000 went to the same supplier, a relative of his.\"* List **four control failures** and the fix for each. One per line, in the form \"Failure - Fix\".",
+  "minutes": 12,
+  "rows": 8,
+  "placeholder": "Failure: ... - Fix: ...",
+  "rules": [
+    { "label": "Four lines", "minLines": 4 },
+    { "label": "Every line has a failure and a fix", "pattern": "fail[^\\n]*fix|-\\s*fix|fix", "perLine": true },
+    { "label": "Spots the lack of separated duties", "pattern": "separat|segregat|one person|same person|different people" },
+    { "label": "Spots the split orders", "pattern": "split|three (separate )?orders|95,?000|limit" },
+    { "label": "Spots the conflict of interest (relative)", "pattern": "relative|conflict|declare" },
+    { "label": "Spots the missing quotes or approval", "pattern": "quote|approv|compet" }
+  ],
+  "sample": "Failure: one person does every step of the purchase - Fix: separate requesting, approving, receiving and paying between different people.\nFailure: three orders of ₦95,000 look like split orders to stay under the approval limit - Fix: ban splitting and review repeat orders to the same supplier.\nFailure: the supplier is Chinedu's relative and no conflict was declared - Fix: require a declaration of interests and exclude him from choosing that supplier.\nFailure: no competing quotes or manager approval - Fix: require written quotes and approval at the right level before ordering.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "proc-m07-t3",
+  "prompt": "Write the **main points of a one-page procurement policy** for a small company: at least six bullet points covering approval limits, quotes, conflicts of interest, receiving goods, paying invoices and records.",
+  "minutes": 12,
+  "rows": 9,
+  "placeholder": "- Approval limits: ...",
+  "rules": [
+    { "label": "At least six points", "minLines": 6 },
+    { "label": "Covers approval limits", "pattern": "approval|limit|authori" },
+    { "label": "Covers quotes or competition", "pattern": "quote|compet|tender|bid" },
+    { "label": "Covers conflicts of interest or gifts", "pattern": "conflict|interest|gift" },
+    { "label": "Covers receiving goods", "pattern": "receiv|inspect|grn|delivery" },
+    { "label": "Covers paying invoices (matching)", "pattern": "invoice|match|pay" },
+    { "label": "Covers records", "pattern": "record|file|document|audit" }
+  ],
+  "sample": "- Approval limits: every purchase needs approval at the right level before the order is placed, and orders must not be split to avoid limits.\n- Quotes: three written quotes above ₦100,000 and a formal tender above ₦10,000,000.\n- Conflicts of interest: staff must declare any interest in a supplier and must not accept gifts above a small value.\n- Receiving goods: goods are counted and inspected by stores and recorded on a goods received note.\n- Paying invoices: finance pays only after matching the PO, the GRN and the invoice.\n- Records: the full file for each purchase is kept for audit.",
+  "required": false
+}
+```
+
+Next lesson: working with stores and keeping stock right.
+$md$, true, true, 7, array['proc-m07-t1', 'proc-m07-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
+values ('proc-m08', 'procurement-sourcing', 'Inventory coordination', 8, 'Inventory Coordination', 'INVCOORD', array['Calculate a reorder point', 'Work with stores', 'Forecast demand', 'Avoid stockouts and overstock']::text[], array['Stock levels and reorder points', 'Working with stores and warehouse', 'Forecasting demand', 'Avoiding stockouts and overstock']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('procurement-sourcing:inventory-coordination', 'procurement-sourcing', 'proc-m08', 'inventory-coordination', 'Inventory Coordination', 'Set stock levels and reorder points, work with stores and the warehouse, forecast demand and avoid both stockouts and overstock.', 20, $md$
+## Why procurement cares about stock
+
+Buyers decide when and how much to order, and those decisions fill the store. Order too little and the business **stocks out**: production stops, customers wait, rush orders cost more. Order too much and money sits on shelves, goods expire or are damaged, and space runs out. Good coordination with stores keeps stock **just right**.
+
+## Stock levels and reorder points
+
+Four numbers do most of the work:
+
+- **Average usage:** how much you use per day, week or month.
+- **Lead time:** how long from placing an order to having the goods ready to use.
+- **Safety stock:** an extra buffer for surprise demand or late delivery.
+- **Reorder point:** the stock level that triggers a new order.
+
+*Reorder point = (average daily usage × lead time in days) + safety stock*
+
+Example: the school uses **20 reams of paper a day**. Lead time is **7 days**. Safety stock is **40 reams**.
+- Usage during lead time: 20 × 7 = 140 reams.
+- Reorder point = 140 + 40 = **180 reams**.
+
+When stock falls to 180, order. The 140 covers the wait and the 40 covers surprises.
+
+Also set a **maximum level** so you do not over-order. And choose an **order quantity**: ordering more at once may earn a discount but costs more to store.
+
+## Working with stores and the warehouse
+
+Stores and procurement depend on each other:
+
+- **Stores tell procurement** what is in stock, what is moving fast, what is slow and what is damaged or expired.
+- **Procurement tells stores** what is on order, expected dates and any delay.
+- **Count regularly.** A stock count against the records finds errors and theft early.
+- **Use first-in, first-out (FIFO)** for goods that expire or deteriorate, so old stock is used first.
+- **Receive properly.** Stock records are only as good as the goods received notes.
+- **Agree who may issue stock** and require a signed requisition for every issue.
+
+When requesters demand "urgent" purchases often, ask why. It usually means the reorder points are wrong.
+
+## Forecasting demand
+
+A forecast is an informed estimate of what you will use. Simple methods work well:
+
+- **Past usage.** Look at the last 6 to 12 months.
+- **Moving average.** Average of the last few periods. If you used 400, 450 and 500 units in the last three months, the average is (400 + 450 + 500) ÷ 3 = **450** a month.
+- **Adjust for known changes:** seasons, promotions, new customers, a new project, price changes.
+- **Ask the people who use it.** Sales, production and operations know what is coming.
+
+Review the forecast against what actually happened. The gap tells you how to improve.
+
+## Avoiding stockouts and overstock
+
+| Problem | Causes | Fixes |
+| :-- | :-- | :-- |
+| **Stockouts** | Reorder point too low, late supplier, poor forecasts, missed counts | Raise safety stock, use a backup supplier, order earlier, track lead times |
+| **Overstock** | Over-ordering for discounts, poor forecasts, no one using the item | Lower maximum level, stop reordering, return or sell surplus, share across branches |
+| **Dead stock** | Items nobody uses | Review regularly, discount, return, or write off |
+| **Expired or damaged stock** | Poor storage or FIFO | Better storage, smaller and more frequent orders |
+
+Not all items need the same attention. Give most care to items that are **costly** or **critical**, and keep simple rules for cheap, low-risk items.
+
+## Try it
+
+```task
+{
+  "id": "proc-m08-t1",
+  "prompt": "A clinic uses **30 boxes of gloves a day**. Lead time is **5 days** and safety stock is **60 boxes**. Work out the **reorder point** and say what the safety stock protects against.",
+  "minutes": 8,
+  "rows": 5,
+  "placeholder": "Reorder point = ...",
+  "rules": [
+    { "label": "Usage during lead time of 150 boxes", "pattern": "\\b150\\b" },
+    { "label": "Reorder point of 210 boxes", "pattern": "\\b210\\b" },
+    { "label": "Says safety stock covers late delivery or higher demand", "pattern": "late|delay|surprise|higher demand|unexpected|variation|uncertain" }
+  ],
+  "sample": "Usage during lead time = 30 x 5 = 150 boxes.\nReorder point = 150 + 60 = 210 boxes.\nThe safety stock protects against late delivery or unexpectedly higher demand while waiting for the order.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "proc-m08-t2",
+  "prompt": "A shop sold **400, 450 and 500** units in the last three months. Work out the three-month average forecast for next month. Then say in 30 to 70 words what else you would check before you place the order.",
+  "minutes": 10,
+  "rows": 6,
+  "placeholder": "Forecast = ...",
+  "rules": [
+    { "label": "Average of 450", "pattern": "\\b450\\b" },
+    { "label": "Mentions a trend, season, promotion or known change", "pattern": "trend|season|promotion|growing|rising|increase|festive|christmas|new customer|price" },
+    { "label": "Mentions current stock or what is on order", "pattern": "stock|on order|in hand|already" },
+    { "label": "Between 30 and 70 words (after the sum)", "minWords": 30, "maxWords": 100 }
+  ],
+  "sample": "Forecast = (400 + 450 + 500) / 3 = 450 units for next month.\nBefore ordering, I would check the trend: sales have risen each month, so 450 may be too low, and the festive season may push demand higher. I would also check how much stock is in hand and on order, any promotions planned, and what the shop manager expects, so that I order enough without overstocking.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "proc-m08-t3",
+  "prompt": "A hospital pharmacy keeps running out of one item and has too much of another. List **four actions** you would take to reduce stockouts and overstock. One per line.",
+  "minutes": 8,
+  "rows": 6,
+  "placeholder": "Raise the safety stock on ...",
+  "rules": [
+    { "label": "Four lines", "minLines": 4 },
+    { "label": "Mentions reorder point, safety stock or order timing", "pattern": "reorder|safety stock|order (earlier|sooner)|lead time" },
+    { "label": "Mentions stopping or reducing orders of the overstocked item", "pattern": "stop|reduce|lower|maximum|return|share|transfer" },
+    { "label": "Mentions counts, records or forecasting", "pattern": "count|record|forecast|review|track" },
+    { "label": "Mentions a backup supplier or expiry/FIFO", "pattern": "backup|second supplier|fifo|expir|first-in" }
+  ],
+  "sample": "Raise the reorder point and safety stock on the item that keeps running out.\nLine up a backup supplier for the critical item.\nStop reordering the overstocked item and lower its maximum level, or transfer or return the surplus.\nCount stock regularly and review usage monthly to improve the forecast, and use FIFO so the oldest stock is used before it expires.",
+  "required": false
+}
+```
+
+Next lesson: controlling cost and showing real savings.
+$md$, true, true, 8, array['proc-m08-t1', 'proc-m08-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
+values ('proc-m09', 'procurement-sourcing', 'Cost control and savings', 9, 'Cost Control', 'COST', array['Compare total cost of ownership', 'Analyse spend', 'Reduce cost without hurting quality', 'Report savings honestly']::text[], array['Total cost of ownership', 'Spend analysis', 'Reducing cost without hurting quality', 'Reporting savings']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('procurement-sourcing:cost-control-and-savings', 'procurement-sourcing', 'proc-m09', 'cost-control-and-savings', 'Cost Control and Savings', 'Use total cost of ownership, analyse spend, cut cost without hurting quality and report savings honestly.', 25, $md$
+## Total cost of ownership
+
+The purchase price is only part of what an item costs. **Total cost of ownership (TCO)** adds up everything you pay over its life: purchase price, delivery, installation, running costs, maintenance, training, downtime and disposal, minus any resale value.
+
+Example: two printers for an office over three years.
+
+| | Printer A | Printer B |
+| :-- | :-- | :-- |
+| Purchase price | ₦150,000 | ₦220,000 |
+| Ink per year | ₦40,000 | ₦15,000 |
+| Ink for 3 years | ₦120,000 | ₦45,000 |
+| **TCO over 3 years** | **₦270,000** | **₦265,000** |
+
+Printer A is ₦70,000 cheaper to buy, but Printer B costs ₦5,000 less overall, and it needs less maintenance and fewer refills. Buying on price alone would have chosen the dearer option. Always ask: *what will this cost us in total?*
+
+## Spend analysis
+
+**Spend analysis** looks at what the business buys, from whom and how much. It shows where the money goes so you can focus effort where it pays.
+
+Steps:
+
+1. **Collect** purchase data for a period (say 12 months): supplier, item, quantity, price, date, department.
+2. **Clean** it: merge the same supplier written in different ways, group items into categories.
+3. **Rank** categories and suppliers by spend.
+4. **Look for patterns:** many suppliers for the same item, prices that vary between departments, items bought urgently at high prices, rising prices.
+
+Often a few categories account for most of the spend, the **80/20 rule**. If the top three of ten categories take 80% of the money, put your best effort there and keep simple rules for the rest.
+
+| Category | Annual spend | Share |
+| :-- | :-- | :-- |
+| Raw materials | ₦48,000,000 | 60% |
+| Packaging | ₦16,000,000 | 20% |
+| Transport | ₦8,000,000 | 10% |
+| Office supplies | ₦4,000,000 | 5% |
+| Other | ₦4,000,000 | 5% |
+
+## Reducing cost without hurting quality
+
+Cutting the price is only one way. Others:
+
+- **Negotiate** price, terms and volume (module 5).
+- **Combine demand:** buy together for several departments or sites to earn a larger discount.
+- **Reduce the number of suppliers** for the same item to increase volume with each.
+- **Standardise** specifications so you buy fewer variations in larger quantities.
+- **Change the specification:** does it really need the premium grade or the extra feature?
+- **Look at alternatives** or substitutes that do the job.
+- **Cut waste:** avoid rush orders, over-ordering, expiry and duplicate purchases.
+- **Improve payment terms** and take early-payment discounts where the saving beats the cost of money.
+- **Fix the process:** fewer errors, fewer returns, less rework.
+
+Beware of false savings: a cheaper product that breaks sooner, delays that stop production, or a supplier pushed so hard that quality falls. Always check quality and service stay at the level you need.
+
+## Reporting savings
+
+Report savings in a way finance will accept. Two main types:
+
+- **Cost reduction:** you pay less than before for the same thing. Savings = (old price − new price) × quantity. Old price ₦5,000, new price ₦4,600, quantity 1,000: (5,000 − 4,600) × 1,000 = **₦400,000.**
+- **Cost avoidance:** you avoided a price rise or an unneeded purchase. Useful, but it is not money out of the budget, so label it separately.
+
+Be honest: compare with the **right baseline** (last price paid, or budget), include the costs of the change, and keep evidence. A savings figure that finance cannot check damages your credibility.
+
+## Try it
+
+```task
+{
+  "id": "proc-m09-t1",
+  "prompt": "Compare the **three-year total cost of ownership** of two generators. **G1**: price ₦2,000,000, fuel ₦900,000 a year, servicing ₦100,000 a year. **G2**: price ₦2,600,000, fuel ₦650,000 a year, servicing ₦80,000 a year. Work out each TCO and say which is cheaper over three years and by how much.",
+  "minutes": 10,
+  "rows": 8,
+  "placeholder": "G1 = ...",
+  "rules": [
+    { "label": "G1 TCO of ₦5,000,000", "pattern": "5,?000,?000" },
+    { "label": "G2 TCO of ₦4,790,000", "pattern": "4,?790,?000" },
+    { "label": "Says G2 is cheaper", "pattern": "g2[^.]*(cheaper|lower|less|better)|cheaper[^.]*g2" },
+    { "label": "Difference of ₦210,000", "pattern": "210,?000" }
+  ],
+  "sample": "G1 = 2,000,000 + 3 x (900,000 + 100,000) = 2,000,000 + 3,000,000 = ₦5,000,000.\nG2 = 2,600,000 + 3 x (650,000 + 80,000) = 2,600,000 + 2,190,000 = ₦4,790,000.\nG2 is cheaper over three years by ₦210,000, although it costs more to buy.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "proc-m09-t2",
+  "prompt": "Annual spend: raw materials ₦48,000,000, packaging ₦16,000,000, transport ₦8,000,000, office supplies ₦4,000,000, other ₦4,000,000. Work out the **total** and the **percentage share** of raw materials and packaging together. Then say where you would focus your effort and why.",
+  "minutes": 10,
+  "rows": 7,
+  "placeholder": "Total = ...",
+  "rules": [
+    { "label": "Total of ₦80,000,000", "pattern": "80,?000,?000" },
+    { "label": "Raw materials and packaging total of ₦64,000,000", "pattern": "64,?000,?000" },
+    { "label": "Share of 80%", "pattern": "\\b80\\s?%|80 percent" },
+    { "label": "Focuses on raw materials and packaging", "pattern": "raw materials?[\\s\\S]*packaging|packaging[\\s\\S]*raw materials?|biggest|largest|most of the" },
+    { "label": "Gives a reason (largest saving, 80/20)", "pattern": "because|since|biggest|largest|most|80/20|saving" }
+  ],
+  "sample": "Total = 48 + 16 + 8 + 4 + 4 = ₦80,000,000.\nRaw materials and packaging = 48,000,000 + 16,000,000 = ₦64,000,000, which is 64/80 = 80% of the spend.\nI would focus on raw materials and packaging, because they are where most of the money goes, so even a small percentage saving there is worth far more than a large one on office supplies.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "proc-m09-t3",
+  "prompt": "You negotiated the price of an item from ₦5,000 to ₦4,600 on an annual quantity of 1,000. Calculate the **saving**, then say in 30 to 70 words what you would record as evidence and why a ₦400,000 saving should not be mixed with cost avoidance.",
+  "minutes": 8,
+  "rows": 6,
+  "placeholder": "Saving = ...",
+  "rules": [
+    { "label": "Saving of ₦400,000", "pattern": "400,?000" },
+    { "label": "Mentions evidence (quotes, old and new price, PO)", "pattern": "evidence|old price|new price|quote|purchase order|po|invoice|baseline|record" },
+    { "label": "Mentions the difference between reduction and avoidance", "pattern": "avoid|reduction|budget|not (money|cash)|separate" },
+    { "label": "Between 30 and 90 words in total", "minWords": 30, "maxWords": 100 }
+  ],
+  "sample": "Saving = (5,000 - 4,600) x 1,000 = ₦400,000.\nI would record the old price, the new price, the quantity, the quotes and the purchase orders as evidence, so finance can check the baseline. I would report it as a cost reduction, kept separate from cost avoidance, because a reduction is real money no longer spent while avoidance is only a rise that did not happen, and mixing them makes the figures hard to trust.",
+  "required": false
+}
+```
+
+Next lesson: managing supplier relationships over time.
+$md$, true, true, 9, array['proc-m09-t1', 'proc-m09-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
+values ('proc-m10', 'procurement-sourcing', 'Supplier relationship management', 10, 'Supplier Management', 'SRM', array['Build a supplier scorecard', 'Calculate OTIF and defect rate', 'Handle disputes and delays', 'Plan for supplier risk']::text[], array['Performance reviews', 'Developing key suppliers', 'Handling disputes and delays', 'Risk and backup suppliers']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('procurement-sourcing:supplier-relationship-management', 'procurement-sourcing', 'proc-m10', 'supplier-relationship-management', 'Supplier Relationship Management', 'Review supplier performance with a scorecard, develop key suppliers, handle disputes and delays and manage supply risk with backup suppliers.', 25, $md$
+## Why manage suppliers after the order
+
+Choosing a good supplier is only the start. Performance drifts if nobody watches it: deliveries slip, quality dips, prices creep up. **Supplier relationship management (SRM)** means tracking how suppliers perform, working with them to improve and dealing early with problems. The aim is steady, reliable supply at a fair total cost.
+
+## Performance reviews and scorecards
+
+A **supplier scorecard** measures a few things that matter, regularly, using facts.
+
+Common measures:
+
+| Measure | How to calculate it |
+| :-- | :-- |
+| **On time** | Deliveries received by the promised date ÷ total deliveries |
+| **In full** | Deliveries with the complete quantity ÷ total deliveries |
+| **OTIF (on time, in full)** | Orders both on time and complete ÷ total orders |
+| **Quality / defect rate** | Faulty items ÷ items received |
+| **Invoice accuracy** | Invoices correct first time ÷ total invoices |
+| **Responsiveness** | How fast they answer queries and fix problems |
+| **Price** | Compared with the market and with the agreed price |
+
+Example: of 50 orders last quarter, 46 arrived on time and complete. OTIF = 46 ÷ 50 = **92%**.
+
+Set targets (for example, OTIF of at least 95% and defects under 1%), review quarterly, and share the results with the supplier. A scorecard is most useful when it leads to a conversation: *here is what we saw; what will you change?*
+
+## Developing key suppliers
+
+Not all suppliers deserve the same attention. A common way to sort them uses two questions: **how much do we spend** and **how risky or hard is it to replace them?**
+
+| Type | Spend / risk | Approach |
+| :-- | :-- | :-- |
+| **Strategic** | High spend, high risk | Close partnership, joint planning, regular senior contact |
+| **Leverage** | High spend, low risk | Compete them, negotiate hard, use volume |
+| **Bottleneck** | Low spend, high risk | Secure supply, hold stock, find alternatives |
+| **Routine** | Low spend, low risk | Keep the process simple, automate |
+
+For strategic suppliers, invest in the relationship: share forecasts, visit, agree improvement goals, resolve problems together and give them a fair return. Suppliers give their best service to customers they trust, pay on time and treat fairly.
+
+## Handling disputes and delays
+
+Problems will happen. Handle them in a way that fixes the issue and keeps the relationship:
+
+1. **Get the facts.** Check the PO, delivery note and communications. What exactly was agreed? What exactly went wrong?
+2. **Tell the supplier promptly, in writing,** with the evidence.
+3. **Agree a remedy:** replacement, repair, credit, a revised date or price adjustment.
+4. **Follow the contract** if it sets penalties or procedures.
+5. **Escalate** if needed: to a senior contact, then to the formal dispute process.
+6. **Record it** and use it in the next review.
+7. **Learn:** if it keeps happening, address the cause or move volume to another supplier.
+
+Stay professional. Blame and anger rarely fix a late delivery; clear facts and a firm date usually do.
+
+## Risk and backup suppliers
+
+Depending on one supplier is risky. A fire, a strike, a price shock, a port delay or a closure can stop your business. Reduce the risk:
+
+- **Qualify a second supplier** for important items, even if you only buy small amounts from them.
+- **Hold safety stock** of critical items.
+- **Watch the supplier's health:** news, late payments to others, staff turnover.
+- **Spread by location** so one event does not stop everything.
+- **Include continuity terms** in contracts, such as notice of problems and priority supply.
+- **Have a plan:** who to call, what to substitute, how to tell customers.
+
+The cost of a backup is usually far smaller than the cost of an emergency.
+
+## Try it
+
+```task
+{
+  "id": "proc-m10-t1",
+  "prompt": "Last quarter a supplier delivered **50 orders**. **46** were on time and complete; of the other 4, **2** were late and **2** were short. They sent **1,200 items** of which **18** were faulty. Calculate the **OTIF %** and the **defect rate**, and say whether you would meet targets of OTIF 95% and defects under 1%.",
+  "minutes": 10,
+  "rows": 7,
+  "placeholder": "OTIF = ...",
+  "rules": [
+    { "label": "OTIF of 92%", "pattern": "\\b92\\s?%|92 percent" },
+    { "label": "Defect rate of 1.5%", "pattern": "1\\.5\\s?%|1\\.5 percent" },
+    { "label": "Says both targets are missed", "pattern": "miss|not met|below|fail|neither|not meet|short of|worse" }
+  ],
+  "sample": "OTIF = 46 / 50 = 92%.\nDefect rate = 18 / 1,200 = 1.5%.\nThe supplier misses both targets: 92% is below the 95% OTIF target and 1.5% is above the 1% defect limit, so I would share the scorecard and agree an improvement plan.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "proc-m10-t2",
+  "prompt": "A key supplier of packaging will deliver **a week late**, which will stop your packing line. Write the **email** you send them (60 to 130 words): state the facts, the impact, what you need (a firm date and options such as part delivery) and when you expect a reply.",
+  "minutes": 12,
+  "rows": 9,
+  "placeholder": "Dear ...,",
+  "rules": [
+    { "label": "Greets and is professional", "pattern": "dear|hello|hi |regards|thank" },
+    { "label": "States the facts (order number, date, delay)", "pattern": "order|po|due|promised|late|delay" },
+    { "label": "States the impact", "pattern": "stop|impact|affect|line|customers|production|packing" },
+    { "label": "Asks for a firm date or part delivery", "pattern": "firm date|confirm|part delivery|partial|split|expedite|earliest" },
+    { "label": "Sets a deadline for a reply", "pattern": "by \\d|today|tomorrow|within|before|end of|\\d+ (hours|pm|am)" },
+    { "label": "Between 60 and 130 words", "minWords": 60, "maxWords": 135 }
+  ],
+  "sample": "Dear Mr Bello, our order PO-2026-0187 for 20,000 cartons was promised for Monday 10 March, and we have just been told it will arrive a week late. This will stop our packing line and affect deliveries to our customers. Please confirm today the earliest firm delivery date, and whether you can send a part delivery of 8,000 cartons by Wednesday so the line can keep running. Please also tell us what has caused the delay and what you are doing to prevent it recurring. I would appreciate your reply by 4 pm today. Kind regards, Ngozi Okoro, Purchasing Officer.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "proc-m10-t3",
+  "prompt": "Classify these suppliers as **strategic, leverage, bottleneck or routine**, with a short reason: (1) the only maker of a machine part you cannot easily replace, cost small; (2) the main supplier of your raw material, large spend, many alternatives; (3) the supplier of pens and notebooks. One per line.",
+  "minutes": 8,
+  "rows": 5,
+  "placeholder": "1. bottleneck - ...",
+  "rules": [
+    { "label": "Three lines", "minLines": 3 },
+    { "label": "Classifies the machine part supplier as bottleneck", "pattern": "bottleneck" },
+    { "label": "Classifies the raw material supplier as leverage (or strategic)", "pattern": "leverage|strategic" },
+    { "label": "Classifies the stationery supplier as routine", "pattern": "routine" },
+    { "label": "Gives reasons", "pattern": "because|since|only|alternatives|small|low|simple|volume" }
+  ],
+  "sample": "1. Bottleneck - low spend but it is the only maker, so a failure would stop the machine.\n2. Leverage - high spend with many alternatives, so I can negotiate hard and compete the suppliers.\n3. Routine - low spend, many alternatives and low risk, so I keep the process simple.",
+  "required": false
+}
+```
+
+Next lesson: local and international sourcing, and doing it ethically.
+$md$, true, true, 10, array['proc-m10-t1', 'proc-m10-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
+values ('proc-m11', 'procurement-sourcing', 'Local and international sourcing, and ethics', 11, 'Ethical Sourcing', 'ETHICS', array['Compare local and imported cost', 'Handle conflicts of interest', 'Refuse bribery', 'Buy ethically and sustainably']::text[], array['Local versus international sourcing', 'Import costs and lead times', 'Conflicts of interest and bribery', 'Sustainable and ethical procurement']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('procurement-sourcing:local-international-sourcing-and-ethics', 'procurement-sourcing', 'proc-m11', 'local-international-sourcing-and-ethics', 'Local and International Sourcing, and Ethics', 'Compare local and international sourcing on real cost and lead time, recognise conflicts of interest and bribery, and buy in a sustainable and ethical way.', 25, $md$
+## Local versus international sourcing
+
+Neither is always better. The right choice depends on the item, the volume, the urgency and the risk.
+
+**Local sourcing** is buying within Nigeria. Its strengths: short lead times, easy visits and inspection, simple payment in naira, quick problem solving, support for local jobs and industry. Its weaknesses: sometimes higher prices, limited choice or capacity, and quality that varies.
+
+**International sourcing** is buying from abroad. Its strengths: often lower unit prices, wider choice, specialist products and new technology. Its weaknesses: longer lead times, shipping and customs, exchange rate risk, advance payment, harder returns and disputes, and more paperwork.
+
+Compare on **total landed cost** and risk, never on the quoted unit price alone.
+
+## Import costs and lead times
+
+For an imported item, add to the supplier's price:
+
+- international freight and insurance
+- import duty and VAT
+- clearing agent and port charges
+- local transport to your store
+- bank and payment charges
+- the effect of the exchange rate between order and payment
+- an allowance for losses and delays
+
+Example: an imported item is quoted at ₦700 a unit for 1,000 units (₦700,000). Freight and insurance are ₦120,000, duty and VAT ₦150,000, clearing and port ₦60,000 and transport ₦20,000. The landed cost is 700,000 + 120,000 + 150,000 + 60,000 + 20,000 = **₦1,050,000**, which is ₦1,050 a unit. A local supplier at ₦950 a unit is cheaper, delivers in days and carries less risk.
+
+Lead time also costs money. A six-week lead time means holding more stock, tying up cash and reacting slowly to demand. Build it into your reorder points (module 8). The Import, Export & Mini Importation course builds a full landed cost calculator.
+
+## Conflicts of interest
+
+A **conflict of interest** exists when a personal interest could influence, or look as if it influences, a business decision. In procurement it includes:
+
+- awarding business to a relative, friend or a company you own or work for
+- taking a second job with a supplier
+- accepting gifts, hospitality or favours from suppliers
+- sharing inside information about one bid with another supplier
+
+The rules are simple:
+1. **Declare** the interest to your manager in writing.
+2. **Step back** from the decision.
+3. **Let someone else** decide.
+4. **Record** it.
+
+Even the *appearance* of a conflict damages trust, so declare early.
+
+## Bribery and corruption
+
+**Bribery** is offering, giving, asking for or accepting something of value to influence a decision. It includes cash, gifts, "commissions" and "facilitation payments". In Nigeria it is a criminal offence, and public procurement is governed by the Public Procurement Act and enforced by anti-corruption agencies. Companies can also be liable under the laws of other countries where they do business.
+
+Practical rules:
+
+- Never ask for or accept money or valuable gifts from suppliers. A small corporate gift, openly recorded and within the policy, may be acceptable; when in doubt, decline.
+- Never pay a bribe, however small, however "normal" it is said to be.
+- Keep records of every gift offered, accepted or declined.
+- Report pressure or offers through the proper channel (a manager, compliance or a whistleblowing line).
+- Be cautious of agents or "consultants" who say they can "fix" a decision.
+
+The cost of one bribe can be a lost job, a criminal record, a banned company and the loss of every legitimate customer.
+
+## Sustainable and ethical procurement
+
+Buyers also carry responsibility for how goods are made and delivered. Ethical procurement considers:
+
+- **Labour standards:** no child or forced labour, safe conditions, fair pay.
+- **Environment:** waste, emissions, packaging, energy use, responsible materials.
+- **Local content and inclusion:** opportunities for local and small businesses where they can compete fairly.
+- **Fair treatment of suppliers:** paying on time and on the agreed terms.
+- **Transparency:** open, competitive processes and honest dealing.
+
+Ask suppliers about their practices, include simple standards in your terms and check them. Cheap goods made in unsafe or unlawful conditions are a risk to your reputation and sometimes to the law.
+
+## Try it
+
+```task
+{
+  "id": "proc-m11-t1",
+  "prompt": "An imported item is quoted at **₦700 a unit for 1,000 units**. Freight and insurance ₦120,000, duty and VAT ₦150,000, clearing and port ₦60,000, local transport ₦20,000. Work out the **landed cost** in total and per unit, and compare it with a local supplier at **₦950 a unit**. Say which you would choose and what other factors matter.",
+  "minutes": 12,
+  "rows": 8,
+  "placeholder": "Goods = ...",
+  "rules": [
+    { "label": "Goods of ₦700,000", "pattern": "700,?000" },
+    { "label": "Landed cost of ₦1,050,000", "pattern": "1,?050,?000" },
+    { "label": "Per unit of ₦1,050", "pattern": "1,?050\\b" },
+    { "label": "Chooses the local supplier", "pattern": "local" },
+    { "label": "Mentions lead time, risk or exchange rate", "pattern": "lead time|risk|exchange|delay|time|stock" }
+  ],
+  "sample": "Goods = 1,000 x 700 = ₦700,000.\nLanded cost = 700,000 + 120,000 + 150,000 + 60,000 + 20,000 = ₦1,050,000, or ₦1,050 a unit.\nThe local supplier at ₦950 a unit (₦950,000) is cheaper, so I would choose local. It also delivers faster, needs less stock and carries no exchange rate or customs delay risk.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "proc-m11-t2",
+  "prompt": "Your cousin owns a company that has submitted a quote for your department's contract, and a supplier has sent you a gift hamper worth ₦80,000. In 50 to 110 words, say what you will do about each.",
+  "minutes": 10,
+  "rows": 7,
+  "placeholder": "I will declare ...",
+  "rules": [
+    { "label": "Declares the conflict of interest in writing", "pattern": "declare|disclose|tell|inform|report" },
+    { "label": "Steps back from the decision", "pattern": "step back|withdraw|not take part|excuse|recuse|not be involved|let someone else|other person" },
+    { "label": "Declines or reports the gift", "pattern": "decline|return|refuse|record|register|report" },
+    { "label": "Refers to policy or fairness", "pattern": "policy|fair|compan|trust|appear" },
+    { "label": "Between 50 and 110 words", "minWords": 50, "maxWords": 115 }
+  ],
+  "sample": "I will declare my cousin's interest to my manager in writing, step back from evaluating or deciding on that contract, and let another person handle it so the process stays fair. I will politely return the gift hamper with a note that our policy does not allow gifts of that value, and record that it was offered and declined. Even the appearance of favouring a relative or a supplier damages trust in the company, so I would rather be open early.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "proc-m11-t3",
+  "prompt": "Write **five questions** you would put to a supplier about their ethical and sustainable practices. One per line, each ending with a question mark.",
+  "minutes": 8,
+  "rows": 7,
+  "placeholder": "Do you ...?",
+  "rules": [
+    { "label": "Five questions", "minLines": 5 },
+    { "label": "Every line is a question", "pattern": "\\?\\s*$", "perLine": true },
+    { "label": "Asks about labour or working conditions", "pattern": "labou?r|worker|wage|child|safe|conditions" },
+    { "label": "Asks about the environment or waste", "pattern": "environment|waste|emission|energy|recycl|packag" },
+    { "label": "Asks about gifts, bribery or conflicts", "pattern": "gift|brib|corrupt|conflict|policy" }
+  ],
+  "sample": "Do you employ any child or forced labour, and how do you check your own suppliers?\nHow do you keep your workers safe and pay fair wages?\nWhat do you do to reduce waste and energy use in your factory?\nCan you use less or recyclable packaging for our orders?\nDo you have a written policy on bribery, gifts and conflicts of interest, and how do you enforce it?",
+  "required": false
+}
+```
+
+Next lesson: your own procurement project.
+$md$, true, true, 11, array['proc-m11-t1', 'proc-m11-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
+values ('proc-m12', 'procurement-sourcing', 'Final project: a practical procurement', 12, 'Procurement Project', 'PROJECT', array['Run a purchase end to end', 'Evaluate and negotiate', 'Recommend with evidence', 'Draft a purchase order']::text[], array['Choosing the purchase', 'Running the process', 'Evaluating and negotiating', 'Presenting your recommendation']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('procurement-sourcing:final-project-a-practical-procurement', 'procurement-sourcing', 'proc-m12', 'final-project-a-practical-procurement', 'Final Project - A Practical Procurement', 'Run a real or realistic purchase from need to purchase order: define it, shortlist suppliers, request quotes, evaluate, negotiate and present your recommendation.', 45, $md$
+## What you are building
+
+You have learned every step of procurement. Now you run one purchase end to end and present it as a professional would to a manager: what was needed, how you found and compared suppliers, what you negotiated and what you recommend.
+
+Choose a **real purchase** if you can (for your workplace, a club, a church, a school, a small business or a family event), or a realistic one such as laptops for a training centre, uniforms for staff, or a year's supply of cleaning materials. Use real quotes where possible. Where you must assume a number, say so clearly.
+
+## Your project has six parts
+
+1. **The need and specification.** What is needed, why, how much, when and to what standard, with a budget.
+2. **Suppliers.** A long list and a short list of at least three, and how you chose them.
+3. **The request.** The RFQ you sent (or would send) and the information given to all suppliers.
+4. **Evaluation.** Total cost comparison and a weighted score on agreed criteria.
+5. **Negotiation.** Your plan and what you achieved or would aim for, with the saving.
+6. **Recommendation and purchase order.** Your choice, the reasons, risks and a draft purchase order.
+
+## Writing it up
+
+Write for a manager who must approve the spending. Lead with the recommendation, then show the evidence. Use tables for quotes and scores, and keep each part short. State the total cost, the saving against the budget or the first price, and the delivery date.
+
+> [!TIP]
+> Ask a colleague to read it and say what they would still want to know before approving ₦5 million. Answer that in the document.
+
+## Try it
+
+```task
+{
+  "id": "proc-m12-t1",
+  "prompt": "Describe your **purchase and specification** in 50 to 130 words: what you are buying, why, the quantity, quality standard, delivery date and place, and the budget.",
+  "minutes": 12,
+  "rows": 8,
+  "placeholder": "We need to buy ...",
+  "rules": [
+    { "label": "Says what is being bought and why", "pattern": "need|buy|purchase|because|so that" },
+    { "label": "States the quantity", "pattern": "\\b\\d[\\d,]*\\s*(units?|pieces?|pcs|items?|reams?|laptops?|chairs?|sets?|boxes|crates|[a-z]+s)\\b|\\b\\d{2,}\\b" },
+    { "label": "States the quality or standard", "pattern": "standard|quality|specif|grade|model|warrant" },
+    { "label": "States delivery date or place", "pattern": "deliver|by |within|date|lagos|site|office" },
+    { "label": "States the budget in naira", "pattern": "budget|₦\\s?\\d|naira" },
+    { "label": "Between 50 and 130 words", "minWords": 50, "maxWords": 135 }
+  ],
+  "sample": "We need to buy 20 laptops for the new computer lab at Greenfield Training Centre because the current machines are too slow to run the course software and we start a new class in six weeks. Each laptop must have at least 16GB of RAM, a 512GB solid state drive, a modern i5 or equivalent processor, a 14-inch screen and a minimum 12-month warranty, and be supplied by an authorised dealer. Delivery must reach our Ikeja site within 21 days of the order. The approved budget is ₦14,000,000 including VAT and delivery.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "proc-m12-t2",
+  "prompt": "Write your **supplier shortlist and comparison**: at least three suppliers, one per line, with unit price, total cost including delivery, delivery time, payment terms and warranty. Then give your weighted criteria on a last line, adding to 100%.",
+  "minutes": 15,
+  "rows": 8,
+  "placeholder": "Supplier A - ₦...",
+  "rules": [
+    { "label": "At least four lines", "minLines": 4 },
+    { "label": "Lists suppliers with prices in naira", "pattern": "supplier[\\s\\S]*₦\\s?\\d|₦\\s?\\d[\\s\\S]*supplier" },
+    { "label": "Shows total cost", "pattern": "total" },
+    { "label": "Shows delivery time", "pattern": "days?|weeks?|deliver" },
+    { "label": "Shows payment terms or warranty", "pattern": "payment|warrant" },
+    { "label": "Shows weights adding up to percentages", "pattern": "\\d+\\s?%" }
+  ],
+  "sample": "Supplier A (authorised dealer) - ₦680,000 each, total ₦13,600,000 with delivery, 14 days, payment 30 days, 12-month warranty\nSupplier B (importer) - ₦640,000 each, total ₦12,800,000 plus ₦350,000 delivery = ₦13,150,000, 30 days, payment on delivery, 6-month warranty\nSupplier C (distributor) - ₦660,000 each, total ₦13,200,000 with delivery, 21 days, payment 14 days, 12-month warranty\nWeighted criteria: total cost 40%, quality and specification 25%, delivery 15%, warranty and support 15%, references 5%",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "proc-m12-t3",
+  "prompt": "Write your **negotiation result and recommendation** in 60 to 140 words: which supplier you choose, why, the price you negotiated and the saving against the first quote or the budget, plus one risk and how you will manage it.",
+  "minutes": 15,
+  "rows": 9,
+  "placeholder": "I recommend ...",
+  "rules": [
+    { "label": "Names the recommended supplier", "pattern": "recommend|choose|select|award|supplier [a-z]" },
+    { "label": "Gives reasons", "pattern": "because|since|reason|best|lowest|quality|value" },
+    { "label": "States the price and saving in naira", "pattern": "₦\\s?\\d[\\s\\S]*sav|sav[\\s\\S]*₦\\s?\\d" },
+    { "label": "Mentions a risk and how to manage it", "pattern": "risk[\\s\\S]*(manage|mitigat|backup|protect|insure|monitor|inspect)" },
+    { "label": "Between 60 and 140 words", "minWords": 60, "maxWords": 145 }
+  ],
+  "sample": "I recommend Supplier C, because it gives the best overall value: the second-lowest total cost, a 12-month warranty, a 21-day delivery that meets our date and good references. After negotiation, C agreed to reduce the price from ₦660,000 to ₦640,000 a laptop and add free delivery, a total of ₦12,800,000, which is a saving of ₦400,000 against its first quote and ₦1,200,000 against our budget. The main risk is a late delivery, which I will manage by putting a penalty for late delivery in the order and inspecting the laptops on arrival before paying.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "proc-m12-t4",
+  "prompt": "Write the key lines of your **purchase order**, one per line: PO number, buyer, supplier, item and specification, quantity, unit price, total, delivery place and date, payment terms and who approved it. At least ten lines.",
+  "minutes": 10,
+  "rows": 12,
+  "placeholder": "PO number: ...",
+  "rules": [
+    { "label": "At least ten lines", "minLines": 10 },
+    { "label": "Has a PO number", "pattern": "po (number|no)" },
+    { "label": "Names buyer and supplier", "pattern": "buyer[\\s\\S]*supplier|supplier[\\s\\S]*buyer" },
+    { "label": "States quantity and unit price", "pattern": "quantity[\\s\\S]*unit price|unit price[\\s\\S]*quantity" },
+    { "label": "States total, delivery and payment terms", "pattern": "total[\\s\\S]*deliver[\\s\\S]*payment" },
+    { "label": "States approval", "pattern": "approv|authoris|authoriz" }
+  ],
+  "sample": "PO number: GTC-2026-0210\nDate: 3 April 2026\nBuyer: Greenfield Training Centre, Ikeja, Lagos\nSupplier: Compuserve Distributors Ltd\nItem: 14-inch laptop, 16GB RAM, 512GB SSD, Core i5, 12-month warranty\nQuantity: 20\nUnit price: ₦640,000\nTotal: ₦12,800,000 including VAT and delivery\nDelivery: to our Ikeja site within 21 days of this order\nPayment terms: 14 days after delivery, inspection and a correct invoice quoting this PO\nApproved by: the finance manager and managing director",
+  "required": false
+}
+```
+
+When you are done, submit your complete project.
+$md$, true, true, 12, array['proc-m12-t1', 'proc-m12-t2', 'proc-m12-t3']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 
 -- Course: Logistics & Freight Forwarding
@@ -87452,6 +88948,684 @@ values ('iemi-f15', 1, 'Evidence, numbers and tested assumptions matter more tha
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 
+-- Assessment: Procurement Fundamentals: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('proc-m01-check', 'procurement-sourcing', 'module', 'proc-m01', 'Procurement Fundamentals: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-m01-q1', 'proc-m01-check', 1, 'What is the main difference between procurement and purchasing?', '["There is none","Purchasing is the transaction; procurement is the whole process from need to review","Procurement only applies to government","Purchasing includes negotiation and procurement does not"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-m01-q1', 1, 'Purchasing is one step inside procurement.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-m01-q2', 'proc-m01-check', 2, 'Why can a 5% saving on purchases add more to profit than a 5% rise in sales?', '["Sales never add profit","A saving goes straight to profit, while extra sales bring extra costs","Savings are taxed less","It cannot"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-m01-q2', 1, 'Savings drop to the bottom line; extra sales usually need extra cost to produce.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-m01-q3', 'proc-m01-check', 3, 'Which step comes right after identifying the need?', '["Paying the supplier","Specifying the requirement","Raising the purchase order","Reviewing performance"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-m01-q3', 1, 'You need a clear specification before you can find or compare suppliers.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-m01-q4', 'proc-m01-check', 4, 'A person requests an item, picks the supplier, approves the order and signs the payment. What is the main problem?', '["It is faster","No separation of duties, so errors or fraud can go unnoticed","Suppliers dislike it","It breaks the VAT rules"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-m01-q4', 1, 'Separating roles creates checks.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-m01-q5', 'proc-m01-check', 5, 'Which role records goods received and controls stock?', '["Requester","Approver","Stores","Supplier"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-m01-q5', 2, 'Stores receives, inspects and records goods.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Supplier Identification: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('proc-m02-check', 'procurement-sourcing', 'module', 'proc-m02', 'Supplier Identification: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-m02-q1', 'proc-m02-check', 1, 'Why write a specification before looking for suppliers?', '["It is required by law","Vague requests produce quotes that cannot be compared","It lowers prices automatically","Suppliers need it for tax"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-m02-q1', 1, 'A clear specification lets you compare like with like.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-m02-q2', 'proc-m02-check', 2, 'What is a short list?', '["Every supplier you found","The few suppliers you will ask for a quote","Suppliers you rejected","A list of items"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-m02-q2', 1, 'The long list is narrowed to the few worth a quote.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-m02-q3', 'proc-m02-check', 3, 'About how many suppliers should usually be on the short list?', '["One","Two","Three to five","Twenty"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-m02-q3', 2, 'Fewer than three gives no comparison; many more slows you down.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-m02-q4', 'proc-m02-check', 4, 'A local quote is ₦6,800,000. An overseas quote is ₦5,200,000 plus ₦900,000 freight, duty and clearing. Which is cheaper?', '["Local by ₦700,000","Overseas by ₦700,000","They are equal","Overseas by ₦1,600,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-m02-q4', 1, 'Overseas total ₦6,100,000 is ₦700,000 less, before considering lead time and risk.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-m02-q5', 'proc-m02-check', 5, 'Which is a good must-have question for cutting a long list?', '["Do they have a nice website?","Can they supply the quantity in the time we need?","Are they the largest company?","Do they offer the lowest price?"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-m02-q5', 1, 'Must-haves test whether a supplier can do the job at all.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Vendor Evaluation: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('proc-m03-check', 'procurement-sourcing', 'module', 'proc-m03', 'Vendor Evaluation: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-m03-q1', 'proc-m03-check', 1, 'Why use a weighted scoring matrix?', '["To avoid talking to suppliers","To compare suppliers fairly on what matters most","To justify the cheapest quote","It is required for every purchase"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-m03-q1', 1, 'Weights show priorities and make the choice explainable.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-m03-q2', 'proc-m03-check', 2, 'When should the criteria and weights be agreed?', '["After seeing the quotes","Before looking at the quotes","After signing the contract","Never"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-m03-q2', 1, 'Changing them afterwards to suit a favourite is biased.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-m03-q3', 'proc-m03-check', 3, 'Weights: price 40%, quality 30%, delivery 20%, service 10%. Supplier scores 8, 6, 7, 9. What is the total?', '["6.9","7.3","7.5","30"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-m03-q3', 1, '3.2 + 1.8 + 1.4 + 0.9 = 7.3.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-m03-q4', 'proc-m03-check', 4, 'What does a reference check give you that a brochure does not?', '["A lower price","Evidence of how the supplier really performs for others","A legal guarantee","A discount"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-m03-q4', 1, 'Customers can say whether the supplier delivers and fixes problems.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-m03-q5', 'proc-m03-check', 5, 'What is a sensible way to start with a new, unproven supplier?', '["A very large order","A small trial order","Full payment in advance","No checks"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-m03-q5', 1, 'A trial limits your exposure while you learn.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: RFQ and RFP: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('proc-m04-check', 'procurement-sourcing', 'module', 'proc-m04', 'RFQ and RFP: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-m04-q1', 'proc-m04-check', 1, 'When is an RFQ most suitable?', '["A complex need where suppliers propose different solutions","A clear, standard item where price is the main difference","Never","Only for government"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-m04-q1', 1, 'RFQs suit well-defined items; RFPs suit complex needs.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-m04-q2', 'proc-m04-check', 2, 'Three bids for 500 chairs: A ₦24,000 delivered; B ₦22,500 plus ₦400,000 delivery; C ₦23,000 delivered. Which has the lowest total?', '["A","B","C","They are equal"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-m04-q2', 2, 'A = 12,000,000; B = 11,650,000; C = 11,500,000.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-m04-q3', 'proc-m04-check', 3, 'A bid is far lower than the others. What should you do?', '["Accept it straight away","Check it meets the specification and ask what is included","Reject it automatically","Tell other suppliers its price"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-m04-q3', 1, 'Very low bids can hide misunderstandings, exclusions or later variations.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-m04-q4', 'proc-m04-check', 4, 'Supplier A asks a question about the RFQ. What is the fair response?', '["Answer only A","Share the question and answer with all suppliers","Ignore it","Change the deadline for A"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-m04-q4', 1, 'All bidders must have the same information.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-m04-q5', 'proc-m04-check', 5, 'Why keep a record of bids, scoring and the decision?', '["To impress suppliers","To make the decision auditable and defensible","Because suppliers ask","To avoid paying"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-m04-q5', 1, 'A documented decision can be explained and checked.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Negotiation: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('proc-m05-check', 'procurement-sourcing', 'module', 'proc-m05', 'Negotiation: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-m05-q1', 'proc-m05-check', 1, 'What is a BATNA?', '["The best alternative to a negotiated agreement","A bank transfer","A budget approval","The biggest available discount"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-m05-q1', 0, 'Your best alternative sets how strong your position is.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-m05-q2', 'proc-m05-check', 2, 'You buy 400 units at ₦15,000 with a 3% volume discount. What is the new total?', '["₦5,820,000","₦5,850,000","₦5,970,000","₦6,000,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-m05-q2', 0, '6,000,000 − 180,000 = ₦5,820,000.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-m05-q3', 'proc-m05-check', 3, 'A supplier says the offer ends today. What is the best response?', '["Accept immediately","Stay calm, ask what could change, and avoid being rushed","Walk out","Threaten to report them"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-m05-q3', 1, 'Real deals rarely vanish in a day; pressure is a tactic.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-m05-q4', 'proc-m05-check', 4, 'Why negotiate payment terms as well as price?', '["They have no value","Longer terms improve your cash flow, and early-payment discounts can save money","Suppliers cannot change them","They are set by law"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-m05-q4', 1, 'Terms are part of the total cost.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-m05-q5', 'proc-m05-check', 5, 'What should you do at the end of a negotiation?', '["Shake hands only","Confirm the agreement in writing","Delete the notes","Reopen the price"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-m05-q5', 1, 'Written confirmation avoids later disputes.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Purchase Orders and Contracts: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('proc-m06-check', 'procurement-sourcing', 'module', 'proc-m06', 'Purchase Orders and Contracts: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-m06-q1', 'proc-m06-check', 1, 'What should happen before a purchase order is raised?', '["Nothing","An approved purchase requisition","Payment","The goods arrive"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-m06-q1', 1, 'Approval prevents unauthorised commitments.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-m06-q2', 'proc-m06-check', 2, 'Ordered 200 at ₦3,500; 190 delivered, 12 damaged. What do you pay for?', '["200 units","190 units","178 units","12 units"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-m06-q2', 2, '190 − 12 = 178 good units, ₦623,000.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-m06-q3', 'proc-m06-check', 3, 'Why require the PO number on invoices and delivery notes?', '["For marketing","So documents can be matched","It is a tax rule","It speeds up the supplier"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-m06-q3', 1, 'The number links order, delivery and invoice.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-m06-q4', 'proc-m06-check', 4, 'Which contract term deals with late delivery?', '["Confidentiality","Penalties or liquidated damages","Scope","Governing language"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-m06-q4', 1, 'Penalty clauses set the consequence for lateness.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-m06-q5', 'proc-m06-check', 5, 'What do you do first when goods arrive with damage?', '["Sign without noting anything","Note the damage on the delivery note and tell the supplier in writing","Throw them away","Pay in full and complain later"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-m06-q5', 1, 'Record and report it immediately, with evidence.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Procurement Processes and Controls: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('proc-m07-check', 'procurement-sourcing', 'module', 'proc-m07', 'Procurement Processes and Controls: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-m07-q1', 'proc-m07-check', 1, 'What is order splitting?', '["Dividing deliveries by branch","Breaking one purchase into smaller orders to stay under an approval limit","Ordering from two suppliers","A discount method"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-m07-q1', 1, 'It bypasses controls and is a fraud warning sign.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-m07-q2', 'proc-m07-check', 2, 'Which three documents are matched in a three-way match?', '["Quote, contract, receipt","Purchase order, goods received note, invoice","Requisition, tender, payment","Invoice, bank statement, tax return"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-m07-q2', 1, 'PO, GRN and invoice must agree before payment.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-m07-q3', 'proc-m07-check', 3, 'PO 100 at ₦2,000; GRN 95; invoice for 100. What should you pay?', '["₦200,000","₦190,000 after the invoice is corrected","₦100,000","Nothing ever"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-m07-q3', 1, 'Pay only for what was received: 95 × ₦2,000.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-m07-q4', 'proc-m07-check', 4, 'What is an audit trail?', '["A route to the warehouse","Records that let someone follow a purchase from request to payment","A supplier list","A kind of tax"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-m07-q4', 1, 'Complete files answer ''why did we buy this?''.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-m07-q5', 'proc-m07-check', 5, 'What makes a procurement policy effective?', '["Being long and complex","Being simple, known by staff and followed","Staying secret","Never changing"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-m07-q5', 1, 'A policy nobody follows gives false comfort.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Inventory Coordination: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('proc-m08-check', 'procurement-sourcing', 'module', 'proc-m08', 'Inventory Coordination: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-m08-q1', 'proc-m08-check', 1, 'Usage is 20 reams a day, lead time 7 days, safety stock 40. What is the reorder point?', '["140","160","180","280"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-m08-q1', 2, '20 × 7 = 140; plus 40 = 180.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-m08-q2', 'proc-m08-check', 2, 'What is safety stock for?', '["Decoration","A buffer against late delivery or higher demand","Returns","Taxes"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-m08-q2', 1, 'It covers uncertainty during the lead time.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-m08-q3', 'proc-m08-check', 3, 'Sales of 400, 450 and 500 in three months. What is the moving average?', '["400","450","475","500"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-m08-q3', 1, '(400 + 450 + 500) ÷ 3 = 450.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-m08-q4', 'proc-m08-check', 4, 'What does FIFO mean for stock?', '["First in, first out: use old stock first","Fast in, fast out","Fixed inventory for orders","Final in, final out"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-m08-q4', 0, 'FIFO reduces expiry and deterioration.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-m08-q5', 'proc-m08-check', 5, 'Frequent ''urgent'' purchases usually suggest:', '["Good planning","Reorder points and forecasts are wrong","Suppliers are cheap","Too much stock"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-m08-q5', 1, 'Fix the planning, not just the emergency.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Cost Control and Savings: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('proc-m09-check', 'procurement-sourcing', 'module', 'proc-m09', 'Cost Control and Savings: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-m09-q1', 'proc-m09-check', 1, 'What does total cost of ownership include?', '["Only the purchase price","Price plus delivery, running, maintenance, training and disposal costs","Only the discount","Only the tax"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-m09-q1', 1, 'TCO covers the whole life of the item.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-m09-q2', 'proc-m09-check', 2, 'Price ₦5,000 falls to ₦4,600 on 1,000 units. What is the saving?', '["₦40,000","₦400,000","₦4,600,000","₦5,000,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-m09-q2', 1, '(5,000 − 4,600) × 1,000 = ₦400,000.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-m09-q3', 'proc-m09-check', 3, 'What does the 80/20 rule suggest in spend analysis?', '["Treat all categories equally","A few categories take most of the spend, so focus effort there","Buy 80% locally","Save 20%"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-m09-q3', 1, 'Focus on the biggest categories first.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-m09-q4', 'proc-m09-check', 4, 'Which is a false saving?', '["A negotiated lower price for the same quality","A cheaper product that fails sooner and costs more overall","Combining orders for a discount","Removing duplicate purchases"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-m09-q4', 1, 'Savings must hold on total cost and quality.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-m09-q5', 'proc-m09-check', 5, 'Why separate cost reduction from cost avoidance in reports?', '["They are the same","Reduction is money no longer spent; avoidance is a rise that did not happen","Avoidance is illegal","Finance dislikes savings"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-m09-q5', 1, 'Clear labelling keeps the figures credible.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Supplier Relationship Management: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('proc-m10-check', 'procurement-sourcing', 'module', 'proc-m10', 'Supplier Relationship Management: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-m10-q1', 'proc-m10-check', 1, '46 of 50 orders arrive on time and complete. What is OTIF?', '["46%","88%","92%","96%"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-m10-q1', 2, '46 ÷ 50 = 92%.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-m10-q2', 'proc-m10-check', 2, 'A low-spend supplier is the only source of a critical part. What type is it?', '["Strategic","Leverage","Bottleneck","Routine"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-m10-q2', 2, 'Low spend but high supply risk is a bottleneck item.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-m10-q3', 'proc-m10-check', 3, 'What is the best first step when a supplier fails to deliver?', '["Stop all contact","Gather facts and tell them promptly in writing","Cancel every order","Post about it online"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-m10-q3', 1, 'Facts and clear communication fix more problems than anger.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-m10-q4', 'proc-m10-check', 4, 'Why qualify a backup supplier?', '["To waste time","To reduce the risk of depending on one source","To lower tax","It is a legal requirement"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-m10-q4', 1, 'A backup protects against disruption.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-m10-q5', 'proc-m10-check', 5, 'What should a scorecard lead to?', '["A filing cabinet","A conversation and an improvement plan","A lawsuit","A price increase"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-m10-q5', 1, 'Measures matter when they drive action.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Local and International Sourcing, and Ethics: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('proc-m11-check', 'procurement-sourcing', 'module', 'proc-m11', 'Local and International Sourcing, and Ethics: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-m11-q1', 'proc-m11-check', 1, 'Imported goods ₦700,000, freight and insurance ₦120,000, duty and VAT ₦150,000, clearing ₦60,000, transport ₦20,000. What is the landed cost?', '["₦700,000","₦850,000","₦1,050,000","₦1,100,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-m11-q1', 2, 'Add every cost: ₦1,050,000.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-m11-q2', 'proc-m11-check', 2, 'You discover a bidder is your relative. What do you do?', '["Say nothing","Declare it and step back from the decision","Help them quietly","Cancel the bid"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-m11-q2', 1, 'Declare, step back, let someone else decide.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-m11-q3', 'proc-m11-check', 3, 'A supplier sends an expensive gift during a tender. What is the right response?', '["Keep it","Decline or return it and record it","Share it with the team secretly","Ask for more"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-m11-q3', 1, 'Gifts during a tender can look like bribes.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-m11-q4', 'proc-m11-check', 4, 'Why is the lead time of an imported item a cost?', '["It is not","You hold more stock and tie up cash while waiting","Customs refunds it","It lowers duty"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-m11-q4', 1, 'Long lead times increase stock needs and slow reaction.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-m11-q5', 'proc-m11-check', 5, 'Which is part of ethical procurement?', '["Ignoring working conditions if the price is low","Asking about labour standards, environment and paying suppliers on time","Hiding costs from suppliers","Using only one supplier forever"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-m11-q5', 1, 'Ethics covers labour, environment and fair dealing.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Final Project: A Practical Procurement: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('proc-m12-check', 'procurement-sourcing', 'module', 'proc-m12', 'Final Project: A Practical Procurement: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-m12-q1', 'proc-m12-check', 1, 'How should the recommendation be organised for a manager?', '["Evidence first, recommendation hidden at the end","Lead with the recommendation, then show the evidence","Only the price","Only the supplier''s brochure"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-m12-q1', 1, 'Managers need the decision first and the support after.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-m12-q2', 'proc-m12-check', 2, 'What should the supplier comparison show?', '["Unit price only","Total cost, delivery, payment terms, warranty and scores","Supplier names only","Photos"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-m12-q2', 1, 'Compare on a common basis, including total cost.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-m12-q3', 'proc-m12-check', 3, 'What makes a saving figure credible?', '["A bigger number","A clear baseline with evidence","No explanation","Including avoided costs as cash"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-m12-q3', 1, 'Finance must be able to check it.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-m12-q4', 'proc-m12-check', 4, 'Why include a risk and how you will manage it?', '["It lengthens the report","It shows you thought about what could go wrong","It is optional decoration","It lowers the price"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-m12-q4', 1, 'Approvers want to know the risks and the response.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-m12-q5', 'proc-m12-check', 5, 'What belongs in the purchase order you draft?', '["Only the price","Number, parties, item, quantity, price, delivery, payment terms and approval","Your CV","The supplier''s bank PIN"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-m12-q5', 1, 'A complete PO prevents disputes.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Procurement & Sourcing: final assessment
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('procurement-sourcing-final', 'procurement-sourcing', 'final', null, 'Procurement & Sourcing: final assessment', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-f01', 'procurement-sourcing-final', 1, 'What is the first step of the procurement cycle?', '["Paying the supplier","Identifying the need","Negotiating","Issuing a purchase order"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-f01', 1, 'Everything starts with a clear need.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-f02', 'procurement-sourcing-final', 2, 'Which best describes procurement?', '["Raising purchase orders","The whole process of getting goods and services, from need to review","Paying invoices","Storing goods"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-f02', 1, 'Procurement spans the whole cycle.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-f03', 'procurement-sourcing-final', 3, 'Weights: price 40%, quality 30%, delivery 20%, service 10%. Supplier X scores 9, 5, 6, 7. What is the total?', '["6.5","7.0","7.2","27"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-f03', 1, '3.6 + 1.5 + 1.2 + 0.7 = 7.0.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-f04', 'procurement-sourcing-final', 4, 'Why should all bidders receive the same information?', '["To confuse them","To keep the competition fair","It lowers prices automatically","It is optional"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-f04', 1, 'Fairness is the basis of a defensible award.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-f05', 'procurement-sourcing-final', 5, 'A bidder offers a price 30% lower than the rest. What do you do first?', '["Award at once","Check it meets the specification and what is excluded","Disqualify them","Tell the others"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-f05', 1, 'Verify compliance before getting excited about price.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-f06', 'procurement-sourcing-final', 6, 'What is a good negotiation approach?', '["Focus only on the unit price","Prepare targets, a walk-away point and alternatives, and negotiate total cost","Bluff about competitors","Never ask questions"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-f06', 1, 'Preparation and total cost thinking win better deals.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-f07', 'procurement-sourcing-final', 7, '400 units at ₦15,000 with a 3% discount. What is the total?', '["₦5,820,000","₦5,880,000","₦5,970,000","₦6,000,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-f07', 0, '6,000,000 − 180,000 = ₦5,820,000.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-f08', 'procurement-sourcing-final', 8, 'PO 100 at ₦2,000; GRN 95; invoice 100. What do you pay?', '["₦200,000","₦190,000 once corrected","₦100,000","₦0 forever"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-f08', 1, 'Pay for what was received.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-f09', 'procurement-sourcing-final', 9, 'Which control stops one person running a purchase end to end?', '["Segregation of duties","A bigger budget","Longer lead times","Price lists"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-f09', 0, 'Splitting roles creates checks.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-f10', 'procurement-sourcing-final', 10, 'Usage 30 boxes a day, lead time 5 days, safety stock 60. What is the reorder point?', '["150","180","210","300"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-f10', 2, '30 × 5 = 150; plus 60 = 210.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-f11', 'procurement-sourcing-final', 11, 'Printer A costs ₦150,000 plus ₦40,000 ink a year; Printer B ₦220,000 plus ₦15,000 a year. Over 3 years, which is cheaper?', '["A by ₦70,000","B by ₦5,000","They are equal","A by ₦5,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-f11', 1, 'A = 270,000; B = 265,000.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-f12', 'procurement-sourcing-final', 12, 'Which statement about savings is correct?', '["Cost avoidance is cash saved","Cost reduction is paying less than before for the same thing","Savings need no evidence","Savings never matter"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-f12', 1, 'Reduction is real; avoidance should be labelled separately.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-f13', 'procurement-sourcing-final', 13, '46 of 50 orders are on time and complete. Targets are OTIF 95%. What follows?', '["The target is met","OTIF is 92%, so the target is missed and an improvement plan is needed","OTIF is 46%","Nothing"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-f13', 1, '46/50 = 92%, below 95%.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-f14', 'procurement-sourcing-final', 14, 'You have a conflict of interest in a tender. What do you do?', '["Declare it and step back","Hide it","Vote for your friend","Resign immediately"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-f14', 0, 'Declare, step back, let someone else decide.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('proc-f15', 'procurement-sourcing-final', 15, 'What makes an imported item''s price comparable with a local one?', '["Its unit price alone","Its full landed cost and lead-time risk","Its logo","Its country"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('proc-f15', 1, 'Compare total landed cost, not the quoted unit price.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
 -- Project: Harbourline Freight operations review
 insert into public.projects (id, course_id, title, summary, brief_md, tasks, datasets, rubric, required)
 values ('sql-harbourline-review', 'sql-for-data-analysis', 'Harbourline Freight operations review', 'Analyse the operations of a fictional logistics company and report what you find to its leadership team.', $md$Harbourline Freight's leadership team is planning 2027 and has asked for an operations review built from the company database.
@@ -87790,6 +89964,16 @@ values ('iemi-business-plan', 'import-export-mini-importation', 'Your import or 
 Use real prices from real suppliers, forwarders and marketplaces, and say where you have had to assume a number. Submit a link to your plan (a shared document, PDF or folder) and paste your **landed cost (or export price) per unit** and your **selling price and margin** below, followed by a short note on where to find each part.
 
 Write for a reader who knows nothing about your product, such as a partner, a bank or a mentor: clear, specific and backed by numbers.$md$, array['Product and market: the product, who buys it and why, the price range you found and at least two competitors, with evidence of demand.', 'Suppliers (or buyers): a shortlist of at least three, compared on the same terms, and the checks you made to verify them.', 'Order and shipping: quantity, MOQ, sample plan, payment terms, shipping method, forwarder and the documents you will need.', 'Compliance and clearance: the agencies, permits and registrations your product needs, its HS code and how you will clear it (or the export documents and rules).', 'Costs and price: a full landed cost (or export price) per unit, the selling price and margin, and the effect of the naira weakening by 10%.', 'Selling plan: channels, how many units you expect to sell and when, and your reorder rule.', 'Cash flow for the first 90 days: money in and out, and how much you need to start.', 'Risks: your three biggest risks, each with a fix.']::text[], '{}'::text[], array['The product is specific, and demand and competition are supported by evidence, not opinion.', 'Suppliers (or buyers) are compared fairly on the same terms and verified with concrete checks.', 'The order, payment terms and shipping method are realistic and protect the buyer from fraud and loss.', 'Compliance is specific to the product: the right agencies, permits, HS code and documents.', 'The landed cost (or export price) includes every cost, with the calculations shown, and the price and margin follow from it.', 'The plan is tested against a weaker naira and higher freight, and still works or is changed.', 'The selling plan, cash flow and risks are practical, with clear numbers and fixes.']::text[], true)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
+
+
+-- Project: A practical procurement project
+insert into public.projects (id, course_id, title, summary, brief_md, tasks, datasets, rubric, required)
+values ('proc-practical-procurement', 'procurement-sourcing', 'A practical procurement project', 'Source a real or realistic purchase end to end: the need, supplier shortlist, RFQ, evaluation, negotiation and purchase order.', $md$Choose a real or realistic purchase, for example equipment for a workplace, uniforms, a year's supplies or an event, and run the whole procurement process on paper.
+
+Use real quotes where you can; where you assume a number, say so. Submit a link to your project (a shared document, PDF or folder) and paste your **recommendation** and the **total cost and saving** below, with a short note on where to find each part.
+
+Write for a manager who must approve the spending: lead with the recommendation, then show the evidence.$md$, array['The need and specification: what, why, how much, quality standard, delivery and budget.', 'A long list and a short list of at least three suppliers, with how you chose them.', 'The RFQ (or RFP) you sent, with the information given to every supplier.', 'A total cost comparison of the bids, on a common basis.', 'A weighted scoring matrix with criteria and weights agreed before scoring.', 'Your negotiation plan (target, walk-away, alternative, what you can trade) and the result, with the saving.', 'Your recommendation, with reasons and one main risk and how you will manage it.', 'A draft purchase order, and the controls (approval and three-way match) you would apply.']::text[], '{}'::text[], array['The need is specific and the specification is clear enough for suppliers to quote on the same basis.', 'Suppliers are identified from several sources and shortlisted using clear must-have criteria.', 'The request is complete and every supplier receives the same information.', 'Bids are compared on total cost and scored against criteria set in advance.', 'The negotiation plan is prepared and looks beyond price to terms and total cost.', 'The recommendation is justified with numbers, the saving is calculated with a clear baseline and a risk is managed.', 'The purchase order is complete and the controls named are appropriate.']::text[], true)
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
 
 
