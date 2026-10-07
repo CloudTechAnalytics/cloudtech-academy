@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { track } from "@/lib/tracking";
 import { Link, useNavigate } from "react-router";
 import { useSeo } from "@/lib/seo";
 import { getBackend } from "@/lib/backend";
@@ -39,6 +40,7 @@ export default function SignUp() {
     setSigningUp(true);
     try {
       const { needsConfirmation } = await (await getBackend()).signUp({ fullName: fullName.trim(), email: email.trim(), password });
+      track("sign_up");
       if (needsConfirmation) setConfirm(true);
       else navigate(`/welcome?next=${encodeURIComponent(next)}`, { replace: true });
     } catch (err) {

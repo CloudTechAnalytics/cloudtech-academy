@@ -79,6 +79,9 @@ export default function AdminSettings() {
         <NavLink to="/admin/settings/community" className={({ isActive }) => tab(isActive)}>
           Community
         </NavLink>
+        <NavLink to="/admin/settings/tracking" className={({ isActive }) => tab(isActive)}>
+          Tracking and search
+        </NavLink>
       </nav>
 
       <div className="grid gap-8 xl:grid-cols-[minmax(0,1fr)_22rem]">

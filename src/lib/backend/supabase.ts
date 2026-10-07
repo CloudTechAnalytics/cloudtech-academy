@@ -23,6 +23,7 @@ import {
   type EmailTemplate,
   type EmailLogEntry,
   type EmailSetup,
+  type TrackingSettings,
   type ProgrammeStats,
   type AdminProgrammeEnrollment,
   type Certificate,
@@ -750,6 +751,11 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
       if (!d.courseId && !d.trackId) throw new BackendError("That payment isn't for a course or programme.");
       return { courseId: d.courseId ?? null, trackId: d.trackId ?? null };
     },
+    async getTrackingSettings() {
+      const { data, error } = await sb.from("site_settings").select("ga4_id, google_ads_id, meta_pixel_id").eq("id", 1).maybeSingle();
+      if (error || !data) return { ga4Id: null, googleAdsId: null, metaPixelId: null } satisfies TrackingSettings;
+      return { ga4Id: data.ga4_id ?? null, googleAdsId: data.google_ads_id ?? null, metaPixelId: data.meta_pixel_id ?? null } satisfies TrackingSettings;
+    },
     async getPaymentSettings() {
       const { data, error } = await sb.from("payment_settings").select("*").eq("id", 1).maybeSingle();
       // A database without the manual-payment migration keeps taking card payments.
@@ -1098,6 +1104,10 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
             })
             .eq("id", trackId),
         );
+      },
+      async saveTrackingSettings(s) {
+        const clean = (v: string | null) => v?.trim() || null;
+        check(await sb.from("site_settings").update({ ga4_id: clean(s.ga4Id), google_ads_id: clean(s.googleAdsId), meta_pixel_id: clean(s.metaPixelId), updated_at: new Date().toISOString() }).eq("id", 1));
       },
       async listEmailTemplates() {
         return (check(await sb.from("email_templates").select("*").order("key", { ascending: false })) as Row[]).map((r): EmailTemplate => ({ key: r.key, label: r.label, subject: r.subject, body: r.body, enabled: r.enabled }));

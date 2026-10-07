@@ -56,6 +56,7 @@ const AdminEvents = lazy(() => import("@/pages/admin/AdminEvents"));
 const AdminEventForm = lazy(() => import("@/pages/admin/AdminEventForm"));
 const AdminEventRegistrations = lazy(() => import("@/pages/admin/AdminEventRegistrations"));
 const AdminCommunity = lazy(() => import("@/pages/admin/AdminCommunity"));
+const AdminTracking = lazy(() => import("@/pages/admin/AdminTracking"));
 const AdminSettings = lazy(() => import("@/pages/admin/AdminSettings"));
 const AdminCertificates = lazy(() => import("@/pages/admin/AdminCertificates"));
 const AdminCertificatePayments = lazy(() => import("@/pages/admin/AdminCertificates").then((m) => ({ default: m.AdminCertificatePayments })));
@@ -141,6 +142,7 @@ export function AppRoutes() {
             <Route path="community" element={<AdminCommunity />} />
             <Route path="settings" element={<Navigate to="/admin/settings/community" replace />} />
             <Route path="settings/community" element={<AdminSettings />} />
+            <Route path="settings/tracking" element={<AdminTracking />} />
             <Route path="certificates" element={<AdminCertificates />} />
             <Route path="certificates/payments" element={<AdminCertificatePayments />} />
             <Route path="certificates/new" element={<AdminCertificateIssue mode="new" />} />

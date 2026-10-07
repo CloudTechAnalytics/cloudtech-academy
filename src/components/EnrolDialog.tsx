@@ -4,6 +4,7 @@ import { Modal } from "@/components/Modal";
 import { Button } from "@/components/Button";
 import { Alert } from "@/components/Form";
 import { RESET_AFTER_DAYS } from "@/lib/inactivity";
+import { track } from "@/lib/tracking";
 
 /**
  * Asks before enrolling in a free course, so nobody enrols by accident. Enrolling adds the course to My Learning and
@@ -18,6 +19,7 @@ export function EnrolDialog({ course, open, onClose, onConfirm }: { course: Cour
     setError(null);
     try {
       await onConfirm();
+      track("enrol", { item: course.title });
     } catch (e) {
       setError(e instanceof Error ? e.message : "Couldn't enrol you. Please try again.");
     } finally {

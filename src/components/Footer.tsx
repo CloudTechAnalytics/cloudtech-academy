@@ -48,8 +48,11 @@ export function Footer() {
           </ul>
         </nav>
       </div>
-      <div className="container-page border-t border-cream/12 py-7 text-[0.8125rem] text-cream/55">
-        © {new Date().getFullYear()} CloudTech Analytics. All rights reserved.
+      <div className="container-page flex flex-wrap items-center justify-between gap-3 border-t border-cream/12 py-7 text-[0.8125rem] text-cream/55">
+        <span>© {new Date().getFullYear()} CloudTech Analytics. All rights reserved.</span>
+        <button type="button" onClick={() => window.dispatchEvent(new Event("ct-cookie-choices"))} className="underline-offset-2 hover:text-cream hover:underline">
+          Cookie choices
+        </button>
       </div>
     </footer>
   );

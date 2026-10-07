@@ -111,6 +111,9 @@ export type EmailSetup = {
   smtpUser: string | null;
 };
 
+/** The ids used to measure visits and ads. Any of them can be empty. */
+export type TrackingSettings = { ga4Id: string | null; googleAdsId: string | null; metaPixelId: string | null };
+
 export type ManualOrder = { order: CourseOrder; payments: OrderPayment[] };
 
 export type AdminPayment = OrderPayment & {
@@ -636,6 +639,9 @@ export interface Backend {
   /** Online payment: confirms a payment on the server after the learner returns, and enrols them. Returns what was bought. */
   confirmCoursePayment?(reference: string): Promise<{ courseId: string | null; trackId: string | null }>;
 
+  /** Public: the measurement ids an admin has set. Empty when none, or when the database predates them. */
+  getTrackingSettings(): Promise<TrackingSettings>;
+
   /* ---------- manual payments ---------- */
   getPaymentSettings(): Promise<PaymentSettings>;
   /** The accounts a learner can pay into (active ones). */
@@ -737,6 +743,7 @@ export interface Backend {
     /** One row per course: enrolments by source, completions, revenue and conversion. */
     listCourseStats(): Promise<CourseStats[]>;
     saveProgramme(trackId: string, sales: CourseSalesFields): Promise<void>;
+    saveTrackingSettings(s: TrackingSettings): Promise<void>;
     listEmailTemplates(): Promise<EmailTemplate[]>;
     saveEmailTemplate(t: EmailTemplate): Promise<void>;
     listEmailLog(): Promise<EmailLogEntry[]>;

@@ -7,6 +7,7 @@ import { formatPrice, type CoursePrice } from "@/lib/commerce";
 import { formatDate } from "@/lib/format";
 import { Button, ButtonLink } from "@/components/Button";
 import { Alert } from "@/components/Form";
+import { track } from "@/lib/tracking";
 
 type Props = {
   kind: "course" | "programme";
@@ -211,7 +212,10 @@ export function ManualCheckout({ kind, id, title, price, instalments, openTo, op
             setError(null);
             void getBackend()
               .then((b) => b.startManualOrder(kind, id, plan))
-              .then((o) => setCurrent(o))
+              .then((o) => {
+                track("begin_checkout", { value: price.amount, currency: price.currency, item: title });
+                setCurrent(o);
+              })
               .catch((e) => setError(e instanceof Error ? e.message : "Couldn't start your payment."))
               .finally(() => setBusy(false));
           }}

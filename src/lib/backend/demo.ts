@@ -40,6 +40,7 @@ import {
   type EmailTemplate,
   type EmailLogEntry,
   type EmailSetup,
+  type TrackingSettings,
   type ProgrammeStats,
   type AdminProgrammeEnrollment,
   type CertificateEvent,
@@ -73,6 +74,7 @@ type Store = {
   programmes: { userId: string; trackId: string; source: "purchase" | "granted"; enrolledAt: string }[];
   orderPayments: (OrderPayment & { userId: string; proofName?: string | null })[];
   emails: EmailLogEntry[];
+  tracking: TrackingSettings | null;
   emailTemplates: EmailTemplate[] | null;
   emailSettings: { enabled: boolean; replyTo: string | null } | null;
   paymentAccounts: PaymentAccount[] | null;
@@ -116,6 +118,7 @@ const empty = (): Store => ({
   programmes: [],
   orderPayments: [],
   emails: [],
+  tracking: null,
   emailTemplates: null,
   emailSettings: null,
   paymentAccounts: null,
@@ -1082,6 +1085,9 @@ export function createDemoBackend(): Backend {
       const u = current();
       return u ? load().programmes.filter((p) => p.userId === u.id).map(({ trackId, enrolledAt, source }) => ({ trackId, enrolledAt, source })) : [];
     },
+    async getTrackingSettings() {
+      return load().tracking ?? { ga4Id: null, googleAdsId: null, metaPixelId: null };
+    },
     async getPaymentSettings() {
       return settingsOf(load());
     },
@@ -1495,6 +1501,12 @@ export function createDemoBackend(): Backend {
         const s = load();
         if (!TRACKS.some((t) => t.id === trackId)) throw new BackendError("Programme not found.");
         s.programmeSales = { ...(s.programmeSales ?? {}), [trackId]: sales };
+        save(s);
+      },
+      async saveTrackingSettings(t) {
+        requireAdmin();
+        const s = load();
+        s.tracking = t;
         save(s);
       },
       async listEmailTemplates() {
