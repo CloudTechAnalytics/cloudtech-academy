@@ -9,7 +9,7 @@ import type { AssessmentDef, Course } from "@/content/types";
 import { requiredExerciseIds } from "../lesson-format";
 import { certificateNumber, eligibility, matchesCertificate, moduleTaskIds, newCredentialId } from "../certificates";
 import { isStale } from "../inactivity";
-import { enrolmentState as enrolmentOf, isPaid, programmeCourseIds, salesOf, withSales } from "../commerce";
+import { coursePrice, enrolmentState as enrolmentOf, isPaid, programmeCourseIds, salesOf, withSales } from "../commerce";
 import type { CourseSalesFields } from "@/content/catalog";
 import { programmeCertificateAvailable, requiredCourses, TRACKS } from "@/content/tracks";
 import { PROFILE_SLUG_RE, SLUG_HELP } from "../profile";
@@ -1046,7 +1046,7 @@ export function createDemoBackend(): Backend {
       if (state !== "open") throw new BackendError(state === "paused" ? "Payments for this course are paused. Please try again soon." : "Enrolment for this course is not open right now.");
       if ((s.enrollments[u.id] ?? []).some((e) => e.courseId === courseId)) throw new BackendError("You are already enrolled in this course.");
       const price = course.price ?? 0;
-      const charge = course.discountActive && course.discountPrice != null && course.discountPrice < price ? course.discountPrice : price;
+      const charge = coursePrice(course)?.amount ?? price;
       let order = s.courseOrders.find((o) => o.userId === u.id && o.courseId === courseId && o.status === "pending");
       if (order) Object.assign(order, { currency: course.currency ?? "NGN", listAmount: price, amount: charge });
       else {
@@ -1120,7 +1120,7 @@ export function createDemoBackend(): Backend {
         sales = course;
         price = course.price;
       }
-      const charge = sales.discountActive && sales.discountPrice != null && sales.discountPrice < price ? sales.discountPrice : price;
+      const charge = coursePrice(sales)?.amount ?? price;
       const cur = sales.currency ?? "NGN";
       let order = s.courseOrders.find((o) => o.userId === u.id && (o.status === "pending" || o.status === "partial") && (kind === "programme" ? o.trackId === id : o.courseId === id));
       if (order) {
@@ -1177,7 +1177,7 @@ export function createDemoBackend(): Backend {
       if (!track.price || state !== "open") throw new BackendError(state === "paused" ? "Payments for this programme are paused. Please try again soon." : "Enrolment for this programme is not open right now.");
       if (s.programmes.some((p) => p.userId === u.id && p.trackId === trackId)) throw new BackendError("You are already enrolled in this programme.");
       const price = track.price;
-      const charge = track.discountActive && track.discountPrice != null && track.discountPrice < price ? track.discountPrice : price;
+      const charge = coursePrice(track)?.amount ?? price;
       let order = s.courseOrders.find((o) => o.userId === u.id && o.trackId === trackId && o.status === "pending");
       if (order) Object.assign(order, { currency: track.currency ?? "NGN", listAmount: price, amount: charge });
       else {
@@ -1648,7 +1648,7 @@ export function createDemoBackend(): Backend {
           const t = i.kind === "programme" ? programmeOf(s, i.targetId) : courses(s).find((c) => c.id === i.targetId);
           if (!t) throw new BackendError(i.kind === "programme" ? "Programme not found." : "Course not found.");
           const price = t.price ?? i.amount;
-          const charge = t.price == null ? i.amount : t.discountActive && t.discountPrice != null && t.discountPrice < t.price ? t.discountPrice : t.price;
+          const charge = t.price == null ? i.amount : (coursePrice(t)?.amount ?? t.price);
           order = { id: uid(), userId: i.userId, courseId: i.kind === "course" ? i.targetId : null, trackId: i.kind === "programme" ? i.targetId : null, currency: t.currency ?? "NGN", listAmount: price, amount: charge, status: "pending", provider: "manual", providerRef: null, note: null, createdAt: now(), paidAt: null };
           s.courseOrders.push(order);
         }

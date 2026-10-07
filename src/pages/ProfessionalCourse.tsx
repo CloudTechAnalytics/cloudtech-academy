@@ -1,7 +1,10 @@
 import { Link } from "react-router";
-import { Award, BookOpen, CheckCircle2, Clock, FolderKanban, GraduationCap, Lock, MessageCircle, Target, Users, UserCheck } from "lucide-react";
+import { Award, BookOpen, HelpCircle, CheckCircle2, Clock, FolderKanban, GraduationCap, Lock, MessageCircle, Target, Users, UserCheck } from "lucide-react";
 import type { Course } from "@/content/types";
-import { useProgrammes, type useLearner } from "@/lib/data";
+import { useCourses, useProgrammes, type useLearner } from "@/lib/data";
+import { PathwayStrip } from "@/components/PathwayStrip";
+import { levelText } from "@/components/CourseCard";
+import { pathwaysFor } from "@/content/pathways";
 import { categoryName } from "@/content";
 import { badgeCount, publishedLessons } from "@/lib/certificates";
 import { durationLabel } from "@/lib/format";
@@ -38,6 +41,7 @@ function Heading({ id, children }: { id: string; children: string }) {
 export function ProfessionalCourseView({ course, learner }: { course: Course; learner: ReturnType<typeof useLearner> }) {
   const lessons = publishedLessons(course);
   const programmes = useProgrammes();
+  const allCourses = useCourses();
   const parents = programmes.filter((t) => isPaid(t) && programmeCourseIds(t).includes(course.id));
   const enrolled = !!learner.enrollment;
   const resume = lessons.find((l) => l.id === learner.enrollment?.lastLessonId) ?? lessons.find((l) => !learner.progress.completedLessons.includes(l.id)) ?? lessons[0];
@@ -48,6 +52,9 @@ export function ProfessionalCourseView({ course, learner }: { course: Course; le
   const hours = course.durationLabel || durationLabel(undefined, course.estimatedHours);
   const enrollTo = learner.signedIn ? `/courses/${course.slug}/enroll` : `/sign-up?next=${encodeURIComponent(`/courses/${course.slug}/enroll`)}`;
   const priceText = price ? formatPrice(price.amount, price.currency) : "";
+  const available = course.status === "available" && lessons.length > 0;
+  const standalone = parents.length === 0;
+  const pathways = pathwaysFor(course.id);
 
   // A course that is only sold inside a programme has no price of its own: point to the programmes that include it.
   const bundled = parents.length > 0 && (!price || state !== "open");
@@ -64,6 +71,8 @@ export function ProfessionalCourseView({ course, learner }: { course: Course; le
         );
       })}
     </div>
+  ) : !available ? (
+    <p className="rounded-lg border border-line-strong bg-sand px-4 py-3 text-center text-[0.9375rem] text-muted">Opens soon. Enrolment opens as soon as the course is ready.</p>
   ) : (
     state === "open" ? (
       <ButtonLink to={enrollTo} className="w-full">
@@ -76,6 +85,7 @@ export function ProfessionalCourseView({ course, learner }: { course: Course; le
 
   const facts = [
     { icon: Clock, label: hours },
+    { icon: GraduationCap, label: levelText(course) },
     { icon: BookOpen, label: `${course.modules.length} ${course.modules.length === 1 ? "module" : "modules"}` },
     { icon: Users, label: DELIVERY_LABEL[course.deliveryType ?? "self_paced"] },
     ...(course.projectTitle ? [{ icon: FolderKanban, label: "Capstone project" }] : []),
@@ -88,12 +98,12 @@ export function ProfessionalCourseView({ course, learner }: { course: Course; le
         <div className="container-page grid gap-10 py-14 sm:py-16 lg:grid-cols-12 lg:py-20">
           <div className="lg:col-span-7">
             <nav aria-label="Breadcrumb" className="text-[0.8125rem] text-ivory/70">
-              <Link to="/programmes" className="hover:text-ivory">
-                Professional Programmes
+              <Link to={standalone ? "/courses" : "/programmes"} className="hover:text-ivory">
+                {standalone ? "Courses" : "Professional Programmes"}
               </Link>{" "}
               / {categoryName(course.categoryId)}
             </nav>
-            <p className="mt-5 text-[0.8125rem] font-semibold uppercase tracking-[0.14em] text-brass-pale">Professional Programme · Build a career</p>
+            <p className="mt-5 text-[0.8125rem] font-semibold uppercase tracking-[0.14em] text-brass-pale">{standalone ? "Professional course · Build a skill that pays" : "Professional Programme · Build a career"}</p>
             <h1 className="mt-3 font-serif text-[2.5rem] leading-[1.06] tracking-[-0.02em] sm:text-[3.3rem]">{course.title}</h1>
             <p className="mt-5 max-w-2xl text-[1.0625rem] leading-relaxed text-ivory/80">{course.summary}</p>
             <ul className="mt-7 flex flex-wrap gap-x-6 gap-y-2 text-[0.9rem] text-ivory/90">
@@ -107,6 +117,7 @@ export function ProfessionalCourseView({ course, learner }: { course: Course; le
 
           <aside className="lg:col-span-5">
             <div className="rounded-2xl border border-brass/40 bg-paper p-6 text-ink shadow-[0_30px_60px_-35px_rgba(0,0,0,0.6)]">
+              {course.thumbnail && <img src={course.thumbnail} alt="" className="-mx-6 -mt-6 mb-5 h-40 w-[calc(100%+3rem)] rounded-t-2xl object-cover" />}
               {enrolled ? (
                 <>
                   <p className="flex items-center gap-2 font-semibold text-success">
@@ -131,6 +142,12 @@ export function ProfessionalCourseView({ course, learner }: { course: Course; le
                         <span className="font-serif text-[2.4rem] leading-none">{priceText}</span>
                         {price.discounted && <s className="text-[1.1rem] text-subtle">{formatPrice(price.listAmount, price.currency)}</s>}
                       </p>
+                      {price.discounted && (
+                        <p className="mt-2 inline-block rounded-full bg-brass-pale px-3 py-1 text-[0.8125rem] font-semibold text-brass-dark">
+                          {price.label ? `${price.label}: ` : ""}
+                          {price.percentOff}% off{course.discountEnd ? ` until ${new Date(course.discountEnd).toLocaleDateString("en-NG", { day: "numeric", month: "long", year: "numeric" })}` : ""}
+                        </p>
+                      )}
                       <p className="mt-1 text-[0.8125rem] text-muted">One-off payment. Lessons unlock the moment your payment is confirmed.</p>
                     </div>
                   ) : (
@@ -160,7 +177,7 @@ export function ProfessionalCourseView({ course, learner }: { course: Course; le
       <div className="container-page grid gap-14 py-14 sm:py-16 lg:grid-cols-12">
         <div className="space-y-14 lg:col-span-7">
           <section aria-labelledby="overview-title">
-            <Heading id="overview-title">Programme overview</Heading>
+            <Heading id="overview-title">{standalone ? "Course overview" : "Programme overview"}</Heading>
             <p className="mt-4 whitespace-pre-line text-[1.0625rem] leading-relaxed text-ink/85">{overview}</p>
           </section>
 
@@ -188,7 +205,7 @@ export function ProfessionalCourseView({ course, learner }: { course: Course; le
                       <summary className="flex cursor-pointer list-none items-start gap-4">
                         <span className="w-7 shrink-0 pt-0.5 font-serif text-[0.95rem] text-brass-dark">{String(i + 1).padStart(2, "0")}</span>
                         <span className="min-w-0 flex-1 font-medium">{m.title}</span>
-                        <span className="shrink-0 pt-0.5 text-[0.8125rem] text-muted">{items.reduce((n, l) => n + l.minutes, 0)} min</span>
+                        {items.length > 0 && <span className="shrink-0 pt-0.5 text-[0.8125rem] text-muted">{items.reduce((n, l) => n + l.minutes, 0)} min</span>}
                         {!enrolled && <Lock aria-label="Unlocks when you enroll" className="mt-1 h-3.5 w-3.5 shrink-0 text-subtle" />}
                       </summary>
                       <ul className="ml-11 mt-3 space-y-2 text-[0.9rem] text-muted">
@@ -204,6 +221,12 @@ export function ProfessionalCourseView({ course, learner }: { course: Course; le
                             {l.summary && <span className="block text-[0.8125rem] text-subtle">{l.summary}</span>}
                           </li>
                         ))}
+                        {items.length === 0 &&
+                          m.topics.map((t) => (
+                            <li key={t} className="flex items-start gap-2">
+                              <CheckCircle2 aria-hidden className="mt-0.5 h-3.5 w-3.5 shrink-0 text-brass" /> {t}
+                            </li>
+                          ))}
                         {m.badge && (
                           <li className="flex items-center gap-1.5 text-brass-dark">
                             <Award aria-hidden className="h-3.5 w-3.5" /> Badge: {m.badge}
@@ -236,9 +259,34 @@ export function ProfessionalCourseView({ course, learner }: { course: Course; le
             <section aria-labelledby="assess-title">
               <Heading id="assess-title">Assessment and certificate</Heading>
               <p className="mt-4 text-[1rem] leading-relaxed text-ink/85">
-                You are assessed with a final assessment (pass mark {course.certificate.passingScore}%){course.projectTitle ? " and a capstone project" : ""}. Your professional
-                certificate is awarded when you meet those requirements. Paying for the programme does not award it on its own.
+                You are assessed with a final assessment (pass mark {course.certificate.passingScore}%){course.projectTitle ? " and a final project" : ""}. Your certificate is awarded
+                when you meet those requirements. Paying for the {standalone ? "course" : "programme"} does not award it on its own.
               </p>
+            </section>
+          )}
+
+          {!!course.faqs?.length && (
+            <section aria-labelledby="faq-title">
+              <Heading id="faq-title">Frequently asked questions</Heading>
+              <div className="mt-5 divide-y divide-line border-y border-line">
+                {course.faqs.map((f) => (
+                  <details key={f.q} className="group py-4">
+                    <summary className="flex cursor-pointer list-none items-start gap-3 font-medium">
+                      <HelpCircle aria-hidden className="mt-0.5 h-4 w-4 shrink-0 text-brass-dark" /> <span className="flex-1">{f.q}</span>
+                    </summary>
+                    <p className="ml-7 mt-2 text-[0.9375rem] leading-relaxed text-muted">{f.a}</p>
+                  </details>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {pathways.length > 0 && (
+            <section aria-labelledby="path-title" className="space-y-4">
+              <Heading id="path-title">Where this fits</Heading>
+              {pathways.map((p) => (
+                <PathwayStrip key={p.id} pathway={p} courses={allCourses} current={course.id} />
+              ))}
             </section>
           )}
 

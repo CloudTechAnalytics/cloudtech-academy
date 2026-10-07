@@ -130,7 +130,7 @@ export default function AdminCourses() {
                   {isPaid(c) && <span className="block text-[0.75rem] text-muted">{priceLabel(c)}</span>}
                 </td>
                 <td>{c.modules.flatMap((m) => m.lessons).length}</td>
-                <td>{c.published ? "Published" : "Draft"}</td>
+                <td>{c.archived ? "Archived" : c.published ? "Published" : c.publishedAt ? "Unpublished" : "Draft"}</td>
                 <td className="whitespace-nowrap text-right">
                   <button type="button" disabled={busy === c.id} onClick={() => void togglePublish(c)} className="text-[0.8125rem] font-semibold text-brass-dark disabled:opacity-50">
                     {c.published ? "Unpublish" : "Publish"}

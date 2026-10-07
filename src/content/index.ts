@@ -165,6 +165,7 @@ function buildCourse(def: (typeof COURSES)[number], position: number): Course {
     badge: m.badge ?? null,
     badgeCode: m.badgeCode ?? null,
     skills: m.skills ?? [],
+    topics: m.topics ?? [],
     lessons: m.lessons.map((slug): Lesson => {
       const raw = BODIES[def.id]?.[slug];
       if (!raw) throw new Error(`Missing lesson file for ${def.id}/${slug}`);

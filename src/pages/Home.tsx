@@ -8,6 +8,7 @@ import { CourseCard } from "@/components/CourseCard";
 import { Reveal } from "@/components/Reveal";
 import { webSiteJsonLd } from "@/lib/schema";
 import { isPaid } from "@/lib/commerce";
+import { DIVISIONS } from "@/content/catalog";
 
 /** Courses we suggest to someone arriving with no experience. All are free. */
 const STARTING_COURSES = [
@@ -199,7 +200,32 @@ export default function Home() {
         </div>
       </section>
 
-      <section aria-labelledby="how-title" className="border-y border-line bg-paper py-16 sm:py-20">
+      <section aria-labelledby="areas-title" className="border-y border-line bg-paper py-16 sm:py-20">
+        <div className="container-page">
+          <SectionHeading
+            id="areas-title"
+            kicker="Learn Skills. Build Careers. Create Opportunities."
+            title="Learning for the real world"
+            intro="From data and technology to business, trade and professional skills, CloudTech Academy provides practical learning designed for the real world."
+            link={{ to: "/courses", label: "Explore all courses" }}
+          />
+          <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {DIVISIONS.map((d, i) => (
+              <Reveal as="li" key={d.id} delay={(i % 4) * 60} className="h-full">
+                <Link to={`/courses?area=${d.id}`} className="group flex h-full flex-col rounded-2xl border border-line bg-ivory p-6 transition-[border-color,box-shadow] duration-200 hover:border-brass/60 hover:shadow-[0_12px_32px_-20px_rgba(23,32,51,0.35)]">
+                  <h3 className="font-serif text-[1.25rem] leading-snug text-ink">{d.name}</h3>
+                  <p className="mt-2 text-[0.9375rem] leading-relaxed text-muted">{d.blurb}</p>
+                  <span className="mt-auto inline-flex items-center gap-1.5 pt-5 text-[0.875rem] font-semibold text-brass-dark">
+                    Explore <ArrowRight aria-hidden className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                  </span>
+                </Link>
+              </Reveal>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <section aria-labelledby="how-title" className="bg-ivory py-16 sm:py-20">
         <div className="container-page">
           <SectionHeading id="how-title" kicker="How it works" title="Every course follows the same four steps" />
           <ol className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">

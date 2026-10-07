@@ -101,7 +101,7 @@ function Inner() {
         </div>
         {mode === "manual" && (
           <div className="mt-8 rounded-2xl border border-line-strong bg-paper p-6">
-            <ManualCheckout kind="programme" id={course.id} title={name} price={price ?? { amount: 0, listAmount: 0, discounted: false, currency: "NGN" }} instalments={null} openTo={start} openLabel="Open the programme" onlyExisting />
+            <ManualCheckout kind="programme" id={course.id} title={name} price={price ?? { amount: 0, listAmount: 0, discounted: false, currency: "NGN", percentOff: 0 }} instalments={null} openTo={start} openLabel="Open the programme" onlyExisting />
           </div>
         )}
       </div>

@@ -5,6 +5,7 @@
  */
 
 import type { Level } from "./tracks";
+import { BUSINESS_COURSES } from "./business-courses.ts";
 
 export type Difficulty = "beginner" | "intermediate" | "advanced";
 export type CourseStatus = "available" | "coming_soon";
@@ -27,7 +28,23 @@ export const CATEGORIES: Category[] = [
   { id: "business-analysis", name: "Business Analysis", description: "Requirements, processes and decisions." },
   { id: "project-management", name: "Product & Project Management", description: "Planning, delivering and steering projects and products." },
   { id: "cloud", name: "Cloud & Technology", description: "Cloud platforms, cost, reliability and security." },
+  { id: "business-entrepreneurship", name: "Business & Entrepreneurship", description: "Starting, running, marketing and selling for a business." },
+  { id: "trade-logistics", name: "Trade & Logistics", description: "Importing, exporting, procurement, freight and supply chains." },
+  { id: "professional-skills", name: "Professional Skills", description: "The skills that make people effective at work: managing, serving, organising and accounting." },
 ];
+
+/**
+ * The four areas of the Academy. A category belongs to a division; every category that is not listed under Business, Trade or
+ * Professional Skills is part of Data & Technology, so the existing courses need no change.
+ */
+export type Division = { id: string; name: string; blurb: string; categoryIds: string[] };
+export const DIVISIONS: Division[] = [
+  { id: "data-tech", name: "Data & Technology", blurb: "Data, analytics, AI, coding, cloud and the digital skills behind them.", categoryIds: [] },
+  { id: "business", name: "Business & Entrepreneurship", blurb: "Start, run, market and grow a business.", categoryIds: ["business-entrepreneurship"] },
+  { id: "trade", name: "Trade & Logistics", blurb: "Import, export, procure, ship and manage supply chains.", categoryIds: ["trade-logistics"] },
+  { id: "professional", name: "Professional Skills", blurb: "Manage projects and people, serve clients, run an office and keep the books.", categoryIds: ["professional-skills"] },
+];
+export const divisionOf = (categoryId: string) => DIVISIONS.find((d) => d.categoryIds.includes(categoryId)) ?? DIVISIONS[0];
 
 export type CertificateRules = {
   enabled: boolean;
@@ -49,6 +66,8 @@ export type ModuleDef = {
   badgeCode?: string;
   /** Skills shown on the module badge's public credential page. */
   skills?: string[];
+  /** What the module covers, one line each. Lets the curriculum of a course still being written be shown in full. */
+  topics?: string[];
 };
 
 /** A free course teaches one skill or an introduction. A professional course is a complete, structured, paid programme. */
@@ -73,6 +92,11 @@ export type CourseSalesFields = {
   /** ISO date-times; empty means no limit. */
   enrollmentStart?: string | null;
   enrollmentEnd?: string | null;
+  /** Name of the promotion shown beside the price, e.g. "Early Bird". */
+  discountLabel?: string;
+  /** ISO date-times; the promotional price applies only inside them. Empty means no limit. */
+  discountStart?: string | null;
+  discountEnd?: string | null;
   /** Shown only when the course really includes them. */
   communityAccess?: boolean;
   instructorSupport?: boolean;
@@ -109,6 +133,15 @@ export type CourseDef = CourseSalesFields & {
   description: string;
   categoryId: string;
   difficulty: Difficulty;
+  /** The top of the level range, e.g. a course for "Beginner to Intermediate" has difficulty beginner and difficultyMax intermediate. */
+  difficultyMax?: Difficulty;
+  /** Length in weeks, for filtering (a 3 month course is 12). Short courses leave it empty and show hours. */
+  durationWeeks?: number;
+  /** A picture for the course card and page (a web address). */
+  thumbnail?: string;
+  faqs?: { q: string; a: string }[];
+  /** Archived courses leave the catalogue but stay open to people already enrolled. */
+  archived?: boolean;
   /** 1 Foundations, 2 Practical Skills, 3 Professional, 4 Career Projects (see LEVELS in tracks.ts). */
   level: Level;
   levelLabel: string;
@@ -1976,7 +2009,7 @@ export const PROGRAMME_ONLY_COURSES = new Set([
   "web-development-with-javascript", "software-developer-capstone",
 ]);
 
-export const COURSES: CourseDef[] = ALL_COURSES.map((c) =>
+export const COURSES: CourseDef[] = [...ALL_COURSES, ...BUSINESS_COURSES].map((c) =>
   PROGRAMME_ONLY_COURSES.has(c.id) ? { ...c, isFree: false, access: "paid", courseType: "professional", enrollmentStatus: "closed" } : c,
 );
 

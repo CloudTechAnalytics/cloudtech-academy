@@ -63,6 +63,8 @@ export type Module = {
   badge: string | null;
   badgeCode: string | null;
   skills: string[];
+  /** What the module covers, for courses whose lessons are not written yet. */
+  topics: string[];
 };
 
 export type Course = Omit<CourseDef, "modules"> & {

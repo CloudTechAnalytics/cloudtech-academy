@@ -97,12 +97,41 @@ function Details({ course, onSaved }: { course: Course; onSaved: () => Promise<u
           </select>
         </div>
         <div>
+          <label className="text-[0.875rem] font-medium" htmlFor="state">
+            Availability
+          </label>
+          <select
+            id="state"
+            className={selectCls}
+            value={c.archived ? "archived" : c.published ? "published" : c.publishedAt ? "unpublished" : "draft"}
+            onChange={(e) => {
+              const v = e.target.value;
+              setC((x) => ({ ...x, published: v === "published" || v === "archived", archived: v === "archived" }));
+            }}
+          >
+            <option value="draft">Draft (not shown anywhere)</option>
+            <option value="published">Published</option>
+            <option value="unpublished">Unpublished (hidden again)</option>
+            <option value="archived">Archived (hidden from the catalogue, still open to people enrolled)</option>
+          </select>
+        </div>
+        <div>
           <label className="text-[0.875rem] font-medium" htmlFor="diff">
             Difficulty
           </label>
           <select id="diff" className={selectCls} value={c.difficulty} onChange={(e) => set("difficulty", e.target.value as Difficulty)}>
             <option value="beginner">Beginner</option>
             <option value="intermediate">Intermediate</option>
+            <option value="advanced">Advanced</option>
+          </select>
+        </div>
+        <div>
+          <label className="text-[0.875rem] font-medium" htmlFor="diffmax">
+            Level range: up to (optional)
+          </label>
+          <select id="diffmax" className={selectCls} value={c.difficultyMax ?? ""} onChange={(e) => set("difficultyMax", (e.target.value || undefined) as Difficulty | undefined)}>
+            <option value="">Just the level above</option>
+            <option value="intermediate">Intermediate (Beginner to Intermediate)</option>
             <option value="advanced">Advanced</option>
           </select>
         </div>
@@ -128,6 +157,7 @@ function Details({ course, onSaved }: { course: Course; onSaved: () => Promise<u
           hint="Leave empty while the course is being written."
         />
         <TextField label="Project title" value={c.projectTitle ?? ""} onChange={(e) => set("projectTitle", e.target.value || undefined)} />
+        <TextField label="Thumbnail (web address of a picture)" value={c.thumbnail ?? ""} onChange={(e) => set("thumbnail", e.target.value || undefined)} hint="Shown on the course card and page. Leave empty for none." />
       </div>
       <TextField
         label="Skills (comma separated)"
@@ -139,6 +169,21 @@ function Details({ course, onSaved }: { course: Course; onSaved: () => Promise<u
           )
         }
         onBlur={() => set("skills", c.skills.map((s) => s.trim()).filter(Boolean))}
+      />
+      <TextArea
+        label="Frequently asked questions (one per line: Question | Answer)"
+        rows={5}
+        value={(c.faqs ?? []).map((f) => (f.a ? `${f.q} | ${f.a}` : f.q)).join("\n")}
+        onChange={(e) =>
+          set(
+            "faqs",
+            e.target.value.split("\n").map((l) => {
+              const [q, ...rest] = l.split("|");
+              return { q, a: rest.join("|").trimStart() };
+            }),
+          )
+        }
+        onBlur={() => set("faqs", (c.faqs ?? []).map((f) => ({ q: f.q.trim(), a: f.a.trim() })).filter((f) => f.q))}
       />
       <TextArea
         label="Prerequisites (one per line)"
@@ -188,18 +233,44 @@ function Details({ course, onSaved }: { course: Course; onSaved: () => Promise<u
               <option value="hybrid">Hybrid</option>
             </select>
           </div>
-          <TextField label="Duration (shown to learners)" value={c.durationLabel ?? ""} onChange={(e) => set("durationLabel", e.target.value || undefined)} hint="For example 12 weeks." />
+          <TextField label="Duration (shown to learners)" value={c.durationLabel ?? ""} onChange={(e) => set("durationLabel", e.target.value || undefined)} hint="For example 3 months." />
+          <TextField label="Length in weeks (for filtering)" type="number" min={1} max={104} value={c.durationWeeks ?? ""} onChange={(e) => set("durationWeeks", e.target.value ? Number(e.target.value) : undefined)} hint="3 months is 12." />
         </div>
 
         {(c.access ?? "free") === "paid" && (
           <>
             <div className="grid gap-4 sm:grid-cols-3">
               <TextField label="Price" type="number" min={0} value={c.price ?? ""} onChange={(e) => set("price", e.target.value ? Number(e.target.value) : null)} />
-              <TextField label="Currency" value={c.currency ?? "NGN"} maxLength={3} onChange={(e) => set("currency", e.target.value.toUpperCase())} hint="NGN for naira." />
-              <TextField label="Discount price" type="number" min={0} value={c.discountPrice ?? ""} onChange={(e) => set("discountPrice", e.target.value ? Number(e.target.value) : null)} />
+              <div>
+                <label className="text-[0.875rem] font-medium" htmlFor="cur">
+                  Currency
+                </label>
+                <select id="cur" className={selectCls} value={c.currency ?? "NGN"} onChange={(e) => set("currency", e.target.value)}>
+                  {["NGN", "USD", "GBP", "CAD"].map((x) => (
+                    <option key={x} value={x}>
+                      {x}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <TextField label="Promotional price" type="number" min={0} value={c.discountPrice ?? ""} onChange={(e) => set("discountPrice", e.target.value ? Number(e.target.value) : null)} hint="Optional. Must be below the price." />
+            </div>
+            <div className="grid gap-4 sm:grid-cols-3">
+              <div>
+                <label className="text-[0.875rem] font-medium" htmlFor="promo">
+                  Promotion
+                </label>
+                <select id="promo" className={selectCls} value={c.discountActive ? "active" : "none"} onChange={(e) => set("discountActive", e.target.value === "active")}>
+                  <option value="none">No promotion</option>
+                  <option value="active">Active</option>
+                </select>
+              </div>
+              <TextField label="Promotion name" value={c.discountLabel ?? ""} onChange={(e) => set("discountLabel", e.target.value || undefined)} hint="For example Early Bird." />
+              <span />
+              <TextField label="Promotion starts (optional)" type="datetime-local" value={localInput(c.discountStart)} onChange={(e) => set("discountStart", e.target.value ? new Date(e.target.value).toISOString() : null)} />
+              <TextField label="Promotion ends (optional)" type="datetime-local" value={localInput(c.discountEnd)} onChange={(e) => set("discountEnd", e.target.value ? new Date(e.target.value).toISOString() : null)} />
             </div>
             <div className="flex flex-wrap gap-x-8 gap-y-3">
-              <Check label="Discount is available now" checked={!!c.discountActive} onChange={(v) => set("discountActive", v)} />
               <Check label="Payments are paused" checked={c.paymentStatus === "paused"} onChange={(v) => set("paymentStatus", v ? "paused" : "active")} />
             </div>
             <div className="grid gap-4 sm:grid-cols-3">
@@ -288,7 +359,7 @@ function Details({ course, onSaved }: { course: Course; onSaved: () => Promise<u
   );
 }
 
-const moduleInput = (m: Module): ModuleInput => ({ id: m.id, courseId: m.courseId, title: m.title, position: m.position, badge: m.badge, badgeCode: m.badgeCode, skills: m.skills });
+const moduleInput = (m: Module): ModuleInput => ({ id: m.id, courseId: m.courseId, title: m.title, position: m.position, badge: m.badge, badgeCode: m.badgeCode, skills: m.skills, topics: m.topics });
 
 /** A module's badge: its name, the code in its credential IDs, the skills on its credential page, and its check. */
 function ModuleBadge({ course, module: m, onSave }: { course: Course; module: Module; onSave: (m: ModuleInput) => Promise<void> }) {
@@ -364,6 +435,14 @@ function Curriculum({ course, reload }: { course: Course; reload: () => Promise<
       await (await getBackend()).admin.saveModule({ ...moduleInput(m), title: title.trim() });
     });
 
+  const saveTopics = (id: string, text: string) =>
+    run(async () => {
+      const m = course.modules.find((x) => x.id === id)!;
+      const topics = text.split("\n").map((t) => t.trim()).filter(Boolean);
+      if (JSON.stringify(topics) === JSON.stringify(m.topics)) return;
+      await (await getBackend()).admin.saveModule({ ...moduleInput(m), topics });
+    });
+
   const remove = (id: string, lessons: number) => {
     const warning = lessons ? `Delete this module and its ${lessons} lesson(s)? Learner progress on those lessons is deleted too.` : "Delete this module?";
     if (!window.confirm(warning)) return;
@@ -381,6 +460,7 @@ function Curriculum({ course, reload }: { course: Course; reload: () => Promise<
         badge: null,
         badgeCode: null,
         skills: [],
+        topics: [],
       });
       setNewModule("");
     });
@@ -417,6 +497,17 @@ function Curriculum({ course, reload }: { course: Course; reload: () => Promise<
                 </button>
               </div>
             </div>
+            <details className="mt-2 pl-6">
+              <summary className="cursor-pointer text-[0.8125rem] text-muted">What this module covers ({m.topics.length})</summary>
+              <textarea
+                aria-label={`What ${m.title} covers, one per line`}
+                defaultValue={m.topics.join("\n")}
+                rows={4}
+                onBlur={(e) => void saveTopics(m.id, e.target.value)}
+                className="mt-2 block w-full rounded-lg border border-line-strong bg-paper px-3 py-2 text-[0.875rem]"
+              />
+              <p className="mt-1 text-[0.75rem] text-muted">One line each. Shown on the course page, so a course can be sold before its lessons are written.</p>
+            </details>
             <ul className="mt-3 space-y-1 pl-6">
               {m.lessons.map((l) => (
                 <li key={l.id} className="flex items-center justify-between gap-3 text-[0.9375rem]">

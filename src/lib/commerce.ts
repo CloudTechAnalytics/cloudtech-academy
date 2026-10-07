@@ -5,7 +5,7 @@ import type { Track } from "@/content/tracks";
 const SALES_KEYS: (keyof CourseSalesFields)[] = [
   "courseType", "access", "price", "currency", "discountPrice", "discountActive", "paymentStatus", "deliveryType", "enrollmentStatus", "enrollmentStart",
   "enrollmentEnd", "communityAccess", "instructorSupport", "durationLabel", "publishedAt", "overview", "audience", "outcomes", "included", "projectPreviews",
-  "instructor", "professionalOutcome", "allowInstalments", "firstPercent", "secondDueDays",
+  "instructor", "professionalOutcome", "allowInstalments", "firstPercent", "secondDueDays", "discountLabel", "discountStart", "discountEnd",
 ];
 
 /** A programme with what admins have set in the database laid over the site's built-in defaults. */
@@ -30,16 +30,37 @@ export const isProfessional = (c: Pick<Course, "courseType">) => c.courseType ==
 export type CoursePrice = {
   /** What the learner pays now. */
   amount: number;
-  /** The normal price, shown struck through when a discount applies. */
+  /** The normal price, shown struck through when a promotion applies. */
   listAmount: number;
   discounted: boolean;
   currency: string;
+  /** Whole percent off the normal price, only when there is a real promotion. */
+  percentOff: number;
+  /** The promotion's name, e.g. "Early Bird". */
+  label?: string;
 };
 
-export function coursePrice(c: Pick<Course, "price" | "currency" | "discountPrice" | "discountActive">): CoursePrice | null {
+/**
+ * What a learner pays today. The promotional price counts only while the promotion is switched on and today falls inside
+ * its start and end dates (when set), the same rule the database applies when it charges. A previous price is only ever
+ * shown for a promotion an admin has actually configured.
+ */
+export function coursePrice(
+  c: Pick<Course, "price" | "currency" | "discountPrice" | "discountActive"> & { discountStart?: string | null; discountEnd?: string | null; discountLabel?: string },
+  at = new Date(),
+): CoursePrice | null {
   if (c.price === null || c.price === undefined) return null;
-  const discounted = !!c.discountActive && c.discountPrice !== null && c.discountPrice !== undefined && c.discountPrice < c.price;
-  return { amount: discounted ? (c.discountPrice as number) : c.price, listAmount: c.price, discounted, currency: c.currency ?? "NGN" };
+  const inWindow = (!c.discountStart || new Date(c.discountStart) <= at) && (!c.discountEnd || new Date(c.discountEnd) >= at);
+  const discounted = !!c.discountActive && inWindow && c.discountPrice !== null && c.discountPrice !== undefined && c.discountPrice > 0 && c.discountPrice < c.price;
+  const amount = discounted ? (c.discountPrice as number) : c.price;
+  return {
+    amount,
+    listAmount: c.price,
+    discounted,
+    currency: c.currency ?? "NGN",
+    percentOff: discounted ? Math.round((1 - amount / c.price) * 100) : 0,
+    label: discounted ? c.discountLabel?.trim() || undefined : undefined,
+  };
 }
 
 export function formatPrice(amount: number, currency = "NGN") {

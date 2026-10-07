@@ -54,6 +54,19 @@ const COURSES = [...FULL, ...SHORT];
 expected: ${want.join(", ")}
 found:    ${have.join(", ")}`);
 }
+// Every course sits in a real category, and a paid course that is still being written is complete on the page: a price,
+// enrolment closed (so nobody can pay for lessons that do not exist yet) and what each module covers.
+{
+  const { COURSES, CATEGORIES } = await import("../src/content/catalog.ts");
+  for (const c of COURSES) {
+    if (!CATEGORIES.some((x) => x.id === c.categoryId)) throw new Error(`${c.id} uses an unknown category: ${c.categoryId}`);
+    if (c.status === "coming_soon" && c.access === "paid") {
+      if (!(c.price > 0)) throw new Error(`${c.id} is paid but has no price.`);
+      if (c.enrollmentStatus !== "closed") throw new Error(`${c.id} has no lessons yet, so enrolment must stay closed.`);
+      for (const m of c.modules) if (!m.topics?.length) throw new Error(`${c.id}/${m.id} lists no topics.`);
+    }
+  }
+}
 // Folders whose lesson text is withheld from the public site (paid courses) must be real course folders.
 for (const f of JSON.parse(fs.readFileSync("src/content/protected-courses.json", "utf8")).folders) {
   if (!COURSES.includes(f)) throw new Error(`protected-courses.json lists "${f}", which is not a course folder.`);

@@ -67,6 +67,13 @@ function commerceColumns(x, isTrack) {
   if (!isTrack) {
     cols.course_type = str(x.courseType ?? "free");
     cols.outcomes = arr(x.outcomes ?? []);
+    cols.difficulty_max = x.difficultyMax ? str(x.difficultyMax) : "null";
+    cols.duration_weeks = num(x.durationWeeks);
+    cols.thumbnail = x.thumbnail ? str(x.thumbnail) : "null";
+    cols.faqs = json(x.faqs);
+    cols.discount_label = x.discountLabel ? str(x.discountLabel) : "null";
+    cols.discount_start = ts(x.discountStart);
+    cols.discount_end = ts(x.discountEnd);
   }
   return cols;
 }
@@ -127,6 +134,7 @@ for (const c of BUNDLED_COURSES) {
         badge_name: str(m.badge),
         badge_code: str(m.badgeCode),
         skills: arr(m.skills ?? []),
+        topics: arr(m.topics ?? []),
       }),
     );
     for (const l of m.lessons) {
