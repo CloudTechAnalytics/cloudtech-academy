@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link, useSearchParams } from "react-router";
 import { Search } from "lucide-react";
 import { useSeo } from "@/lib/seo";
@@ -35,7 +35,12 @@ export default function Courses() {
   });
   const all = useCourses();
   const programmes = useProgrammes();
-  const [params, setParams] = useSearchParams();
+  const [urlParams, setParams] = useSearchParams();
+  // The prerendered page has no filters in it, so the first render ignores the address and the filters apply straight after,
+  // which keeps the page matching what the server sent.
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  const params = useMemo(() => (mounted ? urlParams : new URLSearchParams()), [mounted, urlParams]);
   const get = (k: string) => params.get(k) ?? "";
   const area = AREAS.some((a) => a.id === get("area")) ? get("area") : "";
   // "access=professional" is the older link to the programmes; it still works.
